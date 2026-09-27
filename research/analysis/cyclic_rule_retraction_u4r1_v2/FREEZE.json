@@ -1,0 +1,54 @@
+{
+  "schema": "cyclic-rule-retraction-freeze-v1",
+  "issue": 4449,
+  "intake_main": "2cd91f0c785eca30f75d072f6b21abc30fae5ac0",
+  "predecessor_reservation_branch": "research/cyclic-rule-retraction-20260926-u4r1",
+  "predecessor_reservation_head": "3666992ab2b5e1b41b159b361d1c690d8e720fdf",
+  "branch": "research/cyclic-rule-retraction-u4r1-current-main-20260927",
+  "path": "research/analysis/cyclic_rule_retraction_u4r1_v2",
+  "formal_invocations_before_freeze": 0,
+  "formal_invocations_authorized": 1,
+  "formal_conditions": 256,
+  "formal_conditions_sha256": "0af2eedbb7586a0d45b8a0b651833813f406c0dea57523b08e16cd450e17aa57",
+  "construction": {
+    "phase": "excluded",
+    "conditions": 10,
+    "rows_sha256": "d6f4ebbd6cdc29309dc0b98ecc5622b00b9d3b7f90f97937bac0f6b08ffbee97",
+    "first_audit": "STOP_AUDIT; semantic_errors=0; effective_controls=9/10; preserve construction01/audit.json",
+    "corrected_audit": "PASS_CONSTRUCTION; semantic_errors=0; effective_controls=10/10; report construction-audit03.json"
+  },
+  "container": {
+    "engine": "OrbStack",
+    "context": "orbstack",
+    "image_id": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "platform": "linux/arm64",
+    "python": "3.12.14",
+    "network": "none",
+    "rootfs_read_only": true,
+    "source_mount_read_only": true,
+    "cpus": 1,
+    "memory_bytes": 268435456,
+    "pids_limit": 32,
+    "cap_drop": "ALL",
+    "no_new_privileges": true
+  },
+  "source_sha256": {
+    "README.md": "3272f4cfddc470cf8af4dab4d31ed86a35bea84627f5b399516c9aa7dbae1cc5",
+    "PLAN.md": "4416e01b322f988e0ba5d6fd73be5c9929cd0fa02edcf1b0ce4a6d7e20648edb",
+    "CONSTRUCTION.md": "b47b68b9837ec308f97d4df0f91067237e27645a8f385d367d4488b0f86d4301",
+    "study.py": "c28df3d35bba2a385fb5bc7d115e44a69c45ff338a198bdfe02fbdd1a383acd9",
+    "audit.py": "f9146d0d1ca1b79601b08408186aa92dafcd119ce933f2de87c49c383308f2cd"
+  },
+  "gates": {
+    "candidate_equals_independent_least_model": true,
+    "full_rebuild_equals_independent_least_model": true,
+    "no_new_grounded_claims_after_rule_deletion": true,
+    "outside_affected_cone_unchanged": true,
+    "no_change_rows_preserve_state": true,
+    "local_support_false_retains_positive_cycle_count_min": 1,
+    "blind_invalidation_false_removes_alternative_support_count_min": 1,
+    "raw_audit_errors": 0,
+    "effective_corruption_controls_rejected": 10
+  },
+  "retry_policy": "No retry, replacement, exclusion, or post-result tuning of the one formal invocation. Preserve any incomplete/failed output as STOP/HOLD."
+}

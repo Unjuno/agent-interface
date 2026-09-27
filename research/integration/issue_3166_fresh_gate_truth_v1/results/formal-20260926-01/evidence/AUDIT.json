@@ -1,0 +1,25 @@
+{
+  "checks": {
+    "24_matrix_rows": true,
+    "admitted_useful_rows_have_effect_release": true,
+    "every_policy_has_six_contexts": true,
+    "fixture_cleanup_clean": true,
+    "gate_only_denies_invalid": true,
+    "no_effect_control_is_hold": true,
+    "per_case_raw_matches_row_file": true,
+    "policy_predictions_match_raw": true,
+    "preflight_pass": true,
+    "raw_case_count": true,
+    "raw_ids_unique": true,
+    "reduced_policy_unsafe_effects": true,
+    "refusal_before_runtime": true,
+    "source_bytes_independently_pinned": true,
+    "two_tier_denies_invalid": true,
+    "valid_true_admitted_all": true
+  },
+  "decision": "PASS_GATE_TRUTH_FIRST_RUNG_SCOPED",
+  "errors": [],
+  "raw_sha256": "795cf31a651d814b4072553de1c688e5c5f31157f2787c792d2d667b2a7aa759",
+  "rows": 25,
+  "scope": "Issue #3166 first rung only; full issue remains open"
+}

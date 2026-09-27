@@ -1,0 +1,33 @@
+{
+  "schema": "needle-lora-rank1-preregistration-v2.v1",
+  "issue": 4507,
+  "allocation": "needle-lora-rank1-online-skill-v2",
+  "base_main_sha": "175ff6fff032d43de826d4ea63774cd001df5636",
+  "parent_evidence_commit": "54e5b395fc4fcbab2b10ecfca6f9770bca07885d",
+  "seeds": [74111, 74222, 74333],
+  "seed_offsets": [1, 2, 3, 4, 10, 20, 21, 30],
+  "treatment": "output LoRA rank 1",
+  "paired_control": "output LoRA rank 2",
+  "schedule": {
+    "base_rows": 512,
+    "base_steps": 400,
+    "support_arrivals": 16,
+    "updates_per_arrival": 8,
+    "total_adapter_updates": 128,
+    "batch_size": 32,
+    "heldout_rows_per_role": 4096,
+    "adapter_learning_rate": 0.04,
+    "base_learning_rate": 0.025
+  },
+  "decision": {
+    "rank1_accuracy_min_each_seed": 0.9,
+    "role_a_accuracy_min_each_seed": 0.9,
+    "max_accuracy_loss_vs_rank2": 0.03,
+    "aggregate_rank1_update_p95_ms_max": 60,
+    "rank1_to_rank2_update_p95_ratio_max": 0.8
+  },
+  "output_layout": "host metadata in /out; model files only in precreated empty /out/training",
+  "formal_invocations": 1,
+  "retries": 0,
+  "tuning_after_formal_start": false
+}

@@ -2,6 +2,22 @@
 
 This is the model/vendor-neutral local entry point over promoted Agent Interface backends.
 
+Check a local program before attempting input:
+
+```sh
+python -m runtime.cli_v1 validate --program program.json
+```
+
+This uses the existing display-free validator and dispatch's sequence expanders.
+It returns bounded diagnostics and original/expanded operation positions when
+available, without opening a backend or modifying the file. Exit codes are
+0 for static validity, 1 for an invalid program, and 2 for input-loading errors.
+The file must be UTF-8 JSON, at most 1 MiB. This command does not accept stdin.
+Static validity does not check live capabilities, target identity, observation
+freshness, lease expiry, release or task success. Dispatch still performs its
+normal checks. Validation is optional; it is not an automatic extra round trip.
+The standalone `python -m runtime.cli_v1.validate_program` entry remains available.
+
 For a retained `prepared_exchange` action report, inspect the result and latest
 observation without printing the full routine event history:
 

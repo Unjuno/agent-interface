@@ -1,0 +1,56 @@
+{
+  "schema": "issue-3887-independent-audit-freeze-v1",
+  "issue": 3887,
+  "allocation": "needle-lora-3441-rank4-minibatch-seed-corrected-index-v1-independent-audit",
+  "branch": "research/issue-3887-independent-audit-20260921",
+  "path": "research/needle_lora_3441_rank4_minibatch_seed_corrected_audit_v1/",
+  "input_path": "research/needle_lora_3441_rank4_minibatch_seed_corrected_v1/",
+  "input_main_commit": "cb2445ad77d31b089eb4e43780b377c6eb054fd5",
+  "input_git_blob_sha1": {
+    "FREEZE.json": "7a9f9a97c97dec5d2eb662f497408f50b61243f7",
+    "FORMAL_METADATA.json": "f511d071eb46c3309de67348a512ff62e4d1231b",
+    "FORMAL_STDOUT.json": "d1d8f29b47e78f84c35097e19fe36cd4bdd3694b",
+    "FORMAL_STDERR.txt": "d3f5a12faa99758192ecc4ed3fc22c9249232e86",
+    "RAW_RESULT.json.gz.b64": "f9c0ebbcb6134ec5dc7d192643b3b217422a7643",
+    "SOURCE_RUNNER.py": "fedf0f68bc5a99d885d4407542d8dbdb12fc61b0",
+    "SOURCE_3807_BASELINE.py": "18b6be0a175df957d838e188de4c7ca826b26af8",
+    "audit.py": "48c5e8951e7a9e14395980262ea1cec61987c8ef",
+    "AUDIT.json": "51108109865dd6f8a0b6643cc013989e6d381dbb",
+    "REPORT.md": "87e72df44cb1672640918e780c86bf0c7106df01",
+    "TEST_CONSTRUCTION.py": "c1898ec4595a210932d1bd079b86b14bba2cf6f8",
+    "SHA256SUMS.txt": "edec0681463bbbc543ddebd7c1c660b9ac346d3f"
+  },
+  "input_sha256": {
+    "FREEZE.json": "ba84791ed7ac2e2afd09fcab4065f3129443a7df7c305d7d7eebe653f9e55d8d",
+    "FORMAL_METADATA.json": "3869447c59313aeeb9f6a21cbf7404d531fcf261443b18e43bcdf67de2984b9d",
+    "FORMAL_STDOUT.json": "22d31f596da6122f18255fad03a9c795012ac2f671306c5f8cac6c672e7d6fb5",
+    "FORMAL_STDERR.txt": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+    "RAW_RESULT.json.gz.b64": "c68f29e5f97e8a8479fd5f41f247a86ef2449e5adca1c451db30e01c14945304",
+    "SOURCE_RUNNER.py": "cc4126a2b144a8134930c69d02908af45bc8f44613ec5b7e856da13f9167d6f2",
+    "SOURCE_3807_BASELINE.py": "43e6e6ef39883e78e50c3887b2ddf804a755f0305cad0d9ef6f640b00bdccdff",
+    "audit.py": "cdb8f3d80a031892ef701287801d22c3212af35f09c0a73d1f229f41f8edae8f",
+    "AUDIT.json": "f9dff718dfc15708fcc2226282d49fe235ef713d5bd6ce5dd80517805f0649f4",
+    "REPORT.md": "aa2513a5f58964cf95da3633fb04e7b7749186b6882a02fb2a7a61fe0360dab7",
+    "TEST_CONSTRUCTION.py": "e48665994edd595e984da8208bc017b089bb30f912660817772e17d53d5e9f42",
+    "SHA256SUMS.txt": "c3a1329298ab138c01a5f5febb9bacc5ee7ed0bf90277b13d1ade80370d0c0ea"
+  },
+  "expected_predecessor_source_sha256": {
+    "SOURCE_RUNNER.py": "babbc44f868acc4eb159b71a0061ce9b57c690f2defbdbad885a7e828295e429",
+    "audit.py": "a9cd15a6b322218a692dcd9e5fc03266a4ab7ddb3acd79d08def645813f29cfa"
+  },
+  "expected_reference_3807_runner_git_blob": "18b6be0a175df957d838e188de4c7ca826b26af8",
+  "expected_raw_payload": {
+    "sha256": "27fb388f6f4b35ce9b460eb3fe3522b39def1c0193f5f07304b84257961eb51c",
+    "bytes": 326706
+  },
+  "audit_code_sha256": "e203fef1bd92407d8ccc9f444b6c8b8f61425615d5442177dc4bb69f258055c9",
+  "construction_test_sha256": "c9c303fedba4c1d0248a50ac1017ffacacbae0990d5090645ee184e9041fcb31",
+  "execution": {
+    "scope": "provenance gate and independent audit only; no training or optimizer step",
+    "device": "CPU",
+    "python": "3.11.9",
+    "torch": "2.5.1+cu121",
+    "cuda_visible_devices": "empty",
+    "container_preflight": "cached python:3.11-bookworm lacks torch; offline check only, no package installation or image pull"
+  }
+}

@@ -1,0 +1,19 @@
+# Construction checks (not formal allocation)
+
+## Environment and run
+
+On 2026-09-21, Docker Desktop linux/amd64 built `ai-live-reader-calc:construction` from local base image config `sha256:eaf46582f96fd46a1ad6a240928b4c2a828de3d058a4b1490bbadf708d5a52d3` and the exact dependency pins in `requirements-live.txt`. The resulting image config is recorded only in the formal `FREEZE.json`; the build used network for package acquisition. Formal execution is separately constrained to `--network none`.
+
+One construction-only `interactive_v17 --app calc --seed 387601` run in Docker used an isolated writable output mount and read-only checkout/root. It launched the actual Calc fixture, emitted `ready` and initial `observation`, accepted only `finish`, and retained `independent_evaluation.success=false`. No task input, model, or network request occurred. The prepared stream contained four ordered records; the existing reader CLI read all four from the retained file with `tail_state=end`, authority `none`, acknowledged `false`, and input-dispatched `false`.
+
+The probe output is retained under `construction/probe-01/`. It is setup evidence only, not the formal allocation and not combined with it. The formal allocation uses a fresh result directory, sends a `clock` control while the live producer blocks for input, reads while that producer is alive, then tests saved-cursor continuation across the terminal append.
+
+The first orchestration-driver construction attempt (`construction/driver-check-01/`) stopped before producer launch with `UnboundLocalError` because the stream ID was assigned before the result object was initialized. This did not start Calc, did not submit a reader request, and contains no formal rows. The output path is intentionally preserved and will not be reused; the runner was corrected and the next construction check uses a fresh directory.
+
+The next orchestration construction (`construction/driver-check-02/`) completed the live sequence (4 records read while alive, 2 terminal records from the saved cursor, then an empty read). Its first independent-audit invocation stopped because the caller targeted the already-existing bind-mount root as an exclusive output directory. A second invocation wrote an audit but classified `FAIL_LIVE_READER_RECONCILIATION` only because Linux-normalized freeze JSON bytes were compared with the original Windows CRLF bytes; the parsed manifest was otherwise identical. Both audit outputs and raw run are retained. The runner now copies the exact frozen bytes, and the subsequent construction uses a fresh directory to check that correction.
+
+The third orchestration construction (`construction/driver-check-03/`) and separate offline audit passed. The existing producer stayed alive through the first read (4 records), then appended 2 terminal records after cursor capture; the second read delivered those 2 and the third returned 0. Delivered stdout and `delivered.jsonl` have SHA-256 `8822e86f5138e947a457708612c7f3b39343339ebc4e1699623b8626cf595329`. The independent audit is `PASS_LIVE_PRODUCER_READ_SCOPED`, errors `[]`; `owner-events.json` records verified empty release and no keys/buttons down. Runner output SHA-256 is `fae01a2fec6900cff1baf129706144b4b645186ba63cf5188f93a7ca717de389`; audit output SHA-256 is `fa4755ec845985bdd7e00fc3be875a622a3e60334887ec13c6e1e00afd411a6a`. This is still construction evidence; the distinct frozen formal allocation has not started.
+
+## Component tests
+
+The merged `research.integration.event_inbox_reader_v1` suite ran in local Docker, network disabled and root/source read-only: 6 test methods passed. The new freeze/runner/auditor modules passed Python 3.12 syntax compilation with bytecode redirected to tmpfs. An initial compile attempt against a read-only checkout tried to create `__pycache__` and stopped with `EROFS`; no source file changed, and the check then passed with `PYTHONPYCACHEPREFIX=/tmp/pycache`.

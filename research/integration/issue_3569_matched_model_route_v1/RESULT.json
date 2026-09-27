@@ -1,0 +1,40 @@
+{
+  "issue": 3569,
+  "allocation": "issue3569-route-host-preflight-01",
+  "preregistration_commit": "be52bf8680c5c5a8e3cc38ca12df42e8f0f8e2b4",
+  "source_main": "12f838151cc210c277e585f5c2fc8b837dedc55c",
+  "decision": "STOP_CONTAINER_PREFLIGHT",
+  "model_route_gate": "STOP_MODEL_ROUTE_UNAVAILABLE",
+  "container": {
+    "runtime": "OrbStack Docker",
+    "engine": "29.4.0",
+    "platform": "linux/arm64",
+    "image": "issue-3548-route-unit:20260920",
+    "image_id": "sha256:0e35cdb51a82e59d359ec09b85ce835d9217a1eab65b68ce1871c9b0a85014c9",
+    "network": "none",
+    "rootfs": "read-only",
+    "source_mount": "read-only"
+  },
+  "preflight": {
+    "invocations": 1,
+    "command": "python3 -c 'import importlib.metadata as m, sys; import runtime.cli_v1.api, runtime.cli_v1.observe, runtime.cli_v1.mcp_server; print(\"python=\"+sys.version.split()[0]); print(\"mcp=\"+m.version(\"mcp\")); print(\"Pillow=\"+m.version(\"Pillow\")); print(\"python-xlib=\"+m.version(\"python-xlib\")); print(\"API/observe/MCP imports=PASS\")'",
+    "exit_code": 1,
+    "stderr": "ModuleNotFoundError: No module named 'runtime.cli_v1.api'",
+    "classification": "CONSTRUCTION_SETUP_STOP_SPARSE_SOURCE_MOUNT"
+  },
+  "model_host": {
+    "available_surfaces": ["generic shell", "CUA", "GitHub MCP"],
+    "agent_interface_route_tools_directly_exposed": false,
+    "exact_model_build_and_usage_receipts_available": false,
+    "classification": "STOP_MODEL_ROUTE_UNAVAILABLE"
+  },
+  "task_calls": 0,
+  "model_calls": 0,
+  "nonce_generated": false,
+  "route_calls": {"python_api": 0, "cli": 0, "stdio_mcp": 0},
+  "input_actions": 0,
+  "network_calls": 0,
+  "authority_grants": 0,
+  "scope": "pre-task route-host feasibility only; no task-performance result, route comparison, or winner",
+  "no_retry": true
+}

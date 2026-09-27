@@ -1,0 +1,14 @@
+{
+  "controls": [
+    {"name": "wrong_effect", "rejected": true, "errors": ["effect:('GENERIC_PATH', 'a_cold')"]},
+    {"name": "false_warm_miss", "rejected": true, "errors": ["cache_expected:a_warm", "warm_miss:a_warm"]},
+    {"name": "false_mut_hit", "rejected": true, "errors": ["cache_expected:a_mut_guard_change", "unsafe_non_deopt:a_mut_guard_change"]},
+    {"name": "false_gen_hit", "rejected": true, "errors": ["cache_expected:a_oldlooking_newgen", "unsafe_non_deopt:a_oldlooking_newgen"]},
+    {"name": "nonneutral", "rejected": true, "errors": ["buttons:('GENERIC_PATH', 'b_warm')"]},
+    {"name": "lineage", "rejected": true, "errors": ["effect_lineage:('GENERIC_PATH', 'b_cold')"]},
+    {"name": "remove_row", "rejected": true, "errors": ["row_count"]},
+    {"name": "no_work_reduction", "rejected": true, "errors": ["no_generic_work_reduction"]}
+  ],
+  "rejected": 8,
+  "total": 8
+}

@@ -1,0 +1,35 @@
+{
+  "allocation_id": "issue2295-action-receipt-recommit-20260922-01",
+  "decision": "PASS_RECOMMIT_RECEIPT_RUNTIME_BOUNDARY_SCOPED only under PLAN.md gates",
+  "formal_cases": 54,
+  "formal_invocations": 0,
+  "formal_reruns": 0,
+  "policies": [
+    "REUSED_ID",
+    "FRESH_EPOCH",
+    "COMPOUND"
+  ],
+  "postfreeze_tuning": 0,
+  "repetitions": 2,
+  "scenarios": [
+    "STABLE_CURRENT",
+    "RECOMMIT_SAME_CLAIM",
+    "DOUBLE_RECOMMIT",
+    "TARGET_REPLACED",
+    "AUTHORITY_CHANGED",
+    "APP_RESTARTED",
+    "DUPLICATE_DELIVERY",
+    "TRUNCATED_RECEIPT",
+    "FRESH_AFTER_RECOMMIT"
+  ],
+  "schema": "agent-interface/action-receipt-recommit-freeze-v1",
+  "source_sha256": {
+    "PLAN.md": "8e64f655e08effa8e6babd0c4ee9aa14ac494124c38450a5adf43959f2385a26",
+    "app.py": "00200b2b6b4dc0ed1ba68e9a0b06cb5ef2bc431b03dd99ae604830097bc91f33",
+    "audit.py": "14c4fe3516ce9bab4fa46b866e97fb60d14fb770dbafc2ac77f1ccc8766ac283",
+    "click.py": "55987f3b5fc785e8c089fb9362139eb4b9f78d5ef7595be403dc2c9bae36abe5",
+    "receipt.py": "b494ac77eeeb8e2db85a30e912e8b6692bca36ee72af38c5f0589a02f7df880b",
+    "run.py": "43329d89f5cb22b567d668dd52089436f620ba8b890a1caeb4c696fd6164e693",
+    "test_audit.py": "7db87382a01740e41ba983cc2f0ba81434fe78bb580a94f9d9122b836e39e237"
+  }
+}

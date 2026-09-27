@@ -1,0 +1,29 @@
+{
+  "checks": {
+    "acceleration_no_worse_than_current_only_on_authored_corpus": true,
+    "explicit_noop_6_of_6_all_arms": true,
+    "invalid_history_fallback_18_of_18": true,
+    "raw_acceleration_noise_exposes_6_false_actions": true,
+    "second_order_alias_pairs_6_of_6": true
+  },
+  "disposition": "PASS_SYNTHETIC_DISCRIMINATOR_ONLY",
+  "metrics": {
+    "CURRENT_ONLY": {
+      "accuracy": 66,
+      "false_executable": 12
+    },
+    "LEVEL_PLUS_VELOCITY": {
+      "accuracy": 78,
+      "false_executable": 6
+    },
+    "LEVEL_PLUS_VELOCITY_PLUS_ACCEL": {
+      "accuracy": 78,
+      "false_executable": 6
+    },
+    "SMOOTHED_TRAJECTORY": {
+      "accuracy": 66,
+      "false_executable": 12
+    }
+  },
+  "rows": 84
+}

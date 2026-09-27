@@ -1,0 +1,47 @@
+{
+  "schema": "needle-local-cuda-seed-replication-freeze-v1",
+  "issue": 4505,
+  "allocation": "needle-lora-3441-pilot-04f-seed-replication-20260926-01",
+  "repository": "Unjuno/agent-interface",
+  "mainBase": "eb87f1f36871fdc483521f09094923a12409c933",
+  "branch": "research/needle-lora-3441-pilot-04f-20260926",
+  "path": "research/needle_lora_3441_pilot_04f_seed_replication_v1/",
+  "predecessor": {
+    "issue": 4492,
+    "disposition": "PASS_MULTI_SKILL_ROUTING_SCOPED",
+    "formalInvocations": 1,
+    "preserveEvidence": true
+  },
+  "seed": 777731,
+  "protocol": {
+    "baseRows": 512,
+    "basePretrainSteps": 400,
+    "adapterStepsPerFit": 120,
+    "supportEach": 16,
+    "heldoutEach": 4096,
+    "features": 8,
+    "hidden": 16,
+    "classes": 4,
+    "rank": 2,
+    "batch": 32,
+    "adamwLearningRate": 0.04,
+    "adapterOrder": ["global_B", "global_C", "adapter_B", "adapter_C"],
+    "deterministicCuda": true,
+    "tf32": false,
+    "cublasWorkspaceConfig": ":4096:8"
+  },
+  "sources": {
+    "runner.py": "3f4a0a4716e2621033bb17100a2385184a1b226af7ed46acb47e05a073c4befd",
+    "audit.py": "3811235d12087e22de528aff78b9c58b76a12b8f746f83b62f19df8fad3d0da1",
+    "test_construction.py": "e6ec8c81b89516ca58777202574d154aa1704138472f33b641d1dc39f88c4afc",
+    "test_audit.py": "3ab4e065c666bd8cd35ec3817e57e8852a2fdd09cff74e445b959341eb112df6",
+    "PREREGISTRATION.md": "130e219f23e3e09f69c56ce28fb1f930967072d538e0c837daab05bc0742d4d4"
+  },
+  "gitBlobs": {
+    "runner.py": "3b09b282d0026e21f3ffc50a06714fe342ce8537",
+    "audit.py": "b72b264c8d69931b4823dcb6ca1ccb122a9af5a4",
+    "test_construction.py": "b0f140536a6ca3043b0a4c89d5dc508cdf2e88a9",
+    "test_audit.py": "77795463c379d4dcdaa978e4c5cc3a7c21dca6be",
+    "PREREGISTRATION.md": "c21b1c370c7372112f100b51cef628232ddb9f8f"
+  }
+}

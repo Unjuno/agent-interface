@@ -15,6 +15,56 @@ from native_exchange_v1 import encoded
 
 
 class MCPTests(unittest.IsolatedAsyncioTestCase):
+    def test_window_inventory_uses_only_exact_stage_and_retains_raw_identity(self):
+        from native_mcp_v1 import window_inventory
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            raw = json.dumps('0x10  0 host book.xlsx - LibreOffice Calc\n').encode()
+            (root/'windows-2.json').write_bytes(raw)
+            result = window_inventory(root, 2)
+            self.assertEqual(result['text'], json.loads(raw))
+            self.assertEqual(result['source']['sha256'], hashlib.sha256(raw).hexdigest())
+            self.assertEqual(result['authority'], 'none')
+            self.assertEqual(window_inventory(root, 1)['status'], 'unavailable')
+            for stage in (True, 0, 65, '../2'):
+                self.assertEqual(window_inventory(root, stage)['status'], 'needs_review')
+
+    def test_window_inventory_malformed_or_large_is_explicit_without_fallback(self):
+        from native_mcp_v1 import window_inventory
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for raw in (b'not json', b'{}', b'"'+b'x'*16384+b'"', b'"\xff"'):
+                (root/'windows-1.json').write_bytes(raw)
+                result = window_inventory(root, 1)
+                self.assertEqual(result['status'], 'needs_review')
+                self.assertNotIn('text', result)
+
+    @unittest.skipUnless(os.name == 'posix', 'executable harness fixture requires POSIX')
+    async def test_failed_harness_stderr_reaches_stdio_client_without_relaunch(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            harness = Path(tmp)/'failed-harness'
+            harness.write_text('#!/bin/sh\necho controlled-startup-failure >&2\nexit 17\n')
+            harness.chmod(0o700)
+            allocation = Path(tmp)/'allocation'
+            parameters = StdioServerParameters(command=sys.executable, args=[
+                str(Path(__file__).with_name('native_mcp_v1.py')),
+                '--allocation-directory', str(allocation), '--app', 'inkscape',
+                '--harness-python', str(harness)], env=dict(os.environ))
+            async with stdio_client(parameters) as (reader, writer):
+                async with ClientSession(reader, writer) as client:
+                    await client.initialize()
+                    first = await client.call_tool('native_start', {'timeout': 5})
+                    state = json.loads(first.content[0].text)['allocation']
+                    self.assertEqual((state['status'], state['returncode']), ('terminal', 17))
+                    self.assertEqual(state['diagnostic']['tail'], 'controlled-startup-failure\n')
+                    self.assertFalse(state['restart_allowed'])
+                    self.assertIsNone(state['task_success'])
+                    for tool in ('native_status', 'native_start'):
+                        reply = await client.call_tool(tool, {})
+                        again = json.loads(reply.content[0].text)['allocation']
+                        self.assertEqual(again, state)
+                    self.assertFalse((allocation/'run'/'source-1.json').exists())
+
     def test_observe_decision_has_no_input_fields_or_implicit_defaults(self):
         from native_mcp_v1 import NativeDecision
         decision = {'source_sequence': 4, 'interaction': 'observe'}
@@ -143,12 +193,20 @@ class MCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual(context['exchange_contract']['value']['max_stages'],6)
                     self.assertEqual(context['authority'],'none')
                     self.assertNotIn('DO_NOT_EXPOSE',observed.content[0].text)
+                    self.assertEqual(json.loads(observed.content[0].text)['window_inventory']['status'], 'unavailable')
+                    (root/'windows-1.json').write_text('{}')
                     (root/'goal.json').write_text('[]')
                     incomplete = await client.call_tool('native_observe', {'stage':1})
                     self.assertFalse(incomplete.isError)
                     incomplete_metadata=json.loads(incomplete.content[0].text)
                     self.assertEqual(incomplete_metadata['session_context']['goal']['status'],'needs_review')
+                    self.assertEqual(incomplete_metadata['window_inventory']['status'], 'needs_review')
                     self.assertEqual(base64.b64decode(incomplete.content[1].data),pixels)
+                    (root/'windows-1.json').write_bytes(encoded('0x01 host exact application title'))
+                    listed = await client.call_tool('native_observe', {'stage':1})
+                    self.assertEqual(json.loads(listed.content[0].text)['window_inventory']['text'],
+                                     '0x01 host exact application title')
+                    self.assertEqual(base64.b64decode(listed.content[1].data), pixels)
                     (root/'goal.json').write_bytes(encoded(goal))
                     invalid = await client.call_tool('native_submit', {'stage':True,'decision':{},'timeout':0})
                     self.assertTrue(invalid.isError)
@@ -249,6 +307,29 @@ class MCPTests(unittest.IsolatedAsyncioTestCase):
             (root/'exchange-contract.json').write_bytes(encoded({
                 'schema':'agent-interface/native-exchange-contract-v1','max_stages':True}))
             self.assertEqual(session_context(root)['exchange_contract']['status'],'needs_review')
+
+    def test_recorded_text_policy_is_read_only_and_strict(self):
+        from native_mcp_v1 import session_context
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self.assertEqual(session_context(root)['text_policy']['status'], 'unavailable')
+            path = root/'text-policy.json'
+            for gap in (0, 2, 10):
+                value = {'gap_ms': gap, 'default_changed': False}
+                raw = encoded(value)
+                path.write_bytes(raw)
+                result = session_context(root)['text_policy']
+                self.assertEqual(result['status'], 'recorded')
+                self.assertEqual(result['value'], value)
+                self.assertEqual(result['source']['sha256'], hashlib.sha256(raw).hexdigest())
+                self.assertEqual(path.read_bytes(), raw)
+            for value in ({'gap_ms': True, 'default_changed': False},
+                          {'gap_ms': 20, 'default_changed': False},
+                          {'gap_ms': 2}, {'gap_ms': 2, 'default_changed': 0}):
+                path.write_bytes(encoded(value))
+                result = session_context(root)['text_policy']
+                self.assertEqual(result['status'], 'needs_review')
+                self.assertNotIn('value', result)
 
     def test_typed_decision_preserves_explicit_payload_without_defaults(self):
         from native_mcp_v1 import NativeDecision

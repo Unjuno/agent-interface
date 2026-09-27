@@ -1,0 +1,59 @@
+{
+  "schema": "needle-concurrent-online-lora.freeze.v2",
+  "issue": 4653,
+  "allocation": "needle-concurrent-online-lora-4653-v2",
+  "branch": "research/needle-concurrent-online-lora-4653-v2-20260927",
+  "additive_path": "research/system1/needle_concurrent_online_lora_4653_v2/",
+  "base_main_sha": "27c7f38c9bb072e0462b07edd06d6cf9ef46bb0a",
+  "predecessor_stop_sha256": "11661455cf850db29f00a938402ea5d233be107e6f0e1eed72ffdbda2e4f4d98",
+  "seeds": [99119, 99221, 99331],
+  "design": {
+    "architecture": "8 input -> tanh hidden 16 -> 4 output; rank-2 output LoRA",
+    "feedback_arrivals": 12,
+    "adamw_steps_per_arrival": 16,
+    "support_batch_per_arrival": 512,
+    "query_count_per_seed_arm": 120,
+    "inference_period_ns": 16666667,
+    "arms": ["BASELINE", "COW", "SHARED_LIVE"],
+    "authority": false,
+    "action_emissions": 0,
+    "changed_from_4631": "fourfold support batch to increase measurable trainer/inference overlap; fresh seeds; auditor vector-shape fix plus construction regression gate; formal wrapper requires explicit --formal"
+  },
+  "environment": {
+    "docker_engine": "29.8.0",
+    "image_tag": "needle-pilot05:local",
+    "image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+    "platform": "linux/amd64",
+    "image_entrypoint": ["python"],
+    "python": "3.12.14",
+    "pytorch": "2.5.1+cpu",
+    "torch_intraop_threads": 1,
+    "torch_interop_threads": 1,
+    "network": "none",
+    "source_mount": "read-only",
+    "root_filesystem": "read-only",
+    "cpus": 1,
+    "memory": "2g",
+    "pids_limit": 64,
+    "tmpfs": "/tmp:rw,noexec,nosuid,size=256m"
+  },
+  "construction_tests_pre_freeze": {"passed": 8, "failed": 0, "optimizer_steps": 0},
+  "formal_cli": {"requires_explicit_flag": "--formal", "default": "construction-only"},
+  "decision_gates": {
+    "audit_errors": 0,
+    "cow_overlap_query_intervals_per_seed_min": 8,
+    "cow_p95_ms_max": 16.67,
+    "cow_deadline_misses_per_seed_max": 0,
+    "proposal_recomputation": "torch.equal against the recorded captured immutable adapter version"
+  },
+  "retry_policy": "zero retries, tuning, seed replacement, or post-result extension",
+  "source_sha256": {
+    "PREREGISTRATION.md": "321db3e374e7d21a324bf27f043647f69043e6ccf5508215759ea448988ba863",
+    "PREDECESSOR_STOP.json": "11661455cf850db29f00a938402ea5d233be107e6f0e1eed72ffdbda2e4f4d98",
+    "runner.py": "92f5e99f26f097b14359234dff5c60e6fecb23b71d95077246cedea114589c1f",
+    "audit.py": "d03087f9de1d5a2d14d02e5a03efc4b4571c3977ab29e14de7346f35448691d6",
+    "test_construction.py": "6a08f0fc1a0cf2176c658ac1bd8fbd19e44b5bb805b5b3cf9c43b78d624e958f",
+    "formal.py": "f7db07c865c9c7db5317ea4145391874ec594525b03825da675821a68c7d955c"
+  },
+  "formal_allocation_count": 1
+}

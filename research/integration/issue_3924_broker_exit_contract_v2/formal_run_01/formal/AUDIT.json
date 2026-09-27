@@ -1,0 +1,124 @@
+{
+  "allocation": "issue3924-orbstac-broker-contract-v2-20260926-01",
+  "contract_errors": [],
+  "decision": "STOP_AUDIT_PROVENANCE",
+  "files_hashed": 50,
+  "provenance_errors": [
+    "timeout: expected recorded sleeping fake invocation"
+  ],
+  "rows": [
+    {
+      "broker_exit": 1,
+      "case": "exit0",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "exited_ns": 3496869162568,
+        "request_id": "exit0",
+        "returncode": 0,
+        "started_ns": 3496798717956,
+        "stderr": ""
+      },
+      "response_sha256": "4062edaf750fb8074e7e83e0c9028c94e32468a8b6f1614774328ef045150f93"
+    },
+    {
+      "broker_exit": 23,
+      "case": "exit23",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "exited_ns": 3497064063629,
+        "request_id": "exit23",
+        "returncode": 23,
+        "started_ns": 3496992723368,
+        "stderr": ""
+      },
+      "response_sha256": "4062edaf750fb8074e7e83e0c9028c94e32468a8b6f1614774328ef045150f93"
+    },
+    {
+      "broker_exit": 1,
+      "case": "timeout",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "error_class": "TimeoutExpired",
+        "exited_ns": 3498190690116,
+        "request_id": "timeout",
+        "returncode": null,
+        "started_ns": 3497182879667,
+        "stderr": "Command '['/study/fake_codex.py', 'exec', '--ignore-user-config', '--ignore-rules', '--ephemeral', '--sandbox', 'read-only', '--skip-git-repo-check', '--json', '--model', 'gpt-5.6-luna', '-c', 'model_reasoning_effort=\"low\"', '-c', 'project_doc_max_bytes=0', '--output-schema', '/repo/schema.json', '-C', '/repo', '-']' timed out after 1.0 seconds",
+        "stop_reason": "HOST_BROKER_SUBPROCESS_TIMEOUT",
+        "timeout_s": 1.0
+      },
+      "response_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "broker_exit": 1,
+      "case": "unavailable",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "error_class": "FileNotFoundError",
+        "exited_ns": 3498311808657,
+        "request_id": "unavailable",
+        "returncode": null,
+        "started_ns": 3498311551305,
+        "stderr": "[Errno 2] No such file or directory: '/missing/fake-codex'",
+        "stop_reason": "HOST_BROKER_EXECUTABLE_UNAVAILABLE"
+      },
+      "response_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "sha256": {
+    "container.json": "056cf79720e2ed3fc4059b54019623be23c4ffb96c43d3dc53fb3869a5e49d10",
+    "exit0/exit0.broker.json": "a5227d545ac35ecf9104f0ff491cee467627c7fc32776923600e5453f7c6b2b9",
+    "exit0/exit0.request.json": "8fd89f441094c2b31b20f00cdc84b9c7e2f95daf1b1c82cb46095149427c4128",
+    "exit0/exit0.response.jsonl": "4062edaf750fb8074e7e83e0c9028c94e32468a8b6f1614774328ef045150f93",
+    "exit0/fake-records/invocation-01.json": "91ce7200446a0cd136bc0a19e539024757611942426d6db5bb9191170d69154a",
+    "exit0/invocation-01.json": "91ce7200446a0cd136bc0a19e539024757611942426d6db5bb9191170d69154a",
+    "exit0/ipc/exit0.broker.json": "a5227d545ac35ecf9104f0ff491cee467627c7fc32776923600e5453f7c6b2b9",
+    "exit0/ipc/exit0.request.json": "8fd89f441094c2b31b20f00cdc84b9c7e2f95daf1b1c82cb46095149427c4128",
+    "exit0/ipc/exit0.response.jsonl": "4062edaf750fb8074e7e83e0c9028c94e32468a8b6f1614774328ef045150f93",
+    "exit0/process.json": "b6ab3828f68ec192a688b624fd9142a1edc41e2bc88d27ab2032fb8e6a67577c",
+    "exit23/exit23.broker.json": "f2e260509be073e3fcd3a883b45e32d8c6d771ca8d40d2726aad13d1e5673cdb",
+    "exit23/exit23.request.json": "4009cd34a965e5d10eb4da5f6c0864eba7fe57eb44d710949fb193402c6af1e0",
+    "exit23/exit23.response.jsonl": "4062edaf750fb8074e7e83e0c9028c94e32468a8b6f1614774328ef045150f93",
+    "exit23/fake-records/invocation-01.json": "840784095bab37b4d9e5b35b37327e3264f5958c9febed7a268912368cbf8091",
+    "exit23/invocation-01.json": "840784095bab37b4d9e5b35b37327e3264f5958c9febed7a268912368cbf8091",
+    "exit23/ipc/exit23.broker.json": "f2e260509be073e3fcd3a883b45e32d8c6d771ca8d40d2726aad13d1e5673cdb",
+    "exit23/ipc/exit23.request.json": "4009cd34a965e5d10eb4da5f6c0864eba7fe57eb44d710949fb193402c6af1e0",
+    "exit23/ipc/exit23.response.jsonl": "4062edaf750fb8074e7e83e0c9028c94e32468a8b6f1614774328ef045150f93",
+    "exit23/process.json": "f2a30394e4743dd7a6fddbed40625403eaf93b5fe10b824ccb4cfe427824edf3",
+    "malformed/ipc/malformed.request.json": "305c0d6c8e1063329e9502b7da5afb917d819297463091162f906eb93595dd06",
+    "malformed/malformed.request.json": "305c0d6c8e1063329e9502b7da5afb917d819297463091162f906eb93595dd06",
+    "malformed/process.json": "7b3b11238f0bcbcb4adafd8c645c8d965d7a63f4c845c2dd65eac90da4f3e135",
+    "one-shot-idle/process.json": "8453ef716b16f2424760ddc8544e92cba895a748a66dca8b149bcb8c97d5bfaf",
+    "timeout/fake-records/invocation-01.json": "d8777af907dca9955986b838f024329ea5e4642d27affdc5e544fc6193ae50ab",
+    "timeout/invocation-01.json": "d8777af907dca9955986b838f024329ea5e4642d27affdc5e544fc6193ae50ab",
+    "timeout/ipc/timeout.broker.json": "bf89977be515fc82c5ced46aa9df8159049619a038129dd7381529f70d63bee1",
+    "timeout/ipc/timeout.request.json": "c3aaaed271ceeb339a29ff4b08ad2ab432a5977106e09098b383a5f8838eebdf",
+    "timeout/ipc/timeout.response.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "timeout/process.json": "2dc2b7f33d1c2c89c2f6c9bd543d9574ee871a9e804e5a53b746672699d09fb0",
+    "timeout/timeout.broker.json": "bf89977be515fc82c5ced46aa9df8159049619a038129dd7381529f70d63bee1",
+    "timeout/timeout.request.json": "c3aaaed271ceeb339a29ff4b08ad2ab432a5977106e09098b383a5f8838eebdf",
+    "timeout/timeout.response.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "two-queued/fake-records/invocation-01.json": "3832971eafba61e490c28d7f6ee311ca3262c05059cee0055d1c2385603204c2",
+    "two-queued/invocation-01.json": "3832971eafba61e490c28d7f6ee311ca3262c05059cee0055d1c2385603204c2",
+    "two-queued/ipc/queued-a.broker.json": "bddaae74854420b897398acf8cc248f4ad16eb042f946b236d28798c77ec0ada",
+    "two-queued/ipc/queued-a.request.json": "8385a1b09105821f9175c7b1bbc476e4c2558b8dc8ada3fe931ff352725f489d",
+    "two-queued/ipc/queued-a.response.jsonl": "4062edaf750fb8074e7e83e0c9028c94e32468a8b6f1614774328ef045150f93",
+    "two-queued/ipc/queued-b.request.json": "1b4d71d1f926554b2efb5a5413a4dfcda7aaf15c344a08b9cc6b94fb47fffc03",
+    "two-queued/process.json": "50e07c33680838208a251be207514689138ae8ff818c694ec511733f48f30e5e",
+    "two-queued/queued-a.broker.json": "bddaae74854420b897398acf8cc248f4ad16eb042f946b236d28798c77ec0ada",
+    "two-queued/queued-a.request.json": "8385a1b09105821f9175c7b1bbc476e4c2558b8dc8ada3fe931ff352725f489d",
+    "two-queued/queued-a.response.jsonl": "4062edaf750fb8074e7e83e0c9028c94e32468a8b6f1614774328ef045150f93",
+    "two-queued/queued-b.request.json": "1b4d71d1f926554b2efb5a5413a4dfcda7aaf15c344a08b9cc6b94fb47fffc03",
+    "unavailable/ipc/unavailable.broker.json": "f15c8d766ff9c49a923ccea9a1fc66e8b9b8fd5d28f0ae53dcabdcc4a046e3d0",
+    "unavailable/ipc/unavailable.request.json": "a734a99e30e95beaaadf54da26a290bd99561a9568a9a7e0e913c2dc403b16f4",
+    "unavailable/ipc/unavailable.response.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "unavailable/process.json": "d268a32a301840cb0cf3792aca82d5ec5f590c8f74f0a2d0f93230704f4cf244",
+    "unavailable/unavailable.broker.json": "f15c8d766ff9c49a923ccea9a1fc66e8b9b8fd5d28f0ae53dcabdcc4a046e3d0",
+    "unavailable/unavailable.request.json": "a734a99e30e95beaaadf54da26a290bd99561a9568a9a7e0e913c2dc403b16f4",
+    "unavailable/unavailable.response.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

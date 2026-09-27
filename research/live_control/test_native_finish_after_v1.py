@@ -105,7 +105,16 @@ class NativeFinishAfterTests(unittest.TestCase):
                 subject.publish(out / f'request-{stage}.json', subject.encoded(
                     dict(source_sequence=source['sequence'], **decision)))
 
+            original_publish = subject.publish
+            def checked_publish(path, data):
+                if path.name.startswith('source-'):
+                    stage = path.stem.split('-')[1]
+                    self.assertEqual(json.loads((out/f'windows-{stage}.json').read_bytes()),
+                                     '0x00000001 host shape.svg - Inkscape')
+                original_publish(path, data)
+
             with patch.object(subject, 'NativeHandleBridge', Bridge), \
+                 patch.object(subject, 'publish', side_effect=checked_publish), \
                  patch.object(subject.time, 'sleep', supply_request), \
                  patch.object(sys, 'argv', ['harness', '--app', 'inkscape', '--out', str(out),
                                             '--max-stages', str(max_stages)]), \

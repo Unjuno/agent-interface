@@ -31,14 +31,17 @@ class NativeDecision(BaseModel):
                      'For keyboard, choose a visible feature in the intended focused window, not a blank region. '
                      'This point guards context; it does not click or select the text destination.'))
     expected_title: StrictStr | None = Field(default=None,
-        description='Expected application title for feedback; required for an action, not a task success assertion.')
+        description=('Exact complete application window title for feedback (case-sensitive equality, not a substring); '
+                     'include the application suffix, e.g. "shape.svg - Inkscape". '
+                     'An unmatched title can wait until the feedback timeout and remain pending. '
+                     'Required for an action; a title match is not a task success assertion.'))
     interaction: Literal['click','keyboard','observe'] = Field(default='click',
         description='click then tail, keyboard-only tail, or observe for one fresh capture without input; observe consumes a stage.')
     tail: list[dict] = Field(default_factory=list, description=(
-        'Explicit ordered native operations. Examples: {"op":"text","text":"190"}, '
+        'Explicit ordered native operations. Examples: {"op":"text","text":"190","gap_ms":10}, '
         '{"op":"key_chord","keys":["CTRL","s"]}, '
         '{"op":"key_chord","keys":["Right"],"repeat":18}, '
-        '{"op":"wait_update","timeout_ms":50}. No automatic waits or retries.'))
+        '{"op":"wait_update","timeout_ms":50}. Text gap_ms is an integer in 0..1000; it overrides the configured text-gap default (zero disables character gaps). Omit gap_ms to use that default. Text gaps and key repeats expand within the same tail limit: 123 operations for click, 126 for keyboard. No automatic retries.'))
     finish: StrictBool = Field(default=False,
         description='End and evaluate without new input; requires only source_sequence. Session closes even if scoring fails.')
     finish_after: StrictBool = Field(default=False,
@@ -68,7 +71,7 @@ class NativeDecision(BaseModel):
 def session_context(root):
     """Present existing public task/limits, not evaluator output or authority."""
     context = {'authority':'none'}
-    for key, filename in [('goal','goal.json'), ('exchange_contract','exchange-contract.json')]:
+    for key, filename in [('goal','goal.json'), ('exchange_contract','exchange-contract.json'), ('text_policy','text-policy.json')]:
         path = root/filename
         try:
             data = path.read_bytes()
@@ -81,6 +84,11 @@ def session_context(root):
                     or type(value.get('max_stages')) is not int
                     or not 2 <= value['max_stages'] <= 64):
                 raise ValueError('invalid native exchange contract')
+            if key == 'text_policy' and (
+                    type(value.get('gap_ms')) is not int
+                    or value['gap_ms'] not in (0, 2, 10)
+                    or type(value.get('default_changed')) is not bool):
+                raise ValueError('invalid recorded text policy')
             context[key] = {'status':'recorded', 'value':value,
                             'source':{'path':str(path),'sha256':hashlib.sha256(data).hexdigest()}}
         except FileNotFoundError:
@@ -88,6 +96,29 @@ def session_context(root):
         except (OSError, ValueError, TypeError) as error:
             context[key] = {'status':'needs_review', 'error':str(error)}
     return context
+
+
+def window_inventory(root, stage):
+    """Read only the selected stage's existing listing; never discover/focus."""
+    result = {'authority':'none', 'stage':stage,
+              'scope':'recorded window listing; not atomic with image, freshness or input authority'}
+    if type(stage) is not int or not 1 <= stage <= 64:
+        return dict(result, status='needs_review', error='stage 1..64 required')
+    path = root/f'windows-{stage}.json'
+    try:
+        with path.open('rb') as stream:
+            raw = stream.read(16385)
+        if len(raw) > 16384:
+            raise ValueError('recorded listing exceeds 16384-byte presentation limit')
+        listing = json.loads(raw)
+        if not isinstance(listing, str):
+            raise ValueError('recorded listing must be a JSON string')
+        return dict(result, status='recorded', text=listing,
+                    source={'path':str(path), 'sha256':hashlib.sha256(raw).hexdigest()})
+    except FileNotFoundError:
+        return dict(result, status='unavailable')
+    except (OSError, ValueError) as error:
+        return dict(result, status='needs_review', error=str(error))
 
 
 def content(result):
@@ -109,6 +140,9 @@ def create_server(run_directory, *, allocation=None):
     lock = threading.Lock()
 
     def with_process_snapshot(result):
+        continuation = result.get('continuation', {})
+        if continuation.get('status') == 'source_available':
+            result['window_inventory'] = window_inventory(root, continuation.get('stage'))
         # Do not wait for exit, retry input, or let a polling error hide its receipt.
         if allocation is not None:
             try:
@@ -147,6 +181,7 @@ def create_server(run_directory, *, allocation=None):
                     return {'allocation':state,'image':None,'authority':'none'}
                 result = review_native(root/'source-1.json',root,compact=True)
                 result.update(allocation=state, session_context=session_context(root))
+                result['window_inventory'] = window_inventory(root, 1)
                 return result
             return invoke(start)
 
@@ -168,6 +203,7 @@ def create_server(run_directory, *, allocation=None):
                 raise ValueError('stage 1..64 required')
             result = review_native(root/f'source-{stage}.json', root, compact=True)
             result['session_context'] = session_context(root)
+            result['window_inventory'] = window_inventory(root, stage)
             return result
         return invoke(observe)
 
@@ -178,6 +214,10 @@ def create_server(run_directory, *, allocation=None):
         Uses existing guarded click/keyboard tail and immutable stage publication.
         Never retry submit after timeout/error. Pending returns decision_sha256:
         use native_resume. Task success is separate from input completion.
+        Inspect image_status and continuation separately from feedback_status.
+        When continuation.status=source_available, view the returned image and
+        use its stage/source_sequence for a new decision; no source-file read is
+        needed. This is retained evidence, not freshness or permission to replay.
         Managed responses include a process snapshot; it may still be live.
         interaction=observe requests one fresh capture without input; include only
         source_sequence and interaction. It consumes a stage and does not finish.

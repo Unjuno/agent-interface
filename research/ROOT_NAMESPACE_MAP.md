@@ -124,6 +124,7 @@ The directories below predate or sit outside the newer category structure. Their
 These are research predecessors. Current promoted executable organization lives under [`../runtime/`](../runtime/).
 
 ### Text delivery / XKB experiments
+- [`x11_text_german_layout_3668_v2/`](x11_text_german_layout_3668_v2/) — Issue #3741 frozen German XKB delivery run; audit FAIL is retained, with de-01 raw evidence missing and the independent re-audit limitation documented in RECOVERY_REVIEW.md.
 
 - [`text_delivery_capability_v1/`](text_delivery_capability_v1/)
 - [`text_observation_binding_v1/`](text_observation_binding_v1/)
@@ -170,16 +171,24 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 - [`gtk/`](gtk/) — retained GTK/X11 fixture and adapter research paths; consult each child report for scope and disposition.
 
 ### Recent additive namespaces
+- [`needle_role_graph_3775_v1/`](needle_role_graph_3775_v1/) — Issue #3778 original role-graph allocation retained as `STOP_RESULT_CAPTURE_TRUNCATED`; see [recovery review](needle_role_graph_3775_v1/RECOVERY_REVIEW.md). Distinct compact successor #3780 is documented separately.
+- [`needle_lora_3441_pilot_04d_corrected_base_v1/`](needle_lora_3441_pilot_04d_corrected_base_v1/) — Issue #4471 GPU formal STOP during result serialization; no scientific metrics were retained.
+- [`needle_lora_3441_pilot_04e_result_schema_v1/`](needle_lora_3441_pilot_04e_result_schema_v1/) — Issue #4471 fresh-seed result-schema successor; scoped one-seed synthetic routing PASS with host-only CUDA limits, not recovery of the earlier STOP.
+- [`needle_lora_3441_pilot_04f_seed_replication_v1/`](needle_lora_3441_pilot_04f_seed_replication_v1/) — Issue #4492 one-seed fresh replication PASS within the same synthetic task family; no population-reliability or runtime claim.
 
 - [`audits/`](audits/) — retained audit-only evidence bundles; currently includes the scoped #3688 exact raw-byte-binding audit and its independent revalidation.
+- [`event_delivery/`](event_delivery/) — retained event-delivery timing/gap/deadline research; consult each child result for scope and disposition.
 - [`chromium/`](chromium/) — retained Chromium live-control, identity, and recovery experiments; consult each child report for scope and disposition.
 - [`cli_fault_residue_3711_revalidation_v1/`](cli_fault_residue_3711_revalidation_v1/) — retained Issue #3711 CLI fault-residue revalidation; consult its report for exact scope and disposition.
+- [`cli_retention_3711_short_write_v1/`](cli_retention_3711_short_write_v1/) — retained Issue #3711 short-write protocol; Ubuntu's required CLI workflow failed on selector mock imports, so no three-OS construction PASS is claimed.
 - [`issue_3733_german_xkb_text_orbstack_v3/`](issue_3733_german_xkb_text_orbstack_v3/) — retained Issue #3733 German XKB formula-delivery experiment and immutable formal/audit evidence; consult its preregistration and result disposition before making claims.
 - [`x11_text_german_layout_3668_v1/`](x11_text_german_layout_3668_v1/) — original Issue #3733 setup STOP and frozen protocol; de-01 stopped before the hypothesis test, with a freeze/result-state discrepancy documented in the artifacts.
 - [`needle_lora_3441_pilot_04c_multiskill_audit_complete/`](needle_lora_3441_pilot_04c_multiskill_audit_complete/) — Issue #3895 one-seed multi-skill audit; HOLD_PROTOCOL_DEVIATION because the run used 120 rather than the specified 400 base updates.
+- [`needle_lora_3441_pilot_04d_multiskill_400base/`](needle_lora_3441_pilot_04d_multiskill_400base/) — retained direct-root Needle multi-skill pilot evidence; use its own report for exact scientific disposition and scope.
 - [`needle_role_skill_reload_3780_v1/`](needle_role_skill_reload_3780_v1/) — Issue #3890 scoped three-seed synthetic cross-process role-skill reload PASS; see report and audit-source correction for limits.
 - [`issue_3784_explicit_x11_receiver_v1/`](issue_3784_explicit_x11_receiver_v1/) — Issue #3784 explicit InputOnly receiver experiment; formal-01 stopped at its receiver-control oracle, so German formula delivery remains untested.
 - [`issue_3784_focused_receiver_v1/`](issue_3784_focused_receiver_v1/) — Issue #3794 corrected KeyRelease oracle and formal German XKB formula-delivery experiment; formal-01 and independent artifact audit passed for the exact pinned X11/Xvfb scope.
+- [`issue_3794_receiver_control_construction_v1/`](issue_3794_receiver_control_construction_v1/) — Issue #3794 construction-only pilot history and audit/corruption controls; no formal result is claimed and predecessor STOPs remain unchanged.
 - [`issue_3784_explicit_x11_receiver_v2/`](issue_3784_explicit_x11_receiver_v2/) — Issue #3791 corrected-receiver successor; formal-02 stopped at the baseline layout parser, so candidate delivery remains untested.
 - [`issue_3784_explicit_x11_receiver_v3/`](issue_3784_explicit_x11_receiver_v3/) — Issue #3796 construction-gated receiver successor; formal-03 passed the exact German formula-delivery gate, with scope limits in RESULT.md.
 - [`needle_lora_3441_online_stream_v1/`](needle_lora_3441_online_stream_v1/) — retained Issue #3441 online-stream needle LoRA experiment; consult its report for exact scope and disposition.
@@ -207,9 +216,13 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 - [`needle_lora_3441_online_stream_v1/`](needle_lora_3441_online_stream_v1/) — retained Issue #3769 streamed online role-adapter experiment.
 - [`needle_lora_3441_rank4_online_multiseed_gpu_v1/`](needle_lora_3441_rank4_online_multiseed_gpu_v1/) — retained Issue #3807 five-seed GPU rank-4 online LoRA failure; see the report for scope and limits.
 - [`needle_role_graph_3780_compact_v1/`](needle_role_graph_3780_compact_v1/) — retained Issue #3780 role-adapter graph result and audits.
+- [`needle_role_graph_3775_v1/`](needle_role_graph_3775_v1/RECOVERY_REVIEW.md) — Issue #3778 original role-graph allocation retained as `STOP_RESULT_CAPTURE_TRUNCATED`; distinct compact successor #3780 is documented separately.
 - [`needle_lora_3441_rank4_online_multiseed_v1/`](needle_lora_3441_rank4_online_multiseed_v1/) — Issue #3790 CPU rank-capacity preregistration and immutable one-shot runner STOP evidence.
 - [`needle_lora_3441_rank4_online_lr_half_multiseed_v1/`](needle_lora_3441_rank4_online_lr_half_multiseed_v1/) — Issue #3826 fixed half-learning-rate rank-4 online LoRA successor; consult its frozen report/audit for scope and disposition.
 - [`needle_lora_3441_rank4_curve_audit_v1/`](needle_lora_3441_rank4_curve_audit_v1/) — Issue #3875 successor's CPU-only independent audit of the immutable #3851 learning-curve result; no training/CUDA, see its scoped report and predecessor STOP.
 - [`needle_lora_3441_rank4_minibatch_seed_v1/`](needle_lora_3441_rank4_minibatch_seed_v1/) — Issue #3851 sampler-stream comparison formal STOP; no training comparison/result was produced, see retained stderr and REPORT.md.
 - [`needle_lora_3441_rank4_minibatch_seed_corrected_v1/`](needle_lora_3441_rank4_minibatch_seed_corrected_v1/) — Issue #3887 frozen sampler-stream successor HOLD; legacy collapse gate was not reproduced, and full independent audit STOP is retained.
+- [`needle_lora_3441_rank4_minibatch_seed_corrected_audit_v1/`](needle_lora_3441_rank4_minibatch_seed_corrected_audit_v1/) — Issue #3887 independent audit stopped before scoring because the frozen source/checksum pins do not match the committed artifacts; the original HOLD remains unchanged.
 - [`needle_lora_3441_rank4_online_multiseed_gpu_v1/`](needle_lora_3441_rank4_online_multiseed_gpu_v1/) — Issues #3807/#3819 GPU rank-capacity failure evidence; #3822 separately records the learning-curve HOLD.
+
+- [`procedural_control_arena_v0/`](procedural_control_arena_v0/) - Procedural control arena; consult its README and VALIDATION for scope and current evidence.
