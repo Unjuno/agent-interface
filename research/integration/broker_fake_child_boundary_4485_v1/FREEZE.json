@@ -25,6 +25,17 @@
     "sorted-once"
   ],
   "formal_invocations": 1,
-  "formal_command": "docker run --rm --pull=never --platform linux/amd64 --network none --read-only --security-opt=no-new-privileges --cap-drop=ALL --cpus=0.25 --memory=256m --pids-limit=32 --tmpfs /tmp:rw,nosuid,size=16m --mount type=bind,source=<src>,target=/src,readonly --mount type=bind,source=<out>,target=/out sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e python /src/formal.py"
+  "formal_command": "docker run --rm --pull=never --platform linux/amd64 --network none --read-only --security-opt=no-new-privileges --cap-drop=ALL --cpus=0.25 --memory=256m --pids-limit=32 --tmpfs /tmp:rw,nosuid,size=16m --mount type=bind,source=<src>,target=/src,readonly --mount type=bind,source=<out>,target=/out sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e python /src/formal.py",
+  "source_sha256_in_container": {
+    "host_model_ipc_broker_v1.py": "e44822269b921aa6327563b27e48a6d8ef4ebe35a182f50de541cf66fce6199c",
+    "runner.py": "ae6c070cf05c607f605c8b0fc322e6007f543d9d677d29005e89494f159c065a",
+    "audit.py": "42b9e99318adc09157aa5277386574933327cf4b5062abe02d01c9aae2947c23",
+    "formal.py": "bd0d7ab0356fc2a64e996f7cf19b328fa02f7dd6acc3945c01974dbf24e3ba33",
+    "test_harness.py": "721aacc84675204318acdb9ee7878f2293e442a0165989ea19250fc248956e06"
+  },
+  "construction_tests": {
+    "command": "python -m unittest -v",
+    "result": "2 passed",
+    "preformal_only": true
+  }
 }
-
