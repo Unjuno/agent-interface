@@ -30,11 +30,12 @@ WORKFLOW_LABELS = {k: OPTIONS[k] for k in ("CONTINUE", "WATCH", "REPAIR", "YIELD
 
 
 def request_for(model, row):
-    criteria = {k: INTENT_LABELS[k] for k in row["options"]} if "options" in row else WORKFLOW_LABELS
+    is_intent = "options" in row
+    criteria = {k: INTENT_LABELS[k] for k in row["options"]} if is_intent else WORKFLOW_LABELS
     intent_prompt = row["intent"] + ". Choose the best matching intent; choose YIELD if the state does not support any choice."
     questions = {"decision": {
         "type": "choice",
-        "instructions": intent_prompt if criteria is INTENT_LABELS else row["intent"] + ". Choose only the best supported workflow decision.",
+        "instructions": intent_prompt if is_intent else row["intent"] + ". Choose only the best supported workflow decision.",
         "criteria": criteria,
     }}
     if row["policy"] == "must-yield":
