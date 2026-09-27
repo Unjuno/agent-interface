@@ -308,6 +308,29 @@ class MCPTests(unittest.IsolatedAsyncioTestCase):
                 'schema':'agent-interface/native-exchange-contract-v1','max_stages':True}))
             self.assertEqual(session_context(root)['exchange_contract']['status'],'needs_review')
 
+    def test_recorded_text_policy_is_read_only_and_strict(self):
+        from native_mcp_v1 import session_context
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self.assertEqual(session_context(root)['text_policy']['status'], 'unavailable')
+            path = root/'text-policy.json'
+            for gap in (0, 2, 10):
+                value = {'gap_ms': gap, 'default_changed': False}
+                raw = encoded(value)
+                path.write_bytes(raw)
+                result = session_context(root)['text_policy']
+                self.assertEqual(result['status'], 'recorded')
+                self.assertEqual(result['value'], value)
+                self.assertEqual(result['source']['sha256'], hashlib.sha256(raw).hexdigest())
+                self.assertEqual(path.read_bytes(), raw)
+            for value in ({'gap_ms': True, 'default_changed': False},
+                          {'gap_ms': 20, 'default_changed': False},
+                          {'gap_ms': 2}, {'gap_ms': 2, 'default_changed': 0}):
+                path.write_bytes(encoded(value))
+                result = session_context(root)['text_policy']
+                self.assertEqual(result['status'], 'needs_review')
+                self.assertNotIn('value', result)
+
     def test_typed_decision_preserves_explicit_payload_without_defaults(self):
         from native_mcp_v1 import NativeDecision
         decisions=[{'source_sequence':7,'finish':True},

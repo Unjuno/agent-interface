@@ -139,6 +139,15 @@ still requires a matched measurement.
 
 ## Native decision loop
 
+Initial native context includes the recorded `text_policy` when available.
+Its `value.gap_ms` is the harness default for text operations that omit
+`gap_ms`; an explicit per-operation value, including zero, takes precedence.
+The recorded harness defaults are 0, 2 or 10 ms, while explicit operation gaps
+accept 0..1000 ms. Missing records return `unavailable`; invalid records return
+`needs_review` without an invented default. The source path and byte hash are
+retained. This is historical configuration context, not runtime admission,
+application readiness or an optimal-typing-speed recommendation.
+
 Native MCP image responses include `window_inventory` when a stage's recorded
 listing is available. Read its complete application/dialog titles alongside the
 image for exact-title feedback; no separate shell discovery is needed. The

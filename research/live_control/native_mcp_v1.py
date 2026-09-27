@@ -71,7 +71,7 @@ class NativeDecision(BaseModel):
 def session_context(root):
     """Present existing public task/limits, not evaluator output or authority."""
     context = {'authority':'none'}
-    for key, filename in [('goal','goal.json'), ('exchange_contract','exchange-contract.json')]:
+    for key, filename in [('goal','goal.json'), ('exchange_contract','exchange-contract.json'), ('text_policy','text-policy.json')]:
         path = root/filename
         try:
             data = path.read_bytes()
@@ -84,6 +84,11 @@ def session_context(root):
                     or type(value.get('max_stages')) is not int
                     or not 2 <= value['max_stages'] <= 64):
                 raise ValueError('invalid native exchange contract')
+            if key == 'text_policy' and (
+                    type(value.get('gap_ms')) is not int
+                    or value['gap_ms'] not in (0, 2, 10)
+                    or type(value.get('default_changed')) is not bool):
+                raise ValueError('invalid recorded text policy')
             context[key] = {'status':'recorded', 'value':value,
                             'source':{'path':str(path),'sha256':hashlib.sha256(data).hexdigest()}}
         except FileNotFoundError:
