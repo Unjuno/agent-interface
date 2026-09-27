@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Raw-only auditor for the frozen Mitra dependency STOP record."""
 import hashlib
+import base64
 import json
 import pathlib
 import re
@@ -10,18 +11,26 @@ import sys
 def audit(root):
     root = pathlib.Path(root)
     errors = []
+    lock_raw = base64.b64decode((root / "requirements.lock.raw.b64").read_text(encoding="ascii"))
+    manifest_raw = base64.b64decode((root / "wheelhouse-manifest.json.raw.b64").read_text(encoding="ascii"))
+    log_raw = base64.b64decode((root / "offline-install-import-preflight.log.raw.b64").read_text(encoding="ascii"))
     lock = (root / "requirements.lock").read_bytes()
-    manifest_raw = (root / "wheelhouse-manifest.json").read_bytes()
     prov = json.loads((root / "ACQUISITION_PROVENANCE.json").read_text(encoding="utf-8"))
     log = (root / "offline-install-import-preflight.log").read_bytes()
+    if lock.replace(b"\r\n", b"\n") != lock_raw.replace(b"\r\n", b"\n"):
+        errors.append("lock_raw_text_mismatch")
+    if manifest_raw.replace(b"\r\n", b"\n") != (root / "wheelhouse-manifest.json").read_bytes().replace(b"\r\n", b"\n"):
+        errors.append("manifest_raw_text_mismatch")
+    if log.replace(b"\r\n", b"\n") != log_raw.replace(b"\r\n", b"\n"):
+        errors.append("log_raw_text_mismatch")
     log_text = log.decode("utf-8", "replace")
     manifest = json.loads(manifest_raw)
     artifacts = prov.get("artifacts", [])
-    if hashlib.sha256(lock).hexdigest() != "d871eb53e8ed38d5ee5d2c8fbae8ed0b2a3f265523bbf24b0573f42b17864ec9":
+    if hashlib.sha256(lock_raw).hexdigest() != "d871eb53e8ed38d5ee5d2c8fbae8ed0b2a3f265523bbf24b0573f42b17864ec9":
         errors.append("lock_sha256")
     if hashlib.sha256(manifest_raw).hexdigest() != "158297ee664e598b0648970eb9b630dce7055f0fa75f2ce85a0bb8d700e2e48b":
         errors.append("manifest_sha256")
-    if hashlib.sha256(log).hexdigest() != "85fbaFaf2397165491b9b6eAaF3445D40c7CB77EC687cB5D342A8F10CE7A8F2F".lower():
+    if hashlib.sha256(log_raw).hexdigest() != "85fbaFaf2397165491b9b6eAaF3445D40c7CB77EC687cB5D342A8F10CE7A8F2F".lower():
         errors.append("log_sha256")
     if len(manifest) != 59 or len(artifacts) != 59 or prov.get("count") != 59:
         errors.append("artifact_count")
