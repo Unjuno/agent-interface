@@ -272,6 +272,27 @@
       "case_id": "release-before-terminal",
       "events": [
         {
+          "event_id": "r0",
+          "event_type": "LEASE_OPEN",
+          "source_role": "executor",
+          "clock": {
+            "domain_id": "mono",
+            "epoch_id": "s4"
+          },
+          "time": {
+            "lower_ns": 0,
+            "upper_ns": 0,
+            "censoring": "exact"
+          },
+          "input_authority": "true",
+          "semantic_authority": "false",
+          "lineage": {
+            "lease_id": "L4",
+            "parent_event_ids": []
+          },
+          "payload": {}
+        },
+        {
           "event_id": "r1",
           "event_type": "PROGRAM_ACCEPTED",
           "source_role": "executor",
@@ -397,6 +418,27 @@
     {
       "case_id": "overlapping-key-holds",
       "events": [
+        {
+          "event_id": "o0",
+          "event_type": "LEASE_OPEN",
+          "source_role": "executor",
+          "clock": {
+            "domain_id": "mono",
+            "epoch_id": "s5"
+          },
+          "time": {
+            "lower_ns": 0,
+            "upper_ns": 0,
+            "censoring": "exact"
+          },
+          "input_authority": "true",
+          "semantic_authority": "false",
+          "lineage": {
+            "lease_id": "L5",
+            "parent_event_ids": []
+          },
+          "payload": {}
+        },
         {
           "event_id": "o1",
           "event_type": "INPUT_EDGE_BRACKET",
@@ -538,6 +580,27 @@
     {
       "case_id": "missing-and-out-of-order-edge",
       "events": [
+        {
+          "event_id": "m0",
+          "event_type": "LEASE_OPEN",
+          "source_role": "executor",
+          "clock": {
+            "domain_id": "mono",
+            "epoch_id": "s6"
+          },
+          "time": {
+            "lower_ns": 0,
+            "upper_ns": 0,
+            "censoring": "exact"
+          },
+          "input_authority": "true",
+          "semantic_authority": "false",
+          "lineage": {
+            "lease_id": "L6",
+            "parent_event_ids": []
+          },
+          "payload": {}
+        },
         {
           "event_id": "m1",
           "event_type": "INPUT_EDGE_BRACKET",
