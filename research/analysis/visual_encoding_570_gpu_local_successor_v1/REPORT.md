@@ -43,3 +43,5 @@ This establishes one host's local Docker GPU/model availability and easy synthet
 
 The executable source freeze, image/model identities, PREFORMAL, screen bundle, raw construction/formal calls, sampler, baseline, logs, audit and evidence hashes are under `research/analysis/visual_encoding_570_gpu_local_successor_v1/`. Do not rerun this consumed allocation. Any further test needs a distinct successor issue and fresh allocation.
 
+Post-formal publication-byte verification and the corrected, separately versioned auditor are documented in [`postformal/REPORT.md`](postformal/REPORT.md). They preserve this frozen report, v1 sources, and raw evidence; no model requests were repeated.
+
