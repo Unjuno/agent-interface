@@ -8,6 +8,7 @@ import os
 import uuid
 import time
 from .x11_target_review import inspect_focused_target
+from .observe import observe_in_session
 from runtime.selector_v1 import open_session, select_backend
 
 
@@ -56,17 +57,39 @@ class MCPSessionOwner:
             self.error = repr(error)
             raise
 
-    def inspect_target(self, target):
+    def inspect_target(self, target, screen_region=None, capture_directory=None):
         self.target_review = None
         if target not in self.targets:
             raise ValueError('unknown configured target')
-        evidence = inspect_focused_target(self.get().backend, self.family_roots[target])
+        session = self.get()
+        evidence = inspect_focused_target(session.backend, self.family_roots[target])
+        observation = None
+        if screen_region is not None:
+            observation = observe_in_session(session, target=target,
+                frame='screen_physical_px', region=screen_region,
+                capture_directory=capture_directory)
+            failure = None
+            if observation.get('status') != 'returned':
+                failure = 'TARGET_CAPTURE_FAILED'
+            else:
+                try:
+                    if inspect_focused_target(session.backend, self.family_roots[target]) != evidence:
+                        failure = 'TARGET_CHANGED_DURING_CAPTURE'
+                except Exception as error:
+                    failure = 'TARGET_RECHECK_FAILED: ' + repr(error)
+            if failure:
+                return {'status': 'needs_review', 'error': failure,
+                        'evidence': evidence, 'observation_report': observation,
+                        'input_dispatched': False, 'authority_granted': False}
         review = {'review_id': uuid.uuid4().hex, 'target': target,
                   'binding_revision': self.binding_revision, 'evidence': evidence,
                   'expires_at_ns': time.monotonic_ns() + 30_000_000_000}
         self.target_review = review
-        return dict(deepcopy(review), status='needs_review', input_dispatched=False,
-                    authority_granted=False)
+        row = dict(deepcopy(review), status='needs_review', input_dispatched=False,
+                   authority_granted=False)
+        if observation is not None:
+            row['observation_report'] = observation
+        return row
 
     def review_target(self, target, window_id, review_id):
         review = self.target_review
