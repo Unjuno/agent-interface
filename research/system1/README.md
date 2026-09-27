@@ -83,3 +83,7 @@ Read each child experiment for its allowed decision vocabulary, authority bounda
 ## Concurrent Needle online-LoRA/System-1 successor
 
 - [`needle_concurrent_online_lora_4653_v2/RESULT_SUMMARY.md`](needle_concurrent_online_lora_4653_v2/RESULT_SUMMARY.md) — successor to #4631; corrected auditor passed with zero errors, but the fourfold fixed training batch still produced fewer than eight overlapping query intervals in every seed, and one seed had two 60 Hz deadline misses. No COW candidate qualifies.
+
+## Local Needle training invocation guard
+
+- [`needle_single_invocation_guard_4678_v1/README.md`](needle_single_invocation_guard_4678_v1/README.md) — Issue #4678 preflight STOP: the exact #4205 GPU image is cached and matches, but its pinned safetensors checkpoint is absent; no training-image container or optimizer step ran. Two offline CPU-only audit containers validated the retained STOP record.
