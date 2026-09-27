@@ -7,6 +7,41 @@ import json
 import time
 
 
+def receipt_summary(row):
+    """Project recorded outcomes; never infer task success from completion."""
+    operations = {}
+    for name in ('navigation', 'direct', 'entered', 'repaired_enter', 'saved'):
+        if name not in row:
+            continue
+        value = row[name]
+        wrapper = value.get('result', {}) if name == 'navigation' else value
+        result = wrapper.get('result', {}) if name in ('navigation', 'direct') else wrapper
+        summary = {k:v for k,v in result.items()
+                   if k not in ('execution', 'guard_checks', 'required_capabilities')}
+        if name in ('navigation', 'direct'):
+            summary['transport'] = {k:v for k,v in wrapper.items() if k != 'result'}
+        execution = result.get('execution', {})
+        summary['execution'] = {k:v for k,v in execution.items()
+                                if k not in ('observations', 'completed_ops', 'waits')}
+        operations[name] = summary
+    feedback = {k:v for k,v in row.get('feedback', {}).items()
+                if k not in ('observation', 'samples')}
+    return {'scope':'receipt projection; full guard/capture/wait records in receipt_file',
+            'operations':operations, 'feedback':feedback,
+            'refusal_emissions':row.get('refusal_emissions'),
+            'task_success':None, 'authority':'none'}
+
+
+def grounding_notice(name, source, request_file, *, prior_receipt=None, receipt_file=None):
+    notice = {'needs_grounding':name, 'source_sequence':source['sequence'],
+              'image':source['native']['artifact']['path'], 'request_file':str(request_file)}
+    if prior_receipt is not None:
+        if receipt_file is None:
+            raise ValueError('full receipt reference required for grounding summary')
+        notice.update(receipt_file=str(receipt_file), receipt_summary=receipt_summary(prior_receipt))
+    return notice
+
+
 def validate_review(value, task_id, source_sequence):
     if not isinstance(value, dict) or set(value) != {'task_id', 'source_sequence', 'outcome', 'reason'}:
         raise ValueError('exact primary review fields required')
@@ -34,7 +69,8 @@ def review_task(out, task_id, source, row, *, timeout=300):
         raise ValueError('primary review decision predates request')
     print(json.dumps({'needs_primary_review': task_id, 'source_sequence': source['sequence'],
                       'image': request['image'], 'request_file': str(decision_path),
-                      'feedback': row['feedback']}), flush=True)
+                      'receipt_file': str(out/(task_id+'-primary-review-request.json')),
+                      'receipt_summary': receipt_summary(row)}), flush=True)
     end = time.monotonic()+timeout
     result = {'status':'unavailable', 'review_requested_ns':request['review_requested_ns']}
     try:
