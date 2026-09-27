@@ -8,7 +8,7 @@ import traceback
 
 from run_native_six_task_self_use_v1 import PrivateSession, suite
 from native_handle_bridge_v1 import NativeHandleBridge
-from native_exchange_v1 import publish, encoded, current_owner_identity
+from native_exchange_v1 import publish, encoded, current_owner_identity, OwnerLifetime
 from native_visual_watch_v1 import NativeVisualWatch
 from native_release_observation_v1 import observe_release_failure
 from native_cleanup_v1 import finish_allocation
@@ -35,6 +35,7 @@ def main():
     parser.add_argument('--max-stages', type=int, choices=range(2,65), default=4)
     parser.add_argument('--seed', type=int, default=991084)
     parser.add_argument('--text-gap-ms', type=int, choices=(0, 2, 10), default=0)
+    parser.add_argument('--owner-lifetime-fd', type=int, default=None)
     parser.add_argument('--probe-old-target', action='store_true')
     args = parser.parse_args()
     out = args.out.resolve()
@@ -42,6 +43,7 @@ def main():
     publish(out/'owner.json', encoded(current_owner_identity()))
     publish(out/'exchange-contract.json', encoded({
         'schema': 'agent-interface/native-exchange-contract-v1', 'max_stages': args.max_stages}))
+    lifetime = OwnerLifetime(args.owner_lifetime_fd)
     session = bridge = output = None
     goal = None
     rows = []
@@ -61,6 +63,7 @@ def main():
         publish(out/f'source-{stage}.json', encoded(source))
 
     try:
+        lifetime.check()
         session = PrivateSession()
         apps = ('calc', 'inkscape') if args.app == 'calc-inkscape' else (args.app,)
         for index, app in enumerate(apps):
@@ -89,6 +92,7 @@ def main():
         bridge = NativeHandleBridge(session.name, {'app': window}, 'app', out/'bridge')
         source = bridge.observe()
         for stage in range(1, args.max_stages + 1):
+            lifetime.check()
             decision_hash = None
             if not (out/f'source-{stage}.json').exists():
                 publish_source(stage, source)
@@ -99,9 +103,11 @@ def main():
                 'windows': windows, 'request_file': str(request)}), flush=True)
             deadline = time.monotonic()+300
             while not request.exists():
+                lifetime.check()
                 if time.monotonic() > deadline:
                     raise TimeoutError('primary-assistant decision timeout')
                 time.sleep(.05)
+            lifetime.check()
             request_bytes = request.read_bytes()
             decision_hash = hashlib.sha256(request_bytes).hexdigest()
             decision = json.loads(request_bytes)
@@ -236,6 +242,7 @@ def main():
                               'window_review': row['window_review']}), flush=True)
         else:
             raise RuntimeError('bounded action stages exhausted without explicit finish')
+        lifetime.check()
         evaluations = {app: suite.evaluate(app, data['output'], data['goal'])
                        for app, data in workloads.items()}
         evaluation = (next(iter(evaluations.values())) if len(evaluations) == 1 else
@@ -256,7 +263,10 @@ def main():
                 'authority_granted': False, 'task_success': None, **terminal_context}
         raise
     finally:
-        cleanup = finish_allocation(out, workloads, bridge, session, terminal_reply)
+        try:
+            cleanup = finish_allocation(out, workloads, bridge, session, terminal_reply)
+        finally:
+            lifetime.close()
     if cleanup['status'] != 'completed':
         raise RuntimeError('allocation cleanup needs review; see cleanup-report.json')
 

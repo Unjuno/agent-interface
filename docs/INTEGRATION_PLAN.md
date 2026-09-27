@@ -1,5 +1,39 @@
 # Integration priority — 2026-09-19
 
+## Integration checkpoint — 2026-09-28
+
+Current integration base: `5c3beab897fa00970837da0980d5ec0fd4010969`.
+Use [the current interface guide](../runtime/USING_CURRENT_INTERFACE.md) for the
+entry points; historical checkpoints below retain their original scope.
+
+- Native post-input window-review failure now preserves the completed action
+  receipt and exposes an observation-only recovery boundary (#5046). One merged-main
+  held-out Calc task recovered without input replay and saved 384/897 (#5057).
+  [Both stages of evidence](../runtime/results/native-review-recovery-main-01/README.md)
+  retain failed review, stale dialog pixels, explicit observations and cleanup limits.
+- Recorded default text pacing is included in pre-publication tail-capacity checks
+  (#5063). Diagnostics state the gap/capacity without echoing input text (#5065).
+  Real stdio regression covers refusal, corrected publication and exact-request
+  resume on one connection. Synthetic fixtures are not GUI task-performance evidence.
+- Public batch/compact/persistent-target-review capabilities remain available as
+  documented in the current guide. Native research recovery is not automatically
+  a public-runtime modal-recovery guarantee.
+
+The remaining priorities are useful feedback/semantic-completion measurement
+across the actual primary host boundary and explicit managed allocation lifetime.
+Title/metadata changes still do not acknowledge redraw. The matched final-wait
+study #3700 remains HOLD_PRODUCTION_ADOPTION; do not increase a default from one
+successful screenshot. Model tokens/cost and comparable human tempo remain unmeasured
+for these native follow-ups.
+
+Managed transport disconnect does not currently terminate its child. The #4124
+ownership-pipe proposal had a public preformal freeze, but no formal result in
+its issue at this checkpoint. Do not promote it from construction evidence or
+modify its consumed/frozen allocation. A distinct integration check must exercise
+actual MCP/server/owner lifetime and declared cleanup boundaries before any change;
+client loss, owner death, input release and task success are separate outcomes.
+No automatic replay, primary-agent sensor development or helper model is added.
+
 ## Production integration update — 2026-09-21
 
 Use this section for the current integration state; the dated accounts below

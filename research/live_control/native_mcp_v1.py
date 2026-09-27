@@ -297,6 +297,8 @@ if __name__ == '__main__':
     parser.add_argument('--harness-python', help='Python with existing GUI harness dependencies')
     parser.add_argument('--text-gap-ms', type=int, choices=(0,2,10), default=None,
                         help='explicit existing harness text pacing policy (managed mode only; default 0)')
+    parser.add_argument('--owner-lifetime', action='store_true',
+                        help='experimental managed pipe lifetime; cooperative boundaries only')
     args = parser.parse_args()
     allocation = None
     if args.allocation_directory:
@@ -305,7 +307,8 @@ if __name__ == '__main__':
         from native_allocation_v1 import NativeAllocation
         allocation = NativeAllocation(args.allocation_directory,args.app,seed=args.seed,
                                       max_stages=args.max_stages,python=args.harness_python,
-                                      text_gap_ms=0 if args.text_gap_ms is None else args.text_gap_ms)
-    elif args.app or args.harness_python or args.text_gap_ms is not None:
-        parser.error('--app/--harness-python/--text-gap-ms require --allocation-directory')
+                                      text_gap_ms=0 if args.text_gap_ms is None else args.text_gap_ms,
+                                      owner_lifetime=args.owner_lifetime)
+    elif args.app or args.harness_python or args.text_gap_ms is not None or args.owner_lifetime:
+        parser.error('--app/--harness-python/--text-gap-ms/--owner-lifetime require --allocation-directory')
     create_server(args.run_directory,allocation=allocation).run(transport='stdio')

@@ -236,8 +236,16 @@ tail is rejected before publication.
 A typed visually-flat target refusal before dispatch may return a fresh boundary
 when stage capacity remains. Its `target_refusal` describes the recorded failure;
 it is not action completion. Choose a new decision from the returned image.
-Arbitrary errors, exhausted capacity or failed review still terminate; no input
-is automatically retried. A refused action does not apply finish_after.
+A failed review after a visually-flat refusal still terminates. For post-action
+review and explicit observation failures, the harness may instead return
+`continuation.status: observation_required` while stage capacity remains.
+The delivered image is the previous retained capture, not post-action evidence.
+Only explicit observe or finish is accepted until a fresh review succeeds; input
+is rejected before publication and is never replayed. Failed post-action review
+also suppresses finish_after. Arbitrary errors and exhausted capacity still
+terminate. A refused action does not apply finish_after. See the
+[retained failure and recovery](../../runtime/results/native-review-recovery-01/README.md)
+and [integrated-main follow-up](../../runtime/results/native-review-recovery-main-01/README.md).
 The published Inkscape task now describes its directional saved-geometry score
 explicitly; nominal drag pixels are not an exact keyboard displacement target.
 
@@ -297,3 +305,23 @@ For a sparse source checkout, the live native GUI harness also imports
 and `research/live_control`. Include these directories before managed startup;
 the inert contract suites alone do not establish that all live imports exist.
 The linked record retains the missing-dependency startup failure separately.
+
+## Experimental managed owner lifetime
+
+`--owner-lifetime` is an opt-in managed-mode candidate on POSIX. The server
+retains a pipe writer and the harness receives only its reader, which is marked
+non-inheritable before application launch. Server exit closes the writer. The
+harness checks for EOF during decision waiting and at stage/evaluation boundaries,
+then takes its existing failure/cleanup path without replay or success evaluation.
+The default remains unchanged. A timeout in one tool call does not close the
+ownership channel. Closing stdio may end the server and therefore its ownership.
+
+This is cooperative boundary handling, not immediate input cancellation: setup,
+input programs and feedback already in progress can continue until a check.
+There remains a check/use race. It does not contain escaped descendants, survive
+a killed harness, prove physical release, or provide restart authority. Initial
+actual-MCP construction used an inert substitute worker. One subsequent idle Calc
+case reached existing cleanup after server exit and externally reaped the owner;
+tracked processes were absent. Held input and complete descendant closure remain
+unverified. See [construction evidence](../../runtime/results/native-owner-lifetime-01/README.md).
+Do not enable it as a production default from these bounded results.
