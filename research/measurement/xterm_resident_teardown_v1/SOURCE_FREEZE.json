@@ -1,0 +1,42 @@
+{
+  "task": "issue-4448-xterm-resident-teardown-v1",
+  "status": "SOURCE_FROZEN_FORMAL_NOT_RUN",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/4448",
+  "branch": "research/xterm-resident-teardown-20260926",
+  "base_commit": "91b5143989403754b360738c445f72b68b673718",
+  "formal_schedule_id": "xterm-resident-teardown-20260927-r1",
+  "formal_invocations_at_freeze": 0,
+  "formal_invocations_planned": 1,
+  "construction_data_pooled": 0,
+  "reruns_replacements_tuning": [0, 0, 0],
+  "source_sha256": {
+    "PLAN.md": "dd9defa2057a41bd0aac4686c809a6a6c2fbd8f211fc327e04b744811d891909",
+    "GATES.json": "8f204e67dba014f4f9fd08712669efd9d2608b6186e9e593c00a5abe7d235d6d",
+    "SCHEDULE.json": "c8ca4c32dac09792f0d6a33fc9fe234061bfeff79fed7221b2d7f796691347b9",
+    "ENVIRONMENT.json": "71fc51476caedaefd2ffa1c31072d38a86d2f55f26dbc97a0802d7aa1e25b6d7",
+    "CONSTRUCTION_REPORT.md": "65b8976bbda0dc87a1bec5851164256683f26294de66c2ac7e2d06ae1e9bc26d",
+    "runner.py": "10cfaab9a0d105b6ae9c025a8bd944d0313cfc98579e7ee6747ced5834dc205e",
+    "fixture_child.py": "f30e3c3822e9811df27c9bb29af7011c70a2fe23ad6079155c16954bc3909ee1",
+    "audit.py": "3ad71af1ccd3edaf694dc45e19af394f33b5bf64e630084ffb8fd17e74b16381"
+  },
+  "construction_evidence": {
+    "path": "construction-02/",
+    "pairs": 3,
+    "raw_sha256": "2cd5199a67fa50965ef89c2463b363fa677f2c0b03c5884ffa7f141db4436e3a",
+    "audit_sha256": "64dc877b80f1843f1cd11e9ed6d6c7a04e9ca8d7246648fb4deffe2fab7fd949",
+    "audit_errors": [],
+    "effective_corruptions_rejected": 12
+  },
+  "formal_command": [
+    "docker run --rm --pull=never --network none --read-only",
+    "--tmpfs /tmp:rw,nosuid,nodev,size=128m",
+    "--tmpfs /dev/shm:rw,nosuid,nodev,size=64m",
+    "--mount type=bind,source=<this-worktree>,target=/repo,readonly",
+    "--mount type=bind,source=<local-output-directory>,target=/evidence",
+    "--entrypoint python3 agent-interface-golden-ipc-2705:20260920-wmctrl",
+    "/repo/research/measurement/xterm_resident_teardown_v1/runner.py",
+    "--output /evidence/formal-01 --pairs 12 --schedule-id xterm-resident-teardown-20260927-r1 --label formal"
+  ],
+  "audit_command_inside_same_local_docker_image": "python3 /repo/research/measurement/xterm_resident_teardown_v1/audit.py --evidence /evidence/formal-01 --pairs 12 --schedule-id xterm-resident-teardown-20260927-r1 --mode formal --output /evidence/formal-01/audit.json",
+  "github_actions_used_as_experiment": false
+}

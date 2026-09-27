@@ -64,6 +64,32 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Research evidence ladder
 
+### Issue #4623 — GPU shared-prefix readout construction stop
+
+Successor [#4623](https://github.com/Unjuno/agent-interface/issues/4623)
+preserves the earlier #1014/#1033 asset-unavailable record. A single pinned
+Qwen2.5-0.5B-Instruct revision was materialized and loaded in a network-disabled
+RTX 3080 Docker container. Three excluded synthetic bundles passed one-token
+vocabulary and cache-isolation construction checks, but full-prefill versus
+incremental-cache FP16 logits exceeded the preregistered 0.002 tolerance
+(max absolute delta 0.087–0.108). An independent audit reconstructed all three
+outcomes with zero errors; argmax did not change in those nine comparisons.
+Disposition: `STOP_CONSTRUCTION_LOGIT_TOLERANCE`; no formal timing block ran,
+so no cache speedup, semantic quality, or #1015 shadow capability is claimed.
+See the [retained stop record](research/system1/typed_readout_prefix_gpu_1014_v1/STOP_RECORD.md)
+  and [model asset hash manifest](research/system1/typed_readout_prefix_gpu_1014_v1/MODEL_MANIFEST.json).
+
+### Issue #4639 — selected answer-code projection STOP
+
+Successor [#4639](https://github.com/Unjuno/agent-interface/issues/4639)
+preserves #4623 and projects only the eight typed answer-code logits from the
+same pinned model, corpus, CUDA image and RTX 3080. Construction controls passed
+and all nine winners matched, but B00/slot 15 exceeded the frozen selected-score
+tolerance (max absolute `0.078125`, max relative `0.003224`). An independent
+implementation reconstructed all nine vectors with `errors=[]`; the preregistered
+all-comparisons gate therefore failed. No formal timing or semantic block ran.
+See the [successor STOP record](research/system1/typed_readout_code_projection_1014_v2/STOP_RECORD.md).
+
 ### Issue #3849 — independent audit of retained #3442 intent-alignment result
 
 The [audit report](research/system1/intent_alignment_3442_audit_v1/REPORT.md)

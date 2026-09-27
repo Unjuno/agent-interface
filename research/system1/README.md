@@ -69,3 +69,8 @@ Read each child experiment for its allowed decision vocabulary, authority bounda
 ## Role graph as a reloadable skill
 
 - [`needle_role_skill_reload_3780_v1/REPORT.md`](../needle_role_skill_reload_3780_v1/REPORT.md) — successor #3890; three-seed, CPU Docker, cross-process JSON-tensor reload PASS with two fresh loaders per seed and a scoped independent audit. Seed 3789 / role C is a narrow threshold pass; no production skill authority is claimed.
+
+## Local decoder readout and cache mechanics
+
+- [`typed_readout_prefix_gpu_1014_v1/STOP_RECORD.md`](typed_readout_prefix_gpu_1014_v1/STOP_RECORD.md) — successor #4623 materialized a pinned Qwen2.5-0.5B model in a network-disabled RTX 3080 Docker container. Independent construction audit reproduced the FP16 full-vocabulary logit-tolerance failure; the formal latency block did not run. No typed-decision competence or runtime claim.
+- [`typed_readout_code_projection_1014_v2/STOP_RECORD.md`](typed_readout_code_projection_1014_v2/STOP_RECORD.md) — successor #4639 separately tested the eight answer-code logits on the same pinned GPU assets. Independent audit reproduced a selected-score tolerance failure (B00/slot 15); the formal latency block did not run. This does not modify #4623.

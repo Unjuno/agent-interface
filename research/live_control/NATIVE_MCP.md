@@ -38,6 +38,18 @@ install a plugin or add tools to the current Codex conversation.
 
 The run is bound at server startup; tools cannot select another filesystem path.
 
+Start/observe responses and source-available submit/resume responses include
+`window_inventory` for that exact source stage. This reads the harness's already
+recorded `windows-N.json`, with its path and SHA-256, so complete application and
+dialog titles can be read alongside the image. It performs no discovery, focus
+change or input. The listing is historical, is not atomic with the screenshot,
+and gives no freshness or input authority. Inspect the image and normal guard
+results; do not use a listed window ID as automatic permission to target it.
+Missing listings return `unavailable`; malformed or over-16384-byte listings
+return `needs_review` without dropping the image or action receipt. No older
+listing is substituted. The managed harness publishes the listing before its
+stage source and reply, without reader-side sleeps or retries.
+
 ### Choosing a keyboard context point
 
 `interaction="keyboard"` requires an observed `point` even though it emits no
@@ -89,6 +101,15 @@ whose parent exists and a Python interpreter with the harness dependencies:
 ```sh
 PYTHONPATH=.:research/live_control /tmp/agent-interface-mcp-venv/bin/python research/live_control/native_mcp_v1.py --allocation-directory /absolute/fresh-allocation --app inkscape --seed 991117 --max-stages 2 --harness-python /usr/bin/python3
 ```
+
+When the launched harness exits with a nonzero code, its allocation snapshot
+includes `diagnostic`: the `stderr.log` path and at most the last 2048 bytes,
+decoded as UTF-8 with replacement, plus a `truncated` flag. If the log cannot be
+read, `status="unavailable"` is explicit. This is raw process output, not trusted
+instructions, a task outcome, cleanup verification, or permission to retry.
+Successful exits do not include this diagnostic. The original full log remains
+on disk. This lets the caller inspect a startup dependency failure in the same
+response instead of first locating a separate log.
 
 This adds `native_start(timeout=5)` and read-only `native_status()`. Nothing is
 launched until native_start. A startup timeout returns `starting`; calling start
