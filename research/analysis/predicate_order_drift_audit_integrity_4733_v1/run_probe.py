@@ -26,9 +26,7 @@ def sha256(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
-def load_inputs(repo_root: Path):
-    source_path = repo_root / "audit.py" if repo_root.is_dir() and repo_root.name == "source" else repo_root / SOURCE_RELATIVE
-    transport_path = repo_root / "RAW_AND_AUDIT.zip.base64" if repo_root.is_dir() and repo_root.name == "input" else repo_root / TRANSPORT_RELATIVE
+def load_inputs(source_path: Path, transport_path: Path):
     source_bytes = source_path.read_bytes()
     transport_bytes = transport_path.read_bytes()
     identities = {
@@ -105,8 +103,8 @@ def run_auditor(source_path: Path, doc: dict, mode: str) -> dict:
                 "stdout_sha256": sha256(completed.stdout.encode())}
 
 
-def execute(repo_root: Path, environment: dict) -> dict:
-    source_path, source_bytes, raw_bytes, original, identities = load_inputs(repo_root)
+def execute(source_path: Path, transport_path: Path, environment: dict) -> dict:
+    source_path, source_bytes, raw_bytes, original, identities = load_inputs(source_path, transport_path)
     baseline = {mode: run_auditor(source_path, copy.deepcopy(original), mode) for mode in MODES}
     mutants = {}
     mutant = copy.deepcopy(original)
@@ -150,7 +148,9 @@ def main() -> int:
     if len(sys.argv) != 4:
         print("usage: run_probe.py SOURCE_PATH TRANSPORT_PATH OUTPUT_JSON", file=sys.stderr)
         return 64
-    output = Path(sys.argv[2])
+    source_path = Path(sys.argv[1])
+    transport_path = Path(sys.argv[2])
+    output = Path(sys.argv[3])
     if output.exists():
         print("STOP_OUTPUT_ALREADY_EXISTS", file=sys.stderr)
         return 2
@@ -158,11 +158,7 @@ def main() -> int:
         env = {"platform": sys.platform, "python": sys.version.split()[0],
                "executable": sys.executable,
                "runtime_mode": os.environ.get("PROBE_RUNTIME_MODE", "unspecified")}
-        result = execute(Path(sys.argv[1]), env)
-        # The transport path is separately mounted read-only; verify the same bytes
-        # the standard repository-relative loader would consume.
-        if sha256(Path(sys.argv[2]).read_bytes()) != TRANSPORT_SHA256:
-            raise ValueError("STOP_TRANSPORT_MOUNT_MISMATCH")
+        result = execute(source_path, transport_path, env)
     except Exception as exc:
         result = {"schema": "predicate-order-audit-integrity-4733-probe-v1",
                   "issue": 4953, "allocation": "predicate-order-audit-integrity-4733-20260928-01",

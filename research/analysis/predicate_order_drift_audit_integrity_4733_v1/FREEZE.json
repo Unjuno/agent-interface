@@ -1,12 +1,12 @@
 {
   "schema": "predicate-order-audit-integrity-4733-freeze-v1",
   "issue": "Unjuno/agent-interface#4953",
-  "allocation": "predicate-order-audit-integrity-4733-20260928-02",
+  "allocation": "predicate-order-audit-integrity-4733-20260928-03",
   "base_main": "081403e352aa79a6ff0cd030fbb9d2fbbf28c7e6",
   "branch": "research/predicate-audit-integrity-4953-v1-20260928",
-  "freeze_revision": 3,
-  "supersedes_freeze_sha256": "d984ed129e96d3d57c9777bae0f467bb90781e18d8207057f6887a71c1fb4e1c",
-  "correction": "Revision 2 runner did start but found a pre-existing RESULT.json from the malformed CLI/mount attempt and STOPped before loading inputs. Preserve the old allocation unmodified; no scientific execution occurred. Revision 3 uses a fresh output allocation path; frozen hypothesis and inputs unchanged.",
+  "freeze_revision": 4,
+  "supersedes_freeze_sha256": "aad89304a4c9ee4ccb004491eba31a778ca3bd79988c83762af3bdc1475837cb",
+  "correction": "Revision 3 STOPped because run_probe.py used sys.argv[2] (the always-existing transport file) for the output-exists guard after its CLI changed to SOURCE_PATH TRANSPORT_PATH OUTPUT_JSON. No scientific input or auditor call occurred. Revision 4 fixes the argument index; prior allocations remain immutable and consumed; frozen hypothesis and source/raw inputs unchanged.",
   "path": "research/analysis/predicate_order_drift_audit_integrity_4733_v1/",
   "prereg_correction_comments": [
     "https://github.com/Unjuno/agent-interface/issues/4953#issuecomment-5858088457",
@@ -32,9 +32,9 @@
   },
   "frozen_files_sha256": {
     "PLAN.md": "9ace65cf5c51bf4a8d51d32ef871210b41aadf777d5532f250e24e7033120a93",
-    "run_probe.py": "f7b770593066aef4154f54651280bb908a197dd525a69baeeb36b02cdaeaf126",
-    "independent_audit.py": "80fe1b8bf7488265b117c0e5c410e7c903acc7559194fa656f8bbb9463faa7e5",
-    "test_probe.py": "c741723a31438f0ba3e3ec38f449c79620f52c06057bbc46f9f1418cf340b2bf"
+    "run_probe.py": "deccfbfa8ab9bb00874ff17fbc3d10801b5af724452abb9cce48ae298240bb1e",
+    "independent_audit.py": "a03c6a44c07db83aac6a004cf52244a83cbcca1edb1462c2404f89f3591ddca6",
+    "test_probe.py": "deae5a55d9865c11e2ca0ecee2bf7c6873a2b53f032ee3c532d747b7106132b2"
   },
   "container": {
     "image": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
@@ -50,12 +50,12 @@
   },
   "paths": {
     "repo_root": "/tmp/agent-interface-3152-live",
-    "formal_output": "/tmp/agent-interface-4953-formal-002",
-    "independent_audit_output": "/tmp/agent-interface-4953-audit-001"
+    "formal_output": "/tmp/agent-interface-4953-formal-003",
+    "independent_audit_output": "/tmp/agent-interface-4953-audit-003"
   },
   "commands": {
-    "formal": "docker run --rm --platform linux/arm64 --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --cpus 1 --memory 512m --pids-limit 32 -e PYTHONDONTWRITEBYTECODE=1 -v /tmp/agent-interface-3152-live/research/analysis/predicate_order_drift_audit_integrity_4733_v1:/plan:ro -v /tmp/agent-interface-3152-live/research/analysis/predicate_order_drift_4258_v1/src:/source:ro -v /tmp/agent-interface-3152-live/research/analysis/predicate_order_drift_4258_v1/RAW_AND_AUDIT.zip.base64:/input/transport:ro -v /tmp/agent-interface-4953-formal-002:/out:rw sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 python -B /plan/run_probe.py /source/audit.py /input/transport /out/RESULT.json",
-    "independent_audit": "docker run --rm --platform linux/arm64 --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --cpus 1 --memory 512m --pids-limit 32 -e PYTHONDONTWRITEBYTECODE=1 -v /tmp/agent-interface-3152-live/research/analysis/predicate_order_drift_audit_integrity_4733_v1:/plan:ro -v /tmp/agent-interface-3152-live/research/analysis/predicate_order_drift_4258_v1/src:/source:ro -v /tmp/agent-interface-3152-live/research/analysis/predicate_order_drift_4258_v1/RAW_AND_AUDIT.zip.base64:/input/transport:ro -v /tmp/agent-interface-4953-formal-002:/evidence:ro -v /tmp/agent-interface-4953-audit-001:/out:rw sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 python -B /plan/independent_audit.py /source /input/transport /evidence/RESULT.json /out/AUDIT.json"
+    "formal": "docker run --rm --platform linux/arm64 --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --cpus 1 --memory 512m --pids-limit 32 -e PYTHONDONTWRITEBYTECODE=1 -v /tmp/agent-interface-3152-live/research/analysis/predicate_order_drift_audit_integrity_4733_v1:/plan:ro -v /tmp/agent-interface-3152-live/research/analysis/predicate_order_drift_4258_v1/src:/source:ro -v /tmp/agent-interface-3152-live/research/analysis/predicate_order_drift_4258_v1/RAW_AND_AUDIT.zip.base64:/input/transport:ro -v /tmp/agent-interface-4953-formal-003:/out:rw sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 python -B /plan/run_probe.py /source/audit.py /input/transport /out/RESULT.json",
+    "independent_audit": "docker run --rm --platform linux/arm64 --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --cpus 1 --memory 512m --pids-limit 32 -e PYTHONDONTWRITEBYTECODE=1 -v /tmp/agent-interface-3152-live/research/analysis/predicate_order_drift_audit_integrity_4733_v1:/plan:ro -v /tmp/agent-interface-3152-live/research/analysis/predicate_order_drift_4258_v1/src:/source:ro -v /tmp/agent-interface-3152-live/research/analysis/predicate_order_drift_4258_v1/RAW_AND_AUDIT.zip.base64:/input/transport:ro -v /tmp/agent-interface-4953-formal-003:/evidence:ro -v /tmp/agent-interface-4953-audit-003:/out:rw sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 python -B /plan/independent_audit.py /source/audit.py /input/transport /evidence/RESULT.json /out/AUDIT.json"
   },
   "formal": {
     "invocations": 0,

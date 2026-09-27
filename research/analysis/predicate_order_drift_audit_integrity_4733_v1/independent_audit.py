@@ -24,10 +24,10 @@ def digest(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
-def audit(repo_root: Path, result_path: Path) -> dict:
+def audit(source_path: Path, transport_path: Path, result_path: Path) -> dict:
     errors = []
-    source = (repo_root / "audit.py").read_bytes() if repo_root.name == "source" else (repo_root / SOURCE).read_bytes()
-    transport = (repo_root / "RAW_AND_AUDIT.zip.base64").read_bytes() if repo_root.name == "input" else (repo_root / TRANSPORT).read_bytes()
+    source = source_path.read_bytes()
+    transport = transport_path.read_bytes()
     if digest(source) != EXPECTED_SOURCE:
         errors.append("source_sha256")
     if digest(transport) != EXPECTED_TRANSPORT:
@@ -107,11 +107,7 @@ def main() -> int:
     if len(sys.argv) != 5:
         print("usage: independent_audit.py SOURCE_DIR INPUT_DIR RESULT_JSON AUDIT_JSON", file=sys.stderr)
         return 64
-    report = audit(Path(sys.argv[1]), Path(sys.argv[3]))
-    # Independently bind the separately mounted transport path as well.
-    if digest((Path(sys.argv[2]) / "RAW_AND_AUDIT.zip.base64").read_bytes()) != EXPECTED_TRANSPORT:
-        report["errors"].append("transport_mount_binding")
-        report["disposition"] = "INDEPENDENT_AUDIT_FAIL"
+    report = audit(Path(sys.argv[1]), Path(sys.argv[2]), Path(sys.argv[3]))
     output = Path(sys.argv[4])
     if output.exists():
         print("STOP_AUDIT_OUTPUT_ALREADY_EXISTS", file=sys.stderr)

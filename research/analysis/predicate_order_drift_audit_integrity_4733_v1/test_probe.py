@@ -20,7 +20,7 @@ sys.path.insert(0, str(HERE))
 
 class ProbeInputTests(unittest.TestCase):
     def test_exact_source_and_transport_identities(self):
-        _, _, raw_bytes, raw, identities = run_probe.load_inputs(ROOT)
+        _, _, raw_bytes, raw, identities = run_probe.load_inputs(ROOT / run_probe.SOURCE_RELATIVE, ROOT / run_probe.TRANSPORT_RELATIVE)
         self.assertEqual(identities["source_git_blob_expected"], "1a6cc0e46b32d4cd6989aed118d003cce4cfe399")
         self.assertEqual(identities["transport_git_blob_expected"], "c38dd2002f201d49b6fc261caff019550a4bf4bc")
         self.assertEqual(len(raw_bytes), 186739)
@@ -37,7 +37,7 @@ class ProbeInputTests(unittest.TestCase):
         self.assertEqual((ROOT / run_probe.TRANSPORT_RELATIVE).read_bytes(), original)
 
     def test_mutations_are_independent_copies(self):
-        _, _, _, original, _ = run_probe.load_inputs(ROOT)
+        _, _, _, original, _ = run_probe.load_inputs(ROOT / run_probe.SOURCE_RELATIVE, ROOT / run_probe.TRANSPORT_RELATIVE)
         weight = copy.deepcopy(original)
         weight["distributions"][0]["rows"][0]["weight"] = float("nan")
         alpha = copy.deepcopy(original)
