@@ -6,6 +6,7 @@ import unittest
 from unittest.mock import patch
 
 
+import base64
 import hashlib
 import os
 from types import SimpleNamespace
@@ -75,17 +76,14 @@ class HostBrokerContractTest(unittest.TestCase):
                          Path("C:/repo/runtime/a.png"))
 
     def _run_broker(self, request, *, instruction_bytes=b"fixed test instructions"):
-        from runtime.host_model_ipc_broker_v1 import host_path, serve
+        from runtime.host_model_ipc_broker_v1 import serve
 
         with tempfile.TemporaryDirectory() as directory:
             base = Path(directory)
             repo = base / "repo"
             repo.mkdir()
             request = dict(request)
-            if request.get("instructions") is not None:
-                instruction_path = Path(host_path(request["instructions"], repo))
-                instruction_path.parent.mkdir(parents=True, exist_ok=True)
-                instruction_path.write_bytes(instruction_bytes)
+            if request.get("instructions_b64") is not None:
                 request.setdefault("instructions_sha256",
                                    hashlib.sha256(instruction_bytes).hexdigest())
             request.setdefault("request_id", "probe")
@@ -117,9 +115,9 @@ class HostBrokerContractTest(unittest.TestCase):
             response = (ipc / "probe.response.jsonl").read_text(encoding="utf-8")
             return status, receipt, response, observed, run.call_count
 
-    def test_forwards_verified_repo_instructions_via_private_temporary_copy(self):
+    def test_forwards_verified_instruction_bytes_via_private_temporary_copy(self):
         _, receipt, response, observed, calls = self._run_broker({
-            "instructions": "/repo/instructions.txt",
+            "instructions_b64": base64.b64encode(b"fixed test instructions").decode("ascii"),
         })
         self.assertEqual(calls, 1)
         self.assertEqual(observed["instructions"], b"fixed test instructions")
@@ -129,16 +127,16 @@ class HostBrokerContractTest(unittest.TestCase):
         self.assertEqual(response, "{}\n")
         self.assertFalse(observed["private_path"].exists())
 
-    def test_forwards_verified_workspace_mapped_instructions(self):
+    def test_forwards_verified_instruction_bytes_with_private_copy(self):
         _, _, _, observed, calls = self._run_broker({
-            "instructions": "/workspace/instructions.txt",
+            "instructions_b64": base64.b64encode(b"fixed test instructions").decode("ascii"),
         })
         self.assertEqual(calls, 1)
         self.assertEqual(observed["instructions"], b"fixed test instructions")
 
-    def test_handles_quoted_container_path_without_cli_argument_injection(self):
+    def test_forwards_quoted_instruction_content_without_cli_argument_injection(self):
         _, _, _, observed, calls = self._run_broker({
-            "instructions": '/repo/a "quoted" instructions.txt',
+            "instructions_b64": base64.b64encode(b"fixed test instructions").decode("ascii"),
         })
         self.assertEqual(calls, 1)
         config = next(arg for arg in observed["args"]
@@ -148,7 +146,7 @@ class HostBrokerContractTest(unittest.TestCase):
 
     def test_preserves_schema_image_and_prompt_arguments(self):
         _, _, _, observed, calls = self._run_broker({
-            "instructions": "/repo/instructions.txt",
+            "instructions_b64": base64.b64encode(b"fixed test instructions").decode("ascii"),
             "image": "/repo/input.png",
         })
         self.assertEqual(calls, 1)
@@ -167,9 +165,9 @@ class HostBrokerContractTest(unittest.TestCase):
         self.assertEqual(receipt["returncode"], 0)
         self.assertEqual(response, "{}\n")
 
-    def test_rejects_instruction_path_escape_without_cli_invocation(self):
+    def test_rejects_legacy_path_instructions_without_cli_invocation(self):
         _, receipt, response, _, calls = self._run_broker({
-            "instructions": "/repo/../outside.txt",
+            "instructions": "/repo/instructions.txt",
         })
         self.assertEqual(calls, 0)
         self.assertEqual(receipt["error_class"], "InvalidInstructions")
@@ -178,12 +176,25 @@ class HostBrokerContractTest(unittest.TestCase):
 
     def test_rejects_instruction_hash_mismatch_without_cli_invocation(self):
         _, receipt, response, _, calls = self._run_broker({
-            "instructions": "/repo/instructions.txt",
+            "instructions_b64": base64.b64encode(b"fixed test instructions").decode("ascii"),
             "instructions_sha256": "0" * 64,
         })
         self.assertEqual(calls, 0)
         self.assertEqual(receipt["error_class"], "InvalidInstructions")
         self.assertEqual(receipt["stop_reason"], "HOST_MODEL_INSTRUCTIONS_REJECTED")
+        self.assertEqual(response, "")
+
+    def test_rejects_invalid_base64_without_cli_invocation(self):
+        _, receipt, response, _, calls = self._run_broker({"instructions_b64": "%%%"})
+        self.assertEqual(calls, 0)
+        self.assertEqual(receipt["error_class"], "InvalidInstructions")
+        self.assertEqual(response, "")
+
+    def test_rejects_oversized_instruction_without_cli_invocation(self):
+        payload = base64.b64encode(b"x" * (1024 * 1024 + 1)).decode("ascii")
+        _, receipt, response, _, calls = self._run_broker({"instructions_b64": payload})
+        self.assertEqual(calls, 0)
+        self.assertEqual(receipt["error_class"], "InvalidInstructions")
         self.assertEqual(response, "")
 
     def test_broker_is_non_authoritative(self):

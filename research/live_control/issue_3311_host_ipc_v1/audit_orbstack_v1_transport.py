@@ -1,6 +1,7 @@
 """Independent audit of a retained synthetic OrbStack v1 transport run."""
 from __future__ import annotations
 
+import base64
 import hashlib
 import json
 from pathlib import Path
@@ -82,11 +83,21 @@ def request_matches_plan(request_path: Path, plan_path: Path) -> bool:
     try:
         request = json.loads(request_path.read_text(encoding="utf-8"))
         plan = json.loads(plan_path.read_text(encoding="utf-8"))
-        return all(type(request[key]) is type(plan[key]) and request[key] == plan[key]
-                   for key in (
+        shared = (
             "request_id", "mode", "prompt", "working", "image", "image_sha256",
-            "instructions", "instructions_sha256", "schema", "schema_sha256",
-            "authority_granted"))
+            "instructions_sha256", "schema", "schema_sha256", "authority_granted")
+        if not all(type(request[key]) is type(plan[key]) and request[key] == plan[key]
+                   for key in shared):
+            return False
+        if "instructions_b64" in request:
+            if "instructions" in request or "instructions" in plan:
+                return False
+            data = base64.b64decode(request["instructions_b64"], validate=True)
+            return (type(plan.get("instructions_bytes")) is int
+                    and plan["instructions_bytes"] == len(data)
+                    and hashlib.sha256(data).hexdigest() == request["instructions_sha256"])
+        return (type(request.get("instructions")) is type(plan["instructions"])
+                and request["instructions"] == plan["instructions"])
     except (OSError, json.JSONDecodeError, KeyError, TypeError):
         return False
 
