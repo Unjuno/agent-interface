@@ -116,6 +116,7 @@ class ConstructionTests(unittest.TestCase):
         self.assertEqual(accepted["comment_id"],10)
         for bad_comments,bad_id in (
             (comments,11),
+            ([{"id":10,"created_at":"2026-09-28T10:00:00Z","user":{"login":"Unjuno"},"body":"Quoted request: `"+marker+"`"}],10),
             ([*comments,{"id":12,"created_at":"2026-09-28T10:01:00Z","user":{"login":"Unjuno"},"body":"hold"}],10),
             ([{"id":10,"created_at":"2026-09-28T10:00:00Z","user":{"login":"someone-else"},"body":marker}],10),
         ):

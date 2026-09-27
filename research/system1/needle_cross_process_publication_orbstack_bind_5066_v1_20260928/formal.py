@@ -43,7 +43,7 @@ def verify_slot_release(comments:list,comment_id:int,allocation:str,main_sha:str
     latest=max(owner_comments,key=lambda c:(str(c.get("created_at","")),int(c.get("id",0))))
     if latest.get("id")!=comment_id:raise RuntimeError("slot release comment is not the owner's latest comment")
     expected=release_marker(allocation,main_sha)
-    if expected not in str(latest.get("body","")):
+    if expected not in {line.strip() for line in str(latest.get("body","")).splitlines()}:
         raise RuntimeError("owner comment does not explicitly release the exact allocation on current main")
     return {"issue":5074,"comment_id":comment_id,"owner":latest["user"]["login"],
             "created_at":latest.get("created_at"),"marker":expected}
