@@ -44,3 +44,7 @@ Child directory names are retained provenance, not a canonical architecture tree
 - Component evidence and integration evidence remain distinct; a component PASS is not an integrated PASS.
 
 Historical and superseded integration paths remain in place when their exact names are part of the evidence chain.
+
+## Current local constructions
+
+- [`public_mcp_geometry_review_2907_construction01_v1/REPORT.md`](public_mcp_geometry_review_2907_construction01_v1/REPORT.md) — three additive Docker constructions for same-root geometry review and stale-binding refusal. Construction03 passes the scoped mechanism audit; overall formal disposition remains HOLD (runner decision mismatch, no independent app-effect oracle, and no mixed-app controller acceptance).
