@@ -1,0 +1,126 @@
+{
+  "files": [
+    {
+      "sha256": "7635d37e508daf350caf28cb48cc30bc9f72fa0d3183108e71de6e71c8427839",
+      "path": "README.md",
+      "bytes": 2572
+    },
+    {
+      "sha256": "c64c0b53fd96a7da12c9dc89d55a87c329f7e8a30e9dc41f3395b89a1f9da5fe",
+      "path": "SOURCE_MANIFEST.json",
+      "bytes": 1407
+    },
+    {
+      "sha256": "b3f45e24433287c029c4a24b93e47cc5b62348651b512f12f47df755e6ab1854",
+      "path": "MODEL_MANIFEST.json",
+      "bytes": 1694
+    },
+    {
+      "sha256": "3d62aceaebb13c88cd8a50d97ce5b982f6b66c1a5bd7bf930fb534857105ba49",
+      "path": "audit_core.py",
+      "bytes": 3347
+    },
+    {
+      "sha256": "251435daa93d496f1665f430ef5700ee3b3d8189e59c8fb0be640e77ae7eec08",
+      "path": "audit_raw.py",
+      "bytes": 2714
+    },
+    {
+      "sha256": "3915a26f23c108b67fc9a36838fec4894509f9c8e630c46881cbbfa81f4d2638",
+      "path": "cache_mechanics.py",
+      "bytes": 1700
+    },
+    {
+      "sha256": "85b5bee5d5a69dab1ff0d094cdbad70d4cd66fcff505b36667978817ed30a49c",
+      "path": "corpus.jsonl",
+      "bytes": 270292
+    },
+    {
+      "sha256": "4d28b2d0e20cd6c9ac91ca937e400dd61637b54256328c3436b556ce7998c67b",
+      "path": "run_construction.py",
+      "bytes": 8034
+    },
+    {
+      "sha256": "a708828f956fa1a4bdae574bf96879a4f52b71280f1aa76cbfd20b1994080acd",
+      "path": "test_audit_core.py",
+      "bytes": 1853
+    }
+  ],
+  "image": {
+    "id": "sha256:570ad778e44baf0bd094241515ed6cbbc7ce154321a7d76f295c42f2d5799261",
+    "transformers": "5.16.1",
+    "torch": "2.5.1+cu121",
+    "platform": "linux/amd64",
+    "safetensors": "0.8.0"
+  },
+  "main_sha": "88497cf7e90bda6c99e951654c19bf247be4c6e4",
+  "rows": {
+    "suffix_slots": [
+      0,
+      7,
+      15
+    ],
+    "bundles": [
+      "B00",
+      "B17",
+      "B63"
+    ],
+    "answer_token_ids": [
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22
+    ],
+    "pairs": 9,
+    "formal_rows": 0,
+    "modes": [
+      "fp16",
+      "bf16",
+      "fp32"
+    ]
+  },
+  "corpus": {
+    "local_source": "pre-existing issue2669-lock-guard-work checkout, verified identical in agent-interface-research-1024 checkout",
+    "sha256": "85b5bee5d5a69dab1ff0d094cdbad70d4cd66fcff505b36667978817ed30a49c",
+    "path": "research/system1/typed_readout_prefix_gpu_1014_v1/corpus.jsonl",
+    "bytes": 270292
+  },
+  "model": {
+    "weights_sha256": "fdf756fa7fcbe7404d5c60e26bff1a0c8b8aa1f72ced49e7dd0210fe288fb7fe",
+    "manifest_sha256": "b3f45e24433287c029c4a24b93e47cc5b62348651b512f12f47df755e6ab1854",
+    "revision": "7ae557604adf67be50417f59c2c2f167def9a775"
+  },
+  "preflight": {
+    "ollama": "resident container left untouched",
+    "audit_unit_tests": "3/3 PASS",
+    "corpus_dimensions": "64 bundles x 16 suffixes",
+    "ast_parse": "5/5 PASS",
+    "gpu": "idle 0 MiB / 0 percent before invocation"
+  },
+  "gates": {
+    "cache_isolation": "all rows and modes",
+    "corruption_controls": 5,
+    "max_relative_error": 0.002,
+    "max_absolute_error": 0.002,
+    "raw_audit_errors": 0,
+    "unchanged_winners": 9
+  },
+  "allocation": "typed-readout-precision-boundary-1014-v3-successor-20260927-01",
+  "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU, 16 GiB",
+  "issue": 4875,
+  "commands": {
+    "raw_only_audit": "docker run --rm --pull=never --network none --read-only --cpus=2 --memory=4g --pids-limit=64 --tmpfs /tmp:rw,noexec,nosuid,size=256m -v \"C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\issue4875:/src:ro\" -v \"C:\\Users\\junny\\.cache\\huggingface\\hub\\models--Qwen--Qwen2.5-0.5B-Instruct\\snapshots\\7ae557604adf67be50417f59c2c2f167def9a775:/models/model:ro\" -v \"C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\issue4875-runout-20260927-v1:/formal:ro\" -v \"C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\issue4875-auditout-20260927-v1:/audit:rw\" -e HF_HOME=/tmp/hf -e TRANSFORMERS_OFFLINE=1 --entrypoint python sha256:570ad778e44baf0bd094241515ed6cbbc7ce154321a7d76f295c42f2d5799261 -B /src/audit_raw.py --result /formal/result.json --corpus /src/corpus.jsonl --model /models/model --out /audit/audit.json",
+    "construction": "docker run --rm --pull=never --network none --read-only --gpus all --cpus=2 --memory=8g --pids-limit=64 --tmpfs /tmp:rw,noexec,nosuid,size=512m -v \"C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\issue4875:/src:ro\" -v \"C:\\Users\\junny\\.cache\\huggingface\\hub\\models--Qwen--Qwen2.5-0.5B-Instruct\\snapshots\\7ae557604adf67be50417f59c2c2f167def9a775:/models/model:ro\" -v \"C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\issue4875-runout-20260927-v1:/out:rw\" -e HF_HOME=/tmp/hf -e TRANSFORMERS_OFFLINE=1 --entrypoint python sha256:570ad778e44baf0bd094241515ed6cbbc7ce154321a7d76f295c42f2d5799261 -B /src/run_construction.py --model /models/model --corpus /src/corpus.jsonl --out /out",
+    "unit_test": "docker run --rm --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=64m -v \"C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\issue4875:/src:ro\" -w /src --entrypoint python sha256:570ad778e44baf0bd094241515ed6cbbc7ce154321a7d76f295c42f2d5799261 -B -m unittest -v test_audit_core.py"
+  },
+  "path": "research/system1/typed_readout_precision_boundary_1014_v3_successor/",
+  "branch": "research/typed-readout-precision-boundary-1014-v3-successor-20260927",
+  "output_paths": {
+    "audit": "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\issue4875-auditout-20260927-v1",
+    "construction": "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\issue4875-runout-20260927-v1"
+  }
+}
