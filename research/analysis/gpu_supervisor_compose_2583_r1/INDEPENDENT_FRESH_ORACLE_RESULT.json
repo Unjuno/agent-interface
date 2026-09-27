@@ -1,0 +1,23 @@
+{
+  "status": "PASS_INDEPENDENT_FRESH_ORACLE",
+  "scope": "addendum; preserves all earlier artifacts unchanged",
+  "image": "pytorch/pytorch:2.5.1-cuda12.1-cudnn9-runtime",
+  "device": "NVIDIA GeForce RTX 3080 Laptop GPU",
+  "torch": "2.5.1+cu121",
+  "cuda_runtime": "12.1",
+  "rows": 256,
+  "fresh_oracle_rows": 160,
+  "blocked_oracle_rows": 96,
+  "cpu_cuda_label_agreement": 256,
+  "gpu_fresh_oracle_agreement": 160,
+  "cpu_fresh_oracle_agreement": 160,
+  "gpu_blocked_oracle_agreement": 96,
+  "cpu_blocked_oracle_agreement": 96,
+  "fresh_oracle": "CONTINUE iff feature[2]==0; YIELD iff feature[2]==1",
+  "gpu_labels_sha256": "014db61ba22eeeee9378094a94f9ff70be0ccec56bdd14447d214d5f74f218ff",
+  "cpu_labels_sha256": "014db61ba22eeeee9378094a94f9ff70be0ccec56bdd14447d214d5f74f218ff",
+  "authority_grants": 0,
+  "input_grants": 0,
+  "task_success_claims": 0,
+  "note": "The fresh-valid oracle is declared independently from model output; this remains a synthetic typed-trace contract, not task correctness."
+}
