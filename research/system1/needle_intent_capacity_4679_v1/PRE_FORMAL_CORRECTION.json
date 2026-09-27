@@ -1,0 +1,30 @@
+{
+  "schema": "needle-intent-capacity.pre-formal-correction.v1",
+  "issue": 4679,
+  "allocation": "needle-intent-capacity-4679-v1",
+  "superseded_freeze_sha256": "84b9143ddf40cae0c5e3356ce35d7e8178586e7e9a4a40643561aea3ed5a662e",
+  "superseded_source_commit": "98aa4c5a044ce10eb8511963e734972527781008",
+  "status": "SUPERSEDED_BEFORE_FORMAL_EXECUTION",
+  "reason": "Runner treated the host-precreated empty Docker output bind mount as an existing result and would STOP before training.",
+  "formal_invocations": 0,
+  "trainer_containers": 0,
+  "auditor_containers": 0,
+  "optimizer_steps": 0,
+  "reruns": 0,
+  "source_change": "Accept an existing empty output directory; reject a nonempty output directory and preserve its contents. No scientific design, data, seed, architecture, or decision-gate change.",
+  "construction_verification": {
+    "docker_engine": "29.8.0",
+    "image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+    "command": "python -B -m unittest -v test_construction",
+    "passed": 10,
+    "failed": 0,
+    "optimizer_steps": 0,
+    "warning": "optional NumPy initialization warning; no package installed"
+  },
+  "v2_source_sha256": {
+    "PREREGISTRATION.md": "f0e5de78da48d11cac602d25eeffbee6bb46f9c307374cdba4e87f149cd571ae",
+    "runner.py": "85948fe1d8d286f7d866e80900902aa9609cc683ab876aa1ab12f93679460cd7",
+    "audit.py": "3512005c2fee3f0504453faeb4c6b3de467b57aa4142850452951344f2127500",
+    "test_construction.py": "60372d9963c5c9c61aee84919f9480246e187309b2e7bbb2bd2e2c8ca933e80d"
+  }
+}

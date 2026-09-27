@@ -526,17 +526,3 @@ null character index. Other operations use one-based `expanded_occurrence`.
 Malformed mappings produce null, and partial-effect uncertainty remains unchanged.
 A character location does not authorize retrying the remainder of an uncertain
 operation. The same program syntax works through CLI, Python API and public MCP.
-
-### Caller-owned Python sessions
-
-Use `dispatch_in_session(session, program, current_observation_seq=...,
-current_binding_revision=...)` when a caller already owns a backend session.
-It shares the public compiler, validation, result envelope and diagnostics with
-one-shot `dispatch`, while retaining that session after success, refusal or error.
-The caller must serialize access and close its backend when finished. The API
-does not clear recovery state, refresh targets or authority, or retry input.
-CLI and public MCP one-shot lifecycle remain unchanged.
-
-The native guarded bridge now uses this function and retains a public dispatch
-report alongside its guard receipts. See
-[the primary Calc run](../results/public-owned-session-live-01/README.md).
