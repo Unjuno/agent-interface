@@ -212,6 +212,70 @@ class OwnedMCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(owner.targets,{'fixture':123})
             owner.close()
 
+    async def test_review_image_uses_new_binding_and_results_do_not_repeat_selection(self):
+        session=self.fixture();session.backend.targets={'fixture':SimpleNamespace(id=123)}
+        session.backend.d.create_resource_object.side_effect=lambda kind,wid: SimpleNamespace(id=wid)
+        def read(*args):
+            self.assertEqual(session.backend.targets['fixture'].id,456)
+            return {'sha256':'fixture'}
+        session.backend.observe_read_only.side_effect=read
+        with tempfile.TemporaryDirectory() as td, self.selection(), patch(
+                'runtime.cli_v1.mcp_session.open_session',return_value=session), patch(
+                'runtime.cli_v1.mcp_session.inspect_focused_target',return_value={'window_id':456}), patch(
+                'runtime.cli_v1.mcp_server.present_result',return_value={
+                    'image_status':'available','image':{'type':'image','mimeType':'image/png','data':'YWJj'}}):
+            server=create_server({'fixture':123},td,session_mode='persistent-x11')
+            inspected=self.row(await server.call_tool('interface_inspect_target',{'target':'fixture'}))
+            reply=await server.call_tool('interface_review_target',{
+                'target':'fixture','window_id':456,'review_id':inspected['review_id'],
+                'screen_region':[0,0,10,10]})
+            row=self.row(reply)
+            self.assertEqual(row['binding_revision'],2)
+            self.assertEqual(row['capture_consistency'],'matched')
+            self.assertEqual([x.type for x in reply.content],['text','image'])
+            retained=self.row(await server.call_tool('interface_results',{'call_id':row['call_id'],'include_image':False}))
+            self.assertEqual(retained['binding_revision'],2)
+            self.assertFalse(retained['operation_invoked'])
+            session.backend.observe_read_only.assert_called_once()
+            session.backend.d.create_resource_object.assert_called_once()
+            session.backend.focus.assert_not_called()
+            await server.call_tool('interface_close',{})
+
+    async def test_review_capture_failure_retains_committed_selection_and_consumes_token(self):
+        session=self.fixture();session.backend.targets={'fixture':SimpleNamespace(id=123)}
+        session.backend.d.create_resource_object.side_effect=lambda kind,wid: SimpleNamespace(id=wid)
+        session.recovery_required=True
+        with self.selection(), patch('runtime.cli_v1.mcp_session.open_session',return_value=session), patch(
+                'runtime.cli_v1.mcp_session.inspect_focused_target',return_value={'window_id':456}):
+            owner=MCPSessionOwner({'fixture':123})
+            inspected=owner.inspect_target('fixture')
+            row=owner.review_target('fixture',456,inspected['review_id'],screen_region=[0,0,0,10])
+            self.assertEqual(row['status'],'target_reviewed')
+            self.assertEqual(row['capture_consistency'],'unconfirmed')
+            self.assertEqual(row['observation_report']['status'],'invalid_request')
+            self.assertEqual(owner.targets,{'fixture':456})
+            self.assertEqual(owner.binding_revision,2)
+            self.assertTrue(session.recovery_required)
+            with self.assertRaises(ValueError): owner.review_target('fixture',456,inspected['review_id'])
+            session.backend.observe_read_only.assert_not_called()
+            owner.close()
+
+    async def test_review_capture_changed_metadata_does_not_rebind_or_hide_selection(self):
+        session=self.fixture();session.backend.targets={'fixture':SimpleNamespace(id=123)}
+        session.backend.d.create_resource_object.side_effect=lambda kind,wid: SimpleNamespace(id=wid)
+        with self.selection(), patch('runtime.cli_v1.mcp_session.open_session',return_value=session), patch(
+                'runtime.cli_v1.mcp_session.inspect_focused_target',side_effect=[
+                    {'window_id':456},{'window_id':456},{'window_id':123}]):
+            owner=MCPSessionOwner({'fixture':123})
+            inspected=owner.inspect_target('fixture')
+            row=owner.review_target('fixture',456,inspected['review_id'],screen_region=[0,0,10,10])
+            self.assertEqual(row['capture_consistency'],'changed')
+            self.assertEqual(row['status'],'target_reviewed')
+            self.assertEqual(owner.binding_revision,2)
+            self.assertEqual(owner.targets,{'fixture':456})
+            session.backend.focus.assert_not_called()
+            owner.close()
+
     async def test_invalid_capture_region_never_yields_review_id(self):
         session=self.fixture()
         with self.selection(), patch('runtime.cli_v1.mcp_session.open_session',return_value=session), patch(
