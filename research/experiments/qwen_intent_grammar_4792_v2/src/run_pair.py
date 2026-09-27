@@ -65,7 +65,7 @@ def main():
     parser.add_argument("--out", required=True)
     args = parser.parse_args()
     freeze_path = Path(args.freeze)
-    root = freeze_path.parent
+    root = freeze_path.parents[2] if freeze_path.parent.name == "src" and freeze_path.parent.parent.name == "formal" else freeze_path.parent
     output = Path(args.out)
     if output.exists() and any(output.iterdir()):
         raise SystemExit("STOP_OUTPUT_NOT_EMPTY")

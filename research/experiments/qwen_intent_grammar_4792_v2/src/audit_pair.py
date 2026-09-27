@@ -133,7 +133,7 @@ def main():
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
     freeze_path, data_path, raw_path = map(Path, (args.freeze, args.data, args.raw))
-    root = freeze_path.parent
+    root = freeze_path.parents[2] if freeze_path.parent.name == "src" and freeze_path.parent.parent.name == "formal" else freeze_path.parent
     freeze = json.loads(freeze_path.read_text(encoding="utf-8"))
     errors = []
     checks = 0

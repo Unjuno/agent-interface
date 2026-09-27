@@ -26,13 +26,13 @@ docker run --rm --pull=never --network none --read-only --security-opt=no-new-pr
 Only after preregistration and exact GitHub readback, generate the formal input exactly once in a small offline CPU container, retaining stdout/stderr/exit and its SHA-256:
 
 ```powershell
-docker run --rm --pull=never --network none --read-only --security-opt=no-new-privileges --cap-drop=ALL --cpus 1 --memory 2g --pids-limit 64 --tmpfs /tmp:rw,noexec,nosuid,size=128m -v "${src}:/src:ro" -v "${input}:/out:rw" qwen05b-action-sft:build01 -B /src/prepare_input.py --out /out/DATASET.json
+docker run --rm --pull=never --network none --read-only --security-opt=no-new-privileges --cap-drop=ALL --cpus 1 --memory 2g --pids-limit 64 --tmpfs /tmp:rw,noexec,nosuid,size=128m -v "${root}:/bundle:ro" -v "${input}:/out:rw" qwen05b-action-sft:build01 -B /bundle/src/prepare_input.py --out /out/DATASET.json
 ```
 
 Then run exactly once with source, model, adapter and input read-only; root read-only; no GPU/network/download; and a fresh writable output mount. `$adapter` must contain the two byte-exact files from `formal/src/recovered/` at its root; do not rewrite the committed adapter config.
 
 ```powershell
-docker run --rm --pull=never --network none --read-only --security-opt=no-new-privileges --cap-drop=ALL --cpus 2 --memory 8g --pids-limit 64 --tmpfs /tmp:rw,noexec,nosuid,size=128m -e CUDA_VISIBLE_DEVICES= -e NVIDIA_VISIBLE_DEVICES=void -e HF_HUB_OFFLINE=1 -e TRANSFORMERS_OFFLINE=1 -e EXPERIMENT_IMAGE_ID=sha256:63ce8205b5e0cf7daddac087d6c1bd5489d51e3af345cf923af925026bdd600c -v "${src}:/src:ro" -v "${modelhub}:/hf:ro" -v "${input}:/input:ro" -v "${adapter}:/adapter:ro" -v "${output}:/out:rw" qwen05b-action-sft:build01 -B /src/run_pair.py --freeze /src/FREEZE.json --model /hf/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775 --adapter /adapter --input /input/DATASET.json --out /out
+docker run --rm --pull=never --network none --read-only --security-opt=no-new-privileges --cap-drop=ALL --cpus 2 --memory 8g --pids-limit 64 --tmpfs /tmp:rw,noexec,nosuid,size=128m -e CUDA_VISIBLE_DEVICES= -e NVIDIA_VISIBLE_DEVICES=void -e HF_HUB_OFFLINE=1 -e TRANSFORMERS_OFFLINE=1 -e EXPERIMENT_IMAGE_ID=sha256:63ce8205b5e0cf7daddac087d6c1bd5489d51e3af345cf923af925026bdd600c -v "${root}:/bundle:ro" -v "${modelhub}:/hf:ro" -v "${input}:/input:ro" -v "${adapter}:/adapter:ro" -v "${output}:/out:rw" qwen05b-action-sft:build01 -B /bundle/src/run_pair.py --freeze /bundle/formal/src/FREEZE.json --model /hf/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775 --adapter /adapter --input /input/DATASET.json --out /out
 ```
 
 Run the raw-only auditor once in a separate CPU container after the pair run, with freeze/source/model/input/raw read-only and audit output fresh/writable. Run all eight declared corruption controls against copies only. A process/infra/audit failure is terminal for this allocation: preserve the first STOP/FAIL/HOLD, do not rerun or tune.
