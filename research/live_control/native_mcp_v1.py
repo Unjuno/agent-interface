@@ -12,6 +12,7 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, Stri
 
 from agent_review import review_native
 from native_exchange_v1 import run
+from native_tail_v1 import expand_tail
 
 
 WaitSeconds = Annotated[StrictInt | StrictFloat, Field(ge=0, le=30,
@@ -38,10 +39,10 @@ class NativeDecision(BaseModel):
     interaction: Literal['click','keyboard','observe'] = Field(default='click',
         description='click then tail, keyboard-only tail, or observe for one fresh capture without input; observe consumes a stage.')
     tail: list[dict] = Field(default_factory=list, description=(
-        'Explicit ordered native operations. Examples: {"op":"text","text":"190"}, '
+        'Explicit ordered native operations. Examples: {"op":"text","text":"190","gap_ms":10}, '
         '{"op":"key_chord","keys":["CTRL","s"]}, '
         '{"op":"key_chord","keys":["Right"],"repeat":18}, '
-        '{"op":"wait_update","timeout_ms":50}. No automatic waits or retries.'))
+        '{"op":"wait_update","timeout_ms":50}. Text gap_ms is an integer in 0..1000; it overrides the configured text-gap default (zero disables character gaps). Omit gap_ms to use that default. Text gaps and key repeats expand within the same tail limit: 123 operations for click, 126 for keyboard. No automatic retries.'))
     finish: StrictBool = Field(default=False,
         description='End and evaluate without new input; requires only source_sequence. Session closes even if scoring fails.')
     finish_after: StrictBool = Field(default=False,
@@ -61,6 +62,10 @@ class NativeDecision(BaseModel):
             return self
         if not self.finish and (self.point is None or self.expected_title is None):
             raise ValueError('action requires point and expected_title')
+        # Check explicit compact operations before publishing a stage request.
+        # Preserve the original payload; harness defaults and runtime admission
+        # are still applied by the owner.
+        expand_tail(self.tail, max_ops=123 if self.interaction == 'click' else 126)
         if (not self.finish and self.interaction == 'keyboard'
                 and not any(op.get('op') in {'text', 'key_chord'} for op in self.tail)):
             raise ValueError('keyboard requires explicit text or key_chord input; '
@@ -71,7 +76,7 @@ class NativeDecision(BaseModel):
 def session_context(root):
     """Present existing public task/limits, not evaluator output or authority."""
     context = {'authority':'none'}
-    for key, filename in [('goal','goal.json'), ('exchange_contract','exchange-contract.json')]:
+    for key, filename in [('goal','goal.json'), ('exchange_contract','exchange-contract.json'), ('text_policy','text-policy.json')]:
         path = root/filename
         try:
             data = path.read_bytes()
@@ -84,6 +89,11 @@ def session_context(root):
                     or type(value.get('max_stages')) is not int
                     or not 2 <= value['max_stages'] <= 64):
                 raise ValueError('invalid native exchange contract')
+            if key == 'text_policy' and (
+                    type(value.get('gap_ms')) is not int
+                    or value['gap_ms'] not in (0, 2, 10)
+                    or type(value.get('default_changed')) is not bool):
+                raise ValueError('invalid recorded text policy')
             context[key] = {'status':'recorded', 'value':value,
                             'source':{'path':str(path),'sha256':hashlib.sha256(data).hexdigest()}}
         except FileNotFoundError:

@@ -1,0 +1,28 @@
+{
+  "schema": "x11-string8-py015-formal-freeze-v1",
+  "issue": 4638,
+  "repository": "Unjuno/agent-interface",
+  "intake_main": "b9bfb0966ba2c3fc0d48654e3b6744c917ee0329",
+  "branch": "research/x11-string8-py015-4455-20260927",
+  "additive_path": "research/integration/x11_string8_capture_015_v1/",
+  "formal_allocation": "one invocation; 30 first-outcome cases",
+  "formal_cases": 30,
+  "construction_cases_excluded": 2,
+  "formal_reruns": 0,
+  "replacements": 0,
+  "exclusions": 0,
+  "post_freeze_tuning": 0,
+  "randomization": "none; deterministic schedule order",
+  "image_digest": "sha256:1c334ebd65f4b1bfe81cc84c90780ea01e6f70c0f7b18cd89c09e03406460238",
+  "source_manifest_sha256": "78ca182dc92713ea8ff519787e9ee54ed8a16dfe4b51dc3586b0c3bc7f180f1c",
+  "environment_sha256": "f97823dc692a102b7fa0cf334cb4a645547e769e8b58d130b5369021dbb7e0c3",
+  "upstream_harness_commit": "142af396a7efec9fa13134d28531fc996174e620",
+  "criteria": {
+    "pass": "PASS_X11_STRING8_PY015_BOUNDARY_SCOPED",
+    "hold": "HOLD_NO_LIVE_STRING8_DISCRIMINATOR_PY015",
+    "fail": "FAIL_STRING8_INVERSION_PY015",
+    "audit_errors": "FAIL_RAW_AUDIT",
+    "infrastructure_or_provenance_missing": "typed HOLD/STOP"
+  },
+  "runtime_patch_authorized": false
+}

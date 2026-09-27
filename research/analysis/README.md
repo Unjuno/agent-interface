@@ -126,7 +126,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
 <details>
-<summary><strong>Expand all 157 retained result/failure directories</strong></summary>
+<summary><strong>Expand all 161 retained result/failure directories</strong></summary>
 
 - [`action_conditioned_routing_repair_successor_2059_r2_v1/`](action_conditioned_routing_repair_successor_2059_r2_v1/)
 - [`action_conditioned_routing_repair_successor_2059_v1/`](action_conditioned_routing_repair_successor_2059_v1/)
@@ -136,6 +136,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`altgr_preflight_contract_successor_2171_v1/`](altgr_preflight_contract_successor_2171_v1/)
 - [`anytime_fidelity_typed_admission_r0_v1/`](anytime_fidelity_typed_admission_r0_v1/)
 - [`attention_budgeting_successor_1940_v1/`](attention_budgeting_successor_1940_v1/)
+- [`attention_cue_provenance_diagnostic_2755_v1/`](attention_cue_provenance_diagnostic_2755_v1/)
 - [`attention_provenance_successor_1936_v1/`](attention_provenance_successor_1936_v1/)
 - [`attention_provenance_value_repair_successor_2039_v1/`](attention_provenance_value_repair_successor_2039_v1/)
 - [`belief_auto_recommit_semantic_boundary_r3_v1/`](belief_auto_recommit_semantic_boundary_r3_v1/)
@@ -148,6 +149,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`causal_temporal_attention_successor_1941_v1/`](causal_temporal_attention_successor_1941_v1/)
 - [`causal_temporal_history_2026_v1/`](causal_temporal_history_2026_v1/)
 - [`cegis_skill_4262_v1/`](cegis_skill_4262_v1/)
+- [`censored_useful_effect_integrity_2514_v1/`](censored_useful_effect_integrity_2514_v1/)
 - [`censored_useful_effect_membership_successor_1838_v1/`](censored_useful_effect_membership_successor_1838_v1/)
 - [`cli_v1_lineage_direct_tests_2428_v1/`](cli_v1_lineage_direct_tests_2428_v1/)
 - [`composition_heldout_fixture_2068_v1/`](composition_heldout_fixture_2068_v1/)
@@ -173,6 +175,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`guard_policy_break_even_r0_v1/`](guard_policy_break_even_r0_v1/)
 - [`guard_policy_calibration_identifiability_r1_v1/`](guard_policy_calibration_identifiability_r1_v1/)
 - [`guard_stale_cost_2494_v1/`](guard_stale_cost_2494_v1/)
+- [`hedged_evidence_start_4277_v1/`](hedged_evidence_start_4277_v1/)
 - [`incremental_focus_fold_z7r2_v1/`](incremental_focus_fold_z7r2_v1/)
 - [`independent_effect_evidence_successor_1295_v1/`](independent_effect_evidence_successor_1295_v1/)
 - [`interaction_consistency_product_lattice_r0_v1/`](interaction_consistency_product_lattice_r0_v1/)
@@ -262,6 +265,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`two_tier_dependency_commit_gate_v1/`](two_tier_dependency_commit_gate_v1/)
 - [`typed_dynamic_branch_readset_v1/`](typed_dynamic_branch_readset_v1/)
 - [`typed_effect_outcome_successor_464_v1/`](typed_effect_outcome_successor_464_v1/)
+- [`typed_failure_mode_diagnosis_4155_v1/`](typed_failure_mode_diagnosis_4155_v1/)
 - [`typed_negative_outcome_contract_v1/`](typed_negative_outcome_contract_v1/)
 - [`typed_query_dependency_v1/`](typed_query_dependency_v1/)
 - [`typed_resolve_dependency_v1/`](typed_resolve_dependency_v1/)

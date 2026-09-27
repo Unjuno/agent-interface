@@ -11,7 +11,8 @@ def git_blob_sha(data: bytes) -> str:
 
 
 def audit(root: Path, *, rows_override=None, manifest_override=None,
-          runner_sources_override=None, package_override=None) -> list[str]:
+          runner_sources_override=None, package_override=None,
+          no_gui_result_override=None) -> list[str]:
     errors: list[str] = []
     package = package_override or root / "research/integration/golden_ipc_source_closure_2922_v1"
     evidence = root / "evidence/ready-gate-01"
@@ -40,6 +41,18 @@ def audit(root: Path, *, rows_override=None, manifest_override=None,
     evaluation = rows[3] if len(rows) > 3 else {}
     if evaluation.get("success") is not False or "FileNotFoundError" not in str(evaluation.get("actual")):
         errors.append("zero-action evaluation disposition changed")
+
+    no_gui_result = no_gui_result_override if no_gui_result_override is not None else json.loads(
+        (package / "NO_GUI_IMPORT_RESULT.json").read_text())
+    if (no_gui_result.get("schema") != "issue2922_no_gui_import_probe_v1"
+            or no_gui_result.get("disposition") != "PASS_IMPORT_ONLY"
+            or no_gui_result.get("exit_code") != 0
+            or no_gui_result.get("stdout_terminal_marker") != "IMPORT_OK"
+            or no_gui_result.get("stderr") != ""
+            or no_gui_result.get("xvfb_invoked") is not False
+            or no_gui_result.get("chromium_invoked") is not False
+            or no_gui_result.get("task_effect") != "not tested"):
+        errors.append("no-GUI import-only result contract mismatch")
 
     manifest = manifest_override if manifest_override is not None else json.loads(
         (package / "SOURCE_MANIFEST.json").read_text())

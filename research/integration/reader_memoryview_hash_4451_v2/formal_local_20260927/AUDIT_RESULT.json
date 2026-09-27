@@ -1,0 +1,19 @@
+{
+  "schema": "reader-memoryview-audit-v2",
+  "checks": 332,
+  "decision": "FAIL_RESOURCE_GATES",
+  "classification": "HOLD_NO_MATERIAL_PEAK_ALLOCATION_BENEFIT",
+  "correctness_and_evidence_errors": [],
+  "resource_gate_errors": [
+    "peak_not_lower:2048",
+    "peak_ratio:2048",
+    "peak_not_lower:4064",
+    "peak_ratio:4064"
+  ],
+  "metrics": {
+    "0": {"baseline_peak": [1089443, 1088954, 1089348], "candidate_peak": [1082976, 1082976, 1082881], "peak_ratio_median": 0.9940639390954827, "wall_ratio_median": 1.1914398334523246, "cpu_ratio_median": 0.9935763656552578},
+    "2048": {"baseline_peak": [1575585, 1575585, 1575585], "candidate_peak": [1575585, 1575585, 1575585], "peak_ratio_median": 1.0, "wall_ratio_median": 0.9648026433026902, "cpu_ratio_median": 0.9866149061804185},
+    "4064": {"baseline_peak": [2091681, 2091681, 2091681], "candidate_peak": [2091681, 2091681, 2091681], "peak_ratio_median": 1.0, "wall_ratio_median": 0.9764559145174317, "cpu_ratio_median": 0.9305040413588529},
+    "4096": {"baseline_peak": [1055745, 1055745, 1055745], "candidate_peak": [1055745, 1055745, 1055745], "peak_ratio_median": 1.0, "wall_ratio_median": 1.055069450680144, "cpu_ratio_median": 1.0406204807140778}
+  }
+}
