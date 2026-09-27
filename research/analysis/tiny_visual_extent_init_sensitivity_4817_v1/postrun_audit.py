@@ -68,6 +68,7 @@ def main() -> None:
         "init_seed": raw.get("init_seed") == INIT_SEED,
         "all_initial_tensors_match_seed": all(seed_checks.values()),
         "held_center_count": len(packed_centers) == 8 and len(recorded_centers or []) == 8,
+        "known_label_mismatch_reproduced": mismatch_indices == [0, 2, 4, 6, 7],
     }
     result = {
         "schema": "issue-4983-postrun-audit-v1",
