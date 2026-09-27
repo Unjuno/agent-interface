@@ -38,7 +38,7 @@ or pooling.
 
 **D.** PASS only if all seven frozen outcomes reconcile, the timeout row proves
 the child started before the deadline, all authority flags are false, the raw
-audit has zero errors, and 16/16 fixed corruption controls reject, including
+audit has zero errors, and 17/17 frozen corruption controls reject, including
 semantic-table/file-byte divergence. A complete
 contradiction is scoped FAIL. Missing start marker, command receipt, hashes,
 resource ownership, or audit is HOLD/STOP, never scientific FAIL/PASS.
@@ -58,7 +58,7 @@ not occupy a shared parent-level `research/integration/` destination.
 
 ## One-shot protocol
 
-1. Verify current main `eb3c8d108b8ddd090e5e81a22c7d5db9c367552c` and exact broker blob; check issue/branch/path collisions.
+1. Verify current main `8c6019147dcf91054f2d63bcd872f8a96ae2434f` and exact broker blob; check issue/branch/path collisions.
 2. Run only construction checks. They never import or invoke the broker.
 3. Confirm explicit shared Docker slot ownership and fresh inventory in the
    `desktop-linux` context. Never
