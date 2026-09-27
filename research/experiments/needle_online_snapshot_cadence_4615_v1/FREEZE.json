@@ -1,0 +1,49 @@
+{
+  "schema": "needle-online-snapshot-cadence-freeze-v1",
+  "issue": 4615,
+  "allocation": "needle-online-snapshot-cadence-4615-v1",
+  "status": "FROZEN_BEFORE_FORMAL_ORCHESTRATION",
+  "base_main_sha": "f5fdbcef6596e4d343492e1436642739566cae5b",
+  "branch": "research/needle-online-snapshot-cadence-4615-v1-20260927",
+  "path": "research/experiments/needle_online_snapshot_cadence_4615_v1/",
+  "seeds": [76111, 76222, 76333],
+  "rng_offsets": [1, 2, 3, 4, 10, 20, 21, 30],
+  "cadences": [1, 4, 16],
+  "source_sha256": {
+    "PRE_REGISTRATION.md": "6ee65282d4ef6c0688144a107ec2c85452c776dba288dd42b593d950fdfb6111",
+    "runner.py": "b852f6e107a17d3320538b93897eaa0cd6623351894862060a5a35a3d11ac741",
+    "audit.py": "14bd677418610fa2b149960bf178948423ec15dbaddafe330c9140ee648fd848",
+    "formal.py": "3910c5e72dc3c13729a828c0174f4b62be09018ba682c0ef04735b976db82543",
+    "test_snapshot.py": "4206c21f3bef631f1edeaf2b78ad21ba8474038d6c6d70501fb7cf0873821f25"
+  },
+  "construction": {
+    "host_tests_passed": 4,
+    "docker_tests_passed": 4,
+    "optimizer_or_formal_invocations": 0,
+    "docker_preflight": "PASS",
+    "docker_version": "29.8.0",
+    "image": "needle-pilot05:local",
+    "image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+    "runtime": "linux/amd64, Python 3.12.14, torch 2.5.1+cpu, CPU-only, one thread"
+  },
+  "runtime": {
+    "network": "none",
+    "root_read_only": true,
+    "source_read_only": true,
+    "cpus": 1,
+    "memory_bytes": 2147483648,
+    "pids": 64,
+    "tmpfs_bytes": 134217728,
+    "torch_threads": 1
+  },
+  "formal_contract": {
+    "orchestrations": 1,
+    "training_container_invocations": 1,
+    "independent_audit_container_invocations": 1,
+    "retries": 0,
+    "tuning": 0,
+    "seed_replacements": 0,
+    "train_timeout_seconds": 1800,
+    "audit_timeout_seconds": 600
+  }
+}
