@@ -20,3 +20,13 @@ validation/construction lifecycle amortizes under this pure-Python scorer and
 cached container. It does not measure PyTorch, the original framework runtime,
 real request distributions, task success, or product latency. See `FREEZE.json`
 for source/input hashes, exact Docker commands, gates, and no-retry policy.
+
+## Allocation 01 — construction STOP
+
+The frozen construction invocation stopped before loading the fixture because
+the test module eagerly evaluated an invalid fallback path under its `/src`
+container mount (`IndexError` in `Path.parents[1]`). The machine-readable
+receipt is `results/construction-01/construction.json`; the exact STOP and
+invocation details are in `FORMAL_FAILURE.md`. No parity row or formal timing
+row was executed. Allocation 01 is consumed and must not be retried; any code
+correction belongs in a separately frozen successor allocation.
