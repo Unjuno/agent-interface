@@ -1,0 +1,69 @@
+{
+  "schema": "needle-concurrent-online-lora.freeze.v3",
+  "issue": 4658,
+  "allocation": "needle-concurrent-online-lora-4658-v3",
+  "branch": "research/needle-concurrent-online-lora-4658-v3-20260927",
+  "additive_path": "research/system1/needle_concurrent_online_lora_4658_v3/",
+  "base_main_sha": "67ffa4187f425aa9cc23ec545ee53d89a690dcfb",
+  "seeds": [
+    99771,
+    99883,
+    99991
+  ],
+  "design": {
+    "architecture": "8 input -> tanh hidden 16 -> 4 output; rank-2 output LoRA",
+    "feedback_arrivals": 12,
+    "adamw_steps_per_arrival": 16,
+    "support_batch_per_arrival": 2048,
+    "query_count_per_seed_arm": 120,
+    "inference_period_ns": 16666667,
+    "arms": [
+      "BASELINE",
+      "COW",
+      "SHARED_LIVE"
+    ],
+    "authority": false,
+    "action_emissions": 0,
+    "changed_from_4653": "support batch 512->2048 only; fresh seeds; independent audit identity/order regression; raw mount read-only for auditor"
+  },
+  "environment": {
+    "image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+    "docker_engine": "29.8.0",
+    "platform": "linux/amd64",
+    "python": "3.12.14",
+    "pytorch": "2.5.1+cpu",
+    "threads": 1,
+    "network": "none",
+    "source_mount": "read-only",
+    "rootfs": "read-only",
+    "cpus": 1,
+    "memory": "2g",
+    "pids_limit": 64
+  },
+  "construction_tests_pre_freeze": {
+    "passed": 9,
+    "failed": 0,
+    "optimizer_steps": 0
+  },
+  "formal_cli": {
+    "requires_explicit_flag": "--formal",
+    "default": "construction-only"
+  },
+  "decision_gates": {
+    "audit_errors": 0,
+    "cow_overlap_min_per_seed": 8,
+    "cow_p95_ms_max": 16.67,
+    "cow_deadline_misses_per_seed_max": 0,
+    "proposal_recompute": "torch.equal against captured immutable adapter version"
+  },
+  "retry_policy": "zero retries/tuning/seed replacement/post-result extension",
+  "source_sha256": {
+    "PREREGISTRATION.md": "69dc33414b80324fa7127fd3f564bef904d63b2b666dfb46d641c2546355b2ec",
+    "runner.py": "727d0ca2c12cb38594b278c7e9476c0332c6f11222566ea7df25f79b70b2b999",
+    "audit.py": "e278cabf02823314f850dfa8e9b916a2d266c797858ef9e03853c5d479ccdad0",
+    "test_construction.py": "f0f1d3c79207204be04c62dc7c8d7bd8bb57b1dc104755d289babf3d12faa563",
+    "formal.py": "2a81401c6db3811219285789665dcc0c3e6ea47c0ac6677ad555976f3608b6d4",
+    "PREDECESSOR_STOP.json": "11661455cf850db29f00a938402ea5d233be107e6f0e1eed72ffdbda2e4f4d98"
+  },
+  "formal_allocation_count": 1
+}
