@@ -172,4 +172,57 @@ class OwnedMCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(owner.targets,{'fixture':123})
             owner.close()
 
+    async def test_inspection_image_is_delivered_once_and_retained_without_recapture(self):
+        session=self.fixture()
+        evidence={'window_id':456,'transient_chain':[456,123]}
+        with tempfile.TemporaryDirectory() as td, self.selection(), patch(
+                'runtime.cli_v1.mcp_session.open_session',return_value=session), patch(
+                'runtime.cli_v1.mcp_session.inspect_focused_target',return_value=evidence) as inspect, patch(
+                'runtime.cli_v1.mcp_server.present_result',return_value={
+                    'image_status':'available','image':{'type':'image','mimeType':'image/png','data':'YWJj'}}):
+            server=create_server({'fixture':123},td,session_mode='persistent-x11')
+            reply=await server.call_tool('interface_inspect_target',{'target':'fixture','screen_region':[0,0,10,10]})
+            row=self.row(reply)
+            self.assertIn('review_id',row)
+            self.assertNotIn('image',row)
+            self.assertEqual([x.type for x in reply.content],['text','image'])
+            self.assertFalse(row['input_dispatched'])
+            self.assertEqual(row['session']['targets'],{'fixture':123})
+            raw=json.loads(Path(row['call_directory'],'report.json').read_text())
+            self.assertEqual(raw['observation_report']['status'],'returned')
+            retained=await server.call_tool('interface_results',{'call_id':row['call_id'],'include_image':False})
+            self.assertEqual([x.type for x in retained.content],['text'])
+            self.assertEqual(self.row(retained)['image_delivery'],'omitted_by_request')
+            self.assertEqual(inspect.call_count,2)
+            session.backend.observe_read_only.assert_called_once_with('fixture','screen_physical_px',[0,0,10,10])
+            session.backend.focus.assert_not_called()
+            session.backend.release_all.assert_not_called()
+            await server.call_tool('interface_close',{})
+
+    async def test_capture_disagreement_retains_observation_but_no_review_id(self):
+        session=self.fixture()
+        with self.selection(), patch('runtime.cli_v1.mcp_session.open_session',return_value=session), patch(
+                'runtime.cli_v1.mcp_session.inspect_focused_target',side_effect=[{'window_id':456},{'window_id':123}]):
+            owner=MCPSessionOwner({'fixture':123})
+            result=owner.inspect_target('fixture',screen_region=[0,0,10,10])
+            self.assertEqual(result['error'],'TARGET_CHANGED_DURING_CAPTURE')
+            self.assertEqual(result['observation_report']['status'],'returned')
+            self.assertNotIn('review_id',result)
+            self.assertIsNone(owner.target_review)
+            self.assertEqual(owner.targets,{'fixture':123})
+            owner.close()
+
+    async def test_invalid_capture_region_never_yields_review_id(self):
+        session=self.fixture()
+        with self.selection(), patch('runtime.cli_v1.mcp_session.open_session',return_value=session), patch(
+                'runtime.cli_v1.mcp_session.inspect_focused_target',return_value={'window_id':456}):
+            owner=MCPSessionOwner({'fixture':123})
+            result=owner.inspect_target('fixture',screen_region=[0,0,0,10])
+            self.assertEqual(result['error'],'TARGET_CAPTURE_FAILED')
+            self.assertEqual(result['observation_report']['status'],'invalid_request')
+            self.assertNotIn('review_id',result)
+            self.assertIsNone(owner.target_review)
+            session.backend.observe_read_only.assert_not_called()
+            owner.close()
+
 if __name__=='__main__': unittest.main()

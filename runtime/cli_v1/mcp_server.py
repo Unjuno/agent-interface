@@ -58,6 +58,16 @@ def content(result, *, error=False, include_image=True):
     return CallToolResult(content=blocks, isError=error)
 
 
+def present_management_report(report, call_root):
+    row = dict(report)
+    if 'observation_report' in report:
+        shown = present_result(report['observation_report'], call_root)
+        for key in ('image', 'image_status', 'image_error'):
+            if key in shown:
+                row[key] = shown[key]
+    return row
+
+
 def create_server(targets, output_directory, *, display_name=None, session_mode="one-shot"):
     if session_mode not in ("one-shot", "persistent-x11"):
         raise ValueError("unknown session mode")
@@ -139,7 +149,10 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                     report = close_owner()
                 elif operation in ('inspect_target', 'review_target'):
                     try:
-                        report = getattr(owner, operation)(**kwargs)
+                        review_options = dict(kwargs)
+                        if operation == 'inspect_target':
+                            review_options['capture_directory'] = str(call_root / 'images')
+                        report = getattr(owner, operation)(**review_options)
                     except Exception as error:
                         report = {'status': 'needs_review', 'error': repr(error),
                                   'input_dispatched': False, 'authority_granted': False}
@@ -177,7 +190,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 persistence_error = repr(error)
                 with calls_lock:
                     calls[call_id]['persistence_failure'] = 'report'
-            result = (dict(report) if operation in ('close', 'inspect_target', 'review_target') else
+            result = (present_management_report(report, call_root) if operation in ('close', 'inspect_target', 'review_target') else
                       present_result(report, call_root, compact=compact, report_refs=report_refs))
             if owner is not None:
                 result['session'] = owner.snapshot()
@@ -218,13 +231,17 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
 
     if owner is not None:
         @server.tool()
-        async def interface_inspect_target(target: StrictStr) -> CallToolResult:
+        async def interface_inspect_target(target: StrictStr,
+                                           screen_region: list[StrictInt] | None = None) -> CallToolResult:
             """Read the focused managed client in this target's configured transient family.
 
             Does not select, focus or send input. Returns a one-use 30s review ID.
-            WM metadata is not authenticated identity or atomic with screenshots.
+            Optional screen_region=[x,y,width,height] returns a fresh screen image
+            in this call. Metadata is rechecked after capture; disagreement gives
+            no review ID. This is not an atomic snapshot or redraw acknowledgement.
+            WM metadata is not authenticated identity.
             """
-            return await submit('inspect_target', {'target': target}, False, False)
+            return await submit('inspect_target', {'target': target, 'screen_region': screen_region}, False, False)
 
         @server.tool()
         async def interface_review_target(target: StrictStr, window_id: StrictInt,
@@ -354,7 +371,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             return content({'status': 'receipt_unavailable', 'call': record,
                 'error': repr(error), 'operation_invoked': False,
                 'replay_allowed': False}, error=True)
-        result = (dict(report) if record['operation'] in ('close', 'inspect_target', 'review_target') else
+        result = (await asyncio.to_thread(present_management_report, report, call_root) if record['operation'] in ('close', 'inspect_target', 'review_target') else
                   await asyncio.to_thread(present_result, report, call_root, compact=compact, report_refs=report_refs))
         result.update(call_id=call_id, call_directory=str(call_root), retained_call=record,
                       operation_invoked=False)
