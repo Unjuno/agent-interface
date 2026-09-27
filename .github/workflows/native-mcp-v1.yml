@@ -11,6 +11,7 @@ on:
       - 'runtime/backends/**'
       - 'runtime/integration_checks/**'
       - 'runtime/distribution_v2/**'
+      - 'runtime/guarded_x11_v1/**'
       - '.github/workflows/native-mcp-v1.yml'
   push:
     paths:
@@ -22,6 +23,7 @@ on:
       - 'runtime/backends/**'
       - 'runtime/integration_checks/**'
       - 'runtime/distribution_v2/**'
+      - 'runtime/guarded_x11_v1/**'
       - '.github/workflows/native-mcp-v1.yml'
 permissions:
   contents: read
@@ -42,6 +44,7 @@ jobs:
             runtime/backends
             runtime/integration_checks
             runtime/distribution_v2
+            runtime/guarded_x11_v1
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'

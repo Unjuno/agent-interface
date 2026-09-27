@@ -36,7 +36,7 @@ Call `close()` in a finally block. It closes this connection, not the applicatio
 The object is synchronous and intended for one caller; it is not a concurrent queue.
 
 Observations and raw input receipts are retained in the fresh output directory.
-History is session-local and currently retained in memory until review or close;
+History is session-local and currently retained in memory until review or object disposal;
 callers must bound session lifetime. No claim of unlimited-session memory use is
 made. A dispatch/persistence exception can mean uncertain delivery; inspect the
 retained evidence and observe explicitly instead of replaying input.
