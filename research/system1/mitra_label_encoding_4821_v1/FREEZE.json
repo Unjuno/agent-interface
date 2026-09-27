@@ -1,0 +1,129 @@
+{
+  "schema": "issue-4821-mitra-gpu-resident-freeze-v1",
+  "allocation": "mitra-gpu-rung0-853-label-encoding-successor-local-20260927-01",
+  "issue": 4821,
+  "parent_issue": 4809,
+  "main_intake_sha": "ca38c41b06d20785ffb0a6163a6a22034511c004",
+  "branch": "research/mitra-label-encoding-4821-20260927",
+  "repository_path": "research/system1/mitra_label_encoding_4821_v1",
+  "source_sha256": {
+    "README.md": "9ca55068f46b54f69257546bc5035883179c84a191a6c3615f509f5d24750b82",
+    "FORMAL_PROTOCOL.md": "ba21f4b71f63a676aa36ec3f5e03cdc3141380d9976a52cea4996b4e94669e9c",
+    "Dockerfile": "f69dd48de0c0702e63f515d5da6e3c6ad21c790ff3b664064582b37aa9de1a04",
+    "requirements.base.lock": "d871eb53e8ed38d5ee5d2c8fbae8ed0b2a3f265523bbf24b0573f42b17864ec9",
+    "requirements.lock": "156c3c63d9b85a3ce32390cb656ae5859426e1ba3cbd85252b2e3496f4114ce3",
+    "wheelhouse-manifest.json": "fa7adf1d755b7554c5ead16f9e64cb0d8d0db0f1cf153e44d9b1a32172d46d9c",
+    "label_abi.py": "7453eaf420a52bdb456a7beee66c02970e9f9191e2b270b5f1605ece1b47f812",
+    "runner.py": "a58ac88e4ab08f3cf6fc49902903dbdd2ec5cc850a7f48d1aa1bac62d156a3ea",
+    "audit_formal.py": "e79771486a704de13a88214af81795654265bfa3379fbd105a4f9df3e5dd2322",
+    "audit_diagnostic.py": "0542362e695f1741bb5add9716de767e8d704e5606c5ac106a486a8d23ba689d",
+    "stop_audit.py": "08e2f7e31ed42942a144acd2d4655e5cab541634bdb17567a5f8fcabaa0c6c21",
+    "test_label_abi.py": "bd5de3f5d3792898cd6d80353aaae86a8b23914c0c670545873c6efb62b444de",
+    "test_audit_formal.py": "3b44854e8065840559d2032c5326640a98c8e104b8aa602974f8405e74a2b3d2",
+    "run-formal.ps1": "e4c23531ed345cebcf30c2683c9148a7928640da6340300fec074562462992bf"
+  },
+  "wheelhouse_manifest_sha256": "fa7adf1d755b7554c5ead16f9e64cb0d8d0db0f1cf153e44d9b1a32172d46d9c",
+  "inputs": {
+    "model": {
+      "path": "HF snapshot edada0d20759c58ada8c8605c25f22f6e98ea5f0/model.safetensors",
+      "bytes": 302717904,
+      "sha256": "5ffab0e2cf52f61c5b7c7eb1e8542996736d1023a0212190cc09abc2119a1e09"
+    },
+    "config": {
+      "path": "HF snapshot edada0d20759c58ada8c8605c25f22f6e98ea5f0/config.json",
+      "bytes": 86,
+      "sha256": "2c96c24dd25f64e92753f6f2ba00cc7833b9923459403dcd8504e8700c0995df"
+    },
+    "model_card": {
+      "path": "HF snapshot edada0d20759c58ada8c8605c25f22f6e98ea5f0/README.md",
+      "sha256": "baab54ff0be437c82b1ae616cf19a41820815e274cdda017f0046dd541c86ca8"
+    },
+    "support": {
+      "path": "inputs/support.csv",
+      "rows": 256,
+      "sha256": "bf4d64cf826ea2d727990bd799d7e6d0f813a97a64119751e05d22a819fdf785"
+    },
+    "queries": {
+      "path": "inputs/queries.csv",
+      "rows": 1024,
+      "sha256": "dc68fe551034d6f961900e0300af8c41fea641e058380d21c904bc4146df7fd1"
+    }
+  },
+  "model": {
+    "repo": "autogluon/mitra-classifier-2",
+    "revision": "edada0d20759c58ada8c8605c25f22f6e98ea5f0",
+    "bytes": 302717904,
+    "sha256": "5ffab0e2cf52f61c5b7c7eb1e8542996736d1023a0212190cc09abc2119a1e09",
+    "config": {
+      "dim": 512,
+      "dim_output": 10,
+      "n_layers": 12,
+      "n_heads": 4,
+      "task": "CLASSIFICATION"
+    },
+    "license": "Apache-2.0 as declared by the hash-pinned model card"
+  },
+  "runtime": {
+    "base_image": "pytorch/pytorch:2.5.1-cuda12.1-cudnn9-runtime",
+    "base_image_id": "sha256:831247999fbf7e08f61b3e39f6d77ee434f38f6f07f769d00db451e853878067",
+    "formal_image_id": "sha256:01ea4e60b03e8a7d48644d0dce596bd2e42ab3815fdc52b0c7a6d4cbcf757dac",
+    "python": "3.11.10",
+    "torch": "2.5.1+cu121",
+    "torch_cuda": "12.1",
+    "autogluon_tabular": "1.6.3",
+    "transformers": "5.17.0",
+    "huggingface_hub": "1.33.0",
+    "safetensors": "0.8.0",
+    "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU",
+    "gpu_vram_bytes": 17179869184,
+    "container_cpu_limit": 1,
+    "container_memory_limit_bytes": 4294967296,
+    "container_pids_limit": 128,
+    "network": "none",
+    "root_read_only": true
+  },
+  "measurement": {
+    "api": "autogluon.tabular.models.mitra.sklearn_interface.MitraClassifier",
+    "device": "cuda",
+    "fine_tune": false,
+    "fine_tune_steps": 0,
+    "estimators": 1,
+    "warmup_rows": 16,
+    "formal_rows": 1024,
+    "batch_size": 1,
+    "repeat_rows": 16,
+    "class_vocabulary": [
+      "C0",
+      "C1",
+      "C2",
+      "C3",
+      "C4",
+      "C5"
+    ],
+    "label_encoding": "frozen C0..C5 order to np.int64 0..5",
+    "probability_column_order": "sorted encoded IDs mapped explicitly back to frozen vocabulary",
+    "quantile": "linear interpolation over sorted formal warm single-query wall latencies",
+    "checkpoint_reread_threshold_bytes": 242174323,
+    "optimizer_step_gate": 0
+  },
+  "construction": {
+    "container_image_id": "sha256:01ea4e60b03e8a7d48644d0dce596bd2e42ab3815fdc52b0c7a6d4cbcf757dac",
+    "tests": "10/10",
+    "independent_audit": "PASS",
+    "corruption_controls_rejected": 7,
+    "model_loaded": false,
+    "gpu_requested": false
+  },
+  "decision": {
+    "pass": "all integrity, CUDA placement, ABI, repeat, zero-optimizer and independent-audit gates pass and warm p95 < 500 ms with no checkpoint-scale per-query reread",
+    "realtime_candidate": "warm single-query p95 < 100 ms",
+    "reject_gpu_high_cadence_shape": "complete integrity-valid block with warm p95 >= 500 ms or any checkpoint-scale per-query reread",
+    "integrity_failure": "source/model/license/image, network, CUDA placement, output ABI, optimizer, audit, or completeness gate fails"
+  },
+  "scope_limits": [
+    "one model revision, one synthetic support/query fixture, one Windows Docker Desktop RTX 3080 host",
+    "runtime and output ABI only; no task accuracy/calibration/effect claim",
+    "no task-specific training, fine-tuning, quantization, distillation, or hyperparameter tuning",
+    "does not alter or reinterpret #853, #4745, #4800, or #4809"
+  ]
+}
