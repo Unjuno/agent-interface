@@ -8,7 +8,7 @@ Construction seed `6911101` only: Docker unit tests passed 6/6; independent cons
 
 ## Scope and known measurement limitation
 
-This is a synthetic local CPU adapter and local durable snapshot timing study, not Cactus Needle 3 adaptation quality or task/action readiness. In predecessor PR #4740, code review noted that the worker starts the post-ack full-batch audit immediately after flushing ACK; under a shared one-CPU quota that can overlap supervisor receipt/parsing included in measured request→ack. Do not claim a clean worker-flush boundary. Resolve with an explicit receipt handshake and preregistration amendment, or supersede this allocation with fresh seeds; never silently patch a formal freeze.
+This is a synthetic local CPU adapter and local durable snapshot timing study, not Cactus Needle 3 adaptation quality or task/action readiness. In predecessor PR #4740, code review noted that the worker started the post-ack full-batch audit immediately after flushing ACK, which could overlap timed supervisor receipt/parsing on one CPU. Before formal freeze, v2 added an explicit `ACK_RECEIVED` handshake and reran construction B; preregistration and construction history record the amendment and result. No formal run has begun.
 
 ## Reproducibility
 
