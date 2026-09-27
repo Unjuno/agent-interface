@@ -1,11 +1,7 @@
-# Source-hash erratum
+# Hash correction: line-ending encodings
 
-The merged #4639 README declares corpus SHA-256
-`c70d4ba3d06dec161fdc8d3f5e5312fbe3ff0af1c1a36cdcb0dc0e290efe27fd`. On the
-current main, the predecessor `SOURCE_MANIFEST.json` lists the bytes of
-`corpus.jsonl` as `85b5bee5d5a69dab1ff0d094cdbad70d4cd66fcff505b36667978817ed30a49c`,
-and direct local SHA-256 independently returns the same value. This successor
-pins the directly verified file bytes as `85b5...` and records both Issues'
-comments. The #4639 raw construction/audit files remain unchanged; their
-per-prefix hashes are consistent with these corpus rows. This is a metadata
-correction only and does not revise either scientific outcome.
+The earlier draft of this note incorrectly called the merged #4639 README corpus hash an upstream metadata error. Git object inspection shows that the README value `c70d4ba3d06dec161fdc8d3f5e5312fbe3ff0af1c1a36cdcb0dc0e290efe27fd` is the correct SHA-256 for the canonical LF Git blob (270,228 bytes).
+
+The predecessor source manifest's `85b5bee5d5a69dab1ff0d094cdbad70d4cd66fcff505b36667978817ed30a49c` is the SHA-256 of its Windows CRLF worktree form (270,292 bytes), which was the exact corpus input consumed by this successor's frozen GPU run. The two byte streams are related by LF-to-CRLF conversion; JSONL records are identical. The frozen runner therefore correctly checks the tested Windows byte stream, but a clean Linux checkout lacked those bytes until this successor added `corpus_source/corpus.jsonl`.
+
+This is a provenance/reproducibility clarification only. No prior raw evidence or formal result has been changed and no formal run has been repeated.

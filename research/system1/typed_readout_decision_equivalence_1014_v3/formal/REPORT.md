@@ -29,8 +29,11 @@ relabel #4623's full-vocabulary score STOP or #4639's selected-score STOP.
 - Model revision: `7ae557604adf67be50417f59c2c2f167def9a775`.
 - Model weight SHA-256:
   `fdf756fa7fcbe7404d5c60e26bff1a0c8b8aa1f72ced49e7dd0210fe288fb7fe`.
-- Corpus SHA-256:
-  `85b5bee5d5a69dab1ff0d094cdbad70d4cd66fcff505b36667978817ed30a49c`.
+- Consumed corpus bytes: 270,292-byte Windows CRLF form, SHA-256:
+  `85b5bee5d5a69dab1ff0d094cdbad70d4cd66fcff505b36667978817ed30a49c`, retained at `corpus_source/corpus.jsonl`.
+  The canonical LF Git blob is 270,228 bytes with SHA-256
+  `c70d4ba3d06dec161fdc8d3f5e5312fbe3ff0af1c1a36cdcb0dc0e290efe27fd`; LF-to-CRLF
+  conversion reproduces the exact input.
 - Formal: `FORMAL_001.json`; exit code `0`; paired rows `1024`; mismatches `0`.
 - Independent audit: `AUDIT_001.json`; exit code `0`; rows reconstructed `1024`;
   audit errors `0`; mismatches `0`.

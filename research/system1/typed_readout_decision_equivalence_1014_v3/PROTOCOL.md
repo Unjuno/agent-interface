@@ -9,9 +9,7 @@ token IDs 15–22 for all 1,024 questions in the immutable 64×16 synthetic corp
 
 Reuse only the pinned Qwen2.5-0.5B-Instruct revision and weight digest,
 tokenizer, FP16 dtype, PyTorch/Transformers/CUDA stack, derived Docker image,
-and corpus SHA `85b5bee5d5a69dab1ff0d094cdbad70d4cd66fcff505b36667978817ed30a49c`
-verified by the predecessor's source manifest and direct hashing. The #4639
-README contains a conflicting corpus-hash value; see this package's erratum.
+and the retained Windows CRLF corpus SHA `85b5bee5d5a69dab1ff0d094cdbad70d4cd66fcff505b36667978817ed30a49c`. The exact bytes are included under `corpus_source/`; the canonical LF Git blob has SHA `c70d4ba3…`. See `CORPUS_REPRODUCTION.md`.
 No download, model,
 prompt, corpus, tokenizer, dtype, or image changes. Run locally on the RTX 3080
 inside network-disabled Docker with read-only model/data/source mounts.
