@@ -51,7 +51,9 @@ def main():
             if e.get('parse_ok') is True and e.get('payload_ok') is True and e.get('generation') in (3788,3789): errors.append('diagnostic_partial_was_valid:'+str(e.get('reader')))
             if e.get('sha256') in (sha(b),sha(c)): errors.append('diagnostic_partial_was_complete:'+str(e.get('reader')))
         else: errors.append('unknown_phase')
-    if r.get('invalid_candidate_rejected') is not True or r.get('invalid_candidate_active_unchanged') is not True: errors.append('invalid_candidate_control')
+    if (r.get('invalid_candidate_rejected') is not True or r.get('invalid_candidate_active_unchanged') is not True
+            or r.get('invalid_active_before_sha256')!=sha(c) or r.get('invalid_active_after_sha256')!=sha(c)):
+        errors.append('invalid_candidate_control')
     if r.get('safe_atomic_observations_ok') is not True or r.get('unsafe_midpoint_detected') is not True or r.get('unsafe_after_write_recovered') is not True: errors.append('runner_gate')
     if r.get('errors')!=[]: errors.append('runner_errors')
     if any(r.get(k)!=0 for k in ('model_calls','optimizer_steps','authority_emissions')): errors.append('scope_boundary')
