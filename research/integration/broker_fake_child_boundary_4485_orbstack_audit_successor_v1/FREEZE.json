@@ -1,0 +1,33 @@
+{
+  "schema": "broker-fake-child-audit-successor-freeze-v1",
+  "issue": 5047,
+  "parent_issue": 5037,
+  "allocation": "broker-fake-child-boundary-4485-orbstack-audit-successor-20260928-01",
+  "intake_main": "2b4891d99e3b938d1595d75ec978eb2e4ce6f5bf",
+  "input_formal_manifest_sha256": "5ae0e8e6dd5cf1d194cf4270f1dc210896e4e78e8fed09599d403177e7b8ad46",
+  "input_result_sha256": "ae09573149160bda321e10ff14483b9cd4690d5c472b4a630b4ebef6b7583a59",
+  "first_failed_audit_sha256": "a69284a0a245723469ff740051907271c1f62795151abb4f83a9267a32fbb441",
+  "broker_source_sha256": "e44822269b921aa6327563b27e48a6d8ef4ebe35a182f50de541cf66fce6199c",
+  "corrected_auditor_sha256": "4a93f9d51b4f1adab3087003bc3bf04d3c05f733b2f8e40232225b631adbae9f",
+  "audit_tests_sha256": "158f6eba166dfffd9564b5e5f6ac53473563fe87f1b03d658bc76497845d4835",
+  "audit_launcher_sha256": "c770d16600a8fc07c1bb6cae3afa4557f7fd423613b5c9dc3254b2be05b9effd",
+  "container": {
+    "engine_context": "orbstack",
+    "image": "python:3.12-slim-bookworm",
+    "image_config_digest": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "platform": "linux/arm64",
+    "python": "3.12.14",
+    "network": "none",
+    "read_only_rootfs": true,
+    "source_and_evidence_mounts": "read-only",
+    "audit_output_mount": "fresh writable only",
+    "cpu": "0.25",
+    "memory": "512m",
+    "memory_swap": "512m",
+    "pids": 32,
+    "capabilities": "drop-all",
+    "security": "no-new-privileges",
+    "invocation_limit": 1,
+    "formal_invocations": 0
+  }
+}
