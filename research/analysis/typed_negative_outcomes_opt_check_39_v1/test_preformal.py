@@ -43,7 +43,9 @@ class OptimizationControls(unittest.TestCase):
     def test_raw_auditor_does_not_depend_on_assertions(self):
         source=AUDIT.read_text(encoding="utf-8")
         self.assertNotIn("assert ",source)
-        self.assertIn("if not condition: errors.append(label)",source)
+        self.assertIn("def check(condition, label, errors):",source)
+        self.assertIn("if not condition:",source)
+        self.assertIn("errors.append(label)",source)
 
     def test_each_mutation_is_rejected_in_all_modes(self):
         original=CANDIDATE.read_text(encoding="utf-8")
