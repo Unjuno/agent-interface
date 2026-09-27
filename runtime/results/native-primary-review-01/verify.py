@@ -5,10 +5,9 @@ import json
 import tarfile
 
 
-def main():
-    here = Path(__file__).resolve().parent
-    manifest = json.loads((here/'manifest.json').read_text())
-    with tarfile.open(here/'evidence.tar.gz', 'r:gz') as archive:
+def read_archive(here, archive_name, manifest_name):
+    manifest = json.loads((here/manifest_name).read_text())
+    with tarfile.open(here/archive_name, 'r:gz') as archive:
         members = archive.getmembers()
         assert len(members) == len(manifest)
         assert len({m.name for m in members}) == len(members)
@@ -18,6 +17,12 @@ def main():
             raw = archive.extractfile(member).read()
             assert {'bytes':len(raw), 'sha256':hashlib.sha256(raw).hexdigest()} == manifest[member.name]
             data[member.name] = raw
+    return data
+
+
+def main():
+    here = Path(__file__).resolve().parent
+    data = read_archive(here, 'evidence.tar.gz', 'manifest.json')
     prefix = 'native-primary-review-01/'
     def read(name):
         return json.loads(data[prefix+name])
@@ -59,6 +64,24 @@ def main():
     assert json.loads(data['native-primary-review-ci-01/result.json'])['status'] == 'PASS'
     print(json.dumps({'files':len(data), 'exact_tasks':6, 'primary_reviews':6,
                       'verified_releases':releases, 'scope':'retained mechanics, not model identity or speed benefit'}))
+    data = read_archive(here, 'stop-control.tar.gz', 'stop-control-manifest.json')
+    prefix = 'native-primary-review-stop-01/'
+    rows = read('tasks.json')
+    assert len(rows) == 1 and read('allocation.json')['route'] == 'direct'
+    assert read('task-1-primary-review-result.json')['decision']['outcome'] == 'uncertain'
+    assert 'no next task' in read('task-1-primary-review-result.json')['error']
+    evaluation = read('evaluation-at-close.json')
+    assert evaluation['success'] is False and evaluation['record_count'] == 1
+    assert evaluation['missing'] == [f'task-{i}' for i in range(2, 7)]
+    assert prefix+'task-2-navigation-program.json' not in data
+    assert len(data[prefix+'submission-history.jsonl'].splitlines()) == 1
+    assert all(p['returncode'] is not None for p in read('cleanup.json'))
+    for result in (rows[0]['navigation']['result']['result'], rows[0]['direct']['result']):
+        release = result['execution']['releases'][-1]
+        assert result['status'] == 'completed'
+        assert release['verified'] and not release['keys_down'] and not release['buttons_down']
+    print(json.dumps({'control_files':len(data), 'control':'explicit uncertainty stopped after task 1',
+                      'scope':'injected control, not spontaneous model uncertainty'}))
 
 
 if __name__ == '__main__':

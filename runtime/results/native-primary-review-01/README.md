@@ -30,6 +30,16 @@ subagent was used. The run process exited 0 as observed by the execution tool.
 
 ## Timing and limitations
 
+A separate direct-route stop control (`native-primary-review-stop-01`, source
+`a8b9cfa17`, seed 991289) deliberately returned `uncertain` after the primary
+assistant viewed a successful task-1 Save. The process exited 1, retained the
+review and error, and performed no task-2 navigation. The independent evaluator
+correctly retained overall failure with one submission and five missing tasks.
+Both completed programs had verified empty release and all tracked children
+were terminal. Its 30 files are in `stop-control.tar.gz` with a separate manifest;
+the successful-run archive is unchanged. This is an injected stopping control,
+not naturally occurring model uncertainty or a matched direct baseline.
+
 See `measurements.json` for all six rows. Action-to-feedback was 634.7–722.0 ms
 on the five tasks without repair. Task 4 took 24.04 s including primary repair.
 Feedback-to-primary-review ranged from 23.59 to 32.49 s, median 23.85 s.
