@@ -123,7 +123,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         'Inspect action, image and cleanup outcomes separately. '
         'Never replay an uncertain action automatically.'))
 
-    def invoke(operation, kwargs, compact, report_refs):
+    def invoke(operation, kwargs, compact, report_refs, detail="full"):
         call_id = None
         try:
             call_root = root / uuid.uuid4().hex
@@ -138,6 +138,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                        'display_name': display_name}
             if owner is not None:
                 request['session'] = owner.snapshot()
+            if detail != 'full':
+                request['presentation'] = {'detail': detail}
             try:
                 _write_json(call_root / 'request.json', request)
             except (OSError, ValueError, TypeError) as error:
@@ -212,6 +214,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             if persistence_error is not None:
                 result['persistence_error'] = persistence_error
                 result['replay_allowed'] = False
+            if detail == 'brief':
+                from .guarded_presentation import brief_guarded_report
+                result = brief_guarded_report(result)
             return content(result, error=persistence_error is not None or (
                 (operation.startswith('guarded_') or operation in ('close', 'inspect_target', 'review_target')) and
                 (report.get('error') is not None or report.get('status') in ('cleanup_failed','refused','needs_review')
@@ -222,7 +227,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                     calls[call_id]["state"] = "finished"
             lock.release()
 
-    async def submit(operation, kwargs, compact, report_refs):
+    async def submit(operation, kwargs, compact, report_refs, detail="full"):
         if report_refs and not compact:
             return content({'status': 'invalid_request',
                 'error': 'report_refs requires compact=true',
@@ -233,7 +238,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         # Decide busy before scheduling a worker; thread-pool contention must not queue input.
         if not lock.acquire(blocking=False):
             return content({'status': 'busy', 'operation_invoked': False}, error=True)
-        worker = asyncio.create_task(asyncio.to_thread(invoke, operation, kwargs, compact, report_refs))
+        worker = asyncio.create_task(asyncio.to_thread(invoke, operation, kwargs, compact, report_refs, detail))
         workers.add(worker)
         def finished(task):
             workers.discard(task)
@@ -347,12 +352,15 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                                 before_call_id: StrictStr | None = None,
                                 compact: StrictBool = False,
                                 include_image: StrictBool = True,
-                                report_refs: StrictBool = False) -> CallToolResult:
+                                report_refs: StrictBool = False,
+                                detail: Literal["full", "brief"] = "full") -> CallToolResult:
         """List this server's calls or reread one retained result. Never dispatch or observe.
 
         A finished worker is not proof of task success. Unknown calls are not replayed.
         This registry lasts only for this server process; no restart recovery is implied.
         Set include_image=false to inspect metadata without resending a retained image.
+        detail=brief projects only normal guarded-input checks; full is the default.
+        Critical/unsupported guarded reports stay full; other modes are unchanged.
         report_refs requires compact=true and a v3 receipt decoder.
         In v3, read the full report at receipt.source.raw_report in this response;
         the report reference requires no additional tool call.
@@ -399,6 +407,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                   await asyncio.to_thread(present_result, report, call_root, compact=compact, report_refs=report_refs))
         result.update(call_id=call_id, call_directory=str(call_root), retained_call=record,
                       operation_invoked=False)
+        if detail == 'brief' and record['operation'].startswith('guarded_'):
+            from .guarded_presentation import brief_guarded_report
+            result = brief_guarded_report(result)
         return content(result, include_image=include_image)
 
     return server
