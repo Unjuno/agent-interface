@@ -187,7 +187,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 if operation == 'close':
                     report = close_owner()
                 elif operation == 'recover_input':
-                    report = owner.recover_input(**kwargs)
+                    report = owner.recover_input(**kwargs, capture_directory=str(call_root / 'images'))
                 elif operation.startswith('guarded_'):
                     report = owner.invoke_guarded(operation, kwargs, call_root)
                 elif operation in ('inspect_target', 'review_target'):
@@ -283,17 +283,23 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
 
     if owner is not None and not guarded:
         @server.tool()
-        async def interface_recover_input(current_binding_revision: StrictInt) -> CallToolResult:
+        async def interface_recover_input(current_binding_revision: StrictInt,
+                                          target: StrictStr | None = None,
+                                          region: list[StrictInt] | None = None) -> CallToolResult:
             """Explicitly release tracked inputs after unverified cleanup, without replay.
 
             Requires this open persistent-X11 session, its current binding revision,
             and recovery_required=true. Failed readback leaves recovery blocked.
             Verified empty release clears only the input block and advances binding
             revision, invalidating old programs and pending target reviews. No new
-            observation or lease is issued. Prior task effects remain unknown:
-            observe/review before choosing a new program. Never retries automatically.
+            lease is issued. Optional target and region=[x,y,width,height] together
+            capture that window after successful recovery in this call. Capture
+            failure retains the recovery result and new revision; observe separately.
+            Review the image before choosing a new program. Capture is not a redraw
+            acknowledgement or task-success check. Never retries automatically.
             """
-            return await submit('recover_input', {'current_binding_revision': current_binding_revision}, False, False)
+            return await submit('recover_input', {'current_binding_revision': current_binding_revision,
+                                                 'target': target, 'region': region}, False, False)
 
         @server.tool()
         async def interface_inspect_target(target: StrictStr,
