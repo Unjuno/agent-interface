@@ -4,8 +4,9 @@ This additive package is for the unmeasured six-task Mindustry economics cell
 under #57. It inherits the frozen task/order/arm/call schedule and acceptance
 rule from #1679; it does not reopen or modify #1679, #2624, or prior allocations.
 
-This branch includes current `main` `16421aefa2ec357b79e3fd3dc307b32955bc6fab`
-(merge commit `1866f05aab`, incorporating #5154 and #5153 after `716d252`). The inherited
+This branch includes current `main` `3553dc1af1125441a6b44256755e7e22df40836d`
+(merge commit `8c3138c7bd`, incorporating #5158 on top of prior #5154/#5153 sync
+`1866f05aab`). The inherited
 #1679 preregistration's five dependency blobs were compared with this main:
 four are byte-identical; the plan Markdown alone changed from
 `ff0de7c4a0d6cc57d145d460f019f72d6967ffec` to
