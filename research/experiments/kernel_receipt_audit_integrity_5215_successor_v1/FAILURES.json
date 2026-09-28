@@ -1,0 +1,7 @@
+{
+ "failures":[
+  {"classification":"TEST_DESIGN_FAILURE","attempt":1,"outcome":"6 unit assertions failed","cause":"The first tests compared mutations against boolean acceptance values rather than checking whether the retained raw cases satisfy release and causal timestamp conditions. The original raw record also contained cases inconsistent with a proposed expected-case calculation.","disposition":"No kernel calls or hypothesis runs occurred. Reworked the suite to preserve the original record as HOLD, explicitly enumerate timestamp/release inconsistencies, and test schema mutation rejection. The failed output is summarized in REPORT.md."},
+  {"classification":"GITHUB_READBACK_CACHE","attempt":1,"outcome":"Raw GitHub URL returned stale source after branch update","disposition":"Switched to GitHub MCP branch-ref fetch; exact returned source text was saved locally and executed."},
+  {"classification":"CONTAINER_EXECUTION_NOT_PERFORMED","attempt":1,"outcome":"Docker Desktop endpoint available but evidence source mount was not frozen before local suite execution","disposition":"No container was launched; this is disclosed and no container validation is claimed."}
+ ]
+}
