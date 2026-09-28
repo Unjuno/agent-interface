@@ -9,7 +9,8 @@ the action; these entry points do not require a second model or a subagent.
 | Entry point | Use | Lifecycle |
 |---|---|---|
 | [Public CLI/API](cli_v1/README.md) | Existing target mappings and admitted programs; ordinary application integration | One-shot dispatch/observation |
-| [Public MCP transport](cli_v1/MCP.md) | The same explicit targets/programs through an MCP host, with native image blocks | One-shot API calls; no managed allocation |
+| [Public MCP transport](cli_v1/MCP.md) | The same explicit targets/programs through an MCP host, with native image blocks | Default one-shot; optional persistent/guarded X11; no managed allocation |
+| [Scoped public X11 MCP](cli_v1/MCP.md#opt-in-scoped-x11-mode) | Shared image-grounded aliases and input-result images through the public MCP server | Opt-in guarded-x11; one explicit target and retained connection |
 | [Native MCP adapter](../research/live_control/NATIVE_MCP.md) | Existing private native harness, or one explicitly managed allocation | Bound run, explicit stages and exact-request resume |
 | [Scoped X11 Python API](guarded_x11_v1/README.md) | Explicit image-grounded aliases and guarded input, also included in the portable archive | One caller-owned connection; explicit close and re-grounding |
 | [Local integration checks](integration_checks/README.md) | Verify the implementation without GUI or model calls | Fresh output directory with logs |

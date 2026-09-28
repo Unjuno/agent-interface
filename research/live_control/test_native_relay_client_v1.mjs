@@ -72,3 +72,42 @@ test('nonfinite or omitted values are refused before recording or sending',async
  assert.equal((await readdir(evidenceDirectory)).filter(n=>n.startsWith('request-')).length,0);
  await client.close();
 });
+test('review attribution comes from explicit retained reply and cannot overwrite history', async () => {
+ const { writeFile } = await import('node:fs/promises');
+ const { createHash } = await import('node:crypto');
+ const { recordRelayReview } = await import('./native_relay_client_v1.mjs');
+ const root = await mkdtemp(join(tmpdir(), 'relay-review-'));
+ const replyPath = join(root, 'reply-21.json'), receiptPath = join(root, 'review.json');
+ const report = {call_id:'call-21',source:{sequence:59,observation_id:'observation-59'}};
+ const row = {id:21,tool:'interface_guarded_input',status:'returned',result:{content:[
+  {type:'text',text:JSON.stringify(report)}, {type:'image',data:'AAECAw==',mimeType:'image/png'}]}};
+ const raw = JSON.stringify(row);
+ await writeFile(replyPath,raw);
+ const args = {replyPath,receiptPath,task:'task-4',phase:'entered',reason:'Caller declares image reviewed.'};
+ const receipt = await recordRelayReview(args);
+ assert.equal(receipt.call_id,'call-21'); assert.equal(receipt.source_sequence,59);
+ assert.equal(receipt.observation_id,'observation-59'); assert.equal(receipt.relay_id,21);
+ assert.equal(receipt.reply_sha256,createHash('sha256').update(raw).digest('hex'));
+ assert.equal(receipt.images[0].sha256,createHash('sha256').update(Buffer.from([0,1,2,3])).digest('hex'));
+ await assert.rejects(recordRelayReview(args),/EEXIST/);
+ assert.deepEqual(JSON.parse(await readFile(receiptPath)),receipt);
+});
+test('review refuses ambiguous, missing-image, uncertain and incomplete evidence', async () => {
+ const { writeFile } = await import('node:fs/promises');
+ const { recordRelayReview } = await import('./native_relay_client_v1.mjs');
+ const root = await mkdtemp(join(tmpdir(), 'relay-review-invalid-'));
+ const text = {type:'text',text:JSON.stringify({call_id:'c',source:{sequence:1,observation_id:'o'}})};
+ const image = {type:'image',data:'AA==',mimeType:'image/png'};
+ const cases = [
+  {id:1,status:'returned',result:{content:[text]}},
+  {id:1,status:'returned',result:{content:[text,text,image]}},
+  {id:1,status:'unknown_requires_reconciliation',result:{content:[text,image]}},
+  {id:1,status:'returned',result:{content:[{type:'text',text:'{"call_id":"c","source":{"sequence":1}}'},image]}},
+ ];
+ for (let i=0;i<cases.length;i++) {
+  const replyPath=join(root,`reply-${i}.json`),receiptPath=join(root,`receipt-${i}.json`);
+  await writeFile(replyPath,JSON.stringify(cases[i]));
+  await assert.rejects(recordRelayReview({replyPath,receiptPath,task:'t',phase:'p',reason:'r'}));
+  await assert.rejects(readFile(receiptPath),/ENOENT/);
+ }
+});

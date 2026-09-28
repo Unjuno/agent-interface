@@ -14,6 +14,27 @@ from native_mcp_relay_v1 import Relay
 
 
 class RelayTests(unittest.IsolatedAsyncioTestCase):
+    async def test_explicit_public_relay_discovery_and_close_without_backend(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);(root/'targets.json').write_text(json.dumps({'app':123}))
+            process=await asyncio.create_subprocess_exec(sys.executable,
+                str(Path(__file__).with_name('native_mcp_relay_v1.py')), '--server-kind','public','--',
+                '--targets',str(root/'targets.json'),'--output-directory',str(root/'calls'),
+                '--session-mode','guarded-x11',stdin=asyncio.subprocess.PIPE,
+                stdout=asyncio.subprocess.PIPE,stderr=asyncio.subprocess.PIPE)
+            requests=[{'id':1,'tool':'native_start','arguments':{}},
+                      {'id':1,'tool':'list_tools','arguments':{}},
+                      {'id':2,'tool':'interface_close','arguments':{}}]
+            stdout,stderr=await asyncio.wait_for(process.communicate(
+                ''.join(json.dumps(r)+'\n' for r in requests).encode()),timeout=20)
+            self.assertEqual(process.returncode,0,stderr.decode())
+            rows=[json.loads(line) for line in stdout.splitlines()]
+            self.assertEqual(rows[0]['status'],'refused');self.assertFalse(rows[0]['dispatched'])
+            self.assertIn('interface_guarded_input',{t['name'] for t in rows[1]['result']['tools']})
+            closed=json.loads(rows[2]['result']['content'][0]['text'])
+            self.assertEqual(closed['status'],'closed')
+            self.assertFalse(closed['connection_close_attempted'])
+
     async def test_real_relay_forwards_opt_in_stop_without_starting_allocation(self):
         with tempfile.TemporaryDirectory() as tmp:
             path=Path(tmp)/'allocation'
