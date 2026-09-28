@@ -110,6 +110,11 @@ export async function presentRelayResponse(row, { text, image }) {
     await text(row);
     return;
   }
+  // Tool execution status is independent of text/image content, including
+  // an empty content array. Preserve an explicit flag without inferring success.
+  if (Object.hasOwn(row.result, 'isError')) {
+    await text({ schema: 'agent-interface/mcp-result-status-v1', isError: row.result.isError });
+  }
   for (const block of row.result.content) {
     if (block.type === 'text') await text(block.text);
     else if (block.type === 'image') await image({ bytes: Buffer.from(block.data, 'base64'), mimeType: block.mimeType });
