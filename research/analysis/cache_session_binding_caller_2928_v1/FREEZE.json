@@ -1,0 +1,23 @@
+{
+  "schema": "issue-2928-current-caller-session-binding-freeze-v1",
+  "issue": 2928,
+  "intake_main": "26d625a699175ddafde38d0ca26d901edfb6df7e",
+  "subject_path": "research/live_control/adaptive_acquisition_caller_v3.py",
+  "subject_git_blob": "7faf042304728ce91a3e4f89d465b251ea0bf70d",
+  "subject_sha256": "8517d130d7336b27e6ddfc0ee06629d2b1183070cf845c3ef4ada8adc3cd79ca",
+  "H": "The current-main reuse route requires a current request session_id in its spec but may omit that value from the reuse_revalidate adapter payload, allowing the caller to rely on undocumented adapter closure state for session binding.",
+  "T": "Import the exact frozen caller source. Run two deterministic shadow cases with identical current request session_id and cached targets tagged to the same vs a prior session. Capture only the payloads passed to reuse_revalidate/final_revalidate and whether the no-effect execute adapter is reached. No provider, GUI, input, model, network, Docker, or runtime write.",
+  "D": "Report the observed interface boundary only. HOLD_SESSION_BINDING_DEPENDS_ON_ADAPTER if current session context is not explicit in the revalidation payload; do not infer real stale-cache admission or production impact.",
+  "C": [
+    "Adapters may close over trusted current-session context outside their payload.",
+    "The execute adapter is a shadow stub that returns safe_yield with zero completed actions.",
+    "Only the caller orchestration is exercised; no concrete production adapter is invoked."
+  ],
+  "U": "Two synthetic cases on one Windows host and one caller source snapshot. No lifecycle PASS/FAIL, cache freshness claim, task effect, safety, latency, or product claim.",
+  "cases": [
+    {"case_id":"same_session","request_session_id":"session-current","cached_session_id":"session-current"},
+    {"case_id":"stale_cached_session","request_session_id":"session-current","cached_session_id":"session-prior"}
+  ],
+  "formal_invocations": 0,
+  "docker_invocations": 0
+}
