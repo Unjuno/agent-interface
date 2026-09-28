@@ -6,7 +6,7 @@ Successor to #4844's consumed allocation. Preserve #4155/#4169, #4844/#4863, the
 
 Allocation -01 was retired before formal freeze as `STOP_PREFORMAL_SEED_EXPOSURE`: construction test code accidentally invoked the full generator on candidate seeds 484411/484412. Allocation -02 then stopped before container creation because a manually entered Docker image ID omitted `681`; Docker returned exit 125. Neither allocation produced formal data, and all four seed values are retired from reuse. Current allocation -03 uses fresh 484431/484432; construction tests use only 17003/17004. The Docker image argument must be read from the frozen JSON at runtime and checked against `docker image inspect` immediately before launch; do not transcribe it.
 
-- Current-main intake: `e2104e0fa5461ecedefd2e0b3df323b4de82a5fa`.
+- Current-main intake: `dbfae29cf848e4beee8f0287a9843532f5a695a8`.
 - Branch: `research/typed-mode-4844-successor-v3-20260928`.
 - Additive path: `research/experiments/typed_mode_generalization_4844_successor_v3/`.
 - Formal executions allowed: one runner, then one separate auditor; no retry.
