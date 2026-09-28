@@ -651,3 +651,24 @@ Actual model tokens/cost, useful-feedback latency and human tempo remain open.
 Evidence: runtime/results/host-timing-summary-01, reproducible from the unchanged
 committed primary-use archive without executing archived code. Five new timing
 tests join the common local/CI runner; 260 protocol and 106 harness checks pass.
+
+
+### Bounded navigation candidate: retain but do not promote
+
+Primary fresh seed 991337 used the existing portable public guarded runtime to
+combine URL entry and Enter in five explicit keyboard tails. Six independent
+exact-once saves passed, with entered-value reviews before separate Saves and
+a zero-input stale-reference refusal followed by explicit re-grounding.
+
+Four navigation replies still showed transitional frames; explicit read-only
+observations resolved them without replay. Actual calls were 28 against a
+24-call plan (prior different-seed run: 29). The candidate also removed one
+100 ms post-text delay, so neither grouping nor timing is isolated. Keep this
+recipe HOLD as a default, retain the 463-file evidence, and evaluate different
+explicit feedback timing conditions in fresh allocations. No generic wait
+default, semantic sensor, retry policy or input mechanism changed.
+
+Evidence: runtime/results/guarded-navigation-batch-primary-01. Host send-to-reply
+total 9,164.4469 ms and first-send-to-last-reply span 217,600.0314 ms are recorded
+boundaries including retrieval/close, not useful-feedback or semantic latency.
+Actual model tokens/cost and comparable human tempo remain unproven.
