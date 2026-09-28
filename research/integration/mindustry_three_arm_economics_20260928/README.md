@@ -315,9 +315,37 @@ started. Automatic repository Actions may start on a push; they are not used
 for local verification or as experimental evidence.
 
 Current-main refresh (2026-09-28): branch merged `origin/main`
-`5ad5a9ab465e2b0052aa301b1909b92816e70025`. The five inherited #1679 blobs,
+`708dec9bcd2bfb3ef597acf7bc1c8a02bcb96b01`. The five inherited #1679 blobs,
 the #5176 evaluator identity gate, and all three reused #55 runtime blobs were
 rechecked; the recorded hashes are unchanged. The latest #5085 comments still
 report the unresolved OrbStack-bound Docker client PID 91031 and no owner
 release. A different task's empty Windows `desktop-linux` snapshot is not a
 lease for #5130. Docker remains prohibited by the exact issue gate.
+
+## Independent raw-allocation auditor — host construction (2026-09-29)
+
+`raw_allocation_audit_v1.py` reconstructs the frozen #1679 evaluator trace from
+event-level preflight, model/image, observation, input, feedback, release,
+submission, private-score, timing, and repair rows. It imports neither the live
+runner nor controller/route candidate. Aggregate task summaries are refused;
+old-target admissions, missing releases, image/source mismatch, and contradictory
+private score are held. A separately supplied source freeze is mandatory for
+`PASS_RAW_RECONSTRUCTION`; unpinned raw is explicitly `PASS_CONSTRUCTION_ONLY`.
+
+The deterministic synthetic three-arm raw fixture and auditor response are in
+`construction/raw_audit_v1_20260929_01/` (raw SHA-256
+`4db34ddb9990ce7a6048f13cb384b19f633f1bdf23c67eec0752df5008564a10`). It
+reconstructs the evaluator's synthetic `RETAIN`/task-2 break-even outcome, but
+all artifact/model/container identities are sentinel values and the result is
+not an experiment. Twelve corruption/contract tests pass; the full package is
+72/72, the inherited evaluator probe remains `passed=true`/`RETAIN`/10 controls,
+and the upstream receipt probe passes. No live runner is connected, and the
+auditor compares identities to the separately supplied freeze but does not
+itself recover/rehash external JAR/save/container bytes. Those provenance checks
+remain required for a formal allocation.
+
+The 2026-09-29 main merge adds reviewed image-host-reference integration, with
+no changes to the eight frozen/reused #1679/#55 dependency paths. The #5130
+container lane is still unassigned under the latest #5085 arbitration; no
+Docker command, workflow, Mindustry process, model call, or formal allocation
+was used for this host construction.
