@@ -1,0 +1,259 @@
+{
+  "schema": "agent-interface/review-v1",
+  "receipt": {
+    "schema": "agent-interface/receipt-view-paced-brief-candidate-v1",
+    "authority": "none",
+    "source": {
+      "path": null,
+      "sha256": "b1bb8c3a8ee058ef47d496f5436439dc8a5aa0e38d472ac9e73b6bbe38de25c6",
+      "bytes": 6869,
+      "kind": "received_bytes",
+      "report_projection": {
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned",
+        "result": {
+          "status": "completed",
+          "admission": "accepted",
+          "required_capabilities": [
+            "capture.frame",
+            "clock.monotonic",
+            "display.geometry",
+            "event.feedback",
+            "input.keyboard",
+            "input.release_all",
+            "input.text",
+            "window.focus"
+          ],
+          "execution": {
+            "started_ns": 1549700401080,
+            "ended_ns": 1550004594737,
+            "emissions": 63,
+            "program_emissions": 34,
+            "observations": [
+              {
+                "bytes": 1600000,
+                "sha256": "7a95867a07cbc0c8c5051c5d47d5c339ab87e53c937b400177e4182a6c26489c",
+                "width": 800,
+                "height": 500,
+                "target": "app",
+                "native_window_id": 6291479,
+                "frame": "screen_physical_px",
+                "region": [
+                  0,
+                  0,
+                  800,
+                  500
+                ],
+                "capture_started_ns": 1549992403807,
+                "capture_ended_ns": 1549995295111,
+                "artifact": {
+                  "mime_type": "image/png",
+                  "path": "/var/tmp/agent-interface-integrated-main/results-local/keymap-primary-02/server/b4f00c1b236d4e3b99742e6a1f12ac96/images/b2e6a163412a44ea8a2e07dc0189e35a.png",
+                  "sha256": "c46450f49ff2b710bf47d936251a73295c919f78890313cb8cbc7626957705c3",
+                  "bytes": 8918,
+                  "width": 800,
+                  "height": 500,
+                  "source_raw_sha256": "7a95867a07cbc0c8c5051c5d47d5c339ab87e53c937b400177e4182a6c26489c",
+                  "timing_ns": {
+                    "started": 1549996268270,
+                    "converted": 1549996952675,
+                    "encoded": 1550002015639,
+                    "written": 1550002233179,
+                    "hashed": 1550003362411
+                  }
+                },
+                "operation_index": 24
+              }
+            ],
+            "releases": [
+              {
+                "keys_down": [],
+                "buttons_down": [],
+                "verified": true,
+                "monotonic_ns": 1550004592490
+              }
+            ],
+            "activations": [],
+            "completed_ops": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25
+            ],
+            "wait_summary": {
+              "count": 10,
+              "requested_ms_total": 280,
+              "recorded_elapsed_ns_total": 281692805,
+              "kind": "fixed_delay",
+              "update_observed": null,
+              "all_completed": true,
+              "omitted_records": {
+                "sha256": "eccc3759c73e961bc18ad9ca9b81f8b7e7f660448eadac44504481b92eb798b2",
+                "bytes": 1539,
+                "encoding": "canonical JSON, UTF-8, sorted keys, compact, ensure_ascii=true"
+              }
+            }
+          },
+          "recovery_required": false
+        },
+        "compilation": {
+          "kind": "bounded_text_gap",
+          "source_program_omitted": {
+            "sha256": "9511a5cfe28c17dbad39bb3e0e0cd0851a8e4246f7d302b65f5f8d2e9dd8f3d1",
+            "encoding": "UTF-8 canonical JSON: sorted keys, compact separators, ensure_ascii=true",
+            "bytes": 575
+          },
+          "operation_sources_omitted": {
+            "count": 26,
+            "sha256": "bb6f6b3232a7e9f7e2885a831debd4fc79c08d81b57a3e263b07c4d414781ef6",
+            "bytes": 1732,
+            "encoding": "canonical JSON, UTF-8, sorted keys, compact, ensure_ascii=true"
+          }
+        },
+        "normalization": {
+          "kind": "explicit_observation_region",
+          "source_operation_indices": [
+            6
+          ],
+          "source_program_omitted": {
+            "sha256": "f811a791da22cc39f194753074abf593636e555d10d041b225c3c019a8cb9ea6",
+            "encoding": "UTF-8 canonical JSON: sorted keys, compact separators, ensure_ascii=true",
+            "bytes": 570
+          }
+        },
+        "session": {
+          "session_id": "debe284a713741af8bc0940b9ab0a9d5",
+          "mode": "persistent-x11",
+          "state": "open",
+          "binding_revision": 1,
+          "targets": {
+            "app": 6291479
+          },
+          "recovery_required": false,
+          "error": null,
+          "authority_granted": false,
+          "restart_allowed": false
+        }
+      }
+    },
+    "report": {
+      "report_ref": "/source/report_projection"
+    },
+    "latest_observations": [],
+    "events": [],
+    "record_counts": {},
+    "omitted_from_view": 0,
+    "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+    "motor_state_validation": {
+      "present": false,
+      "accepted": false,
+      "reason": "missing"
+    },
+    "report_reference": "/source/report_projection",
+    "reference_scope": "Partial report projection only; original source digest identifies the retained full report."
+  },
+  "authority": "none",
+  "outcome_summary": {
+    "reported_status": "returned",
+    "error": null,
+    "failure_phase": null,
+    "cleanup_error": null,
+    "input_release_verified": true,
+    "failure_detail": null,
+    "validation_operation_index": null,
+    "failed_operation_index": null,
+    "failed_operation_effect": null,
+    "execution_status": "completed",
+    "execution_error": null,
+    "execution_detail": null,
+    "recovery_required": false,
+    "failed_source_operation": null,
+    "validation_source_operation": null
+  },
+  "image_reference": {
+    "status": "image",
+    "capture_ns": 1549992403807,
+    "path": "/var/tmp/agent-interface-integrated-main/results-local/keymap-primary-02/server/b4f00c1b236d4e3b99742e6a1f12ac96/images/b2e6a163412a44ea8a2e07dc0189e35a.png",
+    "relative_path": "images/b2e6a163412a44ea8a2e07dc0189e35a.png",
+    "sha256": "c46450f49ff2b710bf47d936251a73295c919f78890313cb8cbc7626957705c3",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation",
+    "execution_observation_index": 0,
+    "recorded_capture": {
+      "target": "app",
+      "native_window_id": 6291479,
+      "frame": "screen_physical_px",
+      "region": [
+        0,
+        0,
+        800,
+        500
+      ],
+      "width": 800,
+      "height": 500,
+      "capture_started_ns": 1549992403807,
+      "capture_ended_ns": 1549995295111,
+      "operation_index": 24
+    }
+  },
+  "image_status": "image",
+  "session": {
+    "session_id": "debe284a713741af8bc0940b9ab0a9d5",
+    "mode": "persistent-x11",
+    "state": "open",
+    "binding_revision": 1,
+    "targets": {
+      "app": 6291479
+    },
+    "recovery_required": false,
+    "error": null,
+    "authority_granted": false,
+    "restart_allowed": false
+  },
+  "call_directory": "/var/tmp/agent-interface-integrated-main/results-local/keymap-primary-02/server/b4f00c1b236d4e3b99742e6a1f12ac96",
+  "call_id": "b4f00c1b236d4e3b99742e6a1f12ac96",
+  "presentation": {
+    "requested": "brief",
+    "returned": "brief",
+    "scope": "Partial success-only projection: source programs, wait records and expansion map omitted. Not lossless or task success.",
+    "omitted_paths": [
+      "/receipt/source/raw_report/normalization/source_program",
+      "/receipt/source/raw_report/compilation/source_program",
+      "/receipt/source/raw_report/result/execution/waits",
+      "/receipt/source/raw_report/compilation/operation_sources"
+    ],
+    "retrieve": {
+      "tool": "interface_results",
+      "arguments": {
+        "call_id": "b4f00c1b236d4e3b99742e6a1f12ac96",
+        "include_image": false,
+        "compact": true,
+        "report_refs": true,
+        "detail": "full"
+      }
+    },
+    "candidate_only": true
+  }
+}
