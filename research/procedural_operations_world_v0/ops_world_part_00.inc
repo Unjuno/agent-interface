@@ -323,7 +323,10 @@ static void collect_free_cells(const OwWorld *w, int cells[][2], int *count) {
     for(int y=1;y<OW_MAP_H-1;++y)for(int x=1;x<OW_MAP_W-1;++x){
         if(w->map[y][x])continue;
         int open=0;
-        if(!w->map[y-1][x])open++;if(!w->map[y+1][x])open++;if(!w->map[y][x-1])open++;if(!w->map[y][x+1])open++;
+        if(!w->map[y-1][x]) open++;
+        if(!w->map[y+1][x]) open++;
+        if(!w->map[y][x-1]) open++;
+        if(!w->map[y][x+1]) open++;
         if(open>=2){cells[n][0]=x;cells[n][1]=y;++n;}
     }
     *count=n;
