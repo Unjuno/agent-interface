@@ -1,9 +1,13 @@
 {
-  "schema":"kernel-receipt-audit-integrity-5215-v1",
-  "input_git_blob":"d3964da3cbf6524c8193b5a59ed16bdb3611772f",
-  "input_record":{"effect_at_499":true,"effect_at_699":true,"effect_at_700":true,"effect_at_701":true,"execution_end_1000":true,"execution_end_1001":true,"execution_end_700":true,"execution_end_999":true,"execution_wrong_command":false},
-  "mutations_tested":["drop each of four invalid temporal keys","replace each invalid temporal key with null","replace each invalid temporal key with string","add unexpected key","replace bool with integer","flip each temporal outcome","flip identity negative control","non-object record"],
-  "controls":null,
-  "disposition":"PENDING_EXECUTION",
-  "scope":"CPU-only audit robustness against retained synthetic record; no kernel execution or GPU/model/CUDA/Docker/GUI/network"
+ "schema":"kernel-receipt-audit-integrity-5215-v1",
+ "input":{"path":"research/kernel_receipt_time_5215_20260928/probe-output.json","git_blob":"d3964da3cbf6524c8193b5a59ed16bdb3611772f"},
+ "host":{"os":"Windows","python":"3.11.9"},
+ "test_command":"python -m unittest discover -s <local-evidence-dir> -p 'test_*.py' -v",
+ "tests":{"passed":8,"failed":0,"mutant_families":["missing_required_negative_key","null","string","integer","unexpected_key","identity_negative_flip","non_object_record"],"mutants_rejected":15},
+ "audit_original":{"disposition":"HOLD_LEGACY_PLAN_CONFLICT","errors":[],"inconsistent_cases":["execution_end_999","execution_end_1000","execution_end_1001","effect_at_499","effect_at_699"],"missing_keys":[],"unexpected_keys":[],"plan_conflicts":["effect_at_700"]},
+ "observed_design_conflicts":{"release_observed_ns":800,"execution_end_ns":[700,999,1000,1001],"effect_observed_ns":[499,699,700,701],"execution_start_ns":500,"effect_claimed_execution_end_ns":700,"plan_case_7":"reject at 700","auditor_case_7":"accept at 700"},
+ "preserved_initial_suite_failure":{"failed_assertions":6,"classification":"TEST_DESIGN_FAILURE"},
+ "container":{"available":"Docker Desktop linux/amd64","invoked":false,"reason":"Exact verified sources were not frozen into a container input before host execution"},
+ "disposition":"HOLD_LEGACY_PLAN_CONFLICT",
+ "scope":"CPU-only audit robustness against a retained synthetic record; no kernel execution or GPU/model/CUDA/Docker/GUI/network"
 }
