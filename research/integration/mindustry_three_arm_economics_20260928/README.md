@@ -145,7 +145,7 @@ python -m unittest discover -s research/integration/mindustry_three_arm_economic
 python research/live_control/probe_integrated_efficiency_protocol_v1.py
 ```
 
-Latest results: runner contract 9/9, frozen decision contract 6/6, inherited
+Latest results: adaptive route construction 5/5, runner contract 9/9, frozen decision contract 6/6, inherited
 probe `passed=true`, positive `RETAIN`, 10 controls. An initial test run had
 one assertion-fixture mismatch (expected persistent to contain 2 tasks instead
 of 6 tasks with 2 model calls); the fixture was corrected, and the rerun passed.
@@ -155,3 +155,16 @@ this construction check. The branch was refreshed to main
 `16421aefa2ec357b79e3fd3dc307b32955bc6fab`; all five frozen dependency blobs
 were rechecked, with only the documented plan-Markdown count changes. The
 formal Docker allocation remains unassigned.
+
+The additive `adaptive_route.py` now routes one-generation cold/reuse/repair
+acquisition for the exact two ordered points (palette slot, world target),
+checks fresh sequence plus X11 surface/geometry before reuse, and refuses a
+stale cache before any model or target-input call. `task_points_v1.py` retains
+the shared bounded-output vocabulary but applies a Mindustry-specific exact-two
+point contract; the inherited generic direct-result validator is one-point-only.
+An initial route test run exposed that mismatch (five errors including the two
+reference-arm subtests). A follow-up repair test also initially constructed a
+non-stale cache and failed its assertion; the fixture was corrected. The final
+adaptive-route suite passes 5/5. No controller/game/model I/O was run. This
+adapter still needs composition with the live Mindustry socket/mod and raw
+auditor before the formal path is runnable.
