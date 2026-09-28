@@ -13,6 +13,8 @@ class PartialExecutionTests(unittest.TestCase):
     def test_unsupported_verify_refuses_entire_program_before_input(self):
         from runtime.backends.x11_v1.backend import X11BackendError
         backend = object.__new__(X11Backend)
+        backend.d = mock.Mock()
+        backend.d.pending_events.return_value = 0
         backend._text_plan = mock.Mock(return_value=[['a']])
         backend.text = mock.Mock()
         backend.release_all = mock.Mock()

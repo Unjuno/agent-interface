@@ -11,6 +11,19 @@ class TextPlanTests(unittest.TestCase):
         backend.key_chord = mock.Mock()
         return backend
 
+    def test_held_key_release_keeps_original_physical_code_after_remap(self):
+        from Xlib import X
+        backend = object.__new__(X11Backend)
+        backend.d = mock.Mock()
+        backend.held_keycodes = {"a": 38}
+        backend.emissions = 0
+        backend._keycode = mock.Mock(return_value=99)
+        with mock.patch("runtime.backends.x11_v1.backend.xtest.fake_input") as emitted:
+            backend.key_state("a", False)
+        emitted.assert_called_once_with(backend.d, X.KeyRelease, 38)
+        backend._keycode.assert_not_called()
+        self.assertEqual(backend.held_keycodes, {})
+
     def test_uppercase_arrow_refusal_explains_canonical_name_without_emission(self):
         backend = object.__new__(X11Backend)
         backend.d = mock.Mock()
@@ -51,6 +64,7 @@ class TextPlanTests(unittest.TestCase):
                 backend.focus = mock.Mock()
                 backend.release_all = mock.Mock()
                 backend.d = mock.Mock()
+                backend.d.pending_events.return_value = 0
                 backend.d.keycode_to_keysym.side_effect = lambda code, level: {
                     (13, 0): ord("="), (17, 0): ord("8"), (17, 1): ord("*")
                 }.get((code, level), 0)
@@ -111,6 +125,7 @@ class TextPlanTests(unittest.TestCase):
             with self.subTest(symbol=symbol):
                 backend = self.backend()
                 backend.d = mock.Mock()
+                backend.d.pending_events.return_value = 0
                 backend.d.keycode_to_keysym.return_value = 0
                 with self.assertRaisesRegex(X11BackendError, "unsupported text layout"):
                     backend.text("12" + symbol)
