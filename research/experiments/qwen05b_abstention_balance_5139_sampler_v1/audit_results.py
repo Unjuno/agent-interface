@@ -36,6 +36,8 @@ def reference_class(intent: Any) -> str | None:
     }
     if op in reasons and set(intent) == {"op", "reason"}:
         reason = intent.get("reason")
+        if not isinstance(reason, str):
+            return None
         return f"{op}:{reason}" if reason in reasons[op] else None
     return None
 
