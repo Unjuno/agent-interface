@@ -39,10 +39,20 @@ new authorization or experiment evidence.
 
 No formal or live model/game allocation has run in this package. GitHub #5085
 still has no named slot assignment for #5130; the latest coordinator arbitration
-request favors #5133, which does not transfer a slot to this lane. Do not
-treat an empty container inventory as authorization. No Docker build/pull or
-experiment-image inspect was performed. A separate unallocated-container
-policy violation did occur during synthetic test preparation: six short-lived
+request assigns #5133 allocation -04 a separate serialized CPU lease, which
+does not transfer to this lane. The live-start prerequisite is already recorded
+as `PASS_MINDUSTRY_MATERIALIZED_LIVE_SMOKE_SCOPED` by fresh #2624 V2: exact
+fixture identities, zero-input readiness, independent raw audit, and 8/8
+corruption controls passed. #5130 explicitly says not to rerun that smoke. Its
+historical evidence archive is incomplete, so this lane does not claim an
+independent reconstruction. A read-only GitHub artifact download attempt for
+the cited artifact ID `10892764779` returned 404; no artifact bytes were
+retrieved and no experiment was run. This single retrieval failure does not
+invalidate the recorded #2624 outcome or prove all materialization channels
+unavailable. Do not treat an empty container inventory as authorization. No
+Docker build/pull or experiment-image inspect was performed. A separate
+unallocated-container policy violation did occur during synthetic test
+preparation: six short-lived
 `docker run --rm` invocations were made without the required named slot. Four
 failed before test cases (repository import/setup errors); two ran the six
 synthetic tests successfully (6/6 each). All used the already-cached pinned
