@@ -352,6 +352,10 @@ class X11Backend:
             "monotonic_ns": time.monotonic_ns(),
         }
 
+    def _wait_update(self, timeout_ms: int) -> None:
+        """Fixed delay; scoped backends may interrupt it at their own deadline."""
+        time.sleep(timeout_ms / 1000.0)
+
     def execute(self, program: dict[str, Any]) -> dict[str, Any]:
         self.preflight(program)
         current_target: str | None = None
@@ -404,7 +408,7 @@ class X11Backend:
                             "kind": "fixed_delay", "update_observed": None}
                     waits.append(wait)
                     try:
-                        time.sleep(op["timeout_ms"] / 1000.0)
+                        self._wait_update(op["timeout_ms"])
                         wait["completed"] = True
                     finally:
                         wait["ended_ns"] = time.monotonic_ns()
