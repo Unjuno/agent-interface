@@ -234,8 +234,12 @@ class OwnedMCPTests(unittest.IsolatedAsyncioTestCase):
             retained=self.row(await server.call_tool('interface_results',{'call_id':inspection['call_id']}))
             self.assertEqual(retained['review_id'],inspection['review_id'])
             self.assertFalse(retained['operation_invoked'])
-            args={'target':'fixture','window_id':456,'review_id':inspection['review_id']}
-            reviewed=self.row(await server.call_tool('interface_review_target',args))
+            request=inspection['review_request']
+            self.assertEqual(request['tool'], 'interface_review_target')
+            args=request['arguments']
+            self.assertEqual(args, {'target':'fixture','window_id':456,'review_id':inspection['review_id']})
+            self.assertEqual(retained['review_request'], request)
+            reviewed=self.row(await server.call_tool(request['tool'],args))
             self.assertEqual(reviewed['binding_revision'],2)
             self.assertEqual(session.backend.targets['fixture'].id,456)
             self.assertTrue(session.recovery_required)
@@ -261,7 +265,7 @@ class OwnedMCPTests(unittest.IsolatedAsyncioTestCase):
             owner=MCPSessionOwner({'fixture':123})
             inspected=owner.inspect_target('fixture')
             with self.assertRaisesRegex(ValueError,'changed'):
-                owner.review_target('fixture',456,inspected['review_id'])
+                owner.review_target(**inspected['review_request']['arguments'])
             self.assertEqual(owner.targets,{'fixture':123})
             self.assertEqual(owner.binding_revision,1)
             self.assertIsNone(owner.target_review)
@@ -276,7 +280,7 @@ class OwnedMCPTests(unittest.IsolatedAsyncioTestCase):
             owner=MCPSessionOwner({'fixture':123})
             inspected=owner.inspect_target('fixture')
             with self.assertRaisesRegex(ValueError,'expired'):
-                owner.review_target('fixture',456,inspected['review_id'])
+                owner.review_target(**inspected['review_request']['arguments'])
             self.assertEqual(owner.targets,{'fixture':123})
             owner.close()
 
@@ -307,6 +311,44 @@ class OwnedMCPTests(unittest.IsolatedAsyncioTestCase):
             session.backend.release_all.assert_not_called()
             await server.call_tool('interface_close',{})
 
+    async def test_captured_request_passes_public_schema_without_alias_translation(self):
+        session=self.fixture();session.backend.targets={'fixture':SimpleNamespace(id=123)}
+        session.backend.d.create_resource_object.side_effect=lambda kind,wid: SimpleNamespace(id=wid)
+        with tempfile.TemporaryDirectory() as td, self.selection(), patch(
+                'runtime.cli_v1.mcp_session.open_session',return_value=session), patch(
+                'runtime.cli_v1.mcp_session.inspect_focused_target',return_value={'window_id':456}):
+            server=create_server({'fixture':123},td,session_mode='persistent-x11')
+            row=self.row(await server.call_tool('interface_inspect_target',
+                {'target':'fixture','screen_region':[0,0,10,10]}))
+            self.assertEqual(session.backend.targets['fixture'].id,123)
+            request=row['review_request']
+            self.assertEqual(request['arguments']['screen_region'],[0,0,10,10])
+            reviewed=self.row(await server.call_tool(request['tool'],request['arguments']))
+            self.assertEqual(reviewed['status'],'target_reviewed')
+            self.assertEqual(reviewed['capture_consistency'],'matched')
+            self.assertEqual(reviewed['binding_revision'],2)
+            session.backend.focus.assert_not_called()
+            session.backend.release_all.assert_not_called()
+            session.dispatch.assert_not_called()
+            await server.call_tool('interface_close',{})
+
+    async def test_editing_request_cannot_change_pending_target_evidence(self):
+        session=self.fixture()
+        with self.selection(), patch('runtime.cli_v1.mcp_session.open_session',return_value=session), patch(
+                'runtime.cli_v1.mcp_session.inspect_focused_target',return_value={'window_id':456}):
+            owner=MCPSessionOwner({'fixture':123})
+            region=[0,0,10,10]
+            row=owner.inspect_target('fixture',screen_region=region)
+            region[2]=99
+            self.assertEqual(row['review_request']['arguments']['screen_region'],[0,0,10,10])
+            row['review_request']['arguments']['window_id']=999
+            self.assertEqual(owner.target_review['evidence']['window_id'],456)
+            with self.assertRaisesRegex(ValueError,'mismatched'):
+                owner.review_target(**row['review_request']['arguments'])
+            self.assertEqual(owner.targets,{'fixture':123})
+            self.assertEqual(owner.binding_revision,1)
+            owner.close()
+
     async def test_capture_disagreement_retains_observation_but_no_review_id(self):
         session=self.fixture()
         with self.selection(), patch('runtime.cli_v1.mcp_session.open_session',return_value=session), patch(
@@ -316,6 +358,7 @@ class OwnedMCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(result['error'],'TARGET_CHANGED_DURING_CAPTURE')
             self.assertEqual(result['observation_report']['status'],'returned')
             self.assertNotIn('review_id',result)
+            self.assertNotIn('review_request',result)
             self.assertIsNone(owner.target_review)
             self.assertEqual(owner.targets,{'fixture':123})
             owner.close()
@@ -364,7 +407,7 @@ class OwnedMCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(owner.targets,{'fixture':456})
             self.assertEqual(owner.binding_revision,2)
             self.assertTrue(session.recovery_required)
-            with self.assertRaises(ValueError): owner.review_target('fixture',456,inspected['review_id'])
+            with self.assertRaises(ValueError): owner.review_target(**inspected['review_request']['arguments'])
             session.backend.observe_read_only.assert_not_called()
             owner.close()
 
@@ -393,6 +436,7 @@ class OwnedMCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(result['error'],'TARGET_CAPTURE_FAILED')
             self.assertEqual(result['observation_report']['status'],'invalid_request')
             self.assertNotIn('review_id',result)
+            self.assertNotIn('review_request',result)
             self.assertIsNone(owner.target_review)
             session.backend.observe_read_only.assert_not_called()
             owner.close()
