@@ -1,8 +1,8 @@
 # Headless CPU instrument envelope — construction allocation
 
-Issue: #5206  
-Allocation: `opsworld-host-cpu-envelope-5206-20260929-01`  
-Main freeze: `708dec9bcd2bfb3ef597acf7bc1c8a02bcb96b01`  
+Issue: #5206
+Allocation: `opsworld-host-cpu-envelope-5206-20260929-01`
+Main freeze: `708dec9bcd2bfb3ef597acf7bc1c8a02bcb96b01`
 Branch: `research/opsworld-instrument-overhead-5206-20260929`
 
 ## H / T / D / C / U

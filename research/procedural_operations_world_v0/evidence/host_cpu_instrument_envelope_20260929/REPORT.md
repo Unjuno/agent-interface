@@ -1,7 +1,7 @@
 # Headless CPU instrument envelope — construction result
 
-Issue #5206 · allocation `opsworld-host-cpu-envelope-5206-20260929-01`  
-Main freeze `708dec9bcd2bfb3ef597acf7bc1c8a02bcb96b01`  
+Issue #5206 · allocation `opsworld-host-cpu-envelope-5206-20260929-01`
+Main freeze `708dec9bcd2bfb3ef597acf7bc1c8a02bcb96b01`
 Branch `research/opsworld-instrument-overhead-5206-20260929`
 
 ## H / T / D / C / U
@@ -74,3 +74,7 @@ two benchmark invocations. All three captured stderr files are empty.
 - No #5139 model/GPU work or Docker invocation/inspection occurred; #5085's
   current restriction was respected.
 - No old benchmark result, allocation, branch, or artifact was changed.
+- After measurement, two Markdown hard-break whitespace characters were
+  removed from `PLAN.md`/`REPORT.md` to make `git diff --check` clean; the H/T/D/C/U
+  content and preregistered conditions were not changed. The original plan hash
+  remains in the preregistration comment and initial evidence commit history.
