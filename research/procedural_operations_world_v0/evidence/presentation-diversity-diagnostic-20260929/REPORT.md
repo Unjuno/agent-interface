@@ -18,9 +18,13 @@ WSL2 Arch Linux, GCC 16.1.1. Existing `make clean all && make test` plus a
 120-frame headless smoke. A separate diagnostic renders 256 seeds x 20
 requested family keys (5,120 combinations), forces the target cue visible,
 records 64-bit FNV-1a over all 640x360 pixels, and compares distinct actual
-presentation families within each seed. For requested sample seed 234, it also compares the
-existing stride-97 pixel hash across all 190 family pairs. No agent acts and no
-score is read.
+presentation families within each seed. For requested sample seed 234, it also
+compares the existing stride-97 pixel hash across all 190 requested-key pairs.
+After host compilation, the unchanged static test/diagnostic binaries were
+executed inside the cached digest-pinned `debian:bookworm-slim` container with
+network disabled, a read-only root and executable bind mount, 1 CPU, 512 MiB
+memory, 32 PIDs, and a disposable tmpfs. Source was not mounted in the
+container. No agent acts and no score is read.
 
 **D.** Construction succeeds only if warning-enabled build and existing
 validity tests pass, all 12 generated presentation families appear, no
@@ -33,8 +37,11 @@ corrected helper is not used to erase or reinterpret those failures.
 
 **C.** Fixed source and configuration, deterministic seeds 0..255 and
 requested family keys 0..19; frame hashes are compared only within a seed.
-This is host-local WSL execution, not Docker, GPU, model/provider, GUI/X11,
-input dispatch, or a scored episode.
+The host build is WSL2; execution was checked both on WSL2 and in one
+CPU-limited, network-disabled local Docker container. The container ran
+precompiled static binaries from a read-only bind mount; source was not
+mounted. No GPU, model/provider, GUI/X11, input dispatch, or scored episode
+was used.
 
 **U.** Hash uniqueness does not prove visual-semantic diversity, resistance to
 generator specialization, held-out family transfer, evaluator isolation, or
@@ -42,6 +49,12 @@ formal benchmark validity. Requested keys 2 and 11 collide at seed 57 because
 both map to actual generated presentation family 2; this is ordinary finite
 family-key mapping, not two different rendered layouts colliding. The full
 frame hash is only a diversity sentinel, not a perceptual or semantic metric.
+
+**Correction notice (successor evidence).** Review found that the historical
+stride-97 helper did not reset `target_complete` for prior-family renders.
+Its `0/190` result is invalid and withdrawn. See `CORRECTION-20260929.md` and
+`RESULT-corrected.json`; the corrected comparison is 0/177 across distinct
+actual-family pairs.
 
 ## Result
 
@@ -57,6 +70,19 @@ frame hash is only a diversity sentinel, not a perceptual or semantic metric.
   stride-97 hash collisions.
 - No plausible renderer defect was detected. The issue remains open with its
   formal-benchmark HOLD.
+- Local Docker confirmation: exit 0 for both the 20-test binary and final
+  5,120-case diagnostic; stdout exactly matched the host result. Image:
+  `debian:bookworm-slim@sha256:3783cc01769c7b2b1b83a5c5ad96c815348e28ed7da68e2e3687004faa906251`
+  (`linux/amd64`). Static test binary SHA-256
+  `7b8ed967359bcfafd68d4609d2626f60c9354efda0427803ba444111357d9fe8`;
+  static diagnostic binary SHA-256
+  `8eb3b71a3b0942c3b06d0ad6f1d2b83f0b7d98daa167544541424d199b6caefa`.
+  The binaries were built on WSL2 then mounted read-only; this validates
+  containerized execution, not an in-container source build.
+- Successor correction: the original `0/190` stride result is withdrawn; the
+  corrected executable comparison reports `0/177` collisions across distinct
+  actual-family pairs. See the correction record for source, exact controls,
+  binary hashes, and the 13 same-family requested-key pairs excluded.
 
 ## Preserved execution/tooling failures
 
@@ -89,4 +115,7 @@ Git blob IDs: `test_ops_world.c` `f369fb7b76db2b7761ae431598133aa39571e0fa`;
 
 The tested source bundle is not modified. The standalone diagnostic helper is
 retained beside this report. Temporary build products and smoke outputs remain
-outside tracked evidence.
+outside tracked evidence. The local Docker Desktop context also contained the
+pre-existing `mitra4821-ast-parse-01` container before and after the run; it was
+not inspected individually, stopped, or modified. The experiment used a
+separate `--rm` container and made no claim of a shared-slot transfer.
