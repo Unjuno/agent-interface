@@ -18,6 +18,8 @@ This candidate is a successor to the retained lease-close matrix. It does not ed
 
 `PASS_FINITE_LEASE_AUTHORITY_POLICY_ONLY`: candidate/oracle and contract-derived rule agree over 48,384 finite combinations; the five focused boundary tests pass; the combined host suite passes 26/26. The post-terminal/no-close edge remains authorized under this explicit lease-only model, while a recorded same-actuation close before the edge rejects it. Candidate v2's terminal-as-authority-cap proposal is retained as an over-restrictive alternative, not adopted as the contract result.
 
+The first exhaustive enumerator attempt stopped at combination 169 because its separately coded expected-rule helper applied a foreign-lease close to the target lease. Candidate and raw oracle agreed on that case; the erroneous expectation is retained in `PRELIMINARY_ENUMERATOR_FAILURE_v3a.json`. The helper was corrected to check lease ID before close-lineage policy, then the entire 48,384-combination audit and 26-test suite were rerun successfully. This harness failure is not relabeled as a candidate/runtime defect.
+
 ## Reproduction
 
 From this directory, with the frozen fixture at `../o2-w2-independent-audit-20260928/trace-cases.json`:
