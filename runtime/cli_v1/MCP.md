@@ -351,3 +351,21 @@ the view, or request the retained call with observation_refs=false. To retrieve
 all guard detail too, use detail="full". Combining this lossless reference layer
 with detail="brief" does not make brief guard summaries lossless. Refused and
 persistence-failed replies remain literal; small/nonduplicate reports do too.
+
+## Opt-in paced-dispatch brief view
+
+For public dispatch, add `detail="brief"` together with `compact=true` and
+`report_refs=true`. Full is the default. Supported successful paced-text
+dispatches can omit duplicated source programs, per-wait records and expansion
+mappings while retaining outcomes, release evidence, images and session state.
+The wait summary describes fixed delays, not detected application updates.
+
+A brief receipt uses `agent-interface/receipt-view-paced-brief-v1`.
+Its partial report is at `receipt.source.report_projection`; it is not a
+lossless v3 receipt and must not be passed to the v3 expansion decoder.
+Follow `presentation.retrieve` to call `interface_results` for that exact
+call with `detail="full"`. Retrieval never executes input again.
+The original report and images remain retained in the current server process.
+Failures, missing evidence, unsupported shapes and non-smaller projections stay
+full. This is an explicit presentation option, not proof of task success or
+measured token/cost savings.
