@@ -40,7 +40,8 @@ Command, run from this directory:
 python -B -m unittest -v test_protocol.py
 ```
 
-Final outcome: `Ran 8 tests in 0.009s` / `OK`. `git diff --check` also passed.
+Final outcome after the source correction and current-main merge:
+`Ran 8 tests in 0.010s` / `OK`. `git diff --check` also passed.
 The first run exposed a contract exception-type/message mismatch for a missing
 output mount; the API was made consistently fail-closed with `ValueError`. An
 additional test then caught a fixture that accidentally overlapped inference;
