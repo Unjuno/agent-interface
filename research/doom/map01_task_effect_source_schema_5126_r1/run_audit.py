@@ -15,7 +15,9 @@ FREEZE = json.loads((HERE / "SOURCE_FREEZE.json").read_text(encoding="utf-8"))
 
 
 def source(path: str) -> str:
-    return (ROOT / path).read_text(encoding="utf-8")
+    return subprocess.check_output(
+        ["git", "show", f"{FREEZE['main_sha']}:{path}"], cwd=ROOT
+    ).decode("utf-8")
 
 
 def keys_from_dict(node: ast.AST) -> list[str]:
@@ -62,11 +64,10 @@ def call_dict_keys(path: str, name: str) -> list[str]:
 
 
 def verify_freeze() -> None:
-    head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
-    if head != FREEZE["main_sha"]:
-        raise AssertionError(f"checkout moved: {head} != frozen {FREEZE['main_sha']}")
     for row in FREEZE["sources"]:
-        data = (ROOT / row["path"]).read_bytes()
+        data = subprocess.check_output(
+            ["git", "cat-file", "blob", f"{FREEZE['main_sha']}:{row['path']}"], cwd=ROOT
+        )
         digest = hashlib.sha256(data).hexdigest()
         blob = subprocess.check_output(["git", "rev-parse", f"HEAD:{row['path']}"], cwd=ROOT, text=True).strip()
         if digest != row["sha256"] or blob != row["git_blob"] or len(data) != row["bytes"]:
