@@ -56,6 +56,33 @@ class HostTimingTests(unittest.TestCase):
         self.assertIsNone(report['calls'][0]['reply_to_next_send_ms'])
         self.assertIn('semantic completion', report['unmeasured'])
 
+    def test_public_capture_review_uses_null_sequence_and_preserves_boundaries(self):
+        self.receipt.update(schema='agent-interface/primary-review-receipt-v2-public-capture',
+                            source_sequence=None)
+        self.events[4]['source_sequence'] = None
+        self.write('review-1.json', self.receipt)
+        report = self.report()
+        self.assertEqual(report['timeline_status'], 'complete')
+        self.assertEqual(report['calls'][0]['reviews'][0]['send_to_declared_review_ms'], 20)
+        self.assertTrue(report['calls'][0]['reviews'][0]['after_presentation'])
+        for sequence in (1, False, 'caller-1'):
+            with self.subTest(sequence=sequence):
+                self.receipt['source_sequence'] = sequence
+                self.events[4]['source_sequence'] = sequence
+                self.write('review-1.json', self.receipt)
+                with self.assertRaisesRegex(ValueError, 'public review cannot'):
+                    self.report()
+        self.receipt.pop('source_sequence')
+        self.events[4].pop('source_sequence')
+        self.write('review-1.json', self.receipt)
+        with self.assertRaisesRegex(ValueError, 'public review cannot'):
+            self.report()
+
+    def test_unknown_review_schema_is_not_silently_accepted(self):
+        self.write('review-1.json', {**self.receipt, 'schema': 'unknown'})
+        with self.assertRaisesRegex(ValueError, 'review receipt identity'):
+            self.report()
+
     def test_corrupted_order_clock_identity_and_hash_refuse(self):
         changes = [(1, 'sequence', 9), (1, 'host_monotonic_ms', 9),
                    (1, 'host_monotonic_ms', float('nan')), (1, 'attempt', True),

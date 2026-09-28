@@ -21,6 +21,40 @@ Adding configuration does not prove tools are available in a running host. The
 public CLI emits JSON; an assistant integration must render its image payload.
 Neither route establishes end-to-end latency merely by returning an image.
 
+For a host that understands v3 receipt references, use the existing explicit
+`compact=true, report_refs=true` flags on both `interface_observe` and
+`interface_dispatch`. For example, an observation's arguments can be:
+
+```json
+{"target":"configured-name","frame":"window_client","region":[0,0,560,260],"compact":true,"report_refs":true}
+```
+
+Choose the actual configured target and region. Read the complete report at
+`receipt.source.raw_report` in that same response; `receipt.report` may be a local
+reference. Native image blocks and outcome summaries remain available. Python
+clients can use `runtime.cli_v1.receipt_references.expand_receipt` to restore v1.
+These flags are not arguments to recovery or target-management tools. Defaults
+remain full for compatibility. A [recount of primary replies](results/public-observation-projection-01/README.md)
+found avoidable text duplication in three observations; this measures bytes,
+not model tokens or cost.
+
+[Primary Calc use](results/calc-compact-primary-01/README.md) exercised these
+flags while entering and saving 336/439 through a format-confirmation dialog.
+Saved worksheet values matched. For `screen_physical_px` captures, the recorded
+native_window_id identifies the configured target, not necessarily the focused
+client shown on screen. After a dialog closes, use target inspection/review before
+continuing input on the main window; a screen image does not implicitly rebind it.
+
+[Primary input-recovery use](results/input-recovery-primary-01/README.md)
+records a failed press that had already changed a visible counter, explicit
+same-session release recovery, visual review and a newly authored continuation
+that saved the requested value. This small injected-fault construction exercises
+the recovery workflow; it does not measure general reliability or speedup.
+An optional target/region on recovery now returns a post-release window image
+in the same call. [Fresh primary use](results/recovery-capture-primary-01/README.md)
+completed the same construction with six rather than seven MCP calls. Capture
+failure preserves the committed recovery result; observe separately if needed.
+
 ## Long-lived guarded sessions
 
 Guarded X11 history keeps two decoded full-screen images in memory and reloads
@@ -321,6 +355,39 @@ For native research sessions, `native_observe(stage=...)` reads an already retai
 ### Optional persistent public MCP on X11
 
 For direct public-MCP use, `python -m runtime.cli_v1.mcp_server --targets targets.json --output-directory runs --display :N --session-mode persistent-x11` retains one connection through explicit close or normal transport shutdown. The default is still one-shot. Use the returned `session.binding_revision` (initially 1) in dispatch assertions. `interface_observe` captures a fresh image; `interface_results` reads a retained result without input or recapture.
+
+If this persistent session reports `recovery_required=true`, normal dispatch
+stays blocked. Explicitly call `interface_recover_input` with its current binding
+revision to attempt tracked-input release/readback. Verified empty release clears
+only that block and advances the revision; old programs and pending target reviews
+become invalid. Observe/review current state before a newly authored program.
+Failure keeps recovery required. This never replays a failed action or reconnects.
+[Real-MCP boundary evidence](results/explicit-input-recovery-01/README.md) covers
+held-input recovery, stale-request refusal and a new program on the same owner;
+application effects and task completion remain unproven by recovery.
+
+X11 registers a key/button cleanup obligation before attempting a press, so an
+uncertain send/sync failure does not erase the release target. Failed release
+readback retains the obligation for explicit recovery. The
+[controlled regression](results/x11-uncertain-press-release-01/README.md) preserves
+a prior falsely verified release with an independently observed held key, plus
+corrected private-X11 and real-MCP boundary checks. Successful-path request counts
+are unchanged; server loss can still prevent release and these checks do not
+measure exact key-up timing or task effects.
+
+Public dispatch `observe` operations also accept `region: [x,y,width,height]`,
+matching `interface_observe`. Use either this form or legacy `x/y/w/h`, never
+both. Explicit lowering happens before admission and is retained in the report.
+The [primary-use regression record](results/public-observe-region-01/README.md)
+preserves the original syntax refusal, successful region-form movement/camera
+observations, and a mixed-form request refused before any input.
+
+When using the research `PrivateSession` fixture, app launch now follows an actual
+window-manager readiness probe (managed and viewable), not just an X11 handshake.
+This affects fixture setup only. The [retained Operations World smoke](../research/live_control/results/private-x11-readiness-01/README.md)
+includes the original startup failure, real-X11 controls, primary-operated public
+MCP movement/camera input and task-discoverability/authoring questions. It does not establish
+task completion or improved interaction latency.
 
 When a separate dialog owns focus, inspect it with `interface_inspect_target(target)`, then explicitly select the observed native ID with `interface_review_target(target, window_id, review_id)`. The review rechecks the focused client's metadata and its configured transient family, sends no input, and advances the binding revision. Capture the selected surface before sending a new program. A review is not a lease or proof of visual freshness. `interface_close` retains cleanup evidence and never reopens the session.
 

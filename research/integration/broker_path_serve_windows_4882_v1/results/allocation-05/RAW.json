@@ -1,0 +1,818 @@
+{
+  "allocation": "broker-path-serve-windows-4882-20260928-05",
+  "broker_subprocess_invocations": 5,
+  "case_count": 23,
+  "environment": {
+    "os_name": "nt",
+    "platform": "win32",
+    "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]"
+  },
+  "fixture_after_entries": [
+    {
+      "kind": "directory",
+      "path": "outside",
+      "sha256": null,
+      "target_relative": null
+    },
+    {
+      "kind": "file",
+      "path": "outside/image.png",
+      "sha256": "0833be942f11243e4beb4793eb10c2c7ebf93bd58013a1de7b42ae5c28cc994c",
+      "target_relative": null
+    },
+    {
+      "kind": "file",
+      "path": "outside/schema.json",
+      "sha256": "a2c799262a3ce3c19ef5cdd983bf3d12b43ab3c426227091b909dcb7054738c0",
+      "target_relative": null
+    },
+    {
+      "kind": "directory",
+      "path": "outside/work",
+      "sha256": null,
+      "target_relative": null
+    },
+    {
+      "kind": "directory",
+      "path": "repo",
+      "sha256": null,
+      "target_relative": null
+    },
+    {
+      "kind": "junction",
+      "path": "repo/external-junction",
+      "sha256": null,
+      "target_relative": "outside"
+    },
+    {
+      "kind": "file",
+      "path": "repo/external-junction/image.png",
+      "sha256": "0833be942f11243e4beb4793eb10c2c7ebf93bd58013a1de7b42ae5c28cc994c",
+      "target_relative": null
+    },
+    {
+      "kind": "file",
+      "path": "repo/external-junction/schema.json",
+      "sha256": "a2c799262a3ce3c19ef5cdd983bf3d12b43ab3c426227091b909dcb7054738c0",
+      "target_relative": null
+    },
+    {
+      "kind": "directory",
+      "path": "repo/external-junction/work",
+      "sha256": null,
+      "target_relative": null
+    },
+    {
+      "kind": "junction",
+      "path": "repo/in-junction",
+      "sha256": null,
+      "target_relative": "repo/internal"
+    },
+    {
+      "kind": "file",
+      "path": "repo/in-junction/image.png",
+      "sha256": "9efbe7ae02ac438fd32e62c970d090a4fdf6928db4bad071c8d65d41c7d8319e",
+      "target_relative": null
+    },
+    {
+      "kind": "file",
+      "path": "repo/in-junction/schema.json",
+      "sha256": "a2c799262a3ce3c19ef5cdd983bf3d12b43ab3c426227091b909dcb7054738c0",
+      "target_relative": null
+    },
+    {
+      "kind": "directory",
+      "path": "repo/in-junction/work",
+      "sha256": null,
+      "target_relative": null
+    },
+    {
+      "kind": "directory",
+      "path": "repo/internal",
+      "sha256": null,
+      "target_relative": null
+    },
+    {
+      "kind": "file",
+      "path": "repo/internal/image.png",
+      "sha256": "9efbe7ae02ac438fd32e62c970d090a4fdf6928db4bad071c8d65d41c7d8319e",
+      "target_relative": null
+    },
+    {
+      "kind": "file",
+      "path": "repo/internal/schema.json",
+      "sha256": "a2c799262a3ce3c19ef5cdd983bf3d12b43ab3c426227091b909dcb7054738c0",
+      "target_relative": null
+    },
+    {
+      "kind": "directory",
+      "path": "repo/internal/work",
+      "sha256": null,
+      "target_relative": null
+    }
+  ],
+  "fixture_id": "broker-path-serve-windows-4882-05-aub1bt9n",
+  "fixture_manifest_sha256": "1248722bdb4c866b388582bae1030ccdf7283599b12e8c54bb14694227f9c727",
+  "fixture_unchanged": true,
+  "junction_setup": [
+    {
+      "ok": true,
+      "stage": "FSCTL_SET_REPARSE_POINT"
+    },
+    {
+      "ok": true,
+      "stage": "FSCTL_SET_REPARSE_POINT"
+    }
+  ],
+  "rows": [
+    {
+      "absolute_input_sha256": {},
+      "argv_paths_relative_to_fixture": {
+        "image": "repo/internal/image.png",
+        "schema": "repo/internal/schema.json",
+        "working": "repo/internal/work"
+      },
+      "broker_receipt_count": 1,
+      "case_id": "valid_repo",
+      "exit_code": 0,
+      "expected": "accept",
+      "field": null,
+      "kind": "valid_repo",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "exited_ns": 35255816908100,
+        "request_id": "case-00",
+        "returncode": 0,
+        "started_ns": 35255815057400,
+        "stderr": ""
+      },
+      "request_id_count": 1,
+      "request_paths": {
+        "image": "/repo/internal/image.png",
+        "schema": "/repo/internal/schema.json",
+        "working": "/repo/internal/work"
+      },
+      "response": "{\"mock\":\"ok\"}",
+      "subprocess_calls": 1
+    },
+    {
+      "absolute_input_sha256": {},
+      "argv_paths_relative_to_fixture": {
+        "image": "repo/internal/image.png",
+        "schema": "repo/internal/schema.json",
+        "working": "repo/internal/work"
+      },
+      "broker_receipt_count": 1,
+      "case_id": "valid_workspace",
+      "exit_code": 0,
+      "expected": "accept",
+      "field": null,
+      "kind": "valid_workspace",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "exited_ns": 35255851932000,
+        "request_id": "case-01",
+        "returncode": 0,
+        "started_ns": 35255849818600,
+        "stderr": ""
+      },
+      "request_id_count": 1,
+      "request_paths": {
+        "image": "/workspace/internal/image.png",
+        "schema": "/workspace/internal/schema.json",
+        "working": "/workspace/internal/work"
+      },
+      "response": "{\"mock\":\"ok\"}",
+      "subprocess_calls": 1
+    },
+    {
+      "absolute_input_sha256": {},
+      "argv_paths_relative_to_fixture": {
+        "image": "repo/internal/image.png",
+        "schema": "repo/internal/schema.json",
+        "working": "repo/internal/work"
+      },
+      "broker_receipt_count": 1,
+      "case_id": "schema_inside_junction",
+      "exit_code": 0,
+      "expected": "accept",
+      "field": "schema",
+      "kind": "inside_junction",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "exited_ns": 35255876997400,
+        "request_id": "case-02",
+        "returncode": 0,
+        "started_ns": 35255875387000,
+        "stderr": ""
+      },
+      "request_id_count": 1,
+      "request_paths": {
+        "image": "/repo/internal/image.png",
+        "schema": "/repo/in-junction/schema.json",
+        "working": "/repo/internal/work"
+      },
+      "response": "{\"mock\":\"ok\"}",
+      "subprocess_calls": 1
+    },
+    {
+      "absolute_input_sha256": {},
+      "argv_paths_relative_to_fixture": {
+        "image": "repo/internal/image.png",
+        "schema": "repo/internal/schema.json",
+        "working": "repo/internal/work"
+      },
+      "broker_receipt_count": 1,
+      "case_id": "image_inside_junction",
+      "exit_code": 0,
+      "expected": "accept",
+      "field": "image",
+      "kind": "inside_junction",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "exited_ns": 35255903707800,
+        "request_id": "case-03",
+        "returncode": 0,
+        "started_ns": 35255901384000,
+        "stderr": ""
+      },
+      "request_id_count": 1,
+      "request_paths": {
+        "image": "/repo/in-junction/image.png",
+        "schema": "/repo/internal/schema.json",
+        "working": "/repo/internal/work"
+      },
+      "response": "{\"mock\":\"ok\"}",
+      "subprocess_calls": 1
+    },
+    {
+      "absolute_input_sha256": {},
+      "argv_paths_relative_to_fixture": {
+        "image": "repo/internal/image.png",
+        "schema": "repo/internal/schema.json",
+        "working": "repo/internal/work"
+      },
+      "broker_receipt_count": 1,
+      "case_id": "working_inside_junction",
+      "exit_code": 0,
+      "expected": "accept",
+      "field": "working",
+      "kind": "inside_junction",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "exited_ns": 35255929075200,
+        "request_id": "case-04",
+        "returncode": 0,
+        "started_ns": 35255927529100,
+        "stderr": ""
+      },
+      "request_id_count": 1,
+      "request_paths": {
+        "image": "/repo/internal/image.png",
+        "schema": "/repo/internal/schema.json",
+        "working": "/repo/in-junction/work"
+      },
+      "response": "{\"mock\":\"ok\"}",
+      "subprocess_calls": 1
+    },
+    {
+      "absolute_input_sha256": {},
+      "argv_paths_relative_to_fixture": null,
+      "broker_receipt_count": 1,
+      "case_id": "schema_traversal",
+      "exit_code": 1,
+      "expected": "reject",
+      "field": "schema",
+      "kind": "traversal",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "error_class": "InvalidHostPath",
+        "exited_ns": 35255953148500,
+        "request_id": "case-05",
+        "returncode": null,
+        "started_ns": 35255952213800,
+        "stderr": "non-canonical or traversing path",
+        "stop_reason": "HOST_MODEL_PATH_REJECTED"
+      },
+      "request_id_count": 1,
+      "request_paths": {
+        "image": "/repo/internal/image.png",
+        "schema": "/repo/../outside/schema.json",
+        "working": "/repo/internal/work"
+      },
+      "response": "",
+      "subprocess_calls": 0
+    },
+    {
+      "absolute_input_sha256": {},
+      "argv_paths_relative_to_fixture": null,
+      "broker_receipt_count": 1,
+      "case_id": "schema_encoded_traversal",
+      "exit_code": 1,
+      "expected": "reject",
+      "field": "schema",
+      "kind": "encoded_traversal",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "error_class": "InvalidHostPath",
+        "exited_ns": 35255979675000,
+        "request_id": "case-06",
+        "returncode": null,
+        "started_ns": 35255978529400,
+        "stderr": "non-canonical or traversing path",
+        "stop_reason": "HOST_MODEL_PATH_REJECTED"
+      },
+      "request_id_count": 1,
+      "request_paths": {
+        "image": "/repo/internal/image.png",
+        "schema": "/repo/%252e%252e/outside/schema.json",
+        "working": "/repo/internal/work"
+      },
+      "response": "",
+      "subprocess_calls": 0
+    },
+    {
+      "absolute_input_sha256": {
+        "schema": "c6bb77c6dbd65de613e7056ed8b54494e7360f27427b8ab54842026c800dbb20"
+      },
+      "argv_paths_relative_to_fixture": null,
+      "broker_receipt_count": 1,
+      "case_id": "schema_absolute",
+      "exit_code": 1,
+      "expected": "reject",
+      "field": "schema",
+      "kind": "absolute",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "error_class": "InvalidHostPath",
+        "exited_ns": 35256003905900,
+        "request_id": "case-07",
+        "returncode": null,
+        "started_ns": 35256001033500,
+        "stderr": "absolute or unscoped host path rejected",
+        "stop_reason": "HOST_MODEL_PATH_REJECTED"
+      },
+      "request_id_count": 1,
+      "request_paths": {
+        "image": "/repo/internal/image.png",
+        "schema": "<absolute-outside>",
+        "working": "/repo/internal/work"
+      },
+      "response": "",
+      "subprocess_calls": 0
+    },
+    {
+      "absolute_input_sha256": {},
+      "argv_paths_relative_to_fixture": null,
+      "broker_receipt_count": 1,
+      "case_id": "schema_missing",
+      "exit_code": 1,
+      "expected": "reject",
+      "field": "schema",
+      "kind": "missing",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "error_class": "InvalidHostPath",
+        "exited_ns": 35256030789400,
+        "request_id": "case-08",
+        "returncode": null,
+        "started_ns": 35256029339100,
+        "stderr": "[WinError 2] \u6307\u5b9a\u3055\u308c\u305f\u30d5\u30a1\u30a4\u30eb\u304c\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3002: 'C:\\\\Users\\\\junny\\\\AppData\\\\Local\\\\Temp\\\\broker-path-serve-windows-4882-05-aub1bt9n\\\\repo\\\\not-present'",
+        "stop_reason": "HOST_MODEL_PATH_REJECTED"
+      },
+      "request_id_count": 1,
+      "request_paths": {
+        "image": "/repo/internal/image.png",
+        "schema": "/repo/not-present",
+        "working": "/repo/internal/work"
+      },
+      "response": "",
+      "subprocess_calls": 0
+    },
+    {
+      "absolute_input_sha256": {},
+      "argv_paths_relative_to_fixture": null,
+      "broker_receipt_count": 1,
+      "case_id": "schema_external_junction",
+      "exit_code": 1,
+      "expected": "reject",
+      "field": "schema",
+      "kind": "external_junction",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "error_class": "InvalidHostPath",
+        "exited_ns": 35256057031400,
+        "request_id": "case-09",
+        "returncode": null,
+        "started_ns": 35256055716600,
+        "stderr": "resolved path escapes repository root",
+        "stop_reason": "HOST_MODEL_PATH_REJECTED"
+      },
+      "request_id_count": 1,
+      "request_paths": {
+        "image": "/repo/internal/image.png",
+        "schema": "/repo/external-junction/schema.json",
+        "working": "/repo/internal/work"
+      },
+      "response": "",
+      "subprocess_calls": 0
+    },
+    {
+      "absolute_input_sha256": {},
+      "argv_paths_relative_to_fixture": null,
+      "broker_receipt_count": 1,
+      "case_id": "schema_ambiguous_separator",
+      "exit_code": 1,
+      "expected": "reject",
+      "field": "schema",
+      "kind": "ambiguous_separator",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "error_class": "InvalidHostPath",
+        "exited_ns": 35256079785700,
+        "request_id": "case-10",
+        "returncode": null,
+        "started_ns": 35256078812400,
+        "stderr": "ambiguous path separator or NUL",
+        "stop_reason": "HOST_MODEL_PATH_REJECTED"
+      },
+      "request_id_count": 1,
+      "request_paths": {
+        "image": "/repo/internal/image.png",
+        "schema": "/repo/sub\\..\\outside",
+        "working": "/repo/internal/work"
+      },
+      "response": "",
+      "subprocess_calls": 0
+    },
+    {
+      "absolute_input_sha256": {},
+      "argv_paths_relative_to_fixture": null,
+      "broker_receipt_count": 1,
+      "case_id": "image_traversal",
+      "exit_code": 1,
+      "expected": "reject",
+      "field": "image",
+      "kind": "traversal",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "error_class": "InvalidHostPath",
+        "exited_ns": 35256102331200,
+        "request_id": "case-11",
+        "returncode": null,
+        "started_ns": 35256101064000,
+        "stderr": "non-canonical or traversing path",
+        "stop_reason": "HOST_MODEL_PATH_REJECTED"
+      },
+      "request_id_count": 1,
+      "request_paths": {
+        "image": "/repo/../outside/image.png",
+        "schema": "/repo/internal/schema.json",
+        "working": "/repo/internal/work"
+      },
+      "response": "",
+      "subprocess_calls": 0
+    },
+    {
+      "absolute_input_sha256": {},
+      "argv_paths_relative_to_fixture": null,
+      "broker_receipt_count": 1,
+      "case_id": "image_encoded_traversal",
+      "exit_code": 1,
+      "expected": "reject",
+      "field": "image",
+      "kind": "encoded_traversal",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "error_class": "InvalidHostPath",
+        "exited_ns": 35256125137300,
+        "request_id": "case-12",
+        "returncode": null,
+        "started_ns": 35256123829800,
+        "stderr": "non-canonical or traversing path",
+        "stop_reason": "HOST_MODEL_PATH_REJECTED"
+      },
+      "request_id_count": 1,
+      "request_paths": {
+        "image": "/repo/%252e%252e/outside/image.png",
+        "schema": "/repo/internal/schema.json",
+        "working": "/repo/internal/work"
+      },
+      "response": "",
+      "subprocess_calls": 0
+    },
+    {
+      "absolute_input_sha256": {
+        "image": "98b59eb48c07b678bbd69dd1e2c849a05191fc743df9d9bbc8217f7972d02fcc"
+      },
+      "argv_paths_relative_to_fixture": null,
+      "broker_receipt_count": 1,
+      "case_id": "image_absolute",
+      "exit_code": 1,
+      "expected": "reject",
+      "field": "image",
+      "kind": "absolute",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "error_class": "InvalidHostPath",
+        "exited_ns": 35256148184900,
+        "request_id": "case-13",
+        "returncode": null,
+        "started_ns": 35256146995600,
+        "stderr": "absolute or unscoped host path rejected",
+        "stop_reason": "HOST_MODEL_PATH_REJECTED"
+      },
+      "request_id_count": 1,
+      "request_paths": {
+        "image": "<absolute-outside>",
+        "schema": "/repo/internal/schema.json",
+        "working": "/repo/internal/work"
+      },
+      "response": "",
+      "subprocess_calls": 0
+    },
+    {
+      "absolute_input_sha256": {},
+      "argv_paths_relative_to_fixture": null,
+      "broker_receipt_count": 1,
+      "case_id": "image_missing",
+      "exit_code": 1,
+      "expected": "reject",
+      "field": "image",
+      "kind": "missing",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "error_class": "InvalidHostPath",
+        "exited_ns": 35256203855000,
+        "request_id": "case-14",
+        "returncode": null,
+        "started_ns": 35256201707200,
+        "stderr": "[WinError 2] \u6307\u5b9a\u3055\u308c\u305f\u30d5\u30a1\u30a4\u30eb\u304c\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3002: 'C:\\\\Users\\\\junny\\\\AppData\\\\Local\\\\Temp\\\\broker-path-serve-windows-4882-05-aub1bt9n\\\\repo\\\\not-present'",
+        "stop_reason": "HOST_MODEL_PATH_REJECTED"
+      },
+      "request_id_count": 1,
+      "request_paths": {
+        "image": "/repo/not-present",
+        "schema": "/repo/internal/schema.json",
+        "working": "/repo/internal/work"
+      },
+      "response": "",
+      "subprocess_calls": 0
+    },
+    {
+      "absolute_input_sha256": {},
+      "argv_paths_relative_to_fixture": null,
+      "broker_receipt_count": 1,
+      "case_id": "image_external_junction",
+      "exit_code": 1,
+      "expected": "reject",
+      "field": "image",
+      "kind": "external_junction",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "error_class": "InvalidHostPath",
+        "exited_ns": 35256227870300,
+        "request_id": "case-15",
+        "returncode": null,
+        "started_ns": 35256226445600,
+        "stderr": "resolved path escapes repository root",
+        "stop_reason": "HOST_MODEL_PATH_REJECTED"
+      },
+      "request_id_count": 1,
+      "request_paths": {
+        "image": "/repo/external-junction/image.png",
+        "schema": "/repo/internal/schema.json",
+        "working": "/repo/internal/work"
+      },
+      "response": "",
+      "subprocess_calls": 0
+    },
+    {
+      "absolute_input_sha256": {},
+      "argv_paths_relative_to_fixture": null,
+      "broker_receipt_count": 1,
+      "case_id": "image_ambiguous_separator",
+      "exit_code": 1,
+      "expected": "reject",
+      "field": "image",
+      "kind": "ambiguous_separator",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "error_class": "InvalidHostPath",
+        "exited_ns": 35256250754500,
+        "request_id": "case-16",
+        "returncode": null,
+        "started_ns": 35256248836900,
+        "stderr": "ambiguous path separator or NUL",
+        "stop_reason": "HOST_MODEL_PATH_REJECTED"
+      },
+      "request_id_count": 1,
+      "request_paths": {
+        "image": "/repo/sub\\..\\outside",
+        "schema": "/repo/internal/schema.json",
+        "working": "/repo/internal/work"
+      },
+      "response": "",
+      "subprocess_calls": 0
+    },
+    {
+      "absolute_input_sha256": {},
+      "argv_paths_relative_to_fixture": null,
+      "broker_receipt_count": 1,
+      "case_id": "working_traversal",
+      "exit_code": 1,
+      "expected": "reject",
+      "field": "working",
+      "kind": "traversal",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "error_class": "InvalidHostPath",
+        "exited_ns": 35256277276100,
+        "request_id": "case-17",
+        "returncode": null,
+        "started_ns": 35256275278700,
+        "stderr": "non-canonical or traversing path",
+        "stop_reason": "HOST_MODEL_PATH_REJECTED"
+      },
+      "request_id_count": 1,
+      "request_paths": {
+        "image": "/repo/internal/image.png",
+        "schema": "/repo/internal/schema.json",
+        "working": "/repo/../outside/work"
+      },
+      "response": "",
+      "subprocess_calls": 0
+    },
+    {
+      "absolute_input_sha256": {},
+      "argv_paths_relative_to_fixture": null,
+      "broker_receipt_count": 1,
+      "case_id": "working_encoded_traversal",
+      "exit_code": 1,
+      "expected": "reject",
+      "field": "working",
+      "kind": "encoded_traversal",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "error_class": "InvalidHostPath",
+        "exited_ns": 35256300822500,
+        "request_id": "case-18",
+        "returncode": null,
+        "started_ns": 35256298815100,
+        "stderr": "non-canonical or traversing path",
+        "stop_reason": "HOST_MODEL_PATH_REJECTED"
+      },
+      "request_id_count": 1,
+      "request_paths": {
+        "image": "/repo/internal/image.png",
+        "schema": "/repo/internal/schema.json",
+        "working": "/repo/%252e%252e/outside/work"
+      },
+      "response": "",
+      "subprocess_calls": 0
+    },
+    {
+      "absolute_input_sha256": {
+        "working": "b3b5f74138a3b1e22efdce46dcbbf7904cebd05cb6a061456422da396e96a0db"
+      },
+      "argv_paths_relative_to_fixture": null,
+      "broker_receipt_count": 1,
+      "case_id": "working_absolute",
+      "exit_code": 1,
+      "expected": "reject",
+      "field": "working",
+      "kind": "absolute",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "error_class": "InvalidHostPath",
+        "exited_ns": 35256322855000,
+        "request_id": "case-19",
+        "returncode": null,
+        "started_ns": 35256321486200,
+        "stderr": "absolute or unscoped host path rejected",
+        "stop_reason": "HOST_MODEL_PATH_REJECTED"
+      },
+      "request_id_count": 1,
+      "request_paths": {
+        "image": "/repo/internal/image.png",
+        "schema": "/repo/internal/schema.json",
+        "working": "<absolute-outside>"
+      },
+      "response": "",
+      "subprocess_calls": 0
+    },
+    {
+      "absolute_input_sha256": {},
+      "argv_paths_relative_to_fixture": null,
+      "broker_receipt_count": 1,
+      "case_id": "working_missing",
+      "exit_code": 1,
+      "expected": "reject",
+      "field": "working",
+      "kind": "missing",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "error_class": "InvalidHostPath",
+        "exited_ns": 35256342922500,
+        "request_id": "case-20",
+        "returncode": null,
+        "started_ns": 35256341436900,
+        "stderr": "[WinError 2] \u6307\u5b9a\u3055\u308c\u305f\u30d5\u30a1\u30a4\u30eb\u304c\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3002: 'C:\\\\Users\\\\junny\\\\AppData\\\\Local\\\\Temp\\\\broker-path-serve-windows-4882-05-aub1bt9n\\\\repo\\\\not-present'",
+        "stop_reason": "HOST_MODEL_PATH_REJECTED"
+      },
+      "request_id_count": 1,
+      "request_paths": {
+        "image": "/repo/internal/image.png",
+        "schema": "/repo/internal/schema.json",
+        "working": "/repo/not-present"
+      },
+      "response": "",
+      "subprocess_calls": 0
+    },
+    {
+      "absolute_input_sha256": {},
+      "argv_paths_relative_to_fixture": null,
+      "broker_receipt_count": 1,
+      "case_id": "working_external_junction",
+      "exit_code": 1,
+      "expected": "reject",
+      "field": "working",
+      "kind": "external_junction",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "error_class": "InvalidHostPath",
+        "exited_ns": 35256363982600,
+        "request_id": "case-21",
+        "returncode": null,
+        "started_ns": 35256362379000,
+        "stderr": "resolved path escapes repository root",
+        "stop_reason": "HOST_MODEL_PATH_REJECTED"
+      },
+      "request_id_count": 1,
+      "request_paths": {
+        "image": "/repo/internal/image.png",
+        "schema": "/repo/internal/schema.json",
+        "working": "/repo/external-junction/work"
+      },
+      "response": "",
+      "subprocess_calls": 0
+    },
+    {
+      "absolute_input_sha256": {},
+      "argv_paths_relative_to_fixture": null,
+      "broker_receipt_count": 1,
+      "case_id": "working_ambiguous_separator",
+      "exit_code": 1,
+      "expected": "reject",
+      "field": "working",
+      "kind": "ambiguous_separator",
+      "receipt": {
+        "authority_granted": false,
+        "boundary": "host-local-codex-exe",
+        "error_class": "InvalidHostPath",
+        "exited_ns": 35256387797400,
+        "request_id": "case-22",
+        "returncode": null,
+        "started_ns": 35256386333300,
+        "stderr": "ambiguous path separator or NUL",
+        "stop_reason": "HOST_MODEL_PATH_REJECTED"
+      },
+      "request_id_count": 1,
+      "request_paths": {
+        "image": "/repo/internal/image.png",
+        "schema": "/repo/internal/schema.json",
+        "working": "/repo/sub\\..\\outside"
+      },
+      "response": "",
+      "subprocess_calls": 0
+    }
+  ],
+  "schema": "broker_path_serve_windows_4882_raw_v1",
+  "source_main": "5670372e20065d3d8286105ed4ea9615952b116f",
+  "status": "RUN_COMPLETE",
+  "subprocess_call_count": 5,
+  "subprocess_mocked": true,
+  "upstream_broker_git_blob": "5734f54f318db9ac5e96b2bed6f6bed105ac39ff"
+}

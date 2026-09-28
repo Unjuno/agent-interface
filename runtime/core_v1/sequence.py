@@ -2,6 +2,42 @@
 from copy import deepcopy
 
 
+def normalize_observation_regions(operations):
+    """Lower explicit public observe regions without changing operation indices.
+
+    Core admission still accepts only x/y/w/h. Mixed forms are ambiguous even
+    when numerically equal; never select one silently or coerce JSON values.
+    """
+    indices = []
+    if (not isinstance(operations, list)
+            or not any(isinstance(op, dict) and 'region' in op for op in operations)):
+        return operations, indices
+    result = deepcopy(operations)
+    for index, op in enumerate(result):
+        if not isinstance(op, dict) or 'region' not in op:
+            continue
+        region = op['region']
+        detail = None
+        if op.get('op') != 'observe':
+            detail = 'region is supported only for observe'
+        elif any(key in op for key in ('x', 'y', 'w', 'h', 'width', 'height')):
+            detail = 'observe region cannot be mixed with coordinate or dimension fields'
+        elif (not isinstance(region, list) or len(region) != 4
+              or any(type(value) is not int for value in region)):
+            detail = 'observe region must be [x, y, width, height] with four integers'
+        elif (any(not -1_000_000 <= value <= 1_000_000 for value in region[:2])
+              or any(not 1 <= value <= 1_000_000 for value in region[2:])):
+            detail = 'observe region coordinates or dimensions out of range'
+        if detail:
+            error = ValueError(detail)
+            error.operation_index = index
+            raise error
+        op.pop('region')
+        op.update(zip(('x', 'y', 'w', 'h'), region))
+        indices.append(index)
+    return result, indices
+
+
 def expand_key_repeats(operations, *, max_ops):
     if type(max_ops) is not int or not 0 <= max_ops <= 128:
         raise ValueError('operation capacity must be 0..128')

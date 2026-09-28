@@ -33,6 +33,15 @@ from runtime.core_v1.contract import SCHEMA_PROGRAM
 
 
 class PrivateSession(suite.Session):
+    def __init__(self):
+        super().__init__()
+        try:
+            from x11_window_manager_ready_v1 import wait_window_manager
+            self.window_manager_readiness = wait_window_manager(self)
+        except Exception:
+            self.close()
+            raise
+
     def windows(self):
         lines = []
         for line in super().windows().splitlines():
