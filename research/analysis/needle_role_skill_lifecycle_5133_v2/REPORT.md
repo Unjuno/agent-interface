@@ -58,3 +58,34 @@ latency or product claim. It does not close #4916.
   STOP unchanged; -04 is an additive corrected allocation.
 
 See `FREEZE.json`, `INVOCATION_LOG.md`, and `results/{construction-04,formal-04,audit-04}/`.
+
+## Post-review evidence correction — append-only
+
+The original `audit-04/audit.json`, raw formal output, and frozen sources are
+preserved byte-for-byte. Review found that the original auditor seeded both
+cumulative-cost accumulators with the reuse initialization cost, cancelling
+the required initialization charge in its break-even calculation. It also
+reported stale 5-block/40-request scope metadata. Therefore the original
+`PASS_LIFECYCLE_AMORTIZATION_SCOPED` is superseded for promotion purposes; its
+historical bytes remain unchanged. The formal raw has **not** been rerun.
+
+`audit_correction.py` is a separately versioned, post-review read-only
+reconstruction over the same immutable raw. It charges initialization only to
+reuse, rebuilds all predictions with the independent oracle, checks frozen
+identities and mutation controls, and derives scope from the raw sample counts.
+Its report is additive at
+`results/audit-correction-04/correction.json`; it does not overwrite the
+original audit or claim a new formal allocation.
+
+The review's separate source-hash mismatch finding does not reproduce against
+the exact PR head `465f6315074f6f98df3789a6936aafacf03e9409`: GitHub Contents
+API readback of all six frozen source files returns the exact `source_git_blobs`
+recorded in `FREEZE.json`, and the 7-test frozen-source suite passes on that
+head. For example, `lifecycle_corrected.py` is blob
+`879accfdaa77e9d2f4c82c5bfa30ba7743fe3a3c` with SHA-256
+`f2b0c70547603ac665c8053b1e5b9181dce49df6a92837922adb450cf1adabe4`. This
+contradictory review observation remains documented for re-review rather than
+being silently discarded. The original analysis-index CI failure was
+independently reproduced locally and fixed by refreshing
+`research/analysis/README.md`; `python research/analysis/check_index.py` now
+passes with 192 retained result/failure directories indexed.
