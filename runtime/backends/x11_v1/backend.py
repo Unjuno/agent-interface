@@ -177,12 +177,14 @@ class X11Backend:
 
     def pointer_button(self, button: str, down: bool) -> None:
         number = BUTTON_MAP[button]
+        # A request can reach the server even if sending/synchronizing raises.
+        # Own the cleanup obligation before attempting the press.
+        if down:
+            self.held_buttons.add(button)
         xtest.fake_input(self.d, X.ButtonPress if down else X.ButtonRelease, number)
         self.emissions += 1
         self.d.sync()
-        if down:
-            self.held_buttons.add(button)
-        else:
+        if not down:
             self.held_buttons.discard(button)
 
     def _keycode(self, key: str) -> int:
@@ -202,12 +204,12 @@ class X11Backend:
 
     def key_state(self, key: str, down: bool) -> None:
         code = self._keycode(key)
+        if down:
+            self.held_keycodes[key] = code
         xtest.fake_input(self.d, X.KeyPress if down else X.KeyRelease, code)
         self.emissions += 1
         self.d.sync()
-        if down:
-            self.held_keycodes[key] = code
-        else:
+        if not down:
             self.held_keycodes.pop(key, None)
 
     def key_chord(self, keys: list[str]) -> None:
@@ -341,10 +343,12 @@ class X11Backend:
             xtest.fake_input(self.d, X.ButtonRelease, BUTTON_MAP[button])
             self.emissions += 1
         self.d.sync()
-        self.held_keycodes.clear()
-        self.held_buttons.clear()
         keys = self._physical_keys_down(tracked)
         buttons = self._physical_buttons_down()
+        # Preserve uncertain/down inputs until readback succeeds. A subsequent
+        # explicit recovery must still know which releases it owes.
+        self.held_keycodes = {name: code for name, code in tracked.items() if name in keys}
+        self.held_buttons.intersection_update(buttons)
         return {
             "keys_down": keys,
             "buttons_down": buttons,

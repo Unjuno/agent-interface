@@ -10,6 +10,90 @@ from runtime.core_v1.test_contract import program
 
 
 class PartialExecutionTests(unittest.TestCase):
+    def test_uncertain_press_is_released_after_send_or_sync_failure(self):
+        from Xlib import X
+        from runtime.backends.x11_v1.backend import X11ExecutionError
+        for pointer in (False, True):
+            for boundary in ('send', 'sync'):
+                with self.subTest(pointer=pointer, boundary=boundary):
+                    backend = object.__new__(X11Backend)
+                    backend.d = mock.Mock()
+                    backend.root = mock.Mock()
+                    backend.held_keycodes = {}
+                    backend.held_buttons = set()
+                    backend.emissions = 0
+                    backend.preflight = mock.Mock()
+                    backend._keycode = lambda key: 38
+                    backend.text = mock.Mock()
+                    physical = {'down': False}
+                    press = X.ButtonPress if pointer else X.KeyPress
+                    release = X.ButtonRelease if pointer else X.KeyRelease
+
+                    def emit(display, event, code):
+                        if event == press:
+                            physical['down'] = True
+                            if boundary == 'send':
+                                raise OSError('request sent before error')
+                        elif event == release:
+                            physical['down'] = False
+
+                    def keymap():
+                        result = bytearray(32)
+                        if not pointer and physical['down']:
+                            result[38 // 8] |= 1 << (38 % 8)
+                        return result
+
+                    backend.d.query_keymap.side_effect = keymap
+                    backend.root.query_pointer.side_effect = lambda: type('Pointer', (), {
+                        'mask': X.Button1Mask if pointer and physical['down'] else 0})()
+                    if boundary == 'sync':
+                        backend.d.sync.side_effect = [OSError('lost sync reply'), None]
+                    op = ({'op': 'pointer_button', 'button': 'left', 'down': True} if pointer
+                          else {'op': 'key_state', 'key': 'w', 'down': True})
+                    with mock.patch('runtime.backends.x11_v1.backend.xtest.fake_input', side_effect=emit):
+                        with self.assertRaises(X11ExecutionError) as caught:
+                            backend.execute({'ops': [op, {'op': 'text', 'text': 'must-not-run'}]})
+                    self.assertFalse(physical['down'])
+                    self.assertTrue(caught.exception.execution['releases'][-1]['verified'])
+                    self.assertEqual(caught.exception.execution['completed_ops'], [])
+                    backend.text.assert_not_called()
+                    self.assertEqual(backend.held_keycodes, {})
+                    self.assertEqual(backend.held_buttons, set())
+
+    def test_release_readback_error_keeps_obligations_for_explicit_recovery(self):
+        backend = object.__new__(X11Backend)
+        backend.d = mock.Mock()
+        backend.emissions = 0
+        backend.held_keycodes = {'w': 38}
+        backend.held_buttons = {'left'}
+        backend._physical_keys_down = mock.Mock(side_effect=[OSError('readback lost'), []])
+        backend._physical_buttons_down = mock.Mock(return_value=[])
+        with mock.patch('runtime.backends.x11_v1.backend.xtest.fake_input') as emit:
+            with self.assertRaises(OSError):
+                backend.release_all()
+            self.assertEqual(backend.held_keycodes, {'w': 38})
+            self.assertEqual(backend.held_buttons, {'left'})
+            result = backend.release_all()
+        self.assertEqual(emit.call_count, 4)
+        self.assertTrue(result['verified'])
+        self.assertEqual(backend.held_keycodes, {})
+        self.assertEqual(backend.held_buttons, set())
+
+    def test_release_down_readback_keeps_only_outstanding_inputs(self):
+        backend = object.__new__(X11Backend)
+        backend.d = mock.Mock()
+        backend.emissions = 0
+        backend.held_keycodes = {'w': 38, 's': 39}
+        backend.held_buttons = {'left', 'right'}
+        backend._physical_keys_down = mock.Mock(side_effect=[['w'], []])
+        backend._physical_buttons_down = mock.Mock(side_effect=[['left'], []])
+        with mock.patch('runtime.backends.x11_v1.backend.xtest.fake_input') as emit:
+            self.assertFalse(backend.release_all()['verified'])
+            self.assertEqual(backend.held_keycodes, {'w': 38})
+            self.assertEqual(backend.held_buttons, {'left'})
+            self.assertTrue(backend.release_all()['verified'])
+        self.assertEqual(emit.call_count, 6)
+
     def test_target_disappearing_after_session_preflight_returns_failure(self):
         from runtime.backends.x11_v1.backend import X11BackendError
         from runtime.core_v1.contract import WINDOW_ACTIVATE
