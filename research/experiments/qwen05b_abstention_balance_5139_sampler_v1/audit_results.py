@@ -22,6 +22,8 @@ def reference_class(intent: Any) -> str | None:
     if not isinstance(intent, Mapping):
         return None
     op = intent.get("op")
+    if not isinstance(op, str):
+        return None
     if op in ("set", "save", "toggle") and set(intent) == {
         "set": {"op", "field", "value"},
         "save": {"op"},

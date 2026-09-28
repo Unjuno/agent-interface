@@ -138,6 +138,16 @@ class IndependentRawAuditTests(unittest.TestCase):
         self.assertTrue(any(error.startswith("support_class_mismatch:") for error in result["errors"]))
         self.assertTrue(any(error.startswith("heldout_class_mismatch:") for error in result["errors"]))
 
+    def test_rejects_unhashable_operation_values_without_crashing(self):
+        data = build(FORMAL_SEED, SUPPORT_SEED, ALLOCATION)
+        data["support_pool"][0]["intent"]["op"] = []
+        data["heldout_pool"][0]["intent"]["op"] = {"malformed": True}
+        raw_bytes = (json.dumps(data, sort_keys=True, separators=(",", ":")) + "\n").encode()
+        result = audit(raw_bytes, {})
+        self.assertFalse(result["integrity_pass"])
+        self.assertTrue(any(error.startswith("support_class_mismatch:") for error in result["errors"]))
+        self.assertTrue(any(error.startswith("heldout_class_mismatch:") for error in result["errors"]))
+
 
 if __name__ == "__main__":
     unittest.main()
