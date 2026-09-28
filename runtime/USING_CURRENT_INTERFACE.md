@@ -572,6 +572,8 @@ The receipt schema is `agent-interface/receipt-view-dispatch-summary-v1`.
 Read `receipt.execution_summary` for execution times, emissions, all capture,
 release and activation records, completed operation count and fixed-wait totals.
 Images, outcome fields, target/session state and call identity remain unchanged.
+A retained lookup without a live session snapshot keeps its historical session
+at `receipt.reported_session`; it does not mint a current binding or authority.
 Source programs, expansion mapping, per-wait timestamps, completed indices and
 duplicate receipt/session metadata are omitted. The source digest identifies the
 retained full report, not the summary. This does not assert task success.

@@ -63,6 +63,14 @@ class PublicSummaryTests(unittest.TestCase):
                 elif mutation == "image": view["image_status"] = "missing"
                 self.assertEqual(summarize_public_dispatch(view), view)
 
+    def test_retained_report_without_live_session_keeps_historical_session(self):
+        view = fixture("nonpaced_dispatch_review.json")
+        session = view.pop("session")  # Actual interface_results shape: no live owner snapshot.
+        summary = summarize_public_dispatch(view)
+        self.assertEqual(summary["receipt"]["schema"], SCHEMA)
+        self.assertNotIn("session", summary)
+        self.assertEqual(summary["receipt"]["reported_session"], session)
+
     def test_preserved_native_extensions_and_literal_reference_shapes(self):
         view = fixture("nonpaced_dispatch_review.json")
         raw = view["receipt"]["source"]["raw_report"]
@@ -76,6 +84,7 @@ class PublicSummaryMCPTests(unittest.IsolatedAsyncioTestCase):
         from runtime.cli_v1.mcp_server import create_server
         full = fixture("nonpaced_dispatch_review.json")
         raw = full["receipt"]["source"]["raw_report"]
+        full.pop("session")  # Match retained presentation rather than the live-owner wrapper.
         args = {"program": raw["normalization"]["source_program"], "current_observation_seq": 1,
                 "current_binding_revision": 1, "compact": True, "report_refs": True}
         with tempfile.TemporaryDirectory() as td:

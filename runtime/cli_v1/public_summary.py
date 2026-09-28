@@ -40,8 +40,9 @@ def summarize_public_dispatch(view):
                 or any(view.get(k) is not None for k in ("persistence_error", "presentation"))
                 or outcome["execution_status"] != "completed" or outcome["input_release_verified"] is not True
                 or any(outcome.get(k) is not None for k in ("error", "cleanup_error", "execution_error", "failure_phase", "failure_detail"))
-                or encoded(raw.get("session")) != encoded(view.get("session"))
+                or ("session" in view and encoded(raw.get("session")) != encoded(view["session"]))
                 or view.get("session", {}).get("recovery_required", False) is not False
+                or raw.get("session", {}).get("recovery_required", False) is not False
                 or not isinstance(view["call_id"], str) or not view["call_id"]):
             return full
         if any(type(execution[k]) is not int or execution[k] < 0 for k in ("started_ns", "ended_ns", "emissions", "program_emissions")):
@@ -103,6 +104,9 @@ def summarize_public_dispatch(view):
             "admission": result["admission"], "required_capabilities": deepcopy(result["required_capabilities"]),
             "execution_summary": summary,
             "scope": "Partial historical summary. Source digest identifies the retained full report, not this summary. No task success or authority."}
+        if "session" in raw and "session" not in view:
+            # A retained lookup has historical session evidence, not a live owner snapshot.
+            projected["receipt"]["reported_session"] = deepcopy(raw["session"])
         projected["presentation"] = {"requested": "summary", "returned": "summary",
             "omitted": ["source programs", "expansion map", "individual waits", "completed operation indices", "duplicate session and receipt metadata"],
             "retrieve": {"tool": "interface_results", "arguments": {"call_id": view["call_id"], "include_image": False,
