@@ -428,3 +428,17 @@ Target inspection resolves a configured X11 child/widget ID to its first managed
 Use `{"op":"key_chord","keys":["Home"]}` for a Home tap and `{"op":"key_chord","keys":["CTRL","s"]}` for a chord. Held input uses `key_state` with `key` and `down`; `key` is not an operation name. X11 keysym names are case-sensitive: `Home`, `End`, `Left`, `Right`, `Up`, `Down`, `BackSpace`, `Delete`, `Insert`. The existing aliases `CTRL`, `SHIFT`, `ALT`, `ENTER`, `TAB`, `ESC`, `SPACE` are also accepted. The actual layout must still map the named key; static validation alone does not establish that.
 
 For common uppercase misspellings, an unmapped-key refusal gives a spelling hint. It does not dispatch the suggested key, retry input, or change held-key identity. Read the execution outcome before deciding a corrected action. This guidance follows the retained `HOME` refusal and explicit `Home` correction in [primary child-target use](../results/managed-target-ancestry-01/README.md).
+
+## Portable JSON-lines relay
+
+For hosts that consume explicit JSON-lines requests rather than acting as an MCP client, the same archive provides a sequential adapter:
+
+```bash
+python3 runtime.pyz relay -- --targets /absolute/targets.json --output-directory /absolute/new-calls --session-mode persistent-x11 --display :99
+```
+
+Pipe stdin/stdout; terminal stdout is refused to preserve exact image JSON bytes. Install the same optional `mcp==1.30.0` dependency used by MCP mode. The relay launches `mcp` from that exact archive using the same Python executable; no research checkout, research allocation or native_start tool is involved. Source development also supports `python3 -m runtime.cli_v1.mcp_relay -- ...` from a checkout.
+
+Each line is exactly `{"id":1,"tool":"list_tools","arguments":{}}`, followed by IDs 2, 3, and so on for accepted calls. Public `interface_*` tools are forwarded unchanged, including image blocks and full/summary options. Inspect discovery to choose a tool. A refused envelope consumes no ID and reports `dispatched:false`; an accepted request consumes its ID before the SDK call, even if the outcome becomes unknown. Never resend an accepted ID or replay uncertain input. `sdk_entry_ns` and `sdk_return_ns` are execution-host monotonic boundaries, not model latency.
+
+Call `interface_close` explicitly and inspect release/cleanup results before closing the pipe. EOF is a disconnect, not a task completion or application-cleanup guarantee. Keep stderr separate from the JSON-lines stream. This adapter does not add a model, queue, automatic retry, task policy or performance claim. The older research relay remains unchanged for frozen research callers.

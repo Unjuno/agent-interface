@@ -83,6 +83,12 @@ print('archive method passed without optional dependencies')
             self.assertEqual(mcp.returncode, 2)
             self.assertIn('optional dependency mcp==1.30.0', mcp.stderr)
             self.assertEqual(mcp.stdout, '')
+            relay = subprocess.run([sys.executable, '-S', str(out), 'relay', '--help'],
+                                   cwd=td, capture_output=True, text=True)
+            self.assertEqual(relay.returncode, 2)
+            self.assertIn('optional dependency mcp==1.30.0', relay.stderr)
+            self.assertEqual(relay.stdout, '')
+
 
     def test_build_pins_source_even_when_head_moves_between_files(self):
         from runtime.distribution_v2 import build as builder
