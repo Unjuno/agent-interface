@@ -631,3 +631,23 @@ matched task latency, useful feedback and human tempo remain unproven. Contract
 checks: 255 protocol + 106 harness. Evidence lives in
 runtime/results/guarded-observation-refs-primary-01; the preceding offline replay
 remains separately labeled. No model/sensor service or secondary agent was added.
+
+
+### Retained host timing integration checkpoint
+
+The read-only runtime.integration_checks.host_timing command binds ordered relay
+events to request/reply files and explicit review receipts. It separates host
+send-to-reply, presentation callbacks, declared reviews and between-call gaps;
+incomplete boundaries remain partial. No runtime action policy changes.
+
+The unchanged seed 991336 record spans 246,136.6832 ms across 29 calls, with
+8,985.4609 ms inside send-to-reply intervals and 237,151.2223 ms between calls.
+Historical reads and close are included: this is not time to task completion.
+The gaps do not isolate model thinking or semantic understanding. This evidence
+does not support globally reducing application waits; evaluate avoidable
+decision/observation round trips while preserving review before submission.
+Actual model tokens/cost, useful-feedback latency and human tempo remain open.
+
+Evidence: runtime/results/host-timing-summary-01, reproducible from the unchanged
+committed primary-use archive without executing archived code. Five new timing
+tests join the common local/CI runner; 260 protocol and 106 harness checks pass.
