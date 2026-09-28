@@ -206,6 +206,37 @@ class FrozenSourceAndConstructionContract(unittest.TestCase):
         negative["queries"][0]["inference_calls"] = [{"call_start_ns": 190, "call_end_ns": 210}]
         self.assertTrue(module.independent_online_window_errors(negative))
 
+    def test_independent_online_auditor_rejects_clock_identity_and_interval_mutations(self):
+        spec = importlib.util.spec_from_file_location("needle_v6_auditor_mutation_matrix", AUDIT_PATH)
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[spec.name] = module
+        spec.loader.exec_module(module)
+        valid = {
+            "queries": [{"query_id": "q", "worker_id": "inference",
+                         "inference_start_ns": 100, "inference_end_ns": 220,
+                         "inference_calls": [{"call_start_ns": 110, "call_end_ns": 160}]}],
+            "feedback": [{"feedback_id": "f", "query_id": "q", "arrived_ns": 120,
+                          "consumed_ns": 145, "update_start_ns": 130, "update_end_ns": 180,
+                          "trainer_worker_id": "trainer"}],
+        }
+        mutations = {
+            "boolean_arrival_clock": lambda r: r["feedback"][0].update(arrived_ns=True),
+            "arrival_after_query_end": lambda r: r["feedback"][0].update(arrived_ns=221),
+            "consumed_before_arrival": lambda r: r["feedback"][0].update(consumed_ns=119),
+            "update_reversed": lambda r: r["feedback"][0].update(update_start_ns=180, update_end_ns=130),
+            "consumption_outside_update": lambda r: r["feedback"][0].update(consumed_ns=125),
+            "same_worker_identity": lambda r: r["feedback"][0].update(trainer_worker_id="inference"),
+            "query_call_outside_window": lambda r: r["queries"][0].update(inference_calls=[{"call_start_ns": 90, "call_end_ns": 120}]),
+            "duplicate_feedback_id": lambda r: r["feedback"].append(dict(r["feedback"][0])),
+            "duplicate_query_id": lambda r: r["queries"].append(dict(r["queries"][0])),
+            "nonoverlapping_second_event": lambda r: (r["queries"].append({"query_id": "q2", "worker_id": "i2", "inference_start_ns": 300, "inference_end_ns": 420, "inference_calls": [{"call_start_ns": 400, "call_end_ns": 410}]}), r["feedback"].append({"feedback_id": "f2", "query_id": "q2", "arrived_ns": 320, "consumed_ns": 345, "update_start_ns": 345, "update_end_ns": 390, "trainer_worker_id": "t2"})),
+        }
+        for name, mutate in mutations.items():
+            with self.subTest(name=name):
+                candidate = json.loads(json.dumps(valid))
+                mutate(candidate)
+                self.assertTrue(module.independent_online_window_errors(candidate), name)
+
     def test_audit_rejects_nonexact_realized_argv(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

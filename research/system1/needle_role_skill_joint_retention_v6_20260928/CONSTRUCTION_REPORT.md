@@ -102,3 +102,21 @@ retained-host-time accounting) was immediately merged without conflict at
 `b324284ee1616280e4dde9f0d2b1c126735ff331`; this newer synchronization is
 recorded in the checkpoint manifest and report. The branch is pushed/rechecked
 before review.
+
+## Supplemental independent-auditor mutation matrix — 2026-09-29
+
+After the pinned Docker result, #5085's latest comment was discovered; it
+explicitly prohibits any further Docker CLI call until a fresh exact lease and
+owner/resource release. Therefore this supplemental run is host-only and does
+not claim Docker reproduction. Windows CPython 3.11.9 reran the complete zero-fit
+suite: **18/18 passed**. Ten deterministic malformed event mutations were
+rejected: boolean arrival clock, post-query arrival, consumption-before-arrival,
+reversed update interval, consumption outside update, same inference/trainer
+identity, call interval outside query, duplicate feedback ID, duplicate query
+ID, and a mixed record where a non-overlapping event follows a valid overlap.
+Only synthetic timestamps/IDs were used; no seed, model, optimizer, or raw formal
+record was read. This host-only count supersedes the earlier 17/17 host count;
+the pinned Docker 17/17 result applies to the prior source revision and was not
+repeated because of the explicit coordinator hold. The ordering/process issue
+and prior Docker construction are disclosed on #5085; this new run used no
+Docker command.
