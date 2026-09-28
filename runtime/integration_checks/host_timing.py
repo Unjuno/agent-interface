@@ -185,6 +185,25 @@ def summarize(directory):
             review['send_to_declared_review_ms'] = review['recorded_ms'] - row['send_ms']
     returned = [r for r in rows if r['reply_ms'] is not None]
     complete = closed and active is None and len(returned) == len(rows)
+    partition = None
+    if complete and rows:
+        start, end = rows[0]['send_ms'], returned[-1]['reply_ms']
+        span = end - start
+        request_ms = math.fsum(r['send_to_reply_ms'] for r in returned)
+        # Presentation can occur after the final reply, so clip every interval
+        # to this named span. Repeated presentations count independently.
+        presentation_ms = math.fsum(
+            max(0, min(p['completed_ms'], end) - max(p['start_ms'], start))
+            for r in rows for p in r['presentations'] if p['completed_ms'] is not None)
+        other_ms = span - request_ms - presentation_ms
+        require(other_ms >= -1e-6, 'overlapping timing partition')
+        partition = {
+            'span': 'first_send_to_last_reply',
+            'total_ms': span,
+            'request_outstanding_ms': request_ms,
+            'presentation_callbacks_ms': presentation_ms,
+            'other_host_intervals_ms': max(0, other_ms),
+            'scope': 'Disjoint host-clock intervals only. Other includes orchestration, logging and caller gaps; not isolated model reasoning or wait.'}
     return {'schema': 'agent-interface/host-timing-summary-v1',
             'scope': 'single retained host lifetime; boundaries, not model latency or semantic truth',
             'timeline_status': 'complete' if complete else 'partial',
@@ -195,6 +214,7 @@ def summarize(directory):
             'unmeasured': ['first useful model-visible feedback', 'semantic completion',
                            'isolated model wait/thinking', 'actual model tokens and cost',
                            'matched speedup and human tempo'],
+            'time_partition': partition,
             'calls': rows, 'input_sha256': identities}
 
 
