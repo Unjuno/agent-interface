@@ -70,7 +70,7 @@ def independent_selection(pool: list[dict[str, object]], arm: str) -> list[dict[
 def dataset_fixture() -> dict[str, object]:
     pool = support_pool()
     return {
-        "seed": 73194109,
+        "seed": 900000001,
         "support_seed": TEST_SEED,
         "support_pool": pool,
         "supports": {
