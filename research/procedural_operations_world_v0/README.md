@@ -2,6 +2,8 @@
 
 > **Landing status:** usable as the lightweight world substrate for automated harness integration; formal benchmark claims remain HOLD until secure paired evaluation and held-out allocation are implemented.
 
+> **Operational guardrail:** [Issue #5206](https://github.com/Unjuno/agent-interface/issues/5206) is the standing validity rule for this environment. Do not continue scored use when a benchmark defect or shortcut is discovered; preserve the evidence, repair the instrument, add a regression control, and revalidate before resuming.
+
 A tiny, CPU-only 2.5D operations world for Agent Interface screening and failure-frontier research.
 
 The FPS-like shell is only the substrate: it supplies continuous navigation, viewpoint control, occlusion, moving world state, concurrent events, and real-time deadlines. The work itself is closer to computer-use/operations tasks: visual data transfer, terminal entry, precision assembly, target tracking/reacquisition, and asynchronous alert handling while other work continues.

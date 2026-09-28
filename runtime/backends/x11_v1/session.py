@@ -81,6 +81,8 @@ class X11RuntimeSession:
             return {
                 "status": "refused",
                 "error": "BACKEND_CONSTRAINT",
+                "program_execution_started": False, "program_emissions": 0,
+                "cleanup_attempted": True,
                 "detail": str(error),
                 "required_capabilities": list(admission.required_capabilities),
                 "backend_emissions": self.backend.emissions,
@@ -111,6 +113,8 @@ class X11RuntimeSession:
             self._record_release([release])
             return {
                 "status": "refused", "error": "BACKEND_CONSTRAINT",
+                "program_execution_started": False, "program_emissions": 0,
+                "cleanup_attempted": True,
                 "detail": str(error),
                 "required_capabilities": list(admission.required_capabilities),
                 "backend_emissions": self.backend.emissions,

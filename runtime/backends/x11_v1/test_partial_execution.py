@@ -133,9 +133,52 @@ class PartialExecutionTests(unittest.TestCase):
         self.assertEqual(result['error'], 'BACKEND_CONSTRAINT')
         self.assertFalse(session.recovery_required)
         self.assertEqual(result['backend_emissions'], 0)
+        self.assertIs(result['program_execution_started'], False)
+        self.assertIs(result['cleanup_attempted'], True)
+        self.assertEqual(result['program_emissions'], 0)
         self.assertTrue(result['release']['verified'])
         backend.activate.assert_not_called()
         backend.release_all.assert_called_once()
+
+    def test_preflight_refusal_distinguishes_prior_and_cleanup_emissions(self):
+        from runtime.backends.x11_v1.backend import X11BackendError
+        from runtime.cli_v1.review import outcome_summary
+        backend = mock.Mock()
+        backend.emissions = 16
+        backend.monotonic_ns.return_value = 9000
+        backend.manifest.return_value = capability_manifest('inert', 'linux', 'x11', OFFICE_FLOOR)
+        backend.preflight.side_effect = X11BackendError('observe requires focused target')
+        def cleanup():
+            backend.emissions += 1
+            return {'verified': True, 'keys_down': [], 'buttons_down': []}
+        backend.release_all.side_effect = cleanup
+        row = X11RuntimeSession(backend).dispatch(program(), current_observation_seq=7,
+                                                  current_binding_revision=3)
+        backend.execute.assert_not_called()
+        backend.release_all.assert_called_once()
+        self.assertEqual(row['backend_emissions'], 17)
+        self.assertEqual(row['program_emissions'], 0)
+        self.assertIs(row['program_execution_started'], False)
+        self.assertIs(row['cleanup_attempted'], True)
+        summary = outcome_summary({'schema':'agent-interface/runtime-dispatch-result-v1',
+                                   'status':'returned', 'result':row})
+        self.assertIs(summary['program_execution_started'], False)
+        self.assertIs(summary['cleanup_attempted'], True)
+        self.assertTrue(summary['input_release_verified'])
+        self.assertEqual(summary['program_emissions'], 0)
+        self.assertNotIn('input_dispatched', summary)
+        old = dict(row)
+        for key in ('program_execution_started', 'cleanup_attempted', 'program_emissions'):
+            old.pop(key)
+        historical = outcome_summary({'schema':'agent-interface/runtime-dispatch-result-v1',
+                                      'status':'returned', 'result':old})
+        self.assertNotIn('program_execution_started', historical)
+        malformed = outcome_summary({'schema':'agent-interface/runtime-dispatch-result-v1',
+            'status':'returned', 'result':{**row, 'program_execution_started':'false',
+                                          'cleanup_attempted':0, 'program_emissions':False}})
+        self.assertIsNone(malformed['program_execution_started'])
+        self.assertIsNone(malformed['cleanup_attempted'])
+        self.assertIsNone(malformed['program_emissions'])
 
     def test_activation_timeout_retains_request_and_stops_following_edit(self):
         from runtime.backends.x11_v1.backend import X11BackendError, X11ExecutionError
