@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { execFileSync } from 'node:child_process';
 import assert from 'node:assert/strict';
 import { mkdtemp,readFile,rename,mkdir,readdir } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -8,7 +9,7 @@ const fixture=`const rl=require('node:readline');rl.createInterface({input:proce
  const r=JSON.parse(line);const report={call_id:'c'+r.id,source:{sequence:r.id,observation_id:'o'+r.id},args:r.arguments};
  setTimeout(()=>console.log(JSON.stringify({id:r.id,tool:r.tool,status:'returned',next_id:r.id+1,result:{content:[{type:'text',text:JSON.stringify(report)},{type:'image',data:'AAECAw==',mimeType:'image/png'}]}})),40);
 });`;
-async function setup(){const root=await mkdtemp(join(tmpdir(),'relay-host-timeline-'));const dir=join(root,'transport');return {dir,client:await createInstrumentedRelayClient({command:process.execPath,args:['-e',fixture],evidenceDirectory:dir})};}
+async function setup(options={}){const root=await mkdtemp(join(tmpdir(),'relay-host-timeline-'));const dir=join(root,'transport');return {dir,client:await createInstrumentedRelayClient({command:process.execPath,args:['-e',fixture],evidenceDirectory:dir,...options})};}
 async function events(dir){return (await readFile(join(dir,'host-events.jsonl'),'utf8')).trim().split('\n').map(JSON.parse);}
 test('ordered same-clock events separate transport, presentation and caller review before next send',async()=>{
  const {dir,client}=await setup();const args={value:'original'};const p=client.send('observe',args);args.value='mutated';
@@ -79,4 +80,63 @@ test('timeline loss after submission retains reply and blocks replay while allow
  assert.equal(client.state().attempts,1);assert.throws(()=>client.send('retry'));
  await assert.rejects(client.close());
  assert.equal(JSON.parse(await readFile(join(dir,'exit.json'))).code,0);
+});
+
+test('opt-in image reuse requires explicit presented review and retains original base',async()=>{
+ const {dir,client}=await setup({reuseReviewedImages:true});const seen=[];
+ const callbacks={text:v=>seen.push(['text',v]),image:v=>seen.push(['image',v.bytes.toString('hex')])};
+ const show=async(n,options)=>{await client.send('observe',{n});await client.present(n,callbacks,options);};
+ await show(1);await show(2);
+ assert.equal(seen.filter(x=>x[0]==='image').length,2);
+ await client.review(2,{task:'t',phase:'reviewed',reason:'Explicitly reviewed second full image.'});
+ await show(3);
+ assert.equal(seen.filter(x=>x[0]==='image').length,2);
+ const reference=seen.filter(x=>x[1]?.schema==='agent-interface/reviewed-image-reference-v1').at(-1)[1];
+ assert.equal(reference.base_attempt,2);assert.equal(reference.attempt,3);
+ assert.ok(seen.some(x=>x[0]==='text'&&typeof x[1]==='string'&&JSON.parse(x[1]).args.n===3));
+ await client.review(3,{task:'t',phase:'same-image',reason:'Reviewed unchanged image reference and current text.'});
+ await show(4);assert.equal(seen.filter(x=>x[1]?.base_attempt===2).length,2);
+ await show(5,{forceImage:true});await show(6);
+ assert.equal(seen.filter(x=>x[0]==='image').length,4);
+ await client.review(6,{task:'t',phase:'resynchronized',reason:'Explicit full-image review after reset.'});
+ await show(7);await client.close();
+ const rows=await events(dir);const starts=rows.filter(x=>x.kind==='presentation_started');
+ assert.deepEqual(starts.map(x=>x.image_delivery.mode),['full','full','reviewed-image-reference','reviewed-image-reference','full','full','reviewed-image-reference']);
+ assert.equal(starts.at(-1).image_delivery.base_attempt,6);
+ assert.equal(rows.find(x=>x.kind==='review_recorded'&&x.attempt===3).image_delivery.base_attempt,2);
+ // The transport reply always retains the full image; only presentation changes.
+ assert.equal(JSON.parse(await readFile(join(dir,'reply-3.json'))).result.content[1].type,'image');
+ // Validate the actual emitted cross-language evidence, including a reviewed reference.
+ const audited=JSON.parse(execFileSync(process.env.PYTHON ?? 'python3',
+   ['-m','runtime.integration_checks.host_timing',dir],{encoding:'utf8'}));
+ assert.equal(audited.timeline_status,'complete');
+ assert.equal(audited.calls[2].presentations[0].image_delivery.base_attempt,2);
+ assert.equal(audited.calls[6].presentations[0].image_delivery.base_attempt,6);
+ const fresh=await setup({reuseReviewedImages:true});let first=0;
+ await fresh.client.send('observe');await fresh.client.present(1,{text:()=>{},image:()=>{first++;}});
+ assert.equal(first,1);await fresh.client.close();
+});
+test('unpresented review cannot acknowledge an image base',async()=>{
+ const {client}=await setup({reuseReviewedImages:true});
+ await client.send('observe');await client.review(1,{task:'t',phase:'unpresented',reason:'Attribution only.'});
+ await client.send('observe');let images=0;
+ await client.present(2,{text:()=>{},image:()=>{images++;}});assert.equal(images,1);await client.close();
+});
+test('reference presentation failure blocks actions and cannot be treated as delivered',async()=>{
+ const {client,dir}=await setup({reuseReviewedImages:true});
+ await client.send('observe');await client.present(1,{text:()=>{},image:()=>{}});
+ await client.review(1,{task:'t',phase:'visible',reason:'Explicit review.'});await client.send('observe');
+ await assert.rejects(client.present(2,{text:v=>{if(typeof v==='object')throw Error('reference renderer failed');},image:()=>assert.fail('duplicate image emitted')}),/reference renderer failed/);
+ assert.throws(()=>client.send('input'),/reference renderer failed/);await client.close();
+ assert.equal((await events(dir)).filter(x=>x.kind==='presentation_callbacks_completed').length,1);
+});
+test('a changed PNG is forwarded and invalidates the previous acknowledged base',async()=>{
+ const changed=fixture.replace("data:'AAECAw=='", "data:r.arguments.changed?'AAECAA==':'AAECAw=='");
+ const {client}=await setup({reuseReviewedImages:true,args:['-e',changed]});let images=0;
+ const callbacks={text:()=>{},image:()=>{images++;}};
+ await client.send('observe');await client.present(1,callbacks);
+ await client.review(1,{task:'t',phase:'visible',reason:'Explicit review.'});
+ await client.send('observe',{changed:true});await client.present(2,callbacks);
+ await client.send('observe');await client.present(3,callbacks);
+ assert.equal(images,3);await client.close();
 });

@@ -6,6 +6,8 @@ import { performance } from 'node:perf_hooks';
 import { createRelayClient, presentRelayResponse, recordRelayReview } from './native_relay_client_v1.mjs';
 
 export async function createInstrumentedRelayClient(options) {
+  const reuseImages = options.reuseReviewedImages ?? false;
+  if (typeof reuseImages !== 'boolean') throw new TypeError('reuseReviewedImages must be boolean');
   const evidenceDirectory = options.evidenceDirectory;
   const client = await createRelayClient(options);
   const eventsPath = join(evidenceDirectory, 'host-events.jsonl');
@@ -13,6 +15,20 @@ export async function createInstrumentedRelayClient(options) {
   catch (error) { await client.close(); throw error; }
   let sequence = 0, busy = null, blocked = null, pending = null, closed = false;
   const delivered = new Set();
+  // One bounded, explicitly reviewed PNG base, scoped to this live host instance.
+  // Equality is byte-for-byte encoded PNG equality, never a hash/perceptual gate.
+  let imageBase = null, lastPresentation = null;
+  function singlePng(reply) {
+    const images = reply.result?.content?.filter(block => block.type === 'image') ?? [];
+    if (reply.status !== 'returned' || images.length !== 1) return null;
+    const block = images[0];
+    if (block.mimeType !== 'image/png' || typeof block.data !== 'string' ||
+        block.data.length > 16 * 1024 * 1024) return null;
+    const bytes = Buffer.from(block.data, 'base64');
+    if (!bytes.length || bytes.toString('base64') !== block.data) return null;
+    return { data: block.data, mime_type: block.mimeType,
+      image_sha256: createHash('sha256').update(bytes).digest('hex') };
+  }
   const event = async (kind, fields = {}) => {
     const row = { schema: 'agent-interface/relay-host-event-v1', sequence: ++sequence,
       host_monotonic_ms: performance.now(), kind, ...fields };
@@ -25,6 +41,7 @@ export async function createInstrumentedRelayClient(options) {
     busy = kind;
   }
   function failed(error) {
+    imageBase = null; lastPresentation = null;
     blocked = String(error) + '; host evidence incomplete: reconcile retained files; never infer no input or replay';
     throw new Error(blocked, { cause: error });
   }
@@ -67,13 +84,33 @@ export async function createInstrumentedRelayClient(options) {
       if (!pending) throw new Error('no request to reconcile');
       return pending;
     },
-    async present(attempt, callbacks) {
+    async present(attempt, callbacks, { forceImage = false } = {}) {
+      if (typeof forceImage !== 'boolean') throw new TypeError('forceImage must be boolean');
       begin('present');
       try {
         const saved = await retained(attempt);
-        await event('presentation_started', { attempt, reply_sha256: saved.reply_sha256 });
-        await presentRelayResponse(saved.reply, callbacks);
-        await event('presentation_callbacks_completed', { attempt, reply_sha256: saved.reply_sha256 });
+        const picture = reuseImages ? singlePng(saved.reply) : null;
+        if (forceImage) imageBase = null;
+        const delivery = reuseImages && picture && imageBase &&
+            picture.mime_type === imageBase.mime_type && picture.data === imageBase.data
+          ? { mode: 'reviewed-image-reference', base_attempt: imageBase.attempt,
+              base_reply_sha256: imageBase.reply_sha256, base_review_sha256: imageBase.review_sha256,
+              image_sha256: picture.image_sha256, mime_type: picture.mime_type }
+          : { mode: 'full' };
+        const extra = reuseImages ? { image_delivery: delivery } : {};
+        await event('presentation_started', { attempt, reply_sha256: saved.reply_sha256, ...extra });
+        const selectedCallbacks = delivery.mode === 'reviewed-image-reference'
+          ? { text: callbacks.text, image: async () => callbacks.text({
+              schema: 'agent-interface/reviewed-image-reference-v1', attempt,
+              reply_sha256: saved.reply_sha256, ...delivery,
+              scope: 'Same PNG bytes as the explicitly reviewed base. Current reply metadata is separate; no redraw or task-completion inference.' }) }
+          : callbacks;
+        await presentRelayResponse(saved.reply, selectedCallbacks);
+        await event('presentation_callbacks_completed', { attempt, reply_sha256: saved.reply_sha256, ...extra });
+        if (reuseImages) {
+          if (delivery.mode === 'full') imageBase = null;
+          lastPresentation = { attempt, reply_sha256: saved.reply_sha256, picture, delivery };
+        }
       } catch (error) { return failed(error); }
       finally { busy = null; }
     },
@@ -83,8 +120,16 @@ export async function createInstrumentedRelayClient(options) {
         const saved = await retained(attempt);
         const receipt = await recordRelayReview({ replyPath: saved.replyPath,
           receiptPath: join(evidenceDirectory, `review-${attempt}.json`), task, phase, reason });
+        const presented = reuseImages && lastPresentation?.attempt === attempt &&
+          lastPresentation.reply_sha256 === saved.reply_sha256 ? lastPresentation : null;
         await event('review_recorded', { attempt, reply_sha256: receipt.reply_sha256,
-          call_id: receipt.call_id, source_sequence: receipt.source_sequence, task, phase });
+          call_id: receipt.call_id, source_sequence: receipt.source_sequence, task, phase,
+          ...(reuseImages ? { image_delivery: presented?.delivery ?? null } : {}) });
+        if (presented?.picture && presented.delivery.mode === 'full') {
+          const reviewBytes = await readFile(join(evidenceDirectory, `review-${attempt}.json`));
+          imageBase = { ...presented.picture, attempt, reply_sha256: saved.reply_sha256,
+            review_sha256: createHash('sha256').update(reviewBytes).digest('hex') };
+        }
         return receipt;
       } catch (error) { return failed(error); }
       finally { busy = null; }
@@ -96,7 +141,7 @@ export async function createInstrumentedRelayClient(options) {
       busy = 'close';
       try {
         // Always permit transport cleanup after an instrumentation failure.
-        const result = await client.close(); closed = true;
+        const result = await client.close(); closed = true; imageBase = null; lastPresentation = null;
         await event('transport_closed', { code: result.code, signal: result.signal });
         return result;
       } catch (error) { return failed(error); }
