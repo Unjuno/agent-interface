@@ -41,3 +41,11 @@ Earlier revisions passed 8/8 and then 15/15 host tests. The current 16/16 suite
 adds an independent auditor implementation check: it rebuilds exact argv and
 online-window decisions without importing candidate `protocol.py`. The earlier
 counts are retained by Git history and are not represented as the current count.
+
+## Current-main synchronization checkpoint
+
+Latest observed main `0205a872462325ba7cabe377ee5aa1655ad5a9bc` was merged without
+conflict at `546894a4e7`. Its changes were confined to the live-control result
+and namespace-map paths; the v6 experiment path remains additive and isolated.
+This is branch freshness only, not a formal freeze or resource grant; repeat the
+current-main and lease checks before any seed-consuming work.
