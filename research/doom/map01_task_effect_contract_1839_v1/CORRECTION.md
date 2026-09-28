@@ -5,9 +5,10 @@ editing any v1 source, freeze, result, or audit artifact.
 
 ## H / T / D / C / U
 
-**H.** The v1 implementation rejects whitespace-only lineage identifiers and
-requires a unique retained source-event reference for every accepted physical
-edge and scorer event.
+**H.** A strict task-effect lineage contract should reject whitespace-only
+identifiers and require unique retained source-event references for accepted
+physical edges and scorer events. The adversarial check below tests whether
+the historical v1 implementation met that bar.
 
 **T.** A read-only adversarial mutation changed `session_id`, `plan_id`,
 `actuation_id`, `physical.owner_id`, and `task_effects[0].effect_id` to one
