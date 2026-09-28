@@ -26,7 +26,7 @@ Result: 6 tests, 0.002 seconds, exit 0.
 
 ## Independent support-selection audit — host CPU only
 
-`audit_sampler.py` is stdlib-only and does not import the candidate sampler or protocol. Given a dataset-shaped object, it independently computes the prescribed SHA-256 ranks from the seed/class/case ID, reconstructs the exact per-arm selected IDs/order from `support_pool`, checks class counts, and compares complete selected rows. The test fixture invokes the candidate sampler only to produce an input sample; verification is performed by the separate auditor implementation.
+`audit_sampler.py` is stdlib-only and does not import the candidate sampler or protocol. Given a dataset-shaped object, it independently computes the prescribed SHA-256 ranks from the seed/class/case ID, reconstructs the exact per-arm selected IDs/order from `support_pool`, checks class counts, and compares complete selected rows. The audit test fixture is self-contained and constructs its synthetic selected rows with a separate test-side SHA-256 implementation; it imports neither the candidate sampler nor its test module, so this PR is independently runnable.
 
 Passed commands:
 
@@ -51,7 +51,7 @@ This is not the independent raw-output audit of a formal dataset or training res
 - `sampler.py`: `0cdbe3e5b61202ec6ea5bd8810f4734a85141e7a7cbaf22ce886568b0f2c23a6`
 - `test_sampler.py`: `e0fbcf0a3c1cce969e3f6751da8d56d952ce3002d46db19f5e3f40b97e4dacbe`
 - `audit_sampler.py`: `ae6833111b15b7eb5f3a89269dde47ad0f396722b5348dcad0870a3addee3ecb`
-- `test_audit_sampler.py`: `96b13f20174a8d3c5060901f495cf5a3ceacc73802f361089b999da1fc211b5e`
+- `test_audit_sampler.py`: `a1cb795079a30d0714c219b5c03e7df5fccbf4ef4428260871df64d7f51a815d`
 
 ## Resource / allocation boundary
 
