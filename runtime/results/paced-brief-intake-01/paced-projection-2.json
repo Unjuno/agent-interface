@@ -1,0 +1,261 @@
+{
+  "schema": "agent-interface/review-v1",
+  "receipt": {
+    "schema": "agent-interface/receipt-view-paced-brief-candidate-v1",
+    "authority": "none",
+    "source": {
+      "path": null,
+      "sha256": "72c7b6b7ef9a4a4d866b9c1d5fcb6493346a4abcac97a6bff2c974a4b287f0a5",
+      "bytes": 7135,
+      "kind": "received_bytes",
+      "report_projection": {
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned",
+        "result": {
+          "status": "completed",
+          "admission": "accepted",
+          "required_capabilities": [
+            "capture.frame",
+            "clock.monotonic",
+            "display.geometry",
+            "event.feedback",
+            "input.keyboard",
+            "input.pointer",
+            "input.release_all",
+            "input.text",
+            "window.focus"
+          ],
+          "execution": {
+            "started_ns": 1522675937285,
+            "ended_ns": 1522981153608,
+            "emissions": 29,
+            "program_emissions": 29,
+            "observations": [
+              {
+                "bytes": 1600000,
+                "sha256": "48e1e31427df72ca3d1f5602807ccadd189c505008abe8836f52a33d444fcea6",
+                "width": 800,
+                "height": 500,
+                "target": "app",
+                "native_window_id": 6291479,
+                "frame": "screen_physical_px",
+                "region": [
+                  0,
+                  0,
+                  800,
+                  500
+                ],
+                "capture_started_ns": 1522967966537,
+                "capture_ended_ns": 1522972503513,
+                "artifact": {
+                  "mime_type": "image/png",
+                  "path": "/var/tmp/agent-interface-integrated-main/results-local/keymap-primary-02/server/71cd8b4f606d4cb8b5bdd62cf617413f/images/40806dc1c8c3404ab5646c1c9f622f5f.png",
+                  "sha256": "d6084a62fbf4bfd7db03ee6376de6196798309be9b9e96fe72e2011f1499d283",
+                  "bytes": 8919,
+                  "width": 800,
+                  "height": 500,
+                  "source_raw_sha256": "48e1e31427df72ca3d1f5602807ccadd189c505008abe8836f52a33d444fcea6",
+                  "timing_ns": {
+                    "started": 1522973433738,
+                    "converted": 1522974154175,
+                    "encoded": 1522979044061,
+                    "written": 1522979252501,
+                    "hashed": 1522980181116
+                  }
+                },
+                "operation_index": 25
+              }
+            ],
+            "releases": [
+              {
+                "keys_down": [],
+                "buttons_down": [],
+                "verified": true,
+                "monotonic_ns": 1522981151609
+              }
+            ],
+            "activations": [],
+            "completed_ops": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26
+            ],
+            "wait_summary": {
+              "count": 10,
+              "requested_ms_total": 280,
+              "recorded_elapsed_ns_total": 282446620,
+              "kind": "fixed_delay",
+              "update_observed": null,
+              "all_completed": true,
+              "omitted_records": {
+                "sha256": "51a784cf1f25b6f8466a941d30adb427eb791280ef6b66771ba4333a50543886",
+                "bytes": 1539,
+                "encoding": "canonical JSON, UTF-8, sorted keys, compact, ensure_ascii=true"
+              }
+            }
+          },
+          "recovery_required": false
+        },
+        "compilation": {
+          "kind": "bounded_text_gap",
+          "source_program_omitted": {
+            "sha256": "310aff261646f51b8a08c1b49b29a44c55b2d0d32ac7ee9ccf7a678b33a5b7c8",
+            "encoding": "UTF-8 canonical JSON: sorted keys, compact separators, ensure_ascii=true",
+            "bytes": 658
+          },
+          "operation_sources_omitted": {
+            "count": 27,
+            "sha256": "c4b0f8bff280942145af5b921a8173fd10fda699f6b41626aa38a69c1ede91b4",
+            "bytes": 1785,
+            "encoding": "canonical JSON, UTF-8, sorted keys, compact, ensure_ascii=true"
+          }
+        },
+        "normalization": {
+          "kind": "explicit_observation_region",
+          "source_operation_indices": [
+            7
+          ],
+          "source_program_omitted": {
+            "sha256": "bfd48426e78c26a3bbff44168e9c0c2e110cea46e22ef5096a963937b1001cdd",
+            "encoding": "UTF-8 canonical JSON: sorted keys, compact separators, ensure_ascii=true",
+            "bytes": 653
+          }
+        },
+        "session": {
+          "session_id": "debe284a713741af8bc0940b9ab0a9d5",
+          "mode": "persistent-x11",
+          "state": "open",
+          "binding_revision": 1,
+          "targets": {
+            "app": 6291479
+          },
+          "recovery_required": false,
+          "error": null,
+          "authority_granted": false,
+          "restart_allowed": false
+        }
+      }
+    },
+    "report": {
+      "report_ref": "/source/report_projection"
+    },
+    "latest_observations": [],
+    "events": [],
+    "record_counts": {},
+    "omitted_from_view": 0,
+    "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+    "motor_state_validation": {
+      "present": false,
+      "accepted": false,
+      "reason": "missing"
+    },
+    "report_reference": "/source/report_projection",
+    "reference_scope": "Partial report projection only; original source digest identifies the retained full report."
+  },
+  "authority": "none",
+  "outcome_summary": {
+    "reported_status": "returned",
+    "error": null,
+    "failure_phase": null,
+    "cleanup_error": null,
+    "input_release_verified": true,
+    "failure_detail": null,
+    "validation_operation_index": null,
+    "failed_operation_index": null,
+    "failed_operation_effect": null,
+    "execution_status": "completed",
+    "execution_error": null,
+    "execution_detail": null,
+    "recovery_required": false,
+    "failed_source_operation": null,
+    "validation_source_operation": null
+  },
+  "image_reference": {
+    "status": "image",
+    "capture_ns": 1522967966537,
+    "path": "/var/tmp/agent-interface-integrated-main/results-local/keymap-primary-02/server/71cd8b4f606d4cb8b5bdd62cf617413f/images/40806dc1c8c3404ab5646c1c9f622f5f.png",
+    "relative_path": "images/40806dc1c8c3404ab5646c1c9f622f5f.png",
+    "sha256": "d6084a62fbf4bfd7db03ee6376de6196798309be9b9e96fe72e2011f1499d283",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation",
+    "execution_observation_index": 0,
+    "recorded_capture": {
+      "target": "app",
+      "native_window_id": 6291479,
+      "frame": "screen_physical_px",
+      "region": [
+        0,
+        0,
+        800,
+        500
+      ],
+      "width": 800,
+      "height": 500,
+      "capture_started_ns": 1522967966537,
+      "capture_ended_ns": 1522972503513,
+      "operation_index": 25
+    }
+  },
+  "image_status": "image",
+  "session": {
+    "session_id": "debe284a713741af8bc0940b9ab0a9d5",
+    "mode": "persistent-x11",
+    "state": "open",
+    "binding_revision": 1,
+    "targets": {
+      "app": 6291479
+    },
+    "recovery_required": false,
+    "error": null,
+    "authority_granted": false,
+    "restart_allowed": false
+  },
+  "call_directory": "/var/tmp/agent-interface-integrated-main/results-local/keymap-primary-02/server/71cd8b4f606d4cb8b5bdd62cf617413f",
+  "call_id": "71cd8b4f606d4cb8b5bdd62cf617413f",
+  "presentation": {
+    "requested": "brief",
+    "returned": "brief",
+    "scope": "Partial success-only projection: source programs, wait records and expansion map omitted. Not lossless or task success.",
+    "omitted_paths": [
+      "/receipt/source/raw_report/normalization/source_program",
+      "/receipt/source/raw_report/compilation/source_program",
+      "/receipt/source/raw_report/result/execution/waits",
+      "/receipt/source/raw_report/compilation/operation_sources"
+    ],
+    "retrieve": {
+      "tool": "interface_results",
+      "arguments": {
+        "call_id": "71cd8b4f606d4cb8b5bdd62cf617413f",
+        "include_image": false,
+        "compact": true,
+        "report_refs": true,
+        "detail": "full"
+      }
+    },
+    "candidate_only": true
+  }
+}
