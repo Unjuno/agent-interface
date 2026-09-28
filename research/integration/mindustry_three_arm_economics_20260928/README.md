@@ -242,12 +242,15 @@ runner or raw auditor, so no integrated experiment is claimed.
 ## Submit evidence protocol compatibility — host integration check (2026-09-28)
 
 The generic `interactive_v27` protocol requires `decision_evidence` tied to a
-successfully flushed observation. The candidate locator now carries that
-observation's `delivery_id`; the click compiler binds it with the same sequence
-and caller-declared `assistant` producer. A host test passes the compiled field
-through the repository's real `DeliveryLedger.validate`, and a missing delivery
-identity fails closed before dispatch. This is generic-protocol compatibility
-only, not proof of the Mindustry socket path.
+successfully flushed observation. The click compiler now selects an explicit
+submit dialect: its default `mindustry-v1` path binds the fresh visual sequence
+without inventing a `delivery_id` absent from that task-specific socket; its
+`interactive-v27` path requires the flushed observation identity and binds it
+with the same sequence and caller-declared `assistant` producer. A host test
+passes the generic compiled field through the repository's real
+`DeliveryLedger.validate`, while a separate test verifies the Mindustry dialect
+does not emit generic-only evidence. Neither test dispatches a live socket
+command.
 
 Source tracing found that `mindustry_single_tile_socket_v1.py` replaces the
 bridge's `interactive_v27.py` child with the task-specific
@@ -274,3 +277,10 @@ issue's explicit no-inspection gate. It returned no rows; no container was
 started, built, pulled, or altered. This was an unallocated Docker inspection,
 not authorization. It is disclosed in the PR conversation; no further Docker
 commands will be issued until an exact named coordinator lease is recorded.
+
+Dialect correction follow-up (2026-09-28): after separating the task-specific
+Mindustry submit dialect from generic `interactive-v27`, the host-only package
+suite passes 47/47, the inherited probe returns `passed=true`, `RETAIN`, 10
+controls, the #5170 comparison suite passes 8/8, Python byte-compilation,
+Node.js syntax validation, and `git diff --check` pass. These are local
+verification only; no Actions workflow was invoked.

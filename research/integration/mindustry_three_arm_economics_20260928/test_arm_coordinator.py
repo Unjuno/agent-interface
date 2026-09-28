@@ -101,14 +101,15 @@ class ArmCoordinatorTests(unittest.TestCase):
         self.assertEqual(locator["authority"],
                          "locator only; explicit caller action still required")
 
-    def test_input_locator_requires_a_flushed_delivery_identity(self):
+    def test_task_specific_locator_does_not_invent_delivery_identity(self):
         coordinator = ArmCoordinator("plain")
         coordinator.resolve(source(1, "A"), 1280, 760, palette_slots(),
                             lambda _obs: candidate())
         missing = source(2, "A")
         del missing["delivery_id"]
-        with self.assertRaisesRegex(RouteStop, "delivery identity"):
-            coordinator.locator_for_input(missing, "A")
+        locator = coordinator.locator_for_input(missing, "A")
+        self.assertNotIn("delivery_id", locator)
+        self.assertEqual(locator["validated_sequence"], 2)
 
     def test_input_locator_refuses_layout_geometry_change(self):
         coordinator = ArmCoordinator("plain")

@@ -8,7 +8,8 @@ class DispatchStop(RuntimeError):
 
 
 def compile_pointer_click(locator: dict, clock: dict, task_id: str,
-                          target: str, lifetime_ns: int = 5_000_000_000) -> dict:
+                          target: str, lifetime_ns: int = 5_000_000_000,
+                          protocol: str = "mindustry-v1") -> dict:
     """Return one click+release-observation socket command; performs no I/O.
 
     A caller must get a fresh visual observation, revalidate its locator, read
@@ -23,8 +24,10 @@ def compile_pointer_click(locator: dict, clock: dict, task_id: str,
     sequence = locator.get("validated_sequence")
     if type(sequence) is not int or sequence < 0:
         raise DispatchStop("validated observation sequence required")
+    if protocol not in {"mindustry-v1", "interactive-v27"}:
+        raise DispatchStop("unknown submit protocol dialect")
     delivery_id = locator.get("delivery_id")
-    if type(delivery_id) is not str or not delivery_id:
+    if protocol == "interactive-v27" and (type(delivery_id) is not str or not delivery_id):
         raise DispatchStop("successfully flushed observation delivery id required")
     if type(clock) is not dict or type(clock.get("sequence")) is not int:
         raise DispatchStop("socket clock sequence required")
@@ -50,14 +53,20 @@ def compile_pointer_click(locator: dict, clock: dict, task_id: str,
     if target == "palette_point":
         steps.append({"op": "settle", "quiet_ms": 100, "timeout_ms": 1200})
     steps.append({"op": "observe"})
-    return {
+    request = {
         "op": "submit",
         "id": f"{task_id}-{action}",
         "expected_sequence": sequence,
         "valid_until_ns": runtime_ns + lifetime_ns,
-        "decision_evidence": {"delivery_id": delivery_id,
-                              "observation_sequence": sequence,
-                              "producer": "assistant"},
         "steps": steps,
-        "authority": "compiled request only; decision evidence is caller-declared, not input authority",
+        "authority": "compiled request only; not dispatched or admitted",
     }
+    if protocol == "interactive-v27":
+        request["decision_evidence"] = {
+            "delivery_id": delivery_id,
+            "observation_sequence": sequence,
+            "producer": "assistant",
+        }
+        request["authority"] = (
+            "compiled request only; decision evidence is caller-declared, not input authority")
+    return request

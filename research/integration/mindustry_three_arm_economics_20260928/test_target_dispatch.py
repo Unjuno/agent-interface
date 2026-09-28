@@ -28,7 +28,7 @@ class TargetDispatchTests(unittest.TestCase):
         self.assertEqual(sum(step["op"] == "pointer_click"
                              for step in command["steps"]), 1)
         self.assertEqual(command["authority"],
-                         "compiled request only; decision evidence is caller-declared, not input authority")
+                         "compiled request only; not dispatched or admitted")
 
     def test_compiled_request_passes_the_live_submit_delivery_ledger(self):
         ledger = DeliveryLedger()
@@ -38,11 +38,28 @@ class TargetDispatchTests(unittest.TestCase):
         current_locator = locator()
         current_locator["delivery_id"] = item["delivery_id"]
         command = compile_pointer_click(current_locator,
-            {"sequence": 7, "runtime_ns": 100}, "A1", "target_point")
+            {"sequence": 7, "runtime_ns": 100}, "A1", "target_point",
+            protocol="interactive-v27")
         accepted = ledger.validate(command["decision_evidence"])
         self.assertEqual(accepted["source_delivery_id"], item["delivery_id"])
         self.assertEqual(accepted["observation_sequence"], command["expected_sequence"])
         self.assertEqual(accepted["producer"], "assistant")
+
+    def test_mindustry_task_socket_dialect_needs_no_unavailable_delivery_id(self):
+        current = locator()
+        del current["delivery_id"]
+        command = compile_pointer_click(current,
+            {"sequence": 7, "runtime_ns": 100}, "A1", "target_point")
+        self.assertNotIn("decision_evidence", command)
+        self.assertEqual(command["expected_sequence"], 7)
+
+    def test_generic_protocol_requires_flushed_delivery_identity(self):
+        current = locator()
+        del current["delivery_id"]
+        with self.assertRaisesRegex(DispatchStop, "flushed observation"):
+            compile_pointer_click(current,
+                {"sequence": 7, "runtime_ns": 100}, "A1", "target_point",
+                protocol="interactive-v27")
 
     def test_compiles_world_click_without_preview_settle(self):
         command = compile_pointer_click(locator(),
@@ -66,7 +83,8 @@ class TargetDispatchTests(unittest.TestCase):
         del missing_delivery["delivery_id"]
         with self.assertRaisesRegex(DispatchStop, "flushed observation"):
             compile_pointer_click(missing_delivery,
-                {"sequence": 7, "runtime_ns": 100}, "A1", "target_point")
+                {"sequence": 7, "runtime_ns": 100}, "A1", "target_point",
+                protocol="interactive-v27")
 
         with self.assertRaisesRegex(DispatchStop, "unknown preregistered"):
             compile_pointer_click(locator(),
