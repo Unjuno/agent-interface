@@ -128,6 +128,15 @@ def outcome_summary(report):
                        execution_error=text(dispatch, 'error'),
                        execution_detail=text(dispatch, 'detail'),
                        recovery_required=recovery if type(recovery) is bool else None)
+        # Preserve explicit scope, never infer no input from a cumulative count
+        # or from a refusal status. Cleanup may itself emit release events.
+        for name in ('program_execution_started', 'cleanup_attempted'):
+            if name in dispatch:
+                value = dispatch[name]
+                summary[name] = value if type(value) is bool else None
+        if 'program_emissions' in dispatch:
+            value = dispatch['program_emissions']
+            summary['program_emissions'] = value if type(value) is int and value >= 0 else None
         if 'compilation' in report:
             summary['failed_source_operation'] = _failure_source(report, failed)
             summary['validation_source_operation'] = _failure_source(
