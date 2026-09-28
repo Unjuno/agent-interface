@@ -10,7 +10,10 @@ application metadata; no family, focus, selection or input guard is relaxed.
 
 Fresh private real-X11 Calc read-only construction (seed 991352) reproduced:
 baseline title empty; candidate title `sheet.xlsx — LibreOffice Calc`.
-Independent xprop output showed empty WM_NAME and that exact _NET_WM_NAME value.
+Independent xprop output showed WM_NAME encoded as COMPOUND_TEXT and that exact
+_NET_WM_NAME value encoded as UTF8_STRING. The legacy get_wm_name() call returned
+empty; the underlying WM_NAME property was not empty. The fix reads the supported
+UTF-8 property rather than adding a COMPOUND_TEXT decoder.
 All other target evidence was equal and backend input emissions remained zero.
 The fixture setup launched/focused Calc; this is not a no-side-effect fixture.
 No task input, saved-task evaluation or latency comparison was performed.
