@@ -121,6 +121,33 @@ Successor v2 construction passed its seed-2002 smoke; its single frozen seed-200
 
 A single local Qwen2.5-0.5B-Instruct rank-8 LoRA fit on 32 synthetic examples completed in a network-disabled Docker container on the laptop RTX 3080. On 64 disjoint held-out settings cases, frozen base exact was 1/64 and adapted exact was 9/64; the candidate produced 15 unsafe negative-case outputs, with YIELD exact 0/10 and NO_ACTION exact 0/6. The independently computed disposition is `FAIL_YIELD_OR_SCOPE_REGRESSION`; training loss fell but did not generalize safely. Fit took 3.708 s (peak CUDA allocation 2.63 GiB); candidate p95 was 1.445 s. Untouched-input audit integrity passed, while only 4/5 shallow mutation controls rejected; this harness defect is disclosed. The sole formal seed is consumed, with no retries or adapter promotion. Exact dataset, paired raw predictions, audit, hashes, H/T/D/C/U and limitations are retained in [the successor evidence](research/experiments/qwen05b_action_sft_4205_v1/README.md) and [Issue #4780](https://github.com/Unjuno/agent-interface/issues/4780). This does not change prior #4205/#4204 evidence or establish live GUI/action use.
 
+### Issue #5139 — current-main support-sampler construction
+
+The additive successor branch `research/qwen5139-current-main-prep-20260928`
+composes the independent SHA-ranked support sampler/auditor with the preserved
+#5014 v2 synthetic protocol. A host-CPU construction experiment generated the
+full 128-row support pool and 256-row held-out pool with explicit, separate
+test-only formal/support seed sentinels. The expanded suite passes 25/25,
+including split and raw-result reconstruction controls. A fixed-seed coverage
+check exposed differing prompt-template/field marginals between the balanced
+and imbalanced set supports. Follow-up construction probes show marginal
+matching and then exact 4-cell joint-distribution matching are feasible across
+128 fixed sentinels while preserving class quotas/nesting. The joint design
+restricts both arms to four of sixteen cells and still compares distinct rows;
+neither probe replaces the frozen hash-ranking allocation or establishes
+causal/model effects. Any adoption requires explicit preregistration and a
+fresh protocol integration. Current main was refreshed to `e74f0ba2`. Evidence and H/T/D/C/U are in
+[`CURRENT_MAIN_CONSTRUCTION.md`](research/experiments/qwen05b_abstention_balance_5139_sampler_v1/CURRENT_MAIN_CONSTRUCTION.md),
+with construction source, independent raw-auditor tests, coverage analyses,
+and the joint-cell report at
+[`evidence/joint-cell-marginals-128-20260928/REPORT.md`](research/experiments/qwen05b_abstention_balance_5139_sampler_v1/evidence/joint-cell-marginals-128-20260928/REPORT.md).
+This is not the formal dataset freeze, pinned-image gate, audit
+of formal training output, GPU/CUDA run, LoRA fit, quality result, or safety
+claim. Historical `sad_cannon`
+attribution and explicit exclusive GPU/Docker lease remain unresolved;
+preserve #4988/#5014 results unchanged. See [Issue #5139](https://github.com/Unjuno/agent-interface/issues/5139)
+and [Draft PR #5165](https://github.com/Unjuno/agent-interface/pull/5165).
+
 ### Issue #4623 — GPU shared-prefix readout construction stop
 
 Successor [#4623](https://github.com/Unjuno/agent-interface/issues/4623)
