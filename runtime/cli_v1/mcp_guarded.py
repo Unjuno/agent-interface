@@ -127,7 +127,8 @@ def register_guarded_tools(server, submit):
     @server.tool()
     async def interface_guarded_input(alias: StrictStr, offset: list[StrictInt], tail: list[dict],
                                      interaction: Literal['click','keyboard']='click',
-                                     observe_after: StrictBool=True) -> CallToolResult:
+                                     observe_after: StrictBool=True,
+                                     detail: Literal["full","brief"]="full") -> CallToolResult:
         """Use a scoped alias once through fresh pixel guards and ordinary input admission.
 
         tail uses text, key_chord, wait_update or observe operations, within the
@@ -135,9 +136,11 @@ def register_guarded_tools(server, submit):
         observe_after captures once immediately after the result; it adds no
         redraw wait. Capture failure retains the input result without replay.
         Inspect result/release separately from feedback and semantic completion.
+        detail=brief summarizes known normal exact-match guard details only.
+        Failures/unknown shapes remain full; full retrieval never replays input.
         """
         return await submit('guarded_input',dict(alias=alias,offset=offset,tail=tail,
-                            interaction=interaction,observe_after=observe_after),False,False)
+                            interaction=interaction,observe_after=observe_after),False,False,detail)
 
     @server.tool()
     async def interface_guarded_review_window(window_id: StrictInt) -> CallToolResult:

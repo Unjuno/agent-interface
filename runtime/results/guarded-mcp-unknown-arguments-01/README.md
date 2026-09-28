@@ -1,0 +1,9 @@
+# Reject unknown public MCP arguments before operation invocation
+
+Primary GUI trial03 discovered that the SDK silently ignored pointer:false and invoked default click behavior. The production adapter now advertises additionalProperties:false for top-level tool arguments and returns an invalid_request CallToolResult before invoking the tool when unknown names are present. It uses the public FastMCP list_tools/call_tool methods, without mutating SDK models. Nested program/tail dictionaries still use existing runtime validators. Known valid requests retain their behavior.
+
+Source e609b197157f06e5cc6b4dd80049d88f842ebd6f; portable archive SHA256 49a0a3bd16c9c074d7c08f460dccfe4c53cfafa8096f3b51c845cedf31c6ac10. Actual SDK relay invocation of the archive with display :9876 and the same unknown pointer argument returned invalid_request, unknown_arguments=[pointer], operation_invoked=false, input_dispatched=false. The server directory remained empty after refusal. Close confirmed the owner had never opened a connection or observed a frame. No real GUI input was attempted in this check. Transport exit 0.
+
+The retained full local suites passed 247 protocol and 106 harness tests. The new test proves no bridge creation on unknown arguments and exactly one keyboard call with zero click calls for a corrected explicit keyboard request. After adding the unknown-argument assertion to the existing real stdio test, that focused test also passed (1 test, 0.627s); its console output is not part of the earlier full-suite logs. CI must validate the final committed test source.
+
+Run python3 -O verify.py for the raw bundle audit. The separate full GUI trial used the preceding runtime source d3ad158ae and retained its ignored-argument failure; do not relabel it as a GUI test of this subsequent adapter change. This refusal check and the inert bridge tests target the changed boundary. No token, latency or human-tempo claim is made.
