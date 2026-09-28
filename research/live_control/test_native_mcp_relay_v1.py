@@ -10,7 +10,7 @@ import unittest
 from unittest.mock import AsyncMock
 
 from mcp.types import CallToolResult, ImageContent, TextContent
-from native_mcp_relay_v1 import Relay
+from native_mcp_relay_v1 import PUBLIC_TOOLS, Relay
 
 
 class RelayTests(unittest.IsolatedAsyncioTestCase):
@@ -32,6 +32,7 @@ class RelayTests(unittest.IsolatedAsyncioTestCase):
             rows=[json.loads(line) for line in stdout.splitlines()]
             self.assertEqual(rows[0]['status'],'refused');self.assertFalse(rows[0]['dispatched'])
             self.assertIn('interface_guarded_input',{t['name'] for t in rows[1]['result']['tools']})
+            self.assertLessEqual({t['name'] for t in rows[1]['result']['tools']},set(PUBLIC_TOOLS))
             self.assertEqual(rows[2]['status'],'returned')
             self.assertTrue(rows[2]['result']['isError'])
             self.assertIn('references',rows[2]['result']['content'][0]['text'])
