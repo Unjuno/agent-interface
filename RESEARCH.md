@@ -143,8 +143,9 @@ and the joint-cell report at
 [`evidence/joint-cell-marginals-128-20260928/REPORT.md`](research/experiments/qwen05b_abstention_balance_5139_sampler_v1/evidence/joint-cell-marginals-128-20260928/REPORT.md).
 This is not the formal dataset freeze, pinned-image gate, audit
 of formal training output, GPU/CUDA run, LoRA fit, quality result, or safety
-claim. Historical `sad_cannon`
-attribution and explicit exclusive GPU/Docker lease remain unresolved;
+claim. The `sad_cannon` attribution is unrecoverable; its terminal HOLD records
+uncertainty under #5139's start-gate clause but does not prove zero fits or no
+overlap. An explicit exclusive GPU/Docker lease remains absent;
 preserve #4988/#5014 results unchanged. See [Issue #5139](https://github.com/Unjuno/agent-interface/issues/5139)
 and [Draft PR #5165](https://github.com/Unjuno/agent-interface/pull/5165).
 
