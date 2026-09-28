@@ -11,7 +11,7 @@ import time
 ROOT = Path(__file__).resolve().parents[2]
 SUITES = {
     'protocol': ['runtime.cli_v1.test_observe', 'runtime.selector_v1.test_selector',
-                 'runtime.cli_v1.test_mcp_server', 'runtime.cli_v1.test_mcp_session', 'runtime.cli_v1.test_mcp_guarded', 'runtime.cli_v1.test_cli', 'runtime.core_v1.test_contract', 'runtime.cli_v1.test_review', 'test_agent_review', 'test_receipt_references', 'test_native_exchange_v1', 'test_native_mcp_v1',
+                 'runtime.cli_v1.test_mcp_server', 'runtime.cli_v1.test_mcp_session', 'runtime.cli_v1.test_mcp_guarded', 'runtime.cli_v1.test_guarded_presentation', 'runtime.cli_v1.test_cli', 'runtime.core_v1.test_contract', 'runtime.cli_v1.test_review', 'test_agent_review', 'test_receipt_references', 'test_native_exchange_v1', 'test_native_mcp_v1',
                  'test_native_allocation_v1', 'test_native_mcp_relay_v1', 'test_native_direct_task_v1',
                  'test_native_primary_review_v1', 'test_native_brief_review_v1', 'test_native_guarded_form_v1', 'test_guarded_source_dependencies_v1'],
     'harness': ['runtime.backends.x11_v1.test_focus', 'runtime.cli_v1.test_x11_target_review', 'runtime.backends.x11_v1.test_text_plan', 'runtime.backends.x11_v1.test_partial_execution', 'test_native_finish_after_v1', 'test_native_cleanup_v1',

@@ -54,6 +54,30 @@ def metadata(response):
 
 
 class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
+    async def test_unknown_top_level_arguments_never_reach_bridge(self):
+        opened=[]
+        def open_fixture(*args,**kwargs):
+            bridge=FakeBridge(*args,**kwargs);opened.append(bridge);return bridge
+        with tempfile.TemporaryDirectory() as td, patch('runtime.cli_v1.mcp_guarded.open_bridge', side_effect=open_fixture) as factory:
+            server=create_server({'app':123},td,session_mode='guarded-x11')
+            for tool in await server.list_tools():
+                self.assertIs(tool.inputSchema['additionalProperties'],False)
+            refused=await server.call_tool('interface_guarded_input',{
+                'alias':'browser_context','offset':[12,12],'tail':[], 'pointer':False})
+            self.assertTrue(refused.isError)
+            row=metadata(refused)
+            self.assertEqual(row['unknown_arguments'],['pointer'])
+            self.assertFalse(row['input_dispatched'])
+            self.assertFalse(row['operation_invoked'])
+            factory.assert_not_called()
+            self.assertEqual(list(Path(td).iterdir()),[])
+            await server.call_tool('interface_guarded_input',{
+                'alias':'browser_context','offset':[12,12],'tail':[],'interaction':'keyboard'})
+            factory.assert_called_once()
+            opened[0].keyboard.assert_called_once()
+            opened[0].click.assert_not_called()
+            await server.call_tool('interface_close',{})
+
     async def test_explicit_mode_tools_shared_retention_and_no_replay(self):
         with tempfile.TemporaryDirectory() as td, patch('runtime.cli_v1.mcp_guarded.open_bridge',side_effect=FakeBridge) as factory:
             server=create_server({'app':123},td,session_mode='guarded-x11')
@@ -169,6 +193,11 @@ with patch('runtime.cli_v1.mcp_guarded.open_bridge',side_effect=FakeBridge):
                 async with ClientSession(reader,writer) as client:
                     await client.initialize()
                     self.assertIn('interface_guarded_input',{t.name for t in (await client.list_tools()).tools})
+                    refused=await client.call_tool('interface_guarded_input',{
+                        'alias':'x','offset':[1,2],'tail':[],'pointer':False})
+                    self.assertTrue(refused.isError)
+                    self.assertEqual(metadata(refused)['unknown_arguments'],['pointer'])
+                    self.assertEqual(list(Path(td).iterdir()),[])
                     action=await client.call_tool('interface_guarded_input',{'alias':'x','offset':[1,2],'tail':[]})
                     row=metadata(action);self.assertEqual(row['status'],'completed')
                     self.assertEqual(action.content[1].type,'image')
@@ -213,3 +242,45 @@ with patch('runtime.cli_v1.mcp_guarded.open_bridge',side_effect=FakeBridge):
                 bridge.mint.assert_not_called();bridge.click.assert_not_called()
                 bridge.keyboard.assert_not_called();bridge.observe.assert_not_called()
                 await server.call_tool('interface_close',{})
+    async def test_brief_projection_preserves_full_retention_and_image_without_replay(self):
+        from runtime.cli_v1.test_guarded_presentation import normal_report
+        with tempfile.TemporaryDirectory() as td:
+            bridge=FakeBridge(None,{'app':123},'app',Path(td)/'fixture')
+            bridge.click.side_effect=lambda *a,**k:normal_report()['result']
+            with patch('runtime.cli_v1.mcp_guarded.open_bridge',return_value=bridge):
+                server=create_server({'app':123},td,session_mode='guarded-x11')
+                response=await server.call_tool('interface_guarded_input',{'alias':'x','offset':[1,2],'tail':[],'detail':'brief'})
+                brief=metadata(response);self.assertEqual(brief['presentation']['returned'],'brief')
+                raw_path=Path(brief['call_directory'])/'report.json';raw_before=raw_path.read_bytes()
+                self.assertIn('guard_checks',json.loads(raw_before)['result'])
+                full_reply=await server.call_tool('interface_results',{'call_id':brief['call_id'],'detail':'full'})
+                full=metadata(full_reply)
+                self.assertNotIn('presentation',full)
+                self.assertEqual(full_reply.content[1].data,response.content[1].data)
+                self.assertIn('guard_checks',full['result'])
+                after=await server.call_tool('interface_results',{'call_id':brief['call_id'],'detail':'brief','include_image':False})
+                self.assertEqual(metadata(after)['presentation']['returned'],'brief')
+                self.assertEqual(len(after.content),1)
+                self.assertEqual(raw_before,raw_path.read_bytes())
+                bridge.click.assert_called_once();bridge.observe.assert_called_once()
+                await server.call_tool('interface_close',{})
+
+    async def test_brief_does_not_hide_report_persistence_failure(self):
+        from runtime.cli_v1.test_guarded_presentation import normal_report
+        from runtime.cli_v1.attempt import _write_json
+        with tempfile.TemporaryDirectory() as td:
+            bridge=FakeBridge(None,{'app':123},'app',Path(td)/'fixture')
+            bridge.click.side_effect=lambda *a,**k:normal_report()['result']
+            def write(path,value):
+                if Path(path).name=='report.json':raise OSError('retained report unavailable')
+                return _write_json(path,value)
+            with patch('runtime.cli_v1.mcp_guarded.open_bridge',return_value=bridge),patch('runtime.cli_v1.mcp_server._write_json',side_effect=write):
+                server=create_server({'app':123},td,session_mode='guarded-x11')
+                response=await server.call_tool('interface_guarded_input',{'alias':'x','offset':[1,2],'tail':[],'detail':'brief'})
+                row=metadata(response)
+                self.assertTrue(response.isError);self.assertIn('persistence_error',row)
+                self.assertEqual(row['presentation']['returned'],'full')
+                self.assertIn('guard_checks',row['result'])
+                self.assertEqual(row['result']['status'],'completed')
+                bridge.click.assert_called_once()
+            await server.call_tool('interface_close',{})
