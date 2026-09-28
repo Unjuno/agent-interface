@@ -10,7 +10,7 @@ import statistics
 import sys
 import urllib.error
 import urllib.request
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 
 import torch
@@ -89,7 +89,8 @@ def sha(data: bytes) -> str:
 
 
 def expected_docker_argv(source_path: str, output_path: str,
-                         docker_context: str = "default") -> list[str] | None:
+                         docker_context: str, hard_stop_utc: str,
+                         hard_stop_seconds: float) -> list[str] | None:
     try:
         source, output = Path(source_path).resolve(strict=True), Path(output_path).resolve(strict=True)
     except (OSError, TypeError):
@@ -100,6 +101,10 @@ def expected_docker_argv(source_path: str, output_path: str,
         return None
     if not isinstance(docker_context, str) or not docker_context.strip() or "\x00" in docker_context:
         return None
+    if not isinstance(hard_stop_utc, str) or not hard_stop_utc.endswith("Z"):
+        return None
+    if not isinstance(hard_stop_seconds, (float, int)) or hard_stop_seconds <= 0:
+        return None
     return [
         "docker", "--context", docker_context, "run", "--pull=never", "--platform=linux/amd64",
         "--cidfile", str(output / "container.id"),
@@ -109,8 +114,10 @@ def expected_docker_argv(source_path: str, output_path: str,
         "--mount", f"type=bind,source={source},target=/src,readonly",
         "--mount", f"type=bind,source={output},target=/out",
         "--workdir=/src", "--env=NEEDLE_OUTPUT=/out",
+        "--env=NEEDLE_HARD_STOP_UTC=" + hard_stop_utc,
+        "--env=NEEDLE_HARD_STOP_SECONDS=" + format(float(hard_stop_seconds), ".6f"),
         "--env=NEEDLE_SEEDS=" + ",".join(map(str, SEEDS)),
-        IMAGE_ID, "-B", "/src/runner.py",
+        IMAGE_ID, "-B", "/src/watchdog.py", "/src/runner.py",
     ]
 
 
@@ -293,7 +300,8 @@ def audit_document(raw: dict, receipt: dict | None = None, raw_sha256: str | Non
         argv = receipt.get("command_argv")
         try:
             expected_argv = expected_docker_argv(receipt["source_path"], receipt["output_path"],
-                                                 receipt["docker_context"])
+                                                 receipt["docker_context"], receipt["hard_stop_utc"],
+                                                 receipt["hard_stop_seconds"])
         except (KeyError, TypeError, ValueError, OSError):
             expected_argv = None
         if expected_argv is None or not isinstance(argv, list) or argv != expected_argv:
@@ -316,6 +324,36 @@ def audit_document(raw: dict, receipt: dict | None = None, raw_sha256: str | Non
                 or not isinstance(receipt.get("container_id"), str)
                 or re.fullmatch(r"[0-9a-f]{64}", receipt.get("container_id", "")) is None):
             errors.append("formal_container_lifecycle")
+        try:
+            output_path = Path(receipt["output_path"])
+            cid_bytes = (output_path / "container.id").read_bytes()
+            if cid_bytes.decode("ascii").strip() != receipt.get("container_id"):
+                errors.append("formal_container_cidfile")
+            watchdog_bytes = (output_path / "watchdog_receipt.json").read_bytes()
+            watchdog = json.loads(watchdog_bytes, object_pairs_hook=unique_pairs)
+            watchdog_sha = sha(watchdog_bytes)
+            hard_stop = datetime.fromisoformat(receipt["hard_stop_utc"].replace("Z", "+00:00"))
+            lease_end = min(datetime.fromisoformat(receipt["expires_at_utc"].replace("Z", "+00:00")),
+                            datetime.fromisoformat(receipt["slot_end_utc"].replace("Z", "+00:00")))
+            expected_hard_stop = lease_end - timedelta(seconds=30)
+            started = datetime.fromisoformat(receipt["started_at_utc"].replace("Z", "+00:00"))
+            expected_runtime = (lease_end - started).total_seconds() - 30
+            watchdog_finished = datetime.fromisoformat(watchdog["finished_at_utc"].replace("Z", "+00:00"))
+            if (receipt.get("hard_stop_utc") is None
+                    or hard_stop.tzinfo is None or lease_end.tzinfo is None
+                    or hard_stop != expected_hard_stop
+                    or type(receipt.get("hard_stop_seconds")) not in (int, float)
+                    or abs(receipt["hard_stop_seconds"] - expected_runtime) > 3.0
+                    or watchdog.get("schema") != "needle-formal-watchdog-receipt-v1"
+                    or watchdog.get("hard_stop_utc") != receipt.get("hard_stop_utc")
+                    or watchdog.get("max_runtime_seconds") != receipt.get("hard_stop_seconds")
+                    or watchdog.get("timed_out") is not False
+                    or watchdog.get("child_exit_code") != receipt.get("exit_code")
+                    or watchdog_finished.tzinfo is None or watchdog_finished >= hard_stop
+                    or watchdog_sha != receipt.get("watchdog_receipt_sha256")):
+                errors.append("formal_container_watchdog_receipt")
+        except (OSError, UnicodeError, KeyError, TypeError, ValueError, json.JSONDecodeError):
+            errors.append("formal_container_watchdog_receipt")
         if (not isinstance(receipt.get("lease_id"), str) or not receipt["lease_id"]
                 or not isinstance(receipt.get("owner_comment_url"), str)):
             errors.append("formal_owner_lease")

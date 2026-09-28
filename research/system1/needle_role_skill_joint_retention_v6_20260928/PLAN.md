@@ -31,9 +31,13 @@ does not test natural-language role recognition or product behavior.
 - `formal.py` has a lease-gated, single-invocation Docker path with no retry;
   it rejects missing or mismatched owner-comment leases before `docker run`.
 - The launch is pinned to the exact leased Docker context, records a Docker
-  container ID, bounds the attached run to end before lease expiry, and reserves
-  time for one in-slot forced cleanup on timeout. A timeout is a STOP, not a
-  retry or scientific outcome.
+  container ID, and imposes layered stop bounds: the host Docker client times
+  out with 20 seconds left in the owner window; the in-container PID-1 watchdog
+  stops its runner child 30 seconds before the earlier slot-end/lease expiry.
+  The watchdog uses monotonic elapsed time so wall-clock adjustment during the
+  run cannot extend the child. Host-side forced removal is a bounded fallback,
+  not the only stop mechanism. A timeout is a STOP, never a retry or scientific
+  outcome.
 - No container invocation until coordinator/resource release is explicit.
 
 ## D — decisions

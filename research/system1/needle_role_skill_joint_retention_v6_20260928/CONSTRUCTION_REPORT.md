@@ -237,7 +237,32 @@ remains for cleanup, it stops before launching.
 
 Host tests additionally exercise API comment-ID mismatch, local Docker-run
 timeout and in-window forced cleanup without invoking Docker. Current suite is
-**26/26** on Windows CPython 3.11.9; compile, preflight-only, `git diff
+**27/27** on Windows CPython 3.11.9; compile, preflight-only, `git diff
 --check`, and all manifest SHA-256 entries pass. This is still not a Docker
 runtime verification: #5085's no-CLI hold remains unsuperseded, and no formal
 seed/model/optimizer or scientific result was used.
+
+## Independent stop-path review follow-up — in-container watchdog — 2026-09-29
+
+Independent review then identified that a host `docker rm --force` fallback
+could itself hang or fail, leaving the container runner alive past its owner
+window. The launcher now freezes an absolute UTC stop instant 30 seconds before
+the earlier slot-end/lease-expiry and passes the remaining duration to a new
+PID-1 watchdog. Inside the pinned container the watchdog supervises the runner
+as a child using monotonic elapsed time, sends terminate and then kill on
+deadline, and writes a watchdog receipt. The host-side attached Docker timeout
+still leaves 20 seconds for bounded best-effort removal; the watchdog is the
+independent stop mechanism if the CLI/daemon cleanup path is unresponsive.
+Independent audit now requires the container ID file to match the receipt,
+checks the watchdog receipt hash/schema/outcome and binds its stop instant and
+runtime to the recorded owner lease. Timeout remains a STOP and cannot become a
+scientific PASS.
+
+The complete Windows CPython 3.11.9 host suite passes **27/27**; syntax checks
+pass, `formal.py --preflight` reports `PREFLIGHT_ONLY` with zero Docker calls,
+and `git diff --check` passes. The freeze manifest includes current hashes for
+the launcher, argv protocol, independent auditor, watchdog, and tests. No Docker
+command was run: #5085's no-CLI hold still applies. Consequently the new watchdog
+has host unit coverage only, not in-container runtime verification; the earlier
+17/17 image run predates it and does not verify this source revision. No formal
+seed, model, optimizer, or scientific outcome is claimed.

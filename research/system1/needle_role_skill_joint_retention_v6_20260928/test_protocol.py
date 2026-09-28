@@ -8,6 +8,7 @@ import importlib.util
 import io
 import json
 import sys
+import subprocess
 from unittest.mock import patch
 from datetime import datetime, timedelta, timezone
 
@@ -16,6 +17,7 @@ import protocol
 HERE = Path(__file__).resolve().parent
 RESEARCH_ROOT = HERE.parent
 RUNNER_PATH = HERE / "runner.py"
+WATCHDOG_PATH = HERE / "watchdog.py"
 AUDIT_PATH = HERE / "audit.py"
 FORMAL_PATH = HERE / "formal.py"
 
@@ -27,12 +29,16 @@ class DockerArgvContract(unittest.TestCase):
             source, output = root / "source", root / "fresh-output"
             source.mkdir()
             output.mkdir()
-            argv = protocol.docker_argv(source, output)
+            deadline = "2099-01-01T00:00:00Z"
+            argv = protocol.docker_argv(source, output, "default", deadline, 100.0)
             self.assertTrue(protocol.exact_argv_matches(argv, list(argv)))
             self.assertEqual(argv.count("--network=none"), 1)
             self.assertIn("--entrypoint=python", argv)
             self.assertIn("-B", argv)
+            self.assertIn("/src/watchdog.py", argv)
             self.assertIn("/src/runner.py", argv)
+            self.assertIn("--env=NEEDLE_HARD_STOP_UTC=" + deadline, argv)
+            self.assertIn("--env=NEEDLE_HARD_STOP_SECONDS=100.000000", argv)
 
     def test_rejects_token_split_missing_extra_reordered_and_mount_mutations(self):
         with tempfile.TemporaryDirectory() as temp:
@@ -40,7 +46,7 @@ class DockerArgvContract(unittest.TestCase):
             source, output = root / "source", root / "fresh-output"
             source.mkdir()
             output.mkdir()
-            expected = protocol.docker_argv(source, output)
+            expected = protocol.docker_argv(source, output, "default", "2099-01-01T00:00:00Z", 100.0)
             mutations = []
             split_network = list(expected)
             at = split_network.index("--network=none")
@@ -65,9 +71,9 @@ class DockerArgvContract(unittest.TestCase):
             source.mkdir()
             output.mkdir()
             with self.assertRaisesRegex(ValueError, "disjoint"):
-                protocol.docker_argv(source, output)
+                protocol.docker_argv(source, output, "default", "2099-01-01T00:00:00Z", 100.0)
             with self.assertRaisesRegex(ValueError, "existing directories"):
-                protocol.docker_argv(source, root / "missing")
+                protocol.docker_argv(source, root / "missing", "default", "2099-01-01T00:00:00Z", 100.0)
 
 
 class OnlineWindowContract(unittest.TestCase):
@@ -210,10 +216,11 @@ class FrozenSourceAndConstructionContract(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             output = Path(temp) / "out"
             output.mkdir()
-            self.assertEqual(module.expected_docker_argv(str(HERE), str(output), "default"),
-                             protocol.docker_argv(HERE, output, "default"))
-            self.assertNotEqual(protocol.docker_argv(HERE, output, "desktop-linux"),
-                                protocol.docker_argv(HERE, output, "orbstack"))
+            self.assertEqual(module.expected_docker_argv(str(HERE), str(output), "default",
+                                                        "2099-01-01T00:00:00Z", 100.0),
+                             protocol.docker_argv(HERE, output, "default", "2099-01-01T00:00:00Z", 100.0))
+            self.assertNotEqual(protocol.docker_argv(HERE, output, "desktop-linux", "2099-01-01T00:00:00Z", 100.0),
+                                protocol.docker_argv(HERE, output, "orbstack", "2099-01-01T00:00:00Z", 100.0))
         positive = {
             "queries": [{"query_id": "q", "worker_id": "inference",
                          "inference_start_ns": 100, "inference_end_ns": 220,
@@ -283,7 +290,7 @@ class FrozenSourceAndConstructionContract(unittest.TestCase):
             root = Path(temp)
             source_dir, output_dir = root / "src", root / "out"
             source_dir.mkdir(); output_dir.mkdir()
-            expected = protocol.docker_argv(source_dir, output_dir)
+            expected = protocol.docker_argv(source_dir, output_dir, "default", "2099-01-01T00:00:00Z", 100.0)
             mutated = list(expected) + ["--privileged"]
             self.assertFalse(protocol.exact_argv_matches(mutated, expected))
 
@@ -402,7 +409,8 @@ class FrozenSourceAndConstructionContract(unittest.TestCase):
                     module.subprocess.TimeoutExpired(["docker", "run"], 100),
                     module.subprocess.CompletedProcess(["docker", "rm"], 0, "", "")]) as run:
                 proc, detail = module.run_lease_bounded(
-                    ["docker", "--context", "desktop-linux", "run"], cidfile, lease, "desktop-linux")
+                    ["docker", "--context", "desktop-linux", "run"], cidfile, lease,
+                    "desktop-linux", "2099-01-01T00:00:00Z")
         self.assertEqual(proc.returncode, 124)
         self.assertTrue(detail["timed_out"])
         self.assertEqual(detail["cleanup_exit_code"], 0)
@@ -416,8 +424,43 @@ class FrozenSourceAndConstructionContract(unittest.TestCase):
         with patch.object(module.subprocess, "run") as run_short:
             with self.assertRaisesRegex(SystemExit, "STOP_LEASE_WINDOW_TOO_SHORT_FOR_CLEANUP"):
                 module.run_lease_bounded(["docker", "run"], Path("missing.cid"), short_lease,
-                                         "desktop-linux")
+                                         "desktop-linux", "2099-01-01T00:00:00Z")
         run_short.assert_not_called()
+
+    def test_container_watchdog_kills_child_at_lease_hard_stop(self):
+        spec = importlib.util.spec_from_file_location("needle_v6_container_watchdog", WATCHDOG_PATH)
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[spec.name] = module
+        spec.loader.exec_module(module)
+        deadline = datetime.now(timezone.utc) + timedelta(seconds=60)
+
+        class Child:
+            returncode = None
+            terminated = False
+
+            def poll(self):
+                return self.returncode
+
+            def terminate(self):
+                self.terminated = True
+                self.returncode = -15
+
+            def wait(self, timeout=None):
+                return self.returncode
+
+        child = Child()
+        with tempfile.TemporaryDirectory() as temp:
+            receipt_path = Path(temp) / "watchdog_receipt.json"
+            times = iter((100.0, 102.0))
+            result = module.run_child(["fake-runner"], 1.0, deadline.isoformat(), receipt_path,
+                                      popen=lambda _: child,
+                                      clock=lambda: next(times),
+                                      sleep=lambda _: None)
+            record = json.loads(receipt_path.read_text(encoding="utf-8"))
+        self.assertEqual(result, 124)
+        self.assertTrue(child.terminated)
+        self.assertTrue(record["timed_out"])
+        self.assertEqual(record["child_exit_code"], 124)
 
     def test_launcher_rechecks_owner_window_at_docker_boundaries(self):
         spec = importlib.util.spec_from_file_location("needle_v6_lease_window_test", FORMAL_PATH)
@@ -469,6 +512,36 @@ class FrozenSourceAndConstructionContract(unittest.TestCase):
         self.assertNotIn("formal_owner_comment_payload", valid_errors)
         self.assertNotIn("formal_owner_comment_live_record", valid_errors)
         self.assertNotIn("formal_container_lifecycle", valid_errors)
+        with tempfile.TemporaryDirectory() as temp:
+            output = Path(temp)
+            (output / "container.id").write_text("a" * 64, encoding="ascii")
+            hard_stop = "2026-09-28T12:04:30Z"
+            watchdog = {"schema": "needle-formal-watchdog-receipt-v1",
+                        "hard_stop_utc": hard_stop, "max_runtime_seconds": 250.0, "timed_out": False,
+                        "child_exit_code": 0, "finished_at_utc": "2026-09-28T12:01:00+00:00"}
+            watchdog_bytes = module.canonical(watchdog) + b"\n"
+            (output / "watchdog_receipt.json").write_bytes(watchdog_bytes)
+            complete_receipt = {**receipt, "owner_lease_comment": comment,
+                                "output_path": str(output), "hard_stop_utc": hard_stop,
+                                "hard_stop_seconds": 250.0,
+                                "watchdog_receipt_sha256": module.sha(watchdog_bytes),
+                                "started_at_utc": "2026-09-28T12:00:20+00:00",
+                                "finished_at_utc": "2026-09-28T12:01:00+00:00", "exit_code": 0}
+            with patch.object(module, "fetch_owner_comment_record", return_value={
+                    "id": 12345, "html_url": comment["html_url"], "issue_url": comment["issue_url"],
+                    "user": {"login": "Unjuno"}, "body": comment["body"]}):
+                complete_errors = module.audit_document({"runs": []}, complete_receipt)["errors"]
+            self.assertNotIn("formal_container_cidfile", complete_errors)
+            self.assertNotIn("formal_container_watchdog_receipt", complete_errors)
+            bad_watchdog = dict(watchdog, timed_out=True)
+            bad_bytes = module.canonical(bad_watchdog) + b"\n"
+            (output / "watchdog_receipt.json").write_bytes(bad_bytes)
+            with patch.object(module, "fetch_owner_comment_record", return_value={
+                    "id": 12345, "html_url": comment["html_url"], "issue_url": comment["issue_url"],
+                    "user": {"login": "Unjuno"}, "body": comment["body"]}):
+                self.assertIn("formal_container_watchdog_receipt", module.audit_document(
+                    {"runs": []}, {**complete_receipt,
+                                    "watchdog_receipt_sha256": module.sha(bad_bytes)})["errors"])
         fake_receipt = {**receipt, "owner_comment_url": "https://example.invalid/fake",
                         "owner_lease_comment": dict(comment, html_url="https://example.invalid/fake")}
         self.assertIn("formal_owner_comment_payload",

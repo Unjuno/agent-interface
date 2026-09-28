@@ -16,7 +16,8 @@ IMAGE_ID = "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a
 ENTRYPOINT = "python"
 
 
-def docker_argv(source: Path, output: Path, docker_context: str = "default") -> list[str]:
+def docker_argv(source: Path, output: Path, docker_context: str,
+                hard_stop_utc: str, hard_stop_seconds: float) -> list[str]:
     """Return the complete intended Docker argv, with all paths realized."""
     try:
         source = source.resolve(strict=True)
@@ -29,6 +30,10 @@ def docker_argv(source: Path, output: Path, docker_context: str = "default") -> 
         raise ValueError("source_output_must_be_disjoint")
     if not isinstance(docker_context, str) or not docker_context.strip() or "\x00" in docker_context:
         raise ValueError("docker_context_invalid")
+    if not isinstance(hard_stop_utc, str) or not hard_stop_utc.endswith("Z"):
+        raise ValueError("hard_stop_utc_invalid")
+    if not isinstance(hard_stop_seconds, (float, int)) or hard_stop_seconds <= 0:
+        raise ValueError("hard_stop_seconds_invalid")
     return [
         "docker", "--context", docker_context, "run", "--pull=never", "--platform=linux/amd64",
         "--cidfile", str(output / "container.id"),
@@ -38,8 +43,10 @@ def docker_argv(source: Path, output: Path, docker_context: str = "default") -> 
         "--mount", f"type=bind,source={source},target=/src,readonly",
         "--mount", f"type=bind,source={output},target=/out",
         "--workdir=/src", "--env=NEEDLE_OUTPUT=/out",
+        "--env=NEEDLE_HARD_STOP_UTC=" + hard_stop_utc,
+        "--env=NEEDLE_HARD_STOP_SECONDS=" + format(float(hard_stop_seconds), ".6f"),
         "--env=NEEDLE_SEEDS=" + ",".join(map(str, SEEDS)),
-        IMAGE_ID, "-B", "/src/runner.py",
+        IMAGE_ID, "-B", "/src/watchdog.py", "/src/runner.py",
     ]
 
 

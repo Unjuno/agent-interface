@@ -9,7 +9,7 @@ import sys
 import time
 import urllib.error
 import urllib.request
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from protocol import (ALLOCATION, IMAGE_ID, SEEDS, canonical, docker_argv,
@@ -21,6 +21,7 @@ ISSUE = 5085
 LEASE_SCHEMA = "needle-docker-owner-lease-v1"
 CLEANUP_RESERVE_SECONDS = 20
 CLEANUP_TIMEOUT_SECONDS = 8
+SELF_STOP_MARGIN_SECONDS = 30
 REQUIRED_LEASE_FIELDS = ("allocation", "owner_comment_url", "docker_context",
                          "main_sha", "branch", "expires_at_utc", "lease_id",
                          "slot_start_utc", "slot_end_utc")
@@ -60,7 +61,7 @@ def fetch_owner_comment(owner_comment_url: str) -> dict:
     try:
         with urllib.request.urlopen(request, timeout=10) as response:
             record = json.loads(response.read(), object_pairs_hook=unique_pairs)
-    except (OSError, urllib.error.URLError, json.JSONDecodeError):
+    except (OSError, urllib.error.URLError, json.JSONDecodeError, ValueError):
         stop("LEASE_OWNER_COMMENT_FETCH_FAILED")
     if not isinstance(record, dict):
         stop("LEASE_OWNER_COMMENT_RECORD_INVALID")
@@ -152,6 +153,25 @@ def lease_seconds_remaining(lease: dict, now=None) -> float:
     return max(0.0, (min(expiry, slot_end) - current).total_seconds())
 
 
+def lease_hard_stop_utc(lease: dict) -> str:
+    expiry = datetime.fromisoformat(lease["expires_at_utc"].replace("Z", "+00:00"))
+    slot_end = datetime.fromisoformat(lease["slot_end_utc"].replace("Z", "+00:00"))
+    if expiry.tzinfo is None or slot_end.tzinfo is None:
+        stop("LEASE_TIME_UNZONED")
+    hard_stop = min(expiry, slot_end).astimezone(timezone.utc) - timedelta(
+        seconds=SELF_STOP_MARGIN_SECONDS)
+    return hard_stop.isoformat().replace("+00:00", "Z")
+
+
+def lease_hard_stop_seconds(lease: dict, now=None) -> float:
+    expiry = datetime.fromisoformat(lease["expires_at_utc"].replace("Z", "+00:00"))
+    slot_end = datetime.fromisoformat(lease["slot_end_utc"].replace("Z", "+00:00"))
+    current = now or datetime.now(timezone.utc)
+    if expiry.tzinfo is None or slot_end.tzinfo is None:
+        return 0.0
+    return (min(expiry, slot_end) - current).total_seconds() - SELF_STOP_MARGIN_SECONDS
+
+
 def _read_container_id(cidfile: Path) -> str | None:
     try:
         value = cidfile.read_text(encoding="ascii").strip()
@@ -166,8 +186,9 @@ def _text_output(value) -> str | None:
     return value.decode("utf-8", errors="replace") if isinstance(value, bytes) else str(value)
 
 
-def run_lease_bounded(argv: list[str], cidfile: Path, lease: dict, docker_context: str):
-    """Bound execution before lease end; force-remove a timed-out container in-slot."""
+def run_lease_bounded(argv: list[str], cidfile: Path, lease: dict,
+                      docker_context: str, hard_stop_utc: str):
+    """Bound execution before lease end; container watchdog remains the final stop."""
     run_timeout = lease_seconds_remaining(lease) - CLEANUP_RESERVE_SECONDS
     if run_timeout <= 0:
         stop("LEASE_WINDOW_TOO_SHORT_FOR_CLEANUP")
@@ -175,7 +196,8 @@ def run_lease_bounded(argv: list[str], cidfile: Path, lease: dict, docker_contex
         proc = subprocess.run(argv, check=False, capture_output=True, text=True,
                               timeout=run_timeout)
         return proc, {"timed_out": False, "cleanup_exit_code": None,
-                      "cleanup_stderr": None, "container_id": _read_container_id(cidfile)}
+                "cleanup_stderr": None, "container_id": _read_container_id(cidfile),
+                "hard_stop_utc": hard_stop_utc}
     except subprocess.TimeoutExpired as exc:
         container_id = _read_container_id(cidfile)
         cleanup_code, cleanup_stderr = None, None
@@ -194,7 +216,8 @@ def run_lease_bounded(argv: list[str], cidfile: Path, lease: dict, docker_contex
                                            stdout=_text_output(exc.stdout),
                                            stderr=_text_output(exc.stderr)), {
             "timed_out": True, "cleanup_exit_code": cleanup_code,
-            "cleanup_stderr": cleanup_stderr, "container_id": container_id}
+            "cleanup_stderr": cleanup_stderr, "container_id": container_id,
+            "hard_stop_utc": hard_stop_utc}
 
 
 def main(argv=None):
@@ -237,7 +260,11 @@ def main(argv=None):
     current_context = context_result.stdout.strip()
     if current_context != expected_context:
         stop("DOCKER_CONTEXT_CHANGED")
-    argv = docker_argv(source, output, current_context)
+    hard_stop = lease_hard_stop_utc(lease)
+    hard_stop_seconds = lease_hard_stop_seconds(lease)
+    if hard_stop_seconds <= 0:
+        stop("LEASE_WINDOW_TOO_SHORT_FOR_SELF_STOP")
+    argv = docker_argv(source, output, current_context, hard_stop, hard_stop_seconds)
     canonical_argv = list(argv)
     receipt = {
         "schema": "needle-role-skill-joint-retention-formal-receipt-v1",
@@ -246,6 +273,8 @@ def main(argv=None):
         "lease_issue": lease["issue"], "slot_start_utc": lease["slot_start_utc"],
         "slot_end_utc": lease["slot_end_utc"], "expires_at_utc": lease["expires_at_utc"],
         "branch": branch, "docker_context": current_context,
+        "hard_stop_utc": hard_stop,
+        "hard_stop_seconds": hard_stop_seconds,
         "owner_lease_comment": owner_comment,
         "source_path": str(source), "output_path": str(output),
         "image_id": IMAGE_ID, "seeds": list(SEEDS), "formal_invocations": 1,
@@ -258,9 +287,12 @@ def main(argv=None):
     # This one invocation is deliberate. There is no retry or partial rerun.
     if not lease_window_active(lease):
         stop("LEASE_SLOT_EXPIRED_BEFORE_DOCKER_RUN")
-    proc, bounded = run_lease_bounded(argv, output / "container.id", lease, current_context)
+    proc, bounded = run_lease_bounded(argv, output / "container.id", lease,
+                                      current_context, hard_stop)
     raw_path = output / "formal_result.json"
     raw_sha = sha256_bytes(raw_path.read_bytes()) if raw_path.is_file() else None
+    watchdog_path = output / "watchdog_receipt.json"
+    watchdog_sha = sha256_bytes(watchdog_path.read_bytes()) if watchdog_path.is_file() else None
     completed = {**receipt, "exit_code": proc.returncode,
                  "finished_at_ns": time.time_ns(),
                  "finished_at_utc": datetime.now(timezone.utc).isoformat(),
@@ -269,6 +301,7 @@ def main(argv=None):
                  "container_cleanup_exit_code": bounded["cleanup_exit_code"],
                  "container_cleanup_stderr": bounded["cleanup_stderr"],
                  "container_id": bounded["container_id"],
+                 "watchdog_receipt_sha256": watchdog_sha,
                  "raw_result_sha256": raw_sha,
                  "formal_result_present": raw_path.is_file()}
     with receipt_path.open("xb") as stream:
