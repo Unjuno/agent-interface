@@ -230,6 +230,8 @@ class X11Backend:
                 focused = True
             elif kind in {"pointer_move", "observe"} and not focused:
                 raise X11BackendError(f"{kind} requires focused target")
+            elif kind == "verify":
+                raise X11BackendError("verify predicates are not implemented by the X11 backend; observe and explicitly review application state")
             elif kind == "text":
                 self._text_plan(op["text"])
             elif kind == "key_chord":
@@ -416,7 +418,8 @@ class X11Backend:
                         wait["completed"] = True
                     finally:
                         wait["ended_ns"] = time.monotonic_ns()
-                elif kind == "verify": pass
+                elif kind == "verify":
+                    raise X11BackendError("verify predicates are not implemented by the X11 backend")
                 elif kind == "release_all": releases.append(self.release_all())
                 else: raise X11BackendError(f"unsupported op {kind}")
                 completed_ops.append(index)
