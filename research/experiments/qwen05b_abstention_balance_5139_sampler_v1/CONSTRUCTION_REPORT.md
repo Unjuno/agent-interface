@@ -8,32 +8,35 @@ Frozen base for this additive sampler bundle: `main` SHA `3007e03481d545eb9a92b8
 
 ## H / T / D / C / U
 
-- **H (narrow construction claim):** SHA-256 class-conditional ranking gives deterministic row-order-independent support lists; selecting both arms from the same per-class ranked list yields nested selections and identical rows for classes with equal counts. This does not test the #5139 efficacy hypothesis.
-- **T:** Four host unit tests over a synthetic 128-row support-pool shape matching the inspected v2 class/template index schedule. Rank key is UTF-8 `support-row-rank-v1\n{seed}\n{class}\n{case_id}`; order is ascending by (digest bytes, case_id UTF-8 bytes). Probe seed string `construction-only-manual-probe` is not an allocation seed and must not be reused for construction/formal allocation.
-- **D:** `PASS_SAMPLER_CONSTRUCTION_ONLY`: 4/4 tests passed. The old first-four `set` prefix covers one template; the ranked four-row set sample for this probe covers all four. Both support arms cover all four set templates. Every class selection is nested in the larger arm, and equal-count classes receive identical ordered rows. Duplicate IDs and a short/missing class fail closed.
-- **C:** Python 3.11.9 host process; deterministic synthetic row metadata; no model, tokenizer, package install, network data, GPU, CUDA, container, GUI, or input. The test does not import the v2 protocol or model output.
-- **U:** This validates only sampler mechanics on a synthetic row-shape fixture. It is not an independent raw-data auditor, not a pinned-image construction gate, not a test of the full current-main dataset generator, and not evidence of LoRA quality, safety, speed, or population generality.
+- **H (narrow construction claim):** SHA-256 class-conditional ranking gives deterministic, input-order-independent row order; selecting both arms from the same per-class ranked list yields nested selections and identical rows for classes with equal counts. This does not test the #5139 efficacy hypothesis.
+- **T:** Six host unit tests over a synthetic 128-row support-pool shape matching the inspected v2 class/template index schedule. Rank bytes are SHA-256 of UTF-8 `support-row-rank-v1\n`, followed by the positive seed as canonical ASCII decimal (no sign or leading zeros), then UTF-8 class name and case ID, newline-separated. Sort by `(digest bytes, case_id UTF-8 bytes)`. The test-only integer seed 1 is not an allocation seed and must not be reused for a construction/formal allocation.
+- **D:** `PASS_SAMPLER_CONSTRUCTION_ONLY`: 6/6 unit tests passed. The separate deterministic construction descriptor for test seed 1 showed old `set` prefix template count 1; ranked balanced per-template counts `{0:1, 1:1, 2:2, 3:0}`; ranked imbalanced counts `{0:3, 1:3, 2:6, 3:4}`. This demonstrates that hashing removes deterministic row-prefix selection but does **not** guarantee matched template/field coverage. Counts are reported, not used to select or replace the seed. Both arms are nested in either count direction; equal-count classes have identical ordered IDs; duplicate IDs, missing/short classes, and noncanonical seeds fail closed.
+- **C:** Python 3.11.9 host process; deterministic synthetic row metadata; no model, tokenizer, package install, network data, GPU, CUDA, container, GUI, or input. A separate test-oracle function reconstructs ranked IDs without importing the candidate `row_rank` or sampler. This is not a separately executed raw-output auditor or independent human review.
+- **U:** This validates only sampler mechanics on a synthetic row-shape fixture. It is not a pinned-image construction gate, not a test of the full current-main dataset generator, and not evidence of LoRA quality, safety, speed, or population generality.
 
-## Exact command and outcomes
+## Exact command and outcome
 
 Passed command:
 
 ```text
-python -m unittest discover -s research -p 'test_qwen5139_sampler.py' -v
+python -m unittest discover -s research/experiments/qwen05b_abstention_balance_5139_sampler_v1 -p 'test_sampler.py' -v
 ```
 
-Result: 4 tests, 0.002 seconds, exit 0.
+Result: 6 tests, 0.002 seconds, exit 0.
 
-Two harness/checker mistakes were retained rather than silently omitted:
+## Preserved construction/checker failures
 
-1. The first exploratory PowerShell checker asserted that the imbalanced arm always has at least as many rows as the balanced arm. That assertion failed for the four YIELD classes (counts 1 vs 4); the allocation design intentionally reverses subset size there. After checking inclusion from the smaller selected set into the larger one in either direction, the construction diagnostics were: `nested_all_classes=true`, `same_rows_where_counts_match=true`, `unique_support_ids=true`, old set-prefix template count 1, ranked balanced set template count 4, ranked imbalanced set template count 4.
-2. The first unittest invocation used module-name loading from the workspace root and failed before discovery with `ModuleNotFoundError: No module named 'test_qwen5139_sampler'`. The correct explicit discovery command above ran the same tests successfully.
+1. The first exploratory PowerShell checker asserted the imbalanced arm always had at least as many rows as the balanced arm. That check failed for the four YIELD classes (counts 1 vs 4); the design intentionally reverses subset size there. A corrected inclusion check tested that the smaller selected set is contained in the larger one in either direction.
+2. The first unittest invocation used module-name loading from the workspace root and failed before discovery with `ModuleNotFoundError: No module named 'test_qwen5139_sampler'`.
+3. A later test asserted that a four-row hash-ranked `set` sample must cover all four templates. Under canonical integer test seed 0, the sample covered only two templates. That assertion was rejected as an unsupported invariant; no template-coverage constraint or seed search was added. Test seed 1 is used only as a fixed mechanics sentinel, and its realized template/field counts are reported above.
+4. Running `unittest discover -s research` while already in the `research/` directory failed before test discovery (`Start directory is not importable: 'research'`). The exact root-relative command above then passed 6/6.
 
-Source SHA-256 values from the local tested files:
+## Local source SHA-256
 
-- `sampler.py`: `80eb3663e0215142104719882ca9640df37e88345d3d7945979bff45fd7ae907`
-- `test_sampler.py`: `74378868d5f43c137b96ac9e5b47fc23ae5ae57c1da223beb7927e86bdaaf79b`
+- `sampler.py`: `0cdbe3e5b61202ec6ea5bd8810f4734a85141e7a7cbaf22ce886568b0f2c23a6`
+- `test_sampler.py`: `e0fbcf0a3c1cce969e3f6751da8d56d952ce3002d46db19f5e3f40b97e4dacbe`
 
 ## Resource / allocation boundary
 
-The current #5085 comments return the #5133 CPU-only slot after its construction STOP. That return does not assign a GPU/Docker lease to #5139. No #5139 allocation seed, model load, CUDA call, fit, adapter write, Docker invocation, or formal output was consumed here. Keep the branch preparatory; do not merge it as a completed experiment. A full fresh-main source/data/model freeze, independently implemented raw auditor, pinned-image CPU gate, historical `sad_cannon` attribution disposition, output/seed collision check, and explicit named #5139 GPU/Docker lease remain required before any model or container work.
+Current #5085 arbitration assigns the serialized CPU slot to #5133 allocation -04. That is neither a #5139 GPU lease nor inherited authorization. No #5139 model load, CUDA call, fit, adapter write, Docker invocation, or formal output was consumed here. Keep this branch preparatory; do not merge it as a completed experiment. A full fresh-main source/data/model freeze, independent raw auditor, pinned-image CPU gate, historical `sad_cannon` attribution disposition, output/seed collision check, and explicit named #5139 GPU/Docker lease remain required before any model or container work.
+
