@@ -25,6 +25,25 @@ def inspect_focused_target(backend, family_root):
     if prop is None or prop.format != 32 or len(prop.value) > 4096:
         raise ValueError('managed client inventory unavailable or too large')
     managed = {int(x) for x in prop.value}
+    # Configured input targets can be toolkit children (for example Tk's
+    # winfo_id). Resolve their actual managed ancestor without changing the
+    # binding. Keep the ancestry in review evidence so reparenting invalidates
+    # the existing one-use review rather than silently choosing a new family.
+    family_path = [family_root]
+    family_client = family_root
+    if family_root not in managed:
+        configured = d.create_resource_object('window', family_root)
+        for _ in range(63):
+            configured = configured.query_tree().parent
+            wid = getattr(configured, 'id', None)
+            if not wid or wid in family_path or wid == root.id:
+                raise ValueError('configured managed client unavailable')
+            family_path.append(wid)
+            if wid in managed:
+                family_client = wid
+                break
+        else:
+            raise ValueError('configured target ancestry exceeds limit')
     focus = d.get_input_focus().focus
     focus_path = []
     for _ in range(64):
@@ -43,7 +62,7 @@ def inspect_focused_target(backend, family_root):
     chain = [win.id]
     current = win
     for _ in range(16):
-        if current.id == family_root:
+        if current.id == family_client:
             break
         current = current.get_wm_transient_for()
         if current is None or current.id in chain:
@@ -54,7 +73,11 @@ def inspect_focused_target(backend, family_root):
     geo = win.get_geometry()
     point = root.translate_coords(win, 0, 0)
     title = read_window_title(d, win)
-    return {'window_id': win.id, 'focus_path': focus_path,
+    evidence = {'window_id': win.id, 'focus_path': focus_path,
             'transient_chain': chain, 'family_root': family_root,
             'title': title, 'wm_class': list(win.get_wm_class() or ()),
             'geometry': [point.x, point.y, geo.width, geo.height]}
+
+    if len(family_path) > 1:
+        evidence.update(configured_target_path=family_path, managed_family_root=family_client)
+    return evidence
