@@ -54,6 +54,30 @@ def metadata(response):
 
 
 class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
+    async def test_unknown_top_level_arguments_never_reach_bridge(self):
+        opened=[]
+        def open_fixture(*args,**kwargs):
+            bridge=FakeBridge(*args,**kwargs);opened.append(bridge);return bridge
+        with tempfile.TemporaryDirectory() as td, patch('runtime.cli_v1.mcp_guarded.open_bridge', side_effect=open_fixture) as factory:
+            server=create_server({'app':123},td,session_mode='guarded-x11')
+            for tool in await server.list_tools():
+                self.assertIs(tool.inputSchema['additionalProperties'],False)
+            refused=await server.call_tool('interface_guarded_input',{
+                'alias':'browser_context','offset':[12,12],'tail':[], 'pointer':False})
+            self.assertTrue(refused.isError)
+            row=metadata(refused)
+            self.assertEqual(row['unknown_arguments'],['pointer'])
+            self.assertFalse(row['input_dispatched'])
+            self.assertFalse(row['operation_invoked'])
+            factory.assert_not_called()
+            self.assertEqual(list(Path(td).iterdir()),[])
+            await server.call_tool('interface_guarded_input',{
+                'alias':'browser_context','offset':[12,12],'tail':[],'interaction':'keyboard'})
+            factory.assert_called_once()
+            opened[0].keyboard.assert_called_once()
+            opened[0].click.assert_not_called()
+            await server.call_tool('interface_close',{})
+
     async def test_explicit_mode_tools_shared_retention_and_no_replay(self):
         with tempfile.TemporaryDirectory() as td, patch('runtime.cli_v1.mcp_guarded.open_bridge',side_effect=FakeBridge) as factory:
             server=create_server({'app':123},td,session_mode='guarded-x11')
@@ -169,6 +193,11 @@ with patch('runtime.cli_v1.mcp_guarded.open_bridge',side_effect=FakeBridge):
                 async with ClientSession(reader,writer) as client:
                     await client.initialize()
                     self.assertIn('interface_guarded_input',{t.name for t in (await client.list_tools()).tools})
+                    refused=await client.call_tool('interface_guarded_input',{
+                        'alias':'x','offset':[1,2],'tail':[],'pointer':False})
+                    self.assertTrue(refused.isError)
+                    self.assertEqual(metadata(refused)['unknown_arguments'],['pointer'])
+                    self.assertEqual(list(Path(td).iterdir()),[])
                     action=await client.call_tool('interface_guarded_input',{'alias':'x','offset':[1,2],'tail':[]})
                     row=metadata(action);self.assertEqual(row['status'],'completed')
                     self.assertEqual(action.content[1].type,'image')

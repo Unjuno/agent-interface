@@ -323,3 +323,7 @@ feedback and task state separately; a brief normal receipt is not semantic succe
 
 The option can reduce serialized metadata for repeated normal guards, but this
 is not evidence of fewer actual model tokens, lower cost or faster decisions.
+
+### Unknown top-level arguments
+
+Public MCP tools reject unknown top-level argument names before invoking the operation or opening the backend. Discovery advertises `additionalProperties: false`. For keyboard-only guarded input, use `interaction: "keyboard"`; `pointer: false` is not an argument. Do not infer accepted semantics from an unrecognized flag. This check does not alter nested program or tail validation. Validation errors may be plain text from the SDK; host renderers must not assume every text block is JSON.

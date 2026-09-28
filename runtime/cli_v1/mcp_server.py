@@ -60,6 +60,32 @@ def content(result, *, error=False, include_image=True):
     return CallToolResult(content=blocks, isError=error)
 
 
+
+class PublicArgumentMCP(FastMCP):
+    """Reject unknown top-level tool arguments before SDK coercion or input.
+
+    Nested program/tail dictionaries retain their existing runtime validators.
+    Only public FastMCP list/call methods are used; SDK metadata is not patched.
+    """
+    async def list_tools(self):
+        tools = await super().list_tools()
+        return [tool.model_copy(update={
+            'inputSchema': {**tool.inputSchema, 'additionalProperties': False}
+        }) for tool in tools]
+
+    async def call_tool(self, name, arguments):
+        for tool in await self.list_tools():
+            if tool.name == name:
+                unknown = sorted(set(arguments) - set(tool.inputSchema.get('properties', {})))
+                if unknown:
+                    return content({'status': 'invalid_request',
+                        'error': 'unknown top-level tool arguments',
+                        'unknown_arguments': unknown, 'operation_invoked': False,
+                        'input_dispatched': False, 'replay_allowed': False}, error=True)
+                break
+        return await super().call_tool(name, arguments)
+
+
 def present_management_report(report, call_root):
     row = dict(report)
     if 'observation_report' in report:
@@ -111,7 +137,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 if owner is not None:
                     await asyncio.to_thread(close_owner)
 
-    server = FastMCP('Agent Interface public API', lifespan=lifespan, instructions=(
+    server = PublicArgumentMCP('Agent Interface public API', lifespan=lifespan, instructions=(
         'Configured target names: ' + json.dumps(sorted(targets)) + '. ' +
         ('Each call owns one backend session. ' if owner is None else
          'One guarded X11 connection remains until close or transport shutdown; no reopen. ' if guarded else
