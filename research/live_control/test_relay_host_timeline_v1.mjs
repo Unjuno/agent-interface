@@ -27,6 +27,20 @@ test('ordered same-clock events separate transport, presentation and caller revi
  assert.equal(rows[4].call_id,'c1');assert.equal(rows[4].reply_sha256,rows[1].reply_sha256);
  assert.equal(JSON.parse(await readFile(join(dir,'review-1.json'))).source_sequence,1);
 });
+test('public capture review joins the same host timeline without a fabricated source sequence',async()=>{
+ const {createHash}=await import('node:crypto');
+ const digest=createHash('sha256').update(Buffer.from([0,1,2,3])).digest('hex');
+ const source=`image_status:'image',image_reference:{sha256:'${digest}',recorded_capture:{target:'app',native_window_id:10,frame:'window_client',region:[0,0,1,1],capture_started_ns:100,capture_ended_ns:101}}`;
+ const publicFixture=fixture.replace('source:{sequence:r.id,observation_id:\'o\'+r.id}',source);
+ const root=await mkdtemp(join(tmpdir(),'public-host-review-'));const dir=join(root,'transport');
+ const client=await createInstrumentedRelayClient({command:process.execPath,args:['-e',publicFixture],evidenceDirectory:dir});
+ await client.send('interface_observe');await client.present(1,{text:()=>{},image:()=>{}});
+ const receipt=await client.review(1,{task:'t',phase:'visible',reason:'Caller reviewed public image.'});
+ assert.equal(receipt.source_sequence,null);assert.equal(receipt.capture.artifact_sha256,digest);
+ const rows=await events(dir);assert.equal(rows.at(-1).kind,'review_recorded');
+ assert.equal(rows.at(-1).source_sequence,null);assert.equal(rows.at(-1).reply_sha256,receipt.reply_sha256);
+ assert.equal(rows.at(-2).kind,'presentation_callbacks_completed');await client.close();
+});
 test('failed instrumentation before send emits no request and transport remains closable',async()=>{
  const {dir,client}=await setup();const path=join(dir,'host-events.jsonl');await rename(path,path+'.original');await mkdir(path);
  await assert.rejects(client.send('must-not-send'));
