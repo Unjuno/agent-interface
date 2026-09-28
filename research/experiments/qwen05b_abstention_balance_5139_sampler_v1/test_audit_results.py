@@ -158,6 +158,20 @@ class IndependentRawAuditTests(unittest.TestCase):
         self.assertTrue(any(error.startswith("support_class_mismatch:") for error in result["errors"]))
         self.assertTrue(any(error.startswith("heldout_class_mismatch:") for error in result["errors"]))
 
+    def test_rejects_all_unhashable_reason_pool_and_operation_combinations(self):
+        data = build(FORMAL_SEED, SUPPORT_SEED, ALLOCATION)
+        data["support_pool"][0]["intent"] = {"op": "yield", "reason": []}
+        data["support_pool"][1]["intent"] = {"op": "no_action", "reason": {"malformed": True}}
+        data["heldout_pool"][0]["intent"] = {"op": "yield", "reason": {"malformed": True}}
+        data["heldout_pool"][1]["intent"] = {"op": "no_action", "reason": []}
+        raw_bytes = (json.dumps(data, sort_keys=True, separators=(",", ":")) + "\n").encode()
+        result = audit(raw_bytes, {})
+        self.assertFalse(result["integrity_pass"])
+        support_errors = [e for e in result["errors"] if e.startswith("support_class_mismatch:")]
+        heldout_errors = [e for e in result["errors"] if e.startswith("heldout_class_mismatch:")]
+        self.assertEqual(len(support_errors), 2, result["errors"])
+        self.assertEqual(len(heldout_errors), 2, result["errors"])
+
 
 if __name__ == "__main__":
     unittest.main()
