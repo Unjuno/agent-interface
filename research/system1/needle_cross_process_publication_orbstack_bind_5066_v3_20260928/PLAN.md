@@ -39,6 +39,16 @@ rewrite differs.
 fixed schedule. No cross-platform equivalence, crash durability, production,
 GUI/model/task quality, authority, or latency claim.
 
+## Completed host-only predecessor rung (not the target result)
+
+Issue #5134's separate host-filesystem allocation
+`needle-publication-host-boundary-5134-20260928-01` is now retained on main in
+PR #5161. I independently re-ran its raw auditor against the merged source and
+seed: `PASS_HOST_BOUNDARY_SCOPED`, 28 atomic rows, 28 unsafe rows, errors empty;
+all three retained artifact digests match `MANIFEST.sha256`. This supports the
+host-only rung but makes no OrbStack/container-bind claim and does not reduce
+the -03 formal denominators or replace its required experiment.
+
 ## Corrected independent-audit boundary
 
 The independent auditor imports neither `runner.py` nor `protocol.py`. It

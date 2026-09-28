@@ -61,7 +61,7 @@
   },
   "U": "One macOS host, one OrbStack version/context, one Linux/arm64 image, one bind-mounted path, synthetic package and fixed schedule only. No Windows equivalence, other filesystems, crash durability, production safety, model/task quality, GUI, dispatch authority or latency claim.",
   "allocation": "needle-publication-orbstack-bind-5066-20260928-03",
-  "base_main_sha": "f572e3be60d21c8ac55e121d9fe45dc999ec5c66",
+  "base_main_sha": "42f706eb89ed1c51942d862983e65518a3155623",
   "branch": "research/needle-publication-orbstack-bind-5066-v3-20260928",
   "freeze_self_hash": "omitted; freeze blob and commit identity are authoritative",
   "issue": 5134,
@@ -73,8 +73,17 @@
   ],
   "retry_policy": "Construction may be corrected before formal. Once formal invocation begins or output is created, retain all evidence and do not retry this allocation.",
   "schema": "needle-orbstack-bind-publication-freeze-v3",
+  "separate_host_boundary_rung": {
+    "allocation": "needle-publication-host-boundary-5134-20260928-01",
+    "audit_sha256": "d404e33dc5ac9c4a3f0e987d701df286794a007d04024eaa1ae47bd53b526405",
+    "container_invocations": 0,
+    "raw_sha256": "6a49e753e40c44df0ed66c0d3b37b744d30479c75bf4e64c681073f4e75ccd8c",
+    "receipt_sha256": "8e980a31af50509dd237631969e380b1a07f8913d95d8361f39e81e8efe82e40",
+    "scope_note": "Host filesystem only; no OrbStack bind-mount inference; does not replace this allocation.",
+    "status": "PASS_HOST_BOUNDARY_SCOPED"
+  },
   "source_sha256": {
-    "PLAN.md": "0d69f1cfd1925eb0b8126ea8e96a7c83afcf8a73252ca7509e725dd651ef8b0f",
+    "PLAN.md": "c748205207810ee1414b1a526ba0ff16d7248fed00aab86e4dedca2e885cde12",
     "audit.py": "7c499a93a7f01dc08a40cf378aa6ef675db4e1ad8acd83b7ac8edf50979fc15e",
     "formal.py": "02fd8b107b733782dba724a40494756fd8edaeb1fff473bf4a74c9e1fafe5605",
     "protocol.py": "1547d59a2ba6e8ea1f41ffbf79a28e3c3aa648a7c6cff215ff0e2a31aa3f1b45",
