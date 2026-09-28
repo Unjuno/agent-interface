@@ -1,0 +1,24 @@
+before [['colon']]
+after [['colon']]
+test_changed_layout (__main__.ChangedLayout.test_changed_layout) ... status completed
+saved {'saved': True, 'text': "http'//ab"}
+FAIL
+
+======================================================================
+FAIL: test_changed_layout (__main__.ChangedLayout.test_changed_layout)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-integrated-main/results-local/x11-keymap-refresh-01/probe.py", line 20, in test_changed_layout
+    self.assertEqual(actual,{'saved':True,'text':'http://a_b'})
+AssertionError: {'saved': True, 'text': "http'//ab"} != {'saved': True, 'text': 'http://a_b'}
+- {'saved': True, 'text': "http'//ab"}
+?                         ^    ^    ^
+
++ {'saved': True, 'text': 'http://a_b'}
+?                         ^    ^   + ^
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.429s
+
+FAILED (failures=1)
