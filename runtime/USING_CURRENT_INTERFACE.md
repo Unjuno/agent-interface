@@ -21,6 +21,17 @@ Adding configuration does not prove tools are available in a running host. The
 public CLI emits JSON; an assistant integration must render its image payload.
 Neither route establishes end-to-end latency merely by returning an image.
 
+## Long-lived guarded sessions
+
+Guarded X11 history keeps two decoded full-screen images in memory and reloads
+older explicit grounding sources from their exact hash-checked PNG artifacts.
+Source sequences, images and fresh guards are unchanged. Missing/corrupt old
+artifacts refuse grounding; they are never replaced with a new screenshot.
+Metadata, handle patches, disk files and caller-held images still require bounded
+session lifetimes. [Retention evidence](results/decoded-observation-history-01/README.md)
+includes a scoped primary task and an isolated memory comparison, not a model
+latency, token-cost or human-tempo claim.
+
 ## Public actions and images
 
 From the repository root, inspect the installed command surface:

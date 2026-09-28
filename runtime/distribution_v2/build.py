@@ -19,6 +19,7 @@ SOURCE_FILES = (
     "runtime/guarded_x11_v1/handles_texture.py",
     "runtime/guarded_x11_v1/handles.py",
     "runtime/guarded_x11_v1/bridge.py",
+    "runtime/guarded_x11_v1/history.py",
     "runtime/guarded_x11_v1/form.py",
     "runtime/core_v1/__init__.py",
     "runtime/core_v1/backend.py",
