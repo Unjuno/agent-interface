@@ -6,7 +6,7 @@
 - Allocation: needle-cross-process-publication-overlap-5066-v4-20260928-01.
 - Branch: research/needle-publication-5082-audit-v4-20260928.
 - Additive path: research/system1/needle_cross_process_publication_5066_v4_20260928/.
-- Intake and source-publication main: ceda253410ce738571580a5980a4e26dc1c3352a.
+- Intake and source-publication main: b6ba91edf5a13a764ac2fab9c682770fa92936e3.
 - Formal execution at this freeze stage: 0; no Docker runner/auditor invocation.
 
 ## H / T / D / C / U
