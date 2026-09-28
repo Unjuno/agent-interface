@@ -8,21 +8,8 @@
 
 static void disable_alerts(OwDifficulty *d){d->required_alerts=0;d->event_rate=0;}
 static void watcher_xy(const OwWorld *w,int idx,float*x,float*y){
-    int n=w->watcher_count;
-    if(n<=0){*x=*y=0;return;}
-    static const int mults[6]={1,3,5,7,11,13};
-    int mm=mults[w->presentation_family%6];
-    while(mm<n && (n%mm)==0) mm+=2;
-    int off=(int)((w->presentation_family*7u)%(unsigned)n);
-    int slot=(idx*mm+off)%n;
-    int mode=w->presentation_family%4;
-    int tx,ty,tw,th;
-    if(mode==0){int cols=32;tw=17;th=19;tx=6+(slot%cols)*tw;ty=6+(slot/cols)*th;}
-    else if(mode==1){tw=14;th=16;if(slot<32){int j=slot;tx=4+(j%2)*15;ty=OW_HUD_H+4+(j/2)*18;}else{int j=slot-32;tx=OW_WIDTH-34+(j%2)*15;ty=OW_HUD_H+4+(j/2)*18;}}
-    else if(mode==2){tw=14;th=15;int corner=slot/16,j=slot%16,gx=j%4,gy=j/4;int bx=(corner&1)?OW_WIDTH-64:4,by=(corner&2)?OW_HEIGHT-66:4;tx=bx+gx*15;ty=by+gy*16;}
-    else{tw=19;th=17;if(slot<32){tx=16+(slot%32)*19;ty=5;}else{int j=slot-32;tx=16+(j%32)*19;ty=OW_HEIGHT-22;}}
-    *x=(float)(tx+1+(tw-3)/2);
-    *y=(float)(ty+1+(th-3)/2);
+    int tx,ty,tw,th; ow_watcher_tile_rect(w,idx,&tx,&ty,&tw,&th);
+    *x=(float)tx+(float)tw*0.5f; *y=(float)ty+(float)th*0.5f;
 }
 static int find_station(const OwWorld*w,int kind){for(int i=0;i<w->station_count;++i)if(w->stations[i].kind==kind)return i;return -1;}
 static void empty_room(OwWorld*w){for(int y=0;y<OW_MAP_H;++y)for(int x=0;x<OW_MAP_W;++x)w->map[y][x]=(x==0||y==0||x==OW_MAP_W-1||y==OW_MAP_H-1)?1:0;w->px=5.5f;w->py=5.5f;w->angle=0;}
@@ -153,6 +140,34 @@ static void test_render_cursor_and_presentation_variation(void) {
     assert(unique>=6);free(f.pixels);
 }
 
+
+static void test_watcher_layout_is_permutation(void) {
+    OwDifficulty d;ow_default_difficulty(&d);disable_alerts(&d);
+    for(int n=2;n<=OW_MAX_WATCHERS;++n){d.watcher_count=n;for(uint64_t fk=0;fk<12;++fk){
+        OwWorld w;ow_init_with_family(&w,1234,fk,&d);
+        for(int i=0;i<n;++i){int ax,ay,aw,ah;ow_watcher_tile_rect(&w,i,&ax,&ay,&aw,&ah);
+            for(int j=0;j<i;++j){int bx,by,bw,bh;ow_watcher_tile_rect(&w,j,&bx,&by,&bw,&bh);assert(ax!=bx||ay!=by||aw!=bw||ah!=bh);}}
+    }}
+}
+
+static void test_expired_alert_attributed_before_channel_reuse(void) {
+    OwDifficulty d;ow_default_difficulty(&d);d.watcher_count=1;d.required_alerts=1;d.event_rate=1;d.alert_burst=1;d.alert_deadline=1;d.dependency_depth=0;
+    OwWorld w;ow_init_with_family(&w,9,77,&d);w.done=0;w.success=0;w.failure_code=OW_FAIL_NONE;w.sim_time=1.995;
+    w.watchers[0].alert=1;w.watchers[0].acknowledged=0;w.watchers[0].generation=1;w.watchers[0].deadline=2.0;
+    w.alert_schedule_count=1;w.alert_schedule_cursor=0;w.alert_schedule[0].t=2.005;w.alert_schedule[0].watcher=0;w.alert_schedule[0].burst_slot=0;
+    ow_step(&w,0.02);assert(w.done&&!w.success);assert(w.failure_code==OW_FAIL_MISSED_ALERT);assert(w.alerts_missed==1);
+}
+
+static void test_object_render_depth_matches_hit_depth(void) {
+    OwDifficulty d;ow_default_difficulty(&d);disable_alerts(&d);d.dependency_depth=0;d.object_count=2;d.object_radius=0.24f;d.target_speed=0;
+    OwWorld w;ow_init_with_family(&w,44,55,&d);empty_room(&w);w.task_mask=OW_TASK_TARGET;w.task_deps[2]=0;w.object_count=2;w.target_object=0;w.target_hits=0;w.target_complete=0;w.target_hits_required=1;
+    w.objects[0]=(OwObject){.x=7.0f,.y=5.5f,.vx=0,.vy=0,.color=0,.shape=1,.target=1,.active=1};
+    w.objects[1]=(OwObject){.x=9.0f,.y=5.5f,.vx=0,.vy=0,.color=1,.shape=1,.target=0,.active=1};
+    OwFrame fr;fr.pixels=calloc((size_t)OW_WIDTH*OW_HEIGHT,sizeof(uint32_t));assert(fr.pixels);ow_render(&w,&fr);
+    int cx=OW_WIDTH/2,cy=OW_HUD_H+(OW_HEIGHT-OW_HUD_H)/2;assert(fr.pixels[(cy+5)*OW_WIDTH+(cx+5)]==0xff3b82f6u);free(fr.pixels);
+    ow_mouse_button(&w,1,1,(float)cx,(float)cy);assert(!w.done||w.success);assert(w.target_hits==1);
+}
+
 static void test_reset_hash(void) {
     OwDifficulty d;ow_default_difficulty(&d);OwWorld w;ow_init_with_family(&w,42,123,&d);uint64_t e=w.episode_hash,h=ow_state_hash(&w);for(int i=0;i<100&&!w.done;++i)ow_step(&w,1.0/60.0);ow_init_with_family(&w,42,123,&d);assert(e==w.episode_hash&&h==ow_state_hash(&w));
 }
@@ -174,7 +189,10 @@ int main(void) {
     test_large_event_ledger_no_silent_truncation();
     test_hidden_score_progress_not_rendered();
     test_render_cursor_and_presentation_variation();
+    test_watcher_layout_is_permutation();
+    test_expired_alert_attributed_before_channel_reuse();
+    test_object_render_depth_matches_hit_depth();
     test_reset_hash();
-    puts("17/17 validity-hardening tests PASS");
+    puts("20/20 validity-hardening tests PASS");
     return 0;
 }

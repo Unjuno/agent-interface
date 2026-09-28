@@ -203,6 +203,7 @@ void ow_backspace(OwWorld *w);
 void ow_enter(OwWorld *w);
 void ow_mouse_move(OwWorld *w, float dx, float dy, float x, float y);
 void ow_mouse_button(OwWorld *w, int button, int down, float x, float y);
+void ow_watcher_tile_rect(const OwWorld *w, int idx, int *x, int *y, int *tw, int *th);
 void ow_render(OwWorld *w, OwFrame *f);
 int ow_write_ppm(const char *path, const OwFrame *f);
 int ow_report_json(const OwWorld *w, const char *path);
