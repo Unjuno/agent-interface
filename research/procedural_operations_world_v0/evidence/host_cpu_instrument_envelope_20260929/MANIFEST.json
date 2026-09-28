@@ -1,0 +1,97 @@
+{
+  "schema": "opsworld-host-cpu-envelope-manifest-v1",
+  "issue": 5206,
+  "allocation": "opsworld-host-cpu-envelope-5206-20260929-01",
+  "base_main": "708dec9bcd2bfb3ef597acf7bc1c8a02bcb96b01",
+  "branch": "research/opsworld-instrument-overhead-5206-20260929",
+  "path": "research/procedural_operations_world_v0/evidence/host_cpu_instrument_envelope_20260929/",
+  "environment": {
+    "os": "Arch Linux on WSL2",
+    "kernel": "6.6.114.1-microsoft-standard-WSL2",
+    "compiler": "GCC 16.1.1 20260430",
+    "build_flags": "-O2 -std=c11 -Wall -Wextra -Wpedantic",
+    "python_audit": "CPython 3.11.9"
+  },
+  "commands": [
+    "make clean all && make test",
+    "./ops_world --seed 42 --family-key 99173 --bench-frames 10000 --set watcher_count=64 --set required_alerts=0 --set event_rate=0 --set object_count=64 --set assembly_pieces=12 --set episode_seconds=3600",
+    "./ops_world --seed 42 --family-key 99173 --bench-resets 100000 --set watcher_count=64 --set required_alerts=0 --set event_rate=0 --set object_count=64 --set assembly_pieces=12",
+    "py -3.11 -B -m unittest discover -s research/procedural_operations_world_v0/evidence/host_cpu_instrument_envelope_20260929 -p test_audit.py -v",
+    "py -3.11 -B research/procedural_operations_world_v0/evidence/host_cpu_instrument_envelope_20260929/audit.py research/procedural_operations_world_v0/evidence/host_cpu_instrument_envelope_20260929/bench-frames.stdout.txt research/procedural_operations_world_v0/evidence/host_cpu_instrument_envelope_20260929/bench-resets.stdout.txt"
+  ],
+  "exit_codes": {
+    "build_and_validity_tests": 0,
+    "bench_frames": 0,
+    "bench_resets": 0,
+    "auditor_unit_tests": 0,
+    "independent_raw_audit": 0
+  },
+  "results": {
+    "validity_tests": "20/20 PASS",
+    "bench_frames_requested": 10000,
+    "bench_frames_executed": 10000,
+    "wall_seconds": 1.228494,
+    "frames_per_second": 8140.05,
+    "ms_per_frame": 0.1228,
+    "state_hash": "bbc3f6446ab4c0b0",
+    "bench_resets": 100000,
+    "reset_wall_seconds": 1.988930,
+    "resets_per_second": 50278.30,
+    "microseconds_per_reset": 19.889,
+    "independent_audit": "PASS_CPU_INSTRUMENT_ENVELOPE_ONLY"
+  },
+  "limitations": [
+    "one Windows/WSL2 host and one measurement per primitive",
+    "frame timer includes ow_step and ow_render; reset timer covers initialization",
+    "event generation and alert obligations disabled",
+    "does not measure controller, X11, input, harness/scheduler overhead, or formal benchmark validity",
+    "no Docker, GPU, CUDA, model/provider, or GUI use"
+  ],
+  "tracked_source": {
+    "research/procedural_operations_world_v0/Makefile": {
+      "git_blob": "23e77b989b7325135f8c87cefe737faf13a82db7",
+      "sha256": "1a21eb8220e9f1d2a04a25ff1cc8bfaa1042bcb03c322b6573b788531a54e0c1"
+    },
+    "research/procedural_operations_world_v0/main.c": {
+      "git_blob": "f2ba43a337682a0b0753b2587d6f23ffc46d70aa",
+      "sha256": "f29b77dc2a92833d1b0bd839eeb4b0e362e60f9b231266e6548489a110e8f0dc"
+    },
+    "research/procedural_operations_world_v0/ops_world.c": {
+      "git_blob": "93e0cb129cff9eccefdd0aa9aa7c7f05ea407453",
+      "sha256": "58e48275baca9b8467a41f7eb8876dff25e5a01c4c74bcbde8921849c2a705e9"
+    },
+    "research/procedural_operations_world_v0/ops_world.h": {
+      "git_blob": "1f37ced44340d1d54b8a49e83e9a0d2fd1743a4f",
+      "sha256": "4bd87389d570ab26280e9851b4955811856e035ec54b635790afbacac2d87bf4"
+    },
+    "research/procedural_operations_world_v0/ops_world_part_00.inc": {
+      "git_blob": "9bf195cebd4de73e348af071091a49fb4a835f64",
+      "sha256": "f38e97fa6e3482165a3014ffd6c7cced569300d3657933e278138412d6a3b446"
+    },
+    "research/procedural_operations_world_v0/ops_world_part_01.inc": {
+      "git_blob": "118db3d10fbb20e28cce61eda231bea47173dbcd",
+      "sha256": "ffae85508c0349fbf27a93bd6e3b60d5a7cf136e0113399799db36a9e771daa1"
+    },
+    "research/procedural_operations_world_v0/ops_world_part_02.inc": {
+      "git_blob": "8e3396329ada48a1e49a11d952b4d96798dc5e0b",
+      "sha256": "24a4fdbb493f5ac8eb8469c3aea85b779647ffe57834f57073ceccd2e49b7719"
+    },
+    "research/procedural_operations_world_v0/ops_world_part_03.inc": {
+      "git_blob": "5a29fedbe547dfbd9c255866e21f91f3f92bf078",
+      "sha256": "ef79edee40804614c8f366dd9701d5e3871578d45d1a0fffd69b822953285761"
+    }
+  },
+  "artifact_sha256": {
+    "PLAN.md": "e1a32cf952fe26925c4fefe7d46742c02c95ec0f92e97c8dd37b1eb815a60c92",
+    "REPORT.md": "1133a914b79c73869503eb7981570efb54f7273466e1cce8853c0c74b050c2a7",
+    "audit.py": "82494be85cb89a60540117000a3814537ed8a5a4041576ae26a3e664eabce503",
+    "test_audit.py": "b0d65ca76c7a7cdf0f0be8bc73e4db0d1b22535020323626842ff5d491dde982",
+    "construction.stdout.txt": "f996e116fba73875497a529d269a40a084fce31773823769302b4bc366103906",
+    "construction.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bench-frames.stdout.txt": "4296ccfdabddcd1a045e4bae2a73e437e1c32a3f3c5b1eb8b8e870b717bc49a8",
+    "bench-frames.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bench-resets.stdout.txt": "649ba785a12fb0023fb5f6f0c32b3fcbe529f31f06da9a5625a794d871ca40c9",
+    "bench-resets.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "audit.json": "d529d169abc7c9de9699ef03fd640c39f638fd96ac7f911e3ccbd26a48d2e8b1"
+  }
+}
