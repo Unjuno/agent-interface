@@ -140,3 +140,21 @@ test('a changed PNG is forwarded and invalidates the previous acknowledged base'
  await client.send('observe');await client.present(3,callbacks);
  assert.equal(images,3);await client.close();
 });
+
+test('reviewed image reference preserves current MCP error status',async()=>{
+ const root=await mkdtemp(join(tmpdir(),'relay-error-reference-'));
+ const client=await createInstrumentedRelayClient({command:process.execPath,
+  args:['-e',fixture.replace('result:{content:','result:{isError:r.id===2,content:')],
+  evidenceDirectory:join(root,'transport'),reuseReviewedImages:true});
+ await client.send('observe');
+ const initial=[];await client.present(1,{text:v=>initial.push(v),image:()=>{}});
+ assert.deepEqual(initial[0],{schema:'agent-interface/mcp-result-status-v1',isError:false});
+ await client.review(1,{task:'t',phase:'initial',reason:'Reviewed base'});
+ await client.send('failed');
+ const next=[];let images=0;
+ await client.present(2,{text:v=>next.push(v),image:()=>{images++}});
+ assert.deepEqual(next[0],{schema:'agent-interface/mcp-result-status-v1',isError:true});
+ assert.equal(next.at(-1).schema,'agent-interface/reviewed-image-reference-v1');
+ assert.equal(images,0);
+ await client.close();
+});
