@@ -133,3 +133,25 @@ test('review refuses ambiguous, missing-image, uncertain and incomplete evidence
   await assert.rejects(readFile(receiptPath),/ENOENT/);
  }
 });
+
+test('presentation preserves explicit MCP error status before unchanged content', async () => {
+ for (const isError of [true, false]) {
+  const row={status:'returned',result:{isError,content:[
+   {type:'text',text:'same ambiguous body'},
+   {type:'image',mimeType:'image/png',data:'AAECAw=='}
+  ]}};
+  const before=JSON.stringify(row),seen=[];
+  await presentRelayResponse(row,{text:v=>seen.push(['text',v]),image:v=>seen.push(['image',v])});
+  assert.deepEqual(seen[0],['text',{schema:'agent-interface/mcp-result-status-v1',isError}]);
+  assert.deepEqual(seen[1],['text','same ambiguous body']);
+  assert.deepEqual(seen[2],['image',{bytes:Buffer.from([0,1,2,3]),mimeType:'image/png'}]);
+  assert.equal(JSON.stringify(row),before);
+ }
+});
+test('presentation retains explicit error status for empty content and does not invent an absent flag', async () => {
+ for (const result of [{isError:true,content:[]},{content:[]}]) {
+  const seen=[];
+  await presentRelayResponse({status:'returned',result},{text:v=>seen.push(v),image:()=>assert.fail('unexpected image')});
+  assert.deepEqual(seen,Object.hasOwn(result,'isError')?[{schema:'agent-interface/mcp-result-status-v1',isError:true}]:[]);
+ }
+});
