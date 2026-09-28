@@ -3,34 +3,78 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import unittest
 
 from audit_sampler import audit_support_selection
-from sampler import select_support
-from test_sampler import TEST_SEED, support_pool
+
+
+TEST_SEED = 1
+CLASSES = (
+    "set", "save", "toggle", "yield:forbidden", "yield:ambiguous",
+    "yield:stale_scope", "yield:missing_evidence", "no_action:already_satisfied",
+)
+COUNTS = {
+    "imbalanced": (16, 4, 4, 1, 1, 1, 1, 4),
+    "balanced": (4, 4, 4, 4, 4, 4, 4, 4),
+}
+
+
+def support_pool() -> list[dict[str, object]]:
+    rows = []
+    for i in range(128):
+        kind = i % 8
+        if kind <= 3:
+            class_name = "set"
+            template = (i // 8) % 4
+            field = (i // 8 + kind) % 4
+        elif kind == 4:
+            class_name = "save"
+            template = (i // 8) % 4
+            field = (i // 8) % 4
+        elif kind == 5:
+            class_name = "toggle"
+            template = (i // 8) % 4
+            field = 0
+        elif kind == 6:
+            class_name = "yield:" + (
+                "forbidden", "ambiguous", "stale_scope", "missing_evidence"
+            )[(i // 8) % 4]
+            template = -1
+            field = -1
+        else:
+            class_name = "no_action:already_satisfied" if i % 2 else "no_action:not_requested"
+            template = -1
+            field = 0
+        if class_name in CLASSES:
+            rows.append({"case_id": f"support-{i:04d}", "class": class_name,
+                         "template": template, "field": field})
+    return rows
+
+
+def independent_selection(pool: list[dict[str, object]], arm: str) -> list[dict[str, object]]:
+    selected = []
+    for class_name, count in zip(CLASSES, COUNTS[arm]):
+        candidates = [row for row in pool if row["class"] == class_name]
+        candidates.sort(key=lambda row: (
+            hashlib.sha256(
+                b"support-row-rank-v1\n" + str(TEST_SEED).encode("ascii") + b"\n"
+                + class_name.encode("utf-8") + b"\n" + str(row["case_id"]).encode("utf-8")
+            ).digest(),
+            str(row["case_id"]).encode("utf-8"),
+        ))
+        selected.extend(candidates[:count])
+    return selected
 
 
 def dataset_fixture() -> dict[str, object]:
     pool = support_pool()
-    imbalanced, balanced = select_support(pool, TEST_SEED)
     return {
         "seed": TEST_SEED,
         "support_pool": pool,
         "supports": {
-            "imbalanced": [
-                row for class_name in (
-                    "set", "save", "toggle", "yield:forbidden",
-                    "yield:ambiguous", "yield:stale_scope",
-                    "yield:missing_evidence", "no_action:already_satisfied",
-                ) for row in imbalanced[class_name]
-            ],
-            "balanced": [
-                row for class_name in (
-                    "set", "save", "toggle", "yield:forbidden",
-                    "yield:ambiguous", "yield:stale_scope",
-                    "yield:missing_evidence", "no_action:already_satisfied",
-                ) for row in balanced[class_name]
-            ],
+            "imbalanced": independent_selection(pool, "imbalanced"),
+            "balanced": independent_selection(pool, "balanced"),
         },
     }
 
