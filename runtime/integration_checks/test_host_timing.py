@@ -173,5 +173,93 @@ class HostTimingTests(unittest.TestCase):
         self.assertEqual(report['calls'][0]['send_to_first_callbacks_completed_ms'], 7)
 
 
+    def reference_events(self):
+        import base64
+        data = base64.b64encode(b'fixed-image-bytes').decode()
+        picture = {'type': 'image', 'mimeType': 'image/png', 'data': data}
+        self.reply['result'] = {'content': [picture]}
+        self.write('reply-1.json', self.reply)
+        digest = hashlib.sha256((self.root / 'reply-1.json').read_bytes()).hexdigest()
+        image_hash = hashlib.sha256(b'fixed-image-bytes').hexdigest()
+        self.receipt.update(reply_sha256=digest, images=[{'mime_type': 'image/png', 'sha256': image_hash}])
+        self.write('review-1.json', self.receipt)
+        events = copy.deepcopy(self.events[:-1])
+        for event in events:
+            event['reply_sha256'] = digest
+            if event['kind'] in ('presentation_started', 'presentation_callbacks_completed', 'review_recorded'):
+                event['image_delivery'] = {'mode': 'full'}
+        delivery = dict(mode='reviewed-image-reference', base_attempt=1,
+                        base_reply_sha256=digest,
+                        base_review_sha256=hashlib.sha256((self.root / 'review-1.json').read_bytes()).hexdigest(),
+                        image_sha256=image_hash, mime_type='image/png')
+        self.write('request-2.json', {'id': 2, 'tool': 'observe'})
+        self.write('reply-2.json', {**self.reply, 'id': 2, 'next_id': 3})
+        digest2 = hashlib.sha256((self.root / 'reply-2.json').read_bytes()).hexdigest()
+        for original, stamp in zip(self.events[:4], (31, 32, 33, 34)):
+            event = copy.deepcopy(original)
+            event.update(attempt=2, relay_id=2, sequence=len(events)+1,
+                         host_monotonic_ms=stamp, reply_sha256=digest2)
+            if event['kind'].startswith('presentation_'):
+                event['image_delivery'] = copy.deepcopy(delivery)
+            events.append(event)
+        events.append({**self.events[-1], 'sequence': len(events)+1})
+        return events
+
+    def test_reviewed_reference_binds_exact_bytes_and_receipt_without_mutating_inputs(self):
+        events = self.reference_events()
+        report = self.report(events)
+        before = {p.name: p.read_bytes() for p in self.root.iterdir()}
+        self.assertEqual(report, summarize(self.root))
+        self.assertEqual(before, {p.name: p.read_bytes() for p in self.root.iterdir()})
+        delivery = report['calls'][1]['presentations'][0]['image_delivery']
+        self.assertEqual(delivery['mode'], 'reviewed-image-reference')
+        self.assertEqual(delivery['base_attempt'], 1)
+
+    def test_reference_rejects_missing_ack_and_tampered_base_identity(self):
+        events = self.reference_events()
+        for key, value in [('base_attempt', 2), ('base_attempt', True), ('base_reply_sha256', 'wrong'),
+                           ('base_review_sha256', 'wrong'), ('image_sha256', 'wrong'),
+                           ('mime_type', 'image/jpeg'), ('mode', 'unknown')]:
+            with self.subTest(key=key):
+                changed = copy.deepcopy(events)
+                changed[7]['image_delivery'][key] = value
+                with self.assertRaisesRegex(ValueError, 'reviewed image base'):
+                    self.report(changed)
+        changed = copy.deepcopy(events)
+        del changed[4]
+        for i, event in enumerate(changed, 1):
+            event['sequence'] = i
+        with self.assertRaisesRegex(ValueError, 'reviewed image base'):
+            self.report(changed)
+
+    def test_reference_rejects_changed_image_and_completion_annotation(self):
+        events = self.reference_events()
+        changed = copy.deepcopy(events)
+        changed[8]['image_delivery'] = {'mode': 'full'}
+        with self.assertRaisesRegex(ValueError, 'completion mismatch'):
+            self.report(changed)
+        reply = json.loads((self.root / 'reply-2.json').read_bytes())
+        reply['result']['content'][0]['data'] = 'Y2hhbmdlZA=='
+        self.write('reply-2.json', reply)
+        digest = hashlib.sha256((self.root / 'reply-2.json').read_bytes()).hexdigest()
+        for event in events:
+            if event.get('attempt') == 2:
+                event['reply_sha256'] = digest
+        with self.assertRaisesRegex(ValueError, 'image bytes differ'):
+            self.report(events)
+
+    def test_full_presentation_invalidates_ack_before_next_reference(self):
+        events = self.reference_events()
+        # Re-present the base fully, without another explicit review.
+        full = []
+        for kind, stamp in [('presentation_started', 30.2), ('presentation_callbacks_completed', 30.4)]:
+            full.append({**events[2], 'kind': kind, 'host_monotonic_ms': stamp})
+        events[5:5] = full
+        for i, event in enumerate(events, 1):
+            event['sequence'] = i
+        with self.assertRaisesRegex(ValueError, 'reviewed image base'):
+            self.report(events)
+
+
 if __name__ == '__main__':
     unittest.main()
