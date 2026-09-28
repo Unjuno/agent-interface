@@ -57,7 +57,9 @@ def audit_support_selection(
 ) -> list[str]:
     """Return deterministic integrity errors for both support arms."""
     errors: list[str] = []
-    seed = dataset.get("seed")
+    # Formal/training randomness is a separate control. Support ordering must
+    # bind only to the explicitly frozen support-selection seed.
+    seed = dataset.get("support_seed")
     if isinstance(seed, bool) or not isinstance(seed, int) or seed <= 0:
         return ["seed_must_be_positive_integer"]
 
