@@ -1,0 +1,48 @@
+{
+  "status": "PRE_AUDIT_FREEZE",
+  "allocation": "typed-mode-4844-calibration-v5-posthoc-audit-20260928-01",
+  "issue": 5205,
+  "branch": "research/typed-mode-calibration-v5-posthoc-audit-20260928",
+  "registration_main_sha": "50e542eda5bcb6a5ddbc62c7400ec36b0dbcc8c2",
+  "integration_main_sha": "71f85380669795d21c668bcbc832ae896d0b6220",
+  "source_commit": "37d49fcaa705395b15929844eeb49ca7c1ce18a4",
+  "formal_runner_invocations": 0,
+  "formal_auditor_invocations": 0,
+  "formal_audit_started": false,
+  "formal_experiment_runner_started": false,
+  "formal_seeds_generated": false,
+  "raw_input": {
+    "source_allocation": "typed-mode-4844-risk-calibration-20260928-01",
+    "repository_path": "research/experiments/typed_mode_generalization_4844_calibration_v5/formal/allocation-01/runner/result.json",
+    "pr_reference": "https://github.com/Unjuno/agent-interface/pull/5198",
+    "bytes": 2794446,
+    "sha256": "b55b8d9e58497c47ef5a2152d1236d27fdb6918a018cbeebf2a75f0b5f709470",
+    "source_freeze_commit": "668b888a47ddfbb1a50e1dd9ff3a386836b22484",
+    "source_freeze_sha256": "abfc648a7599af3e041eceb5b8817a8a088bd91368d318f9b87a40f21b2963bd",
+    "original_seeds": {"train": 67010231, "calibration": 67010232, "test": 67010233}
+  },
+  "construction_seeds_only": [600501, 600502, 600503],
+  "docker": {
+    "context": "desktop-linux",
+    "engine": "28.5.1",
+    "platform": "linux/amd64",
+    "image_config_digest": "sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a",
+    "network": "none",
+    "read_only_root_source_and_raw": true,
+    "cpus": 1,
+    "memory_bytes": 536870912,
+    "pids_limit": 32,
+    "no_new_privileges": true,
+    "construction_container_id": "1102b7b76b60e9b5df59f3042cd7c1fe2de487d8a093b10945cdd158fe8fbe18",
+    "construction_exit_code": 0,
+    "construction_tests": "3/3 passed"
+  },
+  "files": {
+    ".gitattributes": {"bytes": 29, "sha256": "730a35ae3d558080083c3103d9ac8100c3f6561678092abe341701dfa331eb1d", "git_blob": "4f7fc3ef1406bfab189a4a14744c344f36d77d9a"},
+    "CONSTRUCTION.md": {"bytes": 1593, "sha256": "f2512fae7986d93e228d0bc3cb05646ea5185b3bfa3ef63c97ee4fa190f54822", "git_blob": "0f74612c27603f0b15760e12912f7e6bfc216624"},
+    "PLAN.md": {"bytes": 3732, "sha256": "3400b2ce6355b9c4c5e4fea9ab448af6c63066e6ad2379a71be7fa5fe7e516cc", "git_blob": "7c92d8a8797d959dc26c310bf96469e1e751af6c"},
+    "README.md": {"bytes": 583, "sha256": "b3c80a72d3d6c2f3f2b06fac2ed38350b1cb4fc37c553a8a705fa46ec344fce5", "git_blob": "329876bde473fc52ddf17fcdb90d0fbef28d08df"},
+    "audit_posthoc.py": {"bytes": 14412, "sha256": "03d852fb1e3e94b9b9313ffeb3dca085b2196ff70a4c22f680624e82e62016fd", "git_blob": "b61f8d270663f7aed0305b5705f62abbc3b983cf"},
+    "test_construction.py": {"bytes": 1678, "sha256": "48cd9bc3293f0ecf209feef35b0b9b1a4b70510ecbdfbe94cf567161c0c016ac", "git_blob": "e23424972ea23b86d3cb802d7087d46f1404bbb7"}
+  }
+}
