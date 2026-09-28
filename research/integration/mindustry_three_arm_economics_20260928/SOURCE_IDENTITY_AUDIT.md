@@ -1,7 +1,7 @@
 # Inherited #1679 source identity audit
 
 Audit target: `origin/main` at
-`15bab5980e2bb0e48472e29144e21d25dbd337c1` (2026-09-28 local fetch).
+`5ad5a9ab465e2b0052aa301b1909b92816e70025` (2026-09-28 local fetch).
 The preregistration is a historical record and was not edited.
 
 | Dependency | Frozen blob in #1679 preregistration | Current-main blob | Result |
@@ -15,8 +15,8 @@ The preregistration is a historical record and was not edited.
 | `research/live_control/receipt_target_admission_v1.py` | not in #1679 freeze | `a6b50ba3767b88e04654790fb343cd234cfd4bda` | reused for #55 receipt checks |
 | `research/benchmark_discovery/mindustry_single_tile_interactive_v1.py` | not in #1679 freeze | `40c473b2ec7b1b06d403bd814abe15cb2e07a6cc` | frozen child source delegated to additive backend adapter |
 
-The five inherited dependency blobs were rechecked against latest main `15bab598`; all
-match the `ceda2534` audit, with the evaluator adding
+The five inherited dependency blobs were rechecked against latest main `5ad5a9ab`; all
+match the prior audit, with the evaluator adding
 cross-preflight and preflight-to-task model/effort identity checks in merged PR
 #5176; the plan Markdown's complete diff from the frozen blob to current main has two
 edits: the retained pre-preregistration discovery count changes from six to

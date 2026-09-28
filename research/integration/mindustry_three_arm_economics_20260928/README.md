@@ -315,7 +315,7 @@ started. Automatic repository Actions may start on a push; they are not used
 for local verification or as experimental evidence.
 
 Current-main refresh (2026-09-28): branch merged `origin/main`
-`15bab5980e2bb0e48472e29144e21d25dbd337c1`. The five inherited #1679 blobs,
+`5ad5a9ab465e2b0052aa301b1909b92816e70025`. The five inherited #1679 blobs,
 the #5176 evaluator identity gate, and all three reused #55 runtime blobs were
 rechecked; the recorded hashes are unchanged. The latest #5085 comments still
 report the unresolved OrbStack-bound Docker client PID 91031 and no owner
