@@ -63,6 +63,25 @@ class PublicSummaryTests(unittest.TestCase):
                 elif mutation == "image": view["image_status"] = "missing"
                 self.assertEqual(summarize_public_dispatch(view), view)
 
+    def test_inconsistent_wait_timeline_stays_full(self):
+        for mutation in ("before_execution", "after_execution", "overlap", "reversed_timeline"):
+            with self.subTest(mutation=mutation):
+                view = fixture("paced_dispatch_review.json")
+                execution = view["receipt"]["source"]["raw_report"]["result"]["execution"]
+                waits = execution["waits"]
+                if mutation == "before_execution":
+                    waits[0]["started_ns"] = execution["started_ns"] - 1
+                elif mutation == "after_execution":
+                    waits[-1]["ended_ns"] = execution["ended_ns"] + 1
+                elif mutation == "overlap":
+                    waits[1]["started_ns"] = waits[0]["ended_ns"] - 1
+                else:
+                    for key in ("started_ns", "ended_ns"):
+                        waits[0][key], waits[1][key] = waits[1][key], waits[0][key]
+                original = copy.deepcopy(view)
+                self.assertEqual(summarize_public_dispatch(view), original)
+                self.assertEqual(view, original)
+
     def test_retained_report_without_live_session_keeps_historical_session(self):
         view = fixture("nonpaced_dispatch_review.json")
         session = view.pop("session")  # Actual interface_results shape: no live owner snapshot.
