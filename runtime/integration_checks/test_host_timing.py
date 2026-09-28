@@ -13,7 +13,7 @@ class HostTimingTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
-        self.reply = {'id': 1, 'tool': 'observe', 'result': {}}
+        self.reply = {'id': 1, 'tool': 'observe', 'result': {}, 'status': 'returned', 'next_id': 2}
         self.write('request-1.json', {'id': 1, 'tool': 'observe'})
         self.write('reply-1.json', self.reply)
         digest = hashlib.sha256((self.root / 'reply-1.json').read_bytes()).hexdigest()
@@ -86,9 +86,14 @@ class HostTimingTests(unittest.TestCase):
 
     def test_gaps_partition_span_and_attempts_do_not_require_unique_protocol_ids(self):
         # A relay refusal may reuse its protocol ID on the next local attempt.
+        refused = {'status': 'refused', 'dispatched': False, 'next_id': 1, 'error': 'unknown relay tool'}
+        self.write('reply-1.json', refused)
+        digest = hashlib.sha256((self.root / 'reply-1.json').read_bytes()).hexdigest()
         self.write('request-2.json', {'id': 1, 'tool': 'observe'})
         self.write('reply-2.json', self.reply)
-        events = copy.deepcopy(self.events[:-1])
+        events = copy.deepcopy(self.events[:4])
+        for event in events:
+            event.update(reply_sha256=digest, relay_id=None)
         for original, stamp in zip(self.events[:2], (35, 38)):
             event = copy.deepcopy(original)
             event.update(attempt=2, sequence=len(events) + 1, host_monotonic_ms=stamp)
@@ -99,6 +104,30 @@ class HostTimingTests(unittest.TestCase):
         self.assertEqual(report['send_to_reply_total_ms'], 7)
         self.assertEqual(report['first_send_to_last_reply_ms'], 28)
         self.assertIsNone(report['calls'][1]['send_to_first_callbacks_completed_ms'])
+        self.assertEqual(report['calls'][0]['relay_outcome'],
+                         {'status':'refused', 'dispatched':False, 'request_id':1})
+        self.assertNotIn('relay_outcome', report['calls'][1])
+
+    def test_invalid_refusal_cannot_claim_no_dispatch(self):
+        valid = {'status':'refused', 'dispatched':False, 'next_id':1, 'error':'unknown tool'}
+        for key, value in [('dispatched', True), ('dispatched', 0), ('next_id', 2),
+                           ('next_id', True), ('error', None), ('id', 1)]:
+            with self.subTest(key=key, value=value):
+                self.write('reply-1.json', {**valid, key:value})
+                events = copy.deepcopy(self.events[:2])
+                events[1].update(relay_id=None, reply_sha256=hashlib.sha256((self.root/'reply-1.json').read_bytes()).hexdigest())
+                with self.assertRaises(ValueError):
+                    self.report(events)
+
+    def test_unknown_outcome_is_not_reclassified_as_pre_dispatch_refusal(self):
+        self.write('reply-1.json', {**self.reply, 'status':'unknown_requires_reconciliation'})
+        events = copy.deepcopy(self.events[:2])
+        events[1]['reply_sha256'] = hashlib.sha256((self.root/'reply-1.json').read_bytes()).hexdigest()
+        report = self.report(events)
+        self.assertEqual(report['calls'][0]['relay_outcome'],
+                         {'status':'unknown_requires_reconciliation', 'dispatch_outcome':'unknown'})
+        self.assertEqual(report['timeline_status'], 'partial')
+        self.assertEqual(report['returned_count'], 1)
 
     def test_historical_representations_and_unpresented_review_are_not_conflated(self):
         events = copy.deepcopy(self.events[:2] + self.events[4:])

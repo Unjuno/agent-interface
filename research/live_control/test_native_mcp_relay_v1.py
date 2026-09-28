@@ -39,6 +39,31 @@ class RelayTests(unittest.IsolatedAsyncioTestCase):
             closed=json.loads(rows[3]['result']['content'][0]['text'])
             self.assertEqual(closed['status'],'closed')
             self.assertFalse(closed['connection_close_attempted'])
+            # Feed the actual protocol envelopes to the host timing reader.
+            # Synthetic clock values test decoding only, not process latency.
+            from runtime.integration_checks.host_timing import summarize
+            timing=root/'timing';timing.mkdir();events=[]
+            for attempt,(request,row) in enumerate(zip(requests,rows),1):
+                (timing/f'request-{attempt}.json').write_text(json.dumps(request))
+                data=json.dumps(row).encode()
+                (timing/f'reply-{attempt}.json').write_bytes(data)
+                for kind in ('send_requested','reply_available'):
+                    event={'schema':'agent-interface/relay-host-event-v1',
+                           'sequence':len(events)+1,'host_monotonic_ms':len(events),
+                           'kind':kind,'attempt':attempt,'tool':request['tool']}
+                    if kind=='reply_available':
+                        event.update(relay_id=row.get('id'),reply_sha256=hashlib.sha256(data).hexdigest())
+                    events.append(event)
+            events.append({'schema':'agent-interface/relay-host-event-v1',
+                           'sequence':len(events)+1,'host_monotonic_ms':len(events),
+                           'kind':'transport_closed','code':0,'signal':None})
+            (timing/'host-events.jsonl').write_text(''.join(json.dumps(e)+'\n' for e in events))
+            summary=summarize(timing)
+            self.assertEqual(summary['returned_count'],4)
+            self.assertEqual(summary['timeline_status'],'complete')
+            self.assertEqual(summary['calls'][0]['relay_outcome'],
+                             {'status':'refused','dispatched':False,'request_id':1})
+            self.assertNotIn('relay_outcome',summary['calls'][1])
 
     async def test_real_relay_forwards_opt_in_stop_without_starting_allocation(self):
         with tempfile.TemporaryDirectory() as tmp:
