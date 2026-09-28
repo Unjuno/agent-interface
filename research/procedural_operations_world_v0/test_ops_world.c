@@ -8,14 +8,21 @@
 
 static void disable_alerts(OwDifficulty *d){d->required_alerts=0;d->event_rate=0;}
 static void watcher_xy(const OwWorld *w,int idx,float*x,float*y){
-    int n=w->watcher_count;int m=w->presentation_family%4,slot=-1;
-    for(int s=0;s<n;++s){int mults[6]={1,5,7,11,13,17};int mm=mults[w->presentation_family%6];while(mm<n&&({int a=mm,b=n;while(b){int t=a%b;a=b;b=t;}a;})!=1)mm+=2;int off=(w->presentation_family*7u)%(unsigned)n;int ch=(s*mm+off)%n;if(ch==idx){slot=s;break;}}
-    if(slot<0){*x=*y=0;return;}int tw=22,th=16;
-    if(m==0){int cols=32;*x=8+(slot%cols)*19+9;*y=6+(slot/cols)*19+8;}
-    else if(m==1){int per=(n+1)/2;if(slot<per){*x=6+(slot%2)*19+9;*y=OW_HUD_H+8+(slot/2)*19+8;}else{int k=slot-per;*x=OW_WIDTH-44+(k%2)*19+9;*y=OW_HUD_H+8+(k/2)*19+8;}}
-    else if(m==2){int per=(n+3)/4,corner=slot/per,k=slot%per;int col=k%4,row=k/4;int bx=(corner==1||corner==3)?OW_WIDTH-4*19-10:8;int by=(corner>=2)?OW_HEIGHT-((per+3)/4)*19-8:6;*x=bx+col*19+9;*y=by+row*19+8;}
-    else{int per=(n+1)/2;if(slot<per){*x=8+(slot%32)*19+9;*y=6+(slot/32)*19+8;}else{int k=slot-per;*x=8+(k%32)*19+9;*y=OW_HEIGHT-22-(k/32)*19+8;}}
-    (void)tw;(void)th;
+    int n=w->watcher_count;
+    if(n<=0){*x=*y=0;return;}
+    static const int mults[6]={1,3,5,7,11,13};
+    int mm=mults[w->presentation_family%6];
+    while(mm<n && (n%mm)==0) mm+=2;
+    int off=(int)((w->presentation_family*7u)%(unsigned)n);
+    int slot=(idx*mm+off)%n;
+    int mode=w->presentation_family%4;
+    int tx,ty,tw,th;
+    if(mode==0){int cols=32;tw=17;th=19;tx=6+(slot%cols)*tw;ty=6+(slot/cols)*th;}
+    else if(mode==1){tw=14;th=16;if(slot<32){int j=slot;tx=4+(j%2)*15;ty=OW_HUD_H+4+(j/2)*18;}else{int j=slot-32;tx=OW_WIDTH-34+(j%2)*15;ty=OW_HUD_H+4+(j/2)*18;}}
+    else if(mode==2){tw=14;th=15;int corner=slot/16,j=slot%16,gx=j%4,gy=j/4;int bx=(corner&1)?OW_WIDTH-64:4,by=(corner&2)?OW_HEIGHT-66:4;tx=bx+gx*15;ty=by+gy*16;}
+    else{tw=19;th=17;if(slot<32){tx=16+(slot%32)*19;ty=5;}else{int j=slot-32;tx=16+(j%32)*19;ty=OW_HEIGHT-22;}}
+    *x=(float)(tx+1+(tw-3)/2);
+    *y=(float)(ty+1+(th-3)/2);
 }
 static int find_station(const OwWorld*w,int kind){for(int i=0;i<w->station_count;++i)if(w->stations[i].kind==kind)return i;return -1;}
 static void empty_room(OwWorld*w){for(int y=0;y<OW_MAP_H;++y)for(int x=0;x<OW_MAP_W;++x)w->map[y][x]=(x==0||y==0||x==OW_MAP_W-1||y==OW_MAP_H-1)?1:0;w->px=5.5f;w->py=5.5f;w->angle=0;}
