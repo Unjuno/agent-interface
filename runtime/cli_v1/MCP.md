@@ -327,3 +327,12 @@ is not evidence of fewer actual model tokens, lower cost or faster decisions.
 ### Unknown top-level arguments
 
 Public MCP tools reject unknown top-level argument names before invoking the operation or opening the backend. Discovery advertises `additionalProperties: false`. For keyboard-only guarded input, use `interaction: "keyboard"`; `pointer: false` is not an argument. Do not infer accepted semantics from an unrecognized flag. This check does not alter nested program or tail validation. Validation errors may be plain text from the SDK; host renderers must not assume every text block is JSON.
+
+
+### Register multiple references from one image
+
+In guarded-x11 mode, interface_guarded_mint_many accepts one source_sequence and 1..8 references, each containing alias, point=[screen_x,screen_y], and region_size=[width,height]. Use the exact delivered source you inspected. Each alias must match [a-z][a-z0-9_]{0,31}; points are integer pairs and region dimensions are 4..96 pixels. Unknown nested fields and duplicate aliases refuse before any registration. This reuses the existing bridge mint operation; it does not capture, click, infer targets, acknowledge UI state, or weaken later input guards.
+
+Successful entries return alias/offset pairs under minted. Registration is sequential and not atomic. If minting raises, the reply retains earlier successes, identifies failed_index and failed_alias with failed_alias_state="unknown", and lists unattempted_aliases. Registration may have occurred before a persistence failure, so do not replay the batch or reuse the failed alias. Inspect the outcome and explicitly choose fresh references if needed. Full retained results remain available without reminting.
+
+This transport option reduces the number of registration requests for a supplied group by construction. It does not establish lower model latency, token cost, or generic task completion; primary GUI validation and matched measurement are separate requirements.

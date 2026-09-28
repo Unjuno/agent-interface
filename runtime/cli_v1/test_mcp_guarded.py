@@ -54,6 +54,68 @@ def metadata(response):
 
 
 class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
+    async def test_batch_mints_same_source_without_observe_or_input_and_retains_result(self):
+        with tempfile.TemporaryDirectory() as td:
+            bridge=FakeBridge(None,{'app':123},'app',Path(td)/'fixture')
+            with patch('runtime.cli_v1.mcp_guarded.open_bridge',return_value=bridge):
+                server=create_server({'app':123},td,session_mode='guarded-x11')
+                refs=[{'alias':name,'point':[20,30],'region_size':[24,14]} for name in ('field','save')]
+                response=await server.call_tool('interface_guarded_mint_many',{'source_sequence':7,'references':refs})
+                row=metadata(response)
+                self.assertEqual(row['status'],'minted')
+                self.assertEqual(row['minted'],[{'alias':r['alias'],'offset':[12,7]} for r in refs])
+                self.assertEqual(bridge.mint.call_args_list,[
+                    unittest.mock.call('field',7,[20,30],region_size=(24,14)),
+                    unittest.mock.call('save',7,[20,30],region_size=(24,14))])
+                retained=metadata(await server.call_tool('interface_results',{'call_id':row['call_id']}))
+                self.assertEqual(retained['minted'],row['minted'])
+                self.assertFalse(retained['operation_invoked'])
+                self.assertEqual(bridge.mint.call_count,2)
+                bridge.observe.assert_not_called();bridge.click.assert_not_called();bridge.keyboard.assert_not_called()
+                await server.call_tool('interface_close',{})
+
+    async def test_batch_failure_preserves_success_and_stops_before_later_alias(self):
+        with tempfile.TemporaryDirectory() as td:
+            bridge=FakeBridge(None,{'app':123},'app',Path(td)/'fixture')
+            bridge.mint.side_effect=[[12,7],OSError('receipt write failed after possible registration')]
+            with patch('runtime.cli_v1.mcp_guarded.open_bridge',return_value=bridge):
+                server=create_server({'app':123},td,session_mode='guarded-x11')
+                refs=[{'alias':name,'point':[20,30],'region_size':[24,14]} for name in ('field','save','later')]
+                reply=await server.call_tool('interface_guarded_mint_many',{'source_sequence':7,'references':refs})
+                row=metadata(reply)
+                self.assertTrue(reply.isError);self.assertEqual(row['status'],'mint_incomplete')
+                self.assertEqual(row['minted'],[{'alias':'field','offset':[12,7]}])
+                self.assertEqual(row['failed_index'],1);self.assertEqual(row['failed_alias'],'save')
+                self.assertEqual(row['failed_alias_state'],'unknown')
+                self.assertEqual(row['unattempted_aliases'],['later'])
+                self.assertFalse(row['input_dispatched']);self.assertFalse(row['replay_allowed'])
+                self.assertEqual(bridge.mint.call_count,2)
+                bridge.observe.assert_not_called();bridge.click.assert_not_called();bridge.keyboard.assert_not_called()
+                await server.call_tool('interface_close',{})
+
+    async def test_batch_duplicate_aliases_refuse_before_opening(self):
+        with tempfile.TemporaryDirectory() as td, patch('runtime.cli_v1.mcp_guarded.open_bridge') as factory:
+            server=create_server({'app':123},td,session_mode='guarded-x11')
+            ref={'alias':'same','point':[20,30],'region_size':[24,14]}
+            row=metadata(await server.call_tool('interface_guarded_mint_many',{'source_sequence':7,'references':[ref,ref]}))
+            self.assertEqual(row['status'],'refused');self.assertEqual(row['minted'],[])
+            factory.assert_not_called()
+
+    async def test_batch_entire_schema_validated_before_any_mint(self):
+        from mcp.server.fastmcp.exceptions import ToolError
+        from copy import deepcopy
+        valid={'alias':'field','point':[20,30],'region_size':[24,14]}
+        bad=[]
+        for key,value in [('alias','bad alias'),('point',[True,30]),('point',[20]),('region_size',[97,14]),('unknown',False)]:
+            ref=deepcopy(valid);ref[key]=value;bad.append([valid,ref])
+        bad.extend([[],[dict(valid,alias='x'+str(i)) for i in range(9)]])
+        with tempfile.TemporaryDirectory() as td, patch('runtime.cli_v1.mcp_guarded.open_bridge') as factory:
+            server=create_server({'app':123},td,session_mode='guarded-x11')
+            for refs in bad:
+                with self.subTest(refs=refs),self.assertRaises(ToolError):
+                    await server.call_tool('interface_guarded_mint_many',{'source_sequence':7,'references':refs})
+            factory.assert_not_called();self.assertEqual(list(Path(td).iterdir()),[])
+
     async def test_unknown_top_level_arguments_never_reach_bridge(self):
         opened=[]
         def open_fixture(*args,**kwargs):
@@ -198,6 +260,12 @@ with patch('runtime.cli_v1.mcp_guarded.open_bridge',side_effect=FakeBridge):
                     self.assertTrue(refused.isError)
                     self.assertEqual(metadata(refused)['unknown_arguments'],['pointer'])
                     self.assertEqual(list(Path(td).iterdir()),[])
+                    minted=await client.call_tool('interface_guarded_mint_many',{
+                        'source_sequence':1,'references':[
+                            {'alias':'field','point':[20,30],'region_size':[24,14]},
+                            {'alias':'save','point':[40,30],'region_size':[24,14]}]})
+                    self.assertEqual(metadata(minted)['minted'],[
+                        {'alias':'field','offset':[12,7]},{'alias':'save','offset':[12,7]}])
                     action=await client.call_tool('interface_guarded_input',{'alias':'x','offset':[1,2],'tail':[]})
                     row=metadata(action);self.assertEqual(row['status'],'completed')
                     self.assertEqual(action.content[1].type,'image')

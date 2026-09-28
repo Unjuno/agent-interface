@@ -2,9 +2,18 @@
 from copy import deepcopy
 from pathlib import Path
 from mcp.types import CallToolResult
-from pydantic import StrictBool, StrictInt, StrictStr
-from typing import Literal
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
+from typing import Annotated, Literal
 from .mcp_session import MCPSessionOwner
+
+
+class GroundedReference(BaseModel):
+    """An explicit point from the shared delivered source, never an action."""
+    model_config = ConfigDict(extra='forbid')
+    alias: Annotated[StrictStr, Field(pattern=r'^[a-z][a-z0-9_]{0,31}$')]
+    point: Annotated[list[StrictInt], Field(min_length=2, max_length=2)]
+    region_size: Annotated[list[Annotated[StrictInt, Field(ge=4, le=96)]],
+                           Field(min_length=2, max_length=2)]
 
 
 def open_bridge(display_name, targets, target, directory):
@@ -58,6 +67,14 @@ class GuardedSessionOwner(MCPSessionOwner):
         return row
 
     def invoke_guarded(self, operation, arguments, call_root):
+        if operation == 'guarded_mint_many':
+            # Validate the complete batch before opening a connection or minting.
+            references = [GroundedReference.model_validate(ref) for ref in arguments['references']]
+            aliases = [ref.alias for ref in references]
+            if not 1 <= len(references) <= 8 or len(set(aliases)) != len(aliases):
+                return {'operation':operation, 'status':'refused',
+                        'error':'one to eight unique aliases required', 'input_dispatched':False,
+                        'minted':[], 'task_success':None, 'replay_allowed':False}
         self.get()
         bridge = self.bridge
         bridge.backend.configure_capture_artifacts(Path(call_root)/'images')
@@ -81,6 +98,23 @@ class GuardedSessionOwner(MCPSessionOwner):
         try:
             if operation == 'guarded_observe':
                 return self._with_observation(dict(row, status='observed', input_dispatched=False), bridge.observe())
+            if operation == 'guarded_mint_many':
+                minted = []
+                for index, reference in enumerate(references):
+                    try:
+                        offset = bridge.mint(reference.alias, arguments['source_sequence'],
+                            reference.point, region_size=tuple(reference.region_size))
+                    except Exception as error:
+                        # mint may mutate its store before persistence fails. Keep
+                        # earlier successes and mark this alias uncertain; no rollback.
+                        return dict(row, status='mint_incomplete', minted=minted,
+                            source_sequence=arguments['source_sequence'],
+                            failed_index=index, failed_alias=reference.alias,
+                            failed_alias_state='unknown', error=repr(error),
+                            unattempted_aliases=aliases[index+1:], input_dispatched=False)
+                    minted.append({'alias':reference.alias, 'offset':offset})
+                return dict(row, status='minted', minted=minted,
+                            source_sequence=arguments['source_sequence'], input_dispatched=False)
             if operation == 'guarded_mint':
                 point, size = arguments['point'], arguments['region_size']
                 if len(point) != 2 or len(size) != 2 or any(not 4 <= v <= 96 for v in size):
@@ -123,6 +157,23 @@ def register_guarded_tools(server, submit):
         """
         return await submit('guarded_mint', dict(alias=alias,source_sequence=source_sequence,
                             point=point,region_size=region_size),False,False)
+
+    @server.tool()
+    async def interface_guarded_mint_many(source_sequence: StrictInt,
+            references: Annotated[list[GroundedReference], Field(min_length=1,max_length=8)]) -> CallToolResult:
+        """Register 1..8 explicit points from one already delivered image, without input.
+
+        Each reference has alias, point=[screen_x,screen_y], region_size=[width,height].
+        Aliases must be unique; all syntax is validated before minting. This is
+        sequential registration, not an action queue or atomic transaction.
+        On failure, earlier minted references remain; failed_alias_state is unknown
+        because registration may precede persistence failure. Later aliases are
+        unattempted. Inspect the result; do not replay or reuse the failed alias.
+        Each later input still requires fresh visual guards and ordinary admission.
+        """
+        return await submit('guarded_mint_many',{
+            'source_sequence':source_sequence,
+            'references':[ref.model_dump() for ref in references]},False,False)
 
     @server.tool()
     async def interface_guarded_input(alias: StrictStr, offset: list[StrictInt], tail: list[dict],
