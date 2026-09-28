@@ -245,8 +245,12 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 result['persistence_error'] = persistence_error
                 result['replay_allowed'] = False
             if detail == 'brief':
-                from .guarded_presentation import brief_guarded_report
-                result = brief_guarded_report(result)
+                if operation.startswith('guarded_'):
+                    from .guarded_presentation import brief_guarded_report
+                    result = brief_guarded_report(result)
+                elif operation == 'dispatch':
+                    from .public_presentation import brief_public_report
+                    result = brief_public_report(result)
             if observation_refs and operation.startswith('guarded_'):
                 from .receipt_references import compact_guarded_observation
                 result = compact_guarded_observation(result)
@@ -398,20 +402,24 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         @server.tool()
         async def interface_dispatch(program: PublicProgram, current_observation_seq: StrictInt,
                                current_binding_revision: StrictInt,
-                               compact: StrictBool = False, report_refs: StrictBool = False) -> CallToolResult:
+                               compact: StrictBool = False, report_refs: StrictBool = False,
+                               detail: Literal["full", "brief"] = "full") -> CallToolResult:
             """Dispatch once through core admission. Include observe for an image; no implicit replay.
 
             Observation sequence is a caller assertion, not server-issued freshness.
             Persistent mode requires session.binding_revision (initially 1); review
             advances it. One-shot binding values remain caller assertions.
             A returned image may precede redraw. Release and cleanup failures remain visible.
+            detail=brief with compact/report_refs summarizes supported successful paced
+            dispatches. This is a partial receipt; presentation.retrieve gets full data.
+            Failures and unsupported results stay full. Images are unchanged.
             report_refs requires compact=true and a v3 receipt decoder.
             In v3, read the full report at receipt.source.raw_report in this response;
             the report reference requires no additional tool call.
             """
             return await submit('dispatch', {'program': program,
                 'current_observation_seq': current_observation_seq,
-                'current_binding_revision': current_binding_revision}, compact, report_refs)
+                'current_binding_revision': current_binding_revision}, compact, report_refs, detail)
 
     @server.tool()
     async def interface_results(call_id: StrictStr | None = None,
@@ -426,8 +434,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         A finished worker is not proof of task success. Unknown calls are not replayed.
         This registry lasts only for this server process; no restart recovery is implied.
         Set include_image=false to inspect metadata without resending a retained image.
-        detail=brief projects only normal guarded-input checks; full is the default.
-        Critical/unsupported guarded reports stay full; other modes are unchanged.
+        detail=brief projects normal guarded checks or supported successful paced
+        public dispatches with compact/report_refs. Full is the default; failures
+        and unsupported reports stay full. Retrieval never replays input.
         observation_refs=true replaces an exact duplicate observation with a local
         reference to source.native; expand_guarded_observation restores the view.
         It changes no image, capture, authority, or retained raw report.
@@ -480,6 +489,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         if detail == 'brief' and record['operation'].startswith('guarded_'):
             from .guarded_presentation import brief_guarded_report
             result = brief_guarded_report(result)
+        if detail == 'brief' and record['operation'] == 'dispatch':
+            from .public_presentation import brief_public_report
+            result = brief_public_report(result)
         if observation_refs and record['operation'].startswith('guarded_'):
             from .receipt_references import compact_guarded_observation
             result = compact_guarded_observation(result)
