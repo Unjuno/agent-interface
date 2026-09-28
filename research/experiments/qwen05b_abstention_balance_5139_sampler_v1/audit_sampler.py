@@ -77,7 +77,7 @@ def audit_support_selection(
             continue
         class_name = row.get("class")
         case_id = row.get("case_id")
-        if class_name not in grouped:
+        if not isinstance(class_name, str) or class_name not in grouped:
             errors.append(f"unknown_support_class:{index}")
             continue
         if not isinstance(case_id, str) or not case_id:
@@ -130,6 +130,7 @@ def audit_support_selection(
             row.get("class")
             for row in arm_rows
             if isinstance(row, Mapping)
+            and isinstance(row.get("class"), str)
         )
         if len(arm_rows) != sum(class_counts.values()) or any(
             actual_counts.get(name, 0) != class_counts[name]

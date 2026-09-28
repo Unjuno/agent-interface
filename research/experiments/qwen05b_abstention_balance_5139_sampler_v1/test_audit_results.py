@@ -172,6 +172,39 @@ class IndependentRawAuditTests(unittest.TestCase):
         self.assertEqual(len(support_errors), 2, result["errors"])
         self.assertEqual(len(heldout_errors), 2, result["errors"])
 
+    def test_rejects_structurally_malformed_json_dataset_matrix_without_crashing(self):
+        mutations = (
+            ("support_pool_null", lambda d: d.__setitem__("support_pool", None)),
+            ("heldout_pool_null", lambda d: d.__setitem__("heldout_pool", None)),
+            ("heldout_null", lambda d: d.__setitem__("heldout", None)),
+            ("support_row_nonobject", lambda d: d["support_pool"].__setitem__(0, None)),
+            ("heldout_pool_row_nonobject", lambda d: d["heldout_pool"].__setitem__(0, None)),
+            ("support_class_list", lambda d: d["support_pool"][0].__setitem__("class", [])),
+            ("heldout_class_object", lambda d: d["heldout_pool"][0].__setitem__("class", {"bad": True})),
+            ("support_state_null", lambda d: d["support_pool"][0].__setitem__("state", None)),
+            ("heldout_state_string", lambda d: d["heldout_pool"][0].__setitem__("state", "bad")),
+            ("support_intent_list", lambda d: d["support_pool"][0].__setitem__("intent", [])),
+            ("heldout_intent_null", lambda d: d["heldout_pool"][0].__setitem__("intent", None)),
+            ("supports_null", lambda d: d.__setitem__("supports", None)),
+            ("support_task_list", lambda d: d["support_pool"][0].__setitem__("task", [])),
+            ("heldout_task_object", lambda d: d["heldout_pool"][0].__setitem__("task", {"bad": True})),
+            ("support_case_id_list", lambda d: d["support_pool"][0].__setitem__("case_id", [])),
+            ("heldout_case_id_object", lambda d: d["heldout_pool"][0].__setitem__("case_id", {"bad": True})),
+        )
+        for name, mutate in mutations:
+            with self.subTest(name=name):
+                _, documents = fixture()
+                data = build(FORMAL_SEED, SUPPORT_SEED, ALLOCATION)
+                mutate(data)
+                raw_bytes = (json.dumps(data, sort_keys=True, separators=(",", ":")) + "\n").encode()
+                digest = hashlib.sha256(raw_bytes).hexdigest()
+                for payload in documents.values():
+                    payload["dataset_sha256"] = digest
+                result = audit(raw_bytes, documents)
+                self.assertFalse(result["integrity_pass"], result)
+                self.assertTrue(result["errors"], result)
+                self.assertEqual(result["metrics"], {})
+
 
 if __name__ == "__main__":
     unittest.main()

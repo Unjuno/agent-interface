@@ -119,6 +119,15 @@ def _dataset_errors(data: Mapping[str, Any]) -> list[str]:
     support_pool = data.get("support_pool", [])
     heldout_pool = data.get("heldout_pool", [])
     heldout = data.get("heldout", [])
+    if not isinstance(support_pool, list):
+        errors.append("support_pool_not_list")
+        support_pool = []
+    if not isinstance(heldout_pool, list):
+        errors.append("heldout_pool_not_list")
+        heldout_pool = []
+    if not isinstance(heldout, list):
+        errors.append("heldout_not_list")
+        heldout = []
     if len(support_pool) != 128:
         errors.append("support_pool_size")
     if len(heldout_pool) != 256:
@@ -127,13 +136,27 @@ def _dataset_errors(data: Mapping[str, Any]) -> list[str]:
         errors.append("heldout_size")
     for pool_name, pool in (("support", support_pool), ("heldout", heldout_pool)):
         for index, row in enumerate(pool):
-            if not isinstance(row, Mapping) or row.get("class") != reference_class(row.get("intent")):
-                case_id = row.get("case_id", str(index)) if isinstance(row, Mapping) else str(index)
-                errors.append(f"{pool_name}_class_mismatch:{case_id}")
+            if not isinstance(row, Mapping):
+                errors.append(f"{pool_name}_row_not_object:{index}")
+                continue
+            case_id = row.get("case_id")
+            if not isinstance(case_id, str) or not case_id:
+                errors.append(f"{pool_name}_case_id_invalid:{index}")
+            class_name = row.get("class")
+            if not isinstance(class_name, str) or class_name != reference_class(row.get("intent")):
+                errors.append(f"{pool_name}_class_mismatch:{case_id if isinstance(case_id, str) else index}")
+            state = row.get("state")
+            if not isinstance(state, Mapping):
+                errors.append(f"{pool_name}_state_not_object:{case_id if isinstance(case_id, str) else index}")
+            elif not isinstance(state.get("scope_id"), str) or not state.get("scope_id"):
+                errors.append(f"{pool_name}_scope_id_invalid:{case_id if isinstance(case_id, str) else index}")
+            if not isinstance(row.get("task"), str) or not row.get("task"):
+                errors.append(f"{pool_name}_task_invalid:{case_id if isinstance(case_id, str) else index}")
     grouped: dict[str, list[Mapping[str, Any]]] = {name: [] for name in CLASSES}
     for row in heldout_pool:
-        if isinstance(row, Mapping) and row.get("class") in grouped:
-            grouped[row["class"]].append(row)
+        class_name = row.get("class") if isinstance(row, Mapping) else None
+        if isinstance(class_name, str) and class_name in grouped:
+            grouped[class_name].append(row)
     expected = [row for name in CLASSES for row in grouped[name][:8]]
     if any(len(grouped[name]) < 8 for name in CLASSES):
         errors.append("heldout_class_short")
@@ -141,15 +164,35 @@ def _dataset_errors(data: Mapping[str, Any]) -> list[str]:
         errors.append("heldout_selection_order")
     if heldout != expected:
         errors.append("heldout_selection_content")
-    all_ids = [row.get("case_id") for row in support_pool + heldout_pool]
+    all_ids = [
+        row.get("case_id")
+        for row in support_pool + heldout_pool
+        if isinstance(row, Mapping) and isinstance(row.get("case_id"), str)
+    ]
     if len(all_ids) != len(set(all_ids)):
         errors.append("split_case_id_collision")
-    support_scopes = {row.get("state", {}).get("scope_id") for row in support_pool}
-    heldout_scopes = {row.get("state", {}).get("scope_id") for row in heldout_pool}
+    support_scopes = {
+        state.get("scope_id")
+        for row in support_pool
+        if isinstance(row, Mapping) and isinstance((state := row.get("state")), Mapping)
+        and isinstance(state.get("scope_id"), str)
+    }
+    heldout_scopes = {
+        state.get("scope_id")
+        for row in heldout_pool
+        if isinstance(row, Mapping) and isinstance((state := row.get("state")), Mapping)
+        and isinstance(state.get("scope_id"), str)
+    }
     if support_scopes & heldout_scopes:
         errors.append("split_scope_overlap")
-    support_tasks = {row.get("task") for row in support_pool}
-    heldout_tasks = {row.get("task") for row in heldout_pool}
+    support_tasks = {
+        row.get("task") for row in support_pool
+        if isinstance(row, Mapping) and isinstance(row.get("task"), str)
+    }
+    heldout_tasks = {
+        row.get("task") for row in heldout_pool
+        if isinstance(row, Mapping) and isinstance(row.get("task"), str)
+    }
     if support_tasks & heldout_tasks:
         errors.append("split_task_overlap")
     return errors
@@ -165,7 +208,18 @@ def audit(data_bytes: bytes, raw_documents: Mapping[str, Any]) -> dict[str, Any]
     if not isinstance(data, dict):
         return {"integrity_pass": False, "errors": ["dataset_object"]}
     dataset_sha = hashlib.sha256(data_bytes).hexdigest()
-    errors.extend(_dataset_errors(data))
+    dataset_errors = _dataset_errors(data)
+    errors.extend(dataset_errors)
+    if dataset_errors:
+        return {
+            "schema": "qwen05b-abstention-balance-independent-raw-audit-v1",
+            "integrity_pass": False,
+            "errors": errors,
+            "dataset_sha256": dataset_sha,
+            "metrics": {},
+            "per_class_exact": {},
+            "scope": "invalid dataset; raw-arm metrics intentionally withheld",
+        }
     if not isinstance(raw_documents, Mapping):
         return {"integrity_pass": False, "errors": errors + ["raw_documents_object"]}
 
