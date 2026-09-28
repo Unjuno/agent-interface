@@ -108,7 +108,33 @@ static void render_world(OwWorld *w, OwFrame *f) {
                 render_station_icon(f,w->stations[i].kind,w->stations[i].icon_style,screen,cy,r,ic);
             }
         }
-        for(int i=0;i<w->object_count;++i){OwObject*o=&w->objects[i];float sx=o->x-w->px,sy=o->y-w->py;float inv=1.0f/(planex*diry-dirx*planey);float tx=inv*(diry*sx-dirx*sy),ty=inv*(-planey*sx+planex*sy);if(ty<=0.1f)continue;int screen=(int)((OW_WIDTH/2)*(1+tx/ty));int rr=(int)(w->d.object_radius*180.0f/ty);rr=rr<2?2:(rr>40?40:rr);if(screen+rr<0||screen-rr>=OW_WIDTH)continue;uint32_t cc=COLORS[o->color%6];if(screen>=0&&screen<OW_WIDTH&&ty<f->zbuf[screen])shape(f,screen,OW_HUD_H+(OW_HEIGHT-OW_HUD_H)/2,rr,o->shape,cc,1);}
+        /* Render far-to-near so visible overlap matches nearest-object hit testing. */
+        int obj_order[OW_MAX_OBJECTS], obj_n=0;
+        float obj_depth[OW_MAX_OBJECTS];
+        float obj_inv=1.0f/(planex*diry-dirx*planey);
+        for(int i=0;i<w->object_count;++i){
+            OwObject*o=&w->objects[i]; if(!o->active)continue;
+            float sx=o->x-w->px,sy=o->y-w->py;
+            float ty=obj_inv*(-planey*sx+planex*sy);
+            if(ty<=0.1f)continue;
+            obj_order[obj_n]=i; obj_depth[obj_n]=ty; ++obj_n;
+        }
+        for(int i=1;i<obj_n;++i){
+            int oi=obj_order[i]; float od=obj_depth[i]; int j=i-1;
+            while(j>=0 && obj_depth[j]<od){obj_order[j+1]=obj_order[j];obj_depth[j+1]=obj_depth[j];--j;}
+            obj_order[j+1]=oi; obj_depth[j+1]=od;
+        }
+        for(int oi=0;oi<obj_n;++oi){
+            int i=obj_order[oi]; OwObject*o=&w->objects[i];
+            float sx=o->x-w->px,sy=o->y-w->py;
+            float tx=obj_inv*(diry*sx-dirx*sy),ty=obj_depth[oi];
+            int screen=(int)((OW_WIDTH/2)*(1+tx/ty));
+            int rr=(int)(w->d.object_radius*180.0f/ty); rr=rr<2?2:(rr>40?40:rr);
+            if(screen+rr<0||screen-rr>=OW_WIDTH)continue;
+            uint32_t cc=COLORS[o->color%6];
+            if(screen>=0&&screen<OW_WIDTH&&ty<f->zbuf[screen])
+                shape(f,screen,OW_HUD_H+(OW_HEIGHT-OW_HUD_H)/2,rr,o->shape,cc,1);
+        }
     }
     int cx=OW_WIDTH/2,cy=OW_HUD_H+(OW_HEIGHT-OW_HUD_H)/2;line(f,cx-7,cy,cx+7,cy,0xffffffffu);line(f,cx,cy-7,cx,cy+7,0xffffffffu);
 }
@@ -120,7 +146,7 @@ static uint32_t alert_color(const OwWorld *w) {
 
 static void render_watchers(OwWorld *w, OwFrame *f){
     for(int i=0;i<w->watcher_count;++i){
-        int x,y,tw,th; watcher_tile_rect(w,i,&x,&y,&tw,&th);
+        int x,y,tw,th; ow_watcher_tile_rect(w,i,&x,&y,&tw,&th);
         uint32_t fill=w->watchers[i].alert?alert_color(w):((w->watchers[i].acknowledged&&w->sim_time<w->watchers[i].ack_flash_until)?rgb(22,163,74):rgb(39,51,66));
         box(f,x,y,tw-1,th-1,fill,rgb(100,116,139));
         if(w->watchers[i].alert){double rem=w->watchers[i].deadline-w->sim_time;float frac=(float)clampd(rem/w->d.alert_deadline,0,1);rect(f,x+2,y+th-4,(int)((tw-5)*frac),2,rgb(241,245,249));}
