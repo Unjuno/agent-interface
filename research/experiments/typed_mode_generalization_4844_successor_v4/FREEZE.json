@@ -1,0 +1,48 @@
+{
+  "allocation": "typed-mode-4844-successor-20260928-04",
+  "issue": 5184,
+  "status": "PRE_FORMAL_PREPARATION",
+  "branch": "research/typed-mode-4844-successor-v4-20260928-e07d",
+  "path": "research/experiments/typed_mode_generalization_4844_successor_v4/",
+  "intake_main": "ae1c23b9ffcff29e3b6cbf1b25f31066742122e7",
+  "formal": {
+    "training_seed": 866309294,
+    "heldout_seed": 301332595,
+    "training_rows": 2000,
+    "heldout_rows": 4800,
+    "rows_per_block": 960,
+    "rows_per_mode_per_block": 192,
+    "runner_limit": 1,
+    "auditor_limit": 1,
+    "retry_allowed": false,
+    "formal_data_generated": false
+  },
+  "construction": {
+    "seeds": [59003, 59004],
+    "v4_tests_run": false,
+    "formal_seeds_accessed": false
+  },
+  "seed_collision_search": {
+    "checked_before_allocation_comment": true,
+    "sources": ["open/closed Issues", "open/closed PRs", "branches", "commits", "default-branch code"],
+    "formal_seed_866309294_matches": 0,
+    "formal_seed_301332595_matches": 0,
+    "path_or_branch_matches": 0,
+    "recheck_required_before_freeze_and_launch": true
+  },
+  "docker": {
+    "context": "desktop-linux",
+    "image_config_digest": "sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a",
+    "platform": "linux/amd64",
+    "pull": "never",
+    "network": "none",
+    "readonly_root": true,
+    "readonly_source": true,
+    "cpus": 1,
+    "memory_bytes": 536870912,
+    "pids": 32,
+    "security_opt": "no-new-privileges",
+    "scratch": "tmpfs /tmp:rw,noexec,nosuid,size=32m"
+  },
+  "provenance": "This is an allocation registration/preparation record, not the final source freeze. Final source SHA-256, Git blobs, sizes, exact command and commit must be recorded after construction and before any formal seed access."
+}
