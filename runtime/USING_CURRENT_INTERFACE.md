@@ -26,6 +26,10 @@ records a failed press that had already changed a visible counter, explicit
 same-session release recovery, visual review and a newly authored continuation
 that saved the requested value. This small injected-fault construction exercises
 the recovery workflow; it does not measure general reliability or speedup.
+An optional target/region on recovery now returns a post-release window image
+in the same call. [Fresh primary use](results/recovery-capture-primary-01/README.md)
+completed the same construction with six rather than seven MCP calls. Capture
+failure preserves the committed recovery result; observe separately if needed.
 
 ## Long-lived guarded sessions
 
