@@ -2,7 +2,7 @@
 
 import unittest
 
-from runner_contract import Lifecycle, arm_schedule, load_plan
+from runner_contract import Lifecycle, arm_schedule, controller_envelope, load_plan
 
 
 class RunnerContractTests(unittest.TestCase):
@@ -24,6 +24,21 @@ class RunnerContractTests(unittest.TestCase):
             run.reset(True)
         with self.assertRaisesRegex(ValueError, "verified reset"):
             run.advance()
+
+    def test_controller_envelope_is_exactly_the_allowed_projection(self):
+        task = arm_schedule(self.plan, "persistent")[0]
+        envelope = controller_envelope(self.plan, task)
+        self.assertEqual(set(envelope), {"task_id", "task", "layout", "benchmark_epoch"})
+        self.assertEqual(envelope["task"], self.plan["task_contract"]["text"])
+        self.assertEqual(envelope["benchmark_epoch"], 1)
+
+    def test_lifecycle_rejects_non_boolean_score_and_witness(self):
+        run = Lifecycle(self.plan)
+        with self.assertRaisesRegex(ValueError, "must be boolean"):
+            run.score(1)
+        run.score(True)
+        with self.assertRaisesRegex(ValueError, "must be boolean"):
+            run.reset("verified")
 
     def test_unverified_reset_witness_stops_before_next_task(self):
         run = Lifecycle(self.plan)

@@ -55,12 +55,22 @@ def arm_schedule(plan: dict, arm: str) -> tuple[Task, ...]:
                      zip(ids, layouts, routes, counts), start=1))
 
 
+def controller_envelope(plan: dict, task: Task) -> dict:
+    """Construct only the fields permitted on the agent-visible task channel."""
+    visible = plan["task_contract"]["controller_visible_fields"]
+    if visible != ["task_id", "task", "layout", "benchmark_epoch"]:
+        raise ValueError("controller-visible field contract differs from preregistration")
+    return {"task_id": task.task_id, "task": plan["task_contract"]["text"],
+            "layout": task.layout, "benchmark_epoch": task.epoch}
+
+
 class Lifecycle:
     """Enforce score-before-reset, witness-before-next, and the single A→B flip."""
 
-    def __init__(self, plan: dict):
+    def __init__(self, plan: dict, arm: str = "plain"):
         self.plan = plan
-        self.tasks = arm_schedule(plan, "plain")
+        self.arm = arm
+        self.tasks = arm_schedule(plan, arm)
         self.index = 0
         self.phase = "ready"
         self.events: list[dict] = []
@@ -77,17 +87,21 @@ class Lifecycle:
         return row
 
     def score(self, passed: bool) -> dict:
+        if type(passed) is not bool:
+            raise ValueError("score outcome must be boolean")
         if self.phase != "ready":
             raise ValueError("score requires a ready task")
-        row = self._emit("score", task_id=self.current.task_id, passed=bool(passed))
+        row = self._emit("score", task_id=self.current.task_id, passed=passed)
         self.phase = "scored" if passed else "failed"
         return row
 
     def reset(self, witness: bool) -> dict:
+        if type(witness) is not bool:
+            raise ValueError("reset witness must be boolean")
         if self.phase != "scored":
             raise ValueError("reset requires an independently passing score")
         row = self._emit("reset_witness", task_id=self.current.task_id,
-                         verified=bool(witness))
+                         verified=witness)
         if not witness:
             self.phase = "failed"
             return row
