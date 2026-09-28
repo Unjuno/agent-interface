@@ -1,0 +1,33 @@
+{
+  "schema": "issue-2928-current-caller-session-binding-result-v1",
+  "disposition": "HOLD_SESSION_BINDING_DEPENDS_ON_ADAPTER",
+  "intake_main": "26d625a699175ddafde38d0ca26d901edfb6df7e",
+  "subject_git_blob": "7faf042304728ce91a3e4f89d465b251ea0bf70d",
+  "subject_sha256": "8517d130d7336b27e6ddfc0ee06629d2b1183070cf845c3ef4ada8adc3cd79ca",
+  "host": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.10",
+  "rows": 2,
+  "audit_rows_reconstructed": 2,
+  "audit_errors": [],
+  "same_session": {
+    "request_session_id": "session-current",
+    "cached_session_id": "session-current",
+    "reuse_payload_has_request_session": false,
+    "final_payload_has_request_session": false,
+    "execute_adapter_calls": 1,
+    "completed_actions": 0,
+    "effect": null
+  },
+  "stale_cached_session": {
+    "request_session_id": "session-current",
+    "cached_session_id": "session-prior",
+    "reuse_payload_has_request_session": false,
+    "final_payload_has_request_session": false,
+    "execute_adapter_calls": 1,
+    "completed_actions": 0,
+    "effect": null
+  },
+  "formal_invocations": 0,
+  "docker_invocations": 0,
+  "limits": "This does not show a configured production adapter accepts stale sessions; adapters may close over current session state. No lifecycle PASS/FAIL or production safety claim."
+}
