@@ -5,6 +5,7 @@ import unittest
 import ast
 import hashlib
 import importlib.util
+import io
 import json
 import sys
 from unittest.mock import patch
@@ -209,8 +210,10 @@ class FrozenSourceAndConstructionContract(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             output = Path(temp) / "out"
             output.mkdir()
-            self.assertEqual(module.expected_docker_argv(str(HERE), str(output)),
-                             protocol.docker_argv(HERE, output))
+            self.assertEqual(module.expected_docker_argv(str(HERE), str(output), "default"),
+                             protocol.docker_argv(HERE, output, "default"))
+            self.assertNotEqual(protocol.docker_argv(HERE, output, "desktop-linux"),
+                                protocol.docker_argv(HERE, output, "orbstack"))
         positive = {
             "queries": [{"query_id": "q", "worker_id": "inference",
                          "inference_start_ns": 100, "inference_end_ns": 220,
@@ -292,17 +295,28 @@ class FrozenSourceAndConstructionContract(unittest.TestCase):
                  and isinstance(node.func, ast.Attribute) and node.func.attr == "run"
                  and isinstance(node.func.value, ast.Name)
                  and node.func.value.id == "subprocess"]
-        formal_runs = [node for node in calls if node.args and isinstance(node.args[0], ast.Name)
-                       and node.args[0].id == "argv"]
-        self.assertEqual(len(formal_runs), 1)
+        bounded_invocations = [node for node in ast.walk(main) if isinstance(node, ast.Call)
+                               and isinstance(node.func, ast.Name)
+                               and node.func.id == "run_lease_bounded"]
+        self.assertEqual(len(bounded_invocations), 1)
         validate_line = next(node.lineno for node in ast.walk(main) if isinstance(node, ast.Call)
                              and isinstance(node.func, ast.Name) and node.func.id == "validate_lease")
-        self.assertLess(validate_line, formal_runs[0].lineno)
+        self.assertLess(validate_line, bounded_invocations[0].lineno)
         docker_context_line = next(node.lineno for node in calls
                                    if node.args and isinstance(node.args[0], ast.List)
                                    and any(isinstance(item, ast.Constant) and item.value == "docker"
                                            for item in node.args[0].elts))
         self.assertLess(validate_line, docker_context_line)
+        helper = next(node for node in tree.body if isinstance(node, ast.FunctionDef)
+                      and node.name == "run_lease_bounded")
+        formal_subprocess_calls = [node for node in ast.walk(helper) if isinstance(node, ast.Call)
+                                   and isinstance(node.func, ast.Attribute)
+                                   and isinstance(node.func.value, ast.Name)
+                                   and node.func.value.id == "subprocess"
+                                   and node.func.attr == "run" and node.args
+                                   and isinstance(node.args[0], ast.Name)
+                                   and node.args[0].id == "argv"]
+        self.assertEqual(len(formal_subprocess_calls), 1)
         self.assertIn("formal_invocations\": 1", FORMAL_PATH.read_text(encoding="utf-8"))
         self.assertNotIn("retry", ast.unparse(main).lower())
 
@@ -333,6 +347,7 @@ class FrozenSourceAndConstructionContract(unittest.TestCase):
                   "expires_at_utc")}
         body = "<!-- needle-docker-owner-lease-v1\n" + json.dumps(payload) + "\n-->"
         record = {"html_url": lease["owner_comment_url"],
+                  "id": 12345,
                   "issue_url": "https://api.github.com/repos/Unjuno/agent-interface/issues/5085",
                   "user": {"login": "Unjuno"}, "body": body}
         verified = module.validate_lease(lease, "a" * 40, "branch", "desktop-linux", record)
@@ -349,6 +364,60 @@ class FrozenSourceAndConstructionContract(unittest.TestCase):
         wrong_owner = dict(record, user={"login": "attacker"})
         with self.assertRaisesRegex(SystemExit, "STOP_LEASE_OWNER_COMMENT_AUTHOR"):
             module.validate_lease(lease, "a" * 40, "branch", "desktop-linux", wrong_owner)
+        wrong_id = dict(record, id=99999)
+        with self.assertRaisesRegex(SystemExit, "STOP_LEASE_OWNER_COMMENT_ID_MISMATCH"):
+            module.validate_lease(lease, "a" * 40, "branch", "desktop-linux", wrong_id)
+
+    def test_launcher_fetch_binds_api_record_id_to_url_comment_id(self):
+        spec = importlib.util.spec_from_file_location("needle_v6_comment_fetch_id", FORMAL_PATH)
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[spec.name] = module
+        spec.loader.exec_module(module)
+        payload = {"id": 12345}
+        with patch.object(module.urllib.request, "urlopen",
+                          return_value=io.BytesIO(json.dumps(payload).encode())) as opened:
+            self.assertEqual(module.fetch_owner_comment(
+                "https://github.com/Unjuno/agent-interface/issues/5085#issuecomment-12345"),
+                payload)
+        self.assertIn("comments/12345", opened.call_args.args[0].full_url)
+        with patch.object(module.urllib.request, "urlopen",
+                          return_value=io.BytesIO(json.dumps({"id": 99999}).encode())):
+            with self.assertRaisesRegex(SystemExit, "STOP_LEASE_OWNER_COMMENT_ID_MISMATCH"):
+                module.fetch_owner_comment(
+                    "https://github.com/Unjuno/agent-interface/issues/5085#issuecomment-12345")
+
+    def test_launcher_times_out_formal_run_and_force_removes_cid_before_lease_end(self):
+        spec = importlib.util.spec_from_file_location("needle_v6_bounded_docker_run", FORMAL_PATH)
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[spec.name] = module
+        spec.loader.exec_module(module)
+        now = datetime.now(timezone.utc)
+        lease = {"slot_start_utc": (now - timedelta(minutes=1)).isoformat(),
+                 "slot_end_utc": (now + timedelta(minutes=3)).isoformat(),
+                 "expires_at_utc": (now + timedelta(minutes=2)).isoformat()}
+        with tempfile.TemporaryDirectory() as temp:
+            cidfile = Path(temp) / "container.id"
+            cidfile.write_text("a" * 64, encoding="ascii")
+            with patch.object(module.subprocess, "run", side_effect=[
+                    module.subprocess.TimeoutExpired(["docker", "run"], 100),
+                    module.subprocess.CompletedProcess(["docker", "rm"], 0, "", "")]) as run:
+                proc, detail = module.run_lease_bounded(
+                    ["docker", "--context", "desktop-linux", "run"], cidfile, lease, "desktop-linux")
+        self.assertEqual(proc.returncode, 124)
+        self.assertTrue(detail["timed_out"])
+        self.assertEqual(detail["cleanup_exit_code"], 0)
+        self.assertEqual(detail["container_id"], "a" * 64)
+        self.assertEqual(run.call_count, 2)
+        self.assertEqual(run.call_args_list[1].args[0],
+                         ["docker", "--context", "desktop-linux", "rm", "--force", "a" * 64])
+        self.assertLess(run.call_args_list[0].kwargs["timeout"], 120)
+        short_lease = {"slot_end_utc": (now + timedelta(seconds=15)).isoformat(),
+                       "expires_at_utc": (now + timedelta(seconds=15)).isoformat()}
+        with patch.object(module.subprocess, "run") as run_short:
+            with self.assertRaisesRegex(SystemExit, "STOP_LEASE_WINDOW_TOO_SHORT_FOR_CLEANUP"):
+                module.run_lease_bounded(["docker", "run"], Path("missing.cid"), short_lease,
+                                         "desktop-linux")
+        run_short.assert_not_called()
 
     def test_launcher_rechecks_owner_window_at_docker_boundaries(self):
         spec = importlib.util.spec_from_file_location("needle_v6_lease_window_test", FORMAL_PATH)
@@ -383,19 +452,23 @@ class FrozenSourceAndConstructionContract(unittest.TestCase):
                    "main_sha": expected["main_sha"], "branch": expected["branch"],
                    "docker_context": expected["docker_context"], "lease_id": expected["lease_id"],
                    "slot_start_utc": expected["slot_start_utc"], "slot_end_utc": expected["slot_end_utc"],
-                   "expires_at_utc": expected["expires_at_utc"]}
+                   "expires_at_utc": expected["expires_at_utc"],
+                   "container_timed_out": False, "container_cleanup_exit_code": None,
+                   "container_cleanup_stderr": None, "container_id": "a" * 64}
         comment = {"html_url": receipt["owner_comment_url"],
+                   "id": 12345,
                    "issue_url": "https://api.github.com/repos/Unjuno/agent-interface/issues/5085",
                    "user_login": "Unjuno",
                    "body": "<!-- needle-docker-owner-lease-v1\n" + json.dumps(expected)
                            + "\n-->"}
         with patch.object(module, "fetch_owner_comment_record", return_value={
-                "html_url": comment["html_url"], "issue_url": comment["issue_url"],
+                "id": 12345, "html_url": comment["html_url"], "issue_url": comment["issue_url"],
                 "user": {"login": "Unjuno"}, "body": comment["body"]}):
             valid_errors = module.audit_document(
                 {"runs": []}, {**receipt, "owner_lease_comment": comment})["errors"]
         self.assertNotIn("formal_owner_comment_payload", valid_errors)
         self.assertNotIn("formal_owner_comment_live_record", valid_errors)
+        self.assertNotIn("formal_container_lifecycle", valid_errors)
         fake_receipt = {**receipt, "owner_comment_url": "https://example.invalid/fake",
                         "owner_lease_comment": dict(comment, html_url="https://example.invalid/fake")}
         self.assertIn("formal_owner_comment_payload",
@@ -403,7 +476,7 @@ class FrozenSourceAndConstructionContract(unittest.TestCase):
         duplicate = json.dumps(expected)[:-1] + ',"lease_id":"attacker","lease_id":"slot-123"}'
         duplicate_comment = dict(comment, body="<!-- needle-docker-owner-lease-v1\n" + duplicate + "\n-->")
         with patch.object(module, "fetch_owner_comment_record", return_value={
-                "html_url": comment["html_url"], "issue_url": comment["issue_url"],
+                "id": 12345, "html_url": comment["html_url"], "issue_url": comment["issue_url"],
                 "user": {"login": "Unjuno"}, "body": duplicate_comment["body"]}):
             self.assertIn("formal_owner_comment_payload", module.audit_document(
                 {"runs": []}, {**receipt, "owner_lease_comment": duplicate_comment})["errors"])
@@ -411,6 +484,12 @@ class FrozenSourceAndConstructionContract(unittest.TestCase):
         with patch.object(module, "fetch_owner_comment_record", return_value=None):
             self.assertIn("formal_owner_comment_live_record",
                           module.audit_document({"runs": []}, forged_receipt)["errors"])
+        with patch.object(module, "fetch_owner_comment_record", return_value={
+                "id": 99999, "html_url": comment["html_url"], "issue_url": comment["issue_url"],
+                "user": {"login": "Unjuno"}, "body": comment["body"]}):
+            self.assertIn("formal_owner_comment_live_record",
+                          module.audit_document({"runs": []}, {**receipt,
+                              "owner_lease_comment": comment})["errors"])
 
 
 if __name__ == "__main__":

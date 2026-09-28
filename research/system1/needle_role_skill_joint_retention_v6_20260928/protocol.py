@@ -16,7 +16,7 @@ IMAGE_ID = "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a
 ENTRYPOINT = "python"
 
 
-def docker_argv(source: Path, output: Path) -> list[str]:
+def docker_argv(source: Path, output: Path, docker_context: str = "default") -> list[str]:
     """Return the complete intended Docker argv, with all paths realized."""
     try:
         source = source.resolve(strict=True)
@@ -27,8 +27,11 @@ def docker_argv(source: Path, output: Path) -> list[str]:
         raise ValueError("source and output must be existing directories")
     if source == output or source in output.parents or output in source.parents:
         raise ValueError("source_output_must_be_disjoint")
+    if not isinstance(docker_context, str) or not docker_context.strip() or "\x00" in docker_context:
+        raise ValueError("docker_context_invalid")
     return [
-        "docker", "run", "--pull=never", "--platform=linux/amd64",
+        "docker", "--context", docker_context, "run", "--pull=never", "--platform=linux/amd64",
+        "--cidfile", str(output / "container.id"),
         "--network=none", "--read-only", "--cpus=1", "--memory=2g",
         "--pids-limit=64", "--tmpfs", "/tmp:rw,nosuid,nodev,size=256m",
         "--entrypoint=python",

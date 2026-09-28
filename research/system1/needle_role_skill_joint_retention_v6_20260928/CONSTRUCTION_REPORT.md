@@ -189,3 +189,45 @@ contains the explicit no-Docker-CLI hold (#5864690783) and no later exact
 allocation lease/release. The historical Docker construction is not evidence
 for this source. No model, optimizer, formal seeds, raw result, or scientific
 quality/latency claim is included.
+
+## Adjacent Needle/System-1 issue triage — 2026-09-29
+
+Current open-issue/comment recheck found concurrent-LoRA pressure and CPU2
+scheduling work that must remain separate from #5081's role-retention question:
+
+- #4653's corrected concurrent COW-LoRA run passed its raw auditor but ended
+  `HOLD_NO_CONCURRENCY_PRESSURE`: only 5/120 query intervals overlapped training
+  per seed (gate >=8); seed 99119 also missed two absolute 60-Hz deadlines.
+- #4658 increased support workload fourfold. It reached 8/120, 9/120, and 8/120
+  COW overlaps and passed p95 latency, but ended `HOLD_LATENCY_BUDGET` because
+  seed 99771 missed three absolute scheduled deadlines. This argues against
+  treating workload inflation or p95 alone as sufficient.
+- #4917's query-boundary-pulsed CPU2 schedule is the distinct next scheduling
+  hypothesis, but its latest comments preserve a supplemental Stage-0/adoption
+  boundary and ask for explicit ownership before further formal work. Do not
+  reuse its allocation/seeds or merge its evidence into #5081.
+
+These results motivate keeping #5081's fresh online role-skill retention test
+and #4917's scheduling intervention as separate hypotheses. They do not remove
+the current #5085 resource gate, and no additional container or model work was
+performed for this issue triage.
+
+## Review follow-up — comment-ID binding and lease-bounded container cleanup — 2026-09-29
+
+An additional read-only review found two remaining authorization/resource
+edges. First, the launcher and auditor now require the GitHub API record's
+numeric comment `id` to equal the ID encoded in the canonical #5085 comment
+URL; the formal receipt retains that ID. Second, the launcher pins the checked
+Docker context on both run and cleanup calls, records the container ID with
+`--cidfile`, and sets the attached run timeout to end before the earlier of
+lease expiry/slot end, reserving 20 seconds for a single `docker rm --force`
+cleanup. If the run times out, its receipt records exit 124 and cleanup evidence;
+the audit cannot accept it as a formal result. If insufficient lease time
+remains for cleanup, it stops before launching.
+
+Host tests additionally exercise API comment-ID mismatch, local Docker-run
+timeout and in-window forced cleanup without invoking Docker. Current suite is
+**26/26** on Windows CPython 3.11.9; compile, preflight-only, `git diff
+--check`, and all manifest SHA-256 entries pass. This is still not a Docker
+runtime verification: #5085's no-CLI hold remains unsuperseded, and no formal
+seed/model/optimizer or scientific result was used.

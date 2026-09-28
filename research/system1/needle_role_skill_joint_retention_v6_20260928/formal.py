@@ -19,6 +19,8 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE
 ISSUE = 5085
 LEASE_SCHEMA = "needle-docker-owner-lease-v1"
+CLEANUP_RESERVE_SECONDS = 20
+CLEANUP_TIMEOUT_SECONDS = 8
 REQUIRED_LEASE_FIELDS = ("allocation", "owner_comment_url", "docker_context",
                          "main_sha", "branch", "expires_at_utc", "lease_id",
                          "slot_start_utc", "slot_end_utc")
@@ -57,11 +59,13 @@ def fetch_owner_comment(owner_comment_url: str) -> dict:
         headers={"Accept": "application/vnd.github+json", "User-Agent": "agent-interface-research"})
     try:
         with urllib.request.urlopen(request, timeout=10) as response:
-            record = json.loads(response.read())
+            record = json.loads(response.read(), object_pairs_hook=unique_pairs)
     except (OSError, urllib.error.URLError, json.JSONDecodeError):
         stop("LEASE_OWNER_COMMENT_FETCH_FAILED")
     if not isinstance(record, dict):
         stop("LEASE_OWNER_COMMENT_RECORD_INVALID")
+    if type(record.get("id")) is not int or record["id"] != int(match.group(1)):
+        stop("LEASE_OWNER_COMMENT_ID_MISMATCH")
     return record
 
 
@@ -93,6 +97,12 @@ def validate_lease(lease: dict, main_sha: str, branch: str, current_context: str
     if not (slot_start <= now < slot_end and now < expiry <= slot_end):
         stop("LEASE_SLOT_NOT_ACTIVE")
     comment = owner_comment_record or fetch_owner_comment(lease["owner_comment_url"])
+    match = re.fullmatch(
+        r"https://github\.com/Unjuno/agent-interface/issues/5085#issuecomment-(\d+)",
+        lease["owner_comment_url"])
+    if (not match or type(comment.get("id")) is not int
+            or comment.get("id") != int(match.group(1))):
+        stop("LEASE_OWNER_COMMENT_ID_MISMATCH")
     if (comment.get("html_url") != lease["owner_comment_url"]
             or comment.get("issue_url") != "https://api.github.com/repos/Unjuno/agent-interface/issues/5085"):
         stop("LEASE_OWNER_COMMENT_URL_MISMATCH")
@@ -112,7 +122,7 @@ def validate_lease(lease: dict, main_sha: str, branch: str, current_context: str
         "lease_id", "slot_start_utc", "slot_end_utc", "expires_at_utc")}
     if payload != expected_payload:
         stop("LEASE_OWNER_COMMENT_PAYLOAD_MISMATCH")
-    return {"html_url": comment["html_url"], "issue_url": comment["issue_url"],
+    return {"id": comment["id"], "html_url": comment["html_url"], "issue_url": comment["issue_url"],
             "user_login": comment["user"]["login"], "body": body}
 
 
@@ -128,6 +138,63 @@ def lease_window_active(lease: dict, now=None) -> bool:
         return False
     current = now or datetime.now(timezone.utc)
     return slot_start <= current < min(slot_end, expiry)
+
+
+def lease_seconds_remaining(lease: dict, now=None) -> float:
+    try:
+        expiry = datetime.fromisoformat(lease["expires_at_utc"].replace("Z", "+00:00"))
+        slot_end = datetime.fromisoformat(lease["slot_end_utc"].replace("Z", "+00:00"))
+    except (KeyError, TypeError, ValueError):
+        return 0.0
+    current = now or datetime.now(timezone.utc)
+    if expiry.tzinfo is None or slot_end.tzinfo is None:
+        return 0.0
+    return max(0.0, (min(expiry, slot_end) - current).total_seconds())
+
+
+def _read_container_id(cidfile: Path) -> str | None:
+    try:
+        value = cidfile.read_text(encoding="ascii").strip()
+    except OSError:
+        return None
+    return value if re.fullmatch(r"[0-9a-f]{64}", value) else None
+
+
+def _text_output(value) -> str | None:
+    if value is None:
+        return None
+    return value.decode("utf-8", errors="replace") if isinstance(value, bytes) else str(value)
+
+
+def run_lease_bounded(argv: list[str], cidfile: Path, lease: dict, docker_context: str):
+    """Bound execution before lease end; force-remove a timed-out container in-slot."""
+    run_timeout = lease_seconds_remaining(lease) - CLEANUP_RESERVE_SECONDS
+    if run_timeout <= 0:
+        stop("LEASE_WINDOW_TOO_SHORT_FOR_CLEANUP")
+    try:
+        proc = subprocess.run(argv, check=False, capture_output=True, text=True,
+                              timeout=run_timeout)
+        return proc, {"timed_out": False, "cleanup_exit_code": None,
+                      "cleanup_stderr": None, "container_id": _read_container_id(cidfile)}
+    except subprocess.TimeoutExpired as exc:
+        container_id = _read_container_id(cidfile)
+        cleanup_code, cleanup_stderr = None, None
+        if container_id and lease_seconds_remaining(lease) > 1:
+            cleanup_timeout = min(CLEANUP_TIMEOUT_SECONDS,
+                                  max(1.0, lease_seconds_remaining(lease) - 1.0))
+            try:
+                cleanup = subprocess.run(["docker", "--context", docker_context,
+                                          "rm", "--force", container_id],
+                                          check=False, capture_output=True, text=True,
+                                          timeout=cleanup_timeout)
+                cleanup_code, cleanup_stderr = cleanup.returncode, cleanup.stderr
+            except (OSError, subprocess.SubprocessError) as cleanup_error:
+                cleanup_stderr = str(cleanup_error)
+        return subprocess.CompletedProcess(argv, 124,
+                                           stdout=_text_output(exc.stdout),
+                                           stderr=_text_output(exc.stderr)), {
+            "timed_out": True, "cleanup_exit_code": cleanup_code,
+            "cleanup_stderr": cleanup_stderr, "container_id": container_id}
 
 
 def main(argv=None):
@@ -160,14 +227,17 @@ def main(argv=None):
         stop("STALE_MAIN_OR_BRANCH")
     if not lease_window_active(lease):
         stop("LEASE_SLOT_EXPIRED_BEFORE_DOCKER")
+    context_timeout = min(10.0, lease_seconds_remaining(lease))
+    if context_timeout <= 0:
+        stop("LEASE_SLOT_EXPIRED_BEFORE_DOCKER")
     context_result = subprocess.run(["docker", "context", "show"], check=False,
-                                    capture_output=True, text=True, timeout=10)
+                                    capture_output=True, text=True, timeout=context_timeout)
     if context_result.returncode != 0:
         stop("DOCKER_CONTEXT_UNAVAILABLE")
     current_context = context_result.stdout.strip()
     if current_context != expected_context:
         stop("DOCKER_CONTEXT_CHANGED")
-    argv = docker_argv(source, output)
+    argv = docker_argv(source, output, current_context)
     canonical_argv = list(argv)
     receipt = {
         "schema": "needle-role-skill-joint-retention-formal-receipt-v1",
@@ -188,13 +258,17 @@ def main(argv=None):
     # This one invocation is deliberate. There is no retry or partial rerun.
     if not lease_window_active(lease):
         stop("LEASE_SLOT_EXPIRED_BEFORE_DOCKER_RUN")
-    proc = subprocess.run(argv, check=False, capture_output=True, text=True)
+    proc, bounded = run_lease_bounded(argv, output / "container.id", lease, current_context)
     raw_path = output / "formal_result.json"
     raw_sha = sha256_bytes(raw_path.read_bytes()) if raw_path.is_file() else None
     completed = {**receipt, "exit_code": proc.returncode,
                  "finished_at_ns": time.time_ns(),
                  "finished_at_utc": datetime.now(timezone.utc).isoformat(),
                  "stdout": proc.stdout, "stderr": proc.stderr,
+                 "container_timed_out": bounded["timed_out"],
+                 "container_cleanup_exit_code": bounded["cleanup_exit_code"],
+                 "container_cleanup_stderr": bounded["cleanup_stderr"],
+                 "container_id": bounded["container_id"],
                  "raw_result_sha256": raw_sha,
                  "formal_result_present": raw_path.is_file()}
     with receipt_path.open("xb") as stream:

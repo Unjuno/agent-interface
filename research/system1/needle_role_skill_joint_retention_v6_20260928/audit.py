@@ -70,6 +70,7 @@ def fetch_owner_comment_record(owner_comment_url: str) -> dict | None:
         owner_comment_url)
     if not match:
         return None
+    expected_comment_id = int(match.group(1))
     request = urllib.request.Request(
         "https://api.github.com/repos/Unjuno/agent-interface/issues/comments/" + match.group(1),
         headers={"Accept": "application/vnd.github+json", "User-Agent": "agent-interface-research-audit"})
@@ -78,14 +79,17 @@ def fetch_owner_comment_record(owner_comment_url: str) -> dict | None:
             record = json.loads(response.read(), object_pairs_hook=unique_pairs)
     except (OSError, urllib.error.URLError, json.JSONDecodeError, ValueError):
         return None
-    return record if isinstance(record, dict) else None
+    return (record if isinstance(record, dict)
+            and type(record.get("id")) is int
+            and record["id"] == expected_comment_id else None)
 
 
 def sha(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
-def expected_docker_argv(source_path: str, output_path: str) -> list[str] | None:
+def expected_docker_argv(source_path: str, output_path: str,
+                         docker_context: str = "default") -> list[str] | None:
     try:
         source, output = Path(source_path).resolve(strict=True), Path(output_path).resolve(strict=True)
     except (OSError, TypeError):
@@ -94,8 +98,11 @@ def expected_docker_argv(source_path: str, output_path: str) -> list[str] | None
             or source in output.parents or output in source.parents
             or source != Path(__file__).resolve().parent):
         return None
+    if not isinstance(docker_context, str) or not docker_context.strip() or "\x00" in docker_context:
+        return None
     return [
-        "docker", "run", "--pull=never", "--platform=linux/amd64",
+        "docker", "--context", docker_context, "run", "--pull=never", "--platform=linux/amd64",
+        "--cidfile", str(output / "container.id"),
         "--network=none", "--read-only", "--cpus=1", "--memory=2g",
         "--pids-limit=64", "--tmpfs", "/tmp:rw,nosuid,nodev,size=256m",
         "--entrypoint=python",
@@ -285,7 +292,8 @@ def audit_document(raw: dict, receipt: dict | None = None, raw_sha256: str | Non
     else:
         argv = receipt.get("command_argv")
         try:
-            expected_argv = expected_docker_argv(receipt["source_path"], receipt["output_path"])
+            expected_argv = expected_docker_argv(receipt["source_path"], receipt["output_path"],
+                                                 receipt["docker_context"])
         except (KeyError, TypeError, ValueError, OSError):
             expected_argv = None
         if expected_argv is None or not isinstance(argv, list) or argv != expected_argv:
@@ -302,6 +310,12 @@ def audit_document(raw: dict, receipt: dict | None = None, raw_sha256: str | Non
                 or receipt.get("exit_code") != 0 or receipt.get("formal_invocations") != 1
                 or receipt.get("retries") != 0):
             errors.append("formal_receipt_identity")
+        if (receipt.get("container_timed_out") is not False
+                or receipt.get("container_cleanup_exit_code") is not None
+                or receipt.get("container_cleanup_stderr") is not None
+                or not isinstance(receipt.get("container_id"), str)
+                or re.fullmatch(r"[0-9a-f]{64}", receipt.get("container_id", "")) is None):
+            errors.append("formal_container_lifecycle")
         if (not isinstance(receipt.get("lease_id"), str) or not receipt["lease_id"]
                 or not isinstance(receipt.get("owner_comment_url"), str)):
             errors.append("formal_owner_lease")
@@ -317,6 +331,7 @@ def audit_document(raw: dict, receipt: dict | None = None, raw_sha256: str | Non
             match = (re.fullmatch(
                 r"https://github\.com/Unjuno/agent-interface/issues/5085#issuecomment-(\d+)",
                 owner_url) if isinstance(owner_url, str) else None)
+            expected_comment_id = int(match.group(1)) if match else None
             blocks = (re.findall(r"<!-- needle-docker-owner-lease-v1\n(\{.*?\})\n-->",
                                  body, re.DOTALL) if isinstance(body, str) else [])
             try:
@@ -331,11 +346,14 @@ def audit_document(raw: dict, receipt: dict | None = None, raw_sha256: str | Non
                 "lease_id": receipt.get("lease_id"), "slot_start_utc": receipt.get("slot_start_utc"),
                 "slot_end_utc": receipt.get("slot_end_utc"), "expires_at_utc": receipt.get("expires_at_utc"),
             }
-            if (not match or comment.get("html_url") != owner_url
+            if (not match or type(comment.get("id")) is not int
+                    or comment.get("id") != expected_comment_id
+                    or comment.get("html_url") != owner_url
                     or owner_payload != expected_payload):
                 errors.append("formal_owner_comment_payload")
             live_comment = fetch_owner_comment_record(owner_url) if match else None
             if (live_comment is None
+                    or live_comment.get("id") != expected_comment_id
                     or live_comment.get("html_url") != owner_url
                     or live_comment.get("issue_url") != comment.get("issue_url")
                     or not isinstance(live_comment.get("user"), dict)
