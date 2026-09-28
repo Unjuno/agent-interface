@@ -672,3 +672,29 @@ Evidence: runtime/results/guarded-navigation-batch-primary-01. Host send-to-repl
 total 9,164.4469 ms and first-send-to-last-reply span 217,600.0314 ms are recorded
 boundaries including retrieval/close, not useful-feedback or semantic latency.
 Actual model tokens/cost and comparable human tempo remain unproven.
+
+
+### Bounded decoded observation history checkpoint
+
+The guarded bridge now retains at most two decoded images in its own cache.
+Older explicit source access reloads exact hash-checked PNG bytes, without a new
+capture or source-sequence change. Original metadata remains session-local;
+window review clears it. Missing or corrupt old artifacts refuse grounding.
+This bounds decoded cache ownership, not metadata, handle patches, disk growth,
+external references or total session memory.
+
+Source 7c54a7bae passed 262 protocol and 111 harness checks. An isolated 128-image
+retention comparison measured about 528 MiB RSS for dictionary retention and
+39 MiB for the cache across three alternating pairs, with exact old-image pixel
+parity. These are synthetic storage measurements, not live-loop/model performance.
+The primary used the exact portable artifact, evicted source 1 through two newer
+observations, minted from source 1, reviewed the entered value and independently
+saved task-1 once. Eight MCP calls included explicit close and historical-image
+retrieval. The six-task oracle correctly stays false with five unattempted tasks.
+Evidence and limitations: runtime/results/decoded-observation-history-01.
+
+The earlier 250 ms navigation allocation was interrupted and is retained at
+runtime/results/guarded-navigation-delay250-interrupted-01. Twelve replies and
+two saved-page reviews are not independent six-task completion evidence. No wait
+default promotion, semantic sensor, replay policy, actual token-cost or human
+speed claim follows from either result.

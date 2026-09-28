@@ -14,6 +14,7 @@ import uuid
 
 from PIL import Image
 from .handles import TargetHandleStore
+from .history import ObservationHistory
 from runtime.backends.x11_v1.backend import X11Backend, X11BackendError
 from runtime.backends.x11_v1.session import X11RuntimeSession
 from runtime.core_v1.contract import SCHEMA_PROGRAM
@@ -63,7 +64,7 @@ class NativeHandleBridge:
         self.scope = "native-x11:" + uuid.uuid4().hex
         self.store = TargetHandleStore(self.scope)
         self.sequence = 0
-        self.history = {}
+        self.history = ObservationHistory()
         self.checks = []
         self.active = None
         self.moved_point = None
