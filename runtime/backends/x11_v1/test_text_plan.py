@@ -24,13 +24,20 @@ class TextPlanTests(unittest.TestCase):
         backend._keycode.assert_not_called()
         self.assertEqual(backend.held_keycodes, {})
 
-    def test_uppercase_arrow_refusal_explains_canonical_name_without_emission(self):
+    def test_uppercase_refusal_explains_canonical_name_without_emission(self):
         backend = object.__new__(X11Backend)
         backend.d = mock.Mock()
         backend.d.keysym_to_keycode.return_value = 0
+        cases = {'RIGHT':'Right', 'LEFT':'Left', 'UP':'Up', 'DOWN':'Down',
+                 'HOME':'Home', 'END':'End', 'BACKSPACE':'BackSpace',
+                 'DELETE':'Delete', 'INSERT':'Insert'}
         with mock.patch('runtime.backends.x11_v1.backend.xtest.fake_input') as emitted:
-            with self.assertRaisesRegex(X11BackendError, 'use Right'):
-                backend._keycode('RIGHT')
+            for supplied, canonical in cases.items():
+                with self.subTest(key=supplied), self.assertRaisesRegex(X11BackendError, 'use '+canonical):
+                    backend._keycode(supplied)
+            with self.assertRaises(X11BackendError) as unknown:
+                backend._keycode('UNKNOWN_KEY')
+            self.assertNotIn('use ', str(unknown.exception))
             emitted.assert_not_called()
 
     def test_supported_punctuation_uses_x_keysym_names_and_shift(self):
