@@ -1,0 +1,169 @@
+{
+  "schema": "w2-lease-close-candidate-matrix-result-v1",
+  "disposition": "PASS_HOST_CLOSE_ORDER_CANDIDATE_MATRIX_ONLY",
+  "source_main_snapshot": "611962d32477f8a86096431227a819418ceef994",
+  "fixture_sha256": "6a693f06b1b4be15a8da35ec3aaf806d7fb3601091c8ef638c516069d1b4e95f",
+  "runtime": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "container": false,
+  "matrix": {
+    "no_close": {
+      "expected_target_decisions": [
+        "AUTHORIZED_MATCH",
+        "AUTHORIZED_MATCH"
+      ],
+      "candidate_cli": {
+        "exit_code": 0,
+        "stdout": "{\"case_count\": 8, \"report_sha256\": \"cdf6f4cd09f4f028bb9dbe9fba2902af7dbc87a8b4d99d9659f862272f999602\"}\n",
+        "stderr": ""
+      },
+      "auditor_cli": {
+        "exit_code": 0,
+        "stdout": "{\"disposition\": \"PASS_CLOSE_ORDER_RAW_AUDIT_SCOPED\", \"errors\": [], \"case_count\": 8}\n",
+        "stderr": ""
+      },
+      "audit_disposition": "PASS_CLOSE_ORDER_RAW_AUDIT_SCOPED",
+      "audit_errors": [],
+      "decision_rows": 14,
+      "outputs_sha256": {
+        "trace-cases.json": "5d22d05f124b25245a958bd3325ee7e5083f2ecd6c06a95adaad5799e1923daf",
+        "candidate.json": "cdf6f4cd09f4f028bb9dbe9fba2902af7dbc87a8b4d99d9659f862272f999602",
+        "audit.json": "29c32553344935a32e10a8ba6f32fdc7e605db147b1eb01a0bc01924c8e1379f"
+      }
+    },
+    "pre_close": {
+      "expected_target_decisions": [
+        "AUTHORIZED_MATCH",
+        "AUTHORIZED_MATCH"
+      ],
+      "candidate_cli": {
+        "exit_code": 0,
+        "stdout": "{\"case_count\": 8, \"report_sha256\": \"ebc7d24d2f5656e5c3a76e35d0dca051ccdfa341d58ddf62c9b8c1bf42e2754f\"}\n",
+        "stderr": ""
+      },
+      "auditor_cli": {
+        "exit_code": 0,
+        "stdout": "{\"disposition\": \"PASS_CLOSE_ORDER_RAW_AUDIT_SCOPED\", \"errors\": [], \"case_count\": 8}\n",
+        "stderr": ""
+      },
+      "audit_disposition": "PASS_CLOSE_ORDER_RAW_AUDIT_SCOPED",
+      "audit_errors": [],
+      "decision_rows": 14,
+      "outputs_sha256": {
+        "trace-cases.json": "deed3c1a2e66ae2790907209e7f2b9fbb8b84697a52f419a53627cef390260e5",
+        "candidate.json": "ebc7d24d2f5656e5c3a76e35d0dca051ccdfa341d58ddf62c9b8c1bf42e2754f",
+        "audit.json": "9ffef3c063aff58db288f6b4879899f982e8850f88af54a4944b8189e3c37299"
+      }
+    },
+    "post_close": {
+      "expected_target_decisions": [
+        "REJECT_EDGE_AFTER_LEASE_CLOSE",
+        "REJECT_EDGE_AFTER_LEASE_CLOSE"
+      ],
+      "candidate_cli": {
+        "exit_code": 0,
+        "stdout": "{\"case_count\": 8, \"report_sha256\": \"faf4d9d7f31200d3c3467bcf06ddc410144ded3907af3ab54208b14b761090ad\"}\n",
+        "stderr": ""
+      },
+      "auditor_cli": {
+        "exit_code": 0,
+        "stdout": "{\"disposition\": \"PASS_CLOSE_ORDER_RAW_AUDIT_SCOPED\", \"errors\": [], \"case_count\": 8}\n",
+        "stderr": ""
+      },
+      "audit_disposition": "PASS_CLOSE_ORDER_RAW_AUDIT_SCOPED",
+      "audit_errors": [],
+      "decision_rows": 14,
+      "outputs_sha256": {
+        "trace-cases.json": "ecbb3dc94f30854024d3bf4e9fceb44d8f4964924fdf47492fab6a9c89984e08",
+        "candidate.json": "faf4d9d7f31200d3c3467bcf06ddc410144ded3907af3ab54208b14b761090ad",
+        "audit.json": "8f0082c9bde41f8e59c08e46db478df0c70b2f0488af301c0f2eb6615f0be528"
+      }
+    },
+    "overlap": {
+      "expected_target_decisions": [
+        "HOLD_EDGE_CLOSE_ORDER_UNCERTAIN",
+        "REJECT_EDGE_AFTER_LEASE_CLOSE"
+      ],
+      "candidate_cli": {
+        "exit_code": 0,
+        "stdout": "{\"case_count\": 8, \"report_sha256\": \"8ad2c1280d5f943c1c9c7759c2f9b3dfda61de925a293d55f02cf9f866efde77\"}\n",
+        "stderr": ""
+      },
+      "auditor_cli": {
+        "exit_code": 0,
+        "stdout": "{\"disposition\": \"PASS_CLOSE_ORDER_RAW_AUDIT_SCOPED\", \"errors\": [], \"case_count\": 8}\n",
+        "stderr": ""
+      },
+      "audit_disposition": "PASS_CLOSE_ORDER_RAW_AUDIT_SCOPED",
+      "audit_errors": [],
+      "decision_rows": 14,
+      "outputs_sha256": {
+        "trace-cases.json": "168413cc3491a39cabff9a6990e29231322d8efa0b89463b167b7d2eadd59b82",
+        "candidate.json": "8ad2c1280d5f943c1c9c7759c2f9b3dfda61de925a293d55f02cf9f866efde77",
+        "audit.json": "073d02aaba5fe9cda2a19eecd1504911674136061afd00d9db3cc0544347ff01"
+      }
+    },
+    "foreign_close": {
+      "expected_target_decisions": [
+        "HOLD_CLOSE_LINEAGE_UNRESOLVED",
+        "HOLD_CLOSE_LINEAGE_UNRESOLVED"
+      ],
+      "candidate_cli": {
+        "exit_code": 0,
+        "stdout": "{\"case_count\": 8, \"report_sha256\": \"9e3a797422058e2826715a22a1f92cf284193f0d1155396012b1293f8ebec93c\"}\n",
+        "stderr": ""
+      },
+      "auditor_cli": {
+        "exit_code": 0,
+        "stdout": "{\"disposition\": \"PASS_CLOSE_ORDER_RAW_AUDIT_SCOPED\", \"errors\": [], \"case_count\": 8}\n",
+        "stderr": ""
+      },
+      "audit_disposition": "PASS_CLOSE_ORDER_RAW_AUDIT_SCOPED",
+      "audit_errors": [],
+      "decision_rows": 14,
+      "outputs_sha256": {
+        "trace-cases.json": "30d11a527978d8762ddc20a32b954fd3b0e6c44a576d319aaef46790ab5245ff",
+        "candidate.json": "9e3a797422058e2826715a22a1f92cf284193f0d1155396012b1293f8ebec93c",
+        "audit.json": "92dd80c9d6c5560e118e5b16fcb40ec9cb8a1cdc818e15c24e3dce6623b5a202"
+      }
+    },
+    "missing_close": {
+      "expected_target_decisions": [
+        "HOLD_CLOSE_LINEAGE_UNRESOLVED",
+        "HOLD_CLOSE_LINEAGE_UNRESOLVED"
+      ],
+      "candidate_cli": {
+        "exit_code": 0,
+        "stdout": "{\"case_count\": 8, \"report_sha256\": \"ba60632d9689204c6a756b368615347c6a169fa897e8a537a257f8a8e1e03750\"}\n",
+        "stderr": ""
+      },
+      "auditor_cli": {
+        "exit_code": 0,
+        "stdout": "{\"disposition\": \"PASS_CLOSE_ORDER_RAW_AUDIT_SCOPED\", \"errors\": [], \"case_count\": 8}\n",
+        "stderr": ""
+      },
+      "audit_disposition": "PASS_CLOSE_ORDER_RAW_AUDIT_SCOPED",
+      "audit_errors": [],
+      "decision_rows": 14,
+      "outputs_sha256": {
+        "trace-cases.json": "4c69f7c43ef02f6c2cb76982f2bb4449e17670878ec3bee0d934010a8ba73b02",
+        "candidate.json": "ba60632d9689204c6a756b368615347c6a169fa897e8a537a257f8a8e1e03750",
+        "audit.json": "f878136c19bcd129d283a5b1012603940999828b9856802b644651c99eb6c71e"
+      }
+    }
+  },
+  "tamper_control": {
+    "auditor_exit_code": 1,
+    "auditor_stdout": "{\"disposition\": \"FAIL_CLOSE_ORDER_RAW_AUDIT\", \"errors\": [\"candidate_raw_disagreement:release-before-terminal\"], \"case_count\": 8}\n",
+    "auditor_stderr": "",
+    "tampered_candidate_sha256": "0cac6a702f90dc445f931f3b597ed89fbfc7ad34512b10e7c06dbbcd3e7c64d0",
+    "audit_sha256": "6733421eb19f0af29e3c4d285a9cbd7fd200a466a663a1c070aa533a66dc8211",
+    "audit_errors": [
+      "candidate_raw_disagreement:release-before-terminal"
+    ]
+  },
+  "limits": [
+    "Synthetic host-CPU candidate construction only; not Docker/formal evidence.",
+    "Foreign or missing close actuation lineage conservatively HOLD; no broader close policy is claimed.",
+    "No live authority, GUI, model, task effect, or runtime integration is tested."
+  ]
+}
