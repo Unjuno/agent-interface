@@ -190,6 +190,16 @@ allocation lease/release. The historical Docker construction is not evidence
 for this source. No model, optimizer, formal seeds, raw result, or scientific
 quality/latency claim is included.
 
+## Current-main sync — 2026-09-29
+
+GitHub reports main at `0a213fdb794d7c2498868fb109b1794465b70489`. Compare from
+the prior v6 base found eight commits and no changes in this v6 path; after
+committing the current host-only hardening, the branch merged that main tip
+without conflict at `1b4af173771c2de8831ff23bbe2771814be8d478`. The imported
+changes are unrelated runtime/X11 and evidence paths (#5237/#5239). Re-run the
+host suite after synchronization; this does not authorize a Docker call or
+formal run.
+
 ## Adjacent Needle/System-1 issue triage — 2026-09-29
 
 Current open-issue/comment recheck found concurrent-LoRA pressure and CPU2
