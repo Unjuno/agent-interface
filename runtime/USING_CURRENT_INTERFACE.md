@@ -554,3 +554,9 @@ the known Tk fixture saved the exact text in 6/6 cases with this pause versus 2/
 without it; four missing-prefix outcomes are retained. The pause added about
 54.4 ms to median local tool return. This does not establish a universal 50 ms
 threshold or faster end-to-end use, and it does not replace value review.
+
+[Primary two-editor use](results/click-primary-01/README.md) applied the explicit
+pause through the portable public MCP runtime, reviewed each unsaved value, then
+saved in a separate program. Both final files were exact with six calls, five
+images and no repair. This is functional evidence for the explicit workflow;
+reviewing before save adds a decision boundary and is not a speedup claim.
