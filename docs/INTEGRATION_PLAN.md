@@ -1,3 +1,13 @@
+## X11 resync-cut intake — 2026-09-28
+
+[Docker re-audit and compatibility mapping](../runtime/results/resync-cut-intake-01/README.md)
+reproduced the saved 2,478-check audit, all 12 effective corruption controls and
+seven policy tests without rerunning any native allocation. Shared runtime adoption
+remains HOLD: the research needs a producer-authored contiguous state sequence,
+complete snapshot cut and explicit event gap. Public/guarded capture sequences,
+motor recovery and acknowledged image references do not provide those contracts.
+No automatic resync, sensor, wait-policy or input authority was introduced.
+
 ## Reviewed-image functional pair — 2026-09-28
 
 [One primary Calc pair](../runtime/results/reviewed-image-pair-01/README.md)
