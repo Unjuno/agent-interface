@@ -1,0 +1,486 @@
+{
+  "schema": "agent-interface/primary-functional-pair-result-v1",
+  "status": "FUNCTIONAL_PAIR_PASS_EFFICIENCY_HOLD",
+  "arms": {
+    "B0-full": {
+      "saved_values": [
+        324,
+        145
+      ],
+      "call_count": 9,
+      "dispatch_count": 3,
+      "image_reply_count": 7,
+      "full_image_count": 7,
+      "reference_count": 0,
+      "omitted_png_bytes": 0,
+      "extra_observations": 1,
+      "input_programs": [
+        {
+          "program_id": "enter-two-cells",
+          "source": {
+            "observation_seq": 1,
+            "binding_revision": 1
+          },
+          "ops": [
+            {
+              "op": "focus",
+              "target": "app"
+            },
+            {
+              "op": "text",
+              "text": "324",
+              "gap_ms": 20
+            },
+            {
+              "op": "key_chord",
+              "keys": [
+                "ENTER"
+              ]
+            },
+            {
+              "op": "wait_update",
+              "timeout_ms": 100
+            },
+            {
+              "op": "text",
+              "text": "145",
+              "gap_ms": 20
+            },
+            {
+              "op": "key_chord",
+              "keys": [
+                "ENTER"
+              ]
+            },
+            {
+              "op": "wait_update",
+              "timeout_ms": 100
+            },
+            {
+              "op": "observe",
+              "frame": "screen_physical_px",
+              "region": [
+                0,
+                0,
+                1280,
+                800
+              ]
+            },
+            {
+              "op": "release_all"
+            }
+          ],
+          "current_observation_seq": 1,
+          "current_binding_revision": 1
+        },
+        {
+          "program_id": "save-cells",
+          "source": {
+            "observation_seq": 1,
+            "binding_revision": 1
+          },
+          "ops": [
+            {
+              "op": "focus",
+              "target": "app"
+            },
+            {
+              "op": "key_chord",
+              "keys": [
+                "CTRL",
+                "S"
+              ]
+            },
+            {
+              "op": "wait_update",
+              "timeout_ms": 100
+            },
+            {
+              "op": "observe",
+              "frame": "screen_physical_px",
+              "region": [
+                0,
+                0,
+                1280,
+                800
+              ]
+            },
+            {
+              "op": "release_all"
+            }
+          ],
+          "current_observation_seq": 1,
+          "current_binding_revision": 1
+        },
+        {
+          "program_id": "confirm-excel",
+          "source": {
+            "observation_seq": 1,
+            "binding_revision": 2
+          },
+          "ops": [
+            {
+              "op": "focus",
+              "target": "app"
+            },
+            {
+              "op": "key_chord",
+              "keys": [
+                "ENTER"
+              ]
+            },
+            {
+              "op": "wait_update",
+              "timeout_ms": 100
+            },
+            {
+              "op": "release_all"
+            }
+          ],
+          "current_observation_seq": 1,
+          "current_binding_revision": 2
+        }
+      ],
+      "rows": [
+        {
+          "attempt": 1,
+          "tool": "interface_observe",
+          "image_count": 1,
+          "mode": "full",
+          "base_attempt": null,
+          "png_bytes": 57008,
+          "original_text_bytes": 3512
+        },
+        {
+          "attempt": 2,
+          "tool": "interface_dispatch",
+          "image_count": 1,
+          "mode": "full",
+          "base_attempt": null,
+          "png_bytes": 58556,
+          "original_text_bytes": 7996
+        },
+        {
+          "attempt": 3,
+          "tool": "interface_dispatch",
+          "image_count": 1,
+          "mode": "full",
+          "base_attempt": null,
+          "png_bytes": 76927,
+          "original_text_bytes": 4965
+        },
+        {
+          "attempt": 4,
+          "tool": "interface_inspect_target",
+          "image_count": 1,
+          "mode": "full",
+          "base_attempt": null,
+          "png_bytes": 76927,
+          "original_text_bytes": 2463
+        },
+        {
+          "attempt": 5,
+          "tool": "interface_review_target",
+          "image_count": 1,
+          "mode": "full",
+          "base_attempt": null,
+          "png_bytes": 76927,
+          "original_text_bytes": 2287
+        },
+        {
+          "attempt": 6,
+          "tool": "interface_dispatch",
+          "image_count": 0,
+          "mode": "full",
+          "base_attempt": null,
+          "png_bytes": 0,
+          "original_text_bytes": 2691
+        },
+        {
+          "attempt": 7,
+          "tool": "interface_inspect_target",
+          "image_count": 1,
+          "mode": "full",
+          "base_attempt": null,
+          "png_bytes": 75490,
+          "original_text_bytes": 2467
+        },
+        {
+          "attempt": 8,
+          "tool": "interface_inspect_target",
+          "image_count": 1,
+          "mode": "full",
+          "base_attempt": null,
+          "png_bytes": 58475,
+          "original_text_bytes": 2467
+        },
+        {
+          "attempt": 9,
+          "tool": "interface_close",
+          "image_count": 0,
+          "mode": "full",
+          "base_attempt": null,
+          "png_bytes": 0,
+          "original_text_bytes": 736
+        }
+      ],
+      "host_timing_ms": {
+        "sum_send_to_reply": 2681.3340999931097,
+        "enter_send_to_declared_review": 13099.95759999752,
+        "confirm_send_to_saved_declaration": 23240.171700000763,
+        "first_send_to_saved_declaration": 86116.03709999844
+      },
+      "cleanup": [
+        {
+          "pid": 14669,
+          "returncode": 0
+        },
+        {
+          "pid": 14673,
+          "returncode": 1
+        },
+        {
+          "pid": 14678,
+          "returncode": 255
+        }
+      ]
+    },
+    "C1-reviewed-reference": {
+      "saved_values": [
+        324,
+        145
+      ],
+      "call_count": 8,
+      "dispatch_count": 3,
+      "image_reply_count": 6,
+      "full_image_count": 4,
+      "reference_count": 2,
+      "omitted_png_bytes": 153854,
+      "extra_observations": 0,
+      "input_programs": [
+        {
+          "program_id": "enter-two-cells",
+          "source": {
+            "observation_seq": 1,
+            "binding_revision": 1
+          },
+          "ops": [
+            {
+              "op": "focus",
+              "target": "app"
+            },
+            {
+              "op": "text",
+              "text": "324",
+              "gap_ms": 20
+            },
+            {
+              "op": "key_chord",
+              "keys": [
+                "ENTER"
+              ]
+            },
+            {
+              "op": "wait_update",
+              "timeout_ms": 100
+            },
+            {
+              "op": "text",
+              "text": "145",
+              "gap_ms": 20
+            },
+            {
+              "op": "key_chord",
+              "keys": [
+                "ENTER"
+              ]
+            },
+            {
+              "op": "wait_update",
+              "timeout_ms": 100
+            },
+            {
+              "op": "observe",
+              "frame": "screen_physical_px",
+              "region": [
+                0,
+                0,
+                1280,
+                800
+              ]
+            },
+            {
+              "op": "release_all"
+            }
+          ],
+          "current_observation_seq": 1,
+          "current_binding_revision": 1
+        },
+        {
+          "program_id": "save-cells",
+          "source": {
+            "observation_seq": 1,
+            "binding_revision": 1
+          },
+          "ops": [
+            {
+              "op": "focus",
+              "target": "app"
+            },
+            {
+              "op": "key_chord",
+              "keys": [
+                "CTRL",
+                "S"
+              ]
+            },
+            {
+              "op": "wait_update",
+              "timeout_ms": 100
+            },
+            {
+              "op": "observe",
+              "frame": "screen_physical_px",
+              "region": [
+                0,
+                0,
+                1280,
+                800
+              ]
+            },
+            {
+              "op": "release_all"
+            }
+          ],
+          "current_observation_seq": 1,
+          "current_binding_revision": 1
+        },
+        {
+          "program_id": "confirm-excel",
+          "source": {
+            "observation_seq": 1,
+            "binding_revision": 2
+          },
+          "ops": [
+            {
+              "op": "focus",
+              "target": "app"
+            },
+            {
+              "op": "key_chord",
+              "keys": [
+                "ENTER"
+              ]
+            },
+            {
+              "op": "wait_update",
+              "timeout_ms": 100
+            },
+            {
+              "op": "release_all"
+            }
+          ],
+          "current_observation_seq": 1,
+          "current_binding_revision": 2
+        }
+      ],
+      "rows": [
+        {
+          "attempt": 1,
+          "tool": "interface_observe",
+          "image_count": 1,
+          "mode": "full",
+          "base_attempt": null,
+          "png_bytes": 57008,
+          "original_text_bytes": 3554
+        },
+        {
+          "attempt": 2,
+          "tool": "interface_dispatch",
+          "image_count": 1,
+          "mode": "full",
+          "base_attempt": null,
+          "png_bytes": 58556,
+          "original_text_bytes": 8040
+        },
+        {
+          "attempt": 3,
+          "tool": "interface_dispatch",
+          "image_count": 1,
+          "mode": "full",
+          "base_attempt": null,
+          "png_bytes": 76927,
+          "original_text_bytes": 5022
+        },
+        {
+          "attempt": 4,
+          "tool": "interface_inspect_target",
+          "image_count": 1,
+          "mode": "reviewed-image-reference",
+          "base_attempt": 3,
+          "png_bytes": 76927,
+          "original_text_bytes": 2499
+        },
+        {
+          "attempt": 5,
+          "tool": "interface_review_target",
+          "image_count": 1,
+          "mode": "reviewed-image-reference",
+          "base_attempt": 3,
+          "png_bytes": 76927,
+          "original_text_bytes": 2322
+        },
+        {
+          "attempt": 6,
+          "tool": "interface_dispatch",
+          "image_count": 0,
+          "mode": "full",
+          "base_attempt": null,
+          "png_bytes": 0,
+          "original_text_bytes": 2711
+        },
+        {
+          "attempt": 7,
+          "tool": "interface_inspect_target",
+          "image_count": 1,
+          "mode": "full",
+          "base_attempt": null,
+          "png_bytes": 58489,
+          "original_text_bytes": 2503
+        },
+        {
+          "attempt": 8,
+          "tool": "interface_close",
+          "image_count": 0,
+          "mode": "full",
+          "base_attempt": null,
+          "png_bytes": 0,
+          "original_text_bytes": 751
+        }
+      ],
+      "host_timing_ms": {
+        "sum_send_to_reply": 2304.1204000003636,
+        "enter_send_to_declared_review": 14738.892200000584,
+        "confirm_send_to_saved_declaration": 18616.518199998885,
+        "first_send_to_saved_declaration": 85589.50879999995
+      },
+      "cleanup": [
+        {
+          "pid": 15125,
+          "returncode": 0
+        },
+        {
+          "pid": 15129,
+          "returncode": 1
+        },
+        {
+          "pid": 15134,
+          "returncode": 255
+        }
+      ]
+    }
+  },
+  "identical_input_programs": true,
+  "timing_scope": "Host monotonic boundaries and caller review declarations only, including orchestrator/model/tool delays. Fixed-order one pair with unfrozen render timings; no causal latency or useful-feedback improvement.",
+  "request_difference_scope": "B0 extra save-transition observation; cannot attribute to image reuse."
+}
