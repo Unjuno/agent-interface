@@ -320,3 +320,32 @@ Selection and image delivery have separate outcomes: target_reviewed and the new
 ## Existing native method reuse
 
 The [native guarded form method](../research/live_control/NATIVE_GUARDED_FORM.md) is now an importable function used by the existing six-task harness. [Primary use](results/native-method-primary-01/README.md) retains six exact submissions, changed-layout refusal and explicit repair. It remains a scoped native integration component; it is not a new public MCP tool or generic semantic form verifier.
+
+
+### Optional guarded brief responses and strict argument names
+
+In guarded-x11 mode, interface_guarded_input accepts detail="brief" (default "full"). It summarizes only known normal exact-match guard details; all other result fields and images remain unchanged. Critical or unfamiliar evidence stays full. Follow presentation.retrieve to interface_results with detail="full" for retained details; this does not replay input. Full raw reports remain authoritative.
+
+Use interaction="keyboard" for keyboard-only input and provide the minted offset. Unknown top-level tool arguments are now rejected before operation invocation: pointer=false is not supported. Hosts must pass through SDK text errors rather than assuming every text block is JSON.
+
+Primary six-task evidence: runtime/results/guarded-mcp-brief-primary-03, including one unexpected ignored-argument recovery and one planned stale-layout refusal. Previous interrupted and failed trials are retained beside it. The byte reduction is a same-report metadata comparison only, not measured model-token or speed savings.
+
+### Register several explicit references from one image
+
+In guarded-x11 mode, interface_guarded_mint_many accepts one viewed source_sequence
+and 1–8 references, each with alias, point and region_size. It uses the existing
+single-reference registration rules and returns each alias and offset. This sends
+no input and selects no targets for the model. Duplicate aliases and malformed
+reference schemas are refused before opening the backend.
+
+Registration is sequential, not atomic. On mint_incomplete, inspect minted,
+failed_alias, failed_alias_state and unattempted_aliases. Earlier registrations
+remain; the failed alias may already exist if persistence failed. Do not replay
+the batch assuming rollback. Retrieve the retained call for evidence.
+
+[Primary six-task use](results/guarded-mint-many-primary-02/README.md) registered
+five explicit references in two calls, recovered from the planned stale-layout
+refusal, and completed six independently correct submissions exactly once.
+[The prior interrupted trial](results/guarded-mint-many-interrupted-01/README.md)
+is retained. This establishes scoped usability; matched speed and actual model
+token/cost improvements have not been measured.

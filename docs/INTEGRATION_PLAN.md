@@ -579,3 +579,36 @@ under runtime/results/relay-host-timeline-primary-01. Callback-to-review gaps
 around 9.5 to 14 seconds are host boundaries, not isolated model latency. Matched
 performance, first useful model-visible feedback and actual token/cost accounting
 remain open. No speedup or overall completion is claimed.
+
+### Guarded brief presentation and unknown-argument checkpoint
+
+Opt-in detail="brief" now shares the public guarded transport's full report journal and exact image path. Normal exact-match guard details alone are summarized; full remains default and failures remain detailed. A primary six-task trial against d3ad158ae completed all exact saves once and verified read-after-close and release. It required unexpected recovery after pointer:false was silently ignored by the SDK. This failure is retained, and subsequent source e609b1971 rejects unknown top-level arguments through public FastMCP list/call methods before backend invocation. Nested program/tail validation is unchanged.
+
+Evidence: guarded-mcp-brief-interrupted-01, guarded-mcp-brief-host-failure-02, guarded-mcp-brief-primary-03, guarded-mcp-unknown-arguments-01 under runtime/results. The completed trial's 130,035 to 108,586 metadata bytes is a same-record comparison. Actual model tokens/cost, useful-feedback latency, semantic completion latency, matched baselines and human tempo remain unproven. No host text projection was used in trial03; prior trials differ in that respect. Protocol 247 and harness 106 checks passed after the argument fix, plus actual stdio and portable-archive refusal checks.
+
+Issue intake: #5126 identifies malformed/duplicate lineage acceptance in the separately owned #1839/#5123 synthetic contract. Its historical frozen evidence must remain unchanged; it does not authorize or substantiate live production adoption. Latest main's added synthetic report is retained as research, not used as GUI performance evidence.
+
+### Bounded same-image reference registration checkpoint
+
+interface_guarded_mint_many groups 1–8 model-selected references from a single
+viewed image through the existing mint operation. It adds no input queue or
+automatic selection. Schema/duplicate validation occurs before backend opening;
+partial runtime failure preserves earlier registrations and reports the failed
+alias as unknown, with later aliases unattempted. Existing single mint remains.
+
+Primary seed 991335 completed six exact-once independent submissions with 30 MCP
+calls: one observe, two registrations (3+2 references), 22 completed inputs, one
+planned stale-reference refusal, three retained reads and close. Every entered
+value was reviewed before Save. Close verified empty held input; transport and
+fixture exited 0. GUI child codes 0/1/1 are retained, not reported as all-success.
+Evidence: runtime/results/guarded-mint-many-primary-02 (514 files, optimized audit
+passes). The interrupted seed 991334 remains separately preserved (297 files).
+A discovered relay allowlist omission was fixed; public tool discovery coverage
+now prevents that class of integration omission. Local 251 protocol and 106 harness
+tests passed. Five registrations grouped into two reduce registration calls by
+construction, but overall matched latency, useful feedback, semantic completion,
+actual model tokens/cost and human tempo remain unmeasured.
+
+Issue intake: #5134 is a separately allocated OrbStack publication successor with
+explicit queue gates and no GUI/model/product claims. Its predecessor STOP and
+new main's synthetic research remain unchanged; they are not live adoption evidence.

@@ -302,3 +302,37 @@ records six exact saves, a stale-alias refusal before input, explicit recovery,
 source-bound review receipts and result retrieval after close. The earlier
 interrupted trial is retained separately. This establishes scoped integration
 and usability, not matched performance, token savings or human-like tempo.
+
+## Brief guarded-input details
+
+`interface_guarded_input(..., detail="brief")` optionally summarizes repeated
+normal exact-match guard records. The default is `detail="full"`. This adapts the
+positive-only native brief-review approach to public guarded reports; it is not
+a lossless codec. `result.guard_summary` replaces `result.guard_checks` only for
+known completed results with an image, no recovery, verified empty releases,
+completed waits and unmoved exact-region guards. Other result fields, observation
+identity and image stay unchanged. Failures, persistence errors, translations,
+unknown guard/result extensions and unsupported shapes retain full detail.
+
+The `presentation.retrieve` object gives an exact `interface_results` call with
+`detail="full"` and `include_image=false`. It reads the original retained report
+without input or observation. Result retrieval also accepts `detail="brief"`;
+this applies only to guarded reports and leaves other modes unchanged. Raw
+`report.json` is never replaced by the summary. A caller must inspect release,
+feedback and task state separately; a brief normal receipt is not semantic success.
+
+The option can reduce serialized metadata for repeated normal guards, but this
+is not evidence of fewer actual model tokens, lower cost or faster decisions.
+
+### Unknown top-level arguments
+
+Public MCP tools reject unknown top-level argument names before invoking the operation or opening the backend. Discovery advertises `additionalProperties: false`. For keyboard-only guarded input, use `interaction: "keyboard"`; `pointer: false` is not an argument. Do not infer accepted semantics from an unrecognized flag. This check does not alter nested program or tail validation. Validation errors may be plain text from the SDK; host renderers must not assume every text block is JSON.
+
+
+### Register multiple references from one image
+
+In guarded-x11 mode, interface_guarded_mint_many accepts one source_sequence and 1..8 references, each containing alias, point=[screen_x,screen_y], and region_size=[width,height]. Use the exact delivered source you inspected. Each alias must match [a-z][a-z0-9_]{0,31}; points are integer pairs and region dimensions are 4..96 pixels. Unknown nested fields and duplicate aliases refuse before any registration. This reuses the existing bridge mint operation; it does not capture, click, infer targets, acknowledge UI state, or weaken later input guards.
+
+Successful entries return alias/offset pairs under minted. Registration is sequential and not atomic. If minting raises, the reply retains earlier successes, identifies failed_index and failed_alias with failed_alias_state="unknown", and lists unattempted_aliases. Registration may have occurred before a persistence failure, so do not replay the batch or reuse the failed alias. Inspect the outcome and explicitly choose fresh references if needed. Full retained results remain available without reminting.
+
+This transport option reduces the number of registration requests for a supplied group by construction. It does not establish lower model latency, token cost, or generic task completion; primary GUI validation and matched measurement are separate requirements.
