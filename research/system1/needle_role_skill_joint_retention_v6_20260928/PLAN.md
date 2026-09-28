@@ -25,8 +25,9 @@ does not test natural-language role recognition or product behavior.
 - `runner.py` creates one fresh feedback row after a dedicated inference
   worker's first real call begins, snapshots the selected adapter, and records
   each inference call interval while the update worker processes the row.
-- `audit.py` imports only the main-pinned predecessor raw auditor, verifies
-  source lineage and replays every inference snapshot and optimizer trajectory.
+- `audit.py` independently reconstructs event and argv contracts without
+  importing candidate `protocol.py`, then imports only the pinned predecessor
+  raw auditor to replay inference snapshots and optimizer trajectories.
 - `formal.py` has a lease-gated, single-invocation Docker path with no retry;
   it rejects missing or mismatched owner-comment leases before `docker run`.
 - No container invocation until coordinator/resource release is explicit.

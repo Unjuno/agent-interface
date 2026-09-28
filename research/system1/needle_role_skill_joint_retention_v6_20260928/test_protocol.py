@@ -5,6 +5,7 @@ import unittest
 import ast
 import hashlib
 import importlib.util
+import json
 import sys
 
 import protocol
@@ -159,12 +160,36 @@ class FrozenSourceAndConstructionContract(unittest.TestCase):
     def test_auditor_requires_full_receipt_argv_and_independent_lineage(self):
         source = AUDIT_PATH.read_text(encoding="utf-8")
         tree = ast.parse(source)
-        self.assertIn("exact_argv_matches", source)
-        self.assertIn("docker_argv", source)
+        self.assertIn("argv != expected_argv", source)
+        self.assertIn("expected_docker_argv", source)
+        self.assertNotIn("from protocol import", source)
         self.assertNotIn("runner.py\")", source)
         self.assertIn("LEGACY_AUDIT_SHA256", source)
         self.assertTrue(any(isinstance(node, ast.FunctionDef) and node.name == "audit_document"
                             for node in tree.body))
+
+    def test_independent_auditor_rebuilds_argv_and_live_window_contract(self):
+        spec = importlib.util.spec_from_file_location("needle_v6_auditor_independence_test", AUDIT_PATH)
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[spec.name] = module
+        spec.loader.exec_module(module)
+        with tempfile.TemporaryDirectory() as temp:
+            output = Path(temp) / "out"
+            output.mkdir()
+            self.assertEqual(module.expected_docker_argv(str(HERE), str(output)),
+                             protocol.docker_argv(HERE, output))
+        positive = {
+            "queries": [{"query_id": "q", "worker_id": "inference",
+                         "inference_start_ns": 100, "inference_end_ns": 220,
+                         "inference_calls": [{"call_start_ns": 110, "call_end_ns": 160}]}],
+            "feedback": [{"feedback_id": "f", "query_id": "q", "arrived_ns": 120,
+                          "consumed_ns": 145, "update_start_ns": 130, "update_end_ns": 180,
+                          "trainer_worker_id": "trainer"}],
+        }
+        self.assertEqual(module.independent_online_window_errors(positive), [])
+        negative = json.loads(json.dumps(positive))
+        negative["queries"][0]["inference_calls"] = [{"call_start_ns": 190, "call_end_ns": 210}]
+        self.assertTrue(module.independent_online_window_errors(negative))
 
     def test_audit_rejects_nonexact_realized_argv(self):
         with tempfile.TemporaryDirectory() as temp:

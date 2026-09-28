@@ -11,8 +11,9 @@ from pathlib import Path
 
 import torch
 
-from protocol import ALLOCATION, IMAGE_ID, SEEDS, docker_argv, exact_argv_matches, online_window_errors
-
+ALLOCATION = "needle-role-skill-joint-retention-20260928-v6"
+IMAGE_ID = "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e"
+SEEDS = (9980211, 9980311, 9980411)
 ARMS = ("SHARED_B_ONLY", "SHARED_A_REPLAY", "ROUTED_SHARED_ADAPTER", "ROUTED_SEPARATE_SKILLS")
 SCHEMA = "needle-role-skill-joint-retention-raw-v3-online-window"
 ARRIVALS = 16
@@ -54,6 +55,93 @@ def sha(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
+def expected_docker_argv(source_path: str, output_path: str) -> list[str] | None:
+    try:
+        source, output = Path(source_path).resolve(strict=True), Path(output_path).resolve(strict=True)
+    except (OSError, TypeError):
+        return None
+    if (not source.is_dir() or not output.is_dir() or source == output
+            or source in output.parents or output in source.parents
+            or source != Path(__file__).resolve().parent):
+        return None
+    return [
+        "docker", "run", "--pull=never", "--platform=linux/amd64",
+        "--network=none", "--read-only", "--cpus=1", "--memory=2g",
+        "--pids-limit=64", "--tmpfs", "/tmp:rw,nosuid,nodev,size=256m",
+        "--entrypoint=python",
+        "--mount", f"type=bind,source={source},target=/src,readonly",
+        "--mount", f"type=bind,source={output},target=/out",
+        "--workdir=/src", "--env=NEEDLE_OUTPUT=/out",
+        "--env=NEEDLE_SEEDS=" + ",".join(map(str, SEEDS)),
+        IMAGE_ID, "-B", "/src/runner.py",
+    ]
+
+
+def independent_online_window_errors(record: object) -> list[str]:
+    """Auditor-owned reconstruction; does not import the candidate validator."""
+    errors: list[str] = []
+    if not isinstance(record, dict):
+        return ["event_record_not_object"]
+    queries, feedback = record.get("queries"), record.get("feedback")
+    if not isinstance(queries, list) or not queries:
+        return ["queries_missing"]
+    if not isinstance(feedback, list) or not feedback:
+        return ["feedback_missing"]
+    by_id = {}
+    for qi, query in enumerate(queries):
+        if not isinstance(query, dict):
+            errors.append(f"query_invalid:{qi}"); continue
+        qid, worker = query.get("query_id"), query.get("worker_id")
+        qs, qe = query.get("inference_start_ns"), query.get("inference_end_ns")
+        if (not isinstance(qid, str) or not qid or qid in by_id or not isinstance(worker, str)
+                or not worker or type(qs) is not int or type(qe) is not int or qs < 0 or qe <= qs):
+            errors.append(f"query_invalid:{qi}"); continue
+        calls = query.get("inference_calls")
+        valid_calls = []
+        if not isinstance(calls, list) or not calls:
+            errors.append(f"query_inference_calls_missing:{qid}")
+        else:
+            for ci, call in enumerate(calls):
+                if not isinstance(call, dict):
+                    errors.append(f"inference_call_invalid:{qid}:{ci}"); continue
+                cs, ce = call.get("call_start_ns"), call.get("call_end_ns")
+                if (type(cs) is not int or type(ce) is not int or not qs <= cs < ce <= qe):
+                    errors.append(f"inference_call_invalid:{qid}:{ci}")
+                else:
+                    valid_calls.append((cs, ce))
+        by_id[qid] = (qs, qe, worker, valid_calls)
+    ids, any_overlap = set(), False
+    for fi, item in enumerate(feedback):
+        if not isinstance(item, dict):
+            errors.append(f"feedback_invalid:{fi}"); continue
+        fid, qid = item.get("feedback_id"), item.get("query_id")
+        if not isinstance(fid, str) or not fid or fid in ids:
+            errors.append(f"feedback_id_invalid_or_duplicate:{fi}"); continue
+        ids.add(fid)
+        query = by_id.get(qid)
+        arrived, consumed = item.get("arrived_ns"), item.get("consumed_ns")
+        start, end = item.get("update_start_ns"), item.get("update_end_ns")
+        trainer = item.get("trainer_worker_id")
+        if (type(arrived) is not int or type(consumed) is not int or arrived < 0 or consumed < arrived):
+            errors.append(f"feedback_clock_invalid:{fid}"); continue
+        if query is None:
+            errors.append(f"feedback_query_missing:{fid}"); continue
+        qs, qe, qworker, calls = query
+        if not qs < arrived <= consumed < qe:
+            errors.append(f"feedback_not_consumed_inside_query:{fid}")
+        if type(start) is not int or type(end) is not int or start < 0 or end <= start or not start <= consumed <= end:
+            errors.append(f"update_interval_does_not_cover_consumption:{fid}"); continue
+        if not isinstance(trainer, str) or not trainer or trainer == qworker:
+            errors.append(f"workers_not_independent:{fid}")
+        if any(start < call_end and call_start < end for call_start, call_end in calls):
+            any_overlap = True
+        else:
+            errors.append(f"update_does_not_overlap_inference_call:{fid}")
+    if not any_overlap:
+        errors.append("no_verified_query_update_overlap")
+    return errors
+
+
 def unique_pairs(pairs):
     result = {}
     for key, value in pairs:
@@ -82,7 +170,7 @@ def audit_online_arm(seed: int, arm: str, arm_row: dict, support_x: list,
                      support_y: list, test_b: torch.Tensor, init: dict) -> list[str]:
     errors: list[str] = []
     record = arm_row.get("online_window")
-    protocol_errors = online_window_errors(record)
+    protocol_errors = independent_online_window_errors(record)
     errors.extend(f"{seed}:{arm}:online:{item}" for item in protocol_errors)
     queries = record.get("queries", []) if isinstance(record, dict) else []
     feedback = record.get("feedback", []) if isinstance(record, dict) else []
@@ -162,15 +250,19 @@ def audit_document(raw: dict, receipt: dict | None = None, raw_sha256: str | Non
     if receipt is not None:
         argv = receipt.get("command_argv")
         try:
-            expected_argv = docker_argv(Path(receipt["source_path"]), Path(receipt["output_path"]))
+            expected_argv = expected_docker_argv(receipt["source_path"], receipt["output_path"])
         except (KeyError, TypeError, ValueError, OSError):
             expected_argv = None
-        if expected_argv is None or not exact_argv_matches(argv, expected_argv):
+        if expected_argv is None or not isinstance(argv, list) or argv != expected_argv:
             errors.append("formal_argv_contract")
         if (receipt.get("command_argv_sha256") != sha(canonical(argv))
                 if isinstance(argv, list) else True):
             errors.append("formal_argv_digest")
-        if (receipt.get("allocation") != ALLOCATION or receipt.get("image_id") != IMAGE_ID
+        if (receipt.get("allocation") != ALLOCATION or receipt.get("issue") != 5081
+                or receipt.get("image_id") != IMAGE_ID or receipt.get("seeds") != list(SEEDS)
+                or not isinstance(receipt.get("main_sha"), str) or len(receipt["main_sha"]) != 40
+                or not isinstance(receipt.get("branch"), str)
+                or not isinstance(receipt.get("docker_context"), str)
                 or receipt.get("exit_code") != 0 or receipt.get("formal_invocations") != 1
                 or receipt.get("retries") != 0):
             errors.append("formal_receipt_identity")

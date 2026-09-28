@@ -14,11 +14,11 @@ container.
   `research/needle-role-skill-joint-retention-v6-20260928`; additive source
   path is this directory. Formal seeds remain reserved by #5081 and were not
   read or consumed. Formal Docker execution remains lease-gated by #5085.
-- **D:** 14/14 host tests pass. Coverage includes exact argv token equality and
+- **D:** 16/16 host tests pass. Coverage includes exact argv token equality and
   mutation rejection; inference-call overlap, fresh arrival, and distinct
   worker identity; pinned predecessor Git blob identities; event-generation
-  ordering; one-run/no-retry launcher structure; and rejection of a missing
-  owner lease. Syntax checks pass for `runner.py`, `audit.py`, `protocol.py`,
+  ordering; independently rebuilt auditor argv/event contracts; one-run/no-retry
+  launcher structure; and rejection of a missing owner lease. Syntax checks pass for `runner.py`, `audit.py`, `protocol.py`,
   `formal.py`, and `test_protocol.py`; `git diff --check` passes.
 - **C:** checks use synthetic timestamp fixtures and temporary directories.
   No construction seed, optimizer, model forward, Docker command, or image was
@@ -37,7 +37,7 @@ and consumes none of the formal seeds.
 
 ## Historical construction evidence
 
-An earlier revision passed 8/8 host tests. The current 14/14 suite adds the
-frozen-source, online ordering, exact receipt argv, and no-lease launcher tests.
-The earlier record is retained by Git history and is not represented as the
-current count.
+Earlier revisions passed 8/8 and then 15/15 host tests. The current 16/16 suite
+adds an independent auditor implementation check: it rebuilds exact argv and
+online-window decisions without importing candidate `protocol.py`. The earlier
+counts are retained by Git history and are not represented as the current count.
