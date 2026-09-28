@@ -1,0 +1,9 @@
+{
+  "schema":"kernel-receipt-audit-integrity-5215-v1",
+  "input_git_blob":"d3964da3cbf6524c8193b5a59ed16bdb3611772f",
+  "input_record":{"effect_at_499":true,"effect_at_699":true,"effect_at_700":true,"effect_at_701":true,"execution_end_1000":true,"execution_end_1001":true,"execution_end_700":true,"execution_end_999":true,"execution_wrong_command":false},
+  "mutations_tested":["drop each of four invalid temporal keys","replace each invalid temporal key with null","replace each invalid temporal key with string","add unexpected key","replace bool with integer","flip each temporal outcome","flip identity negative control","non-object record"],
+  "controls":null,
+  "disposition":"PENDING_EXECUTION",
+  "scope":"CPU-only audit robustness against retained synthetic record; no kernel execution or GPU/model/CUDA/Docker/GUI/network"
+}
