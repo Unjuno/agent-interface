@@ -359,7 +359,9 @@ The new synthetic artifact `construction/raw_audit_v2_20260929_01/` has raw
 SHA-256 `58e61347f45538ecc6d6f732ae41529d4b28152c09d166de039da4ac761f450c`,
 returns `PASS_CONSTRUCTION_ONLY`, and reconstructs `RETAIN` at break-even task
 2. Its identities are sentinels, so it proves parser construction only.
-V2 corruption tests pass 9/9 and the complete integration package passes
-81/81 on the host. The older v1 artifact is preserved unchanged. No Docker,
+V2 corruption tests pass 10/10 and the complete integration package passes
+82/82 on the host. A further adversarial JSON check found and fixed an
+`OverflowError` escape on a 10**400 reset tick; it now returns a fail-closed
+HOLD. The older v1 artifact is preserved unchanged. No Docker,
 workflow, model call, or live game task was used; shared container access is
 still explicitly held by #5130/#5085.

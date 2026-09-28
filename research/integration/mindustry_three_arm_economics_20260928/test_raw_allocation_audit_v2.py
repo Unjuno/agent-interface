@@ -57,6 +57,13 @@ class RawAllocationAuditV2Tests(unittest.TestCase):
         raw["arms"]["plain"][0]["reset_event"]["after"]["tiles"][0]["block"] = "copper-wall"
         self.assertRaises(RawAuditError, reconstruct, raw)
 
+    def test_adversarial_huge_tick_is_audited_as_hold_not_auditor_crash(self):
+        raw = raw_v2()
+        raw["arms"]["plain"][0]["reset_event"]["before"]["tick"] = 10 ** 400
+        result = audit(json.dumps(raw).encode())
+        self.assertEqual(result["audit"], "HOLD_RAW_RECONSTRUCTION")
+        self.assertIn("reset tick", result["errors"][0])
+
     def test_missing_reset_evidence_holds_audit(self):
         raw = raw_v2()
         del raw["arms"]["ephemeral"][1]["reset_event"]

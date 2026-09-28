@@ -35,6 +35,13 @@ GUARD = {(x, y) for y in range(48, 56) for x in range(136, 150)}
 TARGET = (137, 52)
 
 
+def _finite_number(value: object) -> bool:
+    # Integers are exact and finite regardless of magnitude. math.isfinite(int)
+    # converts to float and can itself raise OverflowError on adversarial JSON.
+    return (type(value) is int or
+            (type(value) is float and math.isfinite(value)))
+
+
 def _tile_map(snapshot: dict) -> dict[tuple[int, int], dict]:
     rows = snapshot.get("tiles")
     if type(rows) is not list or len(rows) != len(GUARD):
@@ -74,12 +81,11 @@ def _verify_reset(before: object, after: object) -> None:
             or set(after["unit"]) != {"x", "y", "type", "plans"}
             or type(after["unit"]["plans"]) is not int or after["unit"]["plans"] != 0
             or type(after["unit"]["type"]) is not str or not after["unit"]["type"]
-            or any(type(after["unit"][key]) not in (int, float)
-                   or not math.isfinite(after["unit"][key]) for key in ("x", "y"))):
+            or any(not _finite_number(after["unit"][key])
+                   for key in ("x", "y"))):
         raise RawAuditError("reset unit has plans or invalid projection")
-    if (type(before["tick"]) not in (int, float)
-            or type(after["tick"]) not in (int, float)
-            or not math.isfinite(before["tick"]) or not math.isfinite(after["tick"])
+    if (not _finite_number(before["tick"])
+            or not _finite_number(after["tick"])
             or after["tick"] < before["tick"]):
         raise RawAuditError("reset tick is invalid or nonmonotonic")
     if original[TARGET]["block"] != "air":
