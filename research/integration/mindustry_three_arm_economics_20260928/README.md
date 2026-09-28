@@ -7,7 +7,7 @@ rule from #1679; it does not reopen or modify #1679, #2624, or prior allocations
 This branch was originally based on `main`
 `3553dc1af1125441a6b44256755e7e22df40836d` (merge commit `8c3138c7bd`,
 incorporating #5158 on top of prior #5154/#5153 sync `1866f05aab`) and has since
-merged current `main` `50e542eda5bcb6a5ddbc62c7400ec36b0dbcc8c2`. The inherited
+merged current `main` `3d44e0b332606579560ca6d6e0a2de799a029511`. The inherited
 #1679 preregistration's five dependency blobs were compared with this main:
 three are byte-identical; the plan Markdown retains its documented change from
 `ff0de7c4a0d6cc57d145d460f019f72d6967ffec` to
@@ -239,19 +239,27 @@ model, controller socket, task input, formal allocation, live audit, or Docker
 container was run. The mod/channel are not yet composed into a live three-arm
 runner or raw auditor, so no integrated experiment is claimed.
 
-## Live submit evidence binding — host integration check (2026-09-28)
+## Submit evidence protocol compatibility — host integration check (2026-09-28)
 
-Current `interactive_v27` rejects submit commands unless they carry
-`decision_evidence` tied to a successfully flushed observation. The earlier
-sequence-bound click compiler did not emit this required field, so its command
-would be refused at the actual submit boundary. The fresh locator now carries
-the observation's `delivery_id`; the compiler binds it with the same sequence
-and caller-declared `assistant` producer. A new test passes the compiled field
+The generic `interactive_v27` protocol requires `decision_evidence` tied to a
+successfully flushed observation. The candidate locator now carries that
+observation's `delivery_id`; the click compiler binds it with the same sequence
+and caller-declared `assistant` producer. A host test passes the compiled field
 through the repository's real `DeliveryLedger.validate`, and a missing delivery
-identity fails closed before dispatch. This verifies payload compatibility
-with the live submit ledger, not an end-to-end socket/game dispatch.
+identity fails closed before dispatch. This is generic-protocol compatibility
+only, not proof of the Mindustry socket path.
 
-After merging main `50e542eda5bcb6a5ddbc62c7400ec36b0dbcc8c2`, the complete
+Source tracing found that `mindustry_single_tile_socket_v1.py` replaces the
+bridge's `interactive_v27.py` child with the task-specific
+`mindustry_single_tile_interactive_v1.py`. That handler forwards submit steps
+directly to `Executor` and does not use `DeliveryLedger` or require
+`decision_evidence`; the additional field is ignored by this handler. Therefore
+the previous statement that the new evidence field was required by the actual
+Mindustry submit path was too strong. The exact runtime dialect still needs a
+dedicated three-arm wrapper/adapter and a construction test against that
+specific child; no live socket dispatch has been verified.
+
+After merging main `3d44e0b332606579560ca6d6e0a2de799a029511`, the complete
 host-only package suite passes 45/45; the separate #5170 comparison suite
 passes 8/8; the inherited probe returns `passed=true`, `RETAIN`, 10 controls;
 Python byte-compilation, Node syntax check, and `git diff --check` pass. The
