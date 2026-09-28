@@ -181,6 +181,22 @@ class X11IntegrationTests(unittest.TestCase):
         self.assertEqual(row["error"], "LEASE_EXPIRED")
         self.assertEqual(self.backend.emissions, before)
 
+    def test_verify_refuses_before_save_and_session_can_continue(self):
+        program = make_program("unsupported-verify", text="must-not-save")
+        program["ops"].insert(-1, {"op": "verify", "predicate": "saved"})
+        before = self.backend.emissions
+        row = self.session.dispatch(program, current_observation_seq=7, current_binding_revision=3)
+        self.assertEqual(row["status"], "refused")
+        self.assertEqual(row["error"], "BACKEND_CONSTRAINT")
+        self.assertIn("verify predicates are not implemented", row["detail"])
+        self.assertEqual(self.backend.emissions, before)
+        self.assertFalse(self.effect.exists())
+        self.assertTrue(row["release"]["verified"])
+        continued = self.session.dispatch(make_program("explicit-save", text="review"),
+            current_observation_seq=7, current_binding_revision=3)
+        self.assertEqual(continued["status"], "completed")
+        self.assertEqual(json.loads(self.effect.read_text()), {"saved": True, "text": "review"})
+
     def test_backend_specific_invalid_text_emits_zero_input(self):
         program = make_program("bad-text", text="ok!")
         before = self.backend.emissions

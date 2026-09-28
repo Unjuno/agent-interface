@@ -10,6 +10,23 @@ from runtime.core_v1.test_contract import program
 
 
 class PartialExecutionTests(unittest.TestCase):
+    def test_unsupported_verify_refuses_entire_program_before_input(self):
+        from runtime.backends.x11_v1.backend import X11BackendError
+        backend = object.__new__(X11Backend)
+        backend._text_plan = mock.Mock(return_value=[['a']])
+        backend.text = mock.Mock()
+        backend.release_all = mock.Mock()
+        backend.emissions = 0
+        # A trailing verification must not allow the preceding edit to run.
+        with self.assertRaisesRegex(X11BackendError, 'verify.*not implemented'):
+            backend.execute({'ops': [
+                {'op': 'text', 'text': 'a'},
+                {'op': 'verify', 'predicate': 'saved'},
+                {'op': 'release_all'}]})
+        backend.text.assert_not_called()
+        backend.release_all.assert_not_called()
+        self.assertEqual(backend.emissions, 0)
+
     def test_explicit_recovery_requires_verified_empty_readback(self):
         backend = mock.Mock()
         session = X11RuntimeSession(backend)

@@ -230,6 +230,8 @@ class X11Backend:
                 focused = True
             elif kind in {"pointer_move", "observe"} and not focused:
                 raise X11BackendError(f"{kind} requires focused target")
+            elif kind == "verify":
+                raise X11BackendError("verify predicates are not implemented by the X11 backend; observe and explicitly review application state")
             elif kind == "text":
                 self._text_plan(op["text"])
             elif kind == "key_chord":
@@ -240,7 +242,7 @@ class X11Backend:
 
     def _text_plan(self, value: str) -> list[list[str]]:
         plan = []
-        symbols = {":": "colon", "/": "slash", "=": "equal", "*": "asterisk"}
+        symbols = {":": "colon", "/": "slash", "=": "equal", "*": "asterisk", "_": "underscore"}
         for ch in value:
             if ch in symbols:
                 # Resolve the symbol from the live map. Do not assume a US
@@ -258,11 +260,11 @@ class X11Backend:
                     self._keycode(key)
                 plan.append(keys)
                 continue
-            if not (ch.isascii() and (ch.isalpha() or ch.isdigit() or ch in ".-_")):
+            if not (ch.isascii() and (ch.isalpha() or ch.isdigit() or ch in ".-")):
                 if ch != " ":
                     raise X11BackendError(f"unsupported text character U+{ord(ch):04X}")
-            if ch in {" ", ".", "-", "_"}:
-                keys = {" ": ["SPACE"], ".": ["period"], "-": ["minus"], "_": ["SHIFT", "minus"]}[ch]
+            if ch in {" ", ".", "-"}:
+                keys = {" ": ["SPACE"], ".": ["period"], "-": ["minus"]}[ch]
             elif ch.isupper():
                 keys = ["SHIFT", ch.lower()]
             else:
@@ -416,7 +418,8 @@ class X11Backend:
                         wait["completed"] = True
                     finally:
                         wait["ended_ns"] = time.monotonic_ns()
-                elif kind == "verify": pass
+                elif kind == "verify":
+                    raise X11BackendError("verify predicates are not implemented by the X11 backend")
                 elif kind == "release_all": releases.append(self.release_all())
                 else: raise X11BackendError(f"unsupported op {kind}")
                 completed_ops.append(index)

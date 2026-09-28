@@ -22,10 +22,12 @@ class TextPlanTests(unittest.TestCase):
 
     def test_supported_punctuation_uses_x_keysym_names_and_shift(self):
         backend = self.backend()
+        backend.d = mock.Mock()
+        backend.d.keycode_to_keysym.side_effect = lambda code, level: ord("_") if level == 1 else ord("-")
         backend.text("a-._ A")
         self.assertEqual(backend.key_chord.call_args_list,
                          [mock.call(keys) for keys in (["a"], ["minus"], ["period"],
-                                                       ["SHIFT", "minus"], ["SPACE"], ["SHIFT", "a"])])
+                                                       ["SHIFT", "underscore"], ["SPACE"], ["SHIFT", "a"])])
 
     def test_unmapped_late_character_emits_no_prefix(self):
         backend = self.backend()
@@ -92,8 +94,8 @@ class TextPlanTests(unittest.TestCase):
             backend.text("http:")
         backend.key_chord.assert_not_called()
 
-    def test_formula_symbols_follow_unshifted_or_shifted_live_mapping(self):
-        for symbol, name in (("=", "equal"), ("*", "asterisk")):
+    def test_symbols_follow_unshifted_or_shifted_live_mapping(self):
+        for symbol, name in (("=", "equal"), ("*", "asterisk"), ("_", "underscore")):
             for selected_level in (0, 1):
                 with self.subTest(symbol=symbol, selected_level=selected_level):
                     backend = self.backend()
@@ -104,8 +106,8 @@ class TextPlanTests(unittest.TestCase):
                     expected = [name] if selected_level == 0 else ["SHIFT", name]
                     backend.key_chord.assert_called_once_with(expected)
 
-    def test_formula_symbol_in_unsupported_level_emits_no_prefix(self):
-        for symbol in ("=", "*"):
+    def test_symbol_in_unsupported_level_emits_no_prefix(self):
+        for symbol in ("=", "*", "_"):
             with self.subTest(symbol=symbol):
                 backend = self.backend()
                 backend.d = mock.Mock()
