@@ -10,7 +10,7 @@ import time
 
 ROOT = Path(__file__).resolve().parents[2]
 SUITES = {
-    'protocol': ['runtime.cli_v1.test_observe', 'runtime.selector_v1.test_selector',
+    'protocol': ['runtime.integration_checks.test_host_timing', 'runtime.cli_v1.test_observe', 'runtime.selector_v1.test_selector',
                  'runtime.cli_v1.test_mcp_server', 'runtime.cli_v1.test_mcp_session', 'runtime.cli_v1.test_mcp_guarded', 'runtime.cli_v1.test_guarded_presentation', 'runtime.cli_v1.test_cli', 'runtime.core_v1.test_contract', 'runtime.cli_v1.test_review', 'test_agent_review', 'test_receipt_references', 'test_native_exchange_v1', 'test_native_mcp_v1',
                  'test_native_allocation_v1', 'test_native_mcp_relay_v1', 'test_native_direct_task_v1',
                  'test_native_primary_review_v1', 'test_native_brief_review_v1', 'test_native_guarded_form_v1', 'test_guarded_source_dependencies_v1'],
