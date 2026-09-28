@@ -47,6 +47,12 @@ The local run was host-only because no Docker slot was assigned to this lane;
 the shared slot had been explicitly assigned to #5133. No container was
 started, inspected, or changed by this probe.
 
+Post-run construction checks: `py_compile` passed for the probe/auditor/control
+scripts; the auditor accepted the retained raw row set and rejected 5/5 copied
+mutations (missing row, duplicate row, changed request session, altered target
+payload, and altered execute count). These controls re-invoke only the auditor
+on temporary copies; they do not re-run the caller or scientific rows.
+
 ## Reproduction
 
 From the repository root, point `probe.py` to the exact frozen main source and
