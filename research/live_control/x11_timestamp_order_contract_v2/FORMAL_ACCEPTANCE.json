@@ -1,0 +1,43 @@
+{
+  "allocation": "x11-timestamp-order-20260923-02",
+  "case_nonzero_exits": 0,
+  "case_rows_complete": 24,
+  "case_timeouts": 0,
+  "corruption_controls": {
+    "boolean exit": true,
+    "changed packet": true,
+    "cleanup": true,
+    "command order": true,
+    "false decision": true,
+    "input lineage": true,
+    "missing event": true,
+    "server exit": true,
+    "witness missing": true,
+    "write count": true,
+    "wrong epoch": true,
+    "wrong tick": true
+  },
+  "formal_acceptance": "HOLD_OUTER_EXECUTION_RECEIPT_MISSING",
+  "formal_invocations": 1,
+  "formal_reruns": 0,
+  "outer_execution_receipt_present": false,
+  "outer_tool_interruption": "container execution tool timed out while execute_v2 parent was waiting; run_v2 continued as same invocation and completed",
+  "process_scan_after_completion": "no owned x11_order_v2/Xvfb process remained",
+  "raw_audit": "PASS",
+  "raw_audit_errors": [],
+  "raw_scientific_decision": "PASS_X11_TIMESTAMP_ORDER_BOUNDARY_SCOPED",
+  "reason": "Do not invent the missing outer execute_v2 exit receipt. Complete case ledger supports the frozen scientific contrast, but the frozen process-evidence gate prevents full formal PASS.",
+  "run_end_recorded": true,
+  "run_status": "COMPLETE",
+  "scientific_rows_disposition": "PASS_X11_TIMESTAMP_ORDER_BOUNDARY_SCOPED_ON_COMPLETE_CASE_LEDGER",
+  "summary": {
+    "AB_BURST_ties": 4,
+    "BAB_BURST_ties": 4,
+    "BA_BURST_ties": 4,
+    "cases": 24,
+    "co_timestamp_cases_with_false_ordered_prefix": 8,
+    "co_timestamp_false_ordered_prefixes": 12,
+    "events": 72,
+    "strict_time_cases_with_disagreement": 8
+  }
+}
