@@ -1,3 +1,17 @@
+## Linux lifecycle research intake — 2026-09-28
+
+The integration owner rechecked #5133 / merged PR #5147 from exact main Git
+bytes. Candidate source hashes match after the earlier repair, but two shared
+reference dependencies still differ from their frozen CRLF byte hashes on Linux.
+Construction checks: 9/10 pass, one reference-identity failure. No formal run or
+corrected raw audit was started. In-memory LF-to-CRLF mapping reproduces both
+expected hashes; no frozen file was changed to force a pass.
+
+[Retained intake evidence](../runtime/results/lifecycle-intake-01/README.md)
+records HOLD_REFERENCE_BYTES_ON_LINUX. Preserve the historical corrected timing
+result, but require dependency-byte reproducibility before promotion from this
+checkout. Synthetic scorer reuse is not a measured interface-latency improvement.
+
 ## Moved implementation source pins (2026-09-28)
 
 The #5107 review identified wrapper-only hashes in experiment preregistrations.
