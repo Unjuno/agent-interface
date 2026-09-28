@@ -21,6 +21,23 @@ Adding configuration does not prove tools are available in a running host. The
 public CLI emits JSON; an assistant integration must render its image payload.
 Neither route establishes end-to-end latency merely by returning an image.
 
+For a host that understands v3 receipt references, use the existing explicit
+`compact=true, report_refs=true` flags on both `interface_observe` and
+`interface_dispatch`. For example, an observation's arguments can be:
+
+```json
+{"target":"configured-name","frame":"window_client","region":[0,0,560,260],"compact":true,"report_refs":true}
+```
+
+Choose the actual configured target and region. Read the complete report at
+`receipt.source.raw_report` in that same response; `receipt.report` may be a local
+reference. Native image blocks and outcome summaries remain available. Python
+clients can use `runtime.cli_v1.receipt_references.expand_receipt` to restore v1.
+These flags are not arguments to recovery or target-management tools. Defaults
+remain full for compatibility. A [recount of primary replies](results/public-observation-projection-01/README.md)
+found avoidable text duplication in three observations; this measures bytes,
+not model tokens or cost.
+
 [Primary input-recovery use](results/input-recovery-primary-01/README.md)
 records a failed press that had already changed a visible counter, explicit
 same-session release recovery, visual review and a newly authored continuation
