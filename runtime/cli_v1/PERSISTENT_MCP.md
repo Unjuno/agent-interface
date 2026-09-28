@@ -1,5 +1,27 @@
 # Optional owned X11 session for public MCP
 
+## Explicit input recovery
+
+After a release cannot be verified, normal dispatch remains blocked. On the same
+open persistent-X11 connection, explicitly call
+`interface_recover_input(current_binding_revision=...)` to attempt release and
+readback of tracked inputs. This never opens/reopens a session or replays the
+failed program. No-recovery-needed, stale-revision and unopened-session requests
+refuse without release; busy calls use the existing no-queue boundary.
+
+Only verified empty release clears the input block. Failure keeps it sticky.
+Success advances binding_revision and invalidates pending target reviews, so old
+programs and repeated requests with the old revision cannot silently continue.
+Observe and review current application state, then explicitly author a new
+program using the returned revision. Recovery establishes input state only:
+prior task effects remain unknown, and no visual freshness or lease is issued.
+One-shot and guarded modes do not expose this tool. The local X11 session API
+also provides `recover_input()`; its caller owns serialization and subsequent
+application-state review. MCP retains each request/result before presenting it;
+historical `interface_results` reads never repeat recovery.
+
+## Session behavior
+
 Experimental opt-in: add `--session-mode persistent-x11` to `python -m runtime.cli_v1.mcp_server --targets targets.json --output-directory runs --display :N`. The default remains `one-shot`. Configured target names and their original transient-family roots are retained for the entire server lifetime. No observation sequence, lease or input authority is minted. The session tracks its explicit target-registration revision; it is not visual freshness authority.
 
 The first persisted observe/dispatch request opens one X11 connection. Later calls use the existing shared observe_in_session/dispatch_in_session APIs on that connection. Calls are serialized; busy refuses instead of queuing. Request persistence still precedes invocation and report persistence precedes image presentation. Session ID/state are included in persistent requests, reports and responses. Initialization failure is sticky; no automatic reconnect. The session's input-recovery requirement is preserved across calls, including read-only observations. There is no new recovery/reset command.
