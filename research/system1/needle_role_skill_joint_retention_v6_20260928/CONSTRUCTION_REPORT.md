@@ -13,12 +13,13 @@ formal result, scientific result, or authorization to use the shared container.
   `708dec9bcd2bfb3ef597acf7bc1c8a02bcb96b01`. The test runs only the standard
   library `unittest` suite in `test_protocol.py`; no model, optimizer, formal
   seed, image, or Docker command is invoked.
-- **D:** 7/7 host unit tests pass. The suite covers exact argv equality and
+- **D:** 8/8 host unit tests pass. The suite covers exact argv equality and
   rejects token splitting, omission, additions, reordering, mount-format
   mutation, path aliasing, and missing directories. Event fixtures accept a
   feedback update that starts after an in-flight query starts and overlaps its
-  inference interval; they reject early/late feedback, non-overlap, shared
-  worker identity, missing query evidence, and malformed/empty records.
+  inference-call interval (not merely a broad query window); they reject
+  early/late feedback, non-overlap, a wait-only query window, shared worker
+  identity, missing query evidence, and malformed/empty records.
 - **C:** only temporary directories and synthetic integer timestamps are used.
   The Docker command contract explicitly pins `--entrypoint=python`, one exact
   `--network=none` token, image digest, mount tokens/order, environment, and
@@ -39,11 +40,13 @@ Command, run from this directory:
 python -B -m unittest -v test_protocol.py
 ```
 
-Final outcome: `Ran 7 tests in 0.013s` / `OK`. `git diff --check` also passed.
+Final outcome: `Ran 8 tests in 0.009s` / `OK`. `git diff --check` also passed.
 The first run exposed a contract exception-type/message mismatch for a missing
-output mount. The API was made consistently fail-closed with `ValueError`, and
-the final seven-test run passed. The first-run defect and repair are retained
-here; no optimizer or container was involved at either point.
+output mount; the API was made consistently fail-closed with `ValueError`. An
+additional test then caught a fixture that accidentally overlapped inference;
+its call interval was corrected so the negative control is genuinely
+non-overlapping. The final eight-test run passed. Both construction defects and
+repairs are retained here; no optimizer or container was involved.
 
 ## Resource and allocation boundary
 

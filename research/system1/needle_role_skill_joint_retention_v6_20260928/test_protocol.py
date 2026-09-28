@@ -60,7 +60,8 @@ class OnlineWindowContract(unittest.TestCase):
     def setUp(self):
         self.record = {
             "queries": [{"query_id": "q-1", "worker_id": "inference-1",
-                         "inference_start_ns": 100, "inference_end_ns": 220}],
+                         "inference_start_ns": 100, "inference_end_ns": 220,
+                         "inference_calls": [{"call_start_ns": 110, "call_end_ns": 160}]}],
             "feedback": [{"feedback_id": "f-1", "query_id": "q-1",
                           "arrived_ns": 120, "consumed_ns": 145,
                           "update_start_ns": 130, "update_end_ns": 180,
@@ -92,6 +93,13 @@ class OnlineWindowContract(unittest.TestCase):
         mutations.append(missing_query)
         for record in mutations:
             self.assertTrue(protocol.online_window_errors(record))
+
+    def test_rejects_wait_only_window_without_overlapping_inference_call(self):
+        mutated = {"queries": [dict(self.record["queries"][0])],
+                   "feedback": [dict(self.record["feedback"][0])]}
+        mutated["queries"][0]["inference_calls"] = [
+            {"call_start_ns": 190, "call_end_ns": 210}]
+        self.assertTrue(protocol.online_window_errors(mutated))
 
     def test_rejects_empty_and_malformed_evidence(self):
         self.assertTrue(protocol.online_window_errors({"queries": [], "feedback": []}))

@@ -19,7 +19,9 @@ does not test natural-language role recognition or product behavior.
   registered formal allocation and quality gates are not tuned or replaced.
 - Zero-fit tests bind every realized Docker argv token and require actual
   feedback arrival, consumption and an optimizer interval to overlap an active
-  inference request, with independent trainer/inference worker identities.
+  inference-call interval inside that request, with independent
+  trainer/inference worker identities. A long query window with only before/after
+  inference calls does not qualify.
 - No container invocation until coordinator/resource release is explicit.
 
 ## D — decisions

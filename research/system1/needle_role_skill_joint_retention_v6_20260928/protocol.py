@@ -73,7 +73,7 @@ def online_window_errors(record: Any) -> list[str]:
         errors.append("feedback_missing")
         feedback = []
 
-    query_by_id: dict[str, tuple[int, int, str]] = {}
+    query_by_id: dict[str, tuple[int, int, str, list[tuple[int, int]]]] = {}
     for index, query in enumerate(queries):
         interval = _interval(query, "inference_start_ns", "inference_end_ns")
         query_id = query.get("query_id") if isinstance(query, dict) else None
@@ -84,7 +84,18 @@ def online_window_errors(record: Any) -> list[str]:
         if query_id in query_by_id:
             errors.append(f"query_duplicate:{query_id}")
             continue
-        query_by_id[query_id] = (*interval, worker)
+        calls = query.get("inference_calls")
+        valid_calls: list[tuple[int, int]] = []
+        if not isinstance(calls, list) or not calls:
+            errors.append(f"query_inference_calls_missing:{query_id}")
+        else:
+            for call_index, call in enumerate(calls):
+                call_interval = _interval(call, "call_start_ns", "call_end_ns")
+                if call_interval is None or not (interval[0] <= call_interval[0] < call_interval[1] <= interval[1]):
+                    errors.append(f"inference_call_invalid:{query_id}:{call_index}")
+                else:
+                    valid_calls.append(call_interval)
+        query_by_id[query_id] = (*interval, worker, valid_calls)
 
     seen_feedback: set[str] = set()
     overlap_count = 0
@@ -109,7 +120,7 @@ def online_window_errors(record: Any) -> list[str]:
         if query is None:
             errors.append(f"feedback_query_missing:{feedback_id}")
             continue
-        q_start, q_end, query_worker = query
+        q_start, q_end, query_worker, calls = query
         if not (q_start < arrival <= consumed < q_end):
             errors.append(f"feedback_not_consumed_inside_query:{feedback_id}")
         if update is None or not (update[0] <= consumed <= update[1]):
@@ -117,10 +128,11 @@ def online_window_errors(record: Any) -> list[str]:
             continue
         if not isinstance(trainer, str) or not trainer or trainer == query_worker:
             errors.append(f"workers_not_independent:{feedback_id}")
-        if max(update[0], q_start) < min(update[1], q_end):
+        if any(max(update[0], call_start) < min(update[1], call_end)
+               for call_start, call_end in calls):
             overlap_count += 1
         else:
-            errors.append(f"update_does_not_overlap_inference:{feedback_id}")
+            errors.append(f"update_does_not_overlap_inference_call:{feedback_id}")
 
     if overlap_count == 0:
         errors.append("no_verified_query_update_overlap")
