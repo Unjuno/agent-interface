@@ -242,7 +242,7 @@ class X11Backend:
 
     def _text_plan(self, value: str) -> list[list[str]]:
         plan = []
-        symbols = {":": "colon", "/": "slash", "=": "equal", "*": "asterisk"}
+        symbols = {":": "colon", "/": "slash", "=": "equal", "*": "asterisk", "_": "underscore"}
         for ch in value:
             if ch in symbols:
                 # Resolve the symbol from the live map. Do not assume a US
@@ -260,11 +260,11 @@ class X11Backend:
                     self._keycode(key)
                 plan.append(keys)
                 continue
-            if not (ch.isascii() and (ch.isalpha() or ch.isdigit() or ch in ".-_")):
+            if not (ch.isascii() and (ch.isalpha() or ch.isdigit() or ch in ".-")):
                 if ch != " ":
                     raise X11BackendError(f"unsupported text character U+{ord(ch):04X}")
-            if ch in {" ", ".", "-", "_"}:
-                keys = {" ": ["SPACE"], ".": ["period"], "-": ["minus"], "_": ["SHIFT", "minus"]}[ch]
+            if ch in {" ", ".", "-"}:
+                keys = {" ": ["SPACE"], ".": ["period"], "-": ["minus"]}[ch]
             elif ch.isupper():
                 keys = ["SHIFT", ch.lower()]
             else:
