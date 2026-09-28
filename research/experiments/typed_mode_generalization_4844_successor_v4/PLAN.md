@@ -3,8 +3,7 @@
 Allocation: `typed-mode-4844-successor-20260928-04`
 Branch: `research/typed-mode-4844-successor-v4-20260928-e07d`
 Evidence path: `research/experiments/typed_mode_generalization_4844_successor_v4/`
-Allocation registered on open Issue #5184; main at registration: `ae1c23b9ffcff29e3b6cbf1b25f31066742122e7`.
-Before source freeze, main advanced to `dfee8da52faedefded3d4555242d19d0ec087f91`; this branch incorporated it in merge commit `afe33c25790523dbbeff27578e8473e885c9bd18`. GitHub compare found intervening additions/edits under other paths only; no v4-path conflict.
+Allocation registered on open Issue #5184; main at registration: `ae1c23b9ffcff29e3b6cbf1b25f31066742122e7`. Before freeze, concurrent main updates were compared and incorporated through merge commit `2214b897cec1d7982820e1febc8ae27938eb8e34`; exact intervening tips and changed paths are in `FREEZE.json`. No v4-path conflict or runtime dependency exists.
 
 The -03 issue was retired as `STOP_DUPLICATE_FORMAL_SEED_COLLISION`: another source consumed 484431/484432 first. Its and this lane's -03 raw outputs remain separate, non-pooled historical evidence. This -04 allocation is a fresh bounded replication with a new path and seeds.
 
