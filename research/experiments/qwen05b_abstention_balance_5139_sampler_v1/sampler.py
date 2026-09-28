@@ -34,16 +34,25 @@ COUNTS = {
 }
 
 
-def row_rank(seed: str, class_name: str, case_id: str) -> bytes:
+def row_rank(seed: int, class_name: str, case_id: str) -> bytes:
     """Return a stable rank, independent of input row order and Python RNG version."""
-    if not seed or not class_name or not case_id:
+    if isinstance(seed, bool) or not isinstance(seed, int) or seed <= 0:
+        raise ValueError("seed_must_be_positive_integer")
+    if not class_name or not case_id:
         raise ValueError("rank_fields_must_be_nonempty")
-    material = f"support-row-rank-v1\n{seed}\n{class_name}\n{case_id}".encode("utf-8")
+    material = (
+        b"support-row-rank-v1\n"
+        + str(seed).encode("ascii")
+        + b"\n"
+        + class_name.encode("utf-8")
+        + b"\n"
+        + case_id.encode("utf-8")
+    )
     return hashlib.sha256(material).digest()
 
 
 def rank_support_rows(
-    rows: Iterable[Mapping[str, Any]], seed: str
+    rows: Iterable[Mapping[str, Any]], seed: int
 ) -> dict[str, list[Mapping[str, Any]]]:
     """Validate and rank a shared support pool independently within each class."""
     grouped: dict[str, list[Mapping[str, Any]]] = defaultdict(list)
@@ -77,7 +86,7 @@ def rank_support_rows(
 
 
 def select_support(
-    rows: Iterable[Mapping[str, Any]], seed: str
+    rows: Iterable[Mapping[str, Any]], seed: int
 ) -> tuple[dict[str, list[Mapping[str, Any]]], dict[str, list[Mapping[str, Any]]]]:
     """Select both arms as prefixes of the same per-class ranked lists."""
     ranked = rank_support_rows(rows, seed)
