@@ -26,6 +26,7 @@ def summarize(directory):
     active = None
     closed = False
     previous = -1
+    next_relay_id = 1
     for index, event in enumerate(events, 1):
         require(event.get('schema') == 'agent-interface/relay-host-event-v1', 'event schema')
         require(type(event.get('sequence')) is int and event['sequence'] == index, 'event sequence')
@@ -54,8 +55,27 @@ def summarize(directory):
             require(active == ('send', attempt) and event.get('tool') == call['tool'], 'reply order')
             request = json.loads(read(f'request-{attempt}.json'))
             reply = json.loads(read(f'reply-{attempt}.json'))
-            require(request['id'] == reply['id'] == event.get('relay_id') and
-                    request['tool'] == reply['tool'] == call['tool'], 'request/reply identity')
+            require(type(request.get('id')) is int and request['id'] == next_relay_id and
+                    request.get('tool') == call['tool'], 'request identity')
+            require(type(reply.get('next_id')) is int, 'relay next ID')
+            if reply.get('status') == 'refused':
+                # The actual relay refuses before dispatch without an id/tool echo.
+                # Local attempt numbers advance, but its protocol ID is not consumed.
+                require(set(reply) == {'status', 'dispatched', 'next_id', 'error'} and
+                        reply['dispatched'] is False and isinstance(reply['error'], str) and
+                        reply['next_id'] == next_relay_id and event.get('relay_id') is None,
+                        'invalid pre-dispatch refusal')
+                call['relay_outcome'] = {'status': 'refused', 'dispatched': False,
+                                         'request_id': request['id']}
+            else:
+                require(reply.get('status') in ('returned', 'unknown_requires_reconciliation') and
+                        type(reply.get('id')) is int and reply['id'] == request['id'] == event.get('relay_id') and
+                        reply.get('tool') == call['tool'] and reply['next_id'] == next_relay_id + 1,
+                        'request/reply identity')
+                if reply['status'] == 'unknown_requires_reconciliation':
+                    call['relay_outcome'] = {'status': 'unknown_requires_reconciliation',
+                                             'dispatch_outcome': 'unknown'}
+                next_relay_id = reply['next_id']
             call['reply_sha256'] = identities[f'reply-{attempt}.json']
             require(event.get('reply_sha256') == call['reply_sha256'], 'reply hash')
             call['reply_ms'] = stamp

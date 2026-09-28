@@ -65,3 +65,14 @@ not model ingestion, useful feedback, semantic completion, token accounting or
 comparable speedup. `timeline_status=complete` means all recorded operations ended
 and transport close was recorded; it does not imply successful process exit,
 GUI cleanup or task success. See the retained [primary-use timing report](../../runtime/results/host-timing-summary-01/README.md).
+
+
+Pre-dispatch relay refusals have no echoed `id` or `tool`: the reader binds them
+to the pending local attempt, retained request, unchanged `next_id` and reply hash.
+They contribute to send/reply time and carry `relay_outcome.status=refused` with
+`dispatched=false`. A later corrected request can use the same protocol ID while
+its local attempt number advances. Unknown dispatch outcomes retain
+`relay_outcome.status=unknown_requires_reconciliation`; they are never inferred
+to be no-input refusals. `returned_count` counts retained replies of all these
+kinds, not successful backend actions. Neither a reply nor a timing result
+authorizes replay. See [real relay regression evidence](../../runtime/results/host-timing-refusal-01/README.md).
