@@ -540,3 +540,17 @@ between activation and text. Its results therefore do not validate removing thos
 boundaries. The [public primary trial](results/public-paced-brief-01/README.md)
 retains a missing first character, visual detection and an explicit repair.
 Do not replay an uncertain whole input program to recover a missing prefix.
+
+For a known click-to-text timing problem, an explicit bounded pause can be placed
+between mouse release and text, using the existing operations:
+
+```json
+{"op":"wait_update","timeout_ms":50}
+```
+
+This is a caller-selected mitigation, not a readiness condition. In a fresh
+[public MCP integration comparison](results/click-text-comparison-01/README.md),
+the known Tk fixture saved the exact text in 6/6 cases with this pause versus 2/6
+without it; four missing-prefix outcomes are retained. The pause added about
+54.4 ms to median local tool return. This does not establish a universal 50 ms
+threshold or faster end-to-end use, and it does not replace value review.
