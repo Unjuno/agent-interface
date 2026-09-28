@@ -146,7 +146,8 @@ python -m unittest discover -s research/integration/mindustry_three_arm_economic
 python research/live_control/probe_integrated_efficiency_protocol_v1.py
 ```
 
-Latest results: adaptive route construction 5/5, runner contract 9/9, frozen decision contract 6/6, inherited
+Latest results: adaptive route construction 7/7, arm coordinator 5/5,
+runner contract 9/9, frozen decision contract 6/6 (27/27 total), inherited
 probe `passed=true`, positive `RETAIN`, 10 controls. An initial test run had
 one assertion-fixture mismatch (expected persistent to contain 2 tasks instead
 of 6 tasks with 2 model calls); the fixture was corrected, and the rerun passed.
@@ -174,7 +175,7 @@ The final input boundary also exposes `require_current_locator`, requiring a
 newer observation and unchanged surface/geometry immediately before caller
 input. Two host tests cover acceptance of a fresh same-binding observation and
 refusal when geometry changes after the model response. Full local suite is
-22/22; the inherited probe remains `passed=true`, `RETAIN`, 10 controls. These
+27/27; the inherited probe remains `passed=true`, `RETAIN`, 10 controls. These
 are host-only construction checks, not Docker/live/formal results.
 
 The inherited #1679 preregistration design auditor was rerun locally and
@@ -183,6 +184,19 @@ detected. It records zero formal/live invocations. Its legacy `AUDIT.json`
 contains an older preregistration hash, so the script's rewritten historical
 output was restored byte-for-byte; this rerun is reported here rather than
 rewriting the prior audit artifact.
+
+The new `ArmCoordinator` composes the route adapter with the frozen
+score/reset/advance lifecycle: it prevents duplicate route resolution before a
+task is scored (including consuming a sole attempt even if model/validation
+fails), requires passing score and verified reset before advancing, and applies
+the preregistered route schedule across all three arms. It also performs a fresh
+pre-input binding check while keeping the locator explicitly non-authorizing.
+Five host tests exercise all six tasks per arm, score/reset composition,
+no-retry refusal, and final-locator freshness with synthetic observations/model
+outputs.
+This is an integration contract only; it still does not launch the Mindustry
+socket/mod, submit pointer input, score engine state, or create/audit a formal
+trace.
 
 Policy incident (2026-09-28 JST): one read-only `docker ps --format ...`
 inspection was mistakenly issued before the named #5130 lease, despite the
