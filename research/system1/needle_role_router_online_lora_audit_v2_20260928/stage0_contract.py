@@ -4,6 +4,7 @@ This module deliberately does not import the predecessor runner/auditor. It test
 the evidence contract on tiny synthetic JSON fixtures and never trains a model.
 """
 import hashlib
+import ast
 import json
 import unittest
 
@@ -24,7 +25,10 @@ def sha(data):
 
 def schedule_for(seed, arm):
     # Deterministic fixture-only index list, intentionally not a training schedule.
-    return [((seed % 97) + i * (ARMS.index(arm) + 1)) % 257 for i in range(16)]
+    start = seed % 97
+    stride = ARMS.index(arm) + 1
+    return [((start + i * stride + (i * i * (ARMS.index(arm) + 3))) % 257)
+            for i in range(16)]
 
 
 def make_fixture(seed, arm):
@@ -115,13 +119,22 @@ class RawContractMutationTests(unittest.TestCase):
         self.assertFalse(audit_raw(raw(obj))[0])
 
     def test_reorder_duplicate_and_index_mutation_reject(self):
-        for mutate in (
+        mutations = (
             lambda xs: list(reversed(xs)),
             lambda xs: xs.__setitem__(1, xs[0]),
             lambda xs: xs.__setitem__(0, (xs[0] + 1) % 257),
-        ):
+        )
+        for mutate in mutations:
             obj = make_fixture(SEEDS[0], ARMS[0])
-            mutate(obj["base_row_indices"])
+            indices = list(obj["base_row_indices"])
+            if mutate is mutations[0]:
+                indices[0], indices[1] = indices[1], indices[0]
+            elif mutate is mutations[1]:
+                indices[1] = indices[0]
+            else:
+                indices[0] = (indices[0] + 1) % 257
+            obj["base_row_indices"] = indices
+            self.assertNotEqual(obj["base_row_indices"], schedule_for(obj["seed"], obj["arm"]))
             self.assertFalse(audit_raw(raw(obj))[0])
 
     def test_digest_mutation_rejects(self):
@@ -143,13 +156,18 @@ class RawContractMutationTests(unittest.TestCase):
             self.assertFalse(audit_raw(raw(obj))[0], key)
 
     def test_no_training_code_or_optimizer_entrypoint_exists(self):
-        # This fixture-only checker has no torch import, runner, optimizer, or fit API.
-        forbidden = ("torch", "run_seed", "optimizer", "fit_model")
         import pathlib
-        source = pathlib.Path(__file__).read_text(encoding="utf-8")
-        for token in forbidden:
-            self.assertNotIn(token, source.lower())
+        tree = ast.parse(pathlib.Path(__file__).read_text(encoding="utf-8"))
+        imports = {alias.name.split(".")[0]
+                   for node in ast.walk(tree)
+                   if isinstance(node, (ast.Import, ast.ImportFrom))
+                   for alias in (node.names if isinstance(node, ast.Import) else [node])}
+        names = {node.name for node in ast.walk(tree) if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))}
+        self.assertFalse(imports & {"torch", "runner", "audit"})
+        self.assertFalse(names & {"run_seed", "fit_model", "optimizer_step"})
 
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+
+
