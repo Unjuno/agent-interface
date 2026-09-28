@@ -28,3 +28,7 @@ python -m unittest -v test_binding.py
 ```
 
 The test writes no files. The independent auditor reads only event rows and never imports the candidate implementation.
+
+## Frozen full-CLI counterexample
+
+[`host_cli/REPORT.md`](host_cli/REPORT.md) records a separate Windows host-CPU execution of the exact frozen W2 verifier and raw auditor CLIs against baseline and a one-field foreign lease-open actuation mutation. Both full CLIs accept the mutant; the target remains authorized with 298/302 ns bounds and raw audit errors are empty. This is stronger host reproduction than the prior function-only probe, but remains explicitly non-container/non-formal. Raw outputs and hashes are retained under `host_cli/`.
