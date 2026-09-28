@@ -208,7 +208,11 @@ def original_gates(reference):
     risk_ok = all(summary[b]["direct_wrong"] > 0 and
                   summary[b]["typed_wrong"] <= summary[b]["direct_wrong"] * 0.75 and
                   summary[b]["typed_wrong"] <= summary[b]["direct_wrong"] for b in PRIMARY_BLOCKS)
-    if not calibration_ok or not heldout_coverage_ok:
+    missing_safety_fields = [name for name in ("direct_unsafe", "typed_unsafe")
+                             if name not in summary.get(PRIMARY_BLOCKS[0], {})]
+    if missing_safety_fields:
+        decision = None
+    elif not calibration_ok or not heldout_coverage_ok:
         decision = "HOLD_CALIBRATION_COVERAGE_INSTABILITY"
     elif not prototypes_ok or not abstention_ok:
         decision = "FAIL_CONTROL_OR_INTEGRITY"
@@ -216,7 +220,10 @@ def original_gates(reference):
         decision = "PASS_TYPED_MODE_MATCHED_COVERAGE_SCOPED"
     else:
         decision = "FAIL_TYPED_MODE_NO_SELECTIVE_RISK_ADVANTAGE"
-    return {"decision": decision, "calibration_coverage_ok": calibration_ok,
+    return {"decision": decision,
+            "gate_evaluability": "HOLD_POSTHOC_GATE_NOT_EVALUABLE" if missing_safety_fields else "EVALUABLE",
+            "missing_required_metrics": missing_safety_fields,
+            "calibration_coverage_ok": calibration_ok,
             "heldout_coverage_match_ok": heldout_coverage_ok, "prototype_controls_ok": prototypes_ok,
             "fail_closed_controls_ok": abstention_ok, "primary_risk_gate_ok": risk_ok,
             "direct_pooled_coverage": direct_pooled, "typed_pooled_coverage": typed_pooled}
@@ -267,12 +274,18 @@ def audit_bytes(raw, expected_sha=EXPECTED_RAW_SHA256, expected_size=EXPECTED_RA
                   for mutation in corruptions(reference_json))
     if rejects != 16:
         issues.append("corruption_control_failure")
+    reconstructed = original_gates(reference_json)
+    gate_hold = not issues and reconstructed["gate_evaluability"] != "EVALUABLE"
     return {"audit_allocation": AUDIT_ALLOCATION, "source_allocation": SOURCE_ALLOCATION,
             "pass": not issues, "errors": issues, "raw_sha256": observed_sha, "raw_bytes": len(raw),
             "calibration_rows": len(parsed.get("calibration", {}).get("rows", [])),
             "test_rows": len(parsed.get("test", {}).get("rows", [])),
             "corruption_controls": {"rejected": rejects, "total": 16},
-            "supplemental_preregistered_decision": original_gates(reference_json) if not issues else None,
+            "raw_reconstruction_pass": not issues,
+            "disposition": "HOLD_POSTHOC_GATE_NOT_EVALUABLE" if gate_hold else ("POSTHOC_AUDIT_CONFIRMS_RETAINED_RAW" if not issues else "HOLD_POSTHOC_AUDIT_MISMATCH"),
+            "gate_evaluability": reconstructed["gate_evaluability"] if not issues else "UNRESOLVED_AUDIT_MISMATCH",
+            "supplemental_scientific_decision": None if issues or gate_hold else reconstructed["decision"],
+            "observable_reconstructed_gates": reconstructed if not issues else None,
             "note": "post-hoc supplemental audit only; original #5198 disposition is not replaced"}
 
 
