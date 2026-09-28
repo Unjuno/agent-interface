@@ -103,6 +103,13 @@ retained-host-time accounting) was immediately merged without conflict at
 recorded in the checkpoint manifest and report. The branch is pushed/rechecked
 before review.
 
+On 2026-09-29, main advanced to `1a8f774845f058d199dc976d2488c6b1d1b90c46`;
+it was merged without conflict at `b3b35ee71f4c7f3a77379fe8c381a949ab97ec25`.
+Included changes #5225's unrelated retained temporal-receipt audit and #5234's
+Mindustry acquisition workflow; neither modifies the v6 experiment path. The
+latest source suite was rerun host-only after the merge because the #5085
+Docker-command hold remains in force.
+
 ## Supplemental independent-auditor mutation matrix — 2026-09-29
 
 After the pinned Docker result, #5085's latest comment was discovered; it
