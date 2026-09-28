@@ -138,3 +138,18 @@ The concrete shortcut and fairness defects found in the two local audits are rep
 5. repeated parameter-frontier sweeps with uncertainty reporting;
 6. external model/image/token/cache/resource accounting;
 7. independent real-application/domain transfer.
+
+
+## Post-merge review hardening — 2026-09-28
+
+A post-merge code review found five instrument-validity defects. They are repaired and regression-tested:
+
+1. watcher-slot multiplication now selects a multiplier coprime with every accepted watcher count, making channel-to-tile placement a true permutation;
+2. tests use the production watcher geometry helper rather than a second coordinate implementation;
+3. moving object sprites render far-to-near, matching nearest-object hit selection when sprites overlap;
+4. expired alert obligations are classified before a newly-due event can reuse the channel, preserving `missed_alert` attribution;
+5. CLI difficulty parsing rejects empty, non-finite, and range-error numeric values.
+
+The local repair gate passes **20/20** validity-hardening tests, Xvfb smoke, and ASan+UBSan. The 64-object/64-watcher full software-render stress lane remains far below a 60/120 Hz frame budget.
+
+These fixes close the concrete post-merge review findings. The broader formal-benchmark HOLD gates remain unchanged.

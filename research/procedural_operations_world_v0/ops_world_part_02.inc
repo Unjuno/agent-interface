@@ -72,16 +72,30 @@ void ow_enter(OwWorld *w) {
     maybe_finish(w);
 }
 
+static int gcd_int(int a, int b) {
+    if (a < 0) a = -a;
+    if (b < 0) b = -b;
+    while (b) { int t = a % b; a = b; b = t; }
+    return a;
+}
+
 static int watcher_visual_slot(const OwWorld *w, int idx) {
     if (w->watcher_count <= 1) return idx;
     static const int mults[6] = {1,3,5,7,11,13};
-    int m = mults[w->presentation_family % 6];
-    while (m < w->watcher_count && (w->watcher_count % m) == 0) m += 2;
-    int off = (int)((w->presentation_family * 7u) % (unsigned)w->watcher_count);
-    return (idx * m + off) % w->watcher_count;
+    int n = w->watcher_count;
+    int m = mults[w->presentation_family % 6] % n;
+    if (m <= 0) m = 1;
+    /* Multiplication modulo n is a permutation iff gcd(m,n)==1. */
+    for (int tries = 0; tries < n && gcd_int(m, n) != 1; ++tries) {
+        ++m;
+        if (m >= n) m = 1;
+    }
+    if (gcd_int(m, n) != 1) m = 1;
+    int off = (int)((w->presentation_family * 7u) % (unsigned)n);
+    return (idx * m + off) % n;
 }
 
-static void watcher_tile_rect(const OwWorld *w, int idx, int *x, int *y, int *tw, int *th) {
+void ow_watcher_tile_rect(const OwWorld *w, int idx, int *x, int *y, int *tw, int *th) {
     int slot = watcher_visual_slot(w, idx);
     int mode = w->presentation_family % 4;
     if (mode == 0) {
@@ -105,7 +119,7 @@ static void watcher_tile_rect(const OwWorld *w, int idx, int *x, int *y, int *tw
 
 static int watcher_tile_at(const OwWorld *w, float x, float y) {
     for (int i=0;i<w->watcher_count;++i) {
-        int tx,ty,tw,th; watcher_tile_rect(w,i,&tx,&ty,&tw,&th);
+        int tx,ty,tw,th; ow_watcher_tile_rect(w,i,&tx,&ty,&tw,&th);
         if (x >= tx+1 && x <= tx+tw-2 && y >= ty+1 && y <= ty+th-2) return i;
     }
     return -1;

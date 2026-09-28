@@ -146,6 +146,13 @@ Split a sequence when the next action depends on a new image: submit the first
 program, inspect its result, then choose the next. An `observe` inside a program
 records an image; it does not suspend the remaining operations for model judgment.
 A fixed wait also does not acknowledge application redraw or successful saving.
+In guarded X11 mode, the existing five-second lease includes typing and waits.
+Expiry interrupts waits and prevents subsequent key presses, preserving partial
+execution and attempting release. The default post-result image still shows the
+state after that attempt. Review it before a new explicit action; do not replay
+the failed tail. Blocking X11 calls are not preempted, so this is not a hard
+real-time guarantee. [Primary expiry evidence](results/guarded-tail-deadline-01/README.md)
+records a stopped suffix and an independently correct reviewed continuation.
 Inspect the action outcome and image separately, requesting a fresh read-only
 observation when needed without repeating uncertain input.
 

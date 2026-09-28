@@ -187,6 +187,9 @@ def register_guarded_tools(server, submit):
 
         tail uses text, key_chord, wait_update or observe operations, within the
         existing expanded program limit. keyboard emits no pointer click.
+        The five-second guarded lease includes typing/waits. Expiry stops later
+        presses, interrupts waits and attempts release; partial effects remain.
+        Blocking X11 calls are not preempted; no hard real-time bound is promised.
         observe_after captures once immediately after the result; it adds no
         redraw wait. Capture failure retains the input result without replay.
         Inspect result/release separately from feedback and semantic completion.

@@ -268,13 +268,7 @@ static void trigger_alert(OwWorld *w, int idx, double scheduled_t) {
 }
 
 static void update_watchers(OwWorld *w) {
-    while (!w->done && w->alert_schedule_cursor < w->alert_schedule_count &&
-           w->alert_schedule[w->alert_schedule_cursor].t <= w->sim_time + 1e-12) {
-        const OwScheduledAlert *se = &w->alert_schedule[w->alert_schedule_cursor];
-        int idx = se->watcher;
-        trigger_alert(w, idx, se->t);
-        ++w->alert_schedule_cursor;
-    }
+    /* Attribute an expired obligation before a newly-due event can reuse its channel. */
     for (int i = 0; i < w->watcher_count && !w->done; ++i) {
         OwWatcher *q = &w->watchers[i];
         if (q->alert && w->sim_time > q->deadline) {
@@ -287,6 +281,16 @@ static void update_watchers(OwWorld *w) {
             }
             return;
         }
+    }
+    while (!w->done && w->alert_schedule_cursor < w->alert_schedule_count &&
+           w->alert_schedule[w->alert_schedule_cursor].t <= w->sim_time + 1e-12) {
+        const OwScheduledAlert *se = &w->alert_schedule[w->alert_schedule_cursor];
+        int idx = se->watcher;
+        trigger_alert(w, idx, se->t);
+        ++w->alert_schedule_cursor;
+    }
+    for (int i = 0; i < w->watcher_count && !w->done; ++i) {
+        OwWatcher *q = &w->watchers[i];
         if (q->acknowledged && w->sim_time >= q->ack_flash_until) q->acknowledged = 0;
     }
 }

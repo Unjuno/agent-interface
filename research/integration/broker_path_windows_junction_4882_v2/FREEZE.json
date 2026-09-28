@@ -1,0 +1,48 @@
+{
+  "schema": "broker_path_windows_junction_4882_v2_freeze_v1",
+  "allocation": "broker-path-windows-junction-4882-20260928-03",
+  "frozen_before_runner": true,
+  "source_main": "442ef765598971806dc5d671a223af7b3a711a5f",
+  "candidate": {
+    "upstream_path": "research/integration/broker_path_confinement_4876_v3/path_policy.py",
+    "git_blob": "cdd0e3d57e08a316fc9df6b55abca8c740db070d",
+    "resolver_function_ast_identical": true
+  },
+  "environment_preflight": {
+    "platform": "Windows 11 Home 10.0.26200 / NTFS",
+    "python": "CPython 3.12.10",
+    "powershell": "PowerShell 7; FileSystem provider lists Junction; runtime fixture creation not independently verified"
+  },
+  "files": {
+    "path_policy.py": "e3aea2c983b670f3318eeec356ea120a1430d2d32c0b757a4f9091179287e6ca",
+    "runner.py": "776545ab885dccafaf23364e8f9834601f999adb95590827c6be31825ef775c7",
+    "audit.py": "9009f472f60bfffd889c57e3e89ca929a57c2a785aaa942a7b53e1b27cc49dee",
+    "make_junctions.ps1": "2b492ce57ad24550f9d5996d8d66908275f3d06f420540f6e011f5ec1044528e"
+  },
+  "cases": [
+    {"id":"repo_root","input":"/repo","expected":"accept-root"},
+    {"id":"workspace_root","input":"/workspace","expected":"accept-root"},
+    {"id":"regular_file","input":"/repo/input.txt","expected":"accept-file"},
+    {"id":"in_root_junction","input":"/workspace/in-junction/data.txt","expected":"accept-file"},
+    {"id":"external_junction","input":"/repo/external-junction/secret.txt","expected":"reject-value-error"},
+    {"id":"lexical_traversal","input":"/repo/../outside/secret.txt","expected":"reject-value-error"},
+    {"id":"encoded_traversal","input":"/repo/%2e%2e/outside/secret.txt","expected":"reject-value-error"},
+    {"id":"absolute_host_path","input":"fixture external secret (not retained)","expected":"reject-value-error"},
+    {"id":"missing_path","input":"/repo/missing.txt","expected":"reject-file-not-found"}
+  ],
+  "decision": {
+    "pass":"PASS_WINDOWS_JUNCTION_CONFINEMENT_SCOPED",
+    "runner_invocations":1,
+    "runner_retries":0,
+    "post_freeze_tuning":0,
+    "success_auditor_invocations":1,
+    "broker_subprocess_invocations":0,
+    "cleanup_only_after_audit":true,
+    "setup_failure":"STOP_SETUP_JUNCTION_UNAVAILABLE"
+  },
+  "limits": [
+    "One native Windows NTFS construction fixture and candidate resolver only.",
+    "No production broker, host-model CLI, model/provider, GUI, input, GPU, or Docker invocation.",
+    "No symlink-race proof, production remediation, cross-OS parity, or #3152 result."
+  ]
+}
