@@ -75,3 +75,46 @@ class GuardedPresentationTests(unittest.TestCase):
             self.assertEqual(projected['presentation']['returned'],'full')
             for key,value in full.items():
                 if key!='presentation':self.assertEqual(projected[key],value)
+class GuardedObservationReferenceTests(unittest.TestCase):
+    def fixture(self):
+        row=normal_report()
+        native={'bytes':4096000,'sha256':'a'*64,'artifact':{'path':'/retained/'+'x'*600,'sha256':'b'*64},'extension':{'value':1}}
+        row['source']['native']=native
+        row['observation_report']={'status':'returned','observation_id':'observation-5','observation':deepcopy(native),'input_dispatched':False}
+        return row
+
+    def test_lossless_full_and_brief_preserve_unknown_fields_and_image(self):
+        from runtime.cli_v1.receipt_references import compact_guarded_observation,expand_guarded_observation
+        for row in (self.fixture(),brief_guarded_report(self.fixture())):
+            row['literal']={'observation_ref':'/source/native'}
+            original=deepcopy(row);compact=compact_guarded_observation(row)
+            self.assertIn('reference_schema',compact)
+            self.assertEqual(expand_guarded_observation(compact),original)
+            self.assertEqual(row,original)
+            self.assertEqual(compact['image'],row['image'])
+            self.assertEqual(compact['literal'],row['literal'])
+            self.assertEqual(compact_guarded_observation(compact),compact)
+
+    def test_near_duplicate_ids_small_reports_and_reserved_fields_stay_literal(self):
+        from runtime.cli_v1.receipt_references import compact_guarded_observation
+        rows=[]
+        row=self.fixture();row['observation_report']['observation']['extension']['value']=True;rows.append(row)
+        row=self.fixture();row['observation_report']['observation_id']='different';rows.append(row)
+        row=self.fixture();row['source']['native']={'x':1};row['observation_report']['observation']={'x':1};rows.append(row)
+        for key in ('reference_schema','observation_references','reference_scope','persistence_error'):
+            row=self.fixture();row[key]='caller-owned';rows.append(row)
+        row=self.fixture();row['status']='refused';rows.append(row)
+        for row in rows:
+            self.assertEqual(compact_guarded_observation(row),row)
+
+    def test_decoder_refuses_redirects_chains_and_identity_mismatch(self):
+        from runtime.cli_v1.receipt_references import compact_guarded_observation,expand_guarded_observation
+        compact=compact_guarded_observation(self.fixture())
+        changes=[(('reference_schema',),'other'),(('observation_references',),{'/observation_report/observation':'/image'}),
+                 (('observation_report','observation'),{'observation_ref':'/image'}),
+                 (('source','observation_id'),'other'),(('source','native'),None)]
+        for path,value in changes:
+            row=deepcopy(compact);parent=row
+            for key in path[:-1]:parent=parent[key]
+            parent[path[-1]]=value
+            with self.assertRaises(ValueError):expand_guarded_observation(row)

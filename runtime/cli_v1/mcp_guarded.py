@@ -138,13 +138,15 @@ class GuardedSessionOwner(MCPSessionOwner):
 
 def register_guarded_tools(server, submit):
     @server.tool()
-    async def interface_guarded_observe() -> CallToolResult:
+    async def interface_guarded_observe(observation_refs: StrictBool=False) -> CallToolResult:
         """Capture the full screen on the configured X11 connection; send no input.
 
         Returns a source.sequence and image for explicit grounding. Capture is
         not a redraw or task-completion acknowledgement. No implicit polling.
+        observation_refs=true references exact duplicate native image metadata at
+        source.native within this response; image delivery is unchanged.
         """
-        return await submit('guarded_observe', {}, False, False)
+        return await submit('guarded_observe', {}, False, False, observation_refs=observation_refs)
 
     @server.tool()
     async def interface_guarded_mint(alias: StrictStr, source_sequence: StrictInt,
@@ -179,7 +181,8 @@ def register_guarded_tools(server, submit):
     async def interface_guarded_input(alias: StrictStr, offset: list[StrictInt], tail: list[dict],
                                      interaction: Literal['click','keyboard']='click',
                                      observe_after: StrictBool=True,
-                                     detail: Literal["full","brief"]="full") -> CallToolResult:
+                                     detail: Literal["full","brief"]="full",
+                                     observation_refs: StrictBool=False) -> CallToolResult:
         """Use a scoped alias once through fresh pixel guards and ordinary input admission.
 
         tail uses text, key_chord, wait_update or observe operations, within the
@@ -189,9 +192,12 @@ def register_guarded_tools(server, submit):
         Inspect result/release separately from feedback and semantic completion.
         detail=brief summarizes known normal exact-match guard details only.
         Failures/unknown shapes remain full; full retrieval never replays input.
+        observation_refs=true additionally replaces exact duplicate image metadata
+        with a local source.native reference. The reference layer is lossless;
+        brief guard summaries remain lossy. Defaults keep the existing full shape.
         """
         return await submit('guarded_input',dict(alias=alias,offset=offset,tail=tail,
-                            interaction=interaction,observe_after=observe_after),False,False,detail)
+                            interaction=interaction,observe_after=observe_after),False,False,detail,observation_refs)
 
     @server.tool()
     async def interface_guarded_review_window(window_id: StrictInt) -> CallToolResult:

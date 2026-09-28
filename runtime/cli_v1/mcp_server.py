@@ -149,7 +149,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         'Inspect action, image and cleanup outcomes separately. '
         'Never replay an uncertain action automatically.'))
 
-    def invoke(operation, kwargs, compact, report_refs, detail="full"):
+    def invoke(operation, kwargs, compact, report_refs, detail="full", observation_refs=False):
         call_id = None
         try:
             call_root = root / uuid.uuid4().hex
@@ -243,6 +243,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             if detail == 'brief':
                 from .guarded_presentation import brief_guarded_report
                 result = brief_guarded_report(result)
+            if observation_refs and operation.startswith('guarded_'):
+                from .receipt_references import compact_guarded_observation
+                result = compact_guarded_observation(result)
             return content(result, error=persistence_error is not None or (
                 (operation.startswith('guarded_') or operation in ('close', 'inspect_target', 'review_target')) and
                 (report.get('error') is not None or report.get('status') in ('cleanup_failed','refused','needs_review')
@@ -253,7 +256,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                     calls[call_id]["state"] = "finished"
             lock.release()
 
-    async def submit(operation, kwargs, compact, report_refs, detail="full"):
+    async def submit(operation, kwargs, compact, report_refs, detail="full", observation_refs=False):
         if report_refs and not compact:
             return content({'status': 'invalid_request',
                 'error': 'report_refs requires compact=true',
@@ -264,7 +267,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         # Decide busy before scheduling a worker; thread-pool contention must not queue input.
         if not lock.acquire(blocking=False):
             return content({'status': 'busy', 'operation_invoked': False}, error=True)
-        worker = asyncio.create_task(asyncio.to_thread(invoke, operation, kwargs, compact, report_refs, detail))
+        worker = asyncio.create_task(asyncio.to_thread(invoke, operation, kwargs, compact, report_refs, detail, observation_refs))
         workers.add(worker)
         def finished(task):
             workers.discard(task)
@@ -379,7 +382,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                                 compact: StrictBool = False,
                                 include_image: StrictBool = True,
                                 report_refs: StrictBool = False,
-                                detail: Literal["full", "brief"] = "full") -> CallToolResult:
+                                detail: Literal["full", "brief"] = "full",
+                                observation_refs: StrictBool = False) -> CallToolResult:
         """List this server's calls or reread one retained result. Never dispatch or observe.
 
         A finished worker is not proof of task success. Unknown calls are not replayed.
@@ -387,6 +391,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         Set include_image=false to inspect metadata without resending a retained image.
         detail=brief projects only normal guarded-input checks; full is the default.
         Critical/unsupported guarded reports stay full; other modes are unchanged.
+        observation_refs=true replaces an exact duplicate observation with a local
+        reference to source.native; expand_guarded_observation restores the view.
+        It changes no image, capture, authority, or retained raw report.
         report_refs requires compact=true and a v3 receipt decoder.
         In v3, read the full report at receipt.source.raw_report in this response;
         the report reference requires no additional tool call.
@@ -436,6 +443,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         if detail == 'brief' and record['operation'].startswith('guarded_'):
             from .guarded_presentation import brief_guarded_report
             result = brief_guarded_report(result)
+        if observation_refs and record['operation'].startswith('guarded_'):
+            from .receipt_references import compact_guarded_observation
+            result = compact_guarded_observation(result)
         return content(result, include_image=include_image)
 
     return server
