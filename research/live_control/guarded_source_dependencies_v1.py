@@ -13,7 +13,7 @@ WRAPPERS = tuple('research/live_control/' + name + '.py' for name in (
     'scoped_target_handle_v2', 'scoped_target_handle_v3',
     'native_handle_bridge_v1', 'native_guarded_form_v1'))
 IMPLEMENTATIONS = tuple('runtime/guarded_x11_v1/' + name + '.py' for name in (
-    '__init__', 'frames', 'handles_base', 'handles_texture', 'handles', 'bridge', 'form'))
+    '__init__', 'frames', 'handles_base', 'handles_texture', 'handles', 'bridge', 'history', 'form'))
 HELPER = 'research/live_control/guarded_source_dependencies_v1.py'
 
 

@@ -14,6 +14,7 @@ import uuid
 
 from PIL import Image
 from .handles import TargetHandleStore
+from .history import ObservationHistory
 from runtime.backends.x11_v1.backend import X11Backend, X11BackendError
 from runtime.backends.x11_v1.session import X11RuntimeSession
 from runtime.core_v1.contract import SCHEMA_PROGRAM
@@ -31,6 +32,27 @@ def read_window_title(connection, window):
     return window.get_wm_name()
 
 class _GuardedBackend(X11Backend):
+    def key_state(self, key, down):
+        # Text expands to key chords, so check each new press, including a
+        # modifier's following key. Releases must remain possible after expiry.
+        if (down and self.owner.active is not None and self.owner.deadline is not None
+                and time.monotonic_ns() >= self.owner.deadline):
+            raise X11BackendError('native target guard lease expired')
+        return super().key_state(key, down)
+
+    def _wait_update(self, timeout_ms):
+        deadline = self.owner.deadline if self.owner.active is not None else None
+        if deadline is None:
+            return super()._wait_update(timeout_ms)
+        end = time.monotonic_ns() + timeout_ms * 1_000_000
+        while True:
+            now = time.monotonic_ns()
+            if now >= deadline:
+                raise X11BackendError('native target guard lease expired during wait')
+            if now >= end:
+                return
+            time.sleep((min(end, deadline) - now) / 1_000_000_000)
+
     def focus(self, target):
         if self.owner.active is not None:
             self.owner.check("before_focus")
@@ -63,7 +85,7 @@ class NativeHandleBridge:
         self.scope = "native-x11:" + uuid.uuid4().hex
         self.store = TargetHandleStore(self.scope)
         self.sequence = 0
-        self.history = {}
+        self.history = ObservationHistory()
         self.checks = []
         self.active = None
         self.moved_point = None
@@ -297,7 +319,7 @@ class NativeHandleBridge:
     def check(self, stage):
         if self.active is None:
             raise X11BackendError("no active native target guard")
-        if self.deadline is not None and time.monotonic_ns() > self.deadline:
+        if self.deadline is not None and time.monotonic_ns() >= self.deadline:
             raise X11BackendError("native target guard lease expired")
         observation = self.observe()
         outcome = self.store.resolve_point(self.active[0], self.active[1], observation,
@@ -306,7 +328,7 @@ class NativeHandleBridge:
         self.checks.append(row)
         if not outcome["eligible"]:
             raise X11BackendError("native target guard refused: " + outcome["status"])
-        if self.deadline is not None and time.monotonic_ns() > self.deadline:
+        if self.deadline is not None and time.monotonic_ns() >= self.deadline:
             raise X11BackendError("native target guard lease expired during capture")
         return outcome
 

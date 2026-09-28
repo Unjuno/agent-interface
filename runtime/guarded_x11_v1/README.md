@@ -36,9 +36,14 @@ Call `close()` in a finally block. It closes this connection, not the applicatio
 The object is synchronous and intended for one caller; it is not a concurrent queue.
 
 Observations and raw input receipts are retained in the fresh output directory.
-History is session-local and currently retained in memory until review or object disposal;
-callers must bound session lifetime. No claim of unlimited-session memory use is
-made. A dispatch/persistence exception can mean uncertain delivery; inspect the
+History is session-local. At most two decoded full-screen images are retained
+by its cache; older observations reload their exact hash-checked PNG when needed
+for explicit grounding. Reloading never captures the current screen or changes
+the source sequence. Missing or corrupt old artifacts refuse grounding. Recent
+cached images remain the pixels already verified at capture. Metadata, handle
+patches, caller-held images and disk artifacts are not bounded by this cache;
+callers must still bound session lifetime. Window review clears all old history
+without loading artifacts. No unlimited-session memory claim is made. A dispatch/persistence exception can mean uncertain delivery; inspect the
 retained evidence and observe explicitly instead of replaying input.
 
 `runtime.guarded_x11_v1.form.fill_and_submit` is the existing two-target fixture
@@ -94,3 +99,21 @@ attribution; see [preserved evidence](../results/guarded-mcp-primary-interrupted
 A fresh [completed primary trial](../results/guarded-mcp-primary-02/README.md)
 subsequently verified six exact saves and explicit recovery through the public
 mode. This supports opt-in integration; efficiency claims remain unproven.
+
+## Guarded tail deadline
+
+The existing five-second guarded lease includes admission captures, pointer
+checks, typing and explicit waits. Every new key press now checks that deadline;
+key release remains permitted afterward. A fixed wait ends at the earlier of
+its requested end or the original lease deadline, without renewing the lease.
+At expiry, execution fails, retains the completed prefix and interrupted wait,
+attempts release and does not start the remaining input. The public guarded
+MCP default still returns one post-result observation, including after this
+failure. Inspect partial effects and the image before choosing a new action;
+never replay the whole tail automatically.
+
+This is cooperative enforcement on the guarded X11 path, not a hard real-time
+stop. Scheduling or blocking X11 calls can delay detection and physical release.
+It adds no continuous focus sensor or autonomous input owner. The ordinary X11
+backend's fixed-delay behavior and admission-only lease check are unchanged.
+A completed fixed delay still does not acknowledge application redraw.

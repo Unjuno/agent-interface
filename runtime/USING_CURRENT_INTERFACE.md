@@ -21,6 +21,17 @@ Adding configuration does not prove tools are available in a running host. The
 public CLI emits JSON; an assistant integration must render its image payload.
 Neither route establishes end-to-end latency merely by returning an image.
 
+## Long-lived guarded sessions
+
+Guarded X11 history keeps two decoded full-screen images in memory and reloads
+older explicit grounding sources from their exact hash-checked PNG artifacts.
+Source sequences, images and fresh guards are unchanged. Missing/corrupt old
+artifacts refuse grounding; they are never replaced with a new screenshot.
+Metadata, handle patches, disk files and caller-held images still require bounded
+session lifetimes. [Retention evidence](results/decoded-observation-history-01/README.md)
+includes a scoped primary task and an isolated memory comparison, not a model
+latency, token-cost or human-tempo claim.
+
 ## Public actions and images
 
 From the repository root, inspect the installed command surface:
@@ -135,6 +146,13 @@ Split a sequence when the next action depends on a new image: submit the first
 program, inspect its result, then choose the next. An `observe` inside a program
 records an image; it does not suspend the remaining operations for model judgment.
 A fixed wait also does not acknowledge application redraw or successful saving.
+In guarded X11 mode, the existing five-second lease includes typing and waits.
+Expiry interrupts waits and prevents subsequent key presses, preserving partial
+execution and attempting release. The default post-result image still shows the
+state after that attempt. Review it before a new explicit action; do not replay
+the failed tail. Blocking X11 calls are not preempted, so this is not a hard
+real-time guarantee. [Primary expiry evidence](results/guarded-tail-deadline-01/README.md)
+records a stopped suffix and an independently correct reviewed continuation.
 Inspect the action outcome and image separately, requesting a fresh read-only
 observation when needed without repeating uncertain input.
 
