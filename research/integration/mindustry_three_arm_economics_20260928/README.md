@@ -4,8 +4,8 @@ This additive package is for the unmeasured six-task Mindustry economics cell
 under #57. It inherits the frozen task/order/arm/call schedule and acceptance
 rule from #1679; it does not reopen or modify #1679, #2624, or prior allocations.
 
-This branch includes current `main` `faf30993f987b2a4ea1e6f85d322ab6c91ab1b7c`
-(merge commit `c6c11371dad48cff1dd4a5a21eea58cdb902c5ac`). The inherited
+This branch includes current `main` `716d25286ec37999d8098cd63bf1731fae0d88d6`
+(merge commit `d74e215aaa5c6b4ca939ec30f062c67fd8d83606`). The inherited
 #1679 preregistration's five dependency blobs were compared with this main:
 four are byte-identical; the plan Markdown alone changed from
 `ff0de7c4a0d6cc57d145d460f019f72d6967ffec` to
@@ -102,9 +102,10 @@ passed. The corrected repository-root unittest command then passed 6/6. This
 additional setup failure is retained separately and is not counted as a test
 failure or success.
 
-After refreshing to main `faf3099`, the repository-root decision-contract
+After refreshing to main `716d252`, the repository-root decision-contract
 unittest passed 6/6 and the inherited host probe returned `passed=true`,
-positive `RETAIN`, `controls=10`. No Docker command was run for this refresh.
+positive `RETAIN`, `controls=10`. The five frozen dependency blobs remain
+unchanged on this main. No Docker command was run for this refresh.
 
 It checks the inherited evaluator's positive route, strict task-4 break-even
 boundary (including equality failing), and fail-closed task schedule, stale
