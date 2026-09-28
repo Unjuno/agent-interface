@@ -471,3 +471,21 @@ navigations. It completed all six values exactly once using 28 calls, versus a
 call reduction does not establish a speedup or token savings. Different explicit
 observation conditions can be evaluated in a fresh allocation without rewriting
 this result.
+
+
+## Exact placement through a visible numeric field
+
+When an application exposes a position field, it can provide an explicit route
+for a document-coordinate target. Review the selected object and field units,
+select the whole value and confirm the selection, enter the requested value,
+then inspect the resulting position and dimensions before saving. Use coordinates
+from the current image; do not copy another session's toolbar coordinates.
+This remains ordinary GUI input chosen by the primary model.
+
+[Primary Inkscape use](results/inkscape-numeric-primary-01/README.md) saved one red
+40x30 rectangle at X80/Y50 through the visible X field at 118% zoom. It took six
+MCP calls including close, with no extra observations or input replay. This is
+one functional example, not evidence of faster operation than dragging. A
+[preceding drag](results/inkscape-current-primary-01/README.md) had different
+success criteria and showed that pointer distance did not equal object distance.
+Neither recipe implies automatic geometry verification or a universal motor gain.
