@@ -22,3 +22,18 @@ python -m unittest -v runtime.backends.x11_v1.test_integration
 ```
 
 Promotion beyond this candidate still requires supported-host/application coverage.
+
+## Preflight refusal evidence
+
+A BACKEND_CONSTRAINT refusal before the execution loop explicitly records
+`program_execution_started: false`, `program_emissions: 0`, and
+`cleanup_attempted: true`. `backend_emissions` remains the cumulative connection
+counter, including prior programs and any cleanup release events. These fields
+therefore do not claim that no physical input occurred: inspect the separate
+release/readback and recovery evidence. The public outcome summary preserves
+these explicit fields without inferring them for historical receipts or other
+backends. No replay is authorized by the summary.
+
+This addresses the ambiguity encountered in the retained
+[primary Calc trial](../../results/public-review-live-01/README.md), whose fourth
+call was refused before execution while backend_emissions still read 16.
