@@ -12,7 +12,7 @@ H: A lease-open record with no exact actuation binding must not authorize edges 
 
 T: Run the deterministic host construction tests against the exact frozen eight-case fixture. Candidate and raw-only oracle are separate modules. For each of the four binding-required cases, test a matched positive, a `FOREIGN-ACTUATION` mutation, and an absent binding. Also test reused lease ID and edges without a lease-open.
 
-D: Construction PASS requires frozen-fixture SHA-256 match, unchanged eight baseline cases, candidate/oracle agreement, 4/4 matched positives, 4/4 foreign mutations rejected, 4/4 missing bindings held, and both structural controls held. This does not pass the Docker formal/audit gate in #5116. Any candidate/oracle disagreement is a construction FAIL; source drift is STOP.
+D: Construction v1 PASS requires frozen-fixture SHA-256 match, unchanged eight baseline cases, candidate/oracle agreement, 4/4 matched positives, 4/4 foreign mutations rejected, 4/4 missing bindings held, and structural controls held. See the append-only v2 extension below for the scalar/multi-actuation rule. Neither host stage passes the Docker formal/audit gate in #5116.
 
 C: Synthetic traces only; one field changes in each positive/negative pair. This tests actuation binding only, not lease time windows, owner/session matching, input occupancy, clock conversion, GUI behavior, or runtime admission.
 
@@ -24,10 +24,14 @@ The committed fixture is an exact-byte copy of the frozen source fixture at `fix
 
 ```powershell
 $env:W2_TRACE_FIXTURE = "fixtures/trace-cases.json"
-python -m unittest -v test_binding.py
+python -m unittest -v test_binding.py test_binding_v2.py
 ```
 
-The test writes no files. The independent auditor reads only event rows and never imports the candidate implementation.
+The tests write no files. The independent auditor reads only event rows and never imports the candidate implementation. The original v1 test/freeze/result remain unchanged; v2 is a separate six-test extension.
+
+## Append-only scalar/multi-actuation resolution
+
+The frozen schema provides a scalar `actuation_id` on lineage and does not define a bounded `actuation_ids` set or lease-to-actuation cardinality. The conservative v2 experiment rule binds a lease-open to exactly one actuation; another actuation under the same lease is rejected unless a future version explicitly specifies a bounded set. This is a scoped test rule, not a claim that the broader protocol contract has formally selected this cardinality. See `FREEZE_v2.json` and `RESULT_v2.json`; v1 records above are preserved verbatim.
 
 ## Frozen full-CLI counterexample
 
