@@ -20,6 +20,10 @@ python research/experiments/qwen05b_abstention_balance_5139_sampler_v1/evidence/
 
 Each stdout JSON file is the exact direct entrypoint output. The original probe source and retained result files are not modified.
 
+## Latest-main follow-up
+
+Main subsequently advanced to `708dec9bcd2bfb3ef597acf7bc1c8a02bcb96b01`. From common base `5ad5a9ab465e2b0052aa301b1909b92816e70025`, its 10 changed paths do not overlap the branch's changed paths. After merging that main into the branch, the same host package suite passed **27/27** in 1.281 seconds, and both direct probes' parsed JSON matched the retained 5ad5a9a stdout artifacts exactly. This is a source-disjoint current-main compatibility check, not a new scientific allocation; no GPU, Docker, model, or fit was used.
+
 ## STOP and resource-governance disclosure
 
 No Docker command was used for this recheck. Separately, Issue #5085 comment #5864462673 discloses three earlier unauthorized local Docker starts from this continuing task; they are preserved as a governance violation, not a result or lease. No further Docker/GPU operation is made here. The 5139 GPU/Docker formal authorization remains absent.
