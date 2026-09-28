@@ -145,7 +145,7 @@ python -m unittest discover -s research/integration/mindustry_three_arm_economic
 python research/live_control/probe_integrated_efficiency_protocol_v1.py
 ```
 
-Latest results: runner contract 8/8, frozen decision contract 6/6, inherited
+Latest results: runner contract 9/9, frozen decision contract 6/6, inherited
 probe `passed=true`, positive `RETAIN`, 10 controls. An initial test run had
 one assertion-fixture mismatch (expected persistent to contain 2 tasks instead
 of 6 tasks with 2 model calls); the fixture was corrected, and the rerun passed.

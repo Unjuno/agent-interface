@@ -1,6 +1,12 @@
 """Construction checks for the host-only six-task lifecycle contract."""
 
 import unittest
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT / "research" / "live_control"))
+import integrated_efficiency_protocol_v1 as evaluator  # noqa: E402
 
 from runner_contract import (Lifecycle, arm_schedule, controller_envelope,
                              evaluator_task_id, load_plan)
@@ -36,10 +42,18 @@ class RunnerContractTests(unittest.TestCase):
     def test_preregistered_labels_map_bijectively_to_frozen_evaluator_ids(self):
         raw_ids = self.plan["tasks"]
         mapped = [evaluator_task_id(self.plan, task_id) for task_id in raw_ids]
-        self.assertEqual(mapped, [f"task-{index}" for index in range(1, 7)])
+        self.assertEqual(mapped, list(evaluator.TASKS))
         self.assertEqual(len(set(mapped)), 6)
         with self.assertRaisesRegex(ValueError, "unknown preregistered"):
             evaluator_task_id(self.plan, "A4")
+
+    def test_schedule_matches_the_inherited_frozen_evaluator(self):
+        self.assertEqual(tuple(self.plan["layouts"]), evaluator.LAYOUTS)
+        for arm in self.plan["arm_order"]:
+            schedule = arm_schedule(self.plan, arm)
+            self.assertEqual(tuple(task.route for task in schedule), evaluator.EXPECTED_ROUTES[arm])
+            self.assertEqual(tuple(task.model_calls for task in schedule),
+                             evaluator.EXPECTED_MODEL_CALLS[arm])
 
     def test_lifecycle_rejects_non_boolean_score_and_witness(self):
         run = Lifecycle(self.plan)
