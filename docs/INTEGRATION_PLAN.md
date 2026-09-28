@@ -579,3 +579,11 @@ under runtime/results/relay-host-timeline-primary-01. Callback-to-review gaps
 around 9.5 to 14 seconds are host boundaries, not isolated model latency. Matched
 performance, first useful model-visible feedback and actual token/cost accounting
 remain open. No speedup or overall completion is claimed.
+
+### Guarded brief presentation and unknown-argument checkpoint
+
+Opt-in detail="brief" now shares the public guarded transport's full report journal and exact image path. Normal exact-match guard details alone are summarized; full remains default and failures remain detailed. A primary six-task trial against d3ad158ae completed all exact saves once and verified read-after-close and release. It required unexpected recovery after pointer:false was silently ignored by the SDK. This failure is retained, and subsequent source e609b1971 rejects unknown top-level arguments through public FastMCP list/call methods before backend invocation. Nested program/tail validation is unchanged.
+
+Evidence: guarded-mcp-brief-interrupted-01, guarded-mcp-brief-host-failure-02, guarded-mcp-brief-primary-03, guarded-mcp-unknown-arguments-01 under runtime/results. The completed trial's 130,035 to 108,586 metadata bytes is a same-record comparison. Actual model tokens/cost, useful-feedback latency, semantic completion latency, matched baselines and human tempo remain unproven. No host text projection was used in trial03; prior trials differ in that respect. Protocol 247 and harness 106 checks passed after the argument fix, plus actual stdio and portable-archive refusal checks.
+
+Issue intake: #5126 identifies malformed/duplicate lineage acceptance in the separately owned #1839/#5123 synthetic contract. Its historical frozen evidence must remain unchanged; it does not authorize or substantiate live production adoption. Latest main's added synthetic report is retained as research, not used as GUI performance evidence.

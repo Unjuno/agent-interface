@@ -302,3 +302,28 @@ records six exact saves, a stale-alias refusal before input, explicit recovery,
 source-bound review receipts and result retrieval after close. The earlier
 interrupted trial is retained separately. This establishes scoped integration
 and usability, not matched performance, token savings or human-like tempo.
+
+## Brief guarded-input details
+
+`interface_guarded_input(..., detail="brief")` optionally summarizes repeated
+normal exact-match guard records. The default is `detail="full"`. This adapts the
+positive-only native brief-review approach to public guarded reports; it is not
+a lossless codec. `result.guard_summary` replaces `result.guard_checks` only for
+known completed results with an image, no recovery, verified empty releases,
+completed waits and unmoved exact-region guards. Other result fields, observation
+identity and image stay unchanged. Failures, persistence errors, translations,
+unknown guard/result extensions and unsupported shapes retain full detail.
+
+The `presentation.retrieve` object gives an exact `interface_results` call with
+`detail="full"` and `include_image=false`. It reads the original retained report
+without input or observation. Result retrieval also accepts `detail="brief"`;
+this applies only to guarded reports and leaves other modes unchanged. Raw
+`report.json` is never replaced by the summary. A caller must inspect release,
+feedback and task state separately; a brief normal receipt is not semantic success.
+
+The option can reduce serialized metadata for repeated normal guards, but this
+is not evidence of fewer actual model tokens, lower cost or faster decisions.
+
+### Unknown top-level arguments
+
+Public MCP tools reject unknown top-level argument names before invoking the operation or opening the backend. Discovery advertises `additionalProperties: false`. For keyboard-only guarded input, use `interaction: "keyboard"`; `pointer: false` is not an argument. Do not infer accepted semantics from an unrecognized flag. This check does not alter nested program or tail validation. Validation errors may be plain text from the SDK; host renderers must not assume every text block is JSON.
