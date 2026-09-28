@@ -1,3 +1,17 @@
+## Reviewed-image functional pair — 2026-09-28
+
+[One primary Calc pair](../runtime/results/reviewed-image-pair-01/README.md)
+uses the same seed/runtime/input programs and fresh per-arm sessions. Both saved
+324/145 correctly. Reuse presented four full images and two references; baseline
+presented seven full images. Baseline needed an extra observation of its save
+transition, so the nine-versus-eight request difference is not attributed to reuse.
+C1 omitted two PNG presentations (153,854 bytes), while full MCP evidence remained.
+
+Keep EFFICIENCY_HOLD: fixed-order single pair, unfrozen rendering timing, unavailable
+actual usage accounting. Recorded host/review timing is not exact useful-feedback
+or causal latency. The primary explicitly distinguished completed input/focus from
+an image still showing save progress. No wait-policy, sensor, or model change.
+
 ## Reviewed-image host integration — 2026-09-28
 
 [Primary Calc use and retained evidence](../runtime/results/reviewed-image-host-primary-01/README.md)
