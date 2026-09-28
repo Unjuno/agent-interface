@@ -4,6 +4,12 @@ Disposition: **HOLD_REFERENCE_BYTES_ON_LINUX** for promotion from this checkout.
 This is an additive integration finding, not a revision of the original timing
 outcome or a new scientific allocation. No production runtime change is adopted.
 
+Follow-up: [exact-byte reconstruction](../lifecycle-reference-reconstruction-01/README.md)
+passed all ten tests and reproduced the corrected raw audit in a separate copy.
+Only two declared LF-to-CRLF mappings were applied, each matching its frozen hash.
+This resolves the representation question for that derived copy; the original
+Linux Git-byte failure and all evidence below remain unchanged.
+
 At main `0c1e87b454fb70bcc7b11dbb8b6a719512d0425b`, the integration owner inspected
 Issue #5133 and merged PR #5147. Its correction restores the five candidate
 Python source files and supersedes the original break-even audit. To check the
