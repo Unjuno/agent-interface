@@ -95,3 +95,10 @@ environment variables. This is `PASS_PINNED_IMAGE_CONSTRUCTION_FIXTURES_ONLY`,
 not an optimizer, adaptation, latency or scientific result. Formal v6 remains
 `STOP_RESOURCE_GATE` pending exact #5085 owner lease; prior v5 evidence is
 unchanged.
+
+PR #5226 was opened as Draft against main observed at
+`b556c109828e89b3a8e78cb618530a044c97d7d8`. That latest main commit (#5224,
+retained-host-time accounting) was immediately merged without conflict at
+`b324284ee1616280e4dde9f0d2b1c126735ff331`; this newer synchronization is
+recorded in the checkpoint manifest and report. The branch is pushed/rechecked
+before review.
