@@ -420,3 +420,5 @@ and mismatched duplicated context retain the full response. `detail=brief`
 also retains the full response for enriched reports. This opt-in trades
 additional metadata and inspection time against a possible separate tool call;
 no latency or token benefit is established yet.
+
+Target inspection uses managed X11 client IDs as configured family roots. Tk widget/child IDs may accept input yet fail the managed transient-family inspection. Configure the managed client explicitly; the optional enrichment does not normalize or rebind it. See [retained primary evidence](../results/post-dispatch-inspection-01/README.md), including the failed child-target trial and corrected allocation.
