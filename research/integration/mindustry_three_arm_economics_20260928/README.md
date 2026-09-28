@@ -4,9 +4,10 @@ This additive package is for the unmeasured six-task Mindustry economics cell
 under #57. It inherits the frozen task/order/arm/call schedule and acceptance
 rule from #1679; it does not reopen or modify #1679, #2624, or prior allocations.
 
-This branch includes current `main` `3553dc1af1125441a6b44256755e7e22df40836d`
-(merge commit `8c3138c7bd`, incorporating #5158 on top of prior #5154/#5153 sync
-`1866f05aab`). The inherited
+This branch was originally based on `main`
+`3553dc1af1125441a6b44256755e7e22df40836d` (merge commit `8c3138c7bd`,
+incorporating #5158 on top of prior #5154/#5153 sync `1866f05aab`) and has since
+merged current `main` `442ef765598971806dc5d671a223af7b3a711a5f`. The inherited
 #1679 preregistration's five dependency blobs were compared with this main:
 four are byte-identical; the plan Markdown alone changed from
 `ff0de7c4a0d6cc57d145d460f019f72d6967ffec` to
@@ -38,10 +39,14 @@ new authorization or experiment evidence.
 
 ## Current status
 
-No formal or live model/game allocation has run in this package. GitHub #5085
-has explicitly assigned the next serialized CPU slot to #5134 allocation
-`needle-publication-orbstack-bind-5066-20260928-02` at #5085 comment
-#5861921301. That lease does not transfer to #5130; #5130 has no named slot.
+No formal or live model/game allocation has run in this package. Latest checked
+#5085 comments say #5134 allocation `needle-publication-orbstack-bind-5066-20260928-03`
+is still only a request, not a lease; an owner-unidentified OpenFOAM container
+was reported running, and #5139 likewise requested a future slot without
+authorization (#5085 comments #5862349694 and #5862378940). No slot is assigned
+to #5130. Do not start, build, pull, inspect, or alter Docker until an exact
+named coordinator allocation and sibling-container release are recorded; a
+locally idle daemon or the user's general Docker availability is not that lease.
 The live-start prerequisite is already recorded
 as `PASS_MINDUSTRY_MATERIALIZED_LIVE_SMOKE_SCOPED` by fresh #2624 V2: exact
 fixture identities, zero-input readiness, independent raw audit, and 8/8
@@ -65,13 +70,14 @@ an execution-policy violation, not a formal result; it has been reported on
 #5130 and #5085. No further Docker calls will be made on this lane until an
 explicit slot assignment.
 
-Readiness gap: this additive path currently contains only the decision-contract
-tests, source-identity audit, and this report. It has no integrated live
-three-arm runner, construction suite for that runner, or raw-output auditor.
-The existing single-task Mindustry runner and synthetic repeat-fixture protocol
-are references, not evidence that the six-task three-arm path is implemented.
-Those composed artifacts and their construction checks must be completed
-before freezing or launching the formal allocation.
+Readiness gap: this additive path has host-side controller adapters, a private
+score/reset file channel, and an independent host reset witness. It still has
+no integrated live three-arm runner, live-game construction suite, or
+independent raw-output auditor. The existing single-task Mindustry runner and
+synthetic repeat-fixture protocol are references, not evidence that the
+six-task three-arm path is implemented. Those composed artifacts and their
+construction checks must be completed before freezing or launching a formal
+allocation.
 
 The decision-contract check is synthetic and non-scientific. It was run both
 on the host and in local, network-disabled Docker containers using the
@@ -146,10 +152,11 @@ python -m unittest discover -s research/integration/mindustry_three_arm_economic
 python research/live_control/probe_integrated_efficiency_protocol_v1.py
 ```
 
-Latest results: adaptive route construction 8/8, arm coordinator 5/5,
+Earlier results: adaptive route construction 8/8, arm coordinator 5/5,
 sequence-bound dispatch 4/4, runner contract 9/9, frozen decision contract 6/6
-(32/32 total), inherited
-probe `passed=true`, positive `RETAIN`, 10 controls. An initial test run had
+(32/32 total), inherited probe `passed=true`, positive `RETAIN`, 10 controls.
+These are superseded as the latest suite count by the host reset/channel checks
+below. An initial test run had
 one assertion-fixture mismatch (expected persistent to contain 2 tasks instead
 of 6 tasks with 2 model calls); the fixture was corrected, and the rerun passed.
 These are host-only construction results, not Docker, live, formal, or
@@ -176,8 +183,8 @@ auditor before the formal path is runnable.
 The final input boundary also exposes `require_current_locator`, requiring a
 newer observation and unchanged surface/geometry immediately before caller
 input. Two host tests cover acceptance of a fresh same-binding observation and
-refusal when geometry changes after the model response. Full local suite is
-32/32; the inherited probe remains `passed=true`, `RETAIN`, 10 controls. These
+refusal when geometry changes after the model response. At that checkpoint the
+suite was 32/32 and the inherited probe was `passed=true`, `RETAIN`, 10 controls. These
 are host-only construction checks, not Docker/live/formal results.
 
 The inherited #1679 preregistration design auditor was rerun locally and
@@ -203,6 +210,27 @@ authority/task labels, and a sequence race.
 This is an integration contract only; it still does not launch the Mindustry
 socket/mod, submit pointer input, score engine state, or create/audit a formal
 trace.
+
+## Private score/reset handshake construction (2026-09-28)
+
+Added `private_reset_audit.py`, `private_benchmark_channel.py`, and the
+additive `mindustry_mod/main.js`. The host audit validates an exact 112-tile
+guard projection, canonical copper/source/core state, paused/live/no-plan unit
+state, exact independent task-score schema, and same-surface changed-geometry
+receipt. The private file channel requires a fresh empty directory, creates
+exclusive one-time markers, enforces bounded waits, and fails closed on score,
+reset, geometry, or readiness errors. The mod publishes reset snapshots and
+cannot expose the next-task ready marker until the host creates a verified
+reset receipt; A3→B1 similarly waits on a host geometry receipt. The channel is
+private host/mod coordination, never controller-visible authority.
+
+Host-only construction checks passed 43/43 across the additive package; the
+inherited efficiency probe remains `passed=true`, positive `RETAIN`, 10
+controls. `node --check mindustry_mod/main.js` and `git diff --check` passed.
+The tests use synthetic temporary-directory protocol participants; no game,
+model, controller socket, task input, formal allocation, live audit, or Docker
+container was run. The mod/channel are not yet composed into a live three-arm
+runner or raw auditor, so no integrated experiment is claimed.
 
 Policy incident (2026-09-28 JST): one read-only `docker ps --format ...`
 inspection was mistakenly issued before the named #5130 lease, despite the
