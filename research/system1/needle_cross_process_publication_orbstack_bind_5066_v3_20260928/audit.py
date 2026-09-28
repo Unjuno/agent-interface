@@ -68,6 +68,16 @@ def unsafe_completion_errors(row:dict,interval:dict)->list[str]:
     return errors
 
 
+def fd_read_order_errors(row:dict,phase:str)->list[str]:
+    fields=("fd_open_ns","replace_start_ns","replace_return_ns","fd_read_start_ns","fd_read_end_ns")
+    values=[row.get(key) for key in fields]
+    if any(not isinstance(value,int) or isinstance(value,bool) for value in values):
+        return ["fd_timestamps_missing_"+phase]
+    if values!=sorted(values) or len(set(values))!=len(values):
+        return ["fd_partial_order_"+phase]
+    return []
+
+
 def expected_docker_argv(receipt:dict,entrypoint:str)->list[str]:
     """Reconstruct the exact formal/audit command from the host receipt fields."""
     name_key="formal_container_name" if entrypoint=="runner" else "auditor_container_name"
@@ -261,8 +271,7 @@ def audit(raw: object, receipt: object, input_root:Path|None=None) -> list[str]:
                 expected_held=seed_raw if phase_number==1 else expected.get(NEW+phase_number-2,b"")
                 expected_target=expected.get(NEW+phase_number-1,b"")
                 expected_held_sha=digest(expected_held);expected_held_gen=OLD+phase_number-1
-                if not (row.get("fd_open_ns",0)<row.get("replace_start_ns",0)<row.get("replace_return_ns",0)<row.get("fd_read_start_ns",0)<row.get("fd_read_end_ns",0)):
-                    e.append("fd_partial_order_"+phase)
+                e.extend(fd_read_order_errors(row,phase))
                 held=row.get("held",{})
                 held_rebuilt=reconstructed(held)
                 if held_rebuilt is None: e.append("atomic_raw_reconstruction_"+phase)
@@ -348,6 +357,7 @@ def mutations(raw,receipt):
     x=copy.deepcopy(raw); x["dispatch_count"]=1; tests["dispatch"]= (x,receipt)
     x=copy.deepcopy(raw); x["atomic"]["rows"].pop(); tests["missing_row"]=(x,receipt)
     x=copy.deepcopy(raw); x["atomic"]["rows"][0]["replace_return_ns"]=0; tests["fd_order"]=(x,receipt)
+    x=copy.deepcopy(raw); x["atomic"]["rows"][0]["fd_read_start_ns"]=x["atomic"]["rows"][0]["replace_return_ns"]-1; tests["fd_read_start_before_replace_return"]=(x,receipt)
     x=copy.deepcopy(raw); x["atomic"]["post_rows"][0]["path"]["raw_sha256"]="0"*64; tests["wrong_path_bytes"]=(x,receipt)
     x=copy.deepcopy(raw); x["unsafe"]["rows"][0]["partial"]["valid"]=True; tests["partial_claimed_valid"]=(x,receipt)
     x=copy.deepcopy(raw); x["unsafe"]["rows"][0]["complete_start_ns"]=x["unsafe"]["rows"][0]["write_end_ns"]-1; tests["completion_before_writer_end"]=(x,receipt)

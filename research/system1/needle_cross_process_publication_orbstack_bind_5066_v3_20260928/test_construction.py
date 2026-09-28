@@ -181,7 +181,11 @@ class ConstructionTests(unittest.TestCase):
                 damaged_receipt=copy.deepcopy(receipt);damaged_receipt["docker_argv"]=[*receipt["docker_argv"][:-1],"/wrong/runner.py"]
                 self.assertIn("receipt_docker_argv",audit.provenance_errors(raw,damaged_receipt,HERE,inp))
                 damaged_row={"fd_open_ns":1,"replace_start_ns":2,"replace_return_ns":5,"fd_read_start_ns":4,"fd_read_end_ns":6}
-                self.assertFalse(1<2<5<damaged_row["fd_read_start_ns"]<damaged_row["fd_read_end_ns"])
+                self.assertEqual(audit.fd_read_order_errors(damaged_row,"phase_1"),["fd_partial_order_phase_1"])
+                good_row={**damaged_row,"fd_read_start_ns":6,"fd_read_end_ns":7}
+                self.assertEqual(audit.fd_read_order_errors(good_row,"phase_1"),[])
+                missing_row={**good_row,"fd_read_start_ns":None}
+                self.assertEqual(audit.fd_read_order_errors(missing_row,"phase_1"),["fd_timestamps_missing_phase_1"])
                 bad_mount=copy.deepcopy(receipt);bad_mount["auditor_mounts"][1]["RW"]=True
                 self.assertIn("auditor_mount_/in",audit.provenance_errors(raw,bad_mount,HERE,inp))
                 (inp/"input_manifest.json").write_text("{}\n")

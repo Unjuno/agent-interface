@@ -2,7 +2,7 @@
   "C": "Both arms use identical seed-derived generations, provenance changes, persistent reader processes, seven phases, image, bind mount and resource limits; only atomic validated replacement versus in-place truncate/write differs. Filesystem result is specific to this host/path/schedule.",
   "D": {
     "FAIL_ORBSTACK_ATOMIC_PUBLICATION_BOUNDARY": "Independent reconstruction finds a contrary complete observation or invalid/stale mutation/admission.",
-    "PASS_ORBSTACK_CROSS_PROCESS_PUBLICATION_SCOPED": "56 phase-reader rows and 28 post reads reconcile; all four readers in every phase satisfy the frozen fd timestamp order; held descriptors return exact previous generation and fresh path reads return exact next generation; all seven real admission calls publish; invalid/stale proposal attempts yield with ACTIVE unchanged; matched unsafe arm exposes exact partial prefixes; each complete read is after and bound to its writer interval; independent raw-only derivation/reconstruction and ten mutation controls pass.",
+    "PASS_ORBSTACK_CROSS_PROCESS_PUBLICATION_SCOPED": "56 phase-reader rows and 28 post reads reconcile; all four readers in every phase satisfy the frozen fd timestamp order; held descriptors return exact previous generation and fresh path reads return exact next generation; all seven real admission calls publish; invalid/stale proposal attempts yield with ACTIVE unchanged; matched unsafe arm exposes exact partial prefixes; each complete read is after and bound to its writer interval; independent raw-only derivation/reconstruction and ten semantic corruption controls plus explicit manifest/mount fixtures pass.",
     "STOP_PROVENANCE_ENVIRONMENT_OR_AUDIT": "Source, image, platform, OrbStack, denominator, fresh output, process or audit gate fails. No scientific claim and no retry."
   },
   "H": "On the pinned macOS-host OrbStack bind mount, seven monotonic package transitions (3788 to 3789..3795) each use one validated same-directory os.replace. All four independent atomic readers per phase open ACTIVE before replacement, retain/read the old descriptor only after replace returns, then read exact digest-valid next-generation bytes through a fresh path open. Actual invalid-digest and stale-base proposal attempts yield without changing ACTIVE. Matched diagnostic in-place writes expose incomplete bytes.",
@@ -74,10 +74,10 @@
   "schema": "needle-orbstack-bind-publication-freeze-v3",
   "source_sha256": {
     "PLAN.md": "98377bc29e8861b621f8897808296cc2b83c39ce0c299e9d515453d0dafaf3d7",
-    "audit.py": "316fd30f03ac890f3393af0627b5b1b6f8b3dcc238fcc49692607081e9006edd",
+    "audit.py": "7c499a93a7f01dc08a40cf378aa6ef675db4e1ad8acd83b7ac8edf50979fc15e",
     "formal.py": "a7cbe2c3d8aa0754623e8bad4178f0cb050cbe69d9b0d93ca03d1196265bdefc",
     "protocol.py": "1547d59a2ba6e8ea1f41ffbf79a28e3c3aa648a7c6cff215ff0e2a31aa3f1b45",
     "runner.py": "efe84beb3808ca19cd9b52f27767b30bf72c9ca0c0b0a5f3b510e4776678d665",
-    "test_construction.py": "e216725275ef8ad0a4dba31e137c131dd4fbc9dad6fc5716635ad52a28bca565"
+    "test_construction.py": "29c033752b8da63349670671eff36d074cb2d39ff04e851315ec215c2aedeaf6"
   }
 }
