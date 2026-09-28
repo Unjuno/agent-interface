@@ -414,7 +414,9 @@ image. Request a new image when the visual state is uncertain.
 
 The full report persists this context. `interface_results` returns the same
 historical data and does not inspect again or renew the one-use review ID.
-Enriched dispatch reports currently stay full even when brief/summary is
-requested, so the new metadata cannot be silently omitted. This opt-in trades
+Successful inspection metadata is preserved in full by `detail=summary`,
+including expiry and any extension fields. Inspection errors, skipped inspection
+and mismatched duplicated context retain the full response. `detail=brief`
+also retains the full response for enriched reports. This opt-in trades
 additional metadata and inspection time against a possible separate tool call;
 no latency or token benefit is established yet.

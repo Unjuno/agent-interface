@@ -82,6 +82,35 @@ class PublicSummaryTests(unittest.TestCase):
                 self.assertEqual(summarize_public_dispatch(view), original)
                 self.assertEqual(view, original)
 
+    def test_post_dispatch_inspection_preserved_or_full_on_failure_and_mismatch(self):
+        inspection = {'status':'needs_review', 'input_dispatched':False,
+                      'authority_granted':False, 'expires_at_ns':123,
+                      'review_request':{'tool':'interface_review_target','arguments':{'review_id':'one-use'}},
+                      'extension':{'report_ref':'literal'}}
+        for mode in ('normal','retained','error','skipped','mismatch','missing_outer','missing_raw'):
+            with self.subTest(mode=mode):
+                view=fixture('nonpaced_dispatch_review.json')
+                raw=view['receipt']['source']['raw_report']
+                view['post_dispatch_inspection']=copy.deepcopy(inspection)
+                raw['post_dispatch_inspection']=copy.deepcopy(inspection)
+                if mode=='retained': view.pop('session')
+                if mode=='error':
+                    raw['post_dispatch_inspection']['error']='unavailable'
+                    view['post_dispatch_inspection']['error']='unavailable'
+                if mode=='skipped':
+                    raw['post_dispatch_inspection']['status']='skipped'
+                    view['post_dispatch_inspection']['status']='skipped'
+                if mode=='mismatch': view['post_dispatch_inspection']['expires_at_ns']+=1
+                if mode=='missing_outer': view.pop('post_dispatch_inspection')
+                if mode=='missing_raw': raw.pop('post_dispatch_inspection')
+                original=copy.deepcopy(view)
+                result=summarize_public_dispatch(view)
+                if mode in ('normal','retained'):
+                    self.assertEqual(result['receipt']['schema'],SCHEMA)
+                    self.assertEqual(result['post_dispatch_inspection'],inspection)
+                else: self.assertEqual(result,original)
+                self.assertEqual(view,original)
+
     def test_retained_report_without_live_session_keeps_historical_session(self):
         view = fixture("nonpaced_dispatch_review.json")
         session = view.pop("session")  # Actual interface_results shape: no live owner snapshot.

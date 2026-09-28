@@ -428,7 +428,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             inspect_after names a configured target in persistent-x11 mode. After
             completed, released input, return read-only target review metadata;
             no implicit selection or new capture. Metadata is later than the image.
-            Inspection failure preserves input evidence. Enriched reports stay full.
+            Inspection failure preserves input evidence. Summary preserves complete
+            successful inspection context; errors or skipped inspection stay full.
             detail=brief with compact/report_refs summarizes supported successful paced
             dispatches. This is a partial receipt; presentation.retrieve gets full data.
             detail=summary also supports nonpaced completed dispatches and omits
