@@ -4,7 +4,8 @@ This additive package is for the unmeasured six-task Mindustry economics cell
 under #57. It inherits the frozen task/order/arm/call schedule and acceptance
 rule from #1679; it does not reopen or modify #1679, #2624, or prior allocations.
 
-This branch has been fast-forwarded to current `main` `e8b4071931df81b3408a5d0a91c7607c6323c9c9`.
+This branch includes current `main` `43abf7afd3df4be8afa129daed3adc72501b6a8f`
+(merge commit `290ee6ef4942cc3cb3883662b98e0a9baaac54f7`).
 
 ## H / T / D / C / U
 
@@ -30,21 +31,31 @@ This branch has been fast-forwarded to current `main` `e8b4071931df81b3408a5d0a9
 ## Current status
 
 No formal or live model/game allocation has run in this package. GitHub #5085
-still has no named slot assignment for #5130; the latest queue comment only
-requests prioritizing #5133, which does not transfer a slot to this lane. Do not
-treat an empty container inventory as authorization. No Docker build, pull, or
-inspection of an experiment image was performed.
+still has no named slot assignment for #5130; the latest coordinator arbitration
+request favors #5133, which does not transfer a slot to this lane. Do not
+treat an empty container inventory as authorization. No Docker build/pull or
+experiment-image inspect was performed. A separate unallocated-container
+policy violation did occur during synthetic test preparation: six short-lived
+`docker run --rm` invocations were made without the required named slot. Four
+failed before test cases (repository import/setup errors); two ran the six
+synthetic tests successfully (6/6 each). All used the already-cached pinned
+Python image, network none, read-only root and repo mounts, and bounded CPU,
+memory and PIDs. The containers exited and `--rm` removed them. No Mindustry,
+model, asset, GPU, formal allocation, or independent audit was invoked. This is
+an execution-policy violation, not a formal result; it has been reported on
+#5130 and #5085. No further Docker calls will be made on this lane until an
+explicit slot assignment.
 
-The decision-contract check is synthetic and non-scientific. It has been run
-both on the host and in a local, network-disabled Docker container using the
+The decision-contract check is synthetic and non-scientific. It was run both
+on the host and in local, network-disabled Docker containers using the
 already-cached `python:3.12-slim-bookworm` image (`sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e`).
 The complete repository was mounted read-only; container root was read-only,
 with 1 CPU, 512 MiB memory, 32 PIDs, all capabilities dropped, and
-`no-new-privileges`. Final result: 6/6 tests passed. The first container
-attempt mounted only test/source subdirectories and failed import (`IndexError`)
-because the expected repository path hierarchy was absent; it ran no test case
-and is retained here as a setup failure, not deleted or folded into the pass.
-The corrected read-only repository mount produced:
+`no-new-privileges`. The two successful invocations each passed 6/6. Four
+failed before test cases: one subdirectory-mount `IndexError`, and three
+repository/scorer import setup errors while correcting the mount-relative path.
+All failures are retained as setup failures, not folded into the passes. The
+corrected self-locating test and read-only repository mount produced:
 
 ```powershell
 python -m unittest discover -s research/integration/mindustry_three_arm_economics_20260928 -p 'test_decision_contract.py' -v
