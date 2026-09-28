@@ -1,0 +1,70 @@
+{
+  "allocation": "issue1460-generation-aba-v3-20260922-01",
+  "audit_command": "python -B audit.py FORMAL.json --out AUDIT.json",
+  "class_counts": {
+    "ABA_BOUNCE": 20000,
+    "ABA_CLEAR": 20000,
+    "AUTH_FALSE": 20000,
+    "CROSS_SCOPE": 20000,
+    "DUP_RETURN": 20000,
+    "FORGED_GEN": 20000,
+    "FRESH_G2": 20000,
+    "HARD": 20000,
+    "REPLAY": 20000,
+    "WATCH": 20000
+  },
+  "construction": {
+    "formal_rows": 0,
+    "py_compile": "PASS",
+    "unit_methods_passed": 7
+  },
+  "controls_command": "python -B controls.py FORMAL.json --out CONTROLS.json",
+  "environment": {
+    "machine": "x86_64",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.13.5"
+  },
+  "files": {
+    "PLAN.md": {
+      "bytes": 2413,
+      "sha256": "51ae421ed123e40f73015db5075155b92cd1be69c3d6ae1a11198b4cf150b210"
+    },
+    "audit.py": {
+      "bytes": 1622,
+      "sha256": "c2609fcd8fc30f18d258e38e8115178bffb412ca0dbfe346782a9267bb40c6b5"
+    },
+    "controls.py": {
+      "bytes": 2150,
+      "sha256": "e780cd9b3428fff3434ec14026103c6cc4d8529d4d93245167150dacefd484c4"
+    },
+    "model.py": {
+      "bytes": 3544,
+      "sha256": "4c3a6c3754b1ef392cb41d942568be68b0d4f31885f2bc2e4a91ce95762a76f1"
+    },
+    "oracle.py": {
+      "bytes": 2003,
+      "sha256": "0fcc1d0f41e366c12b5a847aa2d29d0e8ef267bf23893818e8c9835ae51a71f7"
+    },
+    "runner.py": {
+      "bytes": 6089,
+      "sha256": "6ad7c878a517a110ab68ab5cb0ffc8e37d72920ebad7b9dc74006e48ca4d95ec"
+    },
+    "test_contract.py": {
+      "bytes": 2091,
+      "sha256": "da46da252c25efc7a8867281c83bdcdb6e3760d3ebb7eae2d22b4c528dfe584e"
+    }
+  },
+  "formal_command": "python -B runner.py --out FORMAL.json",
+  "formal_traces": 200000,
+  "issue": 1460,
+  "predecessor_stop": {
+    "allocation": "issue1460-generation-aba-v2-20260922-01",
+    "disposition": "STOP_FORMAL_RUNNER_KEYWORD_MISMATCH",
+    "formal_invocations": 1,
+    "formal_rows": 0
+  },
+  "replacements": 0,
+  "reruns": 0,
+  "seed": 145920260918012,
+  "tuning": 0
+}
