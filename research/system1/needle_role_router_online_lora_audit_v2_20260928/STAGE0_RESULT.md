@@ -1,0 +1,17 @@
+# Issue #5172 stage-0 evidence
+
+## Stage-0 execution record — local Docker (2026-09-28)
+
+### H / T / D / C / U
+
+- **H:** A zero-fit independent raw-contract checker can accept valid tiny schedule fixtures and reject missing/extra/reordered/duplicated/mutated schedule digests and malformed identity/JSON before any optimizer work.
+- **T:** Additive v2 branch `research/role-router-online-lora-audit-successor-v2-20260928`; path `research/system1/needle_role_router_online_lora_audit_v2_20260928/stage0_contract.py`; GitHub blob `aba19733eb856b8cdd3e66c697294db025769041`. Exact readback copied to local `scratch/issue-5172-stage0-v2/stage0_contract.py`, SHA-256 `56b8c52fe514d409ac42d027aedd997ae7d1f2665192f99c6cc24637f418969`. Python image `python:3.11-slim`, local image ID `sha256:da047cb8f9d1d98e5c070f5300ba9f7274e33b8fc0e5be5ed88740aed1b95ba9`, linux/amd64. Command: `docker run --rm --name issue-5172-stage0-v2-20260928 --network none --pull never --read-only --cpus 1 --memory 256m --memory-swap 256m --pids-limit 32 --mount type=bind,source=<scratch/issue-5172-stage0-v2>,target=/src,readonly --tmpfs /tmp:rw,noexec,nosuid,size=8m -w /src python:3.11-slim python -B -m unittest -v stage0_contract`.
+- **D:** v2 Docker suite: 8 tests, 0.043 s, exit 0. Covered 12 valid seed-label × arm fixtures, missing schedule/key, extra digest, reorder/duplicate/index mutation, digest mutation, duplicate keys/NaN, wrong allocation/arm/seed/schema/source, and AST checks for absent training imports/entrypoints. Scope label: `PASS_SYNTHETIC_RAW_CONTRACT_CONSTRUCTION_SCOPED`.
+- **C:** Preserve earlier outcomes: first Docker run on initial v1 source had 8 tests, 2 failures (reorder test accidentally admitted a symmetric fixture; self-source substring check matched its own comment). First v2 launch attempt stopped before container start due to a typo in the expected image digest. A subsequent host run caught one further incorrect reorder-test repair; all were corrected in v2 and the final Docker run passed. Failures are not erased and no container was launched on the image-guard STOP.
+- **U:** This tests a newly authored miniature contract checker only. It does **not** execute/fix/revalidate #4899's 110KB producer or 169KB independent auditor, does not bind the real formal source or reproduce its data schedule, does not consume formal seeds, and makes no skill-quality/online-learning/natural-language routing claim. No shared OrbStack lease requested or used; local Docker Desktop was separately responsive and reported zero running containers before launch. No formal run.
+
+This is construction evidence, not integration-grade repair evidence. The source freeze and complete real-raw replay suite must still be implemented against #4899 lineage, then independently audited and run under the authorized shared-lane process before a fresh formal allocation.
+
+## Important scope distinction
+
+The included `stage0_contract.py` is a standalone miniature checker with synthetic schedules. Its expected schedules are deliberately fixture-only and are not the #4899 optimizer schedule. The result validates the listed JSON contract mutations for this tiny checker; it must not be presented as a fix to #4899's original runner/auditor or as a pass of the role-network/LoRA experiment.
