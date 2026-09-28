@@ -76,3 +76,22 @@ its local attempt number advances. Unknown dispatch outcomes retain
 to be no-input refusals. `returned_count` counts retained replies of all these
 kinds, not successful backend actions. Neither a reply nor a timing result
 authorizes replay. See [real relay regression evidence](../../runtime/results/host-timing-refusal-01/README.md).
+# Public capture review receipts
+
+`client.review(attempt, {task, phase, reason})` also accepts ordinary public
+observe/dispatch images and management responses containing a returned
+observation_report, such as explicit recovery or target review. It records a
+v2 public-capture review receipt, with the exact reply hash, delivered image hash,
+configured target/frame/region and capture timestamps. The image bytes must match
+the declared artifact hash. Missing images or incomplete identities refuse.
+
+Public captures have no server-issued observation sequence: source_sequence is
+null, and dispatch images may also have a null observation_id. Do not substitute
+a caller sequence or relay attempt number. Existing guarded/native v1 receipts
+are unchanged. Use present first, explicitly review the delivered image, then
+record the caller's reasoning; the record itself does not prove human/model
+attention, semantic completion or first useful-feedback timing.
+
+[Retained-response validation](../../runtime/results/public-review-recorder-01/README.md)
+checks five real Calc image replies and rejects three replies without images.
+This offline recorder check is separate from the earlier live primary decisions.
