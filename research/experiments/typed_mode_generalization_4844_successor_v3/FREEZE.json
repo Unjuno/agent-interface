@@ -26,10 +26,10 @@
     "train": 484431,
     "heldout": 484432,
     "formal_invocations": 1,
-    "runner_launch_attempts": 0,
+    "runner_launch_attempts": 1,
     "retries": 0,
-    "allocation_status": "FROZEN_NOT_RUN",
-    "do_not_reuse": false
+    "allocation_status": "HOLD_COVERAGE_TRADEOFF",
+    "do_not_reuse": true
   },
   "construction_seeds": {
     "train": 17003,
@@ -67,7 +67,9 @@
     "pids": 32,
     "no_new_privileges": true,
     "runner_invocations": 1,
-    "auditor_invocations": 1
+    "auditor_invocations": 1,
+    "runner_container_id": "6f40b32178099988ea1130cacdcf06e4c0a2b004283c495c2ae79711801a62fa",
+    "auditor_container_id": "687dc045059fa965afc1c3165811f9a7fb08a9e7409581b3aa9f4204f4778071"
   },
   "commands": {
     "stage0": "python -B -m unittest -v test_stage0.py",
@@ -97,7 +99,13 @@
     "tests": 9,
     "passed": 9,
     "formal_seed_data_generated": false,
-    "formal_result_created": false
+    "formal_result_created": true
   },
-  "formal_stop": null
+  "formal_result": {
+    "decision": "HOLD_COVERAGE_TRADEOFF",
+    "raw_sha256": "51d9c7fed88a5a491a7e1f4fb5a33349ffe58c486a44a946b573a1a18838e300",
+    "rows": 4800,
+    "auditor_errors": 0,
+    "mutation_controls_rejected": 16
+  }
 }
