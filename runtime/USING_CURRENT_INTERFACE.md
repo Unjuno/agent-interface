@@ -349,3 +349,17 @@ refusal, and completed six independently correct submissions exactly once.
 [The prior interrupted trial](results/guarded-mint-many-interrupted-01/README.md)
 is retained. This establishes scoped usability; matched speed and actual model
 token/cost improvements have not been measured.
+
+### Reduce duplicated observation metadata
+
+Set observation_refs=true on guarded observe/input or a retained-result lookup
+to opt into local references. When observation_report.observation contains
+`{"observation_ref":"/source/native"}`, read the complete metadata at source.native
+in the same response. This is the same capture, not a freshness or authority
+refresh. The image block is unchanged. Leave the flag false for the prior shape.
+
+The [primary six-task trial](results/guarded-observation-refs-primary-01/README.md)
+completed six correct exact-once saves, retained full refusal details, and verified
+full retrieval plus referenced image retrieval after close. Actual returned text
+was 9.6176% smaller than the same views with references expanded. Actual model
+token/cost and matched speed improvements remain unmeasured.

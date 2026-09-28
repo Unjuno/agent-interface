@@ -54,6 +54,32 @@ def metadata(response):
 
 
 class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
+    async def test_opt_in_observation_references_preserve_image_and_retained_full_view(self):
+        from runtime.cli_v1.receipt_references import expand_guarded_observation
+        with tempfile.TemporaryDirectory() as td:
+            bridge=FakeBridge(None,{'app':123},'app',Path(td)/'fixture')
+            def capture():
+                source=bridge.capture();source['native']['extension']='x'*800
+                return source
+            bridge.observe.side_effect=capture
+            with patch('runtime.cli_v1.mcp_guarded.open_bridge',return_value=bridge):
+                server=create_server({'app':123},td,session_mode='guarded-x11')
+                response=await server.call_tool('interface_guarded_observe',{'observation_refs':True})
+                row=metadata(response);self.assertIn('reference_schema',row)
+                expanded=expand_guarded_observation(row)
+                retained=await server.call_tool('interface_results',{'call_id':row['call_id']})
+                full=metadata(retained);self.assertNotIn('reference_schema',full)
+                self.assertEqual(full['source'],expanded['source'])
+                self.assertEqual(full['observation_report'],expanded['observation_report'])
+                self.assertEqual(response.content[1],retained.content[1])
+                self.assertEqual(bridge.observe.call_count,1)
+                await server.call_tool('interface_close',{})
+                reread=metadata(await server.call_tool('interface_results',{'call_id':row['call_id'],'observation_refs':True}))
+                self.assertFalse(reread['operation_invoked'])
+                self.assertEqual(expand_guarded_observation(reread)['observation_report'],full['observation_report'])
+                self.assertEqual(bridge.observe.call_count,1)
+                bridge.click.assert_not_called();bridge.keyboard.assert_not_called()
+
     async def test_batch_mints_same_source_without_observe_or_input_and_retains_result(self):
         with tempfile.TemporaryDirectory() as td:
             bridge=FakeBridge(None,{'app':123},'app',Path(td)/'fixture')
