@@ -41,6 +41,18 @@ class PrivateBenchmarkChannel:
         self.phase = "spawn"
         self._before: dict | None = None
         self._after: dict | None = None
+        self._task_started_ns: dict[int, int] = {}
+        self._score_times_by_task: dict[str, int] = {}
+        self._reset_request_ns: int | None = None
+        self._reset_events: dict[str, dict] = {}
+        self._transition_events: list[dict] = []
+        self._last_event_ns = 0
+
+    def _event_time_ns(self) -> int:
+        """Return a strictly increasing host monotonic event timestamp."""
+        now = time.monotonic_ns()
+        self._last_event_ns = max(now, self._last_event_ns + 1)
+        return self._last_event_ns
 
     def _path(self, filename: str) -> Path:
         if not filename or Path(filename).name != filename:
@@ -89,6 +101,7 @@ class PrivateBenchmarkChannel:
             raise PrivateProtocolStop("initial readiness can be consumed once")
         self._wait_file("ready-1.ack", "ready-1.error")
         self._before = self._snapshot("before-1.json")
+        self._task_started_ns[1] = self._event_time_ns()
         self.epoch, self.phase = 1, "ready"
         return self._before
 
@@ -107,6 +120,7 @@ class PrivateBenchmarkChannel:
             raise PrivateProtocolStop("task completion requires one checkpoint")
         if task_id != TASKS[self.epoch - 1]:
             raise PrivateProtocolStop("task id differs from private protocol epoch")
+        score_checked_ns = self._event_time_ns()
         try:
             score = score_receipt(task_id, evaluation)
         except ValueError as error:
@@ -116,6 +130,8 @@ class PrivateBenchmarkChannel:
             raise PrivateProtocolStop("negative or incomplete task score; reset forbidden") from error
 
         self._write_once(score["filename"], score["content"])
+        self._score_times_by_task[task_id] = score_checked_ns
+        self._reset_request_ns = self._event_time_ns()
         self._write_once(f"reset-{self.epoch}.request", "reset\n")
         self._wait_file(f"reset-{self.epoch}.ack", f"reset-{self.epoch}.error")
         reset = self._snapshot(f"reset-{self.epoch}.json")
@@ -129,6 +145,15 @@ class PrivateBenchmarkChannel:
             self.phase = "stopped"
             raise PrivateProtocolStop("reset audit failed; next task forbidden")
 
+        witness_ns = self._event_time_ns()
+        self._reset_events[task_id] = {
+            "request_ns": self._reset_request_ns,
+            "witness_ns": witness_ns,
+            "receipt_id": witness["filename"],
+            "before": self._before,
+            "after": reset,
+        }
+
         if self.epoch == 3:
             self._wait_file("geometry-4.request", "geometry-4.error")
             self.phase = "await_geometry"
@@ -140,6 +165,7 @@ class PrivateBenchmarkChannel:
             return reset
         next_epoch = self.epoch + 1
         self._wait_file(f"ready-{next_epoch}.ack", f"ready-{next_epoch}.error")
+        self._task_started_ns[next_epoch] = self._event_time_ns()
         self.epoch, self.phase, self._before = next_epoch, "ready", reset
         return reset
 
@@ -153,7 +179,36 @@ class PrivateBenchmarkChannel:
             self._write_once("geometry-4.error", str(error) + "\n")
             self.phase = "stopped"
             raise PrivateProtocolStop("A-to-B geometry witness failed") from error
+        transition_ns = self._event_time_ns()
+        self._transition_events.append({
+            "arm": None,
+            "after_task": "A3",
+            "before_task": "B1",
+            "from_layout": "A",
+            "to_layout": "B",
+            "at_ns": transition_ns,
+            "before_binding": before_binding,
+            "after_binding": after_binding,
+        })
         self._write_once(receipt["filename"], receipt["content"])
         self._wait_file("ready-4.ack", "ready-4.error")
+        self._task_started_ns[4] = self._event_time_ns()
         self.epoch, self.phase = 4, "ready"
 
+    def raw_lifecycle_events(self, arm: str) -> dict:
+        """Return immutable-schema private reset and A3→B1 event rows.
+
+        These rows are runner-side audit material; callers must keep them out
+        of the controller socket and merge each reset event into its matching
+        task's raw record before v2 audit.
+        """
+        if arm not in {"plain", "ephemeral", "persistent"}:
+            raise ValueError("unknown preregistered arm")
+        resets = {}
+        for task_id, event in self._reset_events.items():
+            resets[task_id] = {**event}
+        transitions = [{**event, "arm": arm} for event in self._transition_events]
+        return {"task_started_ns": dict(self._task_started_ns),
+                "score_checked_ns": dict(self._score_times_by_task),
+                "reset_events": resets,
+                "transition_events": transitions}

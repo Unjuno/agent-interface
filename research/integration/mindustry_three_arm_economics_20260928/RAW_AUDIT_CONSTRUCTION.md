@@ -55,3 +55,12 @@ both returning `HOLD_RAW_RECONSTRUCTION` instead of escaping the audit. The v2
 suite is 12/12 and the full package 84/84. These checks are host-local and do
 not change the immutable v2 raw artifact or elevate its
 `PASS_CONSTRUCTION_ONLY` scope.
+
+## Private lifecycle adapter successor (2026-09-29)
+
+The follow-on host-channel composition rung is documented in
+[`RAW_LIFECYCLE_ADAPTER_CONSTRUCTION.md`](RAW_LIFECYCLE_ADAPTER_CONSTRUCTION.md).
+It joins fake-mod file-channel lifecycle receipts to the raw v2 fixture and
+independently audits 18 resets plus 3 geometry transitions. The complete
+package is now 86/86 locally; this does not elevate the synthetic result or
+authorize the still-gated Docker/live run.

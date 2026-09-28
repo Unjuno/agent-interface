@@ -365,3 +365,20 @@ nested input and non-standard NaN; malformed inputs return fail-closed HOLD
 instead of crashing the auditor. The older v1 artifact is preserved unchanged. No Docker,
 workflow, model call, or live game task was used; shared container access is
 still explicitly held by #5130/#5085.
+
+## Private-channel → raw-auditor construction (2026-09-29)
+
+The host private filesystem channel now exports strict-monotonic task-start,
+score, reset-request, and reset-witness timestamps plus full private reset
+snapshots and A3→B1 geometry bindings. `raw_lifecycle_adapter.py` joins those
+records to each arm's task-level raw events without synthesizing or repairing
+timestamps. Three six-task fake-mod handshakes compose into the v2 independent
+raw auditor. Retained output and H/T/D/C/U are in
+[`RAW_LIFECYCLE_ADAPTER_CONSTRUCTION.md`](RAW_LIFECYCLE_ADAPTER_CONSTRUCTION.md)
+and `construction/raw_lifecycle_adapter_20260929_02/`: raw SHA-256
+`41ad2bc738021e9a66c8e9aea1e15cfb3af56a1a54890ed80b317da79f8b08b3`,
+`PASS_CONSTRUCTION_ONLY`, hypothetical `RETAIN`/task-2 break-even, 18 reset
+projections, 3 geometry transitions. Complete host suite is now 86/86. This
+exercises the Python file channel against a fake marker writer only—not the Java
+mod, Mindustry, model, socket, or task inputs. No Docker was used because the
+#5130/#5085 container assignment/release gate remains in force.
