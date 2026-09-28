@@ -11,4 +11,3 @@ py -3.11 research/live_control/owner_keyup_release_interop_5156_v2/run_once.py -
 ```
 
 The output path and sibling `audit.json` must both be absent. `run_once.py` checks pinned Git blob identities and source syntax/literals, writes raw results exclusively, and starts `audit.py` as a separate standard-library process. No Docker/OrbStack, LM Studio/model, GPU/CUDA, network, GUI/X11, or input dispatch is used.
-
