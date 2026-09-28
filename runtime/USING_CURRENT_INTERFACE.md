@@ -560,3 +560,33 @@ pause through the portable public MCP runtime, reviewed each unsaved value, then
 saved in a separate program. Both final files were exact with six calls, five
 images and no repair. This is functional evidence for the explicit workflow;
 reviewing before save adds a decision boundary and is not a speedup claim.
+
+## Optional successful-dispatch summaries
+
+`interface_dispatch` and retained `interface_results` accept `detail="summary"`
+with `compact=true, report_refs=true`. This opt-in partial view supports known
+successful public dispatch reports, including short nonpaced save programs.
+Default `detail="full"` and the existing paced `detail="brief"` remain unchanged.
+
+The receipt schema is `agent-interface/receipt-view-dispatch-summary-v1`.
+Read `receipt.execution_summary` for execution times, emissions, all capture,
+release and activation records, completed operation count and fixed-wait totals.
+Images, outcome fields, target/session state and call identity remain unchanged.
+A retained lookup without a live session snapshot keeps its historical session
+at `receipt.reported_session`; it does not mint a current binding or authority.
+Source programs, expansion mapping, per-wait timestamps, completed indices and
+duplicate receipt/session metadata are omitted. The source digest identifies the
+retained full report, not the summary. This does not assert task success.
+
+Follow `presentation.retrieve` to obtain the same call with `detail="full"`
+without replaying input or taking another capture. The lossless receipt decoder
+deliberately rejects the partial summary schema. Failed, incomplete, unfamiliar
+or inconsistent omitted records stay full, as do reports that would not shrink.
+A fixed wait remains a delay, not an acknowledgement of an application update.
+
+[Primary summary-mode use](results/public-summary-01/README.md) exercised paced
+input, a short save, full retrieval and an unchanged full refusal. The two actual
+successful replies used 45.3% fewer canonical JSON bytes than their full views
+and 27.8% fewer than the previous brief option. This is not measured token/cost or
+speed improvement; the full lookup itself adds a call. The record includes the
+retained-session correction and its failed-before/passing-after checks.

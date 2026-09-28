@@ -251,6 +251,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 elif operation == 'dispatch':
                     from .public_presentation import brief_public_report
                     result = brief_public_report(result)
+            if detail == 'summary' and operation == 'dispatch':
+                from .public_summary import summarize_public_dispatch
+                result = summarize_public_dispatch(result)
             if observation_refs and operation.startswith('guarded_'):
                 from .receipt_references import compact_guarded_observation
                 result = compact_guarded_observation(result)
@@ -403,7 +406,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         async def interface_dispatch(program: PublicProgram, current_observation_seq: StrictInt,
                                current_binding_revision: StrictInt,
                                compact: StrictBool = False, report_refs: StrictBool = False,
-                               detail: Literal["full", "brief"] = "full") -> CallToolResult:
+                               detail: Literal["full", "brief", "summary"] = "full") -> CallToolResult:
             """Dispatch once through core admission. Include observe for an image; no implicit replay.
 
             Observation sequence is a caller assertion, not server-issued freshness.
@@ -412,6 +415,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             A returned image may precede redraw. Release and cleanup failures remain visible.
             detail=brief with compact/report_refs summarizes supported successful paced
             dispatches. This is a partial receipt; presentation.retrieve gets full data.
+            detail=summary also supports nonpaced completed dispatches and omits
+            duplicated provenance; follow presentation.retrieve for full evidence.
+            Both partial modes require compact=true, report_refs=true.
             Failures and unsupported results stay full. Images are unchanged.
             report_refs requires compact=true. Full v3 receipts keep the full report
             at receipt.source.raw_report; brief receipts use report_projection and
@@ -427,7 +433,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                                 compact: StrictBool = False,
                                 include_image: StrictBool = True,
                                 report_refs: StrictBool = False,
-                                detail: Literal["full", "brief"] = "full",
+                                detail: Literal["full", "brief", "summary"] = "full",
                                 observation_refs: StrictBool = False) -> CallToolResult:
         """List this server's calls or reread one retained result. Never dispatch or observe.
 
@@ -435,7 +441,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         This registry lasts only for this server process; no restart recovery is implied.
         Set include_image=false to inspect metadata without resending a retained image.
         detail=brief projects normal guarded checks or supported successful paced
-        public dispatches with compact/report_refs. Full is the default; failures
+        public dispatches with compact/report_refs. detail=summary summarizes
+        known successful public dispatches, including nonpaced programs.
+        Full is the default; failures
         and unsupported reports stay full. Retrieval never replays input.
         observation_refs=true replaces an exact duplicate observation with a local
         reference to source.native; expand_guarded_observation restores the view.
@@ -492,6 +500,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         if detail == 'brief' and record['operation'] == 'dispatch':
             from .public_presentation import brief_public_report
             result = brief_public_report(result)
+        if detail == 'summary' and record['operation'] == 'dispatch':
+            from .public_summary import summarize_public_dispatch
+            result = summarize_public_dispatch(result)
         if observation_refs and record['operation'].startswith('guarded_'):
             from .receipt_references import compact_guarded_observation
             result = compact_guarded_observation(result)
