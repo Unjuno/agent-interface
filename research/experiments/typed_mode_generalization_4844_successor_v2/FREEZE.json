@@ -15,8 +15,11 @@
   "formal_seeds": {
     "train": 484421,
     "heldout": 484422,
-    "formal_invocations": 1,
-    "retries": 0
+    "formal_invocations": 0,
+    "runner_launch_attempts": 1,
+    "retries": 0,
+    "allocation_status": "STOP_DOCKER_IMAGE_ARGUMENT_MISMATCH",
+    "do_not_reuse": true
   },
   "construction_seeds": {
     "train": 17001,
@@ -84,5 +87,16 @@
     "passed": 6,
     "formal_seed_data_generated": false,
     "formal_result_created": false
+  },
+  "formal_stop": {
+    "timestamp": "2026-09-28T13:01:24.6790015+09:00",
+    "docker_exit": 125,
+    "container_created": false,
+    "container_id": null,
+    "stderr": "No such image: sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87123ea3073b41a1a",
+    "expected_image": "sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a",
+    "cause": "The Docker CLI image argument omitted the substring 681. The expected image had passed docker image inspect immediately before launch. The experiment process did not start and no seed-dependent data was generated.",
+    "raw_persisted": false,
+    "scientific_result": false
   }
 }

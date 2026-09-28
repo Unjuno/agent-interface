@@ -2,7 +2,7 @@
 
 ## Current status
 
-Allocation `typed-mode-4844-successor-20260928-02` is frozen for one local Docker Desktop formal run, pending exact-source commit and preflight. **No formal runner or auditor invocation has occurred.** No quality or efficacy result is available.
+Allocation `typed-mode-4844-successor-20260928-02` is **STOP_DOCKER_IMAGE_ARGUMENT_MISMATCH**. One Docker CLI launch was attempted, but Docker returned exit 125 before creating a container because my command argument omitted `681` from the pinned image ID. The correct image had passed the immediately preceding inspect. No container ID was created; the experiment process never ran; no formal seeds were accessed; no raw result exists. Per the frozen no-retry rule, this allocation will not be relaunched. No quality or efficacy result is available.
 
 ### Preserved predecessor failures
 
@@ -19,6 +19,8 @@ See [PLAN.md](PLAN.md) for the complete frozen hypothesis, exact schedules, deci
 On Windows 11 / CPython 3.12.10, `python -B -m unittest -v test_stage0.py` passed **6/6**. Tests verify the 4,800-row accounting on construction-only seeds, 960 rows per block and 192 per mode, full-observation and unknown controls, 16 evidence mutation rejections, canonical raw serialization, duplicate-key rejection, and frozen source digests/sidecar. `py_compile` passed. This is construction evidence only; no formal metrics are reported.
 
 Docker Desktop `desktop-linux` reports Engine 28.5.1 linux/x86_64 and an empty running inventory. The selected cached pinned image `sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a` was launched once in a bounded no-network/read-only smoke check and reported CPython 3.12.14; the container exited and the inventory returned empty. This is environment readiness, not the formal experiment.
+
+Formal launch evidence: `formal/allocation-02/runner/runner.log` preserves the exact Docker daemon error. Preflight had verified the expected image ID and the empty Desktop inventory. The failed CLI launch had no CID file/container; a post-failure inventory was also empty. This is an execution/provenance STOP, not a scientific finding. Fresh seeds and a separately frozen successor allocation are required for any future attempt.
 
 ## Frozen source and next formal boundary
 
