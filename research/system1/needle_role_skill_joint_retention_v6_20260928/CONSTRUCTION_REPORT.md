@@ -53,3 +53,45 @@ interface, and Inkscape evidence; the v6 experiment path remains additive and
 isolated.
 This is branch freshness only, not a formal freeze or resource grant; repeat the
 current-main and lease checks before any seed-consuming work.
+
+## Pinned-image construction and audit correction — 2026-09-28
+
+After main advanced to `d8ca8bfed9cd8d84201c91645e4ed25364181d3f`, it was merged
+without conflict at `40a552b60891e234b7cb244bc8759b9367a1d4bb`. Current branch
+head is pushed to GitHub. The experiment image is present locally at the frozen
+digest and its config entrypoint is `python`.
+
+Independent code review found two construction blockers before any fitting:
+
+1. The raw auditor accepted a record if any one feedback update overlapped an
+   inference call, although every registered feedback/query pair must satisfy
+   the overlap condition. It now rejects a mixed record with one valid and one
+   non-overlapping event; a dedicated negative test covers this.
+2. The auditor and formal launcher assumed the repository parent tree via
+   `parents[3]`. The frozen Docker command mounts only this experiment directory
+   as `/src`, so those parent indexes do not exist. The auditor now anchors its
+   local root to its mounted experiment directory; the launcher invokes Git
+   from that directory on the host, where Git discovers the enclosing checkout.
+   A regression test rejects the old depth assumption.
+
+Pinned local Docker construction command (only the experiment directory is
+mounted read-only; no output mount, model run, construction seed or formal seed):
+
+```text
+docker run --rm --pull=never --platform=linux/amd64 --network=none --read-only
+  --cpus=1 --memory=2g --pids-limit=64 --tmpfs /tmp:rw,nosuid,nodev,size=256m
+  --entrypoint=python --mount type=bind,source=<v6 experiment dir>,target=/src,readonly
+  --workdir=/src <frozen image digest> -B -m unittest -v test_protocol.py
+```
+
+The first Docker construction attempt ran 16 tests and failed 3 with
+`IndexError` from the invalid parent assumption; all failure output is retained
+in this report's Git history/Issue #5081 comment, and the ephemeral container
+was automatically removed. After the source-path fix and test addition, the
+same isolated pinned-image command exited 0 with **17/17 passing**. Windows-host
+suite also passes 17/17; `formal.py --preflight` remains `PREFLIGHT_ONLY` with
+zero formal Docker calls. Docker used no network and was not given any seed
+environment variables. This is `PASS_PINNED_IMAGE_CONSTRUCTION_FIXTURES_ONLY`,
+not an optimizer, adaptation, latency or scientific result. Formal v6 remains
+`STOP_RESOURCE_GATE` pending exact #5085 owner lease; prior v5 evidence is
+unchanged.

@@ -168,6 +168,11 @@ class FrozenSourceAndConstructionContract(unittest.TestCase):
         self.assertTrue(any(isinstance(node, ast.FunctionDef) and node.name == "audit_document"
                             for node in tree.body))
 
+    def test_mounted_source_paths_do_not_assume_repository_parent_tree(self):
+        for path in (AUDIT_PATH, FORMAL_PATH):
+            source = path.read_text(encoding="utf-8")
+            self.assertNotRegex(source, r"(?:HERE|__file__).{0,80}parents\[3\]")
+
     def test_independent_auditor_rebuilds_argv_and_live_window_contract(self):
         spec = importlib.util.spec_from_file_location("needle_v6_auditor_independence_test", AUDIT_PATH)
         module = importlib.util.module_from_spec(spec)
@@ -187,6 +192,16 @@ class FrozenSourceAndConstructionContract(unittest.TestCase):
                           "trainer_worker_id": "trainer"}],
         }
         self.assertEqual(module.independent_online_window_errors(positive), [])
+        mixed = json.loads(json.dumps(positive))
+        mixed["queries"].append({"query_id": "q2", "worker_id": "inference2",
+                                 "inference_start_ns": 300, "inference_end_ns": 420,
+                                 "inference_calls": [{"call_start_ns": 400, "call_end_ns": 410}]})
+        mixed["feedback"].append({"feedback_id": "f2", "query_id": "q2", "arrived_ns": 320,
+                                  "consumed_ns": 345, "update_start_ns": 345, "update_end_ns": 390,
+                                  "trainer_worker_id": "trainer2"})
+        mixed_errors = module.independent_online_window_errors(mixed)
+        self.assertIn("update_does_not_overlap_inference_call:f2", mixed_errors)
+        self.assertIn("not_every_feedback_update_overlaps_inference", mixed_errors)
         negative = json.loads(json.dumps(positive))
         negative["queries"][0]["inference_calls"] = [{"call_start_ns": 190, "call_end_ns": 210}]
         self.assertTrue(module.independent_online_window_errors(negative))

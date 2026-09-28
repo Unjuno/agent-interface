@@ -19,7 +19,7 @@ SCHEMA = "needle-role-skill-joint-retention-raw-v3-online-window"
 ARRIVALS = 16
 MICROSTEPS_PER_FEEDBACK = 8
 QUERY_BATCH = 256
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = Path(__file__).resolve().parent
 LEGACY_AUDIT_PATH = Path(__file__).resolve().parent / "lineage/audit.py"
 LEGACY_FREEZE_PATH = LEGACY_AUDIT_PATH.with_name("FORMAL_FREEZE.json")
 LEGACY_FREEZE_SIDECAR_PATH = LEGACY_AUDIT_PATH.with_name("FORMAL_FREEZE.sha256")
@@ -110,7 +110,7 @@ def independent_online_window_errors(record: object) -> list[str]:
                 else:
                     valid_calls.append((cs, ce))
         by_id[qid] = (qs, qe, worker, valid_calls)
-    ids, any_overlap = set(), False
+    ids, overlap_count = set(), 0
     for fi, item in enumerate(feedback):
         if not isinstance(item, dict):
             errors.append(f"feedback_invalid:{fi}"); continue
@@ -134,11 +134,14 @@ def independent_online_window_errors(record: object) -> list[str]:
         if not isinstance(trainer, str) or not trainer or trainer == qworker:
             errors.append(f"workers_not_independent:{fid}")
         if any(start < call_end and call_start < end for call_start, call_end in calls):
-            any_overlap = True
+            overlap_count += 1
         else:
             errors.append(f"update_does_not_overlap_inference_call:{fid}")
-    if not any_overlap:
-        errors.append("no_verified_query_update_overlap")
+    # This allocation registers one online query/update event for every
+    # feedback item. Do not let a single overlapping event mask a disjoint
+    # event elsewhere in the three-seed/four-arm record.
+    if overlap_count != len(feedback):
+        errors.append("not_every_feedback_update_overlaps_inference")
     return errors
 
 

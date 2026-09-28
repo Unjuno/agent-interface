@@ -13,7 +13,7 @@ from protocol import (ALLOCATION, IMAGE_ID, SEEDS, canonical, docker_argv,
                       exact_argv_matches, sha256_bytes)
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parents[3]
+ROOT = HERE
 ISSUE = 5085
 LEASE_SCHEMA = "needle-docker-owner-lease-v1"
 REQUIRED_LEASE_FIELDS = ("allocation", "issue", "owner_comment_url", "docker_context",

@@ -12,26 +12,28 @@
     "os": "Windows 10 build 10.0.26200",
     "python": "3.11.9",
     "architecture": "AMD64",
-    "docker_invocations": 0,
+    "docker_construction_invocations": 2,
+    "docker_formal_invocations": 0,
     "optimizer_steps": 0,
     "formal_seed_access": false,
     "optimizer_microsteps": 0,
-    "formal_docker_calls": 0
+    "formal_docker_calls": 0,
+    "construction_seed_access": false
   },
   "preflight_command": ["python", "-B", "formal.py", "--preflight"],
   "preflight_result": "PREFLIGHT_ONLY",
   "construction_result": {
-    "tests": 16,
-    "passed": 16,
+    "tests": 17,
+    "passed": 17,
     "failed": 0,
-    "decision": "PASS_HOST_CONTRACT_FIXTURES_ONLY"
+    "decision": "PASS_PINNED_IMAGE_CONSTRUCTION_FIXTURES_ONLY"
   },
   "source_sha256": {
     "protocol.py": "9dafd86a06758db026059180d7b5ef248c5e1f8a0f4a06ed2c0756549ab755ff",
-    "test_protocol.py": "d84760650a48f70ca8f9d95b96b3d8872e14ffad2787245a9dd7fc788092de67",
+    "test_protocol.py": "b6971c5f92d0e74ec1379912ff6ef1e296cc19fbb482b9e5f84b13be264c7b0d",
     "runner.py": "fbceebc16048a4d485bcf97d53a0d1d33e040c9fe469924fdc61cbec14ef4e49",
-    "audit.py": "b599d4e5107b2ff9189b4e7f8f37f9d8d8094aa444c68f1832befd00ac4e74c3",
-    "formal.py": "5224d9945b3a652206e0b524717a68abf7c6028e70e6a4fb9275d9c653fbe4d5",
+    "audit.py": "520189a491052f1ad93bffd6f77c090689aa3760c0de1f7e5d9496368735b930",
+    "formal.py": "4da25222129cbf9c63267ba2baab611e131ea0cacd2113cfd1feb9c542b3d62c",
     "lineage/runner.py": "0c978c7721da5f42d57a838a3d141c9781a19a981db5d50b8e028183bc14fcdf",
     "lineage/audit.py": "6abf8cc48d81c5b4267d993e9d992a15d9015f39f0a50558acfcc6d11bcc4558",
     "lineage/FORMAL_FREEZE.json": "482449e97f3b399b166da11fe54a2be2b9df1f13fab1e95753b283614a20cd7c"
@@ -42,12 +44,11 @@
     "lineage/FORMAL_FREEZE.json": "715c86190e8ae85d36d0d6ac3d29cf9d6e067eda",
     "lineage/FORMAL_FREEZE.sha256": "5df5e8563965b39da1bf03b08484216bd0bd1e78"
   },
-  "main_at_checkpoint": "d07b5b593d25c5d5833381f029e385ab93838ea1",
-  "main_sync_status": "latest observed main d07b5b59 merged without conflict in branch merge commit 06cce787db; recheck before any execution",
+  "main_at_checkpoint": "d8ca8bfed9cd8d84201c91645e4ed25364181d3f",
+  "main_sync_status": "latest observed main d8ca8bfe merged without conflict in branch merge commit 40a552b608; recheck before any formal execution",
   "limits": [
-    "host-only zero-fit contract and source-lineage checks",
-    "no generated construction raw record or optimizer runtime test",
-    "no Docker execution or image-entrypoint verification",
+    "pinned-image zero-fit construction fixtures only",
+    "no construction raw record or optimizer runtime test",
     "no observed query/update overlap or adaptation/quality result",
     "no exact v6 resource lease in issue 5085"
   ]
