@@ -35,7 +35,7 @@ python -m unittest discover -s research/experiments/qwen05b_abstention_balance_5
 python -m unittest discover -s research/experiments/qwen05b_abstention_balance_5139_sampler_v1 -p 'test_*.py' -v
 ```
 
-Audit tests: 7/7; complete package tests: 13/13; exit 0. Five evidence mutations were rejected: changed support seed, reversed arm order, substituted row, mutated selected-row field, and duplicate pool ID. An additional control changed only the formal seed and was correctly accepted as irrelevant to support ordering. The positive check reconstructed both arms from the synthetic 128-row pool. Test-only support seed 1 and formal seed 73194109 are fixtures only, not allocation seeds.
+Audit tests: 7/7; complete package tests: 13/13; exit 0. Five evidence mutations were rejected: changed support seed, reversed arm order, substituted row, mutated selected-row field, and duplicate pool ID. An additional control changed only the formal seed and was correctly accepted as irrelevant to support ordering. The positive check reconstructed both arms from the synthetic 128-row pool. Test-only support seed 1 and synthetic formal-seed sentinel 900000001 are fixture values only; neither is an allocation seed or reused study seed.
 
 This is not the independent raw-output audit of a formal dataset or training result. It does not execute the full #5139 data generator, a pinned container, model/tokenizer, CUDA, or LoRA fit.
 
