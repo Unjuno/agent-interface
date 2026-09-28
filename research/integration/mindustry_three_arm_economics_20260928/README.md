@@ -4,8 +4,15 @@ This additive package is for the unmeasured six-task Mindustry economics cell
 under #57. It inherits the frozen task/order/arm/call schedule and acceptance
 rule from #1679; it does not reopen or modify #1679, #2624, or prior allocations.
 
-This branch includes current `main` `26d625a699175ddafde38d0ca26d901edfb6df7e`
-(merge commit `ffa0166e46ecf1c86848bbbc69c445255a861b07`).
+This branch includes current `main` `3007e03481d545eb9a92b8cec07c8c4201bd3728`
+(merge commit `8005ef1eb0cca4f59797e948bc8e2af7a622ca13`). The inherited
+#1679 preregistration's five dependency blobs were compared with this main:
+four are byte-identical; the plan Markdown alone changed from
+`ff0de7c4a0d6cc57d145d460f019f72d6967ffec` to
+`c0c8ff37206820881b9a86d6801fbae80e0b97d6`. A direct diff shows only two
+summary-count edits (six to eight retained discoveries). The frozen decision
+rule text and evaluator source are unchanged. This is a provenance note, not
+new authorization or experiment evidence.
 
 ## H / T / D / C / U
 
@@ -51,10 +58,11 @@ on the host and in local, network-disabled Docker containers using the
 already-cached `python:3.12-slim-bookworm` image (`sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e`).
 The complete repository was mounted read-only; container root was read-only,
 with 1 CPU, 512 MiB memory, 32 PIDs, all capabilities dropped, and
-`no-new-privileges`. The two successful invocations each passed 6/6. Four
-failed before test cases: one subdirectory-mount `IndexError`, and three
-repository/scorer import setup errors while correcting the mount-relative path.
-All failures are retained as setup failures, not folded into the passes. The
+`no-new-privileges`. According to the contemporaneous issue/PR execution record,
+two invocations passed 6/6. Four failed before test cases: one
+subdirectory-mount `IndexError`, and three repository/scorer import setup
+errors while correcting the mount-relative path. All failures are retained as
+setup failures, not folded into the passes. The
 corrected self-locating test and read-only repository mount produced:
 
 ```powershell
@@ -78,11 +86,18 @@ repository-root-relative unittest path; discovery stopped with “Start director
 is not importable.” It ran zero tests. Re-running unittest from the repository
 root and the inherited probe from `research/live_control/` passed as above.
 
+After merging main `3007e034`, another combined verification attempt repeated
+the same cwd mistake and again ran zero unittest cases; the inherited probe
+passed. The corrected repository-root unittest command then passed 6/6. This
+additional setup failure is retained separately and is not counted as a test
+failure or success.
+
 It checks the inherited evaluator's positive route, strict task-4 break-even
 boundary (including equality failing), and fail-closed task schedule, stale
-target, and repair gates. This is local containerized evaluator verification,
-not construction/formal/audit under the shared allocation, and not a
-model/economics result.
+target, and repair gates. The latest rerun is host-only; the prior container
+history above is disclosed despite being unallocated. None of this is
+construction/formal/audit under the shared allocation, or a model/economics
+result.
 
 Refresh main and recheck issue/PR/branch/path and resource arbitration before
 freezing any run.
