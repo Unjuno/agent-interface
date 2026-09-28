@@ -46,13 +46,22 @@
     "mismatches": 0
   },
   "followup_reverification": {
-    "reason": "Static review found both a position-based target verdict lookup and a duplicated unknown-open state where a distinct absent-LEASE_OPEN case was intended.",
-    "change": "Select candidate/oracle rows by target event_id; replace duplicate state with an actually missing LEASE_OPEN event and an independent expected HOLD.",
+    "reason": "Static review found the open domain duplicated unknown timing instead of including a missing LEASE_OPEN event.",
+    "change": "Replace that duplicate state with an actually absent LEASE_OPEN event and an independent expected HOLD_LEASE_OPEN_MISSING.",
     "host_tests": "33/33 passed",
     "command": "python exhaustive_lease_authority_v4.py",
     "exit": 0,
     "combinations_checked": 1161216,
     "mismatches": 0,
     "status": "FOLLOWUP_PASS"
+  },
+  "earlier_harness_robustness_pass": {
+    "reason": "Target verdict lookup was changed from list position to exact event_id.",
+    "host_tests": "32/32 passed",
+    "command": "python exhaustive_lease_authority_v4.py",
+    "exit": 0,
+    "combinations_checked": 1161216,
+    "mismatches": 0,
+    "qualification": "This earlier domain contained a duplicate unknown-open state; it is preserved as history and superseded by the final distinct-state domain."
   }
 }
