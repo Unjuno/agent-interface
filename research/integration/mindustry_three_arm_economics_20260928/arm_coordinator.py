@@ -22,7 +22,8 @@ class ArmCoordinator:
         self.pending_resolution = False
         self.attempt_started = False
 
-    def resolve(self, observation: dict, width: int, height: int, model_call) -> dict:
+    def resolve(self, observation: dict, width: int, height: int,
+                palette_slots: list[dict], model_call) -> dict:
         """Resolve exactly the current scheduled task without granting input."""
         task = self.lifecycle.current
         if (self.lifecycle.phase != "ready" or self.pending_resolution
@@ -34,6 +35,7 @@ class ArmCoordinator:
         result = route_task(arm=self.arm, route=task.route,
             task_id=task.task_id, layout=task.layout, cached=self.cached,
             observation=observation, width=width, height=height,
+            palette_slots=palette_slots,
             model_call=model_call)
         if self.arm == "persistent":
             self.cached = result["cache_update"]

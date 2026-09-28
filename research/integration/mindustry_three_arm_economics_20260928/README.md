@@ -146,8 +146,8 @@ python -m unittest discover -s research/integration/mindustry_three_arm_economic
 python research/live_control/probe_integrated_efficiency_protocol_v1.py
 ```
 
-Latest results: adaptive route construction 7/7, arm coordinator 5/5,
-runner contract 9/9, frozen decision contract 6/6 (27/27 total), inherited
+Latest results: adaptive route construction 8/8, arm coordinator 5/5,
+runner contract 9/9, frozen decision contract 6/6 (28/28 total), inherited
 probe `passed=true`, positive `RETAIN`, 10 controls. An initial test run had
 one assertion-fixture mismatch (expected persistent to contain 2 tasks instead
 of 6 tasks with 2 model calls); the fixture was corrected, and the rerun passed.
@@ -160,8 +160,9 @@ formal Docker allocation remains unassigned.
 
 The additive `adaptive_route.py` now routes one-generation cold/reuse/repair
 acquisition for the exact two ordered points (palette slot, world target),
-checks fresh sequence plus X11 surface/geometry before reuse, and refuses a
-stale cache before any model or target-input call. `task_points_v1.py` retains
+snaps the model's coarse palette point only to a screen-derived slot within
+48px, checks fresh sequence plus X11 surface/geometry before reuse, and refuses
+a stale cache before any model or target-input call. `task_points_v1.py` retains
 the shared bounded-output vocabulary but applies a Mindustry-specific exact-two
 point contract; the inherited generic direct-result validator is one-point-only.
 An initial route test run exposed that mismatch (five errors including the two
@@ -175,7 +176,7 @@ The final input boundary also exposes `require_current_locator`, requiring a
 newer observation and unchanged surface/geometry immediately before caller
 input. Two host tests cover acceptance of a fresh same-binding observation and
 refusal when geometry changes after the model response. Full local suite is
-27/27; the inherited probe remains `passed=true`, `RETAIN`, 10 controls. These
+28/28; the inherited probe remains `passed=true`, `RETAIN`, 10 controls. These
 are host-only construction checks, not Docker/live/formal results.
 
 The inherited #1679 preregistration design auditor was rerun locally and

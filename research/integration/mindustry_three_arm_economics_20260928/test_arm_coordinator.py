@@ -20,6 +20,11 @@ def candidate():
             "confidence_basis": "visually_unambiguous"}
 
 
+def palette_slots():
+    return [{"row": 0, "column": 0, "point": [150, 220]},
+            {"row": 0, "column": 1, "point": [196, 220]}]
+
+
 class ArmCoordinatorTests(unittest.TestCase):
     def test_all_arms_compose_route_schedule_and_score_reset_barriers(self):
         expected_calls = {"plain": 6, "ephemeral": 6, "persistent": 2}
@@ -35,7 +40,7 @@ class ArmCoordinatorTests(unittest.TestCase):
                 for sequence in range(1, 7):
                     resolved = coordinator.resolve(
                         source(sequence, "A" if sequence <= 3 else "B"),
-                        1280 if sequence <= 3 else 1216, 760,
+                        1280 if sequence <= 3 else 1216, 760, palette_slots(),
                         lambda _obs: actual_model_calls.append(sequence) or candidate())
                     self.assertEqual(resolved["task"].task_id,
                                      ["A1", "A2", "A3", "B1", "B2", "B3"][sequence - 1])
@@ -55,15 +60,19 @@ class ArmCoordinatorTests(unittest.TestCase):
         coordinator = ArmCoordinator("plain")
         with self.assertRaisesRegex(ValueError, "requires one resolved task"):
             coordinator.score(True)
-        coordinator.resolve(source(1, "A"), 1280, 760, lambda _obs: candidate())
+        coordinator.resolve(source(1, "A"), 1280, 760, palette_slots(),
+                            lambda _obs: candidate())
         with self.assertRaisesRegex(ValueError, "one unresolved ready task"):
-            coordinator.resolve(source(2, "A"), 1280, 760, lambda _obs: candidate())
+            coordinator.resolve(source(2, "A"), 1280, 760, palette_slots(),
+                                lambda _obs: candidate())
         coordinator.score(True)
         with self.assertRaisesRegex(ValueError, "one unresolved ready task"):
-            coordinator.resolve(source(2, "A"), 1280, 760, lambda _obs: candidate())
+            coordinator.resolve(source(2, "A"), 1280, 760, palette_slots(),
+                                lambda _obs: candidate())
         coordinator.reset(True)
         coordinator.advance()
         self.assertEqual(coordinator.resolve(source(2, "A"), 1280, 760,
+                         palette_slots(),
                          lambda _obs: candidate())["task"].task_id, "A2")
 
     def test_model_or_validation_failure_consumes_attempt_without_retry(self):
@@ -75,15 +84,17 @@ class ArmCoordinatorTests(unittest.TestCase):
             return {"malformed": True}
 
         with self.assertRaisesRegex(RouteStop, "invalid model target output"):
-            coordinator.resolve(source(1, "A"), 1280, 760, invalid_model)
-        with self.assertRaisesRegex(ValueError, "one unresolved ready task"):
             coordinator.resolve(source(1, "A"), 1280, 760,
+                                palette_slots(), invalid_model)
+        with self.assertRaisesRegex(ValueError, "one unresolved ready task"):
+            coordinator.resolve(source(1, "A"), 1280, 760, palette_slots(),
                                 lambda _obs: calls.append("retry") or candidate())
         self.assertEqual(calls, ["dispatched"])
 
     def test_input_locator_is_fresh_and_still_has_no_action_authority(self):
         coordinator = ArmCoordinator("plain")
-        coordinator.resolve(source(1, "A"), 1280, 760, lambda _obs: candidate())
+        coordinator.resolve(source(1, "A"), 1280, 760, palette_slots(),
+                            lambda _obs: candidate())
         locator = coordinator.locator_for_input(source(2, "A"), "A")
         self.assertEqual(locator["validated_sequence"], 2)
         self.assertEqual(locator["authority"],
@@ -91,7 +102,8 @@ class ArmCoordinatorTests(unittest.TestCase):
 
     def test_input_locator_refuses_layout_geometry_change(self):
         coordinator = ArmCoordinator("plain")
-        coordinator.resolve(source(1, "A"), 1280, 760, lambda _obs: candidate())
+        coordinator.resolve(source(1, "A"), 1280, 760, palette_slots(),
+                            lambda _obs: candidate())
         changed = source(2, "A")
         changed["pointer_binding"]["geometry"][2] = 1216
         with self.assertRaisesRegex(RouteStop, "refused before input: association_changed"):

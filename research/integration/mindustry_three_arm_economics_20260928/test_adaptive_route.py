@@ -18,6 +18,11 @@ def candidate():
             "confidence_basis": "visually_unambiguous"}
 
 
+def palette_slots():
+    return [{"row": 0, "column": 0, "point": [150, 220]},
+            {"row": 0, "column": 1, "point": [196, 220]}]
+
+
 class AdaptiveRouteTests(unittest.TestCase):
     def test_persistent_cold_reuse_repair_reuse_has_exact_two_generations(self):
         calls = []
@@ -37,7 +42,8 @@ class AdaptiveRouteTests(unittest.TestCase):
         for task_id, layout, route, source in plan:
             result = route_task(arm="persistent", route=route, task_id=task_id,
                 layout=layout, cached=cached, observation=source,
-                width=1280, height=760, model_call=model)
+                width=1280, height=760, palette_slots=palette_slots(),
+                model_call=model)
             observed_calls.append(result["model_calls"])
             self.assertEqual(result["old_reference_pointer_admissions"], 0)
             if result["cache_update"] is not None:
@@ -48,12 +54,13 @@ class AdaptiveRouteTests(unittest.TestCase):
     def test_stale_reuse_refuses_without_model_call_or_target_input(self):
         first = route_task(arm="persistent", route="cold", task_id="A1", layout="A",
             cached=None, observation=observation(1), width=1280, height=760,
+            palette_slots=palette_slots(),
             model_call=lambda _obs: candidate())["cache_update"]
         calls = []
         with self.assertRaisesRegex(RouteStop, "refused before input: association_changed"):
             route_task(arm="persistent", route="reuse", task_id="A2", layout="A",
                 cached=first, observation=observation(2, (0, 24, 1216, 760)),
-                width=1216, height=760,
+                width=1216, height=760, palette_slots=palette_slots(),
                 model_call=lambda obs: calls.append(obs) or candidate())
         self.assertEqual(calls, [])
 
@@ -63,13 +70,14 @@ class AdaptiveRouteTests(unittest.TestCase):
         with self.assertRaisesRegex(RouteStop, "repair requires the prior target to be stale"):
             route_task(arm="persistent", route="repair", task_id="B1", layout="B",
                 cached=first, observation=observation(2), width=1280, height=760,
-                model_call=lambda _obs: candidate())
+                palette_slots=palette_slots(), model_call=lambda _obs: candidate())
 
     def test_reference_arms_are_cold_and_ephemeral_does_not_cache(self):
         for arm in ("plain", "ephemeral"):
             with self.subTest(arm=arm):
                 result = route_task(arm=arm, route="cold", task_id="A1", layout="A",
                     cached=None, observation=observation(1), width=1280, height=760,
+                    palette_slots=palette_slots(),
                     model_call=lambda _obs: candidate())
                 self.assertEqual(result["model_calls"], 1)
                 self.assertIsNone(result["cache_update"])
@@ -79,11 +87,26 @@ class AdaptiveRouteTests(unittest.TestCase):
         with self.assertRaisesRegex(RouteStop, "invalid model target output"):
             route_task(arm="plain", route="cold", task_id="A1", layout="A",
                 cached=None, observation=observation(1), width=1280, height=760,
-                model_call=lambda _obs: bad)
+                palette_slots=palette_slots(), model_call=lambda _obs: bad)
+
+    def test_palette_probe_snaps_to_nearby_screen_slot_and_refuses_far_candidate(self):
+        slots = [{"row": 0, "column": 0, "point": [152, 221]},
+                 {"row": 0, "column": 1, "point": [198, 221]}]
+        result = route_task(arm="plain", route="cold", task_id="A1", layout="A",
+            cached=None, observation=observation(1), width=1280, height=760,
+            palette_slots=slots, model_call=lambda _obs: candidate())
+        self.assertEqual(result["bundle"].palette_point, (152, 221))
+
+        far = dict(candidate(), points=[{"x": 300, "y": 220}, {"x": 640, "y": 410}])
+        with self.assertRaisesRegex(RouteStop, "outside 48px slot neighborhood"):
+            route_task(arm="plain", route="cold", task_id="A1", layout="A",
+                cached=None, observation=observation(1), width=1280, height=760,
+                palette_slots=slots, model_call=lambda _obs: far)
 
     def test_final_locator_requires_fresh_same_binding_observation(self):
         bundle = route_task(arm="persistent", route="cold", task_id="A1", layout="A",
             cached=None, observation=observation(1), width=1280, height=760,
+            palette_slots=palette_slots(),
             model_call=lambda _obs: candidate())["bundle"]
         locator = require_current_locator(bundle, observation(2), "A")
         self.assertEqual(locator["validated_sequence"], 2)
@@ -93,6 +116,7 @@ class AdaptiveRouteTests(unittest.TestCase):
     def test_final_locator_refuses_geometry_change_after_model_response(self):
         bundle = route_task(arm="persistent", route="cold", task_id="A1", layout="A",
             cached=None, observation=observation(1), width=1280, height=760,
+            palette_slots=palette_slots(),
             model_call=lambda _obs: candidate())["bundle"]
         with self.assertRaisesRegex(RouteStop, "refused before input: association_changed"):
             require_current_locator(bundle, observation(2, (0, 24, 1216, 760)), "A")

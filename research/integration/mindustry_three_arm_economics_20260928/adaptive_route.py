@@ -46,7 +46,7 @@ def _binding(observation: dict) -> tuple[int | str, tuple[int, int, int, int]]:
 
 
 def acquire_bundle(model_output: dict, observation: dict, width: int, height: int,
-                   layout: str) -> TargetBundle:
+                   layout: str, palette_slots: list[dict]) -> TargetBundle:
     """Validate one model generation and bind its two ordered points to source."""
     if type(observation.get("sequence")) is not int or observation["sequence"] < 0:
         raise RouteStop("source observation sequence unavailable")
@@ -60,6 +60,26 @@ def acquire_bundle(model_output: dict, observation: dict, width: int, height: in
     if candidate["status"] != "DIRECT" or len(candidate["points"]) != 2:
         raise RouteStop("one generation must return palette and world points")
     palette, target = candidate["palette_point"], candidate["target_point"]
+    if type(palette_slots) is not list or not palette_slots:
+        raise RouteStop("fresh screen-derived palette slots required")
+    try:
+        slot_index = min(range(len(palette_slots)), key=lambda index:
+            (palette_slots[index]["point"][0] - palette[0]) ** 2
+            + (palette_slots[index]["point"][1] - palette[1]) ** 2)
+        slot = palette_slots[slot_index]
+        snapped_palette = slot["point"]
+        distance_squared = ((snapped_palette[0] - palette[0]) ** 2
+                            + (snapped_palette[1] - palette[1]) ** 2)
+    except (KeyError, IndexError, TypeError) as error:
+        raise RouteStop("invalid screen-derived palette slot set") from error
+    if (type(snapped_palette) is not list or len(snapped_palette) != 2
+            or any(type(value) is not int for value in snapped_palette)):
+        raise RouteStop("integer screen-derived palette center required")
+    if not (0 <= snapped_palette[0] < width and 0 <= snapped_palette[1] < height):
+        raise RouteStop("screen-derived palette center outside source image")
+    if distance_squared > 48 ** 2:
+        raise RouteStop("coarse palette point outside 48px slot neighborhood")
+    palette = snapped_palette
     if palette == target:
         raise RouteStop("palette and world target must be distinct")
     return TargetBundle(tuple(palette), tuple(target), surface, geometry,
@@ -95,7 +115,7 @@ def require_current_locator(bundle: TargetBundle, observation: dict,
 
 def route_task(*, arm: str, route: str, task_id: str, layout: str,
                cached: TargetBundle | None, observation: dict, width: int,
-               height: int, model_call) -> dict:
+               height: int, palette_slots: list[dict] | None, model_call) -> dict:
     """Resolve one frozen route and report any repair refusal before input.
 
     model_call(observation) returns one bounded-visual-target typed object. A
@@ -111,7 +131,8 @@ def route_task(*, arm: str, route: str, task_id: str, layout: str,
         raise RouteStop("persistent reuse schedule mismatch")
 
     if route == "cold":
-        bundle = acquire_bundle(model_call(observation), observation, width, height, layout)
+        bundle = acquire_bundle(model_call(observation), observation, width, height,
+                                layout, palette_slots)
         return {"bundle": bundle, "cache_update": bundle if arm == "persistent" else None,
                 "model_calls": 1, "old_reference_pointer_admissions": 0,
                 "old_reference_status": None}
@@ -132,7 +153,8 @@ def route_task(*, arm: str, route: str, task_id: str, layout: str,
         raise RouteStop("repair requires the prior target to be stale")
     # The old bundle is not returned to the caller and no pointer action occurs
     # before this single fresh model call.
-    repaired = acquire_bundle(model_call(observation), observation, width, height, layout)
+    repaired = acquire_bundle(model_call(observation), observation, width, height,
+                              layout, palette_slots)
     return {"bundle": repaired, "cache_update": repaired, "model_calls": 1,
             "old_reference_pointer_admissions": 0,
             "old_reference_status": "stale"}
