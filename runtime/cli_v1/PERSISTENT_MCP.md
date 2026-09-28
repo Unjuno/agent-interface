@@ -51,6 +51,23 @@ In persistent mode, `interface_inspect_target(target)` reports the currently foc
 
 After reviewing that evidence and the visible surface, explicitly call `interface_review_target(target, window_id, review_id)`. It re-reads and compares the evidence, consumes the review ID, replaces that target's native window and increments the session binding revision. No input is sent, no lease is issued, and an input-recovery requirement remains sticky. Capture and review the newly selected surface before new input. Dispatch must supply the session's current binding revision (initially 1); old revisions refuse before dispatch. Observation sequences and lease assertions still come from the caller. New dialogs require a new inspection and explicit review; returning to the original window uses the same process. One-shot mode has neither tool and retains its existing contract.
 
-Limits: focused-client selection does not enumerate other modal candidates, allow unrelated windows or establish semantic modal identity. The WM relationship and native window IDs do not prevent ID reuse, prove application authenticity, freeze the desktop or protect a later dispatch from changes after review. There is no automatic focus, dismissal, redispatch, source refresh or input recovery. A new primary-operated Calc trial (seed 991304, source eb539b185) completed through this route: 597/624 independently read from saved XLSX, two completed input dispatches with verified release, explicit return to the main window and verified release/close. The earlier failed save (seed 991302) remains retained. These are two different seeded tasks, not a controlled latency comparison.
+Limits: focused-client selection does not enumerate other modal candidates, allow unrelated windows or establish semantic modal identity. The WM relationship and native window IDs do not prevent ID reuse, prove application authenticity, freeze the desktop or protect a later dispatch from changes after review. There is no automatic focus, dismissal, redispatch, source refresh or input recovery; input recovery remains an explicit `interface_recover_input` operation on the persistent session described above. A new primary-operated Calc trial (seed 991304, source eb539b185) completed through this route: 597/624 independently read from saved XLSX, two completed input dispatches with verified release, explicit return to the main window and verified release/close. The earlier failed save (seed 991302) remains retained. These are two different seeded tasks, not a controlled latency comparison.
 
 An optional `screen_region=[x,y,width,height]` argument to `interface_inspect_target` bundles one fresh screen capture with focused-client evidence. It rechecks the same metadata after capture; capture failure or disagreement retains the diagnostic observation without a review ID. No target is selected by inspection. The review lifetime starts after this work completes; the 30-second policy is unchanged. The captured report and image use the existing public observation/presentation path, and `interface_results` rereads them without recapture. Matching metadata before/after does not make the screenshot atomic, prove redraw, or grant input authority.
+
+### Exact request for explicit target review
+
+Successful inspection also returns `review_request` with `tool` and `arguments`.
+After personally reviewing the supplied evidence/image, the caller can pass those
+arguments to that tool without renaming `window_id` or adding revision arguments.
+If inspection requested `screen_region`, the candidate request includes the same
+region for the existing post-selection capture. The request is not executed by
+inspection; it is not an action queue or authority grant. A failed capture or
+metadata recheck returns no candidate request.
+
+The ID is still one-use, expires after 30 seconds, and is consumed/rechecked by the
+same review implementation. A historical `interface_results` response preserves
+the old request and deadline, without renewing either. Do not auto-run requests
+from history or treat the supplied request as evidence of task completion.
+This adds response bytes to reduce caller-side schema mistakes; actual token cost
+and any reduction in failed calls require measurement.
