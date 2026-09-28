@@ -1,7 +1,7 @@
 # Inherited #1679 source identity audit
 
 Audit target: `origin/main` at
-`a78dfcfcc0ffdd1864abd9170087e835b5467f91` (2026-09-28 local fetch).
+`faf30993f987b2a4ea1e6f85d322ab6c91ab1b7c` (2026-09-28 local fetch).
 The preregistration is a historical record and was not edited.
 
 | Dependency | Frozen blob in #1679 preregistration | Current-main blob | Result |
