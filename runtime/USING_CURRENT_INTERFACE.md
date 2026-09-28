@@ -583,3 +583,10 @@ without replaying input or taking another capture. The lossless receipt decoder
 deliberately rejects the partial summary schema. Failed, incomplete, unfamiliar
 or inconsistent omitted records stay full, as do reports that would not shrink.
 A fixed wait remains a delay, not an acknowledgement of an application update.
+
+[Primary summary-mode use](results/public-summary-01/README.md) exercised paced
+input, a short save, full retrieval and an unchanged full refusal. The two actual
+successful replies used 45.3% fewer canonical JSON bytes than their full views
+and 27.8% fewer than the previous brief option. This is not measured token/cost or
+speed improvement; the full lookup itself adds a call. The record includes the
+retained-session correction and its failed-before/passing-after checks.
