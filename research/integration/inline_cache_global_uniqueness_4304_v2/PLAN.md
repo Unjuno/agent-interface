@@ -6,9 +6,11 @@ Status: pre-formal freeze candidate only. No formal case has run for allocation 
 
 This is allocation `inline-cache-uniqueness-4304-20260928-02`, a fresh successor to the immutable STOP `inline-cache-uniqueness-4304-20260924-01` in Issue #4304. It does not edit or pool the closed #4260 result, allocation-01 freeze/partial rows, or any shared runtime. Allocation 01 stopped at `formal-0-06` before warm input when Python-Xlib `String8` supplied `str` for an all-black ROI; its first six rows remain descriptive only. The only hypothesized repair is lossless UTF-8 normalization at the capture adapter. `src/normalize.py` is byte-identical to the current-main X11 String8 study helper; no production runtime path was changed. The live and byte-representation construction tests below exercise this boundary.
 
+An initial pre-formal freeze was published from main `d8ca8bfed9cd8d84201c91645e4ed25364181d3f` at 2026-09-28 07:32:48Z. Main advanced to `b556c109828e89b3a8e78cb618530a044c97d7d8` before any formal invocation. The earlier freeze and branch commit remain in history; no formal output exists for them. This successor freeze updates only the base SHA and its own source-hash manifest before the first formal row.
+
 Own branch: `research/inline-cache-global-uniqueness-4304-v2-20260928`.
 Owned repository path: `research/integration/inline_cache_global_uniqueness_4304_v2/**`.
-Frozen base: `main` at `d8ca8bfed9cd8d84201c91645e4ed25364181d3f`.
+Frozen base: `main` at `b556c109828e89b3a8e78cb618530a044c97d7d8`.
 Local execution: Arch Linux WSL2 on this PC; private Xvfb only. No Docker invocation, GPU/CUDA, model/provider, host desktop, user data, or network experiment. GitHub MCP is used only for coordination/publication.
 
 The branch is additive. Do not include `scratch/`, predecessor restore material outside `lineage/`, or any file outside the owned path in a commit. Preserve every STOP and partial output losslessly.
