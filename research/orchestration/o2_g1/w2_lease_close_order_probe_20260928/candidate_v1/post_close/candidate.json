@@ -1,0 +1,103 @@
+{
+  "schema": "w2-lease-close-candidate-report-v1",
+  "trace_sha256": "ecbb3dc94f30854024d3bf4e9fceb44d8f4964924fdf47492fab6a9c89984e08",
+  "case_count": 8,
+  "cases": [
+    {
+      "case_id": "authorized-idle",
+      "decisions": [
+        {
+          "event_id": null,
+          "status": "NO_INPUT_EDGE"
+        }
+      ]
+    },
+    {
+      "case_id": "unauthorized-input-after-expiry",
+      "decisions": [
+        {
+          "event_id": "u2",
+          "status": "HOLD_LEASE_OPEN_MISSING"
+        },
+        {
+          "event_id": "u3",
+          "status": "HOLD_LEASE_OPEN_MISSING"
+        }
+      ]
+    },
+    {
+      "case_id": "coast-damage",
+      "decisions": [
+        {
+          "event_id": null,
+          "status": "NO_INPUT_EDGE"
+        }
+      ]
+    },
+    {
+      "case_id": "release-before-terminal",
+      "decisions": [
+        {
+          "event_id": "r2",
+          "status": "REJECT_EDGE_AFTER_LEASE_CLOSE"
+        },
+        {
+          "event_id": "r3",
+          "status": "REJECT_EDGE_AFTER_LEASE_CLOSE"
+        }
+      ]
+    },
+    {
+      "case_id": "overlapping-key-holds",
+      "decisions": [
+        {
+          "event_id": "o1",
+          "status": "HOLD_MISSING_LEASE_ACTUATION"
+        },
+        {
+          "event_id": "o2",
+          "status": "HOLD_MISSING_LEASE_ACTUATION"
+        },
+        {
+          "event_id": "o3",
+          "status": "HOLD_MISSING_LEASE_ACTUATION"
+        },
+        {
+          "event_id": "o4",
+          "status": "HOLD_MISSING_LEASE_ACTUATION"
+        }
+      ]
+    },
+    {
+      "case_id": "missing-and-out-of-order-edge",
+      "decisions": [
+        {
+          "event_id": "m1",
+          "status": "HOLD_MISSING_LEASE_ACTUATION"
+        }
+      ]
+    },
+    {
+      "case_id": "no-input-unbound-task-effect",
+      "decisions": [
+        {
+          "event_id": null,
+          "status": "NO_INPUT_EDGE"
+        }
+      ]
+    },
+    {
+      "case_id": "held-input-no-effect",
+      "decisions": [
+        {
+          "event_id": "h2",
+          "status": "HOLD_MISSING_LEASE_ACTUATION"
+        },
+        {
+          "event_id": "h3",
+          "status": "HOLD_MISSING_LEASE_ACTUATION"
+        }
+      ]
+    }
+  ]
+}
