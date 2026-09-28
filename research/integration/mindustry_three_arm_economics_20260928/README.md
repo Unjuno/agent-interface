@@ -4,8 +4,8 @@ This additive package is for the unmeasured six-task Mindustry economics cell
 under #57. It inherits the frozen task/order/arm/call schedule and acceptance
 rule from #1679; it does not reopen or modify #1679, #2624, or prior allocations.
 
-This branch includes current `main` `716d25286ec37999d8098cd63bf1731fae0d88d6`
-(merge commit `d74e215aaa5c6b4ca939ec30f062c67fd8d83606`). The inherited
+This branch includes current `main` `16421aefa2ec357b79e3fd3dc307b32955bc6fab`
+(merge commit `1866f05aab`, incorporating #5154 and #5153 after `716d252`). The inherited
 #1679 preregistration's five dependency blobs were compared with this main:
 four are byte-identical; the plan Markdown alone changed from
 `ff0de7c4a0d6cc57d145d460f019f72d6967ffec` to
@@ -147,4 +147,7 @@ one assertion-fixture mismatch (expected persistent to contain 2 tasks instead
 of 6 tasks with 2 model calls); the fixture was corrected, and the rerun passed.
 These are host-only construction results, not Docker, live, formal, or
 economic evidence. No Docker command or GitHub Actions workflow was used for
-this construction check. The formal Docker allocation remains unassigned.
+this construction check. The branch was refreshed to main
+`16421aefa2ec357b79e3fd3dc307b32955bc6fab`; all five frozen dependency blobs
+were rechecked, with only the documented plan-Markdown count changes. The
+formal Docker allocation remains unassigned.
