@@ -82,4 +82,3 @@ def validate_stream(rows):
         previous[owner] = seq
     return {"status": "PASS_SYNTHETIC_SCHEMA_COMPATIBILITY_ONLY",
             "receipt_count": len(rows), "authority_grants": 0, "x11_observed": False}
-
