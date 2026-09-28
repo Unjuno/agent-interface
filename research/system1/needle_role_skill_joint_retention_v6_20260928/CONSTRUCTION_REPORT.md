@@ -178,8 +178,9 @@ issue URL, `Unjuno` author, and exact body against the retained lease comment.
 The owner payload parser rejects duplicate JSON keys. The launcher rechecks the
 exclusive window immediately before both `docker context show` and the single
 `docker run`, so checks that cross expiry fail closed before the next Docker
-call. Regression tests cover forged URL/record, duplicate-key payload, and
-lease-boundary expiry.
+call. The launcher's lease-file and owner-payload JSON parsers also reject
+duplicate keys. Regression tests cover forged URL/record, duplicate-key
+payload, and lease-boundary expiry.
 
 Windows CPython 3.11.9: **24/24** zero-fit host tests pass; `py_compile` and
 `git diff --check` pass. Updated hashes are in `CONSTRUCTION_FREEZE.json`.

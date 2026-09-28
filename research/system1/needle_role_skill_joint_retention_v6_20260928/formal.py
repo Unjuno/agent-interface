@@ -30,10 +30,19 @@ def stop(reason: str):
     raise SystemExit("STOP_" + reason)
 
 
+def unique_pairs(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError("duplicate_json_key")
+        result[key] = value
+    return result
+
+
 def read_json(path: Path):
     try:
-        return json.loads(path.read_bytes())
-    except (OSError, json.JSONDecodeError) as exc:
+        return json.loads(path.read_bytes(), object_pairs_hook=unique_pairs)
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
         stop("INVALID_JSON:" + str(exc))
 
 
@@ -95,8 +104,8 @@ def validate_lease(lease: dict, main_sha: str, branch: str, current_context: str
     if len(blocks) != 1:
         stop("LEASE_OWNER_COMMENT_PAYLOAD_MISSING")
     try:
-        payload = json.loads(blocks[0])
-    except json.JSONDecodeError:
+        payload = json.loads(blocks[0], object_pairs_hook=unique_pairs)
+    except (json.JSONDecodeError, ValueError):
         stop("LEASE_OWNER_COMMENT_PAYLOAD_INVALID")
     expected_payload = {key: lease[key] for key in (
         "schema", "allocation", "issue", "main_sha", "branch", "docker_context",

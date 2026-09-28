@@ -340,6 +340,12 @@ class FrozenSourceAndConstructionContract(unittest.TestCase):
         forged = dict(record, body=body.replace("slot-123", "forged"))
         with self.assertRaisesRegex(SystemExit, "STOP_LEASE_OWNER_COMMENT_PAYLOAD_MISMATCH"):
             module.validate_lease(lease, "a" * 40, "branch", "desktop-linux", forged)
+        duplicate_payload = (json.dumps(payload)[:-1]
+                             + ',"lease_id":"attacker","lease_id":"slot-123"}')
+        duplicate_body = "<!-- needle-docker-owner-lease-v1\n" + duplicate_payload + "\n-->"
+        duplicate_record = dict(record, body=duplicate_body)
+        with self.assertRaisesRegex(SystemExit, "STOP_LEASE_OWNER_COMMENT_PAYLOAD_INVALID"):
+            module.validate_lease(lease, "a" * 40, "branch", "desktop-linux", duplicate_record)
         wrong_owner = dict(record, user={"login": "attacker"})
         with self.assertRaisesRegex(SystemExit, "STOP_LEASE_OWNER_COMMENT_AUTHOR"):
             module.validate_lease(lease, "a" * 40, "branch", "desktop-linux", wrong_owner)
