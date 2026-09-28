@@ -1,0 +1,32 @@
+{
+  "schema": "recount_provenance_control_5168_preflight_v1",
+  "initial_failures": [
+    {
+      "command": "python -B -m unittest -v research.integration.recount_provenance_control_5168_v1.test_contract",
+      "result": "FAIL_INVOCATION",
+      "reason": "ModuleNotFoundError: package-local runner was not importable from repository-root invocation"
+    },
+    {
+      "command": "python -B -m py_compile \"$p/runner.py\",\"$p/audit.py\",\"$p/freeze_inputs_candidate.py\",\"$p/test_contract.py\"",
+      "result": "FAIL_INVOCATION",
+      "reason": "PowerShell passed a quoted comma-joined argument as an invalid Python filename"
+    }
+  ],
+  "corrected_commands": [
+    {
+      "cwd": "research/integration/recount_provenance_control_5168_v1",
+      "command": "python -B -m unittest -v test_contract.py",
+      "result": "PASS_2_OF_2"
+    },
+    {
+      "cwd": "research/integration/recount_provenance_control_5168_v1",
+      "command": "python -B -m py_compile runner.py audit.py stop_audit.py stop_audit_v2.py stop_audit_v3.py freeze_inputs_candidate.py test_contract.py",
+      "result": "PASS"
+    },
+    {
+      "cwd": "repository root",
+      "command": "git diff --check",
+      "result": "PASS"
+    }
+  ]
+}
