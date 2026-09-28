@@ -3,6 +3,21 @@
 WM properties are application metadata, not authenticated identity. This does not
 prove visual freshness or authorize input; ordinary dispatch admission remains.
 """
+def read_window_title(connection, window):
+    """Prefer public UTF-8 title properties, as on the guarded X11 route."""
+    for name in ('_NET_WM_NAME', '_NET_WM_VISIBLE_NAME'):
+        prop = window.get_full_property(connection.intern_atom(name),
+                                        connection.intern_atom('UTF8_STRING'))
+        if prop is not None:
+            if prop.format != 8:
+                raise ValueError('invalid UTF-8 window title format')
+            title = bytes(prop.value).decode('utf-8', errors='strict')
+            if title:
+                return title
+    title = window.get_wm_name()
+    return title.decode('utf-8', 'replace') if isinstance(title, bytes) else title
+
+
 def inspect_focused_target(backend, family_root):
     from Xlib import X
     d, root = backend.d, backend.root
@@ -38,9 +53,7 @@ def inspect_focused_target(backend, family_root):
         raise ValueError('transient ancestry exceeds limit')
     geo = win.get_geometry()
     point = root.translate_coords(win, 0, 0)
-    title = win.get_wm_name()
-    if isinstance(title, bytes):
-        title = title.decode('utf-8', 'replace')
+    title = read_window_title(d, win)
     return {'window_id': win.id, 'focus_path': focus_path,
             'transient_chain': chain, 'family_root': family_root,
             'title': title, 'wm_class': list(win.get_wm_class() or ()),

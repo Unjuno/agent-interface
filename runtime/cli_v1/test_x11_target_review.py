@@ -16,12 +16,33 @@ class FocusedTargetEvidenceTests(unittest.TestCase):
         modal.get_attributes.return_value=SimpleNamespace(map_state=X.IsViewable)
         modal.get_geometry.return_value=SimpleNamespace(width=300,height=150)
         modal.get_wm_name.return_value=b'Confirm format'
+        modal.get_full_property.return_value=None
         modal.get_wm_class.return_value=('office','calc')
         child=Mock(id=201)
         child.query_tree.return_value=SimpleNamespace(parent=modal)
         backend=Mock(root=root)
         backend.d.get_input_focus.return_value=SimpleNamespace(focus=child)
         return backend,modal,parent
+
+    def test_utf8_title_when_legacy_property_is_empty(self):
+        backend,modal,_=self.fixture()
+        modal.get_wm_name.return_value=''
+        modal.get_full_property.return_value=SimpleNamespace(format=8,value='表計算 — Calc'.encode())
+        self.assertEqual(inspect_focused_target(backend,100)['title'],'表計算 — Calc')
+        modal.get_wm_name.assert_not_called()
+        backend.focus.assert_not_called()
+
+    def test_empty_net_title_uses_visible_title(self):
+        backend,modal,_=self.fixture()
+        modal.get_full_property.side_effect=[SimpleNamespace(format=8,value=b''),SimpleNamespace(format=8,value=b'Visible title')]
+        self.assertEqual(inspect_focused_target(backend,100)['title'],'Visible title')
+
+    def test_invalid_utf8_title_refuses_inspection(self):
+        backend,modal,_=self.fixture()
+        for prop in (SimpleNamespace(format=8,value=b'\xff'),SimpleNamespace(format=32,value=[1])):
+            modal.get_full_property.return_value=prop
+            with self.assertRaises(ValueError):inspect_focused_target(backend,100)
+        backend.focus.assert_not_called()
 
     def test_focused_child_resolves_managed_modal_without_input(self):
         backend,modal,parent=self.fixture()
