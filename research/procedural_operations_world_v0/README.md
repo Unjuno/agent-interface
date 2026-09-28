@@ -1,5 +1,7 @@
 # Procedural Operations World v0.2
 
+> **Landing status:** usable as the lightweight world substrate for automated harness integration; formal benchmark claims remain HOLD until secure paired evaluation and held-out allocation are implemented.
+
 A tiny, CPU-only 2.5D operations world for Agent Interface screening and failure-frontier research.
 
 The FPS-like shell is only the substrate: it supplies continuous navigation, viewpoint control, occlusion, moving world state, concurrent events, and real-time deadlines. The work itself is closer to computer-use/operations tasks: visual data transfer, terminal entry, precision assembly, target tracking/reacquisition, and asynchronous alert handling while other work continues.

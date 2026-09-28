@@ -207,6 +207,7 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 
 - [`procedural_control_arena_v0/`](procedural_control_arena_v0/) — dependency-light mechanics/regression prototype; see its README and validation record for limits. It is not evidence of candidate or cross-domain performance.
 - [`procedural_control_arena_v1/`](procedural_control_arena_v1/) — construction GUI benchmark with compound input primitives; paired baseline/candidate, held-out promotion, evaluator isolation, formal performance, and cross-domain transfer remain unvalidated.
+- [`procedural_operations_world_v0/`](procedural_operations_world_v0/) — ultra-light native 2.5D operations-world substrate for agent-native concurrent control; usable for automated harness integration after validity-hardening, while secure paired B0/C1 evaluation and held-out promotion remain open.
 
 ### Needle / System-1 adapter research
 
