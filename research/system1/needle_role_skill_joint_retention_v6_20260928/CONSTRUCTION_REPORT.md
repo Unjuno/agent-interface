@@ -1,59 +1,43 @@
 # #5081 v6 — host zero-fit construction report
 
-**Disposition:** `PASS_CONTRACT_FIXTURES_ONLY`; not a Docker construction PASS,
-formal result, scientific result, or authorization to use the shared container.
+**Disposition:** `PASS_HOST_CONTRACT_FIXTURES_ONLY`; not a Docker construction
+PASS, formal result, scientific result, or authorization to use the shared
+container.
 
 ## H/T/D/C/U
 
-- **H:** a fully realized Docker token array can be checked by exact equality,
-  and an online-feedback claim can be gated on new feedback arrival/consumption
-  plus an optimizer interval overlapping an active System-1 inference window.
+- **H:** exact realized Docker argv and live query/update event contracts can
+  be validated independently. Feedback must arrive after the first inference
+  call starts and its optimizer interval must overlap an individual active
+  inference call, not merely a broad query window.
 - **T:** allocation `needle-role-skill-joint-retention-20260928-v6`, branch
-  `research/needle-role-skill-joint-retention-v6-20260928`, base main
-  `708dec9bcd2bfb3ef597acf7bc1c8a02bcb96b01`. The test runs only the standard
-  library `unittest` suite in `test_protocol.py`; no model, optimizer, formal
-  seed, image, or Docker command is invoked.
-- **D:** 8/8 host unit tests pass. The suite covers exact argv equality and
-  rejects token splitting, omission, additions, reordering, mount-format
-  mutation, path aliasing, and missing directories. Event fixtures accept a
-  feedback update that starts after an in-flight query starts and overlaps its
-  inference-call interval (not merely a broad query window); they reject
-  early/late feedback, non-overlap, a wait-only query window, shared worker
-  identity, missing query evidence, and malformed/empty records.
-- **C:** only temporary directories and synthetic integer timestamps are used.
-  The Docker command contract explicitly pins `--entrypoint=python`, one exact
-  `--network=none` token, image digest, mount tokens/order, environment, and
-  runner arguments. No host shell string normalization is involved.
-- **U:** these unit fixtures verify the validator, not actual Docker argv
-  execution, container/image entrypoint metadata, independent OS process
-  scheduling, live arrivals, model updates, latency, role retention, or
-  scientific thresholds. Formal work remains behind the coordinator release
-  gate. No result from v5 is changed or upgraded.
-
-## Exact verification
-
-Environment: Windows 10 build `10.0.26200`, CPython `3.11.9` (64-bit AMD64).
-
-Command, run from this directory:
-
-```text
-python -B -m unittest -v test_protocol.py
-```
-
-Final outcome after the source correction and current-main merge:
-`Ran 8 tests in 0.010s` / `OK`. `git diff --check` also passed.
-The first run exposed a contract exception-type/message mismatch for a missing
-output mount; the API was made consistently fail-closed with `ValueError`. An
-additional test then caught a fixture that accidentally overlapped inference;
-its call interval was corrected so the negative control is genuinely
-non-overlapping. The final eight-test run passed. Both construction defects and
-repairs are retained here; no optimizer or container was involved.
+  `research/needle-role-skill-joint-retention-v6-20260928`; additive source
+  path is this directory. Formal seeds remain reserved by #5081 and were not
+  read or consumed. Formal Docker execution remains lease-gated by #5085.
+- **D:** 14/14 host tests pass. Coverage includes exact argv token equality and
+  mutation rejection; inference-call overlap, fresh arrival, and distinct
+  worker identity; pinned predecessor Git blob identities; event-generation
+  ordering; one-run/no-retry launcher structure; and rejection of a missing
+  owner lease. Syntax checks pass for `runner.py`, `audit.py`, `protocol.py`,
+  `formal.py`, and `test_protocol.py`; `git diff --check` passes.
+- **C:** checks use synthetic timestamp fixtures and temporary directories.
+  No construction seed, optimizer, model forward, Docker command, or image was
+  run. The independent auditor imports its frozen predecessor oracle but has
+  not yet audited a generated v6 raw record.
+- **U:** no actual query/update concurrency, adaptation outcome, A/B retention,
+  latency, or scientific threshold has been measured. This is a host contract
+  pass only, not a container or experiment pass. v5 evidence remains unchanged.
 
 ## Resource and allocation boundary
 
-The formal issue #5081 remains queued. #5085/#5144 still require the owner of
-the unrelated OrbStack container to confirm terminal state and the coordinator
-to record an exact lane release. An empty Windows Docker inventory is not a
-lease. This report does not claim Docker availability was tested and makes no
-Docker invocation. The seeds in #5081 are not consumed by this construction
-suite.
+The formal issue #5081 remains queued. #5085 still requires the resource owner
+to record an exact allocation lease and lane release; absence of a visible
+Windows container is not authorization. This report makes no Docker invocation
+and consumes none of the formal seeds.
+
+## Historical construction evidence
+
+An earlier revision passed 8/8 host tests. The current 14/14 suite adds the
+frozen-source, online ordering, exact receipt argv, and no-lease launcher tests.
+The earlier record is retained by Git history and is not represented as the
+current count.

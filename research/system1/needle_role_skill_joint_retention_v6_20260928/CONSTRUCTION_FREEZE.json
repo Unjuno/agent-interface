@@ -14,26 +14,41 @@
     "architecture": "AMD64",
     "docker_invocations": 0,
     "optimizer_steps": 0,
-    "formal_seed_access": false
+    "formal_seed_access": false,
+    "optimizer_microsteps": 0,
+    "formal_docker_calls": 0
   },
+  "preflight_command": ["python", "-B", "formal.py", "--preflight"],
+  "preflight_result": "PREFLIGHT_ONLY",
   "construction_result": {
-    "tests": 8,
-    "passed": 8,
+    "tests": 15,
+    "passed": 15,
     "failed": 0,
-    "decision": "PASS_CONTRACT_FIXTURES_ONLY"
+    "decision": "PASS_HOST_CONTRACT_FIXTURES_ONLY"
   },
   "source_sha256": {
-    "protocol.py": "c17d51e206070da70a3e7bae723c951611e23f8634ffbc80981f9b2ce66899e9",
-    "test_protocol.py": "d90ced70e26a1ca7cfd97c65270acd9086a047f4adb4b9498aa90930808739c9"
+    "protocol.py": "9dafd86a06758db026059180d7b5ef248c5e1f8a0f4a06ed2c0756549ab755ff",
+    "test_protocol.py": "c2433ded457b19960e7fa9e9c82a58651feff9f259dbcbc1cf0822653b6207d7",
+    "runner.py": "fbceebc16048a4d485bcf97d53a0d1d33e040c9fe469924fdc61cbec14ef4e49",
+    "audit.py": "8ae786d476807cf4e8fc39f36a3d77b3cb7a3b51974eb652ad729515dd4aa2d9",
+    "formal.py": "5224d9945b3a652206e0b524717a68abf7c6028e70e6a4fb9275d9c653fbe4d5",
+    "lineage/runner.py": "0c978c7721da5f42d57a838a3d141c9781a19a981db5d50b8e028183bc14fcdf",
+    "lineage/audit.py": "6abf8cc48d81c5b4267d993e9d992a15d9015f39f0a50558acfcc6d11bcc4558",
+    "lineage/FORMAL_FREEZE.json": "482449e97f3b399b166da11fe54a2be2b9df1f13fab1e95753b283614a20cd7c"
   },
-  "source_git_blob_sha": {
-    "protocol.py": "34b8705d46c7cfe3f4dfc26a7d22f65c0cb829e7",
-    "test_protocol.py": "4ea09874101b9a8ebe6af5a0db467e733598705e"
+  "lineage_git_blob_sha_from_github_main": {
+    "lineage/runner.py": "367cf88448130ce997f55c02edb653a30d1176fe",
+    "lineage/audit.py": "c6be7b103cdc989fdac1e7cfa12657818fa5c03e",
+    "lineage/FORMAL_FREEZE.json": "715c86190e8ae85d36d0d6ac3d29cf9d6e067eda",
+    "lineage/FORMAL_FREEZE.sha256": "5df5e8563965b39da1bf03b08484216bd0bd1e78"
   },
+  "main_at_checkpoint": "bbe4bd3b3fadea09679c8956cdd2d35988acd2d3",
+  "main_sync_status": "branch based on 3624c131; latest-main checkpoint bbe4bd3; sync pending before formal",
   "limits": [
-    "host-only standard-library contract tests",
-    "not Docker execution or image-entrypoint verification",
-    "not independent OS process or optimizer overlap evidence",
-    "formal resource lease not granted"
+    "host-only zero-fit contract and source-lineage checks",
+    "no generated construction raw record or optimizer runtime test",
+    "no Docker execution or image-entrypoint verification",
+    "no observed query/update overlap or adaptation/quality result",
+    "no exact v6 resource lease in issue 5085"
   ]
 }

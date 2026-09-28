@@ -2,8 +2,18 @@
 from pathlib import Path
 import tempfile
 import unittest
+import ast
+import hashlib
+import importlib.util
+import sys
 
 import protocol
+
+HERE = Path(__file__).resolve().parent
+RESEARCH_ROOT = HERE.parent
+RUNNER_PATH = HERE / "runner.py"
+AUDIT_PATH = HERE / "audit.py"
+FORMAL_PATH = HERE / "formal.py"
 
 
 class DockerArgvContract(unittest.TestCase):
@@ -104,6 +114,91 @@ class OnlineWindowContract(unittest.TestCase):
     def test_rejects_empty_and_malformed_evidence(self):
         self.assertTrue(protocol.online_window_errors({"queries": [], "feedback": []}))
         self.assertTrue(protocol.online_window_errors(None))
+
+
+class FrozenSourceAndConstructionContract(unittest.TestCase):
+    def test_lineage_sources_match_the_registered_frozen_digests(self):
+        lineage = HERE / "lineage"
+        checks = {
+            lineage / "runner.py": "0c978c7721da5f42d57a838a3d141c9781a19a981db5d50b8e028183bc14fcdf",
+            lineage / "audit.py": "6abf8cc48d81c5b4267d993e9d992a15d9015f39f0a50558acfcc6d11bcc4558",
+            lineage / "FORMAL_FREEZE.json": "482449e97f3b399b166da11fe54a2be2b9df1f13fab1e95753b283614a20cd7c",
+        }
+        for path, expected in checks.items():
+            self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), expected, str(path))
+        self.assertEqual((lineage / "FORMAL_FREEZE.sha256").read_bytes(),
+                         (checks[lineage / "FORMAL_FREEZE.json"] + "\n").encode("ascii"))
+
+    def test_runner_and_auditor_load_the_pinned_lineage_without_fitting(self):
+        for name in ("runner", "audit"):
+            path = HERE / f"{name}.py"
+            spec = importlib.util.spec_from_file_location(f"needle_v6_{name}_lineage_test", path)
+            module = importlib.util.module_from_spec(spec)
+            sys.modules[spec.name] = module
+            spec.loader.exec_module(module)
+            loaded = (module.load_legacy_runner() if name == "runner"
+                      else module.load_lineage_auditor())
+            self.assertIsNotNone(loaded)
+
+    def test_runner_generates_feedback_after_live_query_start_and_audits_calls(self):
+        tree = ast.parse(RUNNER_PATH.read_text(encoding="utf-8"))
+        fit = next(node for node in tree.body if isinstance(node, ast.FunctionDef)
+                   and node.name == "fit_arm_online")
+        calls = [node for node in ast.walk(fit) if isinstance(node, ast.Call)]
+        feedback_at = next(node.lineno for node in calls
+                           if isinstance(node.func, ast.Name) and node.func.id == "feedback_row")
+        first_call_wait_at = next(node.lineno for node in calls
+                                  if isinstance(node.func, ast.Attribute)
+                                  and node.func.attr == "wait"
+                                  and isinstance(node.func.value, ast.Name)
+                                  and node.func.value.id == "first_call_started")
+        self.assertLess(first_call_wait_at, feedback_at)
+        self.assertTrue(any(isinstance(node, ast.Name) and node.id == "online_window_errors"
+                            for node in ast.walk(fit)))
+
+    def test_auditor_requires_full_receipt_argv_and_independent_lineage(self):
+        source = AUDIT_PATH.read_text(encoding="utf-8")
+        tree = ast.parse(source)
+        self.assertIn("exact_argv_matches", source)
+        self.assertIn("docker_argv", source)
+        self.assertNotIn("runner.py\")", source)
+        self.assertIn("LEGACY_AUDIT_SHA256", source)
+        self.assertTrue(any(isinstance(node, ast.FunctionDef) and node.name == "audit_document"
+                            for node in tree.body))
+
+    def test_audit_rejects_nonexact_realized_argv(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            source_dir, output_dir = root / "src", root / "out"
+            source_dir.mkdir(); output_dir.mkdir()
+            expected = protocol.docker_argv(source_dir, output_dir)
+            mutated = list(expected) + ["--privileged"]
+            self.assertFalse(protocol.exact_argv_matches(mutated, expected))
+
+    def test_formal_launcher_has_only_one_run_call_and_requires_lease_before_it(self):
+        tree = ast.parse(FORMAL_PATH.read_text(encoding="utf-8"))
+        main = next(node for node in tree.body if isinstance(node, ast.FunctionDef)
+                    and node.name == "main")
+        calls = [node for node in ast.walk(main) if isinstance(node, ast.Call)
+                 and isinstance(node.func, ast.Attribute) and node.func.attr == "run"
+                 and isinstance(node.func.value, ast.Name)
+                 and node.func.value.id == "subprocess"]
+        formal_runs = [node for node in calls if node.args and isinstance(node.args[0], ast.Name)
+                       and node.args[0].id == "argv"]
+        self.assertEqual(len(formal_runs), 1)
+        validate_line = next(node.lineno for node in ast.walk(main) if isinstance(node, ast.Call)
+                             and isinstance(node.func, ast.Name) and node.func.id == "validate_lease")
+        self.assertLess(validate_line, formal_runs[0].lineno)
+        self.assertIn("formal_invocations\": 1", FORMAL_PATH.read_text(encoding="utf-8"))
+        self.assertNotIn("retry", ast.unparse(main).lower())
+
+    def test_launcher_rejects_absent_owner_lease_without_subprocess(self):
+        spec = importlib.util.spec_from_file_location("needle_v6_formal_preflight", FORMAL_PATH)
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[spec.name] = module
+        spec.loader.exec_module(module)
+        with self.assertRaisesRegex(SystemExit, "STOP_NO_EXPLICIT_OWNER_LEASE"):
+            module.validate_lease({}, "main", "branch", "default")
 
 
 if __name__ == "__main__":

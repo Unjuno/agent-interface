@@ -5,6 +5,8 @@ not allocate an optimizer or consume a formal seed.
 """
 from __future__ import annotations
 
+import hashlib
+import json
 from pathlib import Path
 from typing import Any
 
@@ -41,6 +43,14 @@ def docker_argv(source: Path, output: Path) -> list[str]:
 def exact_argv_matches(realized: Any, expected: list[str]) -> bool:
     """No subset/semantic-equivalence acceptance: token count and order matter."""
     return isinstance(realized, list) and all(isinstance(token, str) for token in realized) and realized == expected
+
+
+def canonical(value: Any) -> bytes:
+    return json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False).encode("utf-8")
+
+
+def sha256_bytes(value: bytes) -> str:
+    return hashlib.sha256(value).hexdigest()
 
 
 def _interval(row: Any, start: str, end: str) -> tuple[int, int] | None:

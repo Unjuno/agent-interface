@@ -22,11 +22,18 @@ does not test natural-language role recognition or product behavior.
   inference-call interval inside that request, with independent
   trainer/inference worker identities. A long query window with only before/after
   inference calls does not qualify.
+- `runner.py` creates one fresh feedback row after a dedicated inference
+  worker's first real call begins, snapshots the selected adapter, and records
+  each inference call interval while the update worker processes the row.
+- `audit.py` imports only the main-pinned predecessor raw auditor, verifies
+  source lineage and replays every inference snapshot and optimizer trajectory.
+- `formal.py` has a lease-gated, single-invocation Docker path with no retry;
+  it rejects missing or mismatched owner-comment leases before `docker run`.
 - No container invocation until coordinator/resource release is explicit.
 
 ## D — decisions
 
-Construction PASS means only that the Python contract functions accept a
+Host construction PASS means only that the Python contract functions accept a
 complete intended argv/event fixture and reject the listed mutations. It is
 not a Docker, concurrency, optimizer, adaptation-quality, latency, or scientific
 result. Formal PASS remains exactly as registered in #5081. A missing event,
@@ -38,12 +45,16 @@ failure/HOLD, never silently reinterpreted as sequential online training.
 The construction suite uses only temporary directories and synthetic event
 records. No model, optimizer, container, filesystem publication, or action
 authority is invoked. Docker argv is an exact token array rather than a shell
-string; `--entrypoint=python` explicitly fixes command interpretation.
+string; `--entrypoint=python` explicitly fixes command interpretation. The
+launcher is checked structurally and its no-lease validator is exercised; its
+formal execution path is not invoked.
 
 ## U — limits
 
 Unit fixtures validate the contract implementation, not real event provenance
-or OS process scheduling. A later formal must retain worker/process receipts,
+or OS process scheduling. The complete runner/auditor have not yet consumed a
+construction seed, run an optimizer, or been tested against a generated raw
+record. A later formal must retain worker/process receipts,
 monotonic query and update intervals, each new feedback identifier, actual
 realized argv, raw bytes and an independent auditor result. The shared Docker
 resource remains gated.
