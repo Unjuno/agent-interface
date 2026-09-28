@@ -30,6 +30,10 @@ HOLD_POSTHOC_AUDIT_MISMATCH for any unexplained content/reconstruction/gate mism
 
 The published #5198 body/report states that unsafe emissions were zero, but its retained raw has no unsafe field. This audit may preserve that earlier claim as historical context; it cannot count it as a raw-derived allocation-01 gate observation, so the safety gate remains non-evaluable from this raw artifact.
 
+## Allocation 01 execution record
+
+The sole audit-only container was launched once in Docker Desktop context `desktop-linux` using the frozen image and resource/network restrictions. Container ID `a71e18b4d343c0b2aa9aa53c966a7d1a98e78ea87944449b1dc6f0b99916fd38` was inspected immediately: image digest matched and state was exited with code 0. However, `/audit/audit.json` was absent, Docker stdout/stderr had not been redirected to a retained log, and the container was subsequently removed; a follow-up inspect therefore could not recover its mounts/state. The audit's semantic execution cannot be established from exit code alone. Formal audit invocation count is one, retries zero, and no raw reconstruction/scientific result is claimed. Disposition: `STOP_AUDIT_RECEIPT_MISSING`. Preserve the original #5198 STOP and the non-evaluable unsafe gate; this consumed audit allocation is not retried.
+
 ## C / U
 
 The audit reuses one immutable finite synthetic dataset; it adds no independent sample and does not cure the frozen auditor. Even confirmation is limited to the existing five-mode/six-cue family. No GUI, runtime, authority, safety, model quality, task effect, efficiency, cross-app, human-tempo or product claim.
