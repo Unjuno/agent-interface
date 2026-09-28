@@ -12,7 +12,8 @@ import sys
 import unittest
 
 ROOT = Path(__file__).resolve().parent
-LIVE = ROOT.parents[1] / "live_control"
+REPOSITORY = next(parent for parent in ROOT.parents if (parent / ".git").exists())
+LIVE = REPOSITORY / "research" / "live_control"
 sys.path.insert(0, str(LIVE))
 
 import integrated_efficiency_protocol_v1 as protocol  # noqa: E402

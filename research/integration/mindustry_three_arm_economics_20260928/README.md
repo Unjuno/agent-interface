@@ -4,6 +4,8 @@ This additive package is for the unmeasured six-task Mindustry economics cell
 under #57. It inherits the frozen task/order/arm/call schedule and acceptance
 rule from #1679; it does not reopen or modify #1679, #2624, or prior allocations.
 
+This branch has been fast-forwarded to current `main` `e8b4071931df81b3408a5d0a91c7607c6323c9c9`.
+
 ## H / T / D / C / U
 
 - **H:** The persistent route `cold,reuse,reuse,repair,reuse,reuse` completes
@@ -27,12 +29,22 @@ rule from #1679; it does not reopen or modify #1679, #2624, or prior allocations
 
 ## Current status
 
-No formal or live model/game allocation has run in this package. Docker has not
-been invoked for it. Shared CPU slot #5073 was released, but a named successor
-slot for #5130 is still pending arbitration. Do not treat an empty container
-inventory as authorization.
+No formal or live model/game allocation has run in this package. GitHub #5085
+still has no named slot assignment for #5130; the latest queue comment only
+requests prioritizing #5133, which does not transfer a slot to this lane. Do not
+treat an empty container inventory as authorization. No Docker build, pull, or
+inspection of an experiment image was performed.
 
-The source-only decision-contract check is synthetic and non-scientific:
+The decision-contract check is synthetic and non-scientific. It has been run
+both on the host and in a local, network-disabled Docker container using the
+already-cached `python:3.12-slim-bookworm` image (`sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e`).
+The complete repository was mounted read-only; container root was read-only,
+with 1 CPU, 512 MiB memory, 32 PIDs, all capabilities dropped, and
+`no-new-privileges`. Final result: 6/6 tests passed. The first container
+attempt mounted only test/source subdirectories and failed import (`IndexError`)
+because the expected repository path hierarchy was absent; it ran no test case
+and is retained here as a setup failure, not deleted or folded into the pass.
+The corrected read-only repository mount produced:
 
 ```powershell
 python -m unittest discover -s research/integration/mindustry_three_arm_economics_20260928 -p 'test_decision_contract.py' -v
@@ -40,8 +52,9 @@ python -m unittest discover -s research/integration/mindustry_three_arm_economic
 
 It checks the inherited evaluator's positive route, strict task-4 break-even
 boundary (including equality failing), and fail-closed task schedule, stale
-target, and repair gates. Six tests pass. This is not a model/economics result.
+target, and repair gates. This is local containerized evaluator verification,
+not construction/formal/audit under the shared allocation, and not a
+model/economics result.
 
-At this preparation checkpoint the clean local branch was fast-forwarded to
-current `main` `e8b4071931df81b3408a5d0a91c7607c6323c9c9`. Refresh main and
-recheck issue/PR/branch/path and resource arbitration before freezing any run.
+Refresh main and recheck issue/PR/branch/path and resource arbitration before
+freezing any run.
