@@ -20,6 +20,17 @@ also provides `recover_input()`; its caller owns serialization and subsequent
 application-state review. MCP retains each request/result before presenting it;
 historical `interface_results` reads never repeat recovery.
 
+Optional `target` and `region=[x,y,width,height]`, supplied together, capture that
+configured window in window-client coordinates after successful recovery, in the
+same request. Invalid capture syntax or an unknown target refuses before release.
+Failed recovery does not capture. A vanished window or capture failure after
+successful release leaves recovery committed at the new revision and retains
+both outcomes; observe separately instead of repeating recovery. Review the
+returned image before choosing input. Capture is not an acknowledgement of redraw
+or application completion, and it issues no lease. Historical result retrieval
+does not repeat either release or capture. Omitting both arguments preserves the
+release-only behavior.
+
 ## Session behavior
 
 Experimental opt-in: add `--session-mode persistent-x11` to `python -m runtime.cli_v1.mcp_server --targets targets.json --output-directory runs --display :N`. The default remains `one-shot`. Configured target names and their original transient-family roots are retained for the entire server lifetime. No observation sequence, lease or input authority is minted. The session tracks its explicit target-registration revision; it is not visual freshness authority.
