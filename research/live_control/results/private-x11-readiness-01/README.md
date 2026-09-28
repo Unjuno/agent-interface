@@ -66,13 +66,19 @@ simulation time. This is motor/feedback usability evidence, not task completion,
 human-tempo performance, a speedup or token/cost savings. Public caller-asserted
 observation/lease authority and fixed-delay semantics are unchanged.
 
-## Next integration work
+## Post-run interpretation and next integration work
 
-The missing HUD text must be diagnosed before treating this environment as a
-useful planning/task benchmark. The mismatched observation argument shapes are
+The primary initially found the lack of HUD text confusing; those review notes
+remain unchanged. Post-run source inspection shows that `render_task_cues` draws
+shape/color cues, while text is used inside source/terminal panels and at session
+end. `VALIDITY_HARDENING.md` explicitly removes cumulative progress counters from
+the visible surface. With watchers disabled, an empty top strip is therefore not
+evidence of a rendering defect. Task discoverability needs a separate real-use
+check that preserves evaluator isolation; do not restore private progress data
+merely to make this smoke easier. The mismatched observation argument shapes are
 a directly experienced authoring cost: consider a shared documented recipe or
 explicit conversion rather than silently accepting malformed core programs.
-Neither issue is fixed by this startup change. DOOM remains one domain among
+Neither usability question is resolved by this startup change. DOOM remains one domain among
 several, not the architecture's sole target.
 
 Verify retained bytes and scoped outcomes with:
