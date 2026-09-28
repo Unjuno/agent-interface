@@ -12,7 +12,7 @@ Pinned commit: `16421aefa2ec357b79e3fd3dc307b32955bc6fab`
 
 | File | SHA-256 of fetched UTF-8 bytes |
 |---|---|
-| `research/live_control/input_owner_v10.py` | `ec4d6969d4c0cae2ee0a2989455a2fe87f930d90aeb3451afd3450c7c85e9718` |
+| `research/live_control/input_owner_v10.py` | `ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b` |
 | `research/live_control/input_transition_owner_v3.py` | `5ffdbb3679451fefdc3836917d43d924f0f43c8082d21327207ecefbd87f5be6` |
 
 The standalone stdlib analyzer checks these hashes before parsing. It found owner release calls at lines 205, 219, 261, and 356, and two wrapper delegations of `_inner.call`. The assertions require exactly four classified owner calls, exactly two wrapper delegations, and exactly three autonomous cleanup calls.
