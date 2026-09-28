@@ -1,3 +1,13 @@
+## X11 resync-cut intake — 2026-09-28
+
+[Docker re-audit and compatibility mapping](../runtime/results/resync-cut-intake-01/README.md)
+reproduced the saved 2,478-check audit, all 12 effective corruption controls and
+seven policy tests without rerunning any native allocation. Shared runtime adoption
+remains HOLD: the research needs a producer-authored contiguous state sequence,
+complete snapshot cut and explicit event gap. Public/guarded capture sequences,
+motor recovery and acknowledged image references do not provide those contracts.
+No automatic resync, sensor, wait-policy or input authority was introduced.
+
 ## Reviewed-image functional pair — 2026-09-28
 
 [One primary Calc pair](../runtime/results/reviewed-image-pair-01/README.md)
@@ -793,3 +803,10 @@ with formal HOLD gates; no secure hidden-evaluator or held-out result is inferre
 #5156 proves automatic cleanup need not have a caller-side bracket, not actual
 key-up timing. #5134's macOS host filesystem result does not establish OrbStack
 bind-mount behavior. Those research results do not change this product's claims.
+
+
+## Inkscape primary-use integration check (2026-09-28)
+
+The current public persistent-X11 interface completed a fresh move-and-save task in Inkscape, seed 991359. See [retained evidence](../runtime/results/inkscape-current-primary-01/README.md): five calls, three input programs, four full reviewed images, independently checked saved SVG. No repeat allocation or input replay was used to repair the observed result.
+
+Pointer command distance and application effect distance differed (36 screen pixels requested; approximately 24 visible). Do not equate runtime completion with exact object displacement. Issues #4388/#4359/#4424 remain intake candidates requiring accessible raw evidence and condition compatibility; this self-use does not authorize a compensation formula or automatic sensor/servo. No runtime/default changes follow from this single task. Same-model matched speed, useful-feedback and semantic-completion boundaries, and actual tokens/cost remain open.
