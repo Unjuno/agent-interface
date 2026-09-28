@@ -803,3 +803,10 @@ with formal HOLD gates; no secure hidden-evaluator or held-out result is inferre
 #5156 proves automatic cleanup need not have a caller-side bracket, not actual
 key-up timing. #5134's macOS host filesystem result does not establish OrbStack
 bind-mount behavior. Those research results do not change this product's claims.
+
+
+## Inkscape primary-use integration check (2026-09-28)
+
+The current public persistent-X11 interface completed a fresh move-and-save task in Inkscape, seed 991359. See [retained evidence](../runtime/results/inkscape-current-primary-01/README.md): five calls, three input programs, four full reviewed images, independently checked saved SVG. No repeat allocation or input replay was used to repair the observed result.
+
+Pointer command distance and application effect distance differed (36 screen pixels requested; approximately 24 visible). Do not equate runtime completion with exact object displacement. Issues #4388/#4359/#4424 remain intake candidates requiring accessible raw evidence and condition compatibility; this self-use does not authorize a compensation formula or automatic sensor/servo. No runtime/default changes follow from this single task. Same-model matched speed, useful-feedback and semantic-completion boundaries, and actual tokens/cost remain open.
