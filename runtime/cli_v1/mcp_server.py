@@ -413,9 +413,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             detail=brief with compact/report_refs summarizes supported successful paced
             dispatches. This is a partial receipt; presentation.retrieve gets full data.
             Failures and unsupported results stay full. Images are unchanged.
-            report_refs requires compact=true and a v3 receipt decoder.
-            In v3, read the full report at receipt.source.raw_report in this response;
-            the report reference requires no additional tool call.
+            report_refs requires compact=true. Full v3 receipts keep the full report
+            at receipt.source.raw_report; brief receipts use report_projection and
+            require explicit retrieval for omitted detail.
             """
             return await submit('dispatch', {'program': program,
                 'current_observation_seq': current_observation_seq,

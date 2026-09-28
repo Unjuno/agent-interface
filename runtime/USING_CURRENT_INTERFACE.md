@@ -503,3 +503,18 @@ saved and visually reviewed two strings through the portable public MCP runtime,
 then independently checked the final file after close. The record includes a
 setup failure and measured preflight overhead; it does not claim faster model
 interaction or general desktop reliability.
+
+## Optional paced-dispatch summaries
+
+For supported successful public paced-text dispatches, explicitly combine
+`detail="brief"`, `compact=true` and `report_refs=true`. Images and outcome
+fields remain present; duplicated programs, validated wait details and expansion
+maps can be omitted from a marked partial receipt. Follow
+`presentation.retrieve` for the full retained report without replaying input.
+Full output remains the default, and failures or unsupported shapes stay full.
+
+[Fresh primary use](results/public-paced-brief-01/README.md) exercised both brief
+images and full retrieval. The primary detected an initial missing character in
+the returned image and made an explicit repair. This option reduces serialized
+text for eligible replies; it does not establish token savings, task success or
+faster interaction, and the retrieval itself adds a call.
