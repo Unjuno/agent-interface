@@ -147,7 +147,8 @@ python research/live_control/probe_integrated_efficiency_protocol_v1.py
 ```
 
 Latest results: adaptive route construction 8/8, arm coordinator 5/5,
-runner contract 9/9, frozen decision contract 6/6 (28/28 total), inherited
+sequence-bound dispatch 4/4, runner contract 9/9, frozen decision contract 6/6
+(32/32 total), inherited
 probe `passed=true`, positive `RETAIN`, 10 controls. An initial test run had
 one assertion-fixture mismatch (expected persistent to contain 2 tasks instead
 of 6 tasks with 2 model calls); the fixture was corrected, and the rerun passed.
@@ -176,7 +177,7 @@ The final input boundary also exposes `require_current_locator`, requiring a
 newer observation and unchanged surface/geometry immediately before caller
 input. Two host tests cover acceptance of a fresh same-binding observation and
 refusal when geometry changes after the model response. Full local suite is
-28/28; the inherited probe remains `passed=true`, `RETAIN`, 10 controls. These
+32/32; the inherited probe remains `passed=true`, `RETAIN`, 10 controls. These
 are host-only construction checks, not Docker/live/formal results.
 
 The inherited #1679 preregistration design auditor was rerun locally and
@@ -194,7 +195,11 @@ the preregistered route schedule across all three arms. It also performs a fresh
 pre-input binding check while keeping the locator explicitly non-authorizing.
 Five host tests exercise all six tasks per arm, score/reset composition,
 no-retry refusal, and final-locator freshness with synthetic observations/model
-outputs.
+outputs. `target_dispatch.py` compiles only a proposal for one palette/world
+click, and refuses if the socket clock sequence differs from the locator's
+fresh visual sequence; it does not send or admit input. Its four tests cover
+exactly one click, palette settle vs animated-world-preview behavior, invalid
+authority/task labels, and a sequence race.
 This is an integration contract only; it still does not launch the Mindustry
 socket/mod, submit pointer input, score engine state, or create/audit a formal
 trace.
