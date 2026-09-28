@@ -67,6 +67,14 @@ def expect_reject(row, stream=False):
     return False
 
 
+def expect_accept(fn):
+    try:
+        fn()
+        return True
+    except (ProtocolError, TypeError, KeyError):
+        return False
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--output", required=True)
@@ -108,7 +116,7 @@ def main():
     buttonrow.update(operation="button_up", button=1)
     cases.append(("explicit.button_up.integer", lambda: validate_receipt(buttonrow)))
 
-    outcomes = {name: bool((lambda fn: (fn(), True)[1])(fn)) for name, fn in cases}
+    outcomes = {name: expect_accept(fn) for name, fn in cases}
     bad = [name for name, accepted in outcomes.items() if not accepted]
 
     negatives = []
