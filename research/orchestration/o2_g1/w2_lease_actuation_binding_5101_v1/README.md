@@ -36,3 +36,18 @@ The frozen schema provides a scalar `actuation_id` on lineage and does not defin
 ## Frozen full-CLI counterexample
 
 [`host_cli/REPORT.md`](host_cli/REPORT.md) records a separate Windows host-CPU execution of the exact frozen W2 verifier and raw auditor CLIs against baseline and a one-field foreign lease-open actuation mutation. Both full CLIs accept the mutant; the target remains authorized with 298/302 ns bounds and raw audit errors are empty. This is stronger host reproduction than the prior function-only probe, but remains explicitly non-container/non-formal. Raw outputs and hashes are retained under `host_cli/`.
+
+## Append-only v3 candidate/auditor CLI construction
+
+`binding_gate_cli.py` creates versioned effective traces and a candidate report without changing the frozen fixture. `audit_binding_gate.py` is launched separately and reconstructs binding decisions from event rows without importing candidate code. Its negative test tampers with a candidate disposition and confirms that the raw-only auditor exits nonzero.
+
+The v3 freeze and result are `FREEZE_v3.json` and `RESULT_v3.json`; `CLI_REPORT_v3.md` summarizes the H/T/D/C/U and the four raw CLI runs. On Python 3.12.10, the retained v1, v2, and v3 suites pass 15/15. Baseline, four matched bindings, one foreign binding, and one missing binding each audit all eight cases and reconstruct 14 decision rows: 11 input-edge rows plus three `NO_INPUT_EDGE` rows. The 12 run outputs and their SHA-256 digests are retained under `cli_v3/`.
+
+Reproduce the combined suite from this directory:
+
+```powershell
+$env:W2_TRACE_FIXTURE = "fixtures/trace-cases.json"
+python -m unittest -v test_binding.py test_binding_v2.py test_binding_gate_cli.py
+```
+
+This remains host-CPU construction evidence only. It does not satisfy the separately gated Docker/formal run, and it makes no live-input, GUI, runtime-authority, or broader protocol claim.
