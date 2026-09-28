@@ -61,6 +61,16 @@ corrected self-locating test and read-only repository mount produced:
 python -m unittest discover -s research/integration/mindustry_three_arm_economics_20260928 -p 'test_decision_contract.py' -v
 ```
 
+The inherited full probe was also run on the host after syncing current main:
+
+```powershell
+python probe_integrated_efficiency_protocol_v1.py
+```
+
+Result: `passed=true`, positive disposition `RETAIN`, all 10 mutation/control
+cases rejected or held as specified. This probe is synthetic too; neither it
+nor the six unit tests supplies live task/economic evidence.
+
 It checks the inherited evaluator's positive route, strict task-4 break-even
 boundary (including equality failing), and fail-closed task schedule, stale
 target, and repair gates. This is local containerized evaluator verification,
