@@ -1,8 +1,11 @@
 # Successor #5219 — strict audit of temporal receipt evidence
 
-Allocation: `kernel-receipt-time-5215-audit-successor-20260929-01`  
-Frozen main: `d8ca8bfed9cd8d84201c91645e4ed25364181d3f`  
-Branch: `research/kernel-receipt-time-5215-audit-successor-20260929`  
+Allocation: `kernel-receipt-time-5215-audit-successor-20260929-01`
+
+Frozen main: `d8ca8bfed9cd8d84201c91645e4ed25364181d3f`
+
+Branch: `research/kernel-receipt-time-5215-audit-successor-20260929`
+
 Evidence path: `research/analysis/kernel_receipt_time_5215_audit_successor_20260929/`
 
 ## H / T / D / C / U

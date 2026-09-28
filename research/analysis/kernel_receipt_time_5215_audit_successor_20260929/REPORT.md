@@ -79,6 +79,11 @@ the actual worktree. A separate PowerShell hash command also first hit a
 brace-expansion parser error; it was corrected before the source identities
 were frozen or the audit matrix was generated.
 
+The first staged diff check flagged trailing spaces used for Markdown hard
+breaks in `PLAN.md`. Those were replaced with blank lines, the plan's manifest
+hash was refreshed, and the subsequent diff check was clean; the audit matrix
+and scientific inputs were unchanged.
+
 ## Limits / next gate
 
 One retained evidence bundle and one host only. This does not establish whether
