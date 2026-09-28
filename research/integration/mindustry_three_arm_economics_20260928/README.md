@@ -132,8 +132,12 @@ Added `runner_contract.py` and `test_runner_contract.py` as host-only building
 blocks. They load the frozen preregistration and reject arm schedule drift;
 construct the exact controller-visible task projection; encode strict boolean
 score/reset outcomes, score-before-reset, verified-reset-before-next-task, and
-exactly one A3-witness→B1-ready geometry transition. They do not start Mindustry
-or a model and are not the integrated runner/raw auditor. Local construction checks:
+exactly one A3-witness→B1-ready geometry transition. The #1679 preregistration
+uses task IDs A1…B3, while its inherited evaluator requires task-1…task-6; the
+new explicit bijection normalizes only the evaluator trace. Raw events keep the
+preregistered IDs. This source-interface mismatch was previously untested.
+They do not start Mindustry or a model and are not the integrated runner/raw
+auditor. Local construction checks:
 
 ```powershell
 python -m unittest discover -s research/integration/mindustry_three_arm_economics_20260928 -p test_runner_contract.py -v
@@ -141,7 +145,7 @@ python -m unittest discover -s research/integration/mindustry_three_arm_economic
 python research/live_control/probe_integrated_efficiency_protocol_v1.py
 ```
 
-Latest results: runner contract 7/7, frozen decision contract 6/6, inherited
+Latest results: runner contract 8/8, frozen decision contract 6/6, inherited
 probe `passed=true`, positive `RETAIN`, 10 controls. An initial test run had
 one assertion-fixture mismatch (expected persistent to contain 2 tasks instead
 of 6 tasks with 2 model calls); the fixture was corrected, and the rerun passed.

@@ -2,7 +2,8 @@
 
 import unittest
 
-from runner_contract import Lifecycle, arm_schedule, controller_envelope, load_plan
+from runner_contract import (Lifecycle, arm_schedule, controller_envelope,
+                             evaluator_task_id, load_plan)
 
 
 class RunnerContractTests(unittest.TestCase):
@@ -31,6 +32,14 @@ class RunnerContractTests(unittest.TestCase):
         self.assertEqual(set(envelope), {"task_id", "task", "layout", "benchmark_epoch"})
         self.assertEqual(envelope["task"], self.plan["task_contract"]["text"])
         self.assertEqual(envelope["benchmark_epoch"], 1)
+
+    def test_preregistered_labels_map_bijectively_to_frozen_evaluator_ids(self):
+        raw_ids = self.plan["tasks"]
+        mapped = [evaluator_task_id(self.plan, task_id) for task_id in raw_ids]
+        self.assertEqual(mapped, [f"task-{index}" for index in range(1, 7)])
+        self.assertEqual(len(set(mapped)), 6)
+        with self.assertRaisesRegex(ValueError, "unknown preregistered"):
+            evaluator_task_id(self.plan, "A4")
 
     def test_lifecycle_rejects_non_boolean_score_and_witness(self):
         run = Lifecycle(self.plan)

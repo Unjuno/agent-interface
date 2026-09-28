@@ -14,6 +14,7 @@ import json
 
 HERE = Path(__file__).resolve().parent
 PREREGISTRATION = HERE.parent / "mindustry_three_arm_economics_prereg_v1" / "PREREGISTRATION.json"
+EVALUATOR_TASK_IDS = tuple(f"task-{index}" for index in range(1, 7))
 
 
 @dataclass(frozen=True)
@@ -62,6 +63,23 @@ def controller_envelope(plan: dict, task: Task) -> dict:
         raise ValueError("controller-visible field contract differs from preregistration")
     return {"task_id": task.task_id, "task": plan["task_contract"]["text"],
             "layout": task.layout, "benchmark_epoch": task.epoch}
+
+
+def evaluator_task_id(plan: dict, preregistered_task_id: str) -> str:
+    """Map Mindustry's A1…B3 labels to the inherited evaluator's positional IDs.
+
+    Raw runtime records retain A1…B3. Only the normalized evaluator trace uses
+    task-1…task-6; this explicit bijection avoids changing the frozen evaluator.
+    """
+    tasks = plan["tasks"]
+    if tasks != ["A1", "A2", "A3", "B1", "B2", "B3"]:
+        raise ValueError("preregistered task identity/order differs")
+    if len(EVALUATOR_TASK_IDS) != len(tasks):
+        raise ValueError("evaluator task inventory differs from preregistration")
+    try:
+        return EVALUATOR_TASK_IDS[tasks.index(preregistered_task_id)]
+    except ValueError as error:
+        raise ValueError("unknown preregistered task id") from error
 
 
 class Lifecycle:
