@@ -26,10 +26,10 @@ Both direct commands exited 0 from repository root with no `PYTHONPATH` assistan
 
 | Artifact | SHA-256 |
 |---|---|
-| Feature-marginal probe source before import fix | `FA2F470E68AE561C43B561BE9D3606B99919F4F5969A630F2F5A44A3C92AFC9A` |
-| Feature-marginal probe source after import fix | `17A46B3B5298192AD8E04C8DB8151029467AE47DC6CD201D26223E6E133ABDA8` |
-| Entrypoint regression test source | `094CC12D90123342D9B828035F5290BF010167FAD7A7CA1BD82DCCAFB1DEDDE3` |
-| Joint-cell probe source | `C119067BAF68681C2E90E344B4BD0012DBA93AFA17F16AF534262FF2F4EB7F87` |
+| Feature-marginal probe source before import fix (working-tree digest; not canonical) | `FA2F470E68AE561C43B561BE9D3606B99919F4F5969A630F2F5A44A3C92AFC9A` |
+| Feature-marginal probe source after import fix (working-tree digest; not canonical) | `17A46B3B5298192AD8E04C8DB8151029467AE47DC6CD201D26223E6E133ABDA8` |
+| Entrypoint regression test source (working-tree digest; not canonical) | `094CC12D90123342D9B828035F5290BF010167FAD7A7CA1BD82DCCAFB1DEDDE3` |
+| Joint-cell probe source (working-tree digest; not canonical) | `C119067BAF68681C2E90E344B4BD0012DBA93AFA17F16AF534262FF2F4EB7F87` |
 | Marginal probe stdout | `42E3E0E353C824570C8BF71491F25AFA89F9DD30A0D48D5295EE3E79EE160A25` |
 | Joint-cell probe stdout | `57D6BE4203C8AFA8CE272E433FB7710362A47E52EC049EBD35FD0737D157E3CF` |
 | Each stderr (empty) | `E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855` |
@@ -55,3 +55,15 @@ An independent host rerun fetched the two probe source blobs by their exact GitH
 - Joint-cell probe blob `518e43988d89c46764e4bab61920311765791db6`, SHA-256 `6b45582dc4210d27e33f2ec8e24089030110f69fc0a981e7a71c41b00d0a5a17`.
 
 The prior entries `FA2F470E...` and `C119067B...` are retained above as the original erroneous record. Result semantics reproduce; those earlier digests do not attest to the current committed probe bytes. No scientific result, source code, allocation seed, or predecessor was changed.
+
+## Canonical final-HEAD source identity
+
+The source files are stored at the package evidence paths `feature-marginals-128-20260928/feature_design_probe.py`, `joint-cell-marginals-128-20260928/joint_matched_feature_probe.py`, and the package-root `test_probe_entrypoints.py`. The earlier blob correction above identifies the pre-fix marginal probe; it is not the post-fix feature script. Canonical values for the final PR HEAD `b5c125e883b656866074183cb2f04b32f2718888` are:
+
+| Artifact at final PR HEAD | Git blob | SHA-256 of canonical Git blob bytes |
+|---|---|---|
+| Feature-marginal probe after import fix | `aa13a75607c9a6dad4a95b301c9d4c202e417b98` | `E67C49099E782016CBC2707AB1270A7585E237D1941E6B071BFE20BAA218FA57` |
+| Joint-cell probe | `518e43988d89c46764e4bab61920311765791db6` | `6B45582DC4210D27E33F2EC8E24089030110F69FC0A981E7A71C41B00D0A5A17` |
+| Entrypoint regression test | `40128a980bee56e4f1180f3d249f3ac708965f97` | `094CC12D90123342D9B828035F5290BF010167FAD7A7CA1BD82DCCAFB1DEDDE3` |
+
+The independent blob-readback rerun above predates the final entrypoint-fix commit and reports 25/25 tests; the primary final-HEAD validation reported above is 27/27. These are separate runs, not contradictory counts for one run. The working-tree digest columns are retained solely as historical records and are not canonical source identities.
