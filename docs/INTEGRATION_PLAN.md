@@ -698,3 +698,29 @@ runtime/results/guarded-navigation-delay250-interrupted-01. Twelve replies and
 two saved-page reviews are not independent six-task completion evidence. No wait
 default promotion, semantic sensor, replay policy, actual token-cost or human
 speed claim follows from either result.
+
+
+### Guarded typing/wait expiry integration checkpoint
+
+The synchronous guarded X11 path now checks its existing five-second deadline
+before each new key press and while waiting. Releases remain allowed; an expired
+wait stays incomplete, retains partial effects, attempts release and stops the
+remaining tail. Default MCP post-result observation remains available. This
+integrates the bounded-input/partial-effect principle from EXPIRY_OBSERVATION;
+it does not port the research executor's input owner or passive sample policy.
+
+At c1e910ab0, 262 protocol and 118 harness checks passed. Primary seed991339 used
+the exact portable archive to enter its token, request a6000ms wait, and include
+an unexecuted suffix. The wait expired under the original deadline; the reviewed
+post-release image showed the exact prefix, followed by an explicitly chosen
+separate Save. Independent task1 exact-once success and unchanged historical
+failure were retained across six MCP calls. Five tasks were unattempted; the
+six-task oracle remains false. Evidence: runtime/results/guarded-tail-deadline-01.
+The before fake-clock reproduction, source, raw controls and113-file archive are
+retained. No runtime hard-deadline, generic speed, token-cost or human-tempo claim.
+
+Latest intake: procedural_operations_world_v0 remains a construction substrate
+with formal HOLD gates; no secure hidden-evaluator or held-out result is inferred.
+#5156 proves automatic cleanup need not have a caller-side bracket, not actual
+key-up timing. #5134's macOS host filesystem result does not establish OrbStack
+bind-mount behavior. Those research results do not change this product's claims.
