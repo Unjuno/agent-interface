@@ -2,7 +2,8 @@
 
 import unittest
 
-from adaptive_route import RouteStop, TargetBundle, route_task
+from adaptive_route import (RouteStop, TargetBundle, require_current_locator,
+                            route_task)
 
 
 def observation(sequence, geometry=(0, 24, 1280, 760)):
@@ -79,6 +80,22 @@ class AdaptiveRouteTests(unittest.TestCase):
             route_task(arm="plain", route="cold", task_id="A1", layout="A",
                 cached=None, observation=observation(1), width=1280, height=760,
                 model_call=lambda _obs: bad)
+
+    def test_final_locator_requires_fresh_same_binding_observation(self):
+        bundle = route_task(arm="persistent", route="cold", task_id="A1", layout="A",
+            cached=None, observation=observation(1), width=1280, height=760,
+            model_call=lambda _obs: candidate())["bundle"]
+        locator = require_current_locator(bundle, observation(2), "A")
+        self.assertEqual(locator["validated_sequence"], 2)
+        self.assertEqual(locator["authority"],
+                         "locator only; explicit caller action still required")
+
+    def test_final_locator_refuses_geometry_change_after_model_response(self):
+        bundle = route_task(arm="persistent", route="cold", task_id="A1", layout="A",
+            cached=None, observation=observation(1), width=1280, height=760,
+            model_call=lambda _obs: candidate())["bundle"]
+        with self.assertRaisesRegex(RouteStop, "refused before input: association_changed"):
+            require_current_locator(bundle, observation(2, (0, 24, 1216, 760)), "A")
 
 
 if __name__ == "__main__":

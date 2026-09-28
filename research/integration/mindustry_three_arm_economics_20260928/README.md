@@ -168,3 +168,17 @@ non-stale cache and failed its assertion; the fixture was corrected. The final
 adaptive-route suite passes 5/5. No controller/game/model I/O was run. This
 adapter still needs composition with the live Mindustry socket/mod and raw
 auditor before the formal path is runnable.
+
+The final input boundary also exposes `require_current_locator`, requiring a
+newer observation and unchanged surface/geometry immediately before caller
+input. Two host tests cover acceptance of a fresh same-binding observation and
+refusal when geometry changes after the model response. Full local suite is
+22/22; the inherited probe remains `passed=true`, `RETAIN`, 10 controls. These
+are host-only construction checks, not Docker/live/formal results.
+
+Policy incident (2026-09-28 JST): one read-only `docker ps --format ...`
+inspection was mistakenly issued before the named #5130 lease, despite the
+issue's explicit no-inspection gate. It returned no rows; no container was
+started, built, pulled, or altered. This was an unallocated Docker inspection,
+not authorization. It is disclosed in the PR conversation; no further Docker
+commands will be issued until an exact named coordinator lease is recorded.

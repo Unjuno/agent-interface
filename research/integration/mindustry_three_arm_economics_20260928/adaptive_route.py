@@ -80,6 +80,19 @@ def revalidate_bundle(bundle: TargetBundle, observation: dict,
     return True, "revalidated"
 
 
+def require_current_locator(bundle: TargetBundle, observation: dict,
+                            layout: str) -> dict:
+    """Final no-authority check required immediately before each target click."""
+    eligible, reason = revalidate_bundle(bundle, observation, layout)
+    if not eligible:
+        raise RouteStop("target locator refused before input: " + reason)
+    return {"palette_point": list(bundle.palette_point),
+            "target_point": list(bundle.target_point),
+            "source_sequence": bundle.source_sequence,
+            "validated_sequence": observation["sequence"],
+            "authority": "locator only; explicit caller action still required"}
+
+
 def route_task(*, arm: str, route: str, task_id: str, layout: str,
                cached: TargetBundle | None, observation: dict, width: int,
                height: int, model_call) -> dict:
