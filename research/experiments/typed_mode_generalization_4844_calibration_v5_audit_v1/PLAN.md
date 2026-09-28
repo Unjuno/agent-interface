@@ -28,6 +28,8 @@ HOLD_POSTHOC_GATE_NOT_EVALUABLE if raw reconstruction and integrity controls pas
 
 HOLD_POSTHOC_AUDIT_MISMATCH for any unexplained content/reconstruction/gate mismatch. STOP_AUDIT_PROVENANCE_OR_INFRASTRUCTURE for raw/source/image/command/exit/receipt failure. No retry.
 
+The published #5198 body/report states that unsafe emissions were zero, but its retained raw has no unsafe field. This audit may preserve that earlier claim as historical context; it cannot count it as a raw-derived allocation-01 gate observation, so the safety gate remains non-evaluable from this raw artifact.
+
 ## C / U
 
 The audit reuses one immutable finite synthetic dataset; it adds no independent sample and does not cure the frozen auditor. Even confirmation is limited to the existing five-mode/six-cue family. No GUI, runtime, authority, safety, model quality, task effect, efficiency, cross-app, human-tempo or product claim.
