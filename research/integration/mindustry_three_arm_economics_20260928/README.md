@@ -125,3 +125,25 @@ result.
 
 Refresh main and recheck issue/PR/branch/path and resource arbitration before
 freezing any run.
+
+## Local runner construction progress (2026-09-28)
+
+Added `runner_contract.py` and `test_runner_contract.py` as host-only building
+blocks. They load the frozen preregistration and reject arm schedule drift;
+encode score-before-reset, verified-reset-before-next-task, and exactly one
+A3-witness→B1-ready geometry transition. They do not start Mindustry or a model
+and are not the integrated runner/raw auditor. Local construction checks:
+
+```powershell
+python -m unittest discover -s research/integration/mindustry_three_arm_economics_20260928 -p test_runner_contract.py -v
+python -m unittest discover -s research/integration/mindustry_three_arm_economics_20260928 -p test_decision_contract.py -v
+python research/live_control/probe_integrated_efficiency_protocol_v1.py
+```
+
+Latest results: runner contract 5/5, frozen decision contract 6/6, inherited
+probe `passed=true`, positive `RETAIN`, 10 controls. An initial test run had
+one assertion-fixture mismatch (expected persistent to contain 2 tasks instead
+of 6 tasks with 2 model calls); the fixture was corrected, and the rerun passed.
+These are host-only construction results, not Docker, live, formal, or
+economic evidence. No Docker command or GitHub Actions workflow was used for
+this construction check. The formal Docker allocation remains unassigned.
