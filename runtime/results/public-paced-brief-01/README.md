@@ -43,3 +43,9 @@ hash-pinned. CI is checked separately on the final PR.
 
 Run python3 -O runtime/results/public-paced-brief-01/verify.py for retained
 integrity and exact live projection/retrieval checks without executing input.
+
+CI correction: the first remote native run failed because its sparse checkout
+excludes runtime/results, where the new unit fixture was originally read.
+ci-first.log.gz retains that log. The exact text fixture is now copied beside
+the tests under runtime/cli_v1/fixtures; production projection/input code is
+unchanged. This corrects test packaging, not the retained first-character loss.

@@ -7,10 +7,10 @@ from unittest.mock import patch
 from runtime.cli_v1.public_presentation import brief_public_report
 from runtime.cli_v1.receipt_references import expand_receipt
 
-ROOT = Path(__file__).resolve().parents[2]
 def fixture():
-    reply = json.loads((ROOT / 'runtime/results/paced-brief-intake-01/reply-2.json').read_text())
-    return json.loads(next(c['text'] for c in reply['result']['content'] if c['type'] == 'text'))
+    # Exact text view from retained paced-brief-intake-01 reply 2. Keep the
+    # fixture beside tests so sparse CI does not depend on research results.
+    return json.loads((Path(__file__).parent / 'fixtures/paced_dispatch_review.json').read_text())
 
 class PublicBriefTests(unittest.TestCase):
     def test_normal_paced_projection_preserves_decision_fields_and_input(self):
