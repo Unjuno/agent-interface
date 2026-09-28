@@ -518,3 +518,25 @@ images and full retrieval. The primary detected an initial missing character in
 the returned image and made an explicit repair. This option reduces serialized
 text for eligible replies; it does not establish token savings, task success or
 faster interaction, and the retrieval itself adds a call.
+
+## Clicking a field before entering text
+
+Treat field activation and text entry as separate decisions when the recipient is
+uncertain. Click the field using current geometry, inspect useful feedback, then
+enter and review the value before saving or submitting it. A screenshot without
+visible recipient evidence does not establish that the field is ready. If the
+application offers no useful readiness evidence, that uncertainty remains.
+
+A single click/text batch can outrun the application's handling of the click.
+`focus` verifies an X11 window ancestry, not the application-internal editor;
+`wait_update` is an explicit fixed delay, not a ready acknowledgement. Existing
+integration tests use a 50 ms post-click wait, but that is not a universal safe
+threshold and the runtime does not insert it automatically. Paced text gaps are
+between characters and do not settle the click before the first character.
+
+[Retained click-recipe intake](results/click-readiness-intake-01/README.md)
+verified that the earlier successful click study included cooperative app turns
+between activation and text. Its results therefore do not validate removing those
+boundaries. The [public primary trial](results/public-paced-brief-01/README.md)
+retains a missing first character, visual detection and an explicit repair.
+Do not replay an uncertain whole input program to recover a missing prefix.
