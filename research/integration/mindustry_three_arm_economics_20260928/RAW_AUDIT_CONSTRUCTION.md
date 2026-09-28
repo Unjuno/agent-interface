@@ -61,6 +61,7 @@ not change the immutable v2 raw artifact or elevate its
 The follow-on host-channel composition rung is documented in
 [`RAW_LIFECYCLE_ADAPTER_CONSTRUCTION.md`](RAW_LIFECYCLE_ADAPTER_CONSTRUCTION.md).
 It joins fake-mod file-channel lifecycle receipts to the raw v2 fixture and
-independently audits 18 resets plus 3 geometry transitions. The complete
-package is now 86/86 locally; this does not elevate the synthetic result or
-authorize the still-gated Docker/live run.
+independently audits 18 resets plus 3 geometry transitions. The latest capture
+also composes all three `ArmCoordinator` route schedules and fresh locator
+checks. The complete package is now 86/86 locally; this does not elevate the
+synthetic result or authorize the still-gated Docker/live run.

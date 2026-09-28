@@ -372,13 +372,15 @@ The host private filesystem channel now exports strict-monotonic task-start,
 score, reset-request, and reset-witness timestamps plus full private reset
 snapshots and A3→B1 geometry bindings. `raw_lifecycle_adapter.py` joins those
 records to each arm's task-level raw events without synthesizing or repairing
-timestamps. Three six-task fake-mod handshakes compose into the v2 independent
-raw auditor. Retained output and H/T/D/C/U are in
+timestamps. Three six-task fake-mod handshakes compose with `ArmCoordinator`
+route selection and fresh locator checks into the v2 independent raw auditor.
+Retained output and H/T/D/C/U are in
 [`RAW_LIFECYCLE_ADAPTER_CONSTRUCTION.md`](RAW_LIFECYCLE_ADAPTER_CONSTRUCTION.md)
-and `construction/raw_lifecycle_adapter_20260929_02/`: raw SHA-256
-`41ad2bc738021e9a66c8e9aea1e15cfb3af56a1a54890ed80b317da79f8b08b3`,
+and `construction/raw_lifecycle_adapter_20260929_03/`: raw SHA-256
+`7ba248560ad0b837a7c47cc07fa76c2de9c6b4873da30360c40a6864713a9a24`,
 `PASS_CONSTRUCTION_ONLY`, hypothetical `RETAIN`/task-2 break-even, 18 reset
-projections, 3 geometry transitions. Complete host suite is now 86/86. This
-exercises the Python file channel against a fake marker writer only—not the Java
-mod, Mindustry, model, socket, or task inputs. No Docker was used because the
-#5130/#5085 container assignment/release gate remains in force.
+projections, 3 geometry transitions. The persistent fake arm dispatches two
+model callbacks while both controls dispatch six. The complete host suite is
+86/86. No Java mod, Mindustry, real model, socket, or real task input was used.
+No Docker was used because the #5130/#5085 container assignment/release gate
+remains in force.

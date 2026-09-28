@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import argparse
 from pathlib import Path
 import sys
 import tempfile
@@ -15,7 +16,13 @@ from test_private_benchmark_channel import assemble_raw_from_private_channels  #
 
 
 def main() -> int:
-    output = HERE / "construction" / "raw_lifecycle_adapter_20260929_02"
+    parser = argparse.ArgumentParser()
+    parser.add_argument("capture_name",
+        help="new immutable capture directory name under construction/")
+    capture_name = parser.parse_args().capture_name
+    if not capture_name or Path(capture_name).name != capture_name:
+        parser.error("capture_name must be a directory basename")
+    output = HERE / "construction" / capture_name
     output.mkdir(parents=True, exist_ok=False)
     with tempfile.TemporaryDirectory() as temp:
         raw = assemble_raw_from_private_channels(Path(temp))

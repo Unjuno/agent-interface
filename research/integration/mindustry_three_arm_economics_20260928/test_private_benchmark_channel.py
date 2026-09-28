@@ -10,6 +10,7 @@ import unittest
 
 from private_benchmark_channel import (PrivateBenchmarkChannel,
                                        PrivateProtocolStop)
+from arm_coordinator import ArmCoordinator
 from raw_lifecycle_adapter import attach_private_lifecycle
 from raw_allocation_audit_v2 import RawAuditError, reconstruct as reconstruct_v2
 from test_raw_allocation_audit_v2 import raw_v2
@@ -70,12 +71,38 @@ def run_complete_fake_channel(root: Path, arm: str) -> dict:
     worker = threading.Thread(target=mod_side, daemon=True)
     worker.start()
     channel.await_initial_ready()
+    coordinator = ArmCoordinator(arm)
+    model_sequences = []
     for epoch, task_id in enumerate(("A1", "A2", "A3", "B1", "B2", "B3"), 1):
+        layout = "A" if epoch <= 3 else "B"
+        width = 1280 if layout == "A" else 1216
+        source = {"sequence": epoch * 10,
+            "pointer_binding": {"surface": 91,
+                "geometry": [0, 24, width, 760]}}
+        def model_call(_observation):
+            model_sequences.append(epoch)
+            return {"op": "target_reference",
+                "point_space": "source_observation_pixels",
+                "points": [{"x": 150, "y": 220}, {"x": 640, "y": 410}],
+                "motion_model": "surface_origin_translation",
+                "confidence_basis": "visually_unambiguous"}
+        routed = coordinator.resolve(source, width, 760,
+            [{"row": 0, "column": 0, "point": [150, 220]}], model_call)
+        locator_observation = {"sequence": epoch * 10 + 1,
+            "pointer_binding": source["pointer_binding"]}
+        locator = coordinator.locator_for_input(locator_observation, layout)
+        if locator["validated_sequence"] != epoch * 10 + 1:
+            raise AssertionError("coordinator did not bind a fresh locator")
+        if routed["task"].task_id != task_id:
+            raise AssertionError("coordinator task differs from private epoch")
         channel.request_checkpoint()
         # The synthetic raw task events carry millisecond-scale offsets; leave
         # an explicit host interval before the independent score timestamp.
         time.sleep(0.01)
+        coordinator.score(True)
         channel.complete_task(task_id, evaluation())
+        coordinator.reset(True)
+        coordinator.advance()
         if epoch == 3:
             channel.release_geometry_transition(
                 {"surface": 91, "geometry": [0, 24, 1280, 760]},
@@ -83,6 +110,11 @@ def run_complete_fake_channel(root: Path, arm: str) -> dict:
     worker.join(timeout=2)
     if worker.is_alive():
         raise TimeoutError("fake private mod did not complete the six-task handshake")
+    expected_calls = 6 if arm in {"plain", "ephemeral"} else 2
+    if len(model_sequences) != expected_calls:
+        raise AssertionError("coordinator model-call count differs from frozen arm")
+    if coordinator.lifecycle.phase != "complete":
+        raise AssertionError("coordinator did not complete the frozen arm")
     return channel.raw_lifecycle_events(arm)
 
 
