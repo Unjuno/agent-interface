@@ -94,10 +94,17 @@ def summarize(directory):
         elif kind == 'review_recorded':
             require(active is None and not call['reviews'], 'overlapping or duplicate review')
             receipt = json.loads(read(f'review-{attempt}.json'))
-            require(receipt.get('schema') == 'agent-interface/primary-review-receipt-v1' and
+            review_schema = receipt.get('schema')
+            require(review_schema in (
+                        'agent-interface/primary-review-receipt-v1',
+                        'agent-interface/primary-review-receipt-v2-public-capture') and
                     all(receipt.get(k) == event.get(k) for k in
                         ('reply_sha256', 'call_id', 'source_sequence', 'task', 'phase')),
                     'review receipt identity')
+            if review_schema == 'agent-interface/primary-review-receipt-v2-public-capture':
+                require('source_sequence' in receipt and receipt['source_sequence'] is None and
+                        'source_sequence' in event and event['source_sequence'] is None,
+                        'public review cannot assert a source sequence')
             # This binds the declaration, not its semantic truth or model ingestion.
             call['reviews'].append({'recorded_ms': stamp, 'task': event.get('task'),
                                     'phase': event.get('phase'),
