@@ -336,3 +336,18 @@ In guarded-x11 mode, interface_guarded_mint_many accepts one source_sequence and
 Successful entries return alias/offset pairs under minted. Registration is sequential and not atomic. If minting raises, the reply retains earlier successes, identifies failed_index and failed_alias with failed_alias_state="unknown", and lists unattempted_aliases. Registration may have occurred before a persistence failure, so do not replay the batch or reuse the failed alias. Inspect the outcome and explicitly choose fresh references if needed. Full retained results remain available without reminting.
 
 This transport option reduces the number of registration requests for a supplied group by construction. It does not establish lower model latency, token cost, or generic task completion; primary GUI validation and matched measurement are separate requirements.
+
+### Optional local observation references
+
+Guarded observe/input and interface_results accept observation_refs=true (default
+false). Exact duplicate observation_report.observation metadata may become
+`{"observation_ref":"/source/native"}`. The complete source.native remains in the
+same response; only the path explicitly listed in observation_references is a
+reference. Other reference-shaped values are literal. Images and raw reports are
+unchanged, and the option never captures or sends input itself.
+
+Use runtime.cli_v1.receipt_references.expand_guarded_observation to reconstruct
+the view, or request the retained call with observation_refs=false. To retrieve
+all guard detail too, use detail="full". Combining this lossless reference layer
+with detail="brief" does not make brief guard summaries lossless. Refused and
+persistence-failed replies remain literal; small/nonduplicate reports do too.
