@@ -29,6 +29,30 @@ Requests are persisted before pipe submission. Raw replies are persisted before 
 
 Call `await client.close()` only after requests settle. This closes transport stdin and waits for transport exit; it does not send finish or certify GUI cleanup. Managed sessions still require explicit finish or opt-in native_stop as appropriate. A hung child may keep close pending. Returned content is not compacted further: existing Python receipt projection remains responsible for lossless references, and the full raw response remains authoritative.
 
-Validation: `node --test research/live_control/test_native_relay_client_v1.mjs`. Six process-backed tests exercise interrupted waiting, single submission, exact text/image forwarding, request snapshotting, refusal-ID reuse without evidence overwrite, process loss, response mismatch, directory reuse and invalid JSON values. Windows Node's test CLI did not resolve the WSL UNC test path here; copying the two exact source files into a fresh Windows temp directory passed. The native CI workflow also runs the tests with Node 22 on Linux.
+Validation: `node --test research/live_control/test_native_relay_client_v1.mjs`. Eight tests exercise interrupted waiting, single submission, exact text/image forwarding, request snapshotting, refusal-ID reuse without evidence overwrite, process loss, response mismatch, directory reuse and invalid JSON values. Windows Node's test CLI did not resolve the WSL UNC test path here; copying the two exact source files into a fresh Windows temp directory passed. The native CI workflow also runs the tests with Node 22 on Linux.
 
 Local real-MCP checks on 2026-09-28: list_tools then native_stop on an unstarted managed allocation returned not_started, with relay exit 0; no GUI allocation was created. A separate read-only attachment retrieved stage 6 from native-node-relay-02 and presented its retained 835/780 Calc image alongside the unchanged text, then exited 0. Records are in results-local/native-node-client-contract-01-evidence and results-local/native-node-client-retained-image-01. This is a transport integration check, not a new task benchmark or token/latency comparison. The preceding live self-use is retained in runtime/results/native-node-relay-01.
+## Explicit review attribution
+
+For public guarded responses, record the review only after viewing its image:
+
+```js
+await recordRelayReview({
+  replyPath: '/absolute/transport/reply-21.json',
+  receiptPath: '/absolute/fresh-review-21.json',
+  task: 'task-4', phase: 'entered', reason: 'Caller reviewed the entered value.'
+});
+```
+
+Import `recordRelayReview` from `native_relay_client_v1.mjs`. Use the exact reply
+file selected for this review, never a mutable latest-source variable. The helper
+records retained reply, image, call and source identity; it does not view the
+image or certify semantic correctness. Existing receipts cannot be overwritten.
+Missing images, ambiguous sourced reports and uncertain transport results refuse.
+No receipt is automatically created when a response arrives.
+
+The relay can launch the public server with `--server-kind public` and optional
+`--runtime-archive /absolute/runtime.pyz`, followed by `--` and public server
+arguments. Default native mode is unchanged. Select `--session-mode guarded-x11`
+explicitly for the scoped tools. A terminated WSL session cannot reuse its old
+aliases or connection; preserve it and allocate a fresh trial.

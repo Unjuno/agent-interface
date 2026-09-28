@@ -71,7 +71,7 @@ def present_management_report(report, call_root):
 
 
 def create_server(targets, output_directory, *, display_name=None, session_mode="one-shot"):
-    if session_mode not in ("one-shot", "persistent-x11"):
+    if session_mode not in ("one-shot", "persistent-x11", "guarded-x11"):
         raise ValueError("unknown session mode")
     if (not isinstance(targets, dict) or not targets or
             any(not isinstance(k, str) or not k or type(v) is not int or v <= 0
@@ -85,6 +85,10 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
     calls = {}
     calls_lock = threading.Lock()
     owner = MCPSessionOwner(targets, display_name) if session_mode == 'persistent-x11' else None
+    guarded = session_mode == 'guarded-x11'
+    if guarded:
+        from .mcp_guarded import GuardedSessionOwner
+        owner = GuardedSessionOwner(targets, root, display_name)
     shutting_down = False
 
     def close_owner():
@@ -110,11 +114,14 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
     server = FastMCP('Agent Interface public API', lifespan=lifespan, instructions=(
         'Configured target names: ' + json.dumps(sorted(targets)) + '. ' +
         ('Each call owns one backend session. ' if owner is None else
+         'One guarded X11 connection remains until close or transport shutdown; no reopen. ' if guarded else
          'One X11 connection is retained until interface_close or transport shutdown; no automatic reopen. '
          'Use session.binding_revision (initially 1) for dispatch. Explicit target review advances it. ') +
-        'No source/lease is issued by this server. '
-        'Caller supplies current observation and binding values. Inspect action, image and cleanup '
-        'outcomes separately. Never replay an uncertain action automatically.'))
+        ('Guarded mode provides bridge source sequences and internally bounded guarded input; '
+         'one explicit target, image-grounded aliases, no automatic replay. ' if guarded else
+         'No source/lease is issued by this server. ') +
+        'Inspect action, image and cleanup outcomes separately. '
+        'Never replay an uncertain action automatically.'))
 
     def invoke(operation, kwargs, compact, report_refs):
         call_id = None
@@ -149,6 +156,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             try:
                 if operation == 'close':
                     report = close_owner()
+                elif operation.startswith('guarded_'):
+                    report = owner.invoke_guarded(operation, kwargs, call_root)
                 elif operation in ('inspect_target', 'review_target'):
                     try:
                         review_options = dict(kwargs)
@@ -182,6 +191,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 if owner is not None and owner.state == 'failed' and owner.session is None:
                     report.update(status='backend_unavailable', failure_phase='session_initialization',
                                   operation_invoked=False, input_dispatched=False, effect_status='none')
+            if operation.startswith('guarded_'):
+                report.setdefault('replay_allowed', False)
+                report.setdefault('task_success', None)
             if owner is not None:
                 report['session'] = owner.snapshot()
             try:
@@ -191,7 +203,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 persistence_error = repr(error)
                 with calls_lock:
                     calls[call_id]['persistence_failure'] = 'report'
-            result = (present_management_report(report, call_root) if operation in ('close', 'inspect_target', 'review_target') else
+            result = (present_management_report(report, call_root) if (operation.startswith('guarded_') or operation in ('close', 'inspect_target', 'review_target')) else
                       present_result(report, call_root, compact=compact, report_refs=report_refs))
             if owner is not None:
                 result['session'] = owner.snapshot()
@@ -201,8 +213,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 result['persistence_error'] = persistence_error
                 result['replay_allowed'] = False
             return content(result, error=persistence_error is not None or (
-                operation in ('close', 'inspect_target', 'review_target') and
-                (report.get('error') is not None or report.get('status') == 'cleanup_failed')))
+                (operation.startswith('guarded_') or operation in ('close', 'inspect_target', 'review_target')) and
+                (report.get('error') is not None or report.get('status') in ('cleanup_failed','refused','needs_review')
+                 or report.get('feedback_status') == 'observation_failed')))
         finally:
             if call_id is not None:
                 with calls_lock:
@@ -230,7 +243,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         # A cancelled transport must not cancel a queued worker and strand its lock.
         return await asyncio.shield(worker)
 
-    if owner is not None:
+    if owner is not None and not guarded:
         @server.tool()
         async def interface_inspect_target(target: StrictStr,
                                            screen_region: list[StrictInt] | None = None) -> CallToolResult:
@@ -261,6 +274,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                                                  'review_id': review_id,
                                                  'screen_region': screen_region}, False, False)
 
+    if owner is not None:
         @server.tool()
         async def interface_close() -> CallToolResult:
             """Close this owned connection, retaining cleanup evidence; never reopen.
@@ -289,40 +303,44 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                    'backend_checked': False, 'task_success': None}
         return content(row, error=row['static_valid'] is not True)
 
-    @server.tool()
-    async def interface_observe(target: StrictStr, frame: Literal['window_client', 'screen_physical_px'],
-                          region: list[StrictInt], compact: StrictBool = False, report_refs: StrictBool = False) -> CallToolResult:
-        """Capture once without input; return receipt and native image block.
+    if guarded:
+        from .mcp_guarded import register_guarded_tools
+        register_guarded_tools(server, submit)
+    else:
+        @server.tool()
+        async def interface_observe(target: StrictStr, frame: Literal['window_client', 'screen_physical_px'],
+                              region: list[StrictInt], compact: StrictBool = False, report_refs: StrictBool = False) -> CallToolResult:
+            """Capture once without input; return receipt and native image block.
 
-        Region is [x, y, width, height]. On X11, window_client coordinates are
-        relative to the target client; overlapping dialogs may be absent or black.
-        screen_physical_px coordinates are relative to the display and include
-        other visible windows in that region. Choose an explicit screen region
-        when an overlapping dialog is needed to interpret the target's state.
-        A capture is not a redraw or task-completion acknowledgement.
-        report_refs requires compact=true and a v3 receipt decoder.
-        In v3, read the full report at receipt.source.raw_report in this response;
-        the report reference requires no additional tool call.
-        """
-        return await submit('observe', {'target': target, 'frame': frame, 'region': region}, compact, report_refs)
+            Region is [x, y, width, height]. On X11, window_client coordinates are
+            relative to the target client; overlapping dialogs may be absent or black.
+            screen_physical_px coordinates are relative to the display and include
+            other visible windows in that region. Choose an explicit screen region
+            when an overlapping dialog is needed to interpret the target's state.
+            A capture is not a redraw or task-completion acknowledgement.
+            report_refs requires compact=true and a v3 receipt decoder.
+            In v3, read the full report at receipt.source.raw_report in this response;
+            the report reference requires no additional tool call.
+            """
+            return await submit('observe', {'target': target, 'frame': frame, 'region': region}, compact, report_refs)
 
-    @server.tool()
-    async def interface_dispatch(program: PublicProgram, current_observation_seq: StrictInt,
-                           current_binding_revision: StrictInt,
-                           compact: StrictBool = False, report_refs: StrictBool = False) -> CallToolResult:
-        """Dispatch once through core admission. Include observe for an image; no implicit replay.
+        @server.tool()
+        async def interface_dispatch(program: PublicProgram, current_observation_seq: StrictInt,
+                               current_binding_revision: StrictInt,
+                               compact: StrictBool = False, report_refs: StrictBool = False) -> CallToolResult:
+            """Dispatch once through core admission. Include observe for an image; no implicit replay.
 
-        Observation sequence is a caller assertion, not server-issued freshness.
-        Persistent mode requires session.binding_revision (initially 1); review
-        advances it. One-shot binding values remain caller assertions.
-        A returned image may precede redraw. Release and cleanup failures remain visible.
-        report_refs requires compact=true and a v3 receipt decoder.
-        In v3, read the full report at receipt.source.raw_report in this response;
-        the report reference requires no additional tool call.
-        """
-        return await submit('dispatch', {'program': program,
-            'current_observation_seq': current_observation_seq,
-            'current_binding_revision': current_binding_revision}, compact, report_refs)
+            Observation sequence is a caller assertion, not server-issued freshness.
+            Persistent mode requires session.binding_revision (initially 1); review
+            advances it. One-shot binding values remain caller assertions.
+            A returned image may precede redraw. Release and cleanup failures remain visible.
+            report_refs requires compact=true and a v3 receipt decoder.
+            In v3, read the full report at receipt.source.raw_report in this response;
+            the report reference requires no additional tool call.
+            """
+            return await submit('dispatch', {'program': program,
+                'current_observation_seq': current_observation_seq,
+                'current_binding_revision': current_binding_revision}, compact, report_refs)
 
     @server.tool()
     async def interface_results(call_id: StrictStr | None = None,
@@ -377,7 +395,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             return content({'status': 'receipt_unavailable', 'call': record,
                 'error': repr(error), 'operation_invoked': False,
                 'replay_allowed': False}, error=True)
-        result = (await asyncio.to_thread(present_management_report, report, call_root) if record['operation'] in ('close', 'inspect_target', 'review_target') else
+        result = (await asyncio.to_thread(present_management_report, report, call_root) if (record['operation'].startswith('guarded_') or record['operation'] in ('close', 'inspect_target', 'review_target')) else
                   await asyncio.to_thread(present_result, report, call_root, compact=compact, report_refs=report_refs))
         result.update(call_id=call_id, call_directory=str(call_root), retained_call=record,
                       operation_invoked=False)
@@ -391,7 +409,7 @@ def main():
     parser.add_argument('--targets', type=Path, required=True)
     parser.add_argument('--output-directory', type=Path, required=True)
     parser.add_argument('--display')
-    parser.add_argument('--session-mode', choices=('one-shot', 'persistent-x11'), default='one-shot')
+    parser.add_argument('--session-mode', choices=('one-shot', 'persistent-x11', 'guarded-x11'), default='one-shot')
     args = parser.parse_args()
     create_server(json.loads(args.targets.read_text(encoding='utf-8')),
                   args.output_directory, display_name=args.display, session_mode=args.session_mode).run(transport='stdio')
