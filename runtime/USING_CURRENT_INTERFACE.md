@@ -489,3 +489,17 @@ one functional example, not evidence of faster operation than dragging. A
 [preceding drag](results/inkscape-current-primary-01/README.md) had different
 success criteria and showed that pointer distance did not equal object distance.
 Neither recipe implies automatic geometry verification or a universal motor gain.
+
+## Keyboard layout changes in persistent X11 sessions
+
+The X11 backend refreshes queued keyboard mapping changes before programs with
+keyboard operations. Underscore follows the current supported keymap level;
+held keys retain their original physical code for release. This does not cover
+arbitrary layouts, IMEs or mapping changes during a program. Review the returned
+text image and saved outcome when correctness matters.
+
+[Primary same-session JP-to-US use](results/keymap-primary-use-01/README.md)
+saved and visually reviewed two strings through the portable public MCP runtime,
+then independently checked the final file after close. The record includes a
+setup failure and measured preflight overhead; it does not claim faster model
+interaction or general desktop reliability.

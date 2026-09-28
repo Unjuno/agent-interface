@@ -65,7 +65,7 @@ class X11Backend:
             permissions=("x11-display-access",),
         )
         row["capabilities"]["input.text"]["detail"] = "strict ASCII letters/digits/space/._- plus layout-checked :/"
-        row["capabilities"]["event.feedback"]["detail"] = "wait_update is a fixed delay; verify is a no-op; neither proves redraw or task effect"
+        row["capabilities"]["event.feedback"]["detail"] = "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
         row["capabilities"][WINDOW_ACTIVATE]["detail"] = "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
         return validate_backend_manifest(row)
 
@@ -203,7 +203,11 @@ class X11Backend:
         return code
 
     def key_state(self, key: str, down: bool) -> None:
-        code = self._keycode(key)
+        # Release/repeat the physical key originally pressed even if the
+        # logical mapping changed while it was held.
+        code = self.held_keycodes.get(key)
+        if code is None:
+            code = self._keycode(key)
         if down:
             self.held_keycodes[key] = code
         xtest.fake_input(self.d, X.KeyPress if down else X.KeyRelease, code)
@@ -218,8 +222,20 @@ class X11Backend:
         for key in reversed(keys):
             self.key_state(key, False)
 
+    def _refresh_keyboard_mapping(self) -> None:
+        # This connection does not subscribe to window event streams. Consume
+        # its queued mapping notifications after a server barrier, before
+        # resolving keysyms for the next program.
+        self.d.sync()
+        for _ in range(self.d.pending_events()):
+            event = self.d.next_event()
+            if event.type == X.MappingNotify:
+                self.d.refresh_keyboard_mapping(event)
+
     def preflight(self, program: dict[str, Any]) -> None:
         """Validate X11-specific constraints before the first physical emission."""
+        if any(op["op"] in {"text", "key_chord", "key_state"} for op in program["ops"]):
+            self._refresh_keyboard_mapping()
         focused = False
         for op in program["ops"]:
             kind = op["op"]
@@ -242,7 +258,7 @@ class X11Backend:
 
     def _text_plan(self, value: str) -> list[list[str]]:
         plan = []
-        symbols = {":": "colon", "/": "slash", "=": "equal", "*": "asterisk"}
+        symbols = {":": "colon", "/": "slash", "=": "equal", "*": "asterisk", "_": "underscore"}
         for ch in value:
             if ch in symbols:
                 # Resolve the symbol from the live map. Do not assume a US
@@ -260,11 +276,11 @@ class X11Backend:
                     self._keycode(key)
                 plan.append(keys)
                 continue
-            if not (ch.isascii() and (ch.isalpha() or ch.isdigit() or ch in ".-_")):
+            if not (ch.isascii() and (ch.isalpha() or ch.isdigit() or ch in ".-")):
                 if ch != " ":
                     raise X11BackendError(f"unsupported text character U+{ord(ch):04X}")
-            if ch in {" ", ".", "-", "_"}:
-                keys = {" ": ["SPACE"], ".": ["period"], "-": ["minus"], "_": ["SHIFT", "minus"]}[ch]
+            if ch in {" ", ".", "-"}:
+                keys = {" ": ["SPACE"], ".": ["period"], "-": ["minus"]}[ch]
             elif ch.isupper():
                 keys = ["SHIFT", ch.lower()]
             else:
