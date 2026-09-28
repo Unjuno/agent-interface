@@ -235,7 +235,7 @@ def validate_reader_trace_rows(rows, reader_index, pid, ready_ns):
     return errors
 
 
-def audit_raw(raw, seed_raw, seed):
+def audit_raw(raw, seed_raw, seed, raw_root=Path("/raw")):
     errors = []
     if not isinstance(raw, dict):
         return ["raw_not_object"], {}, {"atomic_overlap_count": 0, "atomic_overlap_pids": []}
@@ -358,14 +358,14 @@ def audit_raw(raw, seed_raw, seed):
             expected_relative = f"reads/{name}-{reader_index}.jsonl"
             if relative != expected_relative:
                 errors.append(name + "_reader_log_path_mismatch")
-            path = Path("/out") / relative if isinstance(relative, str) else None
+            path = Path(raw_root) / relative if isinstance(relative, str) else None
             if (not isinstance(summary, dict) or summary.get("reader_index") != reader_index or
                     summary.get("pid") != pid or summary.get("error") is not None or
                     summary.get("limit_hit") is not False):
                 errors.append(name + "_reader_summary")
             count = 0
             if (path is None or not path.is_file() or
-                    path.resolve().parent != (Path("/out") / "reads").resolve()):
+                    path.resolve().parent != (Path(raw_root) / "reads").resolve()):
                 errors.append(name + "_reader_log_missing")
                 continue
             try:
@@ -473,11 +473,12 @@ def audit_raw(raw, seed_raw, seed):
 
 
 def main():
-    out = Path("/out")
-    raw_path = out / "raw.json"
+    raw_root = Path("/raw")
+    audit_root = Path("/audit")
+    raw_path = raw_root / "raw.json"
     raw = json.loads(raw_path.read_text(encoding="utf-8"))
     seed_raw, seed = _seed()
-    errors, reps, overlap = audit_raw(raw, seed_raw, seed)
+    errors, reps, overlap = audit_raw(raw, seed_raw, seed, raw_root)
     controls = {}
     if "atomic" in reps:
         controls = corruption_controls(reps["atomic"], _expected_map(seed, range(1, PUBLICATIONS + 1)), reps["atomic"]["pid"])
@@ -502,7 +503,7 @@ def main():
         "raw_sha256": hashlib.sha256(raw_path.read_bytes()).hexdigest(),
         "scope": "single-host Linux local-filesystem synthetic package publication",
     }
-    (out / "audit.json").write_text(json.dumps(report, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+    (audit_root / "audit.json").write_text(json.dumps(report, sort_keys=True, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(report, sort_keys=True))
     return 0 if status == "PASS_ATOMIC_REPLACEMENT_OVERLAP_SCOPED" else 1
 

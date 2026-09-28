@@ -33,6 +33,24 @@ def docker(argv: list[str], timeout: int = 20) -> subprocess.CompletedProcess:
     return run(["docker", "--context", "desktop-linux", *argv], timeout=timeout)
 
 
+def _container_command(mounts: list[str] | tuple[str, ...], script: str) -> list[str]:
+    command = ["docker", "--context", "desktop-linux", "run", *CONTAINER_OPTS]
+    for mount in mounts:
+        command.extend(("--mount", mount))
+    command.extend(("-e", f"FROZEN_IMAGE_ID={IMAGE}", IMAGE, "python", script))
+    return command
+
+
+def runner_command(source_mount: str, raw_mount: str) -> list[str]:
+    return _container_command((source_mount, raw_mount), "/src/runner.py")
+
+
+def auditor_command(source_mount: str, raw_readonly_mount: str,
+                    audit_output_mount: str) -> list[str]:
+    return _container_command(
+        (source_mount, raw_readonly_mount, audit_output_mount), "/src/audit.py")
+
+
 def preflight(output: Path) -> dict:
     if not output.is_absolute() or output.exists() or not output.parent.is_dir():
         raise RuntimeError("output must be an absolute fresh path under an existing parent")
@@ -93,31 +111,34 @@ def main() -> int:
     if checks["running_containers"]:
         raise RuntimeError("STOP_SHARED_DOCKER_LOAD: running containers present; do not start")
     output.mkdir(parents=True, exist_ok=False)
+    raw_output = output / "raw"
+    formal_output = output / "formal"
+    audit_output = output / "audit"
+    raw_output.mkdir()
+    formal_output.mkdir()
+    audit_output.mkdir()
     source_mount = f"type=bind,source={EXP},target=/src,readonly"
-    output_mount = f"type=bind,source={output},target=/out"
-    common = [
-        "docker", "--context", "desktop-linux", "run", *CONTAINER_OPTS,
-        "--mount", source_mount, "--mount", output_mount,
-        "-e", f"FROZEN_IMAGE_ID={IMAGE}", IMAGE,
-    ]
-    runner_command = common + ["python", "/src/runner.py"]
-    auditor_command = common + ["python", "/src/audit.py"]
+    raw_write_mount = f"type=bind,source={raw_output},target=/out"
+    raw_read_mount = f"type=bind,source={raw_output},target=/raw,readonly"
+    audit_write_mount = f"type=bind,source={audit_output},target=/audit"
+    run_command = runner_command(source_mount, raw_write_mount)
+    audit_command = auditor_command(source_mount, raw_read_mount, audit_write_mount)
     started_ns = time.monotonic_ns()
-    runner = run(runner_command, timeout=300)
-    (output / "runner.stdout.txt").write_text(runner.stdout, encoding="utf-8")
-    (output / "runner.stderr.txt").write_text(runner.stderr, encoding="utf-8")
+    runner = run(run_command, timeout=300)
+    (formal_output / "runner.stdout.txt").write_text(runner.stdout, encoding="utf-8")
+    (formal_output / "runner.stderr.txt").write_text(runner.stderr, encoding="utf-8")
     auditor = None
-    if (output / "raw.json").is_file():
-        auditor = run(auditor_command, timeout=180)
-        (output / "auditor.stdout.txt").write_text(auditor.stdout, encoding="utf-8")
-        (output / "auditor.stderr.txt").write_text(auditor.stderr, encoding="utf-8")
+    if (raw_output / "raw.json").is_file():
+        auditor = run(audit_command, timeout=180)
+        (formal_output / "auditor.stdout.txt").write_text(auditor.stdout, encoding="utf-8")
+        (formal_output / "auditor.stderr.txt").write_text(auditor.stderr, encoding="utf-8")
     execution = {
         "allocation": "needle-cross-process-publication-overlap-5066-v4-20260928-01",
         "issue": 5082,
         "formal_orchestrations": 1,
-        "runner_command": runner_command,
+        "runner_command": run_command,
         "runner_exit": runner.returncode,
-        "auditor_command": auditor_command if auditor is not None else None,
+        "auditor_command": audit_command if auditor is not None else None,
         "auditor_exit": None if auditor is None else auditor.returncode,
         "docker_context": checks["docker_context"],
         "docker_engine": checks["docker_engine"],
