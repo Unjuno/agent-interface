@@ -349,3 +349,17 @@ no changes to the eight frozen/reused #1679/#55 dependency paths. The #5130
 container lane is still unassigned under the latest #5085 arbitration; no
 Docker command, workflow, Mindustry process, model call, or formal allocation
 was used for this host construction.
+
+## Lifecycle-complete raw audit v2 (2026-09-29)
+
+V1 omitted reset and geometry events, so it could not reconstruct the complete
+arm lifecycle. Additive v2 now verifies all 18 exact pre/reset snapshots and
+the three same-surface A3→B1 geometry transitions with ordered timestamps.
+The new synthetic artifact `construction/raw_audit_v2_20260929_01/` has raw
+SHA-256 `58e61347f45538ecc6d6f732ae41529d4b28152c09d166de039da4ac761f450c`,
+returns `PASS_CONSTRUCTION_ONLY`, and reconstructs `RETAIN` at break-even task
+2. Its identities are sentinels, so it proves parser construction only.
+V2 corruption tests pass 8/8 and the complete integration package passes
+80/80 on the host. The older v1 artifact is preserved unchanged. No Docker,
+workflow, model call, or live game task was used; shared container access is
+still explicitly held by #5130/#5085.

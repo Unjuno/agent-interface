@@ -30,3 +30,12 @@ The unit suite passes **12/12** and reconstructs a synthetic `RETAIN` at task-2 
 Current source baseline is main `708dec9bcd2bfb3ef597acf7bc1c8a02bcb96b01`; the three intervening upstream commits changed no #1679/#55 dependency blobs. The full package suite, inherited evaluator probe, and Issue #55 no-GUI receipt probe are run locally only. No GitHub Actions result is used.
 
 Docker remains unavailable to this lane by policy, not engine capability: #5130 explicitly forbids all container start/build/pull/inspect/alter until a named coordinator grants the exact lane and sibling-container release is reconciled. Latest #5085 comments still report no authorization. Do not interpret this host construction as a formal audit or result.
+
+## Lifecycle-complete v2 successor
+
+V1 omitted raw reset snapshots and A3→B1 geometry receipts. The additive v2
+auditor and its separate synthetic result are documented in
+[`SOURCE_IDENTITY_AUDIT.md`](SOURCE_IDENTITY_AUDIT.md); v1 raw bytes are
+unchanged. The v2 fixture independently validates 18 reset witnesses and three
+geometry transitions, still at `PASS_CONSTRUCTION_ONLY` only. Full integration
+suite is now 80/80 locally. Current source baseline is `f7c7dd8caf2db49add9b85bb68a3660dcb48af70`.
