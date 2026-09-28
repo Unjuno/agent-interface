@@ -17,6 +17,27 @@ from audit_sampler import CLASSES, audit_support_selection
 ARMS = ("base", "imbalanced", "balanced")
 
 
+def reference_class(intent: Any) -> str | None:
+    """Derive the evaluation class independently from the stored row label."""
+    if not isinstance(intent, Mapping):
+        return None
+    op = intent.get("op")
+    if op in ("set", "save", "toggle") and set(intent) == {
+        "set": {"op", "field", "value"},
+        "save": {"op"},
+        "toggle": {"op", "target"},
+    }[op]:
+        return op
+    reasons = {
+        "yield": {"forbidden", "ambiguous", "stale_scope", "missing_evidence", "unsupported"},
+        "no_action": {"already_satisfied", "not_requested"},
+    }
+    if op in reasons and set(intent) == {"op", "reason"}:
+        reason = intent.get("reason")
+        return f"{op}:{reason}" if reason in reasons[op] else None
+    return None
+
+
 def reference_bind(intent: Any, state: Mapping[str, Any], requested_generation: Any) -> dict[str, Any]:
     if not isinstance(intent, dict) or not isinstance(intent.get("op"), str):
         return {"status": "REJECT", "reason": "malformed_intent"}
@@ -100,6 +121,11 @@ def _dataset_errors(data: Mapping[str, Any]) -> list[str]:
         errors.append("heldout_pool_size")
     if len(heldout) != 64:
         errors.append("heldout_size")
+    for pool_name, pool in (("support", support_pool), ("heldout", heldout_pool)):
+        for index, row in enumerate(pool):
+            if not isinstance(row, Mapping) or row.get("class") != reference_class(row.get("intent")):
+                case_id = row.get("case_id", str(index)) if isinstance(row, Mapping) else str(index)
+                errors.append(f"{pool_name}_class_mismatch:{case_id}")
     grouped: dict[str, list[Mapping[str, Any]]] = {name: [] for name in CLASSES}
     for row in heldout_pool:
         if isinstance(row, Mapping) and row.get("class") in grouped:
