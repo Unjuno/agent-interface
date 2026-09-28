@@ -306,7 +306,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                                            screen_region: list[StrictInt] | None = None) -> CallToolResult:
             """Read the focused managed client in this target's configured transient family.
 
-            Does not select, focus or send input. Returns a one-use 30s review ID.
+            Does not select, focus or send input. Returns a one-use 30s review ID
+            and review_request with exact tool arguments for explicit caller review.
+            This candidate request is not executed and retained results do not renew it.
             Optional screen_region=[x,y,width,height] returns a fresh screen image
             in this call. Metadata is rechecked after capture; disagreement gives
             no review ID. This is not an atomic snapshot or redraw acknowledgement.

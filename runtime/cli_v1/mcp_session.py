@@ -87,6 +87,15 @@ class MCPSessionOwner:
         self.target_review = review
         row = dict(deepcopy(review), status='needs_review', input_dispatched=False,
                    authority_granted=False)
+        arguments = {'target': target, 'window_id': evidence['window_id'],
+                     'review_id': review['review_id']}
+        if screen_region is not None:
+            arguments['screen_region'] = deepcopy(screen_region)
+        row['review_request'] = {'tool': 'interface_review_target', 'arguments': arguments}
+        row['review_request_scope'] = (
+            'Candidate call after your explicit review of this evidence; not executed. '
+            'The one-use ID expires at expires_at_ns and target evidence is rechecked. '
+            'Retained results do not renew it. No input authority or replay permission.')
         if observation is not None:
             row['observation_report'] = observation
         return row
