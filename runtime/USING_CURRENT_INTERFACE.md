@@ -21,6 +21,12 @@ Adding configuration does not prove tools are available in a running host. The
 public CLI emits JSON; an assistant integration must render its image payload.
 Neither route establishes end-to-end latency merely by returning an image.
 
+[Primary input-recovery use](results/input-recovery-primary-01/README.md)
+records a failed press that had already changed a visible counter, explicit
+same-session release recovery, visual review and a newly authored continuation
+that saved the requested value. This small injected-fault construction exercises
+the recovery workflow; it does not measure general reliability or speedup.
+
 ## Long-lived guarded sessions
 
 Guarded X11 history keeps two decoded full-screen images in memory and reloads
