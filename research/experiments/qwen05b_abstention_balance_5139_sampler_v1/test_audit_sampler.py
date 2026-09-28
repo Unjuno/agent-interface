@@ -70,7 +70,8 @@ def independent_selection(pool: list[dict[str, object]], arm: str) -> list[dict[
 def dataset_fixture() -> dict[str, object]:
     pool = support_pool()
     return {
-        "seed": TEST_SEED,
+        "seed": 73194109,
+        "support_seed": TEST_SEED,
         "support_pool": pool,
         "supports": {
             "imbalanced": independent_selection(pool, "imbalanced"),
@@ -85,8 +86,13 @@ class IndependentSamplerAuditTests(unittest.TestCase):
 
     def test_rejects_changed_seed(self) -> None:
         data = dataset_fixture()
-        data["seed"] = TEST_SEED + 1
+        data["support_seed"] = TEST_SEED + 1
         self.assertIn("selected_id_order:balanced", audit_support_selection(data))
+
+    def test_formal_seed_is_independent_of_support_selection(self) -> None:
+        data = dataset_fixture()
+        data["seed"] = 918273645
+        self.assertEqual(audit_support_selection(data), [])
 
     def test_rejects_reordered_arm(self) -> None:
         data = dataset_fixture()
