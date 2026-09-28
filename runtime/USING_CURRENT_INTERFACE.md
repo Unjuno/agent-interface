@@ -322,6 +322,13 @@ For native research sessions, `native_observe(stage=...)` reads an already retai
 
 For direct public-MCP use, `python -m runtime.cli_v1.mcp_server --targets targets.json --output-directory runs --display :N --session-mode persistent-x11` retains one connection through explicit close or normal transport shutdown. The default is still one-shot. Use the returned `session.binding_revision` (initially 1) in dispatch assertions. `interface_observe` captures a fresh image; `interface_results` reads a retained result without input or recapture.
 
+When using the research `PrivateSession` fixture, app launch now follows an actual
+window-manager readiness probe (managed and viewable), not just an X11 handshake.
+This affects fixture setup only. The [retained Operations World smoke](../research/live_control/results/private-x11-readiness-01/README.md)
+includes the original startup failure, real-X11 controls, primary-operated public
+MCP movement/camera input and unresolved HUD/authoring issues. It does not establish
+task completion or improved interaction latency.
+
 When a separate dialog owns focus, inspect it with `interface_inspect_target(target)`, then explicitly select the observed native ID with `interface_review_target(target, window_id, review_id)`. The review rechecks the focused client's metadata and its configured transient family, sends no input, and advances the binding revision. Capture the selected surface before sending a new program. A review is not a lease or proof of visual freshness. `interface_close` retains cleanup evidence and never reopens the session.
 
 This opt-in route has one successful primary-operated Calc save following a retained failed save; it does not inherit the research bridge's visual guards or establish generic modal recovery or lower latency. See [contract and limits](cli_v1/PERSISTENT_MCP.md) and [both primary trials](results/public-owned-mcp-01/README.md).
