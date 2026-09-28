@@ -4,8 +4,8 @@ This additive package is for the unmeasured six-task Mindustry economics cell
 under #57. It inherits the frozen task/order/arm/call schedule and acceptance
 rule from #1679; it does not reopen or modify #1679, #2624, or prior allocations.
 
-This branch includes current `main` `43abf7afd3df4be8afa129daed3adc72501b6a8f`
-(merge commit `290ee6ef4942cc3cb3883662b98e0a9baaac54f7`).
+This branch includes current `main` `26d625a699175ddafde38d0ca26d901edfb6df7e`
+(merge commit `ffa0166e46ecf1c86848bbbc69c445255a861b07`).
 
 ## H / T / D / C / U
 
@@ -70,6 +70,13 @@ python probe_integrated_efficiency_protocol_v1.py
 Result: `passed=true`, positive disposition `RETAIN`, all 10 mutation/control
 cases rejected or held as specified. This probe is synthetic too; neither it
 nor the six unit tests supplies live task/economic evidence.
+
+After syncing main `26d625a`, the same host checks were repeated: unit tests
+6/6 and inherited probe `passed=true`, `controls=10`. One combined verification
+command was first launched from `research/live_control/` while using a
+repository-root-relative unittest path; discovery stopped with “Start directory
+is not importable.” It ran zero tests. Re-running unittest from the repository
+root and the inherited probe from `research/live_control/` passed as above.
 
 It checks the inherited evaluator's positive route, strict task-4 break-even
 boundary (including equality failing), and fail-closed task schedule, stale
