@@ -58,3 +58,14 @@ explicitly for the scoped tools. A terminated WSL session cannot reuse its old
 aliases or connection; preserve it and allocate a fresh trial.
 
 For opt-in same-host ordering and timing boundaries, use the [ordered host timeline](RELAY_HOST_TIMELINE.md). It serializes explicit presentation/review with sends and distinguishes callback completion from caller review; it does not measure model ingestion or semantic understanding.
+
+
+## MCP status in presentation
+
+When a returned MCP result explicitly contains `isError`, the presenter first
+emits a text object with schema `agent-interface/mcp-result-status-v1` and that
+unchanged flag, then forwards every content block in its original order. An
+absent flag is not replaced by an inferred success. This also covers empty
+content and the instrumented host's reviewed-image reference mode. The flag
+describes the MCP tool outcome; false does not establish application/task success.
+Raw replies, image bytes, review attribution and input behavior are unchanged.
