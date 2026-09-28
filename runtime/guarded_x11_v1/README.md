@@ -99,3 +99,21 @@ attribution; see [preserved evidence](../results/guarded-mcp-primary-interrupted
 A fresh [completed primary trial](../results/guarded-mcp-primary-02/README.md)
 subsequently verified six exact saves and explicit recovery through the public
 mode. This supports opt-in integration; efficiency claims remain unproven.
+
+## Guarded tail deadline
+
+The existing five-second guarded lease includes admission captures, pointer
+checks, typing and explicit waits. Every new key press now checks that deadline;
+key release remains permitted afterward. A fixed wait ends at the earlier of
+its requested end or the original lease deadline, without renewing the lease.
+At expiry, execution fails, retains the completed prefix and interrupted wait,
+attempts release and does not start the remaining input. The public guarded
+MCP default still returns one post-result observation, including after this
+failure. Inspect partial effects and the image before choosing a new action;
+never replay the whole tail automatically.
+
+This is cooperative enforcement on the guarded X11 path, not a hard real-time
+stop. Scheduling or blocking X11 calls can delay detection and physical release.
+It adds no continuous focus sensor or autonomous input owner. The ordinary X11
+backend's fixed-delay behavior and admission-only lease check are unchanged.
+A completed fixed delay still does not acknowledge application redraw.
