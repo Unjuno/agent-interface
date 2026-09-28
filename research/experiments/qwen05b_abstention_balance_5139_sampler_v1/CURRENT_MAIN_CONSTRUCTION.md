@@ -92,3 +92,51 @@ contains only the nine files under this experiment directory. Re-running the
 same two commands above at the refreshed branch tip passed again: 16/16 tests
 in 0.037 seconds, `py_compile` exit 0, and `git diff --check` clean. No seeds,
 inputs, outputs, code, or GPU/container allocation changed in this refresh.
+
+## Independent raw-result auditor and set-coverage follow-up — 2026-09-28
+
+Current main advanced to `c2f0eb2dc03d6949942be7f8ccb463f41975393e`; the
+additive branch was refreshed to that tip before this follow-up. The package
+now includes a raw-only training-result auditor and construction-only coverage
+analysis. On the local host, the complete package suite passed **25/25** tests
+in 0.195 seconds. All package Python files passed `py_compile`,
+`git diff --check` was clean, the analysis index reported 193 retained
+result/failure directories, and the research workspace index reported 137
+reachable top-level directories.
+
+The raw auditor is a separate implementation and does not import the
+candidate protocol, dataset generator, sampler, or model code. Its six new
+tests reconstruct synthetic raw rows and reject altered dataset seeds,
+receipts, row ordering, raw/parsed mismatches, forged row bindings, and forged
+effects. A valid but semantically inexact response remains an outcome/metric
+issue rather than an integrity error. These are auditor construction tests,
+not an audit of any formal model output.
+
+Using fixed construction-only seeds (`73194111` formal-test sentinel,
+`51829177` support-selection sentinel, `97101021` held-out-selection
+sentinel), the current hash-ranked `set` allocation had visibly different
+support marginals: balanced n=4 covered templates `{1:2, 2:2}` and fields
+`digest_frequency:2, display_name:1, sharing_visibility:1` (no timezone);
+imbalanced n=16 covered templates `{0:3, 1:4, 2:6, 3:3}` and fields
+`digest_frequency:4, display_name:4, sharing_visibility:3, timezone:5`.
+The common held-out set prefix n=8 covered templates `{0:4, 1:4}` and each of
+the four fields twice. The preserved old-prefix reference instead had one
+template and one each of the four fields at balanced n=4, and exactly four
+examples per template and field at imbalanced n=16. These deterministic
+counts expose a plausible prompt-template/field coverage confound; they do
+not establish any model effect.
+
+A separate construction-only stratified candidate partitions set rows into
+template × field cells and round-robins fixed, hash-tied cells. It yields
+balanced n=4 with one per template and field, nested imbalanced n=16 with four
+per template and field, and a shared held-out n=8 with two per template and
+field. Tests verify these constraints. No seed search or model/outcome access
+was used. This is a feasibility demonstration only: it does not silently
+replace the frozen #5139 hash-ranking allocation. Any adoption requires an
+explicit preregistration/freeze amendment before formal allocation; otherwise
+the coverage limitation remains disclosed.
+
+No model weights, CUDA context, Docker container, training job, adapter, or
+GPU resource was opened or allocated. All #5139 execution gates remain in
+force, including the unresolved historical `sad_cannon` attribution and the
+need for a named exclusive GPU/Docker lease.

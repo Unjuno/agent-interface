@@ -127,14 +127,19 @@ The additive successor branch `research/qwen5139-current-main-prep-20260928`
 composes the independent SHA-ranked support sampler/auditor with the preserved
 #5014 v2 synthetic protocol. A host-CPU construction experiment generated the
 full 128-row support pool and 256-row held-out pool with explicit, separate
-test-only formal/support seed sentinels. All 16 tests passed, including split
-disjointness, support stability when only the formal seed changes, and
-independent rejection of a changed support seed; the same suite passed again
-after refreshing to current main `f572e3be`. Evidence and H/T/D/C/U are in
+test-only formal/support seed sentinels. The expanded suite passes 25/25,
+including split and raw-result reconstruction controls. A fixed-seed coverage
+check exposed differing prompt-template/field marginals between the balanced
+and imbalanced set supports; a separate stratified selector demonstrates
+matched marginals, nesting, and shared held-out coverage as a construction-only
+feasibility result. It does not replace the frozen hash-ranking allocation and
+requires an explicit freeze amendment to adopt. Current main was refreshed to
+`c2f0eb2d`. Evidence and H/T/D/C/U are in
 [`CURRENT_MAIN_CONSTRUCTION.md`](research/experiments/qwen05b_abstention_balance_5139_sampler_v1/CURRENT_MAIN_CONSTRUCTION.md),
-with construction source and sampler tests alongside it. This is not the
-formal dataset freeze, pinned-image gate, raw training-result audit, GPU/CUDA
-run, LoRA fit, quality result, or safety claim. Historical `sad_cannon`
+with construction source, independent raw-auditor tests, and coverage analysis
+alongside it. This is not the formal dataset freeze, pinned-image gate, audit
+of formal training output, GPU/CUDA run, LoRA fit, quality result, or safety
+claim. Historical `sad_cannon`
 attribution and explicit exclusive GPU/Docker lease remain unresolved;
 preserve #4988/#5014 results unchanged. See [Issue #5139](https://github.com/Unjuno/agent-interface/issues/5139)
 and [Draft PR #5165](https://github.com/Unjuno/agent-interface/pull/5165).
