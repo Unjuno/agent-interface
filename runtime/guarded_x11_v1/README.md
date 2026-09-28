@@ -36,9 +36,14 @@ Call `close()` in a finally block. It closes this connection, not the applicatio
 The object is synchronous and intended for one caller; it is not a concurrent queue.
 
 Observations and raw input receipts are retained in the fresh output directory.
-History is session-local and currently retained in memory until review or object disposal;
-callers must bound session lifetime. No claim of unlimited-session memory use is
-made. A dispatch/persistence exception can mean uncertain delivery; inspect the
+History is session-local. At most two decoded full-screen images are retained
+by its cache; older observations reload their exact hash-checked PNG when needed
+for explicit grounding. Reloading never captures the current screen or changes
+the source sequence. Missing or corrupt old artifacts refuse grounding. Recent
+cached images remain the pixels already verified at capture. Metadata, handle
+patches, caller-held images and disk artifacts are not bounded by this cache;
+callers must still bound session lifetime. Window review clears all old history
+without loading artifacts. No unlimited-session memory claim is made. A dispatch/persistence exception can mean uncertain delivery; inspect the
 retained evidence and observe explicitly instead of replaying input.
 
 `runtime.guarded_x11_v1.form.fill_and_submit` is the existing two-target fixture
