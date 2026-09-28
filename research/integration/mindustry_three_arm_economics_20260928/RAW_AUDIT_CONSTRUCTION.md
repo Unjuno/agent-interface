@@ -38,4 +38,4 @@ auditor and its separate synthetic result are documented in
 [`SOURCE_IDENTITY_AUDIT.md`](SOURCE_IDENTITY_AUDIT.md); v1 raw bytes are
 unchanged. The v2 fixture independently validates 18 reset witnesses and three
 geometry transitions, still at `PASS_CONSTRUCTION_ONLY` only. Full integration
-suite is now 80/80 locally. Current source baseline is `f7c7dd8caf2db49add9b85bb68a3660dcb48af70`.
+suite is now 81/81 locally. Current source baseline is `46416bc09283ad268c66e5327309f28fddbdf45f`.

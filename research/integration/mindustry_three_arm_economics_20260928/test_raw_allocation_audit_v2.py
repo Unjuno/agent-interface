@@ -78,6 +78,11 @@ class RawAllocationAuditV2Tests(unittest.TestCase):
         raw["transition_events"][0]["after_binding"]["geometry"] = [0, 24, 1280, 760]
         self.assertRaises(RawAuditError, reconstruct, raw)
 
+    def test_geometry_surface_identity_must_remain_stable(self):
+        raw = raw_v2()
+        raw["transition_events"][0]["after_binding"]["surface"] = 92
+        self.assertRaises(RawAuditError, reconstruct, raw)
+
     def test_geometry_must_be_between_a3_reset_and_b1_start(self):
         raw = raw_v2()
         raw["transition_events"][0]["at_ns"] = raw["arms"]["plain"][3]["started_ns"]

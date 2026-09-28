@@ -52,8 +52,8 @@ SHA-256 `58e61347f45538ecc6d6f732ae41529d4b28152c09d166de039da4ac761f450c`.
 Its output is `PASS_CONSTRUCTION_ONLY`, evaluator disposition `RETAIN`,
 break-even task 2, 18 reset witnesses, and three geometry transitions. Source,
 model, game, and image identity fields remain sentinels; this is not a live
-result. The v2 corruption suite passes 8/8; the entire integration package
-passes 80/80 locally. Initial implementation failures were caught by those
+result. The v2 corruption suite passes 9/9; the entire integration package
+passes 81/81 locally. Initial implementation failures were caught by those
 tests and repaired before the final pass; they were auditor/test-fixture
 defects, not experiment outcomes. No Docker, GitHub Actions, model call, game
 process, or formal allocation was used.
