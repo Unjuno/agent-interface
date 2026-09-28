@@ -31,7 +31,7 @@ def analyze(label, path):
                       and isinstance(row["release"].get("verified_ns"), int)]
     assert len(verified_empty) == expected["terminal"]
     assert not direct_edge_markers
-    return {"file": path.name, "sha256": digest, "event_rows": len(rows),
+    return {"file": f"{label}-events.jsonl", "sha256": digest, "event_rows": len(rows),
             "event_counts": {key: counts.get(key, 0) for key in ("input_admission", "keys_held", "input_released", "terminal")},
             "terminal_verified_empty": len(verified_empty),
             "direct_normal_key_up_or_actuation_markers": len(direct_edge_markers),
