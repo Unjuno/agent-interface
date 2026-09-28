@@ -37,3 +37,21 @@ path resolution.
 remediation, a symlink-race proof, a real broker file-read result, cross-OS
 parity, or #3152 model-escalation acceptance. The candidate remains research
 only; #4882 and #3152 stay open.
+
+## Allocation 02 outcome
+
+The one frozen runner invocation terminated at fixture setup:
+`STOP_SETUP_JUNCTION_UNAVAILABLE`, runner exit 2, zero of nine path cases.
+Both `mklink /J` fixture commands returned 1 and neither path was recognized as
+a junction. The runner did not retain their stdout/stderr, so the exact setup
+cause is **unknown**; do not infer that NTFS junctions themselves are
+unavailable. The frozen success-path auditor was not run because there are no
+scientific rows or live junctions to audit. A separate posthoc checker validates
+only the STOP record's identity and zero-row disposition
+(`PASS_STOP_RECORD_INTEGRITY`); it does not audit resolver behavior. The fixture
+remains in local temporary storage because cleanup was rejected by the shell
+safety policy; it is not part of the published package. No production or user
+files were touched.
+
+Preserve this STOP unchanged. Any corrected fixture invocation requires a new
+allocation and a new pre-run freeze that retains sanitized setup stdout/stderr.
