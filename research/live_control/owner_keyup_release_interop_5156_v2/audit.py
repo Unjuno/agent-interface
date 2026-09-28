@@ -43,8 +43,15 @@ def main():
         failures.append("negative case multiset differs")
     if set(result.get("negative_rejected", {})) != NEGATIVE or not all(result["negative_rejected"].values()):
         failures.append("negative control accepted or omitted")
-    if result.get("status") != "PASS_SYNTHETIC_SCHEMA_COMPATIBILITY_ONLY":
-        failures.append("candidate did not report scoped pass")
+    positives_ok = (set(result.get("positive_outcomes", {})) == POSITIVE
+                    and all(result["positive_outcomes"].values()))
+    negatives_ok = (set(result.get("negative_rejected", {})) == NEGATIVE
+                    and all(result["negative_rejected"].values()))
+    expected_status = ("PASS_SYNTHETIC_SCHEMA_COMPATIBILITY_ONLY" if positives_ok and negatives_ok
+                       else "FAIL_SOURCE_SUPPORTED_FORM_REJECTED" if not positives_ok
+                       else "FAIL_INVALID_FORM_ACCEPTED")
+    if result.get("status") != expected_status:
+        failures.append("decision status does not match independent outcomes")
     if result.get("scope") != "SYNTHETIC_SCHEMA_COMPATIBILITY_ONLY":
         failures.append("scope claim missing")
     if result.get("authority_grants") != 0 or result.get("x11_observed") is not False:
