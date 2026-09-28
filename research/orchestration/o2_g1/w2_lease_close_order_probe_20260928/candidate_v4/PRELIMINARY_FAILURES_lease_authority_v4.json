@@ -1,0 +1,42 @@
+{
+  "schema": "w2-lease-authority-v4-preliminary-failures",
+  "preserved": true,
+  "events": [
+    {
+      "attempt": "initial combined unittest invocation",
+      "outcome": "STOP_BEFORE_TEST_DISCOVERY",
+      "reason": "W2_TRACE_FIXTURE environment variable was missing; no test assertion ran.",
+      "correction": "Reran with an explicit path to the frozen fixture; 32/32 tests passed."
+    },
+    {
+      "attempt": "first exhaustive enumerator draft",
+      "outcome": "HARNESS_EXPECTATION_MISMATCH",
+      "reason": "The fixture's edge/open lease identifiers and actuation identifier were not both normalized to the enumerator's declared L/A pair, and the absent-open-time sentinel was incorrectly expected to reach open-time evaluation.",
+      "correction": "Normalize the synthetic target lineage and treat missing/unknown/invalid opening time as HOLD; no candidate or oracle code changed."
+    },
+    {
+      "attempt": "second exhaustive enumerator draft",
+      "outcome": "HARNESS_EXPECTATION_MISMATCH",
+      "reason": "The open event lease identifier was still inherited from the fixture (L4), so the target L edge appeared to have no matching open.",
+      "correction": "Normalize open lease lineage to L and rerun."
+    },
+    {
+      "attempt": "third exhaustive enumerator draft",
+      "outcome": "HARNESS_EXCEPTION",
+      "reason": "The independent expected-rule helper compared a string unknown-time sentinel as though it were a numeric interval.",
+      "correction": "Handle non-interval close timing as HOLD_UNKNOWN_CLOSE_TIME and rerun the full domain."
+    },
+    {
+      "attempt": "superseded long exhaustive process",
+      "outcome": "STOPPED_TO_PREVENT_DUPLICATE_CPU_RUN",
+      "reason": "The command wrapper returned before surfacing a session identifier; process inspection found the original still running after a corrected run had been launched. The earlier process was stopped by exact PID after confirming its command line. It is not counted as a result.",
+      "correction": "One corrected run completed and is the sole reported exhaustive result."
+    }
+  ],
+  "final_run": {
+    "command": "python exhaustive_lease_authority_v4.py",
+    "exit": 0,
+    "combinations_checked": 1161216,
+    "mismatches": 0
+  }
+}
