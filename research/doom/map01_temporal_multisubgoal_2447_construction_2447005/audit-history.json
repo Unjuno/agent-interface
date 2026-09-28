@@ -1,0 +1,57 @@
+{
+  "schema": "issue2447-construction-audit-history-v1",
+  "case": "issue2447-construction-2447005",
+  "evidence_reexecuted": false,
+  "audits": [
+    {
+      "version": "v1",
+      "source": "src/audit.py",
+      "sha256": "cc5d6477a2d47699157c274af2777a7d0ead33594bdc72f532258e5ebc5f1494",
+      "outcome": "AUDITOR_ERROR",
+      "error": "NameError: nr is not defined; variable is named nres"
+    },
+    {
+      "version": "v2",
+      "source": "src/audit_v2.py",
+      "sha256": "201cbae07e18a8efefb507f763df47999ef1c207490bfcd68c724f73e39fe3a2",
+      "outcome": "FAIL_AUDIT_CHECK",
+      "errors": [
+        "third_observation_binding"
+      ],
+      "reason": "Compared bound X11 fields to the whole setup context including display; the binding schema requires focus/surface/geometry only."
+    },
+    {
+      "version": "v3",
+      "source": "src/audit_v3.py",
+      "sha256": "38b5feb18c5448d5997589835f629d7ba5609aba29d77681455edb3ca7ac23b5",
+      "outcome": "PASS_CONSTRUCTION",
+      "errors": [],
+      "limitations": [
+        "Yaw thresholds still consumed runner-derived delta fields."
+      ]
+    },
+    {
+      "version": "v4",
+      "source": "src/audit_v4.py",
+      "sha256": "f5c77cf14f0bde3427f1097beff33a958e3932004b2f9591ffa950167703b132",
+      "outcome": "PASS_CONSTRUCTION",
+      "errors": [],
+      "added": [
+        "Independently recomputed drop state transition from scorer-only before/after state.",
+        "Independently recomputed right/left yaw deltas from scorer-only angles and checked stored derivations."
+      ]
+    },
+    {
+      "version": "v5",
+      "source": "src/audit_v5.py",
+      "sha256": "cc02facc0f313f883a4ff26e893b91aff29319658dfaf32570ae323c21ba3d77",
+      "outcome": "PASS_CONSTRUCTION",
+      "errors": [],
+      "added": [
+        "Setup sector and heading tolerance.",
+        "Monotonic ordering: prior effect/release < fresh screenshot < action down/up/release for both handoffs."
+      ]
+    }
+  ]
+}
+
