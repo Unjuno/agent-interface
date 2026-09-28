@@ -1,0 +1,94 @@
+{
+  "allocation": "typed-mode-4844-successor-20260928-03",
+  "status": "HOLD_COVERAGE_TRADEOFF",
+  "started_at": "2026-09-28T13:18:08.7893132+09:00",
+  "audited_at": "2026-09-28T13:18:26.8191604+09:00",
+  "source_commit": "2a96313df5edffb1f7d180bee6c142917ac79e37",
+  "execution_branch": "research/typed-mode-4844-successor-v3-20260928",
+  "execution_path": "research/experiments/typed_mode_generalization_4844_successor_v3",
+  "delivery_path": "research/experiments/typed_mode_generalization_4844_allocation03_parallel_collision_20260928",
+  "parallel_collision": {
+    "peer_issue": 5189,
+    "shared_allocation": true,
+    "same_formal_seeds": true,
+    "peer_freeze_commit": "fcf06f1bf4ce85952658cf9f53e38899dfc51530",
+    "peer_freeze_commit_time": "2026-09-28T13:22:33+09:00",
+    "peer_formal_source_commit": "fcf06f1bf4ce85952658cf9f53e38899dfc51530",
+    "peer_pr": 5191,
+    "peer_raw_sha256": "74dfede0db4676fdaf0d6385c625c2c3731a75ffe8572d7f7a45dbc060e42a22",
+    "peer_disposition": "HOLD_COVERAGE_TRADEOFF",
+    "peer_runner_started_at": "2026-09-28T13:24:56.106325311+09:00",
+    "peer_lane_disposition": "STOP_DUPLICATE_FORMAL_SEED_COLLISION",
+    "this_runner_started_at": "2026-09-28T13:18:08.7893132+09:00",
+    "registered_seed_pair_reuse_count": 2,
+    "independent_replication": false,
+    "this_is_first_completed_formal_execution": true,
+    "results_pooled": false
+  },
+  "intake_main": "dbfae29cf848e4beee8f0287a9843532f5a695a8",
+  "docker": {
+    "context": "desktop-linux",
+    "engine": "28.5.1 linux/x86_64",
+    "image": "sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a",
+    "platform": "linux/amd64",
+    "network": "none",
+    "read_only_root": true,
+    "source_read_only": true,
+    "cpus": 1,
+    "memory_bytes": 536870912,
+    "pids_limit": 32,
+    "no_new_privileges": true
+  },
+  "runner": {
+    "invocations": 1,
+    "exit_code": 0,
+    "container_id": "6f40b32178099988ea1130cacdcf06e4c0a2b004283c495c2ae79711801a62fa",
+    "stdout": "runner/STDOUT.txt",
+    "stderr": "runner/STDERR.txt",
+    "raw": "runner/raw.json",
+    "raw_bytes": 942762,
+    "raw_sha256": "51d9c7fed88a5a491a7e1f4fb5a33349ffe58c486a44a946b573a1a18838e300"
+  },
+  "auditor": {
+    "invocations": 1,
+    "exit_code": 0,
+    "container_id": "687dc045059fa965afc1c3165811f9a7fb08a9e7409581b3aa9f4204f4778071",
+    "raw_mount_read_only": true,
+    "accepted": true,
+    "errors": [],
+    "mutation_controls_rejected": 16,
+    "receipt": "auditor/audit.json",
+    "stdout": "auditor/STDOUT.txt",
+    "stderr": "auditor/STDERR.txt"
+  },
+  "primary_gates": {
+    "SINGLE_MISSING": {
+      "direct_wrong": 49,
+      "typed_wrong": 61,
+      "wrong_reduction": -0.24489795918367346,
+      "direct_coverage": 0.3,
+      "typed_coverage": 0.775,
+      "coverage_loss": -0.475,
+      "pass": false
+    },
+    "MULTI_MISSING": {
+      "direct_wrong": 37,
+      "typed_wrong": 79,
+      "wrong_reduction": -1.135135135135135,
+      "direct_coverage": 0.28125,
+      "typed_coverage": 0.7020833333333333,
+      "coverage_loss": -0.4208333333333333,
+      "pass": false
+    },
+    "COMPOSITION_HOLDOUT": {
+      "direct_wrong": 217,
+      "typed_wrong": 149,
+      "wrong_reduction": 0.31336405529953915,
+      "direct_coverage": 0.7416666666666667,
+      "typed_coverage": 0.590625,
+      "coverage_loss": 0.15104166666666674,
+      "pass": false
+    }
+  },
+  "seed_reuse": "none; one runner and one auditor; no retries"
+}
