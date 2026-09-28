@@ -43,3 +43,15 @@ Both direct commands exited 0 from repository root with no `PYTHONPATH` assistan
 ## Resource gate
 
 The latest read of #5085 still shows a live shared Docker client and an unobservable OrbStack inventory; #5139 has no named exclusive GPU/Docker lease. The `sad_cannon` attribution remains unrecoverable; #5139 comment 5864223178 records a terminal HOLD that satisfies only the uncertainty-retention clause, not zero-fit/no-overlap proof. This recheck therefore stayed on host CPU. No resource ownership or formal-run authority is inferred from an idle GPU or a successful CPU test.
+
+
+## Independent GitHub-blob readback correction — 2026-09-28
+
+An independent host rerun fetched the two probe source blobs by their exact GitHub blob IDs and re-executed them from an isolated scratch directory. CPython 3.11.9 package tests passed 25/25. Both 128-sentinel probes exited 0; parsed JSON output exactly matched the committed result JSON. The run remained CPU-only, synthetic, and construction-only.
+
+**Correction to the source SHA-256 values above:** the earlier table's probe-source digests were incorrect. GitHub blob IDs and SHA-256 over the UTF-8 file contents are:
+
+- Feature probe blob `41f6715318d6aca377006f194ce42abc91196257`, SHA-256 `85ac657bd0afaf8a0c2636156204821a723c69755c85704892639686b16c05a4`.
+- Joint-cell probe blob `518e43988d89c46764e4bab61920311765791db6`, SHA-256 `6b45582dc4210d27e33f2ec8e24089030110f69fc0a981e7a71c41b00d0a5a17`.
+
+The prior entries `FA2F470E...` and `C119067B...` are retained above as the original erroneous record. Result semantics reproduce; those earlier digests do not attest to the current committed probe bytes. No scientific result, source code, allocation seed, or predecessor was changed.
