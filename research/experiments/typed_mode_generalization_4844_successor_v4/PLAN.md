@@ -3,7 +3,8 @@
 Allocation: `typed-mode-4844-successor-20260928-04`
 Branch: `research/typed-mode-4844-successor-v4-20260928-e07d`
 Evidence path: `research/experiments/typed_mode_generalization_4844_successor_v4/`
-Allocation registered on open Issue #5184; latest main at registration: `ae1c23b9ffcff29e3b6cbf1b25f31066742122e7`
+Allocation registered on open Issue #5184; main at registration: `ae1c23b9ffcff29e3b6cbf1b25f31066742122e7`.
+Before source freeze, main advanced to `dfee8da52faedefded3d4555242d19d0ec087f91`; this branch incorporated it in merge commit `afe33c25790523dbbeff27578e8473e885c9bd18`. GitHub compare found intervening additions/edits under other paths only; no v4-path conflict.
 
 The -03 issue was retired as `STOP_DUPLICATE_FORMAL_SEED_COLLISION`: another source consumed 484431/484432 first. Its and this lane's -03 raw outputs remain separate, non-pooled historical evidence. This -04 allocation is a fresh bounded replication with a new path and seeds.
 
@@ -45,6 +46,19 @@ From PowerShell, before the allocation's only runner, with the frozen source dir
 ```powershell
 $src = (Resolve-Path .).Path
 $root = Split-Path $src -Parent
+$freeze = Get-Content (Join-Path $src 'FREEZE.json') -Raw | ConvertFrom-Json
+if ($freeze.status -ne 'PRE_FORMAL_FREEZE') { throw 'STOP: final pre-formal freeze record missing' }
+if ((git branch --show-current).Trim() -ne $freeze.branch) { throw 'STOP: branch identity changed' }
+git merge-base --is-ancestor $freeze.source_commit HEAD
+if ($LASTEXITCODE -ne 0) { throw 'STOP: frozen source commit is not an ancestor of HEAD' }
+if (git status --porcelain) { throw 'STOP: checkout is not clean at formal launch' }
+foreach ($entry in $freeze.files.PSObject.Properties) {
+  $file = Join-Path $src $entry.Name
+  if ((Get-Item -LiteralPath $file).Length -ne $entry.Value.bytes) { throw "STOP: byte length mismatch $($entry.Name)" }
+  if ((Get-FileHash -LiteralPath $file -Algorithm SHA256).Hash.ToLower() -ne $entry.Value.sha256) { throw "STOP: SHA-256 mismatch $($entry.Name)" }
+  $gitPath = "$($freeze.path)$($entry.Name)"
+  if ((git rev-parse "$($freeze.source_commit):$gitPath").Trim() -ne $entry.Value.git_blob) { throw "STOP: Git blob mismatch $($entry.Name)" }
+}
 $outRoot = Join-Path $root 'typed-mode-4844-v4-formal-04'
 $out = Join-Path $outRoot 'runner'
 $auditOut = Join-Path $outRoot 'auditor'
@@ -71,3 +85,5 @@ docker --context desktop-linux rm $auditId | Out-Null
 ```
 
 Record exact commands, Docker context/version/image inspection, container IDs/config, stdout/stderr/exit codes, raw SHA-256/size and audit receipt. Confirm all source hashes and the branch head before creating output directories; stop before runner if current context, image, source blobs, or output emptiness differs. Never rerun the formal allocation.
+
+Immediately before final freeze and again before launch, repeat the exact seed-pair searches over open/closed Issues, open/closed PRs, branches, commits and default-branch code. The only expected Issue match is the allocation -04 preregistration comment on #5184; any other match retires this allocation before runner invocation.
