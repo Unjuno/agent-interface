@@ -1,0 +1,84 @@
+{
+  "allocation": "typed-mode-4844-successor-20260928-04",
+  "issue": 5184,
+  "status": "FORMAL_COMPLETE",
+  "disposition": "HOLD_COVERAGE_TRADEOFF",
+  "allocation_valid": true,
+  "branch": "research/typed-mode-4844-successor-v4-20260928-e07d",
+  "freeze_commit": "021fc64366cec2b0d3c16922c7c69760df7aae0c",
+  "freeze_sha256": "7dce865b8dc0c601c6876afa1b09ad538565dd4a55aa570e36f1cdadc750cecb",
+  "source_commit": "fe256c61c4557b5519c097a0ee86168c1b024512",
+  "source_path": "research/experiments/typed_mode_generalization_4844_successor_v4/",
+  "formal_seeds": {"training": 866309294, "heldout": 301332595},
+  "formal_data_generated_after_freeze": true,
+  "runner_invocations": 1,
+  "auditor_invocations": 1,
+  "retries": 0,
+  "docker": {
+    "context": "desktop-linux",
+    "client_server": "28.5.1",
+    "image_config_digest": "sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a",
+    "platform": "linux/amd64",
+    "network": "none",
+    "readonly_root": true,
+    "readonly_source": true,
+    "cpus": 1,
+    "memory_bytes": 536870912,
+    "pids_limit": 32,
+    "security_opt": ["no-new-privileges"],
+    "scratch": "tmpfs /tmp:rw,noexec,nosuid,size=32m",
+    "running_containers_before": [],
+    "running_containers_after": []
+  },
+  "main_concurrency": {
+    "base_at_freeze": "53b93cd5dcb0fbbedee1db23ddf550ba1eb289e0",
+    "latest_observed_after_run": "92ee0cf242d4088e193d8bca405c14a0362b1d7a",
+    "postfreeze_changes": "Four commits modified runtime/cli_v1/x11_target_review.py and its tests and added runtime/results/public-utf8-title-01 only. GitHub compare confirms no v4 research path overlap."
+  },
+  "containers": [
+    {
+      "role": "runner",
+      "id": "b2694c8d1c42020718d774bdb18bf0380f0dec3c940e9e0239833d93dbeb7878",
+      "created_utc": "2026-09-28T04:56:36.205682607Z",
+      "exit_code": 0,
+      "stdout_stderr": "Combined in formal/allocation-04/runner/runner.log",
+      "inspect": "formal/allocation-04/runner/container-inspect.json",
+      "command": "docker --context desktop-linux run --cidfile <runner>/container.id --pull=never --network none --read-only --cpus=1 --memory=512m --pids-limit=32 --security-opt=no-new-privileges --tmpfs /tmp:rw,noexec,nosuid,size=32m --mount type=bind,source=<frozen-source>,target=/src,readonly --mount type=bind,source=<runner-output>,target=/out -e OUT_DIR=/out -e PYTHONDONTWRITEBYTECODE=1 1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a python /src/experiment.py"
+    },
+    {
+      "role": "raw_only_auditor",
+      "id": "aa6e675bc5ba0a8f773e9cb39cdb08d84f05e3e76e361bb1720ab82b1a58988c",
+      "created_utc": "2026-09-28T04:56:38.584114431Z",
+      "exit_code": 0,
+      "raw_mount": "formal/allocation-04/runner/result.json (read-only)",
+      "stdout_stderr": "Combined in formal/allocation-04/auditor/auditor.log",
+      "inspect": "formal/allocation-04/auditor/container-inspect.json",
+      "command": "docker --context desktop-linux run --cidfile <auditor>/container.id --pull=never --network none --read-only --cpus=1 --memory=512m --pids-limit=32 --security-opt=no-new-privileges --tmpfs /tmp:rw,noexec,nosuid,size=32m --mount type=bind,source=<frozen-source>,target=/src,readonly --mount type=bind,source=<raw-result>,target=/in/result.json,readonly --mount type=bind,source=<auditor-output>,target=/audit -e PYTHONDONTWRITEBYTECODE=1 -e AUDIT_DIR=/audit 1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a python /src/audit.py /in/result.json a2c9a758c45d6976f43cb239d44cbfaf0d67fdf4dc3b70118c938da0737e108a"
+    }
+  ],
+  "raw_result": {
+    "path": "formal/allocation-04/runner/result.json",
+    "sha256": "a2c9a758c45d6976f43cb239d44cbfaf0d67fdf4dc3b70118c938da0737e108a",
+    "bytes": 1541863
+  },
+  "audit": {
+    "path": "formal/allocation-04/auditor/audit.json",
+    "pass": true,
+    "rows_reconstructed": 4800,
+    "errors": [],
+    "corruption_controls_rejected": "16/16",
+    "prototype_controls_pass": true,
+    "fail_closed_controls_pass": true,
+    "unsafe_emissions": 0,
+    "raw_gate_disposition": "HOLD_COVERAGE_TRADEOFF"
+  },
+  "prelaunch_seed_search": {
+    "intended_registration_only_issue_match": 5184,
+    "other_issue_matches": 0,
+    "pr_matches": 0,
+    "branch_matches": 0,
+    "commit_matches": 0,
+    "default_branch_code_matches": 0
+  },
+  "scope": "One finite synthetic seed pair and authored classifier family only; no GUI, cross-app, runtime authority, safety, model-quality, real-task, latency, token, human-tempo or product claim."
+}
