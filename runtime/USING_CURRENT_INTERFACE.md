@@ -320,3 +320,12 @@ Selection and image delivery have separate outcomes: target_reviewed and the new
 ## Existing native method reuse
 
 The [native guarded form method](../research/live_control/NATIVE_GUARDED_FORM.md) is now an importable function used by the existing six-task harness. [Primary use](results/native-method-primary-01/README.md) retains six exact submissions, changed-layout refusal and explicit repair. It remains a scoped native integration component; it is not a new public MCP tool or generic semantic form verifier.
+
+
+### Optional guarded brief responses and strict argument names
+
+In guarded-x11 mode, interface_guarded_input accepts detail="brief" (default "full"). It summarizes only known normal exact-match guard details; all other result fields and images remain unchanged. Critical or unfamiliar evidence stays full. Follow presentation.retrieve to interface_results with detail="full" for retained details; this does not replay input. Full raw reports remain authoritative.
+
+Use interaction="keyboard" for keyboard-only input and provide the minted offset. Unknown top-level tool arguments are now rejected before operation invocation: pointer=false is not supported. Hosts must pass through SDK text errors rather than assuming every text block is JSON.
+
+Primary six-task evidence: runtime/results/guarded-mcp-brief-primary-03, including one unexpected ignored-argument recovery and one planned stale-layout refusal. Previous interrupted and failed trials are retained beside it. The byte reduction is a same-report metadata comparison only, not measured model-token or speed savings.
