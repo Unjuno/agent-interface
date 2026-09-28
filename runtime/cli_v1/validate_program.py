@@ -14,7 +14,7 @@ from pathlib import Path
 from typing import Any
 
 from runtime.core_v1.contract import ContractError, required_capabilities, validate_program
-from runtime.core_v1.sequence import expand_key_repeats, expand_text_gaps
+from runtime.core_v1.sequence import expand_key_repeats, expand_text_gaps, normalize_observation_regions
 
 SCHEMA = "agent-interface/static-program-validation-v1"
 MAX_INPUT_BYTES = 1_048_576
@@ -52,6 +52,14 @@ def inspect_program(program: Any) -> dict[str, Any]:
                        detail="program must be object", detail_source="program_validation")
     candidate = deepcopy(program)
     operations = candidate.get("ops")
+    try:
+        operations, region_indices = normalize_observation_regions(operations)
+    except ValueError as error:
+        return _result("invalid", False, error="INVALID_OBSERVATION_REGION",
+                       detail=_detail(error), detail_source="region_normalization",
+                       source_operation_index=error.operation_index)
+    if region_indices:
+        candidate['ops'] = operations
     sources = None
     compilation = None
     # Preserve dispatch's gap-before-repeat precedence, including mixed programs.
@@ -94,7 +102,8 @@ def inspect_program(program: Any) -> dict[str, Any]:
     return _result("valid", True, source_operation_count=len(operations),
                    expanded_operation_count=len(candidate["ops"]),
                    required_capabilities=list(required_capabilities(candidate)),
-                   compilation=compilation)
+                   compilation=compilation,
+                   **({'normalized_observation_operations': region_indices} if region_indices else {}))
 
 
 def inspect_file(path: Path) -> dict[str, Any]:

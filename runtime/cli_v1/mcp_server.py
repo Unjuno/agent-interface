@@ -36,7 +36,9 @@ PublicProgram = Annotated[dict, Field(description=(
     'when input requires focus. Operation examples: {"op":"text","text":"abc","gap_ms":20}, '
     '{"op":"key_chord","keys":["Left"],"repeat":2}, '
     '{"op":"key_chord","keys":["CTRL","s"]}, '
-    '{"op":"observe","frame":"window_client","x":0,"y":0,"w":400,"h":180}. '
+    '{"op":"observe","frame":"window_client","region":[0,0,400,180]}. '
+    'Observe region uses [x,y,width,height], just like interface_observe. '
+    'Legacy x/y/w/h fields remain supported; do not mix them with region. '
     'Use the actual target and observed region; examples do not select them for you. '
     'End with exactly one {"op":"release_all"}. Expanded ops must fit 128. '
     'gap_ms is optional integer 0..1000; key_chord repeat is optional integer 1..126. '
@@ -346,7 +348,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                               region: list[StrictInt], compact: StrictBool = False, report_refs: StrictBool = False) -> CallToolResult:
             """Capture once without input; return receipt and native image block.
 
-            Region is [x, y, width, height]. On X11, window_client coordinates are
+            Region is [x, y, width, height]; public dispatch observe ops accept
+            the same region array (do not mix with legacy x/y/w/h fields).
+            On X11, window_client coordinates are
             relative to the target client; overlapping dialogs may be absent or black.
             screen_physical_px coordinates are relative to the display and include
             other visible windows in that region. Choose an explicit screen region
