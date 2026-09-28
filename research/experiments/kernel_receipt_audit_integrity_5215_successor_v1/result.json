@@ -4,7 +4,7 @@
  "verified_source_commit":"19cc36b996e0e6a1290bd4e0c0b62db5fa2b1428",
  "source_sha256":{"audit_integrity.py":"e97d564936a4d5087b37317a9e04a0702834286d258020c9864a8a193f40732b","test_audit_integrity.py":"0287d4286aad5cf0f74e031b24873f65c4df568de6ef6682973fa75184e2282a"},
  "host":{"os":"Windows","python":"3.11.9","tests_passed":8,"tests_failed":0},
- "container":{"engine":"Docker Desktop linux/amd64","image":"python:3.11-slim@sha256:da047cb8f9d1d98e5c070f5300ba9f7274e33b8fc0e5be5ed88740aed1b95ba9","network":"none","root":"read-only","source_mount":"read-only","cpus":1,"memory":"256m","pids_limit":32,"tmpfs":"/tmp 16m noexec,nosuid","security":"no-new-privileges, cap-drop ALL","exit":0,"tests_passed":8,"tests_failed":0},
+ "container":{"engine":"Docker Desktop linux/amd64","governance":"OUT_OF_SEQUENCE; pre-existing #5085 hold comment #5864690783 was not read before launch; disclosed as #5865679335; PR returned to Draft","image":"python:3.11-slim@sha256:da047cb8f9d1d98e5c070f5300ba9f7274e33b8fc0e5be5ed88740aed1b95ba9","network":"none","root":"read-only","source_mount":"read-only","cpus":1,"memory":"256m","pids_limit":32,"tmpfs":"/tmp 16m noexec,nosuid","security":"no-new-privileges, cap-drop ALL","exit":0,"tests_passed":8,"tests_failed":0},
  "test_command":"python -B -m unittest discover -s /work -p 'test_*.py' -v",
  "mutation_census":{"schema_identity_mutations":18,"derived_case_outcome_flips":8,"rejected":26},
  "audit_original":{"disposition":"HOLD_LEGACY_PLAN_CONFLICT","case_mismatches":["execution_end_999","execution_end_1000","execution_end_1001","effect_at_499","effect_at_699"],"plan_conflicts":["effect_at_700"]},
