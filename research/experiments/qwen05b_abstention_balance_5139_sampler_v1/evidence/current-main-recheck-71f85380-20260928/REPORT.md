@@ -60,10 +60,14 @@ The prior entries `FA2F470E...` and `C119067B...` are retained above as the orig
 
 The source files are stored at the package evidence paths `feature-marginals-128-20260928/feature_design_probe.py`, `joint-cell-marginals-128-20260928/joint_matched_feature_probe.py`, and the package-root `test_probe_entrypoints.py`. The earlier blob correction above identifies the pre-fix marginal probe; it is not the post-fix feature script. Canonical values for the final PR HEAD `b5c125e883b656866074183cb2f04b32f2718888` are:
 
-| Artifact at final PR HEAD | Git blob | SHA-256 of canonical Git blob bytes |
+| Artifact at the PR source HEAD before current-main integration | Git blob | SHA-256 of canonical Git blob bytes |
 |---|---|---|
 | Feature-marginal probe after import fix | `aa13a75607c9a6dad4a95b301c9d4c202e417b98` | `E67C49099E782016CBC2707AB1270A7585E237D1941E6B071BFE20BAA218FA57` |
 | Joint-cell probe | `518e43988d89c46764e4bab61920311765791db6` | `6B45582DC4210D27E33F2EC8E24089030110F69FC0A981E7A71C41B00D0A5A17` |
 | Entrypoint regression test | `40128a980bee56e4f1180f3d249f3ac708965f97` | `094CC12D90123342D9B828035F5290BF010167FAD7A7CA1BD82DCCAFB1DEDDE3` |
 
 The independent blob-readback rerun above predates the final entrypoint-fix commit and reports 25/25 tests; the primary final-HEAD validation reported above is 27/27. These are separate runs, not contradictory counts for one run. The working-tree digest columns are retained solely as historical records and are not canonical source identities.
+
+## Current-main follow-up
+
+See [`evidence/current-main-recheck-5ad5a9ab-20260928/REPORT.md`](../current-main-recheck-5ad5a9ab-20260928/REPORT.md) for a subsequent no-container compatibility recheck against main `5ad5a9ab465e2b0052aa301b1909b92816e70025`. The original result above remains frozen to `71f8538`; this follow-up does not rewrite that historical scope.
