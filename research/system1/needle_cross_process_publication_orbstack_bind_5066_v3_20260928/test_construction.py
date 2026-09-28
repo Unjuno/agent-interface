@@ -21,6 +21,14 @@ SEED = HERE.parents[2] / "research/needle_role_skill_reload_3780_v1/formal/seed-
 
 
 class ConstructionTests(unittest.TestCase):
+    def test_formal_output_path_is_allocation_frozen(self):
+        self.assertEqual(formal.OUTPUT_PATH,Path("/tmp/unjuno-5134-orbstack-publication-20260928-03"))
+        freeze=json.loads((HERE/"FREEZE.json").read_bytes())
+        self.assertEqual(Path(freeze["T"]["output_path"]),formal.OUTPUT_PATH)
+        self.assertEqual(formal.validate_output_path(str(formal.OUTPUT_PATH)),formal.OUTPUT_PATH.resolve())
+        with self.assertRaisesRegex(RuntimeError,"frozen allocation path"):
+            formal.validate_output_path("/tmp/unjuno-wrong-output")
+
     def test_seed_and_candidate_are_exact_and_valid(self):
         raw = SEED.read_bytes()
         seed = json.loads(raw)

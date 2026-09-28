@@ -32,6 +32,13 @@ def write_json(path,value):path.write_text(json.dumps(value,sort_keys=True,inden
 
 
 ALLOCATION="needle-publication-orbstack-bind-5066-20260928-03"
+OUTPUT_PATH=Path("/tmp/unjuno-5134-orbstack-publication-20260928-03")
+
+
+def validate_output_path(requested:str)->Path:
+    out=Path(requested).resolve()
+    if out!=OUTPUT_PATH.resolve():raise RuntimeError("output path differs from frozen allocation path")
+    return out
 
 
 def release_marker(issue_number:int,allocation:str,main_sha:str)->str:
@@ -58,7 +65,7 @@ def main():
     ap=argparse.ArgumentParser();ap.add_argument("--output",required=True);ap.add_argument("--preflight-only",action="store_true")
     ap.add_argument("--slot-release-5074-comment-id",type=int)
     ap.add_argument("--queue-release-5085-comment-id",type=int)
-    args=ap.parse_args();out=Path(args.output).resolve()
+    args=ap.parse_args();out=validate_output_path(args.output)
     if out.exists():raise RuntimeError("output destination already exists")
     if sha(SEED.read_bytes())!="2e7bff5a2c6ffd35935c5e3c88d08cb686fb736d332c8d5cdb24bb1b67dc873a":raise RuntimeError("seed identity mismatch")
     freeze=json.loads((EXP/"FREEZE.json").read_text()); source_expected=freeze["source_sha256"]

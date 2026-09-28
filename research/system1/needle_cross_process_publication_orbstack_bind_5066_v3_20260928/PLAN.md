@@ -19,7 +19,10 @@ ACTIVE; matched in-place writes expose partial bytes.
 blob and generations 3789–3795. One runner invocation followed only on exit 0
 by a separate auditor. The raw/receipt pair is copied to `/in` with a SHA-256
 manifest, mounted read-only; auditor output is a separate writable `/out`.
-Current-main and named exclusive queue/owner markers are mandatory. No retries.
+The sole formal output path is frozen as
+`/tmp/unjuno-5134-orbstack-publication-20260928-03`; a different CLI path is
+rejected before Docker access. Current-main and named exclusive queue/owner
+markers are mandatory. No retries.
 
 **D.** PASS requires 56 concurrent + 28 post rows and 28 unsafe rows to
 reconcile, all descriptor timestamps ordered `open < replace-start <
