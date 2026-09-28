@@ -12,6 +12,7 @@ cleanup() {
   wait "$XVFB_PID" 2>/dev/null || true
 }
 trap cleanup EXIT HUP INT TERM
+python3 "$HERE/test_audit.py"
 i=0
 until xdpyinfo -display "$DISPLAY" >/dev/null 2>&1; do
   i=$((i + 1))
