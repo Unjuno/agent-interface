@@ -158,3 +158,22 @@ test('reviewed image reference preserves current MCP error status',async()=>{
  assert.equal(images,0);
  await client.close();
 });
+
+test('returned local attempt selects retained reply even when relay IDs are reused',async()=>{
+ const refusing=fixture.replace('const r=JSON.parse(line);', "const r=JSON.parse(line);if(r.tool==='refuse'){console.log(JSON.stringify({status:'refused',dispatched:false,next_id:r.id}));return;}");
+ const {client,dir}=await setup({args:['-e',refusing]});
+ try {
+  const pending=client.send('refuse');assert.equal(client.wait(),pending);
+  const refused=await pending;assert.equal(refused.attempt,1);
+  assert.equal(await client.wait(),refused);
+  await client.present(refused.attempt,{text:()=>{},image:()=>assert.fail('refusal image')});
+  const reply=await client.send('observe');assert.equal(reply.id,1);assert.equal(reply.attempt,2);
+  const seen=[];await client.present(reply.attempt,{text:v=>seen.push(v),image:()=>{}});
+  assert.equal(JSON.parse(seen[0]).call_id,'c1');
+  await client.review(reply.attempt,{task:'t',phase:'visible',reason:'Reviewed the returned local attempt.'});
+  const raw=JSON.parse(await readFile(join(dir,'reply-2.json'),'utf8'));
+  assert.equal(Object.hasOwn(raw,'attempt'),false);
+  const {attempt,...unchanged}=reply;assert.deepEqual(unchanged,raw);
+  assert.deepEqual((await events(dir)).filter(x=>x.kind==='presentation_started').map(x=>x.attempt),[1,2]);
+ } finally {await client.close();}
+});

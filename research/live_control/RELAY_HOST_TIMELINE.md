@@ -7,12 +7,17 @@ and fresh evidenceDirectory as `createRelayClient`.
 
 ```js
 const client = await createInstrumentedRelayClient(options);
-await client.send('interface_guarded_observe'); // local attempt 1
-await client.present(1, { text: nodeRepl.write, image: nodeRepl.emitImage });
+const reply = await client.send('interface_guarded_observe');
+await client.present(reply.attempt, { text: nodeRepl.write, image: nodeRepl.emitImage });
 // After viewing the image, explicitly declare the review:
-await client.review(1, { task: 'task-1', phase: 'grounded', reason: 'Viewed field and Save.' });
+await client.review(reply.attempt, { task: 'task-1', phase: 'grounded', reason: 'Viewed field and Save.' });
 // Decide the next operation from the image; no automatic action follows review.
 ```
+
+The instrumented `send()` and its same-request `wait()` return the relay response
+with an additional host-only `attempt` field. Pass `reply.attempt` to `present`
+and `review`; do not infer it from `reply.id` or `next_id`. The field is not added
+to persisted relay replies, MCP content or the base uninstrumented client.
 
 Attempt numbers identify local `request-N.json`/`reply-N.json` files, not reused
 relay protocol IDs. `wait()` returns the same send promise; it never resends.
