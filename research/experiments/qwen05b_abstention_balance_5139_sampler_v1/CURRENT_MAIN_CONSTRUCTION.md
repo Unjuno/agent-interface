@@ -82,3 +82,13 @@ gates; seed/output collision checks; resolution of the historical
 inventory; and an exact, named #5139 GPU/Docker lease. This check satisfies
 none of those gates. No model load, CUDA initialization, Docker command,
 training, adapter write, or GPU allocation was attempted.
+
+## Current-main refresh rerun — 2026-09-28
+
+Main advanced to `f572e3be60d21c8ac55e121d9fe45dc999ec5c66` while the PR was
+being prepared. That exact main tip was merged into this additive branch;
+the experiment path remained absent on main and the PR comparison still
+contains only the nine files under this experiment directory. Re-running the
+same two commands above at the refreshed branch tip passed again: 16/16 tests
+in 0.037 seconds, `py_compile` exit 0, and `git diff --check` clean. No seeds,
+inputs, outputs, code, or GPU/container allocation changed in this refresh.
