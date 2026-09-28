@@ -11,3 +11,5 @@ python probe_terminal_order.py
 The five scenarios are retained in `TERMINAL_ORDER_PROBE.json`: edge before terminal, after terminal, overlapping terminal time, unknown terminal time, and multiple terminal events. Expected outputs are respectively authorization, post-terminal rejection, uncertainty hold, unknown-time hold, and rejection when any terminal interval is strictly before the edge. Candidate/oracle agreement is necessary but is not formal acceptance.
 
 `FREEZE_candidate_v2.json` pins source and fixture identities. `RESULT_candidate_v2.json` includes the probe hash and individual candidate/oracle source hashes. Host-only evidence; no Docker, runtime authority, GUI/model action, or integrated claim.
+
+`exhaustive_interval_audit.py` exhaustively enumerates 48,384 combinations of edge, close, terminal intervals (including unknown/invalid clocks) and close-lineage variants. `EXHAUSTIVE_INTERVAL_AUDIT.json` records zero candidate/oracle mismatches and pins the source hashes. This establishes only equivalence over that finite model; it does not establish that the shared policy assumptions are correct.
