@@ -4,7 +4,7 @@
 
 This is a host-CPU-only construction check for the pre-formal sampler correction in Issue #5139. It is not a model training run, data-quality result, Docker experiment, or GPU result. The sampling correction addresses the immutable v2 deterministic-prefix confound without changing any #4988/#5014 source, seed, dataset, output, or verdict.
 
-Frozen base for this additive sampler bundle: `main` SHA `3007e03481d545eb9a92b8cec07c8c4201bd3728`. Branch: `research/qwen05b-abstention-balance-5139-sampler-20260928`. Study path: `research/experiments/qwen05b_abstention_balance_5139_sampler_v1/`.
+The first publication branch was based on `main` SHA `3007e03481d545eb9a92b8cec07c8c4201bd3728`; it later became stale and is not the review branch. The tested files were republished without sampler/test changes on `research/qwen05b-abstention-balance-5139-sampler-v2-20260928`, based on then-current `main` SHA `a78dfcfcc0ffdd1864abd9170087e835b5467f91`. At recheck, `main` still resolved to that SHA and the review branch compared 3 commits ahead / 0 behind. This republishing updates provenance/base only; it does not rerun or broaden the host test claim. Study path: `research/experiments/qwen05b_abstention_balance_5139_sampler_v1/`.
 
 ## H / T / D / C / U
 
@@ -38,5 +38,4 @@ Result: 6 tests, 0.002 seconds, exit 0.
 
 ## Resource / allocation boundary
 
-Current #5085 arbitration assigns the serialized CPU slot to #5133 allocation -04. That is neither a #5139 GPU lease nor inherited authorization. No #5139 model load, CUDA call, fit, adapter write, Docker invocation, or formal output was consumed here. Keep this branch preparatory; do not merge it as a completed experiment. A full fresh-main source/data/model freeze, independent raw auditor, pinned-image CPU gate, historical `sad_cannon` attribution disposition, output/seed collision check, and explicit named #5139 GPU/Docker lease remain required before any model or container work.
-
+Current #5085 arbitration gives the next shared local execution slot to #5134; its recorded run sequence is not a #5139 GPU lease. No #5139 model load, CUDA call, fit, adapter write, Docker invocation, or formal output was consumed here. Keep this PR preparatory; do not merge it as a completed experiment. A full fresh-main source/data/model freeze, independent raw auditor, pinned-image CPU gate, historical `sad_cannon` attribution disposition, output/seed collision check, and explicit named #5139 GPU/Docker lease remain required before any model or container work.
