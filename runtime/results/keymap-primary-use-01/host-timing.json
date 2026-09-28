@@ -1,0 +1,154 @@
+{
+  "schema": "agent-interface/host-timing-summary-v1",
+  "scope": "single retained host lifetime; boundaries, not model latency or semantic truth",
+  "timeline_status": "complete",
+  "transport_closed": true,
+  "call_count": 4,
+  "returned_count": 4,
+  "send_to_reply_total_ms": 2496.1906000077724,
+  "first_send_to_last_reply_ms": 69096.17870000005,
+  "unmeasured": [
+    "first useful model-visible feedback",
+    "semantic completion",
+    "isolated model wait/thinking",
+    "actual model tokens and cost",
+    "matched speedup and human tempo"
+  ],
+  "time_partition": {
+    "span": "first_send_to_last_reply",
+    "total_ms": 69096.17870000005,
+    "request_outstanding_ms": 2496.1906000077724,
+    "presentation_callbacks_ms": 9.98879999667406,
+    "other_host_intervals_ms": 66589.9992999956,
+    "scope": "Disjoint host-clock intervals only. Other includes orchestration, logging and caller gaps; not isolated model reasoning or wait."
+  },
+  "calls": [
+    {
+      "attempt": 1,
+      "tool": "interface_observe",
+      "send_ms": 38676048.9398,
+      "reply_ms": 38677765.8513,
+      "presentations": [
+        {
+          "start_ms": 38677779.2783,
+          "completed_ms": 38677782.2405,
+          "image_delivery": {
+            "mode": "full"
+          }
+        }
+      ],
+      "reviews": [
+        {
+          "recorded_ms": 38693088.7371,
+          "task": "keymap-primary-02",
+          "phase": "initial",
+          "image_delivery": {
+            "mode": "full"
+          },
+          "after_presentation": true,
+          "send_to_declared_review_ms": 17039.79729999602
+        }
+      ],
+      "reply_sha256": "f1131c21b970d560090ceea6cec28193ada4967e52c1216221ce1786691f91c1",
+      "send_to_reply_ms": 1716.9114999994636,
+      "send_to_first_callbacks_completed_ms": 1733.3007000014186,
+      "reply_to_next_send_ms": 28578.321699999273
+    },
+    {
+      "attempt": 2,
+      "tool": "interface_dispatch",
+      "send_ms": 38706344.173,
+      "reply_ms": 38706708.1334,
+      "presentations": [
+        {
+          "start_ms": 38706722.8394,
+          "completed_ms": 38706725.2093,
+          "image_delivery": {
+            "mode": "full"
+          }
+        }
+      ],
+      "reviews": [
+        {
+          "recorded_ms": 38716349.9537,
+          "task": "keymap-primary-02",
+          "phase": "jp-saved",
+          "image_delivery": {
+            "mode": "full"
+          },
+          "after_presentation": true,
+          "send_to_declared_review_ms": 10005.78069999814
+        }
+      ],
+      "reply_sha256": "a7760f7912bda3118803cc8349c5c7f0cb067b5da5b90a5847bbedce2d30f9d1",
+      "send_to_reply_ms": 363.9604000002146,
+      "send_to_first_callbacks_completed_ms": 381.036299996078,
+      "reply_to_next_send_ms": 26660.36029999703
+    },
+    {
+      "attempt": 3,
+      "tool": "interface_dispatch",
+      "send_ms": 38733368.4937,
+      "reply_ms": 38733732.5992,
+      "presentations": [
+        {
+          "start_ms": 38733751.4747,
+          "completed_ms": 38733756.1314,
+          "image_delivery": {
+            "mode": "full"
+          }
+        }
+      ],
+      "reviews": [
+        {
+          "recorded_ms": 38745078.1046,
+          "task": "keymap-primary-02",
+          "phase": "us-saved",
+          "image_delivery": {
+            "mode": "full"
+          },
+          "after_presentation": true,
+          "send_to_declared_review_ms": 11709.610899999738
+        }
+      ],
+      "reply_sha256": "50071fc8aa84c000af81e6674f15d4236ef6d9c4b323c5630d2827bb28a77c55",
+      "send_to_reply_ms": 364.1055000051856,
+      "send_to_first_callbacks_completed_ms": 387.6376999989152,
+      "reply_to_next_send_ms": 11361.30609999597
+    },
+    {
+      "attempt": 4,
+      "tool": "interface_close",
+      "send_ms": 38745093.9053,
+      "reply_ms": 38745145.1185,
+      "presentations": [
+        {
+          "start_ms": 38745152.5145,
+          "completed_ms": 38745155.0063,
+          "image_delivery": {
+            "mode": "full"
+          }
+        }
+      ],
+      "reviews": [],
+      "reply_sha256": "2f5dc653a85f094343b5da8796fa089c0c4a4353b996506bfa158d61a972b17b",
+      "send_to_reply_ms": 51.21320000290871,
+      "send_to_first_callbacks_completed_ms": 61.101000003516674,
+      "reply_to_next_send_ms": null
+    }
+  ],
+  "input_sha256": {
+    "host-events.jsonl": "d7e457b986244645b26bfc0fd2f343ab111ede90dc49df206cf6bc90af32b52e",
+    "request-1.json": "e902d47267c305dc75b9ff17918f60a3621e796e54bdae64cd2c29311ece77d0",
+    "reply-1.json": "f1131c21b970d560090ceea6cec28193ada4967e52c1216221ce1786691f91c1",
+    "review-1.json": "a088a320c491d188630f2acc2d1605f356fc013021e3eb4f487f36a29648ffe2",
+    "request-2.json": "61469744992283470479c6f946293a75cceb6234cfedf4e5a6b4c38da2856d0d",
+    "reply-2.json": "a7760f7912bda3118803cc8349c5c7f0cb067b5da5b90a5847bbedce2d30f9d1",
+    "review-2.json": "79300e4cfffc2ffbb25f94001f03fceabbe7ebf1032eadbb0d1f17de3a880561",
+    "request-3.json": "b46a7ec193441c0bf6c13adc31ebf61992ef35ed3f870f102c2865ab245ef33d",
+    "reply-3.json": "50071fc8aa84c000af81e6674f15d4236ef6d9c4b323c5630d2827bb28a77c55",
+    "review-3.json": "fceea48944d885856d106e229fdc928b9e3f817e7e7f84c3486fa38b85f6fa32",
+    "request-4.json": "53ddd0ade678b025a0daf0e2d8f44f08c703b3f464f5120e1c1a18c4efe73c55",
+    "reply-4.json": "2f5dc653a85f094343b5da8796fa089c0c4a4353b996506bfa158d61a972b17b"
+  }
+}
