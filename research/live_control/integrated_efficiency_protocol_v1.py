@@ -170,6 +170,7 @@ def evaluate(trace: dict) -> dict:
         raise ValueError("known pre-prereg integration discoveries missing")
     arms = {}
     global_call_ids = set()
+    comparison_identity = None
     for arm in ARMS:
         preflight = trace["preflight_calls"][arm]
         if type(preflight) is not dict or set(preflight) != {
@@ -191,12 +192,19 @@ def evaluate(trace: dict) -> dict:
         if preflight["call_id"] in global_call_ids:
             raise ValueError("duplicate model call id across comparison")
         global_call_ids.add(preflight["call_id"])
+        identity = (preflight["requested_model"], preflight["requested_effort"])
+        if comparison_identity is None:
+            comparison_identity = identity
+        elif identity != comparison_identity:
+            raise ValueError("model/effort mismatch across comparison preflights")
         rows = trace["arms"][arm]
         if type(rows) is not list or len(rows) != 6:
             raise ValueError("exact six-task arm required")
         checked = [validate_task(row, arm, index) for index, row in enumerate(rows)]
         for row in checked:
             for call in row["model_calls"]:
+                if (call["requested_model"], call["requested_effort"]) != comparison_identity:
+                    raise ValueError("model/effort mismatch between task call and comparison")
                 if call["call_id"] in global_call_ids:
                     raise ValueError("duplicate model call id across comparison")
                 global_call_ids.add(call["call_id"])
