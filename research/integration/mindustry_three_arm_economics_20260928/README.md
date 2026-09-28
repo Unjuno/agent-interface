@@ -177,6 +177,13 @@ refusal when geometry changes after the model response. Full local suite is
 22/22; the inherited probe remains `passed=true`, `RETAIN`, 10 controls. These
 are host-only construction checks, not Docker/live/formal results.
 
+The inherited #1679 preregistration design auditor was rerun locally and
+returned `passed=true`, no validation errors, and all five corruption controls
+detected. It records zero formal/live invocations. Its legacy `AUDIT.json`
+contains an older preregistration hash, so the script's rewritten historical
+output was restored byte-for-byte; this rerun is reported here rather than
+rewriting the prior audit artifact.
+
 Policy incident (2026-09-28 JST): one read-only `docker ps --format ...`
 inspection was mistakenly issued before the named #5130 lease, despite the
 issue's explicit no-inspection gate. It returned no rows; no container was
