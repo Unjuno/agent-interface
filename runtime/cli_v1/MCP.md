@@ -392,3 +392,33 @@ without replaying input or taking another capture. The lossless receipt decoder
 deliberately rejects the partial summary schema. Failed, incomplete, unfamiliar
 or inconsistent omitted records stay full, as do reports that would not shrink.
 A fixed wait remains a delay, not an acknowledgement of an application update.
+
+## Optional target inspection after public dispatch
+
+In `persistent-x11` mode, `interface_dispatch(..., inspect_after="app")` can
+request the existing focused-target inspection after that one dispatch. The name
+must be a configured target; unsupported modes and unknown names reject before
+input. Omission preserves the existing behavior.
+
+`post_dispatch_inspection` is separate from the execution outcome. Inspection
+runs only after completed dispatch with verified released keys/buttons and no
+input recovery requirement; otherwise its status is `skipped`. Inspection errors
+preserve the original input result. Never replay input to recover this metadata.
+
+The context contains a candidate `review_request` when available. The primary
+must review the evidence and explicitly call `interface_review_target`, which
+rechecks identity, expiry and binding revision. Inspection does not focus,
+select a target, advance the binding revision or capture another image. Its
+metadata is sampled after dispatch and is not atomically bound to the returned
+image. Request a new image when the visual state is uncertain.
+
+The full report persists this context. `interface_results` returns the same
+historical data and does not inspect again or renew the one-use review ID.
+Successful inspection metadata is preserved in full by `detail=summary`,
+including expiry and any extension fields. Inspection errors, skipped inspection
+and mismatched duplicated context retain the full response. `detail=brief`
+also retains the full response for enriched reports. This opt-in trades
+additional metadata and inspection time against a possible separate tool call;
+no latency or token benefit is established yet.
+
+Target inspection uses managed X11 client IDs as configured family roots. Tk widget/child IDs may accept input yet fail the managed transient-family inspection. Configure the managed client explicitly; the optional enrichment does not normalize or rebind it. See [retained primary evidence](../results/post-dispatch-inspection-01/README.md), including the failed child-target trial and corrected allocation.

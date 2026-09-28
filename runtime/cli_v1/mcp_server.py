@@ -180,6 +180,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                     'replay_allowed': False}, error=True)
             options = dict(kwargs, capture_directory=str(call_root / 'images'),
                            display_name=display_name)
+            inspect_after = options.pop('inspect_after', None)
             # Attempt boundary only, not proof that the backend emitted input.
             with calls_lock:
                 calls[call_id]['backend_attempted'] = True
@@ -223,6 +224,14 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 if owner is not None and owner.state == 'failed' and owner.session is None:
                     report.update(status='backend_unavailable', failure_phase='session_initialization',
                                   operation_invoked=False, input_dispatched=False, effect_status='none')
+            if operation == 'dispatch' and inspect_after is not None:
+                try:
+                    report['post_dispatch_inspection'] = owner.inspect_after_dispatch(report, inspect_after)
+                except Exception as error:
+                    report['post_dispatch_inspection'] = {
+                        'status': 'needs_review', 'error': repr(error),
+                        'input_dispatched': False, 'authority_granted': False,
+                        'scope': 'Inspection failed after dispatch; original execution retained. No replay.'}
             if operation.startswith('guarded_'):
                 report.setdefault('replay_allowed', False)
                 report.setdefault('task_success', None)
@@ -239,6 +248,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                       present_result(report, call_root, compact=compact, report_refs=report_refs))
             if owner is not None:
                 result['session'] = owner.snapshot()
+            if 'post_dispatch_inspection' in report:
+                result['post_dispatch_inspection'] = deepcopy(report['post_dispatch_inspection'])
             result['call_directory'] = str(call_root)
             result['call_id'] = call_id
             if persistence_error is not None:
@@ -406,13 +417,19 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         async def interface_dispatch(program: PublicProgram, current_observation_seq: StrictInt,
                                current_binding_revision: StrictInt,
                                compact: StrictBool = False, report_refs: StrictBool = False,
-                               detail: Literal["full", "brief", "summary"] = "full") -> CallToolResult:
+                               detail: Literal["full", "brief", "summary"] = "full",
+                               inspect_after: StrictStr | None = None) -> CallToolResult:
             """Dispatch once through core admission. Include observe for an image; no implicit replay.
 
             Observation sequence is a caller assertion, not server-issued freshness.
             Persistent mode requires session.binding_revision (initially 1); review
             advances it. One-shot binding values remain caller assertions.
             A returned image may precede redraw. Release and cleanup failures remain visible.
+            inspect_after names a configured target in persistent-x11 mode. After
+            completed, released input, return read-only target review metadata;
+            no implicit selection or new capture. Metadata is later than the image.
+            Inspection failure preserves input evidence. Summary preserves complete
+            successful inspection context; errors or skipped inspection stay full.
             detail=brief with compact/report_refs summarizes supported successful paced
             dispatches. This is a partial receipt; presentation.retrieve gets full data.
             detail=summary also supports nonpaced completed dispatches and omits
@@ -423,9 +440,14 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             at receipt.source.raw_report; brief receipts use report_projection and
             require explicit retrieval for omitted detail.
             """
-            return await submit('dispatch', {'program': program,
-                'current_observation_seq': current_observation_seq,
-                'current_binding_revision': current_binding_revision}, compact, report_refs, detail)
+            if inspect_after is not None and (session_mode != 'persistent-x11' or inspect_after not in owner.targets):
+                return content({'status': 'invalid_request', 'error': 'INVALID_POST_DISPATCH_INSPECTION',
+                                'operation_invoked': False, 'input_dispatched': False}, error=True)
+            arguments = {'program': program, 'current_observation_seq': current_observation_seq,
+                         'current_binding_revision': current_binding_revision}
+            if inspect_after is not None:
+                arguments['inspect_after'] = inspect_after
+            return await submit('dispatch', arguments, compact, report_refs, detail)
 
     @server.tool()
     async def interface_results(call_id: StrictStr | None = None,
@@ -492,6 +514,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 'replay_allowed': False}, error=True)
         result = (await asyncio.to_thread(present_management_report, report, call_root) if (record['operation'].startswith('guarded_') or record['operation'] in ('close', 'inspect_target', 'review_target', 'recover_input')) else
                   await asyncio.to_thread(present_result, report, call_root, compact=compact, report_refs=report_refs))
+        if 'post_dispatch_inspection' in report:
+            result['post_dispatch_inspection'] = deepcopy(report['post_dispatch_inspection'])
         result.update(call_id=call_id, call_directory=str(call_root), retained_call=record,
                       operation_invoked=False)
         if detail == 'brief' and record['operation'].startswith('guarded_'):

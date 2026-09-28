@@ -30,7 +30,7 @@ def summarize_public_dispatch(view):
                 or receipt["omitted_from_view"] != 0
                 or receipt["motor_state_validation"] != {"present": False, "accepted": False, "reason": "missing"}
                 or set(source) != {"path", "sha256", "bytes", "kind", "raw_report"}
-                or set(raw) - {"schema", "status", "result", "normalization", "compilation", "session"}
+                or set(raw) - {"schema", "status", "result", "normalization", "compilation", "session", "post_dispatch_inspection"}
                 or raw["schema"] != "agent-interface/runtime-dispatch-result-v1" or raw["status"] != "returned"
                 or set(result) != {"status", "admission", "required_capabilities", "execution", "recovery_required"}
                 or result["status"] != "completed" or result["admission"] != "accepted"
@@ -45,6 +45,17 @@ def summarize_public_dispatch(view):
                 or raw.get("session", {}).get("recovery_required", False) is not False
                 or not isinstance(view["call_id"], str) or not view["call_id"]):
             return full
+        if "post_dispatch_inspection" in raw or "post_dispatch_inspection" in view:
+            inspection = raw["post_dispatch_inspection"]
+            if (encoded(inspection) != encoded(view["post_dispatch_inspection"])
+                    or inspection.get("status") != "needs_review"
+                    or inspection.get("error") is not None
+                    or inspection.get("input_dispatched") is not False
+                    or inspection.get("authority_granted") is not False
+                    or inspection.get("review_request", {}).get("tool") != "interface_review_target"):
+                return full
+            # The complete inspection, including expiry and extensions, stays in
+            # the outer view. Only its duplicate inside raw_report is omitted.
         if any(type(execution[k]) is not int or execution[k] < 0 for k in ("started_ns", "ended_ns", "emissions", "program_emissions")):
             return full
         if execution["ended_ns"] < execution["started_ns"] or execution["program_emissions"] > execution["emissions"]:

@@ -13,6 +13,53 @@ from runtime.cli_v1.mcp_session import MCPSessionOwner
 
 class OwnedMCPTests(unittest.IsolatedAsyncioTestCase):
 
+    async def test_post_dispatch_inspection_is_opt_in_retained_and_never_replayed(self):
+        from copy import deepcopy
+        raw = json.loads((Path(__file__).parent/'fixtures/nonpaced_dispatch_review.json').read_text())['receipt']['source']['raw_report']
+        for case in ('success', 'inspection_error', 'helper_error', 'release_failure'):
+            with self.subTest(case=case), tempfile.TemporaryDirectory() as td, ExitStack() as stack:
+                session = self.fixture()
+                stack.enter_context(self.selection())
+                stack.enter_context(patch('runtime.cli_v1.mcp_session.open_session', return_value=session))
+                evidence = {'window_id':456,'transient_chain':[456,123]}
+                inspect = stack.enter_context(patch('runtime.cli_v1.mcp_session.inspect_focused_target', return_value=evidence))
+                report = deepcopy(raw)
+                if case == 'release_failure': report['result']['execution']['releases'][0]['verified'] = False
+                if case == 'inspection_error': inspect.side_effect = OSError('lost focus metadata')
+                if case == 'helper_error': stack.enter_context(patch.object(MCPSessionOwner,'inspect_after_dispatch',side_effect=RuntimeError('helper failure')))
+                dispatch = stack.enter_context(patch('runtime.cli_v1.mcp_server.dispatch_in_session', return_value=report))
+                stack.enter_context(patch('runtime.cli_v1.mcp_server.present_result', side_effect=lambda report,*a,**k: {'report':deepcopy(report)}))
+                server = create_server({'fixture':123},td,session_mode='persistent-x11')
+                args = {'program':{},'current_observation_seq':1,'current_binding_revision':1,'inspect_after':'fixture','detail':'summary','compact':True,'report_refs':True}
+                row = self.row(await server.call_tool('interface_dispatch',args))
+                context = row['post_dispatch_inspection']
+                self.assertEqual(row['report']['result'],report['result'])
+                self.assertEqual(row['session']['binding_revision'],1)
+                self.assertEqual(row['session']['targets'],{'fixture':123})
+                if case == 'success': self.assertEqual(context['review_request']['tool'],'interface_review_target')
+                elif case == 'release_failure': self.assertEqual(context['status'],'skipped')
+                else: self.assertIn('error',context)
+                stored = Path(row['call_directory'],'report.json').read_bytes()
+                previous = inspect.call_count
+                retained = self.row(await server.call_tool('interface_results',{'call_id':row['call_id'],'include_image':False}))
+                self.assertEqual(retained['post_dispatch_inspection'],context)
+                self.assertFalse(retained['operation_invoked'])
+                self.assertEqual(inspect.call_count,previous)
+                self.assertEqual(Path(row['call_directory'],'report.json').read_bytes(),stored)
+                dispatch.assert_called_once()
+                self.assertNotIn('inspect_after',dispatch.call_args.kwargs)
+                session.backend.focus.assert_not_called()
+                await server.call_tool('interface_close',{})
+
+    async def test_post_dispatch_inspection_rejects_invalid_target_or_mode_before_input(self):
+        for mode,target in [('one-shot','fixture'),('persistent-x11','unknown')]:
+            with tempfile.TemporaryDirectory() as td, patch('runtime.cli_v1.mcp_server.dispatch') as direct, patch('runtime.cli_v1.mcp_server.dispatch_in_session') as owned, patch('runtime.cli_v1.mcp_session.open_session') as opened:
+                server=create_server({'fixture':123},td,session_mode=mode)
+                reply=await server.call_tool('interface_dispatch',{'program':{},'current_observation_seq':1,'current_binding_revision':1,'inspect_after':target})
+                self.assertTrue(reply.isError)
+                self.assertFalse(self.row(reply)['operation_invoked'])
+                direct.assert_not_called(); owned.assert_not_called(); opened.assert_not_called()
+
     async def test_inspection_error_flag_separates_pending_review_from_failures(self):
         from runtime.cli_v1.attempt import _write_json as write_json
         for case in ('ready_metadata', 'ready_image', 'inspect_failure', 'capture_failure',
