@@ -11,6 +11,66 @@ from runtime.cli_v1.mcp_session import MCPSessionOwner
 
 
 class OwnedMCPTests(unittest.IsolatedAsyncioTestCase):
+    async def test_recovery_requires_existing_owner_and_current_revision(self):
+        with self.selection(), patch('runtime.cli_v1.mcp_session.open_session') as opened:
+            owner = MCPSessionOwner({'fixture': 123})
+            self.assertEqual(owner.recover_input(1)['error'], 'RECOVERY_REQUIRES_OPEN_SESSION')
+            opened.assert_not_called()
+            session = self.fixture()
+            session.recover_input = Mock(return_value={'status': 'recovery_failed',
+                'release_attempted': True, 'recovery_required': True})
+            owner.session = session; owner.state = 'open'
+            owner.target_review = {'pending': True}
+            self.assertEqual(owner.recover_input(0)['error'], 'SESSION_BINDING_REVISION_MISMATCH')
+            session.recover_input.assert_not_called()
+            self.assertEqual(owner.recover_input(1)['status'], 'recovery_failed')
+            self.assertEqual(owner.binding_revision, 1)
+            session.recover_input.return_value = {'status': 'input_recovered',
+                'release_attempted': True, 'recovery_required': False}
+            self.assertEqual(owner.recover_input(1)['binding_revision'], 2)
+            self.assertIsNone(owner.target_review)
+            self.assertEqual(owner.recover_input(1)['error'], 'SESSION_BINDING_REVISION_MISMATCH')
+            self.assertEqual(session.recover_input.call_count, 2)
+
+    async def test_recovery_is_persisted_and_retained_reads_never_repeat_release(self):
+        session = self.fixture()
+        session.recovery_required = True
+        def recover():
+            session.recovery_required = False
+            return {'status': 'input_recovered', 'release_attempted': True,
+                    'recovery_required': False, 'release': session.backend.release_all()}
+        session.recover_input = Mock(side_effect=recover)
+        with tempfile.TemporaryDirectory() as td, self.selection(), patch(
+                'runtime.cli_v1.mcp_session.open_session', return_value=session):
+            server = create_server({'fixture': 123}, td, session_mode='persistent-x11')
+            observed = self.row(await server.call_tool('interface_observe', {
+                'target': 'fixture', 'region': [0, 0, 1, 1], 'frame': 'window_client'}))
+            with patch('runtime.cli_v1.mcp_server._write_json', side_effect=OSError('disk full')):
+                failed = self.row(await server.call_tool('interface_recover_input', {'current_binding_revision': 1}))
+            self.assertEqual(failed['error'], 'REQUEST_PERSISTENCE_FAILED')
+            session.recover_input.assert_not_called()
+            recovered = self.row(await server.call_tool('interface_recover_input', {'current_binding_revision': 1}))
+            self.assertEqual(recovered['status'], 'input_recovered')
+            self.assertEqual(recovered['session']['binding_revision'], 2)
+            self.assertEqual(recovered['session']['session_id'], observed['session']['session_id'])
+            retained = self.row(await server.call_tool('interface_results', {'call_id': recovered['call_id']}))
+            self.assertEqual(retained['status'], 'input_recovered')
+            self.assertFalse(retained['operation_invoked'])
+            session.recover_input.assert_called_once()
+            session.backend.release_all.assert_called_once()
+            old = self.row(await server.call_tool('interface_dispatch', {'program': {},
+                'current_observation_seq': 0, 'current_binding_revision': 1}))
+            report = json.loads(Path(old['call_directory'], 'report.json').read_text())
+            self.assertEqual(report['error'], 'SESSION_BINDING_REVISION_MISMATCH')
+            session.dispatch.assert_not_called()
+
+    async def test_recovery_tool_is_only_on_persistent_public_route(self):
+        with tempfile.TemporaryDirectory() as td:
+            for mode in ('one-shot', 'persistent-x11', 'guarded-x11'):
+                server = create_server({'fixture': 123}, Path(td)/mode, session_mode=mode)
+                names = {tool.name for tool in await server.list_tools()}
+                self.assertEqual('interface_recover_input' in names, mode == 'persistent-x11')
+
     def fixture(self):
         backend = Mock()
         backend.observe_read_only.return_value = {'sha256': 'fixture'}

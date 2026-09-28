@@ -1,7 +1,7 @@
 """Single-owner X11 connection for the optional persistent MCP route.
 
 All methods are serialized by the transport. No restart, authority issuance,
-source refresh or recovery reset. The ordinary one-shot route does not use this.
+source refresh or implicit recovery reset. The ordinary one-shot route does not use this.
 """
 from copy import deepcopy
 import os
@@ -90,6 +90,27 @@ class MCPSessionOwner:
         if observation is not None:
             row['observation_report'] = observation
         return row
+
+    def recover_input(self, current_binding_revision):
+        # Never open/reopen a connection to recover a different input owner.
+        if self.state != 'open' or self.session is None:
+            return {'status': 'refused', 'error': 'RECOVERY_REQUIRES_OPEN_SESSION',
+                    'release_attempted': False, 'authority_granted': False}
+        if (type(current_binding_revision) is not int
+                or current_binding_revision != self.binding_revision):
+            return {'status': 'refused', 'error': 'SESSION_BINDING_REVISION_MISMATCH',
+                    'release_attempted': False, 'authority_granted': False}
+        report = self.session.recover_input()
+        if report.get('release_attempted'):
+            self.dispatch_attempted = True
+        if report.get('status') == 'input_recovered':
+            self.target_review = None
+            self.binding_revision += 1
+        return dict(report, binding_revision=self.binding_revision,
+                    authority_granted=False,
+                    note='Only input neutrality was checked. Prior task effects remain unknown; '
+                         'observe and review the surface before a new program. '
+                         'Use the returned binding revision; no lease/source is issued.')
 
     def review_target(self, target, window_id, review_id, screen_region=None,
                       capture_directory=None):

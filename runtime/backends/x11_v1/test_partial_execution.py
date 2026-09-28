@@ -10,6 +10,24 @@ from runtime.core_v1.test_contract import program
 
 
 class PartialExecutionTests(unittest.TestCase):
+    def test_explicit_recovery_requires_verified_empty_readback(self):
+        backend = mock.Mock()
+        session = X11RuntimeSession(backend)
+        self.assertEqual(session.recover_input()['error'], 'INPUT_RECOVERY_NOT_REQUIRED')
+        backend.release_all.assert_not_called()
+        session.recovery_required = True
+        backend.release_all.side_effect = [OSError('offline'),
+            {'verified': True, 'keys_down': ['w'], 'buttons_down': []},
+            {'verified': True, 'keys_down': [], 'buttons_down': []}]
+        self.assertEqual(session.recover_input()['status'], 'recovery_failed')
+        self.assertTrue(session.recovery_required)
+        self.assertEqual(session.recover_input()['status'], 'recovery_failed')
+        self.assertTrue(session.recovery_required)
+        self.assertEqual(session.recover_input()['status'], 'input_recovered')
+        self.assertFalse(session.recovery_required)
+        backend.execute.assert_not_called()
+        self.assertEqual(backend.release_all.call_count, 3)
+
     def test_uncertain_press_is_released_after_send_or_sync_failure(self):
         from Xlib import X
         from runtime.backends.x11_v1.backend import X11ExecutionError

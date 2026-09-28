@@ -322,6 +322,16 @@ For native research sessions, `native_observe(stage=...)` reads an already retai
 
 For direct public-MCP use, `python -m runtime.cli_v1.mcp_server --targets targets.json --output-directory runs --display :N --session-mode persistent-x11` retains one connection through explicit close or normal transport shutdown. The default is still one-shot. Use the returned `session.binding_revision` (initially 1) in dispatch assertions. `interface_observe` captures a fresh image; `interface_results` reads a retained result without input or recapture.
 
+If this persistent session reports `recovery_required=true`, normal dispatch
+stays blocked. Explicitly call `interface_recover_input` with its current binding
+revision to attempt tracked-input release/readback. Verified empty release clears
+only that block and advances the revision; old programs and pending target reviews
+become invalid. Observe/review current state before a newly authored program.
+Failure keeps recovery required. This never replays a failed action or reconnects.
+[Real-MCP boundary evidence](results/explicit-input-recovery-01/README.md) covers
+held-input recovery, stale-request refusal and a new program on the same owner;
+application effects and task completion remain unproven by recovery.
+
 X11 registers a key/button cleanup obligation before attempting a press, so an
 uncertain send/sync failure does not erase the release target. Failed release
 readback retains the obligation for explicit recovery. The

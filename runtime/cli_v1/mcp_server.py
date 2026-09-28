@@ -186,6 +186,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             try:
                 if operation == 'close':
                     report = close_owner()
+                elif operation == 'recover_input':
+                    report = owner.recover_input(**kwargs)
                 elif operation.startswith('guarded_'):
                     report = owner.invoke_guarded(operation, kwargs, call_root)
                 elif operation in ('inspect_target', 'review_target'):
@@ -233,7 +235,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 persistence_error = repr(error)
                 with calls_lock:
                     calls[call_id]['persistence_failure'] = 'report'
-            result = (present_management_report(report, call_root) if (operation.startswith('guarded_') or operation in ('close', 'inspect_target', 'review_target')) else
+            result = (present_management_report(report, call_root) if (operation.startswith('guarded_') or operation in ('close', 'inspect_target', 'review_target', 'recover_input')) else
                       present_result(report, call_root, compact=compact, report_refs=report_refs))
             if owner is not None:
                 result['session'] = owner.snapshot()
@@ -249,8 +251,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 from .receipt_references import compact_guarded_observation
                 result = compact_guarded_observation(result)
             return content(result, error=persistence_error is not None or (
-                (operation.startswith('guarded_') or operation in ('close', 'inspect_target', 'review_target')) and
-                (report.get('error') is not None or report.get('status') in ('cleanup_failed','refused','needs_review')
+                (operation.startswith('guarded_') or operation in ('close', 'inspect_target', 'review_target', 'recover_input')) and
+                (report.get('error') is not None or report.get('status') in ('cleanup_failed','refused','needs_review','recovery_failed')
                  or report.get('feedback_status') == 'observation_failed')))
         finally:
             if call_id is not None:
@@ -280,6 +282,19 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         return await asyncio.shield(worker)
 
     if owner is not None and not guarded:
+        @server.tool()
+        async def interface_recover_input(current_binding_revision: StrictInt) -> CallToolResult:
+            """Explicitly release tracked inputs after unverified cleanup, without replay.
+
+            Requires this open persistent-X11 session, its current binding revision,
+            and recovery_required=true. Failed readback leaves recovery blocked.
+            Verified empty release clears only the input block and advances binding
+            revision, invalidating old programs and pending target reviews. No new
+            observation or lease is issued. Prior task effects remain unknown:
+            observe/review before choosing a new program. Never retries automatically.
+            """
+            return await submit('recover_input', {'current_binding_revision': current_binding_revision}, False, False)
+
         @server.tool()
         async def interface_inspect_target(target: StrictStr,
                                            screen_region: list[StrictInt] | None = None) -> CallToolResult:
@@ -440,7 +455,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             return content({'status': 'receipt_unavailable', 'call': record,
                 'error': repr(error), 'operation_invoked': False,
                 'replay_allowed': False}, error=True)
-        result = (await asyncio.to_thread(present_management_report, report, call_root) if (record['operation'].startswith('guarded_') or record['operation'] in ('close', 'inspect_target', 'review_target')) else
+        result = (await asyncio.to_thread(present_management_report, report, call_root) if (record['operation'].startswith('guarded_') or record['operation'] in ('close', 'inspect_target', 'review_target', 'recover_input')) else
                   await asyncio.to_thread(present_result, report, call_root, compact=compact, report_refs=report_refs))
         result.update(call_id=call_id, call_directory=str(call_root), retained_call=record,
                       operation_invoked=False)
