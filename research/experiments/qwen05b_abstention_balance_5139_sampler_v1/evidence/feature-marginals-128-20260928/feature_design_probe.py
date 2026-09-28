@@ -2,6 +2,16 @@
 from collections import Counter, defaultdict
 import hashlib
 import json
+from pathlib import Path
+import sys
+
+for parent in Path(__file__).resolve().parents:
+    if all((parent / name).is_file()
+           for name in ("make_dataset.py", "protocol.py", "sampler.py")):
+        sys.path.insert(0, str(parent))
+        break
+else:
+    raise RuntimeError("prepared #5139 source package not found")
 
 import make_dataset
 from protocol import FIELDS, make_rows

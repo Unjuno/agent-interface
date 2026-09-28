@@ -150,9 +150,10 @@ preserve #4988/#5014 results unchanged. See [Issue #5139](https://github.com/Unj
 and [Draft PR #5165](https://github.com/Unjuno/agent-interface/pull/5165).
 
 A later isolated composition recheck against main `71f85380669795d21c668bcbc832ae896d0b6220`
-passed 25/25 host tests and reproduced both fixed 128-sentinel diagnostics with
-JSON identical to the retained outputs. It also retains a direct-launch import
-path STOP and the explicit-path recovery. This remains CPU construction evidence;
+passed 27/27 host tests and reproduced both fixed 128-sentinel diagnostics with
+JSON identical to the retained outputs. A missing direct-launch import bootstrap
+was repaired and covered by subprocess regression tests; the original import
+failure and the first incorrect test-oracle attempt remain disclosed. This remains CPU construction evidence;
 see the [current-main recheck report](research/experiments/qwen05b_abstention_balance_5139_sampler_v1/evidence/current-main-recheck-71f85380-20260928/REPORT.md).
 
 ### Issue #4623 — GPU shared-prefix readout construction stop
