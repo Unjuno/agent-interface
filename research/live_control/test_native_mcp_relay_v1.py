@@ -24,14 +24,18 @@ class RelayTests(unittest.IsolatedAsyncioTestCase):
                 stdout=asyncio.subprocess.PIPE,stderr=asyncio.subprocess.PIPE)
             requests=[{'id':1,'tool':'native_start','arguments':{}},
                       {'id':1,'tool':'list_tools','arguments':{}},
-                      {'id':2,'tool':'interface_close','arguments':{}}]
+                      {'id':2,'tool':'interface_guarded_mint_many','arguments':{'source_sequence':1,'references':[]}},
+                      {'id':3,'tool':'interface_close','arguments':{}}]
             stdout,stderr=await asyncio.wait_for(process.communicate(
                 ''.join(json.dumps(r)+'\n' for r in requests).encode()),timeout=20)
             self.assertEqual(process.returncode,0,stderr.decode())
             rows=[json.loads(line) for line in stdout.splitlines()]
             self.assertEqual(rows[0]['status'],'refused');self.assertFalse(rows[0]['dispatched'])
             self.assertIn('interface_guarded_input',{t['name'] for t in rows[1]['result']['tools']})
-            closed=json.loads(rows[2]['result']['content'][0]['text'])
+            self.assertEqual(rows[2]['status'],'returned')
+            self.assertTrue(rows[2]['result']['isError'])
+            self.assertIn('references',rows[2]['result']['content'][0]['text'])
+            closed=json.loads(rows[3]['result']['content'][0]['text'])
             self.assertEqual(closed['status'],'closed')
             self.assertFalse(closed['connection_close_attempted'])
 
