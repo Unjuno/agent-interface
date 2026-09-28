@@ -612,3 +612,22 @@ actual model tokens/cost and human tempo remain unmeasured.
 Issue intake: #5134 is a separately allocated OrbStack publication successor with
 explicit queue gates and no GUI/model/product claims. Its predecessor STOP and
 new main's synthetic research remain unchanged; they are not live adoption evidence.
+
+### Public observation-reference integration checkpoint
+
+The existing native lossless receipt approach now has a bounded public guarded
+variant: observation_refs=true replaces only an exact duplicate observation object
+with a fixed response-local source.native reference. The option defaults false and
+composes with full or brief detail. Expansion restores that presentation exactly;
+brief's normal guard summary remains independently lossy. It changes neither the
+raw journal, image, action admission, capture count nor retained-read behavior.
+
+Primary seed 991336 used the portable ca53cefd9 artifact through real MCP, completing
+six exact-once independent saves. One planned stale-layout refusal remained full;
+close released input; post-close referenced retrieval matched the original image.
+514 retained files audit under Python optimization. Same-record returned text was
+111,193 bytes versus 123,025 expanded bytes (9.6176%); actual model tokens/cost,
+matched task latency, useful feedback and human tempo remain unproven. Contract
+checks: 255 protocol + 106 harness. Evidence lives in
+runtime/results/guarded-observation-refs-primary-01; the preceding offline replay
+remains separately labeled. No model/sensor service or secondary agent was added.
