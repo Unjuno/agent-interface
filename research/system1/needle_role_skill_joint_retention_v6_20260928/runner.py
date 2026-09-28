@@ -180,7 +180,7 @@ def fit_arm_online(arm, seed, core, memory_x, memory_y, test_a, test_b, init):
         arrived_ns = time.perf_counter_ns()
         trainer_id = f"pid:{os.getpid()}:thread:{threading.get_ident()}"
         started = time.perf_counter_ns()
-        consumed_ns = started
+        consumed_ns = None
         for step in range(MICROSTEPS_PER_FEEDBACK):
             index = arrival * MICROSTEPS_PER_FEEDBACK + step
             bx, by = x.reshape(1, -1), y.reshape(1)
@@ -188,6 +188,10 @@ def fit_arm_online(arm, seed, core, memory_x, memory_y, test_a, test_b, init):
             routes.append(dict(route_receipt))
             step_started = time.perf_counter_ns()
             optimizer.zero_grad(set_to_none=True)
+            if consumed_ns is None:
+                # Record consumption at the first forward that actually sees
+                # the newly arrived feedback row, not at update setup time.
+                consumed_ns = time.perf_counter_ns()
             F.cross_entropy(selected(core, batch_x), batch_y).backward()
             optimizer.step()
             update_ns.append(time.perf_counter_ns() - step_started)
@@ -198,6 +202,8 @@ def fit_arm_online(arm, seed, core, memory_x, memory_y, test_a, test_b, init):
             raise RuntimeError("STOP_INFERENCE_THREAD_JOIN_TIMEOUT")
         if "error" in box:
             raise RuntimeError("STOP_INFERENCE_WORKER:" + str(box["error"]))
+        if consumed_ns is None:
+            raise RuntimeError("STOP_FEEDBACK_NEVER_CONSUMED")
         query = box.get("query")
         if not isinstance(query, dict):
             raise RuntimeError("STOP_INFERENCE_QUERY_MISSING")

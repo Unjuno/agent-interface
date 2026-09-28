@@ -120,3 +120,44 @@ the pinned Docker 17/17 result applies to the prior source revision and was not
 repeated because of the explicit coordinator hold. The ordering/process issue
 and prior Docker construction are disclosed on #5085; this new run used no
 Docker command.
+
+## Independent fail-closed review and source correction — 2026-09-29
+
+A read-only subagent review of the pushed v6 source found three formal-integrity
+gaps and one event-time discrepancy before any formal run:
+
+1. `formal.py` accepted an arbitrary `owner_comment_url`/non-placeholder
+   `lease_id` without retrieving or matching the actual GitHub comment; it also
+   lacked explicit lease start/end boundaries. It now fetches the referenced
+   public GitHub API comment before any Docker CLI call, requires the issue
+   owner `Unjuno`, parses one machine-readable `needle-docker-owner-lease-v1`
+   payload, and exact-compares its allocation, issue, main SHA, branch, Docker
+   context, lease ID, start/end, and expiry to the local lease. The lease window
+   must be active. Its verified comment body and author/URL are retained in the
+   formal receipt.
+2. `audit_document` previously skipped provenance checks when passed
+   `receipt=None`. It now emits `formal_receipt_missing` and decision
+   `HOLD_AUDIT_INTEGRITY`; when present, it independently parses and binds the
+   owner-comment payload and verifies receipt start/finish against the leased
+   window.
+3. `consumed_ns` was timestamped at update setup, before the feedback row was
+   first passed to the model forward. Runner now records consumption directly
+   before the first forward using that row and fails closed if it was never
+   consumed. Both candidate protocol and independent audit treat update
+   intervals as half-open and reject `consumed_ns == update_end_ns`.
+4. The new lease fixture exposed a type bug: lease issue number 5085 is an
+   integer, but was accidentally included in the required-string field list.
+   Validation now checks its exact integer type/value separately.
+
+Windows CPython 3.11.9 now passes **22/22** zero-fit host tests, including forged
+lease payload/author rejection, receipt-absence HOLD, query/update half-open
+boundary, actual feedback-consumption instrumentation, and the prior eleven
+online-event mutations. `py_compile` and `git diff --check` pass; all eight
+source hashes are frozen in `CONSTRUCTION_FREEZE.json`. No Docker command was
+run for these newest changes because #5085 comment #5864690783 forbids further
+Docker CLI activity until an exact lease/release is recorded. The prior 17/17
+pinned-image suite applies only to the preceding source and does not verify
+these new edits. Current result is host-contract evidence only, not a model,
+optimizer, quality, latency, or scientific PASS. A future Docker construction
+must wait until an explicit coordination update supersedes the hold, and formal
+execution additionally requires the verifiable owner lease described above.

@@ -5,8 +5,10 @@ import hashlib
 import importlib.util
 import json
 import random
+import re
 import statistics
 import sys
+from datetime import datetime
 from pathlib import Path
 
 import torch
@@ -129,7 +131,7 @@ def independent_online_window_errors(record: object) -> list[str]:
         qs, qe, qworker, calls = query
         if not qs < arrived <= consumed < qe:
             errors.append(f"feedback_not_consumed_inside_query:{fid}")
-        if type(start) is not int or type(end) is not int or start < 0 or end <= start or not start <= consumed <= end:
+        if type(start) is not int or type(end) is not int or start < 0 or end <= start or not start <= consumed < end:
             errors.append(f"update_interval_does_not_cover_consumption:{fid}"); continue
         if not isinstance(trainer, str) or not trainer or trainer == qworker:
             errors.append(f"workers_not_independent:{fid}")
@@ -250,7 +252,9 @@ def audit_document(raw: dict, receipt: dict | None = None, raw_sha256: str | Non
             or environment.get("pull") != "never" or environment.get("device") != "cpu"
             or environment.get("threads") != 1 or environment.get("interop_threads") != 1):
         errors.append("environment")
-    if receipt is not None:
+    if receipt is None:
+        errors.append("formal_receipt_missing")
+    else:
         argv = receipt.get("command_argv")
         try:
             expected_argv = expected_docker_argv(receipt["source_path"], receipt["output_path"])
@@ -262,6 +266,7 @@ def audit_document(raw: dict, receipt: dict | None = None, raw_sha256: str | Non
                 if isinstance(argv, list) else True):
             errors.append("formal_argv_digest")
         if (receipt.get("allocation") != ALLOCATION or receipt.get("issue") != 5081
+                or receipt.get("lease_issue") != 5085
                 or receipt.get("image_id") != IMAGE_ID or receipt.get("seeds") != list(SEEDS)
                 or not isinstance(receipt.get("main_sha"), str) or len(receipt["main_sha"]) != 40
                 or not isinstance(receipt.get("branch"), str)
@@ -270,9 +275,41 @@ def audit_document(raw: dict, receipt: dict | None = None, raw_sha256: str | Non
                 or receipt.get("retries") != 0):
             errors.append("formal_receipt_identity")
         if (not isinstance(receipt.get("lease_id"), str) or not receipt["lease_id"]
-                or not str(receipt.get("owner_comment_url", "")).startswith(
-                    "https://github.com/Unjuno/agent-interface/issues/5085#")):
+                or not isinstance(receipt.get("owner_comment_url"), str)):
             errors.append("formal_owner_lease")
+        comment = receipt.get("owner_lease_comment")
+        if (not isinstance(comment, dict)
+                or comment.get("html_url") != receipt.get("owner_comment_url")
+                or comment.get("issue_url") != "https://api.github.com/repos/Unjuno/agent-interface/issues/5085"
+                or comment.get("user_login") != "Unjuno"):
+            errors.append("formal_owner_comment_provenance")
+        else:
+            body = comment.get("body")
+            blocks = (re.findall(r"<!-- needle-docker-owner-lease-v1\n(\{.*?\})\n-->",
+                                 body, re.DOTALL) if isinstance(body, str) else [])
+            try:
+                owner_payload = json.loads(blocks[0]) if len(blocks) == 1 else None
+            except (TypeError, json.JSONDecodeError):
+                owner_payload = None
+            expected_payload = {
+                "schema": "needle-docker-owner-lease-v1", "allocation": ALLOCATION,
+                "issue": 5085, "main_sha": receipt.get("main_sha"),
+                "branch": receipt.get("branch"), "docker_context": receipt.get("docker_context"),
+                "lease_id": receipt.get("lease_id"), "slot_start_utc": receipt.get("slot_start_utc"),
+                "slot_end_utc": receipt.get("slot_end_utc"), "expires_at_utc": receipt.get("expires_at_utc"),
+            }
+            if owner_payload != expected_payload:
+                errors.append("formal_owner_comment_payload")
+        try:
+            slot_start = datetime.fromisoformat(receipt["slot_start_utc"].replace("Z", "+00:00"))
+            slot_end = datetime.fromisoformat(receipt["slot_end_utc"].replace("Z", "+00:00"))
+            expires = datetime.fromisoformat(receipt["expires_at_utc"].replace("Z", "+00:00"))
+            started = datetime.fromisoformat(receipt["started_at_utc"].replace("Z", "+00:00"))
+            finished = datetime.fromisoformat(receipt["finished_at_utc"].replace("Z", "+00:00"))
+            if not (slot_start <= started <= finished < min(slot_end, expires)):
+                errors.append("formal_outside_owner_slot")
+        except (KeyError, TypeError, ValueError):
+            errors.append("formal_slot_timestamps")
         if receipt.get("formal_result_present") is not True:
             errors.append("formal_result_missing")
         if (not isinstance(receipt.get("raw_result_sha256"), str)

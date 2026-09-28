@@ -23,17 +23,17 @@
   "preflight_command": ["python", "-B", "formal.py", "--preflight"],
   "preflight_result": "PREFLIGHT_ONLY",
   "construction_result": {
-    "tests": 18,
-    "passed": 18,
+    "tests": 22,
+    "passed": 22,
     "failed": 0,
-    "decision": "PASS_HOST_MUTATION_MATRIX_ONLY"
+    "decision": "PASS_HOST_FAIL_CLOSED_GATES_ONLY"
   },
   "source_sha256": {
-    "protocol.py": "9dafd86a06758db026059180d7b5ef248c5e1f8a0f4a06ed2c0756549ab755ff",
-    "test_protocol.py": "67932c0a250c3f5f9a67ba3486e90aa9c5cbbc9cde24907767fe93524da7a277",
-    "runner.py": "fbceebc16048a4d485bcf97d53a0d1d33e040c9fe469924fdc61cbec14ef4e49",
-    "audit.py": "520189a491052f1ad93bffd6f77c090689aa3760c0de1f7e5d9496368735b930",
-    "formal.py": "4da25222129cbf9c63267ba2baab611e131ea0cacd2113cfd1feb9c542b3d62c",
+    "protocol.py": "0dc5c348fa4c911006b722288e1cf00da336af7bbd12a78be204fb975fee2383",
+    "test_protocol.py": "ef0ee0a3d91a8d6f691e001f9bbb2b13aab597ca8c7e18aae642b544b1a4164d",
+    "runner.py": "4508a48b3a28f987a6f3798e7d877fe961df5975f28379acc9a760d58e3d5a43",
+    "audit.py": "d46cc141c3990c4711eb5102108872e001d71293100dec3c1bbd368a3a32b8e0",
+    "formal.py": "c25969f67f48c64a8ac98c59c574370ac06b0038fd4f2724a4fcf73f8aee5010",
     "lineage/runner.py": "0c978c7721da5f42d57a838a3d141c9781a19a981db5d50b8e028183bc14fcdf",
     "lineage/audit.py": "6abf8cc48d81c5b4267d993e9d992a15d9015f39f0a50558acfcc6d11bcc4558",
     "lineage/FORMAL_FREEZE.json": "482449e97f3b399b166da11fe54a2be2b9df1f13fab1e95753b283614a20cd7c"
@@ -47,7 +47,8 @@
   "main_at_checkpoint": "b556c109828e89b3a8e78cb618530a044c97d7d8",
   "main_sync_status": "latest observed main b556c109 merged without conflict in branch merge commit b324284ee1; recheck before any formal execution",
   "limits": [
-    "pinned-image zero-fit construction fixtures only",
+    "latest lease/receipt/timestamp source was host-tested only; Docker recheck prohibited by current coordination hold",
+    "prior 17/17 pinned-image result applies to earlier source revision only",
     "no construction raw record or optimizer runtime test",
     "no observed query/update overlap or adaptation/quality result",
     "no exact v6 resource lease in issue 5085"

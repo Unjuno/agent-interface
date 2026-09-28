@@ -7,6 +7,7 @@ import hashlib
 import importlib.util
 import json
 import sys
+from datetime import datetime, timedelta, timezone
 
 import protocol
 
@@ -89,6 +90,12 @@ class OnlineWindowContract(unittest.TestCase):
             mutated["feedback"][0]["arrived_ns"] = arrival
             self.assertTrue(protocol.online_window_errors(mutated))
 
+    def test_rejects_consumption_at_half_open_update_end(self):
+        mutated = json.loads(json.dumps(self.record))
+        mutated["feedback"][0]["consumed_ns"] = mutated["feedback"][0]["update_end_ns"]
+        self.assertIn("update_interval_does_not_cover_consumption",
+                      protocol.online_window_errors(mutated)[0])
+
     def test_rejects_nonoverlap_same_worker_and_missing_query(self):
         mutations = []
         late_update = {"queries": [dict(self.record["queries"][0])],
@@ -156,6 +163,26 @@ class FrozenSourceAndConstructionContract(unittest.TestCase):
         self.assertLess(first_call_wait_at, feedback_at)
         self.assertTrue(any(isinstance(node, ast.Name) and node.id == "online_window_errors"
                             for node in ast.walk(fit)))
+
+    def test_runner_timestamps_feedback_consumption_at_first_forward(self):
+        tree = ast.parse(RUNNER_PATH.read_text(encoding="utf-8"))
+        fit = next(node for node in tree.body if isinstance(node, ast.FunctionDef)
+                   and node.name == "fit_arm_online")
+        assignments = [node for node in ast.walk(fit) if isinstance(node, ast.Assign)
+                       and any(isinstance(target, ast.Name) and target.id == "consumed_ns"
+                               for target in node.targets)]
+        calls = [node for node in assignments if isinstance(node.value, ast.Call)
+                 and isinstance(node.value.func, ast.Attribute)
+                 and isinstance(node.value.func.value, ast.Name)
+                 and node.value.func.value.id == "time"
+                 and node.value.func.attr == "perf_counter_ns"]
+        self.assertEqual(len(calls), 1)
+        forward = next(node for node in ast.walk(fit) if isinstance(node, ast.Call)
+                       and isinstance(node.func, ast.Attribute)
+                       and isinstance(node.func.value, ast.Name)
+                       and node.func.value.id == "F" and node.func.attr == "cross_entropy")
+        self.assertLess(calls[0].lineno, forward.lineno)
+        self.assertIn("STOP_FEEDBACK_NEVER_CONSUMED", RUNNER_PATH.read_text(encoding="utf-8"))
 
     def test_auditor_requires_full_receipt_argv_and_independent_lineage(self):
         source = AUDIT_PATH.read_text(encoding="utf-8")
@@ -225,6 +252,7 @@ class FrozenSourceAndConstructionContract(unittest.TestCase):
             "consumed_before_arrival": lambda r: r["feedback"][0].update(consumed_ns=119),
             "update_reversed": lambda r: r["feedback"][0].update(update_start_ns=180, update_end_ns=130),
             "consumption_outside_update": lambda r: r["feedback"][0].update(consumed_ns=125),
+            "consumption_at_update_end": lambda r: r["feedback"][0].update(consumed_ns=180),
             "same_worker_identity": lambda r: r["feedback"][0].update(trainer_worker_id="inference"),
             "query_call_outside_window": lambda r: r["queries"][0].update(inference_calls=[{"call_start_ns": 90, "call_end_ns": 120}]),
             "duplicate_feedback_id": lambda r: r["feedback"].append(dict(r["feedback"][0])),
@@ -236,6 +264,15 @@ class FrozenSourceAndConstructionContract(unittest.TestCase):
                 candidate = json.loads(json.dumps(valid))
                 mutate(candidate)
                 self.assertTrue(module.independent_online_window_errors(candidate), name)
+
+    def test_independent_auditor_holds_when_formal_receipt_is_absent(self):
+        spec = importlib.util.spec_from_file_location("needle_v6_missing_receipt_test", AUDIT_PATH)
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[spec.name] = module
+        spec.loader.exec_module(module)
+        result = module.audit_document({"runs": []}, receipt=None)
+        self.assertEqual(result["decision"], "HOLD_AUDIT_INTEGRITY")
+        self.assertIn("formal_receipt_missing", result["errors"])
 
     def test_audit_rejects_nonexact_realized_argv(self):
         with tempfile.TemporaryDirectory() as temp:
@@ -260,6 +297,11 @@ class FrozenSourceAndConstructionContract(unittest.TestCase):
         validate_line = next(node.lineno for node in ast.walk(main) if isinstance(node, ast.Call)
                              and isinstance(node.func, ast.Name) and node.func.id == "validate_lease")
         self.assertLess(validate_line, formal_runs[0].lineno)
+        docker_context_line = next(node.lineno for node in calls
+                                   if node.args and isinstance(node.args[0], ast.List)
+                                   and any(isinstance(item, ast.Constant) and item.value == "docker"
+                                           for item in node.args[0].elts))
+        self.assertLess(validate_line, docker_context_line)
         self.assertIn("formal_invocations\": 1", FORMAL_PATH.read_text(encoding="utf-8"))
         self.assertNotIn("retry", ast.unparse(main).lower())
 
@@ -270,6 +312,36 @@ class FrozenSourceAndConstructionContract(unittest.TestCase):
         spec.loader.exec_module(module)
         with self.assertRaisesRegex(SystemExit, "STOP_NO_EXPLICIT_OWNER_LEASE"):
             module.validate_lease({}, "main", "branch", "default")
+
+    def test_launcher_requires_live_owner_comment_payload_exactly_bound_to_lease(self):
+        spec = importlib.util.spec_from_file_location("needle_v6_owner_comment_test", FORMAL_PATH)
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[spec.name] = module
+        spec.loader.exec_module(module)
+        now = datetime.now(timezone.utc)
+        start = (now - timedelta(minutes=1)).isoformat()
+        end = (now + timedelta(minutes=10)).isoformat()
+        expiry = end
+        lease = {"schema": module.LEASE_SCHEMA, "allocation": module.ALLOCATION,
+                 "issue": module.ISSUE, "main_sha": "a" * 40, "branch": "branch",
+                 "docker_context": "desktop-linux", "lease_id": "slot-123",
+                 "slot_start_utc": start, "slot_end_utc": end, "expires_at_utc": expiry,
+                 "owner_comment_url": "https://github.com/Unjuno/agent-interface/issues/5085#issuecomment-12345"}
+        payload = {key: lease[key] for key in ("schema", "allocation", "issue", "main_sha",
+                  "branch", "docker_context", "lease_id", "slot_start_utc", "slot_end_utc",
+                  "expires_at_utc")}
+        body = "<!-- needle-docker-owner-lease-v1\n" + json.dumps(payload) + "\n-->"
+        record = {"html_url": lease["owner_comment_url"],
+                  "issue_url": "https://api.github.com/repos/Unjuno/agent-interface/issues/5085",
+                  "user": {"login": "Unjuno"}, "body": body}
+        verified = module.validate_lease(lease, "a" * 40, "branch", "desktop-linux", record)
+        self.assertEqual(verified["user_login"], "Unjuno")
+        forged = dict(record, body=body.replace("slot-123", "forged"))
+        with self.assertRaisesRegex(SystemExit, "STOP_LEASE_OWNER_COMMENT_PAYLOAD_MISMATCH"):
+            module.validate_lease(lease, "a" * 40, "branch", "desktop-linux", forged)
+        wrong_owner = dict(record, user={"login": "attacker"})
+        with self.assertRaisesRegex(SystemExit, "STOP_LEASE_OWNER_COMMENT_AUTHOR"):
+            module.validate_lease(lease, "a" * 40, "branch", "desktop-linux", wrong_owner)
 
 
 if __name__ == "__main__":

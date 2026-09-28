@@ -3,9 +3,12 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import subprocess
 import sys
 import time
+import urllib.error
+import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -16,8 +19,11 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE
 ISSUE = 5085
 LEASE_SCHEMA = "needle-docker-owner-lease-v1"
-REQUIRED_LEASE_FIELDS = ("allocation", "issue", "owner_comment_url", "docker_context",
-                         "main_sha", "branch", "expires_at_utc", "lease_id")
+REQUIRED_LEASE_FIELDS = ("allocation", "owner_comment_url", "docker_context",
+                         "main_sha", "branch", "expires_at_utc", "lease_id",
+                         "slot_start_utc", "slot_end_utc")
+LEASE_COMMENT_PATTERN = re.compile(
+    r"<!-- needle-docker-owner-lease-v1\n(\{.*?\})\n-->", re.DOTALL)
 
 
 def stop(reason: str):
@@ -31,26 +37,74 @@ def read_json(path: Path):
         stop("INVALID_JSON:" + str(exc))
 
 
-def validate_lease(lease: dict, main_sha: str, branch: str, current_context: str):
+def fetch_owner_comment(owner_comment_url: str) -> dict:
+    match = re.fullmatch(
+        r"https://github\.com/Unjuno/agent-interface/issues/5085#issuecomment-(\d+)",
+        owner_comment_url)
+    if not match:
+        stop("LEASE_OWNER_COMMENT_URL_INVALID")
+    request = urllib.request.Request(
+        "https://api.github.com/repos/Unjuno/agent-interface/issues/comments/" + match.group(1),
+        headers={"Accept": "application/vnd.github+json", "User-Agent": "agent-interface-research"})
+    try:
+        with urllib.request.urlopen(request, timeout=10) as response:
+            record = json.loads(response.read())
+    except (OSError, urllib.error.URLError, json.JSONDecodeError):
+        stop("LEASE_OWNER_COMMENT_FETCH_FAILED")
+    if not isinstance(record, dict):
+        stop("LEASE_OWNER_COMMENT_RECORD_INVALID")
+    return record
+
+
+def validate_lease(lease: dict, main_sha: str, branch: str, current_context: str,
+                   owner_comment_record: dict | None = None):
     if not isinstance(lease, dict) or lease.get("schema") != LEASE_SCHEMA:
         stop("NO_EXPLICIT_OWNER_LEASE")
     if any(not isinstance(lease.get(key), str) or not lease[key].strip()
            for key in REQUIRED_LEASE_FIELDS):
         stop("LEASE_FIELD_MISSING")
-    if (lease["allocation"] != ALLOCATION or lease["issue"] != ISSUE
+    if (type(lease.get("issue")) is not int or lease["issue"] != ISSUE
+            or lease["allocation"] != ALLOCATION
             or lease["main_sha"] != main_sha or lease["branch"] != branch
             or lease["docker_context"] != current_context):
         stop("LEASE_SCOPE_MISMATCH")
-    if not lease["owner_comment_url"].startswith("https://github.com/Unjuno/agent-interface/issues/5085#"):
-        stop("LEASE_OWNER_COMMENT_UNVERIFIABLE")
+    if not re.fullmatch(r"[0-9a-f]{40}", lease["main_sha"]):
+        stop("LEASE_MAIN_SHA_INVALID")
     if lease["lease_id"] in ("none", "unknown", "pending"):
         stop("LEASE_ID_INVALID")
     try:
         expiry = datetime.fromisoformat(lease["expires_at_utc"].replace("Z", "+00:00"))
+        slot_start = datetime.fromisoformat(lease["slot_start_utc"].replace("Z", "+00:00"))
+        slot_end = datetime.fromisoformat(lease["slot_end_utc"].replace("Z", "+00:00"))
     except ValueError:
         stop("LEASE_EXPIRY_INVALID")
-    if expiry.tzinfo is None or expiry <= datetime.now(timezone.utc):
-        stop("LEASE_EXPIRED_OR_UNZONED")
+    now = datetime.now(timezone.utc)
+    if any(value.tzinfo is None for value in (expiry, slot_start, slot_end)):
+        stop("LEASE_TIME_UNZONED")
+    if not (slot_start <= now < slot_end and now < expiry <= slot_end):
+        stop("LEASE_SLOT_NOT_ACTIVE")
+    comment = owner_comment_record or fetch_owner_comment(lease["owner_comment_url"])
+    if (comment.get("html_url") != lease["owner_comment_url"]
+            or comment.get("issue_url") != "https://api.github.com/repos/Unjuno/agent-interface/issues/5085"):
+        stop("LEASE_OWNER_COMMENT_URL_MISMATCH")
+    author = comment.get("user")
+    if not isinstance(author, dict) or author.get("login") != "Unjuno":
+        stop("LEASE_OWNER_COMMENT_AUTHOR")
+    body = comment.get("body")
+    blocks = LEASE_COMMENT_PATTERN.findall(body) if isinstance(body, str) else []
+    if len(blocks) != 1:
+        stop("LEASE_OWNER_COMMENT_PAYLOAD_MISSING")
+    try:
+        payload = json.loads(blocks[0])
+    except json.JSONDecodeError:
+        stop("LEASE_OWNER_COMMENT_PAYLOAD_INVALID")
+    expected_payload = {key: lease[key] for key in (
+        "schema", "allocation", "issue", "main_sha", "branch", "docker_context",
+        "lease_id", "slot_start_utc", "slot_end_utc", "expires_at_utc")}
+    if payload != expected_payload:
+        stop("LEASE_OWNER_COMMENT_PAYLOAD_MISMATCH")
+    return {"html_url": comment["html_url"], "issue_url": comment["issue_url"],
+            "user_login": comment["user"]["login"], "body": body}
 
 
 def main(argv=None):
@@ -71,14 +125,7 @@ def main(argv=None):
         stop("SOURCE_PATH_NOT_EXPERIMENT_DIRECTORY")
     if not output.is_dir() or any(output.iterdir()):
         stop("OUTPUT_NOT_EMPTY")
-    context_result = subprocess.run(["docker", "context", "show"], check=False,
-                                    capture_output=True, text=True, timeout=10)
-    if context_result.returncode != 0:
-        stop("DOCKER_CONTEXT_UNAVAILABLE")
-    current_context = context_result.stdout.strip()
-    if current_context != expected_context:
-        stop("DOCKER_CONTEXT_CHANGED")
-    validate_lease(lease, main_sha, branch, current_context)
+    owner_comment = validate_lease(lease, main_sha, branch, expected_context)
     try:
         actual_branch = subprocess.run(["git", "branch", "--show-current"], cwd=ROOT,
                                        check=True, capture_output=True, text=True, timeout=10).stdout.strip()
@@ -88,19 +135,29 @@ def main(argv=None):
         stop("GIT_MAIN_OR_BRANCH_UNVERIFIABLE")
     if actual_branch != branch or current_main != main_sha:
         stop("STALE_MAIN_OR_BRANCH")
-
+    context_result = subprocess.run(["docker", "context", "show"], check=False,
+                                    capture_output=True, text=True, timeout=10)
+    if context_result.returncode != 0:
+        stop("DOCKER_CONTEXT_UNAVAILABLE")
+    current_context = context_result.stdout.strip()
+    if current_context != expected_context:
+        stop("DOCKER_CONTEXT_CHANGED")
     argv = docker_argv(source, output)
     canonical_argv = list(argv)
     receipt = {
         "schema": "needle-role-skill-joint-retention-formal-receipt-v1",
         "allocation": ALLOCATION, "issue": 5081, "lease_id": lease["lease_id"],
         "owner_comment_url": lease["owner_comment_url"], "main_sha": main_sha,
+        "lease_issue": lease["issue"], "slot_start_utc": lease["slot_start_utc"],
+        "slot_end_utc": lease["slot_end_utc"], "expires_at_utc": lease["expires_at_utc"],
         "branch": branch, "docker_context": current_context,
+        "owner_lease_comment": owner_comment,
         "source_path": str(source), "output_path": str(output),
         "image_id": IMAGE_ID, "seeds": list(SEEDS), "formal_invocations": 1,
         "retries": 0, "command_argv": canonical_argv,
         "command_argv_sha256": sha256_bytes(canonical(canonical_argv)),
         "started_at_ns": time.time_ns(),
+        "started_at_utc": datetime.now(timezone.utc).isoformat(),
     }
     receipt_path = output / "formal_receipt.json"
     # This one invocation is deliberate. There is no retry or partial rerun.
@@ -109,6 +166,7 @@ def main(argv=None):
     raw_sha = sha256_bytes(raw_path.read_bytes()) if raw_path.is_file() else None
     completed = {**receipt, "exit_code": proc.returncode,
                  "finished_at_ns": time.time_ns(),
+                 "finished_at_utc": datetime.now(timezone.utc).isoformat(),
                  "stdout": proc.stdout, "stderr": proc.stderr,
                  "raw_result_sha256": raw_sha,
                  "formal_result_present": raw_path.is_file()}

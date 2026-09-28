@@ -133,7 +133,7 @@ def online_window_errors(record: Any) -> list[str]:
         q_start, q_end, query_worker, calls = query
         if not (q_start < arrival <= consumed < q_end):
             errors.append(f"feedback_not_consumed_inside_query:{feedback_id}")
-        if update is None or not (update[0] <= consumed <= update[1]):
+        if update is None or not (update[0] <= consumed < update[1]):
             errors.append(f"update_interval_does_not_cover_consumption:{feedback_id}")
             continue
         if not isinstance(trainer, str) or not trainer or trainer == query_worker:
