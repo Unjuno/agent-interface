@@ -363,3 +363,26 @@ completed six correct exact-once saves, retained full refusal details, and verif
 full retrieval plus referenced image retrieval after close. Actual returned text
 was 9.6176% smaller than the same views with references expanded. Actual model
 token/cost and matched speed improvements remain unmeasured.
+
+
+## Review the destination after a bounded navigation tail
+
+A group of keyboard operations can finish while the application is still showing
+a transitional frame. In public guarded mode, `status=completed` establishes the
+program outcome and `feedback_status=captured` establishes a capture; neither
+means the destination is ready. `wait_update` records a fixed delay, not an
+application acknowledgement.
+
+After navigating, inspect the returned destination before entering another form.
+If the image is still transitional, request `interface_guarded_observe` for a new
+read-only image. `interface_results` returns the retained old image and cannot
+resolve whether navigation has since finished. Do not repeat uncertain navigation
+just to recover feedback. Keep entered-value review separate from submission.
+
+A [primary six-task trial](results/guarded-navigation-batch-primary-01/README.md)
+combined URL entry and Enter, but needed four extra observations across five
+navigations. It completed all six values exactly once using 28 calls, versus a
+24-call plan. This candidate remains on hold as a default recipe; its nominal
+call reduction does not establish a speedup or token savings. Different explicit
+observation conditions can be evaluated in a fresh allocation without rewriting
+this result.
