@@ -7,14 +7,19 @@ rule from #1679; it does not reopen or modify #1679, #2624, or prior allocations
 This branch was originally based on `main`
 `3553dc1af1125441a6b44256755e7e22df40836d` (merge commit `8c3138c7bd`,
 incorporating #5158 on top of prior #5154/#5153 sync `1866f05aab`) and has since
-merged current `main` `442ef765598971806dc5d671a223af7b3a711a5f`. The inherited
+merged current `main` `ceda253410ce738571580a5980a4e26dc1c3352a`. The inherited
 #1679 preregistration's five dependency blobs were compared with this main:
-four are byte-identical; the plan Markdown alone changed from
+three are byte-identical; the plan Markdown retains its documented change from
 `ff0de7c4a0d6cc57d145d460f019f72d6967ffec` to
 `c0c8ff37206820881b9a86d6801fbae80e0b97d6`. A direct diff shows only two
-summary-count edits (six to eight retained discoveries). The frozen decision
-rule text and evaluator source are unchanged. This is a provenance note, not
-new authorization or experiment evidence.
+summary-count edits (six to eight retained discoveries), and the evaluator
+source also changed in #5176. The frozen decision thresholds remain unchanged.
+The evaluator now also requires exact
+model/effort identity across each arm's schema preflight and all task calls,
+per merged successor #5170 / PR #5176; its current blob is recorded in
+`SOURCE_IDENTITY_AUDIT.md`. This closes an evaluator comparability defect
+without changing the preregistered route or economic gates. This is provenance,
+not new authorization or experiment evidence.
 
 ## H / T / D / C / U
 
@@ -47,6 +52,8 @@ authorization (#5085 comments #5862349694 and #5862378940). No slot is assigned
 to #5130. Do not start, build, pull, inspect, or alter Docker until an exact
 named coordinator allocation and sibling-container release are recorded; a
 locally idle daemon or the user's general Docker availability is not that lease.
+The current-main evaluator's model/effort equality gate from #5176 is included
+in the branch; it rejects mixed requested configurations before scoring.
 The live-start prerequisite is already recorded
 as `PASS_MINDUSTRY_MATERIALIZED_LIVE_SMOKE_SCOPED` by fresh #2624 V2: exact
 fixture identities, zero-input readiness, independent raw audit, and 8/8
