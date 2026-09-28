@@ -1,0 +1,44 @@
+{
+  "autonomous_release_callsites": [
+    205,
+    219
+  ],
+  "conditional_finalizer_release_callsites": [
+    356
+  ],
+  "errors": [],
+  "mutation_controls": [
+    {
+      "name": "wrong_disposition",
+      "rejected": true
+    },
+    {
+      "name": "wrong_main_sha",
+      "rejected": true
+    },
+    {
+      "name": "missing_cancel_expiry_site",
+      "rejected": true
+    },
+    {
+      "name": "wrong_source_blob",
+      "rejected": true
+    },
+    {
+      "name": "failed_source_check",
+      "rejected": true
+    },
+    {
+      "name": "wrong_callsite",
+      "rejected": true
+    }
+  ],
+  "queued_release_callsites": [
+    261
+  ],
+  "release_callsites": 4,
+  "result_sha256": "4a674dd4f4929950ce689209d4cca7d80b721bf235cce5cb9424c3bb6849d6cd",
+  "schema": "owner-keyup-caller-boundary-audit-v1",
+  "source_count": 2,
+  "status": "PASS"
+}
