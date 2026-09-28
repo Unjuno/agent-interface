@@ -26,7 +26,7 @@ Result: 6 tests, 0.002 seconds, exit 0.
 
 ## Independent support-selection audit — host CPU only
 
-`audit_sampler.py` is stdlib-only and does not import the candidate sampler or protocol. Given a dataset-shaped object, it independently computes the prescribed SHA-256 ranks from the seed/class/case ID, reconstructs the exact per-arm selected IDs/order from `support_pool`, checks class counts, and compares complete selected rows. The audit test fixture is self-contained and constructs its synthetic selected rows with a separate test-side SHA-256 implementation; it imports neither the candidate sampler nor its test module, so this PR is independently runnable.
+`audit_sampler.py` is stdlib-only and does not import the candidate sampler or protocol. Given a dataset-shaped object, it independently computes the prescribed SHA-256 ranks from `support_seed`/class/case ID, reconstructs the exact per-arm selected IDs/order from `support_pool`, checks class counts, and compares complete selected rows. It does not use the separate formal/training `seed`. The standalone audit fixture tests different formal and support seeds; its selected rows are built with a separate test-side SHA-256 implementation, and it imports neither the candidate sampler nor its test module, so this PR is independently runnable.
 
 Passed commands:
 
@@ -35,7 +35,7 @@ python -m unittest discover -s research/experiments/qwen05b_abstention_balance_5
 python -m unittest discover -s research/experiments/qwen05b_abstention_balance_5139_sampler_v1 -p 'test_*.py' -v
 ```
 
-Audit tests: 6/6; complete package tests: 12/12; exit 0. Five evidence mutations were rejected: changed seed, reversed arm order, substituted row, mutated selected-row field, and duplicate pool ID. The positive check reconstructed both arms from the synthetic 128-row pool. Test-only seed 1 is not an allocation seed.
+Audit tests: 7/7; complete package tests: 13/13; exit 0. Five evidence mutations were rejected: changed support seed, reversed arm order, substituted row, mutated selected-row field, and duplicate pool ID. An additional control changed only the formal seed and was correctly accepted as irrelevant to support ordering. The positive check reconstructed both arms from the synthetic 128-row pool. Test-only support seed 1 and formal seed 73194109 are fixtures only, not allocation seeds.
 
 This is not the independent raw-output audit of a formal dataset or training result. It does not execute the full #5139 data generator, a pinned container, model/tokenizer, CUDA, or LoRA fit.
 
@@ -50,8 +50,8 @@ This is not the independent raw-output audit of a formal dataset or training res
 
 - `sampler.py`: `0cdbe3e5b61202ec6ea5bd8810f4734a85141e7a7cbaf22ce886568b0f2c23a6`
 - `test_sampler.py`: `e0fbcf0a3c1cce969e3f6751da8d56d952ce3002d46db19f5e3f40b97e4dacbe`
-- `audit_sampler.py`: `ae6833111b15b7eb5f3a89269dde47ad0f396722b5348dcad0870a3addee3ecb`
-- `test_audit_sampler.py`: `a1cb795079a30d0714c219b5c03e7df5fccbf4ef4428260871df64d7f51a815d`
+- `audit_sampler.py`: `26007eee3d9402842953618fc2225c200b2f3ad8ab61d49be93840fd84e68638`
+- `test_audit_sampler.py`: `99f974805c94a90589bf3ff826195023e6d4e48cbfcec6c47400480db9b21672`
 
 ## Resource / allocation boundary
 
