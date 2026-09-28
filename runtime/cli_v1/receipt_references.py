@@ -235,3 +235,61 @@ def expand_receipt(view):
         parent[key] = copy.deepcopy(result['events'][number])
     result['schema'] = 'agent-interface/receipt-view-v1'
     return result
+
+GUARDED_OBSERVATION_REFS = 'agent-interface/guarded-observation-refs-v1'
+_GUARDED_REF_MAP = {'/observation_report/observation': '/source/native'}
+_GUARDED_REF_SCOPE = ('Only the listed observation_report.observation is a reference to '
+                      'the complete source.native in this response. Other reference-shaped '
+                      'values are literal. This is not a new capture or authority.')
+
+
+def compact_guarded_observation(view):
+    """Losslessly replace one exact duplicate; preserve literal/critical reports."""
+    result = copy.deepcopy(view)
+    if any(k in view for k in ('reference_schema', 'observation_references', 'reference_scope')):
+        return result
+    try:
+        source, report = view['source'], view['observation_report']
+        native = source['native']
+        if (view['operation'] not in ('guarded_observe', 'guarded_input')
+                or view['status'] not in ('observed', 'completed')
+                or 'error' in view or 'persistence_error' in view
+                or view.get('feedback_status', 'captured') != 'captured'
+                or view.get('image_status') != 'image'
+                or view.get('presentation', {}).get('returned', 'brief') == 'full'
+                or report['status'] != 'returned'
+                or not isinstance(native, dict) or not native
+                or not isinstance(source['observation_id'], str)
+                or source['observation_id'] != report['observation_id']
+                or _encoded(native) != _encoded(report['observation'])):
+            return result
+        result['observation_report']['observation'] = {'observation_ref': '/source/native'}
+        result.update(reference_schema=GUARDED_OBSERVATION_REFS,
+                      observation_references=dict(_GUARDED_REF_MAP), reference_scope=_GUARDED_REF_SCOPE)
+        # Match the public content serializer; image blocks are separate.
+        size = lambda row: len(json.dumps({k:v for k,v in row.items() if k != 'image'}, allow_nan=False).encode())
+        return result if size(result) < size(view) else copy.deepcopy(view)
+    except (KeyError, TypeError, ValueError, AttributeError):
+        return copy.deepcopy(view)
+
+
+def expand_guarded_observation(view):
+    """Decode only this fixed, local reference shape; never resolve arbitrary paths."""
+    result = copy.deepcopy(view)
+    if 'reference_schema' not in result:
+        return result
+    try:
+        if (result['reference_schema'] != GUARDED_OBSERVATION_REFS
+                or result['observation_references'] != _GUARDED_REF_MAP
+                or result['reference_scope'] != _GUARDED_REF_SCOPE
+                or result['observation_report']['observation'] != {'observation_ref':'/source/native'}
+                or not isinstance(result['source']['native'], dict) or not result['source']['native']
+                or not isinstance(result['source']['observation_id'], str)
+                or result['source']['observation_id'] != result['observation_report']['observation_id']):
+            raise ValueError('invalid guarded observation reference')
+        result['observation_report']['observation'] = copy.deepcopy(result['source']['native'])
+        for key in ('reference_schema', 'observation_references', 'reference_scope'):
+            result.pop(key)
+        return result
+    except (KeyError, TypeError, AttributeError) as error:
+        raise ValueError('invalid guarded observation reference') from error
