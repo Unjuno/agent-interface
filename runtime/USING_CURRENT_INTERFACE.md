@@ -590,3 +590,14 @@ successful replies used 45.3% fewer canonical JSON bytes than their full views
 and 27.8% fewer than the previous brief option. This is not measured token/cost or
 speed improvement; the full lookup itself adds a call. The record includes the
 retained-session correction and its failed-before/passing-after checks.
+
+## Primary use with summaries and returned host attempts
+
+[Current-main primary examples](results/current-primary-summary-01/README.md)
+combine public summary dispatches and `reply.attempt` presentation in a small
+entry task and LibreOffice Calc, including explicit format-dialog selection.
+Both saved effects were independently checked after control ended. In Calc,
+a completed Return plus a 100ms wait still captured the dialog; a fresh read-only
+inspection confirmed it had closed. Do not repeat uncertain input merely because
+the result image has not yet changed. This is scoped usability evidence, not a
+matched speed, token/cost or generic readiness result.
