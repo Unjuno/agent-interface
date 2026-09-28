@@ -4,7 +4,7 @@
 
 This is a host-CPU-only construction check for the pre-formal sampler correction in Issue #5139. It is not a model training run, data-quality result, Docker experiment, or GPU result. The sampling correction addresses the immutable v2 deterministic-prefix confound without changing any #4988/#5014 source, seed, dataset, output, or verdict.
 
-The first publication branch was based on `main` SHA `3007e03481d545eb9a92b8cec07c8c4201bd3728`; it later became stale and is not the review branch. The tested files were republished without sampler/test changes on `research/qwen05b-abstention-balance-5139-sampler-v2-20260928`, based on then-current `main` SHA `a78dfcfcc0ffdd1864abd9170087e835b5467f91`. At recheck, `main` still resolved to that SHA and the review branch compared 3 commits ahead / 0 behind. This republishing updates provenance/base only; it does not rerun or broaden the host test claim. Study path: `research/experiments/qwen05b_abstention_balance_5139_sampler_v1/`.
+The first publication branch was based on `main` SHA `3007e03481d545eb9a92b8cec07c8c4201bd3728`; it later became stale and is not the review branch. The tested files were republished without sampler/test changes on `research/qwen05b-abstention-balance-5139-sampler-v2-20260928`, based on then-current `main` SHA `a78dfcfcc0ffdd1864abd9170087e835b5467f91`. Before the report provenance correction, the branch compared 3 commits ahead / 0 behind; that correction adds one commit (4 ahead total). At recheck, `main` still resolved to the stated base SHA. This republishing updates provenance/base only; it does not rerun or broaden the host test claim. Study path: `research/experiments/qwen05b_abstention_balance_5139_sampler_v1/`.
 
 ## H / T / D / C / U
 
