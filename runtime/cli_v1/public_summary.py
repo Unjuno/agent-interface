@@ -82,15 +82,19 @@ def summarize_public_dispatch(view):
         expected = [(i, op["timeout_ms"]) for i, op in enumerate(ops) if op["op"] == "wait_update"]
         if len(waits) != len(expected):
             return full
+        previous_wait_end = execution["started_ns"]
         for wait, (index, duration) in zip(waits, expected):
             if set(wait) != {"operation_index", "requested_ms", "started_ns", "ended_ns", "completed", "kind", "update_observed"}:
                 return full
             if any(type(wait[k]) is not int for k in ("operation_index", "requested_ms", "started_ns", "ended_ns")):
                 return full
             if (wait["operation_index"] != index or wait["requested_ms"] != duration or wait["started_ns"] < 0
+                    or wait["started_ns"] < previous_wait_end
+                    or wait["ended_ns"] > execution["ended_ns"]
                     or wait["ended_ns"] < wait["started_ns"] or wait["completed"] is not True
                     or wait["kind"] != "fixed_delay" or wait["update_observed"] is not None):
                 return full
+            previous_wait_end = wait["ended_ns"]
         projected = deepcopy(view)
         summary = deepcopy(execution)
         summary.pop("completed_ops")
