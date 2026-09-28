@@ -119,6 +119,20 @@ def validate_reader_exit_after_reads(exit_ns, read_rows):
     )
 
 
+def validate_reader_summary_execution(summary):
+    if not isinstance(summary, dict):
+        return ["reader_summary_not_object"]
+    errors = []
+    if summary.get("limit_hit") is not False:
+        errors.append("reader_observation_limit_hit")
+    if summary.get("error") is not None:
+        errors.append("reader_execution_error")
+    partial = summary.get("partial_observations")
+    if type(partial) is not int or partial < 0:
+        errors.append("reader_partial_observation_count")
+    return errors
+
+
 def diagnostic_complete_generation_allowed(row):
     if not isinstance(row, dict):
         return False
@@ -382,6 +396,8 @@ def audit_raw(raw, seed_raw, seed, raw_root=Path("/raw")):
                 if not exit_rows or not validate_reader_exit_after_reads(
                         exit_rows[0].get("exit_ns"), read_rows):
                     errors.append(name + "_reader_exit_timestamp")
+                errors.extend(name + "_" + error for error in
+                              validate_reader_summary_execution(summary))
                 count = len(read_rows)
                 trace_errors = validate_reader_trace_rows(
                     read_rows, reader_index, pid,

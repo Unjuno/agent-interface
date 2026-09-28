@@ -290,7 +290,18 @@ def main() -> int:
         "publication_counts": {a["arm"]: a["publication_count"] for a in arms},
         "reader_exit_codes": {a["arm"]: [r["exit_code"] for r in a["readers"]] for a in arms},
     }, sort_keys=True))
-    return 0 if all(a["writer_error"] is None for a in arms) else 1
+    runner_ok = all(
+        arm["writer_error"] is None
+        and arm["publication_count"] == (PUBLICATIONS if arm["arm"] == "atomic" else 1)
+        and arm["reader_count"] == READERS
+        and len(arm["process_exits"]) == READERS
+        and all(row["exit_code"] == 0 for row in arm["process_exits"])
+        and all(reader.get("summary", {}).get("error") is None
+                and reader.get("summary", {}).get("limit_hit") is False
+                for reader in arm["readers"])
+        for arm in arms
+    )
+    return 0 if runner_ok else 1
 
 
 if __name__ == "__main__":

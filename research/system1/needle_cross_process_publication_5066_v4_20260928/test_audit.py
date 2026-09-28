@@ -108,6 +108,14 @@ class IntervalAuditTests(unittest.TestCase):
         self.assertFalse(validate_reader_exit_after_reads(True, rows))
         self.assertFalse(validate_reader_exit_after_reads(50, [{"read_end_ns": True}]))
 
+    def test_reader_summary_rejects_error_and_observation_cap(self):
+        from audit import validate_reader_summary_execution
+        good = {"limit_hit": False, "error": None, "partial_observations": 1}
+        self.assertEqual(validate_reader_summary_execution(good), [])
+        self.assertTrue(validate_reader_summary_execution({**good, "limit_hit": True}))
+        self.assertTrue(validate_reader_summary_execution({**good, "error": "timeout"}))
+        self.assertTrue(validate_reader_summary_execution({**good, "partial_observations": True}))
+
     def test_frozen_boundary_corruption_controls_reject(self):
         controls = boundary_corruption_controls()
         self.assertEqual(len(controls), 8)

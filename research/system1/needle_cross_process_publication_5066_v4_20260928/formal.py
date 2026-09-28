@@ -162,7 +162,10 @@ def main() -> int:
     print(json.dumps({"runner_exit": runner.returncode,
                       "auditor_exit": None if auditor is None else auditor.returncode,
                       "output": str(output), "files": len(manifest)}, sort_keys=True))
-    return 0 if auditor is not None and auditor.returncode == 0 else 1
+    # Audit retained raw evidence even when the runner exits non-zero after
+    # writing a partial/failed receipt. The final outcome still preserves the
+    # runner failure after independent classification.
+    return 0 if auditor is not None and auditor.returncode == 0 and runner.returncode == 0 else 1
 
 
 if __name__ == "__main__":
