@@ -30,4 +30,4 @@ python -m unittest -v test_lease_authority_v4.py test_lease_authority_v3.py test
 python exhaustive_lease_authority_v4.py
 ```
 
-The additive candidate, oracle, focused tests, enumerator, source freeze, result, and failure ledger are retained beside this report. Before any remote promotion or formal/container run, refetch the five W2 source blobs from the now-advanced `main` (`a78dfcf`) and re-arbitrate the Docker queue. No production or integrated-runtime claim follows from this finite synthetic pass.
+The additive candidate, oracle, focused tests, enumerator, source freeze, result, and failure ledger are retained beside this report. After the run, the five W2 source blobs were re-fetched at each observed newer main through `716d25286ec37999d8098cd63bf1731fae0d88d6`; all remain identical to the frozen source identities. Before any container rerun, refetch them again and obtain an explicit queue lease. The latest coordinator order prioritizes #5134, so #5127 is deferred and has no lease. No production or integrated-runtime claim follows from this finite synthetic pass.

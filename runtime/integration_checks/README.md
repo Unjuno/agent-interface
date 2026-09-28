@@ -70,3 +70,13 @@ Record the built image ID or reuse the same image for a comparison. This image
 is for the fixed native contract suites, not broad test discovery, distribution
 building, a display server, GUI input or model inference. It needs no host display
 socket, Docker socket, credentials or network access during the checks.
+
+## Inspect a retained host timeline
+
+`python3 -m runtime.integration_checks.host_timing /absolute/transport` emits a
+read-only JSON summary of one instrumented relay lifetime. It binds replies and
+review declarations to their recorded hashes, distinguishes incomplete operations,
+and reports host send/reply/presentation/review boundaries separately. This needs
+only Python's standard library. See [the timing contract](../../research/live_control/RELAY_HOST_TIMELINE.md#read-only-timing-summary)
+and [retrospective primary-use evidence](../results/host-timing-summary-01/README.md).
+It cannot measure model ingestion, independent semantic completion or model tokens.

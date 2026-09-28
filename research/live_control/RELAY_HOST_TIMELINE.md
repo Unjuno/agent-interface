@@ -49,3 +49,19 @@ accounting or cross-clock mapping. Clock values are comparable only within this
 host lifetime. Treat ordered host boundaries as instrumentation, not a speedup.
 
 Tests: `node --test research/live_control/test_relay_host_timeline_v1.mjs`.
+## Read-only timing summary
+
+After a host run, use `python3 -m runtime.integration_checks.host_timing /absolute/transport`
+from the repository root. It reads the timeline and its hash-bound request/reply/review
+files without invoking a transport or modifying evidence. Output contains per-call
+send-to-reply, send-to-first-completed-callback, caller-declared review timing and
+reply-to-next-send gaps, plus the exact input hashes. Missing completion boundaries
+remain null/partial; malformed order or identity is an error, not a successful result.
+Repeated presentation is retained and does not replace the first callback boundary.
+Reviews without prior completed presentation are explicitly marked as such.
+
+Use only one retained host lifetime per invocation. These are host boundaries,
+not model ingestion, useful feedback, semantic completion, token accounting or
+comparable speedup. `timeline_status=complete` means all recorded operations ended
+and transport close was recorded; it does not imply successful process exit,
+GUI cleanup or task success. See the retained [primary-use timing report](../../runtime/results/host-timing-summary-01/README.md).
