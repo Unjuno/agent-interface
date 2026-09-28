@@ -283,4 +283,41 @@ Mindustry submit dialect from generic `interactive-v27`, the host-only package
 suite passes 47/47, the inherited probe returns `passed=true`, `RETAIN`, 10
 controls, the #5170 comparison suite passes 8/8, Python byte-compilation,
 Node.js syntax validation, and `git diff --check` pass. These are local
-verification only; no Actions workflow was invoked.
+verification only. Pushes to the PR can trigger repository Actions
+automatically; those results are not used as local or experimental evidence.
+
+## Reusing closed Issue #55 target-revalidation result
+
+Closed Issue #55 is marked completed, and its comments record a finite live
+Mindustry block plus the two remaining binding-unavailable/resize branches.
+The current-main implementation is `mindustry_receipt_session_v1.py` backed by
+`receipt_target_admission_v1.py`: it takes a post-model screenshot, revalidates
+declared target pixel dependencies against retained exact images, and refuses
+with no point/no target authority before the pointer adapter. The historical
+Issue #55 artifacts and result were left unchanged.
+
+The earlier #5130 candidate only bound a fresh sequence and X11 geometry. This
+follow-up adds a #5130-specific socket wrapper that loads the unchanged frozen
+Mindustry child with the receipt-aware backend, plus a click compiler that
+requires a receipt tied to the original source sequence and the post-decision
+locator sequence. Host construction tests check backend lineage, wrapper
+selection, the checked-click envelope, and receipt/locator mismatch refusal.
+This reuses an existing completed result rather than rerunning its model or GUI
+block; it is not yet an end-to-end three-arm run. The formal runner must still
+build target-specific dependency boxes from each exact source image and retain
+the runtime's revalidation/admission ordering in an independent raw audit.
+
+Current local package suite after this addition: 52/52. The reused upstream
+no-GUI receipt-admission probe also passes. In-memory Python AST syntax checks
+cover all 17 package modules; `git diff --check` passes. This remains synthetic
+host construction; no live Mindustry, model, Docker, or formal allocation was
+started. Automatic repository Actions may start on a push; they are not used
+for local verification or as experimental evidence.
+
+Current-main refresh (2026-09-28): branch merged `origin/main`
+`15bab5980e2bb0e48472e29144e21d25dbd337c1`. The five inherited #1679 blobs,
+the #5176 evaluator identity gate, and all three reused #55 runtime blobs were
+rechecked; the recorded hashes are unchanged. The latest #5085 comments still
+report the unresolved OrbStack-bound Docker client PID 91031 and no owner
+release. A different task's empty Windows `desktop-linux` snapshot is not a
+lease for #5130. Docker remains prohibited by the exact issue gate.

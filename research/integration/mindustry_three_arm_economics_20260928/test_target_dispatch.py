@@ -4,7 +4,8 @@ import unittest
 import sys
 from pathlib import Path
 
-from target_dispatch import DispatchStop, compile_pointer_click
+from target_dispatch import (DispatchStop, compile_pointer_click,
+                             compile_receipt_target_click)
 
 LIVE = Path(__file__).resolve().parents[2] / "live_control"
 sys.path.insert(0, str(LIVE))
@@ -13,12 +14,45 @@ from delivery_ledger_v2 import DeliveryLedger
 
 def locator(sequence=7):
     return {"palette_point": [1008, 578], "target_point": [640, 410],
-            "validated_sequence": sequence,
+            "source_sequence": 3, "validated_sequence": sequence,
             "delivery_id": f"delivery:{sequence}",
             "authority": "locator only; explicit caller action still required"}
 
 
 class TargetDispatchTests(unittest.TestCase):
+    def test_receipt_click_uses_runtime_revalidation_step(self):
+        current = locator()
+        receipt = {"target": "Conveyor palette slot",
+            "point_space": "source_observation_pixels",
+            "motion_model": "surface_origin_translation",
+            "point": current["palette_point"], "source_sequence": 3,
+            "decision_after_sequence": 7, "ttl_ms": 60000,
+            "freshness_ms": 1000,
+            "checks": [{"kind": "exact_patch", "source_sequence": 3,
+                        "box": [990, 560, 1036, 606]}]}
+        command = compile_receipt_target_click(current,
+            {"sequence": 7, "runtime_ns": 100}, "A1", "palette_point", receipt)
+        self.assertEqual(command["steps"][0]["op"], "pointer_click_receipt_target")
+        self.assertEqual(command["steps"][0]["receipt"], receipt)
+        self.assertEqual(command["expected_sequence"], 7)
+
+    def test_receipt_click_rejects_decision_or_point_mismatch(self):
+        current = locator()
+        receipt = {"target": "world tile", "point_space": "source_observation_pixels",
+            "motion_model": "surface_origin_translation", "point": [640, 410],
+            "source_sequence": 3, "decision_after_sequence": 6,
+            "ttl_ms": 60000, "freshness_ms": 1000,
+            "checks": [{"kind": "exact_patch", "source_sequence": 3,
+                        "box": [620, 390, 660, 430]}]}
+        with self.assertRaisesRegex(DispatchStop, "decision boundary"):
+            compile_receipt_target_click(current,
+                {"sequence": 7, "runtime_ns": 100}, "A1", "target_point", receipt)
+        receipt["decision_after_sequence"] = 7
+        receipt["point"] = [641, 410]
+        with self.assertRaisesRegex(DispatchStop, "decision boundary"):
+            compile_receipt_target_click(current,
+                {"sequence": 7, "runtime_ns": 100}, "A1", "target_point", receipt)
+
     def test_compiles_one_palette_click_bound_to_the_visual_sequence(self):
         command = compile_pointer_click(locator(),
             {"sequence": 7, "runtime_ns": 100}, "A1", "palette_point")
