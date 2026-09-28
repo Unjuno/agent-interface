@@ -37,9 +37,15 @@ static int parse_set(OwDifficulty *d, const char *arg) {
     size_t n = (size_t)(eq - arg);
     if (n == 0 || n >= sizeof(key)) return -1;
     memcpy(key, arg, n); key[n] = 0;
+    const char *value = eq + 1;
+    if (!*value) { fprintf(stderr, "invalid numeric value in --set %s\n", arg); return -1; }
+    errno = 0;
     char *end = NULL;
-    double v = strtod(eq + 1, &end);
-    if (!end || *end) { fprintf(stderr, "invalid numeric value in --set %s\n", arg); return -1; }
+    double v = strtod(value, &end);
+    if (end == value || !end || *end || errno == ERANGE || !isfinite(v)) {
+        fprintf(stderr, "invalid numeric value in --set %s\n", arg);
+        return -1;
+    }
     char err[160];
     if (ow_set_param(d, key, v, err, sizeof(err))) { fprintf(stderr, "%s\n", err); return -1; }
     return 0;
