@@ -1,3 +1,44 @@
+## Moved implementation source pins (2026-09-28)
+
+The #5107 review identified wrapper-only hashes in experiment preregistrations.
+[Source-provenance integration](../runtime/results/guarded-source-provenance-01/README.md)
+updates 32 future manifest producers to include shared scoped-X11 implementation
+bytes and the resolver itself. Historical frozen outputs are unchanged; stale
+or conflicting pins are refused. Local checks pass 231 protocol and 106
+harness/distribution tests. This repairs experimental source identity after the
+move, not UI latency, model-token accounting or semantic task verification.
+
+## Shared X11 runtime checkpoint (2026-09-28)
+
+The native scoped target store, guarded bridge and form method now live in
+`runtime/guarded_x11_v1`, included in the portable runtime. Historical research
+imports delegate to the same implementation. Existing admission, releases,
+review revocation and waits are unchanged. This supplies an explicit Linux/X11
+Python API; it does not add CLI/MCP method tools or semantic form validation.
+
+[Primary archive use](../runtime/results/shared-x11-runtime-primary-01/README.md)
+records six exact submissions from the built runtime, one zero-emission
+layout-change refusal, explicit re-grounding and continued reuse. The isolated
+archive import test excludes the checkout from Python's path. Local native
+checks pass 223 protocol and 106 harness/distribution tests after correcting
+CI sparse-checkout and optional-dependency test placement. Initial CI failures
+and the corrected local checks are retained alongside the primary-use evidence. Matched performance,
+actual primary model tokens and useful-feedback onset remain unmeasured.
+
+## Native method reuse checkpoint (2026-09-28)
+
+The existing native enter/submit operation is now an importable
+`native_guarded_form_v1.fill_and_submit` function. It retains each step before
+continuing and requires completed execution plus verified empty release. The
+six-task harness uses it for normal execution and one explicit repair only after
+zero-emission initial refusal. [Primary evidence](../runtime/results/native-method-primary-01/README.md)
+retains six exact submissions, layout-change refusal and manual repair.
+
+This closes inline-method reuse, not public CLI/MCP exposure or semantic form
+verification. The compiled conditional state graph remains distinct. No new
+model, sensor, wait default or automatic retry is introduced. Actual primary
+model usage and matched end-to-end efficiency remain unmeasured.
+
 ## Current integration checkpoint: optional native summaries (2026-09-28)
 
 Native submit/resume now offer explicit `detail="brief"` using the existing
@@ -489,3 +530,52 @@ revocation. Fresh primary use saved both [324,455] and SVG x=62; all ten stale
 target probes refused without input. The existing harness supports two-app
 setup and an explicit stage budget, not a separate control route. #2499's full
 three-app/four-transition controlled allocation remains open.
+
+
+### Public guarded X11 MCP integration checkpoint
+
+The public stdio server now offers opt-in `--session-mode guarded-x11`, reusing
+the shared scoped-X11 bridge and existing request/results/close lifecycle.
+One explicit target; no queued actions, helper model, sensor or automatic replay.
+The archive includes the adapter. Existing one-shot and persistent modes remain.
+
+Primary self-use against archive source `2998586f5497e12940fe89992a398a2098298887`
+completed six exact Chromium fixture saves, one zero-input stale-layout refusal
+and explicit re-grounding, with verified empty releases. 32 MCP calls included
+22 completed inputs, one refused input, five mints, one observation, two retained
+reads and close. All six entered values were reviewed before Save with explicit
+source-bound receipts. Read-after-close returned the identical final image.
+Transport and fixture runner exited zero; three tracked GUI children terminated,
+with recorded codes 0/1/0. No claim of all helper exit codes being zero.
+
+The interrupted preceding allocation is preserved unchanged, including its
+incorrect first-source review attribution. New host `recordRelayReview` derives
+identity from an explicit retained reply and refuses overwrite; it does not
+certify that the caller understood the image. The successful trial retains 20
+such declarations, independently scored submission history and every raw reply.
+See `runtime/results/guarded-mcp-primary-02` and
+`runtime/results/guarded-mcp-primary-interrupted-01`.
+
+Host send-to-return total 8,358.3 ms across 32 calls and first-send to final-save
+return 223,553.6 ms are instrumentation boundaries, not useful-feedback or model
+latency. Actual model input tokens/cost and a matched baseline remain unavailable.
+Do not infer speedup, human tempo or token savings. #5116 remains a separately
+owned trace-contract experiment, not a production GUI integration candidate.
+
+### Ordered host-boundary instrumentation checkpoint
+
+The opt-in relay_host_timeline_v1 wrapper records sequential send, retained reply,
+presentation callback and caller-review events using one host monotonic clock.
+This addresses equal filesystem mtimes in the preceding guarded-MCP trial without
+rewriting that evidence. Overlapping host operations refuse instead of queueing;
+recording or renderer failure blocks later actions, while transport cleanup stays
+available. Partial evidence never authorizes replay.
+
+Primary one-form use retained 28 events: entered-value review 18 precedes Save
+request 19, with exact reply/call/source identity and an independently correct
+save. The predeclared scope was task-1 only; the unmodified six-task oracle remains
+false with the other five tasks missing. Evidence and 13 passing Node tests are
+under runtime/results/relay-host-timeline-primary-01. Callback-to-review gaps
+around 9.5 to 14 seconds are host boundaries, not isolated model latency. Matched
+performance, first useful model-visible feedback and actual token/cost accounting
+remain open. No speedup or overall completion is claimed.

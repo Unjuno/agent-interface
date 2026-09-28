@@ -9,8 +9,10 @@ the action; these entry points do not require a second model or a subagent.
 | Entry point | Use | Lifecycle |
 |---|---|---|
 | [Public CLI/API](cli_v1/README.md) | Existing target mappings and admitted programs; ordinary application integration | One-shot dispatch/observation |
-| [Public MCP transport](cli_v1/MCP.md) | The same explicit targets/programs through an MCP host, with native image blocks | One-shot API calls; no managed allocation |
+| [Public MCP transport](cli_v1/MCP.md) | The same explicit targets/programs through an MCP host, with native image blocks | Default one-shot; optional persistent/guarded X11; no managed allocation |
+| [Scoped public X11 MCP](cli_v1/MCP.md#opt-in-scoped-x11-mode) | Shared image-grounded aliases and input-result images through the public MCP server | Opt-in guarded-x11; one explicit target and retained connection |
 | [Native MCP adapter](../research/live_control/NATIVE_MCP.md) | Existing private native harness, or one explicitly managed allocation | Bound run, explicit stages and exact-request resume |
+| [Scoped X11 Python API](guarded_x11_v1/README.md) | Explicit image-grounded aliases and guarded input, also included in the portable archive | One caller-owned connection; explicit close and re-grounding |
 | [Local integration checks](integration_checks/README.md) | Verify the implementation without GUI or model calls | Fresh output directory with logs |
 
 A persistent Node-capable host can use the [reusable native relay client](../research/live_control/NATIVE_RELAY_CLIENT.md) to retain requests/replies and present text plus images in one response. Its same-request wait is not an input retry. [Primary two-app use](results/native-primary-twoapp-client-01/README.md) records actual saved effects and remaining observation handoffs, with host timing limits and unavailable token accounting made explicit.
@@ -314,3 +316,7 @@ On X11, `focus` preserves the current native focus when it is already the regist
 Persistent MCP interface_review_target accepts optional screen_region=[x,y,width,height]. It captures after committing the selected target and reports capture_consistency from a subsequent metadata read. Review the delivered image and require appropriate current evidence before input. Matching metadata does not acknowledge redraw or application completion. Without this option, capture separately as before.
 
 Selection and image delivery have separate outcomes: target_reviewed and the new binding_revision remain valid reports of the selection even if capture fails or metadata changes. Do not replay the consumed review token or assume rollback. Inspect again when evidence is unavailable or changed. Retained interface_results does not select or capture again.
+
+## Existing native method reuse
+
+The [native guarded form method](../research/live_control/NATIVE_GUARDED_FORM.md) is now an importable function used by the existing six-task harness. [Primary use](results/native-method-primary-01/README.md) retains six exact submissions, changed-layout refusal and explicit repair. It remains a scoped native integration component; it is not a new public MCP tool or generic semantic form verifier.

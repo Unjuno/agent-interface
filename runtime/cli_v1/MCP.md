@@ -1,4 +1,4 @@
-# Public one-shot MCP transport
+# Public MCP transport
 
 This optional adapter exposes the existing public `observe` and `dispatch` APIs
 to an MCP host. It returns metadata as text and the selected PNG as a separate
@@ -243,3 +243,62 @@ input emission, execution success or task effect. A finished call with
 attempt; a report-save failure may follow input. A running call with false can
 still proceed later. An unavailable receipt explicitly has `replay_allowed=false`.
 These fields do not grant replay permission or survive a server restart.
+
+
+## Opt-in scoped X11 mode
+
+Use `--session-mode guarded-x11` for one explicitly configured X11 target and
+image-grounded aliases on one retained connection. It reuses the shared
+`runtime.guarded_x11_v1` implementation and the public request journal, busy
+rejection, result retrieval and close lifecycle. It selects no actions and
+requires no helper model. The default remains one-shot.
+
+```sh
+python /absolute/agent-interface-runtime.pyz mcp \
+  --targets /absolute/one-target.json \
+  --output-directory /absolute/fresh-receipts \
+  --display :99 --session-mode guarded-x11
+```
+
+Install MCP, Pillow and python-xlib in the launching interpreter. The target
+file must contain exactly one explicit positive window ID, for example
+`{"browser":6291459}` with the caller's actual ID. The server does not launch
+an application/display or discover a target.
+
+1. Call `interface_guarded_observe()` and view its image.
+2. Call `interface_guarded_mint(alias, source_sequence, point, region_size)`
+   using that returned `source.sequence` and an image-grounded screen point.
+   `region_size` is a two-integer pixel size, each 4..96. Flat regions refuse.
+3. Call `interface_guarded_input(alias, offset, tail, interaction="click",
+   observe_after=true)` with the returned alias/offset. `keyboard` guards the
+   same context without clicking. Tail operations follow the bridge's bounded
+   text/key/wait/observe contract. A successful input response normally contains
+   its result and a fresh image; inspect both before deciding the next action.
+4. Re-ground explicitly after a stale-reference refusal. An uncertain input or
+   failed post-input capture is not permission to repeat the input.
+5. Use `interface_results` to read history without input or capture, then
+   `interface_close` to release held input and close. History remains readable
+   after close; its session snapshot is historical, not the live session state.
+
+Ordinary `interface_dispatch`/`interface_observe` and transient-family tools are
+not registered in this mode. `interface_validate` remains available for static
+program inspection, not alias admission. Guarded results use full reports even
+with compact retrieval flags; `report_refs` still requires `compact=true`.
+
+`interface_guarded_review_window(window_id)` explicitly reviews the focused
+window and revokes all prior aliases, even on a failed review. A successful
+review returns an image/source for new aliases. This is the bridge's focused
+window contract, not authenticated application identity or transient-family
+review. Aliases expire under the bridge's existing bounded lifetime and remain
+session-local. Closing or restarting does not revive them.
+
+The immediate capture does not wait for redraw or establish semantic completion.
+`wait_update` is a bounded delay. CTRL+A emission does not prove selection, and
+address-field focus does not prove the application is ready for text. Review
+entered values before consequential submission. No global pacing default changes.
+
+[Primary use and retained evidence](../results/guarded-mcp-primary-02/README.md)
+records six exact saves, a stale-alias refusal before input, explicit recovery,
+source-bound review receipts and result retrieval after close. The earlier
+interrupted trial is retained separately. This establishes scoped integration
+and usability, not matched performance, token savings or human-like tempo.

@@ -15,10 +15,19 @@ HERE = Path(__file__).resolve().parent
 # Direct script execution needs both local research modules and the runtime package.
 sys.path.insert(0, str(HERE.parents[1]))
 sys.path.insert(0, str(HERE.parent / "observation_gating"))
+# Select one exact built runtime before importing any runtime-backed wrappers.
+# The fixture and primary-review exchange stay in the research harness.
+_archive_parser = argparse.ArgumentParser(add_help=False)
+_archive_parser.add_argument('--runtime-archive', type=Path)
+_archive_args, _ = _archive_parser.parse_known_args()
+if _archive_args.runtime_archive:
+    _runtime_archive = _archive_args.runtime_archive.resolve(strict=True)
+    sys.path.insert(0, str(_runtime_archive))
+
 import gui_suite as suite
 from integrated_efficiency_fixture_v1 import Fixture
 import integrated_efficiency_runtime_v1 as integrated
-from native_handle_bridge_v1 import NativeHandleBridge, read_window_title
+from runtime.guarded_x11_v1.bridge import NativeHandleBridge, read_window_title
 from runtime.cli_v1.api import dispatch
 from runtime.core_v1.contract import SCHEMA_PROGRAM
 
@@ -49,6 +58,7 @@ class PrivateSession(suite.Session):
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--runtime-archive", type=Path, help="explicit built runtime used for all runtime imports")
     parser.add_argument("--route", choices=["persistent", "direct"], default="persistent")
     parser.add_argument('--primary-review', action='store_true',
                         help='require primary image/receipt review before advancing each task')
@@ -97,6 +107,10 @@ def main():
         goal, history, server = integrated.prepare(session, 'chromium', args.seed, args.chromium)
         fixture = integrated._ACTIVE[str(history)]
         save('goal.json', goal)
+        import runtime.guarded_x11_v1.bridge as loaded_bridge
+        import runtime.cli_v1.api as loaded_api
+        save('runtime-origin.json', {'bridge': loaded_bridge.__file__, 'api': loaded_api.__file__,
+             'archive': str(args.runtime_archive.resolve()) if args.runtime_archive else None})
         save('allocation.json', {'negative_task': args.negative_task, 'route': args.route,
                                  'primary_review': args.primary_review})
         window = next(line.split()[0] for line in session.windows().splitlines()
@@ -175,40 +189,40 @@ def main():
                     raise RuntimeError('direct task feedback '+feedback['status']+'; no replay')
                 review(row)
                 continue
+            from runtime.guarded_x11_v1.form import fill_and_submit
             before = bridge.backend.emissions
             started = time.monotonic_ns()
             token = task['token'] + ('-wrong' if task['task_id'] == args.negative_task else '')
-            entered = bridge.click(*handles['field'], tail=[
-                {'op': 'key_chord', 'keys': ['CTRL', 'A']},
-                {'op': 'text', 'text': token},
-                {'op': 'wait_update', 'timeout_ms': 100}])
-            row = {'task_id': task['task_id'], 'navigation': navigation, 'entered': entered,
+            row = {'task_id': task['task_id'], 'navigation': navigation,
                    'action_started_ns': started}
             rows.append(row)
+
+            def retain_step(name, result, *, repair=False):
+                row['repaired_enter' if repair and name == 'entered' else name] = result
+                save('tasks.json', rows)
+
+            method = fill_and_submit(bridge, handles, token, wait_ms=100, on_step=retain_step)
+            row['method'] = {k: v for k, v in method.items() if k != 'results'}
             save('tasks.json', rows)
-            if entered['status'] != 'completed':
+            if method['status'] != 'completed':
                 row['refusal_emissions'] = bridge.backend.emissions-before
                 save('tasks.json', rows)
-                if entered['status'] != 'refused' or repaired:
+                entered = row.get('entered', {})
+                if (method['stopped_at'] != 'entered' or entered.get('status') != 'refused'
+                        or row['refusal_emissions'] != 0 or repaired):
                     raise RuntimeError('unplanned partial or repeated refusal; inspect, no replay')
-                # One explicit assistant repair from a newly viewed source.
+                # One explicit assistant repair, only after zero-emission refusal.
                 source = bridge.observe()
                 handles = request_grounding('repair', source, prior_receipt=row)
                 repaired = True
-                entered = bridge.click(*handles['field'], tail=[
-                    {'op': 'key_chord', 'keys': ['CTRL', 'A']},
-                    {'op': 'text', 'text': token},
-                    {'op': 'wait_update', 'timeout_ms': 100}])
-                row['repaired_enter'] = entered
+                method = fill_and_submit(bridge, handles, token, wait_ms=100,
+                    on_step=lambda name, result: retain_step(name, result, repair=True))
+                row['repaired_method'] = {k: v for k, v in method.items() if k != 'results'}
                 save('tasks.json', rows)
-                if entered['status'] != 'completed':
+                if method['status'] != 'completed':
                     raise RuntimeError('repair did not complete; no further input')
-            saved = bridge.click(*handles['submit'], tail=[{'op': 'wait_update', 'timeout_ms': 100}])
-            row['saved'] = saved
             row['local_elapsed_ms'] = (time.monotonic_ns()-started)/1e6
             save('tasks.json', rows)
-            if saved['status'] != 'completed':
-                raise RuntimeError('Save did not complete; retain entered effect, no replay')
             feedback = bridge.feedback('AI INTEGRATED SAVED - Google Chrome for Testing',
                                       rejected_titles=['AI INTEGRATED REJECTED - Google Chrome for Testing'])
             row['feedback'] = feedback

@@ -13,6 +13,13 @@ FIXED_TIME = (1980, 1, 1, 0, 0, 0)
 SCHEMA = "agent-interface/portable-runtime-build-v1"
 
 SOURCE_FILES = (
+    "runtime/guarded_x11_v1/__init__.py",
+    "runtime/guarded_x11_v1/frames.py",
+    "runtime/guarded_x11_v1/handles_base.py",
+    "runtime/guarded_x11_v1/handles_texture.py",
+    "runtime/guarded_x11_v1/handles.py",
+    "runtime/guarded_x11_v1/bridge.py",
+    "runtime/guarded_x11_v1/form.py",
     "runtime/core_v1/__init__.py",
     "runtime/core_v1/backend.py",
     "runtime/core_v1/contract.py",
@@ -28,6 +35,7 @@ SOURCE_FILES = (
     "runtime/cli_v1/attempt.py",
     "runtime/cli_v1/mcp_server.py",
     "runtime/cli_v1/mcp_session.py",
+    "runtime/cli_v1/mcp_guarded.py",
     "runtime/cli_v1/x11_target_review.py",
     "runtime/cli_v1/receipt.py",
     "runtime/cli_v1/review.py",
@@ -79,7 +87,7 @@ SUPPORT = {
     "wayland": {"promoted": False, "reason": "WAYLAND_BACKEND_NOT_PROMOTED"},
     "automatic_target_discovery": False,
     "automatic_permission_escalation": False,
-    "optional_dependencies": {"x11_png_artifacts": ["Pillow"], "mcp_stdio": ["mcp==1.30.0"]},
+    "optional_dependencies": {"x11_png_artifacts": ["Pillow"], "guarded_x11_python_api": ["Pillow", "python-xlib"], "mcp_stdio": ["mcp==1.30.0"]},
 }
 
 

@@ -11,6 +11,7 @@ on:
       - 'runtime/motor_state_v1/**'
       - 'runtime/selector_v1/**'
       - 'runtime/core_v1/**'
+      - 'runtime/guarded_x11_v1/**'
       - 'runtime/backends/**'
       - 'runtime/distribution_v2/**'
       - '.github/workflows/runtime-cli-v1.yml'
@@ -21,6 +22,7 @@ on:
       - 'runtime/motor_state_v1/**'
       - 'runtime/selector_v1/**'
       - 'runtime/core_v1/**'
+      - 'runtime/guarded_x11_v1/**'
       - 'runtime/backends/**'
       - 'runtime/distribution_v2/**'
       - '.github/workflows/runtime-cli-v1.yml'
@@ -47,6 +49,7 @@ jobs:
             runtime/motor_state_v1
             runtime/selector_v1
             runtime/core_v1
+            runtime/guarded_x11_v1
             runtime/backends
             runtime/distribution_v2
           sparse-checkout-cone-mode: false

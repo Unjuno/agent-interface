@@ -1,0 +1,21 @@
+✔ one pending call survives interrupted waiting; no resend, exact content presentation (173.8816ms)
+✔ refused IDs can remain unchanged while attempt records never overwrite (152.5333ms)
+✔ process loss makes delivery uncertain and blocks new sends (59.3312ms)
+✔ mismatched response retained but never presented as the pending result (142.2146ms)
+✔ existing evidence directory is refused before spawn (1.5144ms)
+✔ nonfinite or omitted values are refused before recording or sending (61.5611ms)
+✔ review attribution comes from explicit retained reply and cannot overwrite history (8.9707ms)
+✔ review refuses ambiguous, missing-image, uncertain and incomplete evidence (14.0912ms)
+✔ ordered same-clock events separate transport, presentation and caller review before next send (177.2584ms)
+✔ failed instrumentation before send emits no request and transport remains closable (65.1807ms)
+✔ presentation failure is retained as a started-only boundary and blocks later action (121.3369ms)
+✔ invalid JSON does not consume an attempt and foreign review cannot gain an event (106.9157ms)
+✔ timeline loss after submission retains reply and blocks replay while allowing transport cleanup (326.4893ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1422.3996

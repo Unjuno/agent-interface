@@ -1,6 +1,7 @@
 """Freeze one anchor-first translated OpenTTD live allocation."""
 import json
 from pathlib import Path
+from guarded_source_dependencies_v1 import complete_guarded_hashes
 
 import preregister_openttd_active_evidence_pair_v1 as prior
 import preregister_openttd_translated_compact_live_v1 as translated
@@ -39,10 +40,10 @@ def main():
             "descriptive because the sequential sessions are not order-balanced"),
         "baseline_report": str(BASELINE.relative_to(HERE)),
         "baseline_sha256": prior.sha(BASELINE),
-        "sources": {
+        "sources": complete_guarded_hashes({
             **{name: prior.sha(HERE / name) for name in dict.fromkeys(SOURCES)},
             **{name: prior.sha(HERE.parent / name) for name in prior.TASK_SOURCES},
-        },
+        }, base=HERE),
         "failure_policy": "retain the first live allocation; no model, runtime or task retry",
         "scope": (
             "one fresh fixed-seed translated OpenTTD task after fixed archived branch evidence; "
