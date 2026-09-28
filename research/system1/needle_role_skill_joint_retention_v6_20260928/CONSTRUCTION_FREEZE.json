@@ -1,0 +1,39 @@
+{
+  "schema": "needle-role-skill-joint-retention-v6-host-contract-v1",
+  "allocation": "needle-role-skill-joint-retention-20260928-v6",
+  "issue": 5081,
+  "branch": "research/needle-role-skill-joint-retention-v6-20260928",
+  "path": "research/system1/needle_role_skill_joint_retention_v6_20260928/",
+  "base_main_sha": "708dec9bcd2bfb3ef597acf7bc1c8a02bcb96b01",
+  "construction_seed_reserved_but_not_used": 9980514,
+  "formal_seeds_reserved_but_not_used": [9980211, 9980311, 9980411],
+  "construction_command": ["python", "-B", "-m", "unittest", "-v", "test_protocol.py"],
+  "construction_host": {
+    "os": "Windows 10 build 10.0.26200",
+    "python": "3.11.9",
+    "architecture": "AMD64",
+    "docker_invocations": 0,
+    "optimizer_steps": 0,
+    "formal_seed_access": false
+  },
+  "construction_result": {
+    "tests": 7,
+    "passed": 7,
+    "failed": 0,
+    "decision": "PASS_CONTRACT_FIXTURES_ONLY"
+  },
+  "source_sha256": {
+    "protocol.py": "1b73194a91edf44dac2f83ca0b683fddce188a65eac62b6217b521b4c47772f7",
+    "test_protocol.py": "fda3f6a8bfebf85382c494e66199e26863662f8a012dc20c98db68f94de350a5"
+  },
+  "source_git_blob_sha": {
+    "protocol.py": "29c6a6eca34c9e7cf1bc6366f55b7d947bba4b0c",
+    "test_protocol.py": "0320f03d813f864788da99bc1402895183801249"
+  },
+  "limits": [
+    "host-only standard-library contract tests",
+    "not Docker execution or image-entrypoint verification",
+    "not independent OS process or optimizer overlap evidence",
+    "formal resource lease not granted"
+  ]
+}
