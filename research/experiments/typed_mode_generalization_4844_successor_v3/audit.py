@@ -165,7 +165,10 @@ def audit_bytes(raw: bytes, expected_sha256: str, expected_train_seed: int = 484
         return {"accepted": False, "errors": ["json:" + str(exc)]}
     if raw != _canonical(data):
         return {"accepted": False, "errors": ["noncanonical_json"]}
-    errors = validate(data, expected_train_seed, expected_test_seed)
+    validation_errors = validate(data, expected_train_seed, expected_test_seed)
+    scientific_prefixes = ("row_unsafe:", "full_control:", "control:")
+    scientific_failures = [code for code in validation_errors if code.startswith(scientific_prefixes)]
+    errors = [code for code in validation_errors if code not in scientific_failures]
     controls = mutation_controls(data, expected_train_seed, expected_test_seed) if type(data) is dict and not errors else {}
     if len(controls) != 16 or not all(controls.values()):
         errors.append("mutation_controls")
@@ -180,6 +183,8 @@ def audit_bytes(raw: bytes, expected_sha256: str, expected_train_seed: int = 484
             gates[block] = {"wrong_reduction": reduction, "coverage_loss": coverage_loss, "pass": reduction >= 0.25 and coverage_loss <= 0.05 and item["direct_unsafe"] == 0 and item["typed_unsafe"] == 0}
     if errors:
         decision = "STOP_PROVENANCE_OR_AUDIT"
+    elif scientific_failures:
+        decision = "FAIL_MODE_MISROUTES_RECOVERY"
     elif any(summary[block]["direct_unsafe"] or summary[block]["typed_unsafe"] for block in BLOCKS):
         decision = "FAIL_MODE_MISROUTES_RECOVERY"
     elif any(not gate["pass"] for gate in gates.values()):
@@ -188,7 +193,7 @@ def audit_bytes(raw: bytes, expected_sha256: str, expected_train_seed: int = 484
         decision = "HOLD_COVERAGE_TRADEOFF" if coverage_tradeoff else ("HOLD_MIXED_PARTIAL_RESULT" if any_benefit else "FAIL_DIAGNOSIS_STILL_REDUNDANT")
     else:
         decision = "PASS_TYPED_MODE_GENERALIZATION_SCOPED"
-    return {"accepted": not errors, "errors": errors, "decision": decision, "primary_gates": gates, "raw_sha256": actual_sha, "rows": len(data.get("rows", [])) if type(data) is dict else 0, "mutation_controls": controls}
+    return {"accepted": not errors, "errors": errors, "scientific_failures": scientific_failures, "decision": decision, "primary_gates": gates, "raw_sha256": actual_sha, "rows": len(data.get("rows", [])) if type(data) is dict else 0, "mutation_controls": controls}
 
 
 if __name__ == "__main__":

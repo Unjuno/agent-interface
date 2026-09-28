@@ -16,7 +16,7 @@ See [PLAN.md](PLAN.md) for the complete frozen hypothesis, exact schedules, deci
 
 ## Stage-0 result
 
-On Windows 11 / CPython 3.12.10, `python -B -m unittest -v test_stage0.py` passed **8/8**. It verifies the 4,800-row accounting on construction-only seeds, 960 rows per block and 192 per mode, full-observation and unknown controls, 16 evidence mutation rejections, canonical raw serialization, duplicate-key rejection, frozen source digests/sidecar, disjoint formal/construction seeds, and that Docker image arguments are sourced from the frozen JSON rather than manually transcribed. This is construction evidence only; no formal metrics are reported.
+On Windows 11 / CPython 3.12.10, `python -B -m unittest -v test_stage0.py` passed **9/9**. It verifies the 4,800-row accounting on construction-only seeds, 960 rows per block and 192 per mode, full-observation and unknown controls, 16 evidence mutation rejections, canonical raw serialization, duplicate-key rejection, frozen source digests/sidecar, disjoint formal/construction seeds, that Docker image arguments are sourced from the frozen JSON rather than manually transcribed, and that a valid but failed control is reported as a scientific failure rather than an audit STOP. This is construction evidence only; no formal metrics are reported.
 
 Docker Desktop `desktop-linux` reports Engine 28.5.1 linux/x86_64 and an empty running inventory. The selected cached pinned image `sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a` was launched once in a bounded no-network/read-only smoke check and reported CPython 3.12.14; the container exited and the inventory returned empty. This is environment readiness, not the formal experiment.
 

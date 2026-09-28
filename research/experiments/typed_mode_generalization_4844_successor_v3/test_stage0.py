@@ -51,6 +51,15 @@ class Stage0Tests(unittest.TestCase):
         self.assertIn("<FREEZE.json docker.image>", freeze["commands"]["auditor"])
         self.assertNotIn("sha256:", freeze["commands"]["runner"])
 
+    def test_valid_control_failure_is_scientific_fail_not_audit_stop(self):
+        candidate = json.loads(json.dumps(self.result))
+        candidate["full_observation"][0]["typed"] = 2
+        raw = (json.dumps(candidate, sort_keys=True, separators=(",", ":"), allow_nan=False) + "\n").encode()
+        audited = audit_bytes(raw, hashlib.sha256(raw).hexdigest(), CONSTRUCTION_TRAIN_SEED, CONSTRUCTION_TEST_SEED)
+        self.assertTrue(audited["accepted"], audited["errors"])
+        self.assertEqual(audited["decision"], "FAIL_MODE_MISROUTES_RECOVERY")
+        self.assertIn("full_control:0", audited["scientific_failures"])
+
     def test_each_block_is_balanced_and_fixed_size(self):
         for block in BLOCKS:
             rows = [row for row in self.result["rows"] if row["block"] == block]
