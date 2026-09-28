@@ -1,0 +1,40 @@
+{
+  "allocation": "kernel-receipt-time-5215-audit-successor-20260929-01",
+  "base_main": "d8ca8bfed9cd8d84201c91645e4ed25364181d3f",
+  "disposition": "PASS_AUDITOR_GAP_SCOPED",
+  "audit_matrix": {
+    "file": "audit-matrix.json",
+    "sha256": "a7f50a716b48313f2214da3cd097f1674225dc03ddbec74fefc81324453cb700"
+  },
+  "study_source_sha256": {
+    "FREEZE.json": "84270188fd3a70b2e7832a70afecd1d1805dbda88445aad6e21828e17b941695",
+    "PLAN.md": "71d54cacf4c6f6d534e56f128218ff76d36ed3305df7dea2c707984a9f38dd2f",
+    "audit.py": "f63da1d27487f4696880235d1b73ed9dfc2ba7a9d178d47138f5518810f7156b",
+    "run_audit.py": "cb341678adb3b1e7f38e272352bdbc497d38640a8885f30d4ba87c8f27cdc915",
+    "test_audit.py": "cce96084a28392acad675a4afd786833386db530844a200e1673bb6a0a02b129",
+    "verify_capture.py": "7cff0b88a35145e8be1c90168fefcd1a9ab011ae5c7372115e8237374be85b30"
+  },
+  "local_execution": {
+    "os": "Windows 10 build 26200, AMD64",
+    "python": "3.11.9",
+    "unit_tests": "5/5 passed",
+    "legacy_audit_reproduction": "exact JSON equality with retained audit-output.json",
+    "strict_mutations": "40/40 HOLD_SCHEMA",
+    "independent_capture_verifier": "passed=true",
+    "docker": "not used; explicitly out of scope in #5215/#5225",
+    "workflow_results_used": false
+  },
+  "github_mcp_readback": {
+    "ref": "main at frozen base_main",
+    "blob_ids_match": true,
+    "paths": [
+      "runtime/results/kernel-time-intake-01/source/PLAN.md",
+      "runtime/results/kernel-time-intake-01/source/probe-output.json",
+      "runtime/results/kernel-time-intake-01/source/audit-output.json",
+      "runtime/results/kernel-time-intake-01/source/audit.py",
+      "runtime/results/kernel-time-intake-01/check.py",
+      "runtime/results/kernel-time-intake-01/result.json"
+    ]
+  },
+  "scope": "retained evidence adjudication only; no kernel probe or runtime source executed or modified"
+}
