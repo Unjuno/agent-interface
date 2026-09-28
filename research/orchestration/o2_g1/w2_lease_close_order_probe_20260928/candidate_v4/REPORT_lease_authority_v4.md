@@ -14,7 +14,7 @@
 
 ## Result
 
-`PASS_FINITE_LEASE_AUTHORITY_OPEN_CLOSE_INTERVAL_POLICY_ONLY`. The exhaustive audit checked 1,161,216 combinations with zero candidate/oracle mismatches and zero expected-rule mismatches. Six focused v4 tests and 26 existing regression tests passed (32/32 total).
+`PASS_FINITE_LEASE_AUTHORITY_OPEN_CLOSE_INTERVAL_POLICY_ONLY`. The exhaustive audit checked 1,161,216 combinations with zero candidate/oracle mismatches and zero expected-rule mismatches. After static review, the harness was tightened to select the target decision by event ID rather than list position; the full 32-test suite and all 1,161,216 combinations were rerun with the same zero-mismatch result. Six focused v4 tests and 26 existing regression tests passed (32/32 total).
 
 The material result is a v3 candidate gap, not a change to the frozen verifier: v3 omitted the `LEASE_OPEN` time bound. V4 holds when open timing is unknown or overlaps the edge, rejects an edge definitely before open, and only then applies the explicit-close rule. `PROGRAM_TERMINAL` remains a distinct lifecycle event, not an inferred lease close. The v3 PR/result remain immutable; v4 is a successor candidate.
 
@@ -30,4 +30,4 @@ python -m unittest -v test_lease_authority_v4.py test_lease_authority_v3.py test
 python exhaustive_lease_authority_v4.py
 ```
 
-The additive candidate, oracle, focused tests, enumerator, source freeze, result, and failure ledger are retained beside this report. After the run, the five W2 source blobs were re-fetched at each observed newer main through `716d25286ec37999d8098cd63bf1731fae0d88d6`; all remain identical to the frozen source identities. Before any container rerun, refetch them again and obtain an explicit queue lease. The latest coordinator order prioritizes #5134, so #5127 is deferred and has no lease. No production or integrated-runtime claim follows from this finite synthetic pass.
+The additive candidate, oracle, focused tests, enumerator, source freeze, result, and failure ledger are retained beside this report. After the run, the five W2 source blobs were re-fetched at each observed newer main through `716d25286ec37999d8098cd63bf1731fae0d88d6`; all remain identical to the frozen source identities. Before any container rerun, refetch them again and obtain an explicit queue lease. The latest coordinator order prioritizes #5134 and is reconciling #5134/#5139 sequencing, so #5127 is deferred and has no lease. No production or integrated-runtime claim follows from this finite synthetic pass.

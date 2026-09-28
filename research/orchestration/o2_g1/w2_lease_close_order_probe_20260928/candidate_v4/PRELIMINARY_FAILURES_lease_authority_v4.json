@@ -30,7 +30,7 @@
       "attempt": "superseded long exhaustive process",
       "outcome": "STOPPED_TO_PREVENT_DUPLICATE_CPU_RUN",
       "reason": "The command wrapper returned before surfacing a session identifier; process inspection found the original still running after a corrected run had been launched. The earlier process was stopped by exact PID after confirming its command line. It is not counted as a result.",
-      "correction": "One corrected run completed and is the sole reported exhaustive result."
+      "correction": "The corrected run completed; a later harness-robustness rerun is recorded separately below."
     }
   ],
   "final_run": {
@@ -38,5 +38,15 @@
     "exit": 0,
     "combinations_checked": 1161216,
     "mismatches": 0
+  },
+  "followup_reverification": {
+    "reason": "Static review found the enumerator selected the target verdict by list position, which relied on fixture event order.",
+    "change": "Select candidate and oracle decision rows by the target input event_id; expected rule and candidate semantics unchanged.",
+    "host_tests": "32/32 passed",
+    "command": "python exhaustive_lease_authority_v4.py",
+    "exit": 0,
+    "combinations_checked": 1161216,
+    "mismatches": 0,
+    "status": "FOLLOWUP_PASS"
   }
 }
