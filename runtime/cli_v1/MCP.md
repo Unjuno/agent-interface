@@ -422,3 +422,9 @@ additional metadata and inspection time against a possible separate tool call;
 no latency or token benefit is established yet.
 
 Target inspection resolves a configured X11 child/widget ID to its first managed ancestor using at most 64 window IDs. For such targets, evidence includes `configured_target_path` and `managed_family_root`, while `family_root` retains the configured ID. The focused window must still belong to that managed transient family. Missing, destroyed, cyclic or excessive ancestry refuses inspection. The path is rechecked with the rest of the evidence during explicit target review; changed ancestry invalidates that review. This metadata lookup does not change the input binding or grant authority. See [earlier primary evidence](../results/post-dispatch-inspection-01/README.md) for the child-ID failure that motivated this support; those historical results remain unchanged.
+
+### X11 key spelling
+
+Use `{"op":"key_chord","keys":["Home"]}` for a Home tap and `{"op":"key_chord","keys":["CTRL","s"]}` for a chord. Held input uses `key_state` with `key` and `down`; `key` is not an operation name. X11 keysym names are case-sensitive: `Home`, `End`, `Left`, `Right`, `Up`, `Down`, `BackSpace`, `Delete`, `Insert`. The existing aliases `CTRL`, `SHIFT`, `ALT`, `ENTER`, `TAB`, `ESC`, `SPACE` are also accepted. The actual layout must still map the named key; static validation alone does not establish that.
+
+For common uppercase misspellings, an unmapped-key refusal gives a spelling hint. It does not dispatch the suggested key, retry input, or change held-key identity. Read the execution outcome before deciding a corrected action. This guidance follows the retained `HOME` refusal and explicit `Home` correction in [primary child-target use](../results/managed-target-ancestry-01/README.md).

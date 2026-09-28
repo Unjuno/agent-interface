@@ -47,6 +47,10 @@ PublicProgram = Annotated[dict, Field(description=(
     'Emitted clicks or CTRL+a are not acknowledgements that a widget has processed them. '
     'On X11, window_client uses target-client coordinates and may omit overlapping dialogs; '
     'screen_physical_px uses display coordinates and includes other visible windows in the explicit region. '
+    'X11 key names are case-sensitive: use Home, End, Left, Right, Up, Down, '
+    'BackSpace, Delete or Insert; supported aliases include CTRL, SHIFT, ALT, ENTER, TAB, ESC, SPACE. '
+    'Use key_chord with keys for a tap/chord, or key_state with key/down for held input; '
+    'there is no key operation. Key mapping is checked on the execution host. '
     'wait_update with timeout_ms is a fixed delay on X11, not a redraw acknowledgement.'
 ))]
 
