@@ -25,6 +25,8 @@ for n in range(1,35):
  restored=copy.deepcopy(shown);presentation=restored.pop('presentation')
  if presentation['returned']=='brief':
   brief+=1
+  releases=shown['result']['execution']['releases']
+  check(bool(releases) and all(r['verified'] is True and r['keys_down']==[] and r['buttons_down']==[] for r in releases),'normal release')
   summary=restored['result'].pop('guard_summary');guards=original['result']['guard_checks']
   check(summary['count']==len(guards),'guard count')
   check(summary['checks']==[{k:g[k] for k in ('stage','observation_sequence','handle','status')} for g in guards],'guard identity')
