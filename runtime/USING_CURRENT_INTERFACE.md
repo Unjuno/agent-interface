@@ -322,6 +322,15 @@ For native research sessions, `native_observe(stage=...)` reads an already retai
 
 For direct public-MCP use, `python -m runtime.cli_v1.mcp_server --targets targets.json --output-directory runs --display :N --session-mode persistent-x11` retains one connection through explicit close or normal transport shutdown. The default is still one-shot. Use the returned `session.binding_revision` (initially 1) in dispatch assertions. `interface_observe` captures a fresh image; `interface_results` reads a retained result without input or recapture.
 
+X11 registers a key/button cleanup obligation before attempting a press, so an
+uncertain send/sync failure does not erase the release target. Failed release
+readback retains the obligation for explicit recovery. The
+[controlled regression](results/x11-uncertain-press-release-01/README.md) preserves
+a prior falsely verified release with an independently observed held key, plus
+corrected private-X11 and real-MCP boundary checks. Successful-path request counts
+are unchanged; server loss can still prevent release and these checks do not
+measure exact key-up timing or task effects.
+
 Public dispatch `observe` operations also accept `region: [x,y,width,height]`,
 matching `interface_observe`. Use either this form or legacy `x/y/w/h`, never
 both. Explicit lowering happens before admission and is retained in the report.
