@@ -1,0 +1,84 @@
+{
+  "allocation": "typed-mode-4844-successor-20260928-02",
+  "issue": 5184,
+  "status": "PRE_FORMAL_FREEZE",
+  "intake_main": "6df1e32308f1f0854e19ba0cdbf022833441f54f",
+  "branch": "research/typed-mode-4844-successor-v2-20260928",
+  "path": "research/experiments/typed_mode_generalization_4844_successor_v2/",
+  "historical_sources_read_only": {
+    "v1_preregistration_commit": "6df1e32308f1f0854e19ba0cdbf022833441f54f",
+    "v1_preregistration_blob": "2b1ae2a3ecadc43a262bad6a1dee432d98a5e784",
+    "v1_experiment_blob": "02f3bd0cb3a4fec2cb98a7fc794fff4998307f7c",
+    "v1_auditor_blob": "fe04a598814306a00bbb472384f50484ecb6178b",
+    "use": "read-only specification/source provenance; no predecessor runner or results executed"
+  },
+  "files": {
+    "experiment.py": {
+      "sha256": "be0e929cc7939116143fcfc38420f1decd65112936eeac1c256010af68b9e02e",
+      "git_blob": "39f3f77e46eba8b4e0a19fc7ee31ad79ac5d8d4c",
+      "bytes": 4796
+    },
+    "audit.py": {
+      "sha256": "702625d510d825ed3294307abd4c2d1d956137334215ff595908185dcddb36e9",
+      "git_blob": "e2feb5068b222b75890f3fcbee63f81c555c8e1d",
+      "bytes": 6876
+    },
+    "test_construction.py": {
+      "sha256": "9b94cf77e27fc44e374d27b570cb0e7e64dcb62a56c98b23e080a8a762081ff1",
+      "git_blob": "9c691459f8d5d5a80a7d7f63bf24fc71c25ba3ef",
+      "bytes": 1764
+    },
+    "PLAN.md": {
+      "sha256": "a3d47983da5aa7f4749ed0a9418204519ed9f75e7df75d18df47680eabd10c0b",
+      "git_blob": "e3e701c2b5aa2a1b8c16278064e6dfcd4670ef6b",
+      "bytes": 6214
+    },
+    "README.md": {
+      "sha256": "8bfec22275056578ef6cf6d96528d9ef4901ef518f7169750a72d68be9664256",
+      "git_blob": "8ae291d37be65ef8497e71feac75d3adfb229025",
+      "bytes": 1770
+    }
+  },
+  "formal": {
+    "train_seed": 484421,
+    "heldout_seed": 484422,
+    "training_rows": 2000,
+    "heldout_rows": 4800,
+    "rows_per_block": 960,
+    "rows_per_mode_per_block": 192,
+    "formal_invocation_limit": 1,
+    "runner_container_limit": 1,
+    "auditor_container_limit": 1,
+    "retry_allowed": false
+  },
+  "docker": {
+    "context": "desktop-linux",
+    "client_version": "28.5.1",
+    "server_version": "28.5.1",
+    "image": "python:3.12.14",
+    "image_config_digest": "sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a",
+    "platform": "linux/amd64",
+    "pull": "never",
+    "network": "none",
+    "read_only_root": true,
+    "cpus": 1,
+    "memory": "512m",
+    "pids_limit": 32,
+    "source_mount": "read-only",
+    "runner_output_mount": "fresh formal-01 only",
+    "auditor_raw_mount": "formal-01 read-only",
+    "auditor_output_mount": "fresh audit-01 only"
+  },
+  "construction": {
+    "seeds": [59001, 59002],
+    "host": "CPython 3.12.10",
+    "host_syntax": "PASS",
+    "host_unittest": "1/1 PASS",
+    "docker_unittest": "1/1 PASS",
+    "formal_seed_access": false
+  },
+  "decision_rules": "PLAN.md",
+  "formal_runner_command": "docker run --rm --pull=never --network none --read-only --cpus=1 --memory=512m --pids-limit=32 --mount type=bind,source=<source>,target=/src,readonly --mount type=bind,source=<empty-formal-01>,target=/out -e OUT_DIR=/out -e PYTHONDONTWRITEBYTECODE=1 sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a python /src/experiment.py",
+  "formal_auditor_command": "docker run --rm --pull=never --network none --read-only --cpus=1 --memory=512m --pids-limit=32 --mount type=bind,source=<source>,target=/src,readonly --mount type=bind,source=<formal-01>,target=/in,readonly --mount type=bind,source=<empty-audit-01>,target=/audit -e PYTHONDONTWRITEBYTECODE=1 -e AUDIT_DIR=/audit sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a python /src/audit.py /in/result.json <result-sha256>",
+  "formal_not_started": true
+}
