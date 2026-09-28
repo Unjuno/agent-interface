@@ -38,9 +38,10 @@ new authorization or experiment evidence.
 ## Current status
 
 No formal or live model/game allocation has run in this package. GitHub #5085
-still has no named slot assignment for #5130; the latest coordinator arbitration
-request assigns #5133 allocation -04 a separate serialized CPU lease, which
-does not transfer to this lane. The live-start prerequisite is already recorded
+has explicitly assigned the next serialized CPU slot to #5134 allocation
+`needle-publication-orbstack-bind-5066-20260928-02` at #5085 comment
+#5861921301. That lease does not transfer to #5130; #5130 has no named slot.
+The live-start prerequisite is already recorded
 as `PASS_MINDUSTRY_MATERIALIZED_LIVE_SMOKE_SCOPED` by fresh #2624 V2: exact
 fixture identities, zero-input readiness, independent raw audit, and 8/8
 corruption controls passed. #5130 explicitly says not to rerun that smoke. Its
@@ -62,6 +63,14 @@ model, asset, GPU, formal allocation, or independent audit was invoked. This is
 an execution-policy violation, not a formal result; it has been reported on
 #5130 and #5085. No further Docker calls will be made on this lane until an
 explicit slot assignment.
+
+Readiness gap: this additive path currently contains only the decision-contract
+tests, source-identity audit, and this report. It has no integrated live
+three-arm runner, construction suite for that runner, or raw-output auditor.
+The existing single-task Mindustry runner and synthetic repeat-fixture protocol
+are references, not evidence that the six-task three-arm path is implemented.
+Those composed artifacts and their construction checks must be completed
+before freezing or launching the formal allocation.
 
 The decision-contract check is synthetic and non-scientific. It was run both
 on the host and in local, network-disabled Docker containers using the
