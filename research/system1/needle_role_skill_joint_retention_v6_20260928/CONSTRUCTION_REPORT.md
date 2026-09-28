@@ -44,8 +44,8 @@ counts are retained by Git history and are not represented as the current count.
 
 ## Current-main synchronization checkpoint
 
-Latest observed main `0205a872462325ba7cabe377ee5aa1655ad5a9bc` was merged without
-conflict at `546894a4e7`. Its changes were confined to the live-control result
-and namespace-map paths; the v6 experiment path remains additive and isolated.
+Latest observed main `6e032b99d1fd85b4a87375f3262eef5e74e96617` was merged without
+conflict at `c91cffbf6a`. Its changes were confined to runtime kernel evidence;
+the v6 experiment path remains additive and isolated.
 This is branch freshness only, not a formal freeze or resource grant; repeat the
 current-main and lease checks before any seed-consuming work.
