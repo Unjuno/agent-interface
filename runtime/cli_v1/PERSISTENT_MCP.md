@@ -71,3 +71,19 @@ the old request and deadline, without renewing either. Do not auto-run requests
 from history or treat the supplied request as evidence of task completion.
 This adds response bytes to reduce caller-side schema mistakes; actual token cost
 and any reduction in failed calls require measurement.
+
+### Successful inspection versus a tool error
+
+A successful `interface_inspect_target` returns MCP `isError=false` while its body
+still says `status=needs_review`. Inspection has completed; explicit caller review
+and target selection are still required. It does not grant input authority, advance
+the binding revision, clear recovery, or prove task completion.
+
+Capture/recheck failure, missing requested image presentation, report persistence
+failure, and failed or expired target review remain tool errors. Inspect the body
+and image outcome; never use `isError=false` as permission to issue input.
+Historical response bundles keep their original flags. This change corrects a
+transport distinction exposed by the primary Calc pair; it makes no latency claim.
+The MCP [tool error contract](https://modelcontextprotocol.io/specification/2025-11-25/server/tools#error-handling)
+defines `isError` for tool execution failures; pending explicit review is the
+successful output of this inspection operation.

@@ -1,4 +1,5 @@
 import asyncio
+from contextlib import ExitStack
 import json
 from pathlib import Path
 import tempfile
@@ -11,6 +12,50 @@ from runtime.cli_v1.mcp_session import MCPSessionOwner
 
 
 class OwnedMCPTests(unittest.IsolatedAsyncioTestCase):
+
+    async def test_inspection_error_flag_separates_pending_review_from_failures(self):
+        from runtime.cli_v1.attempt import _write_json as write_json
+        for case in ('ready_metadata', 'ready_image', 'inspect_failure', 'capture_failure',
+                     'changed_during_capture', 'presentation_failure', 'persistence_failure'):
+            with self.subTest(case=case), tempfile.TemporaryDirectory() as td, ExitStack() as stack:
+                session=self.fixture()
+                evidence={'window_id':456,'transient_chain':[456,123]}
+                stack.enter_context(self.selection())
+                stack.enter_context(patch('runtime.cli_v1.mcp_session.open_session',return_value=session))
+                inspect=stack.enter_context(patch('runtime.cli_v1.mcp_session.inspect_focused_target',return_value=evidence))
+                if case=='inspect_failure':
+                    inspect.side_effect=OSError('window unavailable')
+                if case=='capture_failure':
+                    session.backend.observe_read_only.side_effect=OSError('capture unavailable')
+                if case=='changed_during_capture':
+                    inspect.side_effect=[evidence,dict(evidence,window_id=457)]
+                shown={'image_status':'image','image':{'type':'image','mimeType':'image/png','data':'YWJj'}}
+                if case=='presentation_failure':
+                    shown={'image_status':'needs_review','image_error':'artifact unavailable'}
+                stack.enter_context(patch('runtime.cli_v1.mcp_server.present_result',return_value=shown))
+                if case=='persistence_failure':
+                    def persist(path,value):
+                        if Path(path).name=='report.json':raise OSError('disk full')
+                        return write_json(path,value)
+                    stack.enter_context(patch('runtime.cli_v1.mcp_server._write_json',side_effect=persist))
+                server=create_server({'fixture':123},td,session_mode='persistent-x11')
+                arguments={'target':'fixture'}
+                if case!='ready_metadata':arguments['screen_region']=[0,0,10,10]
+                reply=await server.call_tool('interface_inspect_target',arguments)
+                row=self.row(reply)
+                self.assertEqual(reply.isError,case not in ('ready_metadata','ready_image'))
+                self.assertEqual(row['status'],'needs_review')
+                self.assertFalse(row['input_dispatched'])
+                self.assertFalse(row['authority_granted'])
+                self.assertEqual(row['session']['binding_revision'],1)
+                self.assertEqual(row['session']['targets'],{'fixture':123})
+                if case.startswith('ready_'):
+                    self.assertEqual(row['review_request']['tool'],'interface_review_target')
+                session.backend.focus.assert_not_called()
+                session.backend.release_all.assert_not_called()
+                session.dispatch.assert_not_called()
+                await server.call_tool('interface_close',{})
+
     async def test_recovery_capture_validates_before_release_and_only_captures_success(self):
         owner = MCPSessionOwner({'fixture': 123})
         session = self.fixture(); owner.session = session; owner.state = 'open'
@@ -245,7 +290,9 @@ class OwnedMCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertTrue(session.recovery_required)
             session.backend.release_all.assert_not_called()
             session.backend.focus.assert_not_called()
-            again=self.row(await server.call_tool('interface_review_target',args))
+            replay=await server.call_tool('interface_review_target',args)
+            self.assertTrue(replay.isError)
+            again=self.row(replay)
             self.assertEqual(again['status'],'needs_review')
             stale=self.row(await server.call_tool('interface_dispatch',{'program':{},'current_observation_seq':1,'current_binding_revision':1}))
             report=json.loads(Path(stale['call_directory'],'report.json').read_text())

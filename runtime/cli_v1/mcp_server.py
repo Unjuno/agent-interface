@@ -250,9 +250,18 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             if observation_refs and operation.startswith('guarded_'):
                 from .receipt_references import compact_guarded_observation
                 result = compact_guarded_observation(result)
+            # Inspection's successful result is evidence awaiting caller review,
+            # not a failed tool execution. This grants no target/input authority.
+            inspection_ready = (
+                operation == 'inspect_target' and report.get('status') == 'needs_review'
+                and report.get('error') is None
+                and isinstance(report.get('review_request'), dict)
+                and report['review_request'].get('tool') == 'interface_review_target'
+                and (kwargs.get('screen_region') is None or result.get('image_status') == 'image'))
             return content(result, error=persistence_error is not None or (
                 (operation.startswith('guarded_') or operation in ('close', 'inspect_target', 'review_target', 'recover_input')) and
-                (report.get('error') is not None or report.get('status') in ('cleanup_failed','refused','needs_review','recovery_failed')
+                (report.get('error') is not None or report.get('status') in ('cleanup_failed','refused','recovery_failed')
+                 or (report.get('status') == 'needs_review' and not inspection_ready)
                  or report.get('feedback_status') == 'observation_failed')))
         finally:
             if call_id is not None:
@@ -308,6 +317,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
 
             Does not select, focus or send input. Returns a one-use 30s review ID
             and review_request with exact tool arguments for explicit caller review.
+            Successful inspection returns isError=false while status remains needs_review.
             This candidate request is not executed and retained results do not renew it.
             Optional screen_region=[x,y,width,height] returns a fresh screen image
             in this call. Metadata is rechecked after capture; disagreement gives
