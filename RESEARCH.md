@@ -130,14 +130,18 @@ full 128-row support pool and 256-row held-out pool with explicit, separate
 test-only formal/support seed sentinels. The expanded suite passes 25/25,
 including split and raw-result reconstruction controls. A fixed-seed coverage
 check exposed differing prompt-template/field marginals between the balanced
-and imbalanced set supports; a separate stratified selector demonstrates
-matched marginals, nesting, and shared held-out coverage as a construction-only
-feasibility result. It does not replace the frozen hash-ranking allocation and
-requires an explicit freeze amendment to adopt. Current main was refreshed to
-`c2f0eb2d`. Evidence and H/T/D/C/U are in
+and imbalanced set supports. Follow-up construction probes show marginal
+matching and then exact 4-cell joint-distribution matching are feasible across
+128 fixed sentinels while preserving class quotas/nesting. The joint design
+restricts both arms to four of sixteen cells and still compares distinct rows;
+neither probe replaces the frozen hash-ranking allocation or establishes
+causal/model effects. Any adoption requires explicit preregistration and a
+fresh protocol integration. Current main was refreshed to `e74f0ba2`. Evidence and H/T/D/C/U are in
 [`CURRENT_MAIN_CONSTRUCTION.md`](research/experiments/qwen05b_abstention_balance_5139_sampler_v1/CURRENT_MAIN_CONSTRUCTION.md),
-with construction source, independent raw-auditor tests, and coverage analysis
-alongside it. This is not the formal dataset freeze, pinned-image gate, audit
+with construction source, independent raw-auditor tests, coverage analyses,
+and the joint-cell report at
+[`evidence/joint-cell-marginals-128-20260928/REPORT.md`](research/experiments/qwen05b_abstention_balance_5139_sampler_v1/evidence/joint-cell-marginals-128-20260928/REPORT.md).
+This is not the formal dataset freeze, pinned-image gate, audit
 of formal training output, GPU/CUDA run, LoRA fit, quality result, or safety
 claim. Historical `sad_cannon`
 attribution and explicit exclusive GPU/Docker lease remain unresolved;

@@ -140,3 +140,29 @@ No model weights, CUDA context, Docker container, training job, adapter, or
 GPU resource was opened or allocated. All #5139 execution gates remain in
 force, including the unresolved historical `sad_cannon` attribution and the
 need for a named exclusive GPU/Docker lease.
+
+## Current-main refresh and joint-cell feasibility rerun — 2026-09-28
+
+GitHub main advanced to `e74f0ba20f7b7476ab9b3e62f8533ec53d216daf`. The
+additive branch was fast-forwarded to the latest same-branch evidence at
+`4ce422238e57df7ae3ae20b489e8378769edbf17`, then merged with that exact main
+tip. Main's intervening changes did not touch the #5139 experiment directory.
+The resulting branch is 13 commits ahead and zero behind `origin/main`; all 20
+PR paths remain additive experiment evidence and the `RESEARCH.md` entry.
+
+On this refreshed branch, the original experiment package again passed 25/25
+tests in 0.207 seconds. The retained joint-cell probe was executed from its
+GitHub branch source; it exited 0 and stdout parsed exactly equal to the
+retained `result.json`. The probe source passed a no-write Python `compile()`
+syntax check. Research indexes pass (193 retained result/failure directories;
+137 reachable top-level research directories), and `git diff --check` is
+clean. No allocation seed, source under the experiment path, probe rule,
+result, or GPU/container state changed in this refresh.
+
+The joint-cell probe's scoped disposition remains
+`PASS_JOINT_AND_MARGINAL_MATCHED_SET_FEASIBILITY_ONLY`: 128/128 construction
+sentinels passed; both arms choose the same four diagonal cells, with 1 versus
+4 rows per cell. This narrows template/field composition as a confound but
+leaves row identity and within-cell multiplicity differences, and restricts
+both arms to four of sixteen possible cells. The selector remains a proposal,
+not the `make_dataset.build()` implementation or a causal/model result.
