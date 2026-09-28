@@ -8,7 +8,7 @@ from arm_coordinator import ArmCoordinator
 
 def source(sequence, layout):
     width = 1280 if layout == "A" else 1216
-    return {"sequence": sequence,
+    return {"sequence": sequence, "delivery_id": f"delivery:{sequence}",
             "pointer_binding": {"surface": 91,
                                 "geometry": [0, 24, width, 760]}}
 
@@ -97,8 +97,18 @@ class ArmCoordinatorTests(unittest.TestCase):
                             lambda _obs: candidate())
         locator = coordinator.locator_for_input(source(2, "A"), "A")
         self.assertEqual(locator["validated_sequence"], 2)
+        self.assertEqual(locator["delivery_id"], "delivery:2")
         self.assertEqual(locator["authority"],
                          "locator only; explicit caller action still required")
+
+    def test_input_locator_requires_a_flushed_delivery_identity(self):
+        coordinator = ArmCoordinator("plain")
+        coordinator.resolve(source(1, "A"), 1280, 760, palette_slots(),
+                            lambda _obs: candidate())
+        missing = source(2, "A")
+        del missing["delivery_id"]
+        with self.assertRaisesRegex(RouteStop, "delivery identity"):
+            coordinator.locator_for_input(missing, "A")
 
     def test_input_locator_refuses_layout_geometry_change(self):
         coordinator = ArmCoordinator("plain")

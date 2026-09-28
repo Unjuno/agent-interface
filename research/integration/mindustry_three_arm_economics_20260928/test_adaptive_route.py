@@ -7,7 +7,7 @@ from adaptive_route import (RouteStop, TargetBundle, require_current_locator,
 
 
 def observation(sequence, geometry=(0, 24, 1280, 760)):
-    return {"sequence": sequence,
+    return {"sequence": sequence, "delivery_id": f"delivery:{sequence}",
             "pointer_binding": {"surface": 91, "geometry": list(geometry)}}
 
 

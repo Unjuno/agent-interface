@@ -106,10 +106,14 @@ def require_current_locator(bundle: TargetBundle, observation: dict,
     eligible, reason = revalidate_bundle(bundle, observation, layout)
     if not eligible:
         raise RouteStop("target locator refused before input: " + reason)
+    delivery_id = observation.get("delivery_id")
+    if type(delivery_id) is not str or not delivery_id:
+        raise RouteStop("flushed observation delivery identity required before input")
     return {"palette_point": list(bundle.palette_point),
             "target_point": list(bundle.target_point),
             "source_sequence": bundle.source_sequence,
             "validated_sequence": observation["sequence"],
+            "delivery_id": delivery_id,
             "authority": "locator only; explicit caller action still required"}
 
 

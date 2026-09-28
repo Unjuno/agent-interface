@@ -7,7 +7,7 @@ rule from #1679; it does not reopen or modify #1679, #2624, or prior allocations
 This branch was originally based on `main`
 `3553dc1af1125441a6b44256755e7e22df40836d` (merge commit `8c3138c7bd`,
 incorporating #5158 on top of prior #5154/#5153 sync `1866f05aab`) and has since
-merged current `main` `ceda253410ce738571580a5980a4e26dc1c3352a`. The inherited
+merged current `main` `50e542eda5bcb6a5ddbc62c7400ec36b0dbcc8c2`. The inherited
 #1679 preregistration's five dependency blobs were compared with this main:
 three are byte-identical; the plan Markdown retains its documented change from
 `ff0de7c4a0d6cc57d145d460f019f72d6967ffec` to
@@ -238,6 +238,27 @@ The tests use synthetic temporary-directory protocol participants; no game,
 model, controller socket, task input, formal allocation, live audit, or Docker
 container was run. The mod/channel are not yet composed into a live three-arm
 runner or raw auditor, so no integrated experiment is claimed.
+
+## Live submit evidence binding — host integration check (2026-09-28)
+
+Current `interactive_v27` rejects submit commands unless they carry
+`decision_evidence` tied to a successfully flushed observation. The earlier
+sequence-bound click compiler did not emit this required field, so its command
+would be refused at the actual submit boundary. The fresh locator now carries
+the observation's `delivery_id`; the compiler binds it with the same sequence
+and caller-declared `assistant` producer. A new test passes the compiled field
+through the repository's real `DeliveryLedger.validate`, and a missing delivery
+identity fails closed before dispatch. This verifies payload compatibility
+with the live submit ledger, not an end-to-end socket/game dispatch.
+
+After merging main `50e542eda5bcb6a5ddbc62c7400ec36b0dbcc8c2`, the complete
+host-only package suite passes 45/45; the separate #5170 comparison suite
+passes 8/8; the inherited probe returns `passed=true`, `RETAIN`, 10 controls;
+Python byte-compilation, Node syntax check, and `git diff --check` pass. The
+delivery tests use a synthetic in-memory flush record. No socket, game, model,
+task input, formal run, independent live raw audit, workflow, or Docker
+container was invoked. End-to-end runner and independent raw auditor remain
+the next construction gaps.
 
 Policy incident (2026-09-28 JST): one read-only `docker ps --format ...`
 inspection was mistakenly issued before the named #5130 lease, despite the

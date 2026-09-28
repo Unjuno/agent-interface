@@ -23,6 +23,9 @@ def compile_pointer_click(locator: dict, clock: dict, task_id: str,
     sequence = locator.get("validated_sequence")
     if type(sequence) is not int or sequence < 0:
         raise DispatchStop("validated observation sequence required")
+    delivery_id = locator.get("delivery_id")
+    if type(delivery_id) is not str or not delivery_id:
+        raise DispatchStop("successfully flushed observation delivery id required")
     if type(clock) is not dict or type(clock.get("sequence")) is not int:
         raise DispatchStop("socket clock sequence required")
     if clock["sequence"] != sequence:
@@ -52,6 +55,9 @@ def compile_pointer_click(locator: dict, clock: dict, task_id: str,
         "id": f"{task_id}-{action}",
         "expected_sequence": sequence,
         "valid_until_ns": runtime_ns + lifetime_ns,
+        "decision_evidence": {"delivery_id": delivery_id,
+                              "observation_sequence": sequence,
+                              "producer": "assistant"},
         "steps": steps,
-        "authority": "compiled request only; not dispatched or admitted",
+        "authority": "compiled request only; decision evidence is caller-declared, not input authority",
     }

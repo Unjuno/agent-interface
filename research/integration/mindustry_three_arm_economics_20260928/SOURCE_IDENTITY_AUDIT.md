@@ -1,7 +1,7 @@
 # Inherited #1679 source identity audit
 
 Audit target: `origin/main` at
-`ceda253410ce738571580a5980a4e26dc1c3352a` (2026-09-28 local fetch).
+`50e542eda5bcb6a5ddbc62c7400ec36b0dbcc8c2` (2026-09-28 local fetch).
 The preregistration is a historical record and was not edited.
 
 | Dependency | Frozen blob in #1679 preregistration | Current-main blob | Result |
@@ -12,8 +12,8 @@ The preregistration is a historical record and was not edited.
 | `research/integration/mindustry_repeat_reset_contract_v1/RESULT.json` | `ae4d6143370117c2c3655e61ed62a570060d55b2` | `ae4d6143370117c2c3655e61ed62a570060d55b2` | exact |
 | `research/integration/mindustry_repeat_fixture_protocol_v1/RESULT.json` | `6b6b4c759ea097fadca9768d4938ac5ecf201a94` | `6b6b4c759ea097fadca9768d4938ac5ecf201a94` | exact |
 
-The five dependency blobs were rechecked against latest main `ceda2534`; three
-are unchanged from the prior `442ef765` audit, while the evaluator adds
+The five dependency blobs were rechecked against latest main `50e542ed`; all
+match the `ceda2534` audit, with the evaluator adding
 cross-preflight and preflight-to-task model/effort identity checks in merged PR
 #5176; the plan Markdown's complete diff from the frozen blob to current main has two
 edits: the retained pre-preregistration discovery count changes from six to
