@@ -1,10 +1,25 @@
 {
   "allocation": "typed-mode-4844-successor-20260928-04",
   "issue": 5184,
-  "status": "PRE_FORMAL_PREPARATION",
+  "status": "PRE_FORMAL_FREEZE",
+  "frozen_at": "2026-09-28",
   "branch": "research/typed-mode-4844-successor-v4-20260928-e07d",
   "path": "research/experiments/typed_mode_generalization_4844_successor_v4/",
-  "intake_main": "ae1c23b9ffcff29e3b6cbf1b25f31066742122e7",
+  "source_commit": "fe256c61c4557b5519c097a0ee86168c1b024512",
+  "main": {
+    "at_registration": "ae1c23b9ffcff29e3b6cbf1b25f31066742122e7",
+    "latest_before_freeze": "53b93cd5dcb0fbbedee1db23ddf550ba1eb289e0",
+    "merged_into_branch_at": "2214b897cec1d7982820e1febc8ae27938eb8e34",
+    "freeze_source_commit": "fe256c61c4557b5519c097a0ee86168c1b024512",
+    "intervening_changes": "Seven commits from registration to latest main changed docs/INTEGRATION_PLAN.md and runtime/USING_CURRENT_INTERFACE.md and added independent allocation -02/-03 collision/v2/v3 and compact-calculator evidence under other paths. GitHub compares found no v4 path overlap; all were merged before freeze."
+  },
+  "prior_collision": {
+    "allocation_03": "STOP_DUPLICATE_FORMAL_SEED_COLLISION",
+    "formal_seeds_484431_484432_retired": true,
+    "competing_runs_pooled": false,
+    "source_results": "Distinct allocation -03 source/raw evidence is retained without modification in the v3 and parallel-collision paths."
+  },
+  "hypothesis": "For the disclosed synthetic five-mode/six-binary-cue family, typed mode-posterior aggregation through the fixed disposition map may reduce wrong emitted recovery versus direct disposition classification on partial/compositional holdouts, possibly with inadequate benefit or excessive coverage loss.",
   "formal": {
     "training_seed": 866309294,
     "heldout_seed": 301332595,
@@ -12,37 +27,65 @@
     "heldout_rows": 4800,
     "rows_per_block": 960,
     "rows_per_mode_per_block": 192,
+    "cue_flip_probability": 0.08,
+    "random_missingness_probability": 0.2,
+    "confidence_threshold": 0.65,
+    "alpha": 1,
+    "disposition_map": [0, 0, 1, 2, 2],
+    "blocks": ["COMPLETE", "SINGLE_MISSING", "MULTI_MISSING", "COMPOSITION_HOLDOUT", "NUISANCE_SHIFT"],
     "runner_limit": 1,
     "auditor_limit": 1,
     "retry_allowed": false,
-    "formal_data_generated": false
+    "formal_data_generated": false,
+    "formal_runner_started": false
+  },
+  "decision_gates": {
+    "pass": "SINGLE_MISSING, MULTI_MISSING, and COMPOSITION_HOLDOUT each reduce wrong emitted dispositions by at least 25%, have no increase in wrong recovery, and lose at most 5 pp safe coverage; all prototype/unknown/contradictory controls pass; unsafe emissions are zero; independent raw audit errors are empty and 16/16 mutations reject.",
+    "coverage_tradeoff": "Apparent primary-block error reduction requires more than 5 pp absolute safe-coverage loss.",
+    "stop": "Any source, seed-collision, image, invocation, evidence, or audit provenance/control failure is a typed STOP; do not retry or infer a scientific result."
   },
   "construction": {
     "seeds": [59003, 59004],
-    "v4_tests_run": false,
+    "test": "python -B -m unittest -v test_construction.py",
+    "docker_runs": 2,
+    "both_passed": true,
+    "container_ids": [
+      "4a89379ac4acbbf327222ebf7da66d476da0e3fa1f8d3bc25fe14879e61fc497",
+      "8ada31e2b19f2f1be3b730765815131e382ade987ebedd6f1132288d0a7cfd7c"
+    ],
     "formal_seeds_accessed": false
   },
   "seed_collision_search": {
-    "checked_before_allocation_comment": true,
-    "sources": ["open/closed Issues", "open/closed PRs", "branches", "commits", "default-branch code"],
-    "formal_seed_866309294_matches": 0,
-    "formal_seed_301332595_matches": 0,
-    "path_or_branch_matches": 0,
-    "recheck_required_before_freeze_and_launch": true
+    "before_registration": {"issues": 0, "prs": 0, "branches": 0, "commits": 0, "default_branch_code": 0},
+    "pre_freeze_recheck": {"issues": "1 intended preregistration match only on #5184", "prs": 0, "branches": 0, "commits": 0, "default_branch_code": 0},
+    "query_date": "2026-09-28",
+    "recheck_required_immediately_before_runner": true
   },
   "docker": {
     "context": "desktop-linux",
+    "client_server": "28.5.1",
+    "image_reference": "python:3.12.14",
     "image_config_digest": "sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a",
     "platform": "linux/amd64",
     "pull": "never",
     "network": "none",
-    "readonly_root": true,
-    "readonly_source": true,
+    "root_read_only": true,
+    "source_read_only": true,
     "cpus": 1,
     "memory_bytes": 536870912,
-    "pids": 32,
+    "pids_limit": 32,
     "security_opt": "no-new-privileges",
     "scratch": "tmpfs /tmp:rw,noexec,nosuid,size=32m"
   },
-  "provenance": "This is an allocation registration/preparation record, not the final source freeze. Final source SHA-256, Git blobs, sizes, exact command and commit must be recorded after construction and before any formal seed access."
+  "files": {
+    ".gitattributes": {"sha256":"705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da","git_blob":"fa1385d99a319b43c06f5309d1aae9fdd3adea46","bytes":8},
+    "experiment.py": {"sha256":"befce77fbb8eb8e53336b110eca7a92b02cad5d82538c603787a42ffb810a326","git_blob":"99f0fc40fbc50eba0f46937e1d9e4b98cdb89d15","bytes":4802},
+    "audit.py": {"sha256":"ab6ade85c933b1f56aacd28fd484d15f9bcfbf54d1fa16812c3f96afed9f5f9d","git_blob":"91d9aa34edb163fd17d0a757a2741f8b8f51d105","bytes":8700},
+    "test_construction.py": {"sha256":"58953b5eac7c9eee0d2a4f9e74e72453fb55ffbe4e5d0d5610eacd9931981e13","git_blob":"aeb463104d60aef19cc969048394860459c435d8","bytes":3023},
+    "PLAN.md": {"sha256":"9ba586eba9858bf07fcb6ec5246e9e6d3e7cd4aa9404ef817b40f664c334e7e1","git_blob":"2536f6a3396227b436c9e75147bcfccdc057d7a4","bytes":10686},
+    "README.md": {"sha256":"b2ba9b150a8ce342f1db7cd88abef4837ff35cdd32d2f5ee017c54a8650057c4","git_blob":"2484ef4f1bfb42b8bcfdce0dc3e494639012ab74","bytes":1271},
+    "CONSTRUCTION.md": {"sha256":"57fd1204af6160b88d138e0d82e60b7600d1add1fe965ea5ff14a6f96c21e798","git_blob":"a465bf8e6662ec6be0d7a29596bbd83286d9b624","bytes":2115}
+  },
+  "formal_commands": "Exact command sequence frozen in PLAN.md (source Git blob 2536f6a3396227b436c9e75147bcfccdc057d7a4). Final freeze commit and file readback must be recorded on Issue #5184 before any formal seed access.",
+  "limitations": "Synthetic classifier-family evidence only. No GUI, cross-app, runtime authority, safety proof, task quality, model quality, latency/token, human-tempo, or product claim."
 }
