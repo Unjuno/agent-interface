@@ -27,6 +27,12 @@
       "correction": "Handle non-interval close timing as HOLD_UNKNOWN_CLOSE_TIME and rerun the full domain."
     },
     {
+      "attempt": "distinct missing-open state enumerator draft",
+      "outcome": "HARNESS_EXCEPTION",
+      "reason": "The new absent-open sentinel entered the generic bounded-interval expansion and raised TypeError before completing enumeration.",
+      "correction": "Represent absent LEASE_OPEN as a missing event (no timestamp row), assign expected HOLD_LEASE_OPEN_MISSING, and rerun all combinations."
+    },
+    {
       "attempt": "superseded long exhaustive process",
       "outcome": "STOPPED_TO_PREVENT_DUPLICATE_CPU_RUN",
       "reason": "The command wrapper returned before surfacing a session identifier; process inspection found the original still running after a corrected run had been launched. The earlier process was stopped by exact PID after confirming its command line. It is not counted as a result.",
@@ -40,9 +46,9 @@
     "mismatches": 0
   },
   "followup_reverification": {
-    "reason": "Static review found the enumerator selected the target verdict by list position, which relied on fixture event order.",
-    "change": "Select candidate and oracle decision rows by the target input event_id; expected rule and candidate semantics unchanged.",
-    "host_tests": "32/32 passed",
+    "reason": "Static review found both a position-based target verdict lookup and a duplicated unknown-open state where a distinct absent-LEASE_OPEN case was intended.",
+    "change": "Select candidate/oracle rows by target event_id; replace duplicate state with an actually missing LEASE_OPEN event and an independent expected HOLD.",
+    "host_tests": "33/33 passed",
     "command": "python exhaustive_lease_authority_v4.py",
     "exit": 0,
     "combinations_checked": 1161216,

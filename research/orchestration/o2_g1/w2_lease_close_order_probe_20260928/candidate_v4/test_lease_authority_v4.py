@@ -53,6 +53,13 @@ class LeaseAuthorityV4Test(unittest.TestCase):
         next(e for e in rows if e["event_type"] == "LEASE_OPEN")["time"] = {"lower_ns": None, "upper_ns": None, "censoring": "unknown"}
         self.assert_match(rows, "HOLD_UNKNOWN_LEASE_OPEN_TIME")
 
+    def test_missing_lease_open_holds(self):
+        rows = trace(edge=(201, 202), opened=(199, 200))
+        rows[:] = [e for e in rows if e["event_type"] != "LEASE_OPEN"]
+        candidate, oracle = evaluate(rows), audit(rows)
+        self.assertEqual(candidate, oracle)
+        self.assertEqual(candidate[1]["status"], "HOLD_LEASE_OPEN_MISSING")
+
     def test_terminal_alone_does_not_close_authority(self):
         self.assert_match(trace(edge=(510, 512), opened=(0, 0), terminal=(500, 500)), "AUTHORIZED_MATCH")
 

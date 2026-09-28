@@ -12,6 +12,8 @@ def interval(lo, hi):
 
 
 def expected(edge, opened, closed, close_lease, close_action):
+    if opened == "absent":
+        return "HOLD_LEASE_OPEN_MISSING"
     if not isinstance(opened, tuple):
         return "HOLD_UNKNOWN_LEASE_OPEN_TIME"
     if edge[1] < opened[0]:
@@ -35,7 +37,7 @@ def expected(edge, opened, closed, close_lease, close_action):
 
 def main():
     intervals = [(lo, hi) for lo in range(6) for hi in range(lo, 6)]
-    openings = [None, *intervals, "unknown", "invalid"]
+    openings = ["absent", *intervals, "unknown", "invalid"]
     closings = [None, *intervals, "unknown", "invalid"]
     terminals = [None, *intervals, "unknown", "invalid"]
     lineages = [("L", "A"), ("L", "FOREIGN"), ("L", None), ("OTHER", "A")]
@@ -47,8 +49,8 @@ def main():
     mismatches = []
     for edge, opened, closed, (close_lease, close_action), terminal in itertools.product(
             intervals, openings, closings, lineages, terminals):
-        if opened is None:
-            opened_row_time = {"lower_ns": None, "upper_ns": None, "censoring": "unknown"}
+        if opened == "absent":
+            opened_row_time = None
         elif opened == "unknown":
             opened_row_time = {"lower_ns": None, "upper_ns": None, "censoring": "unknown"}
         elif opened == "invalid":
@@ -63,15 +65,19 @@ def main():
             close_time = interval(*closed)
 
         rows = copy.deepcopy(template)
-        open_row = next(row for row in rows if row["event_type"] == "LEASE_OPEN")
-        open_row["lineage"]["lease_id"] = "L"
-        open_row["lineage"]["actuation_id"] = "A"
-        open_row["time"] = opened_row_time
+        if opened == "absent":
+            rows[:] = [row for row in rows if row["event_type"] != "LEASE_OPEN"]
+        else:
+            open_row = next(row for row in rows if row["event_type"] == "LEASE_OPEN")
+            open_row["lineage"]["lease_id"] = "L"
+            open_row["lineage"]["actuation_id"] = "A"
+            open_row["time"] = opened_row_time
         edge_row = next(row for row in rows if row["event_type"] == "INPUT_EDGE_BRACKET" and row.get("payload", {}).get("edge") == "up")
         edge_row["lineage"]["lease_id"] = "L"
         edge_row["lineage"]["actuation_id"] = "A"
         edge_row["payload"]["transition_interval_ns"] = list(edge)
         edge_row["time"] = interval(*edge)
+        target_event_id = edge_row["event_id"]
         rows[:] = [row for row in rows if row["event_type"] != "LEASE_CLOSE"]
         if closed is not None:
             rows.append({"event_id": "v4-close", "event_type": "LEASE_CLOSE", "time": close_time,
@@ -85,8 +91,8 @@ def main():
         want = expected(edge, opened,
                         closed,
                         close_lease, close_action)
-        got = evaluate(rows)[-1]["status"]
-        oracle = audit(rows)[-1]["status"]
+        got = next(result["status"] for result in evaluate(rows) if result["event_id"] == target_event_id)
+        oracle = next(result["status"] for result in audit(rows) if result["event_id"] == target_event_id)
         checked += 1
         if got != want or oracle != want:
             mismatches.append({"case": checked, "expected": want, "candidate": got, "oracle": oracle,

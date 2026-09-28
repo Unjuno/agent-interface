@@ -4,7 +4,7 @@
 
 **H.** Candidate v3 can authorize an input edge that occurs before its matching `LEASE_OPEN`, because v3 records open lineage but discards the open timestamp. Contract-aligned authority requires the input-edge interval to be wholly after the matching lease-open interval and before any applicable close.
 
-**T.** Keep v3 and all frozen W2 source/results unchanged. Using the exact frozen eight-case trace fixture, exercise edge-before-open, overlap with open, strictly-after-open, unknown open time, terminal without close, and explicit close before edge. Compare the v4 candidate, separately written raw-row oracle, and explicit expected interval rule across the Cartesian domain of 21 edge intervals, 24 open-time states, 24 close-time states, four close-lineage relations, and 24 terminal-time states.
+**T.** Keep v3 and all frozen W2 source/results unchanged. Using the exact frozen eight-case trace fixture, exercise missing-open, edge-before-open, overlap with open, strictly-after-open, unknown open time, terminal without close, and explicit close before edge. Compare the v4 candidate, separately written raw-row oracle, and explicit expected interval rule across the Cartesian domain of 21 edge intervals, 24 distinct open states (absent event, 21 bounded intervals, unknown time, invalid time), 24 close-time states, four close-lineage relations, and 24 terminal-time states.
 
 **D.** PASS only if all focused cases produce the stated policy, candidate and oracle agree with the separately defined rule on every combination, and the focused plus existing binding/close regressions pass. Any harness-construction issue is retained and corrected before a full result; no preliminary failure is overwritten.
 
@@ -14,11 +14,11 @@
 
 ## Result
 
-`PASS_FINITE_LEASE_AUTHORITY_OPEN_CLOSE_INTERVAL_POLICY_ONLY`. The exhaustive audit checked 1,161,216 combinations with zero candidate/oracle mismatches and zero expected-rule mismatches. After static review, the harness was tightened to select the target decision by event ID rather than list position; the full 32-test suite and all 1,161,216 combinations were rerun with the same zero-mismatch result. Six focused v4 tests and 26 existing regression tests passed (32/32 total).
+`PASS_FINITE_LEASE_AUTHORITY_OPEN_CLOSE_INTERVAL_POLICY_ONLY`. The final exhaustive audit checked 1,161,216 combinations with zero candidate/oracle mismatches and zero expected-rule mismatches across 24 distinct open states. The final harness selects the target decision by event ID, includes an actually missing LEASE_OPEN event, and handles its HOLD independently. Seven focused v4 tests and 26 existing regression tests passed (33/33 total).
 
 The material result is a v3 candidate gap, not a change to the frozen verifier: v3 omitted the `LEASE_OPEN` time bound. V4 holds when open timing is unknown or overlaps the edge, rejects an edge definitely before open, and only then applies the explicit-close rule. `PROGRAM_TERMINAL` remains a distinct lifecycle event, not an inferred lease close. The v3 PR/result remain immutable; v4 is a successor candidate.
 
-Preliminary environment/harness failures, corrections, and one superseded duplicate process stopped after exact command-line inspection are itemized in `PRELIMINARY_FAILURES_lease_authority_v4.json`. The first command failure was the missing fixture environment variable; corrected run passed. Early exhaustive drafts had lineage/sentinel mistakes in the test harness; after correction the single counted complete run passed.
+Preliminary environment/harness failures, corrections, and one superseded duplicate process stopped after exact command-line inspection are itemized in `PRELIMINARY_FAILURES_lease_authority_v4.json`. The first command failure was the missing fixture environment variable; corrected run passed. Early exhaustive drafts had lineage/sentinel mistakes. Static review then caught a duplicate unknown-open state; the first distinct-state draft stopped on a preserved TypeError, was corrected, and the final full domain passed.
 
 ## Reproduction
 

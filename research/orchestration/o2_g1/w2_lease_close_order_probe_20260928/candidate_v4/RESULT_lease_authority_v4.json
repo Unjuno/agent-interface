@@ -7,6 +7,12 @@
   "finite_domain": {
     "edge_intervals": 21,
     "open_interval_states": 24,
+    "open_state_breakdown": {
+      "missing_open_event": 1,
+      "bounded_intervals": 21,
+      "unknown_time": 1,
+      "invalid_time": 1
+    },
     "close_interval_states": 24,
     "close_lineage_relations": 4,
     "terminal_interval_states": 24,
@@ -14,9 +20,9 @@
     "candidate_oracle_mismatches": 0,
     "contract_rule_mismatches": 0
   },
-  "focused_boundary_tests": "6/6",
-  "combined_host_regression_tests": "32/32",
-  "followup_reverification": "After making exhaustive decision lookup use target event_id rather than list position, reran combined host tests 32/32 and the full 1,161,216-combination domain; zero mismatches again.",
+  "focused_boundary_tests": "7/7",
+  "combined_host_regression_tests": "33/33",
+  "followup_reverification": "After replacing a duplicate unknown-open state with a distinct missing-LEASE_OPEN state and selecting decisions by target event_id, reran the combined host suite (33/33) and full 1,161,216-combination domain; zero mismatches.",
   "runtime": "Python 3.12.10 Windows host CPU",
   "docker": {
     "context": "desktop-linux",
