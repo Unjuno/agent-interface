@@ -58,7 +58,8 @@ class ModelEffortGuardTests(unittest.TestCase):
 
     def test_preflight_to_task_call_must_match(self):
         candidate = copy.deepcopy(trace())
-        candidate["preflight_calls"]["plain"]["requested_effort"] = "high"
+        for arm in ARMS:
+            candidate["preflight_calls"][arm]["requested_effort"] = "high"
         with self.assertRaisesRegex(ValueError, "model/effort mismatch"):
             evaluate(candidate)
 
@@ -74,6 +75,9 @@ class ModelEffortGuardTests(unittest.TestCase):
         changed["arms"]["persistent"][0]["model_calls"][0][
             "requested_model"] = "other-model"
         self.assertEqual(audit(changed)["decision"], "FAIL_MODEL_EFFORT_MISMATCH")
+        malformed = copy.deepcopy(valid)
+        malformed["arms"]["persistent"][0]["model_calls"][0]["requested_model"] = ["not", "a", "model"]
+        self.assertEqual(audit(malformed)["decision"], "FAIL_MODEL_EFFORT_MISMATCH")
 
 
 if __name__ == "__main__":

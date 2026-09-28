@@ -10,6 +10,8 @@ from pathlib import Path
 def audit(trace: dict) -> dict:
     identities = []
     errors = []
+    if type(trace) is not dict:
+        return {"decision": "HOLD_SCHEMA", "errors": ["trace must be an object"]}
     preflights = trace.get("preflight_calls")
     arms = trace.get("arms")
     if type(preflights) is not dict or type(arms) is not dict:
@@ -34,14 +36,17 @@ def audit(trace: dict) -> dict:
                 identities.append((arm, f"task:{task_index}:{call_index}",
                                    call.get("requested_model"),
                                    call.get("requested_effort")))
-    distinct = {(model, effort) for _, _, model, effort in identities}
-    if any(type(model) is not str or not model or type(effort) is not str or not effort
-           for _, _, model, effort in identities):
+    valid = all(type(model) is str and bool(model) and type(effort) is str and bool(effort)
+                for _, _, model, effort in identities)
+    if not valid:
         errors.append("missing or invalid model/effort identity")
-    if len(distinct) != 1:
+        distinct_count = 0
+    else:
+        distinct_count = len({(model, effort) for _, _, model, effort in identities})
+    if valid and distinct_count != 1:
         errors.append("model/effort identity differs within comparison")
     return {"decision": "PASS_MATCHED_MODEL_EFFORT" if not errors else "FAIL_MODEL_EFFORT_MISMATCH",
-            "identity_records": len(identities), "distinct_identities": len(distinct),
+            "identity_records": len(identities), "distinct_identities": distinct_count,
             "errors": errors}
 
 

@@ -24,5 +24,5 @@ git diff --check
 Recorded outcome: 8 tests passed; existing probe printed `passed=true`, `positive=RETAIN`, `controls=10`; byte-compilation and diff-check passed. A post-merge invocation initially found the issue path outside the sparse checkout and therefore ran 0 tests; it is explicitly not counted. After expanding the sparse path, the 8 tests above were discovered and passed on main `442ef765598971806dc5d671a223af7b3a711a5f`. Current Windows working-copy SHA-256 values after that verified rerun:
 
 - `research/live_control/integrated_efficiency_protocol_v1.py`: `7bf02cd7bc3b2919ba81325f6026d8ce1110b0e18803e370707feac1a1c77c5a`
-- `test_model_effort_guard.py`: `fa7265d56976461098eca5945abbcd6b4455ef330dfc46c234efd52155a3c20f` (working-copy SHA-256)
-- `audit_model_effort_guard.py`: `097a3d396870f0511aa52502b7414fe444f91933a926968a29d7c2863de269f6`
+- `test_model_effort_guard.py`: `378cc278d61811ff8da6b92d0917273bc75e7750ec1886fbac963c774e37cbe5` (working-copy SHA-256)
+- `audit_model_effort_guard.py`: `1323f110fbbcd1c9ca94efdcedf30a94f3bcba948913ee65acd4333a35195e65` (working-copy SHA-256)
