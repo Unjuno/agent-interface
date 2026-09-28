@@ -1,8 +1,10 @@
 {
   "allocation": "typed-mode-4844-successor-20260928-03",
   "issue": 5189,
-  "disposition": "HOLD_COVERAGE_TRADEOFF",
-  "formal_invocations": 1,
+  "disposition": "STOP_DUPLICATE_FORMAL_SEED_COLLISION",
+  "allocation_valid": false,
+  "formal_invocations_on_this_source": 1,
+  "valid_fresh_allocation_invocations": 0,
   "retries": 0,
   "seeds": {"training": 484431, "heldout": 484432},
   "source_commit": "fcf06f1bf4ce85952658cf9f53e38899dfc51530",
@@ -50,9 +52,12 @@
     "rows_reconstructed": 4800,
     "errors": [],
     "corruption_controls_rejected": "16/16",
-    "decision": "HOLD_COVERAGE_TRADEOFF"
+    "raw_metric_gate_observation_only": "HOLD_COVERAGE_TRADEOFF",
+    "allocation_decision": "STOP_DUPLICATE_FORMAL_SEED_COLLISION"
   },
   "notes": [
+    "A separate run using the same allocation ID and formal seeds 484431/484432 was reported on Issue #5184 from source commit 2a96313df5edffb1f7d180bee6c142917ac79e37, with runner start 2026-09-28 13:18 JST. This runner container was created at 2026-09-28 13:24:55 JST; the seeds were already consumed. See COLLISION_RECONCILIATION.md.",
+    "This artifact's raw audit is internally passing but cannot restore seed novelty. It is not a valid formal allocation, independent replicate, or scientific conclusion; do not pool either run or reuse these seeds.",
     "Full per-file SHA-256 and sizes are in formal/allocation-03/SHA256SUMS.txt.",
     "The source freeze remains unchanged. Runner and auditor inspect receipts are retained.",
     "No model/provider, GUI, OS input, GPU, external network or shared OrbStack allocation was used."
