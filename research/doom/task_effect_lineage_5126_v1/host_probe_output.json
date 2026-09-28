@@ -1,0 +1,66 @@
+{
+  "audit": {
+    "cases": 13,
+    "errors": [],
+    "formal_allocations": 1,
+    "live_allocations": 0,
+    "result_sha256": "9ed9e501fc837806ed3a3f4bbe20cad1b3e5aeedfe785e73b7d6bde4f4e95dfa",
+    "status": "PASS_MAP01_TASK_EFFECT_CONTRACT_SCOPED"
+  },
+  "candidate": {
+    "effect_id": " ",
+    "grants_input_authority": false,
+    "grants_task_authority": false,
+    "physical_actuation": "PHYSICAL_ACTUATION_SCOPED",
+    "state_feedback": [],
+    "task_effect": "TASK_EFFECT_SCOPED"
+  },
+  "current_main": "611962d32477f8a86096431227a819418ceef994",
+  "mutated_result_sha256": "e26d8808d4238616f3868a48e628931a7c5e253dcc9664dfbfda6da77880be7e",
+  "oracle": {
+    "effect_id": " ",
+    "grants_input_authority": false,
+    "grants_task_authority": false,
+    "physical_actuation": "PHYSICAL_ACTUATION_SCOPED",
+    "state_feedback": [],
+    "task_effect": "TASK_EFFECT_SCOPED"
+  },
+  "schema": "issue5126-v1-counterexample-recheck-v1",
+  "schema_keys": {
+    "physical_down": [
+      "actuation_id",
+      "key",
+      "lower_ns",
+      "owner_id",
+      "plan_id",
+      "session_id",
+      "upper_ns"
+    ],
+    "physical_up": [
+      "actuation_id",
+      "key",
+      "lower_ns",
+      "owner_id",
+      "plan_id",
+      "session_id",
+      "upper_ns"
+    ],
+    "task_effect": [
+      "actuation_id",
+      "controller_visible",
+      "effect_id",
+      "kind",
+      "observed_ns",
+      "plan_id",
+      "polarity",
+      "scored",
+      "scorer_independent",
+      "scorer_source",
+      "session_id"
+    ]
+  },
+  "source_identity_fields_present": {
+    "physical_edges": false,
+    "task_effect": false
+  }
+}

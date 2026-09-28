@@ -1,0 +1,28 @@
+{
+  "schema": "issue5126-host-construction-execution-v1",
+  "allocation": "MAP01-TASK-EFFECT-LINEAGE-5126-HOST-CONSTRUCTION-20260928-01",
+  "formal_invocations": 0,
+  "container_invocations": 0,
+  "gpu_model_gui_input_invocations": 0,
+  "command": "python -B research/doom/task_effect_lineage_5126_v1/probe_v1_counterexample.py",
+  "environment": "Windows host / CPython 3.11.9",
+  "exit_code": 0,
+  "disposition": "CONFIRMED_LINEAGE_ACCEPTANCE; strict v2 contract unrun",
+  "observed": {
+    "candidate_physical_actuation": "PHYSICAL_ACTUATION_SCOPED",
+    "candidate_task_effect": "TASK_EFFECT_SCOPED",
+    "oracle_physical_actuation": "PHYSICAL_ACTUATION_SCOPED",
+    "oracle_task_effect": "TASK_EFFECT_SCOPED",
+    "raw_auditor": "PASS_MAP01_TASK_EFFECT_CONTRACT_SCOPED",
+    "raw_auditor_errors": [],
+    "current_physical_and_task_effect_source_event_reference_fields": false,
+    "historical_v1_result_sha256": "e26d8808d4238616f3868a48e628931a7c5e253dcc9664dfbfda6da77880be7e"
+  },
+  "sha256": {
+    "FREEZE.json": "0749e605da54bd74577d9b4efe56c673b83378217708de67fae6419763472345",
+    "probe_v1_counterexample.py": "2d972fb62a0e21dca018a2ce531298318bc812382b0346c8b23e8d4b58bcb411",
+    "host_probe_output.json": "530061cc4638753610645fd26a6520616abe3438cdba795f3d9735aa843bcc35",
+    "RESULT.md": "5b1228c9102ad3f53c5cea8f74da44427da417dbad6a73b040852e155ced6734",
+    "historical_v1_result.json": "e26d8808d4238616f3868a48e628931a7c5e253dcc9664dfbfda6da77880be7e"
+  }
+}

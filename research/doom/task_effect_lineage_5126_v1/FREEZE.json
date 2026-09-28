@@ -1,0 +1,26 @@
+{
+  "schema": "issue5126-host-construction-freeze-v1",
+  "issue": 5126,
+  "allocation": "MAP01-TASK-EFFECT-LINEAGE-5126-HOST-CONSTRUCTION-20260928-01",
+  "disposition_scope": "host_only_counterexample_recheck_not_formal_v2_experiment",
+  "base_main": "611962d32477f8a86096431227a819418ceef994",
+  "branch": "research/task-effect-lineage-5126-v1",
+  "formal_invocations": 0,
+  "container_invocations": 0,
+  "gpu_model_gui_input_invocations": 0,
+  "retries": 0,
+  "expected": "Recheck the already reported whitespace mutant against immutable #1839 v1 bytes; inspect whether source schemas contain explicit source event identities.",
+  "command": "python -B research/doom/task_effect_lineage_5126_v1/probe_v1_counterexample.py",
+  "sha256": {
+    "README.md": "1002ef52b2b464314fe4384eebc485cc4c207e2d074c65e6722d48104e261259",
+    "probe_v1_counterexample.py": "2d972fb62a0e21dca018a2ce531298318bc812382b0346c8b23e8d4b58bcb411",
+    "source/contract.py": "2cd9a3da3bd46370bbe9aa8c4b9908de0c9fcce3baead9958f0fdcdad80362af",
+    "source/oracle.py": "e7c5aed6c2f2159f9fa2be7d3d3e7a587c3986573885c4e67f084bbba560195e",
+    "source/audit.py": "487b7057a1582a1834de1191af22594eefd1829e2a0342b3d768926dab3aa67b",
+    "source/result.json": "e26d8808d4238616f3868a48e628931a7c5e253dcc9664dfbfda6da77880be7e",
+    "current_schema/independent_progress_clock_v2.py": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613",
+    "current_schema/doom_typed_observation_v1.py": "7268d2ccd291096f2372fe5d624165a55205ebaf7085ccc0daff7870579b30d8",
+    "current_schema/map01_v12_physical_occupancy_audit_v2/audit.py": "3caafd250bd9f2fcc8e09f49659740c9cfee7e0106bc394da25fca87048299da",
+    "current_schema/audit_map01_effect_receipt_v1.py": "bd7c1035bb86e71fc9ec884ff19b2330217510d59fabdea1efb7d4a95921b5be"
+  }
+}
