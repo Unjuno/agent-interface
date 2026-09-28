@@ -38,7 +38,7 @@ auditor and its separate synthetic result are documented in
 [`SOURCE_IDENTITY_AUDIT.md`](SOURCE_IDENTITY_AUDIT.md); v1 raw bytes are
 unchanged. The v2 fixture independently validates 18 reset witnesses and three
 geometry transitions, still at `PASS_CONSTRUCTION_ONLY` only. Full integration
-suite is now 82/82 locally. Current source baseline is `bbe4bd3b3fadea09679c8956cdd2d35988acd2d3`.
+suite is now 84/84 locally. Current source baseline is `bbe4bd3b3fadea09679c8956cdd2d35988acd2d3`.
 
 ## Adversarial JSON boundary successor (2026-09-29)
 
@@ -50,5 +50,8 @@ finite values and applies `math.isfinite` only to floats, allowing the invalid
 monotonic reset pair to return `HOLD_RAW_RECONSTRUCTION`. A regression control
 retains the 10**400 mutation. Final v2 tests are 10/10 and the full package is
 82/82; inherited and receipt no-GUI probes pass. This synthetic adversarial
-boundary check is host-local and does not change the immutable v2 raw artifact
-or elevate its `PASS_CONSTRUCTION_ONLY` scope.
+boundary checks also cover 2,000-level JSON nesting and non-standard `NaN`,
+both returning `HOLD_RAW_RECONSTRUCTION` instead of escaping the audit. The v2
+suite is 12/12 and the full package 84/84. These checks are host-local and do
+not change the immutable v2 raw artifact or elevate its
+`PASS_CONSTRUCTION_ONLY` scope.

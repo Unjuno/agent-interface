@@ -192,7 +192,10 @@ def reconstruct(raw: object) -> dict:
 def audit(raw_bytes: bytes, expected_source_identity: dict | None = None) -> dict:
     digest = hashlib.sha256(raw_bytes).hexdigest()
     try:
-        raw = json.loads(raw_bytes)
+        def reject_non_json_constant(value: str):
+            raise ValueError("non-standard JSON numeric constant: " + value)
+
+        raw = json.loads(raw_bytes, parse_constant=reject_non_json_constant)
         trace = reconstruct(raw)
         if expected_source_identity is not None:
             _validate_source_identity(expected_source_identity)
@@ -206,7 +209,8 @@ def audit(raw_bytes: bytes, expected_source_identity: dict | None = None) -> dic
                 "raw_sha256": digest, "errors": [], "evaluation": evaluation,
                 "lifecycle": {"resets_verified": 18, "geometry_transitions_verified": 3},
                 "scope": "raw event reconstruction with reset and geometry checks; synthetic until frozen live bytes"}
-    except (ValueError, TypeError, KeyError, json.JSONDecodeError) as error:
+    except (ValueError, TypeError, KeyError, json.JSONDecodeError,
+            RecursionError) as error:
         return {"schema": "mindustry_three_arm_raw_audit_v2",
                 "audit": "HOLD_RAW_RECONSTRUCTION", "source_identity_verified": False,
                 "raw_sha256": digest, "errors": [str(error)], "evaluation": None,

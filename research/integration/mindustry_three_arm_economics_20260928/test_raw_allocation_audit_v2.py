@@ -64,6 +64,17 @@ class RawAllocationAuditV2Tests(unittest.TestCase):
         self.assertEqual(result["audit"], "HOLD_RAW_RECONSTRUCTION")
         self.assertIn("reset tick", result["errors"][0])
 
+    def test_deeply_nested_json_is_audited_as_hold_not_decoder_crash(self):
+        payload = (b"[" * 2_000) + b"0" + (b"]" * 2_000)
+        result = audit(payload)
+        self.assertEqual(result["audit"], "HOLD_RAW_RECONSTRUCTION")
+        self.assertTrue(result["errors"])
+
+    def test_nonstandard_json_nan_is_rejected_as_hold(self):
+        result = audit(b'{"schema":"mindustry_three_arm_raw_events_v2","value":NaN}')
+        self.assertEqual(result["audit"], "HOLD_RAW_RECONSTRUCTION")
+        self.assertIn("non-standard JSON", result["errors"][0])
+
     def test_missing_reset_evidence_holds_audit(self):
         raw = raw_v2()
         del raw["arms"]["ephemeral"][1]["reset_event"]
