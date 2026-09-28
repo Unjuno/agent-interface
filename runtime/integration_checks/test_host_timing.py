@@ -55,6 +55,11 @@ class HostTimingTests(unittest.TestCase):
         self.assertTrue(review['after_presentation'])
         self.assertIsNone(report['calls'][0]['reply_to_next_send_ms'])
         self.assertIn('semantic completion', report['unmeasured'])
+        # Presentation/review/close after the final reply are outside this span.
+        self.assertEqual(report['time_partition']['total_ms'], 4)
+        self.assertEqual(report['time_partition']['request_outstanding_ms'], 4)
+        self.assertEqual(report['time_partition']['presentation_callbacks_ms'], 0)
+        self.assertEqual(report['time_partition']['other_host_intervals_ms'], 0)
 
     def test_public_capture_review_uses_null_sequence_and_preserves_boundaries(self):
         self.receipt.update(schema='agent-interface/primary-review-receipt-v2-public-capture',
@@ -134,6 +139,38 @@ class HostTimingTests(unittest.TestCase):
         self.assertEqual(report['calls'][0]['relay_outcome'],
                          {'status':'refused', 'dispatched':False, 'request_id':1})
         self.assertNotIn('relay_outcome', report['calls'][1])
+        partition = report['time_partition']
+        self.assertEqual(partition['request_outstanding_ms'], 7)
+        self.assertEqual(partition['presentation_callbacks_ms'], 2)
+        self.assertEqual(partition['other_host_intervals_ms'], 19)
+        self.assertEqual(sum(partition[k] for k in ('request_outstanding_ms',
+            'presentation_callbacks_ms', 'other_host_intervals_ms')), partition['total_ms'])
+
+    def test_partition_counts_repeated_presentations_and_excludes_final_presentation(self):
+        self.write('request-2.json', {'id': 2, 'tool': 'observe'})
+        self.write('reply-2.json', {**self.reply, 'id': 2, 'next_id': 3})
+        second_hash = hashlib.sha256((self.root / 'reply-2.json').read_bytes()).hexdigest()
+        events = copy.deepcopy(self.events[:4])
+        for original, stamp in zip(self.events[2:4], (18, 20)):
+            event = copy.deepcopy(original)
+            event.update(sequence=len(events)+1, host_monotonic_ms=stamp)
+            events.append(event)
+        for original, stamp in zip(self.events[:4], (35, 38, 39, 42)):
+            event = copy.deepcopy(original)
+            event.update(sequence=len(events)+1, host_monotonic_ms=stamp,
+                         attempt=2, relay_id=2, reply_sha256=second_hash)
+            events.append(event)
+        close = copy.deepcopy(self.events[-1])
+        close.update(sequence=len(events)+1, host_monotonic_ms=50)
+        report = self.report(events+[close])
+        part = report['time_partition']
+        self.assertEqual(part['total_ms'], 28)
+        self.assertEqual(part['request_outstanding_ms'], 7)
+        self.assertEqual(part['presentation_callbacks_ms'], 4)
+        self.assertEqual(part['other_host_intervals_ms'], 17)
+        # A missing final completion is still incomplete, even outside the span.
+        partial = events[:-1] + [dict(close, sequence=len(events))]
+        self.assertIsNone(self.report(partial)['time_partition'])
 
     def test_invalid_refusal_cannot_claim_no_dispatch(self):
         valid = {'status':'refused', 'dispatched':False, 'next_id':1, 'error':'unknown tool'}
@@ -155,6 +192,7 @@ class HostTimingTests(unittest.TestCase):
                          {'status':'unknown_requires_reconciliation', 'dispatch_outcome':'unknown'})
         self.assertEqual(report['timeline_status'], 'partial')
         self.assertEqual(report['returned_count'], 1)
+        self.assertIsNone(report['time_partition'])
 
     def test_historical_representations_and_unpresented_review_are_not_conflated(self):
         events = copy.deepcopy(self.events[:2] + self.events[4:])

@@ -101,3 +101,20 @@ Public declarations must keep source_sequence explicitly null in both receipt an
 event. [Primary live use](../../runtime/results/public-review-live-01/README.md)
 retains a real Calc task, setup failure, caller mistakes, delayed visual updates,
 and the initial summarizer incompatibility. Timings remain host boundaries.
+
+
+## Partition the recorded host span
+
+For complete nonempty timelines, `time_partition` divides first-send through
+last-reply into request-outstanding intervals, presentation-callback intervals,
+and other host intervals. Every presentation is clipped to that named span;
+presentation/review/close after the final reply is excluded. Repeated
+presentations are counted separately. Partial or empty timelines return null
+rather than presenting incomplete accounting as a complete partition.
+
+The categories are disjoint host-clock boundaries, not causal attribution.
+Request-outstanding time includes transport/server/persistence work. Other host
+intervals include orchestration, logging, caller review and gaps; they must not
+be labelled model thinking, inference latency or idle waste. A high other share
+does not establish that reducing it preserves task correctness. Existing
+per-call boundaries and exact evidence hashes remain available.
