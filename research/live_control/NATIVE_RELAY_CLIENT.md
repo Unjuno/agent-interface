@@ -56,3 +56,5 @@ The relay can launch the public server with `--server-kind public` and optional
 arguments. Default native mode is unchanged. Select `--session-mode guarded-x11`
 explicitly for the scoped tools. A terminated WSL session cannot reuse its old
 aliases or connection; preserve it and allocate a fresh trial.
+
+For opt-in same-host ordering and timing boundaries, use the [ordered host timeline](RELAY_HOST_TIMELINE.md). It serializes explicit presentation/review with sends and distinguishes callback completion from caller review; it does not measure model ingestion or semantic understanding.

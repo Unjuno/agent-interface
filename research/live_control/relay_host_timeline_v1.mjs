@@ -24,7 +24,10 @@ export async function createInstrumentedRelayClient(options) {
     if (blocked || closed) throw new Error(blocked || 'instrumented client closed');
     busy = kind;
   }
-  function failed(error) { blocked = String(error); throw error; }
+  function failed(error) {
+    blocked = String(error) + '; host evidence incomplete: reconcile retained files; never infer no input or replay';
+    throw new Error(blocked, { cause: error });
+  }
   async function retained(attempt) {
     if (!Number.isSafeInteger(attempt) || !delivered.has(attempt)) throw new Error('explicit delivered attempt required');
     const replyPath = join(evidenceDirectory, `reply-${attempt}.json`);

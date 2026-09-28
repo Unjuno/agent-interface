@@ -561,3 +561,21 @@ return 223,553.6 ms are instrumentation boundaries, not useful-feedback or model
 latency. Actual model input tokens/cost and a matched baseline remain unavailable.
 Do not infer speedup, human tempo or token savings. #5116 remains a separately
 owned trace-contract experiment, not a production GUI integration candidate.
+
+### Ordered host-boundary instrumentation checkpoint
+
+The opt-in relay_host_timeline_v1 wrapper records sequential send, retained reply,
+presentation callback and caller-review events using one host monotonic clock.
+This addresses equal filesystem mtimes in the preceding guarded-MCP trial without
+rewriting that evidence. Overlapping host operations refuse instead of queueing;
+recording or renderer failure blocks later actions, while transport cleanup stays
+available. Partial evidence never authorizes replay.
+
+Primary one-form use retained 28 events: entered-value review 18 precedes Save
+request 19, with exact reply/call/source identity and an independently correct
+save. The predeclared scope was task-1 only; the unmodified six-task oracle remains
+false with the other five tasks missing. Evidence and 13 passing Node tests are
+under runtime/results/relay-host-timeline-primary-01. Callback-to-review gaps
+around 9.5 to 14 seconds are host boundaries, not isolated model latency. Matched
+performance, first useful model-visible feedback and actual token/cost accounting
+remain open. No speedup or overall completion is claimed.

@@ -48,3 +48,21 @@ test('invalid JSON does not consume an attempt and foreign review cannot gain an
  assert.throws(()=>client.send('save'));await client.close();
  assert.equal((await events(dir)).filter(r=>r.kind==='review_recorded').length,0);
 });
+test('timeline loss after submission retains reply and blocks replay while allowing transport cleanup',async()=>{
+ const root=await mkdtemp(join(tmpdir(),'relay-host-after-send-'));const dir=join(root,'transport');
+ const client=await createInstrumentedRelayClient({command:process.execPath,args:['-e',fixture.replace(')),40);',')),250);')],evidenceDirectory:dir});
+ const pending=client.send('input');
+ let requestSeen=false;
+ for(let i=0;i<100;i++) {
+  try {await readFile(join(dir,'request-1.json'));requestSeen=true;break;}
+  catch(error){if(error.code!=='ENOENT')throw error;}
+  await new Promise(resolve=>setTimeout(resolve,2));
+ }
+ assert.equal(requestSeen,true);
+ const path=join(dir,'host-events.jsonl');await rename(path,path+'.original');await mkdir(path);
+ await assert.rejects(pending,/never infer no input or replay/);assert.equal(client.wait(),pending);
+ assert.equal(JSON.parse(await readFile(join(dir,'reply-1.json'))).status,'returned');
+ assert.equal(client.state().attempts,1);assert.throws(()=>client.send('retry'));
+ await assert.rejects(client.close());
+ assert.equal(JSON.parse(await readFile(join(dir,'exit.json'))).code,0);
+});
