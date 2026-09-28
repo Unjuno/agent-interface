@@ -38,6 +38,13 @@ remain full for compatibility. A [recount of primary replies](results/public-obs
 found avoidable text duplication in three observations; this measures bytes,
 not model tokens or cost.
 
+[Primary Calc use](results/calc-compact-primary-01/README.md) exercised these
+flags while entering and saving 336/439 through a format-confirmation dialog.
+Saved worksheet values matched. For `screen_physical_px` captures, the recorded
+native_window_id identifies the configured target, not necessarily the focused
+client shown on screen. After a dialog closes, use target inspection/review before
+continuing input on the main window; a screen image does not implicitly rebind it.
+
 [Primary input-recovery use](results/input-recovery-primary-01/README.md)
 records a failed press that had already changed a visible counter, explicit
 same-session release recovery, visual review and a newly authored continuation
