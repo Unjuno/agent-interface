@@ -1,3 +1,19 @@
+## Exact-image reuse intake — 2026-09-28
+
+[Primary-stream reconstruction](../runtime/results/exact-image-intake-01/README.md)
+rechecks the frozen A1r3 gate against three retained primary Calc streams. Four of
+21 images are exact consecutive repeats; independent decoding reconstructs all
+sampled pixels and preserves each reply's separate metadata. Omitted PNG bodies
+would total 290,285 bytes. This is an offline candidate-body count, not model-token,
+latency or live MCP evidence.
+
+Keep LIVE_ADAPTER_HOLD: public MCP currently delivers full image blocks and v2
+review attribution requires an image in that reply. Integration needs explicit
+base acknowledgement/retention, unknown-delivery and reconnect resynchronization,
+reference-aware review, and full-image fallback. Never use equality, a callback,
+XDamage or elapsed fixed delay as proof of redraw/task completion. No sensor or
+wait-policy implementation was added; #3700 remains a separately matched gate.
+
 ## Linux lifecycle dependency reconstruction — 2026-09-28
 
 The [additive exact-byte reconstruction](../runtime/results/lifecycle-reference-reconstruction-01/README.md)
