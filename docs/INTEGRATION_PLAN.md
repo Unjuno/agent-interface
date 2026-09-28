@@ -1,3 +1,18 @@
+## Reviewed-image host integration — 2026-09-28
+
+[Primary Calc use and retained evidence](../runtime/results/reviewed-image-host-primary-01/README.md)
+resolve the earlier live-adapter intake hold for an **opt-in host presentation adapter**
+only. An explicit review establishes one connection-local exact-PNG base; reference
+events bind that acknowledgment and preserve current metadata. Full presentation,
+failure and reconnect reset reuse. The caller must force a full image after losing
+the base from model context; there is no automatic context-eviction detection.
+
+Fresh primary Calc use saved 346/291 with one reference among seven image replies.
+The original full MCP responses remain unchanged. The missing-argument failure is
+retained. 19 Node tests and 280 protocol / 126 harness tests pass. Default enablement,
+actual model-token/cost savings, and matched useful-feedback/semantic-latency gains
+remain HOLD. No sensor, model helper or wait-policy change is included.
+
 ## Exact-image reuse intake — 2026-09-28
 
 [Primary-stream reconstruction](../runtime/results/exact-image-intake-01/README.md)
