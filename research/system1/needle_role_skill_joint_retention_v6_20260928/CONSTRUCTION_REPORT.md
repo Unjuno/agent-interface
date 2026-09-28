@@ -24,9 +24,12 @@ container.
   No construction seed, optimizer, model forward, Docker command, or image was
   run. The independent auditor imports its frozen predecessor oracle but has
   not yet audited a generated v6 raw record.
-- **U:** no actual query/update concurrency, adaptation outcome, A/B retention,
-  latency, or scientific threshold has been measured. This is a host contract
-  pass only, not a container or experiment pass. v5 evidence remains unchanged.
+- **U:** no model-query/optimizer overlap, adaptation outcome, A/B retention,
+  latency, or scientific threshold has been measured. A separate one-shot host
+  thread-boundary probe now verifies only placeholder-call/empty-critical-section
+  event capture; it is not a model experiment. The v6 result remains a host
+  contract pass only, not a container or LoRA experiment pass. v5 evidence is
+  unchanged.
 
 ## Resource and allocation boundary
 
