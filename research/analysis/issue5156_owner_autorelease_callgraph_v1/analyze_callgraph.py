@@ -13,7 +13,7 @@ import json
 from pathlib import Path
 
 EXPECTED = {
-    "owner": "ec4d6969d4c0cae2ee0a2989455a2fe87f930d90aeb3451afd3450c7c85e9718",
+    "owner": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
     "wrapper": "5ffdbb3679451fefdc3836917d43d924f0f43c8082d21327207ecefbd87f5be6",
 }
 
