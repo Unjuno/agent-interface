@@ -25,6 +25,11 @@ def sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def git_blob_sha(path: Path) -> str:
+    content = path.read_bytes()
+    return hashlib.sha1(b"blob " + str(len(content)).encode("ascii") + b"\0" + content).hexdigest()
+
+
 def first_break_even(reload_ns: list[int], reuse_ns: list[int], initialization_ns: int) -> int:
     """First request where cumulative reuse lifetime cost is strictly lower."""
     if len(reload_ns) != len(reuse_ns):
@@ -58,6 +63,7 @@ def main() -> int:
     tensors = json.loads(skill_path.read_bytes())["tensors"]
 
     source_hashes = {name: sha(ROOT / name) for name in freeze["sources"]}
+    source_git_blob_ids = {name: git_blob_sha(ROOT / name) for name in freeze["sources"]}
     reference_hashes = {
         name: sha(REPO / path) for name, path in freeze["reference_sources"].items()
     }
@@ -178,6 +184,7 @@ def main() -> int:
         "raw_sha256": raw_sha,
         "freeze_sha256": freeze_sha,
         "source_hashes": source_hashes,
+        "source_git_blob_ids_exact_bytes": source_git_blob_ids,
         "reference_hashes": reference_hashes,
         "input_hashes": input_hashes,
         "blocks": len(blocks),

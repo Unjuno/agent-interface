@@ -77,15 +77,30 @@ Its report is additive at
 `results/audit-correction-04/correction.json`; it does not overwrite the
 original audit or claim a new formal allocation.
 
-The review's separate source-hash mismatch finding does not reproduce against
-the exact PR head `465f6315074f6f98df3789a6936aafacf03e9409`: GitHub Contents
-API readback of all six frozen source files returns the exact `source_git_blobs`
-recorded in `FREEZE.json`, and the 7-test frozen-source suite passes on that
-head. For example, `lifecycle_corrected.py` is blob
-`879accfdaa77e9d2f4c82c5bfa30ba7743fe3a3c` with SHA-256
-`f2b0c70547603ac665c8053b1e5b9181dce49df6a92837922adb450cf1adabe4`. This
-contradictory review observation remains documented for re-review rather than
-being silently discarded. The original analysis-index CI failure was
-independently reproduced locally and fixed by refreshing
-`research/analysis/README.md`; `python research/analysis/check_index.py` now
-passes with 192 retained result/failure directories indexed.
+The original analysis-index CI failure was independently reproduced locally
+and fixed by refreshing `research/analysis/README.md`;
+`python research/analysis/check_index.py` passes with 192 retained
+result/failure directories indexed.
+
+## Correction: published source bytes and CRLF preservation
+
+The preceding source-hash interpretation was incomplete. Direct raw-byte
+readback at PR head `465f6315074f6f98df3789a6936aafacf03e9409` confirms that
+the five Python sources were stored as LF-only Git blobs while the frozen
+SHA-256 values and formal raw identify the original Windows worktree's mixed
+line-ending bytes. Removing only CRLF carriage returns makes each local source
+byte-for-byte equal to the corresponding GitHub raw file (5/5). The Git blob
+IDs in the original FREEZE match the normalized LF blobs, but those IDs alone
+did not reveal the working-tree byte mismatch. Thus the source text and measured
+Windows bytes agree; the published checkout bytes were not reproducible and
+the original independent audit correctly STOPs from a Linux checkout.
+
+This successor correction adds a path-scoped `-text` rule so the exact
+measured source bytes survive fresh clones on Windows and Linux. The frozen
+FREEZE, formal raw, original audit, and their historical hashes remain
+unchanged. The new raw-only correction report records the exact-byte Git blob
+IDs as well as the frozen SHA-256 values. The previous source-hash discussion
+above is superseded by this line-ending diagnosis.
+The exact source bytes have now been restored into the Git tree under a
+path-scoped `-text` attribute. See `SOURCE_BYTES_REPAIR.md` for the original
+and exact-byte Git blob IDs and the unchanged frozen SHA-256 manifest.
