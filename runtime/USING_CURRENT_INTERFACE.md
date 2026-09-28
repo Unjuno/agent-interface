@@ -322,6 +322,13 @@ For native research sessions, `native_observe(stage=...)` reads an already retai
 
 For direct public-MCP use, `python -m runtime.cli_v1.mcp_server --targets targets.json --output-directory runs --display :N --session-mode persistent-x11` retains one connection through explicit close or normal transport shutdown. The default is still one-shot. Use the returned `session.binding_revision` (initially 1) in dispatch assertions. `interface_observe` captures a fresh image; `interface_results` reads a retained result without input or recapture.
 
+Public dispatch `observe` operations also accept `region: [x,y,width,height]`,
+matching `interface_observe`. Use either this form or legacy `x/y/w/h`, never
+both. Explicit lowering happens before admission and is retained in the report.
+The [primary-use regression record](results/public-observe-region-01/README.md)
+preserves the original syntax refusal, successful region-form movement/camera
+observations, and a mixed-form request refused before any input.
+
 When using the research `PrivateSession` fixture, app launch now follows an actual
 window-manager readiness probe (managed and viewable), not just an X11 handshake.
 This affects fixture setup only. The [retained Operations World smoke](../research/live_control/results/private-x11-readiness-01/README.md)

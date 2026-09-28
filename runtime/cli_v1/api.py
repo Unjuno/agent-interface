@@ -116,6 +116,21 @@ def _dispatch(
         return {"schema": SCHEMA_DISPATCH, "status": "invalid_request", "error": "PROGRAM_NOT_OBJECT"}
     compilation = None
     operations = program.get('ops')
+    from runtime.core_v1.sequence import normalize_observation_regions
+    try:
+        operations, region_indices = normalize_observation_regions(operations)
+    except ValueError as error:
+        return {"schema": SCHEMA_DISPATCH, "status": "invalid_request",
+                "error": "INVALID_OBSERVATION_REGION", "detail": str(error),
+                "source_operation_index": error.operation_index,
+                "input_dispatched": False}
+    normalization = None
+    if region_indices:
+        normalization = {'kind': 'explicit_observation_region',
+                         'source_program': deepcopy(program),
+                         'source_operation_indices': region_indices}
+        program = deepcopy(program)
+        program['ops'] = operations
     if isinstance(operations, list) and any(isinstance(op, dict) and 'gap_ms' in op for op in operations):
         from runtime.core_v1.sequence import expand_text_gaps
         try:
@@ -144,12 +159,16 @@ def _dispatch(
                    else open_session(targets, display_name=display_name))
     except BackendUnavailable as error:
         row = {"schema": SCHEMA_DISPATCH, "status": "backend_unavailable", "error": str(error)}
+        if normalization is not None:
+            row['normalization'] = normalization
         if compilation is not None:
             row['compilation'] = compilation
         return row
     except Exception as error:
         row = {"schema": SCHEMA_DISPATCH, "status": "runtime_failed", "error": repr(error),
                "failure_phase": "backend_initialization"}
+        if normalization is not None:
+            row['normalization'] = normalization
         if compilation is not None:
             row['compilation'] = compilation
         return row
@@ -186,4 +205,6 @@ def _dispatch(
                 row["cleanup_error"] = repr(error)
     if compilation is not None:
         row['compilation'] = compilation
+    if normalization is not None:
+        row['normalization'] = normalization
     return row
