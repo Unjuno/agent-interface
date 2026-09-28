@@ -4,6 +4,8 @@
 
 Allocation -03 (`typed-mode-4844-successor-20260928-03`) completed one runner and one independent auditor under Docker Desktop. The preregistered result is **`HOLD_COVERAGE_TRADEOFF`**. This is finite synthetic evidence only; it does not support deployment or real-application claims. Allocation -02 remains a pre-container STOP and was not retried; seeds 484421/484422 were not reused.
 
+After completion, publication collided with a concurrently created Issue #5189 branch that had frozen the same allocation ID, original path, and seeds under a different source implementation. The peer freeze commit is timestamped 13:22:33+09:00; this runner started at 13:18:08+09:00. I did not overwrite the peer branch. Its owner was notified not to rerun these seeds. This record is not an independent replicate of that implementation, and the two outputs must not be pooled. This result is retained under the unique collision-safe delivery path; the exact execution path and source commit remain recorded in `RUN_RECORD.json` and the Git history.
+
 ### Preserved predecessor failures
 
 - #4844 allocation `typed-mode-4844-seed-484401-v1`: `STOP_PROVENANCE_OR_AUDIT`; its 3,000-row metrics remain exploratory and do not adjudicate the hypothesis.
@@ -35,7 +37,7 @@ Frozen source commit `2a96313df5edffb1f7d180bee6c142917ac79e37`; current-main in
 
 All unsafe-emission counts were zero. The five noiseless full-observation controls matched the correct truth in both arms; unknown and contradictory controls abstained in both arms. The composition block clears the error-reduction threshold but misses the registered coverage-loss bound by about 10.10 percentage points; the other two primary blocks increase wrong emissions. The preregistered disposition is therefore `HOLD_COVERAGE_TRADEOFF`, not PASS. These are descriptive outcomes from one synthetic seed pair, without population-level inference.
 
-The raw output, runner/auditor stdout and stderr, container IDs and inspect records, and independent receipt are preserved under `formal/allocation-03/`.
+The raw output, runner/auditor stdout and stderr, container IDs and compact receipts, and independent audit result are preserved under `formal/allocation-03/`.
 
 ## Frozen source and evidence boundary
 

@@ -7,8 +7,9 @@ Successor to #4844's consumed allocation. Preserve #4155/#4169, #4844/#4863, the
 Allocation -01 was retired before formal freeze as `STOP_PREFORMAL_SEED_EXPOSURE`: construction test code accidentally invoked the full generator on candidate seeds 484411/484412. Allocation -02 then stopped before container creation because a manually entered Docker image ID omitted `681`; Docker returned exit 125. Neither allocation produced formal data, and all four seed values are retired from reuse. Current allocation -03 uses fresh 484431/484432; construction tests use only 17003/17004. The Docker image argument must be read from the frozen JSON at runtime and checked against `docker image inspect` immediately before launch; do not transcribe it.
 
 - Current-main intake: `dbfae29cf848e4beee8f0287a9843532f5a695a8`.
-- Branch: `research/typed-mode-4844-successor-v3-20260928`.
-- Additive path: `research/experiments/typed_mode_generalization_4844_successor_v3/`.
+- Execution branch/path at freeze: `research/typed-mode-4844-successor-v3-20260928` / `research/experiments/typed_mode_generalization_4844_successor_v3/`.
+- Collision-safe evidence delivery branch/path: `research/typed-mode-4844-allocation03-collision-evidence-20260928` / `research/experiments/typed_mode_generalization_4844_allocation03_parallel_collision_20260928/`.
+- The path was relocated after the one-shot formal run because a concurrent Issue #5189 branch claimed the exact allocation ID, seed pair, and original path. No source bytes were changed; see [PARALLEL_COLLISION.md](PARALLEL_COLLISION.md). Do not pool this result as an independent replication.
 - Formal executions allowed: one runner, then one separate auditor; no retry.
 
 ## H / T / D / C / U
