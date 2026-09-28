@@ -168,3 +168,23 @@ these new edits. Current result is host-contract evidence only, not a model,
 optimizer, quality, latency, or scientific PASS. A future Docker construction
 must wait until an explicit coordination update supersedes the hold, and formal
 execution additionally requires the verifiable owner lease described above.
+
+## Independent review follow-up — GitHub-backed audit provenance — 2026-09-29
+
+A further read-only review found that the previous audit only checked provenance
+asserted inside the receipt. It now independently retrieves the referenced
+GitHub API issue-comment record and checks the canonical #5085 comment URL,
+issue URL, `Unjuno` author, and exact body against the retained lease comment.
+The owner payload parser rejects duplicate JSON keys. The launcher rechecks the
+exclusive window immediately before both `docker context show` and the single
+`docker run`, so checks that cross expiry fail closed before the next Docker
+call. Regression tests cover forged URL/record, duplicate-key payload, and
+lease-boundary expiry.
+
+Windows CPython 3.11.9: **24/24** zero-fit host tests pass; `py_compile` and
+`git diff --check` pass. Updated hashes are in `CONSTRUCTION_FREEZE.json`.
+This newer source remains host-tested only: the #5085 comment thread still
+contains the explicit no-Docker-CLI hold (#5864690783) and no later exact
+allocation lease/release. The historical Docker construction is not evidence
+for this source. No model, optimizer, formal seeds, raw result, or scientific
+quality/latency claim is included.

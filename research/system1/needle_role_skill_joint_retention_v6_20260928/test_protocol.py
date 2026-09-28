@@ -7,6 +7,7 @@ import hashlib
 import importlib.util
 import json
 import sys
+from unittest.mock import patch
 from datetime import datetime, timedelta, timezone
 
 import protocol
@@ -342,6 +343,68 @@ class FrozenSourceAndConstructionContract(unittest.TestCase):
         wrong_owner = dict(record, user={"login": "attacker"})
         with self.assertRaisesRegex(SystemExit, "STOP_LEASE_OWNER_COMMENT_AUTHOR"):
             module.validate_lease(lease, "a" * 40, "branch", "desktop-linux", wrong_owner)
+
+    def test_launcher_rechecks_owner_window_at_docker_boundaries(self):
+        spec = importlib.util.spec_from_file_location("needle_v6_lease_window_test", FORMAL_PATH)
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[spec.name] = module
+        spec.loader.exec_module(module)
+        start = datetime(2026, 9, 28, 12, tzinfo=timezone.utc)
+        lease = {"slot_start_utc": start.isoformat(),
+                 "slot_end_utc": (start + timedelta(minutes=10)).isoformat(),
+                 "expires_at_utc": (start + timedelta(minutes=5)).isoformat()}
+        self.assertTrue(module.lease_window_active(lease, start + timedelta(minutes=4)))
+        self.assertFalse(module.lease_window_active(lease, start + timedelta(minutes=5)))
+        self.assertFalse(module.lease_window_active(lease, start - timedelta(seconds=1)))
+        source = FORMAL_PATH.read_text(encoding="utf-8")
+        self.assertIn("LEASE_SLOT_EXPIRED_BEFORE_DOCKER", source)
+        self.assertIn("LEASE_SLOT_EXPIRED_BEFORE_DOCKER_RUN", source)
+
+    def test_independent_audit_binds_owner_url_and_rejects_duplicate_payload_keys(self):
+        spec = importlib.util.spec_from_file_location("needle_v6_owner_audit_test", AUDIT_PATH)
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[spec.name] = module
+        spec.loader.exec_module(module)
+        expected = {
+            "schema": "needle-docker-owner-lease-v1",
+            "allocation": protocol.ALLOCATION, "issue": 5085,
+            "main_sha": "a" * 40, "branch": "branch", "docker_context": "desktop-linux",
+            "lease_id": "slot-123", "slot_start_utc": "2026-09-28T12:00:00+00:00",
+            "slot_end_utc": "2026-09-28T12:10:00+00:00",
+            "expires_at_utc": "2026-09-28T12:05:00+00:00",
+        }
+        receipt = {"owner_comment_url": "https://github.com/Unjuno/agent-interface/issues/5085#issuecomment-12345",
+                   "main_sha": expected["main_sha"], "branch": expected["branch"],
+                   "docker_context": expected["docker_context"], "lease_id": expected["lease_id"],
+                   "slot_start_utc": expected["slot_start_utc"], "slot_end_utc": expected["slot_end_utc"],
+                   "expires_at_utc": expected["expires_at_utc"]}
+        comment = {"html_url": receipt["owner_comment_url"],
+                   "issue_url": "https://api.github.com/repos/Unjuno/agent-interface/issues/5085",
+                   "user_login": "Unjuno",
+                   "body": "<!-- needle-docker-owner-lease-v1\n" + json.dumps(expected)
+                           + "\n-->"}
+        with patch.object(module, "fetch_owner_comment_record", return_value={
+                "html_url": comment["html_url"], "issue_url": comment["issue_url"],
+                "user": {"login": "Unjuno"}, "body": comment["body"]}):
+            valid_errors = module.audit_document(
+                {"runs": []}, {**receipt, "owner_lease_comment": comment})["errors"]
+        self.assertNotIn("formal_owner_comment_payload", valid_errors)
+        self.assertNotIn("formal_owner_comment_live_record", valid_errors)
+        fake_receipt = {**receipt, "owner_comment_url": "https://example.invalid/fake",
+                        "owner_lease_comment": dict(comment, html_url="https://example.invalid/fake")}
+        self.assertIn("formal_owner_comment_payload",
+                      module.audit_document({"runs": []}, fake_receipt)["errors"])
+        duplicate = json.dumps(expected)[:-1] + ',"lease_id":"attacker","lease_id":"slot-123"}'
+        duplicate_comment = dict(comment, body="<!-- needle-docker-owner-lease-v1\n" + duplicate + "\n-->")
+        with patch.object(module, "fetch_owner_comment_record", return_value={
+                "html_url": comment["html_url"], "issue_url": comment["issue_url"],
+                "user": {"login": "Unjuno"}, "body": duplicate_comment["body"]}):
+            self.assertIn("formal_owner_comment_payload", module.audit_document(
+                {"runs": []}, {**receipt, "owner_lease_comment": duplicate_comment})["errors"])
+        forged_receipt = {**receipt, "owner_lease_comment": comment}
+        with patch.object(module, "fetch_owner_comment_record", return_value=None):
+            self.assertIn("formal_owner_comment_live_record",
+                          module.audit_document({"runs": []}, forged_receipt)["errors"])
 
 
 if __name__ == "__main__":

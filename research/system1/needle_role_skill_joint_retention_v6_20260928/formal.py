@@ -107,6 +107,20 @@ def validate_lease(lease: dict, main_sha: str, branch: str, current_context: str
             "user_login": comment["user"]["login"], "body": body}
 
 
+def lease_window_active(lease: dict, now=None) -> bool:
+    """Recheck the complete owner-granted window immediately before each Docker call."""
+    try:
+        expiry = datetime.fromisoformat(lease["expires_at_utc"].replace("Z", "+00:00"))
+        slot_start = datetime.fromisoformat(lease["slot_start_utc"].replace("Z", "+00:00"))
+        slot_end = datetime.fromisoformat(lease["slot_end_utc"].replace("Z", "+00:00"))
+    except (KeyError, TypeError, ValueError):
+        return False
+    if any(value.tzinfo is None for value in (expiry, slot_start, slot_end)):
+        return False
+    current = now or datetime.now(timezone.utc)
+    return slot_start <= current < min(slot_end, expiry)
+
+
 def main(argv=None):
     args = list(sys.argv[1:] if argv is None else argv)
     if args == ["--preflight"]:
@@ -135,6 +149,8 @@ def main(argv=None):
         stop("GIT_MAIN_OR_BRANCH_UNVERIFIABLE")
     if actual_branch != branch or current_main != main_sha:
         stop("STALE_MAIN_OR_BRANCH")
+    if not lease_window_active(lease):
+        stop("LEASE_SLOT_EXPIRED_BEFORE_DOCKER")
     context_result = subprocess.run(["docker", "context", "show"], check=False,
                                     capture_output=True, text=True, timeout=10)
     if context_result.returncode != 0:
@@ -161,6 +177,8 @@ def main(argv=None):
     }
     receipt_path = output / "formal_receipt.json"
     # This one invocation is deliberate. There is no retry or partial rerun.
+    if not lease_window_active(lease):
+        stop("LEASE_SLOT_EXPIRED_BEFORE_DOCKER_RUN")
     proc = subprocess.run(argv, check=False, capture_output=True, text=True)
     raw_path = output / "formal_result.json"
     raw_sha = sha256_bytes(raw_path.read_bytes()) if raw_path.is_file() else None

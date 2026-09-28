@@ -8,6 +8,8 @@ import random
 import re
 import statistics
 import sys
+import urllib.error
+import urllib.request
 from datetime import datetime
 from pathlib import Path
 
@@ -51,6 +53,32 @@ legacy = load_lineage_auditor()
 
 def canonical(value):
     return json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()
+
+
+def unique_pairs(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError("duplicate_json_key")
+        result[key] = value
+    return result
+
+
+def fetch_owner_comment_record(owner_comment_url: str) -> dict | None:
+    match = re.fullmatch(
+        r"https://github\.com/Unjuno/agent-interface/issues/5085#issuecomment-(\d+)",
+        owner_comment_url)
+    if not match:
+        return None
+    request = urllib.request.Request(
+        "https://api.github.com/repos/Unjuno/agent-interface/issues/comments/" + match.group(1),
+        headers={"Accept": "application/vnd.github+json", "User-Agent": "agent-interface-research-audit"})
+    try:
+        with urllib.request.urlopen(request, timeout=10) as response:
+            record = json.loads(response.read(), object_pairs_hook=unique_pairs)
+    except (OSError, urllib.error.URLError, json.JSONDecodeError, ValueError):
+        return None
+    return record if isinstance(record, dict) else None
 
 
 def sha(data: bytes) -> str:
@@ -285,11 +313,16 @@ def audit_document(raw: dict, receipt: dict | None = None, raw_sha256: str | Non
             errors.append("formal_owner_comment_provenance")
         else:
             body = comment.get("body")
+            owner_url = receipt.get("owner_comment_url")
+            match = (re.fullmatch(
+                r"https://github\.com/Unjuno/agent-interface/issues/5085#issuecomment-(\d+)",
+                owner_url) if isinstance(owner_url, str) else None)
             blocks = (re.findall(r"<!-- needle-docker-owner-lease-v1\n(\{.*?\})\n-->",
                                  body, re.DOTALL) if isinstance(body, str) else [])
             try:
-                owner_payload = json.loads(blocks[0]) if len(blocks) == 1 else None
-            except (TypeError, json.JSONDecodeError):
+                owner_payload = (json.loads(blocks[0], object_pairs_hook=unique_pairs)
+                                 if len(blocks) == 1 else None)
+            except (TypeError, json.JSONDecodeError, ValueError):
                 owner_payload = None
             expected_payload = {
                 "schema": "needle-docker-owner-lease-v1", "allocation": ALLOCATION,
@@ -298,8 +331,17 @@ def audit_document(raw: dict, receipt: dict | None = None, raw_sha256: str | Non
                 "lease_id": receipt.get("lease_id"), "slot_start_utc": receipt.get("slot_start_utc"),
                 "slot_end_utc": receipt.get("slot_end_utc"), "expires_at_utc": receipt.get("expires_at_utc"),
             }
-            if owner_payload != expected_payload:
+            if (not match or comment.get("html_url") != owner_url
+                    or owner_payload != expected_payload):
                 errors.append("formal_owner_comment_payload")
+            live_comment = fetch_owner_comment_record(owner_url) if match else None
+            if (live_comment is None
+                    or live_comment.get("html_url") != owner_url
+                    or live_comment.get("issue_url") != comment.get("issue_url")
+                    or not isinstance(live_comment.get("user"), dict)
+                    or live_comment["user"].get("login") != "Unjuno"
+                    or live_comment.get("body") != body):
+                errors.append("formal_owner_comment_live_record")
         try:
             slot_start = datetime.fromisoformat(receipt["slot_start_utc"].replace("Z", "+00:00"))
             slot_end = datetime.fromisoformat(receipt["slot_end_utc"].replace("Z", "+00:00"))
