@@ -95,3 +95,9 @@ attention, semantic completion or first useful-feedback timing.
 [Retained-response validation](../../runtime/results/public-review-recorder-01/README.md)
 checks five real Calc image replies and rejects three replies without images.
 This offline recorder check is separate from the earlier live primary decisions.
+
+The read-only timing summarizer accepts both v1 and v2 public review declarations.
+Public declarations must keep source_sequence explicitly null in both receipt and
+event. [Primary live use](../../runtime/results/public-review-live-01/README.md)
+retains a real Calc task, setup failure, caller mistakes, delayed visual updates,
+and the initial summarizer incompatibility. Timings remain host boundaries.
