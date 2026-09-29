@@ -1,0 +1,22 @@
+{
+  "allocation": "verifier-lifecycle-5279-20260929-01",
+  "base": "4244aaf8b1d0ad2b26d64813842f801ce8f66612",
+  "construction": "two excluded batches; source01 accounting limitation retained, source02 pass1364checks/12controls/6units",
+  "formal_batches": 4,
+  "formal_invocations_before_freeze": 0,
+  "formal_worker_processes": 64,
+  "gate": "full raw/source/IPC/process accounting and reset parity; resident median readiness and result latency each <=0.5 cold, otherwise HOLD; finite T0 only",
+  "source_archive_sha256": "6b1c62f2152054770bd0027cb83a6adf930c69d112a46bbf6b435192d7e9f8ad",
+  "sources": {
+    "ENVIRONMENT.json": "92d4b82c9aedd450ffea4c454e32821c3c92435599dd79308b02d56e33829227",
+    "PLAN.json": "193cc4c4c86ad05a6cec70acea1526a0e4ea549395603f751bedf6804b0963ed",
+    "PLAN.md": "9cfa50f40010b3592ebbad9d9439a5c88985141f5cbcd3ea5a1f252256e2a092",
+    "audit.py": "25aa3da97c9713df918b5e9bc2173bd8eda55ded5efa2bbd55d0d23baae6858a",
+    "batch.py": "ea6ae41be1ad32e5dbd961692184bc0b08a657952e2a671250beca64173d4ea1",
+    "controls.py": "1a4d138682411782195354852b0575720bca5402c9db0970db8310120cbcdabb",
+    "monitor.py": "a0ba7d82aa452b6f4e2ad53b77cba1776dd4865ce6f24111002994c99d4f0ffb",
+    "supervise.py": "fa19100eef648b0b97a4dafbce6d05c8637fffaefdfadf20bc1f83e61afd71de",
+    "test_study.py": "d7d30cc6b9571537b70bae40fd3cb84d26580549121a383e9a2bd45929a82ec6",
+    "worker.py": "8e34b3d4bd4684f40789a0c887da098b7a548d5d626595111014b0bb58d282f3"
+  }
+}
