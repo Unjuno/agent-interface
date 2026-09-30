@@ -78,7 +78,7 @@ historical Docker construction/replay result. See the
 [audit addendum](research/doom/map01_policy_invalidation_clock_4559_v1/AUDIT_ADDENDUM_20260928.md)
 and [Issue #4563](https://github.com/Unjuno/agent-interface/issues/4563).
 
-### Issue #5134 — OrbStack bind-mount publication boundary pilot
+### Issue #5134 — OrbStack bind-mount publication boundary
 
 One separate `OBSTAC_CONSTRUCTION=1` OrbStack pilot executed against the exact
 seed-3788 package with four reader processes, one atomic `os.replace`, and a
@@ -89,9 +89,18 @@ in-place prefix during the write pause. The frozen independent audit exited 1
 with `STOP_BOUNDARY_PILOT` because the runner stores descriptor-open timestamps
 in a separate array while the auditor expects them on each read row. Preserve
 this audit STOP; no patched-auditor replay or pilot retry occurred. This is one
-transition only and does not meet formal allocation -03 denominators or answer
-the full seven-transition Issue hypothesis. See the [pilot report and retained
-raw/audit artifacts](research/system1/needle_orbstack_publication_boundary_5134_20260930_01/REPORT.md)
+transition only and does not meet formal allocation -03 denominators. The
+separate, fresh formal allocation -03 then ran the full seven-transition
+schedule in OrbStack: 28 atomic concurrent, 28 post-publication, and 28 matched
+unsafe rows; the independent raw-only audit returned
+`PASS_ORBSTACK_CROSS_PROCESS_PUBLICATION_SCOPED`, errors empty, and all 11
+corruption controls rejected. Invalid-digest and stale-base proposals both
+yielded without changing ACTIVE. Preserve the pilot STOP unchanged; it was not
+replayed or overwritten. This result is scoped to one macOS 26.6.2 arm64 host,
+OrbStack context, pinned linux/arm64 image, synthetic package, and fixed
+schedule; it does not establish crash durability, other filesystems, or
+production safety. See the [formal result and retained raw/audit artifacts](research/system1/needle_cross_process_publication_orbstack_bind_5066_v3_20260928/RESULT.md),
+the [pilot report](research/system1/needle_orbstack_publication_boundary_5134_20260930_01/REPORT.md),
 and [Issue #5134](https://github.com/Unjuno/agent-interface/issues/5134).
 
 ## Issue #4844 — partial-observation typed-mode successor to #4155
