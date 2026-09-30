@@ -41,7 +41,7 @@ jobs:
             --mount "type=bind,source=$GITHUB_WORKSPACE/$EXPERIMENT_DIR,target=/src,readonly" \
             --mount "type=bind,source=$RUNNER_TEMP/ioco-audit,target=/out" \
             --workdir /src "$IMAGE" sh -euc '
-              python -c "import json; s=json.load(open(\"/src/execution-status.json\")); assert s[\"image_pull_step\"] == \"success\" and s[\"candidate_step\"] == \"success\" and s[\"audit_step\"] == \"success\""
+              python -c "import json; s=json.load(open(\"/src/execution-status.json\")); assert s[\"candidate_invocation_count\"] == 1 and s[\"candidate_exit_code\"] == 0 and s[\"independent_audit_container\"] is True and s[\"audit_exit_code\"] == 0 and s[\"disposition\"] == \"PASS_T0_IOCO_SYNTHETIC_CONTRACT\" and s[\"retry\"] is False"
               python -B /src/audit.py --raw /src/raw.json --output /out/audit.json
               cmp /src/audit.json /out/audit.json
               sha256sum -c /src/FREEZE.sha256
