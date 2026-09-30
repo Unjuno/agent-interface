@@ -91,8 +91,10 @@ def gate() -> dict:
     if actual_hashes != freeze.get("source_sha256"):
         raise RuntimeError("frozen source file hashes differ")
     seed = REPO / "research/needle_role_skill_reload_3780_v1/formal/seed-3788/builder/skill.json"
-    if sha(seed.read_bytes()) != freeze.get("seed_sha256"):
+    if sha(seed.read_bytes()) != freeze.get("seed", {}).get("sha256"):
         raise RuntimeError("frozen seed hash differs")
+    if git("rev-parse", "HEAD:" + str(seed.relative_to(REPO))) != freeze.get("seed", {}).get("git_blob"):
+        raise RuntimeError("frozen seed Git blob differs")
     context = run(["docker", "--context", CONTEXT, "context", "show"])
     if context.returncode or context.stdout.strip() != CONTEXT:
         raise RuntimeError("OrbStack Docker context unavailable")
