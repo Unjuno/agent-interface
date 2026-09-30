@@ -4,6 +4,8 @@ This directory contains committed runtime demonstration/result artifacts used by
 
 Current retained result namespaces include:
 
+- [`primary-summary-pair-01`](primary-summary-pair-01/README.md) — primary full/summary browser pair, exact-once task-4 in each session, preserved images and actual whole-context model usage with fixed-order and timing limits;
+
 - [`cli-inline-calc-02`](cli-inline-calc-02/README.md) — live primary CLI image/metadata forwarding in one host response, saved total 138, with predecessor storage STOP preserved;
 
 - [`cli-current-calc-01`](cli-current-calc-01/README.md) — fresh primary use of current production CLI, saved total 152 and retained intermediate-image feedback gap;

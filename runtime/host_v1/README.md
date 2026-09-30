@@ -180,3 +180,43 @@ retains a fixed local component comparison, startup cost, two fresh known-family
 GUI cases, an expired refusal, and failed construction/check results. The shipped
 MCP route uses the existing connection; the experimental separate clock process
 is not shipped. No whole-task speed, token/cost or human-tempo benefit is claimed.
+
+## Choosing public receipt detail for the next decision
+
+For the public dispatch route, the primary can request the existing summary:
+
+```javascript
+const reply = await client.send('interface_dispatch', {
+  program,
+  current_observation_seq,
+  current_binding_revision,
+  compact: true,
+  report_refs: true,
+  detail: 'summary',
+});
+```
+
+Keep text and image content blocks available to the caller. Eligible completed
+dispatches return `agent-interface/receipt-view-dispatch-summary-v1`, an explicit
+partial historical receipt. It retains the image, complete capture/release/
+activation records, execution outcome, session and raw source digest. Read the
+actual image to decide whether the task completed or another action is needed.
+The summary's completed execution and verified release do not prove application
+success, image readiness, freshness or input authority. Do not decode it as a
+complete raw receipt. The default remains full; failed, incomplete, inconsistent
+or unfamiliar shapes also remain full.
+
+When a decision needs individual waits, operation history or omitted provenance,
+use the returned `presentation.retrieve` instruction. Its
+`interface_results` call with `detail: 'full'` and `include_image: false` reads
+the retained report without input replay or another image. It does not capture
+a newer frame; request a fresh observation on the same session when current
+application state is missing. Full retrieval adds a response and round trip.
+
+[Primary full/summary pair](../results/primary-summary-pair-01/README.md)
+records the same known-family task at exact once in both fresh sessions, equal
+operation shapes and no extra full retrieval. Same-report text was 26.42% smaller
+in the summary arm; unchanged image data remains separate. Actual whole-context
+model usage is retained with cache and fixed-order limits. Neither that byte
+reduction nor the single pair proves lower model cost, faster semantic judgment
+or human-comparable live tempo.
