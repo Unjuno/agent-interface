@@ -64,6 +64,115 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Research evidence ladder
 
+### Issue #5404 — typed resumption packet (scoped deterministic PASS)
+
+One frozen OrbStack run compared opaque summary, full replay, and typed packet
+policies over 50 interruption/fault/idempotency scenarios (150 policy rows).
+The typed packet had zero unsafe admissions and detected all 48 non-benign
+invalidation/receipt cases; committed or unknown effects were reconciled without
+resending. On benign pre-action pauses, its synthetic recovery-step count was 2
+versus 7 for full replay. Opaque summary had 45 unsafe admissions in this
+constructed fixture. These are deterministic model counts, not rates, latency,
+or production claims; oracle completeness, receipt lookup, and event semantics
+are assumptions. See the [full report](research/analysis/typed_resumption_packet_5404_t0_v1/REPORT.md)
+and [Issue #5404](https://github.com/Unjuno/agent-interface/issues/5404).
+
+### Issue #5424 — action-class typed burn-rate T2 (scoped primary-exposure gate PASS; net benefit unproven)
+
+One frozen OrbStack allocation replayed 18,432 fixed-seed synthetic inputs across four regimes and three policies (55,296 policy rows). The typed 12/48-step route budget reduced post-signal primary severe outcomes versus both no-freeze and local consecutive-breaker controls across drift, catastrophe, and common-cause fixtures; affected routes recovered within 12 steps in every fault replicate. However, the correlated-fallback fixture increased alternate-route severe outcomes and lowered completion (4,428 vs 4,453 local / 4,489 no-freeze). Audit v1's summary denominator failed and remains retained; a separate narrow audit-v2 correction passed all rows/summary and rejected 4/4 mutations. This is synthetic mechanism evidence only, not a calibrated SLO, live-route safety, or net production benefit. See [the full report](research/analysis/action_class_error_budget_5424_t2_v1/REPORT.md) and [Issue #5424](https://github.com/Unjuno/agent-interface/issues/5424).
+
+### Issue #5420 — adaptive privacy filter over synthetic randomized response (scoped PASS)
+
+One frozen OrbStack T1 compared five policies on 2,048 paired states (4,096 episodes) and 20,480 policy rows. The adaptive composition filter enforced ε≤1.2 in every episode; static, count-only, and non-stopping odometer controls exceeded 1.2 on at least some traces. A secret-independent public predicate preserved all 2,050 task-ready completions with zero secret queries and chance-level synthetic distinguisher accuracy. The only secret-bearing channels were explicit ε=0.4/0.8 randomized-response mechanisms; no screenshot, OCR, UI, consent, side-channel, or production privacy claim follows. See the [full report](research/analysis/adaptive_privacy_filter_5420_t1_v1/REPORT.md) and [Issue #5420](https://github.com/Unjuno/agent-interface/issues/5420).
+
+### Issue #5275 — verification ontology lexical novelty boundary T1 (scoped synthetic PASS; IID validity limited)
+
+One host-only, no-dispatch T1 compared deterministic coverage, a one-class lexical OOV signal, and their fail-closed combination over 13 synthetic rows. Deterministic coverage false-passed 4/7 OOD rows; lexical-only and combined false-passed 0/7, with 0/6 supported abstentions. However, all six supported evaluation summaries were verbatim training rows, so the IID result is a training-overlap check rather than generalization evidence. The two semantic misses from immutable T0 and two known-vocabulary-dilution variants were flagged in this corpus only. No container, semantic generalization, escalation, safety, or runtime claim follows. See the [full report](research/verification/ontology_gap_5275_t1_v1/REPORT.md) and [Issue #5275](https://github.com/Unjuno/agent-interface/issues/5275).
+
+### Issue #5275 — held-out lexical novelty T2 (FAIL: unsupported/supported tradeoff)
+
+One host-only successor kept T1's one-class OOV threshold fixed and removed exact training/evaluation text overlap. On 16 synthetic cases, the lexical and combined arms abstained on all 8 supported held-out surface forms, yet false-passed 2/8 semantic OOD cases padded with known training vocabulary; deterministic coverage false-passed 5/8 OOD. Both preregistered combined gates failed. Independent audit passed with 11/11 corruption controls rejected. This falsifies the frozen lexical rule for this fixture, not semantic-model detection in general; all labels remain synthetic. No container or runtime claim. See the [T2 report](research/verification/ontology_gap_5275_t2_v1/REPORT.md), [T1 Draft PR #5457](https://github.com/Unjuno/agent-interface/pull/5457), and [Issue #5275](https://github.com/Unjuno/agent-interface/issues/5275).
+
+### Issue #5385 — active lifecycle automata learning (bounded synthetic PASS)
+
+One frozen OrbStack run learned four reachable lifecycle classes in one
+observation-table round, using 204 reported membership queries. Its hypothesis
+matched an independently implemented oracle for all 2,801 seven-symbol words
+through depth 4; a raw-only audit passed with four mutation controls rejected.
+A fixed five-trace manual baseline exposed only two terminal response classes,
+but it is deliberately small and does not establish general query efficiency.
+The bounded exhaustive equivalence oracle and deterministic hand-authored
+machine are strong assumptions; the raw-only auditor cannot reconstruct the
+query transcript because it was not emitted. No live interface, unbounded
+equivalence, runtime authority, safety certification, or product claim follows.
+See the [full report](research/analysis/active_automata_learning_5385_t0_v1/REPORT.md)
+and [Issue #5385](https://github.com/Unjuno/agent-interface/issues/5385).
+
+### Issue #5346 — stigmergic coordination T1 stopped for invalid lease timing
+(`STOP_HARNESS_INVALID`; Issue remains open)
+
+The one-shot, pinned-container successor emitted 2,880 rows over 960 paired
+schedules and the first independent raw auditor returned PASS. Post-run source
+review then found that the crashed owner's lease was released at task-duration
+tick 2 rather than the frozen TTL tick 3. The result is therefore invalid for
+the registered hypothesis; preserve its output and first auditor unchanged and
+do not interpret the apparent policy differences. A new, separately frozen
+successor is required to test corrected expiry semantics and bind the auditor
+to that contract. No runtime, strategic-agent, or product claim follows. See
+the [full T1 report](research/coordination/stigmergy_5346_t1_successor/REPORT.md)
+and [Issue #5346](https://github.com/Unjuno/agent-interface/issues/5346).
+
+### Issue #5346 — scoped TTL-boundary stigmergy successor (T2 finite-model PASS)
+
+The corrected, expanded pinned-container allocation completed 1,600 deterministic
+schedules across NONE, CENTRAL_CLAIMS, and LOCAL_MARKERS. Two raw-only audits
+passed; crash-owner leases expire exactly at TTL 3, all 800 crash schedules
+recover once, authority traces are identical across arms, and both TTL and
+marker-authority mutations are rejected. A supplemental time/fault auditor also
+validated marker visibility delays and rejected an early-observation mutation.
+Across the pooled synthetic schedule, local markers had 3,264 blocked attempts
+versus NONE 3,700, but central claims reduced them further to 2,610. Explicit
+central messages were 0 / 4,300 / 0 respectively; marker write/read/storage
+overhead is not included, so this is a narrow synthetic Pareto tradeoff, not a
+claim that stigmergy is cheaper or faster in a live interface. T1 remains the
+immutable `STOP_HARNESS_INVALID` record. Issue #5346 remains open. See the
+[T2 report](research/coordination/stigmergy_5346_t2_successor/REPORT.md) for
+H/T/D/C/U, exact hashes, outputs, and limits.
+
+### Issue #5269 — mandatory verification-plan coverage boundary (HOLD)
+
+On the immutable 10-case #5268 IR corpus, the deterministic coverage boundary
+accepted 12 complete/valid plans and rejected 39/39 omission/corruption
+proposals; all 31 non-OPTIONAL rows received individual omission controls and
+an independent audit found zero decision disagreements. Corrected disposition
+is `HOLD_UNREPRESENTED_RISK_ESCALATION`: frozen IR v0.1 cannot express the
+required risk-tier escalation, while the deadline profile is synthetic rather
+than a qualified verifier registry. Initial auditor-label and duplicate-control
+construction failures are preserved alongside their corrections. No runtime
+authority, task-effect, SLA, or product claim follows. See
+[`research/verification/verification_coverage_5269_v1/REPORT.md`](research/verification/verification_coverage_5269_v1/REPORT.md)
+for H/T/D/C/U, hashes, and raw/audit records. Issue #5269 remains open pending
+a frozen bridge with #5266/#5273.
+
+### Issue #5315 — finite-sample conformal verifier contract first unit (scoped PASS; Issue HOLD)
+
+One no-model, pinned-Image OrbStack simulation ran 20,000 IID calibration/test
+replicates at sample sizes 4 and 10 and separately applied a known score shift.
+The rank-above-sample-size case returned the full outcome set (no singleton);
+at n=10, split-conformal true-label inclusion was 90.25% IID and 82.61% after
+the declared shift, versus a 90% target. An oracle-provided SHIFT_DETECTED
+control returned the full set but did not test shift detection. The first raw
+auditor's mutation self-test failed as a no-op and remains preserved; an
+additive, separately frozen raw-only audit of the identical bytes passed all
+rows, aggregates, analytic bounds, and mutation controls. This is finite
+synthetic score-law evidence only. It does not establish real verifier risk,
+adaptive exchangeability, a shift detector, or a deployed certificate. Issue
+#5315 remains open. See the full [H/T/D/C/U report and raw evidence](research/analysis/conformal_verifier_risk_contract_5315_v1/REPORT.md).
+
+### Issue #5306 — one-step VOI / irreversibility boundary T1 (scoped PASS; Issue remains open)
+
+A frozen exhaustive host-CPU run covered 405 combinations of binary-state prior, downside, signal sensitivity/false-pass rate, and delay cost. Risk-aware one-step VOI matched the exact Bellman stop/continue oracle on all 405 rows. A separately added expected-downside premium changed 45 decisions: 27 were strictly dominated waits and 18 were ties within tolerance. A separate Decimal raw-only audit passed with zero errors and binds raw SHA-256 `fa237492dd6657da2b98a3b48bc994851e057a70df1c252fbe974a2a5ea22f3a`. This rejects only that separate-premium formulation in the stipulated one-step model; it does not reject multi-step real-options methods or validate the parent VOI hypothesis, empirical calibration, or live action safety. The raw record is retained losslessly as gzip+base64 because the host had no free C: space. Docker was not used because #5085 had no exact assignment. See the [H/T/D/C/U report](research/analysis/voi_option_5306_t1/REPORT.md) and [Issue #5306](https://github.com/Unjuno/agent-interface/issues/5306).
+
 ### Issue #4563 — controlled MAP01 clock-boundary raw-audit addendum
 
 An independent raw-only audit rechecked the retained −1/0/+1 ns controlled
@@ -77,6 +186,31 @@ in 2/5 focused tests because the retained dependency chain cannot import
 historical Docker construction/replay result. See the
 [audit addendum](research/doom/map01_policy_invalidation_clock_4559_v1/AUDIT_ADDENDUM_20260928.md)
 and [Issue #4563](https://github.com/Unjuno/agent-interface/issues/4563).
+
+### Issue #5134 — OrbStack bind-mount publication boundary
+
+One separate `OBSTAC_CONSTRUCTION=1` OrbStack pilot executed against the exact
+seed-3788 package with four reader processes, one atomic `os.replace`, and a
+matched paused in-place write. The runner exited 0 and retained four atomic,
+four strict-prefix, and four complete-reader rows. Raw inspection shows old
+bytes through retained descriptors, new bytes through fresh opens, and the
+in-place prefix during the write pause. The frozen independent audit exited 1
+with `STOP_BOUNDARY_PILOT` because the runner stores descriptor-open timestamps
+in a separate array while the auditor expects them on each read row. Preserve
+this audit STOP; no patched-auditor replay or pilot retry occurred. This is one
+transition only and does not meet formal allocation -03 denominators. The
+separate, fresh formal allocation -03 then ran the full seven-transition
+schedule in OrbStack: 28 atomic concurrent, 28 post-publication, and 28 matched
+unsafe rows; the independent raw-only audit returned
+`PASS_ORBSTACK_CROSS_PROCESS_PUBLICATION_SCOPED`, errors empty, and all 11
+corruption controls rejected. Invalid-digest and stale-base proposals both
+yielded without changing ACTIVE. Preserve the pilot STOP unchanged; it was not
+replayed or overwritten. This result is scoped to one macOS 26.6.2 arm64 host,
+OrbStack context, pinned linux/arm64 image, synthetic package, and fixed
+schedule; it does not establish crash durability, other filesystems, or
+production safety. See the [formal result and retained raw/audit artifacts](research/system1/needle_cross_process_publication_orbstack_bind_5066_v3_20260928/RESULT.md),
+the [pilot report](research/system1/needle_orbstack_publication_boundary_5134_20260930_01/REPORT.md),
+and [Issue #5134](https://github.com/Unjuno/agent-interface/issues/5134).
 
 ## Issue #4844 — partial-observation typed-mode successor to #4155
 
@@ -1675,3 +1809,20 @@ One frozen OrbStack linux/arm64 allocation completed 28/28 rows across screensho
 ## Issue #3311 — historical source provenance successor audit (2026-09-27)
 
 The clean-CI `git show` availability blocker now has an additive, snapshot-backed audit package at [research/live_control/issue_3311_transport_source_provenance_v1/](research/live_control/issue_3311_transport_source_provenance_v1/). Three historical broker/runner/test source sets (nine files) were byte-verified against the original run manifests. One network-disabled, read-only container invocation re-audited all three retained runs: 18/18 checks passed for each. See its [H/T/D/C/U plan](research/live_control/issue_3311_transport_source_provenance_v1/PLAN.md), [frozen preregistration](research/live_control/issue_3311_transport_source_provenance_v1/FREEZE.json), and [formal result](research/live_control/issue_3311_transport_source_provenance_v1/RESULT.json). This closes the historical-source provenance sub-gate only. The integrated live cold/warm/invalidation/repair comparison and actual usage accounting required by Issue #3311 remain pending. A post-formal review amendment also makes the runner exit nonzero on any failed report; its negative controls pass, and the formal run was not repeated. Original v1 evidence and audit reports were left unchanged.
+
+## Issue #5531 — hierarchical failure-domain witness boundary (T4)
+
+Five frozen synthetic cases tested a site-level failure-domain cut in one candidate Docker container and an independent raw-only audit container. Two distinct hosts and two distinct racks in the same configured site both remained `SUSPECTED_UNAVAILABLE`; two current witnesses from distinct sites produced the toy `FAILED` classification. A stale-generation witness and one observer making conflicting site claims did not increase the count. The auditor passed with zero errors, and seven local tests passed, including rejection of a same-site-to-FAILED mutation. This is only a finite classification result: topology is assumed, common global/cloud control planes are outside the model, no failure timing/probability or production availability is measured, and no authority is granted. This distinct allocation is labeled `T4-HIER-01`; it does not modify or retry the delay-correlation STOP integrated by [PR #5559](https://github.com/Unjuno/agent-interface/pull/5559). See the [H/T/D/C/U report](research/analysis/research_failure_detector_5531_t4/REPORT.md), [freeze](research/analysis/research_failure_detector_5531_t4/FREEZE.json), [candidate output](research/analysis/research_failure_detector_5531_t4/candidate.json), and [independent audit](research/analysis/research_failure_detector_5531_t4/audit.json). Issue #5531 remains open.
+
+## r133 cross-domain coverage semantics transfer — Issue #12
+
+One network-disabled Docker reconstruction used exact frozen main-commit Git blobs for scoped DOOM physical brackets, v38/v39 occupancy summaries, DOOM state/task-effect feedback summaries, and Calc final-wait results. The candidate and an independent second-container auditor both verified all source blob identities; the auditor returned `PASS` with zero errors. Three separate-process mutation tests rejected duration promotion from release-only evidence, task-effect promotion from state-only feedback, and v39 precision-gate promotion. The vector intentionally emits no overall coverage score. This validates only faithful classification of the retained evidence types—not held-out benchmark validity, matched domain performance, new GUI/game/model behavior, or cross-domain task transfer. Two earlier container/transport STOPS are retained unchanged. See the [H/T/D/C/U report and artifacts](research/analysis/r133_domain_coverage_transfer_v1/REPORT.md), [T0-03 freeze](research/analysis/r133_domain_coverage_transfer_v1/FREEZE_T0-03.json), [candidate](research/analysis/r133_domain_coverage_transfer_v1/results/t0-03/candidate.json), and [independent audit](research/analysis/r133_domain_coverage_transfer_v1/results/t0-03/audit.json). Issue #12 remains open.
+
+## Issue #5156 — joined-release serializer T0 (construction only)
+
+One host-only T0 corrected and tested the exact duplicate-event serializer shape that stopped Allocation 04. A single candidate invocation emitted three synthetic explicit-release rows; a separately implemented raw-only audit accepted all three with zero errors and rejected 8/8 corruption controls. Focused tests passed 5/5. This is serializer construction evidence only: Allocation 04 remains incomplete and unaudited, and no X11, owner, key-up, physical-input, MAP01, Docker, or product result is inferred. No shared container allocation was used because the current #5085 CPU reservation was occupied by another bounded run. See the report at research/analysis/owner_keyup_serializer_5156_t0_20261001_v1/REPORT.md, freeze at research/analysis/owner_keyup_serializer_5156_t0_20261001_v1/FREEZE.json, raw at research/analysis/owner_keyup_serializer_5156_t0_20261001_v1/results/raw.jsonl, audit at research/analysis/owner_keyup_serializer_5156_t0_20261001_v1/results/AUDIT.json, and Issue #5156.
+
+
+## Issue #5598 — paired synthetic route outcome reanalysis (scope mismatch)
+
+A read-only reanalysis of the retained #5424 exogenous corpus found 18,432 same-row route-A/route-B potential outcomes. In its common-cause fixture, B was `ok` on 405/740 A-non-OK rows (54.7%) versus 82.4% marginally, and B was severe/catastrophic on 282/740 (38.1%); within the 720 rows with an incident identity, rescue was 153/461 (33.2%) and severe/catastrophic B was 278/461 (60.3%). The other three synthetic regimes showed little difference between marginal and conditional B success. This is a descriptive, post-hoc simulator association only; fixed-seed rows are dependent, and no inferential or causal claim is made. It supplies no GUI task IDs, live-route refusals/effects, reset-matched application outcomes, or effect oracle, so #5598's GUI-support disposition remains `STOP_DATA_SCOPE_MISMATCH` and the parallel zero-A-failure public GUI-pair STOP remains unchanged. No container or new GUI experiment was run. See `research/analysis/conditional_route_rescue_5598_t0_20261001/REPORT.md` and Issue #5598.

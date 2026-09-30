@@ -1,0 +1,24 @@
+{
+  "assertions": {
+    "all_single_mutants_killed": true,
+    "combination_survivor_exists": false
+  },
+  "cases": [
+    {"authority":"GRANTED","epoch":2,"lineage":"VALID","min_epoch":1,"name":"fresh_true"},
+    {"authority":"GRANTED","epoch":1,"lineage":"VALID","min_epoch":1,"name":"stale_true"},
+    {"authority":"GRANTED","epoch":2,"lineage":"UNKNOWN","min_epoch":1,"name":"fresh_unknown"},
+    {"authority":"DENIED","epoch":2,"lineage":"VALID","min_epoch":1,"name":"fresh_no_authority"}
+  ],
+  "mutants": [
+    {"killed":["stale_true","fresh_unknown"],"operators":["epoch_nonstrict"]},
+    {"killed":["fresh_unknown"],"operators":["lineage_inverted"]},
+    {"killed":["fresh_unknown"],"operators":["authority_inverted"]},
+    {"killed":["stale_true","fresh_unknown"],"operators":["epoch_nonstrict","lineage_inverted"]},
+    {"killed":["stale_true","fresh_unknown"],"operators":["epoch_nonstrict","authority_inverted"]},
+    {"killed":["fresh_unknown"],"operators":["lineage_inverted","authority_inverted"]},
+    {"killed":["stale_true","fresh_unknown"],"operators":["epoch_nonstrict","lineage_inverted","authority_inverted"]}
+  ],
+  "schema":"mutation-oracle-independence-t5-v1",
+  "semantic_sha256":"4e853f1f020954e740b7b3918f50bbd98888b3009395d57f89395b9cf56323be",
+  "status":"FAIL"
+}

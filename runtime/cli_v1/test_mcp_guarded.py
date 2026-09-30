@@ -26,7 +26,7 @@ class FakeBridge:
         self.keyboard=Mock(side_effect=self.input)
         self.review_window=Mock(return_value={'status':'needs_review','input_dispatched':False})
 
-    def configure(self, directory):
+    def configure(self, directory, *, retain_rgb=False):
         self.capture_directory=Path(directory);self.capture_directory.mkdir(parents=True,exist_ok=True)
 
     def capture(self):
@@ -54,6 +54,98 @@ def metadata(response):
 
 
 class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
+    async def test_metadata_only_guarded_lookup_skips_encoding_and_preserves_capture(self):
+        import base64
+        with tempfile.TemporaryDirectory() as td:
+            bridge = FakeBridge(None, {'app': 123}, 'app', Path(td)/'bridge')
+            with patch('runtime.cli_v1.mcp_guarded.open_bridge', return_value=bridge):
+                server = create_server({'app': 123}, td, session_mode='guarded-x11')
+                original = await server.call_tool('interface_guarded_observe', {})
+                before = metadata(original)
+                call_id = before['call_id']
+                raw_path = Path(td, call_id, 'report.json')
+                saved_bytes = raw_path.read_bytes()
+                with patch('runtime.cli_v1.review.base64.b64encode', wraps=base64.b64encode) as encode:
+                    omitted = await server.call_tool('interface_results', {
+                        'call_id': call_id, 'include_image': False})
+                    self.assertEqual(encode.call_count, 0)
+                row = metadata(omitted)
+                self.assertEqual(len(omitted.content), 1)
+                self.assertEqual(row['image_status'], before['image_status'])
+                self.assertEqual(row['image_delivery'], 'omitted_by_request')
+                self.assertEqual(row['source'], before['source'])
+                self.assertEqual(row['observation_report'], before['observation_report'])
+                self.assertIs(row['operation_invoked'], False)
+                self.assertEqual(raw_path.read_bytes(), saved_bytes)
+                included = await server.call_tool('interface_results', {'call_id': call_id})
+                self.assertEqual(included.content[1].data, original.content[1].data)
+                image_path = Path(before['source']['native']['artifact']['path'])
+                image_path.write_bytes(image_path.read_bytes()+b'corruption')
+                with patch('runtime.cli_v1.review.base64.b64encode', wraps=base64.b64encode) as encode:
+                    corrupted = await server.call_tool('interface_results', {
+                        'call_id': call_id, 'include_image': False})
+                    self.assertEqual(encode.call_count, 0)
+                self.assertEqual(metadata(corrupted)['image_status'], 'needs_review')
+                self.assertIn('image_error', metadata(corrupted))
+                self.assertEqual(raw_path.read_bytes(), saved_bytes)
+                bridge.observe.assert_called_once()
+                bridge.click.assert_not_called()
+                bridge.keyboard.assert_not_called()
+                await server.call_tool('interface_close', {})
+
+    async def test_public_observation_keeps_current_rgb_across_capture_directory_changes(self):
+        # Removing the guarded owner's retain_rgb policy must refuse the real
+        # bridge observation, rather than silently pass an inert bridge fake.
+        from PIL import Image
+        from runtime.backends.x11_v1.backend import X11Backend
+        from runtime.guarded_x11_v1.bridge import NativeHandleBridge
+        import io
+        import base64
+        with tempfile.TemporaryDirectory() as td:
+            bridge = object.__new__(NativeHandleBridge)
+            bridge.out = Path(td)/'bridge'; bridge.out.mkdir()
+            bridge.target = 'app'; bridge.sequence = 0
+            bridge.binding_revision = 0; bridge.history = {}; bridge.review_required = False
+            bridge._binding = lambda: {'focus':123, 'surface':123, 'geometry':[0,0,2,1]}
+            backend = object.__new__(X11Backend)
+            backend.targets = {'app':SimpleNamespace(id=123)}
+            backend.d = SimpleNamespace(screen=lambda:SimpleNamespace(width_in_pixels=2,height_in_pixels=1))
+            backend.release_all = lambda: {'verified':True,'keys_down':[],'buttons_down':[]}
+            backend.close = lambda: None
+            captures = []
+            def capture(target, frame, region):
+                raw = bytes([3,2,1,0,6,5,4,0])
+                artifact = backend.capture_artifacts.write(raw, 2, 1, depth=24,
+                    bits_per_pixel=32, scanline_pad=32, byte_order=0,
+                    masks=(0xff0000,0xff00,0xff), true_color=True)
+                captures.append(artifact)
+                return {'artifact':artifact,'sha256':hashlib.sha256(raw).hexdigest(),'capture_started_ns':1}
+            backend.observe_read_only = capture
+            bridge.backend = backend
+            bridge.session = SimpleNamespace(backend=backend,recovery_required=False)
+            backend.configure_capture_artifacts(bridge.out/'images', retain_rgb=True)
+            with patch('runtime.cli_v1.mcp_guarded.open_bridge',return_value=bridge):
+                server = create_server({'app':123},td,session_mode='guarded-x11')
+                try:
+                    for sequence in (1,2):
+                        response = await server.call_tool('interface_guarded_observe',{})
+                        row = metadata(response)
+                        self.assertEqual(row['status'],'observed',row)
+                        self.assertEqual(row['source']['sequence'],sequence)
+                        self.assertEqual(row['source']['image_source'],'exact_capture_rgb_handoff')
+                        self.assertEqual(len(response.content),2)
+                        with Image.open(io.BytesIO(base64.b64decode(response.content[1].data))) as image:
+                            self.assertEqual(list(image.convert('RGB').getdata()),[(1,2,3),(4,5,6)])
+                        self.assertEqual(list(bridge.history[sequence][1].getdata()),[(1,2,3),(4,5,6)])
+                        self.assertEqual(Path(captures[-1]['path']).parent,Path(row['call_directory'])/'images')
+                    self.assertNotEqual(Path(captures[0]['path']).parent,Path(captures[1]['path']).parent)
+                    before = len(captures)
+                    reread = await server.call_tool('interface_results',{'call_id':row['call_id']})
+                    self.assertEqual(reread.content[1],response.content[1])
+                    self.assertEqual(len(captures),before)
+                finally:
+                    await server.call_tool('interface_close',{})
+
     async def test_opt_in_observation_references_preserve_image_and_retained_full_view(self):
         from runtime.cli_v1.receipt_references import expand_guarded_observation
         with tempfile.TemporaryDirectory() as td:

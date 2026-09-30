@@ -13,6 +13,8 @@ FIXED_TIME = (1980, 1, 1, 0, 0, 0)
 SCHEMA = "agent-interface/portable-runtime-build-v1"
 
 SOURCE_FILES = (
+    "runtime/host_v1/__init__.py",
+    "runtime/host_v1/file_publication.py",
     "runtime/guarded_x11_v1/__init__.py",
     "runtime/guarded_x11_v1/frames.py",
     "runtime/guarded_x11_v1/handles_base.py",
@@ -35,9 +37,12 @@ SOURCE_FILES = (
     "runtime/cli_v1/api.py",
     "runtime/cli_v1/attempt.py",
     "runtime/cli_v1/mcp_server.py",
+    "runtime/cli_v1/mcp_relay.py",
     "runtime/cli_v1/mcp_session.py",
     "runtime/cli_v1/mcp_guarded.py",
     "runtime/cli_v1/guarded_presentation.py",
+    "runtime/cli_v1/public_presentation.py",
+    "runtime/cli_v1/public_summary.py",
     "runtime/cli_v1/x11_target_review.py",
     "runtime/cli_v1/receipt.py",
     "runtime/cli_v1/review.py",
@@ -63,10 +68,13 @@ GENERATED = {
     "runtime/__init__.py": b"\n",
     "runtime/backends/__init__.py": b"\n",
     "__main__.py": b'''import sys
-if len(sys.argv) > 1 and sys.argv[1] == "mcp":
-    del sys.argv[1]
+if len(sys.argv) > 1 and sys.argv[1] in ("mcp", "relay"):
+    mode = sys.argv.pop(1)
     try:
-        from runtime.cli_v1.mcp_server import main
+        if mode == "relay":
+            from runtime.cli_v1.mcp_relay import main
+        else:
+            from runtime.cli_v1.mcp_server import main
     except ModuleNotFoundError as error:
         if error.name != "mcp" and not error.name.startswith("mcp."):
             raise
@@ -128,7 +136,10 @@ def _info(name: str) -> zipfile.ZipInfo:
     return info
 
 
-def build(root: Path, out: Path, manifest_out: Path, sums_out: Path) -> dict:
+HOST_SOURCE_FILES = ("runtime/host_v1/relay_client.mjs", "runtime/host_v1/relay_host.mjs", "runtime/host_v1/README.md")
+
+
+def build(root: Path, out: Path, manifest_out: Path, sums_out: Path, *, host_directory: Path | None = None) -> dict:
     revision = _source_revision(root)
     entries: dict[str, bytes] = dict(GENERATED)
     source_manifest = []
@@ -150,6 +161,32 @@ def build(root: Path, out: Path, manifest_out: Path, sums_out: Path) -> dict:
     }
     entries["BUILD.json"] = (json.dumps(build_meta, sort_keys=True, separators=(",", ":")) + "\n").encode()
 
+    # Read both distributions from the single source revision pinned above.
+    # A conflicting host destination must refuse before changing runtime outputs.
+    host_manifest = None
+    if host_directory is not None:
+        host_entries = {Path(rel).name: _source_bytes(root, rel, revision) for rel in HOST_SOURCE_FILES}
+        host_manifest = {
+            "schema": "agent-interface/portable-host-manifest-v1",
+            "source_revision": revision,
+            "node_minimum": "22",
+            "files": [{"path": name, "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()}
+                      for name, data in sorted(host_entries.items())],
+            "research_tree_included": False,
+            "tests_included": False,
+        }
+        host_directory.mkdir(parents=True, exist_ok=False)
+        for name, data in host_entries.items():
+            with (host_directory / name).open('xb') as stream:
+                stream.write(data)
+        metadata = (json.dumps(host_manifest, indent=2, sort_keys=True) + "\n").encode('utf-8')
+        with (host_directory / 'HOST_MANIFEST.json').open('xb') as stream:
+            stream.write(metadata)
+        checksums = ''.join(f"{row['sha256']}  {row['path']}\n" for row in host_manifest['files'])
+        checksums += f"{hashlib.sha256(metadata).hexdigest()}  HOST_MANIFEST.json\n"
+        with (host_directory / 'SHA256SUMS').open('x', encoding='utf-8', newline='\n') as stream:
+            stream.write(checksums)
+
     out.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(out, "w", compression=zipfile.ZIP_STORED, strict_timestamps=True) as archive:
         for name in sorted(entries):
@@ -166,6 +203,8 @@ def build(root: Path, out: Path, manifest_out: Path, sums_out: Path) -> dict:
         "source_files": source_manifest,
         "support": SUPPORT,
     }
+    if host_manifest is not None:
+        result['host_bundle'] = {'directory': host_directory.name, 'manifest': host_manifest}
     manifest_out.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     sums_out.write_text(f"{result['sha256']}  {out.name}\n", encoding="utf-8")
     return result
@@ -177,8 +216,9 @@ def main() -> int:
     p.add_argument("--out", type=Path, required=True)
     p.add_argument("--manifest", type=Path, required=True)
     p.add_argument("--sums", type=Path, required=True)
+    p.add_argument("--host-directory", type=Path, help="export committed Node host files into a fresh directory")
     a = p.parse_args()
-    print(json.dumps(build(a.root.resolve(), a.out, a.manifest, a.sums), sort_keys=True))
+    print(json.dumps(build(a.root.resolve(), a.out, a.manifest, a.sums, host_directory=a.host_directory), sort_keys=True))
     return 0
 
 

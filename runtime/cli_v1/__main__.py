@@ -36,9 +36,12 @@ def _emit(payload) -> None:
     sys.stdout.flush()
 
 
-def _present_result(row, *, with_review, capture_directory, exit_code, compact=False, report_refs=False, retention=None):
+def _present_result(row, *, with_review, capture_directory, exit_code, compact=False, report_refs=False, retention=None, detail="full"):
     presented = (present_result(row, capture_directory, compact=compact, report_refs=report_refs)
                  if with_review else dict(row))
+    if detail == 'summary' and retention is not None and retention.get('report_persisted') is True:
+        from .public_summary import summarize_cli_dispatch
+        presented = summarize_cli_dispatch(presented, retention['directory'])
     if retention is not None:
         presented['retention'] = retention
         if not retention['report_persisted']:
@@ -50,6 +53,9 @@ def _present_result(row, *, with_review, capture_directory, exit_code, compact=F
 def main() -> int:
     parser = argparse.ArgumentParser(prog="agent-interface")
     sub = parser.add_subparsers(dest="command", required=True)
+    publication = sub.add_parser('publish-json', help='publish one complete caller-authored JSON slot exclusively on Linux')
+    publication.add_argument('--path', required=True, help='fresh destination in an existing caller-owned directory')
+    publication.add_argument('--value', required=True, help='JSON file or - for stdin; no action is selected')
     validation = sub.add_parser('validate', help='check program syntax and expansion without opening a backend')
     validation.add_argument('--program', type=Path, required=True, help='local UTF-8 JSON program; static validity is not runtime admission')
     attempt_status = sub.add_parser('attempt-status', help='inspect retained attempt files without input or replay')
@@ -75,6 +81,8 @@ def main() -> int:
     image_review = sub.add_parser("review")
     image_review.add_argument("--report", required=True)
     image_review.add_argument("--run-directory", required=True)
+    image_review.add_argument("--no-image", action="store_true", help="validate the retained image but omit its encoded payload")
+    image_review.add_argument("--expected-report-sha256", help="require the exact source bytes identified by an earlier summary")
     image_review.add_argument("--compact", action="store_true", help="replace duplicate receipt events with reversible local references")
     image_review.add_argument("--report-refs", action="store_true", help="allow v3 report references; requires --compact and a compatible decoder")
     run = sub.add_parser("dispatch")
@@ -89,7 +97,23 @@ def main() -> int:
     run.add_argument("--review", action="store_true", help="return result and last captured image together")
     run.add_argument("--compact", action="store_true", help="use smaller reversible receipt references with --review")
     run.add_argument("--report-refs", action="store_true", help="allow v3 report references; requires --compact and a compatible decoder")
+    run.add_argument('--detail', choices=('full', 'summary'), default='full',
+                     help='summary projects supported successes; requires retained review with compact/report-refs')
     args = parser.parse_args()
+    if getattr(args, 'detail', 'full') == 'summary' and not (args.review and args.run_directory and args.compact and args.report_refs):
+        parser.error('--detail summary requires --review --run-directory --compact --report-refs')
+    if args.command == 'publish-json':
+        from runtime.host_v1.file_publication import publish_json
+        try:
+            row = publish_json(args.path, _read_json(args.value))
+        except (OSError, ValueError, TypeError) as error:
+            _emit({'schema': 'agent-interface/host-json-publication-v1',
+                   'status': 'publication_failed', 'error': str(error),
+                   'requires_reconciliation': True, 'replay_allowed': False,
+                   'authority': 'none', 'input_dispatched': False})
+            return 2
+        _emit(row)
+        return 0
     if args.command == 'validate':
         from .validate_program import inspect_file
         row = inspect_file(args.program)
@@ -117,8 +141,8 @@ def main() -> int:
         return 0 if row['status'] == 'report_recorded' else 2
     if args.command == "review":
         try:
-            row = (review_bytes(sys.stdin.buffer.read(), args.run_directory, compact=args.compact, report_refs=args.report_refs) if args.report == "-"
-                   else review(args.report, args.run_directory, compact=args.compact, report_refs=args.report_refs))
+            row = (review_bytes(sys.stdin.buffer.read(), args.run_directory, compact=args.compact, report_refs=args.report_refs, expected_report_sha256=args.expected_report_sha256, include_image=not args.no_image) if args.report == "-"
+                   else review(args.report, args.run_directory, compact=args.compact, report_refs=args.report_refs, expected_report_sha256=args.expected_report_sha256, include_image=not args.no_image))
         except (OSError, ValueError, TypeError) as error:
             _emit({"schema": "agent-interface/review-v1", "status": "invalid_receipt", "error": str(error)})
             return 2
@@ -154,7 +178,7 @@ def main() -> int:
         display_name=args.display, capture_directory=args.capture_directory),
         args.run_directory, operation='dispatch', timings=args.retention_timings)
     code = 2 if row["status"] != "returned" else (0 if row["result"].get("status") == "completed" else 3)
-    return _present_result(row, with_review=args.review, capture_directory=args.capture_directory, exit_code=code, compact=args.compact, report_refs=args.report_refs, retention=retention)
+    return _present_result(row, with_review=args.review, capture_directory=args.capture_directory, exit_code=code, compact=args.compact, report_refs=args.report_refs, retention=retention, detail=args.detail)
 
 
 if __name__ == "__main__":

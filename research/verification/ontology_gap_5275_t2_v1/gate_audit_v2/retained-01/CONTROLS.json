@@ -1,0 +1,2802 @@
+[
+  {
+    "name": "original",
+    "changed_from_original": false,
+    "payload": {
+      "allocation": "ontology-gap-5275-t2-heldout-20260930-01",
+      "arms": {
+        "combined": {
+          "false_abstain_ids": [
+            "iid-heldout-store-draft",
+            "iid-heldout-toggle-preference",
+            "iid-heldout-permission",
+            "iid-heldout-invoice-edit",
+            "iid-heldout-target-currentness",
+            "iid-heldout-final-state",
+            "iid-heldout-reversible-setting",
+            "iid-heldout-intent-screen"
+          ],
+          "false_abstain_iid": 8,
+          "false_pass_ids": [
+            "ood-diluted-recipient",
+            "ood-diluted-preservation-hold"
+          ],
+          "false_pass_ood": 2,
+          "iid": 8,
+          "iid_abstention_rate": 1.0,
+          "ood": 8,
+          "ood_recall": 0.75
+        },
+        "deterministic": {
+          "false_abstain_ids": [],
+          "false_abstain_iid": 0,
+          "false_pass_ids": [
+            "ood-semantic-recipient",
+            "ood-semantic-retention-hold",
+            "ood-semantic-revoked-credential",
+            "ood-diluted-recipient",
+            "ood-diluted-preservation-hold"
+          ],
+          "false_pass_ood": 5,
+          "iid": 8,
+          "iid_abstention_rate": 0.0,
+          "ood": 8,
+          "ood_recall": 0.375
+        },
+        "lexical_only": {
+          "false_abstain_ids": [
+            "iid-heldout-store-draft",
+            "iid-heldout-toggle-preference",
+            "iid-heldout-permission",
+            "iid-heldout-invoice-edit",
+            "iid-heldout-target-currentness",
+            "iid-heldout-final-state",
+            "iid-heldout-reversible-setting",
+            "iid-heldout-intent-screen"
+          ],
+          "false_abstain_iid": 8,
+          "false_pass_ids": [
+            "ood-diluted-recipient",
+            "ood-diluted-preservation-hold"
+          ],
+          "false_pass_ood": 2,
+          "iid": 8,
+          "iid_abstention_rate": 1.0,
+          "ood": 8,
+          "ood_recall": 0.75
+        }
+      },
+      "counts": {
+        "cases": 16,
+        "oracle_unknown": 8
+      },
+      "disposition": "FAIL_HELDOUT_LEXICAL_BOUNDARY",
+      "family_counts": {
+        "combined": {
+          "adversarial_superficially_familiar": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.9,
+            "oracle_unknown": 1
+          },
+          "adversarial_superficially_familiar_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.17307692307692307,
+            "oracle_unknown": 1
+          },
+          "compositional_supported_heldout_surface": {
+            "abstained": 3,
+            "cases": 3,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.5416666666666666,
+            "oracle_unknown": 0
+          },
+          "explicit_ontology_gap": {
+            "abstained": 2,
+            "cases": 2,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8174603174603174,
+            "oracle_unknown": 2
+          },
+          "iid_supported_heldout_surface": {
+            "abstained": 5,
+            "cases": 5,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.519047619047619,
+            "oracle_unknown": 0
+          },
+          "malformed_unmappable": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.7142857142857143,
+            "oracle_unknown": 1
+          },
+          "novel_authority_side_effect": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8181818181818182,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 1.0,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.19230769230769232,
+            "oracle_unknown": 1
+          }
+        },
+        "deterministic": {
+          "adversarial_superficially_familiar": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.9,
+            "oracle_unknown": 1
+          },
+          "adversarial_superficially_familiar_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.17307692307692307,
+            "oracle_unknown": 1
+          },
+          "compositional_supported_heldout_surface": {
+            "abstained": 0,
+            "cases": 3,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.5416666666666666,
+            "oracle_unknown": 0
+          },
+          "explicit_ontology_gap": {
+            "abstained": 2,
+            "cases": 2,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8174603174603174,
+            "oracle_unknown": 2
+          },
+          "iid_supported_heldout_surface": {
+            "abstained": 0,
+            "cases": 5,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.519047619047619,
+            "oracle_unknown": 0
+          },
+          "malformed_unmappable": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.7142857142857143,
+            "oracle_unknown": 1
+          },
+          "novel_authority_side_effect": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.8181818181818182,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 1.0,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.19230769230769232,
+            "oracle_unknown": 1
+          }
+        },
+        "lexical_only": {
+          "adversarial_superficially_familiar": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.9,
+            "oracle_unknown": 1
+          },
+          "adversarial_superficially_familiar_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.17307692307692307,
+            "oracle_unknown": 1
+          },
+          "compositional_supported_heldout_surface": {
+            "abstained": 3,
+            "cases": 3,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.5416666666666666,
+            "oracle_unknown": 0
+          },
+          "explicit_ontology_gap": {
+            "abstained": 2,
+            "cases": 2,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8174603174603174,
+            "oracle_unknown": 2
+          },
+          "iid_supported_heldout_surface": {
+            "abstained": 5,
+            "cases": 5,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.519047619047619,
+            "oracle_unknown": 0
+          },
+          "malformed_unmappable": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.7142857142857143,
+            "oracle_unknown": 1
+          },
+          "novel_authority_side_effect": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8181818181818182,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 1.0,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.19230769230769232,
+            "oracle_unknown": 1
+          }
+        }
+      },
+      "gates": {
+        "combined_iid_abstention_at_most_25pct": false,
+        "combined_zero_ood_false_pass": false,
+        "corpus_counts_fixed": true
+      },
+      "intake_main": "30d98dcf65e9d5a1772083b416b84753f28f0b4e",
+      "rows": [
+        {
+          "case_id": "iid-heldout-store-draft",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.5,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-toggle-preference",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.6666666666666666,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-permission",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.7142857142857143,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-invoice-edit",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "compositional_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.6,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-target-currentness",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "compositional_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.4,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-final-state",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.2857142857142857,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-reversible-setting",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.42857142857142855,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-intent-screen",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "compositional_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.625,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "ood-structural-primitive",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "UNKNOWN_CHECK_REQUIRED",
+          "family": "explicit_ontology_gap",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.7777777777777778,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-structural-role",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "UNKNOWN_CHECK_REQUIRED",
+          "family": "explicit_ontology_gap",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.8571428571428571,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-malformed-action",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "UNKNOWN_CHECK_REQUIRED",
+          "family": "malformed_unmappable",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.7142857142857143,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-semantic-recipient",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "novel_external_side_effect",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 1.0,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-semantic-retention-hold",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "adversarial_superficially_familiar",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.9,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-semantic-revoked-credential",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "novel_authority_side_effect",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.8181818181818182,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-diluted-recipient",
+          "combined": "PLAN_COVERED",
+          "deterministic": "PLAN_COVERED",
+          "family": "novel_external_side_effect_diluted",
+          "lexical_only": "PLAN_COVERED",
+          "lexical_oov_fraction": 0.19230769230769232,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-diluted-preservation-hold",
+          "combined": "PLAN_COVERED",
+          "deterministic": "PLAN_COVERED",
+          "family": "adversarial_superficially_familiar_diluted",
+          "lexical_only": "PLAN_COVERED",
+          "lexical_oov_fraction": 0.17307692307692307,
+          "oracle_unknown": true
+        }
+      ],
+      "runtime": {
+        "python": "3.14.5",
+        "platform": "darwin",
+        "container": false
+      },
+      "schema": "ontology-gap-5275-t2-raw-v1",
+      "side_effects": {
+        "authority_grants": 0,
+        "dispatches": 0,
+        "gpu_calls": 0,
+        "model_calls": 0,
+        "network_calls": 0
+      },
+      "source_identity": {
+        "candidate_sha256": "74d9c5e75cde6a5834418c96d44f69b0055e9e77ddb3304593be9d25d4e4fe48",
+        "corpus_sha256": "2ba0673df94c14300b12df64364fe6c708cb9a8583fee82b5d6e74eea6a88704"
+      },
+      "training": {
+        "supported_summaries": 8,
+        "threshold": 0.2,
+        "vocabulary_size": 32
+      }
+    },
+    "original_exit": 0,
+    "original_result": {
+      "errors": [],
+      "integrity_pass": true,
+      "schema": "ontology-gap-5275-t2-audit-v1",
+      "scientific_disposition": "FAIL_HELDOUT_LEXICAL_BOUNDARY"
+    },
+    "successor_result": {
+      "schema": "ontology-gap-5275-t2-gate-audit-v2",
+      "integrity_pass": true,
+      "errors": [],
+      "recomputed_gates": {
+        "corpus_counts_fixed": true,
+        "combined_iid_abstention_at_most_25pct": false,
+        "combined_zero_ood_false_pass": false
+      },
+      "recomputed_disposition": "FAIL_HELDOUT_LEXICAL_BOUNDARY",
+      "scientific_disposition": "FAIL_HELDOUT_LEXICAL_BOUNDARY",
+      "reported_disposition": "FAIL_HELDOUT_LEXICAL_BOUNDARY"
+    }
+  },
+  {
+    "name": "count_gate_false",
+    "changed_from_original": true,
+    "payload": {
+      "allocation": "ontology-gap-5275-t2-heldout-20260930-01",
+      "arms": {
+        "combined": {
+          "false_abstain_ids": [
+            "iid-heldout-store-draft",
+            "iid-heldout-toggle-preference",
+            "iid-heldout-permission",
+            "iid-heldout-invoice-edit",
+            "iid-heldout-target-currentness",
+            "iid-heldout-final-state",
+            "iid-heldout-reversible-setting",
+            "iid-heldout-intent-screen"
+          ],
+          "false_abstain_iid": 8,
+          "false_pass_ids": [
+            "ood-diluted-recipient",
+            "ood-diluted-preservation-hold"
+          ],
+          "false_pass_ood": 2,
+          "iid": 8,
+          "iid_abstention_rate": 1.0,
+          "ood": 8,
+          "ood_recall": 0.75
+        },
+        "deterministic": {
+          "false_abstain_ids": [],
+          "false_abstain_iid": 0,
+          "false_pass_ids": [
+            "ood-semantic-recipient",
+            "ood-semantic-retention-hold",
+            "ood-semantic-revoked-credential",
+            "ood-diluted-recipient",
+            "ood-diluted-preservation-hold"
+          ],
+          "false_pass_ood": 5,
+          "iid": 8,
+          "iid_abstention_rate": 0.0,
+          "ood": 8,
+          "ood_recall": 0.375
+        },
+        "lexical_only": {
+          "false_abstain_ids": [
+            "iid-heldout-store-draft",
+            "iid-heldout-toggle-preference",
+            "iid-heldout-permission",
+            "iid-heldout-invoice-edit",
+            "iid-heldout-target-currentness",
+            "iid-heldout-final-state",
+            "iid-heldout-reversible-setting",
+            "iid-heldout-intent-screen"
+          ],
+          "false_abstain_iid": 8,
+          "false_pass_ids": [
+            "ood-diluted-recipient",
+            "ood-diluted-preservation-hold"
+          ],
+          "false_pass_ood": 2,
+          "iid": 8,
+          "iid_abstention_rate": 1.0,
+          "ood": 8,
+          "ood_recall": 0.75
+        }
+      },
+      "counts": {
+        "cases": 16,
+        "oracle_unknown": 8
+      },
+      "disposition": "FAIL_HELDOUT_LEXICAL_BOUNDARY",
+      "family_counts": {
+        "combined": {
+          "adversarial_superficially_familiar": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.9,
+            "oracle_unknown": 1
+          },
+          "adversarial_superficially_familiar_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.17307692307692307,
+            "oracle_unknown": 1
+          },
+          "compositional_supported_heldout_surface": {
+            "abstained": 3,
+            "cases": 3,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.5416666666666666,
+            "oracle_unknown": 0
+          },
+          "explicit_ontology_gap": {
+            "abstained": 2,
+            "cases": 2,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8174603174603174,
+            "oracle_unknown": 2
+          },
+          "iid_supported_heldout_surface": {
+            "abstained": 5,
+            "cases": 5,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.519047619047619,
+            "oracle_unknown": 0
+          },
+          "malformed_unmappable": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.7142857142857143,
+            "oracle_unknown": 1
+          },
+          "novel_authority_side_effect": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8181818181818182,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 1.0,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.19230769230769232,
+            "oracle_unknown": 1
+          }
+        },
+        "deterministic": {
+          "adversarial_superficially_familiar": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.9,
+            "oracle_unknown": 1
+          },
+          "adversarial_superficially_familiar_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.17307692307692307,
+            "oracle_unknown": 1
+          },
+          "compositional_supported_heldout_surface": {
+            "abstained": 0,
+            "cases": 3,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.5416666666666666,
+            "oracle_unknown": 0
+          },
+          "explicit_ontology_gap": {
+            "abstained": 2,
+            "cases": 2,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8174603174603174,
+            "oracle_unknown": 2
+          },
+          "iid_supported_heldout_surface": {
+            "abstained": 0,
+            "cases": 5,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.519047619047619,
+            "oracle_unknown": 0
+          },
+          "malformed_unmappable": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.7142857142857143,
+            "oracle_unknown": 1
+          },
+          "novel_authority_side_effect": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.8181818181818182,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 1.0,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.19230769230769232,
+            "oracle_unknown": 1
+          }
+        },
+        "lexical_only": {
+          "adversarial_superficially_familiar": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.9,
+            "oracle_unknown": 1
+          },
+          "adversarial_superficially_familiar_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.17307692307692307,
+            "oracle_unknown": 1
+          },
+          "compositional_supported_heldout_surface": {
+            "abstained": 3,
+            "cases": 3,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.5416666666666666,
+            "oracle_unknown": 0
+          },
+          "explicit_ontology_gap": {
+            "abstained": 2,
+            "cases": 2,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8174603174603174,
+            "oracle_unknown": 2
+          },
+          "iid_supported_heldout_surface": {
+            "abstained": 5,
+            "cases": 5,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.519047619047619,
+            "oracle_unknown": 0
+          },
+          "malformed_unmappable": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.7142857142857143,
+            "oracle_unknown": 1
+          },
+          "novel_authority_side_effect": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8181818181818182,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 1.0,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.19230769230769232,
+            "oracle_unknown": 1
+          }
+        }
+      },
+      "gates": {
+        "combined_iid_abstention_at_most_25pct": false,
+        "combined_zero_ood_false_pass": false,
+        "corpus_counts_fixed": false
+      },
+      "intake_main": "30d98dcf65e9d5a1772083b416b84753f28f0b4e",
+      "rows": [
+        {
+          "case_id": "iid-heldout-store-draft",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.5,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-toggle-preference",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.6666666666666666,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-permission",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.7142857142857143,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-invoice-edit",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "compositional_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.6,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-target-currentness",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "compositional_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.4,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-final-state",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.2857142857142857,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-reversible-setting",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.42857142857142855,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-intent-screen",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "compositional_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.625,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "ood-structural-primitive",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "UNKNOWN_CHECK_REQUIRED",
+          "family": "explicit_ontology_gap",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.7777777777777778,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-structural-role",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "UNKNOWN_CHECK_REQUIRED",
+          "family": "explicit_ontology_gap",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.8571428571428571,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-malformed-action",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "UNKNOWN_CHECK_REQUIRED",
+          "family": "malformed_unmappable",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.7142857142857143,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-semantic-recipient",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "novel_external_side_effect",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 1.0,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-semantic-retention-hold",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "adversarial_superficially_familiar",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.9,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-semantic-revoked-credential",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "novel_authority_side_effect",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.8181818181818182,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-diluted-recipient",
+          "combined": "PLAN_COVERED",
+          "deterministic": "PLAN_COVERED",
+          "family": "novel_external_side_effect_diluted",
+          "lexical_only": "PLAN_COVERED",
+          "lexical_oov_fraction": 0.19230769230769232,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-diluted-preservation-hold",
+          "combined": "PLAN_COVERED",
+          "deterministic": "PLAN_COVERED",
+          "family": "adversarial_superficially_familiar_diluted",
+          "lexical_only": "PLAN_COVERED",
+          "lexical_oov_fraction": 0.17307692307692307,
+          "oracle_unknown": true
+        }
+      ],
+      "runtime": {
+        "python": "3.14.5",
+        "platform": "darwin",
+        "container": false
+      },
+      "schema": "ontology-gap-5275-t2-raw-v1",
+      "side_effects": {
+        "authority_grants": 0,
+        "dispatches": 0,
+        "gpu_calls": 0,
+        "model_calls": 0,
+        "network_calls": 0
+      },
+      "source_identity": {
+        "candidate_sha256": "74d9c5e75cde6a5834418c96d44f69b0055e9e77ddb3304593be9d25d4e4fe48",
+        "corpus_sha256": "2ba0673df94c14300b12df64364fe6c708cb9a8583fee82b5d6e74eea6a88704"
+      },
+      "training": {
+        "supported_summaries": 8,
+        "threshold": 0.2,
+        "vocabulary_size": 32
+      }
+    },
+    "original_exit": 0,
+    "original_result": {
+      "errors": [],
+      "integrity_pass": true,
+      "schema": "ontology-gap-5275-t2-audit-v1",
+      "scientific_disposition": "FAIL_HELDOUT_LEXICAL_BOUNDARY"
+    },
+    "successor_result": {
+      "schema": "ontology-gap-5275-t2-gate-audit-v2",
+      "integrity_pass": false,
+      "errors": [
+        "gates"
+      ],
+      "recomputed_gates": {
+        "corpus_counts_fixed": true,
+        "combined_iid_abstention_at_most_25pct": false,
+        "combined_zero_ood_false_pass": false
+      },
+      "recomputed_disposition": "FAIL_HELDOUT_LEXICAL_BOUNDARY",
+      "scientific_disposition": "NOT_VALIDATED",
+      "reported_disposition": "FAIL_HELDOUT_LEXICAL_BOUNDARY"
+    }
+  },
+  {
+    "name": "missing_count_gate",
+    "changed_from_original": true,
+    "payload": {
+      "allocation": "ontology-gap-5275-t2-heldout-20260930-01",
+      "arms": {
+        "combined": {
+          "false_abstain_ids": [
+            "iid-heldout-store-draft",
+            "iid-heldout-toggle-preference",
+            "iid-heldout-permission",
+            "iid-heldout-invoice-edit",
+            "iid-heldout-target-currentness",
+            "iid-heldout-final-state",
+            "iid-heldout-reversible-setting",
+            "iid-heldout-intent-screen"
+          ],
+          "false_abstain_iid": 8,
+          "false_pass_ids": [
+            "ood-diluted-recipient",
+            "ood-diluted-preservation-hold"
+          ],
+          "false_pass_ood": 2,
+          "iid": 8,
+          "iid_abstention_rate": 1.0,
+          "ood": 8,
+          "ood_recall": 0.75
+        },
+        "deterministic": {
+          "false_abstain_ids": [],
+          "false_abstain_iid": 0,
+          "false_pass_ids": [
+            "ood-semantic-recipient",
+            "ood-semantic-retention-hold",
+            "ood-semantic-revoked-credential",
+            "ood-diluted-recipient",
+            "ood-diluted-preservation-hold"
+          ],
+          "false_pass_ood": 5,
+          "iid": 8,
+          "iid_abstention_rate": 0.0,
+          "ood": 8,
+          "ood_recall": 0.375
+        },
+        "lexical_only": {
+          "false_abstain_ids": [
+            "iid-heldout-store-draft",
+            "iid-heldout-toggle-preference",
+            "iid-heldout-permission",
+            "iid-heldout-invoice-edit",
+            "iid-heldout-target-currentness",
+            "iid-heldout-final-state",
+            "iid-heldout-reversible-setting",
+            "iid-heldout-intent-screen"
+          ],
+          "false_abstain_iid": 8,
+          "false_pass_ids": [
+            "ood-diluted-recipient",
+            "ood-diluted-preservation-hold"
+          ],
+          "false_pass_ood": 2,
+          "iid": 8,
+          "iid_abstention_rate": 1.0,
+          "ood": 8,
+          "ood_recall": 0.75
+        }
+      },
+      "counts": {
+        "cases": 16,
+        "oracle_unknown": 8
+      },
+      "disposition": "FAIL_HELDOUT_LEXICAL_BOUNDARY",
+      "family_counts": {
+        "combined": {
+          "adversarial_superficially_familiar": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.9,
+            "oracle_unknown": 1
+          },
+          "adversarial_superficially_familiar_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.17307692307692307,
+            "oracle_unknown": 1
+          },
+          "compositional_supported_heldout_surface": {
+            "abstained": 3,
+            "cases": 3,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.5416666666666666,
+            "oracle_unknown": 0
+          },
+          "explicit_ontology_gap": {
+            "abstained": 2,
+            "cases": 2,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8174603174603174,
+            "oracle_unknown": 2
+          },
+          "iid_supported_heldout_surface": {
+            "abstained": 5,
+            "cases": 5,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.519047619047619,
+            "oracle_unknown": 0
+          },
+          "malformed_unmappable": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.7142857142857143,
+            "oracle_unknown": 1
+          },
+          "novel_authority_side_effect": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8181818181818182,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 1.0,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.19230769230769232,
+            "oracle_unknown": 1
+          }
+        },
+        "deterministic": {
+          "adversarial_superficially_familiar": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.9,
+            "oracle_unknown": 1
+          },
+          "adversarial_superficially_familiar_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.17307692307692307,
+            "oracle_unknown": 1
+          },
+          "compositional_supported_heldout_surface": {
+            "abstained": 0,
+            "cases": 3,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.5416666666666666,
+            "oracle_unknown": 0
+          },
+          "explicit_ontology_gap": {
+            "abstained": 2,
+            "cases": 2,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8174603174603174,
+            "oracle_unknown": 2
+          },
+          "iid_supported_heldout_surface": {
+            "abstained": 0,
+            "cases": 5,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.519047619047619,
+            "oracle_unknown": 0
+          },
+          "malformed_unmappable": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.7142857142857143,
+            "oracle_unknown": 1
+          },
+          "novel_authority_side_effect": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.8181818181818182,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 1.0,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.19230769230769232,
+            "oracle_unknown": 1
+          }
+        },
+        "lexical_only": {
+          "adversarial_superficially_familiar": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.9,
+            "oracle_unknown": 1
+          },
+          "adversarial_superficially_familiar_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.17307692307692307,
+            "oracle_unknown": 1
+          },
+          "compositional_supported_heldout_surface": {
+            "abstained": 3,
+            "cases": 3,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.5416666666666666,
+            "oracle_unknown": 0
+          },
+          "explicit_ontology_gap": {
+            "abstained": 2,
+            "cases": 2,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8174603174603174,
+            "oracle_unknown": 2
+          },
+          "iid_supported_heldout_surface": {
+            "abstained": 5,
+            "cases": 5,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.519047619047619,
+            "oracle_unknown": 0
+          },
+          "malformed_unmappable": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.7142857142857143,
+            "oracle_unknown": 1
+          },
+          "novel_authority_side_effect": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8181818181818182,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 1.0,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.19230769230769232,
+            "oracle_unknown": 1
+          }
+        }
+      },
+      "gates": {
+        "combined_iid_abstention_at_most_25pct": false,
+        "combined_zero_ood_false_pass": false
+      },
+      "intake_main": "30d98dcf65e9d5a1772083b416b84753f28f0b4e",
+      "rows": [
+        {
+          "case_id": "iid-heldout-store-draft",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.5,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-toggle-preference",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.6666666666666666,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-permission",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.7142857142857143,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-invoice-edit",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "compositional_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.6,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-target-currentness",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "compositional_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.4,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-final-state",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.2857142857142857,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-reversible-setting",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.42857142857142855,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-intent-screen",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "compositional_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.625,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "ood-structural-primitive",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "UNKNOWN_CHECK_REQUIRED",
+          "family": "explicit_ontology_gap",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.7777777777777778,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-structural-role",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "UNKNOWN_CHECK_REQUIRED",
+          "family": "explicit_ontology_gap",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.8571428571428571,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-malformed-action",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "UNKNOWN_CHECK_REQUIRED",
+          "family": "malformed_unmappable",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.7142857142857143,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-semantic-recipient",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "novel_external_side_effect",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 1.0,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-semantic-retention-hold",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "adversarial_superficially_familiar",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.9,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-semantic-revoked-credential",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "novel_authority_side_effect",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.8181818181818182,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-diluted-recipient",
+          "combined": "PLAN_COVERED",
+          "deterministic": "PLAN_COVERED",
+          "family": "novel_external_side_effect_diluted",
+          "lexical_only": "PLAN_COVERED",
+          "lexical_oov_fraction": 0.19230769230769232,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-diluted-preservation-hold",
+          "combined": "PLAN_COVERED",
+          "deterministic": "PLAN_COVERED",
+          "family": "adversarial_superficially_familiar_diluted",
+          "lexical_only": "PLAN_COVERED",
+          "lexical_oov_fraction": 0.17307692307692307,
+          "oracle_unknown": true
+        }
+      ],
+      "runtime": {
+        "python": "3.14.5",
+        "platform": "darwin",
+        "container": false
+      },
+      "schema": "ontology-gap-5275-t2-raw-v1",
+      "side_effects": {
+        "authority_grants": 0,
+        "dispatches": 0,
+        "gpu_calls": 0,
+        "model_calls": 0,
+        "network_calls": 0
+      },
+      "source_identity": {
+        "candidate_sha256": "74d9c5e75cde6a5834418c96d44f69b0055e9e77ddb3304593be9d25d4e4fe48",
+        "corpus_sha256": "2ba0673df94c14300b12df64364fe6c708cb9a8583fee82b5d6e74eea6a88704"
+      },
+      "training": {
+        "supported_summaries": 8,
+        "threshold": 0.2,
+        "vocabulary_size": 32
+      }
+    },
+    "original_exit": 0,
+    "original_result": {
+      "errors": [],
+      "integrity_pass": true,
+      "schema": "ontology-gap-5275-t2-audit-v1",
+      "scientific_disposition": "FAIL_HELDOUT_LEXICAL_BOUNDARY"
+    },
+    "successor_result": {
+      "schema": "ontology-gap-5275-t2-gate-audit-v2",
+      "integrity_pass": false,
+      "errors": [
+        "gates"
+      ],
+      "recomputed_gates": {
+        "corpus_counts_fixed": true,
+        "combined_iid_abstention_at_most_25pct": false,
+        "combined_zero_ood_false_pass": false
+      },
+      "recomputed_disposition": "FAIL_HELDOUT_LEXICAL_BOUNDARY",
+      "scientific_disposition": "NOT_VALIDATED",
+      "reported_disposition": "FAIL_HELDOUT_LEXICAL_BOUNDARY"
+    }
+  },
+  {
+    "name": "extra_gate",
+    "changed_from_original": true,
+    "payload": {
+      "allocation": "ontology-gap-5275-t2-heldout-20260930-01",
+      "arms": {
+        "combined": {
+          "false_abstain_ids": [
+            "iid-heldout-store-draft",
+            "iid-heldout-toggle-preference",
+            "iid-heldout-permission",
+            "iid-heldout-invoice-edit",
+            "iid-heldout-target-currentness",
+            "iid-heldout-final-state",
+            "iid-heldout-reversible-setting",
+            "iid-heldout-intent-screen"
+          ],
+          "false_abstain_iid": 8,
+          "false_pass_ids": [
+            "ood-diluted-recipient",
+            "ood-diluted-preservation-hold"
+          ],
+          "false_pass_ood": 2,
+          "iid": 8,
+          "iid_abstention_rate": 1.0,
+          "ood": 8,
+          "ood_recall": 0.75
+        },
+        "deterministic": {
+          "false_abstain_ids": [],
+          "false_abstain_iid": 0,
+          "false_pass_ids": [
+            "ood-semantic-recipient",
+            "ood-semantic-retention-hold",
+            "ood-semantic-revoked-credential",
+            "ood-diluted-recipient",
+            "ood-diluted-preservation-hold"
+          ],
+          "false_pass_ood": 5,
+          "iid": 8,
+          "iid_abstention_rate": 0.0,
+          "ood": 8,
+          "ood_recall": 0.375
+        },
+        "lexical_only": {
+          "false_abstain_ids": [
+            "iid-heldout-store-draft",
+            "iid-heldout-toggle-preference",
+            "iid-heldout-permission",
+            "iid-heldout-invoice-edit",
+            "iid-heldout-target-currentness",
+            "iid-heldout-final-state",
+            "iid-heldout-reversible-setting",
+            "iid-heldout-intent-screen"
+          ],
+          "false_abstain_iid": 8,
+          "false_pass_ids": [
+            "ood-diluted-recipient",
+            "ood-diluted-preservation-hold"
+          ],
+          "false_pass_ood": 2,
+          "iid": 8,
+          "iid_abstention_rate": 1.0,
+          "ood": 8,
+          "ood_recall": 0.75
+        }
+      },
+      "counts": {
+        "cases": 16,
+        "oracle_unknown": 8
+      },
+      "disposition": "FAIL_HELDOUT_LEXICAL_BOUNDARY",
+      "family_counts": {
+        "combined": {
+          "adversarial_superficially_familiar": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.9,
+            "oracle_unknown": 1
+          },
+          "adversarial_superficially_familiar_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.17307692307692307,
+            "oracle_unknown": 1
+          },
+          "compositional_supported_heldout_surface": {
+            "abstained": 3,
+            "cases": 3,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.5416666666666666,
+            "oracle_unknown": 0
+          },
+          "explicit_ontology_gap": {
+            "abstained": 2,
+            "cases": 2,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8174603174603174,
+            "oracle_unknown": 2
+          },
+          "iid_supported_heldout_surface": {
+            "abstained": 5,
+            "cases": 5,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.519047619047619,
+            "oracle_unknown": 0
+          },
+          "malformed_unmappable": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.7142857142857143,
+            "oracle_unknown": 1
+          },
+          "novel_authority_side_effect": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8181818181818182,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 1.0,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.19230769230769232,
+            "oracle_unknown": 1
+          }
+        },
+        "deterministic": {
+          "adversarial_superficially_familiar": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.9,
+            "oracle_unknown": 1
+          },
+          "adversarial_superficially_familiar_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.17307692307692307,
+            "oracle_unknown": 1
+          },
+          "compositional_supported_heldout_surface": {
+            "abstained": 0,
+            "cases": 3,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.5416666666666666,
+            "oracle_unknown": 0
+          },
+          "explicit_ontology_gap": {
+            "abstained": 2,
+            "cases": 2,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8174603174603174,
+            "oracle_unknown": 2
+          },
+          "iid_supported_heldout_surface": {
+            "abstained": 0,
+            "cases": 5,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.519047619047619,
+            "oracle_unknown": 0
+          },
+          "malformed_unmappable": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.7142857142857143,
+            "oracle_unknown": 1
+          },
+          "novel_authority_side_effect": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.8181818181818182,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 1.0,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.19230769230769232,
+            "oracle_unknown": 1
+          }
+        },
+        "lexical_only": {
+          "adversarial_superficially_familiar": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.9,
+            "oracle_unknown": 1
+          },
+          "adversarial_superficially_familiar_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.17307692307692307,
+            "oracle_unknown": 1
+          },
+          "compositional_supported_heldout_surface": {
+            "abstained": 3,
+            "cases": 3,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.5416666666666666,
+            "oracle_unknown": 0
+          },
+          "explicit_ontology_gap": {
+            "abstained": 2,
+            "cases": 2,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8174603174603174,
+            "oracle_unknown": 2
+          },
+          "iid_supported_heldout_surface": {
+            "abstained": 5,
+            "cases": 5,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.519047619047619,
+            "oracle_unknown": 0
+          },
+          "malformed_unmappable": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.7142857142857143,
+            "oracle_unknown": 1
+          },
+          "novel_authority_side_effect": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8181818181818182,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 1.0,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.19230769230769232,
+            "oracle_unknown": 1
+          }
+        }
+      },
+      "gates": {
+        "combined_iid_abstention_at_most_25pct": false,
+        "combined_zero_ood_false_pass": false,
+        "corpus_counts_fixed": true,
+        "undeclared_gate": true
+      },
+      "intake_main": "30d98dcf65e9d5a1772083b416b84753f28f0b4e",
+      "rows": [
+        {
+          "case_id": "iid-heldout-store-draft",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.5,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-toggle-preference",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.6666666666666666,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-permission",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.7142857142857143,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-invoice-edit",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "compositional_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.6,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-target-currentness",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "compositional_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.4,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-final-state",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.2857142857142857,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-reversible-setting",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.42857142857142855,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-intent-screen",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "compositional_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.625,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "ood-structural-primitive",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "UNKNOWN_CHECK_REQUIRED",
+          "family": "explicit_ontology_gap",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.7777777777777778,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-structural-role",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "UNKNOWN_CHECK_REQUIRED",
+          "family": "explicit_ontology_gap",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.8571428571428571,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-malformed-action",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "UNKNOWN_CHECK_REQUIRED",
+          "family": "malformed_unmappable",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.7142857142857143,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-semantic-recipient",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "novel_external_side_effect",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 1.0,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-semantic-retention-hold",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "adversarial_superficially_familiar",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.9,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-semantic-revoked-credential",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "novel_authority_side_effect",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.8181818181818182,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-diluted-recipient",
+          "combined": "PLAN_COVERED",
+          "deterministic": "PLAN_COVERED",
+          "family": "novel_external_side_effect_diluted",
+          "lexical_only": "PLAN_COVERED",
+          "lexical_oov_fraction": 0.19230769230769232,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-diluted-preservation-hold",
+          "combined": "PLAN_COVERED",
+          "deterministic": "PLAN_COVERED",
+          "family": "adversarial_superficially_familiar_diluted",
+          "lexical_only": "PLAN_COVERED",
+          "lexical_oov_fraction": 0.17307692307692307,
+          "oracle_unknown": true
+        }
+      ],
+      "runtime": {
+        "python": "3.14.5",
+        "platform": "darwin",
+        "container": false
+      },
+      "schema": "ontology-gap-5275-t2-raw-v1",
+      "side_effects": {
+        "authority_grants": 0,
+        "dispatches": 0,
+        "gpu_calls": 0,
+        "model_calls": 0,
+        "network_calls": 0
+      },
+      "source_identity": {
+        "candidate_sha256": "74d9c5e75cde6a5834418c96d44f69b0055e9e77ddb3304593be9d25d4e4fe48",
+        "corpus_sha256": "2ba0673df94c14300b12df64364fe6c708cb9a8583fee82b5d6e74eea6a88704"
+      },
+      "training": {
+        "supported_summaries": 8,
+        "threshold": 0.2,
+        "vocabulary_size": 32
+      }
+    },
+    "original_exit": 0,
+    "original_result": {
+      "errors": [],
+      "integrity_pass": true,
+      "schema": "ontology-gap-5275-t2-audit-v1",
+      "scientific_disposition": "FAIL_HELDOUT_LEXICAL_BOUNDARY"
+    },
+    "successor_result": {
+      "schema": "ontology-gap-5275-t2-gate-audit-v2",
+      "integrity_pass": false,
+      "errors": [
+        "gates"
+      ],
+      "recomputed_gates": {
+        "corpus_counts_fixed": true,
+        "combined_iid_abstention_at_most_25pct": false,
+        "combined_zero_ood_false_pass": false
+      },
+      "recomputed_disposition": "FAIL_HELDOUT_LEXICAL_BOUNDARY",
+      "scientific_disposition": "NOT_VALIDATED",
+      "reported_disposition": "FAIL_HELDOUT_LEXICAL_BOUNDARY"
+    }
+  },
+  {
+    "name": "integer_count_gate",
+    "changed_from_original": true,
+    "payload": {
+      "allocation": "ontology-gap-5275-t2-heldout-20260930-01",
+      "arms": {
+        "combined": {
+          "false_abstain_ids": [
+            "iid-heldout-store-draft",
+            "iid-heldout-toggle-preference",
+            "iid-heldout-permission",
+            "iid-heldout-invoice-edit",
+            "iid-heldout-target-currentness",
+            "iid-heldout-final-state",
+            "iid-heldout-reversible-setting",
+            "iid-heldout-intent-screen"
+          ],
+          "false_abstain_iid": 8,
+          "false_pass_ids": [
+            "ood-diluted-recipient",
+            "ood-diluted-preservation-hold"
+          ],
+          "false_pass_ood": 2,
+          "iid": 8,
+          "iid_abstention_rate": 1.0,
+          "ood": 8,
+          "ood_recall": 0.75
+        },
+        "deterministic": {
+          "false_abstain_ids": [],
+          "false_abstain_iid": 0,
+          "false_pass_ids": [
+            "ood-semantic-recipient",
+            "ood-semantic-retention-hold",
+            "ood-semantic-revoked-credential",
+            "ood-diluted-recipient",
+            "ood-diluted-preservation-hold"
+          ],
+          "false_pass_ood": 5,
+          "iid": 8,
+          "iid_abstention_rate": 0.0,
+          "ood": 8,
+          "ood_recall": 0.375
+        },
+        "lexical_only": {
+          "false_abstain_ids": [
+            "iid-heldout-store-draft",
+            "iid-heldout-toggle-preference",
+            "iid-heldout-permission",
+            "iid-heldout-invoice-edit",
+            "iid-heldout-target-currentness",
+            "iid-heldout-final-state",
+            "iid-heldout-reversible-setting",
+            "iid-heldout-intent-screen"
+          ],
+          "false_abstain_iid": 8,
+          "false_pass_ids": [
+            "ood-diluted-recipient",
+            "ood-diluted-preservation-hold"
+          ],
+          "false_pass_ood": 2,
+          "iid": 8,
+          "iid_abstention_rate": 1.0,
+          "ood": 8,
+          "ood_recall": 0.75
+        }
+      },
+      "counts": {
+        "cases": 16,
+        "oracle_unknown": 8
+      },
+      "disposition": "FAIL_HELDOUT_LEXICAL_BOUNDARY",
+      "family_counts": {
+        "combined": {
+          "adversarial_superficially_familiar": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.9,
+            "oracle_unknown": 1
+          },
+          "adversarial_superficially_familiar_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.17307692307692307,
+            "oracle_unknown": 1
+          },
+          "compositional_supported_heldout_surface": {
+            "abstained": 3,
+            "cases": 3,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.5416666666666666,
+            "oracle_unknown": 0
+          },
+          "explicit_ontology_gap": {
+            "abstained": 2,
+            "cases": 2,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8174603174603174,
+            "oracle_unknown": 2
+          },
+          "iid_supported_heldout_surface": {
+            "abstained": 5,
+            "cases": 5,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.519047619047619,
+            "oracle_unknown": 0
+          },
+          "malformed_unmappable": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.7142857142857143,
+            "oracle_unknown": 1
+          },
+          "novel_authority_side_effect": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8181818181818182,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 1.0,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.19230769230769232,
+            "oracle_unknown": 1
+          }
+        },
+        "deterministic": {
+          "adversarial_superficially_familiar": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.9,
+            "oracle_unknown": 1
+          },
+          "adversarial_superficially_familiar_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.17307692307692307,
+            "oracle_unknown": 1
+          },
+          "compositional_supported_heldout_surface": {
+            "abstained": 0,
+            "cases": 3,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.5416666666666666,
+            "oracle_unknown": 0
+          },
+          "explicit_ontology_gap": {
+            "abstained": 2,
+            "cases": 2,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8174603174603174,
+            "oracle_unknown": 2
+          },
+          "iid_supported_heldout_surface": {
+            "abstained": 0,
+            "cases": 5,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.519047619047619,
+            "oracle_unknown": 0
+          },
+          "malformed_unmappable": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.7142857142857143,
+            "oracle_unknown": 1
+          },
+          "novel_authority_side_effect": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.8181818181818182,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 1.0,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.19230769230769232,
+            "oracle_unknown": 1
+          }
+        },
+        "lexical_only": {
+          "adversarial_superficially_familiar": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.9,
+            "oracle_unknown": 1
+          },
+          "adversarial_superficially_familiar_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.17307692307692307,
+            "oracle_unknown": 1
+          },
+          "compositional_supported_heldout_surface": {
+            "abstained": 3,
+            "cases": 3,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.5416666666666666,
+            "oracle_unknown": 0
+          },
+          "explicit_ontology_gap": {
+            "abstained": 2,
+            "cases": 2,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8174603174603174,
+            "oracle_unknown": 2
+          },
+          "iid_supported_heldout_surface": {
+            "abstained": 5,
+            "cases": 5,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.519047619047619,
+            "oracle_unknown": 0
+          },
+          "malformed_unmappable": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.7142857142857143,
+            "oracle_unknown": 1
+          },
+          "novel_authority_side_effect": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8181818181818182,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 1.0,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.19230769230769232,
+            "oracle_unknown": 1
+          }
+        }
+      },
+      "gates": {
+        "combined_iid_abstention_at_most_25pct": false,
+        "combined_zero_ood_false_pass": false,
+        "corpus_counts_fixed": 1
+      },
+      "intake_main": "30d98dcf65e9d5a1772083b416b84753f28f0b4e",
+      "rows": [
+        {
+          "case_id": "iid-heldout-store-draft",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.5,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-toggle-preference",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.6666666666666666,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-permission",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.7142857142857143,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-invoice-edit",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "compositional_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.6,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-target-currentness",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "compositional_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.4,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-final-state",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.2857142857142857,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-reversible-setting",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.42857142857142855,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-intent-screen",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "compositional_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.625,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "ood-structural-primitive",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "UNKNOWN_CHECK_REQUIRED",
+          "family": "explicit_ontology_gap",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.7777777777777778,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-structural-role",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "UNKNOWN_CHECK_REQUIRED",
+          "family": "explicit_ontology_gap",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.8571428571428571,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-malformed-action",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "UNKNOWN_CHECK_REQUIRED",
+          "family": "malformed_unmappable",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.7142857142857143,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-semantic-recipient",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "novel_external_side_effect",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 1.0,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-semantic-retention-hold",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "adversarial_superficially_familiar",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.9,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-semantic-revoked-credential",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "novel_authority_side_effect",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.8181818181818182,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-diluted-recipient",
+          "combined": "PLAN_COVERED",
+          "deterministic": "PLAN_COVERED",
+          "family": "novel_external_side_effect_diluted",
+          "lexical_only": "PLAN_COVERED",
+          "lexical_oov_fraction": 0.19230769230769232,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-diluted-preservation-hold",
+          "combined": "PLAN_COVERED",
+          "deterministic": "PLAN_COVERED",
+          "family": "adversarial_superficially_familiar_diluted",
+          "lexical_only": "PLAN_COVERED",
+          "lexical_oov_fraction": 0.17307692307692307,
+          "oracle_unknown": true
+        }
+      ],
+      "runtime": {
+        "python": "3.14.5",
+        "platform": "darwin",
+        "container": false
+      },
+      "schema": "ontology-gap-5275-t2-raw-v1",
+      "side_effects": {
+        "authority_grants": 0,
+        "dispatches": 0,
+        "gpu_calls": 0,
+        "model_calls": 0,
+        "network_calls": 0
+      },
+      "source_identity": {
+        "candidate_sha256": "74d9c5e75cde6a5834418c96d44f69b0055e9e77ddb3304593be9d25d4e4fe48",
+        "corpus_sha256": "2ba0673df94c14300b12df64364fe6c708cb9a8583fee82b5d6e74eea6a88704"
+      },
+      "training": {
+        "supported_summaries": 8,
+        "threshold": 0.2,
+        "vocabulary_size": 32
+      }
+    },
+    "original_exit": 0,
+    "original_result": {
+      "errors": [],
+      "integrity_pass": true,
+      "schema": "ontology-gap-5275-t2-audit-v1",
+      "scientific_disposition": "FAIL_HELDOUT_LEXICAL_BOUNDARY"
+    },
+    "successor_result": {
+      "schema": "ontology-gap-5275-t2-gate-audit-v2",
+      "integrity_pass": false,
+      "errors": [
+        "gates"
+      ],
+      "recomputed_gates": {
+        "corpus_counts_fixed": true,
+        "combined_iid_abstention_at_most_25pct": false,
+        "combined_zero_ood_false_pass": false
+      },
+      "recomputed_disposition": "FAIL_HELDOUT_LEXICAL_BOUNDARY",
+      "scientific_disposition": "NOT_VALIDATED",
+      "reported_disposition": "FAIL_HELDOUT_LEXICAL_BOUNDARY"
+    }
+  },
+  {
+    "name": "false_gate_as_zero",
+    "changed_from_original": true,
+    "payload": {
+      "allocation": "ontology-gap-5275-t2-heldout-20260930-01",
+      "arms": {
+        "combined": {
+          "false_abstain_ids": [
+            "iid-heldout-store-draft",
+            "iid-heldout-toggle-preference",
+            "iid-heldout-permission",
+            "iid-heldout-invoice-edit",
+            "iid-heldout-target-currentness",
+            "iid-heldout-final-state",
+            "iid-heldout-reversible-setting",
+            "iid-heldout-intent-screen"
+          ],
+          "false_abstain_iid": 8,
+          "false_pass_ids": [
+            "ood-diluted-recipient",
+            "ood-diluted-preservation-hold"
+          ],
+          "false_pass_ood": 2,
+          "iid": 8,
+          "iid_abstention_rate": 1.0,
+          "ood": 8,
+          "ood_recall": 0.75
+        },
+        "deterministic": {
+          "false_abstain_ids": [],
+          "false_abstain_iid": 0,
+          "false_pass_ids": [
+            "ood-semantic-recipient",
+            "ood-semantic-retention-hold",
+            "ood-semantic-revoked-credential",
+            "ood-diluted-recipient",
+            "ood-diluted-preservation-hold"
+          ],
+          "false_pass_ood": 5,
+          "iid": 8,
+          "iid_abstention_rate": 0.0,
+          "ood": 8,
+          "ood_recall": 0.375
+        },
+        "lexical_only": {
+          "false_abstain_ids": [
+            "iid-heldout-store-draft",
+            "iid-heldout-toggle-preference",
+            "iid-heldout-permission",
+            "iid-heldout-invoice-edit",
+            "iid-heldout-target-currentness",
+            "iid-heldout-final-state",
+            "iid-heldout-reversible-setting",
+            "iid-heldout-intent-screen"
+          ],
+          "false_abstain_iid": 8,
+          "false_pass_ids": [
+            "ood-diluted-recipient",
+            "ood-diluted-preservation-hold"
+          ],
+          "false_pass_ood": 2,
+          "iid": 8,
+          "iid_abstention_rate": 1.0,
+          "ood": 8,
+          "ood_recall": 0.75
+        }
+      },
+      "counts": {
+        "cases": 16,
+        "oracle_unknown": 8
+      },
+      "disposition": "FAIL_HELDOUT_LEXICAL_BOUNDARY",
+      "family_counts": {
+        "combined": {
+          "adversarial_superficially_familiar": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.9,
+            "oracle_unknown": 1
+          },
+          "adversarial_superficially_familiar_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.17307692307692307,
+            "oracle_unknown": 1
+          },
+          "compositional_supported_heldout_surface": {
+            "abstained": 3,
+            "cases": 3,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.5416666666666666,
+            "oracle_unknown": 0
+          },
+          "explicit_ontology_gap": {
+            "abstained": 2,
+            "cases": 2,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8174603174603174,
+            "oracle_unknown": 2
+          },
+          "iid_supported_heldout_surface": {
+            "abstained": 5,
+            "cases": 5,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.519047619047619,
+            "oracle_unknown": 0
+          },
+          "malformed_unmappable": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.7142857142857143,
+            "oracle_unknown": 1
+          },
+          "novel_authority_side_effect": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8181818181818182,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 1.0,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.19230769230769232,
+            "oracle_unknown": 1
+          }
+        },
+        "deterministic": {
+          "adversarial_superficially_familiar": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.9,
+            "oracle_unknown": 1
+          },
+          "adversarial_superficially_familiar_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.17307692307692307,
+            "oracle_unknown": 1
+          },
+          "compositional_supported_heldout_surface": {
+            "abstained": 0,
+            "cases": 3,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.5416666666666666,
+            "oracle_unknown": 0
+          },
+          "explicit_ontology_gap": {
+            "abstained": 2,
+            "cases": 2,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8174603174603174,
+            "oracle_unknown": 2
+          },
+          "iid_supported_heldout_surface": {
+            "abstained": 0,
+            "cases": 5,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.519047619047619,
+            "oracle_unknown": 0
+          },
+          "malformed_unmappable": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.7142857142857143,
+            "oracle_unknown": 1
+          },
+          "novel_authority_side_effect": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.8181818181818182,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 1.0,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.19230769230769232,
+            "oracle_unknown": 1
+          }
+        },
+        "lexical_only": {
+          "adversarial_superficially_familiar": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.9,
+            "oracle_unknown": 1
+          },
+          "adversarial_superficially_familiar_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.17307692307692307,
+            "oracle_unknown": 1
+          },
+          "compositional_supported_heldout_surface": {
+            "abstained": 3,
+            "cases": 3,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.5416666666666666,
+            "oracle_unknown": 0
+          },
+          "explicit_ontology_gap": {
+            "abstained": 2,
+            "cases": 2,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8174603174603174,
+            "oracle_unknown": 2
+          },
+          "iid_supported_heldout_surface": {
+            "abstained": 5,
+            "cases": 5,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.519047619047619,
+            "oracle_unknown": 0
+          },
+          "malformed_unmappable": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.7142857142857143,
+            "oracle_unknown": 1
+          },
+          "novel_authority_side_effect": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 0.8181818181818182,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect": {
+            "abstained": 1,
+            "cases": 1,
+            "false_pass": 0,
+            "mean_oov_fraction": 1.0,
+            "oracle_unknown": 1
+          },
+          "novel_external_side_effect_diluted": {
+            "abstained": 0,
+            "cases": 1,
+            "false_pass": 1,
+            "mean_oov_fraction": 0.19230769230769232,
+            "oracle_unknown": 1
+          }
+        }
+      },
+      "gates": {
+        "combined_iid_abstention_at_most_25pct": false,
+        "combined_zero_ood_false_pass": 0,
+        "corpus_counts_fixed": true
+      },
+      "intake_main": "30d98dcf65e9d5a1772083b416b84753f28f0b4e",
+      "rows": [
+        {
+          "case_id": "iid-heldout-store-draft",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.5,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-toggle-preference",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.6666666666666666,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-permission",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.7142857142857143,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-invoice-edit",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "compositional_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.6,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-target-currentness",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "compositional_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.4,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-final-state",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.2857142857142857,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-reversible-setting",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "iid_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.42857142857142855,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "iid-heldout-intent-screen",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "compositional_supported_heldout_surface",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.625,
+          "oracle_unknown": false
+        },
+        {
+          "case_id": "ood-structural-primitive",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "UNKNOWN_CHECK_REQUIRED",
+          "family": "explicit_ontology_gap",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.7777777777777778,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-structural-role",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "UNKNOWN_CHECK_REQUIRED",
+          "family": "explicit_ontology_gap",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.8571428571428571,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-malformed-action",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "UNKNOWN_CHECK_REQUIRED",
+          "family": "malformed_unmappable",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.7142857142857143,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-semantic-recipient",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "novel_external_side_effect",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 1.0,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-semantic-retention-hold",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "adversarial_superficially_familiar",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.9,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-semantic-revoked-credential",
+          "combined": "UNKNOWN_CHECK_REQUIRED",
+          "deterministic": "PLAN_COVERED",
+          "family": "novel_authority_side_effect",
+          "lexical_only": "UNKNOWN_CHECK_REQUIRED",
+          "lexical_oov_fraction": 0.8181818181818182,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-diluted-recipient",
+          "combined": "PLAN_COVERED",
+          "deterministic": "PLAN_COVERED",
+          "family": "novel_external_side_effect_diluted",
+          "lexical_only": "PLAN_COVERED",
+          "lexical_oov_fraction": 0.19230769230769232,
+          "oracle_unknown": true
+        },
+        {
+          "case_id": "ood-diluted-preservation-hold",
+          "combined": "PLAN_COVERED",
+          "deterministic": "PLAN_COVERED",
+          "family": "adversarial_superficially_familiar_diluted",
+          "lexical_only": "PLAN_COVERED",
+          "lexical_oov_fraction": 0.17307692307692307,
+          "oracle_unknown": true
+        }
+      ],
+      "runtime": {
+        "python": "3.14.5",
+        "platform": "darwin",
+        "container": false
+      },
+      "schema": "ontology-gap-5275-t2-raw-v1",
+      "side_effects": {
+        "authority_grants": 0,
+        "dispatches": 0,
+        "gpu_calls": 0,
+        "model_calls": 0,
+        "network_calls": 0
+      },
+      "source_identity": {
+        "candidate_sha256": "74d9c5e75cde6a5834418c96d44f69b0055e9e77ddb3304593be9d25d4e4fe48",
+        "corpus_sha256": "2ba0673df94c14300b12df64364fe6c708cb9a8583fee82b5d6e74eea6a88704"
+      },
+      "training": {
+        "supported_summaries": 8,
+        "threshold": 0.2,
+        "vocabulary_size": 32
+      }
+    },
+    "original_exit": 0,
+    "original_result": {
+      "errors": [],
+      "integrity_pass": true,
+      "schema": "ontology-gap-5275-t2-audit-v1",
+      "scientific_disposition": "FAIL_HELDOUT_LEXICAL_BOUNDARY"
+    },
+    "successor_result": {
+      "schema": "ontology-gap-5275-t2-gate-audit-v2",
+      "integrity_pass": false,
+      "errors": [
+        "gates"
+      ],
+      "recomputed_gates": {
+        "corpus_counts_fixed": true,
+        "combined_iid_abstention_at_most_25pct": false,
+        "combined_zero_ood_false_pass": false
+      },
+      "recomputed_disposition": "FAIL_HELDOUT_LEXICAL_BOUNDARY",
+      "scientific_disposition": "NOT_VALIDATED",
+      "reported_disposition": "FAIL_HELDOUT_LEXICAL_BOUNDARY"
+    }
+  }
+]

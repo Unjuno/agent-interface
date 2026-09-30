@@ -14,6 +14,95 @@ from unittest import mock
 from runtime.cli_v1.api import dispatch, doctor
 
 
+class HostJSONPublicationTests(unittest.TestCase):
+    def test_unsupported_platform_does_not_create_a_slot(self):
+        from runtime.host_v1.file_publication import publish_json
+        with tempfile.TemporaryDirectory() as td, mock.patch('runtime.host_v1.file_publication.sys.platform', 'win32'):
+            with self.assertRaisesRegex(ValueError, 'requires Linux'):
+                publish_json(Path(td) / 'review.json', {'source_sequence': 1})
+            self.assertEqual(list(Path(td).iterdir()), [])
+
+    @unittest.skipUnless(sys.platform == 'linux', 'Linux exclusive publication')
+    def test_slot_is_invisible_until_complete_and_cannot_be_overwritten(self):
+        import threading, os
+        from runtime.host_v1.file_publication import publish_json
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / 'review.json'; ready = threading.Event(); release = threading.Event()
+            value = {'source_sequence': 37, 'reason': 'x' * 1000000}
+            errors = []; original_link = os.link
+            def gated_link(source, destination):
+                self.assertEqual(json.loads(Path(source).read_text()), value)
+                ready.set()
+                if not release.wait(3): raise TimeoutError('test publication gate')
+                return original_link(source, destination)
+            def writer():
+                try: publish_json(path, value)
+                except BaseException as error: errors.append(error)
+            with mock.patch('runtime.host_v1.file_publication.os.link', side_effect=gated_link):
+                thread = threading.Thread(target=writer); thread.start()
+                try:
+                    self.assertTrue(ready.wait(3))
+                    self.assertFalse(path.exists())
+                finally: release.set(); thread.join(3)
+            self.assertFalse(thread.is_alive()); self.assertEqual(errors, [])
+            before = path.read_bytes(); self.assertEqual(json.loads(before), value)
+            with self.assertRaises(FileExistsError): publish_json(path, {'source_sequence': 99})
+            self.assertEqual(path.read_bytes(), before)
+            self.assertEqual([p.name for p in Path(td).iterdir()], ['review.json'])
+
+    @unittest.skipUnless(sys.platform == 'linux', 'Linux exclusive publication')
+    def test_fsync_failures_preserve_ambiguous_committed_slot(self):
+        import os
+        from runtime.host_v1.file_publication import publish_json
+        for failed_call in (1, 2):
+            with self.subTest(failed_call=failed_call), tempfile.TemporaryDirectory() as td:
+                path = Path(td) / 'review.json'; calls = []; original_sync = os.fsync
+                def sync(fd):
+                    calls.append(fd)
+                    if len(calls) == failed_call: raise OSError('injected sync failure')
+                    return original_sync(fd)
+                with mock.patch('runtime.host_v1.file_publication.os.fsync', side_effect=sync):
+                    with self.assertRaisesRegex(OSError, 'injected'): publish_json(path, {'reviewed': True})
+                self.assertEqual(path.exists(), failed_call == 2)
+                if path.exists():
+                    self.assertEqual(json.loads(path.read_bytes()), {'reviewed': True})
+                    with self.assertRaises(FileExistsError): publish_json(path, {'reviewed': False})
+                self.assertFalse(any(p.name.startswith('.publish-') for p in Path(td).iterdir()))
+
+    @unittest.skipUnless(sys.platform == 'linux', 'Linux exclusive publication')
+    def test_invalid_finite_json_is_rejected_before_publication(self):
+        from runtime.host_v1.file_publication import publish_json
+        with tempfile.TemporaryDirectory() as td:
+            with self.assertRaises(ValueError): publish_json(Path(td) / 'review.json', {'x': float('nan')})
+            self.assertEqual(list(Path(td).iterdir()), [])
+
+    @unittest.skipUnless(sys.platform == 'linux', 'Linux exclusive publication')
+    def test_cli_publication_stdin_and_duplicate_refusal_without_input(self):
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / 'review.json'
+            args = [sys.executable, '-m', 'runtime.cli_v1', 'publish-json', '--path', str(path), '--value', '-']
+            first = subprocess.run(args, input=b'{"task_id":"task-1","source_sequence":4}', capture_output=True)
+            self.assertEqual(first.returncode, 0, first.stderr)
+            receipt = json.loads(first.stdout); before = path.read_bytes()
+            self.assertEqual(receipt['sha256'], hashlib.sha256(before).hexdigest())
+            second = subprocess.run(args, input=b'{"task_id":"different"}', capture_output=True)
+            self.assertEqual(second.returncode, 2)
+            failure = json.loads(second.stdout)
+            self.assertTrue(failure['requires_reconciliation']); self.assertFalse(failure['replay_allowed'])
+            self.assertEqual(path.read_bytes(), before)
+
+
+class SummaryArgumentTests(unittest.TestCase):
+    def test_missing_retained_review_options_reject_before_dispatch(self):
+        from runtime.cli_v1.__main__ import main
+        args = ['agent-interface','dispatch','--program','unused.json','--targets','unused-targets.json',
+                '--current-observation-seq','1','--current-binding-revision','1','--detail','summary']
+        with mock.patch('sys.argv',args),mock.patch('sys.stderr',io.StringIO()),mock.patch('runtime.cli_v1.__main__.dispatch') as invoke:
+            with self.assertRaises(SystemExit) as caught:main()
+            self.assertEqual(caught.exception.code,2)
+            invoke.assert_not_called()
+
+
 class FakeSession:
     def __init__(self):
         self.calls = []

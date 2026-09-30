@@ -1,0 +1,39 @@
+{
+  "decision": "STOP_LIVE_CLOCK_NOT_ADVANCING",
+  "formal_issue2447_rows": 0,
+  "construction_import_smoke": "PASS",
+  "passive_clock": {
+    "ASYNC_SPECTATOR_dummy_0.6s": [1, 1],
+    "ASYNC_PLAYER_dummy_1s": [1, 1],
+    "SPECTATOR_dummy_1s": [1, 1],
+    "ASYNC_PLAYER_xvfb_openbox_1s": [3, 3],
+    "ASYNC_SPECTATOR_xvfb_openbox_2s": [3, 3]
+  },
+  "forced_advance_diagnostic": {
+    "mode": "ASYNC_PLAYER",
+    "command": "advance_action(35)",
+    "tic": [1, 54],
+    "interpretation": "engine responsive under explicit advancement only; does not pass passive-clock gate"
+  },
+  "image_id": "sha256:b99a3444e7b2b05d159976d9ba60d9e90f212d47406c4b7aa7773e5042a28713",
+  "dockerfile_sha256": "87f5e9b07ff66d7f55dab7441d5a60e0c559f27d627a311debac2dabc97d023a",
+  "base_image": "python:3.13-slim@sha256:7c61056e61ac89e852de05f3dc6fa51a6dd2181797bceed46aa725dd7cb2cd3b",
+  "runtime": {
+    "os": "Linux 6.6.87.2-microsoft-standard-WSL2",
+    "architecture": "amd64",
+    "python": "3.13.15",
+    "glibc": "2.41",
+    "vizdoom": "1.3.0",
+    "numpy": "2.5.3",
+    "opencv": "4.13.0",
+    "Pillow": "12.3.0",
+    "pygame_ce": "2.5.8",
+    "python_xlib": "0.33"
+  },
+  "wad": {
+    "name": "freedoom2.wad",
+    "bytes": 28787748,
+    "source": "wheel bundled construction fixture; not Issue #2447 source bundle"
+  },
+  "retries": 0
+}

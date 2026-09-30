@@ -1,0 +1,29 @@
+{
+  "schema": "issue4682-environment-v1",
+  "host_capture_commands": [
+    "docker version --format '{{.Server.Version}}'",
+    "docker info --format '{{.OSType}}|{{.Architecture}}'",
+    "docker image inspect sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 --format '{{.Id}}|{{.Os}}|{{.Architecture}}'"
+  ],
+  "expected_runtime": {
+    "docker_engine": "29.8.0",
+    "daemon_platform": "linux/x86_64",
+    "image_id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "image_platform": "linux/amd64",
+    "python": "3.12.14"
+  },
+  "network": "none",
+  "image_pull": "never",
+  "root_filesystem": "read-only",
+  "source_mount": "read-only",
+  "input_mount": "read-only",
+  "output_mount": "fresh writable directory",
+  "cpu_limit": 1,
+  "memory_limit": "512m",
+  "pids_limit": 32,
+  "formal_docker_invocations": 1,
+  "independent_audit_docker_invocations": 1,
+  "predecessor_runner_invocations": 0,
+  "predecessor_auditor_invocations": 0,
+  "github_actions_invocations": 0
+}

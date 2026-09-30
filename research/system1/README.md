@@ -35,6 +35,7 @@ This is a navigation view, not a mandatory runtime pipeline. Individual studies 
 | Online role-adapter update | [needle_lora_3441_online_stream_v1/](../needle_lora_3441_online_stream_v1/) — host-CPU online run; both online and batch misses the 0.90 gate; not container or runtime evidence. |
 | Online update generation fence | [`needle_adaptive_generation_fence_4840_v1/`](needle_adaptive_generation_fence_4840_v1/) — scoped 64-row envelope/oracle pass; no model training or runtime authority. |
 | Role-skill publication boundary | [needle_role_skill_publication_stage1_4986_20260928/](needle_role_skill_publication_stage1_4986_20260928/) — four-reader atomic-publication construction; no model training or skill-quality claim. |
+| OrbStack publication boundary | [needle_cross_process_publication_orbstack_bind_5066_v3_20260928/](needle_cross_process_publication_orbstack_bind_5066_v3_20260928/RESULT.md) — formal allocation -03 scoped PASS on OrbStack (28 atomic, 28 post, 28 unsafe rows; independent raw audit and 11 corruption controls); the separate predecessor pilot STOP remains at [needle_orbstack_publication_boundary_5134_20260930_01/](needle_orbstack_publication_boundary_5134_20260930_01/REPORT.md). |
 | Representation collision / ambiguity | [`map01_representation_collision_v1/`](map01_representation_collision_v1/) |
 
 For lower-level local decision mechanics, route cost, TTC admission, typed evidence, and useful-work-per-frontier-boundary studies, use [`../local_system1/`](../local_system1/).
@@ -92,7 +93,7 @@ Read each child experiment for its allowed decision vocabulary, authority bounda
 
 ## Concurrent Needle online-LoRA/System-1 successor
 
-- [`needle_concurrent_online_lora_4653_v2/RESULT_SUMMARY.md`](needle_concurrent_online_lora_4653_v2/RESULT_SUMMARY.md) — successor to #4631; corrected auditor passed with zero errors, but the fourfold fixed training batch still produced fewer than eight overlapping query intervals in every seed, and one seed had two 60 Hz deadline misses. No COW candidate qualifies.
+- [`needle_concurrent_online_lora_4653_v2/RESULT_SUMMARY.md`](needle_concurrent_online_lora_4653_v2/RESULT_SUMMARY.md) — successor to #4631; historical `HOLD_NO_CONCURRENCY_PRESSURE` and original evidence remain unchanged, with no COW candidate qualified. The retained audit reports zero errors, but [frozen seeds](needle_concurrent_online_lora_4653_v2/FREEZE.json) `99119/99221/99331` differ from [retained audit seeds](needle_concurrent_online_lora_4653_v2/outputs/formal01/AUDIT.json) `88117/88229/88301`, as already acknowledged in [#4769’s preregistration](needle_cow_two_cpu_online_lora_v1/PREREGISTRATION.md). The seed-attribution mismatch remains unresolved.
 
 ## Local Needle training invocation guard
 

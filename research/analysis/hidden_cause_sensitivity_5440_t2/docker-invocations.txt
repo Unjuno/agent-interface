@@ -1,0 +1,20 @@
+Image for every invocation: python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 (linux/amd64)
+Common isolation: --network=none --cpus=1 --memory=256m --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m
+
+Pre-freeze candidate construction tests, 4/4 PASS:
+docker run --rm --network=none --cpus=1 --memory=256m --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m -v <scratch>:/work:ro -w /work <image> python -B -m unittest -v test_construction.py
+
+Frozen candidate, exactly one invocation, exit 0:
+docker run --rm --network=none --cpus=1 --memory=256m --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m -e EXPERIMENT_BASE_SHA=a2469a821f4d27d2ec9a1d5d63ed8b81e57f81c3 -e EXPERIMENT_IMAGE=<image> -e EXPERIMENT_PLATFORM=linux/amd64 -v <scratch>:/work:ro -v <scratch>/output:/out:rw -w /work <image> python -B candidate.py
+
+Auditor v1, exactly one invocation, exit 1; original FAIL output preserved:
+docker run --rm --network=none --cpus=1 --memory=256m --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m -v <scratch>:/work:ro -v <scratch>/output:/out:rw -w /work <image> python -B audit.py
+
+Auditor v2, exactly one invocation; STOP with KeyError before an output file was written:
+docker run --rm --network=none --cpus=1 --memory=256m --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m -v <scratch>:/work:ro -v <scratch>/output:/out:rw -w /work <image> python -B audit_v2.py
+
+Auditor v3 construction tests, 2/2 PASS; did not read candidate raw:
+docker run --rm --network=none --cpus=1 --memory=256m --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m -v <scratch>:/work:ro -w /work <image> python -B -m unittest -v test_audit_v3_construction.py
+
+Auditor v3, exactly one raw-only invocation, exit 0:
+docker run --rm --network=none --cpus=1 --memory=256m --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m -v <scratch>:/work:ro -v <scratch>/output:/out:rw -w /work <image> python -B audit_v3.py

@@ -16,6 +16,7 @@ Agent Interface holds the model fixed and asks whether a better computer interfa
 - Bounded local mechanisms handle high-frequency refinement, verification, and invalidation when they can do so safely.
 - Fresh evidence governs authority; stale, ambiguous, or novel state must yield back to stronger reasoning.
 - Universal computer control remains the fallback floor when optimized routes are unavailable.
+- The project optimizes for solving computer control, not mechanism novelty: existing or standard techniques are preferred when they are the smallest sufficient solution; new mechanisms need a measured residual.
 
 ## System shape
 
@@ -52,7 +53,7 @@ flowchart LR
 | Analysis vs experiment workflow | [Research method](docs/RESEARCH_METHOD.md) |
 | Relationship between evidence, runtime, and release | [Evidence map](docs/EVIDENCE_MAP.md) |
 | Use the current action/image interface | [Current interface guide](runtime/USING_CURRENT_INTERFACE.md) |
-| Public API/CLI/MCP integration and remaining gaps | [Public transport handoff](docs/PUBLIC_TRANSPORT_HANDOFF_2026-09-20.md) |
+| Historical public transport integration snapshot (2026-09-20) | [Public transport handoff](docs/PUBLIC_TRANSPORT_HANDOFF_2026-09-20.md) |
 | Runnable construction preview | [Runtime](runtime/README.md) |
 | User-facing release boundary | [Release contract](release/README.md) |
 

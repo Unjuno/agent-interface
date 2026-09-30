@@ -1,0 +1,228 @@
+{
+  "base_main_sha": "ffb0d43b5f0408011a3f70223da43d4aa3f27fe4",
+  "candidate_sha256": "ec6adc9966d439a247f30ccb50b42f1185f7522393e60f2b65daabaf36e1a680",
+  "claim_count": 16,
+  "container": {
+    "image": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "network": "none",
+    "platform": "linux/amd64"
+  },
+  "input_sha256": "02ba32c8f1a4c8ab3d65e7fa138f459602a22a8ab2224859d9b916315a14f20e",
+  "matched_budget": {
+    "abstention_cap": 4,
+    "fraction": "1/4",
+    "margin_only_abstained_ids": [
+      "pair-01-A",
+      "pair-01-B",
+      "pair-02-A",
+      "pair-02-B"
+    ],
+    "margin_only_residual_unsafe_admissions": 2,
+    "sensitivity_abstained_ids": [
+      "pair-01-B",
+      "pair-02-B",
+      "pair-03-B",
+      "pair-04-B"
+    ],
+    "sensitivity_residual_unsafe_admissions": 0
+  },
+  "nominal_commit_count": 16,
+  "robust_commit_count": 12,
+  "rows": [
+    {
+      "case_id": "pair-01-A",
+      "cause_risks": {
+        "external-mutation": "1/40",
+        "shared-clock": "1/20",
+        "stale-snapshot": "1/40"
+      },
+      "matched_pair": "pair-01",
+      "nominal_margin": "1/5",
+      "status": "ROBUST",
+      "worst_case_margin": "1/10"
+    },
+    {
+      "case_id": "pair-01-B",
+      "cause_risks": {
+        "external-mutation": "3/40",
+        "shared-clock": "3/20",
+        "stale-snapshot": "3/40"
+      },
+      "matched_pair": "pair-01",
+      "nominal_margin": "1/5",
+      "status": "SENSITIVE",
+      "worst_case_margin": "-1/10"
+    },
+    {
+      "case_id": "pair-02-A",
+      "cause_risks": {
+        "external-mutation": "1/20",
+        "shared-clock": "1/10",
+        "stale-snapshot": "1/20"
+      },
+      "matched_pair": "pair-02",
+      "nominal_margin": "2/5",
+      "status": "ROBUST",
+      "worst_case_margin": "1/5"
+    },
+    {
+      "case_id": "pair-02-B",
+      "cause_risks": {
+        "external-mutation": "3/20",
+        "shared-clock": "3/10",
+        "stale-snapshot": "3/20"
+      },
+      "matched_pair": "pair-02",
+      "nominal_margin": "2/5",
+      "status": "SENSITIVE",
+      "worst_case_margin": "-1/5"
+    },
+    {
+      "case_id": "pair-03-A",
+      "cause_risks": {
+        "external-mutation": "1/20",
+        "shared-clock": "1/10",
+        "stale-snapshot": "1/20"
+      },
+      "matched_pair": "pair-03",
+      "nominal_margin": "3/5",
+      "status": "ROBUST",
+      "worst_case_margin": "2/5"
+    },
+    {
+      "case_id": "pair-03-B",
+      "cause_risks": {
+        "external-mutation": "7/40",
+        "shared-clock": "7/20",
+        "stale-snapshot": "7/40"
+      },
+      "matched_pair": "pair-03",
+      "nominal_margin": "3/5",
+      "status": "SENSITIVE",
+      "worst_case_margin": "-1/10"
+    },
+    {
+      "case_id": "pair-04-A",
+      "cause_risks": {
+        "external-mutation": "3/40",
+        "shared-clock": "3/20",
+        "stale-snapshot": "3/40"
+      },
+      "matched_pair": "pair-04",
+      "nominal_margin": "4/5",
+      "status": "ROBUST",
+      "worst_case_margin": "1/2"
+    },
+    {
+      "case_id": "pair-04-B",
+      "cause_risks": {
+        "external-mutation": "9/40",
+        "shared-clock": "9/20",
+        "stale-snapshot": "9/40"
+      },
+      "matched_pair": "pair-04",
+      "nominal_margin": "4/5",
+      "status": "SENSITIVE",
+      "worst_case_margin": "-1/10"
+    },
+    {
+      "case_id": "pair-05-A",
+      "cause_risks": {
+        "external-mutation": "1/40",
+        "shared-clock": "1/20",
+        "stale-snapshot": "1/40"
+      },
+      "matched_pair": "pair-05",
+      "nominal_margin": "2/5",
+      "status": "ROBUST",
+      "worst_case_margin": "3/10"
+    },
+    {
+      "case_id": "pair-05-B",
+      "cause_risks": {
+        "external-mutation": "1/20",
+        "shared-clock": "1/10",
+        "stale-snapshot": "1/20"
+      },
+      "matched_pair": "pair-05",
+      "nominal_margin": "2/5",
+      "status": "ROBUST",
+      "worst_case_margin": "1/5"
+    },
+    {
+      "case_id": "pair-06-A",
+      "cause_risks": {
+        "external-mutation": "1/20",
+        "shared-clock": "1/10",
+        "stale-snapshot": "1/20"
+      },
+      "matched_pair": "pair-06",
+      "nominal_margin": "3/5",
+      "status": "ROBUST",
+      "worst_case_margin": "2/5"
+    },
+    {
+      "case_id": "pair-06-B",
+      "cause_risks": {
+        "external-mutation": "1/10",
+        "shared-clock": "1/5",
+        "stale-snapshot": "1/10"
+      },
+      "matched_pair": "pair-06",
+      "nominal_margin": "3/5",
+      "status": "ROBUST",
+      "worst_case_margin": "1/5"
+    },
+    {
+      "case_id": "pair-07-A",
+      "cause_risks": {
+        "external-mutation": "1/10",
+        "shared-clock": "1/5",
+        "stale-snapshot": "1/10"
+      },
+      "matched_pair": "pair-07",
+      "nominal_margin": "4/5",
+      "status": "ROBUST",
+      "worst_case_margin": "2/5"
+    },
+    {
+      "case_id": "pair-07-B",
+      "cause_risks": {
+        "external-mutation": "3/20",
+        "shared-clock": "3/10",
+        "stale-snapshot": "3/20"
+      },
+      "matched_pair": "pair-07",
+      "nominal_margin": "4/5",
+      "status": "ROBUST",
+      "worst_case_margin": "1/5"
+    },
+    {
+      "case_id": "pair-08-A",
+      "cause_risks": {
+        "external-mutation": "3/40",
+        "shared-clock": "3/20",
+        "stale-snapshot": "3/40"
+      },
+      "matched_pair": "pair-08",
+      "nominal_margin": "9/10",
+      "status": "ROBUST",
+      "worst_case_margin": "3/5"
+    },
+    {
+      "case_id": "pair-08-B",
+      "cause_risks": {
+        "external-mutation": "1/8",
+        "shared-clock": "1/4",
+        "stale-snapshot": "1/8"
+      },
+      "matched_pair": "pair-08",
+      "nominal_margin": "9/10",
+      "status": "ROBUST",
+      "worst_case_margin": "2/5"
+    }
+  ],
+  "schema": "hidden-cause-sensitivity-t1-raw-v1",
+  "sensitivity_abstention_count": 4,
+  "sensitivity_abstention_rate": "1/4"
+}

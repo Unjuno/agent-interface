@@ -1,5 +1,15 @@
 # Public transport integration handoff — 2026-09-20
 
+> **Historical snapshot; navigation checked 2026-09-30.** For current supported
+> entry points and lifecycle options, use [Using the current interface](../runtime/USING_CURRENT_INTERFACE.md).
+> The dated account below is retained unchanged, including source-era descriptions
+> of fixed startup targets, one-shot lifecycle and Draft PR status. Both
+> [#3532](https://github.com/Unjuno/agent-interface/pull/3532) and
+> [#3549](https://github.com/Unjuno/agent-interface/pull/3549) have since merged;
+> their original stale-image observations and measurement limits remain evidence.
+> Merging them does not establish useful-feedback latency, token savings,
+> a transport comparison or release readiness.
+
 Implementation snapshot: main `0e5df8ae27dd9e2b9e20d84d3dff8c15a7710e9b`.
 This supplements the [earlier integration snapshot](INTEGRATION_STATUS_2026-09-20.md).
 It records usable integration surfaces and their limits, not a performance win

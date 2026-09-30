@@ -281,6 +281,22 @@ python -m runtime.cli_v1 review --report dispatch-result.json --run-directory /a
 ```
 
 
+`review --no-image` returns the receipt, image reference and outcome without the
+Base64 image payload. File and stdin review still validate the selected image's
+path, digest and PNG signature. Missing or altered images remain `needs_review`
+with exit code 2; omitting the image is not evidence that the application has
+updated. The default review includes the image. This is a read-only option and
+never captures a newer frame or sends input.
+
+CLI summaries include `expected_report_sha256` in their read-only retrieval
+arguments. Pass it as `review --expected-report-sha256 <digest>` to require the
+exact original report bytes. This also works with `--report -`. A changed report
+or malformed expected digest returns `invalid_receipt` with exit code 2 before
+loading its referenced image. Whitespace changes count as different bytes.
+Without the option, review retains its existing behavior. This check establishes
+source identity relative to the supplied digest; it does not authenticate the
+producer, prove task success, or authorize replay.
+
 To pass a complete response without creating a report file, use `review --report -`.
 Python callers can pass the original bytes to `runtime.cli_v1.review.review_bytes`.
 The source digest covers the received bytes, not reserialized JSON. Since there
@@ -571,3 +587,37 @@ The native bridge uses this API and retains a public observation report before
 its existing binding/image checks. A returned public capture is not an accepted
 bridge source: if binding changed, the bridge still refuses to advance its source.
 No new readiness detection, automatic capture retry or lease renewal is added.
+
+### Retained CLI dispatch summary
+
+For a CLI dispatch, opt into `--detail summary --review --run-directory <fresh-directory> --compact --report-refs`.
+The existing public success projection keeps execution outcome, observations,
+release records and image data. Complete raw `report.json` is saved first; its
+exact byte length/hash must match the presented source before projection.
+The returned `presentation.retrieve` describes a read-only `review --no-image` command
+for that report. Full is the default and the review command's normal format.
+Missing/changed raw reports, report-persistence failures, action failures and
+unsupported records stay full; no input is replayed. Retention status remains
+outside the partial receipt. Summaries are not reversible receipts themselves.
+The existing MCP projection gates are shared. Smaller serialized metadata is
+not a measurement of model input tokens, cost or faster useful feedback.
+
+
+### Publishing a caller-authored host decision on Linux
+
+For a file-spooled host that waits for JSON at a known path, publish the complete
+value rather than writing directly to that visible filename:
+
+```sh
+python /absolute/runtime.pyz publish-json --path /absolute/new-review.json --value -
+```
+
+Supply the authored JSON on stdin (or a file via `--value`). The destination is
+exclusive and its parent must already exist. This is filesystem publication,
+not computer input or review validation. The receiving protocol still validates
+source identity and the decision. `publication_failed`/exit 2 requires
+reconciliation because a failure after linking may leave a complete occupied
+slot; never overwrite it or treat an error as permission to repeat an action.
+See [host publication](../host_v1/README.md) for its Linux-only scope.
+
+[Retained primary six-task use and publication failure/fix](../results/atomic-host-publication-01/README.md) records the incomplete direct comparison and the no-GUI publication checks. The whole integration spine remains unvalidated.

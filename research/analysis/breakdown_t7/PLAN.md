@@ -1,0 +1,3 @@
+# T7 plan — Issue #5444
+
+Pre-registered before the single formal execution in Issue comment `5910699630`. Construct the full 320-state Cartesian scenario family (two action classes, two ground-truth outcomes, five compensation costs, sixteen four-vote profiles) with an UNKNOWN authority receipt. Compare fail-closed, UNKNOWN-as-zero, and every compensation threshold from 0 through 4. Do not choose a threshold. Freeze sources, run exact container enumeration once, independently reproduce with rational arithmetic, exercise four corruption controls, preserve raw hashes, and report all finite-grid coverage and limits.

@@ -43,9 +43,9 @@ class X11Backend:
         self.emissions = 0
         self.capture_artifacts = None
 
-    def configure_capture_artifacts(self, directory) -> None:
+    def configure_capture_artifacts(self, directory, *, retain_rgb=False) -> None:
         from .capture_artifacts import CaptureArtifacts
-        self.capture_artifacts = CaptureArtifacts(directory)
+        self.capture_artifacts = CaptureArtifacts(directory, retain_rgb=retain_rgb)
 
     def observe_read_only(self, target, frame, region):
         # Unlike a program's focus/observe sequence this does not change focus,
@@ -197,7 +197,9 @@ class X11Backend:
             keysym = XK.string_to_keysym(key.lower())
         code = self.d.keysym_to_keycode(keysym)
         if not code:
-            suggestions = {"RIGHT": "Right", "LEFT": "Left", "UP": "Up", "DOWN": "Down"}
+            suggestions = {"RIGHT": "Right", "LEFT": "Left", "UP": "Up", "DOWN": "Down",
+                           "HOME": "Home", "END": "End", "BACKSPACE": "BackSpace",
+                           "DELETE": "Delete", "INSERT": "Insert"}
             hint = f"; X11 keysym names are case-sensitive, use {suggestions[key]}" if key in suggestions else ""
             raise X11BackendError(f"unmapped key {key}{hint}")
         return code
@@ -245,7 +247,7 @@ class X11Backend:
                     self._activation_target(op['target'])
                 focused = True
             elif kind in {"pointer_move", "observe"} and not focused:
-                raise X11BackendError(f"{kind} requires focused target")
+                raise X11BackendError(f"{kind} requires focused target; put focus or activate before this operation in the same program; prior dispatch focus is not inherited")
             elif kind == "verify":
                 raise X11BackendError("verify predicates are not implemented by the X11 backend; observe and explicitly review application state")
             elif kind == "text":
@@ -304,7 +306,12 @@ class X11Backend:
             self.emissions += 2
         self.d.sync()
 
+    def take_capture_rgb(self, artifact):
+        return self.capture_artifacts.take_rgb(artifact)
+
     def capture(self, target: str, frame: str, x: int, y: int, w: int, h: int) -> dict[str, Any]:
+        if self.capture_artifacts is not None:
+            self.capture_artifacts.discard_rgb()
         win = self._target(target)
         if frame == "window_client":
             source, sx, sy = win, x, y

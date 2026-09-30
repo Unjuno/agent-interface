@@ -54,6 +54,11 @@ Prefer the narrowest existing namespace. The diagram is a placement guide; retai
 
 Use analytical work to eliminate questions that are already decidable from explicit assumptions; do not treat it as measurement of a real backend/model unless the retained evidence actually contains those endpoints.
 
+- [`analysis/typed_resumption_packet_5404_t0_v1/REPORT.md`](analysis/typed_resumption_packet_5404_t0_v1/REPORT.md) — Issue #5404 OrbStack T0: 50 interruption/recovery scenarios, scoped deterministic PASS; no live interruption or runtime claim.
+- [`analysis/active_automata_learning_5385_t0_v1/REPORT.md`](analysis/active_automata_learning_5385_t0_v1/REPORT.md) — Issue #5385 OrbStack T0: four-state bounded active learner PASS against 2,801 finite words; no live-interface or unbounded-equivalence claim.
+- [`analysis/action_class_error_budget_5424_t2_v1/REPORT.md`](analysis/action_class_error_budget_5424_t2_v1/REPORT.md) — Issue #5424 OrbStack T2: fixed-corpus typed burn-rate budget reduced post-signal primary severe exposures, with correlated-fallback completion tradeoff and preserved audit-v1 FAIL.
+- [`analysis/adaptive_privacy_filter_5420_t1_v1/REPORT.md`](analysis/adaptive_privacy_filter_5420_t1_v1/REPORT.md) — Issue #5420 OrbStack T1: adaptive ε filter enforces the declared bound for two synthetic randomized-response channels; no GUI privacy or DP claim.
+
 ## Workspace map
 
 The top level is intentionally evidence-preserving. The categories below are navigation aids; they do not change the status of any experiment.
@@ -116,10 +121,14 @@ For new work, prefer the narrowest existing category below rather than adding an
 - `receiver_*`, `external_effect_*`, `outbox_*`, `staged_*`, and `exact_runtime_*` directories — effect/commit/recovery semantics.
 - `git_*` directories — Git/reference concurrency and atomicity experiments.
 - [`coordination/`](coordination/) and [`orchestration/`](orchestration/) — retained coordination/orchestration evidence.
+- [Issue #5346 T1](coordination/stigmergy_5346_t1_successor/REPORT.md) — one-shot stigmergy successor stopped after post-run review found the crash lease released at duration 2 instead of frozen TTL 3; do not interpret its apparent policy metrics.
+- [Issue #5346 T2](coordination/stigmergy_5346_t2_successor/REPORT.md) — expanded TTL-boundary successor; scoped synthetic tradeoff only, not a live multi-agent/interface validation.
 
 ### Evaluation and research governance
 
 - [`benchmark_discovery/`](benchmark_discovery/) — benchmark/coverage discovery.
+- [`verification/ontology_gap_5275_t1_v1/REPORT.md`](verification/ontology_gap_5275_t1_v1/REPORT.md) — Issue #5275 T1 lexical novelty boundary probe; scoped synthetic result with training/evaluation overlap disclosed, no semantic-generalization claim.
+- [`verification/ontology_gap_5275_t2_v1/REPORT.md`](verification/ontology_gap_5275_t2_v1/REPORT.md) — Issue #5275 T2 held-out surface successor: FAIL, lexical-only abstains on all supported held-out cases and known-vocabulary dilution hides two semantic OOD cases.
 - [`evolution/`](evolution/) — convergence, freeze criteria, evolution ledger, and evaluation contracts.
 - [`conditional_optimization/`](conditional_optimization/) and [`optimization_revisits/`](optimization_revisits/) — conditional reuse and revisit work.
 - [`retention/`](retention/) — retained-evidence utilities/records where applicable.
@@ -176,3 +185,14 @@ A directory existing here does **not** mean its mechanism is promoted. Negative 
 - [`needle_lora_3441_rank4_online_multiseed_v1/`](needle_lora_3441_rank4_online_multiseed_v1/) — Issue #3790 frozen CPU rank-capacity study; its single formal attempt stopped before held-out metrics, documented in `STOP_RUN.json`.
 - [`needle_lora_3441_rank4_online_multiseed_gpu_v1/`](needle_lora_3441_rank4_online_multiseed_gpu_v1/) — Issues #3807/#3819 rank-capacity GPU raw result; final rank-4 online accuracy FAIL is preserved, with the missing learning-curve HOLD noted in #3822.
 - [`needle_lora_3441_pilot_04d_multiskill_400base/`](needle_lora_3441_pilot_04d_multiskill_400base/) — retained direct-root Needle multi-skill pilot evidence; use its own report for exact scientific disposition and scope.
+
+### Issue #5236 X11 keymap STOP evidence
+
+- [`x11_midprogram_keymap_5236_formal02_20260930/`](x11_midprogram_keymap_5236_formal02_20260930/) — Formal02 STOP: child import path prevented the hypothesis test.
+- [`x11_midprogram_keymap_5236_formal03_20260930/`](x11_midprogram_keymap_5236_formal03_20260930/) — Formal03 STOP: missing Tk runtime library prevented fixture startup.
+- [`x11_midprogram_keymap_5236_formal04_20260930/`](x11_midprogram_keymap_5236_formal04_20260930/) — Formal04 STOP: focused root did not receive fixture key input/effects.
+- [`x11_midprogram_keymap_5236_formal05_20260930/`](x11_midprogram_keymap_5236_formal05_20260930/) — Formal05 STOP: click/input reached fixture but completed effects were missing; see immutable STOP record.
+- [`x11_midprogram_keymap_5236_formal06_20261001/`](x11_midprogram_keymap_5236_formal06_20261001/) — Formal06 `STOP_PROTOCOL_DEVIATION`: raw predates freeze; auditor mismatch is diagnostic only. See `RESULT_DISPOSITION.md`.
+- [`x11_midprogram_keymap_docker_diagnostic_20260930/`](x11_midprogram_keymap_docker_diagnostic_20260930/) — Nonformal Docker focus-versus-click diagnostic; not evidence for the formal hypothesis.
+
+- [`aoi_43_t0/`](aoi_43_t0/) — #43 retained toy construction; [accounting-defect/HOLD correction](aoi_43_t0/README.md): identical queue policies and incomparable drop counters; no demonstrated critical-retention benefit.

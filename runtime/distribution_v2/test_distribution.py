@@ -13,6 +13,30 @@ from runtime.distribution_v2.build import FIXED_TIME, GENERATED, SOURCE_FILES, S
 
 
 class PortableDistributionTests(unittest.TestCase):
+    def test_optional_host_bundle_uses_exact_committed_files_and_refuses_conflict(self):
+        import hashlib
+        from runtime.distribution_v2.build import HOST_SOURCE_FILES
+        root = Path(__file__).resolve().parents[2]
+        revision = subprocess.check_output(['git', '-C', str(root), 'rev-parse', 'HEAD'], text=True).strip()
+        with tempfile.TemporaryDirectory() as td:
+            td = Path(td)
+            plain = build(root, td/'plain.pyz', td/'plain.json', td/'plain.sum')
+            bundled = build(root, td/'bundle.pyz', td/'bundle.json', td/'bundle.sum', host_directory=td/'host')
+            self.assertEqual((td/'plain.pyz').read_bytes(), (td/'bundle.pyz').read_bytes())
+            self.assertNotIn('host_bundle', plain)
+            meta = json.loads((td/'host/HOST_MANIFEST.json').read_bytes())
+            self.assertEqual(meta['source_revision'], revision)
+            for rel in HOST_SOURCE_FILES:
+                expected = subprocess.check_output(['git', '-C', str(root), 'show', f'{revision}:{rel}'])
+                self.assertEqual((td/'host'/Path(rel).name).read_bytes(), expected)
+            for line in (td/'host/SHA256SUMS').read_text().splitlines():
+                digest, name = line.split('  ', 1)
+                self.assertEqual(hashlib.sha256((td/'host'/name).read_bytes()).hexdigest(), digest)
+            before = {p: p.read_bytes() for p in td.rglob('*') if p.is_file()}
+            with self.assertRaises(FileExistsError):
+                build(root, td/'bundle.pyz', td/'bundle.json', td/'bundle.sum', host_directory=td/'host')
+            self.assertEqual({p: p.read_bytes() for p in td.rglob('*') if p.is_file()}, before)
+
     def test_guarded_method_available_without_optional_dependencies(self):
         root = Path(__file__).resolve().parents[2]
         with tempfile.TemporaryDirectory() as td:
@@ -83,6 +107,12 @@ print('archive method passed without optional dependencies')
             self.assertEqual(mcp.returncode, 2)
             self.assertIn('optional dependency mcp==1.30.0', mcp.stderr)
             self.assertEqual(mcp.stdout, '')
+            relay = subprocess.run([sys.executable, '-S', str(out), 'relay', '--help'],
+                                   cwd=td, capture_output=True, text=True)
+            self.assertEqual(relay.returncode, 2)
+            self.assertIn('optional dependency mcp==1.30.0', relay.stderr)
+            self.assertEqual(relay.stdout, '')
+
 
     def test_build_pins_source_even_when_head_moves_between_files(self):
         from runtime.distribution_v2 import build as builder
