@@ -1,0 +1,56 @@
+{
+  "allocation": "5156-JOINED-RELEASE-SERIALIZER-T0-20261001-01",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/5156",
+  "source_main": "4808f1ec2e45f99bd711e27be5cce4bf476c3c8e",
+  "retained_failure": {
+    "allocation": "MAP01-OWNER-KEYUP-BRACKET-5156-20260930-04",
+    "merged_source_main": "716f8864948023abb3f70f60a5053c66ec4c2737",
+    "runner_path": "research/live_control/owner_keyup_formal_x11_5156_20260930_04/run_formal_x11.py",
+    "runner_git_blob": "a83beffe3c2e0e432862bcdda100f9762022590d",
+    "runner_line": 156,
+    "raw_path": "research/live_control/owner_keyup_formal_x11_5156_20260930_04/results/allocation-04-fail/raw.jsonl",
+    "raw_git_blob": "c11d740f5f37dc538490c235b117013067a52a36",
+    "stderr_path": "research/live_control/owner_keyup_formal_x11_5156_20260930_04/results/allocation-04-fail/runner.stderr.txt",
+    "stderr_git_blob": "3473226a0bf77c26a0d806817e6a697e6477e922",
+    "failure": "TypeError: dict() got multiple values for keyword argument 'event'",
+    "immutable_predecessor": true
+  },
+  "hypothesis": "A local serializer that explicitly preserves the nested owner event as owner_event and writes event=joined_release will emit a complete, identity-preserving row without changing X11 ownership, key-release, admission, cancellation, or authority behavior.",
+  "test": {
+    "population": "Three synthetic explicit-release rows: one single-key release and two ordered releases in a two-key case.",
+    "candidate_invocations": 1,
+    "independent_raw_audit_invocations": 1,
+    "retry_limit": 0,
+    "commands": [
+      "python candidate.py inputs.json results/raw.jsonl",
+      "python audit.py inputs.json results/raw.jsonl"
+    ],
+    "gate": "PASS_SERIALIZER_CONSTRUCTION_ONLY only if all three rows preserve the complete owner and caller fields, nested event provenance, owner/intent identity, ordered caller/request/XSync brackets, timing-valid and non-authority fields; and the separate raw-only auditor accepts pristine raw while rejecting all frozen mutations."
+  },
+  "preflight": {
+    "host": "Windows x64",
+    "python": "CPython 3.12.10",
+    "focused_tests_before_freeze": "5/5 PASS; includes 8 audit corruption cases rejected",
+    "py_compile_before_freeze": "PASS"
+  },
+  "container_policy": {
+    "docker_desktop": "available as desktop-linux, Docker 28.5.1, linux/amd64",
+    "formal_orb": "not authorized for this T0",
+    "reason": "The current #5085 queue has an active/competing bounded CPU container reservation and no exclusive assignment to this allocation. No container will be launched from an idle inventory snapshot.",
+    "candidate_is_host_only": true
+  },
+  "limits": [
+    "This is a synthetic serializer construction experiment, not a re-execution or audit of Allocation 04.",
+    "It does not validate Xlib, Xvfb, a real owner, release timing, physical key state, input authority, GUI, MAP01, task effect, model, GPU, or network behavior.",
+    "Allocation 04 raw.jsonl remains incomplete and its required formal auditor was not run; this T0 does not repair or relabel it.",
+    "A future X11 formal run requires a fresh exact coordinator allocation after this serializer is integrated and source/image/platform/path checks are repeated."
+  ],
+  "sources_sha256": {
+    "serialize_release.py": "8dcf54ce4dfed1493182e7dffe12be63b4b9ef969964e088eebf32f8d22a10ea",
+    "candidate.py": "1d4507570590f664f151546cbbb0d07f0918e7e3da6528875a8d881f27335d33",
+    "audit.py": "93978308c1486290501173037a222d00e5ff7de50a1865ed50e13e7e4d2973c5",
+    "test_serializer.py": "1ccbe3e4770095af0eceec9bb407bf3709acd8136df221155ca7a544fe780ecf",
+    "test_audit.py": "49af73469cbe462fa6f1af98df996bdcbe7e3158a9ae2bf7daf6ad75a7a398f2",
+    "inputs.json": "a924aeece02e4554244daf52e61d2beffd975ea353d4c165763ed3c4c6e71c52"
+  }
+}
