@@ -15,7 +15,7 @@ jobs:
     timeout-minutes: 5
     container:
       image: python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f
-      options: --cpus=1 --memory=512m --pids-limit=64 --cap-drop=ALL --security-opt=no-new-privileges
+      options: --cpus=1 --memory=512m --pids-limit=64
     steps:
       - uses: actions/checkout@v4
         with:
@@ -38,20 +38,20 @@ jobs:
       - name: Record execution environment
         if: steps.mode.outputs.execute == 'true'
         run: |
-          mkdir -p research/analysis/mixed_criticality_temporal_feasibility_5557_t15_v1/results/formal-01
-          python -c 'import json,platform,os;print(json.dumps({"python":platform.python_version(),"platform":platform.platform(),"runner_os":os.getenv("RUNNER_OS"),"image":"python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f","formal_runner":"single subsequent candidate step and single subsequent raw-only audit step"},sort_keys=True))' > research/analysis/mixed_criticality_temporal_feasibility_5557_t15_v1/results/formal-01/environment.json
+          mkdir -p research/analysis/mixed_criticality_temporal_feasibility_5557_t15_v1/results/formal-02
+          python -c 'import json,platform,os;print(json.dumps({"python":platform.python_version(),"platform":platform.platform(),"runner_os":os.getenv("RUNNER_OS"),"image":"python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f","formal_runner":"single subsequent candidate step and single subsequent raw-only audit step"},sort_keys=True))' > research/analysis/mixed_criticality_temporal_feasibility_5557_t15_v1/results/formal-02/environment.json
       - name: One formal candidate invocation
         if: steps.mode.outputs.execute == 'true'
         working-directory: research/analysis/mixed_criticality_temporal_feasibility_5557_t15_v1
-        run: python -B experiment.py --output results/formal-01/raw.jsonl
+        run: python -B experiment.py --output results/formal-02/raw.jsonl
       - name: One independent raw-only audit invocation
         if: steps.mode.outputs.execute == 'true'
         working-directory: research/analysis/mixed_criticality_temporal_feasibility_5557_t15_v1
-        run: python -B audit.py results/formal-01/raw.jsonl --output results/formal-01/AUDIT.json
+        run: python -B audit.py results/formal-02/raw.jsonl --output results/formal-02/AUDIT.json
       - name: Upload exact raw outputs
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: issue-5557-t15-formal-01-${{ github.run_id }}
+          name: issue-5557-t15-formal-02-${{ github.run_id }}
           path: research/analysis/mixed_criticality_temporal_feasibility_5557_t15_v1/results/
           if-no-files-found: warn

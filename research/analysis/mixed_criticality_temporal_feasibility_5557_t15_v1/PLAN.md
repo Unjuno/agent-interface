@@ -4,7 +4,7 @@
 
 This is a distinct finite experiment after T0–T14. Earlier work covered aggregate resource minima, explicit UNSAT classification, per-class and dependency-closure diagnosis, and freshness validity. T15 tests a temporal collision hidden by horizon-wide total capacity. No earlier allocation or raw result is edited or reused.
 
-Issue preregistration comments: #5918821974 (H/T/D/C/U) and #5918873465 (exact workload clarification). Frozen source main: `728d30cb2bf4e3b0a183a929258064d3ba823404`. Candidate formal invocations: 0; formal audit invocations: 0 at freeze.
+Issue preregistration comments: #5918821974 (H/T/D/C/U), #5918873465 (exact workload clarification), and #5919139236 (fresh T15-02 allocation and sole infrastructure correction). Frozen source main: `728d30cb2bf4e3b0a183a929258064d3ba823404`. T15-01 (run 36772395836) stopped before checkout completed: candidate formal invocations 0; formal audit invocations 0. That immutable allocation is not rerun or edited. T15-02 is a fresh single allocation.
 
 ## Frozen design
 
@@ -28,7 +28,7 @@ Issue preregistration comments: #5918821974 (H/T/D/C/U) and #5918873465 (exact w
 
 ## Exact execution protocol
 
-Workflow: `.github/workflows/issue-5557-temporal-t15.yml`. Candidate command: `python -B experiment.py --output results/formal-01/raw.jsonl`. Audit command: `python -B audit.py results/formal-01/raw.jsonl --output results/formal-01/AUDIT.json`. Candidate and audit each run once, sequentially, only when the branch head does not carry the `[t15-results-recorded]` marker. Results are uploaded as Actions artifact; after download, their bytes are committed unchanged. No Docker daemon on the workstation is used.
+Workflow: `.github/workflows/issue-5557-temporal-t15.yml`. Candidate command: `python -B experiment.py --output results/formal-02/raw.jsonl`. Audit command: `python -B audit.py results/formal-02/raw.jsonl --output results/formal-02/AUDIT.json`. Candidate and audit each run once, sequentially, only when the branch head does not carry the `[t15-results-recorded]` marker. Results are uploaded as Actions artifact; after download, their bytes are committed unchanged. T15-01 showed runner EACCES with `--cap-drop=ALL` and `--security-opt=no-new-privileges`; T15-02 removes only those two options, keeping the digest-pinned image and CPU/memory/PID bounds. No Docker daemon on the workstation is used.
 
 ## Terminal scope
 
