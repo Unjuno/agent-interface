@@ -1,0 +1,27 @@
+{
+  "schema": "w2-lease-authority-freeze-v4",
+  "main_sha": "a78dfcfcc0ffdd1864abd9170087e835b5467f91",
+  "previous_candidate": "v3 at PR #5142; preserved byte-for-byte and not corrected in place",
+  "fixture_sha256": "6a693f06b1b4be15a8da35ec3aaf806d7fb3601091c8ef638c516069d1b4e95f",
+  "source_blob_ids_reconfirmed_at_main_a78dfcfcc0ffdd1864abd9170087e835b5467f91": {
+    "verify_contract.py": "d8f4221811b160e5714d2d6e4154c82af94d633e",
+    "audit_contract.py": "1942546e60ad7e6cb56b9a383830033db14d0397",
+    "event-schema.json": "ebc424d2df631aa74c6d9aee4699c595a27ed589",
+    "trace-cases.json": "0a49a00567c25766495cd332be50f6c2946781f7"
+  },
+  "latest_source_revalidation_main_sha": "89f1784d060c9897f34b51cba5af1c4cdc96d54f",
+  "source_currentness_note": "All five W2 source blobs were re-fetched directly from main after it advanced to 89f1784; all five blob IDs remain identical to the frozen source snapshot.",
+  "local_source_sha256": {
+    "lease_authority_candidate_v4.py": "476532287fa8b8c62ef31b2126715f3dc5ef9467b0852db0377a1585b37ad6f7",
+    "lease_authority_oracle_v4.py": "0f29146444cc9891cce107944fc87ac9c7a508d7b8f754617d589eedc007f2df",
+    "test_lease_authority_v4.py": "b487b7cdbb6ebB56eeFC6aeea6f842cba8fea2e807c039f7c18d55bf80aea2c5",
+    "exhaustive_lease_authority_v4.py": "41a2e191152a1c336160344106b0178e676b39f3b0d99f506b61fc91f1ce8125"
+  },
+  "commands": [
+    "$env:W2_TRACE_FIXTURE=(Resolve-Path ..\\o2-w2-independent-audit-20260928\\trace-cases.json).Path; python -m unittest -v test_lease_authority_v4.py test_lease_authority_v3.py test_binding.py test_binding_v2.py test_binding_gate_cli.py test_close_order_cli.py",
+    "python exhaustive_lease_authority_v4.py"
+  ],
+  "scope": "Python 3.12.10, Windows host CPU; desktop-linux context observed. No container was started. At experiment time #5133 -04 held the serialized lease; it later returned. Current coordination prioritizes #5134, so #5127 is deferred and holds no lease.",
+  "finite_open_states": ["LEASE_OPEN event absent", "21 bounded intervals", "unknown timestamp", "invalid timestamp"],
+  "decision_rule": "Expected decisions are computed by an explicit lease-interval rule independently of candidate and oracle implementations. Missing LEASE_OPEN holds; unknown/invalid opening time holds; for a bounded open, edge_hi < open_lo rejects and open_hi >= edge_lo holds; otherwise proceed. Close: foreign-lease close ignored; same-lease unresolved actuation or unknown time holds; close_hi < edge_lo rejects; edge_hi >= close_lo holds; otherwise authorized. PROGRAM_TERMINAL is varied but never substituted for LEASE_CLOSE."
+}
