@@ -159,9 +159,13 @@ class MCPSessionOwner:
                     observation = {'status': 'observation_failed', 'error': repr(error),
                                    'input_dispatched': False, 'side_effect_authority': False}
                 report = dict(report, observation_report=observation)
+        recovery_note = (
+            'Input recovery is still required. The release attempt did not verify neutrality. '
+            'Do not send a new program or replay the previous one. '
+            if report.get('recovery_required') is True else '')
         return dict(report, binding_revision=self.binding_revision,
                     authority_granted=False,
-                    note='Only input neutrality was checked. Prior task effects remain unknown; '
+                    note=recovery_note + 'Only input neutrality was checked. Prior task effects remain unknown; '
                          'Review the returned image, or observe separately if no usable image '
                          'was returned, before a new program. Capture does not acknowledge redraw. '
                          'Use the returned binding revision; no lease/source is issued.')
