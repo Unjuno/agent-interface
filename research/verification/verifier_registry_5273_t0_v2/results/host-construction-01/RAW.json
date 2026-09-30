@@ -1,0 +1,124 @@
+{
+  "allocation": "verifier-registry-5273-t0-v2-20260930-01",
+  "base_commit": "c12e6079f82d1604a9f9a08445a314e4d59d8846",
+  "cases_sha256": "f50bc843ac7230f47a2b243e4290726f9c712f6c8c4d223d4ef15472cf1f9d40",
+  "decisions": [
+    {
+      "authority": "none",
+      "check_id": "c1",
+      "cost_basis": "declared_estimate_not_measurement",
+      "dispatch_count": 0,
+      "estimated_cost_ms": 12,
+      "reasons": [],
+      "status": "COMPATIBLE"
+    },
+    {
+      "authority": "none",
+      "check_id": "c2",
+      "cost_basis": "declared_estimate_not_measurement",
+      "dispatch_count": 0,
+      "estimated_cost_ms": 12,
+      "reasons": [
+        "unsupported_primitive",
+        "wrong_evidence_role"
+      ],
+      "status": "REJECTED"
+    },
+    {
+      "authority": "none",
+      "check_id": "c3",
+      "cost_basis": "declared_estimate_not_measurement",
+      "dispatch_count": 0,
+      "estimated_cost_ms": 12,
+      "reasons": [
+        "wrong_evidence_role"
+      ],
+      "status": "REJECTED"
+    },
+    {
+      "authority": "none",
+      "check_id": "c4",
+      "cost_basis": "declared_estimate_not_measurement",
+      "dispatch_count": 0,
+      "estimated_cost_ms": 12,
+      "reasons": [
+        "wrong_output_role"
+      ],
+      "status": "REJECTED"
+    },
+    {
+      "authority": "none",
+      "check_id": "c5",
+      "cost_basis": "declared_estimate_not_measurement",
+      "dispatch_count": 0,
+      "estimated_cost_ms": 12,
+      "reasons": [
+        "stale_version"
+      ],
+      "status": "REJECTED"
+    },
+    {
+      "authority": "none",
+      "check_id": "c6",
+      "cost_basis": "declared_estimate_not_measurement",
+      "dispatch_count": 0,
+      "estimated_cost_ms": null,
+      "reasons": [
+        "verifier_unknown"
+      ],
+      "status": "UNAVAILABLE"
+    },
+    {
+      "authority": "none",
+      "check_id": "c7",
+      "cost_basis": "declared_estimate_not_measurement",
+      "dispatch_count": 0,
+      "estimated_cost_ms": 120,
+      "reasons": [
+        "resource_unavailable",
+        "latency_unqualified"
+      ],
+      "status": "UNAVAILABLE"
+    },
+    {
+      "authority": "none",
+      "check_id": "c8",
+      "cost_basis": "declared_estimate_not_measurement",
+      "dispatch_count": 0,
+      "estimated_cost_ms": 80,
+      "reasons": [
+        "budget_exceeded"
+      ],
+      "status": "REJECTED"
+    },
+    {
+      "authority": "none",
+      "check_id": "c9",
+      "cost_basis": "declared_estimate_not_measurement",
+      "dispatch_count": 0,
+      "estimated_cost_ms": 900,
+      "reasons": [
+        "stale_version",
+        "side_effect_prohibited",
+        "resource_unavailable",
+        "latency_unqualified"
+      ],
+      "status": "REJECTED"
+    },
+    {
+      "authority": "none",
+      "check_id": "c10",
+      "cost_basis": "declared_estimate_not_measurement",
+      "dispatch_count": 0,
+      "estimated_cost_ms": 12,
+      "reasons": [
+        "deadline_infeasible"
+      ],
+      "status": "REJECTED"
+    }
+  ],
+  "freeze_sha256": "8be490ec36eed7ceccf4c3884bd0129ab337f0c873616f35e9dfe14edf920347",
+  "parent_ir_candidate_sha256": "0d3fc7b367c98d3b58c41a6da2da0e0db360c902b9b70f0af42cc7c4b89101e0",
+  "registry_sha256": "d3f5a85b404cb5e27349f3bb85067d0d9649a9b5413ce3d2cb27c6161e2e2965",
+  "schema": "verifier_registry_5273_raw.v2"
+}

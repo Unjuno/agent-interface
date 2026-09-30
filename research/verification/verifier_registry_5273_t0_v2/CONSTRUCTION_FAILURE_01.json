@@ -1,0 +1,7 @@
+{
+  "schema":"verifier_registry_5273_v2_construction_failure.v1",
+  "status":"RETAINED_FAILURE",
+  "failure":"The wrong_input_role fixture initially used CURRENT_INTENT, which local_cpu accepts; the test oracle incorrectly expected wrong_evidence_role.",
+  "classification":"fixture/oracle mismatch found before freeze; not a formal allocation result",
+  "preservation":"This first failure is retained unchanged. Corrected fixture uses CURRENT_PERMISSION for local_cpu while preserving valid verification_ir.v0.1 enum values."
+}

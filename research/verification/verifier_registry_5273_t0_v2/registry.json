@@ -1,0 +1,13 @@
+{
+  "schema":"verifier_registry.v0.1",
+  "registry_version":"t0-2026-09-30.2",
+  "authority":"none",
+  "cost_unit":"milliseconds",
+  "cost_provenance":"synthetic declared estimate; not measured latency",
+  "descriptors":[
+    {"verifier_id":"deterministic_rule","version":"1.0.0","supported_primitives":["META.COVERAGE","AUTHORITY.PERMISSION_CURRENT"],"accepted_evidence_roles":["COVERAGE_REPORT","CURRENT_PERMISSION"],"output_evidence_roles":["COVERAGE_REPORT","CURRENT_PERMISSION"],"side_effect_class":"none","authority":"none","cold_cost_ms":4,"warm_cost_ms":1,"latency_provenance":"synthetic_estimate","resource_class":"cpu","deadline_behavior":"refuse_if_estimated_cost_exceeds_deadline","failure_modes":["invalid_input","internal_error"],"fallback":"yield_unknown"},
+    {"verifier_id":"local_cpu","version":"2.1.0","supported_primitives":["TARGET.IDENTITY_CURRENT","TARGET.TARGET_MATCH","SEMANTIC.SCOPE_MATCH"],"accepted_evidence_roles":["CURRENT_OBSERVATION","CURRENT_INTENT"],"output_evidence_roles":["CURRENT_OBSERVATION","CURRENT_INTENT"],"side_effect_class":"none","authority":"none","cold_cost_ms":80,"warm_cost_ms":12,"latency_provenance":"synthetic_estimate","resource_class":"cpu","deadline_behavior":"refuse_if_estimated_cost_exceeds_deadline","failure_modes":["invalid_input","resource_unavailable","timeout"],"fallback":"yield_unknown"},
+    {"verifier_id":"local_multimodal","version":"0.1.0-placeholder","supported_primitives":["TARGET.IDENTITY_CURRENT"],"accepted_evidence_roles":["CURRENT_OBSERVATION"],"output_evidence_roles":["CURRENT_OBSERVATION"],"side_effect_class":"none","authority":"none","cold_cost_ms":300,"warm_cost_ms":120,"latency_provenance":"unavailable_unqualified","resource_class":"gpu","deadline_behavior":"unknown_without_qualified_backend","failure_modes":["backend_unavailable","unqualified","timeout"],"fallback":"yield_unknown"},
+    {"verifier_id":"external_tool","version":"1.0.0-placeholder","supported_primitives":["AUTHORITY.PERMISSION_CURRENT"],"accepted_evidence_roles":["CURRENT_PERMISSION"],"output_evidence_roles":["CURRENT_PERMISSION"],"side_effect_class":"external_read","authority":"none","cold_cost_ms":1500,"warm_cost_ms":900,"latency_provenance":"unmeasured_placeholder","resource_class":"network","deadline_behavior":"unknown_without_live_service_envelope","failure_modes":["network_unavailable","permission_denied","timeout"],"fallback":"yield_unknown"}
+  ]
+}
