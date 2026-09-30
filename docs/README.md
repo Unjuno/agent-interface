@@ -101,7 +101,6 @@ Use current/canonical documents for present project direction and architecture. 
 - [CURRENT_GOAL.md](CURRENT_GOAL.md) — current governing invariant and active research direction.
 - [PROGRESS_FROM_BASELINE.md](PROGRESS_FROM_BASELINE.md) — evidence-backed progress, measured bottlenecks, and remaining gates.
 - [LOCAL_RESEARCH_HANDOFF.md](LOCAL_RESEARCH_HANDOFF.md) — detailed running handoff across experiments and failures.
-- [SEMANTIC_EVIDENCE_STATUS.md](SEMANTIC_EVIDENCE_STATUS.md) — scoped semantic-evidence status.
 
 ### Design and architecture
 
@@ -126,6 +125,10 @@ Use current/canonical documents for present project direction and architecture. 
 - [../runtime/README.md](../runtime/README.md) — current runnable construction preview and runtime entry points.
 - [../release/README.md](../release/README.md) — public release contract and readiness boundary.
 - [product-hunt.md](product-hunt.md) — launch/presentation notes; not a research-status source.
+
+### Retained and provisional context
+
+- [SEMANTIC_EVIDENCE_STATUS.md](SEMANTIC_EVIDENCE_STATUS.md) — provisional 2026-09-13 vocabulary/evaluation intake; not current status or frozen ABI.
 
 ### Retained public-entry detail
 
