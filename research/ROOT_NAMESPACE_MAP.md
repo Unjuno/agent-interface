@@ -260,3 +260,4 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 - [`aoi_43_t0/`](aoi_43_t0/) — executed Age-of-Information critical-event retention T0 for #43 (exploratory; not runtime validation).
 
 - [`x11_midprogram_keymap_5236_formal05_save_diagnostic_20261001/`](x11_midprogram_keymap_5236_formal05_save_diagnostic_20261001/) — Local Docker diagnostics: post-save waits do not change the US control; mid-program XKB remaps produce wrong saved text in Debian Docker (not Arch formal evidence).
+- [`x11_midprogram_keymap_5236_formal06_20261001/`](x11_midprogram_keymap_5236_formal06_20261001/) — Issue #5236 Formal06 one-shot Arch WSL2 result `FAIL_STALE_MAP_EFFECT`; raw/wrapper, independent audit, and corruption controls retained.
