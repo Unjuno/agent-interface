@@ -35,6 +35,17 @@ def audit(records, expected):
             else:
                 errors.append("autonomous release could not bind uniquely to admitted key")
 
+    cancelled_owner_receipts = [envelope.get("record", {}) for envelope in records
+                                if envelope.get("event") == "owner_record"
+                                and envelope.get("record", {}).get("event") == "owner_release"
+                                and envelope.get("record", {}).get("reason") == "cancelled"]
+    if len(cancelled_owner_receipts) != 1:
+        errors.append("cancelled owner-release receipt missing/duplicated")
+    elif (cancelled_owner_receipts[0].get("verified") is not True
+          or cancelled_owner_receipts[0].get("keys_down") != []
+          or cancelled_owner_receipts[0].get("buttons_down") != []):
+        errors.append("cancelled owner-release did not verify neutral state")
+
     actual = {}
     actual_sequence = []
     for row in joined:
