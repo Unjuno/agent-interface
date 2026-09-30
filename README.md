@@ -16,6 +16,7 @@ Agent Interface holds the model fixed and asks whether a better computer interfa
 - Bounded local mechanisms handle high-frequency refinement, verification, and invalidation when they can do so safely.
 - Fresh evidence governs authority; stale, ambiguous, or novel state must yield back to stronger reasoning.
 - Universal computer control remains the fallback floor when optimized routes are unavailable.
+- The project optimizes for solving computer control, not mechanism novelty: existing or standard techniques are preferred when they are the smallest sufficient solution; new mechanisms need a measured residual.
 
 ## System shape
 
