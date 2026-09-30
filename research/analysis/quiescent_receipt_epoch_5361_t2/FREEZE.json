@@ -1,0 +1,22 @@
+{
+  "allocation":"quiescent-receipt-epoch-5361-t2-20260930-01",
+  "issue":5361,
+  "source_main":"b0190453a787102189429e4b8c32032cf60efd17",
+  "branch":"research/quiescent-receipt-epoch-5361-t2-20260930",
+  "runtime":{"python":"3.14.5","platform":"Darwin arm64","dependencies":"stdlib only"},
+  "commands":["python3 -B runner.py formal_raw.json","python3 -B audit.py formal_raw.json audit.json"],
+  "runner_invocations":1,
+  "auditor_invocations":1,
+  "retry_policy":"No retries or tuning; preserve first outcome.",
+  "container":"Not invoked; coordinator assignment required under #5085.",
+  "expected_rows":10,
+  "outputs_absent_before_run":["formal_raw.json","audit.json"],
+  "source_sha256":{
+    "model.py":"499341dac30d46d267b41bccf0f62d0c126df2aa88e251e6ff5a0190572e4b1d",
+    "oracle.py":"02b170044c35610adc515e6479fa91149b37409acea2f2984e57e6c04e2d7c02",
+    "runner.py":"057bf7b0de1f145b5d62024ee6005cdb49d56867ac9e01fcdf350d4f846116f4",
+    "audit.py":"0ce22dec1a05aea2039a53ba324159ed1784f947be638b79f0cc99cc3cb95150",
+    "test_model.py":"6c53511a6c589894d141edea1fcfbc1e6ba18e062262565337c3a65be75d3bfe"
+  },
+  "scope_limit":"Finite synthetic receipt/epoch protocol; no cryptographic, OS, or production guarantee."
+}

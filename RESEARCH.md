@@ -64,6 +64,21 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Research evidence ladder
 
+### Issue #5385 — active lifecycle automata learning (bounded synthetic PASS)
+
+One frozen OrbStack run learned four reachable lifecycle classes in one
+observation-table round, using 204 reported membership queries. Its hypothesis
+matched an independently implemented oracle for all 2,801 seven-symbol words
+through depth 4; a raw-only audit passed with four mutation controls rejected.
+A fixed five-trace manual baseline exposed only two terminal response classes,
+but it is deliberately small and does not establish general query efficiency.
+The bounded exhaustive equivalence oracle and deterministic hand-authored
+machine are strong assumptions; the raw-only auditor cannot reconstruct the
+query transcript because it was not emitted. No live interface, unbounded
+equivalence, runtime authority, safety certification, or product claim follows.
+See the [full report](research/analysis/active_automata_learning_5385_t0_v1/REPORT.md)
+and [Issue #5385](https://github.com/Unjuno/agent-interface/issues/5385).
+
 ### Issue #5346 — stigmergic coordination T1 stopped for invalid lease timing
 (`STOP_HARNESS_INVALID`; Issue remains open)
 
