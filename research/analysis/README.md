@@ -224,6 +224,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`observation_relevance_completeness_v1/`](observation_relevance_completeness_v1/)
 - [`observation_reveal_support_closure_v1/`](observation_reveal_support_closure_v1/)
 - [`occupancy_gate_frontier_1592_v1/`](occupancy_gate_frontier_1592_v1/)
+- [`opacity_action_relevance_5360_t1_v1/`](opacity_action_relevance_5360_t1_v1/)
 - [`optimistic_concurrent_readwrite_commit_r0_v1/`](optimistic_concurrent_readwrite_commit_r0_v1/)
 - [`optimistic_readwrite_x11_retained_audit_a3_v1/`](optimistic_readwrite_x11_retained_audit_a3_v1/)
 - [`partial_order_replay_4889_v1/`](partial_order_replay_4889_v1/)
