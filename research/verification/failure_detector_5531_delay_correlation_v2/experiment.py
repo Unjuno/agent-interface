@@ -6,7 +6,7 @@ N = 10000
 HORIZON = 16
 THRESHOLDS = (2, 4, 8)
 SCENARIOS = ("healthy_fast", "healthy_heavy_tail", "partition_recover", "crashed", "restarted")
-SEED_BASE = 55310100
+SEED_BASE = 55370000
 
 def draw_episode(scenario, seed):
     r = random.Random(seed)
