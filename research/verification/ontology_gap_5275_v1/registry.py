@@ -12,6 +12,7 @@ KNOWN_EVIDENCE_ROLES = frozenset({
     "OBSERVATION_CURRENT",
     "INDEPENDENT_EFFECT",
     "POLICY_RECORD",
+    "POLICY_RECORD",
 })
 KNOWN_VERIFIERS = frozenset({
     "deterministic_rule",
