@@ -208,6 +208,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`independent_effect_evidence_successor_1295_v1/`](independent_effect_evidence_successor_1295_v1/)
 - [`interaction_consistency_product_lattice_r0_v1/`](interaction_consistency_product_lattice_r0_v1/)
 - [`interrupt_stack_resume_contract_v1/`](interrupt_stack_resume_contract_v1/)
+- [`ioco_5518_t7_tick_bound/`](ioco_5518_t7_tick_bound/)
 - [`issue3152_broker_path_confinement_20260927_v1/`](issue3152_broker_path_confinement_20260927_v1/)
 - [`issue_3655_committed_evidence_audit_v1/`](issue_3655_committed_evidence_audit_v1/)
 - [`justification_bound_action_safe_r1_v1/`](justification_bound_action_safe_r1_v1/)
