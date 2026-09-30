@@ -36,6 +36,8 @@ def fixture_rows():
                  "keycode": 38, "owner_id": "o3", "intent_token": "i3", "timing_valid": True,
                  "grants_input_authority": False, "physical_key_up_claimed": False,
                  "request_started_ns": 20, "request_returned_ns": 30, "shared_sync_returned_ns": 40}})
+    rows.append({"event": "owner_record", "record": {"event": "owner_release", "reason": "cancelled",
+                 "verified": True, "keys_down": [], "buttons_down": []}})
     rows.extend([{"event": "case_terminal", "case": c, "all_up_verified": True,
                   "second_admission_rejected": c == "partial_cancel"} for c in EXPECTED["cases"]])
     rows += [{"event": "process_cleanup", "owner_stopped": True},
@@ -92,6 +94,13 @@ class FormalAuditTests(unittest.TestCase):
                    and r.get("case") == "two_key_explicit"]
         rows[indexes[0]], rows[indexes[1]] = rows[indexes[1]], rows[indexes[0]]
         self.assertTrue(any("release order mismatch" in e for e in audit(rows, EXPECTED)))
+
+    def test_cancel_owner_receipt_must_independently_verify_neutral(self):
+        rows = fixture_rows()
+        receipt = next(r["record"] for r in rows if r.get("event") == "owner_record"
+                       and r.get("record", {}).get("event") == "owner_release")
+        receipt["verified"] = False
+        self.assertTrue(any("cancelled owner-release" in e for e in audit(rows, EXPECTED)))
 
 
 if __name__ == "__main__":
