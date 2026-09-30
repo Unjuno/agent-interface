@@ -240,14 +240,19 @@ def audit(records, expected):
 def validate_host_launch_receipt(receipt, raw_bytes, expected_bytes, expected, fixture, key):
     errors = []
     if not isinstance(receipt, dict) or receipt.get("schema") != "formal-x11-host-launch-v1":
-        return ["invalid formal X11 host launch receipt schema"]
+        return ["invalid formal X11 host launch receipt schema"], False
     signature = receipt.get("hmac_sha256")
+    signature_authenticated = False
     unsigned = {name: value for name, value in receipt.items() if name != "hmac_sha256"}
     canonical = json.dumps(unsigned, sort_keys=True, separators=(",", ":")).encode("utf-8")
     if not isinstance(key, bytes) or len(key) < 32:
         errors.append("trusted host receipt key must be at least 32 bytes")
-    elif (not isinstance(signature, str) or not re.fullmatch(r"[0-9a-f]{64}", signature)
-          or not hmac.compare_digest(signature, hmac.new(key, canonical, hashlib.sha256).hexdigest())):
+    elif isinstance(signature, str) and re.fullmatch(r"[0-9a-f]{64}", signature):
+        signature_authenticated = hmac.compare_digest(
+            signature, hmac.new(key, canonical, hashlib.sha256).hexdigest())
+        if not signature_authenticated:
+            errors.append("host launch receipt HMAC signature invalid")
+    else:
         errors.append("host launch receipt HMAC signature invalid")
     expected_fields = {
         "allocation": expected.get("allocation"),
@@ -276,7 +281,7 @@ def validate_host_launch_receipt(receipt, raw_bytes, expected_bytes, expected, f
             or not isinstance(fixture.get("display"), str) or not fixture["display"].startswith(":")
             or fixture.get("evidence_mode") != "formal-x11"):
         errors.append("raw formal fixture identity does not match host launch receipt")
-    return errors
+    return errors, signature_authenticated
 
 
 def main(raw_path, expected_path, audit_path, mode, receipt_path=None, receipt_key_path=None):
@@ -312,11 +317,9 @@ def main(raw_path, expected_path, audit_path, mode, receipt_path=None, receipt_k
                 receipt_sha256 = hashlib.sha256(receipt_bytes).hexdigest()
                 receipt = json.loads(receipt_bytes)
                 key = Path(receipt_key_path).read_bytes()
-                receipt_errors = validate_host_launch_receipt(
+                receipt_errors, receipt_authenticated = validate_host_launch_receipt(
                     receipt, raw_bytes, expected_bytes, expected, fixtures[0], key)
                 errors.extend(receipt_errors)
-                receipt_authenticated = not any("signature" in error or "trusted host receipt key" in error
-                                                for error in receipt_errors)
                 receipt_bindings_valid = not receipt_errors
             except (OSError, json.JSONDecodeError) as exc:
                 errors.append(f"formal X11 host launch receipt/key unreadable: {type(exc).__name__}")

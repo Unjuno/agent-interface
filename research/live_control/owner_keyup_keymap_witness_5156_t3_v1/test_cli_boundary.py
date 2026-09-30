@@ -129,12 +129,42 @@ class RawOnlyCliBoundaryTests(unittest.TestCase):
         key = b"unit-test-only-host-receipt-key-32-bytes-minimum"
         signing_payload = json.dumps(receipt, sort_keys=True, separators=(",", ":")).encode()
         receipt["hmac_sha256"] = hmac.new(key, signing_payload, hashlib.sha256).hexdigest()
-        self.assertEqual(validate_host_launch_receipt(receipt, raw, expected_bytes, expected, fixture, key), [])
+        receipt_errors, authenticated = validate_host_launch_receipt(
+            receipt, raw, expected_bytes, expected, fixture, key)
+        self.assertEqual(receipt_errors, [])
+        self.assertTrue(authenticated)
         receipt["raw_sha256"] = "0" * 64
-        self.assertTrue(any("raw_sha256 mismatch" in error for error in
-                            validate_host_launch_receipt(receipt, raw, expected_bytes, expected, fixture, key)))
-        self.assertTrue(any("signature invalid" in error for error in
-                            validate_host_launch_receipt(receipt, raw, expected_bytes, expected, fixture, key)))
+        receipt_errors, authenticated = validate_host_launch_receipt(
+            receipt, raw, expected_bytes, expected, fixture, key)
+        self.assertFalse(authenticated)
+        self.assertTrue(any("raw_sha256 mismatch" in error for error in receipt_errors))
+        self.assertTrue(any("signature invalid" in error for error in receipt_errors))
+
+    def test_malformed_receipt_schema_never_reports_authenticated(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            raw = Path(temporary) / "relabeled.jsonl"
+            receipt = Path(temporary) / "receipt.json"
+            key_path = Path(temporary) / "trusted.key"
+            audit_path = Path(temporary) / "audit.json"
+            records = fixture_rows()
+            fixture = records[0]
+            fixture.pop("synthetic_only")
+            fixture["evidence_mode"] = "formal-x11"
+            fixture["display"] = ":99"
+            fixture["image_digest"] = "sha256:" + "1" * 64
+            fixture["platform"] = "linux/amd64"
+            raw.write_text("".join(json.dumps(row) + "\n" for row in records), encoding="utf-8")
+            receipt.write_text('{"schema":"wrong"}\n', encoding="utf-8")
+            key_path.write_bytes(b"k" * 32)
+            subprocess.run(
+                [sys.executable, "-B", str(HERE / "audit_formal_x11.py"), str(raw),
+                 str(HERE / "EXPECTED.json"), str(audit_path), "formal-x11", str(receipt), str(key_path)],
+                cwd=HERE, capture_output=True, text=True, timeout=10, check=False)
+            result = json.loads(audit_path.read_text(encoding="utf-8"))
+            self.assertFalse(result["host_launch_receipt_authenticated"])
+            self.assertFalse(result["host_launch_receipt_bindings_valid"])
+            self.assertEqual(result["host_launch_receipt_sha256"],
+                             hashlib.sha256(receipt.read_bytes()).hexdigest())
 
 
 if __name__ == "__main__":
