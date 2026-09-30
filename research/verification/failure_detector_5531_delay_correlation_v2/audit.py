@@ -3,7 +3,7 @@ import hashlib, json, random, sys
 
 ALLOCATION="fd5531-delay-correlation-20261001-02"
 
-BASE=55310100; COUNT=10000; LAST=16
+BASE=55370000; COUNT=10000; LAST=16
 KINDS=("healthy_fast","healthy_heavy_tail","partition_recover","crashed","restarted")
 CUTS=(2,4,8)
 
