@@ -1,0 +1,192 @@
+{
+  "allocation_status": "STOP_SOURCE_IMAGE_OR_AUDIT",
+  "error_count": 604,
+  "error_classes": [
+    {
+      "check": "exact_expected_evaluations",
+      "count": 22,
+      "examples": [
+        {
+          "check": "exact_expected_evaluations",
+          "step": 0,
+          "order": "naive",
+          "expected": "1247/500",
+          "observed": "147/125"
+        },
+        {
+          "check": "exact_expected_evaluations",
+          "step": 0,
+          "order": "learned",
+          "expected": "607/500",
+          "observed": "147/125"
+        }
+      ]
+    },
+    {
+      "check": "exact_expected_weighted_cost",
+      "count": 22,
+      "examples": [
+        {
+          "check": "exact_expected_weighted_cost",
+          "step": 0,
+          "order": "naive",
+          "expected": "674/125",
+          "observed": "206/125"
+        },
+        {
+          "check": "exact_expected_weighted_cost",
+          "step": 0,
+          "order": "learned",
+          "expected": "1173/250",
+          "observed": "206/125"
+        }
+      ]
+    },
+    {
+      "check": "grid_step_and_delta",
+      "count": 10,
+      "examples": [
+        {
+          "check": "grid_step_and_delta",
+          "step": 1
+        },
+        {
+          "check": "grid_step_and_delta",
+          "step": 2
+        }
+      ]
+    },
+    {
+      "check": "learned_order_matches_frozen_false_probability_rule",
+      "count": 1,
+      "examples": [
+        {
+          "check": "learned_order_matches_frozen_false_probability_rule",
+          "expected": [
+            "C",
+            "B",
+            "A",
+            "D"
+          ],
+          "observed": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        }
+      ]
+    },
+    {
+      "check": "p50_weighted_nearest_rank",
+      "count": 22,
+      "examples": [
+        {
+          "check": "p50_weighted_nearest_rank",
+          "step": 0,
+          "order": "naive",
+          "expected": 7,
+          "observed": 1
+        },
+        {
+          "check": "p50_weighted_nearest_rank",
+          "step": 0,
+          "order": "learned",
+          "expected": 4,
+          "observed": 1
+        }
+      ]
+    },
+    {
+      "check": "p95_weighted_nearest_rank",
+      "count": 22,
+      "examples": [
+        {
+          "check": "p95_weighted_nearest_rank",
+          "step": 0,
+          "order": "naive",
+          "expected": 15,
+          "observed": 3
+        },
+        {
+          "check": "p95_weighted_nearest_rank",
+          "step": 0,
+          "order": "learned",
+          "expected": 15,
+          "observed": 3
+        }
+      ]
+    },
+    {
+      "check": "row_cost_and_test_count_match_frozen_order",
+      "count": 154,
+      "examples": [
+        {
+          "check": "row_cost_and_test_count_match_frozen_order",
+          "step": 0,
+          "order": "learned",
+          "state": "0000",
+          "expected": [
+            4,
+            1
+          ],
+          "observed": [
+            1,
+            1
+          ]
+        },
+        {
+          "check": "row_cost_and_test_count_match_frozen_order",
+          "step": 0,
+          "order": "learned",
+          "state": "0001",
+          "expected": [
+            4,
+            1
+          ],
+          "observed": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "check": "row_mass_matches_frozen_distribution",
+      "count": 350,
+      "examples": [
+        {
+          "check": "row_mass_matches_frozen_distribution",
+          "step": 0,
+          "order": "naive",
+          "state": "0000",
+          "expected": "18/625",
+          "observed": "27/2500"
+        },
+        {
+          "check": "row_mass_matches_frozen_distribution",
+          "step": 0,
+          "order": "naive",
+          "state": "0001",
+          "expected": "9/1250",
+          "observed": "27/625"
+        }
+      ]
+    },
+    {
+      "check": "source_mass_matches_frozen_distribution",
+      "count": 1,
+      "examples": [
+        {
+          "check": "source_mass_matches_frozen_distribution",
+          "expected": "243/2500",
+          "observed": "2/625"
+        }
+      ]
+    }
+  ],
+  "first_attempt_preserved": true,
+  "rerun_performed": false,
+  "independent_specification": "FREEZE.json, interpreting development_false_probability as P(predicate=false)",
+  "scope": "Forensic posthoc classification only; no new experimental invocation."
+}

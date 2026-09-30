@@ -56,6 +56,7 @@ Use analytical work to eliminate questions that are already decidable from expli
 
 - [`analysis/typed_resumption_packet_5404_t0_v1/REPORT.md`](analysis/typed_resumption_packet_5404_t0_v1/REPORT.md) — Issue #5404 OrbStack T0: 50 interruption/recovery scenarios, scoped deterministic PASS; no live interruption or runtime claim.
 - [`analysis/active_automata_learning_5385_t0_v1/REPORT.md`](analysis/active_automata_learning_5385_t0_v1/REPORT.md) — Issue #5385 OrbStack T0: four-state bounded active learner PASS against 2,801 finite words; no live-interface or unbounded-equivalence claim.
+- [`analysis/action_class_error_budget_5424_t2_v1/REPORT.md`](analysis/action_class_error_budget_5424_t2_v1/REPORT.md) — Issue #5424 OrbStack T2: fixed-corpus typed burn-rate budget reduced post-signal primary severe exposures, with correlated-fallback completion tradeoff and preserved audit-v1 FAIL.
 
 ## Workspace map
 

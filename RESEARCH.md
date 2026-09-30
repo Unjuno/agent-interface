@@ -77,6 +77,10 @@ or production claims; oracle completeness, receipt lookup, and event semantics
 are assumptions. See the [full report](research/analysis/typed_resumption_packet_5404_t0_v1/REPORT.md)
 and [Issue #5404](https://github.com/Unjuno/agent-interface/issues/5404).
 
+### Issue #5424 — action-class typed burn-rate T2 (scoped primary-exposure gate PASS; net benefit unproven)
+
+One frozen OrbStack allocation replayed 18,432 fixed-seed synthetic inputs across four regimes and three policies (55,296 policy rows). The typed 12/48-step route budget reduced post-signal primary severe outcomes versus both no-freeze and local consecutive-breaker controls across drift, catastrophe, and common-cause fixtures; affected routes recovered within 12 steps in every fault replicate. However, the correlated-fallback fixture increased alternate-route severe outcomes and lowered completion (4,428 vs 4,453 local / 4,489 no-freeze). Audit v1's summary denominator failed and remains retained; a separate narrow audit-v2 correction passed all rows/summary and rejected 4/4 mutations. This is synthetic mechanism evidence only, not a calibrated SLO, live-route safety, or net production benefit. See [the full report](research/analysis/action_class_error_budget_5424_t2_v1/REPORT.md) and [Issue #5424](https://github.com/Unjuno/agent-interface/issues/5424).
+
 ### Issue #5385 — active lifecycle automata learning (bounded synthetic PASS)
 
 One frozen OrbStack run learned four reachable lifecycle classes in one
