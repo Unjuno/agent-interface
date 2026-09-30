@@ -4,7 +4,7 @@
 
 This is a distinct finite experiment after T0–T14. Earlier work covered aggregate resource minima, explicit UNSAT classification, per-class and dependency-closure diagnosis, and freshness validity. T15 tests a temporal collision hidden by horizon-wide total capacity. No earlier allocation or raw result is edited or reused.
 
-Issue preregistration comments: #5918821974 (H/T/D/C/U), #5918873465 (exact workload clarification), and #5919139236 (fresh T15-02 allocation and sole infrastructure correction). Frozen source main: `728d30cb2bf4e3b0a183a929258064d3ba823404`. T15-01 (run 36772395836) stopped before checkout completed: candidate formal invocations 0; formal audit invocations 0. That immutable allocation is not rerun or edited. T15-02 is a fresh single allocation.
+Issue preregistration comments: #5918821974 (H/T/D/C/U), #5918873465 (exact workload clarification), and #5919139236 (fresh T15-02 allocation and sole infrastructure correction). Frozen source main: `728d30cb2bf4e3b0a183a929258064d3ba823404`. T15-01 (run 36772395836) failed checkout with EACCES: candidate formal invocations 0; formal audit invocations 0. That immutable allocation is not rerun or edited. T15-02 (run 36772891046) successfully initialized the pinned container but stalled downloading the repository archive in `actions/checkout@v4` from 20:28:50Z until cancellation at 20:29:58Z; candidate formal invocations 0; auditor invocations 0; construction tests 0. No artifact files were produced. This is an infrastructure STOP, not a scientific result. The run log is retained in GitHub Actions and the stop is recorded in Issue comment #5919197649. Both allocations remain distinct and immutable.
 
 ## Frozen design
 
@@ -28,7 +28,11 @@ Issue preregistration comments: #5918821974 (H/T/D/C/U), #5918873465 (exact work
 
 ## Exact execution protocol
 
-Workflow: `.github/workflows/issue-5557-temporal-t15.yml`. Candidate command: `python -B experiment.py --output results/formal-02/raw.jsonl`. Audit command: `python -B audit.py results/formal-02/raw.jsonl --output results/formal-02/AUDIT.json`. Candidate and audit each run once, sequentially, only when the branch head does not carry the `[t15-results-recorded]` marker. Results are uploaded as Actions artifact; after download, their bytes are committed unchanged. T15-01 showed runner EACCES with `--cap-drop=ALL` and `--security-opt=no-new-privileges`; T15-02 removes only those two options, keeping the digest-pinned image and CPU/memory/PID bounds. No Docker daemon on the workstation is used.
+Workflow: `.github/workflows/issue-5557-temporal-t15.yml`. Candidate command: `python -B experiment.py --output results/formal-02/raw.jsonl`. Audit command: `python -B audit.py results/formal-02/raw.jsonl --output results/formal-02/AUDIT.json`. Candidate and audit were not reached in T15-02; no result artifact exists. T15-01 showed runner EACCES with `--cap-drop=ALL` and `--security-opt=no-new-privileges`; T15-02 removed only those two options, keeping the digest-pinned image and CPU/memory/PID bounds, but checkout stalled downloading the archive. Neither allocation is rerun. No Docker daemon on the workstation is used.
+
+## Infrastructure successor boundary
+
+Repository precedent `.github/workflows/observation-recovery-contract-2452.yml` fetches exact PR-head files from `raw.githubusercontent.com` instead of using checkout/archive transport. A future allocation may preregister that transport, verify each fetched file against frozen SHA-256 values before tests or candidate execution, and enforce bounded network timeouts. This is only a candidate recovery path, not evidence that the transport will work or that the scientific hypothesis passes. T15-01 and T15-02 remain consumed STOP allocations.
 
 ## Terminal scope
 
