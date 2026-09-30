@@ -64,6 +64,19 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Research evidence ladder
 
+### Issue #5404 — typed resumption packet (scoped deterministic PASS)
+
+One frozen OrbStack run compared opaque summary, full replay, and typed packet
+policies over 50 interruption/fault/idempotency scenarios (150 policy rows).
+The typed packet had zero unsafe admissions and detected all 48 non-benign
+invalidation/receipt cases; committed or unknown effects were reconciled without
+resending. On benign pre-action pauses, its synthetic recovery-step count was 2
+versus 7 for full replay. Opaque summary had 45 unsafe admissions in this
+constructed fixture. These are deterministic model counts, not rates, latency,
+or production claims; oracle completeness, receipt lookup, and event semantics
+are assumptions. See the [full report](research/analysis/typed_resumption_packet_5404_t0_v1/REPORT.md)
+and [Issue #5404](https://github.com/Unjuno/agent-interface/issues/5404).
+
 ### Issue #5385 — active lifecycle automata learning (bounded synthetic PASS)
 
 One frozen OrbStack run learned four reachable lifecycle classes in one

@@ -54,6 +54,7 @@ Prefer the narrowest existing namespace. The diagram is a placement guide; retai
 
 Use analytical work to eliminate questions that are already decidable from explicit assumptions; do not treat it as measurement of a real backend/model unless the retained evidence actually contains those endpoints.
 
+- [`analysis/typed_resumption_packet_5404_t0_v1/REPORT.md`](analysis/typed_resumption_packet_5404_t0_v1/REPORT.md) — Issue #5404 OrbStack T0: 50 interruption/recovery scenarios, scoped deterministic PASS; no live interruption or runtime claim.
 - [`analysis/active_automata_learning_5385_t0_v1/REPORT.md`](analysis/active_automata_learning_5385_t0_v1/REPORT.md) — Issue #5385 OrbStack T0: four-state bounded active learner PASS against 2,801 finite words; no live-interface or unbounded-equivalence claim.
 
 ## Workspace map
