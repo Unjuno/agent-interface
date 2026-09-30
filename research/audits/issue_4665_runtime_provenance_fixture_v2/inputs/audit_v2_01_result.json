@@ -1,0 +1,33 @@
+{
+  "accepted_bytes": 246,
+  "allocation": "issue3711-downstream-truncation-artifact-audit-v2-01",
+  "attempt_snapshot": {
+    "report.json": {
+      "bytes": 140,
+      "kind": "file",
+      "sha256": "516a2a999b7a0591d78b73a8e2e41b800d434d3077ed08a57cdf4b39fcc4b584"
+    },
+    "request.json": {
+      "bytes": 381,
+      "kind": "file",
+      "sha256": "92bacf5e4a7550bc6ef3d605c0dbb7662cbac29eb12076e07c650f10ff915f57"
+    }
+  },
+  "audit_v1_sha256": "69454ea54a9c3b6b91ca6331645e4b0a7dc071cd9da4abb9b88bff7888afa7ca",
+  "delivered_prefix_bytes": 23,
+  "disposition": "FAIL_AUDIT_V2",
+  "downstream_consumer_error": "JSONDecodeError",
+  "errors": [
+    "ALLOCATION_OR_BASE_MISMATCH"
+  ],
+  "formal_freeze_sha256": "b7b2d2bebd24bfc54abc4a20bb00da452eafb084ed09fa7b2a2c57ad146658cd",
+  "full_accepted_document": "valid_json",
+  "raw_sha256": "3f51dc5a4c9c8acb48fc2929a8219260575271e5794cd5bd4afedf6f712afc73",
+  "report_sha256": "516a2a999b7a0591d78b73a8e2e41b800d434d3077ed08a57cdf4b39fcc4b584",
+  "request_sha256": "92bacf5e4a7550bc6ef3d605c0dbb7662cbac29eb12076e07c650f10ff915f57",
+  "schema": "agent-interface/issue3711-downstream-truncation-audit-v2",
+  "source_sha256": {
+    "research/integration/issue_3711_downstream_truncation_v1/audit-v2/PLAN.md": "05a71df1a90e81aceb771762449c82a76f811f1d56493bfa130b6d9929bd324f",
+    "research/integration/issue_3711_downstream_truncation_v1/audit-v2/audit.py": "1f9834523c1dcead68d81bd0ecf3855528b70344be24b4865f9f6bf338709658"
+  }
+}
