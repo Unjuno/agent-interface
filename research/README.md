@@ -116,6 +116,8 @@ For new work, prefer the narrowest existing category below rather than adding an
 - `receiver_*`, `external_effect_*`, `outbox_*`, `staged_*`, and `exact_runtime_*` directories — effect/commit/recovery semantics.
 - `git_*` directories — Git/reference concurrency and atomicity experiments.
 - [`coordination/`](coordination/) and [`orchestration/`](orchestration/) — retained coordination/orchestration evidence.
+- [Issue #5346 T1](coordination/stigmergy_5346_t1_successor/REPORT.md) — one-shot stigmergy successor stopped after post-run review found the crash lease released at duration 2 instead of frozen TTL 3; do not interpret its apparent policy metrics.
+- [Issue #5346 T2](coordination/stigmergy_5346_t2_successor/REPORT.md) — expanded TTL-boundary successor; scoped synthetic tradeoff only, not a live multi-agent/interface validation.
 
 ### Evaluation and research governance
 
