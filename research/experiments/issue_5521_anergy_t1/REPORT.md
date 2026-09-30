@@ -44,6 +44,17 @@ identity, GUI safety, safe-probe non-interference, crash consistency under
 storage faults, threshold robustness, fairness, or production usefulness.
 Do not promote this to an integrated runtime PASS.
 
+## Parallel T1 comparison
+
+After this run, Issue #5521 received another agent's T1/T2 comments
+(#5913135096 and #5913149677). Those traces use an explicit expiry that permits
+a fresh same-generation check after expiry. This run deliberately keeps an
+EXPIRED tombstone for the old proposal fingerprint and requires a new
+fingerprint to re-enter. The differing outcomes are a policy choice, not
+replication agreement: neither schedule establishes which expiry semantics are
+preferable. Preserve both results; compare them in a preregistered container
+extension rather than overwriting either record.
+
 ## Reproduction
 
 From repository root:
