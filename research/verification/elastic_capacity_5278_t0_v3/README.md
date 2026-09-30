@@ -21,6 +21,6 @@ v1's test import mismatch and v2's pre-run main-drift STOP are preserved unchang
 
 The v1 auditor implementation was named audit.py while its tests imported auditor; the immutable failure STOP is at the v1 branch/evidence path. v3 changes only the test import to the actual audit module. simulator.py is candidate; audit.py is independent and imports no candidate code; workloads.json freezes all jobs; test_model.py is construction-only.
 
-Construction command: python -m unittest discover -s scratch-5278-v2 -p test_model.py -v (CPython 3.11.9), exit 0, 8/8. Full transcript: CONSTRUCTION.txt.
+Construction command: python -m unittest discover -s scratch-5278-v3 -p test_model.py -v (CPython 3.11.9), exit 0, 8/8. Full transcript: CONSTRUCTION.txt.
 
 Before formal execution, freeze exact GitHub blobs, local materialized source SHA-256, interpreter, command, raw path and collision check in an Issue comment. Exactly one local Python simulator invocation to an absent raw path; on exit 0 only, one separate raw-only audit and five in-memory corruptions. No retries, tuning, alternate paths or inputs. Host-only T0 uses no shared Docker slot and does not grant #5139's RTX lane.
