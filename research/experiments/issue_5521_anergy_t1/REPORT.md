@@ -7,6 +7,9 @@ raw-host.jsonl; run.py emits the frozen schedule and all three policy traces.
 audit.py independently replays the persisted records and returns
 PASS_SCOPED. test_t1.py also changes the same-generation contradictory row to
 ADMITTED/effect=true and confirms that the independent auditor rejects it.
+After main advanced, the frozen source and local tests were refreshed and
+rerun at base 2a5d0a21b8a93d311f9cb491a818ce2ce5c8f7de; deterministic raw bytes
+were unchanged.
 
 | Policy | Verifier checks | Admitted effects |
 |---|---:|---:|
