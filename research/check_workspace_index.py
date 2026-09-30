@@ -4,14 +4,140 @@
 from __future__ import annotations
 
 import re
-import subprocess
 import sys
+import os
+import subprocess
+import threading
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 INDEX_FILES = (ROOT / "README.md", ROOT / "ROOT_NAMESPACE_MAP.md")
 
 DIR_LINK_RE = re.compile(r"\[\x60([^\x60]+?)/\x60\]\(([^)]+)/\)")
+
+# CI's committed-tree mode does not fetch missing objects or read study payloads.
+GIT_TIMEOUT = 5
+OUTPUT_LIMIT = 2 * 1024 * 1024
+OID_RE = re.compile(r"(?:[0-9a-f]{40}|[0-9a-f]{64})\Z")
+
+
+class TreeInventoryError(RuntimeError):
+    pass
+
+
+def run_git(repo: Path, arguments: list[str]) -> bytes:
+    """Bound output while reading, as well as runtime; never invoke a shell."""
+    env = os.environ.copy()
+    env.update(GIT_NO_LAZY_FETCH="1", GIT_NO_REPLACE_OBJECTS="1",
+               GIT_TERMINAL_PROMPT="0", GIT_OPTIONAL_LOCKS="0")
+    try:
+        process = subprocess.Popen(
+            ["git", "-C", str(repo), *arguments], stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT, env=env,
+        )
+    except OSError as exc:
+        raise TreeInventoryError("GIT_START_FAILED") from exc
+    data = bytearray()
+    read_errors: list[Exception] = []
+
+    def read_output() -> None:
+        try:
+            while len(data) <= OUTPUT_LIMIT:
+                chunk = process.stdout.read(min(65536, OUTPUT_LIMIT + 1 - len(data)))
+                if not chunk:
+                    break
+                data.extend(chunk)
+            if len(data) > OUTPUT_LIMIT:
+                process.kill()
+        except Exception as exc:
+            read_errors.append(exc)
+
+    reader = threading.Thread(target=read_output, daemon=True)
+    reader.start()
+    try:
+        process.wait(timeout=GIT_TIMEOUT)
+        reader.join(timeout=GIT_TIMEOUT)
+        if reader.is_alive():
+            raise TreeInventoryError("GIT_READ_TIMEOUT")
+        if len(data) > OUTPUT_LIMIT:
+            raise TreeInventoryError("GIT_OUTPUT_LIMIT")
+        if read_errors or process.returncode:
+            raise TreeInventoryError("GIT_COMMAND_FAILED")
+        return bytes(data)
+    except subprocess.TimeoutExpired as exc:
+        raise TreeInventoryError("GIT_TIMEOUT") from exc
+    finally:
+        if process.poll() is None:
+            process.kill()
+        process.wait()
+        reader.join(timeout=GIT_TIMEOUT)
+        if not reader.is_alive():
+            process.stdout.close()
+
+
+def parse_tree(data: bytes) -> dict[str, tuple[str, str, str]]:
+    """Parse every immediate ls-tree -z record, retaining mode/type distinctions."""
+    if data and not data.endswith(b"\0"):
+        raise TreeInventoryError("INCOMPLETE_TREE_OUTPUT")
+    entries: dict[str, tuple[str, str, str]] = {}
+    for record in data[:-1].split(b"\0") if data else ():
+        header, separator, raw_name = record.partition(b"\t")
+        if not separator:
+            raise TreeInventoryError("MALFORMED_TREE_RECORD")
+        try:
+            fields = header.decode("ascii").split(" ")
+            name = raw_name.decode("utf-8")
+        except UnicodeError as exc:
+            raise TreeInventoryError("TREE_ENCODING_UNSUPPORTED") from exc
+        if len(fields) != 3:
+            raise TreeInventoryError("MALFORMED_TREE_RECORD")
+        mode, kind, oid = fields
+        valid = {"040000": "tree", "100644": "blob", "100755": "blob",
+                 "120000": "blob", "160000": "commit"}
+        if valid.get(mode) != kind or not OID_RE.fullmatch(oid):
+            raise TreeInventoryError("MALFORMED_TREE_OBJECT")
+        if not name or name in (".", "..") or "/" in name or name in entries:
+            raise TreeInventoryError("MALFORMED_TREE_NAME")
+        entries[name] = (mode, kind, oid)
+    return entries
+
+
+def committed_inventory(repo: Path) -> tuple[set[str], tuple[str, str]]:
+    """Check one committed snapshot; unsupported visible links fail closed.
+
+    This is stricter than filesystem mode and excludes untracked/empty worktree
+    directories. No caller-supplied revision or path is evaluated by Git.
+    """
+    try:
+        commit = run_git(repo, ["rev-parse", "--verify", "HEAD^{commit}"]).decode("ascii").strip()
+    except UnicodeError as exc:
+        raise TreeInventoryError("INVALID_COMMIT_ID") from exc
+    if not OID_RE.fullmatch(commit):
+        raise TreeInventoryError("INVALID_COMMIT_ID")
+    roots = parse_tree(run_git(repo, ["ls-tree", "-z", commit]))
+    if any(len(entry[2]) != len(commit) for entry in roots.values()):
+        raise TreeInventoryError("OBJECT_ID_LENGTH_MISMATCH")
+    research = roots.get("research")
+    if not research or research[:2] != ("040000", "tree"):
+        raise TreeInventoryError("MISSING_RESEARCH_TREE")
+    entries = parse_tree(run_git(repo, ["ls-tree", "-z", research[2]]))
+    if any(len(entry[2]) != len(commit) for entry in entries.values()):
+        raise TreeInventoryError("OBJECT_ID_LENGTH_MISMATCH")
+    for name, (mode, _, _) in entries.items():
+        if not name.startswith(".") and mode in ("120000", "160000"):
+            raise TreeInventoryError("UNSUPPORTED_TREE_ENTRY: " + repr(name))
+    dirs = {name for name, (mode, _, _) in entries.items()
+            if mode == "040000" and not name.startswith(".")}
+    texts = []
+    for name in ("README.md", "ROOT_NAMESPACE_MAP.md"):
+        entry = entries.get(name)
+        if not entry or entry[0] not in ("100644", "100755") or entry[1] != "blob":
+            raise TreeInventoryError("MISSING_INDEX_BLOB: " + name)
+        try:
+            texts.append(run_git(repo, ["cat-file", "blob", entry[2]]).decode("utf-8"))
+        except UnicodeError as exc:
+            raise TreeInventoryError("INDEX_ENCODING_UNSUPPORTED: " + name) from exc
+    return dirs, tuple(texts)
 
 
 def top_level_dirs() -> set[str]:
@@ -45,11 +171,22 @@ def indexed_top_level_dirs(text: str) -> set[str]:
 
 
 def main() -> int:
-    dirs = top_level_dirs()
+    if sys.argv[1:] == ["--git-tree"]:
+        try:
+            dirs, texts = committed_inventory(ROOT.parent)
+        except TreeInventoryError as exc:
+            print("Committed workspace inventory failed: " + str(exc), file=sys.stderr)
+            return 2
+    elif sys.argv[1:]:
+        print("usage: check_workspace_index.py [--git-tree]", file=sys.stderr)
+        return 2
+    else:
+        dirs = top_level_dirs()
+        texts = tuple(path.read_text(encoding="utf-8") for path in INDEX_FILES)
     indexed: set[str] = set()
 
-    for path in INDEX_FILES:
-        indexed.update(indexed_top_level_dirs(path.read_text(encoding="utf-8")))
+    for text in texts:
+        indexed.update(indexed_top_level_dirs(text))
 
     missing = sorted(dirs - indexed)
     dangling = sorted(indexed - dirs)
