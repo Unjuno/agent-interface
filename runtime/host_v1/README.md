@@ -31,6 +31,19 @@ await client.present(closed.attempt, { text: async value => {}, image: async val
 await client.close();
 ```
 
+For a call that must be delivered before the caller handles its outcome, use the opt-in composed method:
+
+```js
+const response = await client.sendPresented('interface_guarded_input', args, {
+  text: deliverText,
+  image: deliverImage,
+});
+// Both callbacks have completed. Now inspect the unchanged typed outcome.
+// isError may carry a refusal; it is not automatic permission to retry or recover.
+```
+
+This uses the same retained send/present path, snapshots and validates both callbacks before dispatch, and reserves the host until presentation finishes. Another send, review or close during that interval is refused rather than queued. If interrupted, await `client.wait()` on the same host: it returns the original combined promise. Rendering failure leaves the reply retained, blocks further input and permits transport cleanup. A successful callback is delivery only; explicit review, outcome interpretation, release validation and any bounded recovery remain caller responsibilities. Existing separate `send`/`present` behavior is unchanged.
+
 The host creates `evidenceDirectory` exclusively. Supply a path that does not exist; do not create that directory before constructing the client. Keep the returned client in a durable caller binding before starting subsequent presentation work.
 
 The `text` callback receives both strings and structured objects, including the MCP result-status object. Pass each value to a sink that accepts its type, or format objects explicitly with `JSON.stringify(value)`; do not unconditionally parse callback values as JSON strings. For a sink accepting only text, use `text: async value => deliverText(typeof value === "string" ? value : JSON.stringify(value))`. A callback failure blocks further ordinary calls; reconcile retained replies and close the original transport rather than replaying input.

@@ -13,7 +13,7 @@ export async function createInstrumentedRelayClient(options) {
   const eventsPath = join(evidenceDirectory, 'host-events.jsonl');
   try { await writeFile(eventsPath, '', { flag: 'wx' }); }
   catch (error) { await client.close(); throw error; }
-  let sequence = 0, busy = null, blocked = null, pending = null, closed = false;
+  let sequence = 0, busy = null, blocked = null, pending = null, closed = false, reservation = null;
   const delivered = new Set();
   // One bounded, explicitly reviewed PNG base, scoped to this live host instance.
   // Equality is byte-for-byte encoded PNG equality, never a hash/perceptual gate.
@@ -35,8 +35,8 @@ export async function createInstrumentedRelayClient(options) {
     await appendFile(eventsPath, JSON.stringify(row) + '\n');
     return row;
   };
-  function begin(kind) {
-    if (busy) throw new Error('host operation outstanding; wait, do not queue or resend');
+  function begin(kind, reservationToken = null) {
+    if (busy || (reservation && reservation !== reservationToken)) throw new Error('host operation outstanding; wait, do not queue or resend');
     if (blocked || closed) throw new Error(blocked || 'instrumented client closed');
     busy = kind;
   }
@@ -51,9 +51,8 @@ export async function createInstrumentedRelayClient(options) {
     const bytes = await readFile(replyPath);
     return { replyPath, reply: JSON.parse(bytes), reply_sha256: createHash('sha256').update(bytes).digest('hex') };
   }
-  return {
-    send(tool, args = {}) {
-      begin('send');
+  function send(tool, args = {}, reservationToken = null) {
+      begin('send', reservationToken);
       // Snapshot synchronously, before the instrumentation's asynchronous write.
       let snapshot;
       try {
@@ -80,14 +79,10 @@ export async function createInstrumentedRelayClient(options) {
       })();
       pending.catch(() => {});
       return pending;
-    },
-    wait() {
-      if (!pending) throw new Error('no request to reconcile');
-      return pending;
-    },
-    async present(attempt, callbacks, { forceImage = false } = {}) {
+    }
+  async function present(attempt, callbacks, { forceImage = false } = {}, reservationToken = null) {
       if (typeof forceImage !== 'boolean') throw new TypeError('forceImage must be boolean');
-      begin('present');
+      begin('present', reservationToken);
       try {
         const saved = await retained(attempt);
         const picture = reuseImages ? singlePng(saved.reply) : null;
@@ -114,7 +109,33 @@ export async function createInstrumentedRelayClient(options) {
         }
       } catch (error) { return failed(error); }
       finally { busy = null; }
+    }
+  return {
+    send(tool, args = {}) { return send(tool, args); },
+    sendPresented(tool, args, callbacks) {
+      const sinks = { text: callbacks?.text, image: callbacks?.image };
+      if (typeof sinks.text !== 'function' || typeof sinks.image !== 'function') {
+        throw new TypeError('text and image callbacks required before dispatch');
+      }
+      begin('send_presented');
+      const token = Symbol('send_presented');
+      busy = null; reservation = token;
+      const combined = (async () => {
+        try {
+          const reply = await send(tool, args, token);
+          await present(reply.attempt, sinks, {}, token);
+          return reply;
+        } finally { reservation = null; }
+      })();
+      pending = combined;
+      pending.catch(() => {});
+      return pending;
     },
+    wait() {
+      if (!pending) throw new Error('no request to reconcile');
+      return pending;
+    },
+    present(attempt, callbacks, options) { return present(attempt, callbacks, options); },
     async review(attempt, { task, phase, reason }) {
       begin('review');
       try {
@@ -135,9 +156,9 @@ export async function createInstrumentedRelayClient(options) {
       } catch (error) { return failed(error); }
       finally { busy = null; }
     },
-    state() { return { ...client.state(), host_busy: busy, host_blocked: blocked, host_closed: closed, event_sequence: sequence }; },
+    state() { return { ...client.state(), host_busy: busy ?? (reservation ? 'send_presented' : null), host_blocked: blocked, host_closed: closed, event_sequence: sequence }; },
     async close() {
-      if (busy) throw new Error('host operation outstanding; cannot close');
+      if (busy || reservation) throw new Error('host operation outstanding; cannot close');
       if (closed) throw new Error('instrumented client already closed');
       busy = 'close';
       try {
