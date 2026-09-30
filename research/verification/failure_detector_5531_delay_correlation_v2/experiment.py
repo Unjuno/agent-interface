@@ -95,6 +95,13 @@ def summarize(policy, threshold):
         rows.append({"scenario": scenario, **agg})
     return rows
 
+def boundary_probes():
+    return {
+      "late_valid_response_after_failed": run_candidate({"response_tick":7,"restart_tick":None,"host_a_witness":True,"host_b_witness":True,"decoys":[{"tick":3,"kind":"SEMANTICALLY_INVALID","generation":1},{"tick":5,"kind":"STALE_RESPONSE","generation":0}]},2),
+      "decoys_without_valid_response": run_candidate({"response_tick":None,"restart_tick":None,"host_a_witness":False,"host_b_witness":False,"decoys":[{"tick":3,"kind":"SEMANTICALLY_INVALID","generation":1},{"tick":5,"kind":"STALE_RESPONSE","generation":0}]},2),
+      "explicit_restart_then_current_response": run_candidate({"response_tick":12,"restart_tick":10,"host_a_witness":False,"host_b_witness":False,"decoys":[]},4)
+    }
+
 def main():
     output = {"schema": "fd5531-delay-correlation-raw-v1", "allocation": ALLOCATION,
               "freeze_blob_sha": os.environ.get("FREEZE_BLOB_SHA"),
@@ -105,7 +112,7 @@ def main():
                 "partition_recovery_delay": "uniform(3,12)+uniform(1,3)", "restart_tick":10,
                 "false_witness": {"shared_domain_event_p":.04,"independent_domain_p":.005},
                 "crash_witness": {"host_a_p":.96,"host_b_p":.94}, "seed_base":SEED_BASE},
-              "threshold_results": {}}
+              "threshold_results": {}, "boundary_probes": boundary_probes()}
     for threshold in THRESHOLDS:
         output["threshold_results"][str(threshold)] = {
             "typed": summarize("typed", threshold),
