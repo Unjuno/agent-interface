@@ -43,3 +43,12 @@ An initial read-only measurement script incorrectly counted the historical resul
 Run `python3 -O runtime/results/public-six-task-comparison-04/verify.py`. It checks all 1,051 archived files/package hashes without extraction or execution, both independent six-token histories, SDK/host timing recomputation, delivered-image accounting, PNG links, 36 input releases, refusal/reground, read-only lookups, terminal/cleanup scope and both retained stops. Helpers and setup/scorer source are included. Guarded helper text still depends on explicitly named REPL bindings; it is provenance, not an autonomous model runner.
 
 The next production priority is completion feedback and reducing unnecessary primary round trips while keeping explicit visual decisions at uncertainty boundaries. Do not add another scientific issue for the two local stops. Keep #2789 open: exact model-image-visible/perception boundaries, a clean transport-cost comparison, broad desktop reliability and human-tempo benefit remain unproven. Frozen predecessor records stay unchanged. No executable runtime change is promoted from this pair.
+
+## Read-only task 6 visual erratum — 2026-09-30
+
+The retained direct task 6 Save PNG actually shows `/task/6`, not the `/submit/6`
+address described above and in the original primary review. The entered form and
+missing final SAVED cue are confirmed. Independent exact-once submission success
+and `HOLD_INTEGRATION_INCOMPLETE` remain unchanged. See the
+[additive visual erratum, exact PNG and remaining observation boundary](TASK6_VISUAL_ERRATUM.md).
+The original archive and review are preserved verbatim; no input was repeated.
