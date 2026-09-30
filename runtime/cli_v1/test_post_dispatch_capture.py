@@ -45,7 +45,15 @@ class PostDispatchCaptureTests(unittest.IsolatedAsyncioTestCase):
             def dispatch(_session,program,**options):
                 dispatched.append(options)
                 raw=copy.deepcopy(json.loads((Path(__file__).parent/'fixtures/nonpaced_dispatch_review.json').read_text())['receipt']['source']['raw_report'])
-                ex=raw['result']['execution'];ex['observations']=[dict(self.picture(Path(options['capture_directory']),'red'),operation_index=4)] if include_prior else []
+                ex=raw['result']['execution']
+                # Translate historical fixture times into this mocked execution's
+                # clock domain; mixing its old uptime with current release/capture
+                # makes a legitimate summary correctly fall back on fresh hosts.
+                shift=time.monotonic_ns()-200_000_000-ex['started_ns']
+                ex['started_ns']+=shift
+                for wait in ex['waits']:
+                    wait['started_ns']+=shift;wait['ended_ns']+=shift
+                ex['observations']=[dict(self.picture(Path(options['capture_directory']),'red'),operation_index=4)] if include_prior else []
                 ex['releases']=[{'verified':case!='unverified','keys_down':[],'buttons_down':[],'monotonic_ns':time.monotonic_ns()}]
                 ex['ended_ns']=time.monotonic_ns()
                 if expect_summary:
@@ -138,6 +146,10 @@ class PostDispatchCaptureTests(unittest.IsolatedAsyncioTestCase):
         await self.exercise()
     async def test_no_inline_capture_summary_keeps_image_and_full_program_retrieval(self):
         await self.exercise(include_prior=False,wait_ms=20,expect_summary=True)
+        # A fresh CI host has much less uptime than the frozen fixture host.
+        real_clock=time.monotonic_ns;origin=real_clock()
+        with self.subTest(clock='fresh-host'),patch('time.monotonic_ns',side_effect=lambda:20_000_000_000+real_clock()-origin):
+            await self.exercise(include_prior=False,wait_ms=20,expect_summary=True)
     async def test_program_without_inline_observe_gets_post_release_image(self):
         await self.exercise(include_prior=False)
     async def test_refusal_unverified_release_and_recovery_skip_post_capture(self):
