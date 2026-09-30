@@ -1,0 +1,79 @@
+{
+  "alpha": 0.05,
+  "arms": [
+    {
+      "certificate_decision": "ALLOW_MARGINAL_CLAIM_ONLY",
+      "conditional_selected_risk": 1.0,
+      "empirical_population_loss": 0.04,
+      "fail_closed_singleton": "UNCERTAIN",
+      "id": "iid_reference",
+      "set_valued": "{PASS,FAIL}"
+    },
+    {
+      "certificate_decision": "REJECT_STALE",
+      "conditional_selected_risk": 1.0,
+      "empirical_population_loss": 0.1,
+      "fail_closed_singleton": "UNCERTAIN",
+      "id": "temporal_shift",
+      "set_valued": "{PASS,FAIL}"
+    },
+    {
+      "certificate_decision": "REJECT_POPULATION_MISMATCH",
+      "conditional_selected_risk": 0.8,
+      "empirical_population_loss": 0.12,
+      "fail_closed_singleton": "UNCERTAIN",
+      "id": "ui_layout_shift",
+      "set_valued": "{PASS,FAIL}"
+    },
+    {
+      "certificate_decision": "REJECT_POPULATION_MISMATCH",
+      "conditional_selected_risk": 0.5,
+      "empirical_population_loss": 0.1,
+      "fail_closed_singleton": "UNCERTAIN",
+      "id": "task_family_shift",
+      "set_valued": "{PASS,FAIL}"
+    },
+    {
+      "certificate_decision": "REJECT_ASSUMPTION_INVALID",
+      "conditional_selected_risk": 0.8,
+      "empirical_population_loss": 0.04,
+      "fail_closed_singleton": "UNCERTAIN",
+      "id": "adaptive_repeated_query",
+      "set_valued": "{PASS,FAIL}"
+    }
+  ],
+  "authority_granted": false,
+  "calibration": {
+    "crc_upper": 0.045,
+    "digest": "sha256:8aa1c2f7aa293626aaed346a57fbe4928ddb89df9486588517dd5b1339c3aa6b",
+    "errors": 8,
+    "n": 199
+  },
+  "controls": [
+    {
+      "decision": "REJECT_CALIBRATION_DIGEST_MISMATCH",
+      "id": "tampered_nonempty_digest"
+    },
+    {
+      "decision": "REJECT_CALIBRATION_DIGEST_MISMATCH",
+      "id": "changed_record_bytes"
+    },
+    {
+      "decision": "REJECT_CALIBRATION_STATS_MISMATCH",
+      "id": "summary_count_mismatch"
+    },
+    {
+      "decision": "REJECT_UNSUPPORTED_SCOPE",
+      "id": "conditional_scope"
+    },
+    {
+      "decision": "REJECT_POPULATION_MISMATCH",
+      "id": "population_mismatch"
+    },
+    {
+      "decision": "REJECT_STALE",
+      "id": "stale_calibration"
+    }
+  ],
+  "status": "T0_SUCCESSOR_EXECUTED"
+}
