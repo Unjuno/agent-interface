@@ -1,0 +1,52 @@
+{
+  "disposition": "corrected audit of unchanged candidate raw; v1 failure retained",
+  "errors": [],
+  "exhaustive_states_checked": 32,
+  "kill_matrix": {
+    "accept_stale": {
+      "baseline": false,
+      "independent_exhaustive": true,
+      "killed_by_declared_oracles": true,
+      "metamorphic": true,
+      "non_equivalent": true
+    },
+    "commit_unknown": {
+      "baseline": true,
+      "independent_exhaustive": true,
+      "killed_by_declared_oracles": true,
+      "metamorphic": false,
+      "non_equivalent": true
+    },
+    "compound_provenance_authority_terminal": {
+      "baseline": false,
+      "independent_exhaustive": true,
+      "killed_by_declared_oracles": true,
+      "metamorphic": false,
+      "non_equivalent": true
+    },
+    "drop_provenance": {
+      "baseline": true,
+      "independent_exhaustive": true,
+      "killed_by_declared_oracles": true,
+      "metamorphic": false,
+      "non_equivalent": true
+    },
+    "ignore_authority": {
+      "baseline": false,
+      "independent_exhaustive": true,
+      "killed_by_declared_oracles": true,
+      "metamorphic": true,
+      "non_equivalent": true
+    },
+    "reactivate_terminal": {
+      "baseline": false,
+      "independent_exhaustive": true,
+      "killed_by_declared_oracles": true,
+      "metamorphic": true,
+      "non_equivalent": true
+    }
+  },
+  "raw_sha256": "cc8677299ecb2bef5435f07cd9c90f97555a80ca25980b7b0eaf803e5d7ae6b9",
+  "schema": "issue5541-mutation-adequacy-audit-v2",
+  "status": "PASS_T0_MUTATION_ADEQUACY"
+}
