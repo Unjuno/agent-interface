@@ -41,9 +41,9 @@
   ],
   "candidate_sha256": {
     "run_formal_x11.py": "ba24bb7795fec409b30c4a2c7b5362d552a1d70bd1097a52b7160e2ea069b54a",
-    "audit_formal_x11.py": "b1ead58b0bde6d2da7205c89e201f998000841a17f1520d0fd62a033d0ce7b9d",
+    "audit_formal_x11.py": "97e88c693b7b24e08d75e599c7471d1b109f6d64e6ffdccdd1cf12566775311b",
     "EXPECTED.json": "ea6ef132acd07bb3fa20cd5db2a3acfd9bb5ef2648478e4436de0ee1400cbc53",
-    "test_audit_formal_x11.py": "d7562af140e696c01eed730ee0d7f8658f05f75b447e0c9a676c0b11c9e6f6cd",
+    "test_audit_formal_x11.py": "fbc59d5ea8a49604b2879d0b1a1bf3d0f052d668aaac0abb85efdc7b95603418",
     "dependencies/input_owner_v11.py": "14333b8e8450950bcdb60fa7055f7a7d4b279438ab44fbb8d14eb2f45fad057c"
   },
   "expected_inventory": [
@@ -58,5 +58,11 @@
     "D": "PASS_OWNER_THREAD_KEYUP_BRACKET_SCOPED only if each predeclared release exists in exact order, key/owner/intent identities bind, explicit caller-owner timing nests, server-observed keymap transitions down→up, cancellation is classified without fabricated caller timestamps, authority/physical claims are false, owner/thread/container cleanup is externally verified. Setup gap=STOP; semantic/control change=FAIL.",
     "C": "XSync is server-processing completion only; one Xvfb server and one fixture, no game/MAP01/model/provider/GPU/network/user desktop.",
     "U": "No application-consumption instant, MAP01 occupancy, efficacy, safety rate, latency, human tempo, reliability, or transfer claim."
-  }
+  },
+  "pre_run_revision": [
+    {
+      "reason": "raw-only auditor additionally requires the cancellation owner_release receipt itself to report verified neutral keys/buttons; mutation coverage is 8/8",
+      "supersedes": "previous pre-formal candidate; no X11 or container invocation had occurred"
+    }
+  ]
 }
