@@ -258,3 +258,5 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 - [`x11_midprogram_keymap_docker_diagnostic_20260930/`](x11_midprogram_keymap_docker_diagnostic_20260930/) — nonformal local Docker focus-versus-click diagnostic.
 
 - [`aoi_43_t0/`](aoi_43_t0/) — executed Age-of-Information critical-event retention T0 for #43 (exploratory; not runtime validation).
+
+- [`x11_midprogram_keymap_5236_formal05_save_diagnostic_20261001/`](x11_midprogram_keymap_5236_formal05_save_diagnostic_20261001/) — Nonformal local Docker check rejects an extra one-second post-dispatch wait as the missing-effect cause under US layout; not a remap result.
