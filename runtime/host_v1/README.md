@@ -31,6 +31,10 @@ await client.present(closed.attempt, { text: async value => {}, image: async val
 await client.close();
 ```
 
+The host creates `evidenceDirectory` exclusively. Supply a path that does not exist; do not create that directory before constructing the client. Keep the returned client in a durable caller binding before starting subsequent presentation work.
+
+The `text` callback receives both strings and structured objects, including the MCP result-status object. Pass each value to a sink that accepts its type, or format objects explicitly with `JSON.stringify(value)`; do not unconditionally parse callback values as JSON strings. For a sink accepting only text, use `text: async value => deliverText(typeof value === "string" ? value : JSON.stringify(value))`. A callback failure blocks further ordinary calls; reconcile retained replies and close the original transport rather than replaying input.
+
 The callback bodies above must be implemented by the host; empty callbacks do not constitute observation or review. The API does not supply a model, select actions, mint authority, install sensors, queue calls, restart applications or retry input. It returns metadata and the tool's image unchanged. A review receipt records attribution, not proof of perception or semantic completion.
 
 `send` permits one outstanding call. If a host observation times out, await `wait()` on that same client; do not send again or create another client to replay it. Requests and replies are retained before delivery. Files are exclusive writes in a fresh directory; this is not fsync-backed crash durability or authenticated evidence. Ambiguous tool delivery, malformed replies or host-journal errors require reconciliation. `close()` ends the transport only and does not prove application cleanup. Separate caller-owned cleanup may still be needed.
@@ -151,3 +155,10 @@ already changed the application. Optional `target` and `region` request a captur
 after recovery. An unavailable capture does not undo the completed recovery;
 observe separately instead of repeating it. Recovery issues no new lease and
 proves neither task success nor redraw completion.
+
+[Primary state-dependent capture](../results/primary-layout-feedback-01/README.md)
+records a lower-page form crop followed by a full-frame completion observation.
+The saved document cue appeared outside the form crop. Widen capture when the
+next action can replace the document or move the required cue. The retained
+caller setup failures and expired allocation are included; this single known
+task does not establish a general speed or token benefit.
