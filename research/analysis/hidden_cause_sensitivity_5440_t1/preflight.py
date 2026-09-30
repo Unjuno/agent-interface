@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from fractions import Fraction
 from pathlib import Path
@@ -36,7 +37,13 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("input", type=Path)
     args = parser.parse_args()
-    validate(json.loads(args.input.read_text(encoding="utf-8")))
+    data_bytes = args.input.read_bytes()
+    candidate_bytes = args.input.with_name("candidate.py").read_bytes()
+    if hashlib.sha256(data_bytes).hexdigest() != "02ba32c8f1a4c8ab3d65e7fa138f459602a22a8ab2224859d9b916315a14f20e":
+        raise SystemExit("STOP_FROZEN_INPUT_SHA256")
+    if hashlib.sha256(candidate_bytes).hexdigest() != "ec6adc9966d439a247f30ccb50b42f1185f7522393e60f2b65daabaf36e1a680":
+        raise SystemExit("STOP_FROZEN_CANDIDATE_SHA256")
+    validate(json.loads(data_bytes))
     print("PASS_T1_INPUT_STRUCTURE_ONLY claims=16 pairs=8 scientific_result=NONE")
 
 
