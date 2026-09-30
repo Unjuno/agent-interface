@@ -14,6 +14,17 @@ from unittest import mock
 from runtime.cli_v1.api import dispatch, doctor
 
 
+class SummaryArgumentTests(unittest.TestCase):
+    def test_missing_retained_review_options_reject_before_dispatch(self):
+        from runtime.cli_v1.__main__ import main
+        args = ['agent-interface','dispatch','--program','unused.json','--targets','unused-targets.json',
+                '--current-observation-seq','1','--current-binding-revision','1','--detail','summary']
+        with mock.patch('sys.argv',args),mock.patch('sys.stderr',io.StringIO()),mock.patch('runtime.cli_v1.__main__.dispatch') as invoke:
+            with self.assertRaises(SystemExit) as caught:main()
+            self.assertEqual(caught.exception.code,2)
+            invoke.assert_not_called()
+
+
 class FakeSession:
     def __init__(self):
         self.calls = []

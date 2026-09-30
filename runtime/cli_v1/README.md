@@ -571,3 +571,17 @@ The native bridge uses this API and retains a public observation report before
 its existing binding/image checks. A returned public capture is not an accepted
 bridge source: if binding changed, the bridge still refuses to advance its source.
 No new readiness detection, automatic capture retry or lease renewal is added.
+
+### Retained CLI dispatch summary
+
+For a CLI dispatch, opt into `--detail summary --review --run-directory <fresh-directory> --compact --report-refs`.
+The existing public success projection keeps execution outcome, observations,
+release records and image data. Complete raw `report.json` is saved first; its
+exact byte length/hash must match the presented source before projection.
+The returned `presentation.retrieve` describes a read-only `review` command
+for that report. Full is the default and the review command's normal format.
+Missing/changed raw reports, report-persistence failures, action failures and
+unsupported records stay full; no input is replayed. Retention status remains
+outside the partial receipt. Summaries are not reversible receipts themselves.
+The existing MCP projection gates are shared. Smaller serialized metadata is
+not a measurement of model input tokens, cost or faster useful feedback.

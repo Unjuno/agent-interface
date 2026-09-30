@@ -12,6 +12,34 @@ def encoded(value):
 
 
 def summarize_public_dispatch(view):
+    call_id = view.get('call_id') if isinstance(view, dict) else None
+    if not isinstance(call_id, str) or not call_id:
+        return deepcopy(view)
+    return _summarize_dispatch(view, {"tool": "interface_results", "arguments": {
+        "call_id": call_id, "include_image": False, "compact": True,
+        "report_refs": True, "detail": "full"}})
+
+
+def summarize_cli_dispatch(view, run_directory):
+    """Project only when the exact complete raw report is locally recoverable."""
+    import hashlib
+    from pathlib import Path
+    full = deepcopy(view)
+    try:
+        root = Path(run_directory).absolute()
+        report = root / 'report.json'
+        data = report.read_bytes()
+        source = view['receipt']['source']
+        if len(data) != source['bytes'] or hashlib.sha256(data).hexdigest() != source['sha256']:
+            return full
+        return _summarize_dispatch(view, {"command": "review", "arguments": {
+            "report": str(report), "run_directory": str(root),
+            "compact": True, "report_refs": True}})
+    except (OSError, KeyError, TypeError, ValueError):
+        return full
+
+
+def _summarize_dispatch(view, retrieval):
     """Summarize known completed reports only, without changing images or outcomes."""
     full = deepcopy(view)
     try:
@@ -43,7 +71,7 @@ def summarize_public_dispatch(view):
                 or ("session" in view and encoded(raw.get("session")) != encoded(view["session"]))
                 or view.get("session", {}).get("recovery_required", False) is not False
                 or raw.get("session", {}).get("recovery_required", False) is not False
-                or not isinstance(view["call_id"], str) or not view["call_id"]):
+                ):
             return full
         if "post_dispatch_inspection" in raw or "post_dispatch_inspection" in view:
             inspection = raw["post_dispatch_inspection"]
@@ -124,8 +152,7 @@ def summarize_public_dispatch(view):
             projected["receipt"]["reported_session"] = deepcopy(raw["session"])
         projected["presentation"] = {"requested": "summary", "returned": "summary",
             "omitted": ["source programs", "expansion map", "individual waits", "completed operation indices", "duplicate session and receipt metadata"],
-            "retrieve": {"tool": "interface_results", "arguments": {"call_id": view["call_id"], "include_image": False,
-                "compact": True, "report_refs": True, "detail": "full"}}}
+            "retrieve": deepcopy(retrieval)}
         return projected if len(encoded(projected)) < len(encoded(view)) else full
     except (KeyError, TypeError, ValueError, AttributeError):
         return full
