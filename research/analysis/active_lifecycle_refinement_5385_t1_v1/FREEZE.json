@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "experiment": "issue-5385-t1-finite-alternating-refinement",
+  "status": "FROZEN_AWAITING_FORMAL_WINDOW",
+  "issue": "Unjuno/agent-interface#5385",
+  "branch": "research/active-lifecycle-refinement-5385-t1-20261001",
+  "research_path": "research/analysis/active_lifecycle_refinement_5385_t1_v1/",
+  "allocation_id": "ACTIVE-AUTOMATA-5385-T1-DESKTOP-20261001-01",
+  "source_main_sha": "e32ace71fa1158ca8d5eec13fe620a1a51c1ff00",
+  "source_manifest_path": "SOURCE_MANIFEST.json",
+  "source_manifest_sha256": "16527b92c7afd9f1b901527551c26b2d8b13a52b07f8c0aa1ed977895e64e551",
+  "source_commit": "the exact branch HEAD commit containing this freeze and source manifest; record its returned SHA in EXECUTION.json before candidate invocation",
+  "candidate_invocations": 1,
+  "independent_auditor_invocations": 1,
+  "retries": 0,
+  "slot": {
+    "start_utc": "2026-09-30T20:45:00Z",
+    "end_utc": "2026-09-30T21:00:00Z",
+    "start_jst": "2026-10-01T05:45:00+09:00",
+    "end_jst": "2026-10-01T06:00:00+09:00",
+    "status": "self-assigned unique CPU-only slot under user's standing autonomous-research direction; does not inherit earlier proposals",
+    "preceding_visible_requests": [
+      "#5156 2026-09-30T19:15:00Z/19:30:00Z request",
+      "#5550 2026-09-30T19:45:00Z/20:00:00Z request",
+      "#5318 and #2437 proposals for 20:15–20:30Z withdrawn; no slot transfer"
+    ],
+    "start_gate": "Before either formal container, recheck current GitHub main equals source_main_sha; exact live queue has no overlap; Docker context is desktop-linux; current Docker ps inventory is empty; image digest/platform match below; otherwise STOP before invocation."
+  },
+  "container": {
+    "engine_context": "desktop-linux",
+    "engine_version_observed_preparation_only": "28.5.1",
+    "image": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "image_id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "platform": "linux/amd64",
+    "network": "none",
+    "cpu_limit": 1,
+    "memory_limit": "256m",
+    "pids_limit": 64,
+    "root_filesystem": "read-only",
+    "source_mount": "read-only",
+    "output_mount": "separate read-write directory only",
+    "capabilities": "all dropped",
+    "security_opt": "no-new-privileges",
+    "pull_or_build": false
+  },
+  "formal_commands": [
+    "docker run --rm --network none --cpus=1 --memory=256m --pids-limit=64 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --security-opt no-new-privileges --cap-drop ALL -v <verified-source>:/src:ro -v <unique-output>:/out:rw -w /src python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 python experiment.py --output /out/formal.jsonl --source-commit <freeze-commit-sha> --allocation-id ACTIVE-AUTOMATA-5385-T1-DESKTOP-20261001-01",
+    "docker run --rm --network none --cpus=1 --memory=256m --pids-limit=64 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --security-opt no-new-privileges --cap-drop ALL -v <verified-source>:/src:ro -v <unique-output>:/out:rw -w /src python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 python audit.py --raw /out/formal.jsonl --output /out/audit.json"
+  ],
+  "output_contract": {
+    "raw": "raw/formal.jsonl",
+    "independent_audit": "raw/audit.json",
+    "raw_write_once": true,
+    "audit_only_if_candidate_exit_zero": true,
+    "never_overwrite_or_rerun": true
+  },
+  "expected_witnesses_are_predictions_not_results": {
+    "unsafe_output": ["invalidate", "retry", "retry", "retry", "effect"],
+    "missing_refusal": ["invalidate", "retry", "retry", "retry", "retry"]
+  }
+}
