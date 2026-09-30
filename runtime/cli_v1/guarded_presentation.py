@@ -8,7 +8,7 @@ _GUARD_FIELDS = frozenset(('stage','observation_sequence','eligible','status','h
     'private_registry_id_exposed'))
 _TOP_FIELDS = frozenset(('operation','task_success','replay_allowed','status','result',
     'source','observation_report','feedback_status','session','image_status','image',
-    'call_directory','call_id','retained_call','operation_invoked'))
+    'call_directory','call_id','retained_call','operation_invoked','image_delivery'))
 _RESULT_FIELDS = frozenset(('status','admission','required_capabilities','execution',
     'recovery_required','guard_checks'))
 _EXECUTION_FIELDS = frozenset(('started_ns','ended_ns','emissions','program_emissions',
@@ -27,7 +27,9 @@ def brief_guarded_report(view):
     try:
         result=view['result'];execution=result['execution'];guards=result['guard_checks']
         session=view['session']
-        if (set(view)-_TOP_FIELDS or set(result)!=_RESULT_FIELDS or set(execution)!=_EXECUTION_FIELDS
+        if (set(view)-_TOP_FIELDS
+            or ('image_delivery' in view and view['image_delivery'] != 'omitted_by_request')
+            or set(result)!=_RESULT_FIELDS or set(execution)!=_EXECUTION_FIELDS
             or view['operation']!='guarded_input' or view['status']!='completed'
             or view['task_success'] is not None or view['replay_allowed'] is not False
             or result['status']!='completed' or result['admission']!='accepted'
