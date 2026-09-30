@@ -27,7 +27,7 @@ class CutTests(unittest.TestCase):
  def test_conflicting_duplicate_is_contradictory(self):
   r=next(x for x in build_raw()["rows"] if x["case"]=="conflicting_duplicate_delivery");self.assertEqual(r["decision"],"CONTRADICTORY")
  def test_identical_duplicate_is_dedup_safe(self):
-  r=next(x for x in build_raw()["rows"] if x["case"]=="identical_duplicate_delivery");self.assertEqual(r["decision"],"CONSISTENT");self.assertEqual(len(set(r["selected_event_ids"])),3)
+  r=next(x for x in build_raw()["rows"] if x["case"]=="identical_duplicate_delivery");self.assertEqual(r["decision"],"CONSISTENT");self.assertEqual(r["unique_received_message_ids"],["m1"])
  def test_freshness_only_admits_an_inconsistent_bundle(self):
   r=next(x for x in build_raw()["rows"] if x["case"]=="cross_ack" and x["cut"]=={"A":0,"B":2});self.assertTrue(r["per_record_freshness_admits"]);self.assertFalse(r["certified_cross_source_claim"])
  def test_no_side_effect_capability_in_raw(self):self.assertEqual(build_raw()["side_effects"],{"authority_grants":0,"actions_dispatched":0,"network_calls":0,"model_calls":0,"gpu_calls":0})
