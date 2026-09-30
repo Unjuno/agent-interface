@@ -22,3 +22,7 @@ The preregistered hypothesis, bounded protocol, and decision limits are in Issue
 This supports only the local geometry/map sequencing discriminator. It does not test focus, key delivery, first-character loss, fixed-delay readiness, load effects, or task correctness. Raw JSON does not embed its own source hash or main pin; those identities are in the pre-run freeze and the recorded pre-run hash readback, so downstream consumers must pair the raw with this manifest. No corruption-mutation suite was run for this small auditor. The result is therefore a bounded construction PASS, not qualification of the complete Issue #5260 successor or runtime integration.
 
 The original #5260 r0 STOP remains untouched. No Docker, GUI input, XTest, model/provider, GPU, or user display was used. No Xvfb process remained after the invocation.
+
+## Post-merge audit-control follow-up
+
+An additive test module exercises the auditor against temporary JSON copies; it never edits the retained raw or saved audit. Baseline accepted, and 7/7 mutations were rejected: wrong schema, nonzero app exit, Map after accepted sample, unmapped state, zero width, center outside root, and inverted sample clock. Command: `python research/integration/tk_map_barrier_5260_successor_5296_v1/test_audit.py` (2 tests pass). This follow-up does not upgrade the experiment scope or repair the raw's manifest linkage limitation noted above.

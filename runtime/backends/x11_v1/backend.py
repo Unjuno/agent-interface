@@ -247,7 +247,7 @@ class X11Backend:
                     self._activation_target(op['target'])
                 focused = True
             elif kind in {"pointer_move", "observe"} and not focused:
-                raise X11BackendError(f"{kind} requires focused target")
+                raise X11BackendError(f"{kind} requires focused target; put focus or activate before this operation in the same program; prior dispatch focus is not inherited")
             elif kind == "verify":
                 raise X11BackendError("verify predicates are not implemented by the X11 backend; observe and explicitly review application state")
             elif kind == "text":
