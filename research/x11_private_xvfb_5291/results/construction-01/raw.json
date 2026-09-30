@@ -1,0 +1,54 @@
+{
+  "base_main_sha": "1d5b5f2a7b8d7ac6a467a1aaabdfc30c851f7f72",
+  "checks": {
+    "host_socket_unchanged": true,
+    "namespace_bound": true,
+    "no_forced_kill": true,
+    "private_tmpfs": true,
+    "readiness": true,
+    "wrapper_exit_zero": true,
+    "xvfb_exit_zero": true
+  },
+  "child_mount_ns": "mnt:[4026532232]",
+  "decision": "PASS",
+  "errors": [],
+  "finished_utc": "2026-09-30T08:08:35.919300+00:00",
+  "forced_kill": false,
+  "host_socket_after": {
+    "device": 38,
+    "exists": true,
+    "inode": 13,
+    "is_socket": true,
+    "mode": 49663
+  },
+  "host_socket_before": {
+    "device": 38,
+    "exists": true,
+    "inode": 13,
+    "is_socket": true,
+    "mode": 49663
+  },
+  "log_sha256": "a4e471a180703e08838e544e59bfda10bf9927a6ef47938d8fa17405ac4bdc31",
+  "mountinfo_line": "613 612 0:88 / /tmp/.X11-unix rw,nosuid,nodev,relatime - tmpfs tmpfs rw",
+  "preflight": {
+    "Xvfb": "/usr/sbin/Xvfb",
+    "mount": "/usr/sbin/mount",
+    "python3": "/usr/sbin/python3",
+    "unshare": "/usr/sbin/unshare"
+  },
+  "readiness": {
+    "display": ":97",
+    "height": 480,
+    "width": 640
+  },
+  "schema": "x11-private-xvfb-5291-v1",
+  "sigterm_sent": true,
+  "started_utc": "2026-09-30T08:08:35.708064+00:00",
+  "wrapper_exit_code": 0,
+  "wrapper_mount_ns": "mnt:[4026532220]",
+  "wrapper_pid": 293,
+  "xvfb_exit_code": 0,
+  "xvfb_pid": 299,
+  "xvfb_proc_mount_ns": "mnt:[4026532232]",
+  "xvfb_proc_stat_before_signal": "299 (Xvfb) S 294 293 293 0 -1 4194560 3030 794 431 12 1 4 0 0 20 0 1 0 14884 233975808 8642 18446744073709551615 104229950795776 104229952357637 140724909688528 0 0 0 0 4096 1098933487 1 0 0 17 4 0 0 0 0 0 104229952682832 104229952726224 104230930927616 140724909695587 140724909695640 140724909695640 140724909699049 0\n"
+}
