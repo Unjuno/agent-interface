@@ -30,7 +30,7 @@ The local component checks below ran against `33c19225f117d6d927a98e791e620de374
 
 ## Current-source feasibility findings
 
-1. The proposed v23 path is not ready to satisfy the requested endpoints as-is. `session_map01_v6.py` emits `post_control_score` only on `finish`, so it does not timestamp a first useful kill/exit during a plan. The v23 effect receipts classify viewport pixel change and expressly do not call it useful feedback.
+1. The current-main GitHub copy of `research/doom/session_map01_v6.py` (directly fetched at the recheck) emits `post_control_score` only on `finish`, so it does not timestamp a first useful kill/exit during a plan. The sparse local checkout does not include this file; it was not locally executed or hashed in this preflight. The v23 effect receipts classify viewport pixel change and expressly do not call it useful feedback.
 2. The retained `input_owner_v10.py` timestamps admission and eventual empty release, but not each normal per-key `up`. `input_transition_owner_v3.py` brackets the caller-side RPC around a fake/inner owner in its tests; it does not prove an owner-thread KeyRelease-to-XSync bracket. Do not label that bracket as exact physical occupancy.
 3. Existing scorer components offer a possible authority-separated path: `independent_progress_clock_v2.py`, `main_thread_scorer_polling_v1.py`, and `map01_scorer_stdio_adapter_v1.py` can retain scorer-only kill/death/exit samples outside the controller-visible stream. They are not yet integrated into the proposed v23 session or bound to a physical actuation/plan.
 
