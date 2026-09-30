@@ -100,6 +100,33 @@ class MCPSessionOwner:
             row['observation_report'] = observation
         return row
 
+    def inspect_after_dispatch(self, report, target):
+        """Optional metadata only; never replace execution evidence or refresh its image."""
+        started = time.monotonic_ns()
+        result = report.get('result', {})
+        releases = result.get('execution', {}).get('releases', [])
+        self.target_review = None
+        ready = (self.state == 'open' and self.session is not None
+                 and self.session.recovery_required is False
+                 and result.get('status') == 'completed'
+                 and result.get('recovery_required') is False
+                 and bool(releases) and all(
+                     item.get('verified') is True and item.get('keys_down') == []
+                     and item.get('buttons_down') == [] and 'error' not in item
+                     for item in releases))
+        if not ready:
+            inspection = {'status': 'skipped', 'reason': 'DISPATCH_NOT_COMPLETED_AND_RELEASED'}
+        else:
+            try:
+                inspection = self.inspect_target(target)
+            except Exception as error:
+                inspection = {'status': 'needs_review', 'error': repr(error)}
+        return dict(inspection, started_ns=started, ended_ns=time.monotonic_ns(),
+                    input_dispatched=False, authority_granted=False,
+                    scope='Metadata sampled after dispatch. Not atomically bound to its image; '
+                          'no redraw or task completion acknowledgement. Review explicitly; '
+                          'retained lookup does not renew the review ID.')
+
     def recover_input(self, current_binding_revision, target=None, region=None,
                       capture_directory=None):
         # Never open/reopen a connection to recover a different input owner.

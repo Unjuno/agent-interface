@@ -73,7 +73,8 @@ export async function createInstrumentedRelayClient(options) {
           await event('reply_available', { attempt, tool, relay_id: reply.id ?? null,
             reply_sha256: createHash('sha256').update(bytes).digest('hex') });
           delivered.add(attempt);
-          return reply;
+          // Host-only identity; persisted relay bytes and protocol IDs stay unchanged.
+          return { ...reply, attempt };
         } catch (error) { return failed(error); }
         finally { busy = null; }
       })();

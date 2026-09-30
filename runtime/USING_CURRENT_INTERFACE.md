@@ -503,3 +503,101 @@ saved and visually reviewed two strings through the portable public MCP runtime,
 then independently checked the final file after close. The record includes a
 setup failure and measured preflight overhead; it does not claim faster model
 interaction or general desktop reliability.
+
+## Optional paced-dispatch summaries
+
+For supported successful public paced-text dispatches, explicitly combine
+`detail="brief"`, `compact=true` and `report_refs=true`. Images and outcome
+fields remain present; duplicated programs, validated wait details and expansion
+maps can be omitted from a marked partial receipt. Follow
+`presentation.retrieve` for the full retained report without replaying input.
+Full output remains the default, and failures or unsupported shapes stay full.
+
+[Fresh primary use](results/public-paced-brief-01/README.md) exercised both brief
+images and full retrieval. The primary detected an initial missing character in
+the returned image and made an explicit repair. This option reduces serialized
+text for eligible replies; it does not establish token savings, task success or
+faster interaction, and the retrieval itself adds a call.
+
+## Clicking a field before entering text
+
+Treat field activation and text entry as separate decisions when the recipient is
+uncertain. Click the field using current geometry, inspect useful feedback, then
+enter and review the value before saving or submitting it. A screenshot without
+visible recipient evidence does not establish that the field is ready. If the
+application offers no useful readiness evidence, that uncertainty remains.
+
+A single click/text batch can outrun the application's handling of the click.
+`focus` verifies an X11 window ancestry, not the application-internal editor;
+`wait_update` is an explicit fixed delay, not a ready acknowledgement. Existing
+integration tests use a 50 ms post-click wait, but that is not a universal safe
+threshold and the runtime does not insert it automatically. Paced text gaps are
+between characters and do not settle the click before the first character.
+
+[Retained click-recipe intake](results/click-readiness-intake-01/README.md)
+verified that the earlier successful click study included cooperative app turns
+between activation and text. Its results therefore do not validate removing those
+boundaries. The [public primary trial](results/public-paced-brief-01/README.md)
+retains a missing first character, visual detection and an explicit repair.
+Do not replay an uncertain whole input program to recover a missing prefix.
+
+For a known click-to-text timing problem, an explicit bounded pause can be placed
+between mouse release and text, using the existing operations:
+
+```json
+{"op":"wait_update","timeout_ms":50}
+```
+
+This is a caller-selected mitigation, not a readiness condition. In a fresh
+[public MCP integration comparison](results/click-text-comparison-01/README.md),
+the known Tk fixture saved the exact text in 6/6 cases with this pause versus 2/6
+without it; four missing-prefix outcomes are retained. The pause added about
+54.4 ms to median local tool return. This does not establish a universal 50 ms
+threshold or faster end-to-end use, and it does not replace value review.
+
+[Primary two-editor use](results/click-primary-01/README.md) applied the explicit
+pause through the portable public MCP runtime, reviewed each unsaved value, then
+saved in a separate program. Both final files were exact with six calls, five
+images and no repair. This is functional evidence for the explicit workflow;
+reviewing before save adds a decision boundary and is not a speedup claim.
+
+## Optional successful-dispatch summaries
+
+`interface_dispatch` and retained `interface_results` accept `detail="summary"`
+with `compact=true, report_refs=true`. This opt-in partial view supports known
+successful public dispatch reports, including short nonpaced save programs.
+Default `detail="full"` and the existing paced `detail="brief"` remain unchanged.
+
+The receipt schema is `agent-interface/receipt-view-dispatch-summary-v1`.
+Read `receipt.execution_summary` for execution times, emissions, all capture,
+release and activation records, completed operation count and fixed-wait totals.
+Images, outcome fields, target/session state and call identity remain unchanged.
+A retained lookup without a live session snapshot keeps its historical session
+at `receipt.reported_session`; it does not mint a current binding or authority.
+Source programs, expansion mapping, per-wait timestamps, completed indices and
+duplicate receipt/session metadata are omitted. The source digest identifies the
+retained full report, not the summary. This does not assert task success.
+
+Follow `presentation.retrieve` to obtain the same call with `detail="full"`
+without replaying input or taking another capture. The lossless receipt decoder
+deliberately rejects the partial summary schema. Failed, incomplete, unfamiliar
+or inconsistent omitted records stay full, as do reports that would not shrink.
+A fixed wait remains a delay, not an acknowledgement of an application update.
+
+[Primary summary-mode use](results/public-summary-01/README.md) exercised paced
+input, a short save, full retrieval and an unchanged full refusal. The two actual
+successful replies used 45.3% fewer canonical JSON bytes than their full views
+and 27.8% fewer than the previous brief option. This is not measured token/cost or
+speed improvement; the full lookup itself adds a call. The record includes the
+retained-session correction and its failed-before/passing-after checks.
+
+## Primary use with summaries and returned host attempts
+
+[Current-main primary examples](results/current-primary-summary-01/README.md)
+combine public summary dispatches and `reply.attempt` presentation in a small
+entry task and LibreOffice Calc, including explicit format-dialog selection.
+Both saved effects were independently checked after control ended. In Calc,
+a completed Return plus a 100ms wait still captured the dialog; a fresh read-only
+inspection confirmed it had closed. Do not repeat uncertain input merely because
+the result image has not yet changed. This is scoped usability evidence, not a
+matched speed, token/cost or generic readiness result.

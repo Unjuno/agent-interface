@@ -38,6 +38,8 @@ SOURCE_FILES = (
     "runtime/cli_v1/mcp_session.py",
     "runtime/cli_v1/mcp_guarded.py",
     "runtime/cli_v1/guarded_presentation.py",
+    "runtime/cli_v1/public_presentation.py",
+    "runtime/cli_v1/public_summary.py",
     "runtime/cli_v1/x11_target_review.py",
     "runtime/cli_v1/receipt.py",
     "runtime/cli_v1/review.py",

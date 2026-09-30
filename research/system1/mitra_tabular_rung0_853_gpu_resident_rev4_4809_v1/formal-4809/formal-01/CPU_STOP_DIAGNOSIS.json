@@ -1,0 +1,34 @@
+{
+  "schema": "issue-4809-cpu-stop-diagnosis-v1",
+  "formal_allocation": "mitra-gpu-rung0-853-rev4-successor-local-20260927-01",
+  "diagnostic_mode": "CPU-only, network-disabled, read-only-container; no model mount, no GPU request, no formal result rerun",
+  "formal_stop": {
+    "stage": "support_context_setup",
+    "exception_type": "TypeError",
+    "message": "Cannot cast array data from dtype('O') to dtype('int64') according to the rule 'safe'",
+    "model_load_count": 0
+  },
+  "source_trace": {
+    "fit_calls": "make_stratified_dataset_split(X, y, seed=self.seed)",
+    "split_calls": "np.bincount(y)",
+    "source_module": "autogluon.tabular.models.mitra._internal.data.dataset_split",
+    "inference": "The formal string labels C0..C5 arrive as NumPy object dtype; np.bincount requires integer class IDs."
+  },
+  "reproduction_on_exact_frozen_support_fixture": {
+    "rows": 256,
+    "classes": ["C0", "C1", "C2", "C3", "C4", "C5"],
+    "string_labels_dtype": "object",
+    "string_labels_result": "same TypeError",
+    "integer_encoding": "C0..C5 -> 0..5, dtype int64",
+    "integer_split_result": "PASS",
+    "split_sizes": [204, 52, 204, 52],
+    "observed_classes": [0, 1, 2, 3, 4, 5]
+  },
+  "limitations": [
+    "No Mitra model checkpoint was loaded.",
+    "No GPU was requested or used.",
+    "This confirms support-label preprocessing as the cause of the STOP and verifies split compatibility only.",
+    "The original one-shot formal allocation remains terminal; this diagnostic does not authorize rerun."
+  ],
+  "proposed_successor_change": "Encode categorical labels deterministically to contiguous int64 class IDs before classifier.fit, while preserving and auditing the intended six-column probability ABI; validate output ordering against the frozen class vocabulary before any new one-shot GPU invocation."
+}
