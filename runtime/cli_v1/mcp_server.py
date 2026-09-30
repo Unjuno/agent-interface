@@ -36,7 +36,9 @@ PublicProgram = Annotated[dict, Field(description=(
     'when input requires focus. Operation examples: {"op":"text","text":"abc","gap_ms":20}, '
     '{"op":"key_chord","keys":["Left"],"repeat":2}, '
     '{"op":"key_chord","keys":["CTRL","s"]}, '
-    '{"op":"observe","frame":"window_client","x":0,"y":0,"w":400,"h":180}. '
+    '{"op":"observe","frame":"window_client","region":[0,0,400,180]}. '
+    'Observe region uses [x,y,width,height], just like interface_observe. '
+    'Legacy x/y/w/h fields remain supported; do not mix them with region. '
     'Use the actual target and observed region; examples do not select them for you. '
     'End with exactly one {"op":"release_all"}. Expanded ops must fit 128. '
     'gap_ms is optional integer 0..1000; key_chord repeat is optional integer 1..126. '
@@ -45,6 +47,10 @@ PublicProgram = Annotated[dict, Field(description=(
     'Emitted clicks or CTRL+a are not acknowledgements that a widget has processed them. '
     'On X11, window_client uses target-client coordinates and may omit overlapping dialogs; '
     'screen_physical_px uses display coordinates and includes other visible windows in the explicit region. '
+    'X11 key names are case-sensitive: use Home, End, Left, Right, Up, Down, '
+    'BackSpace, Delete or Insert; supported aliases include CTRL, SHIFT, ALT, ENTER, TAB, ESC, SPACE. '
+    'Use key_chord with keys for a tap/chord, or key_state with key/down for held input; '
+    'there is no key operation. Key mapping is checked on the execution host. '
     'wait_update with timeout_ms is a fixed delay on X11, not a redraw acknowledgement.'
 ))]
 
@@ -178,12 +184,15 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                     'replay_allowed': False}, error=True)
             options = dict(kwargs, capture_directory=str(call_root / 'images'),
                            display_name=display_name)
+            inspect_after = options.pop('inspect_after', None)
             # Attempt boundary only, not proof that the backend emitted input.
             with calls_lock:
                 calls[call_id]['backend_attempted'] = True
             try:
                 if operation == 'close':
                     report = close_owner()
+                elif operation == 'recover_input':
+                    report = owner.recover_input(**kwargs, capture_directory=str(call_root / 'images'))
                 elif operation.startswith('guarded_'):
                     report = owner.invoke_guarded(operation, kwargs, call_root)
                 elif operation in ('inspect_target', 'review_target'):
@@ -219,6 +228,14 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 if owner is not None and owner.state == 'failed' and owner.session is None:
                     report.update(status='backend_unavailable', failure_phase='session_initialization',
                                   operation_invoked=False, input_dispatched=False, effect_status='none')
+            if operation == 'dispatch' and inspect_after is not None:
+                try:
+                    report['post_dispatch_inspection'] = owner.inspect_after_dispatch(report, inspect_after)
+                except Exception as error:
+                    report['post_dispatch_inspection'] = {
+                        'status': 'needs_review', 'error': repr(error),
+                        'input_dispatched': False, 'authority_granted': False,
+                        'scope': 'Inspection failed after dispatch; original execution retained. No replay.'}
             if operation.startswith('guarded_'):
                 report.setdefault('replay_allowed', False)
                 report.setdefault('task_success', None)
@@ -231,24 +248,42 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 persistence_error = repr(error)
                 with calls_lock:
                     calls[call_id]['persistence_failure'] = 'report'
-            result = (present_management_report(report, call_root) if (operation.startswith('guarded_') or operation in ('close', 'inspect_target', 'review_target')) else
+            result = (present_management_report(report, call_root) if (operation.startswith('guarded_') or operation in ('close', 'inspect_target', 'review_target', 'recover_input')) else
                       present_result(report, call_root, compact=compact, report_refs=report_refs))
             if owner is not None:
                 result['session'] = owner.snapshot()
+            if 'post_dispatch_inspection' in report:
+                result['post_dispatch_inspection'] = deepcopy(report['post_dispatch_inspection'])
             result['call_directory'] = str(call_root)
             result['call_id'] = call_id
             if persistence_error is not None:
                 result['persistence_error'] = persistence_error
                 result['replay_allowed'] = False
             if detail == 'brief':
-                from .guarded_presentation import brief_guarded_report
-                result = brief_guarded_report(result)
+                if operation.startswith('guarded_'):
+                    from .guarded_presentation import brief_guarded_report
+                    result = brief_guarded_report(result)
+                elif operation == 'dispatch':
+                    from .public_presentation import brief_public_report
+                    result = brief_public_report(result)
+            if detail == 'summary' and operation == 'dispatch':
+                from .public_summary import summarize_public_dispatch
+                result = summarize_public_dispatch(result)
             if observation_refs and operation.startswith('guarded_'):
                 from .receipt_references import compact_guarded_observation
                 result = compact_guarded_observation(result)
+            # Inspection's successful result is evidence awaiting caller review,
+            # not a failed tool execution. This grants no target/input authority.
+            inspection_ready = (
+                operation == 'inspect_target' and report.get('status') == 'needs_review'
+                and report.get('error') is None
+                and isinstance(report.get('review_request'), dict)
+                and report['review_request'].get('tool') == 'interface_review_target'
+                and (kwargs.get('screen_region') is None or result.get('image_status') == 'image'))
             return content(result, error=persistence_error is not None or (
-                (operation.startswith('guarded_') or operation in ('close', 'inspect_target', 'review_target')) and
-                (report.get('error') is not None or report.get('status') in ('cleanup_failed','refused','needs_review')
+                (operation.startswith('guarded_') or operation in ('close', 'inspect_target', 'review_target', 'recover_input')) and
+                (report.get('error') is not None or report.get('status') in ('cleanup_failed','refused','recovery_failed')
+                 or (report.get('status') == 'needs_review' and not inspection_ready)
                  or report.get('feedback_status') == 'observation_failed')))
         finally:
             if call_id is not None:
@@ -279,11 +314,33 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
 
     if owner is not None and not guarded:
         @server.tool()
+        async def interface_recover_input(current_binding_revision: StrictInt,
+                                          target: StrictStr | None = None,
+                                          region: list[StrictInt] | None = None) -> CallToolResult:
+            """Explicitly release tracked inputs after unverified cleanup, without replay.
+
+            Requires this open persistent-X11 session, its current binding revision,
+            and recovery_required=true. Failed readback leaves recovery blocked.
+            Verified empty release clears only the input block and advances binding
+            revision, invalidating old programs and pending target reviews. No new
+            lease is issued. Optional target and region=[x,y,width,height] together
+            capture that window after successful recovery in this call. Capture
+            failure retains the recovery result and new revision; observe separately.
+            Review the image before choosing a new program. Capture is not a redraw
+            acknowledgement or task-success check. Never retries automatically.
+            """
+            return await submit('recover_input', {'current_binding_revision': current_binding_revision,
+                                                 'target': target, 'region': region}, False, False)
+
+        @server.tool()
         async def interface_inspect_target(target: StrictStr,
                                            screen_region: list[StrictInt] | None = None) -> CallToolResult:
             """Read the focused managed client in this target's configured transient family.
 
-            Does not select, focus or send input. Returns a one-use 30s review ID.
+            Does not select, focus or send input. Returns a one-use 30s review ID
+            and review_request with exact tool arguments for explicit caller review.
+            Successful inspection returns isError=false while status remains needs_review.
+            This candidate request is not executed and retained results do not renew it.
             Optional screen_region=[x,y,width,height] returns a fresh screen image
             in this call. Metadata is rechecked after capture; disagreement gives
             no review ID. This is not an atomic snapshot or redraw acknowledgement.
@@ -346,7 +403,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                               region: list[StrictInt], compact: StrictBool = False, report_refs: StrictBool = False) -> CallToolResult:
             """Capture once without input; return receipt and native image block.
 
-            Region is [x, y, width, height]. On X11, window_client coordinates are
+            Region is [x, y, width, height]; public dispatch observe ops accept
+            the same region array (do not mix with legacy x/y/w/h fields).
+            On X11, window_client coordinates are
             relative to the target client; overlapping dialogs may be absent or black.
             screen_physical_px coordinates are relative to the display and include
             other visible windows in that region. Choose an explicit screen region
@@ -361,20 +420,38 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         @server.tool()
         async def interface_dispatch(program: PublicProgram, current_observation_seq: StrictInt,
                                current_binding_revision: StrictInt,
-                               compact: StrictBool = False, report_refs: StrictBool = False) -> CallToolResult:
+                               compact: StrictBool = False, report_refs: StrictBool = False,
+                               detail: Literal["full", "brief", "summary"] = "full",
+                               inspect_after: StrictStr | None = None) -> CallToolResult:
             """Dispatch once through core admission. Include observe for an image; no implicit replay.
 
             Observation sequence is a caller assertion, not server-issued freshness.
             Persistent mode requires session.binding_revision (initially 1); review
             advances it. One-shot binding values remain caller assertions.
             A returned image may precede redraw. Release and cleanup failures remain visible.
-            report_refs requires compact=true and a v3 receipt decoder.
-            In v3, read the full report at receipt.source.raw_report in this response;
-            the report reference requires no additional tool call.
+            inspect_after names a configured target in persistent-x11 mode. After
+            completed, released input, return read-only target review metadata;
+            no implicit selection or new capture. Metadata is later than the image.
+            Inspection failure preserves input evidence. Summary preserves complete
+            successful inspection context; errors or skipped inspection stay full.
+            detail=brief with compact/report_refs summarizes supported successful paced
+            dispatches. This is a partial receipt; presentation.retrieve gets full data.
+            detail=summary also supports nonpaced completed dispatches and omits
+            duplicated provenance; follow presentation.retrieve for full evidence.
+            Both partial modes require compact=true, report_refs=true.
+            Failures and unsupported results stay full. Images are unchanged.
+            report_refs requires compact=true. Full v3 receipts keep the full report
+            at receipt.source.raw_report; brief receipts use report_projection and
+            require explicit retrieval for omitted detail.
             """
-            return await submit('dispatch', {'program': program,
-                'current_observation_seq': current_observation_seq,
-                'current_binding_revision': current_binding_revision}, compact, report_refs)
+            if inspect_after is not None and (session_mode != 'persistent-x11' or inspect_after not in owner.targets):
+                return content({'status': 'invalid_request', 'error': 'INVALID_POST_DISPATCH_INSPECTION',
+                                'operation_invoked': False, 'input_dispatched': False}, error=True)
+            arguments = {'program': program, 'current_observation_seq': current_observation_seq,
+                         'current_binding_revision': current_binding_revision}
+            if inspect_after is not None:
+                arguments['inspect_after'] = inspect_after
+            return await submit('dispatch', arguments, compact, report_refs, detail)
 
     @server.tool()
     async def interface_results(call_id: StrictStr | None = None,
@@ -382,15 +459,18 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                                 compact: StrictBool = False,
                                 include_image: StrictBool = True,
                                 report_refs: StrictBool = False,
-                                detail: Literal["full", "brief"] = "full",
+                                detail: Literal["full", "brief", "summary"] = "full",
                                 observation_refs: StrictBool = False) -> CallToolResult:
         """List this server's calls or reread one retained result. Never dispatch or observe.
 
         A finished worker is not proof of task success. Unknown calls are not replayed.
         This registry lasts only for this server process; no restart recovery is implied.
         Set include_image=false to inspect metadata without resending a retained image.
-        detail=brief projects only normal guarded-input checks; full is the default.
-        Critical/unsupported guarded reports stay full; other modes are unchanged.
+        detail=brief projects normal guarded checks or supported successful paced
+        public dispatches with compact/report_refs. detail=summary summarizes
+        known successful public dispatches, including nonpaced programs.
+        Full is the default; failures
+        and unsupported reports stay full. Retrieval never replays input.
         observation_refs=true replaces an exact duplicate observation with a local
         reference to source.native; expand_guarded_observation restores the view.
         It changes no image, capture, authority, or retained raw report.
@@ -436,13 +516,21 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             return content({'status': 'receipt_unavailable', 'call': record,
                 'error': repr(error), 'operation_invoked': False,
                 'replay_allowed': False}, error=True)
-        result = (await asyncio.to_thread(present_management_report, report, call_root) if (record['operation'].startswith('guarded_') or record['operation'] in ('close', 'inspect_target', 'review_target')) else
+        result = (await asyncio.to_thread(present_management_report, report, call_root) if (record['operation'].startswith('guarded_') or record['operation'] in ('close', 'inspect_target', 'review_target', 'recover_input')) else
                   await asyncio.to_thread(present_result, report, call_root, compact=compact, report_refs=report_refs))
+        if 'post_dispatch_inspection' in report:
+            result['post_dispatch_inspection'] = deepcopy(report['post_dispatch_inspection'])
         result.update(call_id=call_id, call_directory=str(call_root), retained_call=record,
                       operation_invoked=False)
         if detail == 'brief' and record['operation'].startswith('guarded_'):
             from .guarded_presentation import brief_guarded_report
             result = brief_guarded_report(result)
+        if detail == 'brief' and record['operation'] == 'dispatch':
+            from .public_presentation import brief_public_report
+            result = brief_public_report(result)
+        if detail == 'summary' and record['operation'] == 'dispatch':
+            from .public_summary import summarize_public_dispatch
+            result = summarize_public_dispatch(result)
         if observation_refs and record['operation'].startswith('guarded_'):
             from .receipt_references import compact_guarded_observation
             result = compact_guarded_observation(result)

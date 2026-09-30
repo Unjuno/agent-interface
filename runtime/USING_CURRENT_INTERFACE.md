@@ -21,6 +21,40 @@ Adding configuration does not prove tools are available in a running host. The
 public CLI emits JSON; an assistant integration must render its image payload.
 Neither route establishes end-to-end latency merely by returning an image.
 
+For a host that understands v3 receipt references, use the existing explicit
+`compact=true, report_refs=true` flags on both `interface_observe` and
+`interface_dispatch`. For example, an observation's arguments can be:
+
+```json
+{"target":"configured-name","frame":"window_client","region":[0,0,560,260],"compact":true,"report_refs":true}
+```
+
+Choose the actual configured target and region. Read the complete report at
+`receipt.source.raw_report` in that same response; `receipt.report` may be a local
+reference. Native image blocks and outcome summaries remain available. Python
+clients can use `runtime.cli_v1.receipt_references.expand_receipt` to restore v1.
+These flags are not arguments to recovery or target-management tools. Defaults
+remain full for compatibility. A [recount of primary replies](results/public-observation-projection-01/README.md)
+found avoidable text duplication in three observations; this measures bytes,
+not model tokens or cost.
+
+[Primary Calc use](results/calc-compact-primary-01/README.md) exercised these
+flags while entering and saving 336/439 through a format-confirmation dialog.
+Saved worksheet values matched. For `screen_physical_px` captures, the recorded
+native_window_id identifies the configured target, not necessarily the focused
+client shown on screen. After a dialog closes, use target inspection/review before
+continuing input on the main window; a screen image does not implicitly rebind it.
+
+[Primary input-recovery use](results/input-recovery-primary-01/README.md)
+records a failed press that had already changed a visible counter, explicit
+same-session release recovery, visual review and a newly authored continuation
+that saved the requested value. This small injected-fault construction exercises
+the recovery workflow; it does not measure general reliability or speedup.
+An optional target/region on recovery now returns a post-release window image
+in the same call. [Fresh primary use](results/recovery-capture-primary-01/README.md)
+completed the same construction with six rather than seven MCP calls. Capture
+failure preserves the committed recovery result; observe separately if needed.
+
 ## Long-lived guarded sessions
 
 Guarded X11 history keeps two decoded full-screen images in memory and reloads
@@ -322,6 +356,32 @@ For native research sessions, `native_observe(stage=...)` reads an already retai
 
 For direct public-MCP use, `python -m runtime.cli_v1.mcp_server --targets targets.json --output-directory runs --display :N --session-mode persistent-x11` retains one connection through explicit close or normal transport shutdown. The default is still one-shot. Use the returned `session.binding_revision` (initially 1) in dispatch assertions. `interface_observe` captures a fresh image; `interface_results` reads a retained result without input or recapture.
 
+If this persistent session reports `recovery_required=true`, normal dispatch
+stays blocked. Explicitly call `interface_recover_input` with its current binding
+revision to attempt tracked-input release/readback. Verified empty release clears
+only that block and advances the revision; old programs and pending target reviews
+become invalid. Observe/review current state before a newly authored program.
+Failure keeps recovery required. This never replays a failed action or reconnects.
+[Real-MCP boundary evidence](results/explicit-input-recovery-01/README.md) covers
+held-input recovery, stale-request refusal and a new program on the same owner;
+application effects and task completion remain unproven by recovery.
+
+X11 registers a key/button cleanup obligation before attempting a press, so an
+uncertain send/sync failure does not erase the release target. Failed release
+readback retains the obligation for explicit recovery. The
+[controlled regression](results/x11-uncertain-press-release-01/README.md) preserves
+a prior falsely verified release with an independently observed held key, plus
+corrected private-X11 and real-MCP boundary checks. Successful-path request counts
+are unchanged; server loss can still prevent release and these checks do not
+measure exact key-up timing or task effects.
+
+Public dispatch `observe` operations also accept `region: [x,y,width,height]`,
+matching `interface_observe`. Use either this form or legacy `x/y/w/h`, never
+both. Explicit lowering happens before admission and is retained in the report.
+The [primary-use regression record](results/public-observe-region-01/README.md)
+preserves the original syntax refusal, successful region-form movement/camera
+observations, and a mixed-form request refused before any input.
+
 When using the research `PrivateSession` fixture, app launch now follows an actual
 window-manager readiness probe (managed and viewable), not just an X11 handshake.
 This affects fixture setup only. The [retained Operations World smoke](../research/live_control/results/private-x11-readiness-01/README.md)
@@ -411,3 +471,133 @@ navigations. It completed all six values exactly once using 28 calls, versus a
 call reduction does not establish a speedup or token savings. Different explicit
 observation conditions can be evaluated in a fresh allocation without rewriting
 this result.
+
+
+## Exact placement through a visible numeric field
+
+When an application exposes a position field, it can provide an explicit route
+for a document-coordinate target. Review the selected object and field units,
+select the whole value and confirm the selection, enter the requested value,
+then inspect the resulting position and dimensions before saving. Use coordinates
+from the current image; do not copy another session's toolbar coordinates.
+This remains ordinary GUI input chosen by the primary model.
+
+[Primary Inkscape use](results/inkscape-numeric-primary-01/README.md) saved one red
+40x30 rectangle at X80/Y50 through the visible X field at 118% zoom. It took six
+MCP calls including close, with no extra observations or input replay. This is
+one functional example, not evidence of faster operation than dragging. A
+[preceding drag](results/inkscape-current-primary-01/README.md) had different
+success criteria and showed that pointer distance did not equal object distance.
+Neither recipe implies automatic geometry verification or a universal motor gain.
+
+## Keyboard layout changes in persistent X11 sessions
+
+The X11 backend refreshes queued keyboard mapping changes before programs with
+keyboard operations. Underscore follows the current supported keymap level;
+held keys retain their original physical code for release. This does not cover
+arbitrary layouts, IMEs or mapping changes during a program. Review the returned
+text image and saved outcome when correctness matters.
+
+[Primary same-session JP-to-US use](results/keymap-primary-use-01/README.md)
+saved and visually reviewed two strings through the portable public MCP runtime,
+then independently checked the final file after close. The record includes a
+setup failure and measured preflight overhead; it does not claim faster model
+interaction or general desktop reliability.
+
+## Optional paced-dispatch summaries
+
+For supported successful public paced-text dispatches, explicitly combine
+`detail="brief"`, `compact=true` and `report_refs=true`. Images and outcome
+fields remain present; duplicated programs, validated wait details and expansion
+maps can be omitted from a marked partial receipt. Follow
+`presentation.retrieve` for the full retained report without replaying input.
+Full output remains the default, and failures or unsupported shapes stay full.
+
+[Fresh primary use](results/public-paced-brief-01/README.md) exercised both brief
+images and full retrieval. The primary detected an initial missing character in
+the returned image and made an explicit repair. This option reduces serialized
+text for eligible replies; it does not establish token savings, task success or
+faster interaction, and the retrieval itself adds a call.
+
+## Clicking a field before entering text
+
+Treat field activation and text entry as separate decisions when the recipient is
+uncertain. Click the field using current geometry, inspect useful feedback, then
+enter and review the value before saving or submitting it. A screenshot without
+visible recipient evidence does not establish that the field is ready. If the
+application offers no useful readiness evidence, that uncertainty remains.
+
+A single click/text batch can outrun the application's handling of the click.
+`focus` verifies an X11 window ancestry, not the application-internal editor;
+`wait_update` is an explicit fixed delay, not a ready acknowledgement. Existing
+integration tests use a 50 ms post-click wait, but that is not a universal safe
+threshold and the runtime does not insert it automatically. Paced text gaps are
+between characters and do not settle the click before the first character.
+
+[Retained click-recipe intake](results/click-readiness-intake-01/README.md)
+verified that the earlier successful click study included cooperative app turns
+between activation and text. Its results therefore do not validate removing those
+boundaries. The [public primary trial](results/public-paced-brief-01/README.md)
+retains a missing first character, visual detection and an explicit repair.
+Do not replay an uncertain whole input program to recover a missing prefix.
+
+For a known click-to-text timing problem, an explicit bounded pause can be placed
+between mouse release and text, using the existing operations:
+
+```json
+{"op":"wait_update","timeout_ms":50}
+```
+
+This is a caller-selected mitigation, not a readiness condition. In a fresh
+[public MCP integration comparison](results/click-text-comparison-01/README.md),
+the known Tk fixture saved the exact text in 6/6 cases with this pause versus 2/6
+without it; four missing-prefix outcomes are retained. The pause added about
+54.4 ms to median local tool return. This does not establish a universal 50 ms
+threshold or faster end-to-end use, and it does not replace value review.
+
+[Primary two-editor use](results/click-primary-01/README.md) applied the explicit
+pause through the portable public MCP runtime, reviewed each unsaved value, then
+saved in a separate program. Both final files were exact with six calls, five
+images and no repair. This is functional evidence for the explicit workflow;
+reviewing before save adds a decision boundary and is not a speedup claim.
+
+## Optional successful-dispatch summaries
+
+`interface_dispatch` and retained `interface_results` accept `detail="summary"`
+with `compact=true, report_refs=true`. This opt-in partial view supports known
+successful public dispatch reports, including short nonpaced save programs.
+Default `detail="full"` and the existing paced `detail="brief"` remain unchanged.
+
+The receipt schema is `agent-interface/receipt-view-dispatch-summary-v1`.
+Read `receipt.execution_summary` for execution times, emissions, all capture,
+release and activation records, completed operation count and fixed-wait totals.
+Images, outcome fields, target/session state and call identity remain unchanged.
+A retained lookup without a live session snapshot keeps its historical session
+at `receipt.reported_session`; it does not mint a current binding or authority.
+Source programs, expansion mapping, per-wait timestamps, completed indices and
+duplicate receipt/session metadata are omitted. The source digest identifies the
+retained full report, not the summary. This does not assert task success.
+
+Follow `presentation.retrieve` to obtain the same call with `detail="full"`
+without replaying input or taking another capture. The lossless receipt decoder
+deliberately rejects the partial summary schema. Failed, incomplete, unfamiliar
+or inconsistent omitted records stay full, as do reports that would not shrink.
+A fixed wait remains a delay, not an acknowledgement of an application update.
+
+[Primary summary-mode use](results/public-summary-01/README.md) exercised paced
+input, a short save, full retrieval and an unchanged full refusal. The two actual
+successful replies used 45.3% fewer canonical JSON bytes than their full views
+and 27.8% fewer than the previous brief option. This is not measured token/cost or
+speed improvement; the full lookup itself adds a call. The record includes the
+retained-session correction and its failed-before/passing-after checks.
+
+## Primary use with summaries and returned host attempts
+
+[Current-main primary examples](results/current-primary-summary-01/README.md)
+combine public summary dispatches and `reply.attempt` presentation in a small
+entry task and LibreOffice Calc, including explicit format-dialog selection.
+Both saved effects were independently checked after control ended. In Calc,
+a completed Return plus a 100ms wait still captured the dialog; a fresh read-only
+inspection confirmed it had closed. Do not repeat uncertain input merely because
+the result image has not yet changed. This is scoped usability evidence, not a
+matched speed, token/cost or generic readiness result.

@@ -55,6 +55,38 @@ class HostTimingTests(unittest.TestCase):
         self.assertTrue(review['after_presentation'])
         self.assertIsNone(report['calls'][0]['reply_to_next_send_ms'])
         self.assertIn('semantic completion', report['unmeasured'])
+        # Presentation/review/close after the final reply are outside this span.
+        self.assertEqual(report['time_partition']['total_ms'], 4)
+        self.assertEqual(report['time_partition']['request_outstanding_ms'], 4)
+        self.assertEqual(report['time_partition']['presentation_callbacks_ms'], 0)
+        self.assertEqual(report['time_partition']['other_host_intervals_ms'], 0)
+
+    def test_public_capture_review_uses_null_sequence_and_preserves_boundaries(self):
+        self.receipt.update(schema='agent-interface/primary-review-receipt-v2-public-capture',
+                            source_sequence=None)
+        self.events[4]['source_sequence'] = None
+        self.write('review-1.json', self.receipt)
+        report = self.report()
+        self.assertEqual(report['timeline_status'], 'complete')
+        self.assertEqual(report['calls'][0]['reviews'][0]['send_to_declared_review_ms'], 20)
+        self.assertTrue(report['calls'][0]['reviews'][0]['after_presentation'])
+        for sequence in (1, False, 'caller-1'):
+            with self.subTest(sequence=sequence):
+                self.receipt['source_sequence'] = sequence
+                self.events[4]['source_sequence'] = sequence
+                self.write('review-1.json', self.receipt)
+                with self.assertRaisesRegex(ValueError, 'public review cannot'):
+                    self.report()
+        self.receipt.pop('source_sequence')
+        self.events[4].pop('source_sequence')
+        self.write('review-1.json', self.receipt)
+        with self.assertRaisesRegex(ValueError, 'public review cannot'):
+            self.report()
+
+    def test_unknown_review_schema_is_not_silently_accepted(self):
+        self.write('review-1.json', {**self.receipt, 'schema': 'unknown'})
+        with self.assertRaisesRegex(ValueError, 'review receipt identity'):
+            self.report()
 
     def test_corrupted_order_clock_identity_and_hash_refuse(self):
         changes = [(1, 'sequence', 9), (1, 'host_monotonic_ms', 9),
@@ -107,6 +139,38 @@ class HostTimingTests(unittest.TestCase):
         self.assertEqual(report['calls'][0]['relay_outcome'],
                          {'status':'refused', 'dispatched':False, 'request_id':1})
         self.assertNotIn('relay_outcome', report['calls'][1])
+        partition = report['time_partition']
+        self.assertEqual(partition['request_outstanding_ms'], 7)
+        self.assertEqual(partition['presentation_callbacks_ms'], 2)
+        self.assertEqual(partition['other_host_intervals_ms'], 19)
+        self.assertEqual(sum(partition[k] for k in ('request_outstanding_ms',
+            'presentation_callbacks_ms', 'other_host_intervals_ms')), partition['total_ms'])
+
+    def test_partition_counts_repeated_presentations_and_excludes_final_presentation(self):
+        self.write('request-2.json', {'id': 2, 'tool': 'observe'})
+        self.write('reply-2.json', {**self.reply, 'id': 2, 'next_id': 3})
+        second_hash = hashlib.sha256((self.root / 'reply-2.json').read_bytes()).hexdigest()
+        events = copy.deepcopy(self.events[:4])
+        for original, stamp in zip(self.events[2:4], (18, 20)):
+            event = copy.deepcopy(original)
+            event.update(sequence=len(events)+1, host_monotonic_ms=stamp)
+            events.append(event)
+        for original, stamp in zip(self.events[:4], (35, 38, 39, 42)):
+            event = copy.deepcopy(original)
+            event.update(sequence=len(events)+1, host_monotonic_ms=stamp,
+                         attempt=2, relay_id=2, reply_sha256=second_hash)
+            events.append(event)
+        close = copy.deepcopy(self.events[-1])
+        close.update(sequence=len(events)+1, host_monotonic_ms=50)
+        report = self.report(events+[close])
+        part = report['time_partition']
+        self.assertEqual(part['total_ms'], 28)
+        self.assertEqual(part['request_outstanding_ms'], 7)
+        self.assertEqual(part['presentation_callbacks_ms'], 4)
+        self.assertEqual(part['other_host_intervals_ms'], 17)
+        # A missing final completion is still incomplete, even outside the span.
+        partial = events[:-1] + [dict(close, sequence=len(events))]
+        self.assertIsNone(self.report(partial)['time_partition'])
 
     def test_invalid_refusal_cannot_claim_no_dispatch(self):
         valid = {'status':'refused', 'dispatched':False, 'next_id':1, 'error':'unknown tool'}
@@ -128,6 +192,7 @@ class HostTimingTests(unittest.TestCase):
                          {'status':'unknown_requires_reconciliation', 'dispatch_outcome':'unknown'})
         self.assertEqual(report['timeline_status'], 'partial')
         self.assertEqual(report['returned_count'], 1)
+        self.assertIsNone(report['time_partition'])
 
     def test_historical_representations_and_unpresented_review_are_not_conflated(self):
         events = copy.deepcopy(self.events[:2] + self.events[4:])
@@ -144,6 +209,94 @@ class HostTimingTests(unittest.TestCase):
         report = self.report(events + [close])
         self.assertEqual(len(report['calls'][0]['presentations']), 2)
         self.assertEqual(report['calls'][0]['send_to_first_callbacks_completed_ms'], 7)
+
+
+    def reference_events(self):
+        import base64
+        data = base64.b64encode(b'fixed-image-bytes').decode()
+        picture = {'type': 'image', 'mimeType': 'image/png', 'data': data}
+        self.reply['result'] = {'content': [picture]}
+        self.write('reply-1.json', self.reply)
+        digest = hashlib.sha256((self.root / 'reply-1.json').read_bytes()).hexdigest()
+        image_hash = hashlib.sha256(b'fixed-image-bytes').hexdigest()
+        self.receipt.update(reply_sha256=digest, images=[{'mime_type': 'image/png', 'sha256': image_hash}])
+        self.write('review-1.json', self.receipt)
+        events = copy.deepcopy(self.events[:-1])
+        for event in events:
+            event['reply_sha256'] = digest
+            if event['kind'] in ('presentation_started', 'presentation_callbacks_completed', 'review_recorded'):
+                event['image_delivery'] = {'mode': 'full'}
+        delivery = dict(mode='reviewed-image-reference', base_attempt=1,
+                        base_reply_sha256=digest,
+                        base_review_sha256=hashlib.sha256((self.root / 'review-1.json').read_bytes()).hexdigest(),
+                        image_sha256=image_hash, mime_type='image/png')
+        self.write('request-2.json', {'id': 2, 'tool': 'observe'})
+        self.write('reply-2.json', {**self.reply, 'id': 2, 'next_id': 3})
+        digest2 = hashlib.sha256((self.root / 'reply-2.json').read_bytes()).hexdigest()
+        for original, stamp in zip(self.events[:4], (31, 32, 33, 34)):
+            event = copy.deepcopy(original)
+            event.update(attempt=2, relay_id=2, sequence=len(events)+1,
+                         host_monotonic_ms=stamp, reply_sha256=digest2)
+            if event['kind'].startswith('presentation_'):
+                event['image_delivery'] = copy.deepcopy(delivery)
+            events.append(event)
+        events.append({**self.events[-1], 'sequence': len(events)+1})
+        return events
+
+    def test_reviewed_reference_binds_exact_bytes_and_receipt_without_mutating_inputs(self):
+        events = self.reference_events()
+        report = self.report(events)
+        before = {p.name: p.read_bytes() for p in self.root.iterdir()}
+        self.assertEqual(report, summarize(self.root))
+        self.assertEqual(before, {p.name: p.read_bytes() for p in self.root.iterdir()})
+        delivery = report['calls'][1]['presentations'][0]['image_delivery']
+        self.assertEqual(delivery['mode'], 'reviewed-image-reference')
+        self.assertEqual(delivery['base_attempt'], 1)
+
+    def test_reference_rejects_missing_ack_and_tampered_base_identity(self):
+        events = self.reference_events()
+        for key, value in [('base_attempt', 2), ('base_attempt', True), ('base_reply_sha256', 'wrong'),
+                           ('base_review_sha256', 'wrong'), ('image_sha256', 'wrong'),
+                           ('mime_type', 'image/jpeg'), ('mode', 'unknown')]:
+            with self.subTest(key=key):
+                changed = copy.deepcopy(events)
+                changed[7]['image_delivery'][key] = value
+                with self.assertRaisesRegex(ValueError, 'reviewed image base'):
+                    self.report(changed)
+        changed = copy.deepcopy(events)
+        del changed[4]
+        for i, event in enumerate(changed, 1):
+            event['sequence'] = i
+        with self.assertRaisesRegex(ValueError, 'reviewed image base'):
+            self.report(changed)
+
+    def test_reference_rejects_changed_image_and_completion_annotation(self):
+        events = self.reference_events()
+        changed = copy.deepcopy(events)
+        changed[8]['image_delivery'] = {'mode': 'full'}
+        with self.assertRaisesRegex(ValueError, 'completion mismatch'):
+            self.report(changed)
+        reply = json.loads((self.root / 'reply-2.json').read_bytes())
+        reply['result']['content'][0]['data'] = 'Y2hhbmdlZA=='
+        self.write('reply-2.json', reply)
+        digest = hashlib.sha256((self.root / 'reply-2.json').read_bytes()).hexdigest()
+        for event in events:
+            if event.get('attempt') == 2:
+                event['reply_sha256'] = digest
+        with self.assertRaisesRegex(ValueError, 'image bytes differ'):
+            self.report(events)
+
+    def test_full_presentation_invalidates_ack_before_next_reference(self):
+        events = self.reference_events()
+        # Re-present the base fully, without another explicit review.
+        full = []
+        for kind, stamp in [('presentation_started', 30.2), ('presentation_callbacks_completed', 30.4)]:
+            full.append({**events[2], 'kind': kind, 'host_monotonic_ms': stamp})
+        events[5:5] = full
+        for i, event in enumerate(events, 1):
+            event['sequence'] = i
+        with self.assertRaisesRegex(ValueError, 'reviewed image base'):
+            self.report(events)
 
 
 if __name__ == '__main__':

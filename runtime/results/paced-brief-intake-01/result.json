@@ -1,0 +1,48 @@
+{
+  "rows": [
+    {
+      "attempt": 2,
+      "sha256": "a7760f7912bda3118803cc8349c5c7f0cb067b5da5b90a5847bbedce2d30f9d1",
+      "full_bytes": 8912,
+      "candidate_bytes": 8425,
+      "returned": "brief"
+    },
+    {
+      "attempt": 3,
+      "sha256": "50071fc8aa84c000af81e6674f15d4236ef6d9c4b323c5630d2827bb28a77c55",
+      "full_bytes": 8674,
+      "candidate_bytes": 8353,
+      "returned": "brief"
+    }
+  ],
+  "scope": "new retained paced-task condition; unchanged archived candidate; canonical JSON bytes, not tokens",
+  "breakdown": [
+    {
+      "attempt": 2,
+      "full_bytes": 8912,
+      "execution_bytes": 2696,
+      "waits_bytes": 1539,
+      "wait_count": 10,
+      "operation_sources_bytes": 1785,
+      "normalization_program_bytes": 653,
+      "compilation_program_bytes": 658,
+      "completed_ops_bytes": 72
+    },
+    {
+      "attempt": 3,
+      "full_bytes": 8674,
+      "execution_bytes": 2693,
+      "waits_bytes": 1539,
+      "wait_count": 10,
+      "operation_sources_bytes": 1732,
+      "normalization_program_bytes": 570,
+      "compilation_program_bytes": 575,
+      "completed_ops_bytes": 69
+    }
+  ],
+  "total_full_bytes": 17586,
+  "total_candidate_bytes": 16778,
+  "reduction_percent": 4.594563857614009,
+  "disposition": "HOLD_RUNTIME_ADOPTION",
+  "reason": "Only 4.59% canonical text-byte reduction on this new condition; no token/cost or fresh brief-mode decision-quality evidence. Wait and expansion-detail projection would be a distinct candidate."
+}

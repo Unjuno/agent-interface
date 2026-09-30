@@ -47,6 +47,16 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
+          sparse-checkout: |
+            runtime/distribution_v2
+            runtime/guarded_x11_v1
+            runtime/core_v1
+            runtime/selector_v1
+            runtime/cli_v1
+            runtime/motor_state_v1
+            runtime/backends/x11_v1
+            runtime/backends/win32_v1
+            runtime/backends/quartz_v1
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'

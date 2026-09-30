@@ -24,6 +24,80 @@ class FakeSession:
 
 class ApiTests(unittest.TestCase):
 
+    def test_public_observe_region_lowering_preserves_original_and_expansion(self):
+        from copy import deepcopy
+        from runtime.cli_v1.api import dispatch_in_session
+        from runtime.cli_v1.validate_program import inspect_program
+        from runtime.cli_v1.test_validate_program import program as make_program
+        from runtime.core_v1.contract import validate_program
+        p = make_program([
+            {'op': 'text', 'text': 'ab', 'gap_ms': 10},
+            {'op': 'key_chord', 'keys': ['Left'], 'repeat': 2},
+            {'op': 'observe', 'target': 'fixture', 'frame': 'window_client',
+             'region': [-3, 4, 640, 360]}, {'op': 'release_all'}])
+        original = deepcopy(p)
+        session = FakeSession()
+        row = dispatch_in_session(session, p, current_observation_seq=0, current_binding_revision=0)
+        lowered = session.calls[0][0]
+        validate_program(lowered)
+        self.assertEqual(lowered['ops'][5], {'op': 'observe', 'target': 'fixture',
+            'frame': 'window_client', 'x': -3, 'y': 4, 'w': 640, 'h': 360})
+        self.assertEqual(row['normalization']['source_program'], original)
+        self.assertEqual(row['normalization']['source_operation_indices'], [2])
+        self.assertEqual(row['compilation']['operation_sources'][5]['source_operation_index'], 2)
+        static = inspect_program(p)
+        self.assertTrue(static['static_valid'])
+        self.assertEqual(static['expanded_operation_count'], len(lowered['ops']))
+        self.assertEqual(static['normalized_observation_operations'], [2])
+        self.assertEqual(p, original)
+
+    def test_region_is_public_syntax_not_core_admission(self):
+        from runtime.cli_v1.test_validate_program import program as make_program
+        from runtime.core_v1.contract import ContractError, validate_program
+        p = make_program([{'op': 'observe', 'frame': 'window_client',
+                           'region': [0, 0, 1, 1]}, {'op': 'release_all'}])
+        with self.assertRaises(ContractError):
+            validate_program(p)
+
+    def test_invalid_observe_regions_refuse_before_session_or_input(self):
+        from runtime.cli_v1.api import dispatch_in_session
+        from runtime.cli_v1.validate_program import inspect_program
+        cases = [None, [], [0, 0, 1], [0, 0, 1, 1, 1], [False, 0, 1, 1],
+                 [0, 0, 1.0, 1], [0, 0, 0, 1], [0, 0, -1, 1],
+                 [1000001, 0, 1, 1], [0, 0, 1000001, 1], '0,0,1,1']
+        ops = [{'op': 'observe', 'frame': 'window_client', 'region': r} for r in cases]
+        ops += [{'op': 'observe', 'region': [0, 0, 1, 1], key: 0}
+                for key in ('x', 'y', 'w', 'h', 'width', 'height')]
+        ops += [{'op': 'pointer_move', 'region': [0, 0, 1, 1]}]
+        for op in ops:
+            with self.subTest(op=op):
+                p = {'ops': [{'op': 'text', 'text': 'must-not-be-sent'}, op]}
+                session = mock.Mock()
+                with mock.patch('runtime.cli_v1.api.open_session') as opened:
+                    row = dispatch(p, {}, current_observation_seq=0, current_binding_revision=0)
+                    borrowed = dispatch_in_session(session, p, current_observation_seq=0, current_binding_revision=0)
+                opened.assert_not_called()
+                session.dispatch.assert_not_called()
+                for result in (row, borrowed, inspect_program(p)):
+                    self.assertEqual(result['error'], 'INVALID_OBSERVATION_REGION')
+                    self.assertEqual(result['source_operation_index'], 1)
+
+    def test_region_normalization_retained_on_backend_unavailable(self):
+        from runtime.selector_v1 import BackendUnavailable
+        p = {'ops': [{'op': 'observe', 'region': [0, 0, 1, 1]}]}
+        with mock.patch('runtime.cli_v1.api.open_session', side_effect=BackendUnavailable('offline')):
+            result = dispatch(p, {}, current_observation_seq=0, current_binding_revision=0)
+        self.assertEqual(result['normalization']['source_program'], p)
+        self.assertEqual(result['status'], 'backend_unavailable')
+
+    def test_legacy_observe_has_no_normalization_record(self):
+        from runtime.cli_v1.api import dispatch_in_session
+        p = {'ops': [{'op': 'observe', 'frame': 'window_client', 'x': 0, 'y': 0, 'w': 1, 'h': 1}]}
+        session = FakeSession()
+        row = dispatch_in_session(session, p, current_observation_seq=0, current_binding_revision=0)
+        self.assertNotIn('normalization', row)
+        self.assertEqual(session.calls[0][0], p)
+
     def test_borrowed_session_compiles_without_opening_or_closing(self):
         from runtime.cli_v1.api import dispatch_in_session
         session = FakeSession()
@@ -107,7 +181,8 @@ class ApiTests(unittest.TestCase):
                 'terminal':{'release_all_required':True}, 'ops':[]}
         valid = {'op':'observe','frame':'window_client','x':0,'y':0,'w':400,'h':180}
         for op, expected in [
-            ({'op':'observe','frame':'window_client','region':[0,0,400,180]}, 'observe x must be int'),
+            ({'op':'observe','frame':'window_client','y':0,'w':400,'h':180}, 'observe x must be int'),
+            ({'op':'observe','frame':'window_client','region':[0,0,400,180]}, None),
             ({'op':'observe','frame':'window_client','x':0,'y':0,'width':400,'height':180}, 'observe w must be int'),
             ({'op':'private-caller-text-' * 100}, 'unsupported operation'),
             (valid, None),

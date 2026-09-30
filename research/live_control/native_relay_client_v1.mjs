@@ -110,6 +110,11 @@ export async function presentRelayResponse(row, { text, image }) {
     await text(row);
     return;
   }
+  // Tool execution status is independent of text/image content, including
+  // an empty content array. Preserve an explicit flag without inferring success.
+  if (Object.hasOwn(row.result, 'isError')) {
+    await text({ schema: 'agent-interface/mcp-result-status-v1', isError: row.result.isError });
+  }
   for (const block of row.result.content) {
     if (block.type === 'text') await text(block.text);
     else if (block.type === 'image') await image({ bytes: Buffer.from(block.data, 'base64'), mimeType: block.mimeType });
@@ -136,7 +141,7 @@ export async function recordRelayReview({ replyPath, receiptPath, task, phase, r
     if (block.type === 'text') {
       try {
         const value = JSON.parse(block.text);
-        if (value?.call_id && value?.source) reports.push(value);
+        if (value?.call_id && (value?.source || value?.image_reference || value?.observation_report)) reports.push(value);
       } catch { /* Other text blocks are not report metadata. */ }
     } else if (block.type === 'image') {
       images.push({ mime_type: block.mimeType,
@@ -145,13 +150,44 @@ export async function recordRelayReview({ replyPath, receiptPath, task, phase, r
   }
   if (reports.length !== 1 || images.length === 0) throw new Error('one sourced report and delivered image required');
   const report = reports[0];
-  if (typeof report.call_id !== 'string' || !Number.isSafeInteger(report.source.sequence) ||
-      typeof report.source.observation_id !== 'string') throw new Error('complete source identity required');
+  if (typeof report.call_id !== 'string') throw new Error('complete source identity required');
+  let identity;
+  if (report.source) {
+    if (!Number.isSafeInteger(report.source.sequence) ||
+        typeof report.source.observation_id !== 'string') throw new Error('complete source identity required');
+    identity = {schema: 'agent-interface/primary-review-receipt-v1',
+      source_sequence: report.source.sequence, observation_id: report.source.observation_id};
+  } else {
+    const reference = report.image_reference;
+    const observationReport = report.observation_report;
+    const observation = reference?.recorded_capture ?? observationReport?.observation;
+    const artifactHash = reference?.sha256 ?? observation?.artifact?.sha256;
+    if (report.image_status !== 'image' || images.length !== 1 ||
+        (observationReport && observationReport.status !== 'returned') ||
+        typeof artifactHash !== 'string' || !/^[a-f0-9]{64}$/.test(artifactHash) ||
+        images[0].sha256 !== artifactHash || !observation ||
+        typeof observation.target !== 'string' ||
+        !Number.isSafeInteger(observation.native_window_id) ||
+        !['window_client', 'screen_physical_px'].includes(observation.frame) ||
+        !Array.isArray(observation.region) || observation.region.length !== 4 ||
+        !observation.region.every(Number.isSafeInteger) ||
+        !Number.isSafeInteger(observation.capture_started_ns) ||
+        !Number.isSafeInteger(observation.capture_ended_ns) ||
+        observation.capture_ended_ns < observation.capture_started_ns) {
+      throw new Error('complete public capture identity and matching delivered image required');
+    }
+    identity = {schema: 'agent-interface/primary-review-receipt-v2-public-capture',
+      source_sequence: null, observation_id: reference?.observation_id ?? observationReport?.observation_id ?? null,
+      capture: {target: observation.target, native_window_id: observation.native_window_id,
+        frame: observation.frame, region: observation.region,
+        capture_started_ns: observation.capture_started_ns, capture_ended_ns: observation.capture_ended_ns,
+        artifact_sha256: artifactHash},
+      source_scope: 'retained public capture; no server-issued observation sequence or freshness'};
+  }
   const receipt = {
-    schema: 'agent-interface/primary-review-receipt-v1',
+    ...identity,
     task, phase, reason, recorded_at: new Date().toISOString(),
     relay_id: reply.id, tool: reply.tool, call_id: report.call_id,
-    source_sequence: report.source.sequence, observation_id: report.source.observation_id,
     reply_sha256: createHash('sha256').update(bytes).digest('hex'), images,
     evidence_scope: 'caller-declared review; attribution only; not semantic success or measured model latency',
   };

@@ -2,6 +2,25 @@
 
 This is the model/vendor-neutral local entry point over promoted Agent Interface backends.
 
+Public dispatch observation operations accept `region: [x, y, width, height]`,
+the same array used by the standalone observation tool. For example:
+`{"op":"observe","target":"app","frame":"window_client","region":[0,0,640,360]}`.
+Legacy `x/y/w/h` fields remain supported. Do not combine either form with the
+other or with `width/height` fields: mixed forms, non-integer values (including
+booleans), wrong-length arrays and out-of-range coordinates/dimensions refuse
+before input. Negative x/y are permitted within the existing coordinate bounds;
+width and height must be positive. Target/frame selection and all admission
+requirements remain the caller's responsibility.
+
+The public API lowers this explicit syntax before bounded text-gap/key-repeat
+expansion. Static validation uses the same lowering. The core's x/y/w/h contract
+is unchanged. Dispatch reports retain `normalization.kind=explicit_observation_region`,
+the original `source_program` and `source_operation_indices`; if expansion also
+occurs, its existing `compilation` record describes the normalized intermediate
+program. Normalization changes no operation indices, adds no wait and issues no
+observation, lease or input. This authoring convenience does not establish faster
+task completion or token savings.
+
 Check a local program before attempting input:
 
 ```sh

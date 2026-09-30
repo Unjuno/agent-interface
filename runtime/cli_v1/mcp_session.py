@@ -1,14 +1,14 @@
 """Single-owner X11 connection for the optional persistent MCP route.
 
 All methods are serialized by the transport. No restart, authority issuance,
-source refresh or recovery reset. The ordinary one-shot route does not use this.
+source refresh or implicit recovery reset. The ordinary one-shot route does not use this.
 """
 from copy import deepcopy
 import os
 import uuid
 import time
 from .x11_target_review import inspect_focused_target
-from .observe import observe_in_session
+from .observe import observe_in_session, valid_observation_request
 from runtime.selector_v1 import open_session, select_backend
 
 
@@ -87,9 +87,84 @@ class MCPSessionOwner:
         self.target_review = review
         row = dict(deepcopy(review), status='needs_review', input_dispatched=False,
                    authority_granted=False)
+        arguments = {'target': target, 'window_id': evidence['window_id'],
+                     'review_id': review['review_id']}
+        if screen_region is not None:
+            arguments['screen_region'] = deepcopy(screen_region)
+        row['review_request'] = {'tool': 'interface_review_target', 'arguments': arguments}
+        row['review_request_scope'] = (
+            'Candidate call after your explicit review of this evidence; not executed. '
+            'The one-use ID expires at expires_at_ns and target evidence is rechecked. '
+            'Retained results do not renew it. No input authority or replay permission.')
         if observation is not None:
             row['observation_report'] = observation
         return row
+
+    def inspect_after_dispatch(self, report, target):
+        """Optional metadata only; never replace execution evidence or refresh its image."""
+        started = time.monotonic_ns()
+        result = report.get('result', {})
+        releases = result.get('execution', {}).get('releases', [])
+        self.target_review = None
+        ready = (self.state == 'open' and self.session is not None
+                 and self.session.recovery_required is False
+                 and result.get('status') == 'completed'
+                 and result.get('recovery_required') is False
+                 and bool(releases) and all(
+                     item.get('verified') is True and item.get('keys_down') == []
+                     and item.get('buttons_down') == [] and 'error' not in item
+                     for item in releases))
+        if not ready:
+            inspection = {'status': 'skipped', 'reason': 'DISPATCH_NOT_COMPLETED_AND_RELEASED'}
+        else:
+            try:
+                inspection = self.inspect_target(target)
+            except Exception as error:
+                inspection = {'status': 'needs_review', 'error': repr(error)}
+        return dict(inspection, started_ns=started, ended_ns=time.monotonic_ns(),
+                    input_dispatched=False, authority_granted=False,
+                    scope='Metadata sampled after dispatch. Not atomically bound to its image; '
+                          'no redraw or task completion acknowledgement. Review explicitly; '
+                          'retained lookup does not renew the review ID.')
+
+    def recover_input(self, current_binding_revision, target=None, region=None,
+                      capture_directory=None):
+        # Never open/reopen a connection to recover a different input owner.
+        if self.state != 'open' or self.session is None:
+            return {'status': 'refused', 'error': 'RECOVERY_REQUIRES_OPEN_SESSION',
+                    'release_attempted': False, 'authority_granted': False}
+        if (type(current_binding_revision) is not int
+                or current_binding_revision != self.binding_revision):
+            return {'status': 'refused', 'error': 'SESSION_BINDING_REVISION_MISMATCH',
+                    'release_attempted': False, 'authority_granted': False}
+        wants_capture = target is not None or region is not None
+        if wants_capture and (not valid_observation_request(target, 'window_client', region)
+                              or target not in self.targets):
+            return {'status': 'refused', 'error': 'INVALID_RECOVERY_OBSERVATION',
+                    'release_attempted': False, 'authority_granted': False}
+        report = self.session.recover_input()
+        if report.get('release_attempted'):
+            self.dispatch_attempted = True
+        if report.get('status') == 'input_recovered':
+            self.target_review = None
+            self.binding_revision += 1
+            if wants_capture:
+                # Recovery has committed. A capture failure must retain its
+                # receipt/revision rather than invite a repeated release.
+                try:
+                    observation = observe_in_session(self.session, target=target,
+                        frame='window_client', region=region,
+                        capture_directory=capture_directory)
+                except Exception as error:
+                    observation = {'status': 'observation_failed', 'error': repr(error),
+                                   'input_dispatched': False, 'side_effect_authority': False}
+                report = dict(report, observation_report=observation)
+        return dict(report, binding_revision=self.binding_revision,
+                    authority_granted=False,
+                    note='Only input neutrality was checked. Prior task effects remain unknown; '
+                         'Review the returned image, or observe separately if no usable image '
+                         'was returned, before a new program. Capture does not acknowledge redraw. '
+                         'Use the returned binding revision; no lease/source is issued.')
 
     def review_target(self, target, window_id, review_id, screen_region=None,
                       capture_directory=None):

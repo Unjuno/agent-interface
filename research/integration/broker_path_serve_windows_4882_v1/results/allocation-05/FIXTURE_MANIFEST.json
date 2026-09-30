@@ -1,0 +1,108 @@
+{
+  "base_relative": ".",
+  "entries": [
+    {
+      "kind": "directory",
+      "path": "outside",
+      "sha256": null,
+      "target_relative": null
+    },
+    {
+      "kind": "file",
+      "path": "outside/image.png",
+      "sha256": "0833be942f11243e4beb4793eb10c2c7ebf93bd58013a1de7b42ae5c28cc994c",
+      "target_relative": null
+    },
+    {
+      "kind": "file",
+      "path": "outside/schema.json",
+      "sha256": "a2c799262a3ce3c19ef5cdd983bf3d12b43ab3c426227091b909dcb7054738c0",
+      "target_relative": null
+    },
+    {
+      "kind": "directory",
+      "path": "outside/work",
+      "sha256": null,
+      "target_relative": null
+    },
+    {
+      "kind": "directory",
+      "path": "repo",
+      "sha256": null,
+      "target_relative": null
+    },
+    {
+      "kind": "junction",
+      "path": "repo/external-junction",
+      "sha256": null,
+      "target_relative": "outside"
+    },
+    {
+      "kind": "file",
+      "path": "repo/external-junction/image.png",
+      "sha256": "0833be942f11243e4beb4793eb10c2c7ebf93bd58013a1de7b42ae5c28cc994c",
+      "target_relative": null
+    },
+    {
+      "kind": "file",
+      "path": "repo/external-junction/schema.json",
+      "sha256": "a2c799262a3ce3c19ef5cdd983bf3d12b43ab3c426227091b909dcb7054738c0",
+      "target_relative": null
+    },
+    {
+      "kind": "directory",
+      "path": "repo/external-junction/work",
+      "sha256": null,
+      "target_relative": null
+    },
+    {
+      "kind": "junction",
+      "path": "repo/in-junction",
+      "sha256": null,
+      "target_relative": "repo/internal"
+    },
+    {
+      "kind": "file",
+      "path": "repo/in-junction/image.png",
+      "sha256": "9efbe7ae02ac438fd32e62c970d090a4fdf6928db4bad071c8d65d41c7d8319e",
+      "target_relative": null
+    },
+    {
+      "kind": "file",
+      "path": "repo/in-junction/schema.json",
+      "sha256": "a2c799262a3ce3c19ef5cdd983bf3d12b43ab3c426227091b909dcb7054738c0",
+      "target_relative": null
+    },
+    {
+      "kind": "directory",
+      "path": "repo/in-junction/work",
+      "sha256": null,
+      "target_relative": null
+    },
+    {
+      "kind": "directory",
+      "path": "repo/internal",
+      "sha256": null,
+      "target_relative": null
+    },
+    {
+      "kind": "file",
+      "path": "repo/internal/image.png",
+      "sha256": "9efbe7ae02ac438fd32e62c970d090a4fdf6928db4bad071c8d65d41c7d8319e",
+      "target_relative": null
+    },
+    {
+      "kind": "file",
+      "path": "repo/internal/schema.json",
+      "sha256": "a2c799262a3ce3c19ef5cdd983bf3d12b43ab3c426227091b909dcb7054738c0",
+      "target_relative": null
+    },
+    {
+      "kind": "directory",
+      "path": "repo/internal/work",
+      "sha256": null,
+      "target_relative": null
+    }
+  ],
+  "schema": "broker_path_serve_windows_fixture_v1"
+}

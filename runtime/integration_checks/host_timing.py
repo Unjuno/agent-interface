@@ -1,5 +1,6 @@
 """Read-only timing of retained relay host boundaries, never model latency."""
 import argparse
+import base64
 import hashlib
 import json
 import math
@@ -20,6 +21,26 @@ def summarize(directory):
         identities[name] = hashlib.sha256(data).hexdigest()
         return data
 
+    def image_candidate(attempt, expected_hash):
+        name = f'reply-{attempt}.json'
+        raw = read(name)
+        require(identities[name] == expected_hash, 'image reply hash changed')
+        reply = json.loads(raw)
+        images = [b for b in reply.get('result', {}).get('content', []) if b.get('type') == 'image']
+        if reply.get('status') != 'returned' or len(images) != 1:
+            return None
+        image = images[0]
+        data = image.get('data')
+        if image.get('mimeType') != 'image/png' or not isinstance(data, str) or len(data) > 16 * 1024 * 1024:
+            return None
+        try:
+            decoded = base64.b64decode(data, validate=True)
+        except ValueError:
+            return None
+        if not decoded or base64.b64encode(decoded).decode() != data:
+            return None
+        return {'data': data, 'mime_type': 'image/png', 'image_sha256': hashlib.sha256(decoded).hexdigest()}
+
     events = [json.loads(line) for line in read('host-events.jsonl').splitlines()]
     require(events, 'empty timeline')
     calls = {}
@@ -27,6 +48,8 @@ def summarize(directory):
     closed = False
     previous = -1
     next_relay_id = 1
+    image_base = None
+    last_presentation = None
     for index, event in enumerate(events, 1):
         require(event.get('schema') == 'agent-interface/relay-host-event-v1', 'event schema')
         require(type(event.get('sequence')) is int and event['sequence'] == index, 'event sequence')
@@ -85,22 +108,65 @@ def summarize(directory):
                 event.get('reply_sha256') == call['reply_sha256'], 'unbound reply event')
         if kind == 'presentation_started':
             require(active is None, 'overlapping presentation')
-            call['presentations'].append({'start_ms': stamp, 'completed_ms': None})
+            presentation = {'start_ms': stamp, 'completed_ms': None}
+            if 'image_delivery' in event:
+                delivery = event['image_delivery']
+                require(isinstance(delivery, dict), 'image delivery object')
+                if delivery.get('mode') == 'full':
+                    require(delivery == {'mode': 'full'}, 'full image delivery shape')
+                else:
+                    require(type(delivery.get('base_attempt')) is int and
+                            image_base is not None and delivery == image_base['reference'],
+                            'missing or mismatched reviewed image base')
+                    candidate = image_candidate(attempt, call['reply_sha256'])
+                    require(candidate is not None and candidate['data'] == image_base['data'],
+                            'referenced image bytes differ')
+                presentation['image_delivery'] = delivery
+            call['presentations'].append(presentation)
             active = ('present', attempt)
         elif kind == 'presentation_callbacks_completed':
             require(active == ('present', attempt), 'presentation completion without start')
-            call['presentations'][-1]['completed_ms'] = stamp
+            presentation = call['presentations'][-1]
+            require(event.get('image_delivery') == presentation.get('image_delivery'),
+                    'image delivery completion mismatch')
+            presentation['completed_ms'] = stamp
+            last_presentation = (attempt, presentation.get('image_delivery'))
+            if presentation.get('image_delivery', {}).get('mode') == 'full':
+                image_base = None
             active = None
         elif kind == 'review_recorded':
             require(active is None and not call['reviews'], 'overlapping or duplicate review')
             receipt = json.loads(read(f'review-{attempt}.json'))
-            require(receipt.get('schema') == 'agent-interface/primary-review-receipt-v1' and
+            review_schema = receipt.get('schema')
+            require(review_schema in (
+                        'agent-interface/primary-review-receipt-v1',
+                        'agent-interface/primary-review-receipt-v2-public-capture') and
                     all(receipt.get(k) == event.get(k) for k in
                         ('reply_sha256', 'call_id', 'source_sequence', 'task', 'phase')),
                     'review receipt identity')
+            if review_schema == 'agent-interface/primary-review-receipt-v2-public-capture':
+                require('source_sequence' in receipt and receipt['source_sequence'] is None and
+                        'source_sequence' in event and event['source_sequence'] is None,
+                        'public review cannot assert a source sequence')
+            delivery_fields = {}
+            if 'image_delivery' in event:
+                expected = last_presentation[1] if last_presentation and last_presentation[0] == attempt else None
+                require(event['image_delivery'] == expected, 'review image presentation mismatch')
+                delivery_fields['image_delivery'] = expected
+                if expected == {'mode': 'full'}:
+                    candidate = image_candidate(attempt, call['reply_sha256'])
+                    if candidate is not None:
+                        require(receipt.get('images') == [{'mime_type': candidate['mime_type'],
+                                                          'sha256': candidate['image_sha256']}],
+                                'review image identity')
+                        image_base = {'data': candidate['data'], 'reference': {
+                            'mode': 'reviewed-image-reference', 'base_attempt': attempt,
+                            'base_reply_sha256': call['reply_sha256'],
+                            'base_review_sha256': identities[f'review-{attempt}.json'],
+                            'image_sha256': candidate['image_sha256'], 'mime_type': candidate['mime_type']}}
             # This binds the declaration, not its semantic truth or model ingestion.
             call['reviews'].append({'recorded_ms': stamp, 'task': event.get('task'),
-                                    'phase': event.get('phase'),
+                                    'phase': event.get('phase'), **delivery_fields,
                                     'after_presentation': any(p['completed_ms'] is not None
                                                              for p in call['presentations'])})
         else:
@@ -119,6 +185,25 @@ def summarize(directory):
             review['send_to_declared_review_ms'] = review['recorded_ms'] - row['send_ms']
     returned = [r for r in rows if r['reply_ms'] is not None]
     complete = closed and active is None and len(returned) == len(rows)
+    partition = None
+    if complete and rows:
+        start, end = rows[0]['send_ms'], returned[-1]['reply_ms']
+        span = end - start
+        request_ms = math.fsum(r['send_to_reply_ms'] for r in returned)
+        # Presentation can occur after the final reply, so clip every interval
+        # to this named span. Repeated presentations count independently.
+        presentation_ms = math.fsum(
+            max(0, min(p['completed_ms'], end) - max(p['start_ms'], start))
+            for r in rows for p in r['presentations'] if p['completed_ms'] is not None)
+        other_ms = span - request_ms - presentation_ms
+        require(other_ms >= -1e-6, 'overlapping timing partition')
+        partition = {
+            'span': 'first_send_to_last_reply',
+            'total_ms': span,
+            'request_outstanding_ms': request_ms,
+            'presentation_callbacks_ms': presentation_ms,
+            'other_host_intervals_ms': max(0, other_ms),
+            'scope': 'Disjoint host-clock intervals only. Other includes orchestration, logging and caller gaps; not isolated model reasoning or wait.'}
     return {'schema': 'agent-interface/host-timing-summary-v1',
             'scope': 'single retained host lifetime; boundaries, not model latency or semantic truth',
             'timeline_status': 'complete' if complete else 'partial',
@@ -129,6 +214,7 @@ def summarize(directory):
             'unmeasured': ['first useful model-visible feedback', 'semantic completion',
                            'isolated model wait/thinking', 'actual model tokens and cost',
                            'matched speedup and human tempo'],
+            'time_partition': partition,
             'calls': rows, 'input_sha256': identities}
 
 

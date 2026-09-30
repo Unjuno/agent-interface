@@ -15,7 +15,7 @@ NATIVE_TOOLS = ('list_tools', 'native_start', 'native_status', 'native_observe',
                 'native_submit', 'native_resume', 'native_stop')
 PUBLIC_TOOLS = ('list_tools', 'interface_validate', 'interface_observe', 'interface_dispatch',
                 'interface_results', 'interface_inspect_target', 'interface_review_target',
-                'interface_close', 'interface_guarded_observe', 'interface_guarded_mint',
+                'interface_close', 'interface_recover_input', 'interface_guarded_observe', 'interface_guarded_mint',
                 'interface_guarded_input', 'interface_guarded_review_window', 'interface_guarded_mint_many')
 
 

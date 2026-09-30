@@ -351,3 +351,80 @@ the view, or request the retained call with observation_refs=false. To retrieve
 all guard detail too, use detail="full". Combining this lossless reference layer
 with detail="brief" does not make brief guard summaries lossless. Refused and
 persistence-failed replies remain literal; small/nonduplicate reports do too.
+
+## Opt-in paced-dispatch brief view
+
+For public dispatch, add `detail="brief"` together with `compact=true` and
+`report_refs=true`. Full is the default. Supported successful paced-text
+dispatches can omit duplicated source programs, per-wait records and expansion
+mappings while retaining outcomes, release evidence, images and session state.
+The wait summary describes fixed delays, not detected application updates.
+
+A brief receipt uses `agent-interface/receipt-view-paced-brief-v1`.
+Its partial report is at `receipt.source.report_projection`; it is not a
+lossless v3 receipt and must not be passed to the v3 expansion decoder.
+Follow `presentation.retrieve` to call `interface_results` for that exact
+call with `detail="full"`. Retrieval never executes input again.
+The original report and images remain retained in the current server process.
+Failures, missing evidence, unsupported shapes and non-smaller projections stay
+full. This is an explicit presentation option, not proof of task success or
+measured token/cost savings.
+
+## Optional successful-dispatch summaries
+
+`interface_dispatch` and retained `interface_results` accept `detail="summary"`
+with `compact=true, report_refs=true`. This opt-in partial view supports known
+successful public dispatch reports, including short nonpaced save programs.
+Default `detail="full"` and the existing paced `detail="brief"` remain unchanged.
+
+The receipt schema is `agent-interface/receipt-view-dispatch-summary-v1`.
+Read `receipt.execution_summary` for execution times, emissions, all capture,
+release and activation records, completed operation count and fixed-wait totals.
+Images, outcome fields, target/session state and call identity remain unchanged.
+A retained lookup without a live session snapshot keeps its historical session
+at `receipt.reported_session`; it does not mint a current binding or authority.
+Source programs, expansion mapping, per-wait timestamps, completed indices and
+duplicate receipt/session metadata are omitted. The source digest identifies the
+retained full report, not the summary. This does not assert task success.
+
+Follow `presentation.retrieve` to obtain the same call with `detail="full"`
+without replaying input or taking another capture. The lossless receipt decoder
+deliberately rejects the partial summary schema. Failed, incomplete, unfamiliar
+or inconsistent omitted records stay full, as do reports that would not shrink.
+A fixed wait remains a delay, not an acknowledgement of an application update.
+
+## Optional target inspection after public dispatch
+
+In `persistent-x11` mode, `interface_dispatch(..., inspect_after="app")` can
+request the existing focused-target inspection after that one dispatch. The name
+must be a configured target; unsupported modes and unknown names reject before
+input. Omission preserves the existing behavior.
+
+`post_dispatch_inspection` is separate from the execution outcome. Inspection
+runs only after completed dispatch with verified released keys/buttons and no
+input recovery requirement; otherwise its status is `skipped`. Inspection errors
+preserve the original input result. Never replay input to recover this metadata.
+
+The context contains a candidate `review_request` when available. The primary
+must review the evidence and explicitly call `interface_review_target`, which
+rechecks identity, expiry and binding revision. Inspection does not focus,
+select a target, advance the binding revision or capture another image. Its
+metadata is sampled after dispatch and is not atomically bound to the returned
+image. Request a new image when the visual state is uncertain.
+
+The full report persists this context. `interface_results` returns the same
+historical data and does not inspect again or renew the one-use review ID.
+Successful inspection metadata is preserved in full by `detail=summary`,
+including expiry and any extension fields. Inspection errors, skipped inspection
+and mismatched duplicated context retain the full response. `detail=brief`
+also retains the full response for enriched reports. This opt-in trades
+additional metadata and inspection time against a possible separate tool call;
+no latency or token benefit is established yet.
+
+Target inspection resolves a configured X11 child/widget ID to its first managed ancestor using at most 64 window IDs. For such targets, evidence includes `configured_target_path` and `managed_family_root`, while `family_root` retains the configured ID. The focused window must still belong to that managed transient family. Missing, destroyed, cyclic or excessive ancestry refuses inspection. The path is rechecked with the rest of the evidence during explicit target review; changed ancestry invalidates that review. This metadata lookup does not change the input binding or grant authority. See [earlier primary evidence](../results/post-dispatch-inspection-01/README.md) for the child-ID failure that motivated this support; those historical results remain unchanged.
+
+### X11 key spelling
+
+Use `{"op":"key_chord","keys":["Home"]}` for a Home tap and `{"op":"key_chord","keys":["CTRL","s"]}` for a chord. Held input uses `key_state` with `key` and `down`; `key` is not an operation name. X11 keysym names are case-sensitive: `Home`, `End`, `Left`, `Right`, `Up`, `Down`, `BackSpace`, `Delete`, `Insert`. The existing aliases `CTRL`, `SHIFT`, `ALT`, `ENTER`, `TAB`, `ESC`, `SPACE` are also accepted. The actual layout must still map the named key; static validation alone does not establish that.
+
+For common uppercase misspellings, an unmapped-key refusal gives a spelling hint. It does not dispatch the suggested key, retry input, or change held-key identity. Read the execution outcome before deciding a corrected action. This guidance follows the retained `HOME` refusal and explicit `Home` correction in [primary child-target use](../results/managed-target-ancestry-01/README.md).

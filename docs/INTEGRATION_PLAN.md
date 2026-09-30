@@ -1,3 +1,82 @@
+## X11 resync-cut intake — 2026-09-28
+
+[Docker re-audit and compatibility mapping](../runtime/results/resync-cut-intake-01/README.md)
+reproduced the saved 2,478-check audit, all 12 effective corruption controls and
+seven policy tests without rerunning any native allocation. Shared runtime adoption
+remains HOLD: the research needs a producer-authored contiguous state sequence,
+complete snapshot cut and explicit event gap. Public/guarded capture sequences,
+motor recovery and acknowledged image references do not provide those contracts.
+No automatic resync, sensor, wait-policy or input authority was introduced.
+
+## Reviewed-image functional pair — 2026-09-28
+
+[One primary Calc pair](../runtime/results/reviewed-image-pair-01/README.md)
+uses the same seed/runtime/input programs and fresh per-arm sessions. Both saved
+324/145 correctly. Reuse presented four full images and two references; baseline
+presented seven full images. Baseline needed an extra observation of its save
+transition, so the nine-versus-eight request difference is not attributed to reuse.
+C1 omitted two PNG presentations (153,854 bytes), while full MCP evidence remained.
+
+Keep EFFICIENCY_HOLD: fixed-order single pair, unfrozen rendering timing, unavailable
+actual usage accounting. Recorded host/review timing is not exact useful-feedback
+or causal latency. The primary explicitly distinguished completed input/focus from
+an image still showing save progress. No wait-policy, sensor, or model change.
+
+## Reviewed-image host integration — 2026-09-28
+
+[Primary Calc use and retained evidence](../runtime/results/reviewed-image-host-primary-01/README.md)
+resolve the earlier live-adapter intake hold for an **opt-in host presentation adapter**
+only. An explicit review establishes one connection-local exact-PNG base; reference
+events bind that acknowledgment and preserve current metadata. Full presentation,
+failure and reconnect reset reuse. The caller must force a full image after losing
+the base from model context; there is no automatic context-eviction detection.
+
+Fresh primary Calc use saved 346/291 with one reference among seven image replies.
+The original full MCP responses remain unchanged. The missing-argument failure is
+retained. 19 Node tests and 280 protocol / 126 harness tests pass. Default enablement,
+actual model-token/cost savings, and matched useful-feedback/semantic-latency gains
+remain HOLD. No sensor, model helper or wait-policy change is included.
+
+## Exact-image reuse intake — 2026-09-28
+
+[Primary-stream reconstruction](../runtime/results/exact-image-intake-01/README.md)
+rechecks the frozen A1r3 gate against three retained primary Calc streams. Four of
+21 images are exact consecutive repeats; independent decoding reconstructs all
+sampled pixels and preserves each reply's separate metadata. Omitted PNG bodies
+would total 290,285 bytes. This is an offline candidate-body count, not model-token,
+latency or live MCP evidence.
+
+Keep LIVE_ADAPTER_HOLD: public MCP currently delivers full image blocks and v2
+review attribution requires an image in that reply. Integration needs explicit
+base acknowledgement/retention, unknown-delivery and reconnect resynchronization,
+reference-aware review, and full-image fallback. Never use equality, a callback,
+XDamage or elapsed fixed delay as proof of redraw/task completion. No sensor or
+wait-policy implementation was added; #3700 remains a separately matched gate.
+
+## Linux lifecycle dependency reconstruction — 2026-09-28
+
+The [additive exact-byte reconstruction](../runtime/results/lifecycle-reference-reconstruction-01/README.md)
+restores only the two declared reference dependencies to their frozen CRLF
+hashes in a separate copy. Ten tests pass, and the corrected raw auditor reconciles
+30,000 predictions with all fields matching the retained correction except Python
+version. No formal rerun occurred. This resolves the representation question for
+the scoped synthetic result; an unmodified LF checkout still fails the original
+byte gate. No interface-speed claim or new runtime behavior is promoted.
+
+## Linux lifecycle research intake — 2026-09-28
+
+The integration owner rechecked #5133 / merged PR #5147 from exact main Git
+bytes. Candidate source hashes match after the earlier repair, but two shared
+reference dependencies still differ from their frozen CRLF byte hashes on Linux.
+Construction checks: 9/10 pass, one reference-identity failure. No formal run or
+corrected raw audit was started. In-memory LF-to-CRLF mapping reproduces both
+expected hashes; no frozen file was changed to force a pass.
+
+[Retained intake evidence](../runtime/results/lifecycle-intake-01/README.md)
+records HOLD_REFERENCE_BYTES_ON_LINUX. Preserve the historical corrected timing
+result, but require dependency-byte reproducibility before promotion from this
+checkout. Synthetic scorer reuse is not a measured interface-latency improvement.
+
 ## Moved implementation source pins (2026-09-28)
 
 The #5107 review identified wrapper-only hashes in experiment preregistrations.
@@ -724,3 +803,10 @@ with formal HOLD gates; no secure hidden-evaluator or held-out result is inferre
 #5156 proves automatic cleanup need not have a caller-side bracket, not actual
 key-up timing. #5134's macOS host filesystem result does not establish OrbStack
 bind-mount behavior. Those research results do not change this product's claims.
+
+
+## Inkscape primary-use integration check (2026-09-28)
+
+The current public persistent-X11 interface completed a fresh move-and-save task in Inkscape, seed 991359. See [retained evidence](../runtime/results/inkscape-current-primary-01/README.md): five calls, three input programs, four full reviewed images, independently checked saved SVG. No repeat allocation or input replay was used to repair the observed result.
+
+Pointer command distance and application effect distance differed (36 screen pixels requested; approximately 24 visible). Do not equate runtime completion with exact object displacement. Issues #4388/#4359/#4424 remain intake candidates requiring accessible raw evidence and condition compatibility; this self-use does not authorize a compensation formula or automatic sensor/servo. No runtime/default changes follow from this single task. Same-model matched speed, useful-feedback and semantic-completion boundaries, and actual tokens/cost remain open.

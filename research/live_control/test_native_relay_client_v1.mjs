@@ -92,6 +92,28 @@ test('review attribution comes from explicit retained reply and cannot overwrite
  await assert.rejects(recordRelayReview(args),/EEXIST/);
  assert.deepEqual(JSON.parse(await readFile(receiptPath)),receipt);
 });
+test('public and management captures have explicit identity without invented sequence', async () => {
+ const { writeFile } = await import('node:fs/promises');
+ const { createHash } = await import('node:crypto');
+ const { recordRelayReview } = await import('./native_relay_client_v1.mjs');
+ const root=await mkdtemp(join(tmpdir(),'public-review-'));
+ const hash=createHash('sha256').update(Buffer.from([0,1,2,3])).digest('hex');
+ const capture={target:'app',native_window_id:123,frame:'screen_physical_px',region:[0,0,1,1],capture_started_ns:100,capture_ended_ns:200};
+ const reports=[{call_id:'c',image_status:'image',image_reference:{sha256:hash,recorded_capture:capture}},
+  {call_id:'m',image_status:'image',observation_report:{status:'returned',observation_id:'obs',observation:{...capture,artifact:{sha256:hash}}}}];
+ for (let i=0;i<reports.length;i++) {
+  const replyPath=join(root,`reply-${i}.json`),receiptPath=join(root,`review-${i}.json`);
+  const row={id:i+1,tool:'interface_observe',status:'returned',result:{content:[{type:'text',text:JSON.stringify(reports[i])},{type:'image',mimeType:'image/png',data:'AAECAw=='}]}};
+  await writeFile(replyPath,JSON.stringify(row));
+  const receipt=await recordRelayReview({replyPath,receiptPath,task:'t',phase:'reviewed',reason:'explicit caller review'});
+  assert.equal(receipt.source_sequence,null);assert.equal(receipt.capture.artifact_sha256,hash);
+  assert.equal(receipt.schema,'agent-interface/primary-review-receipt-v2-public-capture');
+  assert.equal(receipt.observation_id,i===0?null:'obs');
+  row.result.content[1].data='AA==';await writeFile(replyPath,JSON.stringify(row));
+  await assert.rejects(recordRelayReview({replyPath,receiptPath:receiptPath+'.bad',task:'t',phase:'reviewed',reason:'r'}),/matching delivered image/);
+  await assert.rejects(readFile(receiptPath+'.bad'),/ENOENT/);
+ }
+});
 test('review refuses ambiguous, missing-image, uncertain and incomplete evidence', async () => {
  const { writeFile } = await import('node:fs/promises');
  const { recordRelayReview } = await import('./native_relay_client_v1.mjs');
@@ -109,5 +131,27 @@ test('review refuses ambiguous, missing-image, uncertain and incomplete evidence
   await writeFile(replyPath,JSON.stringify(cases[i]));
   await assert.rejects(recordRelayReview({replyPath,receiptPath,task:'t',phase:'p',reason:'r'}));
   await assert.rejects(readFile(receiptPath),/ENOENT/);
+ }
+});
+
+test('presentation preserves explicit MCP error status before unchanged content', async () => {
+ for (const isError of [true, false]) {
+  const row={status:'returned',result:{isError,content:[
+   {type:'text',text:'same ambiguous body'},
+   {type:'image',mimeType:'image/png',data:'AAECAw=='}
+  ]}};
+  const before=JSON.stringify(row),seen=[];
+  await presentRelayResponse(row,{text:v=>seen.push(['text',v]),image:v=>seen.push(['image',v])});
+  assert.deepEqual(seen[0],['text',{schema:'agent-interface/mcp-result-status-v1',isError}]);
+  assert.deepEqual(seen[1],['text','same ambiguous body']);
+  assert.deepEqual(seen[2],['image',{bytes:Buffer.from([0,1,2,3]),mimeType:'image/png'}]);
+  assert.equal(JSON.stringify(row),before);
+ }
+});
+test('presentation retains explicit error status for empty content and does not invent an absent flag', async () => {
+ for (const result of [{isError:true,content:[]},{content:[]}]) {
+  const seen=[];
+  await presentRelayResponse({status:'returned',result},{text:v=>seen.push(v),image:()=>assert.fail('unexpected image')});
+  assert.deepEqual(seen,Object.hasOwn(result,'isError')?[{schema:'agent-interface/mcp-result-status-v1',isError:true}]:[]);
  }
 });
