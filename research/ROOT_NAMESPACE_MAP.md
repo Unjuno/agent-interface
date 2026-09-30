@@ -234,3 +234,6 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 - [`procedural_control_arena_v1/`](procedural_control_arena_v1/) - Procedural control arena v1 construction environment; see README and VALIDATION for scope and open promotion gates.
 
 - [`kernel_receipt_time_5215_20260928/`](kernel_receipt_time_5215_20260928/) — Issue #5215 kernel receipt timestamp construction probe; consult PLAN and REPORT for its contract-only scope and limitations.
+
+- [`x11_private_xvfb_5286/`](x11_private_xvfb_5286/) - Issue #5286 retained private-Xvfb termination construction STOP; see its immutable raw evidence and STOP report.
+- [`x11_private_xvfb_5291/`](x11_private_xvfb_5291/) - Issue #5291 private-Xvfb readiness and clean SIGTERM construction evidence; scoped to one WSL2 host, with no GUI input or task-effect claim.
