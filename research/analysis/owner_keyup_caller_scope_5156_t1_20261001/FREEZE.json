@@ -1,0 +1,27 @@
+{
+  "schema": "issue5156-caller-bracket-scope-analysis-freeze-v1",
+  "allocation": "MAP01-OWNER-KEYUP-BRACKET-5156-CALLER-SCOPE-T1-20261001",
+  "main_sha": "666a2b0919199bb11251ceb83a31b23be6d71b34",
+  "sources": {
+    "research/live_control/input_owner_v10.py": {
+      "git_blob": "341b3c01649943ddaad5f28431a792c4889cc36e",
+      "sha256": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b"
+    },
+    "research/live_control/input_transition_owner_v3.py": {
+      "git_blob": "0ea631abcf6272f0538a9ef9198ad8069b47b464",
+      "sha256": "5ffdbb3679451fefdc3836917d43d924f0f43c8082d21327207ecefbd87f5be6"
+    }
+  },
+  "test_sha256": "6015d653aad749762c912c9e31ab840611c5d44696a9dde58534942991f80d3f",
+  "tools_sha256": {
+    "classify.py": "57d4e7e6be7017a1b9bd7fcf39350c364585704e6488f11e6ddb075dff32dab3",
+    "audit.py": "72c8bed50a2413a03a95a02810a12c0c747703e047e551dcf51cdd9c7e4f13a6"
+  },
+  "hypothesis": "The registered universal caller-nesting gate cannot hold for all owner_release events because the frozen InputOwner has autonomous stop, lease expiry/cancel/focus, and thread-finalizer paths that perform release directly on the owner thread after request callers may have returned. Explicit key-up transitions are separately caller-bracketed.",
+  "test": "After freezing, invoke the deterministic AST classifier exactly once and invoke the independent source/result auditor exactly once only if classifier exit is zero. Construction tests and compilation are pre-freeze only. No source/runtime changes, X server, Docker, GUI, input, or X11 formal allocation.",
+  "decision": "PASS_CALLER_BRACKET_SCOPE_CORRECTION_REQUIRED iff source blob identities match, all four release callsites are classified, exactly one callsite is the queued release/close operation, wrapper v3 brackets explicit up/button_up, and wrapper does not enclose autonomous cleanup. Otherwise STOP_SOURCE_OR_CLASSIFICATION_MISMATCH.",
+  "context": "Windows CPython 3.12.10; AST and stdlib only. Container execution is not relevant to this source-determined control-flow question and shared Docker/OrbStack inspection is not authorized by the current #5156 coordination note.",
+  "formal_classifier_invocations": 1,
+  "independent_audit_invocations": 1,
+  "retries": 0
+}

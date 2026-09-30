@@ -1,0 +1,56 @@
+{
+  "autonomous_site_count": 3,
+  "decision": "PASS_CALLER_BRACKET_SCOPE_CORRECTION_REQUIRED",
+  "expected_blobs_match": {
+    "owner_v10.py": true,
+    "wrapper_v3.py": true
+  },
+  "owner_release_sites": [
+    {
+      "enclosing_conditions": [
+        "self.stop_requested.is_set()"
+      ],
+      "kind": "autonomous_stop",
+      "line": 205
+    },
+    {
+      "enclosing_conditions": [
+        "expired or active.cancel.is_set() or changed",
+        "active is not None"
+      ],
+      "kind": "autonomous_expiry_cancel_focus",
+      "line": 219
+    },
+    {
+      "enclosing_conditions": [
+        "op in ('release', 'close')",
+        "op == 'surface_context'",
+        "op == 'input_state'"
+      ],
+      "kind": "queued_explicit_release_or_close",
+      "line": 261
+    },
+    {
+      "enclosing_conditions": [
+        "held or buttons"
+      ],
+      "kind": "thread_finalizer",
+      "line": 356
+    }
+  ],
+  "physical_keyup_or_application_consumption_measured": false,
+  "queued_explicit_site_count": 1,
+  "release_site_count": 4,
+  "schema": "issue5156-caller-bracket-scope-result-v1",
+  "source_git_blobs": {
+    "owner_v10.py": "341b3c01649943ddaad5f28431a792c4889cc36e",
+    "wrapper_v3.py": "0ea631abcf6272f0538a9ef9198ad8069b47b464"
+  },
+  "source_sha256": {
+    "owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "wrapper_v3.py": "5ffdbb3679451fefdc3836917d43d924f0f43c8082d21327207ecefbd87f5be6"
+  },
+  "wrapper_autonomous_cleanup_timer": false,
+  "wrapper_explicit_transition_branch": "operation not in ('up', 'button_up')",
+  "wrapper_timestamps_explicit_up": true
+}
