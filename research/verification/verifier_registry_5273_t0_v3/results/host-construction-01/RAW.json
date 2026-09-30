@@ -1,0 +1,340 @@
+{
+  "allocation": "verifier-registry-5273-t0-v3-20260930-01",
+  "base_commit": "4e2c0cf6241e3068bbc1afde8c97206c6b731a1b",
+  "fixtures_sha256": "82ce703bf06c7583775fe2635fe60d15dd78306e094ce45fed55511694744b41",
+  "freeze_sha256": "2ca6eaff9bc44c64303c798c463f11fec4e591b2a18033d260035e2994c8abe4",
+  "parent_ir_candidate_sha256": "0d3fc7b367c98d3b58c41a6da2da0e0db360c902b9b70f0af42cc7c4b89101e0",
+  "plans": [
+    {
+      "authority": "none",
+      "case_id": "warm_cpu_feasible",
+      "decisions": [
+        {
+          "authority": "none",
+          "check_id": "c1",
+          "cost_basis": "declared_estimate_not_measurement",
+          "dispatch_count": 0,
+          "estimated_cost_ms": 12,
+          "reasons": [],
+          "status": "COMPATIBLE"
+        }
+      ],
+      "dispatch_count": 0,
+      "plan_id": "warm_cpu_feasible",
+      "reasons": [],
+      "schema": "verifier_plan_preflight.v0.3",
+      "status": "COMPATIBLE"
+    },
+    {
+      "authority": "none",
+      "case_id": "unsupported_primitive",
+      "decisions": [
+        {
+          "authority": "none",
+          "check_id": "c2",
+          "cost_basis": "declared_estimate_not_measurement",
+          "dispatch_count": 0,
+          "estimated_cost_ms": 12,
+          "reasons": [
+            "unsupported_primitive",
+            "wrong_evidence_role"
+          ],
+          "status": "REJECTED"
+        }
+      ],
+      "dispatch_count": 0,
+      "plan_id": "unsupported_primitive",
+      "reasons": [
+        {
+          "check_id": "c2",
+          "reason": "unsupported_primitive"
+        },
+        {
+          "check_id": "c2",
+          "reason": "wrong_evidence_role"
+        }
+      ],
+      "schema": "verifier_plan_preflight.v0.3",
+      "status": "REJECTED"
+    },
+    {
+      "authority": "none",
+      "case_id": "wrong_input_role",
+      "decisions": [
+        {
+          "authority": "none",
+          "check_id": "c3",
+          "cost_basis": "declared_estimate_not_measurement",
+          "dispatch_count": 0,
+          "estimated_cost_ms": 12,
+          "reasons": [
+            "wrong_evidence_role"
+          ],
+          "status": "REJECTED"
+        }
+      ],
+      "dispatch_count": 0,
+      "plan_id": "wrong_input_role",
+      "reasons": [
+        {
+          "check_id": "c3",
+          "reason": "wrong_evidence_role"
+        }
+      ],
+      "schema": "verifier_plan_preflight.v0.3",
+      "status": "REJECTED"
+    },
+    {
+      "authority": "none",
+      "case_id": "wrong_output_role",
+      "decisions": [
+        {
+          "authority": "none",
+          "check_id": "c4",
+          "cost_basis": "declared_estimate_not_measurement",
+          "dispatch_count": 0,
+          "estimated_cost_ms": 12,
+          "reasons": [
+            "wrong_output_role"
+          ],
+          "status": "REJECTED"
+        }
+      ],
+      "dispatch_count": 0,
+      "plan_id": "wrong_output_role",
+      "reasons": [
+        {
+          "check_id": "c4",
+          "reason": "wrong_output_role"
+        }
+      ],
+      "schema": "verifier_plan_preflight.v0.3",
+      "status": "REJECTED"
+    },
+    {
+      "authority": "none",
+      "case_id": "stale_version",
+      "decisions": [
+        {
+          "authority": "none",
+          "check_id": "c5",
+          "cost_basis": "declared_estimate_not_measurement",
+          "dispatch_count": 0,
+          "estimated_cost_ms": 12,
+          "reasons": [
+            "stale_version"
+          ],
+          "status": "REJECTED"
+        }
+      ],
+      "dispatch_count": 0,
+      "plan_id": "stale_version",
+      "reasons": [
+        {
+          "check_id": "c5",
+          "reason": "stale_version"
+        }
+      ],
+      "schema": "verifier_plan_preflight.v0.3",
+      "status": "REJECTED"
+    },
+    {
+      "authority": "none",
+      "case_id": "unknown_verifier",
+      "decisions": [
+        {
+          "authority": "none",
+          "check_id": "c6",
+          "cost_basis": "declared_estimate_not_measurement",
+          "dispatch_count": 0,
+          "estimated_cost_ms": null,
+          "reasons": [
+            "verifier_unknown"
+          ],
+          "status": "UNAVAILABLE"
+        }
+      ],
+      "dispatch_count": 0,
+      "plan_id": "unknown_verifier",
+      "reasons": [
+        {
+          "check_id": "c6",
+          "reason": "verifier_unknown"
+        }
+      ],
+      "schema": "verifier_plan_preflight.v0.3",
+      "status": "UNAVAILABLE"
+    },
+    {
+      "authority": "none",
+      "case_id": "resource_unavailable",
+      "decisions": [
+        {
+          "authority": "none",
+          "check_id": "c7",
+          "cost_basis": "declared_estimate_not_measurement",
+          "dispatch_count": 0,
+          "estimated_cost_ms": 120,
+          "reasons": [
+            "resource_unavailable",
+            "latency_unqualified"
+          ],
+          "status": "UNAVAILABLE"
+        }
+      ],
+      "dispatch_count": 0,
+      "plan_id": "resource_unavailable",
+      "reasons": [
+        {
+          "check_id": "c7",
+          "reason": "resource_unavailable"
+        },
+        {
+          "check_id": "c7",
+          "reason": "latency_unqualified"
+        }
+      ],
+      "schema": "verifier_plan_preflight.v0.3",
+      "status": "UNAVAILABLE"
+    },
+    {
+      "authority": "none",
+      "case_id": "cold_budget_violation",
+      "decisions": [
+        {
+          "authority": "none",
+          "check_id": "c8",
+          "cost_basis": "declared_estimate_not_measurement",
+          "dispatch_count": 0,
+          "estimated_cost_ms": 80,
+          "reasons": [
+            "budget_exceeded"
+          ],
+          "status": "REJECTED"
+        }
+      ],
+      "dispatch_count": 0,
+      "plan_id": "cold_budget_violation",
+      "reasons": [
+        {
+          "check_id": "c8",
+          "reason": "budget_exceeded"
+        }
+      ],
+      "schema": "verifier_plan_preflight.v0.3",
+      "status": "REJECTED"
+    },
+    {
+      "authority": "none",
+      "case_id": "hard_incompatibility_precedes_unavailable",
+      "decisions": [
+        {
+          "authority": "none",
+          "check_id": "c9",
+          "cost_basis": "declared_estimate_not_measurement",
+          "dispatch_count": 0,
+          "estimated_cost_ms": 900,
+          "reasons": [
+            "stale_version",
+            "side_effect_prohibited",
+            "resource_unavailable",
+            "latency_unqualified"
+          ],
+          "status": "REJECTED"
+        }
+      ],
+      "dispatch_count": 0,
+      "plan_id": "hard_incompatibility_precedes_unavailable",
+      "reasons": [
+        {
+          "check_id": "c9",
+          "reason": "stale_version"
+        },
+        {
+          "check_id": "c9",
+          "reason": "side_effect_prohibited"
+        },
+        {
+          "check_id": "c9",
+          "reason": "resource_unavailable"
+        },
+        {
+          "check_id": "c9",
+          "reason": "latency_unqualified"
+        }
+      ],
+      "schema": "verifier_plan_preflight.v0.3",
+      "status": "REJECTED"
+    },
+    {
+      "authority": "none",
+      "case_id": "deadline_infeasible",
+      "decisions": [
+        {
+          "authority": "none",
+          "check_id": "c10",
+          "cost_basis": "declared_estimate_not_measurement",
+          "dispatch_count": 0,
+          "estimated_cost_ms": 12,
+          "reasons": [
+            "deadline_infeasible"
+          ],
+          "status": "REJECTED"
+        }
+      ],
+      "dispatch_count": 0,
+      "plan_id": "deadline_infeasible",
+      "reasons": [
+        {
+          "check_id": "c10",
+          "reason": "deadline_infeasible"
+        }
+      ],
+      "schema": "verifier_plan_preflight.v0.3",
+      "status": "REJECTED"
+    },
+    {
+      "authority": "none",
+      "case_id": "full_plan_has_unavailable_member",
+      "decisions": [
+        {
+          "authority": "none",
+          "check_id": "c11",
+          "cost_basis": "declared_estimate_not_measurement",
+          "dispatch_count": 0,
+          "estimated_cost_ms": 120,
+          "reasons": [
+            "resource_unavailable",
+            "latency_unqualified"
+          ],
+          "status": "UNAVAILABLE"
+        },
+        {
+          "authority": "none",
+          "check_id": "c12",
+          "cost_basis": "declared_estimate_not_measurement",
+          "dispatch_count": 0,
+          "estimated_cost_ms": 12,
+          "reasons": [],
+          "status": "COMPATIBLE"
+        }
+      ],
+      "dispatch_count": 0,
+      "plan_id": "full_plan_has_unavailable_member",
+      "reasons": [
+        {
+          "check_id": "c11",
+          "reason": "resource_unavailable"
+        },
+        {
+          "check_id": "c11",
+          "reason": "latency_unqualified"
+        }
+      ],
+      "schema": "verifier_plan_preflight.v0.3",
+      "status": "UNAVAILABLE"
+    }
+  ],
+  "registry_sha256": "8920e902f90737abe6739cc6b40a5d7a36b19cc1fd3f6eb9f026d1f74be4d2fe",
+  "schema": "verifier_registry_5273_raw.v3"
+}

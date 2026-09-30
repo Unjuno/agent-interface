@@ -1,0 +1,7 @@
+{
+  "schema":"verifier_registry_5273_v3_construction_failure.v1",
+  "status":"RETAINED_FAILURE",
+  "failure":"The initial independent auditor's exact plan-field set omitted the candidate's documented schema and plan_id fields; the pre-freeze oracle audit correctly rejected all 11 rows.",
+  "classification":"auditor/candidate output-contract mismatch found during construction, before freeze and before formal allocation",
+  "preservation":"Failure retained. Auditor now validates both plan_id and schema explicitly. No source freeze or execution was consumed."
+}
