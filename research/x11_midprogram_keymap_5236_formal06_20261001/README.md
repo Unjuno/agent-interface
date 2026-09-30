@@ -40,4 +40,3 @@ python -B -m research.x11_midprogram_keymap_5236_formal06_20261001.audit \
   research/x11_midprogram_keymap_5236_formal06_20261001/results/formal06-20261001-01/raw.json \
   research/x11_midprogram_keymap_5236_formal06_20261001/results/formal06-20261001-01/wrapper.json
 ```
-
