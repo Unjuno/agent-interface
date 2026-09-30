@@ -461,3 +461,12 @@ before committing. The refusal and separate corrected allocation are retained
 in [portable relay self-use](../results/portable-public-relay-01/README.md).
 
 A Node host can use the [sequential host API](../host_v1/README.md) to retain requests/replies and deliver exact text/image blocks without importing the research tree. Its two `.mjs` files are separate from the Python archive.
+
+
+For retained public observe/dispatch results, `include_image=false` still checks
+the image path, recorded digest and PNG signature, but skips Base64 encoding of
+the validated PNG. Metadata and `image_delivery=omitted_by_request` remain the
+same as an ordinary image-omitted lookup. Missing or altered images still produce
+`needs_review`; the option does not bypass validation or capture a new frame.
+Management/guarded result presentation retains its existing path. No measured
+model-token, cost or useful-feedback latency benefit is implied.

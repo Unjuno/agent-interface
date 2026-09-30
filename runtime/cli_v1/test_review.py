@@ -13,6 +13,40 @@ from runtime.distribution_v2.build import SOURCE_FILES, build
 
 class PublicReviewTests(unittest.TestCase):
 
+    def test_metadata_only_review_skips_encoding_but_preserves_image_validation(self):
+        from unittest.mock import patch
+        png = base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aP1cAAAAASUVORK5CYII=')
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / 'frame.png'
+            path.write_bytes(png)
+            native = {'sha256': 'raw', 'capture_started_ns': 1,
+                      'artifact': {'mime_type': 'image/png', 'path': str(path),
+                                   'source_raw_sha256': 'raw', 'sha256': hashlib.sha256(png).hexdigest()}}
+            report = {'schema': 'agent-interface/runtime-observation-v1',
+                      'status': 'returned', 'observation': native}
+            raw = json.dumps(report).encode()
+            for options in ({}, {'compact': True}, {'compact': True, 'report_refs': True}):
+                full = review_bytes(raw, td, **options)
+                expected = dict(full, image=None, image_delivery='omitted_by_request')
+                with patch('runtime.cli_v1.review.base64.b64encode', side_effect=AssertionError('must not encode')):
+                    self.assertEqual(review_bytes(raw, td, include_image=False, **options), expected)
+                self.assertEqual(base64.b64decode(full['image']['data']), png)
+            for corruption in ('hash', 'signature', 'missing'):
+                if corruption == 'hash': path.write_bytes(png + b' ')
+                elif corruption == 'signature':
+                    path.write_bytes(b'invalid PNG')
+                    native['artifact']['sha256'] = hashlib.sha256(path.read_bytes()).hexdigest()
+                else: path.unlink()
+                raw = json.dumps(report).encode()
+                full = review_bytes(raw, td)
+                omitted = review_bytes(raw, td, include_image=False)
+                self.assertEqual(omitted, full)
+                self.assertEqual(omitted['image_status'], 'needs_review')
+                self.assertNotIn('image_delivery', omitted)
+            for invalid in ('false', 0, None):
+                with self.assertRaises(ValueError): review_bytes(raw, td, include_image=invalid)
+
+
     def test_expected_digest_binds_file_and_stdin_before_image_access(self):
         from unittest.mock import patch
         raw = json.dumps({'schema': 'agent-interface/runtime-dispatch-result-v1',
