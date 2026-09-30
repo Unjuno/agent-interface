@@ -8,6 +8,7 @@ import json
 from itertools import islice, dropwhile
 from pathlib import Path
 import threading
+import time
 from typing import Annotated, Literal
 import uuid
 
@@ -161,6 +162,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         from .mcp_guarded import GuardedSessionOwner
         owner = GuardedSessionOwner(targets, root, display_name)
     shutting_down = False
+    server_instance_id = uuid.uuid4().hex
 
     def close_owner():
         report = owner.close()
@@ -433,6 +435,25 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             Release/close failures are separate from prior task outcomes.
             """
             return await submit('close', {}, False, False)
+
+    @server.tool()
+    async def interface_clock() -> CallToolResult:
+        """Read this execution host's monotonic clock without input or authority.
+
+        Use only on this live server connection when authoring an already
+        authorized absolute expiry; this call issues no lease or source sequence.
+        Transport/presentation time consumes the remaining deadline. Do not add
+        elapsed Windows time, renew a retained sample, or reuse it after server
+        replacement/suspend. No backend is opened and no action result is created.
+        """
+        return content({'schema': 'agent-interface/execution-clock-v1',
+                        'monotonic_ns': time.monotonic_ns(),
+                        'clock': 'time.monotonic_ns',
+                        'server_instance_id': server_instance_id,
+                        'input_dispatched': False, 'authority_granted': False,
+                        'lease_issued': False,
+                        'scope': 'Clock sample only; not freshness, admission or task completion. '
+                                 'Only comparable within this execution host clock domain.'})
 
     @server.tool()
     async def interface_validate(program: dict) -> CallToolResult:
