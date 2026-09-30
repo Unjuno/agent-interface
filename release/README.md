@@ -27,7 +27,12 @@ This diagram restates the existing release boundary: repository/CI evidence can 
 
 ## Current Research Preview RC
 
-The active release lane is `release/research-preview-20260917-rc1` (Issue #515). Its packaging implementation lives under `release/preview_bundle_v1/`.
+The release lane is `release/research-preview-20260917-rc1`, introduced in
+[Issue #515](https://github.com/Unjuno/agent-interface/issues/515). Its
+[RC1 freeze](preview_bundle_v1/RC1_FREEZE.json) and
+[Issue #606](https://github.com/Unjuno/agent-interface/issues/606) define the
+release-only convergence and explicit-allowlist gate. Packaging implementation
+lives under `release/preview_bundle_v1/`.
 ### Release workspace map
 
 | Path | Role |
@@ -49,7 +54,16 @@ python3 release/preview_bundle_v1/test_build_preview.py -v
 python3 release/preview_bundle_v1/build_preview.py --root . --out artifacts-local/research-preview
 ```
 
-The builder packages the complete tracked RC source closure, emits `MANIFEST.json`, `SHA256SUMS`, `VERSION`, `QUICKSTART.md`, and `SUPPORT.md`, and runs the static first-run preflight both before and after archive extraction. The complete tracked closure is intentional: an earlier reduced offline research bundle omitted retained files required by `audit-retained`.
+The [builder](preview_bundle_v1/build_preview.py) packages an explicit selection
+of tracked runtime/release sources, Golden Desktop support files and retained
+audit evidence, as defined by `select_release_paths` and the manifest's
+`selection_policy`. It verifies the exact selected closure, rather than archiving
+the whole RC tree. Required retained files remain mandatory: an earlier reduced
+offline research bundle omitted files required by `audit-retained`.
+
+The builder emits `MANIFEST.json`, `SHA256SUMS`, `VERSION`, `QUICKSTART.md`,
+`SUPPORT.md`, and `RELEASE_NOTES.md`, and runs the static first-run preflight
+both before and after archive extraction.
 
 Packaging CI also installs the pinned runtime Python requirements and reruns `audit-retained` from the checkout and extracted archive. This is a source/package-closure check only; a generic Linux runner is not a substitute for supported-host WSLg acceptance.
 

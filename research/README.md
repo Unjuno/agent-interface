@@ -127,6 +127,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 ### Evaluation and research governance
 
 - [`benchmark_discovery/`](benchmark_discovery/) — benchmark/coverage discovery.
+- [`verification/ontology_gap_5275_t1_v1/REPORT.md`](verification/ontology_gap_5275_t1_v1/REPORT.md) — Issue #5275 T1 lexical novelty boundary probe; scoped synthetic result with training/evaluation overlap disclosed, no semantic-generalization claim.
 - [`verification/ontology_gap_5275_t2_v1/REPORT.md`](verification/ontology_gap_5275_t2_v1/REPORT.md) — Issue #5275 T2 held-out surface successor: FAIL, lexical-only abstains on all supported held-out cases and known-vocabulary dilution hides two semantic OOD cases.
 - [`evolution/`](evolution/) — convergence, freeze criteria, evolution ledger, and evaluation contracts.
 - [`conditional_optimization/`](conditional_optimization/) and [`optimization_revisits/`](optimization_revisits/) — conditional reuse and revisit work.
@@ -192,3 +193,5 @@ A directory existing here does **not** mean its mechanism is promoted. Negative 
 - [`x11_midprogram_keymap_5236_formal04_20260930/`](x11_midprogram_keymap_5236_formal04_20260930/) — Formal04 STOP: focused root did not receive fixture key input/effects.
 - [`x11_midprogram_keymap_5236_formal05_20260930/`](x11_midprogram_keymap_5236_formal05_20260930/) — Formal05 STOP: click/input reached fixture but completed effects were missing; see immutable STOP record.
 - [`x11_midprogram_keymap_docker_diagnostic_20260930/`](x11_midprogram_keymap_docker_diagnostic_20260930/) — Nonformal Docker focus-versus-click diagnostic; not evidence for the formal hypothesis.
+
+- [`aoi_43_t0/`](aoi_43_t0/) — #43 retained toy construction; [accounting-defect/HOLD correction](aoi_43_t0/README.md): identical queue policies and incomparable drop counters; no demonstrated critical-retention benefit.

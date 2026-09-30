@@ -1,0 +1,121 @@
+{
+  "issue": 4912,
+  "allocation": "typed-readout-precision-boundary-1014-v4-20260928-01",
+  "branch": "research/typed-readout-precision-boundary-1014-v4-20260928",
+  "main_sha": "f3dc0f18b0aaef241a6cd34124b68439c3434b05",
+  "source_files": [
+    {
+      "path": "audit_core.py",
+      "sha256": "6e808d444a00878fc192e12083700f704703355ceb7a0b44bd606c17bf84c64c",
+      "bytes": 3337
+    },
+    {
+      "path": "audit_raw.py",
+      "sha256": "251435daa93d496f1665f430ef5700ee3b3d8189e59c8fb0be640e77ae7eec08",
+      "bytes": 2714
+    },
+    {
+      "path": "cache_mechanics.py",
+      "sha256": "3915a26f23c108b67fc9a36838fec4894509f9c8e630c46881cbbfa81f4d2638",
+      "bytes": 1700
+    },
+    {
+      "path": "corpus.jsonl",
+      "sha256": "85b5bee5d5a69dab1ff0d094cdbad70d4cd66fcff505b36667978817ed30a49c",
+      "bytes": 270292
+    },
+    {
+      "path": "MODEL_MANIFEST.json",
+      "sha256": "b3f45e24433287c029c4a24b93e47cc5b62348651b512f12f47df755e6ab1854",
+      "bytes": 1694
+    },
+    {
+      "path": "README.md",
+      "sha256": "87e1cf9af84fb9b089f808dfff30a28cd126382ad4bea4d71482ae31fb6182fa",
+      "bytes": 2046
+    },
+    {
+      "path": "run_construction.py",
+      "sha256": "adc5b89c2baf03d0480f64678e5209a20b36fc7a44a13e4dcbaa28b14fa47c52",
+      "bytes": 8024
+    },
+    {
+      "path": "SOURCE_MANIFEST.json",
+      "sha256": "2cb7446cda581fec85d23ce5b2e3a28fc4e0280ea1fcf6f5637ff0f14a14a9af",
+      "bytes": 1396
+    },
+    {
+      "path": "test_audit_core.py",
+      "sha256": "cb95a951b56fbfb268dba7c65b6e05639ad8a797c7afadc4014d657fb306a6bf",
+      "bytes": 1843
+    }
+  ],
+  "image": {
+    "safetensors": "0.8.0",
+    "transformers": "5.16.1",
+    "torch": "2.5.1+cu121",
+    "id": "sha256:570ad778e44baf0bd094241515ed6cbbc7ce154321a7d76f295c42f2d5799261",
+    "platform": "linux/amd64"
+  },
+  "model": {
+    "weights_sha256": "fdf756fa7fcbe7404d5c60e26bff1a0c8b8aa1f72ced49e7dd0210fe288fb7fe",
+    "revision": "7ae557604adf67be50417f59c2c2f167def9a775"
+  },
+  "corpus": {
+    "bytes": 270292,
+    "sha256": "85b5bee5d5a69dab1ff0d094cdbad70d4cd66fcff505b36667978817ed30a49c"
+  },
+  "rows": {
+    "bundles": [
+      "B00",
+      "B17",
+      "B63"
+    ],
+    "pairs": 9,
+    "modes": [
+      "fp16",
+      "bf16",
+      "fp32"
+    ],
+    "answer_token_ids": [
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22
+    ],
+    "formal_rows": 0,
+    "suffix_slots": [
+      0,
+      7,
+      15
+    ]
+  },
+  "commands": {
+    "unit_test": "docker run --rm --pull=never --network none --read-only --cpus=2 --memory=4g --pids-limit=64 --tmpfs /tmp:rw,noexec,nosuid,size=256m --mount type=bind,source=\"C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\issue4912-v4-source\",target=/src,readonly -w /src --entrypoint python sha256:570ad778e44baf0bd094241515ed6cbbc7ce154321a7d76f295c42f2d5799261 -B -m unittest -v test_audit_core.py",
+    "construction": "docker run --rm --pull=never --network none --read-only --gpus all --cpus=2 --memory=8g --pids-limit=64 --tmpfs /tmp:rw,noexec,nosuid,size=512m --mount type=bind,source=\"C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\issue4912-v4-source\",target=/src,readonly --mount type=bind,source=\"C:\\Users\\junny\\.cache\\huggingface\\hub\\models--Qwen--Qwen2.5-0.5B-Instruct\\snapshots\\7ae557604adf67be50417f59c2c2f167def9a775\",target=/models/model,readonly --mount type=bind,source=\"C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\issue4912-v4-construction-out-20260928\",target=/out --env HF_HOME=/tmp/hf --env TRANSFORMERS_OFFLINE=1 --entrypoint python sha256:570ad778e44baf0bd094241515ed6cbbc7ce154321a7d76f295c42f2d5799261 -B /src/run_construction.py --model /models/model --corpus /src/corpus.jsonl --out /out",
+    "raw_only_audit": "docker run --rm --pull=never --network none --read-only --cpus=2 --memory=4g --pids-limit=64 --tmpfs /tmp:rw,noexec,nosuid,size=256m --mount type=bind,source=\"C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\issue4912-v4-source\",target=/src,readonly --mount type=bind,source=\"C:\\Users\\junny\\.cache\\huggingface\\hub\\models--Qwen--Qwen2.5-0.5B-Instruct\\snapshots\\7ae557604adf67be50417f59c2c2f167def9a775\",target=/models/model,readonly --mount type=bind,source=\"C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\issue4912-v4-construction-out-20260928\",target=/raw,readonly --mount type=bind,source=\"C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\issue4912-v4-audit-out-20260928\",target=/audit --env HF_HOME=/tmp/hf --env TRANSFORMERS_OFFLINE=1 --entrypoint python sha256:570ad778e44baf0bd094241515ed6cbbc7ce154321a7d76f295c42f2d5799261 -B /src/audit_raw.py --result /raw/result.json --corpus /src/corpus.jsonl --model /models/model --out /audit/audit.json",
+    "host_wrapper": "Run the exact commands.construction argv once. Redirect stdout to C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\issue4912-v4-host-logs-20260928\\construction.stdout.log and stderr to C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\issue4912-v4-host-logs-20260928\\construction.stderr.log; write invocation.json into that same host-only logs directory after exit. None of these log files or the receipt may be under, or mounted into, /out."
+  },
+  "host_paths": {
+    "logs": "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\issue4912-v4-host-logs-20260928",
+    "audit_output": "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\issue4912-v4-audit-out-20260928",
+    "source": "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\issue4912-v4-source",
+    "model": "C:\\Users\\junny\\.cache\\huggingface\\hub\\models--Qwen--Qwen2.5-0.5B-Instruct\\snapshots\\7ae557604adf67be50417f59c2c2f167def9a775",
+    "construction_output": "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\issue4912-v4-construction-out-20260928"
+  },
+  "gates": {
+    "atol": 0.002,
+    "retry": 0,
+    "rtol": 0.002
+  },
+  "preflight": {
+    "gpu": "check immediately before invocation; no model load before that check",
+    "corpus_sha256": "85b5bee5d5a69dab1ff0d094cdbad70d4cd66fcff505b36667978817ed30a49c",
+    "output_empty": true,
+    "logs_separate": true
+  }
+}

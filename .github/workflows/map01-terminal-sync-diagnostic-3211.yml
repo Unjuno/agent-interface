@@ -18,6 +18,9 @@ env:
 
 jobs:
   diagnostic:
+    # Historical allocation retained for evidence only; never execute this job.
+    # A fresh successor needs independent owner/resource/allocation validation.
+    if: ${{ false }}
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     steps:
@@ -62,10 +65,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p evidence-manifest
-          printf 'allocation_id=%s
-run_id=%s
-sha=%s
-' "$ALLOCATION_ID" "$GITHUB_RUN_ID" "$GITHUB_SHA" > evidence-manifest/metadata.txt
+          printf 'allocation_id=%s\nrun_id=%s\nsha=%s\n' "$ALLOCATION_ID" "$GITHUB_RUN_ID" "$GITHUB_SHA" > evidence-manifest/metadata.txt
           : > evidence-manifest/result-sha256sums.txt
           if [ -d "$OUT" ]; then find "$OUT" -type f -print0 | sort -z | xargs -0 sha256sum >> evidence-manifest/result-sha256sums.txt; fi
           tar -czf "evidence-$GITHUB_RUN_ID.tar.gz" evidence-manifest allocation-owner.json diagnostic-runner.stdout "$OUT"
