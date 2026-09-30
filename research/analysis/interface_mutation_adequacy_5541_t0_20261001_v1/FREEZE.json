@@ -1,0 +1,58 @@
+{
+  "allocation": "ISSUE-5541-MUTATION-ADEQUACY-T0-20261001-01",
+  "issue": 5541,
+  "source_main": "9fc98feb617c26fe1baa7ecc4decd43b69df8601",
+  "hypothesis": "A layered suite consisting of nominal/boundary traces, metamorphic downgrade checks, and an independent exhaustive semantic oracle can expose non-equivalent safety-contract mutants, including a correlated interaction mutant that the first two layers miss.",
+  "test": {
+    "finite_domain": {
+      "evidence_present": [false, true],
+      "evidence_fresh": [false, true],
+      "authority_matches": [false, true],
+      "outcome_known": [false, true],
+      "terminal_failure": [false, true]
+    },
+    "state_count": 32,
+    "mutants": [
+      "drop_provenance",
+      "accept_stale",
+      "ignore_authority",
+      "commit_unknown",
+      "reactivate_terminal",
+      "compound_provenance_authority_terminal"
+    ],
+    "oracles": [
+      "baseline nominal, missing-provenance, and unknown-outcome traces",
+      "metamorphic downgrade from fully valid to stale, authority-mismatched, and terminal-failure states",
+      "separately implemented exhaustive truth-table audit over all 32 states"
+    ],
+    "commands": [
+      "python3 -m unittest -v test_candidate.py",
+      "python3 run.py results/raw.json",
+      "python3 audit.py results/raw.json results/AUDIT.json"
+    ],
+    "retry_limit": 0
+  },
+  "decision": {
+    "pass": "All candidate decisions match the strict semantic contract; all six mutants are independently shown non-equivalent; every one is killed by at least one declared oracle; the compound interaction mutant survives baseline and metamorphic tests but is killed by exhaustive audit.",
+    "fail": "Any declared non-equivalent mutant survives all oracles, the candidate violates any state in the finite domain, or raw/inventory/accounting is incomplete.",
+    "stop": "Source identity, execution, or raw integrity is incomplete."
+  },
+  "limits": {
+    "population": "One synthetic five-boolean admission contract and six declared mutants.",
+    "no_claims": [
+      "production failure probability",
+      "mutation-catalogue completeness",
+      "real interface safety",
+      "cross-contract or cross-domain adequacy"
+    ],
+    "container": "No Docker/OrbStack invocation is authorized by this freeze; the shared CPU slot must be explicitly assigned in #5085 before any container run."
+  },
+  "source_sha256": {
+    "candidate.py": "e2ed8b50f9003c5c6eb8d0f0cd132b4fbf29bdc61f017b7c56979a5ba6468ec7",
+    "run.py": "0536aaa163a42868828ec5b88ccf36262852f5ba1f577ec4178776bdedf62a3d",
+    "audit.py": "ca6ee089ff48d32abd2ca002f9cf2f6d47d6b579ccdd27ab35cbbc7a1d886de0",
+    "test_candidate.py": "0624dcbd3ce98fdaa0c67437bfd2a0e5e18f57e16b1b72ae08161b6c714b3cf6"
+  },
+  "container": null,
+  "external_side_effects": false
+}
