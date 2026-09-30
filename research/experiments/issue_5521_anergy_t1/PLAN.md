@@ -11,7 +11,7 @@
 ## Freeze
 
 - Issue: #5521, following its T0 comment requesting crash/restart, contradictory evidence, expiry, and independent replay.
-- Base: 040215383237a6ec85cd87233c2f377cba4e11e0.
+- Base: 434a8dd3041631358ffe1a9286b47f6c78365ae1.
 - Output path: research/experiments/issue_5521_anergy_t1/.
 - No Docker/OrbStack invocation: #5085 has no exclusive CPU allocation for this lane. The host rung is construction evidence pending an authorized container reproduction.
 - Network/model/GPU/GUI/input: none.
