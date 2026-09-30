@@ -1,0 +1,24 @@
+{
+  "allocation": "host-construction-v4",
+  "base_commit": "bbeee4da02285281e960334f8babefc2d7070358",
+  "claims": "host construction only; no formal/container allocation",
+  "files_sha256": {
+    "RAW.json": "0dc6d2cacff8cb864caf2fb33ef78fb75baa5bfadd1db1c2e888f3929e425047",
+    "audit.py": "2816f5a12260f742f29a0761e71b5300e41b80a27dc0f919773c89c7b57822be",
+    "candidate.py": "24ae4e8892e55b3c02ed45e668c667b202ccae5b45f10db111c90bd5a64c6d36",
+    "cases.json": "7ec16c520a2ff7ee390193f45362ebe2bc701194f87f663db435e5397f8f4ecf",
+    "run_host.py": "e2ce74c438b8213e3124813abfe1052c84b4780669ec03c55a0dd91231dd9fdd",
+    "test_audit.py": "34a48412397e10b404e4b3f3b1c5ad5dacf3af6a652e76aebe44495f6674063d",
+    "test_registry.py": "a3666c3b2881979bc7767c19543fd5624203e5273d1ca4c720861a5b6a886541",
+    "../verification_ir_5268_v1/candidate.py": "0d3fc7b367c98d3b58c41a6da2da0e0db360c902b9b70f0af42cc7c4b89101e0"
+  },
+  "host_tests": "7/7 PASS",
+  "runner_invocations": 1,
+  "container_invocations": 0,
+  "dispatch_count": 0,
+  "dependency_execution_semantics": "NOT_TESTED",
+  "audit": {
+    "source_hash_is_listed_but_not_self-included": true,
+    "method": "raw-input recomputation without importing candidate.py"
+  }
+}

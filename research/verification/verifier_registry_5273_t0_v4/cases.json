@@ -1,0 +1,29 @@
+[
+  {
+    "case_id": "warm-compatible",
+    "ir": {"schema":"verification_ir.v0.1","unknown_check_required":false,"checks":[{"check_id":"c1","primitive":"TARGET.IDENTITY_CURRENT","subject_ref":"window:1","criticality":"MANDATORY","required_evidence_role":"CURRENT_OBSERVATION","verifier_class":"deterministic","dependencies":[],"deadline":null,"budget_class":"bounded","fallback":"YIELD_NO_INPUT"}]},
+    "assignments": [{"check_id":"c1","verifier_id":"cpu","estimated_cost":12}],
+    "registry_snapshot": [{"verifier_id":"cpu","version":"1","status":"available","primitives":["TARGET.IDENTITY_CURRENT"],"input_roles":["CURRENT_OBSERVATION"],"output_roles":["CURRENT_OBSERVATION"],"cost":12}],
+    "resources": {"available":true,"network":false,"deadline_budget":100}
+  },
+  {
+    "case_id": "stale-hard-reject",
+    "ir": {"schema":"verification_ir.v0.1","unknown_check_required":false,"checks":[{"check_id":"c1","primitive":"TARGET.IDENTITY_CURRENT","subject_ref":"window:1","criticality":"MANDATORY","required_evidence_role":"CURRENT_OBSERVATION","verifier_class":"deterministic","dependencies":[],"deadline":null,"budget_class":"bounded","fallback":"YIELD_NO_INPUT"}]},
+    "assignments": [{"check_id":"c1","verifier_id":"cpu","estimated_cost":12}],
+    "registry_snapshot": [{"verifier_id":"cpu","version":"1","status":"stale","primitives":["TARGET.IDENTITY_CURRENT"],"input_roles":["CURRENT_OBSERVATION"],"output_roles":["CURRENT_OBSERVATION"],"cost":12}],
+    "resources": {"available":false,"network":false,"deadline_budget":1}
+  },
+  {
+    "case_id": "unknown-verifier-unavailable",
+    "ir": {"schema":"verification_ir.v0.1","unknown_check_required":false,"checks":[{"check_id":"c1","primitive":"TARGET.IDENTITY_CURRENT","subject_ref":"window:1","criticality":"MANDATORY","required_evidence_role":"CURRENT_OBSERVATION","verifier_class":"deterministic","dependencies":[],"deadline":null,"budget_class":"bounded","fallback":"YIELD_NO_INPUT"}]},
+    "assignments": [{"check_id":"c1","verifier_id":"missing","estimated_cost":3}], "registry_snapshot": [],
+    "resources": {"available":true,"network":false,"deadline_budget":100}
+  },
+  {
+    "case_id": "dependency-metadata-only",
+    "ir": {"schema":"verification_ir.v0.1","unknown_check_required":false,"checks":[{"check_id":"c1","primitive":"TARGET.IDENTITY_CURRENT","subject_ref":"window:1","criticality":"MANDATORY","required_evidence_role":"CURRENT_OBSERVATION","verifier_class":"deterministic","dependencies":[],"deadline":null,"budget_class":"bounded","fallback":"YIELD_NO_INPUT"},{"check_id":"c2","primitive":"SEMANTIC.INTENT_MATCH","subject_ref":"intent:save-v1","criticality":"MANDATORY","required_evidence_role":"CURRENT_INTENT","verifier_class":"deterministic","dependencies":["c1"],"deadline":null,"budget_class":"bounded","fallback":"YIELD_NO_INPUT"}]},
+    "assignments": [{"check_id":"c1","verifier_id":"cpu","estimated_cost":12},{"check_id":"c2","verifier_id":"cpu","estimated_cost":12}],
+    "registry_snapshot": [{"verifier_id":"cpu","version":"1","status":"available","primitives":["TARGET.IDENTITY_CURRENT","SEMANTIC.INTENT_MATCH"],"input_roles":["CURRENT_OBSERVATION","CURRENT_INTENT"],"output_roles":["CURRENT_OBSERVATION","CURRENT_INTENT"],"cost":12}],
+    "resources": {"available":true,"network":false,"deadline_budget":100}
+  }
+]

@@ -1,0 +1,298 @@
+{
+  "rows": [
+    {
+      "assignments": [
+        {
+          "check_id": "c1",
+          "estimated_cost": 12,
+          "verifier_id": "cpu"
+        }
+      ],
+      "case_id": "warm-compatible",
+      "ir": {
+        "checks": [
+          {
+            "budget_class": "bounded",
+            "check_id": "c1",
+            "criticality": "MANDATORY",
+            "deadline": null,
+            "dependencies": [],
+            "fallback": "YIELD_NO_INPUT",
+            "primitive": "TARGET.IDENTITY_CURRENT",
+            "required_evidence_role": "CURRENT_OBSERVATION",
+            "subject_ref": "window:1",
+            "verifier_class": "deterministic"
+          }
+        ],
+        "schema": "verification_ir.v0.1",
+        "unknown_check_required": false
+      },
+      "observed": {
+        "aggregate_status": "COMPATIBLE",
+        "authority": "NONE",
+        "decisions": [
+          {
+            "check_id": "c1",
+            "estimated_cost": 12,
+            "input_role": "CURRENT_OBSERVATION",
+            "output_role": "CURRENT_OBSERVATION",
+            "primitive": "TARGET.IDENTITY_CURRENT",
+            "reasons": [],
+            "requested_version": "1",
+            "status": "COMPATIBLE",
+            "verifier_id": "cpu"
+          }
+        ],
+        "dispatch_count": 0
+      },
+      "registry_snapshot": [
+        {
+          "cost": 12,
+          "input_roles": [
+            "CURRENT_OBSERVATION"
+          ],
+          "output_roles": [
+            "CURRENT_OBSERVATION"
+          ],
+          "primitives": [
+            "TARGET.IDENTITY_CURRENT"
+          ],
+          "status": "available",
+          "verifier_id": "cpu",
+          "version": "1"
+        }
+      ],
+      "resources": {
+        "available": true,
+        "deadline_budget": 100,
+        "network": false
+      }
+    },
+    {
+      "assignments": [
+        {
+          "check_id": "c1",
+          "estimated_cost": 12,
+          "verifier_id": "cpu"
+        }
+      ],
+      "case_id": "stale-hard-reject",
+      "ir": {
+        "checks": [
+          {
+            "budget_class": "bounded",
+            "check_id": "c1",
+            "criticality": "MANDATORY",
+            "deadline": null,
+            "dependencies": [],
+            "fallback": "YIELD_NO_INPUT",
+            "primitive": "TARGET.IDENTITY_CURRENT",
+            "required_evidence_role": "CURRENT_OBSERVATION",
+            "subject_ref": "window:1",
+            "verifier_class": "deterministic"
+          }
+        ],
+        "schema": "verification_ir.v0.1",
+        "unknown_check_required": false
+      },
+      "observed": {
+        "aggregate_status": "REJECTED",
+        "authority": "NONE",
+        "decisions": [
+          {
+            "check_id": "c1",
+            "estimated_cost": 12,
+            "input_role": "CURRENT_OBSERVATION",
+            "output_role": "CURRENT_OBSERVATION",
+            "primitive": "TARGET.IDENTITY_CURRENT",
+            "reasons": [
+              "verifier_not_current"
+            ],
+            "requested_version": "1",
+            "status": "REJECTED",
+            "verifier_id": "cpu"
+          }
+        ],
+        "dispatch_count": 0
+      },
+      "registry_snapshot": [
+        {
+          "cost": 12,
+          "input_roles": [
+            "CURRENT_OBSERVATION"
+          ],
+          "output_roles": [
+            "CURRENT_OBSERVATION"
+          ],
+          "primitives": [
+            "TARGET.IDENTITY_CURRENT"
+          ],
+          "status": "stale",
+          "verifier_id": "cpu",
+          "version": "1"
+        }
+      ],
+      "resources": {
+        "available": false,
+        "deadline_budget": 1,
+        "network": false
+      }
+    },
+    {
+      "assignments": [
+        {
+          "check_id": "c1",
+          "estimated_cost": 3,
+          "verifier_id": "missing"
+        }
+      ],
+      "case_id": "unknown-verifier-unavailable",
+      "ir": {
+        "checks": [
+          {
+            "budget_class": "bounded",
+            "check_id": "c1",
+            "criticality": "MANDATORY",
+            "deadline": null,
+            "dependencies": [],
+            "fallback": "YIELD_NO_INPUT",
+            "primitive": "TARGET.IDENTITY_CURRENT",
+            "required_evidence_role": "CURRENT_OBSERVATION",
+            "subject_ref": "window:1",
+            "verifier_class": "deterministic"
+          }
+        ],
+        "schema": "verification_ir.v0.1",
+        "unknown_check_required": false
+      },
+      "observed": {
+        "aggregate_status": "UNAVAILABLE",
+        "authority": "NONE",
+        "decisions": [
+          {
+            "check_id": "c1",
+            "estimated_cost": 3,
+            "input_role": "CURRENT_OBSERVATION",
+            "output_role": "CURRENT_OBSERVATION",
+            "primitive": "TARGET.IDENTITY_CURRENT",
+            "reasons": [
+              "unknown_verifier"
+            ],
+            "requested_version": null,
+            "status": "UNAVAILABLE",
+            "verifier_id": "missing"
+          }
+        ],
+        "dispatch_count": 0
+      },
+      "registry_snapshot": [],
+      "resources": {
+        "available": true,
+        "deadline_budget": 100,
+        "network": false
+      }
+    },
+    {
+      "assignments": [
+        {
+          "check_id": "c1",
+          "estimated_cost": 12,
+          "verifier_id": "cpu"
+        },
+        {
+          "check_id": "c2",
+          "estimated_cost": 12,
+          "verifier_id": "cpu"
+        }
+      ],
+      "case_id": "dependency-metadata-only",
+      "ir": {
+        "checks": [
+          {
+            "budget_class": "bounded",
+            "check_id": "c1",
+            "criticality": "MANDATORY",
+            "deadline": null,
+            "dependencies": [],
+            "fallback": "YIELD_NO_INPUT",
+            "primitive": "TARGET.IDENTITY_CURRENT",
+            "required_evidence_role": "CURRENT_OBSERVATION",
+            "subject_ref": "window:1",
+            "verifier_class": "deterministic"
+          },
+          {
+            "budget_class": "bounded",
+            "check_id": "c2",
+            "criticality": "MANDATORY",
+            "deadline": null,
+            "dependencies": [
+              "c1"
+            ],
+            "fallback": "YIELD_NO_INPUT",
+            "primitive": "SEMANTIC.INTENT_MATCH",
+            "required_evidence_role": "CURRENT_INTENT",
+            "subject_ref": "intent:save-v1",
+            "verifier_class": "deterministic"
+          }
+        ],
+        "schema": "verification_ir.v0.1",
+        "unknown_check_required": false
+      },
+      "observed": {
+        "aggregate_status": "COMPATIBLE",
+        "authority": "NONE",
+        "decisions": [
+          {
+            "check_id": "c1",
+            "estimated_cost": 12,
+            "input_role": "CURRENT_OBSERVATION",
+            "output_role": "CURRENT_OBSERVATION",
+            "primitive": "TARGET.IDENTITY_CURRENT",
+            "reasons": [],
+            "requested_version": "1",
+            "status": "COMPATIBLE",
+            "verifier_id": "cpu"
+          },
+          {
+            "check_id": "c2",
+            "estimated_cost": 12,
+            "input_role": "CURRENT_INTENT",
+            "output_role": "CURRENT_INTENT",
+            "primitive": "SEMANTIC.INTENT_MATCH",
+            "reasons": [],
+            "requested_version": "1",
+            "status": "COMPATIBLE",
+            "verifier_id": "cpu"
+          }
+        ],
+        "dispatch_count": 0
+      },
+      "registry_snapshot": [
+        {
+          "cost": 12,
+          "input_roles": [
+            "CURRENT_OBSERVATION",
+            "CURRENT_INTENT"
+          ],
+          "output_roles": [
+            "CURRENT_OBSERVATION",
+            "CURRENT_INTENT"
+          ],
+          "primitives": [
+            "TARGET.IDENTITY_CURRENT",
+            "SEMANTIC.INTENT_MATCH"
+          ],
+          "status": "available",
+          "verifier_id": "cpu",
+          "version": "1"
+        }
+      ],
+      "resources": {
+        "available": true,
+        "deadline_budget": 100,
+        "network": false
+      }
+    }
+  ],
+  "schema": "verifier_registry_raw.v4"
+}
