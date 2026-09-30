@@ -1,4 +1,184 @@
+## X11 resync-cut intake — 2026-09-28
+
+[Docker re-audit and compatibility mapping](../runtime/results/resync-cut-intake-01/README.md)
+reproduced the saved 2,478-check audit, all 12 effective corruption controls and
+seven policy tests without rerunning any native allocation. Shared runtime adoption
+remains HOLD: the research needs a producer-authored contiguous state sequence,
+complete snapshot cut and explicit event gap. Public/guarded capture sequences,
+motor recovery and acknowledged image references do not provide those contracts.
+No automatic resync, sensor, wait-policy or input authority was introduced.
+
+## Reviewed-image functional pair — 2026-09-28
+
+[One primary Calc pair](../runtime/results/reviewed-image-pair-01/README.md)
+uses the same seed/runtime/input programs and fresh per-arm sessions. Both saved
+324/145 correctly. Reuse presented four full images and two references; baseline
+presented seven full images. Baseline needed an extra observation of its save
+transition, so the nine-versus-eight request difference is not attributed to reuse.
+C1 omitted two PNG presentations (153,854 bytes), while full MCP evidence remained.
+
+Keep EFFICIENCY_HOLD: fixed-order single pair, unfrozen rendering timing, unavailable
+actual usage accounting. Recorded host/review timing is not exact useful-feedback
+or causal latency. The primary explicitly distinguished completed input/focus from
+an image still showing save progress. No wait-policy, sensor, or model change.
+
+## Reviewed-image host integration — 2026-09-28
+
+[Primary Calc use and retained evidence](../runtime/results/reviewed-image-host-primary-01/README.md)
+resolve the earlier live-adapter intake hold for an **opt-in host presentation adapter**
+only. An explicit review establishes one connection-local exact-PNG base; reference
+events bind that acknowledgment and preserve current metadata. Full presentation,
+failure and reconnect reset reuse. The caller must force a full image after losing
+the base from model context; there is no automatic context-eviction detection.
+
+Fresh primary Calc use saved 346/291 with one reference among seven image replies.
+The original full MCP responses remain unchanged. The missing-argument failure is
+retained. 19 Node tests and 280 protocol / 126 harness tests pass. Default enablement,
+actual model-token/cost savings, and matched useful-feedback/semantic-latency gains
+remain HOLD. No sensor, model helper or wait-policy change is included.
+
+## Exact-image reuse intake — 2026-09-28
+
+[Primary-stream reconstruction](../runtime/results/exact-image-intake-01/README.md)
+rechecks the frozen A1r3 gate against three retained primary Calc streams. Four of
+21 images are exact consecutive repeats; independent decoding reconstructs all
+sampled pixels and preserves each reply's separate metadata. Omitted PNG bodies
+would total 290,285 bytes. This is an offline candidate-body count, not model-token,
+latency or live MCP evidence.
+
+Keep LIVE_ADAPTER_HOLD: public MCP currently delivers full image blocks and v2
+review attribution requires an image in that reply. Integration needs explicit
+base acknowledgement/retention, unknown-delivery and reconnect resynchronization,
+reference-aware review, and full-image fallback. Never use equality, a callback,
+XDamage or elapsed fixed delay as proof of redraw/task completion. No sensor or
+wait-policy implementation was added; #3700 remains a separately matched gate.
+
+## Linux lifecycle dependency reconstruction — 2026-09-28
+
+The [additive exact-byte reconstruction](../runtime/results/lifecycle-reference-reconstruction-01/README.md)
+restores only the two declared reference dependencies to their frozen CRLF
+hashes in a separate copy. Ten tests pass, and the corrected raw auditor reconciles
+30,000 predictions with all fields matching the retained correction except Python
+version. No formal rerun occurred. This resolves the representation question for
+the scoped synthetic result; an unmodified LF checkout still fails the original
+byte gate. No interface-speed claim or new runtime behavior is promoted.
+
+## Linux lifecycle research intake — 2026-09-28
+
+The integration owner rechecked #5133 / merged PR #5147 from exact main Git
+bytes. Candidate source hashes match after the earlier repair, but two shared
+reference dependencies still differ from their frozen CRLF byte hashes on Linux.
+Construction checks: 9/10 pass, one reference-identity failure. No formal run or
+corrected raw audit was started. In-memory LF-to-CRLF mapping reproduces both
+expected hashes; no frozen file was changed to force a pass.
+
+[Retained intake evidence](../runtime/results/lifecycle-intake-01/README.md)
+records HOLD_REFERENCE_BYTES_ON_LINUX. Preserve the historical corrected timing
+result, but require dependency-byte reproducibility before promotion from this
+checkout. Synthetic scorer reuse is not a measured interface-latency improvement.
+
+## Moved implementation source pins (2026-09-28)
+
+The #5107 review identified wrapper-only hashes in experiment preregistrations.
+[Source-provenance integration](../runtime/results/guarded-source-provenance-01/README.md)
+updates 32 future manifest producers to include shared scoped-X11 implementation
+bytes and the resolver itself. Historical frozen outputs are unchanged; stale
+or conflicting pins are refused. Local checks pass 231 protocol and 106
+harness/distribution tests. This repairs experimental source identity after the
+move, not UI latency, model-token accounting or semantic task verification.
+
+## Shared X11 runtime checkpoint (2026-09-28)
+
+The native scoped target store, guarded bridge and form method now live in
+`runtime/guarded_x11_v1`, included in the portable runtime. Historical research
+imports delegate to the same implementation. Existing admission, releases,
+review revocation and waits are unchanged. This supplies an explicit Linux/X11
+Python API; it does not add CLI/MCP method tools or semantic form validation.
+
+[Primary archive use](../runtime/results/shared-x11-runtime-primary-01/README.md)
+records six exact submissions from the built runtime, one zero-emission
+layout-change refusal, explicit re-grounding and continued reuse. The isolated
+archive import test excludes the checkout from Python's path. Local native
+checks pass 223 protocol and 106 harness/distribution tests after correcting
+CI sparse-checkout and optional-dependency test placement. Initial CI failures
+and the corrected local checks are retained alongside the primary-use evidence. Matched performance,
+actual primary model tokens and useful-feedback onset remain unmeasured.
+
+## Native method reuse checkpoint (2026-09-28)
+
+The existing native enter/submit operation is now an importable
+`native_guarded_form_v1.fill_and_submit` function. It retains each step before
+continuing and requires completed execution plus verified empty release. The
+six-task harness uses it for normal execution and one explicit repair only after
+zero-emission initial refusal. [Primary evidence](../runtime/results/native-method-primary-01/README.md)
+retains six exact submissions, layout-change refusal and manual repair.
+
+This closes inline-method reuse, not public CLI/MCP exposure or semantic form
+verification. The compiled conditional state graph remains distinct. No new
+model, sensor, wait default or automatic retry is introduced. Actual primary
+model usage and matched end-to-end efficiency remain unmeasured.
+
+## Current integration checkpoint: optional native summaries (2026-09-28)
+
+Native submit/resume now offer explicit `detail="brief"` using the existing
+primary-review projection. Full remains default; critical and unsupported
+outcomes remain full. Brief responses supply exact-request full retrieval.
+[Primary two-app use](../runtime/results/native-primary-brief-01/README.md)
+passed saved-file scoring while preserving recovery failures and one caller
+schema error. Local checks passed 217 protocol and 97 harness tests.
+Actual model tokens/cost, matched latency comparison and human-tempo evidence
+remain unavailable. This checkpoint does not close #57 or change pacing,
+capture, guards or sensor policy.
+
+# Current integration checkpoint — primary host use, 2026-09-28
+
+Current exercised main: b3af4e85f8bf7d41da5251b1728a6ddab34c3476. Older dated checkpoints below remain historical and may describe limitations since repaired.
+
+- Explicit opt-in owner-lifetime and cooperative native_stop are integrated (#5072/#5077), with retained idle server-kill and stop checks. They do not guarantee immediate cancellation during active input or full descendant cleanup.
+- Relay stop forwarding and visible UTF-8 title fallback are integrated (#5083). The reusable persistent Node host client (#5088) retains requests/replies, rejects overlapping sends and lets the caller wait on the same request. Direct registered MCP was still unavailable in this host; Node-mediated MCP is the exercised path.
+- Native exact-request resume shares public image-delivery control (#5089): outcome-only retrieval can omit the image block while preserving validation and references. Default delivery is unchanged.
+- [Primary two-app use](../runtime/results/native-primary-twoapp-client-01/README.md) completed Calc 753/599 and Inkscape X56/Y50/W40/H30 in one bounded allocation. Eleven MCP calls included five input programs and two explicit observations; eight images were presented. Saved-file scorers and raw-file verification passed.
+
+The current bottleneck must be evaluated across the complete primary-host loop: first-start-send to finish callback was 94.966 seconds, of which 8.670 seconds lay inside send-to-callback intervals and 86.295 seconds between calls. The latter mixes reasoning, orchestration and commentary; it is not pure model wait. Callback timing is not useful-feedback or host-render timing. Exact model/token/cost accounting and matched comparison remain unavailable, so this does not complete #57 or prove human tempo.
+
+Next integration priority: preserve this working path and measure bounded observation/decision handoffs, especially valid-but-unpainted and stale-dialog images. Do not expand unrelated experiments, develop sensors in this task, or adopt a wait default from these examples. #3700 remains HOLD_PRODUCTION_ADOPTION. Registered-host recovery, true useful-feedback onset and comparison accounting remain explicit gaps.
+
+---
 # Integration priority — 2026-09-19
+
+## Integration checkpoint — 2026-09-28
+
+Current integration base: `5c3beab897fa00970837da0980d5ec0fd4010969`.
+Use [the current interface guide](../runtime/USING_CURRENT_INTERFACE.md) for the
+entry points; historical checkpoints below retain their original scope.
+
+- Native post-input window-review failure now preserves the completed action
+  receipt and exposes an observation-only recovery boundary (#5046). One merged-main
+  held-out Calc task recovered without input replay and saved 384/897 (#5057).
+  [Both stages of evidence](../runtime/results/native-review-recovery-main-01/README.md)
+  retain failed review, stale dialog pixels, explicit observations and cleanup limits.
+- Recorded default text pacing is included in pre-publication tail-capacity checks
+  (#5063). Diagnostics state the gap/capacity without echoing input text (#5065).
+  Real stdio regression covers refusal, corrected publication and exact-request
+  resume on one connection. Synthetic fixtures are not GUI task-performance evidence.
+- Public batch/compact/persistent-target-review capabilities remain available as
+  documented in the current guide. Native research recovery is not automatically
+  a public-runtime modal-recovery guarantee.
+
+The remaining priorities are useful feedback/semantic-completion measurement
+across the actual primary host boundary and explicit managed allocation lifetime.
+Title/metadata changes still do not acknowledge redraw. The matched final-wait
+study #3700 remains HOLD_PRODUCTION_ADOPTION; do not increase a default from one
+successful screenshot. Model tokens/cost and comparable human tempo remain unmeasured
+for these native follow-ups.
+
+Managed transport disconnect does not currently terminate its child. The #4124
+ownership-pipe proposal had a public preformal freeze, but no formal result in
+its issue at this checkpoint. Do not promote it from construction evidence or
+modify its consumed/frozen allocation. A distinct integration check must exercise
+actual MCP/server/owner lifetime and declared cleanup boundaries before any change;
+client loss, owner death, input release and task success are separate outcomes.
+No automatic replay, primary-agent sensor development or helper model is added.
 
 ## Production integration update — 2026-09-21
 
@@ -429,3 +609,204 @@ revocation. Fresh primary use saved both [324,455] and SVG x=62; all ten stale
 target probes refused without input. The existing harness supports two-app
 setup and an explicit stage budget, not a separate control route. #2499's full
 three-app/four-transition controlled allocation remains open.
+
+
+### Public guarded X11 MCP integration checkpoint
+
+The public stdio server now offers opt-in `--session-mode guarded-x11`, reusing
+the shared scoped-X11 bridge and existing request/results/close lifecycle.
+One explicit target; no queued actions, helper model, sensor or automatic replay.
+The archive includes the adapter. Existing one-shot and persistent modes remain.
+
+Primary self-use against archive source `2998586f5497e12940fe89992a398a2098298887`
+completed six exact Chromium fixture saves, one zero-input stale-layout refusal
+and explicit re-grounding, with verified empty releases. 32 MCP calls included
+22 completed inputs, one refused input, five mints, one observation, two retained
+reads and close. All six entered values were reviewed before Save with explicit
+source-bound receipts. Read-after-close returned the identical final image.
+Transport and fixture runner exited zero; three tracked GUI children terminated,
+with recorded codes 0/1/0. No claim of all helper exit codes being zero.
+
+The interrupted preceding allocation is preserved unchanged, including its
+incorrect first-source review attribution. New host `recordRelayReview` derives
+identity from an explicit retained reply and refuses overwrite; it does not
+certify that the caller understood the image. The successful trial retains 20
+such declarations, independently scored submission history and every raw reply.
+See `runtime/results/guarded-mcp-primary-02` and
+`runtime/results/guarded-mcp-primary-interrupted-01`.
+
+Host send-to-return total 8,358.3 ms across 32 calls and first-send to final-save
+return 223,553.6 ms are instrumentation boundaries, not useful-feedback or model
+latency. Actual model input tokens/cost and a matched baseline remain unavailable.
+Do not infer speedup, human tempo or token savings. #5116 remains a separately
+owned trace-contract experiment, not a production GUI integration candidate.
+
+### Ordered host-boundary instrumentation checkpoint
+
+The opt-in relay_host_timeline_v1 wrapper records sequential send, retained reply,
+presentation callback and caller-review events using one host monotonic clock.
+This addresses equal filesystem mtimes in the preceding guarded-MCP trial without
+rewriting that evidence. Overlapping host operations refuse instead of queueing;
+recording or renderer failure blocks later actions, while transport cleanup stays
+available. Partial evidence never authorizes replay.
+
+Primary one-form use retained 28 events: entered-value review 18 precedes Save
+request 19, with exact reply/call/source identity and an independently correct
+save. The predeclared scope was task-1 only; the unmodified six-task oracle remains
+false with the other five tasks missing. Evidence and 13 passing Node tests are
+under runtime/results/relay-host-timeline-primary-01. Callback-to-review gaps
+around 9.5 to 14 seconds are host boundaries, not isolated model latency. Matched
+performance, first useful model-visible feedback and actual token/cost accounting
+remain open. No speedup or overall completion is claimed.
+
+### Guarded brief presentation and unknown-argument checkpoint
+
+Opt-in detail="brief" now shares the public guarded transport's full report journal and exact image path. Normal exact-match guard details alone are summarized; full remains default and failures remain detailed. A primary six-task trial against d3ad158ae completed all exact saves once and verified read-after-close and release. It required unexpected recovery after pointer:false was silently ignored by the SDK. This failure is retained, and subsequent source e609b1971 rejects unknown top-level arguments through public FastMCP list/call methods before backend invocation. Nested program/tail validation is unchanged.
+
+Evidence: guarded-mcp-brief-interrupted-01, guarded-mcp-brief-host-failure-02, guarded-mcp-brief-primary-03, guarded-mcp-unknown-arguments-01 under runtime/results. The completed trial's 130,035 to 108,586 metadata bytes is a same-record comparison. Actual model tokens/cost, useful-feedback latency, semantic completion latency, matched baselines and human tempo remain unproven. No host text projection was used in trial03; prior trials differ in that respect. Protocol 247 and harness 106 checks passed after the argument fix, plus actual stdio and portable-archive refusal checks.
+
+Issue intake: #5126 identifies malformed/duplicate lineage acceptance in the separately owned #1839/#5123 synthetic contract. Its historical frozen evidence must remain unchanged; it does not authorize or substantiate live production adoption. Latest main's added synthetic report is retained as research, not used as GUI performance evidence.
+
+### Bounded same-image reference registration checkpoint
+
+interface_guarded_mint_many groups 1–8 model-selected references from a single
+viewed image through the existing mint operation. It adds no input queue or
+automatic selection. Schema/duplicate validation occurs before backend opening;
+partial runtime failure preserves earlier registrations and reports the failed
+alias as unknown, with later aliases unattempted. Existing single mint remains.
+
+Primary seed 991335 completed six exact-once independent submissions with 30 MCP
+calls: one observe, two registrations (3+2 references), 22 completed inputs, one
+planned stale-reference refusal, three retained reads and close. Every entered
+value was reviewed before Save. Close verified empty held input; transport and
+fixture exited 0. GUI child codes 0/1/1 are retained, not reported as all-success.
+Evidence: runtime/results/guarded-mint-many-primary-02 (514 files, optimized audit
+passes). The interrupted seed 991334 remains separately preserved (297 files).
+A discovered relay allowlist omission was fixed; public tool discovery coverage
+now prevents that class of integration omission. Local 251 protocol and 106 harness
+tests passed. Five registrations grouped into two reduce registration calls by
+construction, but overall matched latency, useful feedback, semantic completion,
+actual model tokens/cost and human tempo remain unmeasured.
+
+Issue intake: #5134 is a separately allocated OrbStack publication successor with
+explicit queue gates and no GUI/model/product claims. Its predecessor STOP and
+new main's synthetic research remain unchanged; they are not live adoption evidence.
+
+### Public observation-reference integration checkpoint
+
+The existing native lossless receipt approach now has a bounded public guarded
+variant: observation_refs=true replaces only an exact duplicate observation object
+with a fixed response-local source.native reference. The option defaults false and
+composes with full or brief detail. Expansion restores that presentation exactly;
+brief's normal guard summary remains independently lossy. It changes neither the
+raw journal, image, action admission, capture count nor retained-read behavior.
+
+Primary seed 991336 used the portable ca53cefd9 artifact through real MCP, completing
+six exact-once independent saves. One planned stale-layout refusal remained full;
+close released input; post-close referenced retrieval matched the original image.
+514 retained files audit under Python optimization. Same-record returned text was
+111,193 bytes versus 123,025 expanded bytes (9.6176%); actual model tokens/cost,
+matched task latency, useful feedback and human tempo remain unproven. Contract
+checks: 255 protocol + 106 harness. Evidence lives in
+runtime/results/guarded-observation-refs-primary-01; the preceding offline replay
+remains separately labeled. No model/sensor service or secondary agent was added.
+
+
+### Retained host timing integration checkpoint
+
+The read-only runtime.integration_checks.host_timing command binds ordered relay
+events to request/reply files and explicit review receipts. It separates host
+send-to-reply, presentation callbacks, declared reviews and between-call gaps;
+incomplete boundaries remain partial. No runtime action policy changes.
+
+The unchanged seed 991336 record spans 246,136.6832 ms across 29 calls, with
+8,985.4609 ms inside send-to-reply intervals and 237,151.2223 ms between calls.
+Historical reads and close are included: this is not time to task completion.
+The gaps do not isolate model thinking or semantic understanding. This evidence
+does not support globally reducing application waits; evaluate avoidable
+decision/observation round trips while preserving review before submission.
+Actual model tokens/cost, useful-feedback latency and human tempo remain open.
+
+Evidence: runtime/results/host-timing-summary-01, reproducible from the unchanged
+committed primary-use archive without executing archived code. Five new timing
+tests join the common local/CI runner; 260 protocol and 106 harness checks pass.
+
+
+### Bounded navigation candidate: retain but do not promote
+
+Primary fresh seed 991337 used the existing portable public guarded runtime to
+combine URL entry and Enter in five explicit keyboard tails. Six independent
+exact-once saves passed, with entered-value reviews before separate Saves and
+a zero-input stale-reference refusal followed by explicit re-grounding.
+
+Four navigation replies still showed transitional frames; explicit read-only
+observations resolved them without replay. Actual calls were 28 against a
+24-call plan (prior different-seed run: 29). The candidate also removed one
+100 ms post-text delay, so neither grouping nor timing is isolated. Keep this
+recipe HOLD as a default, retain the 463-file evidence, and evaluate different
+explicit feedback timing conditions in fresh allocations. No generic wait
+default, semantic sensor, retry policy or input mechanism changed.
+
+Evidence: runtime/results/guarded-navigation-batch-primary-01. Host send-to-reply
+total 9,164.4469 ms and first-send-to-last-reply span 217,600.0314 ms are recorded
+boundaries including retrieval/close, not useful-feedback or semantic latency.
+Actual model tokens/cost and comparable human tempo remain unproven.
+
+
+### Bounded decoded observation history checkpoint
+
+The guarded bridge now retains at most two decoded images in its own cache.
+Older explicit source access reloads exact hash-checked PNG bytes, without a new
+capture or source-sequence change. Original metadata remains session-local;
+window review clears it. Missing or corrupt old artifacts refuse grounding.
+This bounds decoded cache ownership, not metadata, handle patches, disk growth,
+external references or total session memory.
+
+Source 7c54a7bae passed 262 protocol and 111 harness checks. An isolated 128-image
+retention comparison measured about 528 MiB RSS for dictionary retention and
+39 MiB for the cache across three alternating pairs, with exact old-image pixel
+parity. These are synthetic storage measurements, not live-loop/model performance.
+The primary used the exact portable artifact, evicted source 1 through two newer
+observations, minted from source 1, reviewed the entered value and independently
+saved task-1 once. Eight MCP calls included explicit close and historical-image
+retrieval. The six-task oracle correctly stays false with five unattempted tasks.
+Evidence and limitations: runtime/results/decoded-observation-history-01.
+
+The earlier 250 ms navigation allocation was interrupted and is retained at
+runtime/results/guarded-navigation-delay250-interrupted-01. Twelve replies and
+two saved-page reviews are not independent six-task completion evidence. No wait
+default promotion, semantic sensor, replay policy, actual token-cost or human
+speed claim follows from either result.
+
+
+### Guarded typing/wait expiry integration checkpoint
+
+The synchronous guarded X11 path now checks its existing five-second deadline
+before each new key press and while waiting. Releases remain allowed; an expired
+wait stays incomplete, retains partial effects, attempts release and stops the
+remaining tail. Default MCP post-result observation remains available. This
+integrates the bounded-input/partial-effect principle from EXPIRY_OBSERVATION;
+it does not port the research executor's input owner or passive sample policy.
+
+At c1e910ab0, 262 protocol and 118 harness checks passed. Primary seed991339 used
+the exact portable archive to enter its token, request a6000ms wait, and include
+an unexecuted suffix. The wait expired under the original deadline; the reviewed
+post-release image showed the exact prefix, followed by an explicitly chosen
+separate Save. Independent task1 exact-once success and unchanged historical
+failure were retained across six MCP calls. Five tasks were unattempted; the
+six-task oracle remains false. Evidence: runtime/results/guarded-tail-deadline-01.
+The before fake-clock reproduction, source, raw controls and113-file archive are
+retained. No runtime hard-deadline, generic speed, token-cost or human-tempo claim.
+
+Latest intake: procedural_operations_world_v0 remains a construction substrate
+with formal HOLD gates; no secure hidden-evaluator or held-out result is inferred.
+#5156 proves automatic cleanup need not have a caller-side bracket, not actual
+key-up timing. #5134's macOS host filesystem result does not establish OrbStack
+bind-mount behavior. Those research results do not change this product's claims.
+
+
+## Inkscape primary-use integration check (2026-09-28)
+
+The current public persistent-X11 interface completed a fresh move-and-save task in Inkscape, seed 991359. See [retained evidence](../runtime/results/inkscape-current-primary-01/README.md): five calls, three input programs, four full reviewed images, independently checked saved SVG. No repeat allocation or input replay was used to repair the observed result.
+
+Pointer command distance and application effect distance differed (36 screen pixels requested; approximately 24 visible). Do not equate runtime completion with exact object displacement. Issues #4388/#4359/#4424 remain intake candidates requiring accessible raw evidence and condition compatibility; this self-use does not authorize a compensation formula or automatic sensor/servo. No runtime/default changes follow from this single task. Same-model matched speed, useful-feedback and semantic-completion boundaries, and actual tokens/cost remain open.

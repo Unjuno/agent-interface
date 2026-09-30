@@ -22,6 +22,19 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /.gitattributes
+            /runtime/cli_v1/
+            /runtime/core_v1/
+            /runtime/motor_state_v1/
+            /runtime/selector_v1/
+            /runtime/backends/
+            /research/__init__.py
+            /research/integration/__init__.py
+            /research/integration/review_compilation_r4k6_v1/
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'

@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/tmp/agent-interface-3311-clone-20260927/runtime/host_model_ipc_broker_v1.py", line 88, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/tmp/agent-interface-3311-clone-20260927/runtime/host_model_ipc_broker_v1.py", line 84, in main
+    return serve(args.ipc.resolve(), args.repo.resolve(), args.once)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/agent-interface-3311-clone-20260927/runtime/host_model_ipc_broker_v1.py", line 33, in serve
+    request = json.loads(path.read_text(encoding="utf-8"))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1029, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1015, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/tmp/agent-interface-3311-clone-20260927/research/live_control/issue_3311_host_ipc_v1/evidence/20260927-desktop-01/ipc/c36d4a1bcdac494f947a18a3301f9a2e.request.json'

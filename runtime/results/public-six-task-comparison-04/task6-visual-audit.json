@@ -1,0 +1,64 @@
+{
+  "status": "PASS_RETAINED_TASK6_PROVENANCE",
+  "method": "Independent stdlib archive/hash/JSON/base64 checks; no archived code execution or live GUI/model/input",
+  "snapshot": "6bb7cc0e4a6cee98d70ad1d3b024f2a84a46367b",
+  "archive": {
+    "git_blob": "e988bc8b0262fe6340d3c7b1cd7321b950da7d68",
+    "sha256": "811e63849956658bdbb0fecc1a7237308dd93c71d96644050b1581bc243c4dd2",
+    "bytes": 5321120,
+    "member_count": 1051,
+    "unpacked_bytes": 10553488,
+    "all_member_hashes_match": true
+  },
+  "source_revision": "7477466a9c11442a7af307fc5bc20e1ee5dd9863",
+  "task6": {
+    "route": "direct",
+    "save_attempt": 19,
+    "call_id": "ad8d4e2bf5a44440abcb5681082c8591",
+    "request_path": "current/direct/host/request-19.json",
+    "request_sha256": "a45cbe73623279c05411e33336d5f935280f714e4dc610085f84f16bb21b0cb3",
+    "reply_path": "current/direct/host/reply-19.json",
+    "reply_sha256": "e833903bc250c04feac449d994aca30b8ed22b3ee8457d0ab682606fa74a3b58",
+    "native_png_path": "current/direct/server/ad8d4e2bf5a44440abcb5681082c8591/images/9e6c4f96438b4014b42643088020c68e.png",
+    "image_sha256": "0023463ae6bb2d8e0f7374d8a575137cb75a976f3a46166b9c66461f925bb3f6",
+    "image_bytes": 29839,
+    "review_path": "current/direct/host/review-19.json",
+    "review_sha256": "7c262f05fa128230bfdcd93b8bcce1ffe2caf332d0ec3d46a242464d063d6f89",
+    "recorded_review_reason": "Image shows submit/6 URL and entered form, not final SAVED text. Independent exact task6 count1 verifies submission; visual completion cue incomplete in captured frame.",
+    "submission": {
+      "exact": true,
+      "expected_token": "t992004-6",
+      "layout": "B",
+      "received_ns": 859096079120,
+      "schema": "integrated_efficiency_submission_v1",
+      "submitted_values": [
+        "t992004-6"
+      ],
+      "task_id": "task-6"
+    },
+    "capture_started_ns": 859174961552,
+    "capture_ended_ns": 859205726302,
+    "arithmetic_capture_minus_received_ns": 78882432,
+    "clock_binding_scope": "fixture perf_counter_ns versus backend monotonic_ns; common-clock binding and chronological inference not established by this correction",
+    "save_release_verified": true,
+    "historical_lookup_attempt": 20,
+    "lookup_same_call_capture_and_png": true,
+    "lookup_operation_invoked": false,
+    "save_image_presentation_callback_recorded": true,
+    "lookup_image_presentation_callback_recorded": false,
+    "close_attempt": 21,
+    "close_release_verified": true,
+    "subsequent_fresh_observation_present": false,
+    "visual_cue_after_fresh_observation": "UNKNOWN_NOT_OBSERVED"
+  },
+  "exact_once_history_counts": {
+    "direct": 6,
+    "guarded": 6
+  },
+  "preserved_statuses": {
+    "comparison02": "STOP_USER_AUTHORIZED_WSL_RESTART",
+    "comparison03": "STOP_CALLER_PROGRAM_CONSTRUCTION",
+    "integration": "HOLD_INTEGRATION_INCOMPLETE"
+  },
+  "visual_inspection": "Separate human-readable independent review; this checker does not read text semantics from pixels"
+}

@@ -1,4 +1,4 @@
-# Public one-shot MCP transport
+# Public MCP transport
 
 This optional adapter exposes the existing public `observe` and `dispatch` APIs
 to an MCP host. It returns metadata as text and the selected PNG as a separate
@@ -34,7 +34,7 @@ python /absolute/agent-interface-runtime.pyz mcp \
 ```
 
 The archive includes the adapter, not its third-party dependencies. Ordinary CLI
-commands do not import MCP. Missing MCP dependencies affect only `mcp` mode.
+commands do not import MCP. Missing MCP dependencies affect only `mcp` and `relay` modes.
 
 Requests and reports use the CLI's temporary-file, flush/fsync, then replace
 writer. The final report name is published only after the write completes.
@@ -94,6 +94,24 @@ that does not understand this format should leave `report_refs=false`.
 [Primary v3 use](../results/mcp-report-refs-use-01/README.md) records one
 SDK-mediated input/save and read-only result comparison, including identical
 images and exact reconstruction. It does not establish token or speed savings.
+
+[Two-application compact use](../results/compact-mixed-app-01/README.md) retains
+a Calc/Inkscape trial with 11 v3 receipts, verified close and independent saved
+file checks, including one text-entry correction. To opt in, pass both flags on
+each supported call, for example:
+
+```json
+{"target":"calc","frame":"screen_physical_px","region":[0,0,1280,800],"compact":true,"report_refs":true}
+```
+
+Use this argument object with `interface_observe`; `interface_dispatch` accepts
+the same two presentation flags alongside its program and source assertions.
+Inspect the image and outcome separately. In v3, activation details remain at
+`receipt.source.raw_report.result.execution.activations`; do not interpret the
+reference marker as missing execution evidence or repeat an operation to read it.
+Management calls retain their own format. One offline replay reduced serialized
+text for 10 observe/dispatch reports by 30.09%, excluding image blocks and five
+management calls. Actual model tokens, cost and latency were not measured.
 
 `interface_validate(program)` optionally checks a draft using the same static
 inspector as CLI `validate`, without opening a backend or issuing input. It
@@ -225,3 +243,263 @@ input emission, execution success or task effect. A finished call with
 attempt; a report-save failure may follow input. A running call with false can
 still proceed later. An unavailable receipt explicitly has `replay_allowed=false`.
 These fields do not grant replay permission or survive a server restart.
+
+
+## Opt-in scoped X11 mode
+
+Use `--session-mode guarded-x11` for one explicitly configured X11 target and
+image-grounded aliases on one retained connection. It reuses the shared
+`runtime.guarded_x11_v1` implementation and the public request journal, busy
+rejection, result retrieval and close lifecycle. It selects no actions and
+requires no helper model. The default remains one-shot.
+
+```sh
+python /absolute/agent-interface-runtime.pyz mcp \
+  --targets /absolute/one-target.json \
+  --output-directory /absolute/fresh-receipts \
+  --display :99 --session-mode guarded-x11
+```
+
+Install MCP, Pillow and python-xlib in the launching interpreter. The target
+file must contain exactly one explicit positive window ID, for example
+`{"browser":6291459}` with the caller's actual ID. The server does not launch
+an application/display or discover a target.
+
+1. Call `interface_guarded_observe()` and view its image.
+2. Call `interface_guarded_mint(alias, source_sequence, point, region_size)`
+   using that returned `source.sequence` and an image-grounded screen point.
+   `region_size` is a two-integer pixel size, each 4..96. Flat regions refuse.
+3. Call `interface_guarded_input(alias, offset, tail, interaction="click",
+   observe_after=true)` with the returned alias/offset. `keyboard` guards the
+   same context without clicking. Tail operations follow the bridge's bounded
+   text/key/wait/observe contract. A successful input response normally contains
+   its result and a fresh image; inspect both before deciding the next action.
+4. Re-ground explicitly after a stale-reference refusal. An uncertain input or
+   failed post-input capture is not permission to repeat the input.
+5. Use `interface_results` to read history without input or capture, then
+   `interface_close` to release held input and close. History remains readable
+   after close; its session snapshot is historical, not the live session state.
+
+Ordinary `interface_dispatch`/`interface_observe` and transient-family tools are
+not registered in this mode. `interface_validate` remains available for static
+program inspection, not alias admission. Guarded results use full reports even
+with compact retrieval flags; `report_refs` still requires `compact=true`.
+
+`interface_guarded_review_window(window_id)` explicitly reviews the focused
+window and revokes all prior aliases, even on a failed review. A successful
+review returns an image/source for new aliases. This is the bridge's focused
+window contract, not authenticated application identity or transient-family
+review. Aliases expire under the bridge's existing bounded lifetime and remain
+session-local. Closing or restarting does not revive them.
+
+The immediate capture does not wait for redraw or establish semantic completion.
+`wait_update` is a bounded delay. CTRL+A emission does not prove selection, and
+address-field focus does not prove the application is ready for text. Review
+entered values before consequential submission. No global pacing default changes.
+
+[Primary use and retained evidence](../results/guarded-mcp-primary-02/README.md)
+records six exact saves, a stale-alias refusal before input, explicit recovery,
+source-bound review receipts and result retrieval after close. The earlier
+interrupted trial is retained separately. This establishes scoped integration
+and usability, not matched performance, token savings or human-like tempo.
+
+## Brief guarded-input details
+
+`interface_guarded_input(..., detail="brief")` optionally summarizes repeated
+normal exact-match guard records. The default is `detail="full"`. This adapts the
+positive-only native brief-review approach to public guarded reports; it is not
+a lossless codec. `result.guard_summary` replaces `result.guard_checks` only for
+known completed results with an image, no recovery, verified empty releases,
+completed waits and unmoved exact-region guards. Other result fields, observation
+identity and image stay unchanged. Failures, persistence errors, translations,
+unknown guard/result extensions and unsupported shapes retain full detail.
+
+The `presentation.retrieve` object gives an exact `interface_results` call with
+`detail="full"` and `include_image=false`. It reads the original retained report
+without input or observation. Result retrieval also accepts `detail="brief"`;
+this applies only to guarded reports and leaves other modes unchanged. Raw
+`report.json` is never replaced by the summary. A caller must inspect release,
+feedback and task state separately; a brief normal receipt is not semantic success.
+
+The option can reduce serialized metadata for repeated normal guards, but this
+is not evidence of fewer actual model tokens, lower cost or faster decisions.
+
+### Unknown top-level arguments
+
+Public MCP tools reject unknown top-level argument names before invoking the operation or opening the backend. Discovery advertises `additionalProperties: false`. For keyboard-only guarded input, use `interaction: "keyboard"`; `pointer: false` is not an argument. Do not infer accepted semantics from an unrecognized flag. This check does not alter nested program or tail validation. Validation errors may be plain text from the SDK; host renderers must not assume every text block is JSON.
+
+
+### Register multiple references from one image
+
+In guarded-x11 mode, interface_guarded_mint_many accepts one source_sequence and 1..8 references, each containing alias, point=[screen_x,screen_y], and region_size=[width,height]. Use the exact delivered source you inspected. Each alias must match [a-z][a-z0-9_]{0,31}; points are integer pairs and region dimensions are 4..96 pixels. Unknown nested fields and duplicate aliases refuse before any registration. This reuses the existing bridge mint operation; it does not capture, click, infer targets, acknowledge UI state, or weaken later input guards.
+
+Successful entries return alias/offset pairs under minted. Registration is sequential and not atomic. If minting raises, the reply retains earlier successes, identifies failed_index and failed_alias with failed_alias_state="unknown", and lists unattempted_aliases. Registration may have occurred before a persistence failure, so do not replay the batch or reuse the failed alias. Inspect the outcome and explicitly choose fresh references if needed. Full retained results remain available without reminting.
+
+This transport option reduces the number of registration requests for a supplied group by construction. It does not establish lower model latency, token cost, or generic task completion; primary GUI validation and matched measurement are separate requirements.
+
+### Optional local observation references
+
+Guarded observe/input and interface_results accept observation_refs=true (default
+false). Exact duplicate observation_report.observation metadata may become
+`{"observation_ref":"/source/native"}`. The complete source.native remains in the
+same response; only the path explicitly listed in observation_references is a
+reference. Other reference-shaped values are literal. Images and raw reports are
+unchanged, and the option never captures or sends input itself.
+
+Use runtime.cli_v1.receipt_references.expand_guarded_observation to reconstruct
+the view, or request the retained call with observation_refs=false. To retrieve
+all guard detail too, use detail="full". Combining this lossless reference layer
+with detail="brief" does not make brief guard summaries lossless. Refused and
+persistence-failed replies remain literal; small/nonduplicate reports do too.
+
+## Opt-in paced-dispatch brief view
+
+For public dispatch, add `detail="brief"` together with `compact=true` and
+`report_refs=true`. Full is the default. Supported successful paced-text
+dispatches can omit duplicated source programs, per-wait records and expansion
+mappings while retaining outcomes, release evidence, images and session state.
+The wait summary describes fixed delays, not detected application updates.
+
+A brief receipt uses `agent-interface/receipt-view-paced-brief-v1`.
+Its partial report is at `receipt.source.report_projection`; it is not a
+lossless v3 receipt and must not be passed to the v3 expansion decoder.
+Follow `presentation.retrieve` to call `interface_results` for that exact
+call with `detail="full"`. Retrieval never executes input again.
+The original report and images remain retained in the current server process.
+Failures, missing evidence, unsupported shapes and non-smaller projections stay
+full. This is an explicit presentation option, not proof of task success or
+measured token/cost savings.
+
+## Optional successful-dispatch summaries
+
+`interface_dispatch` and retained `interface_results` accept `detail="summary"`
+with `compact=true, report_refs=true`. This opt-in partial view supports known
+successful public dispatch reports, including short nonpaced save programs.
+Default `detail="full"` and the existing paced `detail="brief"` remain unchanged.
+
+The receipt schema is `agent-interface/receipt-view-dispatch-summary-v1`.
+Read `receipt.execution_summary` for execution times, emissions, all capture,
+release and activation records, completed operation count and fixed-wait totals.
+Images, outcome fields, target/session state and call identity remain unchanged.
+A retained lookup without a live session snapshot keeps its historical session
+at `receipt.reported_session`; it does not mint a current binding or authority.
+Source programs, expansion mapping, per-wait timestamps, completed indices and
+duplicate receipt/session metadata are omitted. The source digest identifies the
+retained full report, not the summary. This does not assert task success.
+
+Follow `presentation.retrieve` to obtain the same call with `detail="full"`
+without replaying input or taking another capture. The lossless receipt decoder
+deliberately rejects the partial summary schema. Failed, incomplete, unfamiliar
+or inconsistent omitted records stay full, as do reports that would not shrink.
+A fixed wait remains a delay, not an acknowledgement of an application update.
+
+## Optional target inspection after public dispatch
+
+In `persistent-x11` mode, `interface_dispatch(..., inspect_after="app")` can
+request the existing focused-target inspection after that one dispatch. The name
+must be a configured target; unsupported modes and unknown names reject before
+input. Omission preserves the existing behavior.
+
+`post_dispatch_inspection` is separate from the execution outcome. Inspection
+runs only after completed dispatch with verified released keys/buttons and no
+input recovery requirement; otherwise its status is `skipped`. Inspection errors
+preserve the original input result. Never replay input to recover this metadata.
+
+The context contains a candidate `review_request` when available. The primary
+must review the evidence and explicitly call `interface_review_target`, which
+rechecks identity, expiry and binding revision. Inspection does not focus,
+select a target, advance the binding revision or capture another image. Its
+metadata is sampled after dispatch and is not atomically bound to the returned
+image. Request a new image when the visual state is uncertain.
+
+The full report persists this context. `interface_results` returns the same
+historical data and does not inspect again or renew the one-use review ID.
+Successful inspection metadata is preserved in full by `detail=summary`,
+including expiry and any extension fields. Inspection errors, skipped inspection
+and mismatched duplicated context retain the full response. `detail=brief`
+also retains the full response for enriched reports. This opt-in trades
+additional metadata and inspection time against a possible separate tool call;
+no latency or token benefit is established yet.
+
+Target inspection resolves a configured X11 child/widget ID to its first managed ancestor using at most 64 window IDs. For such targets, evidence includes `configured_target_path` and `managed_family_root`, while `family_root` retains the configured ID. The focused window must still belong to that managed transient family. Missing, destroyed, cyclic or excessive ancestry refuses inspection. The path is rechecked with the rest of the evidence during explicit target review; changed ancestry invalidates that review. This metadata lookup does not change the input binding or grant authority. See [earlier primary evidence](../results/post-dispatch-inspection-01/README.md) for the child-ID failure that motivated this support; those historical results remain unchanged.
+
+### X11 key spelling
+
+Use `{"op":"key_chord","keys":["Home"]}` for a Home tap and `{"op":"key_chord","keys":["CTRL","s"]}` for a chord. Held input uses `key_state` with `key` and `down`; `key` is not an operation name. X11 keysym names are case-sensitive: `Home`, `End`, `Left`, `Right`, `Up`, `Down`, `BackSpace`, `Delete`, `Insert`. The existing aliases `CTRL`, `SHIFT`, `ALT`, `ENTER`, `TAB`, `ESC`, `SPACE` are also accepted. The actual layout must still map the named key; static validation alone does not establish that.
+
+For common uppercase misspellings, an unmapped-key refusal gives a spelling hint. It does not dispatch the suggested key, retry input, or change held-key identity. Read the execution outcome before deciding a corrected action. This guidance follows the retained `HOME` refusal and explicit `Home` correction in [primary child-target use](../results/managed-target-ancestry-01/README.md).
+
+## Portable JSON-lines relay
+
+For hosts that consume explicit JSON-lines requests rather than acting as an MCP client, the same archive provides a sequential adapter:
+
+```bash
+python3 runtime.pyz relay -- --targets /absolute/targets.json --output-directory /absolute/new-calls --session-mode persistent-x11 --display :99
+```
+
+Pipe stdin/stdout; terminal stdout is refused to preserve exact image JSON bytes. Install the same optional `mcp==1.30.0` dependency used by MCP mode. The relay launches `mcp` from that exact archive using the same Python executable; no research checkout, research allocation or native_start tool is involved. Source development also supports `python3 -m runtime.cli_v1.mcp_relay -- ...` from a checkout.
+
+Each line is exactly `{"id":1,"tool":"list_tools","arguments":{}}`, followed by IDs 2, 3, and so on for accepted calls. Public `interface_*` tools are forwarded unchanged, including image blocks and full/summary options. Inspect discovery to choose a tool. A refused envelope consumes no ID and reports `dispatched:false`; an accepted request consumes its ID before the SDK call, even if the outcome becomes unknown. Never resend an accepted ID or replay uncertain input. `sdk_entry_ns` and `sdk_return_ns` are execution-host monotonic boundaries, not model latency.
+
+Call `interface_close` explicitly and inspect release/cleanup results before closing the pipe. EOF is a disconnect, not a task completion or application-cleanup guarantee. Keep stderr separate from the JSON-lines stream. This adapter does not add a model, queue, automatic retry, task policy or performance claim. The older research relay remains unchanged for frozen research callers.
+
+### Program-local X11 target selection
+
+Every X11 dispatch containing `pointer_move` or `observe` must include `focus`
+or `activate` before those operations in that same program. The operating
+system may retain widget focus across calls, but the dispatch program's target
+selection starts empty. A previous dispatch or `interface_observe(target=...)`
+does not populate it. Preflight rejects a missing selection before executing
+any program input; read the reported outcome and release result before deciding
+on a corrected program.
+
+For a split focus/input/save interaction, each program that ends with an
+observation therefore needs its own explicit selection. `focus` preserves an
+already focused descendant; it does not establish that a clicked widget has
+processed the click or that text has arrived. Review the returned image/value
+before committing. The refusal and separate corrected allocation are retained
+in [portable relay self-use](../results/portable-public-relay-01/README.md).
+
+A Node host can use the [sequential host API](../host_v1/README.md) to retain requests/replies and deliver exact text/image blocks without importing the research tree. Its two `.mjs` files are separate from the Python archive.
+
+
+For retained public observe/dispatch results, `include_image=false` still checks
+the image path, recorded digest and PNG signature, but skips Base64 encoding of
+the validated PNG. Metadata and `image_delivery=omitted_by_request` remain the
+same as an ordinary image-omitted lookup. Missing or altered images still produce
+`needs_review`; the option does not bypass validation or capture a new frame.
+Management/guarded result presentation retains its existing path. No measured
+model-token, cost or useful-feedback latency benefit is implied.
+
+
+### Metadata-only retained image review
+
+`interface_results(call_id=..., include_image=false)` validates the retained PNG
+without Base64-encoding an image block that would be discarded. This applies to
+both normal and guarded/management result presentation. The response retains the
+same recorded source and image status, with `image_delivery=omitted_by_request`
+when a valid image is available; a changed/missing/invalid PNG still reports its
+review error. No fresh capture, redraw acknowledgement or input replay occurs.
+The default `include_image=true` continues to return the retained image.
+
+[Guarded public-path regression and primary use](../results/guarded-metadata-no-encode-01/README.md)
+records the forwarding repair and scoped checks. Avoiding this conversion does
+not by itself establish lower model tokens/cost or measured response latency.
+
+### Worker submission failures
+
+A synchronous worker submission rejection returns `status=worker_submission_failed`,
+`failure_phase=worker_submission` and `replay_allowed=false`. If the callable has
+not entered, its admission is revoked: `operation_invoked=false`,
+`input_dispatched=false`, `effect_status=none`. It creates no operation call ID,
+backend session or retained operation artifact. Capacity becomes available for a
+new explicit call once the host's executor is usable; the server does not replace
+the executor or retry the rejected request.
+
+If callable entry raced with a submission error, the response instead preserves
+`operation_invoked=true`, `input_dispatched=null`, `effect_status=unknown`. The
+running worker keeps the admission slot until its existing finalization; inspect
+retained calls before deciding how to continue. This does not authorize replay.
+A terminal accepted future without callable entry also revokes only pending work;
+SDK-level errors may still be returned. Cancelled transports continue to shield
+accepted work, and overlapping calls remain busy rather than queued input.

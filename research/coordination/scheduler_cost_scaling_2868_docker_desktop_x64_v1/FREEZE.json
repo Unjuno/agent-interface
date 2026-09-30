@@ -1,0 +1,63 @@
+{
+  "schema": "scheduler-cost-scaling-freeze-v1",
+  "issue": 5025,
+  "predecessor_issue": 5021,
+  "allocation": "scheduler-cost-scaling-2868-docker-desktop-x64-20260928-01",
+  "intake_main": "1b1b683a07b87edba6fb312600f09d28ea86b4ae",
+  "branch": "research/scheduler-cost-scaling-2868-docker-desktop-x64-20260928",
+  "path": "research/coordination/scheduler_cost_scaling_2868_docker_desktop_x64_v1/",
+  "environment": {
+    "docker_context": "desktop-linux",
+    "docker_engine": "28.5.1",
+    "image": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "platform": "linux/amd64",
+    "python": "3.12.14"
+  },
+  "hypothesis": "Under the stable key (-priority, deadline, enqueue_seq, op_id), all three policies emit identical complete traces, and heap median paired process-CPU ratios versus scan and sorted-list are each <=0.80 at sizes 512 and 2048 on this Docker Desktop linux/amd64 host.",
+  "design": {
+    "sizes": [8, 32, 128, 512, 2048],
+    "paired_blocks_per_size": 15,
+    "policies": ["STABLE_LIST_SCAN", "STABLE_SORTED_LIST", "ELIGIBLE_HEAP"],
+    "worker_count": 225,
+    "timing_clock_cpu": "time.process_time_ns",
+    "timing_clock_wall": "time.perf_counter_ns",
+    "timed_scope": "tuple and queue construction plus complete drain",
+    "out_of_scope": ["candidate generation", "child process startup", "serialization", "parent wait"]
+  },
+  "decision": {
+    "pass": "All 225 records/exits reconcile; every trace equals the independent tuple oracle; independent raw audit has zero errors and all five corruption controls reject; paired median heap/scan and heap/sorted-list CPU ratios <=0.80 at both 512 and 2048.",
+    "fail_threshold": "Integrity and semantics pass, but a large-queue threshold misses.",
+    "fail_semantics": "Any selected trace differs from the frozen oracle.",
+    "stop": "Any source, image, platform, hash, denominator, or audit gate fails; no timing interpretation."
+  },
+  "construction": {
+    "excluded_from_formal": true,
+    "schedule_sha256": "f778860219a8a9ffe8014eb00eeb41456dac1bf58a2687ee64045a2b9e1df733",
+    "tests": "2 passed in pinned Docker image",
+    "python_ast": "PASS",
+    "shell_syntax": "PASS for formal_entry.sh and audit_entry.sh",
+    "formal_output_empty_at_freeze": true,
+    "audit_output_empty_at_freeze": true
+  },
+  "source_sha256": {
+    "src/audit_entry.sh": "7652be5613382e26f79f19ef3d22a492cb63dfda770430e28857a57a08bfef20",
+    "src/audit.py": "857a428c05b374e51cd34a0acea0b8c11d1a9388352518baed8d5e18619e3532",
+    "src/formal_entry.sh": "a2fbb480b8947491fc82e64ea7751a68f2e6610af2ecb384c952f073c2ea891e",
+    "src/generate_schedule.py": "c77e3862df7640842fbba7353d6c1dba3fb95c22261e380b283e2ad1959b3806",
+    "src/runner.py": "42bd02ae054b7b9d89984d359bc854299e760904cf4194be78a61d32394e2fa0",
+    "src/test_protocol.py": "66f15d3de3fe9de88aac81e1c17c217bda1c2d233f98e47ba4f7f9345d3c18f7",
+    "src/worker.py": "98e7c6d58fe8ab0ce3ca63ff6c145732f499e63f5c8a3c378e5b0e3069865d6e"
+  },
+  "input_sha256": {
+    "input/schedule.json": "f778860219a8a9ffe8014eb00eeb41456dac1bf58a2687ee64045a2b9e1df733"
+  },
+  "formal_output_paths": [
+    "raw.json", "runner.stdout", "runner.stderr", "runner.exit"
+  ],
+  "audit_output_paths": [
+    "audit.json", "audit.stdout", "audit.stderr", "audit.exit"
+  ],
+  "formal_invocations": 0,
+  "audit_invocations": 0,
+  "retries_allowed": false
+}

@@ -1,0 +1,41 @@
+{
+  "schema": "map01-task-effect-contract-freeze-v2",
+  "issue": 5126,
+  "base_main": "611962d32477f8a86096431227a819418ceef994",
+  "branch": "research/strict-task-effect-lineage-5126-20260928",
+  "scope": {
+    "synthetic_cases": 13,
+    "formal_corpus_runs": 1,
+    "raw_audit_runs": 1,
+    "auditor_mutation_sensitivity_checks_in_unittests": 1,
+    "focused_unittest_methods": 7,
+    "live_allocations": 0,
+    "network": false,
+    "model_provider": false,
+    "gui_or_input": false,
+    "gpu": false,
+    "container": false
+  },
+  "source_sha256": {
+    "PLAN.md": "aa96d961de363b6b813919cd6e6d7eb3c06f949c3c4dd7ff237f0916f2727a5f",
+    "contract.py": "186e6594581ae8c5304b198afcd265c0d5941717854518f953add423bb85b485",
+    "oracle.py": "e017959797e2b6c96e4f1fa407b0c8860ccc8fd6ba4e8bdee26cfc2c58ae206e",
+    "run.py": "e979544adb8817a9a5a2c1eee26c8832f970c46cc0413e0c531c1cb4289fb48c",
+    "audit.py": "df661bd9cab0712edc4339e354b9284b795aad89c38f74dd92faccbfa58938b6",
+    "test_contract.py": "228f8e31e46c9e5ffd1b66e9ada87b20c4594f3e61fc8f48e2efc10ec39f4b1d"
+  },
+  "evidence_sha256": {
+    "result.json": "536de27a25cdc7b9936235dc1ef900cf174f2acbf16239a696474ede5f69fa9f",
+    "audit_result.json": "40a1ec9b417505857ff24ad35c6e761024cf4d8a917186a0a64d1fcff7756d26"
+  },
+  "gate": {
+    "candidate_oracle_mismatches": 0,
+    "expected_gate_mismatches": 0,
+    "raw_audit_errors": 0,
+    "raw_auditor_rejects_whitespace_corruption": true,
+    "input_authority": false,
+    "task_authority": false,
+    "disposition": "PASS_STRICT_LINEAGE_FINITE_CONTRACT"
+  },
+  "boundary": "Synthetic host-only contract evidence; no live source-schema or runtime acceptance claim."
+}

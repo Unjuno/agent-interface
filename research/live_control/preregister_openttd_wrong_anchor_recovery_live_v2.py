@@ -1,6 +1,7 @@
 """Freeze one wrong-anchor recovery allocation with portable paths."""
 import json
 from pathlib import Path
+from guarded_source_dependencies_v1 import complete_guarded_hashes
 
 import preregister_openttd_active_evidence_pair_v1 as prior
 import preregister_openttd_translated_compact_live_v1 as translated
@@ -50,10 +51,10 @@ def main():
             "causal speed comparison because this is a recovery fault allocation"),
         "baseline_report": BASELINE.relative_to(HERE).as_posix(),
         "baseline_sha256": prior.sha(BASELINE),
-        "sources": {
+        "sources": complete_guarded_hashes({
             **{name: prior.sha(HERE / name) for name in dict.fromkeys(SOURCES)},
             **{name: prior.sha(HERE.parent / name) for name in prior.TASK_SOURCES},
-        },
+        }, base=HERE),
         "failure_policy": "retain the first fault allocation including failure; no model, runtime or task retry",
         "scope": (
             "one fixed-seed translated OpenTTD deterministic wrong-anchor fault; same Luna-low "

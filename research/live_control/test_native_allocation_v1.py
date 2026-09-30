@@ -10,6 +10,81 @@ from native_exchange_v1 import current_owner_identity
 
 
 class AllocationTests(unittest.TestCase):
+    def test_stop_is_opt_in_idempotent_and_never_relaunches(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            off = NativeAllocation(Path(tmp)/'off', 'calc')
+            with self.assertRaises(ValueError):
+                off.request_stop()
+            on = NativeAllocation(Path(tmp)/'on', 'calc', owner_lifetime=True)
+            self.assertEqual(on.request_stop()['status'], 'not_started')
+            self.assertFalse(on.directory.exists())
+            process = Mock(pid=os.getpid())
+            process.poll.return_value = None
+            with patch('native_allocation_v1.subprocess.Popen', return_value=process) as spawn:
+                on.start(timeout=0)
+                writer = on._owner_writer
+                stopped = on.request_stop()
+                self.assertEqual(stopped['status'], 'stopping')
+                self.assertTrue(stopped['stop_requested'])
+                with self.assertRaises(OSError):
+                    os.fstat(writer)
+                self.assertEqual(on.request_stop()['status'], 'stopping')
+                self.assertEqual(on.start(timeout=0)['status'], 'stopping')
+                process.poll.return_value = 1
+                self.assertEqual(on.status()['status'], 'terminal')
+                self.assertEqual(on.request_stop()['status'], 'terminal')
+                spawn.assert_called_once()
+                process.terminate.assert_not_called()
+                process.kill.assert_not_called()
+
+
+    def test_owner_lifetime_pipe_closes_on_setup_and_spawn_failure(self):
+        real_pipe = os.pipe
+        for phase in ('launch_record', 'spawn'):
+            with self.subTest(phase=phase), tempfile.TemporaryDirectory() as tmp:
+                descriptors = []
+                def capture_pipe():
+                    pair = real_pipe()
+                    descriptors.extend(pair)
+                    return pair
+                allocation = NativeAllocation(Path(tmp)/'run', 'calc', owner_lifetime=True)
+                failing = (patch('pathlib.Path.write_text', side_effect=OSError('record failure'))
+                           if phase == 'launch_record' else
+                           patch('native_allocation_v1.subprocess.Popen', side_effect=OSError('spawn failure')))
+                with patch('native_allocation_v1.os.pipe', side_effect=capture_pipe), failing:
+                    self.assertEqual(allocation.start(timeout=0)['status'], 'needs_review')
+                self.assertEqual(len(descriptors), 2)
+                for fd in descriptors:
+                    with self.assertRaises(OSError):
+                        os.fstat(fd)
+                self.assertIsNone(allocation._owner_writer)
+
+    def test_only_reader_is_passed_and_terminal_poll_closes_writer(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            allocation = NativeAllocation(Path(tmp)/'run', 'calc', owner_lifetime=True)
+            process = Mock(pid=os.getpid())
+            process.poll.return_value = None
+            captured = {}
+            def spawn(argv, **options):
+                reader = options['pass_fds'][0]
+                captured.update(reader=reader, writer=allocation._owner_writer)
+                self.assertEqual(options['pass_fds'], (reader,))
+                self.assertEqual(argv[argv.index('--owner-lifetime-fd')+1], str(reader))
+                self.assertFalse(os.get_inheritable(allocation._owner_writer))
+                os.fstat(reader)
+                return process
+            with patch('native_allocation_v1.subprocess.Popen', side_effect=spawn):
+                self.assertEqual(allocation.start(timeout=0)['status'], 'starting')
+            with self.assertRaises(OSError):
+                os.fstat(captured['reader'])
+            os.fstat(captured['writer'])
+            process.poll.return_value = 0
+            self.assertEqual(allocation.status()['status'], 'terminal')
+            with self.assertRaises(OSError):
+                os.fstat(captured['writer'])
+            self.assertEqual(allocation.status()['status'], 'terminal')
+
+
     def test_explicit_text_policy_is_forwarded_and_reported(self):
         with tempfile.TemporaryDirectory() as tmp:
             for gap in (0,2,10):

@@ -59,6 +59,28 @@ class RawAuditTests(unittest.TestCase):
                              no_gui_result_override=result)
         self.assertIn("no-GUI import-only result contract mismatch", " ".join(errors))
 
+    def test_direct_xvfb_ready_bundle_passes(self):
+        self.assertEqual([], audit.audit(self.repo, package_override=self.package))
+
+    def test_direct_xvfb_intervention_mutation_is_rejected(self):
+        path = self.package / "READY_GATE_03_RESULT.json"
+        result = json.loads(path.read_text())
+        result["manual_ready_signal_interventions"] = 1
+        errors = audit.audit(self.repo, package_override=self.package,
+                             ready_result_override=result)
+        self.assertIn("direct-Xvfb result contract mismatch", " ".join(errors))
+
+    def test_host_get_component_result_passes(self):
+        self.assertEqual([], audit.audit(self.repo, package_override=self.package))
+
+    def test_host_get_post_mutation_claim_is_rejected(self):
+        path = self.package / "FIXTURE_GET_HOST_RESULT.json"
+        result = json.loads(path.read_text())
+        result["output_path_exists_after"] = True
+        errors = audit.audit(self.repo, package_override=self.package,
+                             fixture_result_override=result)
+        self.assertIn("host GET component result scope mismatch", " ".join(errors))
+
 
 if __name__ == "__main__":
     unittest.main()

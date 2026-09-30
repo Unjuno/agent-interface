@@ -6,10 +6,36 @@ from types import SimpleNamespace
 from unittest import mock
 
 from PIL import Image
-from native_handle_bridge_v1 import NativeHandleBridge, _GuardedBackend
+from native_handle_bridge_v1 import NativeHandleBridge, _GuardedBackend, read_window_title
 from scoped_target_handle_v3 import TargetHandleStore
 from runtime.backends.x11_v1.backend import X11Backend, X11BackendError
 
+
+class WindowTitleTests(unittest.TestCase):
+    def test_visible_utf8_fallback_when_client_name_missing(self):
+        d = mock.Mock()
+        d.intern_atom.side_effect = lambda name: name
+        window = mock.Mock()
+        window.get_full_property.side_effect = [None, SimpleNamespace(value='sheet.xlsx — Calc'.encode())]
+        self.assertEqual(read_window_title(d, window), 'sheet.xlsx — Calc')
+        window.get_wm_name.assert_not_called()
+
+    def test_client_title_precedes_visible_decoration(self):
+        d = mock.Mock()
+        window = mock.Mock()
+        window.get_full_property.return_value = SimpleNamespace(value=b'client')
+        self.assertEqual(read_window_title(d, window), 'client')
+        self.assertEqual(window.get_full_property.call_count, 1)
+
+    def test_legacy_fallback_and_invalid_utf8(self):
+        d = mock.Mock()
+        window = mock.Mock()
+        window.get_full_property.return_value = None
+        window.get_wm_name.return_value = 'legacy'
+        self.assertEqual(read_window_title(d, window), 'legacy')
+        window.get_full_property.return_value = SimpleNamespace(value=b'\xff')
+        with self.assertRaises(UnicodeDecodeError):
+            read_window_title(d, window)
 
 class NativeHandleBridgeTests(unittest.TestCase):
     def review_bridge(self, focus=20, captured_focus=20):
@@ -34,6 +60,44 @@ class NativeHandleBridgeTests(unittest.TestCase):
             return observation
         bridge.observe = mock.Mock(side_effect=observe)
         return bridge
+
+    def test_public_observation_failure_retains_error_without_advancing_source(self):
+        bridge = self.review_bridge()
+        bridge._binding = mock.Mock(return_value={"focus": 20})
+        bridge.backend = mock.Mock()
+        bridge.backend.d.screen.return_value = SimpleNamespace(
+            width_in_pixels=1280, height_in_pixels=800)
+        bridge.backend.observe_read_only.side_effect = OSError("capture unavailable")
+        bridge.session.backend = bridge.backend
+        bridge.session.recovery_required = True
+        with self.assertRaisesRegex(X11BackendError, "public observation failed"):
+            NativeHandleBridge.observe(bridge)
+        self.assertEqual(bridge.sequence, 7)
+        self.assertEqual(set(bridge.history), {7})
+        self.assertTrue(bridge.session.recovery_required)
+        bridge.backend.observe_read_only.assert_called_once_with(
+            "app", "screen_physical_px", [0, 0, 1280, 800])
+        bridge.backend.close.assert_not_called()
+        bridge.session.dispatch.assert_not_called()
+        report = bridge._save.call_args.args[1]
+        self.assertEqual(report["status"], "observation_failed")
+        self.assertFalse(report["input_dispatched"])
+
+    def test_public_observation_keeps_binding_change_refusal(self):
+        bridge = self.review_bridge()
+        bridge._binding = mock.Mock(side_effect=[{"focus": 20}, {"focus": 21}])
+        bridge.backend = mock.Mock()
+        bridge.backend.d.screen.return_value = SimpleNamespace(
+            width_in_pixels=1280, height_in_pixels=800)
+        bridge.backend.observe_read_only.return_value = {"sha256": "captured"}
+        bridge.session.backend = bridge.backend
+        with self.assertRaisesRegex(X11BackendError, "binding changed"):
+            NativeHandleBridge.observe(bridge)
+        self.assertEqual(bridge.sequence, 7)
+        self.assertEqual(set(bridge.history), {7})
+        bridge.backend.close.assert_not_called()
+        bridge.session.dispatch.assert_not_called()
+        self.assertEqual(bridge._save.call_args.args[1]["status"], "returned")
 
     def test_public_dispatch_retains_report_and_caller_owned_session(self):
         bridge = self.review_bridge()

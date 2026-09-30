@@ -13,6 +13,57 @@ from runtime.distribution_v2.build import FIXED_TIME, GENERATED, SOURCE_FILES, S
 
 
 class PortableDistributionTests(unittest.TestCase):
+    def test_optional_host_bundle_uses_exact_committed_files_and_refuses_conflict(self):
+        import hashlib
+        from runtime.distribution_v2.build import HOST_SOURCE_FILES
+        root = Path(__file__).resolve().parents[2]
+        revision = subprocess.check_output(['git', '-C', str(root), 'rev-parse', 'HEAD'], text=True).strip()
+        with tempfile.TemporaryDirectory() as td:
+            td = Path(td)
+            plain = build(root, td/'plain.pyz', td/'plain.json', td/'plain.sum')
+            bundled = build(root, td/'bundle.pyz', td/'bundle.json', td/'bundle.sum', host_directory=td/'host')
+            self.assertEqual((td/'plain.pyz').read_bytes(), (td/'bundle.pyz').read_bytes())
+            self.assertNotIn('host_bundle', plain)
+            meta = json.loads((td/'host/HOST_MANIFEST.json').read_bytes())
+            self.assertEqual(meta['source_revision'], revision)
+            for rel in HOST_SOURCE_FILES:
+                expected = subprocess.check_output(['git', '-C', str(root), 'show', f'{revision}:{rel}'])
+                self.assertEqual((td/'host'/Path(rel).name).read_bytes(), expected)
+            for line in (td/'host/SHA256SUMS').read_text().splitlines():
+                digest, name = line.split('  ', 1)
+                self.assertEqual(hashlib.sha256((td/'host'/name).read_bytes()).hexdigest(), digest)
+            before = {p: p.read_bytes() for p in td.rglob('*') if p.is_file()}
+            with self.assertRaises(FileExistsError):
+                build(root, td/'bundle.pyz', td/'bundle.json', td/'bundle.sum', host_directory=td/'host')
+            self.assertEqual({p: p.read_bytes() for p in td.rglob('*') if p.is_file()}, before)
+
+    def test_guarded_method_available_without_optional_dependencies(self):
+        root = Path(__file__).resolve().parents[2]
+        with tempfile.TemporaryDirectory() as td:
+            td = Path(td)
+            archive = td/'runtime.pyz'
+            build(root, archive, td/'manifest.json', td/'sum')
+            code = """
+import sys
+sys.path.insert(0, sys.argv[1])
+from runtime.guarded_x11_v1.form import fill_and_submit
+events = []
+class Bridge:
+    def click(self, alias, offset, **kwargs):
+        events.append(alias)
+        return {'status':'completed','recovery_required':False,
+            'execution':{'releases':[{'verified':True,'keys_down':[],'buttons_down':[]}]}}
+result = fill_and_submit(Bridge(), {'field':('field',[3,3]), 'submit':('save',[2,2])},
+    'text', wait_ms=0, on_step=lambda name, result: events.append(name))
+assert events == ['field','entered','save','saved']
+assert result['task_success'] is None and result['replay_allowed'] is False
+assert 'PIL' not in sys.modules and 'Xlib' not in sys.modules
+print('archive method passed without optional dependencies')
+"""
+            run = subprocess.run([sys.executable, '-I', '-S', '-c', code, str(archive)],
+                                 cwd=td, capture_output=True, text=True, timeout=30)
+            self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
+
     def test_public_validation_outside_checkout_without_dependencies(self):
         root = Path(__file__).resolve().parents[2]
         with tempfile.TemporaryDirectory() as td:
@@ -56,6 +107,12 @@ class PortableDistributionTests(unittest.TestCase):
             self.assertEqual(mcp.returncode, 2)
             self.assertIn('optional dependency mcp==1.30.0', mcp.stderr)
             self.assertEqual(mcp.stdout, '')
+            relay = subprocess.run([sys.executable, '-S', str(out), 'relay', '--help'],
+                                   cwd=td, capture_output=True, text=True)
+            self.assertEqual(relay.returncode, 2)
+            self.assertIn('optional dependency mcp==1.30.0', relay.stderr)
+            self.assertEqual(relay.stdout, '')
+
 
     def test_build_pins_source_even_when_head_moves_between_files(self):
         from runtime.distribution_v2 import build as builder

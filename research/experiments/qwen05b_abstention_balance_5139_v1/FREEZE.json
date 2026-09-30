@@ -1,0 +1,136 @@
+{
+  "allocation": "qwen5139-support-balance-currentmain-eddcf7a4-20260930-02",
+  "commands": {
+    "formal": "docker run --rm --gpus all --network none --read-only --tmpfs /tmp:rw,nosuid,nodev,size=4g --memory 12g --cpus 8 --pids-limit 512 -e FROZEN_IMAGE_DIGEST=sha256:63ce8205b5e0cf7daddac087d6c1bd5489d51e3af345cf923af925026bdd600c -v <source>:/src:ro -v <model>:/model:ro -v <output>:/out:rw sha256:63ce8205b5e0cf7daddac087d6c1bd5489d51e3af345cf923af925026bdd600c /src/run_formal.py --source /src --model /model --data /src/formal-dataset.json --out /out --seed 705482479",
+    "preflight_only": "docker run --rm --network none --read-only --tmpfs /tmp:rw,nosuid,nodev,size=1g -e FROZEN_IMAGE_DIGEST=sha256:63ce8205b5e0cf7daddac087d6c1bd5489d51e3af345cf923af925026bdd600c -v <source>:/src:ro -v <model>:/model:ro -v <output>:/out:rw sha256:63ce8205b5e0cf7daddac087d6c1bd5489d51e3af345cf923af925026bdd600c /src/run_formal.py --source /src --model /model --data /src/formal-dataset.json --out /out --seed 705482479 --preflight-only",
+    "raw_audit": "python audit_raw.py --source <source> --data <formal-dataset.json> --results <formal-output> --audit-out <audit-output>"
+  },
+  "created_utc": "2026-09-30T08:35:21Z",
+  "current_main_sha": "eddcf7a47c1f3c47165288037e66f66da0c3138a",
+  "data": {
+    "classes": [
+      "set",
+      "save",
+      "toggle",
+      "yield:forbidden",
+      "yield:ambiguous",
+      "yield:stale_scope",
+      "yield:missing_evidence",
+      "no_action:already_satisfied"
+    ],
+    "formal_input_sha256": "51ad75f365d77767ea88dcbbc8d170ccb1283913565e1ce14fa0e95226c02fe8",
+    "heldout_pool_rows": 256,
+    "heldout_rows": 64,
+    "path": "formal-dataset.json",
+    "support_counts": {
+      "balanced": {
+        "no_action:already_satisfied": 4,
+        "save": 4,
+        "set": 4,
+        "toggle": 4,
+        "yield:ambiguous": 4,
+        "yield:forbidden": 4,
+        "yield:missing_evidence": 4,
+        "yield:stale_scope": 4
+      },
+      "imbalanced": {
+        "no_action:already_satisfied": 4,
+        "save": 4,
+        "set": 16,
+        "toggle": 4,
+        "yield:ambiguous": 1,
+        "yield:forbidden": 1,
+        "yield:missing_evidence": 1,
+        "yield:stale_scope": 1
+      }
+    },
+    "support_pool_rows": 128,
+    "training_case_order_sha256": {
+      "balanced": "22bad95161201ba98ecfa4d2164558f4068dc406efa46028085ff6c877d4e05c",
+      "imbalanced": "c11202ce3e9a033cff494a74b161692bcf80ec44b34cd92d3347b4aad9b016e7"
+    }
+  },
+  "historical_execution_attribution": "sad_cannon attribution remains unknown; no inference or fit is attributed",
+  "image": {
+    "construction_gate": "NOT_RUN_QUEUE_SLOT_UNAVAILABLE",
+    "digest": "sha256:63ce8205b5e0cf7daddac087d6c1bd5489d51e3af345cf923af925026bdd600c",
+    "platform": "linux/amd64",
+    "reference": "qwen05b-action-sft:build01"
+  },
+  "issue": 5139,
+  "model": {
+    "files": {
+      ".gitattributes": "11ad7efa24975ee4b0c3c3a38ed18737f0658a5f75a0a96787b576a78a023361",
+      "LICENSE": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+      "README.md": "b19c806a904db6dc878a0462e70b551f6b7ac78dfbb88c2eb966ca2b9109ae15",
+      "config.json": "18e18afcaccafade98daf13a54092927904649e1dd4eba8299ab717d5d94ff45",
+      "generation_config.json": "e558847a8b4402616f1273797b015104dc266fe4b520056fca88823ba8f8ebe6",
+      "merges.txt": "599bab54075088774b1733fde865d5bd747cbcc7a547c5bc12610e874e26f5e3",
+      "model.safetensors": "fdf756fa7fcbe7404d5c60e26bff1a0c8b8aa1f72ced49e7dd0210fe288fb7fe",
+      "tokenizer.json": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539",
+      "tokenizer_config.json": "5b5d4f65d0acd3b2d56a35b56d374a36cbc1c8fa5cf3b3febbbfabf22f359583",
+      "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+    },
+    "model_safetensors_sha256": "fdf756fa7fcbe7404d5c60e26bff1a0c8b8aa1f72ced49e7dd0210fe288fb7fe",
+    "repo": "Qwen/Qwen2.5-0.5B-Instruct",
+    "revision": "7ae557604adf67be50417f59c2c2f167def9a775"
+  },
+  "resource_gate": {
+    "cuda_invoked": false,
+    "docker_invocations": 0,
+    "formal_fit_invocations": 0,
+    "lease": "ABSENT; #5085 currently assigns slot to #5134",
+    "model_loaded": false
+  },
+  "schema": "qwen05b-abstention-balance-freeze-v1",
+  "seeds": {
+    "formal_seed": 705482479,
+    "heldout_seed": 324463753,
+    "support_seed": 588007343
+  },
+  "source_files": [
+    "PREREGISTRATION.md",
+    "README.md",
+    "STOP_RECORD.json",
+    "SOURCE_PROVENANCE.json",
+    "SEED_COLLISION_CHECK.json",
+    "audit_raw.py",
+    "audit_reference.py",
+    "controls.py",
+    "evaluate_arm.py",
+    "evaluate_reference.py",
+    "make_dataset.py",
+    "protocol.py",
+    "requirements.lock",
+    "run_formal.py",
+    "sampler.py",
+    "test_freeze_schema.py",
+    "test_protocol.py",
+    "test_sampler.py",
+    "train_arm.py",
+    "train_reference.py"
+  ],
+  "source_sha256": {
+    "PREREGISTRATION.md": "dae7cd42917521ebdcc32e18c416abf84aca3b964ed871f9c0db3c4dd1f55377",
+    "README.md": "b89a31d27ad62a9294a6e330b4558b2cf650229f4d02e7986330087560743263",
+    "SEED_COLLISION_CHECK.json": "4e9ceab5abedbe5ffb1bab9cad5ee453bd9e2d4956b10624141d2d2e378ce2f3",
+    "SOURCE_PROVENANCE.json": "80698124e1fdc262e4cb4ccf6f7efc9d5a49b105aca124d8ca996f63a0519897",
+    "STOP_RECORD.json": "616222396496656781db6ef4b9ab39f66d02803373a8f267621360a55a52408e",
+    "audit_raw.py": "6a6c2e96868d22c7525b31efe1a4c62653c18d99c2cb3457ab310a207fc30202",
+    "audit_reference.py": "cf770430fa375aabac330856b3388aa9b85afe06f9892c0c27d14048ba6e67fd",
+    "controls.py": "286a74830ff602664fa442f0026f63c7f8ab59b60a8f2248f99ad279f47c3a2d",
+    "evaluate_arm.py": "72f976a8df524a94e2a67e2a71d254d10acd716cd7b014bc32418cc050d93201",
+    "evaluate_reference.py": "ba03ab03ac8cafa9142bf64545b71b483ec43e51f934fbba819699e99d77cf3f",
+    "make_dataset.py": "9f344d93845e809c43bfed019b6da866affbc72ad93d467571ab34def5364f2e",
+    "protocol.py": "c9346782f9a5e0ba7ee188976a83605fb668a48f849cbb3d55468bbe606ecbd8",
+    "requirements.lock": "e39c0c0f1e67c52cc3feaa02707c0887ea68259abe221ac469dc7e6df4f52c09",
+    "run_formal.py": "7909a3fa94117e0a0c11737c59d3a2bf6f3e82b6f8dba89a45602baa5df8fa00",
+    "sampler.py": "0cdbe3e5b61202ec6ea5bd8810f4734a85141e7a7cbaf22ce886568b0f2c23a6",
+    "test_freeze_schema.py": "8d5023adc23246a14cfceecbfdf28de905c456e7e267298dcd4dc7409db5713d",
+    "test_protocol.py": "0c17b4f9393c0ae18874dc90cf9c71cd24063e1586f6760173fd2c318ad42e13",
+    "test_sampler.py": "e0fbcf0a3c1cce969e3f6751da8d56d952ce3002d46db19f5e3f40b97e4dacbe",
+    "train_arm.py": "ce049d3cd09601c3fcebb0485c67885b8ba99f62281308e178e81c9a15a2cf92",
+    "train_reference.py": "4504ed1ea5c302756f5f732a33eaf0baf4791427126010c7c37a0da59fcfb0c7"
+  },
+  "status": "STOP_QUEUE_SLOT_UNAVAILABLE"
+}

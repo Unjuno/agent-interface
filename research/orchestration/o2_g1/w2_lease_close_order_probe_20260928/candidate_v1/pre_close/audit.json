@@ -1,0 +1,110 @@
+{
+  "schema": "w2-lease-close-independent-raw-audit-v1",
+  "disposition": "PASS_CLOSE_ORDER_RAW_AUDIT_SCOPED",
+  "trace_sha256": "deed3c1a2e66ae2790907209e7f2b9fbb8b84697a52f419a53627cef390260e5",
+  "candidate_sha256": "ebc7d24d2f5656e5c3a76e35d0dca051ccdfa341d58ddf62c9b8c1bf42e2754f",
+  "case_count": 8,
+  "decision_rows": 14,
+  "errors": [],
+  "reconstructed": [
+    {
+      "case_id": "authorized-idle",
+      "decisions": [
+        {
+          "event_id": null,
+          "status": "NO_INPUT_EDGE"
+        }
+      ]
+    },
+    {
+      "case_id": "unauthorized-input-after-expiry",
+      "decisions": [
+        {
+          "event_id": "u2",
+          "status": "HOLD_LEASE_OPEN_MISSING"
+        },
+        {
+          "event_id": "u3",
+          "status": "HOLD_LEASE_OPEN_MISSING"
+        }
+      ]
+    },
+    {
+      "case_id": "coast-damage",
+      "decisions": [
+        {
+          "event_id": null,
+          "status": "NO_INPUT_EDGE"
+        }
+      ]
+    },
+    {
+      "case_id": "release-before-terminal",
+      "decisions": [
+        {
+          "event_id": "r2",
+          "status": "AUTHORIZED_MATCH"
+        },
+        {
+          "event_id": "r3",
+          "status": "AUTHORIZED_MATCH"
+        }
+      ]
+    },
+    {
+      "case_id": "overlapping-key-holds",
+      "decisions": [
+        {
+          "event_id": "o1",
+          "status": "HOLD_MISSING_LEASE_ACTUATION"
+        },
+        {
+          "event_id": "o2",
+          "status": "HOLD_MISSING_LEASE_ACTUATION"
+        },
+        {
+          "event_id": "o3",
+          "status": "HOLD_MISSING_LEASE_ACTUATION"
+        },
+        {
+          "event_id": "o4",
+          "status": "HOLD_MISSING_LEASE_ACTUATION"
+        }
+      ]
+    },
+    {
+      "case_id": "missing-and-out-of-order-edge",
+      "decisions": [
+        {
+          "event_id": "m1",
+          "status": "HOLD_MISSING_LEASE_ACTUATION"
+        }
+      ]
+    },
+    {
+      "case_id": "no-input-unbound-task-effect",
+      "decisions": [
+        {
+          "event_id": null,
+          "status": "NO_INPUT_EDGE"
+        }
+      ]
+    },
+    {
+      "case_id": "held-input-no-effect",
+      "decisions": [
+        {
+          "event_id": "h2",
+          "status": "HOLD_MISSING_LEASE_ACTUATION"
+        },
+        {
+          "event_id": "h3",
+          "status": "HOLD_MISSING_LEASE_ACTUATION"
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Raw synthetic lease/actuation/close timing only; no live authority or runtime claim."
+  ]
+}

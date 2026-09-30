@@ -1,0 +1,102 @@
+{
+  "allocation": "typed-mode-4844-successor-20260928-02",
+  "issue": 5184,
+  "intake_main": "6df1e32308f1f0854e19ba0cdbf022833441f54f",
+  "branch": "research/typed-mode-4844-successor-v2-20260928",
+  "additive_path": "research/experiments/typed_mode_generalization_4844_successor_v2",
+  "predecessors_preserved": [4155, 4169, 4844, 4863],
+  "retired_allocation": {
+    "id": "typed-mode-4844-successor-20260928-01",
+    "decision": "STOP_PREFORMAL_SEED_EXPOSURE",
+    "candidate_seeds_consumed": [484411, 484412],
+    "docker_invocations": 0,
+    "raw_persisted": false
+  },
+  "formal_seeds": {
+    "train": 484421,
+    "heldout": 484422,
+    "formal_invocations": 0,
+    "runner_launch_attempts": 1,
+    "retries": 0,
+    "allocation_status": "STOP_DOCKER_IMAGE_ARGUMENT_MISMATCH",
+    "do_not_reuse": true
+  },
+  "construction_seeds": {
+    "train": 17001,
+    "heldout": 17002,
+    "formal_seed_access": false
+  },
+  "design": {
+    "n_train": 2000,
+    "n_test": 4800,
+    "rows_per_block": 960,
+    "rows_per_mode_per_block": 192,
+    "blocks": ["COMPLETE", "SINGLE_MISSING", "MULTI_MISSING", "COMPOSITION_HOLDOUT", "NUISANCE_SHIFT"],
+    "primary_blocks": ["SINGLE_MISSING", "MULTI_MISSING", "COMPOSITION_HOLDOUT"],
+    "modes": 5,
+    "cues": 6,
+    "disposition_map": [0, 0, 1, 2, 2],
+    "laplace_alpha": 1.0,
+    "cue_flip_probability": 0.08,
+    "random_missing_probability": 0.20,
+    "confidence_threshold": 0.65
+  },
+  "docker": {
+    "context": "desktop-linux",
+    "engine": "28.5.1 linux/x86_64",
+    "image": "sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a",
+    "platform": "linux/amd64",
+    "python": "3.12.14",
+    "pull": "never",
+    "network": "none",
+    "read_only_root": true,
+    "source_read_only": true,
+    "cpu": 1,
+    "memory": "512m",
+    "pids": 32,
+    "no_new_privileges": true,
+    "runner_invocations": 1,
+    "auditor_invocations": 1
+  },
+  "commands": {
+    "stage0": "python -B -m unittest -v test_stage0.py",
+    "runner": "docker --context desktop-linux run --pull=never --network none --read-only --cpus=1 --memory=512m --pids-limit=32 --security-opt=no-new-privileges --mount type=bind,source=<bundle>,target=/src,readonly --mount type=bind,source=<fresh-runner-output>,target=/out --tmpfs /tmp:rw,noexec,nosuid,size=32m -e OUT_DIR=/out sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a python /src/experiment.py",
+    "auditor": "docker --context desktop-linux run --pull=never --network none --read-only --cpus=1 --memory=512m --pids-limit=32 --security-opt=no-new-privileges --mount type=bind,source=<bundle>,target=/src,readonly --mount type=bind,source=<runner-output>,target=/raw,readonly --mount type=bind,source=<fresh-audit-output>,target=/audit --tmpfs /tmp:rw,noexec,nosuid,size=32m sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a python /src/audit.py /raw/raw.json /audit/audit.json <raw-sha256>"
+  },
+  "source_sha256": {
+    ".gitattributes": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da",
+    "experiment.py": "2474154bb9f93e68c82d437bdcd6adf50612bd8404d5c3aefeb61c805ad53473",
+    "audit.py": "dbc80f40985b9947027bb292c49c113423960f4d47212166c5ba0b716d5a64ff",
+    "test_stage0.py": "f03d52c0db29b3b40adbea10a9231cf6f1971a109c8a8193a998802c3d10f477"
+  },
+  "source_git_blobs": {
+    ".gitattributes": "fa1385d99a319b43c06f5309d1aae9fdd3adea46",
+    "experiment.py": "7e492c34169b31d7e78fc29c4d8fda21e4afe2be",
+    "audit.py": "b7ff6b21702eb77bf470fe688e6bc245293e0463",
+    "test_stage0.py": "bba32845340fce7cadac55293cee255bd1385755"
+  },
+  "source_sizes": {
+    ".gitattributes": 8,
+    "experiment.py": 7075,
+    "audit.py": 10230,
+    "test_stage0.py": 3202
+  },
+  "stage0": {
+    "host": "Windows 11; CPython 3.12.10",
+    "tests": 6,
+    "passed": 6,
+    "formal_seed_data_generated": false,
+    "formal_result_created": false
+  },
+  "formal_stop": {
+    "timestamp": "2026-09-28T13:01:24.6790015+09:00",
+    "docker_exit": 125,
+    "container_created": false,
+    "container_id": null,
+    "stderr": "No such image: sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87123ea3073b41a1a",
+    "expected_image": "sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a",
+    "cause": "The Docker CLI image argument omitted the substring 681. The expected image had passed docker image inspect immediately before launch. The experiment process did not start and no seed-dependent data was generated.",
+    "raw_persisted": false,
+    "scientific_result": false
+  }
+}

@@ -52,6 +52,31 @@ only the interface changes
 
 Then measure model calls, serialization, image/observation cost, latency, retries, recovery, and task correctness separately.
 
+## Outcome principle — solve computer control, not mechanism novelty
+
+> **Agent Interface exists to solve computer control. Novelty is not an acceptance criterion.**
+
+The project may adopt an established algorithm, system technique, library, runtime component, or prior-art design when it closes the measured computer-control bottleneck. It may also compose known mechanisms or develop a new mechanism when the exposed residual requires one. The selection rule is the same in every case: prefer the **smallest sufficient mechanism** that preserves correctness and improves the relevant computer-control outcome.
+
+This means:
+
+- existing mechanisms are valid solutions and should be preferred over reinvention when they satisfy the requirement;
+- deterministic rules, standard scheduling/batching/caching, established control/CV methods, and other strong simple baselines must be considered before allocating a new learned or custom mechanism;
+- a new model, router, scheduler, verifier, representation, or protocol is justified only by a measured residual that simpler/existing mechanisms do not close;
+- established techniques should be identified as prior art rather than relabeled as project novelty;
+- architecture, model count, mechanism count, and research novelty are not promotion targets by themselves;
+- a component-level mechanism result should eventually connect to an actual computer-control endpoint such as independently correct task/effect behavior, earlier useful feedback/effect, fewer model boundaries/observations/recovery steps, or another preregistered integrated control metric;
+- correctness remains the hard gate: a faster or cheaper route that loses task-relevant state, causes wrong effects, weakens authority/release semantics, or breaks recovery is not an improvement;
+- if a simpler existing route wins—for example batching instead of replicas, a macro instead of a learned policy, or direct rich-model operation instead of an unnecessary local intermediary—keep the simpler route.
+
+A preferred research question is therefore:
+
+> **Holding task, environment, and correctness requirements fixed, which existing or new mechanism removes the exposed computer-control bottleneck with the least added complexity and total cost?**
+
+**Worker invariant:** before creating or promoting a mechanism, state the concrete computer-control bottleneck, the strongest existing/simple comparator, the residual that justifies added complexity, and the path from component evidence to an actual control effect. If no residual remains, stop rather than adding architecture for its own sake.
+
+See direction guard [#5280](https://github.com/Unjuno/agent-interface/issues/5280).
+
 ## Governing intent principle — preserve rich-model intent, localize refinement
 
 > **Preserve rich-model intent; localize the high-frequency refinement loop.**

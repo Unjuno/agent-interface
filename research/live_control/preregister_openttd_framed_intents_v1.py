@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+from guarded_source_dependencies_v1 import complete_guarded_hashes
 
 
 HERE = Path(__file__).resolve().parent
@@ -46,8 +47,8 @@ def main():
         "intent_contract": "runner sends only original1024 coordinates with explicit screen_chrome/window_content frames; executor resolves click, drag and condition boxes from the latest stable target binding before whole-program validation",
         "primary_endpoint": "runtime resolution records target geometry and correct translations, repeat stops, target completes, and both agree with the independent engine score",
         "failure_policy": "retain first result in declared order; no runner coordinate transform, visual calibration, retry or replacement after launch",
-        "sources": {**{name: sha(HERE / name) for name in live},
-                    **{name: sha(HERE.parent / name) for name in task}},
+        "sources": complete_guarded_hashes({**{name: sha(HERE / name) for name in live},
+                    **{name: sha(HERE.parent / name) for name in task}}, base=HERE),
         "scope": "one fresh scripted seed991004 positive/repeat pair at1152x720 using runtime-resolved source-frame intents and independent engine score; no model, new save, human, token or general frame-selection claim"}
     (OUT / "preregistration.json").write_text(
         json.dumps(plan, indent=2) + "\n", encoding="utf-8", newline="\n")

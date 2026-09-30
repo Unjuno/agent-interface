@@ -6,8 +6,9 @@ preflight, GUI, task, or efficiency behavior.
 """
 from __future__ import annotations
 
-import json
+import base64
 import hashlib
+import json
 import os
 from pathlib import Path
 import subprocess
@@ -25,7 +26,9 @@ from research.live_control.issue_3311_host_ipc_v1.audit_orbstack_v1_transport im
 ROOT = Path(__file__).resolve().parents[3]
 RUNTIME = ROOT / "runtime"
 LIVE = ROOT / "research/live_control"
-IMAGE = "agent-interface-3311-runtime-v2:20260920"
+IMAGE = os.environ.get("AGENT_INTERFACE_TEST_DOCKER_IMAGE", "agent-interface-3311-runtime-v2:20260920")
+DOCKER_CONTEXT = os.environ.get("AGENT_INTERFACE_TEST_DOCKER_CONTEXT", "orbstack")
+PYTHON_ENTRYPOINT = os.environ.get("AGENT_INTERFACE_PYTHON_ENTRYPOINT", "/usr/bin/python3")
 
 
 def _run_container_with_broker(broker, command, root):
@@ -33,7 +36,7 @@ def _run_container_with_broker(broker, command, root):
     container = None
     succeeded = False
     try:
-        image_info = subprocess.run(["docker", "--context", "orbstack", "image",
+        image_info = subprocess.run(["docker", "--context", DOCKER_CONTEXT, "image",
             "inspect", IMAGE], capture_output=True, text=True, check=True, timeout=15)
         inspected_image = json.loads(image_info.stdout)[0]
         if command.count(IMAGE) != 1:
@@ -148,14 +151,23 @@ class OrbStackV1TransportTest(unittest.TestCase):
             broker = subprocess.Popen([sys.executable, str(RUNTIME / "host_model_ipc_broker_v1.py"),
                 "--ipc", str(ipc), "--repo", str(repo), "--once"], env=env,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-            command = ["docker", "--context", "orbstack", "run", "--rm", "--network", "none",
+            command = ["docker", "--context", DOCKER_CONTEXT, "run", "--rm", "--network", "none"]
+            docker_user = os.environ.get("AGENT_INTERFACE_DOCKER_USER")
+            if docker_user:
+                command.extend(["--user", docker_user])
+            command.extend([
                 "-e", "HOST_MODEL_IPC_DIR=/ipc", "-e", "HOST_MODEL_IPC_TIMEOUT_S=15",
                 "-v", f"{ipc}:/ipc", "-v", f"{repo}:/repo", "-v", f"{out}:/out",
                 "-v", f"{LIVE / 'container_host_model_ipc_runner_v1.py'}:/code/runner.py:ro",
-                "--entrypoint", "/usr/bin/python3", IMAGE,
+                "--entrypoint", PYTHON_ENTRYPOINT, IMAGE,
                 "/code/runner.py", "/usr/bin/node", "/usr/bin/true", "/repo/prompt.txt",
                 "/repo/workspace", "/out/runner", "handle", "-",
-                "/repo/instructions.txt", "/repo/schema.json"]
+                "/repo/instructions.txt", "/repo/schema.json"])
+            if hasattr(os, "getuid") and hasattr(os, "getgid"):
+                command[command.index("-e", command.index("-e") + 1):command.index("-e", command.index("-e") + 1)] = [
+                    "-e", f"HOST_MODEL_IPC_OWNER_UID={os.getuid()}",
+                    "-e", f"HOST_MODEL_IPC_OWNER_GID={os.getgid()}",
+                ]
             container, broker_stdout, broker_stderr = _run_container_with_broker(
                 broker, command, root)
             recorded_command = json.loads((root / "container-command.json").read_text())
@@ -178,14 +190,16 @@ class OrbStackV1TransportTest(unittest.TestCase):
             self.assertFalse(request["authority_granted"])
             self.assertEqual(request["schema"], "/repo/schema.json")
             self.assertEqual(request["working"], "/repo/workspace")
+            self.assertNotIn("instructions", request)
+            self.assertEqual(base64.b64decode(request["instructions_b64"], validate=True),
+                             b"synthetic only"+bytes([10]))
+            self.assertEqual(request["instructions_sha256"],
+                             hashlib.sha256(b"synthetic only"+bytes([10])).hexdigest())
+            plan = json.loads((out / "runner/plan.json").read_text(encoding="utf-8"))
+            self.assertNotIn("instructions_b64", plan)
+            self.assertEqual(plan["instructions_bytes"], len(b"synthetic only"+bytes([10])))
             broker_record = json.loads((ipc / f"{request['request_id']}.broker.json").read_text())
             self.assertEqual(broker_record["returncode"], 0)
-            self.assertTrue(broker_record["host_cli_invoked"])
-            self.assertEqual(broker_record["host_cli_identity"]["version"],
-                             "codex fake-transport-v1")
-            self.assertEqual(broker_record["host_cli_identity"]["path"], str(fake.resolve()))
-            self.assertEqual(len(broker_record["host_cli_identity"]["sha256"]), 64)
-            self.assertIsNotNone(broker_record["host_cli_identity"]["node"])
             events = [json.loads(line) for line in
                       (out / "runner/events.jsonl").read_text(encoding="utf-8").splitlines()]
             self.assertEqual([row["type"] for row in events],

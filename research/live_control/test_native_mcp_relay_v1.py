@@ -10,10 +10,86 @@ import unittest
 from unittest.mock import AsyncMock
 
 from mcp.types import CallToolResult, ImageContent, TextContent
-from native_mcp_relay_v1 import Relay
+from native_mcp_relay_v1 import PUBLIC_TOOLS, Relay
 
 
 class RelayTests(unittest.IsolatedAsyncioTestCase):
+    async def test_explicit_public_relay_discovery_and_close_without_backend(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);(root/'targets.json').write_text(json.dumps({'app':123}))
+            process=await asyncio.create_subprocess_exec(sys.executable,
+                str(Path(__file__).with_name('native_mcp_relay_v1.py')), '--server-kind','public','--',
+                '--targets',str(root/'targets.json'),'--output-directory',str(root/'calls'),
+                '--session-mode','guarded-x11',stdin=asyncio.subprocess.PIPE,
+                stdout=asyncio.subprocess.PIPE,stderr=asyncio.subprocess.PIPE)
+            requests=[{'id':1,'tool':'native_start','arguments':{}},
+                      {'id':1,'tool':'list_tools','arguments':{}},
+                      {'id':2,'tool':'interface_guarded_mint_many','arguments':{'source_sequence':1,'references':[]}},
+                      {'id':3,'tool':'interface_close','arguments':{}}]
+            stdout,stderr=await asyncio.wait_for(process.communicate(
+                ''.join(json.dumps(r)+'\n' for r in requests).encode()),timeout=20)
+            self.assertEqual(process.returncode,0,stderr.decode())
+            rows=[json.loads(line) for line in stdout.splitlines()]
+            self.assertEqual(rows[0]['status'],'refused');self.assertFalse(rows[0]['dispatched'])
+            self.assertIn('interface_guarded_input',{t['name'] for t in rows[1]['result']['tools']})
+            self.assertLessEqual({t['name'] for t in rows[1]['result']['tools']},set(PUBLIC_TOOLS))
+            self.assertEqual(rows[2]['status'],'returned')
+            self.assertTrue(rows[2]['result']['isError'])
+            self.assertIn('references',rows[2]['result']['content'][0]['text'])
+            closed=json.loads(rows[3]['result']['content'][0]['text'])
+            self.assertEqual(closed['status'],'closed')
+            self.assertFalse(closed['connection_close_attempted'])
+            # Feed the actual protocol envelopes to the host timing reader.
+            # Synthetic clock values test decoding only, not process latency.
+            from runtime.integration_checks.host_timing import summarize
+            timing=root/'timing';timing.mkdir();events=[]
+            for attempt,(request,row) in enumerate(zip(requests,rows),1):
+                (timing/f'request-{attempt}.json').write_text(json.dumps(request))
+                data=json.dumps(row).encode()
+                (timing/f'reply-{attempt}.json').write_bytes(data)
+                for kind in ('send_requested','reply_available'):
+                    event={'schema':'agent-interface/relay-host-event-v1',
+                           'sequence':len(events)+1,'host_monotonic_ms':len(events),
+                           'kind':kind,'attempt':attempt,'tool':request['tool']}
+                    if kind=='reply_available':
+                        event.update(relay_id=row.get('id'),reply_sha256=hashlib.sha256(data).hexdigest())
+                    events.append(event)
+            events.append({'schema':'agent-interface/relay-host-event-v1',
+                           'sequence':len(events)+1,'host_monotonic_ms':len(events),
+                           'kind':'transport_closed','code':0,'signal':None})
+            (timing/'host-events.jsonl').write_text(''.join(json.dumps(e)+'\n' for e in events))
+            summary=summarize(timing)
+            self.assertEqual(summary['returned_count'],4)
+            self.assertEqual(summary['timeline_status'],'complete')
+            self.assertEqual(summary['calls'][0]['relay_outcome'],
+                             {'status':'refused','dispatched':False,'request_id':1})
+            self.assertNotIn('relay_outcome',summary['calls'][1])
+
+    async def test_real_relay_forwards_opt_in_stop_without_starting_allocation(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path=Path(tmp)/'allocation'
+            process=await asyncio.create_subprocess_exec(sys.executable,
+                str(Path(__file__).with_name('native_mcp_relay_v1.py')),'--',
+                '--allocation-directory',str(path),'--app','calc','--owner-lifetime',
+                stdin=asyncio.subprocess.PIPE,stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE,env=dict(os.environ))
+            requests=[{'id':1,'tool':'list_tools','arguments':{}},
+                      {'id':2,'tool':'native_stop','arguments':{}},
+                      {'id':2,'tool':'native_stop','arguments':{}}]
+            stdout,stderr=await asyncio.wait_for(process.communicate(
+                ''.join(json.dumps(r)+'\n' for r in requests).encode()),timeout=20)
+            self.assertEqual(process.returncode,0,stderr.decode())
+            rows=[json.loads(line) for line in stdout.splitlines()]
+            self.assertIn('native_stop',{t['name'] for t in rows[0]['result']['tools']})
+            self.assertEqual(rows[1]['status'],'returned')
+            self.assertFalse(rows[1]['result']['isError'])
+            self.assertEqual(json.loads(rows[1]['result']['content'][0]['text'])['allocation']['status'],'not_started')
+            self.assertEqual(rows[2]['status'],'refused')
+            self.assertFalse(rows[2]['dispatched'])
+            self.assertEqual(rows[2]['next_id'],3)
+            self.assertFalse(path.exists())
+
+
     async def test_real_relay_pending_resume_then_second_stage(self):
         # Inert file-exchange fixture: verifies transport composition, not GUI effects.
         with tempfile.TemporaryDirectory() as tmp:

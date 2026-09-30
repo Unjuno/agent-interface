@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+from guarded_source_dependencies_v1 import complete_guarded_hashes
 
 
 HERE = Path(__file__).resolve().parent
@@ -80,8 +81,8 @@ def main():
         "failure_policy": (
             "retain both first sessions; no retry or template/candidate/order/dwell/prompt/"
             "point/frame/size repair; readiness failure gets no model or target click"),
-        "sources": {**{name: sha(HERE / name) for name in live},
-                    **{name: sha(HERE.parent / name) for name in task}},
+        "sources": complete_guarded_hashes({**{name: sha(HERE / name) for name in live},
+                    **{name: sha(HERE.parent / name) for name in task}}, base=HERE),
         "scope": (
             "two fresh same-save seed991004 OpenTTD X11 sessions, one Luna-low image call "
             "maximum, three development-known candidates and one scripted guarded L; "

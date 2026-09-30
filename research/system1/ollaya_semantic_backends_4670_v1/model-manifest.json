@@ -1,0 +1,25 @@
+{
+  "runtime": {
+    "name": "ollaya",
+    "version": "0.7.2",
+    "source_commit": "f9e2d11fee1d01235878bfa6cfa1eb1e42bbbaea",
+    "image": "ghcr.io/ollaya-dev/ollaya@sha256:7765396cadaa762e1024679e63497178f012d5c8988a3337a68426a68d5c7315",
+    "device": "cpu",
+    "cpus": 4,
+    "memory_bytes": 8589934592
+  },
+  "host": {
+    "cpu": "Intel Core i7-12700H",
+    "ram_bytes": 34087497728,
+    "gpu": "NVIDIA RTX 3080 Laptop GPU 16 GiB (not used)"
+  },
+  "formal_arms": [
+    {"name": "laya:en", "manifest_id": "9e5247e3c4f5", "model_family": "ModernBERT-large", "size_bytes": 853634822, "precision": "F32", "license": "Apache-2.0"},
+    {"name": "decider:0.8b", "manifest_id": "97a22ac9c6c4", "model_family": "Qwen3.5-0.8B / 0.75B parameters", "size_bytes": 1504827608, "precision": "F32", "license": "Apache-2.0"}
+  ],
+  "acquired_nonformal_candidates": [
+    {"name": "nli:deberta-v3-large", "manifest_id": "b33142f79a03", "size_bytes": 884000000, "license": "MIT; upstream notes some training-data components have non-commercial licenses"},
+    {"name": "gliclass:latest", "manifest_id": "8c4c3acece90", "size_bytes": 1800000000, "license": "Apache-2.0"}
+  ],
+  "download_integrity": "Ollaya pull completed and verified each downloaded layer SHA-256 before writing each model manifest. Full local model-store file hash inventory is in model-store-sha256.json."
+}

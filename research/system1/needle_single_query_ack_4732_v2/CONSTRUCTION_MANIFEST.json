@@ -1,0 +1,53 @@
+{
+  "schema": "needle-single-query-ack-construction-v2-manifest",
+  "allocation": "needle-single-query-ack-6911201-6911301-6911401-v2",
+  "formal_eligible": false,
+  "source": {
+    "runner.py": {"bytes": 9979, "sha256": "94adb5a18e4588e5a8bd9760cc212380ad3928390ef3aa5e6a5e381f2dfa2aff"},
+    "audit.py": {"bytes": 12674, "sha256": "e18a7e8b205c38d6c53538562d40eb217538b894b6769164905af959eb5866cb"},
+    "test_study.py": {"bytes": 3053, "sha256": "365edc9f578bfea682bbfe13169898140aa9d0f4166da550aa196e01045c8dea"},
+    "README.md": {"bytes": 1925, "sha256": "1d28311782b9b49af27a0de6c45842c77d6f8f728d4c7e0f138158b3daf28d9b"},
+    "CONSTRUCTION_HISTORY.md": {"bytes": 3112, "sha256": "e3a1d2a12653d27d828bab18693f866055d3f735216d4c626e3b07347506daae"},
+    "PREREGISTRATION.md": {"bytes": 3891, "sha256": "40a7913623e25e27a570357412cb93f70291bcda2dda58ef9392ecae7131aba7"},
+    "baseline/study.py": {"bytes": 16433, "sha256": "14d403f5f394fc4ac228609c5c137f09c153b777a45cedfe4abd895ff72ebf74", "git_blob": "b055bd949a4489fc25e10b40ff7e6a44e233fb86"}
+  },
+  "docker_tests": {"image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e", "passed": 6, "failed": 0, "latest_source_includes_ack_receipt_handshake": true},
+  "runs": [
+    {
+      "phase": "construction-original-boundary",
+      "seed": 6911101,
+      "auditor": "CONSTRUCTION_AUDIT_PASS",
+      "checked_arm_arrivals": 24,
+      "audit_errors": 0,
+      "corruption_controls_rejected": 5,
+      "files": {
+        "audit.json": {"bytes": 800, "sha256": "e38a7e9c0cad16dcce37f4001a68d0ea1bece753903591ba4caf710efbaf7411"},
+        "worker-input.json": {"bytes": 86833, "sha256": "7407a9f2451b911839a9edae0e36c3d89ec4d7376131d43b5158cb9b1adafb9b"},
+        "run.json": {"bytes": 291561, "sha256": "de9e72d187496ad2da0bb253effbcd656291ef19c91c5fb630af08a66c59eb45", "storage": "ordered 10,000-character UTF-8 chunks; concatenation SHA-256 verified by per-chunk Git blob readback"},
+        "volume/INLINE_512/snapshot.json": {"bytes": 2965, "sha256": "74512f77cfe19594ae851d5070a1d79b26c2a8c67e45078208bf08561d9d0602"},
+        "volume/ONLINE_QUERY_ONLY/snapshot.json": {"bytes": 2965, "sha256": "74512f77cfe19594ae851d5070a1d79b26c2a8c67e45078208bf08561d9d0602"}
+      },
+      "ack_p95_ms": {"inline_512": 34.474455, "online_query_only": 41.363101, "ratio": 1.1998188513785062},
+      "total_elapsed_ms": {"inline_512": 583.445197, "online_query_only": 583.808479},
+      "formal_inference": false
+    },
+    {
+      "phase": "construction-ack-receipt-handshake",
+      "seed": 6911101,
+      "auditor": "CONSTRUCTION_AUDIT_PASS",
+      "checked_arm_arrivals": 24,
+      "audit_errors": 0,
+      "corruption_controls_rejected": 5,
+      "files": {
+        "audit.json": {"bytes": 800, "sha256": "7419d02f7a84019bf5ae98eb1e0841755cc620c7fdcc6c480e35f1d9de6c605f"},
+        "worker-input.json": {"bytes": 86833, "sha256": "7407a9f2451b911839a9edae0e36c3d89ec4d7376131d43b5158cb9b1adafb9b"},
+        "run.json": {"bytes": 291558, "sha256": "5c99c2ad2d0e3f0dd2d903a15e0ab273f0440e9fa3114e444f1ed0d9a42d15d1", "storage": "ordered 10,000-character UTF-8 chunks; concatenation SHA-256 verified by per-chunk Git blob readback"},
+        "volume/INLINE_512/snapshot.json": {"bytes": 2965, "sha256": "74512f77cfe19594ae851d5070a1d79b26c2a8c67e45078208bf08561d9d0602"},
+        "volume/ONLINE_QUERY_ONLY/snapshot.json": {"bytes": 2965, "sha256": "74512f77cfe19594ae851d5070a1d79b26c2a8c67e45078208bf08561d9d0602"}
+      },
+      "ack_p95_ms": {"inline_512": 27.485479, "online_query_only": 25.529501, "ratio": 0.9288359500665787},
+      "total_elapsed_ms": {"inline_512": 523.451725, "online_query_only": 563.02943},
+      "formal_inference": false
+    }
+  ]
+}

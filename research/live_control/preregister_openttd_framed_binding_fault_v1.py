@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+from guarded_source_dependencies_v1 import complete_guarded_hashes
 
 
 HERE = Path(__file__).resolve().parent
@@ -39,8 +40,8 @@ def main():
         "fault": "after whole-program admission and frame resolution, move the client surface16px before the first pointer operation",
         "primary_endpoint": "terminal needs_decision, changed surface geometry, zero pointer_admission records, verified release and independent task false",
         "failure_policy": "retain the first fresh outcome; no retry, geometry restoration or replacement",
-        "sources": {**{name: sha(HERE / name) for name in live},
-                    **{name: sha(HERE.parent / name) for name in task}},
+        "sources": complete_guarded_hashes({**{name: sha(HERE / name) for name in live},
+                    **{name: sha(HERE.parent / name) for name in task}}, base=HERE),
         "scope": "one fresh scripted OpenTTD X11 fault injection proving post-admission geometry mismatch behavior; test-only move step, no model, task success, speed or general race-freedom claim"}
     (OUT / "preregistration.json").write_text(
         json.dumps(plan, indent=2) + "\n", encoding="utf-8", newline="\n")

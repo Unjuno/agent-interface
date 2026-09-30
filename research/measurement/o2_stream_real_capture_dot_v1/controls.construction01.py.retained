@@ -1,0 +1,22 @@
+"""Evidence corruption controls; no system/network fault injection."""
+import copy,json,sys
+from pathlib import Path
+from audit import audit
+out=Path(__file__).resolve().parent/sys.argv[1]
+base=[json.loads(x) for x in (out/'samples.jsonl').read_text().splitlines()]
+mutations={
+'missing_row':lambda r:r.pop(),
+'wrong_state_pixels':lambda r:r[0].update(state_pixels_sha256='0'*64),
+'wrong_wire_hash':lambda r:r[0].update(wire_sha256='0'*64),
+'wrong_sequence':lambda r:r[0].update(state_sequence=999),
+'wrong_wire_length':lambda r:r[0].update(wire_bytes=r[0]['wire_bytes']+1),
+'invalid_memory_measurement':lambda r:next(x for x in r if x['pass']==3).update(tracemalloc_peak=-1),
+'wrong_input_route':lambda r:r[0].update(input='inputs/absent.png'),
+'wrong_order':lambda r:r.reverse(),
+}
+results=[]
+for name,mutate in mutations.items():
+ rows=copy.deepcopy(base);mutate(rows);a=audit(out,rows)
+ results.append({'name':name,'rejected':bool(a['errors']),'errors':a['errors']})
+print(json.dumps({'controls':results,'all_rejected':all(x['rejected'] for x in results)},indent=2))
+sys.exit(not all(x['rejected'] for x in results))

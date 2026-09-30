@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+from guarded_source_dependencies_v1 import complete_guarded_hashes
 
 
 HERE = Path(__file__).resolve().parent
@@ -82,7 +83,7 @@ def main():
             "the changed intervention can make field pixels differ for an external reason; it must still prevent Submit",
             "one matched pair gives no success rate, tail latency, token saving, break-even, portability or human-tempo claim",
         ],
-        "sources": {name: sha(HERE / name) for name in sources},
+        "sources": complete_guarded_hashes({name: sha(HERE / name) for name in sources}, base=HERE),
         "scope": "two fresh same-seed Linux/X11 Chromium sessions after a no-GUI schema gate; one Luna-low grounding call each, bounded local continuation, no efficiency or generality claim",
     }
     (OUT / "preregistration.json").write_text(json.dumps(plan, indent=2) + "\n",

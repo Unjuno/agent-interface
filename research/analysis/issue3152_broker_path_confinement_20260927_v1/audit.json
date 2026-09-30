@@ -1,0 +1,51 @@
+{
+  "schema": "issue3152-main-path-boundary-audit-v1",
+  "auditor": "independent raw-only JavaScript checks in orchestration runtime; does not import broker/tests",
+  "source_commit": "fc4159ddd0b546c2adfe58faf8d40771e6e5dfc3",
+  "checks": {
+    "passed": true,
+    "errors": []
+  },
+  "corruption_controls": {
+    "total": 8,
+    "rejected": 8,
+    "cases": [
+      {
+        "case": 1,
+        "rejected": true
+      },
+      {
+        "case": 2,
+        "rejected": true
+      },
+      {
+        "case": 3,
+        "rejected": true
+      },
+      {
+        "case": 4,
+        "rejected": true
+      },
+      {
+        "case": 5,
+        "rejected": true
+      },
+      {
+        "case": 6,
+        "rejected": true
+      },
+      {
+        "case": 7,
+        "rejected": true
+      },
+      {
+        "case": 8,
+        "rejected": true
+      }
+    ]
+  },
+  "limitations": [
+    "Synthetic mocked subprocess only; no host CLI/model invocation.",
+    "Linux probe only; no real host file read or exploitability claim."
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "schema": "scheduler-cost-freeze-v1",
+  "issue": 5021,
+  "parent_issue": 2868,
+  "allocation": "scheduler-cost-scaling-2868-v1-20260928-01",
+  "freeze_created_utc": "2026-09-27T19:39:25Z",
+  "freeze_parent_commit": "1b1b683a07b87edba6fb312600f09d28ea86b4ae",
+  "branch": "research/scheduler-cost-scaling-2868-v1-20260928",
+  "path": "research/coordination/scheduler_cost_scaling_2868_v1/",
+  "schedule_sha256": "296d7f6252b3d4576db0284633fc635e66fa88c7ec21e2b8964088c311122a00",
+  "source_sha256": {
+    "generate_scenarios.py": "17cd3b465caf98ddc5865a516642da4a7e2c380af8d9efe08137bc718b5e6659",
+    "runner.py": "d5f62158ec44c117704660fe296cb8930dc54acabcfcd870148fb6a98109240d",
+    "audit.py": "6f77b25aa164054eab72787b567c02143b53a2caa6d0f2dd0028e0958a51030d",
+    "test_protocol.py": "c031414b52cedc6068e9a8e661eb93c9d75dc0d500d78a001f0e395117655262"
+  },
+  "protocol": {
+    "queue_sizes": [8, 32, 128, 512, 2048],
+    "paired_blocks_per_size": 15,
+    "policies": ["STABLE_LIST_SCAN", "STABLE_SORTED_LIST", "ELIGIBLE_HEAP"],
+    "worker_processes": 225,
+    "timed_interval": "queue-representation-construction-through-complete-drain",
+    "excluded_from_timed_interval": ["candidate generation", "child-process startup", "serialization"],
+    "performance_gate": {
+      "median_paired_heap_over_scan_cpu_ratio_max": 0.8,
+      "median_paired_heap_over_sorted_list_cpu_ratio_max": 0.8,
+      "queue_sizes": [512, 2048]
+    },
+    "formal_runner_invocations": 1,
+    "independent_auditor_invocations": 1,
+    "retry_policy": "No retries after formal runner starts; preserve exact partial/failure output and stop."
+  },
+  "environment": {
+    "engine": "OrbStack Docker context",
+    "host_os_arch": "linux/arm64",
+    "host_cpus": 10,
+    "host_memory_bytes": 16819609600,
+    "image": "python:3.12-slim-bookworm",
+    "image_id": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "image_os_arch": "linux/arm64",
+    "python": "3.12.14",
+    "pull": "never",
+    "network": "none",
+    "read_only_root": true,
+    "cpu_quota": 0.25,
+    "memory_limit": "512m",
+    "pids_limit": 64,
+    "tmpfs": "/tmp:rw,noexec,nosuid,size=16m"
+  },
+  "formal_runner_argv": [
+    "docker", "--context", "orbstack", "run", "--rm", "--pull=never",
+    "--platform=linux/arm64", "--network=none", "--read-only",
+    "--tmpfs", "/tmp:rw,noexec,nosuid,size=16m", "--cpus=0.25",
+    "--memory=512m", "--pids-limit=64",
+    "--mount", "type=bind,source=/private/tmp/unjuno-scheduler-cost-5021-20260928/research/coordination/scheduler_cost_scaling_2868_v1,target=/src,readonly",
+    "--mount", "type=bind,source=/private/tmp/unjuno-scheduler-cost-5021-20260928/research/coordination/scheduler_cost_scaling_2868_v1/results/formal01/runner,target=/out",
+    "-w", "/src", "--entrypoint", "python3",
+    "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "-B", "/src/runner.py", "--out", "/out"
+  ],
+  "independent_auditor_argv": [
+    "docker", "--context", "orbstack", "run", "--rm", "--pull=never",
+    "--platform=linux/arm64", "--network=none", "--read-only",
+    "--tmpfs", "/tmp:rw,noexec,nosuid,size=16m", "--cpus=0.25",
+    "--memory=512m", "--pids-limit=64",
+    "--mount", "type=bind,source=/private/tmp/unjuno-scheduler-cost-5021-20260928/research/coordination/scheduler_cost_scaling_2868_v1,target=/src,readonly",
+    "--mount", "type=bind,source=/private/tmp/unjuno-scheduler-cost-5021-20260928/research/coordination/scheduler_cost_scaling_2868_v1/results/formal01/runner/raw.json,target=/raw/raw.json,readonly",
+    "--mount", "type=bind,source=/private/tmp/unjuno-scheduler-cost-5021-20260928/research/coordination/scheduler_cost_scaling_2868_v1/results/formal01/audit,target=/out",
+    "-w", "/src", "--entrypoint", "python3",
+    "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "-B", "/src/audit.py", "/raw/raw.json", "/out"
+  ],
+  "formal_result": null
+}

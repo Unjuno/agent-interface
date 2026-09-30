@@ -1,0 +1,56 @@
+{
+  "issue": 5427,
+  "parentIssue": 5409,
+  "branch": "research/issue5427-gpu-pilot-20260930-01",
+  "baseMainSha": "1f858cf0d2da2821b5767077e1c9556764507dbb",
+  "status": "FROZEN_BEFORE_ALLOCATION",
+  "allocationConsumed": false,
+  "files": [
+    {
+      "path": "research/experiments/strategic_reporting_5322_gpu_v4/GPU_MODEL_PILOT_V4_PREREG.md",
+      "sha256": "6423c9986dc3c2a51f6a9244845ae85a18008cf45ecd470fb82e12d32a054da2"
+    },
+    {
+      "path": "research/experiments/strategic_reporting_5322_gpu_v4/gpu_model_pilot_v4.py",
+      "sha256": "720fbcfeb06085ff500e780f1fbf7459f459e190656b7d733e4421b6f35d2827"
+    },
+    {
+      "path": "research/experiments/strategic_reporting_5322_gpu_v4/audit_gpu_model_pilot_v4.py",
+      "sha256": "62242eaa2a86fc31138cbcf4d2345c63e083f548413a95807ac6d02ce4231129"
+    },
+    {
+      "path": "research/experiments/strategic_reporting_5322_gpu_v4/capture_gpu_pilot_stream_v4.py",
+      "sha256": "9f7378e9cd1333c934fc4d7faf67ff0980b9100287f27ab4a0174e3dbbad23fe"
+    }
+  ],
+  "runtime": {
+    "os": "Windows-10-10.0.26200-SP0",
+    "python": "3.11.9",
+    "ollama": "0.34.4",
+    "torch": "2.5.1+cu121",
+    "cudaAvailable": true,
+    "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU"
+  },
+  "models": {
+    "qwen2.5:3b": "357c53fb659c5076de1d65ccb0b397446227b71a42be9d1603d46168015c9e4b",
+    "qwen3:4b": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7"
+  },
+  "seeds": {
+    "hiddenTruth": 748219965,
+    "generation": 20261002,
+    "temperature": 0
+  },
+  "allocation": {
+    "modelCalls": 6,
+    "caseRows": 96,
+    "arms": [
+      "metadata_only",
+      "outcome_scoring",
+      "proper_score_random_audit"
+    ],
+    "retries": 0
+  },
+  "constructionCheck": "Source syntax, model/case/prompt parity, exact truth sequence and runner live-event/ACK barrier checks passed. No inference was used in these checks.",
+  "transportCheck": "Separate no-model `READY`/`ACK 1`/`ECHO:ACK 1` subprocess round trip passed using the same Windows PTY primitive.",
+  "barrier": "Runner saves LIVE_STDOUT before redirecting model stdout, emits a CALL_EVENT to the live PTY, and blocks on stdin. Orchestrator writes call-i.json via GitHub MCP and verifies readback before sending ACK i. Only then may the runner make the next model request."
+}

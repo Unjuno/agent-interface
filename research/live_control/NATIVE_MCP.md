@@ -25,7 +25,7 @@ install a plugin or add tools to the current Codex conversation.
   contract, with exact source hashes. Missing or malformed context stays explicit
   and does not erase a valid image. No evaluator output is read. Context describes
   the task; it grants no authority and is not an atomic snapshot with the image.
-- `native_submit(stage, decision, timeout=5)` uses existing immutable publication
+- `native_submit(stage, decision, timeout=5, detail="full")` uses existing immutable publication
   and guarded action execution. After pending/error, never retry submit.
   The tool schema describes source_sequence, point, expected_title, interaction,
   tail and strict boolean finish/finish_after. Action decisions need point/title;
@@ -33,7 +33,7 @@ install a plugin or add tools to the current Codex conversation.
   publication. Unspecified defaults are not inserted into the saved request;
   extension fields remain available. Tail/runtime admission is still checked
   by the existing harness and backend, not certified by this input schema.
-- `native_resume(stage, decision_sha256, timeout=5)` follows the existing
+- `native_resume(stage, decision_sha256, timeout=5, include_image=true, detail="full")` follows the existing
   read-only digest-bound path. It does not create a missing request.
 
 The run is bound at server startup; tools cannot select another filesystem path.
@@ -236,8 +236,16 @@ tail is rejected before publication.
 A typed visually-flat target refusal before dispatch may return a fresh boundary
 when stage capacity remains. Its `target_refusal` describes the recorded failure;
 it is not action completion. Choose a new decision from the returned image.
-Arbitrary errors, exhausted capacity or failed review still terminate; no input
-is automatically retried. A refused action does not apply finish_after.
+A failed review after a visually-flat refusal still terminates. For post-action
+review and explicit observation failures, the harness may instead return
+`continuation.status: observation_required` while stage capacity remains.
+The delivered image is the previous retained capture, not post-action evidence.
+Only explicit observe or finish is accepted until a fresh review succeeds; input
+is rejected before publication and is never replayed. Failed post-action review
+also suppresses finish_after. Arbitrary errors and exhausted capacity still
+terminate. A refused action does not apply finish_after. See the
+[retained failure and recovery](../../runtime/results/native-review-recovery-01/README.md)
+and [integrated-main follow-up](../../runtime/results/native-review-recovery-main-01/README.md).
 The published Inkscape task now describes its directional saved-geometry score
 explicitly; nominal drag pixels are not an exact keyboard displacement target.
 
@@ -297,3 +305,105 @@ For a sparse source checkout, the live native GUI harness also imports
 and `research/live_control`. Include these directories before managed startup;
 the inert contract suites alone do not establish that all live imports exist.
 The linked record retains the missing-dependency startup failure separately.
+
+## Experimental managed owner lifetime
+
+`--owner-lifetime` is an opt-in managed-mode candidate on POSIX. The server
+retains a pipe writer and the harness receives only its reader, which is marked
+non-inheritable before application launch. Server exit closes the writer. The
+harness checks for EOF during decision waiting and at stage/evaluation boundaries,
+then takes its existing failure/cleanup path without replay or success evaluation.
+The default remains unchanged. A timeout in one tool call does not close the
+ownership channel. Closing stdio may end the server and therefore its ownership.
+
+This is cooperative boundary handling, not immediate input cancellation: setup,
+input programs and feedback already in progress can continue until a check.
+There remains a check/use race. It does not contain escaped descendants, survive
+a killed harness, prove physical release, or provide restart authority. Initial
+actual-MCP construction used an inert substitute worker. One subsequent idle Calc
+case reached existing cleanup after server exit and externally reaped the owner;
+tracked processes were absent. Held input and complete descendant closure remain
+unverified. See [construction evidence](../../runtime/results/native-owner-lifetime-01/README.md).
+Do not enable it as a production default from these bounded results.
+
+### Explicit cooperative stop
+
+In managed `--owner-lifetime` mode, `native_stop()` closes the owned lifetime
+channel while keeping the MCP connection available. It requests stop at the next
+cooperative boundary, not immediate interruption. `allocation.status: stopping`
+with `stop_requested: true` is not terminal or cleanup success. Poll native_status;
+use exact-request native_resume to inspect previously committed outcomes without
+replay. New native_submit calls are refused while stopping. Repeated stop calls
+never relaunch or signal processes. Before startup, stop returns not_started and
+creates nothing; it does not prohibit a later explicit start. Without this mode
+the tool is not exposed. The EOF error covers either server exit or explicit stop.
+
+[Retained idle Calc stop and server-termination cases](../../runtime/results/native-cooperative-stop-01/README.md) verify the limited lifecycle behavior; they do not exercise active input.
+
+
+### Node-mediated self-use and legacy X11 titles
+
+The sequential relay forwards the opt-in native_stop tool. Native private-session discovery and feedback can fall back to the window manager's UTF-8 visible title when the client lacks _NET_WM_NAME; titles remain observation cues, never input authority. See [retained primary self-use](../../runtime/results/native-node-relay-01/README.md) for the failed startup, title diagnosis, same-response image delivery and independently scored Calc save. This Node-mediated route does not imply registered MCP reconnection or measured speed/token improvement.
+
+
+The [persistent Node host client](NATIVE_RELAY_CLIENT.md) provides a reusable adapter to the existing relay, with one outstanding request, retained replies and same-request waiting after host interruption.
+
+
+For outcome-only rereading, native_resume accepts include_image=false. It still validates the retained image and exact request, preserves image_status/image_reference, and adds image_delivery=omitted_by_request only when a valid image block was suppressed. It does not recapture or grant input authority. The default delivers the image. See [paired retained retrieval](../../runtime/results/native-resume-image-delivery-01/README.md).
+
+## Optional normal-result summary
+
+Submit and resume accept `detail="brief"`; the default remains `"full"`.
+This reuses the existing primary-review receipt projection only for completed,
+matched, reviewed boundary results with valid guards, verified releases and no
+recovery requirement. Unsupported, failed, pending and recovery results retain
+the full receipt. A normal result also stays full if the projection is larger.
+
+A brief result uses `receipt_summary`, not `receipt`. Its `presentation` records
+omitted detail counts, the full receipt path/hash, and an exact `native_resume`
+call with `detail="full", include_image=false`. Follow that call when guard,
+wait, completed-operation or feedback-sample detail is needed. This retrieval
+reads the committed request; it does not replay input. It requires the same run
+and retained files to remain available.
+
+The image, outcome summary, continuation and contextual metadata are unchanged.
+Inspect the returned image even when action execution and feedback are normal:
+a matched boundary can still show an unpainted dialog. Neither the summary nor
+input completion establishes task success. Unknown fields outside the explicitly
+omitted detail sections remain visible. The summary is a lossy presentation,
+not a replacement for the retained full receipt.
+
+Local retrospective checks on the existing two-app primary-use record reduced
+serialized metadata from 54,164 to 47,307 bytes across 11 responses (12.7%), with
+only three responses summarized. This is not an actual model-token, cost or
+latency measurement, and no fresh GUI trial is implied. Real MCP retrieval on
+five retained stages preserved images and exact full receipts without modifying
+request bytes or modification times. Further primary-use evaluation is needed
+before changing the default.
+
+A subsequent [primary two-app trial](../../runtime/results/native-primary-brief-01/README.md) completed both saved effects using brief output, while retaining recovery errors and one caller schema failure. It does not establish a performance improvement.
+
+## Explicit recovery observation request
+
+When a failed post-input review returns `continuation.status="observation_required"`,
+that continuation includes `fresh_observation_request` with the existing
+`native_submit` tool and exact stage/source arguments for `interaction="observe"`.
+The caller may choose that request to obtain one new capture without repeating
+input. It is a description, not an automatic action or a guarantee that the
+request will still be accepted. Source, stage-bound, owner-state and occupied-slot
+checks still apply. If the call times out, use the returned exact-request resume
+contract; do not submit the template again. Finish remains a separate choice.
+
+The template is absent for normal boundaries, unknown/missing images, exhausted
+stages and already-submitted stages. `native_observe(stage)` continues to read a
+retained image and does not refresh it. There is no new tool, polling, sensor,
+input replay or wait policy.
+
+This addresses the primary caller's preserved `observe=true` schema mistake in
+[native brief self-use](../../runtime/results/native-primary-brief-01/README.md).
+The supported request uses `decision={source_sequence: N, interaction: "observe"}`.
+Real stdio regression checks show that presenting it publishes nothing, explicitly
+following it publishes only that observation, changed sources reject it, and an
+occupied stage rejects a repeated submission. This is usability/contract evidence;
+no latency or token saving is claimed. The template adds metadata only on the
+failed-review recovery path.

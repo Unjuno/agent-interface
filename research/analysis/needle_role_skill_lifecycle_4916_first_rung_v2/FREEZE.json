@@ -1,0 +1,54 @@
+{
+  "allocation": "needle-role-skill-lifecycle-4916-first-rung-20260928-02",
+  "issue": 5053,
+  "predecessor_allocation": "needle-role-skill-lifecycle-4916-first-rung-20260928-01",
+  "diagnostic_allocation": "needle-role-skill-lifecycle-4916-parity-diag-20260928-01",
+  "base_commit": "e03adfe50b6fc8eebbaa001207dbb7154300fc9d",
+  "hypothesis": "For the exact retained seed-3788 synthetic role-skill JSON, per-request read/parse/full validation/selected-role construction has greater lifetime cost than one full validation/all-role construction followed by reuse across the first 40 requests, with identical predictions.",
+  "treatment": "Five paired alternating AB/BA blocks, each arm processes the same fixed 40-request A/B/C schedule. RELOAD_EACH_REQUEST includes complete load, digest/schema/shape validation and selected-role construction for every request. LOAD_ONCE_REUSE includes one complete load and construction of all roles in its initialization cost.",
+  "decision": "PASS_LIFECYCLE_FIRST_RUNG_SCOPED only when container construction matches all 12,288 retained predictions, all 400 timed predictions match both arms and retained pred, independent raw-only audit has zero errors and rejects all seven mutations, reuse wins all five paired blocks, median lifetime-cost ratio <=0.90, and source/reference/input/image identities remain exact. Otherwise preserve exact FAIL/HOLD/STOP; no retry or replacement allocation.",
+  "control": "Same package, rows, corrected scorer, fixed schedule, CPU-only runtime and image; only lifecycle differs. Startup excluded equally, reuse includes initialization, reload includes per-request validation/construction; AB/BA order alternates.",
+  "uncertainty": "One synthetic package/seed, five pairs, N=40 per arm per block, cached linux/amd64 emulated Python image. No PyTorch/framework speed, broad workload, task-success, GUI, authority, production, or product claim. A scoped pilot PASS only supports a separately frozen larger run and does not close #4916.",
+  "sources": {
+    "construction_runner.py": "7d5eb4ba759c9b59ba9b2f657f41fa7e84866d269c149962445ab897d7338d77",
+    "lifecycle_corrected.py": "64a86fe56fb40e719368ec85427751941224e22bcb057d57aaeb011065517cd7",
+    "pilot_audit.py": "9a77c5968ff909c5e6e850f702328236c3eacd3ba6bc8beb666a86608dac7796",
+    "pilot_runner.py": "061b8490284a44a44af7bb83a434dfc5f605b149b61b64620ed1b49e2c539f57",
+    "test_first_rung.py": "b44ce8a89eb6b8e1fd52d2c7af43e3606efae93115df658c26df215e59400bdf"
+  },
+  "reference_sources": {
+    "lifecycle.py": "research/analysis/needle_role_skill_lifecycle_4916_v2/lifecycle.py",
+    "loader.py": "research/needle_role_skill_reload_3780_v1/loader.py"
+  },
+  "reference_sources_sha256": {
+    "lifecycle.py": "e45a6b1ec6ad4995533c59d3ae560b9a91e2d31b2d7186c1cae5705f90602b80",
+    "loader.py": "5ff6df91ea3929f68fe77ccd6156bdb1310d0fec86088489d8b99905a7c5854f"
+  },
+  "inputs": {
+    "skill.json": "research/needle_role_skill_reload_3780_v1/formal/seed-3788/builder/skill.json",
+    "expected.json": "research/needle_role_skill_reload_3780_v1/formal/seed-3788/builder/expected.json"
+  },
+  "inputs_sha256": {
+    "skill.json": "2e7bff5a2c6ffd35935c5e3c88d08cb686fb736d332c8d5cdb24bb1b67dc873a",
+    "expected.json": "5baca462abbcdd561dba4c790775a589f91a0fa15453e2f3e6c3bc74fb1b6f61"
+  },
+  "container": {
+    "engine": "OrbStack Docker",
+    "image": "python:3.13.5-slim-bookworm",
+    "image_id": "sha256:4c2cf9917bd1cbacc5e9b07320025bdb7cdf2df7b0ceaccb55e9dd7e30987419",
+    "platform": "linux/amd64",
+    "network": "none",
+    "root_filesystem": "read-only",
+    "repository_mount": "read-only",
+    "output_mount": "dedicated writable directory only",
+    "cpu_limit": "0.25",
+    "memory_limit": "512m",
+    "pids_limit": 32,
+    "package_install": false
+  },
+    "construction_command": "docker run --rm --pull=never --platform linux/amd64 --network none --cpus=0.25 --memory=512m --pids-limit=32 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=64m --env OUT_DIR=/out --env CONTAINER_IMAGE_ID=sha256:4c2cf9917bd1cbacc5e9b07320025bdb7cdf2df7b0ceaccb55e9dd7e30987419 --mount type=bind,source=/private/tmp/agent-interface-4916-v2,target=/repo,readonly --mount type=bind,source=/private/tmp/agent-interface-4916-v2/research/analysis/needle_role_skill_lifecycle_4916_first_rung_v2/results/construction-02,target=/out --workdir /repo python:3.13.5-slim-bookworm python -B /repo/research/analysis/needle_role_skill_lifecycle_4916_first_rung_v2/construction_runner.py",
+  "formal_command": "docker run --rm --pull=never --platform linux/amd64 --network none --cpus=0.25 --memory=512m --pids-limit=32 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=64m --env OUT_DIR=/out --env CONTAINER_IMAGE_ID=sha256:4c2cf9917bd1cbacc5e9b07320025bdb7cdf2df7b0ceaccb55e9dd7e30987419 --mount type=bind,source=/private/tmp/agent-interface-4916-v2,target=/repo,readonly --mount type=bind,source=/private/tmp/agent-interface-4916-v2/research/analysis/needle_role_skill_lifecycle_4916_first_rung_v2/results/formal-02,target=/out --workdir /repo python:3.13.5-slim-bookworm python -B /repo/research/analysis/needle_role_skill_lifecycle_4916_first_rung_v2/pilot_runner.py",
+  "audit_command": "docker run --rm --pull=never --platform linux/amd64 --network none --cpus=0.25 --memory=512m --pids-limit=32 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=64m --mount type=bind,source=/private/tmp/agent-interface-4916-v2,target=/repo,readonly --mount type=bind,source=/private/tmp/agent-interface-4916-v2/research/analysis/needle_role_skill_lifecycle_4916_first_rung_v2/results/formal-02,target=/results,readonly --mount type=bind,source=/private/tmp/agent-interface-4916-v2/research/analysis/needle_role_skill_lifecycle_4916_first_rung_v2/results/audit-02,target=/out --workdir /repo python:3.13.5-slim-bookworm python -B /repo/research/analysis/needle_role_skill_lifecycle_4916_first_rung_v2/pilot_audit.py --raw /results/raw.json --out /out/audit.json",
+  "invocations": {"construction": 1, "formal": 1, "audit": 1},
+  "retries": 0
+}

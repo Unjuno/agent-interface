@@ -1,6 +1,7 @@
 """Portable, non-mutating checks for the retained transport auditor."""
 from __future__ import annotations
 
+import base64
 import hashlib
 import json
 from pathlib import Path
@@ -169,6 +170,23 @@ class ResponseCorrelationTest(unittest.TestCase):
 
 
 class RequestPlanCorrelationTest(unittest.TestCase):
+    def test_base64_instruction_payload_correlates_to_plan_digest_and_size(self):
+        with tempfile.TemporaryDirectory(prefix="3311-v1-request-plan-b64-") as temp:
+            root = Path(temp)
+            request_path, plan_path = root / "request.json", root / "plan.json"
+            body = b"synthetic instructions"
+            digest = hashlib.sha256(body).hexdigest()
+            shared = {"request_id": "b64", "mode": "handle", "prompt": "probe",
+                "working": "/repo/workspace", "image": None, "image_sha256": None,
+                "instructions_sha256": digest, "schema": "/repo/schema.json",
+                "schema_sha256": "s" * 64, "authority_granted": False}
+            request_path.write_text(json.dumps(dict(shared,
+                instructions_b64=base64.b64encode(body).decode("ascii"))))
+            plan_path.write_text(json.dumps(dict(shared, instructions_bytes=len(body))))
+            self.assertTrue(auditor.request_matches_plan(request_path, plan_path))
+            plan_path.write_text(json.dumps(dict(shared, instructions_bytes=len(body) + 1)))
+            self.assertFalse(auditor.request_matches_plan(request_path, plan_path))
+
     def test_request_fields_must_match_runner_plan(self):
         with tempfile.TemporaryDirectory(prefix="3311-v1-request-plan-") as temp:
             root = Path(temp)

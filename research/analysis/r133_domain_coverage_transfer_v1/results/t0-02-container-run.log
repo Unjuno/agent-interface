@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/work/run_once.py", line 48, in <module>
+    main()
+  File "/work/run_once.py", line 39, in main
+    record = build_result(root, sys.stdin.buffer.read())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/run_once.py", line 14, in build_result
+    inputs, provenance = load_inputs_from_payload(payload)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/frozen_sources.py", line 35, in load_inputs_from_payload
+    envelope = json.loads(payload)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/decoder.py", line 338, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/json/decoder.py", line 356, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)

@@ -15,6 +15,219 @@ from native_exchange_v1 import encoded
 
 
 class MCPTests(unittest.IsolatedAsyncioTestCase):
+    async def test_stdio_recovery_request_publishes_only_explicit_observation(self):
+        # Synthetic failed-review evidence, real transport and file publication.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            pixels = base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+a9xkAAAAASUVORK5CYII=')
+            (root/'frame.png').write_bytes(pixels)
+            source = {'sequence': 1, 'capture_ns': 123, 'native': {'sha256': 'raw',
+                'capture_started_ns': 123, 'artifact': {'path': str(root/'frame.png'),
+                'sha256': hashlib.sha256(pixels).hexdigest(),
+                'source_raw_sha256': 'raw', 'mime_type': 'image/png'}}}
+            recovery = dict(source, review_recovery={'status': 'observation_required'})
+            (root/'source-1.json').write_bytes(encoded(source))
+            (root/'source-2.json').write_bytes(encoded(recovery))
+            request = encoded({'source_sequence': 1, 'interaction': 'observe'})
+            digest = hashlib.sha256(request).hexdigest()
+            (root/'request-1.json').write_bytes(request)
+            (root/'reply-1.json').write_bytes(encoded({'stage': 1, 'status': 'boundary',
+                'decision_sha256': digest, 'observation': recovery}))
+            params = StdioServerParameters(command=sys.executable, args=[
+                str(Path(__file__).with_name('native_mcp_v1.py')), '--run-directory', tmp], env=dict(os.environ))
+            async with stdio_client(params) as (reader, writer):
+                async with ClientSession(reader, writer) as client:
+                    await client.initialize()
+                    args = {'stage': 1, 'decision_sha256': digest, 'timeout': 0, 'detail': 'brief'}
+                    response = await client.call_tool('native_resume', args)
+                    self.assertFalse(response.isError, response.content)
+                    view = json.loads(response.content[0].text)
+                    next_step = view['continuation']
+                    self.assertEqual(next_step['status'], 'observation_required')
+                    template = next_step['fresh_observation_request']
+                    self.assertEqual(template, {'tool': 'native_submit', 'arguments': {
+                        'stage': 2, 'decision': {'source_sequence': 1, 'interaction': 'observe'}}})
+                    self.assertEqual(view['presentation']['returned'], 'full')
+                    self.assertFalse((root/'request-2.json').exists())
+                    self.assertEqual((root/'request-1.json').read_bytes(), request)
+                    self.assertEqual(base64.b64decode(response.content[1].data), pixels)
+                    # A returned template is not authority if its source changes.
+                    (root/'source-2.json').write_bytes(encoded(dict(recovery, sequence=2)))
+                    stale = await client.call_tool(template['tool'], dict(template['arguments'], timeout=0))
+                    self.assertTrue(stale.isError)
+                    self.assertFalse((root/'request-2.json').exists())
+                    (root/'source-2.json').write_bytes(encoded(recovery))
+                    pending = await client.call_tool(template['tool'], dict(template['arguments'], timeout=0))
+                    self.assertFalse(pending.isError, pending.content)
+                    self.assertEqual(json.loads(pending.content[0].text)['status'], 'pending')
+                    self.assertEqual((root/'request-2.json').read_bytes(), encoded(template['arguments']['decision']))
+                    before = (root/'request-2.json').stat().st_mtime_ns
+                    duplicate = await client.call_tool(template['tool'], dict(template['arguments'], timeout=0))
+                    self.assertTrue(duplicate.isError)
+                    self.assertEqual((root/'request-2.json').stat().st_mtime_ns, before)
+                    resumed = await client.call_tool('native_resume', args)
+                    continuation = json.loads(resumed.content[0].text)['continuation']
+                    self.assertEqual(continuation['status'], 'already_submitted')
+                    self.assertNotIn('fresh_observation_request', continuation)
+
+    async def test_stdio_brief_receipt_has_exact_full_retrieval_and_same_image(self):
+        from test_native_brief_review_v1 import fixture
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            pixels=base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+a9xkAAAAASUVORK5CYII=')
+            (root/'frame.png').write_bytes(pixels)
+            source={'sequence':2,'capture_ns':123,'native':{'sha256':'raw','capture_started_ns':123,
+                'artifact':{'path':str(root/'frame.png'),'sha256':hashlib.sha256(pixels).hexdigest(),
+                            'source_raw_sha256':'raw','mime_type':'image/png'}}}
+            request=encoded({'source_sequence':1,'interaction':'keyboard','point':[1,2],
+                             'expected_title':'app','tail':[{'op':'key_chord','keys':['Return']}]})
+            digest=hashlib.sha256(request).hexdigest()
+            (root/'request-1.json').write_bytes(request)
+            (root/'source-2.json').write_bytes(encoded(source))
+            (root/'source-1.json').write_bytes(encoded(dict(source, sequence=1)))
+            report=fixture()['receipt']['native_result']
+            report.update(stage=1,decision_sha256=digest,observation=source)
+            (root/'reply-1.json').write_bytes(encoded(report))
+            parameters=StdioServerParameters(command=sys.executable,args=[
+                str(Path(__file__).with_name('native_mcp_v1.py')),'--run-directory',tmp],env=dict(os.environ))
+            async with stdio_client(parameters) as (reader,writer):
+                async with ClientSession(reader,writer) as client:
+                    await client.initialize()
+                    arguments={'stage':1,'decision_sha256':digest,'timeout':0}
+                    full=await client.call_tool('native_resume',arguments)
+                    brief=await client.call_tool('native_resume',dict(arguments,detail='brief'))
+                    self.assertFalse(brief.isError, brief.content)
+                    shown=json.loads(brief.content[0].text)
+                    self.assertEqual(shown['presentation']['returned'],'brief')
+                    self.assertNotIn('receipt',shown)
+                    self.assertEqual(brief.content[1].data,full.content[1].data)
+                    retrieval=shown['presentation']['retrieve']
+                    restored=await client.call_tool(retrieval['tool'],retrieval['arguments'])
+                    self.assertEqual([b.type for b in restored.content],['text'])
+                    self.assertEqual(json.loads(restored.content[0].text)['receipt'],
+                                     json.loads(full.content[0].text)['receipt'])
+                    self.assertEqual((root/'request-1.json').read_bytes(),request)
+                    for invalid in ('tiny',True,1):
+                        rejected=await client.call_tool('native_resume',dict(arguments,detail=invalid))
+                        self.assertTrue(rejected.isError)
+    async def test_stop_tool_is_opt_in_and_stopping_refuses_new_input(self):
+        from native_mcp_v1 import create_server
+        with tempfile.TemporaryDirectory() as tmp:
+            allocation = Mock(run_directory=Path(tmp), owner_lifetime=True)
+            allocation.request_stop.return_value = {'status': 'stopping', 'stop_requested': True}
+            allocation.status.return_value = {'status': 'stopping', 'stop_requested': True}
+            server = create_server(None, allocation=allocation)
+            self.assertIn('native_stop', {t.name for t in await server.list_tools()})
+            reply = await server.call_tool('native_stop', {})
+            self.assertFalse(reply.isError)
+            self.assertEqual(json.loads(reply.content[0].text)['allocation']['status'], 'stopping')
+            with patch('native_mcp_v1.run') as run:
+                refused = await server.call_tool('native_submit', {'stage': 1,
+                    'decision': {'source_sequence': 1, 'finish': True}})
+            self.assertTrue(refused.isError)
+            run.assert_not_called()
+            allocation.owner_lifetime = False
+            server = create_server(None, allocation=allocation)
+            self.assertNotIn('native_stop', {t.name for t in await server.list_tools()})
+
+
+    async def test_stdio_pacing_refusal_keeps_connection_and_request_slot_usable(self):
+        # Real transport/publication, synthetic source, no GUI or input owner.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root/'source-1.json').write_text(json.dumps({'sequence': 1}))
+            (root/'text-policy.json').write_text(json.dumps({'gap_ms': 2, 'default_changed': False}))
+            params = StdioServerParameters(command=sys.executable, args=[
+                str(Path(__file__).with_name('native_mcp_v1.py')), '--run-directory', str(root)],
+                env=dict(os.environ))
+            async with stdio_client(params) as (reader, writer):
+                async with ClientSession(reader, writer) as client:
+                    await client.initialize()
+                    decision = {'source_sequence': 1, 'interaction': 'keyboard',
+                        'point': [1, 2], 'expected_title': 'fixture',
+                        'tail': [{'op': 'text', 'text': 'x' * 64}]}
+                    refused = await client.call_tool('native_submit',
+                        {'stage': 1, 'decision': decision, 'timeout': 0})
+                    self.assertTrue(refused.isError)
+                    detail = json.loads(refused.content[0].text)['error']
+                    self.assertIn('capacity 126', detail)
+                    self.assertIn('gap_ms=2', detail)
+                    self.assertNotIn('x' * 64, detail)
+                    self.assertFalse((root/'request-1.json').exists())
+                    decision['tail'][0]['gap_ms'] = 0
+                    accepted = await client.call_tool('native_submit',
+                        {'stage': 1, 'decision': decision, 'timeout': 0})
+                    self.assertFalse(accepted.isError)
+                    receipt = json.loads(accepted.content[0].text)
+                    self.assertEqual(receipt['status'], 'pending')
+                    retained = (root/'request-1.json').read_bytes()
+                    self.assertEqual(json.loads(retained), decision)
+                    resumed = await client.call_tool('native_resume', {'stage': 1,
+                        'decision_sha256': receipt['decision_sha256'], 'timeout': 0})
+                    self.assertFalse(resumed.isError)
+                    self.assertEqual((root/'request-1.json').read_bytes(), retained)
+
+    async def test_recorded_default_expansion_refuses_before_publication(self):
+        from native_mcp_v1 import create_server
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root/'text-policy.json').write_text(json.dumps({'gap_ms': 2, 'default_changed': False}))
+            server = create_server(root)
+            decision = {'source_sequence': 1, 'interaction': 'keyboard',
+                        'point': [1, 2], 'expected_title': 'app',
+                        'tail': [{'op': 'text', 'text': 'x' * 64}]}
+            with patch('native_mcp_v1.run', return_value={'image': None}) as run:
+                reply = await server.call_tool('native_submit', {'stage': 1, 'decision': decision, 'timeout': 0})
+            self.assertTrue(reply.isError)
+            diagnostic = json.loads(reply.content[0].text)
+            self.assertIn('capacity 126', diagnostic['error'])
+            self.assertIn('gap_ms=2', diagnostic['error'])
+            self.assertNotIn('x' * 64, diagnostic['error'])
+            self.assertIsNone(diagnostic['program_attempted'])
+            run.assert_not_called()
+            self.assertFalse((root/'request-1.json').exists())
+            decision['tail'][0]['gap_ms'] = 0
+            with patch('native_mcp_v1.run', return_value={'image': None}) as run:
+                reply = await server.call_tool('native_submit', {'stage': 1, 'decision': decision, 'timeout': 0})
+            self.assertFalse(reply.isError)
+            self.assertEqual(run.call_args.args[2], decision)
+
+    async def test_recorded_pacing_boundaries_and_recovery_remain_available(self):
+        from native_mcp_v1 import create_server
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            server = create_server(root)
+            action = {'source_sequence': 1, 'point': [1, 2], 'expected_title': 'app'}
+            for policy in ({'gap_ms': True, 'default_changed': False},
+                           {'gap_ms': 3, 'default_changed': False}, []):
+                (root/'text-policy.json').write_text(json.dumps(policy))
+                with patch('native_mcp_v1.run', return_value={'image': None}) as run:
+                    reply = await server.call_tool('native_submit', {'stage': 1, 'decision': action})
+                self.assertTrue(reply.isError)
+                run.assert_not_called()
+            for decision in ({'source_sequence': 1, 'finish': True},
+                             {'source_sequence': 1, 'interaction': 'observe'}):
+                with patch('native_mcp_v1.run', return_value={'image': None}) as run:
+                    reply = await server.call_tool('native_submit', {'stage': 1, 'decision': decision})
+                self.assertFalse(reply.isError)
+                run.assert_called_once()
+            with patch('native_mcp_v1.run', return_value={'image': None}) as run:
+                reply = await server.call_tool('native_resume', {'stage': 1, 'decision_sha256': 'a' * 64})
+            self.assertFalse(reply.isError)
+            self.assertTrue(run.call_args.kwargs['resume'])
+            (root/'text-policy.json').unlink()
+            with patch('native_mcp_v1.run', return_value={'image': None}) as run:
+                reply = await server.call_tool('native_submit', {'stage': 1, 'decision': action})
+            self.assertFalse(reply.isError)
+            run.assert_called_once()
+            (root/'text-policy.json').write_text(json.dumps({'gap_ms': 10, 'default_changed': False}))
+            for size, rejected in ((62, False), (63, True)):
+                decision = dict(action, tail=[{'op': 'text', 'text': 'x' * size}])
+                with patch('native_mcp_v1.run', return_value={'image': None}) as run:
+                    reply = await server.call_tool('native_submit', {'stage': 1, 'decision': decision})
+                self.assertEqual(reply.isError, rejected)
+                self.assertEqual(run.call_count, 0 if rejected else 1)
+
     def test_window_inventory_uses_only_exact_stage_and_retains_raw_identity(self):
         from native_mcp_v1 import window_inventory
         with tempfile.TemporaryDirectory() as tmp:
@@ -265,6 +478,35 @@ class MCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual((root/'request-1.json').read_bytes(),raw)
                     self.assertEqual((root/'request-1.json').stat().st_mtime_ns,before)
 
+                    metadata_only = await client.call_tool('native_resume', {'stage':1,
+                        'decision_sha256':row['decision_sha256'],'timeout':0,'include_image':False})
+                    self.assertFalse(metadata_only.isError)
+                    self.assertEqual([b.type for b in metadata_only.content], ['text'])
+                    omitted = json.loads(metadata_only.content[0].text)
+                    self.assertEqual(omitted.pop('image_delivery'), 'omitted_by_request')
+                    for key in ('receipt','outcome_summary','image_status','image_reference','continuation'):
+                        self.assertEqual(omitted.get(key), result.get(key), key)
+                    self.assertTrue(omitted['exchange']['resumed_read_only'])
+                    self.assertEqual((root/'request-1.json').read_bytes(),raw)
+                    self.assertEqual((root/'request-1.json').stat().st_mtime_ns,before)
+                    for invalid_flag in (0, 1, 'false', None):
+                        invalid_delivery = await client.call_tool('native_resume', {'stage':1,
+                            'decision_sha256':row['decision_sha256'],'timeout':0,'include_image':invalid_flag})
+                        self.assertTrue(invalid_delivery.isError)
+                    wrong_without_image = await client.call_tool('native_resume', {'stage':1,
+                        'decision_sha256':'0'*64,'timeout':0,'include_image':False})
+                    self.assertTrue(wrong_without_image.isError)
+                    (root/'frame.png').write_bytes(pixels+b'corrupt')
+                    corrupt = await client.call_tool('native_resume', {'stage':1,
+                        'decision_sha256':row['decision_sha256'],'timeout':0,'include_image':False})
+                    corruption = json.loads(corrupt.content[0].text)
+                    self.assertEqual(corruption['image_status'], 'needs_review')
+                    self.assertIn('sha256 mismatch', corruption['image_error'])
+                    self.assertNotIn('image_delivery', corruption)
+                    self.assertFalse(corruption['outcome_summary']['evaluation_success'])
+                    self.assertEqual((root/'request-1.json').read_bytes(),raw)
+                    self.assertEqual((root/'request-1.json').stat().st_mtime_ns,before)
+                    (root/'frame.png').write_bytes(pixels)
                     # An inert boundary fixture exercises the new metadata over real stdio.
                     next_source=dict(source,sequence=2)
                     (root/'source-2.json').write_bytes(encoded(next_source))
@@ -274,6 +516,7 @@ class MCPTests(unittest.IsolatedAsyncioTestCase):
                         'decision_sha256':row['decision_sha256'],'timeout':0})
                     next_step=json.loads(boundary.content[0].text)['continuation']
                     self.assertEqual(next_step['status'],'source_available')
+                    self.assertNotIn('fresh_observation_request', next_step)
                     self.assertEqual((next_step['stage'],next_step['source_sequence']),(2,2))
                     self.assertEqual(base64.b64decode(boundary.content[1].data),pixels)
                     self.assertEqual((root/'request-1.json').read_bytes(),raw)
@@ -285,6 +528,7 @@ class MCPTests(unittest.IsolatedAsyncioTestCase):
                     conflict_metadata=json.loads(conflicting.content[0].text)
                     self.assertEqual(conflict_metadata['continuation']['status'],'needs_review')
                     self.assertNotIn('source_sequence',conflict_metadata['continuation'])
+                    self.assertNotIn('fresh_observation_request', conflict_metadata['continuation'])
                     self.assertEqual(base64.b64decode(conflicting.content[1].data),pixels)
                     (root/'request-2.json').write_bytes(b'{}')
                     occupied=await client.call_tool('native_resume',{'stage':1,

@@ -1,0 +1,16 @@
+{
+  "schema": "predicate-order-typehash-construction-v1",
+  "snapshot_timing": "recorded before the one formal allocation invocation",
+  "formal_allocation_invoked_at_snapshot": false,
+  "previous_allocation_04": "preserved STOP; no artifacts pooled",
+  "input_sha256_verified": true,
+  "source_sha256_frozen": true,
+  "output_directory_empty_at_freeze": true,
+  "path_contract": {
+    "source": ["/src", "/repo/src"],
+    "input": ["/input", "/repo/input"],
+    "same_read_write_output_directory": ["/out", "/repo/out", "/evidence", "/audit"],
+    "reason": "runner writes /out/runner_result.json; independent audit reads it at /evidence and writes /evidence/AUDIT.json; manifest verifier reads /audit/manifest.json. All aliases resolve to one fresh writable host output directory."
+  },
+  "formal_sequence": ["four unit tests", "Python AST and shell syntax", "excluded baseline construction probe", "candidate-vs-retained auditor runner", "independent raw audit", "positive and three negative manifest controls"]
+}

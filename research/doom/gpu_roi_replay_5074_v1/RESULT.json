@@ -1,0 +1,165 @@
+{
+  "schema": "map01-health-roi-gpu-replay-result-v1",
+  "allocation": "map01-health-roi-gpu-replay-5074-v1-v2",
+  "result": "PASS_GPU_CPU_EXACT_PARITY",
+  "device": "NVIDIA GeForce RTX 3080 Laptop GPU",
+  "torch": "2.5.1+cu121",
+  "cuda_runtime": "12.1",
+  "source_run": "map01-astra-attempt-v1",
+  "frame_manifest_sha256": "e0cbb11901cedaae1283d228593307c0e771a51a31b21e7bb1de8db0650d2935",
+  "failure_analysis_sha256": "b5383b9407198cd88e9aec712018965a27081701812619e9aeb84ba3e042e1ca",
+  "roi": {
+    "xyxy": [
+      440,
+      585,
+      535,
+      635
+    ],
+    "size": [
+      95,
+      50
+    ],
+    "rgb_threshold_exclusive": 32,
+    "minimum_changed_pixels_inclusive": 100
+  },
+  "rows": [
+    {
+      "from_iteration": 0,
+      "to_iteration": 1,
+      "cpu_changed_pixels": 0,
+      "gpu_changed_pixels": 0,
+      "cpu_status": "UNCHANGED",
+      "gpu_status": "UNCHANGED",
+      "exact_count_match": true,
+      "status_match": true
+    },
+    {
+      "from_iteration": 1,
+      "to_iteration": 2,
+      "cpu_changed_pixels": 0,
+      "gpu_changed_pixels": 0,
+      "cpu_status": "UNCHANGED",
+      "gpu_status": "UNCHANGED",
+      "exact_count_match": true,
+      "status_match": true
+    },
+    {
+      "from_iteration": 2,
+      "to_iteration": 3,
+      "cpu_changed_pixels": 0,
+      "gpu_changed_pixels": 0,
+      "cpu_status": "UNCHANGED",
+      "gpu_status": "UNCHANGED",
+      "exact_count_match": true,
+      "status_match": true
+    },
+    {
+      "from_iteration": 3,
+      "to_iteration": 4,
+      "cpu_changed_pixels": 0,
+      "gpu_changed_pixels": 0,
+      "cpu_status": "UNCHANGED",
+      "gpu_status": "UNCHANGED",
+      "exact_count_match": true,
+      "status_match": true
+    },
+    {
+      "from_iteration": 4,
+      "to_iteration": 5,
+      "cpu_changed_pixels": 869,
+      "gpu_changed_pixels": 869,
+      "cpu_status": "INVALIDATED",
+      "gpu_status": "INVALIDATED",
+      "exact_count_match": true,
+      "status_match": true
+    },
+    {
+      "from_iteration": 5,
+      "to_iteration": 6,
+      "cpu_changed_pixels": 0,
+      "gpu_changed_pixels": 0,
+      "cpu_status": "UNCHANGED",
+      "gpu_status": "UNCHANGED",
+      "exact_count_match": true,
+      "status_match": true
+    },
+    {
+      "from_iteration": 6,
+      "to_iteration": 7,
+      "cpu_changed_pixels": 838,
+      "gpu_changed_pixels": 838,
+      "cpu_status": "INVALIDATED",
+      "gpu_status": "INVALIDATED",
+      "exact_count_match": true,
+      "status_match": true
+    },
+    {
+      "from_iteration": 7,
+      "to_iteration": 8,
+      "cpu_changed_pixels": 800,
+      "gpu_changed_pixels": 800,
+      "cpu_status": "INVALIDATED",
+      "gpu_status": "INVALIDATED",
+      "exact_count_match": true,
+      "status_match": true
+    },
+    {
+      "from_iteration": 8,
+      "to_iteration": 9,
+      "cpu_changed_pixels": 890,
+      "gpu_changed_pixels": 890,
+      "cpu_status": "INVALIDATED",
+      "gpu_status": "INVALIDATED",
+      "exact_count_match": true,
+      "status_match": true
+    },
+    {
+      "from_iteration": 9,
+      "to_iteration": 10,
+      "cpu_changed_pixels": 992,
+      "gpu_changed_pixels": 992,
+      "cpu_status": "INVALIDATED",
+      "gpu_status": "INVALIDATED",
+      "exact_count_match": true,
+      "status_match": true
+    },
+    {
+      "from_iteration": 10,
+      "to_iteration": 11,
+      "cpu_changed_pixels": 922,
+      "gpu_changed_pixels": 922,
+      "cpu_status": "INVALIDATED",
+      "gpu_status": "INVALIDATED",
+      "exact_count_match": true,
+      "status_match": true
+    },
+    {
+      "from_iteration": 11,
+      "to_iteration": 12,
+      "cpu_changed_pixels": 416,
+      "gpu_changed_pixels": 416,
+      "cpu_status": "INVALIDATED",
+      "gpu_status": "INVALIDATED",
+      "exact_count_match": true,
+      "status_match": true
+    }
+  ],
+  "summary": {
+    "pairs": 12,
+    "invalidated": 7,
+    "unchanged": 5,
+    "manual_expected_invalidated": 7,
+    "manual_expected_unchanged": 5,
+    "matches_retained_manual_decision_labels": true,
+    "cpu_cuda_mismatches": 0,
+    "cuda_allocation_before_bytes": 0,
+    "cuda_allocation_after_bytes": 186368,
+    "gpu_timing_ms_including_transfer_and_compute": 140.1484832763672,
+    "timing_scope": "single diagnostic replay; descriptive only, no performance claim"
+  },
+  "limits": [
+    "one postselected failed run; no live sampling, treatment, causal survival, or MAP01 exit evidence",
+    "health-ROI change signals only one-way policy invalidation; it does not prove semantic threat identity or task success",
+    "manual health labels and prior threshold are reused, not independently re-annotated"
+  ]
+}

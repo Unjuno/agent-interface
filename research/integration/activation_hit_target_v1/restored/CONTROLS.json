@@ -1,0 +1,106 @@
+{
+  "controls": [
+    {
+      "case": 0,
+      "errors": [
+        "final_effect:a"
+      ],
+      "name": "final_value",
+      "rejected": true
+    },
+    {
+      "case": 3,
+      "errors": [
+        "callback_count"
+      ],
+      "name": "omitted_callback_reindexed",
+      "rejected": true
+    },
+    {
+      "case": 0,
+      "errors": [
+        "hit_chain:pre",
+        "tk_native_hit_agreement:pre",
+        "pre_hit_control",
+        "receipt_binding"
+      ],
+      "name": "wrong_hit_leaf",
+      "rejected": true
+    },
+    {
+      "case": 0,
+      "errors": [
+        "receipt_binding"
+      ],
+      "name": "receipt_hit_binding",
+      "rejected": true
+    },
+    {
+      "case": 5,
+      "errors": [
+        "receipt_only_decision"
+      ],
+      "name": "flipped_decision",
+      "rejected": true
+    },
+    {
+      "case": 0,
+      "errors": [
+        "native_count:2"
+      ],
+      "name": "omitted_key_reindexed",
+      "rejected": true
+    },
+    {
+      "case": 0,
+      "errors": [
+        "incomplete:KeyError:'app_exit'"
+      ],
+      "name": "missing_app_exit",
+      "rejected": true
+    },
+    {
+      "case": 0,
+      "errors": [
+        "app_exit"
+      ],
+      "name": "bool_app_exit",
+      "rejected": true
+    },
+    {
+      "case": 0,
+      "errors": [
+        "independent_neutral"
+      ],
+      "name": "non_neutral",
+      "rejected": true
+    },
+    {
+      "case": 0,
+      "errors": [
+        "native_geometry_invariant"
+      ],
+      "name": "changed_geometry",
+      "rejected": true
+    },
+    {
+      "case": 3,
+      "errors": [
+        "independent_marker:after_capture"
+      ],
+      "name": "marker_with_recomputed_hash",
+      "rejected": true
+    },
+    {
+      "case": 0,
+      "errors": [
+        "decision_time"
+      ],
+      "name": "reversed_decision_time",
+      "rejected": true
+    }
+  ],
+  "pass": true,
+  "rejected": 12,
+  "total": 12
+}

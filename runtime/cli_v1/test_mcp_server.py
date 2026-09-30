@@ -14,6 +14,139 @@ from runtime.cli_v1.mcp_server import create_server
 
 class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
 
+    async def test_real_executor_rejection_does_not_strand_admission(self):
+        from concurrent.futures import ThreadPoolExecutor
+        loop = asyncio.get_running_loop()
+        dead = ThreadPoolExecutor(max_workers=1)
+        dead.shutdown(wait=True)
+        healthy = ThreadPoolExecutor(max_workers=2)
+        with tempfile.TemporaryDirectory() as td:
+            server = create_server({'fixture': 123}, td, session_mode='persistent-x11')
+            with patch('runtime.cli_v1.mcp_server.MCPSessionOwner.get') as opened, \
+                 patch('runtime.cli_v1.mcp_server.dispatch') as dispatch, \
+                 patch('runtime.cli_v1.mcp_server.observe') as observe:
+                loop.set_default_executor(dead)
+                from mcp.server.fastmcp.exceptions import ToolError
+                try:
+                    try:
+                        failed = await server.call_tool('interface_close', {})
+                        self.assertTrue(failed.isError)
+                        error_text = failed.content[0].text
+                    except ToolError as error:
+                        error_text = str(error)
+                finally:
+                    loop.set_default_executor(healthy)
+                self.assertIn('cannot schedule new futures after shutdown', error_text)
+                self.assertEqual(list(Path(td).iterdir()), [])
+                listed = json.loads((await server.call_tool('interface_results', {})).content[0].text)
+                self.assertEqual(listed['calls'], [])
+                self.assertEqual(await loop.run_in_executor(None, lambda: 'healthy'), 'healthy')
+                recovered = await server.call_tool('interface_close', {})
+                row = json.loads(recovered.content[0].text)
+                self.assertFalse(recovered.isError)
+                self.assertEqual(row['status'], 'closed')
+                self.assertFalse(row['release_attempted'])
+                opened.assert_not_called(); dispatch.assert_not_called(); observe.assert_not_called()
+                self.assertEqual(len(list(Path(td).glob('*/report.json'))), 1)
+
+
+    async def test_rejected_queued_callable_is_revoked_before_late_entry(self):
+        from concurrent.futures import ThreadPoolExecutor
+        release, completed = threading.Event(), threading.Event()
+        class LateRejectingPool(ThreadPoolExecutor):
+            def submit(self, function, *args, **kwargs):
+                def late():
+                    try:
+                        if not release.wait(5): raise RuntimeError('test deadline')
+                        return function(*args, **kwargs)
+                    finally: completed.set()
+                self.late_future = super().submit(late)
+                raise RuntimeError('queued then rejected')
+        loop=asyncio.get_running_loop();pool=LateRejectingPool(max_workers=1)
+        healthy=ThreadPoolExecutor(max_workers=2)
+        with tempfile.TemporaryDirectory() as td:
+            server=create_server({'fixture':123},td,session_mode='persistent-x11')
+            loop.set_default_executor(pool)
+            try:
+                failed=await server.call_tool('interface_close',{})
+                row=json.loads(failed.content[0].text)
+                self.assertTrue(failed.isError)
+                self.assertFalse(row['operation_invoked']);self.assertFalse(row['input_dispatched'])
+                self.assertEqual(row['effect_status'],'none');self.assertFalse(row['replay_allowed'])
+                loop.set_default_executor(healthy)
+                recovered=await server.call_tool('interface_close',{})
+                self.assertFalse(recovered.isError)
+                release.set()
+                self.assertTrue(await asyncio.to_thread(completed.wait,2))
+                pool.late_future.result(timeout=2)
+                listed=json.loads((await server.call_tool('interface_results',{})).content[0].text)
+                self.assertEqual(len(listed['calls']),1)
+                self.assertEqual(len(list(Path(td).glob('*/report.json'))),1)
+            finally:
+                loop.set_default_executor(healthy);release.set();pool.shutdown(wait=True)
+
+    async def test_submission_error_after_entry_keeps_running_slot_and_context(self):
+        from concurrent.futures import ThreadPoolExecutor
+        from contextvars import ContextVar
+        from runtime.cli_v1.mcp_session import MCPSessionOwner
+        entered,release,completed=threading.Event(),threading.Event(),threading.Event()
+        marker=ContextVar('mcp-worker-test-marker',default='absent');token=marker.set('caller-context')
+        seen=[];original_close=MCPSessionOwner.close
+        def slow_close(owner):
+            seen.append(marker.get());entered.set()
+            if not release.wait(5):raise RuntimeError('test deadline')
+            return original_close(owner)
+        class StartedRejectingPool(ThreadPoolExecutor):
+            def submit(self,function,*args,**kwargs):
+                def tracked():
+                    try:return function(*args,**kwargs)
+                    finally:completed.set()
+                self.running_future=super().submit(tracked)
+                if not entered.wait(2):raise RuntimeError('test entry deadline')
+                raise RuntimeError('worker entered then submission raised')
+        loop=asyncio.get_running_loop();pool=StartedRejectingPool(max_workers=1)
+        healthy=ThreadPoolExecutor(max_workers=2)
+        try:
+            with tempfile.TemporaryDirectory() as td,patch.object(MCPSessionOwner,'close',slow_close):
+                server=create_server({'fixture':123},td,session_mode='persistent-x11')
+                loop.set_default_executor(pool)
+                failed=await server.call_tool('interface_close',{})
+                row=json.loads(failed.content[0].text)
+                self.assertTrue(row['operation_invoked']);self.assertIsNone(row['input_dispatched'])
+                self.assertEqual(row['effect_status'],'unknown');self.assertFalse(row['replay_allowed'])
+                loop.set_default_executor(healthy)
+                busy=await server.call_tool('interface_close',{})
+                self.assertEqual(json.loads(busy.content[0].text)['status'],'busy')
+                release.set();self.assertTrue(await asyncio.to_thread(completed.wait,2))
+                pool.running_future.result(timeout=2)
+                listed=json.loads((await server.call_tool('interface_results',{})).content[0].text)
+                self.assertEqual(len(listed['calls']),1)
+                self.assertEqual(listed['calls'][0]['state'],'finished')
+                self.assertEqual(seen,['caller-context'])
+                recovered=await server.call_tool('interface_close',{})
+                self.assertFalse(recovered.isError)
+        finally:
+            loop.set_default_executor(healthy);release.set();pool.shutdown(wait=True);marker.reset(token)
+    async def test_failed_accepted_future_without_entry_releases_admission(self):
+        from concurrent.futures import Future, ThreadPoolExecutor
+        from mcp.server.fastmcp.exceptions import ToolError
+        class FailedFuturePool(ThreadPoolExecutor):
+            def submit(self,function,*args,**kwargs):
+                future=Future();future.set_exception(RuntimeError('failed before callable entry'))
+                return future
+        loop=asyncio.get_running_loop();pool=FailedFuturePool(max_workers=1)
+        healthy=ThreadPoolExecutor(max_workers=2)
+        with tempfile.TemporaryDirectory() as td:
+            server=create_server({'fixture':123},td,session_mode='persistent-x11')
+            loop.set_default_executor(pool)
+            try:
+                with self.assertRaisesRegex(ToolError,'failed before callable entry'):
+                    await server.call_tool('interface_close',{})
+                self.assertEqual(list(Path(td).iterdir()),[])
+                loop.set_default_executor(healthy)
+                recovered=await server.call_tool('interface_close',{})
+                self.assertFalse(recovered.isError)
+            finally:loop.set_default_executor(healthy);pool.shutdown(wait=True)
     async def test_validation_nesting_failure_retains_structured_metadata(self):
         with tempfile.TemporaryDirectory() as td:
             server = create_server({'fixture': 123}, td)
@@ -82,6 +215,39 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(new['outcome_summary'], old['outcome_summary'])
                 observe.assert_called_once()
                 self.assertNotIn('report_refs', observe.call_args.kwargs)
+
+    async def test_retained_public_metadata_lookup_never_encodes_image(self):
+        import base64, hashlib
+        png = base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aP1cAAAAASUVORK5CYII=')
+        with tempfile.TemporaryDirectory() as td:
+            server = create_server({'fixture': 123}, td)
+            def observed(_targets, **kwargs):
+                path = Path(kwargs['capture_directory']) / 'frame.png'
+                path.parent.mkdir(parents=True)
+                path.write_bytes(png)
+                return {'schema': 'agent-interface/runtime-observation-v1', 'status': 'returned',
+                    'observation': {'sha256': 'raw', 'capture_started_ns': 1,
+                        'artifact': {'mime_type': 'image/png', 'path': str(path),
+                            'source_raw_sha256': 'raw', 'sha256': hashlib.sha256(png).hexdigest()}}}
+            with patch('runtime.cli_v1.mcp_server.observe', side_effect=observed) as observe:
+                reply = await server.call_tool('interface_observe', {'target': 'fixture',
+                    'frame': 'window_client', 'region': [0, 0, 1, 1]})
+                metadata = json.loads(reply.content[0].text)
+                call_id = metadata['call_id']
+                before = Path(td, call_id, 'report.json').read_bytes()
+                with patch('runtime.cli_v1.review.base64.b64encode', side_effect=AssertionError('must not encode')):
+                    omitted = await server.call_tool('interface_results', {'call_id': call_id, 'include_image': False})
+                row = json.loads(omitted.content[0].text)
+                self.assertEqual(len(omitted.content), 1)
+                self.assertEqual(row['image_status'], 'image', row)
+                self.assertEqual(row['image_delivery'], 'omitted_by_request')
+                self.assertEqual(row['image_reference'], metadata['image_reference'])
+                self.assertEqual(row['outcome_summary'], metadata['outcome_summary'])
+                self.assertFalse(row['operation_invoked'])
+                self.assertEqual(Path(td, call_id, 'report.json').read_bytes(), before)
+                included = await server.call_tool('interface_results', {'call_id': call_id})
+                self.assertEqual(included.content[1].data, reply.content[1].data)
+                observe.assert_called_once()
 
     async def test_retained_image_can_be_omitted_without_changing_result_or_replaying(self):
         with tempfile.TemporaryDirectory() as td:
@@ -204,7 +370,7 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual(program_schema['type'], 'object')
                     for term in ('agent-interface/program-v1', 'expires_at_ns',
                                  'execution host monotonic clock', 'release_all',
-                                 'gap_ms', 'repeat', '128'):
+                                 'gap_ms', 'repeat', '128', 'Home', 'BackSpace', 'case-sensitive', 'key_state', 'pointer_move', 'pointer_button', 'concurrent cursors', 'decision boundary'):
                         self.assertIn(term, program_schema['description'])
                     reply = await client.call_tool('interface_dispatch', {
                         'program': {}, 'current_observation_seq': -1, 'current_binding_revision': 0})
@@ -375,7 +541,7 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual(program_schema['type'], 'object')
                     for term in ('agent-interface/program-v1', 'expires_at_ns',
                                  'execution host monotonic clock', 'release_all',
-                                 'gap_ms', 'repeat', '128'):
+                                 'gap_ms', 'repeat', '128', 'Home', 'BackSpace', 'case-sensitive', 'key_state', 'pointer_move', 'pointer_button', 'concurrent cursors', 'decision boundary'):
                         self.assertIn(term, program_schema['description'])
                     reply = await client.call_tool('interface_dispatch', {
                         'program': {}, 'current_observation_seq': -1, 'current_binding_revision': 0})

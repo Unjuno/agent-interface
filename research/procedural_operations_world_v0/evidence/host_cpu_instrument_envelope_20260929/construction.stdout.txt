@@ -1,0 +1,13 @@
+Mon Sep 28 06:36:54 UTC 2026
+Linux sub 6.6.114.1-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Mon Dec  1 20:46:23 UTC 2025 x86_64 GNU/Linux
+cc (GCC) 16.1.1 20260430
+rm -f *.o ops_world test_ops_world render_fixtures fixture-*.ppm
+cc -O2 -std=c11 -Wall -Wextra -Wpedantic   -c -o main.o main.c
+cc -O2 -std=c11 -Wall -Wextra -Wpedantic   -c -o ops_world.o ops_world.c
+cc -O2 -std=c11 -Wall -Wextra -Wpedantic -o ops_world main.o ops_world.o -lm -lX11
+cc -O2 -std=c11 -Wall -Wextra -Wpedantic   -c -o test_ops_world.o test_ops_world.c
+cc -O2 -std=c11 -Wall -Wextra -Wpedantic -o test_ops_world test_ops_world.o ops_world.o -lm
+cc -O2 -std=c11 -Wall -Wextra -Wpedantic   -c -o render_fixtures.o render_fixtures.c
+cc -O2 -std=c11 -Wall -Wextra -Wpedantic -o render_fixtures render_fixtures.o ops_world.o -lm
+./test_ops_world
+20/20 validity-hardening tests PASS

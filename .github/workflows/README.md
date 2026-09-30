@@ -31,6 +31,7 @@ GitHub Actions in this directory serve different purposes. They are grouped here
 ## Research execution
 
 - `container-lab-bundle-01.yml` — container research bundle execution.
+- `mindustry-v1602-asset-acquire-2624.yml` — manually materializes and hash-verifies the pinned Mindustry fixture for Issue #2624, then retains the artifact for 30 days; this is setup only, not a scientific result.
 - `map01-measurement-integration-live-02.yml` through `-04.yml` — scoped MAP01 measurement integration workflows.
 - `map01-recovery-mechanics-dev-01.yml`, `-02.yml` — retained MAP01 recovery-mechanics development workflows.
 - `map01-recovery-cover-mechanism-live-v3-01.yml` through `v6-01.yml` — versioned MAP01 recovery/cover live workflows.

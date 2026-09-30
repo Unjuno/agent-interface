@@ -1,0 +1,46 @@
+{
+  "allocation": "needle-role-skill-lifecycle-4916-parity-diag-20260928-01",
+  "issue": 5053,
+  "predecessor_allocation": "needle-role-skill-lifecycle-4916-first-rung-20260928-01",
+  "base_commit": "e03adfe50b6fc8eebbaa001207dbb7154300fc9d",
+  "hypothesis": "Transposing the saved rank-by-output LoRA matrix B before row-major linear scoring will restore exact retained-loader argmax parity for all 12,288 seed-3788 rows; the predecessor mismatch is an orientation defect, not a float32-rounding effect.",
+  "treatment": "Run the frozen diagnostic scorer/test against all three roles and all 4,096 retained rows per role. Change only B orientation in the candidate computation; do not modify predecessor source, fixtures, or expected predictions.",
+  "decision": "PASS only when the exact pinned-container construction suite exits 0 and checks all 12,288 retained predictions plus exact input hashes. Any mismatch/process failure is retained as FAIL/STOP; no timing follows this diagnostic allocation.",
+  "control": "Same retained seed-3788 artifact, expected rows, encoder/head computations, schedule/row order, CPU-only runtime and cached Python image; only B orientation differs from the predecessor candidate.",
+  "uncertainty": "This diagnoses synthetic retained scorer parity only. It does not test lifecycle amortization, PyTorch runtime parity on this image, model quality, another seed, or product behavior.",
+  "sources": {
+    "test_parity_diag.py": "18332e502a26ddf7a2d0838c86e15783879ea76063bf05dd4996efe0653eb1ba",
+    "diagnostic_runner.py": "c2c24df19c5799644dfac31af97f466028ee1e77541edb852f4d02db154ec511"
+  },
+  "reference_sources": {
+    "lifecycle.py": "research/analysis/needle_role_skill_lifecycle_4916_v2/lifecycle.py",
+    "loader.py": "research/needle_role_skill_reload_3780_v1/loader.py"
+  },
+  "reference_sources_sha256": {
+    "lifecycle.py": "e45a6b1ec6ad4995533c59d3ae560b9a91e2d31b2d7186c1cae5705f90602b80",
+    "loader.py": "5ff6df91ea3929f68fe77ccd6156bdb1310d0fec86088489d8b99905a7c5854f"
+  },
+  "inputs": {
+    "skill.json": "research/needle_role_skill_reload_3780_v1/formal/seed-3788/builder/skill.json",
+    "expected.json": "research/needle_role_skill_reload_3780_v1/formal/seed-3788/builder/expected.json"
+  },
+  "inputs_sha256": {
+    "skill.json": "2e7bff5a2c6ffd35935c5e3c88d08cb686fb736d332c8d5cdb24bb1b67dc873a",
+    "expected.json": "5baca462abbcdd561dba4c790775a589f91a0fa15453e2f3e6c3bc74fb1b6f61"
+  },
+  "container": {
+    "engine": "OrbStack Docker",
+    "image": "python:3.13.5-slim-bookworm",
+    "image_id": "sha256:4c2cf9917bd1cbacc5e9b07320025bdb7cdf2df7b0ceaccb55e9dd7e30987419",
+    "platform": "linux/amd64",
+    "network": "none",
+    "root_filesystem": "read-only",
+    "repository_mount": "read-only",
+    "output_mount": "dedicated writable directory only",
+    "cpu_limit": "0.25",
+    "memory_limit": "512m",
+    "pids_limit": 32,
+    "retries": 0
+  },
+  "command": "docker run --rm --pull=never --platform linux/amd64 --network none --cpus=0.25 --memory=512m --pids-limit=32 --read-only --env OUT_DIR=/out --env CONTAINER_IMAGE_ID=sha256:4c2cf9917bd1cbacc5e9b07320025bdb7cdf2df7b0ceaccb55e9dd7e30987419 --mount type=bind,source=/private/tmp/agent-interface-4916-v2,target=/repo,readonly --mount type=bind,source=/private/tmp/agent-interface-4916-v2/research/analysis/needle_role_skill_lifecycle_4916_parity_diag_v1/results/diag-01,target=/out --workdir /repo python:3.13.5-slim-bookworm python -B /repo/research/analysis/needle_role_skill_lifecycle_4916_parity_diag_v1/diagnostic_runner.py"
+}

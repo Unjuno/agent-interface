@@ -1,10 +1,11 @@
 # Portable unified runtime zipapp v1
 
-This package builds one deterministic `agent-interface-runtime.pyz` containing the promoted execution modules only:
+This package builds one deterministic `agent-interface-runtime.pyz` containing the execution modules and explicitly scoped Python APIs:
 
 - `runtime/core_v1`;
 - `runtime/selector_v1`;
 - `runtime/cli_v1`;
+- opt-in [scoped X11 Python API](../guarded_x11_v1/README.md) (`runtime/guarded_x11_v1`);
 - X11, Win32 and Quartz promoted backend/session modules.
 
 The archive contains no tests, fixtures, research tree or retained evidence. It is built from exact committed Git blob bytes with fixed ZIP timestamps/mode/order, so Windows checkout newline conversion cannot change the artifact.
@@ -123,3 +124,30 @@ On WSL, filesystem and abstract X11 sockets may coexist. For owned Xvfb tests,
 verify the display is unused before launch and verify the connected screen;
 do not assume automatic display-number allocation identifies the intended server.
 The actual zipapp route is recorded in [the retained portable run](https://github.com/Unjuno/agent-interface/blob/873ecdafd/runtime/results/public-portable-review-01/README.md).
+
+## Optional Node host bundle
+
+To distribute the public host API together with the Python runtime, add a fresh host directory:
+
+```sh
+python -m runtime.distribution_v2.build \
+  --out results-local/my-bundle/runtime.pyz \
+  --manifest results-local/my-bundle/manifest.json \
+  --sums results-local/my-bundle/runtime.sha256 \
+  --host-directory results-local/my-bundle/host
+```
+
+The builder exports `relay_client.mjs`, `relay_host.mjs`, their usage README,
+`HOST_MANIFEST.json` and host-local `SHA256SUMS`. Both distributions read from
+the same committed revision pinned at build start. Uncommitted host edits are
+excluded. The Python archive bytes are unchanged by this option; Node files
+remain separate and require Node.js 22 or newer. Verify host checksums from
+inside the host directory, then import `relay_host.mjs` by its absolute path.
+The host launches the explicit Python/archive command supplied by its caller.
+
+An existing host directory refuses before any runtime output is changed. A
+failure while writing a new bundle can leave partial files; it is not an atomic
+multi-file publication or crash-durability guarantee. Treat a failed build as
+incomplete, preserve it for diagnosis, and do not publish it as a successful
+bundle. No server, model, application, input or permissions are launched by the
+builder. This is local export, not automatic release publication.

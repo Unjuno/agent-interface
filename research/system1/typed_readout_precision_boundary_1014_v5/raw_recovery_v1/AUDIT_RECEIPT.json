@@ -1,0 +1,49 @@
+{
+  "schema": "issue4912-v5-raw-recovery-audit-v1",
+  "parent_issue": 4912,
+  "parent_pr": 4919,
+  "recovery_branch": "research/typed-readout-precision-1014-v5-raw-recovery-20260928",
+  "observed_utc": "2026-09-27T16:19:23Z",
+  "operation": "publication-only recovery and raw audit; no model inference",
+  "raw_result": {
+    "path": "raw_result.json",
+    "bytes": 12160,
+    "sha256": "c1a2256d8b117d7dc0ec7d90c7333f3356378313d7f735fb7aa7700278183624"
+  },
+  "audit": {
+    "path": "audit.json",
+    "bytes": 1052,
+    "sha256": "eb0c16487bd4635582df9f2e5337db38a1080105ae44558f6dc165ebaf3001d1",
+    "status": "AUDIT_PASS_RAW_ONLY",
+    "errors": [],
+    "rows": 27,
+    "corruption_controls_rejected": 5
+  },
+  "auditor_source": {
+    "path": "research/system1/typed_readout_precision_boundary_1014_v5/raw_recovery_v1/audit_raw.py",
+    "sha256": "251435daa93d496f1665f430ef5700ee3b3d8189e59c8fb0be640e77ae7eec08"
+  },
+  "audit_core_source": {
+    "path": "research/system1/typed_readout_precision_boundary_1014_v5/raw_recovery_v1/audit_core.py",
+    "sha256": "bd07ac6b539253608a6978f9e777724a6fc3a05cd49550fe370adb0383eb86f3"
+  },
+  "corpus_sha256": "85b5bee5d5a69dab1ff0d094cdbad70d4cd66fcff505b36667978817ed30a49c",
+  "model_weights_sha256": "fdf756fa7fcbe7404d5c60e26bff1a0c8b8aa1f72ced49e7dd0210fe288fb7fe",
+  "runtime": {
+    "python": "3.11.9",
+    "execution": "local host CPU, standard-library-only raw validation",
+    "docker_used": false,
+    "gpu_used": false,
+    "model_loaded": false,
+    "optimizer_steps": 0,
+    "inference_or_generation_calls": 0,
+    "training_runs": 0,
+    "retries": 0
+  },
+  "exit_code": 0,
+  "corpus": {
+    "path": "corpus.jsonl",
+    "bytes": 270292,
+    "sha256": "85b5bee5d5a69dab1ff0d094cdbad70d4cd66fcff505b36667978817ed30a49c"
+  }
+}

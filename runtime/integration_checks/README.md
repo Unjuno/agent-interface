@@ -70,3 +70,19 @@ Record the built image ID or reuse the same image for a comparison. This image
 is for the fixed native contract suites, not broad test discovery, distribution
 building, a display server, GUI input or model inference. It needs no host display
 socket, Docker socket, credentials or network access during the checks.
+
+## Inspect a retained host timeline
+
+`python3 -m runtime.integration_checks.host_timing /absolute/transport` emits a
+read-only JSON summary of one instrumented relay lifetime. It binds replies and
+review declarations to their recorded hashes, distinguishes incomplete operations,
+and reports host send/reply/presentation/review boundaries separately. This needs
+only Python's standard library. See [the timing contract](../../research/live_control/RELAY_HOST_TIMELINE.md#read-only-timing-summary)
+and [retrospective primary-use evidence](../results/host-timing-summary-01/README.md).
+It cannot measure model ingestion, independent semantic completion or model tokens.
+
+## Count reported work separately from transport replies
+
+Run `python3 -m runtime.integration_checks.workload /absolute/host-directory` after a retained host lifetime. It validates the host timeline, hashes the same replies, and counts explicit public dispatch completion/refusal/failure separately from relay refusal and unknown results. Other tool calls remain counted by name. Unsupported receipt forms stay unclassified. No input is dispatched.
+
+This is receipt accounting, not task scoring: a completed input can have the wrong visible effect, a refused action does not prove all earlier input had no effect, and a repair requires independent attribution. Per-call release verification, inspection results and presentation/review counts remain visible. Partial timelines are not repaired or silently excluded. See [four retained inventories](../results/retained-workload-01/README.md).

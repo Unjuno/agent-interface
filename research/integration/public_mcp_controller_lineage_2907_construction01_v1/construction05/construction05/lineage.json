@@ -1,0 +1,232 @@
+{
+  "authority_granted": false,
+  "backend_object_identity": 134399617305488,
+  "cleanup": {
+    "apps_terminated": 3,
+    "owned_pids": [
+      26,
+      68,
+      89,
+      113,
+      134,
+      135,
+      154,
+      159,
+      174,
+      213,
+      220,
+      221
+    ],
+    "xvfb_alive_before_cleanup": true
+  },
+  "dispatches": [
+    {
+      "case": "stale-observation",
+      "receipt": {
+        "result": {
+          "backend_emissions": 0,
+          "error": "STALE_OBSERVATION",
+          "required_capabilities": [
+            "input.keyboard",
+            "input.release_all"
+          ],
+          "status": "refused"
+        },
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned"
+      }
+    },
+    {
+      "case": "stale-binding",
+      "receipt": {
+        "result": {
+          "backend_emissions": 0,
+          "error": "STALE_BINDING",
+          "required_capabilities": [
+            "input.keyboard",
+            "input.release_all"
+          ],
+          "status": "refused"
+        },
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned"
+      }
+    },
+    {
+      "case": "fresh-neutral-no-lease",
+      "receipt": {
+        "result": {
+          "admission": "accepted",
+          "execution": {
+            "completed_ops": [
+              0,
+              1
+            ],
+            "emissions": 2,
+            "ended_ns": 20743851149670,
+            "observations": [],
+            "program_emissions": 2,
+            "releases": [
+              {
+                "buttons_down": [],
+                "keys_down": [],
+                "monotonic_ns": 20743851147180,
+                "verified": true
+              }
+            ],
+            "started_ns": 20743850019989,
+            "waits": []
+          },
+          "recovery_required": false,
+          "required_capabilities": [
+            "input.keyboard",
+            "input.release_all"
+          ],
+          "status": "completed"
+        },
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned"
+      }
+    }
+  ],
+  "observations": [
+    {
+      "binding_revision": 1,
+      "image_sha256": null,
+      "input_dispatched": false,
+      "observation": {
+        "artifact": {
+          "bytes": 228,
+          "height": 160,
+          "mime_type": "image/png",
+          "path": "/evidence/construction05/images/839337214efa46f1a3b59684a507fd0a.png",
+          "sha256": "b7adbfd93fc97a4eeeb76516e6477e819553601ed653466345a25d963e60fbc9",
+          "source_raw_sha256": "8eafc7bd411c1f02b9e972a83d2b0a4164eefc5ef51e6b63ad7acc78be4ad44f",
+          "timing_ns": {
+            "converted": 20743790308119,
+            "encoded": 20743806064038,
+            "hashed": 20743813134505,
+            "started": 20743789868100,
+            "written": 20743813016198
+          },
+          "width": 320
+        },
+        "bytes": 204800,
+        "capture_ended_ns": 20743789706782,
+        "capture_started_ns": 20743789207956,
+        "frame": "window_client",
+        "height": 160,
+        "native_window_id": 4194311,
+        "region": [
+          0,
+          0,
+          320,
+          160
+        ],
+        "sha256": "8eafc7bd411c1f02b9e972a83d2b0a4164eefc5ef51e6b63ad7acc78be4ad44f",
+        "target": "inkscape",
+        "width": 320
+      },
+      "sequence": 1,
+      "side_effect_authority": false,
+      "status": "returned",
+      "target": "inkscape",
+      "window_id": 4194311
+    },
+    {
+      "binding_revision": 1,
+      "image_sha256": null,
+      "input_dispatched": false,
+      "observation": {
+        "artifact": {
+          "bytes": 1260,
+          "height": 160,
+          "mime_type": "image/png",
+          "path": "/evidence/construction05/images/1a213728ffe548a984c433bb32f0d5c2.png",
+          "sha256": "0a97a9387f096eeab11c60153580ab66a53ba1482726935e9b9d515f93be00c9",
+          "source_raw_sha256": "d4cf9a2b0d9fe33ba48d54ccbec34de973c0462c566ce86d2a17f720bfdef313",
+          "timing_ns": {
+            "converted": 20743819879013,
+            "encoded": 20743820759968,
+            "hashed": 20743825078607,
+            "started": 20743819821717,
+            "written": 20743824957746
+          },
+          "width": 320
+        },
+        "bytes": 204800,
+        "capture_ended_ns": 20743819677221,
+        "capture_started_ns": 20743819306858,
+        "frame": "window_client",
+        "height": 160,
+        "native_window_id": 6292261,
+        "region": [
+          0,
+          0,
+          320,
+          160
+        ],
+        "sha256": "d4cf9a2b0d9fe33ba48d54ccbec34de973c0462c566ce86d2a17f720bfdef313",
+        "target": "calc",
+        "width": 320
+      },
+      "sequence": 2,
+      "side_effect_authority": false,
+      "status": "returned",
+      "target": "calc",
+      "window_id": 6292261
+    },
+    {
+      "binding_revision": 1,
+      "image_sha256": null,
+      "input_dispatched": false,
+      "observation": {
+        "artifact": {
+          "bytes": 10191,
+          "height": 160,
+          "mime_type": "image/png",
+          "path": "/evidence/construction05/images/d3c9d25457924264894bdeaf3eb16977.png",
+          "sha256": "f9e88a2632511187324674cd7ac27cc95d3f5d0c43f4b7d97606e13c6e0bdab6",
+          "source_raw_sha256": "10b35f4d18c648498fffe90474dfa2eee5f5c59693fb0fa4518a11702b4468a8",
+          "timing_ns": {
+            "converted": 20743834503645,
+            "encoded": 20743835972932,
+            "hashed": 20743839478055,
+            "started": 20743834453727,
+            "written": 20743839363010
+          },
+          "width": 320
+        },
+        "bytes": 204800,
+        "capture_ended_ns": 20743834318738,
+        "capture_started_ns": 20743834040657,
+        "frame": "window_client",
+        "height": 160,
+        "native_window_id": 8388611,
+        "region": [
+          0,
+          0,
+          320,
+          160
+        ],
+        "sha256": "10b35f4d18c648498fffe90474dfa2eee5f5c59693fb0fa4518a11702b4468a8",
+        "target": "chromium",
+        "width": 320
+      },
+      "sequence": 3,
+      "side_effect_authority": false,
+      "status": "returned",
+      "target": "chromium",
+      "window_id": 8388611
+    }
+  ],
+  "release": {
+    "buttons_down": [],
+    "keys_down": [],
+    "monotonic_ns": 20743851419646,
+    "verified": true
+  },
+  "session_id": "8c7c911ccabb02bcf9ff849f",
+  "session_object_identity": 134399616400608
+}
+

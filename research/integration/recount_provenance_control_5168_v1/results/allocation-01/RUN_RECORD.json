@@ -1,0 +1,26 @@
+{
+  "schema": "recount_provenance_control_5168_run_record_v1",
+  "allocation": "recount-provenance-control-5168-20260928-01",
+  "source_main": "43a8f58c126a8d54cb84f2f4fcd2299b9028b380",
+  "candidate_pr_head": "d14bc0abfcab3dc8572d4716c73cf3e460c3a5e2",
+  "candidate_invocations": 1,
+  "candidate_exit_code": 1,
+  "candidate_stdout_manifest": false,
+  "candidate_stderr_retained": false,
+  "candidate_stderr_sha256": "357434210e6d1ffb6799ebf67d8256d2ebc6aea8240041db8f1b01b460f359f7",
+  "formal_outcome": "STOP_RUNNER_STDERR_NOT_RETAINED",
+  "behavior_conclusion": "none",
+  "no_retry": true,
+  "live_fixture_audit": "PASS_STOP_RECORD_INTEGRITY (v3); 28 files, 14 unique result call IDs; only designated working-tree input differs",
+  "earlier_stop_audits_preserved": [
+    "v1 FAIL_STOP_AUDIT: assumed pre-mutation worktree bytes equal committed Git blob",
+    "v2 FAIL_STOP_AUDIT: inverted normalization assertion"
+  ],
+  "artifacts_sha256": {
+    "RAW.json": "02d3719f7f37f7d76460f6bfedb0d68ba3505207fa0ce1dceeff0676910e7b8a",
+    "STOP_AUDIT.json": "1d790b54c359609acd0793a79d1ac2d32a28660e3238f89a65f68d6a05c0f690",
+    "STOP_AUDIT_V2.json": "75d0ea4244a34695240b94b535aae010c8c8beef61039e96a4cbfea49119f045",
+    "STOP_AUDIT_V3.json": "d14451c692b742ec5a107fdf794d066a44ef1315eb7e8c38d35792b6e8bac63b"
+  },
+  "docker_model_gui_network_calls": 0
+}

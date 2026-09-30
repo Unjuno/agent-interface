@@ -1,0 +1,42 @@
+{
+  "corruption_controls": {
+    "authority": true,
+    "bool_exit": true,
+    "bool_rep": true,
+    "captured": true,
+    "duplicate": true,
+    "effects": true,
+    "missing": true,
+    "range_sql": true,
+    "status": true,
+    "watermark": true
+  },
+  "counts": {
+    "BOUNDED_PREFIX": {
+      "cases": 6,
+      "deferred": 0,
+      "exact_applied": 0,
+      "genuine_applied": 6,
+      "rebound_applied": 0
+    },
+    "REVALIDATE_FRONTIER": {
+      "cases": 6,
+      "deferred": 2,
+      "exact_applied": 0,
+      "genuine_applied": 6,
+      "rebound_applied": 0
+    },
+    "STALE_DELETE_ALL": {
+      "cases": 6,
+      "deferred": 0,
+      "exact_applied": 0,
+      "genuine_applied": 4,
+      "rebound_applied": 2
+    }
+  },
+  "decision": "PASS_CONCURRENT_COMPACTION_PREFIX_SCOPED",
+  "errors": [],
+  "new_formal_runs": 0,
+  "probes": 54,
+  "rows": 18
+}
