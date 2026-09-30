@@ -336,6 +336,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`xterm_resource_footprint_transfer_v2/`](xterm_resource_footprint_transfer_v2/)
 - [`xterm_resource_footprint_transfer_v3/`](xterm_resource_footprint_transfer_v3/)
 
+- [`voi_option_5306_t1/`](voi_option_5306_t1/)
 </details>
 
 <!-- END GENERATED ANALYSIS RESULT INDEX -->
