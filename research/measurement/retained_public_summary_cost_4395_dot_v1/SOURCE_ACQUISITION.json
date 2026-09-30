@@ -1,0 +1,45 @@
+{
+  "source_main_at_intake": "a0218fe526a48e1b9c1c208048492cf993b97d8a",
+  "source_main_rechecked": "32db1c3fdc6e50dd6d64c3d6886e503c94144fd6",
+  "source_blobs": [
+    {
+      "path": "runtime/cli_v1/public_summary.py",
+      "git_blob": "ed67787d2d20a41ca43095aa848f14fc00dd08d5",
+      "ref": "32db1c3fdc6e50dd6d64c3d6886e503c94144fd6"
+    },
+    {
+      "path": "runtime/cli_v1/public_presentation.py",
+      "git_blob": "760094e020c14ed00e199e460bda5f6b16421e81",
+      "ref": "32db1c3fdc6e50dd6d64c3d6886e503c94144fd6"
+    },
+    {
+      "path": "runtime/core_v1/sequence.py",
+      "git_blob": "8788005073995b613b56ad68532a439078e253d9",
+      "ref": "32db1c3fdc6e50dd6d64c3d6886e503c94144fd6"
+    },
+    {
+      "path": "runtime/cli_v1/mcp_server.py",
+      "git_blob": "b0e08343250e62088530874bae38f40a95e40a18",
+      "ref": "32db1c3fdc6e50dd6d64c3d6886e503c94144fd6"
+    }
+  ],
+  "archive": {
+    "path": "runtime/results/public-summary-01/raw.tar.gz",
+    "git_blob": "2c181c56825f9cc0d3c646ce8cc07e68ee6c207b",
+    "sha256": "b44b25eadd1fc17d0ebcd4b5ce13ae18750c3cd1e127c5bb6f377ac1be3514d3",
+    "bytes": 260194
+  },
+  "manifest": {
+    "path": "runtime/results/public-summary-01/manifest.json",
+    "git_blob": "ebf71f5577520c916553068519eb6430a75ea180"
+  },
+  "input_mapping": {
+    "inputs/entry-full.json": "full-2.json",
+    "inputs/save-full.json": "full-3.json",
+    "inputs/refusal-full.json": "single text block in primary/host/reply-5.json",
+    "inputs/entry-summary.json": "single text block in primary/host/reply-2.json",
+    "inputs/save-summary.json": "single text block in primary/host/reply-3.json"
+  },
+  "source_transfer_note": "Text source acquisition initially had one extra final newline from local file construction; before any candidate import the one-byte transfer artifact was removed only where exact Git-blob equality proved the correction. All current upstream source bytes match Git blobs.",
+  "construction_note": "13 tests cover measurement helpers and independently audited fabricated measurement records. Two red/green helper cycles are retained. No candidate projection was imported or executed; invented construction clocks/memory are not scientific measurements."
+}
