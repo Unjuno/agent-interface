@@ -323,6 +323,11 @@ def main(raw_path, expected_path, audit_path, mode, receipt_path=None, receipt_k
                 errors.append(f"formal X11 host launch receipt unreadable: {type(exc).__name__}")
             except json.JSONDecodeError:
                 errors.append("formal X11 host launch receipt is invalid JSON")
+        if receipt_path is not None and receipt is None and receipt_bytes is not None:
+            errors.append("formal X11 host launch receipt must be a JSON object")
+        if receipt is not None and not isinstance(receipt, dict):
+            errors.append("formal X11 host launch receipt must be a JSON object")
+            receipt = None
         if receipt is not None and receipt_key_path is not None and len(fixtures) == 1:
             try:
                 key = Path(receipt_key_path).read_bytes()

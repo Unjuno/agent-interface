@@ -166,6 +166,33 @@ class RawOnlyCliBoundaryTests(unittest.TestCase):
             self.assertEqual(result["host_launch_receipt_sha256"],
                              hashlib.sha256(receipt.read_bytes()).hexdigest())
 
+    def test_json_null_receipt_fails_closed_and_retains_digest(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            raw = Path(temporary) / "relabeled.jsonl"
+            receipt = Path(temporary) / "receipt.json"
+            key_path = Path(temporary) / "trusted.key"
+            audit_path = Path(temporary) / "audit.json"
+            records = fixture_rows()
+            fixture = records[0]
+            fixture.pop("synthetic_only")
+            fixture.update(evidence_mode="formal-x11", display=":99",
+                           image_digest="sha256:" + "1" * 64, platform="linux/amd64")
+            raw.write_text("".join(json.dumps(row) + "\n" for row in records), encoding="utf-8")
+            receipt.write_text("null\n", encoding="utf-8")
+            key_path.write_bytes(b"k" * 32)
+            completed = subprocess.run(
+                [sys.executable, "-B", str(HERE / "audit_formal_x11.py"), str(raw),
+                 str(HERE / "EXPECTED.json"), str(audit_path), "formal-x11", str(receipt), str(key_path)],
+                cwd=HERE, capture_output=True, text=True, timeout=10, check=False)
+            result = json.loads(audit_path.read_text(encoding="utf-8"))
+            self.assertNotEqual(completed.returncode, 0)
+            self.assertEqual(result["status"], "FAIL_AUDIT")
+            self.assertFalse(result["host_launch_receipt_authenticated"])
+            self.assertFalse(result["host_launch_receipt_bindings_valid"])
+            self.assertEqual(result["host_launch_receipt_sha256"],
+                             hashlib.sha256(receipt.read_bytes()).hexdigest())
+            self.assertTrue(any("must be a JSON object" in error for error in result["errors"]))
+
     def test_receipt_hash_retained_when_trusted_key_is_not_supplied(self):
         with tempfile.TemporaryDirectory() as temporary:
             raw = Path(temporary) / "relabeled.jsonl"
