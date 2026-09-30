@@ -1,8 +1,10 @@
 # v3 verification record
 
-Environment: Python 3.12.10, standard library only. No Docker/OrbStack or live environment was used.
+Environment: CPython 3.12.10, standard library only. No Docker/OrbStack or live environment was used.
 
-The exact committed `runner.py` and `audit.py` were fetched from branch `research/map01-task-effect-receipt-boundary-4193-successor-20260930`. The retained source was fetched from `main`; the runner checked its compressed-byte SHA-256 before decoding.
+The exact `runner.py` and independent `audit.py` from code snapshot `fd206cb1cd0ff4948835afa7b9e9b4f120e032e4` were fetched from the experiment branch. The retained source was fetched from main; the runner verified its compressed-byte SHA-256 before decoding.
+
+The runner checks exact session membership, scorer schema and within-session monotonicity, physical DOWN/UP brackets and adapter edges, nonempty receipt identities, and equality across DOWN/UP identity fields. Both scripts recursively inspect the complete retained session object for native `source_event_id` and `scorer_event_id` keys.
 
 Executed sequentially in an isolated temporary directory:
 
@@ -20,4 +22,4 @@ AUDIT_PASS sessions=6 physical_joins=3/3 attack_positive_sessions=0/3 noinput_po
 AUDITOR_EXIT 0
 ```
 
-This verifies publication artifacts and recomputes the retained-source schema facts. It is not a fresh experiment or an independent task-effect replication. The historical #4193 first result remains unchanged.
+This verifies publication artifacts and recomputes the retained-source schema facts. It is not a fresh experiment or independent task-effect replication. The historical #4193 first result remains unchanged.
