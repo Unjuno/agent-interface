@@ -11,7 +11,7 @@ Frozen main: 8265c1a19cbba7ab0f5316f27bdb59509269399d
 
 **T.** Exhaustively enumerate every process-prefix cut over three frozen DAG fixtures: a two-way action/receipt exchange with an independent local event; two sends delivered in reverse order; and independent concurrent local observations (25 prefix cuts total). Add six controls: explicit in-flight, dropped ACK, missing channel, missing causal metadata, identical duplicate, and conflicting duplicate. Compare per-record freshness-only admission with vector-clock candidate classification. A separately authored graph-parent auditor recomputes all row labels. All records are synthetic and marked individually fresh; no external effects.
 
-**D.** PASS scoped only if independent auditor exactly reconstructs all 25 cuts and six controls; no non-CONSISTENT row is certified; at least one complete cross-stream bundle is preserved; receive-without-send never confirms an effect; missing channel/metadata and dropped ACK fail closed; identical duplicate delivery does not create extra logical evidence; conflicting duplicate is contradictory. Any disagreement is FAIL/UNCERTAIN and retained without retry.
+**D.** PASS scoped only if independent auditor exactly reconstructs all 25 cuts and six controls; no non-CONSISTENT row is certified; at least one complete cross-stream bundle is preserved; receive-without-send never confirms an effect; missing channel/metadata and dropped ACK fail closed; identical duplicate delivery reports exactly one logical message ID; conflicting duplicate is contradictory. Any disagreement is FAIL/UNCERTAIN and retained without retry.
 
 **C.** If source-local causal parents or bounded channel state cannot be observed, return UNKNOWN/INCOMPLETE rather than inferring coherence. Single-source actions may use local evidence without a global cut. Existing freshness and action admission remain independent hard gates.
 
@@ -21,10 +21,10 @@ Terminology follows the distributed-snapshot safety condition: a cut cannot incl
 
 ## Frozen source Git blob SHA-1 identities
 
-- causal_core.py: 302595c32bdfffc88b54c78c3fc4f54ac4e5c03e
-- run_t0.py: 6cfc154d4d15e35db28f1496b9a45616dd5721fc
-- test_core.py: 05b20b25e78d1dd31e2fc0872ca5bc5030268d51
-- audit_t0.py (independent, frozen pre-run): a79b9a918a9b7971dcf903fd632b5a5960f6c7b3
+- causal_core.py: d26f28200ff6c50b60d8984978ad14431df67470
+- run_t0.py: dbe8735606ce38e09d5a9e5be71e7e5297be4939
+- test_core.py: 6b011871b71476532f56064d3d4007a102e58667
+- audit_t0.py (independent, frozen pre-run): 7b7e1c23c6d28607c934036e5f64c452f3ec9c06
 
 ## Source files
 
