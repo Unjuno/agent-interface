@@ -5,52 +5,62 @@
   "files": [
     {
       "path": "research/experiments/strategic_reporting_5322_v1/PREREGISTRATION.md",
-      "blobSha": "56e60a99b4a11d036e7b0c59908b322eadbc99ea",
-      "bytes": 6194
+      "sha256": "44f12f752957ce42aa14ec243263582429dc1365b6f633f0c8f5f0abe4583fa4",
+      "bytes": 6214
     },
     {
       "path": "research/experiments/strategic_reporting_5322_v1/GPU_MODEL_PILOT_PREREG.md",
-      "blobSha": "c67cf426b32fb93d382dff69c068dfafbf089b1b",
-      "bytes": 2627
+      "sha256": "a8792de43aecd09f69af7eab5ca02781d57424bb3aa75fe86c1117bb813621ce",
+      "bytes": 2629
     },
     {
       "path": "research/experiments/strategic_reporting_5322_v1/simulator.py",
-      "blobSha": "35191602d3bf8d9e9de9e8fb5f9f8f8f3654f458",
+      "sha256": "1e8a766acabec1fe49f0c68a496716cc5e66f5c83b7258ae916e5d806f0d00be",
       "bytes": 13289
     },
     {
       "path": "research/experiments/strategic_reporting_5322_v1/audit.py",
-      "blobSha": "88c5945b098e0cd5c09c9fb0acbf3e5992bdbc7b",
+      "sha256": "2471c0d70910f296e7c5f614bca59afe7cbcc70220465351e1fd490027df81c0",
       "bytes": 14764
     },
     {
       "path": "research/experiments/strategic_reporting_5322_v1/gpu_model_pilot.py",
-      "blobSha": "3821aa5768a0918c13e513257002f79d231211ca",
+      "sha256": "7df869523736423965bb44cb67b5a9c39524f320188d97f932f575a7be1f3625",
       "bytes": 8392
     },
     {
       "path": "research/experiments/strategic_reporting_5322_v1/audit_gpu_model_pilot.py",
-      "blobSha": "50c335ecbdb31407daa6b2d14e11d249020b223a",
+      "sha256": "d5c6e7a25f2e1b5bb47b10f9e6353c32531e7aa7999a74cfdc764cee3b452c22",
       "bytes": 8291
     },
     {
       "path": "research/experiments/strategic_reporting_5322_v1/test_simulator.py",
-      "blobSha": "88523c7826de8445b7ee441222cdfb54694aa4cc",
+      "sha256": "8842ff8c2a50fdf9138b436fabe0d01c1d3cb02fb81eda7c97b8402bed8e731c",
       "bytes": 1584
     },
     {
       "path": "research/experiments/strategic_reporting_5322_v1/README.md",
-      "blobSha": "c955bbbc194de1605d062a6a0acb0431aef92e3b",
-      "bytes": 1689
+      "sha256": "b392c6e45f470c4c9a57a36214f730eff1cf1f2a25580c241aae59798c84124f",
+      "bytes": 1691
     },
     {
       "path": "research/experiments/strategic_reporting_5322_v1/gate.py",
-      "blobSha": "48340e1f16a90a46e77a6d936f3a1ac8e843c458",
+      "sha256": "a935828bc65d0a26ef8a3cefdfe9e299a9f2eb1319520759049c679746c6ff8c",
       "bytes": 2618
     },
     {
       "path": ".github/workflows/issue-5322-formal.yml",
-      "blobSha": "47b6f6ebd118bfc91c866d49bb1d815890480c71",
+      "sha256": "60989f28cebe7ac4ef72ecf95c0b1fd1d68e34325b1dcc2a311b60a1b09eeb1f",
+      "bytes": 2903
+    },
+    {
+      "path": "research/experiments/strategic_reporting_5322_v1/gate.py",
+      "sha256": "a935828bc65d0a26ef8a3cefdfe9e299a9f2eb1319520759049c679746c6ff8c",
+      "bytes": 2618
+    },
+    {
+      "path": ".github/workflows/issue-5322-formal.yml",
+      "sha256": "60989f28cebe7ac4ef72ecf95c0b1fd1d68e34325b1dcc2a311b60a1b09eeb1f",
       "bytes": 2903
     }
   ],
@@ -68,7 +78,8 @@
     "policyRows": 33600,
     "container": "python:3.12-slim",
     "trigger": "START_FORMAL.txt marker after freeze",
-    "runPolicy": "single invocation; no retry after execution failure"
+    "runPolicy": "single invocation; no retry after execution failure",
+    "sourceHashAudit": "All 10 source and workflow files re-read from GitHub Contents API as base64 and SHA-256 matched this manifest byte-for-byte."
   },
   "gpuPilot": {
     "models": [
@@ -88,9 +99,8 @@
     "filesystem": "C: volume full; 0 bytes free; no local raw writes possible",
     "date": "2026-09-30"
   },
-  "freezeAudit": {
-    "readBackFromBranch": "research/issue5322-incentive-reporting-20260930-01",
-    "method": "GitHub Contents API SHA readback; byte lengths recorded; source prereg hashes pending recomputation from stored exact bytes",
-    "status": "REQUIRES_HASH_RECONCILIATION"
+  "freezeCorrection": {
+    "reason": "The earlier apparent mismatches came from hashing UTF-8 display text after line-ending/final-newline normalization. Base64 byte readback confirms exact SHA-256 matches.",
+    "priorFreezeCommit": "8e2f6dae6f6a441a4d24dde2fdf8af810acda114"
   }
 }
