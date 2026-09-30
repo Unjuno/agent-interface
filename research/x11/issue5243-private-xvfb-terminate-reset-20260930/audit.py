@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Strict raw auditor and five single-field corruption controls."""
+"""Strict raw auditor and six single-field corruption controls."""
 import copy
 import json
 import sys
