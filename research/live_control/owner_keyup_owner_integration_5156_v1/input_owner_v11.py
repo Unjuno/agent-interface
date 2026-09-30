@@ -172,14 +172,37 @@ class InputOwner:
             if lease.cancel.is_set():
                 raise Cancelled()
 
+        def record_key_release_brackets(entries, reason, trigger_class, sync_returned_ns):
+            """Record successful key-release request brackets after their shared XSync."""
+            for key, code, request_started_ns, request_returned_ns, lease in entries:
+                self.records.append(dict(
+                    event='owner_key_release_bracket', schema='owner-key-release-bracket-v1',
+                    owner_id=self.owner_id, intent_token=getattr(lease, 'intent_token', None),
+                    trigger_class=trigger_class, reason=reason,
+                    key=key if isinstance(key, str) else None, keycode=code,
+                    request_started_ns=request_started_ns, request_returned_ns=request_returned_ns,
+                    shared_sync_returned_ns=sync_returned_ns,
+                    grants_input_authority=False, physical_key_up_claimed=False))
+
         def release(reason):
             nonlocal active,revision
             revision += 1
+            trigger_class = ('owner_stop' if reason == 'stop_requested' else
+                             'thread_finalizer' if reason == 'thread_exit' else
+                             'owner_lease_cleanup')
+            key_release_entries = []
             for code in list(held):
+                lease = held[code]
+                request_started_ns = time.perf_counter_ns()
                 xtest.fake_input(d, X.KeyRelease, code)
+                request_returned_ns = time.perf_counter_ns()
+                key_release_entries.append((None, code,
+                                            request_started_ns, request_returned_ns, lease))
             for button in list(buttons):
                 xtest.fake_input(d, X.ButtonRelease, button)
             d.sync()
+            sync_returned_ns = time.perf_counter_ns()
+            record_key_release_brackets(key_release_entries, reason, trigger_class, sync_returned_ns)
             mask = d.screen().root.query_pointer().mask
             buttons_down = [b for b in touched_buttons if mask & (X.Button1Mask << (b-1))]
             bitmap = d.query_keymap()
@@ -336,8 +359,14 @@ class InputOwner:
                             if code in held and held[code] is not lease:
                                 raise ValueError('key belongs to another intent')
                             if code in held:
+                                request_started_ns = time.perf_counter_ns()
                                 xtest.fake_input(d, X.KeyRelease, code)
+                                request_returned_ns = time.perf_counter_ns()
                                 d.sync()
+                                sync_returned_ns = time.perf_counter_ns()
+                                record_key_release_brackets(
+                                    [(key, code, request_started_ns, request_returned_ns, held[code])],
+                                    'explicit_up', 'explicit_up', sync_returned_ns)
                                 del held[code]
                             result = None
                     else:
