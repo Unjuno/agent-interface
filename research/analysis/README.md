@@ -279,6 +279,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`safety_plane_data_cutset_r0_v1/`](safety_plane_data_cutset_r0_v1/)
 - [`safety_watchdog_claim_sink_cutset_r1_a2_v1/`](safety_watchdog_claim_sink_cutset_r1_a2_v1/)
 - [`safety_watchdog_claim_sink_cutset_r1_v1/`](safety_watchdog_claim_sink_cutset_r1_v1/)
+- [`saga_prefix_comparison_16_t4_v1/`](saga_prefix_comparison_16_t4_v1/)
 - [`semantic_delta_successor_2000_v1/`](semantic_delta_successor_2000_v1/)
 - [`semantic_mvcc_readset_4257_v1/`](semantic_mvcc_readset_4257_v1/)
 - [`semantic_predicate_fabric_4215_v1/`](semantic_predicate_fabric_4215_v1/)
