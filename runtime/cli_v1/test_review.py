@@ -13,6 +13,45 @@ from runtime.distribution_v2.build import SOURCE_FILES, build
 
 class PublicReviewTests(unittest.TestCase):
 
+    def test_expected_digest_binds_file_and_stdin_before_image_access(self):
+        from unittest.mock import patch
+        raw = json.dumps({'schema': 'agent-interface/runtime-dispatch-result-v1',
+                          'status': 'returned', 'result': {'status': 'refused'}}).encode()
+        digest = hashlib.sha256(raw).hexdigest()
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / 'report.json'
+            path.write_bytes(raw)
+            self.assertEqual(review(path, td, expected_report_sha256=digest), review(path, td))
+            self.assertEqual(review_bytes(raw, td, expected_report_sha256=digest), review_bytes(raw, td))
+            changed = raw + b' '
+            path.write_bytes(changed)
+            for expected in (digest, '', 'g' * 64, digest.upper(), 123, True):
+                with self.subTest(expected=expected), patch('runtime.cli_v1.review._review') as presentation:
+                    with self.assertRaises(ValueError):
+                        review(path, td, expected_report_sha256=expected)
+                    with self.assertRaises(ValueError):
+                        review_bytes(changed, td, expected_report_sha256=expected)
+                    presentation.assert_not_called()
+            self.assertEqual(review_bytes(changed, td)['receipt']['source']['sha256'],
+                             hashlib.sha256(changed).hexdigest())
+
+    def test_cli_expected_digest_refusal_is_machine_readable(self):
+        raw = json.dumps({'schema': 'agent-interface/runtime-dispatch-result-v1',
+                          'status': 'returned', 'result': {'status': 'refused'}}).encode()
+        digest = hashlib.sha256(raw).hexdigest()
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / 'report.json'
+            path.write_bytes(raw + b' ')
+            for source in (str(path), '-'):
+                result = subprocess.run([sys.executable, '-m', 'runtime.cli_v1', 'review',
+                    '--report', source, '--run-directory', td,
+                    '--expected-report-sha256', digest], input=raw + b' ', capture_output=True)
+                self.assertEqual(result.returncode, 2, result.stderr)
+                row = json.loads(result.stdout)
+                self.assertEqual(row['status'], 'invalid_receipt')
+                self.assertEqual(row['error'], 'report SHA-256 does not match expected source')
+
+
     def test_recorded_failure_phase_survives_all_presentations(self):
         from runtime.cli_v1.review import present_result
         from unittest.mock import patch

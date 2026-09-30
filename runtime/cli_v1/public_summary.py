@@ -34,7 +34,8 @@ def summarize_cli_dispatch(view, run_directory):
             return full
         return _summarize_dispatch(view, {"command": "review", "arguments": {
             "report": str(report), "run_directory": str(root),
-            "compact": True, "report_refs": True}})
+            "compact": True, "report_refs": True,
+            "expected_report_sha256": source["sha256"]}})
     except (OSError, KeyError, TypeError, ValueError):
         return full
 
