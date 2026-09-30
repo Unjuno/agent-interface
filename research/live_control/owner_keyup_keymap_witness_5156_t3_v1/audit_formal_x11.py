@@ -1,6 +1,7 @@
 """Independent raw-only audit for the one-shot #5156 X11 fixture."""
 import hashlib
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -235,7 +236,41 @@ def audit(records, expected):
     return errors
 
 
-def main(raw_path, expected_path, audit_path, mode):
+def validate_host_launch_receipt(receipt, raw_bytes, expected_bytes, expected, fixture):
+    errors = []
+    if not isinstance(receipt, dict) or receipt.get("schema") != "formal-x11-host-launch-v1":
+        return ["invalid formal X11 host launch receipt schema"]
+    expected_fields = {
+        "allocation": expected.get("allocation"),
+        "frozen_main": expected.get("frozen_main"),
+        "runner_sha256": hashlib.sha256((Path(__file__).parent / "run_formal_x11.py").read_bytes()).hexdigest(),
+        "expected_sha256": hashlib.sha256(expected_bytes).hexdigest(),
+        "raw_sha256": hashlib.sha256(raw_bytes).hexdigest(),
+        "candidate_exit_code": 0,
+        "container_exit_code": 0,
+    }
+    for field, value in expected_fields.items():
+        if receipt.get(field) != value or (field.endswith("exit_code") and type(receipt.get(field)) is not int):
+            errors.append(f"host launch receipt {field} mismatch")
+    if not isinstance(receipt.get("container_id"), str) or not re.fullmatch(r"[0-9a-f]{64}", receipt["container_id"]):
+        errors.append("host launch receipt container_id is not a full Docker container ID")
+    digest = receipt.get("image_digest")
+    if not isinstance(digest, str) or not re.fullmatch(r"sha256:[0-9a-f]{64}", digest):
+        errors.append("host launch receipt image_digest is invalid")
+    if not isinstance(receipt.get("platform"), str) or not re.fullmatch(r"linux/[a-z0-9_]+", receipt["platform"]):
+        errors.append("host launch receipt platform is invalid")
+    if not isinstance(receipt.get("engine_context"), str) or not receipt["engine_context"]:
+        errors.append("host launch receipt engine_context is missing")
+    if not isinstance(receipt.get("argv"), list) or receipt["argv"] != ["python3", "-B", "run_formal_x11.py", "raw.jsonl"]:
+        errors.append("host launch receipt argv mismatch")
+    if (fixture.get("image_digest") != digest or fixture.get("platform") != receipt.get("platform")
+            or not isinstance(fixture.get("display"), str) or not fixture["display"].startswith(":")
+            or fixture.get("evidence_mode") != "formal-x11"):
+        errors.append("raw formal fixture identity does not match host launch receipt")
+    return errors
+
+
+def main(raw_path, expected_path, audit_path, mode, receipt_path=None):
     raw_bytes = Path(raw_path).read_bytes()
     records = [json.loads(line) for line in raw_bytes.splitlines() if line]
     expected_bytes = Path(expected_path).read_bytes()
@@ -245,6 +280,8 @@ def main(raw_path, expected_path, audit_path, mode):
     marker_values = [r.get("synthetic_only") for r in fixtures]
     if mode == "synthetic-cli":
         synthetic_only = True
+        if receipt_path is not None:
+            errors.append("synthetic-cli mode must not accept a formal host launch receipt")
         if (len(fixtures) != 1 or marker_values != [True]
                 or fixtures[0].get("evidence_mode") != "synthetic-cli"):
             errors.append("synthetic-cli mode requires exactly one fixture marked synthetic_only=true")
@@ -253,6 +290,14 @@ def main(raw_path, expected_path, audit_path, mode):
         if (len(fixtures) != 1 or fixtures[0].get("evidence_mode") != "formal-x11"
                 or any("synthetic_only" in fixture for fixture in fixtures)):
             errors.append("formal-x11 mode requires exactly one explicit formal-x11 fixture without synthetic markers")
+        if receipt_path is None:
+            errors.append("formal-x11 mode requires an out-of-band host launch receipt")
+        elif len(fixtures) == 1:
+            try:
+                receipt = json.loads(Path(receipt_path).read_text(encoding="utf-8"))
+                errors.extend(validate_host_launch_receipt(receipt, raw_bytes, expected_bytes, expected, fixtures[0]))
+            except (OSError, json.JSONDecodeError) as exc:
+                errors.append(f"formal X11 host launch receipt unreadable: {type(exc).__name__}")
     pass_status = ("PASS_SYNTHETIC_RAW_ONLY_CLI_BOUNDARY" if synthetic_only
                    else "PASS_OWNER_THREAD_KEYUP_BRACKET_SCOPED")
     result = {"status": pass_status if not errors else "FAIL_AUDIT",
@@ -261,13 +306,16 @@ def main(raw_path, expected_path, audit_path, mode):
               "raw_rows": len(records), "allocation": expected["allocation"],
               "scope": ("synthetic JSONL serialization/process boundary only; no X server or physical input evidence"
                         if synthetic_only else
-                        "disposable X11 fixture only; XSync server-processing bracket, not application consumption")}
+                        ("disposable X11 fixture only; host launch receipt matched to raw/source/image; XSync server-processing bracket, not application consumption"
+                         if not any("host launch receipt" in error or "receipt" in error for error in errors)
+                         else "formal X11 provenance unverified; raw bytes alone do not establish server origin"))}
     Path(audit_path).write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps(result, sort_keys=True))
     return 0 if not errors else 1
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 5 or sys.argv[4] not in ("formal-x11", "synthetic-cli"):
-        raise SystemExit("usage: audit_formal_x11.py RAW.jsonl EXPECTED.json AUDIT.json {formal-x11|synthetic-cli}")
+    if (len(sys.argv) not in (5, 6) or sys.argv[4] not in ("formal-x11", "synthetic-cli")
+            or (sys.argv[4] == "synthetic-cli" and len(sys.argv) != 5)):
+        raise SystemExit("usage: audit_formal_x11.py RAW.jsonl EXPECTED.json AUDIT.json synthetic-cli | formal-x11 HOST_LAUNCH_RECEIPT.json")
     raise SystemExit(main(*sys.argv[1:]))

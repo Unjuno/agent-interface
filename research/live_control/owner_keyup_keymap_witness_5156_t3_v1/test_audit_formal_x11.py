@@ -11,7 +11,7 @@ EXPECTED = json.loads(Path("EXPECTED.json").read_text(encoding="utf-8"))
 def fixture_rows():
     rows = [{"event": "fixture", "evidence_mode": "synthetic-cli", "synthetic_only": True,
              "allocation": "MAP01-OWNER-KEYMAP-WITNESS-5156-T3-20261001-01",
-             "frozen_main": "d54d0722195f6fb86158f259ed80754ba046ddea"}]
+             "frozen_main": "7c44e41934a62b6f90227b0dc74231cf897ab898"}]
     for case, key, code, owner, intent in (
         ("single_explicit", "a", 38, "o1", "i1"),
         ("two_key_explicit", "a", 38, "o2", "i2"),

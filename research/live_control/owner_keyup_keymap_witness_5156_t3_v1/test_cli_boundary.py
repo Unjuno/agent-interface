@@ -5,6 +5,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from audit_formal_x11 import validate_host_launch_receipt
 from test_audit_formal_x11 import fixture_rows
 
 
@@ -80,6 +81,54 @@ class RawOnlyCliBoundaryTests(unittest.TestCase):
             self.assertEqual(result["status"], "FAIL_AUDIT")
             self.assertTrue(any("formal-x11 mode requires exactly one explicit formal-x11 fixture" in error
                                 for error in result["errors"]))
+
+    def test_formal_mode_rejects_relabeled_synthetic_raw_without_host_receipt(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            raw = Path(temporary) / "relabeled.jsonl"
+            audit_path = Path(temporary) / "audit.json"
+            records = fixture_rows()
+            fixture = records[0]
+            fixture.pop("synthetic_only")
+            fixture["evidence_mode"] = "formal-x11"
+            fixture["display"] = ":99"
+            fixture["image_digest"] = "sha256:" + "1" * 64
+            fixture["platform"] = "linux/amd64"
+            raw.write_text("".join(json.dumps(row) + "\n" for row in records), encoding="utf-8")
+            completed = subprocess.run(
+                [sys.executable, "-B", str(HERE / "audit_formal_x11.py"), str(raw),
+                 str(HERE / "EXPECTED.json"), str(audit_path), "formal-x11"],
+                cwd=HERE, capture_output=True, text=True, timeout=10, check=False)
+            result = json.loads(audit_path.read_text(encoding="utf-8"))
+            self.assertNotEqual(completed.returncode, 0)
+            self.assertEqual(result["status"], "FAIL_AUDIT")
+            self.assertTrue(any("host launch receipt" in error for error in result["errors"]))
+
+    def test_host_launch_receipt_binds_raw_expected_and_runner_identities(self):
+        expected_path = HERE / "EXPECTED.json"
+        expected_bytes = expected_path.read_bytes()
+        expected = json.loads(expected_bytes)
+        raw = b"captured formal raw bytes\n"
+        fixture = {"evidence_mode": "formal-x11", "display": ":99",
+                   "image_digest": "sha256:" + "1" * 64, "platform": "linux/amd64"}
+        receipt = {
+            "schema": "formal-x11-host-launch-v1",
+            "allocation": expected["allocation"],
+            "frozen_main": expected["frozen_main"],
+            "runner_sha256": hashlib.sha256((HERE / "run_formal_x11.py").read_bytes()).hexdigest(),
+            "expected_sha256": hashlib.sha256(expected_bytes).hexdigest(),
+            "raw_sha256": hashlib.sha256(raw).hexdigest(),
+            "candidate_exit_code": 0,
+            "container_exit_code": 0,
+            "container_id": "a" * 64,
+            "image_digest": fixture["image_digest"],
+            "platform": fixture["platform"],
+            "engine_context": "orbstack",
+            "argv": ["python3", "-B", "run_formal_x11.py", "raw.jsonl"],
+        }
+        self.assertEqual(validate_host_launch_receipt(receipt, raw, expected_bytes, expected, fixture), [])
+        receipt["raw_sha256"] = "0" * 64
+        self.assertTrue(any("raw_sha256 mismatch" in error for error in
+                            validate_host_launch_receipt(receipt, raw, expected_bytes, expected, fixture)))
 
 
 if __name__ == "__main__":
