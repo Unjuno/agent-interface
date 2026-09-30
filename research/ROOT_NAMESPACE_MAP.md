@@ -248,6 +248,14 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 
 - [`kernel_receipt_time_5215_20260928/`](kernel_receipt_time_5215_20260928/) — Issue #5215 kernel receipt timestamp construction probe; consult PLAN and REPORT for its contract-only scope and limitations.
 
+### Issue #5236 X11 keymap successor evidence
+
+- [`x11_midprogram_keymap_5236_formal02_20260930/`](x11_midprogram_keymap_5236_formal02_20260930/) — Formal02 import-path STOP; see immutable STOP record.
+- [`x11_midprogram_keymap_5236_formal03_20260930/`](x11_midprogram_keymap_5236_formal03_20260930/) — Formal03 missing-Tk-runtime STOP; no fixture row completed.
+- [`x11_midprogram_keymap_5236_formal04_20260930/`](x11_midprogram_keymap_5236_formal04_20260930/) — Formal04 focused-root delivery/effect STOP; independent audit and corruption controls retained.
+- [`x11_midprogram_keymap_5236_formal05_20260930/`](x11_midprogram_keymap_5236_formal05_20260930/) — Formal05 STOP_PROVENANCE_OR_RUNNER; dispatch completed but independent saved effects were missing.
+- [`x11_midprogram_keymap_docker_diagnostic_20260930/`](x11_midprogram_keymap_docker_diagnostic_20260930/) — Nonformal local Docker focus-versus-Entry-click diagnostic; not formal hypothesis evidence.
+
 
 ### Issue #5236 X11 keymap STOP evidence
 
