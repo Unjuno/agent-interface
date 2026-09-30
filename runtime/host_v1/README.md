@@ -162,3 +162,21 @@ The saved document cue appeared outside the form crop. Widen capture when the
 next action can replace the document or move the required cue. The retained
 caller setup failures and expired allocation are included; this single known
 task does not establish a general speed or token benefit.
+
+## Authoring deadlines from the live execution clock
+
+For a Windows host dispatching into WSL, call `client.send('interface_clock', {})`
+on the same relay client instead of launching WSL/Python again for every clock
+sample. Read its text block, verify `schema` and the expected `server_instance_id`,
+and use the returned `monotonic_ns` only for an explicitly authorized absolute
+expiry. If parsing into JavaScript Number, require safe integers for the sample
+and resulting deadline. Clock acquisition adds a sequential MCP call; it does not
+issue a lease, select a validity duration, refresh source assertions or recover
+input. A caller already inside the execution host can read that host's monotonic
+clock directly.
+
+[Clock acquisition and primary use](../results/execution-clock-01/README.md)
+retains a fixed local component comparison, startup cost, two fresh known-family
+GUI cases, an expired refusal, and failed construction/check results. The shipped
+MCP route uses the existing connection; the experimental separate clock process
+is not shipped. No whole-task speed, token/cost or human-tempo benefit is claimed.
