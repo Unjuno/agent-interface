@@ -1,0 +1,57 @@
+# #5156 T2 — multi-process exclusive claim (scoped host result)
+
+## Result
+
+`PASS_MULTIPROCESS_CLAIM_BOUNDARY_SCOPED`.
+
+On Windows 11 / CPython 3.12.10 / local C: NTFS, two independent `spawn`
+processes were synchronized after both observed the allocation claim absent.
+Across 20 fresh-directory trials, the unclaimed baseline admitted both
+processes in 20/20 trials (40/40 inert candidate receipts). With an
+`O_CREAT | O_EXCL` claim on the same shared local directory, exactly one process
+was admitted in 20/20 trials (20 receipts total; statuses `[0, 2]` each trial).
+All worker exit codes were zero; no timeouts occurred. The independent raw-only
+auditor checked all 40 trial rows and retained marker/receipt files and returned
+`errors: []`.
+
+## H / T / D / C / U
+
+- **H:** On this host filesystem, an exclusive file-creation claim serializes
+  independent process dispatches where a prior “claim absent” check alone does
+  not.
+- **T:** 20 synchronized two-process trials per arm; candidate callbacks only
+  create unique inert receipt files. The test suite ran before source freeze;
+  then the frozen candidate ran once and the separate auditor ran once after
+  candidate exit 0.
+- **D:** Baseline 20/20 two-process admissions and claim arm 20/20 single
+  admissions required; observed exactly. Raw audit: 40 rows, zero errors.
+- **C:** This is a bounded single-host NTFS test. It does not show behavior on
+  multiple machines, SMB/network filesystems, crash recovery, or production
+  dispatcher integration. A permanent claim is fail-closed after a crash and
+  its availability cost was not measured.
+- **U:** No Docker/X11/GUI/model/game/formal #5156 input was used. No key-up,
+  occupancy, efficacy, safety-rate, recovery, latency, or product claim follows.
+
+Host execution is intentional for this rung: it tests the Windows filesystem
+semantics directly; a container bind mount could expose different locking
+semantics. A Docker Desktop proposal for a separate allocation was pending, so
+this host-only experiment did not occupy or infer ownership of that resource.
+
+## Verification and artifacts
+
+- Construction command: `python -B -m unittest -v test_mp_race.py` — 2 passed.
+- A repository-root module-style test invocation first failed to resolve the
+  package-local import; it did not call the experiment runner. The same frozen
+  construction suite passed when run from the package directory as documented.
+- Candidate command: `python -B run_mp_experiment.py results/raw.json` — exit 0,
+  40 rows, no retry.
+- Audit command: `python -B audit_mp_experiment.py results/raw.json results/audit.json`
+  — exit 0, `PASS_MULTIPROCESS_CLAIM_BOUNDARY_SCOPED`, zero errors.
+- Raw SHA-256: `d5a7501afcea5a78d451a787ee6cc0974e9a6a0c74e4607568f19166ba33b132`.
+- Audit SHA-256: `5675396f877dc44e248937ea3a171aec8620eeb52dfb7701cc6df2563f41a390`.
+- Freeze pins current GitHub main `e32ace71fa1158ca8d5eec13fe620a1a51c1ff00`
+  and the source blob identities from the prior #5156 T1/main packages.
+
+The historical T1 thread-only result and consumed X11 allocation STOPs remain
+unchanged. This result is a new T2 successor observation, not a formal X11 or
+MAP01 result.
