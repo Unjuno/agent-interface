@@ -1,0 +1,12 @@
+{
+  "allocation": "r133-domain-coverage-transfer-t0-02",
+  "decision": "STOP_DOCKER_STDIN_NOT_ATTACHED",
+  "phase": "candidate container started; source payload was empty; JSON parsing failed before source verification or reconstruction",
+  "evidence": "results/t0-02-container-run.log",
+  "exit_code": 1,
+  "candidate_output": false,
+  "audit_started": false,
+  "retry": false,
+  "cause": "docker run invocation omitted -i",
+  "successor": "T0-03 must assert stdin attachment before launch"
+}
