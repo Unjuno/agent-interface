@@ -90,6 +90,10 @@ def audit(raw):
     observed_partitions = set()
     totals = {p: {"false_pass": 0, "false_fail": 0, "uncertain": 0, "correct": 0} for p in POLICIES}
     rows = raw.get("rows")
+    if raw.get("study") != "dependency-aware-verifier-quorums-5314-v1":
+        errors.append("study_identity_mismatch")
+    if raw.get("intake_main") != "b0190453a787102189429e4b8c32032cf60efd17":
+        errors.append("frozen_intake_main_mismatch")
     if not isinstance(rows, list):
         rows = []
         errors.append("rows_not_list")
@@ -129,6 +133,10 @@ def audit(raw):
                 expected_labels[member] = f"d{domain_index}"
         if verified != expected_labels:
             errors.append(f"row_{row_index}_dependency_labels_disagree_with_partition")
+        if declared != expected_labels:
+            errors.append(f"row_{row_index}_declared_labels_disagree_with_verified_dependencies")
+        if not all(known):
+            errors.append(f"row_{row_index}_unknown_metadata_in_frozen_universe")
         signature = row_key(groups, votes, truth)
         if signature in seen_rows:
             errors.append(f"row_{row_index}_duplicate_case")
@@ -195,8 +203,16 @@ def run_controls(raw):
     mutations.append(("forge_dependency_label", changed))
 
     changed = copy.deepcopy(raw)
+    changed["rows"][0]["declared_labels"][0] = "forged-independent-domain"
+    mutations.append(("forge_declared_domain", changed))
+
+    changed = copy.deepcopy(raw)
     changed["rows"][0]["metadata_known"][0] = False
     mutations.append(("erase_dependency_provenance", changed))
+
+    changed = copy.deepcopy(raw)
+    changed["intake_main"] = "unfrozen-main"
+    mutations.append(("change_frozen_main", changed))
 
     changed = copy.deepcopy(raw)
     multi = next(row for row in changed["rows"] if any(len(group) > 1 for group in row["groups"]))
@@ -211,6 +227,7 @@ def run_controls(raw):
 
 def main():
     raw_path = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "raw.json"
+    output_path = Path(sys.argv[2]) if len(sys.argv) > 2 else ROOT / "audit_v2.json"
     raw_bytes = raw_path.read_bytes()
     raw = json.loads(raw_bytes)
     result = audit(raw)
@@ -219,7 +236,7 @@ def main():
     gate = (
         actual_sha == RAW_SHA256
         and not result["discrepancies"]
-        and len(controls) == 6
+        and len(controls) == 8
         and all(control["rejected"] for control in controls)
     )
     result.update({
@@ -235,7 +252,7 @@ def main():
             "no empirical independence or deployment efficacy demonstrated",
         ],
     })
-    (ROOT / "audit_v2.json").write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    output_path.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps(result, sort_keys=True, indent=2))
 
 

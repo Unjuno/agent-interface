@@ -8,6 +8,7 @@ on:
     paths:
       - 'research/analysis/gpu_grounding_template_diversity_2912_v2/**'
       - 'runtime/cli_v1/**'
+      - 'runtime/host_v1/*.py'
       - 'runtime/motor_state_v1/**'
       - 'runtime/selector_v1/**'
       - 'runtime/core_v1/**'
@@ -19,6 +20,7 @@ on:
     paths:
       - 'research/analysis/gpu_grounding_template_diversity_2912_v2/**'
       - 'runtime/cli_v1/**'
+      - 'runtime/host_v1/*.py'
       - 'runtime/motor_state_v1/**'
       - 'runtime/selector_v1/**'
       - 'runtime/core_v1/**'
@@ -46,6 +48,7 @@ jobs:
           fetch-depth: 1
           sparse-checkout: |
             runtime/cli_v1
+            runtime/host_v1
             runtime/motor_state_v1
             runtime/selector_v1
             runtime/core_v1
@@ -57,7 +60,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Compile unified runtime surface
-        run: python -m compileall -q runtime/cli_v1 runtime/motor_state_v1 runtime/selector_v1
+        run: python -m compileall -q runtime/cli_v1 runtime/host_v1 runtime/motor_state_v1 runtime/selector_v1
       - name: Run CLI/API tests
         run: python -m unittest -v runtime.cli_v1.test_attempt runtime.cli_v1.test_cli runtime.cli_v1.test_review runtime.cli_v1.test_observe runtime.cli_v1.test_golden_v3 runtime.cli_v1.test_receipt runtime.cli_v1.test_receipt_motor_state runtime.selector_v1.test_selector runtime.motor_state_v1.test_adapter
       - name: Run machine-readable doctor

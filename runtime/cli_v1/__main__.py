@@ -53,6 +53,9 @@ def _present_result(row, *, with_review, capture_directory, exit_code, compact=F
 def main() -> int:
     parser = argparse.ArgumentParser(prog="agent-interface")
     sub = parser.add_subparsers(dest="command", required=True)
+    publication = sub.add_parser('publish-json', help='publish one complete caller-authored JSON slot exclusively on Linux')
+    publication.add_argument('--path', required=True, help='fresh destination in an existing caller-owned directory')
+    publication.add_argument('--value', required=True, help='JSON file or - for stdin; no action is selected')
     validation = sub.add_parser('validate', help='check program syntax and expansion without opening a backend')
     validation.add_argument('--program', type=Path, required=True, help='local UTF-8 JSON program; static validity is not runtime admission')
     attempt_status = sub.add_parser('attempt-status', help='inspect retained attempt files without input or replay')
@@ -99,6 +102,18 @@ def main() -> int:
     args = parser.parse_args()
     if getattr(args, 'detail', 'full') == 'summary' and not (args.review and args.run_directory and args.compact and args.report_refs):
         parser.error('--detail summary requires --review --run-directory --compact --report-refs')
+    if args.command == 'publish-json':
+        from runtime.host_v1.file_publication import publish_json
+        try:
+            row = publish_json(args.path, _read_json(args.value))
+        except (OSError, ValueError, TypeError) as error:
+            _emit({'schema': 'agent-interface/host-json-publication-v1',
+                   'status': 'publication_failed', 'error': str(error),
+                   'requires_reconciliation': True, 'replay_allowed': False,
+                   'authority': 'none', 'input_dispatched': False})
+            return 2
+        _emit(row)
+        return 0
     if args.command == 'validate':
         from .validate_program import inspect_file
         row = inspect_file(args.program)
