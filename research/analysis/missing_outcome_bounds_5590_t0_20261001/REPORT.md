@@ -18,7 +18,7 @@ The frozen ledger has 10 launched synthetic episodes: 6 verified successes, 1 ve
 - Syntax command: `python3 -m py_compile candidate.py audit.py test_bounds.py` — **passed**.
 - Candidate command: `python3 candidate.py ledger.json results/host-boundary-01/raw.json` — **exit 0**.
 - Separate audit command: `python3 audit.py ledger.json results/host-boundary-01/raw.json` — **exit 0**, `PASS_BOUNDS_SCOPED`, `errors=[]`.
-- Repository local CI on the then-current `1ecc98b03ed5efeaee2cb664feb6f5e91280389f`: analysis index check; research-workspace test suite **21/21**; workspace index **148 top-level directories reachable**; analysis-index unit suite **6/6**; `git diff --check` — all passed.
+- Repository local CI passed on both the initial construction base `1ecc98b03ed5efeaee2cb664feb6f5e91280389f` and the PR base `8ee4ff891a54827b3df3df297cdb849e2aea428e`: analysis index check (**249** retained result/failure directories); research-workspace test suite **21/21**; workspace index **148 top-level directories reachable**; analysis-index unit suite **6/6**; `git diff --check` — all passed.
 - Raw SHA-256: `0f428c7d3da7b29cb982d1d7502536c3f562e569d6e16d18e4e7d37f5e1ed4ec`.
 - Candidate stdout SHA-256: `d9d71397f7212f61941cba33cbe3ea7bd31d0cb19b799deb645f87e3a15bed04`.
 - Auditor stdout SHA-256: `00cd1f13ba775126aecbab7cc90ac8adf8f1dd062c8a11c7bcf44277095e5e6c`.
