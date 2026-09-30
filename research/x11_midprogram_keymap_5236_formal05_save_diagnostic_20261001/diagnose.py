@@ -19,8 +19,8 @@ from runtime.backends.x11_v1.session import X11RuntimeSession
 WAIT_MS = 1500
 
 
-def run_case(post_dispatch_wait: bool) -> dict:
-    case = "post_dispatch_wait" if post_dispatch_wait else "original_ops"
+def run_case(inter_op_wait: bool) -> dict:
+    case = "ctrl_s_wait_update_250ms" if inter_op_wait else "ctrl_s_then_release"
     with tempfile.TemporaryDirectory(prefix="issue5236-save-diag-") as temp:
         root = Path(temp)
         log = (root / "xvfb.log").open("wb")
@@ -50,31 +50,32 @@ def run_case(post_dispatch_wait: bool) -> dict:
             window = json.loads(meta.read_text(encoding="utf-8"))["window_id"]
             backend = X11Backend(display, {"fixture": window})
             session = X11RuntimeSession(backend)
+            ops = [
+                {"op": "focus", "target": "fixture"},
+                {"op": "pointer_move", "target": "fixture", "frame": "window_client", "x": 50, "y": 55},
+                {"op": "pointer_button", "button": "left", "down": True},
+                {"op": "pointer_button", "button": "left", "down": False},
+                {"op": "text", "text": "a"},
+                {"op": "wait_update", "timeout_ms": WAIT_MS},
+                {"op": "text", "text": "_"},
+                {"op": "key_chord", "keys": ["CTRL", "S"]},
+            ]
+            if inter_op_wait:
+                ops.append({"op": "wait_update", "timeout_ms": 250})
+            ops.append({"op": "release_all"})
             program = {
                 "schema": "agent-interface/program-v1",
                 "program_id": "issue5236-formal05-save-diag-" + case,
                 "source": {"observation_seq": 7, "binding_revision": 3},
                 "authority": {"lease_id": "diagnostic-only", "expires_at_ns": time.monotonic_ns() + 30_000_000_000},
                 "terminal": {"release_all_required": True},
-                "ops": [
-                    {"op": "focus", "target": "fixture"},
-                    {"op": "pointer_move", "target": "fixture", "frame": "window_client", "x": 50, "y": 55},
-                    {"op": "pointer_button", "button": "left", "down": True},
-                    {"op": "pointer_button", "button": "left", "down": False},
-                    {"op": "text", "text": "a"},
-                    {"op": "wait_update", "timeout_ms": WAIT_MS},
-                    {"op": "text", "text": "_"},
-                    {"op": "key_chord", "keys": ["CTRL", "S"]},
-                    {"op": "release_all"},
-                ],
+                "ops": ops,
             }
             started = time.monotonic_ns()
             dispatch = session.dispatch(program, current_observation_seq=7, current_binding_revision=3)
             ended = time.monotonic_ns()
             immediate_effect = effect.read_text(encoding="utf-8") if effect.exists() else None
             immediate_events = events.read_text(encoding="utf-8") if events.exists() else ""
-            if post_dispatch_wait:
-                time.sleep(1.0)
             final_effect = effect.read_text(encoding="utf-8") if effect.exists() else None
             final_events = events.read_text(encoding="utf-8") if events.exists() else ""
             return {
@@ -104,7 +105,7 @@ def run_case(post_dispatch_wait: bool) -> dict:
 if __name__ == "__main__":
     cases = [run_case(False), run_case(True)]
     result = {"scope": "nonformal local Docker diagnostic; no XKB remap and no formal allocation", "cases": cases}
-    output = Path(__file__).with_name("results") / "diagnostic01" / "raw.json"
+    output = Path(__file__).with_name("results") / "diagnostic02" / "raw.json"
     output.parent.mkdir(parents=True, exist_ok=False)
     output.write_text(json.dumps(result, sort_keys=True, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"result_path": str(output), "cases": [
