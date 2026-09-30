@@ -115,3 +115,29 @@ is ready for #5269 mandatory coverage or #5275 OOD detection. Before those
 successors, review whether the v0.1 primitive/role set is genuinely grounded in
 the contracts and correct the #701 reference if needed. Do not use this result
 as an action-admission gate; it emits no action verdict or authority.
+
+## Independent review qualifications
+
+A read-only code reviewer found no critical issue and independently confirmed
+the raw counts, source/output hashes and finite PASS. The reviewer also noted
+limits that bound how far to generalize this result:
+
+- The runner refuses to overwrite the existing formal output, but
+  `formal_invocation: 1` and the status string are runner constants; the audit
+  does not independently authenticate execution chronology. The once-only
+  claim is supported by the recorded command/tool result and retained output,
+  not by a signed run counter.
+- Source digests match `FREEZE.json`, and raw-file hashes are reported here,
+  but the freeze file is not itself authenticated by an external trusted
+  signature. This is internally consistent provenance, not a signed
+  attestation.
+- The eight corruption controls exercise named mutations, mostly against the
+  baseline oracle row. They are not an exhaustive general-schema fuzz test.
+- The candidate validates each field and dependency reference but does not
+  generally enforce primitive/role/verifier compatibility or detect
+  multi-node dependency cycles. The ten-case literal oracle checks only the
+  combinations present in this corpus.
+
+These qualifications do not change the preregistered finite-corpus decision;
+they prohibit treating the current validator as production-ready or as a
+complete ontology contract.
