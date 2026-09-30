@@ -36,6 +36,9 @@ Integration work should make the composed boundary explicit: runtime + caller, a
 
 Child directory names are retained provenance, not a canonical architecture tree. Use each experiment's report for the exact composition and decision rule.
 
+Current-main host preflight STOP for Issue #3190:
+[`desktop_lifecycle_rebind_3190_host_preflight_v1/REPORT.md`](desktop_lifecycle_rebind_3190_host_preflight_v1/REPORT.md).
+
 ## Interpretation
 
 - Use [`../../RESEARCH.md`](../../RESEARCH.md) for the evidence ledger and claims taxonomy.
