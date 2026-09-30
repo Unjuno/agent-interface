@@ -34,16 +34,18 @@ def draw_episode(scenario, seed):
 
 def run_candidate(ep, threshold):
     state = "AUTHORIZED"; generation = 1; suspect_ticks = 0
-    false_reactivation = 0; clear_tick = None; failed_tick = None
+    false_reactivation = 0; clear_tick = None; failed_tick = None; terminal_failures = 0; decoys_ignored = 0
     for tick in range(HORIZON + 1):
         if ep["restart_tick"] == tick:
             generation += 1
             if state == "FAILED":
                 state = "AUTHORIZED"
         if tick == 6 and ep["host_a_witness"] and ep["host_b_witness"]:
-            state = "FAILED"; failed_tick = tick
+            state = "FAILED"; failed_tick = tick; terminal_failures += 1
         if state == "AUTHORIZED" and tick >= threshold and (ep["response_tick"] is None or ep["response_tick"] > tick):
             state = "SUSPECTED_UNAVAILABLE"
+        if any(d["tick"] == tick for d in ep["decoys"]):
+            decoys_ignored += 1
         # Only current-generation, semantically valid responses clear suspicion.
         if ep["response_tick"] == tick and tick >= (ep["restart_tick"] or 0):
             if state == "FAILED":
@@ -53,7 +55,8 @@ def run_candidate(ep, threshold):
         if state == "SUSPECTED_UNAVAILABLE":
             suspect_ticks += 1
     return {"final": state, "suspect_ticks": suspect_ticks, "false_reactivation": false_reactivation,
-            "clear_tick": clear_tick, "failed_tick": failed_tick}
+            "clear_tick": clear_tick, "failed_tick": failed_tick,
+            "terminal_failures": terminal_failures, "decoys_ignored": decoys_ignored}
 
 def run_baseline(ep, threshold):
     state = "AUTHORIZED"; suspect_ticks = 0; failed_tick = None
@@ -65,13 +68,13 @@ def run_baseline(ep, threshold):
         # Baseline treats a late response as insufficient to clear terminal failure.
         if state == "SUSPECTED_UNAVAILABLE": suspect_ticks += 1
     return {"final": state, "suspect_ticks": suspect_ticks, "false_reactivation": 0,
-            "clear_tick": None, "failed_tick": failed_tick}
+            "clear_tick": None, "failed_tick": failed_tick, "terminal_failures": int(failed_tick is not None), "decoys_ignored": 0}
 
 def summarize(policy, threshold):
     rows = []
     for scenario_index, scenario in enumerate(SCENARIOS):
         agg = {"n": N, "final": {}, "false_failed": 0, "crash_failed_by_8": 0,
-               "suspect_tick_sum": 0, "suspect_any": 0, "false_reactivation": 0,
+               "suspect_tick_sum": 0, "suspect_any": 0, "false_reactivation": 0, "false_terminal_failures": 0, "decoys_ignored": 0,
                "hash_chain": "0" * 64}
         chain = bytes(32)
         for i in range(N):
@@ -81,10 +84,12 @@ def summarize(policy, threshold):
             agg["suspect_tick_sum"] += result["suspect_ticks"]
             agg["suspect_any"] += result["suspect_ticks"] > 0
             agg["false_reactivation"] += result["false_reactivation"]
+            agg["decoys_ignored"] += result["decoys_ignored"]
+            agg["false_terminal_failures"] += result["terminal_failures"] if scenario != "crashed" else 0
             is_crash = scenario == "crashed"
             agg["false_failed"] += result["final"] == "FAILED" and not is_crash
             agg["crash_failed_by_8"] += is_crash and result["failed_tick"] is not None and result["failed_tick"] <= 8
-            row = f'{i}|{result["final"]}|{result["suspect_ticks"]}|{result["failed_tick"]}|{result["clear_tick"]}|{result["false_reactivation"]}'.encode()
+            row = f'{i}|{result["final"]}|{result["suspect_ticks"]}|{result["failed_tick"]}|{result["clear_tick"]}|{result["false_reactivation"]}|{result["terminal_failures"]}|{result["decoys_ignored"]}'.encode()
             chain = hashlib.sha256(chain + row).digest()
         agg["hash_chain"] = chain.hex()
         rows.append({"scenario": scenario, **agg})
