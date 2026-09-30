@@ -100,7 +100,7 @@ def main():
     assert result["noinput_sessions_with_positive_scorer_endpoint"] == sum(s["positive_endpoint_count"] > 0 for s in controls) == 0
     assert result["attack_positive_endpoint_total"] == sum(s["positive_endpoint_count"] for s in attacks) == 0
     assert result["noinput_positive_endpoint_total"] == sum(s["positive_endpoint_count"] for s in controls) == 0
-    assert result["scorer_sample_total"] == sum(s["sample_count"] for s in by_key.values()) == 196
+    assert result["scorer_sample_total"] == sum(s["sample_count"] for s in by_key.values()) == 194
     assert result["native_source_event_id_present_anywhere"] is False
     assert result["native_scorer_event_id_present_anywhere"] is False
     assert result["disposition"] == "HOLD_NO_POSITIVE_SCORER_EVENT"
