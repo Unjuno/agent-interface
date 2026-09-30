@@ -35,7 +35,9 @@ from the action epoch; (3) all valid committed same-generation action reads
 remain admissible; (4) display-only reads never cause an action and do not
 cause opacity rejection solely for being tentative; (5) first invalid-read
 provenance is retained; (6) an independent history oracle agrees on all 32
-rows and rejects three in-memory corruption controls. Any invalid action
+rows, independently recomputes both policy decisions exactly, and rejects four
+in-memory corruption controls, including a weak-comparator decision mutation.
+Any invalid action
 admission is FAIL; any absence of a comparator witness is HOLD_NO_DISCRIMINATOR.
 
 **C.** Hand-authored deterministic histories; no real transaction manager,
@@ -53,7 +55,8 @@ Two policies, fixed scenario matrix, no post-hoc tuning. `action_consumed_read`
 is explicit and distinct from `presentation_only`. The opacity decision must
 record the earliest invalid consumed read even when a later rejection also
 exists. Raw output is append-only and overwrite-protected; independent auditor
-does not import the simulator.
+does not import the simulator. Audit-only successors may re-audit immutable raw
+attempts with a stronger checker; they do not replace prior raw or audit output.
 
 One runner invocation; one separate audit. Docker/OrbStack formal execution
 requires an exact named exclusive CPU-only allocation and current-main/source

@@ -99,14 +99,30 @@ def check_rows(data: dict) -> list[str]:
         if row.get("role") != ("action_consumed" if derived["action_attempted"] else "presentation_only"):
             errors.append(f"action_role_event_mismatch:{key}")
         reason = derived["oracle_invalid_reason"]
-        strict = row["decision"]
-        if row["policy"] == "ACTION_RELEVANT_OPACITY":
-            expected_accept = reason is None and derived["action_attempted"]
-            if strict["accepted"] != expected_accept:
-                errors.append(f"strict_decision_mismatch:{key}")
-            expected_first = None if reason is None else "r1"
-            if strict["first_invalid_read"] != expected_first:
-                errors.append(f"first_invalid_read_missing:{key}")
+        if not derived["action_attempted"]:
+            expected_decision = {
+                "accepted": False,
+                "reason": "no_action_attempt",
+                "first_invalid_read": None,
+            }
+        elif row.get("policy") == "FINAL_STATE_ONLY":
+            accepted = derived["action_epoch"] == derived["final_generation"]
+            expected_decision = {
+                "accepted": accepted,
+                "reason": "final_generation_match" if accepted else "final_generation_mismatch",
+                "first_invalid_read": None,
+            }
+        elif row.get("policy") == "ACTION_RELEVANT_OPACITY":
+            expected_decision = {
+                "accepted": reason is None,
+                "reason": "valid" if reason is None else reason,
+                "first_invalid_read": None if reason is None else "r1",
+            }
+        else:
+            errors.append(f"policy_invalid:{key}")
+            continue
+        if row.get("decision") != expected_decision:
+            errors.append(f"policy_decision_mismatch:{key}:{row.get('policy')}")
     witnesses = 0
     for key, pair in grouped.items():
         a, b = pair["FINAL_STATE_ONLY"], pair["ACTION_RELEVANT_OPACITY"]
@@ -151,6 +167,13 @@ def check(data: dict) -> list[str]:
     next(e for e in mutated["events"] if e["type"] == "consume")["action_epoch"] = 1
     if not mutation_rejected(generation_control, mutated, "history_projection_mismatch"):
         errors.append("mutation_generation_not_detected")
+    weak_control = next(r for r in rows if r["pattern"] == "supersession"
+                        and r["role"] == "action_consumed"
+                        and r["policy"] == "FINAL_STATE_ONLY")
+    mutated = copy.deepcopy(weak_control)
+    mutated["decision"]["accepted"] = False
+    if not mutation_rejected(weak_control, mutated, "policy_decision_mismatch"):
+        errors.append("mutation_weak_comparator_decision_not_detected")
     return sorted(set(errors))
 
 

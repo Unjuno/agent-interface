@@ -22,10 +22,13 @@ container runner and separate audit complete.
   that never committed before consumption. Attempt 07 is the corrected host
   construction gate: its independent auditor reconstructs validity from raw
   ordered events, checks strict unique sequence order, and rejects event-status,
-  action-role, and generation mutation controls. Of six invalid action histories,
-  the weak comparator admits five; strict opacity admits zero invalid histories
-  and preserves two valid committed same-generation histories. Attempts 01–06
-  and all their raw outputs/audits remain unchanged.
+  action-role, and generation mutation controls. Audit-only attempt 08 then
+  re-audited the immutable attempt-07 raw, independently recomputed the exact
+  decision object for both policies on all 32 rows, and rejected four mutation
+  controls including a forged weak-comparator decision. Of six invalid action
+  histories, the weak comparator admits five; strict opacity admits zero
+  invalid histories and preserves two valid committed same-generation
+  histories. Attempts 01–07 and their raw outputs/audits remain unchanged.
 - **C:** Hand-authored synthetic histories; no production transaction manager,
   irreversible side effect, distributed commit, external process, or live GUI.
 - **U:** Real concurrency semantics, retry behavior, distributed commit,
@@ -37,9 +40,11 @@ container runner and separate audit complete.
 Host: macOS 26.6.2 arm64, CPython 3.14.5, standard library only. Syntax checks
 pass. Attempt 07 source SHA256: simulator
 `0fb3cccb377a43d218c49d75fe1f7fe86c5508c09ea340ce8aae2350b5ed4549`,
-auditor `4e0e722ebb1fbabf02dcf6f92ed6b90a80de8e52b5dfd02265cbd183e010dd3a`.
+original auditor `4e0e722ebb1fbabf02dcf6f92ed6b90a80de8e52b5dfd02265cbd183e010dd3a`.
 Raw SHA256 `3fb5162d7f6e4d038e243068a829c024f7bf2b725f2d50cb39817b7ecc3fe30e`;
-audit SHA256 `6d3fbef7ef4b08a66c6ec97269cc12e53d3f5ad43635849c3a6110178968e452`.
+attempt-07 audit SHA256 `6d3fbef7ef4b08a66c6ec97269cc12e53d3f5ad43635849c3a6110178968e452`.
+Attempt-08 auditor SHA256 `54253e2412225c59a6b7b410d5ec151facab357b3ee6d9fd77f73a128a6429b1`;
+audit-only receipt SHA256 `6d3fbef7ef4b08a66c6ec97269cc12e53d3f5ad43635849c3a6110178968e452`.
 A CPU-only OrbStack allocation is
 requested in #5085. No Docker/OrbStack CLI or container invocation has occurred
 for this allocation; until an exact coordinator grant, the formal result is
