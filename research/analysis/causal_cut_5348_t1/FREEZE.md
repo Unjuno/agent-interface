@@ -19,6 +19,13 @@ Frozen main: 8265c1a19cbba7ab0f5316f27bdb59509269399d
 
 Terminology follows the distributed-snapshot safety condition: a cut cannot include a receive without its causal send. See Chandy & Lamport (1985), DOI 10.1145/214451.214456, and Lamport (1978), DOI 10.1145/359545.359563.
 
+## Frozen source Git blob SHA-1 identities
+
+- causal_core.py: 302595c32bdfffc88b54c78c3fc4f54ac4e5c03e
+- run_t0.py: 6cfc154d4d15e35db28f1496b9a45616dd5721fc
+- test_core.py: 05b20b25e78d1dd31e2fc0872ca5bc5030268d51
+- audit_t0.py (independent, frozen pre-run): a79b9a918a9b7971dcf903fd632b5a5960f6c7b3
+
 ## Source files
 
 - Candidate: causal_core.py
