@@ -9,6 +9,7 @@ class TextPlanTests(unittest.TestCase):
         backend = object.__new__(X11Backend)
         backend._keycode = mock.Mock(return_value=1)
         backend.key_chord = mock.Mock()
+        backend._keyboard_mapping_snapshot = mock.Mock(return_value=('stable-test-map',))
         return backend
 
     def test_held_key_release_keeps_original_physical_code_after_remap(self):

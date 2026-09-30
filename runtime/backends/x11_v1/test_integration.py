@@ -211,4 +211,59 @@ class X11IntegrationTests(unittest.TestCase):
         self.assertEqual(row["release"]["buttons_down"], [])
 
 
+@unittest.skipUnless(os.environ.get('DISPLAY'), 'requires X11 DISPLAY')
+class X11MappingIntegrationTests(unittest.TestCase):
+    # Mapping is server-wide state. Keep its fixture lifetime separate from
+    # the ordinary input tests so their existing Tk clients cannot retain it.
+    def test_midprogram_keymap_change_stops_before_suffix_and_save(self):
+        """Use only the caller-owned private test DISPLAY, restoring its map."""
+        display = os.environ['DISPLAY']
+        original = subprocess.run(['xkbcomp', display, '-'], capture_output=True, text=True, check=True).stdout
+        try:
+            for initial, changed in (('jp', 'us'), ('us', 'jp')):
+                with self.subTest(initial=initial, changed=changed), tempfile.TemporaryDirectory() as scratch:
+                    # A refused program leaves its real prefix in the app. Own a
+                    # separate app so this test cannot change another test's edit state.
+                    root = Path(scratch); meta = root/'meta.json'; effect = root/'effect.json'
+                    app = subprocess.Popen([sys.executable, '-m', 'runtime.backends.x11_v1.fixture_app', '--meta', str(meta), '--effect', str(effect)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                    backend = None
+                    try:
+                        deadline = time.monotonic() + 5
+                        while not meta.exists():
+                            if app.poll() is not None or time.monotonic() > deadline:
+                                raise RuntimeError('private remap fixture not ready')
+                            time.sleep(.02)
+                        subprocess.run(['setxkbmap', '-display', display, '-layout', initial], check=True, capture_output=True)
+                        actor = []
+                        class RemapDuringWait(X11Backend):
+                            def _wait_update(self, milliseconds):
+                                if milliseconds == 111:
+                                    result = subprocess.run(['setxkbmap', '-display', display, '-layout', changed], capture_output=True)
+                                    actor.append(result.returncode)
+                                    if result.returncode:
+                                        raise RuntimeError('private keymap actor failed')
+                                super()._wait_update(milliseconds)
+                        backend = RemapDuringWait(display, {'fixture': json.loads(meta.read_text())['window_id']})
+                        program = make_program('midprogram-' + initial + '-' + changed, text='a')
+                        program['ops'][4]['timeout_ms'] = 100
+                        program['ops'][8:8] = [{'op': 'wait_update', 'timeout_ms': 111}, {'op': 'text', 'text': '_'}]
+                        row = X11RuntimeSession(backend).dispatch(program, current_observation_seq=7, current_binding_revision=3)
+                        self.assertEqual(actor, [0])
+                        self.assertEqual(row['status'], 'execution_failed')
+                        self.assertEqual(row['execution']['failed_op'], 9)
+                        self.assertEqual(row['execution']['completed_ops'], list(range(9)))
+                        self.assertIn('keyboard mapping changed', row['execution']['error'])
+                        self.assertFalse(effect.exists())
+                        release = row['execution']['releases'][-1]
+                        self.assertTrue(release['verified'])
+                        self.assertEqual(release['keys_down'], [])
+                        self.assertEqual(release['buttons_down'], [])
+                    finally:
+                        if backend is not None:
+                            backend.close()
+                        app.terminate(); app.wait(timeout=5)
+        finally:
+            subprocess.run(['xkbcomp', '-', display], input=original, text=True, capture_output=True, check=True)
+
+
 if __name__ == "__main__": unittest.main()
