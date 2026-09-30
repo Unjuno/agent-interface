@@ -362,6 +362,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`x11_fresh_family_hold_2404_v1/`](x11_fresh_family_hold_2404_v1/)
 - [`x11_fresh_reproducibility_2479_v1/`](x11_fresh_reproducibility_2479_v1/)
 - [`x11_identity_readiness_2723_v1/`](x11_identity_readiness_2723_v1/)
+- [`x11_keymap_5236_audit_gate_v1/`](x11_keymap_5236_audit_gate_v1/)
 - [`x11_mixed_composed_audit_2425_v1/`](x11_mixed_composed_audit_2425_v1/)
 - [`x11_native_handle_xid_reuse_3551_v1/`](x11_native_handle_xid_reuse_3551_v1/)
 - [`x11_ood_gate_2409_v1/`](x11_ood_gate_2409_v1/)
