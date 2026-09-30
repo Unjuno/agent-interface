@@ -459,3 +459,5 @@ already focused descendant; it does not establish that a clicked widget has
 processed the click or that text has arrived. Review the returned image/value
 before committing. The refusal and separate corrected allocation are retained
 in [portable relay self-use](../results/portable-public-relay-01/README.md).
+
+A Node host can use the [sequential host API](../host_v1/README.md) to retain requests/replies and deliver exact text/image blocks without importing the research tree. Its two `.mjs` files are separate from the Python archive.
