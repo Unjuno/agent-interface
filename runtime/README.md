@@ -104,3 +104,12 @@ benefit or human-tempo operation; earlier interrupted/caller-failed trials are r
 [Public six-task comparison](results/post-release-feedback-04/README.md) retains actual use of the optional post-release capture together with summary presentation: both arms saved six exact tokens once; the candidate needed zero extra completion observations versus six for inline capture. Dispatch text remained larger, and human-comparable tempo is unmeasured. The candidate stays draft pending the current guarded/refusal/recovery integration comparison under #2789 / #57. Earlier no-wait failures remain in [the original scoped evidence](results/post-release-feedback-01/README.md).
 
 Current integration evidence: [guarded/direct six-task comparison](results/post-release-spine-02/README.md) retains exact-once effect, verified release, changed-layout refusal and manual scope repair on the composed candidate. The genuine direct batch returns useful field/Save feedback sooner in this pair; expected-refusal caller handling and autonomous/economic promotion remain HOLD.
+
+The newer [full revalidation attempt](results/post-release-spine-03/README.md)
+stopped guarded input at task2 while its direct baseline finished all six tasks.
+The [pointer-state probe](results/pointer-hover-contract-01/README.md) reproduced
+hover-induced guard pixel changes. [Explicit guarded motion self-use](results/guarded-pointer-move-01/README.md)
+then verified two exact saves through move, primary image review, fresh alias
+and guarded click. This candidate retains the original before-press guard and
+does not auto-click or remint. Complete six-task recovery/comparison and broader
+domain coverage remain required; the two-task result does not supersede that gate.
