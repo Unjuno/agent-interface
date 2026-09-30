@@ -10,6 +10,8 @@ Status: `HOLD_PREREGISTRATION_INCOMPLETE`. This note records current-main feasib
 - Queue request: #5085 comment [#5921114962](https://github.com/Unjuno/agent-interface/issues/5085#issuecomment-5921114962), allocation `MAP01-R133-RECOVERY-COAST-59-T1-DESKTOP-20261002-01`
 - Proposed CPU-only Docker Desktop window: 2026-10-02 00:00–01:00 UTC. The comment is a request only; no lease or container permission was observed.
 
+The local component checks below ran against `33c19225f117d6d927a98e791e620de37479a927`. A final GitHub recheck found `main` had advanced to `7c98ac44c432ad1b2e3b9834e54bdeda734e4bfa` via an additive Issue #4373 evidence commit. Its changed paths are confined to `research/verification/submit_purpose_s6p1_v1/**`; none of the checked MAP01/owner/scorer sources changed. The local branch was rebased onto that current main, so its current base is `7c98ac44c432ad1b2e3b9834e54bdeda734e4bfa`. Re-freeze all source identities again at formal start.
+
 ## H / T / D / C / U (provisional)
 
 - **H:** A bounded, explicitly guarded recovery cover during model inference produces more independently scored useful MAP01 progress and less unsafe unprotected time than unauthored coast under matched threat-contact conditions.
