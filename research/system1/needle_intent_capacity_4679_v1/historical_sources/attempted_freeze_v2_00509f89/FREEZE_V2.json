@@ -1,0 +1,78 @@
+{
+  "schema": "needle-intent-capacity.freeze.v2",
+  "issue": 4679,
+  "allocation": "needle-intent-capacity-4679-v1",
+  "branch": "research/needle-intent-capacity-4679-v1-20260927",
+  "additive_path": "research/system1/needle_intent_capacity_4679_v1/",
+  "base_main_sha": "407bea640ad46827f58bd7e30979e52096fff092",
+  "source_commit": "3106152858eff2a1d4b85267567291aab66e8368",
+  "supersedes": {
+    "freeze_file": "FREEZE.json",
+    "freeze_sha256": "84b9143ddf40cae0c5e3356ce35d7e8178586e7e9a4a40643561aea3ed5a662e",
+    "source_commit": "98aa4c5a044ce10eb8511963e734972527781008",
+    "reason": "Runner rejected a host-precreated empty output bind mount; detected before any formal container or optimizer step. See PRE_FORMAL_CORRECTION.json."
+  },
+  "seeds": [4153101, 4153103, 4153107],
+  "seed_derivation": {
+    "train_states": "base seed",
+    "heldout_states": "base seed + 1",
+    "state_only_init": "base seed + 10",
+    "both_intent_aware_inits": "base seed + 20"
+  },
+  "design": {
+    "train_base_states_per_seed": 4096,
+    "heldout_base_states_per_seed": 2048,
+    "intents": ["TRACK", "STABILIZE", "WATCH_ONLY", "OUT_OF_SCOPE"],
+    "classes": ["CONTINUE", "CORRECT", "WATCH", "YIELD"],
+    "arms": {
+      "STATE_ONLY_24": "6->24(tanh)->24(tanh)->4",
+      "INTENT_AWARE_24": "10->24(tanh)->24(tanh)->4",
+      "INTENT_AWARE_64": "10->64(tanh)->64(tanh)->4"
+    },
+    "optimizer": "AdamW",
+    "loss": "cross_entropy full batch",
+    "learning_rate": 0.006,
+    "weight_decay": 0.0001,
+    "steps_per_fit": 900,
+    "formal_fit_count": 9,
+    "authority": false,
+    "action_emissions": 0
+  },
+  "environment": {
+    "docker_engine": "29.8.0",
+    "image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a910e",
+    "platform": "linux/amd64",
+    "python": "3.12.14",
+    "pytorch": "2.5.1+cpu",
+    "threads": 1,
+    "network": "none",
+    "source_mount": "read-only",
+    "rootfs": "read-only",
+    "cpus": 1,
+    "memory": "2g",
+    "pids_limit": 64
+  },
+  "construction": {
+    "suite": "python -B -m unittest -v test_construction",
+    "passed": 10,
+    "failed": 0,
+    "optimizer_steps": 0,
+    "output_mount_empty_accepted": true,
+    "output_mount_nonempty_rejected_without_mutation": true,
+    "warning": "optional Numpy_initialization warning; no package installed"
+  },
+  "formal_commands": {
+    "trainer": ["docker", "run", "--rm", "--network", "none", "--read-only", "--cpus=1", "--memory=2g", "--pids-limit=64", "--security-opt=no-new-privileges", "--workdir", "/src", "--tmpfs", "/tmp:rw,noexec,nosuiz,size=256m", "--mount", "type=bind,source=<frozen-source>,destination=/src,readonly", "--mount", "type=bind,source=<formal01>/training,destination=/out", "--entrypoint", "python", "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e", "-B", "/src/runner.py", "--formal", "--out", "/out"],
+    "auditor": ["docker", "run", "--rm", "--network", "none", "--read-only", "--cpus=1", "--memory=2g", "--pids-limit=64", "--security-opt=no-new-privileges", "--workdir", "/src", "--tmpfs", "/tmp:rw,noexec,nosuiz,size=256m", "--mount", "type=bind,source=<frozen-source>,destination=/src,readonly", "--mount", "type=bind,source=<formal01>/training,destination=/raw,readonly", "--mount", "type=bind,source=<formal01>/audit,destination=/audit", "--entrypoint", "python", "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e", "-B", "/src/audit.py", "--raw", "/raw", "--out", "/audit/AUDIT.json"]
+  },
+  "retry_policy": "one trainer + one separate auditor container; zero retries, tuning, seed replacement or post-result extension",
+  "source_sha256": {
+    "PREREGISTRATION.md": "f0e5de78da48d11cac602d25eeffbee6bb46f9c307374cdba4e87f149cd571ae",
+    "runner.py": "85948fe1d8d286f7d866e80900902aa9609cc683ab876aa1ab12f93679460cd7",
+    "audit.py": "3512005c2fee3f0504453faeb4c6b3de467b57aa4142850452951344f2127500",
+    "test_construction.py": "60372d9963c5c9c61aee84919f9480246e187309b2e7bbb2bd2e2c8ca933e80d",
+    "PRE_FORMAL_CORRECTION.json": "469d5273c62d481b170b13467a9643016c9d962b5727a9341ae20f21fc121c2c"
+  },
+  "formal_orchestration_count": 1,
+  "formal_runs_before_this_freeze": 0
+}
