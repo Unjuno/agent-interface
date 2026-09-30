@@ -18,14 +18,15 @@
     "wrapper_sha256_utf8": "4adc62f9c9132f9d4885f9c40abf296500b87ca6a822db62864c57b1f355642a"
   },
   "formal_wrapper": {
-    "commit": "47e673f86e7c467acb2d442be6647953097d5474",
-    "sha256_utf8": "58548ab9f9ecfd541163d4ce476bebb08f8d9a6f088e83b266718b624dce344b",
-    "behavior": "fetches only pinned Python sources into memory; runs frozen formal runner then separate auditor process; compresses successful raw to gzip/base64 for additive GitHub retention; writes no local files"
+    "commit": "590c48c9b92a91a992890db240cc0caaf1dacc68",
+    "sha256_utf8": "6838243f9fd9a6136824dcb5f5b522018adb72c08849186db849790a58348e4f",
+    "behavior": "fetches only pinned Python sources into memory; runs frozen formal runner and a separate auditor process; preserves and gzip/base64 encodes raw stdout regardless of gate outcome; writes no local files; exits nonzero if runner or audit fails",
+    "syntax": "PowerShell AST parse passed on Windows PowerShell host"
   },
   "execution": {
     "container": null,
     "container_reason": "No exact exclusive #5085 slot; shared running container owner remains unidentified. Host-only finite CPU execution is the declared bounded route; no Docker invocation.",
-    "command": "$script=(Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/Unjuno/agent-interface/47e673f86e7c467acb2d442be6647953097d5474/research/analysis/planner_hysteresis_5352_t0_v1/run_local.ps1').Content; & ([scriptblock]::Create($script))",
+    "command": "$script=(Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/Unjuno/agent-interface/590c48c9b92a91a992890db240cc0caaf1dacc68/research/analysis/planner_hysteresis_5352_t0_v1/run_local.ps1').Content; & ([scriptblock]::Create($script))",
     "output_path": "research/analysis/planner_hysteresis_5352_t0_v1/results/formal-01/",
     "output_collision": "No prior path exists on the new additive branch; outputs are not written to the full local C: volume."
   },
