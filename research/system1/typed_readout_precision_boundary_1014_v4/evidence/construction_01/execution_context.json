@@ -1,0 +1,14 @@
+{
+  "allocation": "typed-readout-precision-boundary-1014-v4-20260928-01",
+  "attempted_host_command": "docker --rm --pull=never --network none --read-only --gpus all --cpus=2 --memory=8g --pids-limit=64 ...",
+  "docker_subcommand": "run was omitted; Docker parsed --rm as a top-level flag",
+  "docker_exit": 125,
+  "classification": "STOP_DOCKER_CLI_USAGE_ERROR",
+  "container_created": false,
+  "model_load": false,
+  "forward_count": 0,
+  "raw_output_files": 0,
+  "formal_rows": 0,
+  "retry": 0,
+  "note": "Docker CLI rejected the command before creating a container; frozen allocation is consumed and will not be retried."
+}
