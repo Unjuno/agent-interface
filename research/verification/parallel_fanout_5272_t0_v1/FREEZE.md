@@ -68,5 +68,16 @@ not yet been formally invoked.
 input/code hash table to avoid self-reference. The GitHub commit containing
 this freeze is recorded in the result report; its parent must equal the frozen
 main commit above. Any main advancement before the formal runner starts
-invalidates this freeze and requires stopping before execution, not silently
-rebasing a consumed run.
+is checked immediately before execution. Continue only when the frozen main
+commit remains an ancestor and the intervening diff does not touch this
+experiment path, its frozen inputs/source, `docs/CURRENT_GOAL.md`,
+`ROADMAP.md`, `RESEARCH.md`, `docs/RESEARCH_METHOD.md`, or Issues #5267,
+#5268, and #5272. A conflict or inability to verify ancestry/path scope is a
+STOP; do not silently rebase or rerun a consumed allocation. This permits
+unrelated parallel integrations without changing the frozen experiment.
+
+Pre-formal amendment: at the time of review, main had advanced from the frozen
+commit by four commits. GitHub compare showed changes only under
+`runtime/cli_v1/` and `runtime/results/cli-summary-primary-01/`; those paths do
+not overlap this synthetic T0's source, inputs, or decision contract. The
+current formal preflight must repeat the ancestry and path check.
