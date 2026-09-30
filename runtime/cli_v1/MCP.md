@@ -34,7 +34,7 @@ python /absolute/agent-interface-runtime.pyz mcp \
 ```
 
 The archive includes the adapter, not its third-party dependencies. Ordinary CLI
-commands do not import MCP. Missing MCP dependencies affect only `mcp` mode.
+commands do not import MCP. Missing MCP dependencies affect only `mcp` and `relay` modes.
 
 Requests and reports use the CLI's temporary-file, flush/fsync, then replace
 writer. The final report name is published only after the write completes.
@@ -442,3 +442,20 @@ Pipe stdin/stdout; terminal stdout is refused to preserve exact image JSON bytes
 Each line is exactly `{"id":1,"tool":"list_tools","arguments":{}}`, followed by IDs 2, 3, and so on for accepted calls. Public `interface_*` tools are forwarded unchanged, including image blocks and full/summary options. Inspect discovery to choose a tool. A refused envelope consumes no ID and reports `dispatched:false`; an accepted request consumes its ID before the SDK call, even if the outcome becomes unknown. Never resend an accepted ID or replay uncertain input. `sdk_entry_ns` and `sdk_return_ns` are execution-host monotonic boundaries, not model latency.
 
 Call `interface_close` explicitly and inspect release/cleanup results before closing the pipe. EOF is a disconnect, not a task completion or application-cleanup guarantee. Keep stderr separate from the JSON-lines stream. This adapter does not add a model, queue, automatic retry, task policy or performance claim. The older research relay remains unchanged for frozen research callers.
+
+### Program-local X11 target selection
+
+Every X11 dispatch containing `pointer_move` or `observe` must include `focus`
+or `activate` before those operations in that same program. The operating
+system may retain widget focus across calls, but the dispatch program's target
+selection starts empty. A previous dispatch or `interface_observe(target=...)`
+does not populate it. Preflight rejects a missing selection before executing
+any program input; read the reported outcome and release result before deciding
+on a corrected program.
+
+For a split focus/input/save interaction, each program that ends with an
+observation therefore needs its own explicit selection. `focus` preserves an
+already focused descendant; it does not establish that a clicked widget has
+processed the click or that text has arrived. Review the returned image/value
+before committing. The refusal and separate corrected allocation are retained
+in [portable relay self-use](../results/portable-public-relay-01/README.md).

@@ -117,3 +117,25 @@ class ActivationTests(unittest.TestCase):
 
 
 if __name__=='__main__':unittest.main()
+
+
+class ProgramLocalTargetTests(unittest.TestCase):
+    def test_prior_preflight_does_not_supply_next_program_target(self):
+        backend = X11Backend.__new__(X11Backend)
+        backend._target = Mock()
+        backend.preflight({'ops': [{'op': 'focus', 'target': 'app'},
+                                    {'op': 'observe'}]})
+        for kind in ('observe', 'pointer_move'):
+            with self.subTest(kind=kind):
+                with self.assertRaisesRegex(X11BackendError, 'same program; prior dispatch focus is not inherited'):
+                    backend.preflight({'ops': [{'op': kind}]})
+        backend._target.assert_called_once_with('app')
+
+    def test_explicit_activation_supplies_program_target(self):
+        backend = X11Backend.__new__(X11Backend)
+        backend._target = Mock()
+        backend._activation_target = Mock()
+        backend.preflight({'ops': [{'op': 'activate', 'target': 'app'},
+                                    {'op': 'pointer_move'}, {'op': 'observe'}]})
+        backend._target.assert_called_once_with('app')
+        backend._activation_target.assert_called_once_with('app')
