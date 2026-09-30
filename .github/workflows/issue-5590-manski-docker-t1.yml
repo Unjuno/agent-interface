@@ -24,8 +24,8 @@ jobs:
           REF: ${{ github.event.pull_request.head.sha }}
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           REPOSITORY: ${{ github.repository }}
-          EXPECTED_MAIN: 818ebd32a52a74acf26724e4f00739d19d9ecdbf
-          EXPECTED_FREEZE_SHA256: de1db0565369cd092337bd9e72713631969f677e4ffe41d744b2452b37d8f5dd
+          EXPECTED_MAIN: b92f2abb21e796150287135a74599fea64cc9759
+          EXPECTED_FREEZE_SHA256: 802d0c2e9e363a64761e50ecfdccaf408cc11c531be1581a31cb79758a6b8be1
           EXPECTED_MANIFEST_SHA256: eff8a2c803126c0c7c4d060d613486b3db051402ec70e005e92ec10ad4449fff
         run: |
           python3 - <<'PY' > "$GITHUB_WORKSPACE/results/docker-t1-01/preflight.json" 2> "$GITHUB_WORKSPACE/results/docker-t1-01/preflight.stderr.txt"
