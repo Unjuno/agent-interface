@@ -57,4 +57,14 @@ def main():
         "source_sha256": {name: sha256(root / name) for name in freeze["frozen_sources"]},
         "results": results,
         "baseline": {
-            "compared": ["reference-d
+            "compared": ["reference-direct", "reference-hidden-batch-retry"],
+            "exact_raw_trace_equal": exact_raw_equal,
+            "agent_visible_io_equal": observable(direct) == observable(hidden),
+        },
+    }
+    Path(args.output).write_text(json.dumps(raw, sort_keys=True, indent=2) + "\n",
+                                 encoding="utf-8")
+
+
+if __name__ == "__main__":
+    main()

@@ -26,4 +26,53 @@
       "implementation": "mutant-target-switch",
       "trace": [
         {"input": {"type": "OBSERVE_CURRENT"}, "outputs": [{"type": "OBSERVED", "generation": 1, "target": "A", "evidence": "obs-1"}], "internal": []},
-        {"input": {"type": "ADMIT", "target": "A", "ev
+        {"input": {"type": "ADMIT", "target": "A", "evidence": "obs-1"}, "outputs": [{"type": "ADMITTED", "target": "B", "evidence": "obs-1", "admission": "act-1"}], "internal": []}
+      ]
+    },
+    {
+      "case_id": "forbidden-stale-admission",
+      "implementation": "mutant-stale-evidence",
+      "trace": [
+        {"input": {"type": "OBSERVE_CURRENT"}, "outputs": [{"type": "OBSERVED", "generation": 1, "target": "A", "evidence": "obs-1"}], "internal": []},
+        {"input": {"type": "INVALIDATE", "evidence": "obs-1"}, "outputs": [{"type": "INVALIDATED", "evidence": "obs-1", "generation": 1}], "internal": []},
+        {"input": {"type": "ADMIT", "target": "A", "evidence": "obs-1"}, "outputs": [{"type": "ADMITTED", "target": "A", "evidence": "obs-1", "admission": "act-1"}], "internal": []}
+      ]
+    },
+    {
+      "case_id": "forbidden-unauthorized-admission",
+      "implementation": "mutant-authority-bypass",
+      "trace": [
+        {"input": {"type": "ADMIT", "target": "A", "evidence": "obs-1"}, "outputs": [{"type": "ADMITTED", "target": "A", "evidence": "obs-1", "admission": "act-1"}], "internal": []}
+      ]
+    },
+    {
+      "case_id": "forbidden-semantic-false-success",
+      "implementation": "mutant-false-success",
+      "trace": [
+        {"input": {"type": "OBSERVE_CURRENT"}, "outputs": [{"type": "OBSERVED", "generation": 1, "target": "A", "evidence": "obs-1"}], "internal": []},
+        {"input": {"type": "ADMIT", "target": "A", "evidence": "obs-1"}, "outputs": [{"type": "ADMITTED", "target": "A", "evidence": "obs-1", "admission": "act-1"}], "internal": []},
+        {"input": {"type": "RELEASE", "admission": "act-1"}, "outputs": [{"type": "RELEASED", "admission": "act-1", "keys_down": []}], "internal": []},
+        {"input": {"type": "VERIFY", "observation": "NOT_OBSERVED"}, "outputs": [{"type": "CONFIRMED", "effect": "task-complete", "evidence": "score-1"}], "internal": []}
+      ]
+    },
+    {
+      "case_id": "delayed-unknown-and-explicit-quiescence",
+      "implementation": "delayed-verifier",
+      "trace": [
+        {"input": {"type": "OBSERVE_CURRENT"}, "outputs": [{"type": "OBSERVED", "generation": 1, "target": "A", "evidence": "obs-1"}], "internal": []},
+        {"input": {"type": "ADMIT", "target": "A", "evidence": "obs-1"}, "outputs": [{"type": "ADMITTED", "target": "A", "evidence": "obs-1", "admission": "act-1"}], "internal": []},
+        {"input": {"type": "RELEASE", "admission": "act-1"}, "outputs": [{"type": "RELEASED", "admission": "act-1", "keys_down": []}], "internal": []},
+        {"input": {"type": "VERIFY", "observation": "PENDING"}, "outputs": [{"type": "UNKNOWN", "reason": "VERIFIER_PENDING"}], "internal": []},
+        {"input": {"type": "QUIESCENCE_PROBE", "window": "bounded-10ms"}, "outputs": [{"type": "QUIESCENT", "scope": "bounded-probe", "window": "bounded-10ms"}], "internal": []},
+        {"input": {"type": "VERIFY", "observation": "SUCCESS", "evidence": "score-1"}, "outputs": [{"type": "CONFIRMED", "effect": "task-complete", "evidence": "score-1"}], "internal": []}
+      ]
+    },
+    {
+      "case_id": "missing-output-is-not-quiescence",
+      "implementation": "mutant-silent-adapter",
+      "trace": [
+        {"input": {"type": "OBSERVE_CURRENT"}, "outputs": [], "internal": []}
+      ]
+    }
+  ]
+}

@@ -52,4 +52,33 @@ class ConformanceTests(unittest.TestCase):
     def test_explicit_quiescence_label_is_distinct_from_missing_output(self):
         spec = {
             "initial": "PENDING",
-            "tra
+            "transitions": [{
+                "from": "PENDING",
+                "input": {"type": "QUIESCENCE_PROBE", "window": "bounded"},
+                "to": "PENDING",
+                "allowed_outputs": [{"type": "QUIESCENT", "scope": "bounded_probe"}],
+            }],
+        }
+        trace = [{
+            "input": {"type": "QUIESCENCE_PROBE", "window": "bounded"},
+            "outputs": [{"type": "QUIESCENT", "scope": "bounded_probe"}],
+            "internal": [],
+        }]
+        self.assertEqual(evaluate(spec, trace)["status"], "CONFORMANT")
+
+    def test_forbidden_output_returns_first_contract_counterexample(self):
+        trace = [
+            {"input": {"type": "OBSERVE"},
+             "outputs": [{"type": "OBSERVED", "generation": 1, "target": "A"}],
+             "internal": []},
+            {"input": {"type": "ADMIT", "target": "A"},
+             "outputs": [{"type": "ADMITTED", "target": "B"}], "internal": []},
+        ]
+        result = evaluate(self.spec, trace)
+        self.assertEqual(result["status"], "NONCONFORMANT")
+        self.assertEqual(result["counterexample"]["prefix_length"], 2)
+        self.assertEqual(result["counterexample"]["reason"], "OUTPUT_NOT_ALLOWED")
+
+
+if __name__ == "__main__":
+    unittest.main()

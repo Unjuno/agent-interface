@@ -12,4 +12,20 @@
 
 ## Frozen question and method
 
-The contract state is 
+The contract state is `READY → FRESH → ADMITTED → RELEASED → PENDING → DONE`, with `STALE` reachable by explicit invalidation. Each input has exactly one declared transition for the current state and an allowed output set. The checker returns the shortest observed prefix at the first unspecified input or forbidden output. Internal implementation events are retained in the synthetic raw fixture but ignored by the candidate relation.
+
+Quiescence policy is explicit: `QUIESCENT` is an output label accepted only after `QUIESCENCE_PROBE`; an empty output list is missing evidence and yields UNKNOWN. Neither a timeout nor a missing event can be promoted to semantic success.
+
+Issue #5518's comparison with #5513 (metamorphic relations) and #5516 (observation-preserving equivalence) remains open: this experiment tests input-conditioned output inclusion, not relation generation or bisimulation.
+
+## Reproduction
+
+Host construction tests:
+
+```sh
+python -B -m unittest discover -s tests -t . -p 'test_*.py' -v
+```
+
+Run the frozen candidate exactly once in Docker Desktop using the pinned image in `FREEZE.json`, with `--network none`, a read-only source mount, and a separate writable output mount. Then run `audit.py` in a second container against that raw output; it never invokes `run.py`. The GitHub Actions PR check repeats only the raw audit. Frozen source checksums cover only files in `FREEZE.json`, so appending outputs does not invalidate the preregistered input manifest.
+
+Raw outputs, execution status, manifests, exact hashes, and the audit outcome are retained in this directory after the first run. Do not rerun the frozen candidate or overwrite its outcome.

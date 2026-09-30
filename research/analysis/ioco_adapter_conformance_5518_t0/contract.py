@@ -53,4 +53,20 @@ def evaluate(spec, trace):
         allowed = transition["allowed_outputs"]
         if len(outputs) != 1 or _canonical(outputs[0]) not in {_canonical(x) for x in allowed}:
             return {
-                "status": "NONCONFORMANT
+                "status": "NONCONFORMANT",
+                "reason": "OUTPUT_NOT_ALLOWED",
+                "counterexample": {
+                    "prefix_length": index,
+                    "index": index,
+                    "state": state,
+                    "input": stimulus,
+                    "observed_outputs": outputs,
+                    "allowed_outputs": allowed,
+                    "reason": "OUTPUT_NOT_ALLOWED",
+                },
+            }
+        state = transition["to"]
+        seen_prefix = index
+
+    return {"status": "CONFORMANT", "reason": "ALL_PREFIXES_ALLOWED",
+            "prefix_length": seen_prefix, "final_state": state}
