@@ -19,7 +19,7 @@ class PostDispatchCaptureTests(unittest.IsolatedAsyncioTestCase):
             'artifact':{'mime_type':'image/png','path':str(path),'bytes':len(b),
                 'sha256':hashlib.sha256(b).hexdigest(),'source_raw_sha256':hashlib.sha256(rgb).hexdigest(),
                 'width':1,'height':1}}
-    async def exercise(self,case='success',include_prior=True):
+    async def exercise(self,case='success',include_prior=True,wait_ms=None):
         with tempfile.TemporaryDirectory() as td,ExitStack() as stack:
             capture_root=None;observed=[];dispatched=[]
             def configure(directory):
@@ -51,11 +51,13 @@ class PostDispatchCaptureTests(unittest.IsolatedAsyncioTestCase):
             server=create_server({'fixture':123},td,session_mode='persistent-x11')
             reply=await server.call_tool('interface_dispatch',{'program':{},'current_observation_seq':1,
                 'current_binding_revision':1,'inspect_after':'fixture','inspect_after_region':[0,0,1,1],
-                'compact':True,'report_refs':True,'detail':'summary'})
+                'compact':True,'report_refs':True,'detail':'summary',
+                **({'inspect_after_wait_ms':wait_ms} if wait_ms is not None else {})})
             self.assertFalse(reply.isError)
             row=self.row(reply)
             self.assertEqual(len(dispatched),1)
             self.assertNotIn('inspect_after_region',dispatched[0])
+            self.assertNotIn('inspect_after_wait_ms',dispatched[0])
             self.assertEqual(row['session']['binding_revision'],1)
             self.assertFalse(row['authority']!='none')
             self.assertFalse(row['post_dispatch_inspection']['authority_granted'])
@@ -70,6 +72,15 @@ class PostDispatchCaptureTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(observed,[('fixture','screen_physical_px',[0,0,1,1])])
             else:self.assertEqual(observed,[])
             raw=json.loads(original);context=row['post_dispatch_inspection']
+            if wait_ms is not None and case=='success':
+                wait=context['capture_wait']
+                self.assertEqual(wait['requested_ms'],wait_ms)
+                self.assertTrue(wait['completed'])
+                self.assertIsNone(wait['update_observed'])
+                self.assertGreaterEqual(wait['started_ns'],raw['result']['execution']['releases'][0]['monotonic_ns'])
+                self.assertGreaterEqual(wait['ended_ns']-wait['started_ns'],wait_ms*1_000_000)
+                self.assertGreaterEqual(context['observation_report']['observation']['capture_started_ns'],wait['ended_ns'])
+            elif case!='success':self.assertNotIn('capture_wait',context)
             if case=='success':
                 self.assertEqual(row['image_reference']['post_dispatch_observation_id'],context['observation_report']['observation_id'])
                 self.assertNotIn('execution_observation_index',row['image_reference'])
@@ -80,6 +91,7 @@ class PostDispatchCaptureTests(unittest.IsolatedAsyncioTestCase):
             elif case in ['capture_error','changed']:
                 self.assertIn('error',context)
                 self.assertNotIn('review_request',context)
+                if case=='changed':self.assertEqual(context['recheck_evidence']['window_id'],456)
                 self.assertNotIn('post_dispatch_observation_id',row['image_reference'])
                 b=base64.b64decode(next(c.data for c in reply.content if c.type=='image'))
                 import io
@@ -97,6 +109,16 @@ class PostDispatchCaptureTests(unittest.IsolatedAsyncioTestCase):
     async def test_capture_failure_or_changed_target_preserves_original_input_image(self):
         for case in ['capture_error','changed']:
             with self.subTest(case=case):await self.exercise(case)
+    async def test_explicit_wait_is_after_release_and_retained_lookup_never_waits_again(self):
+        await self.exercise(wait_ms=20)
+        for case in ['refused','unverified','recovery']:
+            with self.subTest(case=case):await self.exercise(case,wait_ms=20)
+    async def test_invalid_wait_rejects_before_session_or_input(self):
+        for args in [{'inspect_after_wait_ms':10},{'inspect_after':'fixture','inspect_after_wait_ms':10},{'inspect_after':'fixture','inspect_after_region':[0,0,1,1],'inspect_after_wait_ms':-1},{'inspect_after':'fixture','inspect_after_region':[0,0,1,1],'inspect_after_wait_ms':1001}]:
+            with self.subTest(args=args),tempfile.TemporaryDirectory() as td,patch('runtime.cli_v1.mcp_session.open_session') as opened,patch('runtime.cli_v1.mcp_server.dispatch_in_session') as dispatch:
+                server=create_server({'fixture':123},td,session_mode='persistent-x11')
+                reply=await server.call_tool('interface_dispatch',dict(program={},current_observation_seq=1,current_binding_revision=1,**args))
+                self.assertTrue(reply.isError);opened.assert_not_called();dispatch.assert_not_called()
     async def test_invalid_post_capture_rejects_before_session_or_input(self):
         for mode,target,region in [('one-shot','fixture',[0,0,1,1]),('persistent-x11',None,[0,0,1,1]),('persistent-x11','missing',[0,0,1,1]),('persistent-x11','fixture',[0,0,0,1]),('persistent-x11','fixture',[0,0,True,1]),('persistent-x11','fixture',[0,0,8192,8192])]:
             with self.subTest(mode=mode,target=target,region=region),tempfile.TemporaryDirectory() as td,patch('runtime.cli_v1.mcp_session.open_session') as opened,patch('runtime.cli_v1.mcp_server.dispatch_in_session') as dispatch:

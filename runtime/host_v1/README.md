@@ -239,7 +239,19 @@ execution observation. The complete later observation stays in
 state or unverified release skips the later capture. Capture/target-check failure
 keeps the original input result and any original inline image.
 
-This is a read-only capture, with no automatic delay, redraw detection, semantic
+Optional `inspect_after_wait_ms` (an integer from 0 to 1000, requiring a region)
+adds an explicit sleep after verified release and before inspection/capture.
+The default adds no wait. `post_dispatch_inspection.capture_wait` retains its
+requested duration, start/end, completed flag and `update_observed: null`. This
+sleep does not detect redraw, extend the input lease or grant input authority.
+Refused input, recovery and unverified release skip both wait and capture.
+
+A no-wait held-button experiment completed Save exactly once but still required
+a fresh observation: its captured frame lacked the saved cue and the metadata
+changed during capture. Capture ordering alone is insufficient; application
+settling and the extra receipt cost must be evaluated on actual tasks.
+
+This is a read-only capture, with no redraw detection, semantic
 success inference or input replay. A later frame can still lack the completion
 cue. Inspect the actual image before deciding the next action; request a fresh
 observation when necessary. Historical `interface_results` returns the retained
