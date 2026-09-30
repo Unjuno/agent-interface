@@ -241,11 +241,17 @@ def main(raw_path, expected_path, audit_path):
     expected_bytes = Path(expected_path).read_bytes()
     expected = json.loads(expected_bytes)
     errors = audit(records, expected)
-    result = {"status": "PASS_OWNER_THREAD_KEYUP_BRACKET_SCOPED" if not errors else "FAIL_AUDIT",
+    fixtures = [r for r in records if r.get("event") == "fixture"]
+    synthetic_only = len(fixtures) == 1 and fixtures[0].get("synthetic_only") is True
+    pass_status = ("PASS_SYNTHETIC_RAW_ONLY_CLI_BOUNDARY" if synthetic_only
+                   else "PASS_OWNER_THREAD_KEYUP_BRACKET_SCOPED")
+    result = {"status": pass_status if not errors else "FAIL_AUDIT",
               "errors": errors, "raw_sha256": hashlib.sha256(raw_bytes).hexdigest(),
               "expected_sha256": hashlib.sha256(expected_bytes).hexdigest(),
               "raw_rows": len(records), "allocation": expected["allocation"],
-              "scope": "disposable X11 fixture only; XSync server-processing bracket, not application consumption"}
+              "scope": ("synthetic JSONL serialization/process boundary only; no X server or physical input evidence"
+                        if synthetic_only else
+                        "disposable X11 fixture only; XSync server-processing bracket, not application consumption")}
     Path(audit_path).write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps(result, sort_keys=True))
     return 0 if not errors else 1

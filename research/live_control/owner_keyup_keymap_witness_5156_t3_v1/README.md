@@ -20,6 +20,15 @@ Repository freeze: main `728d30cb2bf4e3b0a183a929258064d3ba823404`, observed 202
 
 **U:** No live MAP01 occupancy, efficacy, safety rate, recovery quality, human tempo, latency, or cross-domain transfer is established. No MAP01/control interaction is part of this construction.
 
+## Synthetic raw-only CLI boundary experiment
+
+**H:** A synthetic JSONL fixture can cross the actual on-disk boundary from one candidate process to a separate auditor process, preserving all nine keymap snapshots and producing a correctly scoped synthetic result.
+
+**T/D:**
+`run_cli_construction_experiment.py` invokes `emit_synthetic_candidate.py` once, then invokes `audit_formal_x11.py` once in a distinct process only after candidate exit 0. It records PIDs, exit codes, stdout/stderr, and source/expected/raw hashes. The raw fixture carries `synthetic_only: true`; the auditor must emit `PASS_SYNTHETIC_RAW_ONLY_CLI_BOUNDARY` and explicitly say no X server or physical input evidence. This is a host-only file/process-boundary construction experiment; it does not exercise the X11 runner.
+
+`results/construction-cli-01/` is immutable historical evidence for the first attempt. Its candidate/raw were synthetic, but the original auditor JSON mislabeled scope as X11. `CORRECTION.json` records the issue and hashes without modifying the original bytes. `construction-cli-02` is the corrected successor run.
+
 ## Reproduction
 
 From this directory run:
@@ -27,6 +36,8 @@ From this directory run:
 ```sh
 python3 -B -m unittest -v test_keymap_witness test_audit_formal_x11 test_serialize_release
 python3 -B -m py_compile audit_formal_x11.py run_formal_x11.py
+python3 -B -m unittest -v test_cli_boundary
+python3 -B run_cli_construction_experiment.py --results results/construction-cli-NN
 ```
 
-Latest host-only result: 26/26 tests passed; `py_compile`, JSON parsing, vendored-source byte comparison, and `git diff --check` passed. This does not imply Docker/X11 execution. Preserve the exact stdout and file hashes when recording a new run.
+Latest host-only result: 27/27 tests passed; `py_compile`, JSON parsing, vendored-source byte comparison, and `git diff --check` passed. Synthetic CLI evidence does not imply Docker/X11 execution. Use a fresh results directory for every experiment and preserve exact stdout and file hashes.

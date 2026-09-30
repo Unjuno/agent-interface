@@ -1,0 +1,12 @@
+{
+  "schema": "result-scope-correction-v1",
+  "created_at_utc": "2026-09-30T20:24:30Z",
+  "preserve_original_bytes": true,
+  "original_run_sha256": "637bb6498bc1f4ecd10d324bbcd8d4165d8c91e73a9fafcb4d88bfa11f610786",
+  "original_audit_sha256": "d672d95ef4869c7c32c4038d692235b67e95c6f0a9a5b274de953e4708e03497",
+  "raw_sha256": "ec4e18461aefc547e84e7ad177d4a1064c827f560b57ffa3c5d8c86265926701",
+  "finding": "The candidate and RUN.json correctly identify this as synthetic-only with no container or X11, but audit.json used an unconditional disposable-X11 scope string and formal PASS status.",
+  "corrected_disposition": "INVALID_FORMAL_SCOPE_LABEL; synthetic file/process boundary only",
+  "scientific_status": "NOT_A_FORMAL_X11_RESULT",
+  "action": "Original raw, audit, run record, and stdout/stderr are preserved unchanged. The CLI auditor now emits a synthetic-only status/scope when the fixture row is marked synthetic_only=true. A new construction-cli-02 run will verify the correction."
+}
