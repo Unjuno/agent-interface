@@ -2,6 +2,12 @@ import unittest
 import experiment as e
 
 class ExperimentTests(unittest.TestCase):
+    def test_deterministic_boundary_bundle(self):
+        p=e.boundary_probes()
+        self.assertEqual(p["late_valid_response_after_failed"]["final"],"FAILED")
+        self.assertEqual(p["late_valid_response_after_failed"]["late_response_rejected_after_failed"],1)
+        self.assertEqual(p["decoys_without_valid_response"]["final"],"SUSPECTED_UNAVAILABLE")
+        self.assertEqual(p["explicit_restart_then_current_response"]["final"],"AUTHORIZED")
     def test_seed_replay_is_deterministic(self):
         self.assertEqual(e.draw_episode("healthy_heavy_tail", 99), e.draw_episode("healthy_heavy_tail", 99))
     def test_invalid_and_stale_decoys_do_not_clear_suspicion(self):
