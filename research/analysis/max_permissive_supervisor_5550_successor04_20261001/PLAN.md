@@ -32,7 +32,7 @@ allocation and all raw/audit files unchanged.
 ## Queue state (not a source freeze)
 
 - Allocation proposal: `MAXPERM-SUPERVISOR-5550-T0-ORBSTACK-SUCCESSOR-20261001-04`.
-- Latest main after PR #5619: `e918dff299d462a61defbc6548e48ab6b3cabc06`.
+- Latest main observed after PR #5619 and subsequent merges: `19c588c063fec0cc46ccda5d0154a5984afcb6c1`.
 - Candidate/auditor/tests currently match the predecessor hashes recorded in
   its `FREEZE.json`; they must be re-hashed against a fresh main at assignment.
 - Proposed cached image only: `sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9`,
