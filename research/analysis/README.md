@@ -257,6 +257,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`predicate_readset_audit_revalidation_4766_v1/`](predicate_readset_audit_revalidation_4766_v1/)
 - [`predicate_readset_runtime_proxy_4233_v1/`](predicate_readset_runtime_proxy_4233_v1/)
 - [`predicate_specialist_switch_4284_v1/`](predicate_specialist_switch_4284_v1/)
+- [`predictive_safety_filter_5317_t3_v1/`](predictive_safety_filter_5317_t3_v1/)
 - [`probabilistic_automaton_censor_bounds_r1_v1/`](probabilistic_automaton_censor_bounds_r1_v1/)
 - [`probabilistic_automaton_censoring_identifiability_r0_v1/`](probabilistic_automaton_censoring_identifiability_r0_v1/)
 - [`probabilistic_automaton_dwell_censor_r2_v1/`](probabilistic_automaton_dwell_censor_r2_v1/)
