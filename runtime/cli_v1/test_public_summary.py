@@ -14,6 +14,10 @@ def fixture(name):
 
 
 class PublicSummaryTests(unittest.TestCase):
+    def test_malformed_top_level_values_keep_full_fallback(self):
+        for value in [None, [], 'invalid', {}]:
+            self.assertEqual(summarize_public_dispatch(value), value)
+
     def test_cli_summary_requires_exact_retained_report_and_keeps_image(self):
         import hashlib
         from runtime.cli_v1.public_summary import summarize_cli_dispatch

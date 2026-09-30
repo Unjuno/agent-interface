@@ -12,7 +12,7 @@ def encoded(value):
 
 
 def summarize_public_dispatch(view):
-    call_id = view.get('call_id')
+    call_id = view.get('call_id') if isinstance(view, dict) else None
     if not isinstance(call_id, str) or not call_id:
         return deepcopy(view)
     return _summarize_dispatch(view, {"tool": "interface_results", "arguments": {
