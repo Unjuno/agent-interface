@@ -40,12 +40,26 @@
     }
   ],
   "candidate_sha256": {
-    "run_formal_x11.py": "51a6abf963b750d3682a78173b2b6a32315aa87493761a95be43844785b9898e",
-    "audit_formal_x11.py": "49d30e688bac0e065e1b826097d1b62efb35c1849ff92754a62f1db2c6ab61be",
+    "run_formal_x11.py": "ba24bb7795fec409b30c4a2c7b5362d552a1d70bd1097a52b7160e2ea069b54a",
+    "audit_formal_x11.py": "b1ead58b0bde6d2da7205c89e201f998000841a17f1520d0fd62a033d0ce7b9d",
     "EXPECTED.json": "33be8123d31bb11e599268bc649000d20d256b86a2ffa01967ee7eac67dfa18d",
-    "test_audit_formal_x11.py": "f9a1b7a85adc146f9b17b77efdb3df2279dbcfab571c2b677acba086bcebf11a",
+    "test_audit_formal_x11.py": "d7562af140e696c01eed730ee0d7f8658f05f75b447e0c9a676c0b11c9e6f6cd",
     "dependencies/input_owner_v11.py": "14333b8e8450950bcdb60fa7055f7a7d4b279438ab44fbb8d14eb2f45fad057c"
   },
+  "pre_run_candidate_revisions": [
+    {
+      "superseded_runner_sha256": "51a6abf963b750d3682a78173b2b6a32315aa87493761a95be43844785b9898e",
+      "reason": "added runner-completion sentinel; removed unobserved claim that zero fixture child processes exited"
+    },
+    {
+      "superseded_auditor_sha256": "49d30e688bac0e065e1b826097d1b62efb35c1849ff92754a62f1db2c6ab61be",
+      "reason": "audits exact predeclared release order, explicit trigger class, and runner-completion sentinel"
+    },
+    {
+      "superseded_tests_sha256": "f9a1b7a85adc146f9b17b77efdb3df2279dbcfab571c2b677acba086bcebf11a",
+      "reason": "added release-order mutation control"
+    }
+  ],
   "expected_inventory": [
     "single_explicit:a",
     "two_key_explicit:a",
@@ -54,8 +68,8 @@
   ],
   "decisions": {
     "H": "Per-key owner-thread KeyRelease request→XSync intervals for explicit client up can be nested in caller timing without changing admission or release semantics.",
-    "T": "One disposable Xvfb fixture: single-key down/up, two-key down/down then sequential up/up with no XQueryKeymap between releases, and cancellation after one admitted key before a second admission. Then independently audit.",
-    "D": "PASS_OWNER_THREAD_KEYUP_BRACKET_SCOPED only if each predeclared release exists, key/owner/intent identities bind, explicit caller-owner timing nests, server-observed keymap transitions down→up, cancellation is classified without fabricated caller timestamps, authority/physical claims are false, and owner/process/terminal cleanup is verified. Setup gap=STOP; semantic/control change=FAIL.",
+    "T": "One disposable Xvfb fixture: single-key down/up, two-key down/down then sequential up/up with no intervening owner-state query, and cancellation after one admitted key before a second admission. Then independently audit.",
+    "D": "PASS_OWNER_THREAD_KEYUP_BRACKET_SCOPED only if each predeclared release exists in exact order, key/owner/intent identities bind, explicit caller-owner timing nests, server-observed keymap transitions down→up, cancellation is classified without fabricated caller timestamps, authority/physical claims are false, and owner/thread/container cleanup is externally verified. Setup gap=STOP; semantic/control change=FAIL.",
     "C": "XSync is server-processing completion only; one Xvfb server and one fixture, no game/MAP01/model/provider/GPU/network/user desktop.",
     "U": "No application-consumption instant, MAP01 occupancy, efficacy, safety rate, latency, human tempo, reliability, or transfer claim."
   }
