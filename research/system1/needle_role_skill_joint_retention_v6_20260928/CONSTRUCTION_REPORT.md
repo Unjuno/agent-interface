@@ -266,3 +266,17 @@ command was run: #5085's no-CLI hold still applies. Consequently the new watchdo
 has host unit coverage only, not in-container runtime verification; the earlier
 17/17 image run predates it and does not verify this source revision. No formal
 seed, model, optimizer, or scientific outcome is claimed.
+
+## Main sync and host re-verification — 2026-09-30
+
+Main advanced to `3a96b8ea80201edd8860318b14148facecd009b8` with three commits
+since the preceding checkpoint. GitHub compare shows their files are limited
+to retained DOOM input evidence, Procedural Operations World diagnostics, and
+runtime/public-paced-brief documentation and code; none touches this v6 path.
+The latest main was merged without conflict at `86effc835521bb8c6331b8d0681cd95b7926314b`.
+
+After the merge, Windows CPython 3.11.9 reran
+`python -B -m unittest -v test_protocol.py`: **27/27 pass**. `git diff --check`
+passes. Docker remains uninvoked; this synchronization and host test do not
+verify the newly added watchdog inside the pinned container. No formal seed,
+model, optimizer, or scientific result was accessed or claimed.
