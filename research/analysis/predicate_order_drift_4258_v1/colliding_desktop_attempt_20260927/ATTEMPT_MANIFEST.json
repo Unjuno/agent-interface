@@ -1,0 +1,27 @@
+{
+  "record_type": "colliding_nonconforming_attempt",
+  "issue": 4733,
+  "allocation": "predicate-order-drift-4258-20260927-01",
+  "allocation_wide_disposition": "HOLD_DUPLICATE_NONCONFORMING_ATTEMPT",
+  "hypothesis_result_valid": false,
+  "rerun_performed": false,
+  "formal_invocations_by_this_worker": 1,
+  "intake_main_recorded_at_start": "21f81b3e6e41491bca9078a4d5adfd577c041f64",
+  "runtime_image": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+  "docker_context": "desktop-linux",
+  "container_platform": "linux/amd64",
+  "container_controls": ["--network none", "--read-only", "read-only source bind mount", "writable output bind mount", "tmpfs /tmp"],
+  "missing_controls_vs_other_workers_freeze": ["CPU limit", "memory limit", "PID limit"],
+  "primary_failure": "Producer and first auditor treated frozen development false probabilities as true probabilities; forensic audit against the local freeze found 604 discrepancies.",
+  "competing_current_worker_state": "The dedicated branch and publicly authorized freeze were discovered only after this invocation; that branch was not modified.",
+  "files": [
+    {"path": "FREEZE.json", "bytes": 2661, "sha256": "6DB5BF72F180FF30542342CE57BA3F2568FB660D4195B33F0B289B80A12EE8B9"},
+    {"path": "run_experiment.py", "bytes": 4445, "sha256": "C55508A16298362E06DCDFAC865926D00E004AA4812B5EF4B661C2383308B152"},
+    {"path": "audit_result.py", "bytes": 6283, "sha256": "DA52240B6E672A6A34E9BBB1E204B2AC1C1ADCFD21A3F90E61C58C4E94780DB4"},
+    {"path": "results/docker-formal01/raw.json", "bytes": 105794, "sha256": "22EF04789317488200C3EEDED32AF6F5AA9D1A238D3D1CBE0709C85F85C04807"},
+    {"path": "results/docker-formal01/audit.json", "bytes": 259, "sha256": "6D40AAFE36B8096D68978F6EE0A57B080392E16E217CFC0E092F0EBEC9696F86"},
+    {"path": "audit_result_posthoc_v2.py", "bytes": 6645, "sha256": "B84FA808F74B538B7BF61CE29A66F8CE8B146C1B7C53C09D5920AF793472499E"},
+    {"path": "results/docker-formal01/audit_posthoc_v2.json", "bytes": 4611, "sha256": "63265C0B70A53A8EA3902929416BA752C74DEFDF9BD957AAA43BA0E21FB5A3B0"},
+    {"path": "REPORT.md", "bytes": 2888, "sha256": "B5854227A327D90BCBDD0510299FA9E25D1A73E22AC38482A89E82BBA0E850DA"}
+  ]
+}
