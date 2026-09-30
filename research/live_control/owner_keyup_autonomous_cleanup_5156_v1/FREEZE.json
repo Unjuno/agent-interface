@@ -1,0 +1,31 @@
+{
+  "allocation": "02",
+  "issue": "Unjuno/agent-interface#5156",
+  "base_commit": "7863d1d7c51a42169f2fe291e264f48be9d0a041",
+  "source_blobs": {
+    "input_owner_v10.py": "341b3c01649943ddaad5f28431a792c4889cc36e",
+    "input_transition_owner_v3.py": "0ea631abcf6272f0538a9ef9198ad8069b47b464",
+    "executor_v3.py": "2b072454fd81c41bf9e025217afc78020c7059de"
+  },
+  "source_sha256": {
+    "input_owner_v10.py": "CEAE7D9983CD0BA13A35E01CE2CE7DBBF03A0397B23DDC123B0110B4D4DE670B",
+    "input_transition_owner_v3.py": "5FFDBB3679451FEFDC3836917D43D924F0F43C8082D21327207ECEFBD87F5BE6",
+    "executor_v3.py": "EA3FA8C9751A6A41B4814AD6E0D03BEC85166765B0A41D2488A51750D17B3A4A"
+  },
+  "scope": "synthetic host-only construction; no X11, GUI, real input, container, model, or GPU",
+  "formal_x11_spent": false,
+  "sha256": {
+    "release_envelope.py": "31E4708FC8D863CFC2028C79C2673EF35E7E230B341453300B4DB31FD6F0E38C",
+    "test_release_envelope.py": "FD20ECE60465B83FB9D1DE56A6BAC4BDDCCD92CA81284769BD151848EECCAA24",
+    "build_raw.py": "F8EE33F45D07330A932EC04D000F1EC66F9FEEEFF859EE995C0D03E485EA7153",
+    "audit.py": "AA5344342FA1E447D8626B113880B6FE9734882987CEBB8FADD4B62AF2E705E9",
+    "source_audit.py": "8DA4FC0551186C89CEC931122BD15381DA1D3EF5BE887B8BBB378046B26D851E",
+    "README.md": "47A1B443B0D59E26CC08B309C4A60F412EDFA856072830D866D1E99E4E14C53B"
+  },
+  "development_iterations": {
+    "initial_red": "expected import failure before implementation",
+    "initial_green": "4 unit tests passed after adapting implementation to the pinned test contract",
+    "expanded_development": "9 unittest methods passed, including the preregistered 10 construction scenarios and independent audit corruption controls; separate source audit classified all four pinned release callsites"
+  },
+  "candidate_frozen_before_final_run": true
+}
