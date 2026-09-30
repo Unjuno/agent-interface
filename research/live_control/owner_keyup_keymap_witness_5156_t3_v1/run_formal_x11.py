@@ -65,6 +65,7 @@ def wait_key_set(d, codes, expected_down, timeout=1.0):
 
 def main(out_path):
     raw = []
+    expected = json.loads((HERE / "EXPECTED.json").read_text(encoding="utf-8"))
     Path(out_path).parent.mkdir(parents=True, exist_ok=True)
     Path(out_path).write_text("", encoding="utf-8")
 
@@ -98,8 +99,8 @@ def main(out_path):
     try:
         emit({"event": "fixture", "display": os.environ.get("DISPLAY"),
                     "focus_window": window.id,
-                    "allocation": os.environ.get("FORMAL_ALLOCATION", "MAP01-OWNER-KEYMAP-WITNESS-5156-T3-20261001-01"),
-                    "frozen_main": os.environ.get("FORMAL_FROZEN_MAIN", "8ee4ff891a54827b3df3df297cdb849e2aea428e"),
+                    "allocation": os.environ.get("FORMAL_ALLOCATION", expected["allocation"]),
+                    "frozen_main": os.environ.get("FORMAL_FROZEN_MAIN", expected["frozen_main"]),
                     "image_digest": os.environ.get("FORMAL_IMAGE_DIGEST"),
                     "platform": os.environ.get("FORMAL_PLATFORM")})
 

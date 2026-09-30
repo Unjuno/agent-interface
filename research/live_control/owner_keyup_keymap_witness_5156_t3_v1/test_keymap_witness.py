@@ -8,6 +8,7 @@ from test_audit_formal_x11 import fixture_rows
 
 
 EXPECTED = json.loads(Path("EXPECTED.json").read_text(encoding="utf-8"))
+SOURCE_MANIFEST = json.loads(Path("SOURCE_MANIFEST.json").read_text(encoding="utf-8"))
 
 
 def bitmap_hex(keycodes, down):
@@ -41,6 +42,9 @@ def witness_rows():
 
 
 class KeymapWitnessTests(unittest.TestCase):
+    def test_expected_freeze_matches_vendored_source_manifest(self):
+        self.assertEqual(EXPECTED["frozen_main"], SOURCE_MANIFEST["main_commit"])
+
     def test_boolean_only_down_up_receipts_are_not_independent_evidence(self):
         rows = [r for r in fixture_rows() if r.get("event") != "keymap_snapshot"]
         errors = audit(rows, EXPECTED)
