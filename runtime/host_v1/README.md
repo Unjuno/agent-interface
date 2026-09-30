@@ -288,3 +288,5 @@ Full `interface_results` includes the original program in
 inconsistent invocation/capture evidence and failed/unknown wait shapes stay
 full. CLI summaries have no server invocation context and retain their existing
 full fallback when raw provenance is absent.
+
+The [retained real-X11 send/presentation smoke](../results/host-presented-send-01/README.md) exercises typed refusal delivery before the composed promise resolves, an explicit read-only binding review, and neutral close. It addresses the prior caller presentation loss; it is not an automatic recovery or six-task integration pass.
