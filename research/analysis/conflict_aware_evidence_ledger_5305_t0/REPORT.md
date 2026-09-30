@@ -36,8 +36,10 @@ metadata; the model has one proposition and only five atoms.
 - Audit JSON SHA-256: `c304b2242c2b9cd021a9572055bc09a3623668c86e5532ca5d1ee18d389abd0`
 - Candidate source SHA-256: see `FREEZE.json` (captured after the single candidate invocation).
 - Auditor source SHA-256 is retained in `FREEZE.json`.
-- No Docker, network, model, GUI, action, GPU, CUDA, or external service was
-  invoked. This was an exhaustive finite model check, not a hardware experiment.
+- The candidate and audit experiment used no Docker, network, model, GUI, action,
+  GPU, CUDA, or external service. GitHub MCP was used afterward to publish the
+  retained evidence. This was an exhaustive finite model check, not a hardware
+  experiment.
 - No source/main files or predecessor artifacts were changed.
 
 ## Delivery limitation
