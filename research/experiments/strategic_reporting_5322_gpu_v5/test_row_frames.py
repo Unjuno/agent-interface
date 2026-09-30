@@ -28,6 +28,13 @@ class RowFrameTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             decode_call(frames, 2)
 
+    def test_zero_is_reserved_for_final_event(self):
+        payload = b'{"status":"PASS_AUDIT"}'
+        frames = encode_call(0, payload)
+        self.assertEqual(payload, decode_call(frames, 0))
+        with self.assertRaises(ValueError):
+            encode_call(7, payload)
+
     def test_rejects_empty_and_oversized_input(self):
         with self.assertRaises(ValueError):
             encode_call(1, b"")
