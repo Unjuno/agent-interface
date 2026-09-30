@@ -2,7 +2,8 @@
 (doc, expectedStudySha256, expectedAuditSha256) => {
   const alphabet=["SIGN","PUBLISH","INDEX","HASH","REVOKE","ACTIVATE","ARCHIVE","NOTIFY"];
   const costs=[2,4,2,3,5,3,3,1], values=[4,5,3,2,4,4,2,1], index=new Map(alphabet.map((x,i)=>[x,i]));
-  const sets=[[0,1],[0,2],[1,2],[0,1,2]], budget=10;\n  const contractNames=[["order","requires"],["order","mutex"],["requires","mutex"],["order","requires","mutex"]];
+  const sets=[[0,1],[0,2],[1,2],[0,1,2]], budget=10;
+  const contractNames=[["order","requires"],["order","mutex"],["requires","mutex"],["order","requires","mutex"]];
   const predicateTables=[
     {kind:0,x:0,y:1}, // SIGN precedes PUBLISH
     {kind:1,x:2,y:3}, // INDEX requires HASH
