@@ -7,6 +7,12 @@ on:
       - "research/analysis/hidden_cause_sensitivity_5440_t1/raw/audit.json"
       - "research/analysis/hidden_cause_sensitivity_5440_t1/SHA256SUMS"
       - "research/analysis/hidden_cause_sensitivity_5440_t1/execution-status.json"
+      - "research/analysis/hidden_cause_sensitivity_5440_t1/execution-status.sha256"
+      - "research/analysis/hidden_cause_sensitivity_5440_t1/supplemental.sha256"
+      - "research/analysis/hidden_cause_sensitivity_5440_t1/formal-result.json"
+      - "research/analysis/hidden_cause_sensitivity_5440_t1/formal-result.md"
+      - "research/analysis/hidden_cause_sensitivity_5440_t1/workflow-activation-stops.json"
+      - "research/analysis/hidden_cause_sensitivity_5440_t1/postrun-delivery-stop.json"
 
 permissions:
   contents: read
@@ -38,4 +44,6 @@ jobs:
               python /src/audit.py --input /src/cases.json --raw /src/raw/formal.json --output /out/recomputed-audit.json
               cmp /src/raw/audit.json /out/recomputed-audit.json
               sha256sum -c /src/SHA256SUMS
+              sha256sum -c /src/execution-status.sha256
+              sha256sum -c /src/supplemental.sha256
             '

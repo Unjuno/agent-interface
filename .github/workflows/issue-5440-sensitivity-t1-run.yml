@@ -1,7 +1,6 @@
 name: Issue 5440 hidden-cause sensitivity T1
 
 on:
-  workflow_dispatch:
   push:
     branches: [main]
     paths:
@@ -16,6 +15,7 @@ permissions:
 
 jobs:
   container-experiment:
+    if: ${{ github.sha == '32db1c3fdc6e50dd6d64c3d6886e503c94144fd6' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     env:
@@ -59,11 +59,7 @@ jobs:
           OUTPUT_DIR="$RUNNER_TEMP/sensitivity-output"
           mkdir -p "$OUTPUT_DIR"
           printf '{"schema":"hidden-cause-sensitivity-t1-execution-status-v1","image":"%s","platform":"%s","base_main_sha":"%s","image_pull_step":"%s","container_step":"%s"}\n' "$IMAGE" "$PLATFORM" "$BASE_MAIN_SHA" "$IMAGE_PULL_OUTCOME" "$CONTAINER_OUTCOME" > "$OUTPUT_DIR/execution-status.json"
-          if [ -f "$OUTPUT_DIR/SHA256SUMS" ]; then
-            (cd "$OUTPUT_DIR" && sha256sum execution-status.json) >> "$OUTPUT_DIR/SHA256SUMS"
-          else
-            (cd "$OUTPUT_DIR" && sha256sum execution-status.json > SHA256SUMS)
-          fi
+          (cd "$OUTPUT_DIR" && sha256sum execution-status.json > execution-status.sha256)
       - name: Upload immutable run output
         if: always()
         uses: actions/upload-artifact@v4

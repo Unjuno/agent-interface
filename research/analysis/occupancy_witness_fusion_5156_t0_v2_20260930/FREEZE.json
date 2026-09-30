@@ -1,0 +1,47 @@
+{
+  "freeze_id": "R133_OCCUPANCY_WITNESS_FUSION_5156_T0_V2_20260930_01",
+  "base_commit": "79e7c9af7e7fa3371f5ca3994c6b72e6cdb8456c",
+  "predecessor": {
+    "path": "predecessor_attempt_01/",
+    "disposition": "STOP_STALE_MAIN_BEFORE_RUN",
+    "runner_invocations": 0,
+    "candidate_imports": 0,
+    "source_freeze": "predecessor_attempt_01/FREEZE.json",
+    "stop_record": "predecessor_attempt_01/STOP.json"
+  },
+  "sources": {
+    "PLAN.md": "132BCEF241ECC24BA51E1F609A1F9AB68F18649C266481FAA59AE4833548F5FD",
+    "fusion.py": "543E6BFBE6B91D57300DDFF3977378014D69EF802BE8E686F55936BF82F60EC4",
+    "test_fusion.py": "5B098999F9DFB8DAA9A87B4571E0E6B820EFC91148EA08D135AA1BCFEFD66147",
+    "run_t0.py": "D44922C95BE8D0722AD6598F816755002888F2B44EAAA05003199CAFF2C2C069",
+    "audit_t0.py": "2654B468C24E6F80CB7B78B80D23F24280FFFFAF811FD0A444B5B896C1E50A61"
+  },
+  "source_git_blob_oids": {
+    "PLAN.md": "870b36a6f7b3675b7f61c414c3bafbb589b9dbd5",
+    "fusion.py": "1600b7e0274b0002b3ba34e638483654609f59f2",
+    "test_fusion.py": "aa021e1af0fe22ded94fafc3eef7d736ab7517f5",
+    "run_t0.py": "3d9a7bb52d2ed4663e41ac27f7e514533dfd5345",
+    "audit_t0.py": "a2d5fc18529d46f85f07dc7207dab4f1bbbfce87"
+  },
+  "environment": {
+    "platform": "Windows host",
+    "python": "3.12.10",
+    "dependencies": "Python standard library only",
+    "docker_or_orbstack": "NOT_INVOKED_NO_EXACT_5085_ASSIGNMENT",
+    "network": "NOT_USED",
+    "gpu_model_gui_input": "NOT_USED"
+  },
+  "allocation": {
+    "candidate_runner_invocations": 1,
+    "raw_only_audit_invocations": 1,
+    "test_runs_before_freeze": 1,
+    "output": "results/t0-02/raw.json",
+    "output_must_be_absent_before_runner": true,
+    "retry_or_replacement": 0
+  },
+  "pre_freeze_construction": {
+    "unit_tests": "12 passed",
+    "these_checks_are_confirmatory_result_rows": false
+  },
+  "decision_scope": "synthetic_discrete_interval_contract_only; no physical input or runtime claim"
+}
