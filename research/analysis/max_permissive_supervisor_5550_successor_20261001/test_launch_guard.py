@@ -1,5 +1,10 @@
 import unittest
 from datetime import datetime, timezone
+import json
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
 
 from launch_guard import assess
 
@@ -58,6 +63,33 @@ class LaunchGuardTests(unittest.TestCase):
         from launch_guard import parse_utc
         with self.assertRaises(ValueError):
             parse_utc("2026-10-01T16:00:00")
+
+    def test_cli_rejects_caller_supplied_clock(self):
+        freeze = {
+            "allocation": "successor-03",
+            "frozen_main": "abc123",
+            "execution_lease": {
+                "assigned": True,
+                "coordinator_comment_id": "123456",
+                "owner": "Unjuno",
+                "start_utc": "2026-10-01T16:00:00Z",
+                "end_utc": "2026-10-01T16:15:00Z",
+                "image_digest": "sha256:abc",
+                "platform": "linux/arm64",
+            },
+        }
+        script = Path(__file__).with_name("launch_guard.py")
+        with tempfile.TemporaryDirectory() as temp_dir:
+            freeze_path = Path(temp_dir) / "freeze.json"
+            freeze_path.write_text(json.dumps(freeze), encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(script), str(freeze_path), "--main-sha", "abc123",
+                 "--image-digest", "sha256:abc", "--platform", "linux/arm64",
+                 "--now-utc", "2026-10-01T16:00:00Z"],
+                capture_output=True, text=True, check=False,
+            )
+        self.assertNotEqual(result.returncode, 0)
+        self.assertNotIn("PASS_PRELAUNCH_GATE", result.stdout)
 
 
 if __name__ == "__main__":
