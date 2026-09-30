@@ -39,6 +39,7 @@ the declared population matches reality.
 ## Freeze
 
 Issue: https://github.com/Unjuno/agent-interface/issues/5315
+Frozen main before the final source refreeze: `57b56de2831204885c55375737580e5d82d3ab98`.
 Primary sources: CRC https://arxiv.org/abs/2208.02814; SCRC
 https://arxiv.org/abs/2512.12844. Frozen source/base identities are recorded in
 `FREEZE.json` after source commit and before the single formal invocation.
