@@ -281,6 +281,13 @@ python -m runtime.cli_v1 review --report dispatch-result.json --run-directory /a
 ```
 
 
+`review --no-image` returns the receipt, image reference and outcome without the
+Base64 image payload. File and stdin review still validate the selected image's
+path, digest and PNG signature. Missing or altered images remain `needs_review`
+with exit code 2; omitting the image is not evidence that the application has
+updated. The default review includes the image. This is a read-only option and
+never captures a newer frame or sends input.
+
 CLI summaries include `expected_report_sha256` in their read-only retrieval
 arguments. Pass it as `review --expected-report-sha256 <digest>` to require the
 exact original report bytes. This also works with `--report -`. A changed report
@@ -587,7 +594,7 @@ For a CLI dispatch, opt into `--detail summary --review --run-directory <fresh-d
 The existing public success projection keeps execution outcome, observations,
 release records and image data. Complete raw `report.json` is saved first; its
 exact byte length/hash must match the presented source before projection.
-The returned `presentation.retrieve` describes a read-only `review` command
+The returned `presentation.retrieve` describes a read-only `review --no-image` command
 for that report. Full is the default and the review command's normal format.
 Missing/changed raw reports, report-persistence failures, action failures and
 unsupported records stay full; no input is replayed. Retention status remains
