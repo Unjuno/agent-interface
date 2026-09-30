@@ -172,6 +172,19 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 - [`gtk/`](gtk/) — retained GTK/X11 fixture and adapter research paths; consult each child report for scope and disposition.
 
 ### Recent additive namespaces
+- [`archive/`](archive/) — Legacy research archive; consult included manifests and reports for scope.
+- [`archives/`](archives/) — Archived research bundles and their retained evidence indexes.
+- [`container_control/`](container_control/) — Container-control research artifacts.
+- [`control_codec/`](control_codec/) — Control-codec research artifacts.
+- [`needle_online_lora_skill_stream_v1/`](needle_online_lora_skill_stream_v1/) — Needle online role-skill streaming study; see REPORT.md for disposition.
+- [`orchestration/`](orchestration/) — Orchestration research artifacts.
+- [`real_apps_v1/`](real_apps_v1/) — Real-application research artifacts, v1.
+- [`real_apps_v2/`](real_apps_v2/) — Real-application research artifacts, v2.
+- [`real_apps_v3/`](real_apps_v3/) — Guarded real-application research artifacts, v3.
+- [`retention/`](retention/) — Retention research artifacts.
+- [`visual_tracking/`](visual_tracking/) — Visual-tracking research artifacts.
+- [`x11_private_xvfb_5286/`](x11_private_xvfb_5286/) — Issue #5286 private-Xvfb termination attempt; STOP retained, not a clean-termination result.
+- [`x11_private_xvfb_5291/`](x11_private_xvfb_5291/) — Issue #5291 successor: scoped local construction/termination PASS; not GUI-input or product validation.
 - [`needle_role_graph_3775_v1/`](needle_role_graph_3775_v1/) — Issue #3778 original role-graph allocation retained as `STOP_RESULT_CAPTURE_TRUNCATED`; see [recovery review](needle_role_graph_3775_v1/RECOVERY_REVIEW.md). Distinct compact successor #3780 is documented separately.
 - [`needle_lora_3441_pilot_04d_corrected_base_v1/`](needle_lora_3441_pilot_04d_corrected_base_v1/) — Issue #4471 GPU formal STOP during result serialization; no scientific metrics were retained.
 - [`needle_lora_3441_pilot_04e_result_schema_v1/`](needle_lora_3441_pilot_04e_result_schema_v1/) — Issue #4471 fresh-seed result-schema successor; scoped one-seed synthetic routing PASS with host-only CUDA limits, not recovery of the earlier STOP.
