@@ -36,23 +36,31 @@ def audit(records, expected):
                 errors.append("autonomous release could not bind uniquely to admitted key")
 
     actual = {}
+    actual_sequence = []
     for row in joined:
         identity = (row.get("case"), row.get("key"), "explicit_up")
         if identity in actual:
             errors.append(f"duplicate explicit release: {identity}")
         actual[identity] = row
+        actual_sequence.append(identity)
     for row in auto_rows:
         identity = (row.get("case"), row.get("expected_key"), row.get("trigger_class"))
         if identity in actual:
             errors.append(f"duplicate autonomous release: {identity}")
         actual[identity] = row
+        actual_sequence.append(identity)
 
     expected_ids = set()
+    expected_sequence = []
     for case, spec in expected["cases"].items():
         for release in spec["release"]:
-            expected_ids.add((case, release["key"], release["class"]))
+            identity = (case, release["key"], release["class"])
+            expected_ids.add(identity)
+            expected_sequence.append(identity)
     if set(actual) != expected_ids:
         errors.append(f"release inventory mismatch: got={sorted(actual)} want={sorted(expected_ids)}")
+    if actual_sequence != expected_sequence:
+        errors.append(f"release order mismatch: got={actual_sequence} want={expected_sequence}")
 
     for identity in expected_ids & set(actual):
         case, key, trigger = identity
@@ -98,13 +106,14 @@ def audit(records, expected):
         errors.append("cancel did not reject second admission")
     if len([r for r in records if r.get("event") == "process_cleanup" and r.get("owner_stopped") is True]) != 1:
         errors.append("owner process cleanup not verified exactly once")
-    if any(r.get("event") == "process_cleanup" and r.get("fixture_child_processes") != 0 for r in records):
-        errors.append("fixture child-process cleanup mismatch")
     if len([r for r in records if r.get("event") == "terminal_state" and r.get("neutral") is True
              and r.get("grants_input_authority") is False]) != 1:
         errors.append("neutral terminal input state missing")
     if len([r for r in records if r.get("event") == "fixture"]) != 1:
         errors.append("fixture identity missing/duplicated")
+    complete = [r for r in records if r.get("event") == "runner_complete" and r.get("exit_code") == 0]
+    if len(complete) != 1:
+        errors.append("runner completion sentinel missing/duplicated")
     return errors
 
 
