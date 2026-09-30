@@ -1,0 +1,120 @@
+test_all_six_orders_are_balanced (test_harness.Construction.test_all_six_orders_are_balanced) ... FAIL
+test_exact_external_json_spacing_and_order (test_harness.Construction.test_exact_external_json_spacing_and_order) ... FAIL
+test_expected_summary_preserves_critical_fields (test_harness.Construction.test_expected_summary_preserves_critical_fields) ... FAIL
+test_external_image_is_removed_not_serialized (test_harness.Construction.test_external_image_is_removed_not_serialized) ... FAIL
+test_full_oracle_is_exact_and_not_aliased (test_harness.Construction.test_full_oracle_is_exact_and_not_aliased) ... FAIL
+test_memory_counts_are_typed_and_ordered (test_harness.Construction.test_memory_counts_are_typed_and_ordered) ... FAIL
+test_real_refusal_policy_contract_cannot_be_success (test_harness.Construction.test_real_refusal_policy_contract_cannot_be_success) ... FAIL
+test_timing_gate_accepts_finite_aggregate (test_harness.Construction.test_timing_gate_accepts_finite_aggregate) ... FAIL
+test_timing_gate_rejects_coarse_or_nonfinite (test_harness.Construction.test_timing_gate_rejects_coarse_or_nonfinite) ... ok
+test_typed_equality_does_not_conflate_bool_and_int (test_harness.Construction.test_typed_equality_does_not_conflate_bool_and_int) ... FAIL
+
+======================================================================
+FAIL: test_all_six_orders_are_balanced (test_harness.Construction.test_all_six_orders_are_balanced)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ac864d2e1baf/runtime-issue-astra/real-receipt-cost-v1/test_harness.py", line 19, in test_all_six_orders_are_balanced
+    self.assertEqual(harness.orders(), list(itertools.permutations(('FULL_V3', 'PACED_BRIEF', 'PUBLIC_SUMMARY'))))
+AssertionError: Lists differ: [] != [('FULL_V3', 'PACED_BRIEF', 'PUBLIC_SUMMAR[229 chars]V3')]
+
+Second list contains 6 additional elements.
+First extra element 0:
+('FULL_V3', 'PACED_BRIEF', 'PUBLIC_SUMMARY')
+
+- []
++ [('FULL_V3', 'PACED_BRIEF', 'PUBLIC_SUMMARY'),
++  ('FULL_V3', 'PUBLIC_SUMMARY', 'PACED_BRIEF'),
++  ('PACED_BRIEF', 'FULL_V3', 'PUBLIC_SUMMARY'),
++  ('PACED_BRIEF', 'PUBLIC_SUMMARY', 'FULL_V3'),
++  ('PUBLIC_SUMMARY', 'FULL_V3', 'PACED_BRIEF'),
++  ('PUBLIC_SUMMARY', 'PACED_BRIEF', 'FULL_V3')]
+
+======================================================================
+FAIL: test_exact_external_json_spacing_and_order (test_harness.Construction.test_exact_external_json_spacing_and_order)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ac864d2e1baf/runtime-issue-astra/real-receipt-cost-v1/test_harness.py", line 13, in test_exact_external_json_spacing_and_order
+    self.assertEqual(harness.wire_bytes({'z': 1, 'a': 'é'}), b'{"z": 1, "a": "\\u00e9"}')
+AssertionError: None != b'{"z": 1, "a": "\\u00e9"}'
+
+======================================================================
+FAIL: test_expected_summary_preserves_critical_fields (test_harness.Construction.test_expected_summary_preserves_critical_fields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ac864d2e1baf/runtime-issue-astra/real-receipt-cost-v1/test_harness.py", line 45, in test_expected_summary_preserves_critical_fields
+    self.assertEqual(oracle.preserved_errors(source, expected), [])
+AssertionError: Lists differ: ['unimplemented'] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+'unimplemented'
+
+- ['unimplemented']
++ []
+
+======================================================================
+FAIL: test_external_image_is_removed_not_serialized (test_harness.Construction.test_external_image_is_removed_not_serialized)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ac864d2e1baf/runtime-issue-astra/real-receipt-cost-v1/test_harness.py", line 16, in test_external_image_is_removed_not_serialized
+    self.assertEqual(harness.wire_bytes({'image': {'opaque': 1}, 'v': 2}), b'{"v": 2}')
+AssertionError: None != b'{"v": 2}'
+
+======================================================================
+FAIL: test_full_oracle_is_exact_and_not_aliased (test_harness.Construction.test_full_oracle_is_exact_and_not_aliased)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ac864d2e1baf/runtime-issue-astra/real-receipt-cost-v1/test_harness.py", line 34, in test_full_oracle_is_exact_and_not_aliased
+    self.assertEqual(expected, source)
+AssertionError: None != {'authority': 'none', 'outcome_summary': [50 chars][1]}}
+
+======================================================================
+FAIL: test_memory_counts_are_typed_and_ordered (test_harness.Construction.test_memory_counts_are_typed_and_ordered)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ac864d2e1baf/runtime-issue-astra/real-receipt-cost-v1/test_harness.py", line 50, in test_memory_counts_are_typed_and_ordered
+    self.assertEqual(oracle.memory_errors({'net_bytes':30,'peak_bytes':50}), [])
+AssertionError: Lists differ: ['unimplemented'] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+'unimplemented'
+
+- ['unimplemented']
++ []
+
+======================================================================
+FAIL: test_real_refusal_policy_contract_cannot_be_success (test_harness.Construction.test_real_refusal_policy_contract_cannot_be_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ac864d2e1baf/runtime-issue-astra/real-receipt-cost-v1/test_harness.py", line 40, in test_real_refusal_policy_contract_cannot_be_success
+    self.assertEqual(oracle.expected_view('refusal',policy,source,None), source)
+AssertionError: None != {'authority': 'none', 'outcome_summary': [50 chars][1]}}
+
+======================================================================
+FAIL: test_timing_gate_accepts_finite_aggregate (test_harness.Construction.test_timing_gate_accepts_finite_aggregate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ac864d2e1baf/runtime-issue-astra/real-receipt-cost-v1/test_harness.py", line 25, in test_timing_gate_accepts_finite_aggregate
+    self.assertEqual(oracle.timing_errors({'wall_ns': 100000, 'cpu_ns': 99000, 'count': 3}, 1000), [])
+AssertionError: Lists differ: ['unimplemented'] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+'unimplemented'
+
+- ['unimplemented']
++ []
+
+======================================================================
+FAIL: test_typed_equality_does_not_conflate_bool_and_int (test_harness.Construction.test_typed_equality_does_not_conflate_bool_and_int)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ac864d2e1baf/runtime-issue-astra/real-receipt-cost-v1/test_harness.py", line 22, in test_typed_equality_does_not_conflate_bool_and_int
+    self.assertFalse(oracle.same({'flag': True}, {'flag': 1}))
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.002s
+
+FAILED (failures=9)

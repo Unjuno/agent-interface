@@ -1,0 +1,13 @@
+{
+  "amendment": 1,
+  "issue": 5486,
+  "pre_run_only": true,
+  "reason": "Independent audit expected array order was inconsistent with the runner's canonical sorted error lists; no candidate or runner execution occurred before this correction.",
+  "original_freeze_unchanged": true,
+  "original_independent_auditor_sha256": "da6804eb3d1344efedd47d95b4287e5903a75692093892b55c27360eb32f61f5",
+  "corrected_independent_auditor": "independent_audit_v2.py",
+  "corrected_sha256": "79758680c8dd37cd604903c84a317ebdfb22f07ec9471bfe962428efbdc2ba3d",
+  "change": "Compare sorted actual and expected error lists so order is not treated as a semantic gate.",
+  "runner_unchanged": true,
+  "allocation_consumed": false
+}

@@ -470,3 +470,18 @@ same as an ordinary image-omitted lookup. Missing or altered images still produc
 `needs_review`; the option does not bypass validation or capture a new frame.
 Management/guarded result presentation retains its existing path. No measured
 model-token, cost or useful-feedback latency benefit is implied.
+
+
+### Metadata-only retained image review
+
+`interface_results(call_id=..., include_image=false)` validates the retained PNG
+without Base64-encoding an image block that would be discarded. This applies to
+both normal and guarded/management result presentation. The response retains the
+same recorded source and image status, with `image_delivery=omitted_by_request`
+when a valid image is available; a changed/missing/invalid PNG still reports its
+review error. No fresh capture, redraw acknowledgement or input replay occurs.
+The default `include_image=true` continues to return the retained image.
+
+[Guarded public-path regression and primary use](../results/guarded-metadata-no-encode-01/README.md)
+records the forwarding repair and scoped checks. Avoiding this conversion does
+not by itself establish lower model tokens/cost or measured response latency.
