@@ -55,3 +55,5 @@ Historical and superseded integration paths remain in place when their exact nam
 - [`golden_v3_audit_input_binding_2198_v1/REPORT.md`](golden_v3_audit_input_binding_2198_v1/REPORT.md) — Docker Desktop audit of #2198's hardcoded checker: six inputs produce identical output; independent raw JSON finds seven absent required fields, one contradictory schema identity, and `usage` present. Checker input-binding FAIL; reconciliation remains HOLD.
 
 - [`golden_v3_docker_slot_correction_2198_v1/RESOURCE_CORRECTION.md`](golden_v3_docker_slot_correction_2198_v1/RESOURCE_CORRECTION.md) — retrospective correction: the #2198 audit launched Docker containers during #5074's exclusive CPU-slot reservation; no further container run until explicit release.
+
+- [`issue_2195_modal_selection_pilot_v1/REPORT.md`](issue_2195_modal_selection_pilot_v1/REPORT.md) - retained modal PNG, SVG fixture and six-case specification; one request timed out, zero model responses received or retained, `HOLD_PILOT_INFERENCE_TIMEOUT`.
