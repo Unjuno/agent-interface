@@ -154,6 +154,67 @@ class X11IntegrationTests(unittest.TestCase):
         self.assertEqual(releases[-1]["buttons_down"], [])
         self.assertEqual(len(row["execution"]["observations"]), 1)
 
+    def test_synchronous_pointer_grab_keeps_recovery_explicit(self):
+        from Xlib import X, display
+        class FailAfterPress(X11Backend):
+            def pointer_button(self, button, down):
+                super().pointer_button(button, down)
+                if down:
+                    raise RuntimeError('injected failure after native press')
+
+        observer = display.Display(os.environ['DISPLAY'])
+        target = self.backend.targets['fixture'].id
+        window = observer.create_resource_object('window', target)
+        backend = FailAfterPress(os.environ['DISPLAY'], {'fixture': target})
+        session = X11RuntimeSession(backend)
+        try:
+            # A real passive synchronous grab freezes subsequent pointer events.
+            # The independent connection owns both the grab and its release.
+            window.grab_button(1, X.AnyModifier, False, X.ButtonPressMask,
+                               X.GrabModeSync, X.GrabModeAsync, X.NONE, X.NONE)
+            observer.sync()
+            program = make_program('synchronous-grab')
+            result = session.dispatch(program, current_observation_seq=7,
+                                      current_binding_revision=3)
+            self.assertEqual(result['status'], 'execution_failed')
+            self.assertFalse(result['execution']['releases'][-1]['verified'])
+            self.assertTrue(observer.screen().root.query_pointer().mask & X.Button1Mask)
+            self.assertTrue(session.recovery_required)
+            emissions = backend.emissions
+
+            # Allow the already queued release to run; send no additional input.
+            observer.allow_events(X.AsyncPointer, X.CurrentTime)
+            window.ungrab_button(1, X.AnyModifier)
+            observer.sync()
+            deadline = time.monotonic() + .5
+            masks = []
+            while True:
+                mask = observer.screen().root.query_pointer().mask
+                masks.append(mask)
+                if not mask & X.Button1Mask or time.monotonic() >= deadline:
+                    break
+                time.sleep(.001)  # test observer only, not a production wait
+            self.assertFalse(masks[-1] & X.Button1Mask, masks)
+            self.assertEqual(backend.emissions, emissions)
+            self.assertTrue(session.recovery_required)
+            blocked = session.dispatch(program, current_observation_seq=7,
+                                       current_binding_revision=3)
+            self.assertEqual(blocked['error'], 'INPUT_RECOVERY_REQUIRED')
+            self.assertEqual(backend.emissions, emissions)
+            recovered = session.recover_input()
+            self.assertEqual(recovered['status'], 'input_recovered')
+            self.assertFalse(recovered['replay_allowed'])
+            self.assertIsNone(recovered['task_success'])
+            self.assertFalse(session.recovery_required)
+            self.assertFalse(self.effect.exists())
+        finally:
+            observer.allow_events(X.AsyncPointer, X.CurrentTime)
+            window.ungrab_button(1, X.AnyModifier)
+            observer.sync()
+            backend.release_all()
+            backend.close()
+            observer.close()
+
     def test_stale_observation_emits_zero_input(self):
         before = self.backend.emissions
         row = self.session.dispatch(make_program("stale", seq=6), current_observation_seq=7, current_binding_revision=3)
