@@ -2,23 +2,37 @@
 import base64
 import hashlib
 import json
+import re
 from pathlib import Path
 
 from .receipt import receipt_view, receipt_bytes
 from .receipt_image import select_image
 
 
-def review(report_path, run_directory, *, compact=False, report_refs=False):
+def _check_expected_digest(data, expected):
+    if expected is None:
+        return
+    if not isinstance(expected, str) or re.fullmatch(r'[0-9a-f]{64}', expected) is None:
+        raise ValueError('expected report SHA-256 must be 64 lowercase hexadecimal characters')
+    if hashlib.sha256(data).hexdigest() != expected:
+        raise ValueError('report SHA-256 does not match expected source')
+
+
+def review(report_path, run_directory, *, compact=False, report_refs=False,
+           expected_report_sha256=None):
     view = receipt_view(report_path)
     # Parse the same bytes whose digest is presented to the caller.
     data = Path(view['source']['path']).read_bytes()
     if hashlib.sha256(data).hexdigest() != view['source']['sha256']:
         raise ValueError('report changed during review')
+    _check_expected_digest(data, expected_report_sha256)
     return _review(data, view, run_directory, compact=compact, report_refs=report_refs)
 
 
-def review_bytes(data: bytes, run_directory, *, compact=False, report_refs=False):
+def review_bytes(data: bytes, run_directory, *, compact=False, report_refs=False,
+                 expected_report_sha256=None):
     """Review a complete received response without a temporary report file."""
+    _check_expected_digest(data, expected_report_sha256)
     return _review(data, receipt_bytes(data), run_directory, compact=compact, report_refs=report_refs)
 
 

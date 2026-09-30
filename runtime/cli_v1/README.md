@@ -281,6 +281,15 @@ python -m runtime.cli_v1 review --report dispatch-result.json --run-directory /a
 ```
 
 
+CLI summaries include `expected_report_sha256` in their read-only retrieval
+arguments. Pass it as `review --expected-report-sha256 <digest>` to require the
+exact original report bytes. This also works with `--report -`. A changed report
+or malformed expected digest returns `invalid_receipt` with exit code 2 before
+loading its referenced image. Whitespace changes count as different bytes.
+Without the option, review retains its existing behavior. This check establishes
+source identity relative to the supplied digest; it does not authenticate the
+producer, prove task success, or authorize replay.
+
 To pass a complete response without creating a report file, use `review --report -`.
 Python callers can pass the original bytes to `runtime.cli_v1.review.review_bytes`.
 The source digest covers the received bytes, not reserialized JSON. Since there
