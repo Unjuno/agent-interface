@@ -100,8 +100,8 @@ class MCPSessionOwner:
             row['observation_report'] = observation
         return row
 
-    def inspect_after_dispatch(self, report, target):
-        """Optional metadata only; never replace execution evidence or refresh its image."""
+    def inspect_after_dispatch(self, report, target, screen_region=None, capture_directory=None):
+        """Read-only inspection/capture after completed released input; no replay."""
         started = time.monotonic_ns()
         result = report.get('result', {})
         releases = result.get('execution', {}).get('releases', [])
@@ -118,7 +118,8 @@ class MCPSessionOwner:
             inspection = {'status': 'skipped', 'reason': 'DISPATCH_NOT_COMPLETED_AND_RELEASED'}
         else:
             try:
-                inspection = self.inspect_target(target)
+                inspection = self.inspect_target(target, screen_region=screen_region,
+                                                 capture_directory=capture_directory)
             except Exception as error:
                 inspection = {'status': 'needs_review', 'error': repr(error)}
         return dict(inspection, started_ns=started, ended_ns=time.monotonic_ns(),

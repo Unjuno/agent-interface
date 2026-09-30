@@ -220,3 +220,28 @@ in the summary arm; unchanged image data remains separate. Actual whole-context
 model usage is retained with cache and fixed-order limits. Neither that byte
 reduction nor the single pair proves lower model cost, faster semantic judgment
 or human-comparable live tempo.
+
+## Capturing after verified input release
+
+On the public `persistent-x11` dispatch route, request `inspect_after: target`
+and `inspect_after_region: [left, top, width, height]` to capture once after
+completed input and verified neutral release. The region uses
+`screen_physical_px`; it must be valid before input begins. Target focus metadata
+is checked before and after capture. This extends the existing optional
+post-dispatch inspection and does not select a new target or advance binding.
+
+A program may omit its inline `observe` when this later image is the intended
+feedback. If it contains both, both captures are retained, and an eligible later
+image is selected for delivery. Read `image_reference.post_dispatch_observation_id`
+and `capture_phase: 'after_dispatch_release'` to distinguish it from an inline
+execution observation. The complete later observation stays in
+`post_dispatch_inspection.observation_report`. Failure, refusal, recovery-required
+state or unverified release skips the later capture. Capture/target-check failure
+keeps the original input result and any original inline image.
+
+This is a read-only capture, with no automatic delay, redraw detection, semantic
+success inference or input replay. A later frame can still lack the completion
+cue. Inspect the actual image before deciding the next action; request a fresh
+observation when necessary. Historical `interface_results` returns the retained
+selection without recapturing or renewing the target review request. Full
+receipt fallback remains available when summary eligibility is not met.

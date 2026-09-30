@@ -228,6 +228,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             options = dict(kwargs, capture_directory=str(call_root / 'images'),
                            display_name=display_name)
             inspect_after = options.pop('inspect_after', None)
+            inspect_after_region = options.pop('inspect_after_region', None)
             # Attempt boundary only, not proof that the backend emitted input.
             with calls_lock:
                 calls[call_id]['backend_attempted'] = True
@@ -273,7 +274,11 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                                   operation_invoked=False, input_dispatched=False, effect_status='none')
             if operation == 'dispatch' and inspect_after is not None:
                 try:
-                    report['post_dispatch_inspection'] = owner.inspect_after_dispatch(report, inspect_after)
+                    capture_options = ({'screen_region': inspect_after_region,
+                                        'capture_directory': str(call_root / 'images')}
+                                       if inspect_after_region is not None else {})
+                    report['post_dispatch_inspection'] = owner.inspect_after_dispatch(
+                        report, inspect_after, **capture_options)
                 except Exception as error:
                     report['post_dispatch_inspection'] = {
                         'status': 'needs_review', 'error': repr(error),
@@ -502,7 +507,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                                current_binding_revision: StrictInt,
                                compact: StrictBool = False, report_refs: StrictBool = False,
                                detail: Literal["full", "brief", "summary"] = "full",
-                               inspect_after: StrictStr | None = None) -> CallToolResult:
+                               inspect_after: StrictStr | None = None,
+                               inspect_after_region: list[StrictInt] | None = None) -> CallToolResult:
             """Dispatch once through core admission. Include observe for an image; no implicit replay.
 
             Observation sequence is a caller assertion, not server-issued freshness.
@@ -511,7 +517,10 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             A returned image may precede redraw. Release and cleanup failures remain visible.
             inspect_after names a configured target in persistent-x11 mode. After
             completed, released input, return read-only target review metadata;
-            no implicit selection or new capture. Metadata is later than the image.
+            no implicit selection. With inspect_after_region, capture that explicit
+            screen_physical_px region once after verified release and recheck target
+            metadata. The selected image names post_dispatch_observation_id. Without
+            a region inspection is metadata only, later than the inline image.
             Inspection failure preserves input evidence. Summary preserves complete
             successful inspection context; errors or skipped inspection stay full.
             detail=brief with compact/report_refs summarizes supported successful paced
@@ -527,10 +536,19 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             if inspect_after is not None and (session_mode != 'persistent-x11' or inspect_after not in owner.targets):
                 return content({'status': 'invalid_request', 'error': 'INVALID_POST_DISPATCH_INSPECTION',
                                 'operation_invoked': False, 'input_dispatched': False}, error=True)
+            if inspect_after_region is not None:
+                from .observe import valid_observation_request
+                if (inspect_after is None or not valid_observation_request(
+                        inspect_after, 'screen_physical_px', inspect_after_region)):
+                    return content({'status': 'invalid_request',
+                        'error': 'INVALID_POST_DISPATCH_CAPTURE',
+                        'operation_invoked': False, 'input_dispatched': False}, error=True)
             arguments = {'program': program, 'current_observation_seq': current_observation_seq,
                          'current_binding_revision': current_binding_revision}
             if inspect_after is not None:
                 arguments['inspect_after'] = inspect_after
+            if inspect_after_region is not None:
+                arguments['inspect_after_region'] = inspect_after_region
             return await submit('dispatch', arguments, compact, report_refs, detail)
 
     @server.tool()
