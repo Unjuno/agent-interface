@@ -180,6 +180,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`deadline_identity_5265_dot/`](deadline_identity_5265_dot/)
 - [`decision_sufficiency_5329_v1/`](decision_sufficiency_5329_v1/)
 - [`dependency_aware_verifier_quorum_5314_v1/`](dependency_aware_verifier_quorum_5314_v1/)
+- [`desktop_lifecycle_rebind_3190_host_preflight_v1/`](desktop_lifecycle_rebind_3190_host_preflight_v1/)
 - [`deterministic_replay_boundary_r0_v1/`](deterministic_replay_boundary_r0_v1/)
 - [`effect_time_contract_authorization_successor_532_v1/`](effect_time_contract_authorization_successor_532_v1/)
 - [`epistemic_commit_5441_t4/`](epistemic_commit_5441_t4/)
