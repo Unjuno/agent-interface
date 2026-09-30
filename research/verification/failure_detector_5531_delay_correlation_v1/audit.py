@@ -2,7 +2,7 @@
 import hashlib, json, random, sys
 
 ALLOCATION="fd5531-delay-correlation-20261001-01"
-FREEZE_SHA="PLACEHOLDER_FREEZE_SHA"
+
 BASE=55310000; COUNT=10000; LAST=16
 KINDS=("healthy_fast","healthy_heavy_tail","partition_recover","crashed","restarted")
 CUTS=(2,4,8)
@@ -32,7 +32,7 @@ def replay(kind, cut, mode, i):
     for now in range(LAST+1):
         if reboot==now:
             if state=="FAILED": state="AUTHORIZED"
-        if now==6 and wa and wb:
+        if mode=="typed" and now==6 and wa and wb:
             state="FAILED"; first_failure=now; failure_events+=1
         if state=="AUTHORIZED" and now>=cut and (ready is None or ready>now):
             state="FAILED" if mode=="baseline" else "SUSPECTED_UNAVAILABLE"
@@ -64,11 +64,11 @@ def expected(cut,mode):
           "decoys_ignored":decoys,"hash_chain":chain.hex()})
     return answer
 
-def audit(raw):
+def audit(raw, expected_freeze_sha):
     errors=[]
     if raw.get("schema")!="fd5531-delay-correlation-raw-v1": errors.append("schema")
     if raw.get("allocation")!=ALLOCATION: errors.append("allocation")
-    if raw.get("freeze_blob_sha")!=FREEZE_SHA: errors.append("freeze_identity")
+    if raw.get("freeze_blob_sha")!=expected_freeze_sha: errors.append("freeze_identity")
     if raw.get("runtime",{}).get("container") is not False: errors.append("container_flag")
     if raw.get("parameters",{}).get("episodes_per_scenario")!=COUNT: errors.append("count")
     expected_thresholds={}
@@ -94,4 +94,4 @@ def audit(raw):
 
 if __name__=="__main__":
     import base64
-    raise SystemExit(audit(json.loads(base64.b64decode(sys.argv[1]).decode("utf-8"))))
+    raise SystemExit(audit(json.loads(base64.b64decode(sys.argv[1]).decode("utf-8")),sys.argv[2]))
