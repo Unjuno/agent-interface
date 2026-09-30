@@ -1,0 +1,649 @@
+{
+  "environment": {
+    "display_server": "private Xvfb per row",
+    "docker": false,
+    "platform": "Linux-6.6.114.1-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "python": "3.14.5 (main, May 10 2026, 18:26:20) [GCC 16.1.1 20260430]",
+    "python_xlib": [
+      0,
+      33
+    ]
+  },
+  "host_mount_ns_inode": 4026532399,
+  "namespace": {
+    "child_mount_ns_inode": 4026532411,
+    "host_mount_ns_inode": 4026532399,
+    "private": true,
+    "socket_dir_mode": 1023,
+    "socket_mount": {
+      "fstype": "tmpfs",
+      "source": "none",
+      "target": "/tmp/.X11-unix"
+    }
+  },
+  "rows": [
+    {
+      "actor_argv": null,
+      "actor_exit": null,
+      "actor_receipt": null,
+      "actor_stderr": "",
+      "actor_stdout": "",
+      "dispatch": {
+        "admission": "accepted",
+        "execution": {
+          "activations": [],
+          "completed_ops": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "emissions": 10,
+          "ended_ns": 1464053055075,
+          "observations": [],
+          "program_emissions": 10,
+          "releases": [
+            {
+              "buttons_down": [],
+              "keys_down": [],
+              "monotonic_ns": 1464053053250,
+              "verified": true
+            }
+          ],
+          "started_ns": 1462550124797,
+          "waits": [
+            {
+              "completed": true,
+              "ended_ns": 1464050859465,
+              "kind": "fixed_delay",
+              "operation_index": 2,
+              "requested_ms": 1500,
+              "started_ns": 1462550693390,
+              "update_observed": null
+            }
+          ]
+        },
+        "recovery_required": false,
+        "required_capabilities": [
+          "clock.monotonic",
+          "event.feedback",
+          "input.keyboard",
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ],
+        "status": "completed"
+      },
+      "dispatch_ended_ns": 1464053066314,
+      "dispatch_started_ns": 1462549193004,
+      "display": ":0",
+      "events_hex": null,
+      "expected_effect_hex": "7b227361766564223a20747275652c202274657874223a2022615f227d0a",
+      "fixture_argv": [
+        "/usr/sbin/python",
+        "-m",
+        "runtime.backends.x11_v1.fixture_app",
+        "--meta",
+        "/mnt/c/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-2/scratch/issue5243-terminate-reset-20260930/research/x11_midprogram_keymap_5236_formal04_20260930/results/formal04-20260930-01/control_us/meta.json",
+        "--effect",
+        "/mnt/c/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-2/scratch/issue5243-terminate-reset-20260930/research/x11_midprogram_keymap_5236_formal04_20260930/results/formal04-20260930-01/control_us/effect.json",
+        "--events",
+        "/mnt/c/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-2/scratch/issue5243-terminate-reset-20260930/research/x11_midprogram_keymap_5236_formal04_20260930/results/formal04-20260930-01/control_us/events.jsonl"
+      ],
+      "fixture_exit": -15,
+      "fixture_exit_before_cleanup": null,
+      "fixture_stderr": "",
+      "fixture_stderr_before_cleanup": "",
+      "fixture_stdout": "",
+      "fixture_stdout_before_cleanup": "",
+      "initial_layout": "us",
+      "layout_after": {
+        "argv": [
+          "setxkbmap",
+          "-display",
+          ":0",
+          "-query"
+        ],
+        "exit": 0,
+        "stderr": "",
+        "stdout": "rules:      evdev\nmodel:      pc105\nlayout:     us\n"
+      },
+      "layout_initial": {
+        "argv": [
+          "setxkbmap",
+          "-display",
+          ":0",
+          "-query"
+        ],
+        "exit": 0,
+        "stderr": "",
+        "stdout": "rules:      evdev\nmodel:      pc105\nlayout:     us\n"
+      },
+      "layout_setup": {
+        "argv": [
+          "setxkbmap",
+          "-display",
+          ":0",
+          "-layout",
+          "us"
+        ],
+        "exit": 0,
+        "stderr": "",
+        "stdout": ""
+      },
+      "program": {
+        "authority": {
+          "expires_at_ns": 1492549190664,
+          "lease_id": "issue5236-formal04"
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "a"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 1500
+          },
+          {
+            "op": "text",
+            "text": "_"
+          },
+          {
+            "keys": [
+              "CTRL",
+              "S"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "issue5236-formal04-control_us",
+        "schema": "agent-interface/program-v1",
+        "source": {
+          "binding_revision": 3,
+          "observation_seq": 7
+        },
+        "terminal": {
+          "release_all_required": true
+        }
+      },
+      "row": "control_us",
+      "saved_effect_hex": null,
+      "status": "row_complete",
+      "target_layout": null,
+      "wait": {
+        "completed": true,
+        "ended_ns": 1464050859465,
+        "kind": "fixed_delay",
+        "operation_index": 2,
+        "requested_ms": 1500,
+        "started_ns": 1462550693390,
+        "update_observed": null
+      },
+      "xvfb": {
+        "argv": [
+          "Xvfb",
+          "-displayfd",
+          "1",
+          "-screen",
+          "0",
+          "1024x768x24",
+          "-nolisten",
+          "tcp",
+          "-terminate",
+          "-ac"
+        ],
+        "cleanup_action": "natural_terminate",
+        "exit_code": 0,
+        "pid": 311
+      }
+    },
+    {
+      "actor_argv": [
+        "/usr/sbin/python",
+        "-c",
+        "import json,subprocess,sys,time; d,t,out=sys.argv[1:]; time.sleep(0.25); start=time.monotonic_ns(); argv=['setxkbmap','-display',d,'-layout',t]; p=subprocess.run(argv,capture_output=True,text=True); end=time.monotonic_ns(); open(out,'w',encoding='utf-8').write(json.dumps({'argv':argv,'target_layout':t,'started_ns':start,'ended_ns':end,'exit':p.returncode,'stdout':p.stdout,'stderr':p.stderr},sort_keys=True)+'\\n'); sys.exit(p.returncode)",
+        ":0",
+        "us",
+        "/mnt/c/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-2/scratch/issue5243-terminate-reset-20260930/research/x11_midprogram_keymap_5236_formal04_20260930/results/formal04-20260930-01/jp_to_us/actor.json"
+      ],
+      "actor_exit": 0,
+      "actor_receipt": {
+        "argv": [
+          "setxkbmap",
+          "-display",
+          ":0",
+          "-layout",
+          "us"
+        ],
+        "ended_ns": 1464648795539,
+        "exit": 0,
+        "started_ns": 1464627277800,
+        "stderr": "",
+        "stdout": "",
+        "target_layout": "us"
+      },
+      "actor_stderr": "",
+      "actor_stdout": "",
+      "dispatch": {
+        "admission": "accepted",
+        "execution": {
+          "activations": [],
+          "completed_ops": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "emissions": 10,
+          "ended_ns": 1465851153404,
+          "observations": [],
+          "program_emissions": 10,
+          "releases": [
+            {
+              "buttons_down": [],
+              "keys_down": [],
+              "monotonic_ns": 1465851151951,
+              "verified": true
+            }
+          ],
+          "started_ns": 1464348596998,
+          "waits": [
+            {
+              "completed": true,
+              "ended_ns": 1465849455151,
+              "kind": "fixed_delay",
+              "operation_index": 2,
+              "requested_ms": 1500,
+              "started_ns": 1464349297046,
+              "update_observed": null
+            }
+          ]
+        },
+        "recovery_required": false,
+        "required_capabilities": [
+          "clock.monotonic",
+          "event.feedback",
+          "input.keyboard",
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ],
+        "status": "completed"
+      },
+      "dispatch_ended_ns": 1465851162381,
+      "dispatch_started_ns": 1464348083067,
+      "display": ":0",
+      "events_hex": null,
+      "expected_effect_hex": "7b227361766564223a20747275652c202274657874223a2022615f227d0a",
+      "fixture_argv": [
+        "/usr/sbin/python",
+        "-m",
+        "runtime.backends.x11_v1.fixture_app",
+        "--meta",
+        "/mnt/c/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-2/scratch/issue5243-terminate-reset-20260930/research/x11_midprogram_keymap_5236_formal04_20260930/results/formal04-20260930-01/jp_to_us/meta.json",
+        "--effect",
+        "/mnt/c/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-2/scratch/issue5243-terminate-reset-20260930/research/x11_midprogram_keymap_5236_formal04_20260930/results/formal04-20260930-01/jp_to_us/effect.json",
+        "--events",
+        "/mnt/c/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-2/scratch/issue5243-terminate-reset-20260930/research/x11_midprogram_keymap_5236_formal04_20260930/results/formal04-20260930-01/jp_to_us/events.jsonl"
+      ],
+      "fixture_exit": -15,
+      "fixture_exit_before_cleanup": null,
+      "fixture_stderr": "",
+      "fixture_stderr_before_cleanup": "",
+      "fixture_stdout": "",
+      "fixture_stdout_before_cleanup": "",
+      "initial_layout": "jp",
+      "layout_after": {
+        "argv": [
+          "setxkbmap",
+          "-display",
+          ":0",
+          "-query"
+        ],
+        "exit": 0,
+        "stderr": "",
+        "stdout": "rules:      evdev\nmodel:      pc105\nlayout:     us\n"
+      },
+      "layout_initial": {
+        "argv": [
+          "setxkbmap",
+          "-display",
+          ":0",
+          "-query"
+        ],
+        "exit": 0,
+        "stderr": "",
+        "stdout": "rules:      evdev\nmodel:      pc105\nlayout:     jp\n"
+      },
+      "layout_setup": {
+        "argv": [
+          "setxkbmap",
+          "-display",
+          ":0",
+          "-layout",
+          "jp"
+        ],
+        "exit": 0,
+        "stderr": "",
+        "stdout": ""
+      },
+      "program": {
+        "authority": {
+          "expires_at_ns": 1494348080367,
+          "lease_id": "issue5236-formal04"
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "a"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 1500
+          },
+          {
+            "op": "text",
+            "text": "_"
+          },
+          {
+            "keys": [
+              "CTRL",
+              "S"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "issue5236-formal04-jp_to_us",
+        "schema": "agent-interface/program-v1",
+        "source": {
+          "binding_revision": 3,
+          "observation_seq": 7
+        },
+        "terminal": {
+          "release_all_required": true
+        }
+      },
+      "row": "jp_to_us",
+      "saved_effect_hex": null,
+      "status": "row_complete",
+      "target_layout": "us",
+      "wait": {
+        "completed": true,
+        "ended_ns": 1465849455151,
+        "kind": "fixed_delay",
+        "operation_index": 2,
+        "requested_ms": 1500,
+        "started_ns": 1464349297046,
+        "update_observed": null
+      },
+      "xvfb": {
+        "argv": [
+          "Xvfb",
+          "-displayfd",
+          "1",
+          "-screen",
+          "0",
+          "1024x768x24",
+          "-nolisten",
+          "tcp",
+          "-terminate",
+          "-ac"
+        ],
+        "cleanup_action": "natural_terminate",
+        "exit_code": 0,
+        "pid": 319
+      }
+    },
+    {
+      "actor_argv": [
+        "/usr/sbin/python",
+        "-c",
+        "import json,subprocess,sys,time; d,t,out=sys.argv[1:]; time.sleep(0.25); start=time.monotonic_ns(); argv=['setxkbmap','-display',d,'-layout',t]; p=subprocess.run(argv,capture_output=True,text=True); end=time.monotonic_ns(); open(out,'w',encoding='utf-8').write(json.dumps({'argv':argv,'target_layout':t,'started_ns':start,'ended_ns':end,'exit':p.returncode,'stdout':p.stdout,'stderr':p.stderr},sort_keys=True)+'\\n'); sys.exit(p.returncode)",
+        ":0",
+        "jp",
+        "/mnt/c/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-2/scratch/issue5243-terminate-reset-20260930/research/x11_midprogram_keymap_5236_formal04_20260930/results/formal04-20260930-01/us_to_jp/actor.json"
+      ],
+      "actor_exit": 0,
+      "actor_receipt": {
+        "argv": [
+          "setxkbmap",
+          "-display",
+          ":0",
+          "-layout",
+          "jp"
+        ],
+        "ended_ns": 1466439350581,
+        "exit": 0,
+        "started_ns": 1466423123064,
+        "stderr": "",
+        "stdout": "",
+        "target_layout": "jp"
+      },
+      "actor_stderr": "",
+      "actor_stdout": "",
+      "dispatch": {
+        "admission": "accepted",
+        "execution": {
+          "activations": [],
+          "completed_ops": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "emissions": 10,
+          "ended_ns": 1467648873913,
+          "observations": [],
+          "program_emissions": 10,
+          "releases": [
+            {
+              "buttons_down": [],
+              "keys_down": [],
+              "monotonic_ns": 1467648872477,
+              "verified": true
+            }
+          ],
+          "started_ns": 1466146291732,
+          "waits": [
+            {
+              "completed": true,
+              "ended_ns": 1467647066087,
+              "kind": "fixed_delay",
+              "operation_index": 2,
+              "requested_ms": 1500,
+              "started_ns": 1466146844395,
+              "update_observed": null
+            }
+          ]
+        },
+        "recovery_required": false,
+        "required_capabilities": [
+          "clock.monotonic",
+          "event.feedback",
+          "input.keyboard",
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ],
+        "status": "completed"
+      },
+      "dispatch_ended_ns": 1467648881326,
+      "dispatch_started_ns": 1466145791852,
+      "display": ":0",
+      "events_hex": null,
+      "expected_effect_hex": "7b227361766564223a20747275652c202274657874223a2022615f227d0a",
+      "fixture_argv": [
+        "/usr/sbin/python",
+        "-m",
+        "runtime.backends.x11_v1.fixture_app",
+        "--meta",
+        "/mnt/c/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-2/scratch/issue5243-terminate-reset-20260930/research/x11_midprogram_keymap_5236_formal04_20260930/results/formal04-20260930-01/us_to_jp/meta.json",
+        "--effect",
+        "/mnt/c/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-2/scratch/issue5243-terminate-reset-20260930/research/x11_midprogram_keymap_5236_formal04_20260930/results/formal04-20260930-01/us_to_jp/effect.json",
+        "--events",
+        "/mnt/c/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-2/scratch/issue5243-terminate-reset-20260930/research/x11_midprogram_keymap_5236_formal04_20260930/results/formal04-20260930-01/us_to_jp/events.jsonl"
+      ],
+      "fixture_exit": -15,
+      "fixture_exit_before_cleanup": null,
+      "fixture_stderr": "",
+      "fixture_stderr_before_cleanup": "",
+      "fixture_stdout": "",
+      "fixture_stdout_before_cleanup": "",
+      "initial_layout": "us",
+      "layout_after": {
+        "argv": [
+          "setxkbmap",
+          "-display",
+          ":0",
+          "-query"
+        ],
+        "exit": 0,
+        "stderr": "",
+        "stdout": "rules:      evdev\nmodel:      pc105\nlayout:     jp\n"
+      },
+      "layout_initial": {
+        "argv": [
+          "setxkbmap",
+          "-display",
+          ":0",
+          "-query"
+        ],
+        "exit": 0,
+        "stderr": "",
+        "stdout": "rules:      evdev\nmodel:      pc105\nlayout:     us\n"
+      },
+      "layout_setup": {
+        "argv": [
+          "setxkbmap",
+          "-display",
+          ":0",
+          "-layout",
+          "us"
+        ],
+        "exit": 0,
+        "stderr": "",
+        "stdout": ""
+      },
+      "program": {
+        "authority": {
+          "expires_at_ns": 1496145789490,
+          "lease_id": "issue5236-formal04"
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "a"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 1500
+          },
+          {
+            "op": "text",
+            "text": "_"
+          },
+          {
+            "keys": [
+              "CTRL",
+              "S"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "issue5236-formal04-us_to_jp",
+        "schema": "agent-interface/program-v1",
+        "source": {
+          "binding_revision": 3,
+          "observation_seq": 7
+        },
+        "terminal": {
+          "release_all_required": true
+        }
+      },
+      "row": "us_to_jp",
+      "saved_effect_hex": null,
+      "status": "row_complete",
+      "target_layout": "jp",
+      "wait": {
+        "completed": true,
+        "ended_ns": 1467647066087,
+        "kind": "fixed_delay",
+        "operation_index": 2,
+        "requested_ms": 1500,
+        "started_ns": 1466146844395,
+        "update_observed": null
+      },
+      "xvfb": {
+        "argv": [
+          "Xvfb",
+          "-displayfd",
+          "1",
+          "-screen",
+          "0",
+          "1024x768x24",
+          "-nolisten",
+          "tcp",
+          "-terminate",
+          "-ac"
+        ],
+        "cleanup_action": "natural_terminate",
+        "exit_code": 0,
+        "pid": 330
+      }
+    }
+  ],
+  "schema": "issue5236-formal04-raw-v1",
+  "source_blobs": {
+    "research/x11_midprogram_keymap_5236_formal04_20260930/README.md": "ff27d0080f7ef06713342cbbd4c5ae721f85f089",
+    "research/x11_midprogram_keymap_5236_formal04_20260930/audit.py": "7565e7542a1eb6627fd97dd40ff5d74d96b6e7f9",
+    "research/x11_midprogram_keymap_5236_formal04_20260930/corruptions.py": "040424f97c4b3bc78c045d679bb69e2f1f99f532",
+    "research/x11_midprogram_keymap_5236_formal04_20260930/runner.py": "dabd9c7048a982886a5e353e2e4da1fac5d32006",
+    "research/x11_midprogram_keymap_5236_formal04_20260930/test_formal.py": "61a3a77bbac5798d3e51766168664e7706ae5a9a",
+    "runtime/backends/x11_v1/backend.py": "2fae5b34e932d53c0f9ee86931815123dc705300",
+    "runtime/backends/x11_v1/fixture_app.py": "11c30cf084744ffdba3b00df7637b5853c8571ac",
+    "runtime/backends/x11_v1/session.py": "4dbd6dd219e2ec7313cd32d3e4cb154e0efcfbb1"
+  },
+  "source_manifest": {
+    "allocation": "issue5236-formal04-20260930-01",
+    "base_commit": "c4735cfd27bfca057d9c1fca9a7ea19866f77259",
+    "files": {
+      "research/x11_midprogram_keymap_5236_formal04_20260930/README.md": "ff27d0080f7ef06713342cbbd4c5ae721f85f089",
+      "research/x11_midprogram_keymap_5236_formal04_20260930/audit.py": "7565e7542a1eb6627fd97dd40ff5d74d96b6e7f9",
+      "research/x11_midprogram_keymap_5236_formal04_20260930/corruptions.py": "040424f97c4b3bc78c045d679bb69e2f1f99f532",
+      "research/x11_midprogram_keymap_5236_formal04_20260930/runner.py": "dabd9c7048a982886a5e353e2e4da1fac5d32006",
+      "research/x11_midprogram_keymap_5236_formal04_20260930/test_formal.py": "61a3a77bbac5798d3e51766168664e7706ae5a9a",
+      "runtime/backends/x11_v1/backend.py": "2fae5b34e932d53c0f9ee86931815123dc705300",
+      "runtime/backends/x11_v1/fixture_app.py": "11c30cf084744ffdba3b00df7637b5853c8571ac",
+      "runtime/backends/x11_v1/session.py": "4dbd6dd219e2ec7313cd32d3e4cb154e0efcfbb1"
+    },
+    "output_path": "research/x11_midprogram_keymap_5236_formal04_20260930/results/formal04-20260930-01"
+  }
+}
