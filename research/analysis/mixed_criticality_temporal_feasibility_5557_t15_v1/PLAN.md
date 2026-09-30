@@ -32,7 +32,7 @@ Workflow: `.github/workflows/issue-5557-temporal-t15.yml`. Candidate command: `p
 
 ## Preservation-run note and infrastructure successor boundary
 
-The stop-recording commit `22d6859227d9009e814d8fd3a10b68bbef17fd08` triggered the same PR workflow because its path filter includes report updates. Preservation-only run 36773349770 was cancelled while checkout remained stalled; candidate, auditor, and construction-test steps were all skipped (0 invocations). This is not another allocation or a retry; see Issue comment #5919258256.
+The stop-recording commit `22d6859227d9009e814d8fd3a10b68bbef17fd08` triggered the same PR workflow because its path filter includes report updates. Preservation-only run 36773349770 was cancelled while checkout remained stalled; candidate, auditor, and construction-test steps were all skipped (0 invocations). This is not another allocation or a retry; see Issue comment #5919258256. The workflow recognizes `[t15-stop-recorded]` as a no-execution marker so further stop-recording commits skip checkout and all scientific code.
 
 Repository precedent `.github/workflows/observation-recovery-contract-2452.yml` fetches exact PR-head files from `raw.githubusercontent.com` instead of using checkout/archive transport. A future allocation may preregister that transport, verify each fetched file against frozen SHA-256 values before tests or candidate execution, and enforce bounded network timeouts. This is only a candidate recovery path, not evidence that the transport will work or that the scientific hypothesis passes. T15-01 and T15-02 remain consumed STOP allocations.
 

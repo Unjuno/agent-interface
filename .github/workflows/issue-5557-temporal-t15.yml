@@ -26,7 +26,7 @@ jobs:
         run: |
           subject="$(git log -1 --format=%s)"
           case "$subject" in
-            *'[t15-results-recorded]'*) echo 'execute=false' >> "$GITHUB_OUTPUT" ;;
+            *'[t15-results-recorded]'*|*'[t15-stop-recorded]'*) echo 'execute=false' >> "$GITHUB_OUTPUT" ;;
             *) echo 'execute=true' >> "$GITHUB_OUTPUT" ;;
           esac
       - name: Verify frozen source manifest
