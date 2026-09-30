@@ -159,7 +159,7 @@ def main(out_path):
         owner.close()
         if owner._inner.thread.is_alive() or not owner._inner.stopped.is_set():
             raise RuntimeError("owner process/thread did not stop")
-        emit({"event": "process_cleanup", "owner_stopped": True, "fixture_child_processes": 0})
+        emit({"event": "process_cleanup", "owner_stopped": True})
         codes = set(admitted.values())
         neutral = all(not key_down(observer, code) for code in codes)
         if not neutral:
@@ -174,6 +174,7 @@ def main(out_path):
         window.destroy()
         observer.sync()
         observer.close()
+    emit({"event": "runner_complete", "exit_code": 0, "raw_rows": len(raw) + 1})
     print(json.dumps({"status": "RUNNER_EXIT_0", "raw_rows": len(raw), "raw_path": out_path}))
 
 
