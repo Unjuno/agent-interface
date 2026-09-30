@@ -74,3 +74,5 @@ implemented; use this helper inside the Linux/WSL environment. The sequential
 stdio relay does not require a file-spooled decision.
 
 [Retained primary six-task use and publication failure/fix](../results/atomic-host-publication-01/README.md) records the incomplete direct comparison and the no-GUI publication checks. The whole integration spine remains unvalidated.
+
+[Primary operation after publication integration](../results/atomic-primary-six-task-01/README.md) completed fresh direct and persistent six-task allocations with separate exact scoring, stale refusal and explicit recovery. It records the remaining timing/acceptance limits.
