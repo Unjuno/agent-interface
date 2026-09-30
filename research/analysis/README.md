@@ -250,6 +250,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`predicate_cache_persist_4217_v1/`](predicate_cache_persist_4217_v1/)
 - [`predicate_dependency_cache_4217_v1/`](predicate_dependency_cache_4217_v1/)
 - [`predicate_dependency_completeness_4217_v1/`](predicate_dependency_completeness_4217_v1/)
+- [`predicate_order_audit_typehash_successor_r4_v1/`](predicate_order_audit_typehash_successor_r4_v1/)
 - [`predicate_order_audit_typehash_successor_r5_v1/`](predicate_order_audit_typehash_successor_r5_v1/)
 - [`predicate_order_drift_audit_integrity_4733_successor_v1/`](predicate_order_drift_audit_integrity_4733_successor_v1/)
 - [`predicate_order_drift_audit_integrity_4733_v1/`](predicate_order_drift_audit_integrity_4733_v1/)
