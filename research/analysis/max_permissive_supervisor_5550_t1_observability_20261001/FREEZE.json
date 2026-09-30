@@ -1,0 +1,21 @@
+{
+  "allocation": "5550-T1-PARTIAL-OBSERVABILITY-HOST-20261001-01",
+  "source_main_sha": "e94101a1bd2ad6e3e103088aa4d169c2ad112086",
+  "prereg_commit": "caf560074765b750d24edefc62fe352122dfc952",
+  "candidate_sha256": "bc04f837ace58fc1b1bf17e06bed9c84a4296f1655a1679b88cb7f869a8237e4",
+  "auditor_sha256": "81a83cc02756a59edd7ebce2521682dcbb28ae86f7774dd24daeeda26176d415",
+  "tests_sha256": "350a0449157212123d2e38b32422f87bfb3fdbc890b63c7a642de9f91112b225",
+  "python": "CPython 3.14.5",
+  "execution": {
+    "mode": "host-cpu-only",
+    "candidate_invocations": 1,
+    "audit_invocations": 1,
+    "network": "not-used",
+    "shared_container_lane": "not-used"
+  },
+  "decision": {
+    "must_enable": ["REVALIDATE"],
+    "must_disable": ["COMMIT"],
+    "corruption_controls_rejected": "4/4"
+  }
+}
