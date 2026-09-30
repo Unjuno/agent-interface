@@ -16,6 +16,12 @@ From repository root, with Docker network enabled for Debian packages and Python
 docker run --rm -v "$PWD:/work" -w /work python:3.14-slim-bookworm sh -lc 'apt-get update && apt-get install -y tk xvfb x11-xkb-utils && pip install python-xlib && python -B research/x11_midprogram_keymap_5236_formal05_save_diagnostic_20261001/diagnose.py'
 ```
 
+The remap comparison uses the built image and:
+
+```sh
+docker run --rm -v "$PWD:/work" -w /work issue5236-formal05-save-diag:local python -B research/x11_midprogram_keymap_5236_formal05_save_diagnostic_20261001/diagnose_remap.py
+```
+
 No formal allocation is consumed.
 
 ## Result
@@ -24,4 +30,6 @@ Diagnostic 01 compared the exact operation sequence with a one-second host delay
 
 Diagnostic 02 directly tested the Issue's proposed `wait_update` after Ctrl-S and before release/teardown. The baseline `Ctrl-S → release` and `Ctrl-S → wait_update(250ms) → release` cases both immediately wrote the same exact effect and recorded the same passive key sequence. The wait completed as operation 8 in the second case; all ten operations completed and release was verified. Raw: `results/diagnostic02/raw.json`, SHA-256 `AEDEF17FE825A0F601A57F58EFFBD25D0A4DC3BC03242990700B9FE91CBA3F31`.
 
-These tests reject a simple missing post-save wait as the explanation under the US control; they do not explain the formal05 remap-row STOP. Re-decoding formal05's passive audit shows only `a`, `Shift_L`, and the post-remap character (`??` or `equal`)—no `Control_L` or `s`—in those rows. The earlier Issue comment noting the missing save-chord events was correct; a later correction comment was itself mistaken and has been corrected. This US-layout Docker comparison does not override that remap-specific evidence. Any formal successor must be separately frozen.
+Diagnostic 03 compared the unchanged US row and both mid-wait remap directions in fresh Docker Xvfb/Tk fixtures. All three dispatches completed with verified release; both remap actors exited 0 and final layouts matched their targets. US saved `a_` with events `a, Shift_L, underscore, Control_L, s`; JP→US saved `a` with `a, Shift_L, ??, Control_L, s`; US→JP saved `a=` with `a, Shift_L, equal, Control_L, s`. The independent saved effect therefore differs in both remap rows in this Debian Docker environment. Raw: `results/diagnostic03/raw.json`, SHA-256 `38A546623D6CFB0B2628663F4E6D94E6A65901E37934AAB4B35C94867D72B22B`.
+
+The US controls reject a simple missing post-save wait. Diagnostic 03 supports the remap/key-interpretation hypothesis in Docker, but its Debian image and XKB data are not the Arch formal environment. Formal05's passive audit shows `a`, `Shift_L`, and the post-remap character (`??` or `equal`) but no `Control_L` or `s`, whereas these Docker rows do receive the save chord. Thus the Docker remap findings corroborate wrong mapped text, but do not explain formal05's missing save events or missing effect. That difference needs source/environment-level investigation and a separately frozen Arch successor; formal05 remains STOP and must not be rerun.
