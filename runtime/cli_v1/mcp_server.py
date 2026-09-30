@@ -209,6 +209,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                                   "state": "running", "arguments": deepcopy(kwargs),
                                   "backend_attempted": False, "persistence_failure": None}
             # Serialize before calling the backend. A persistence failure here sends no input.
+            authored_program = deepcopy(kwargs.get('program'))
             request = {'operation': operation, 'arguments': kwargs, 'targets': deepcopy(owner.targets) if owner else targets,
                        'display_name': display_name}
             if owner is not None:
@@ -319,7 +320,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                     result = brief_public_report(result)
             if detail == 'summary' and operation == 'dispatch':
                 from .public_summary import summarize_public_dispatch
-                result = summarize_public_dispatch(result)
+                result = summarize_public_dispatch(result, source_program=authored_program)
             if observation_refs and operation.startswith('guarded_'):
                 from .receipt_references import compact_guarded_observation
                 result = compact_guarded_observation(result)
@@ -642,7 +643,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             result = brief_public_report(result)
         if detail == 'summary' and record['operation'] == 'dispatch':
             from .public_summary import summarize_public_dispatch
-            result = summarize_public_dispatch(result)
+            result = summarize_public_dispatch(result, source_program=record["arguments"].get("program"))
         if observation_refs and record['operation'].startswith('guarded_'):
             from .receipt_references import compact_guarded_observation
             result = compact_guarded_observation(result)

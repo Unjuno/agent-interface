@@ -262,3 +262,14 @@ The [retained integration candidate](../results/post-release-feedback-01/README.
 includes ordinary and held-input failures, the explicit-wait pair, receipt-size
 cost and independent exact-once scoring. Its task-4 scope does not establish
 the full six-task integration spine or human-comparable tempo.
+
+For a successful public post-release capture without an inline observe,
+`detail: summary` can use the server's pre-invocation program copy to check
+completed operation and wait counts. It leaves the complete inspection and
+image reference visible. The report digest identifies the raw report; this
+separate invocation context is labelled in `presentation.program_provenance`.
+Full `interface_results` includes the original program in
+`retained_call.arguments.program`, without replay or a new capture. Missing or
+inconsistent invocation/capture evidence and failed/unknown wait shapes stay
+full. CLI summaries have no server invocation context and retain their existing
+full fallback when raw provenance is absent.

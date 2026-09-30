@@ -19,8 +19,11 @@ class PostDispatchCaptureTests(unittest.IsolatedAsyncioTestCase):
             'artifact':{'mime_type':'image/png','path':str(path),'bytes':len(b),
                 'sha256':hashlib.sha256(b).hexdigest(),'source_raw_sha256':hashlib.sha256(rgb).hexdigest(),
                 'width':1,'height':1}}
-    async def exercise(self,case='success',include_prior=True,wait_ms=None):
+    async def exercise(self,case='success',include_prior=True,wait_ms=None,expect_summary=False):
         with tempfile.TemporaryDirectory() as td,ExitStack() as stack:
+            source_fixture=json.loads((Path(__file__).parent/'fixtures/nonpaced_dispatch_review.json').read_text())['receipt']['source']['raw_report']
+            request_program=copy.deepcopy(source_fixture['normalization']['source_program']) if expect_summary else {}
+            if expect_summary:request_program['ops']=[op for op in request_program['ops'] if op['op']!='observe']
             capture_root=None;observed=[];dispatched=[]
             if case=='wait_error':stack.enter_context(patch('runtime.cli_v1.mcp_session.time.sleep',side_effect=OSError('interrupted settling wait')))
             def configure(directory):
@@ -45,17 +48,23 @@ class PostDispatchCaptureTests(unittest.IsolatedAsyncioTestCase):
                 ex=raw['result']['execution'];ex['observations']=[dict(self.picture(Path(options['capture_directory']),'red'),operation_index=4)] if include_prior else []
                 ex['releases']=[{'verified':case!='unverified','keys_down':[],'buttons_down':[],'monotonic_ns':time.monotonic_ns()}]
                 ex['ended_ns']=time.monotonic_ns()
+                if expect_summary:
+                    raw.pop('normalization',None)
+                    ex['completed_ops']=list(range(len(request_program['ops'])))
                 if case=='refused':raw['result']={'status':'refused','error':'LEASE_EXPIRED','backend_emissions':0}
                 if case=='recovery':session.recovery_required=True;raw['result']['recovery_required']=True
                 return raw
             stack.enter_context(patch('runtime.cli_v1.mcp_server.dispatch_in_session',side_effect=dispatch))
             server=create_server({'fixture':123},td,session_mode='persistent-x11')
-            reply=await server.call_tool('interface_dispatch',{'program':{},'current_observation_seq':1,
+            reply=await server.call_tool('interface_dispatch',{'program':request_program,'current_observation_seq':1,
                 'current_binding_revision':1,'inspect_after':'fixture','inspect_after_region':[0,0,1,1],
                 'compact':True,'report_refs':True,'detail':'summary',
                 **({'inspect_after_wait_ms':wait_ms} if wait_ms is not None else {})})
             self.assertFalse(reply.isError)
             row=self.row(reply)
+            if expect_summary:
+                self.assertEqual(row['receipt']['schema'],'agent-interface/receipt-view-dispatch-summary-v1')
+                self.assertNotIn('raw_report',row['receipt']['source'])
             self.assertEqual(len(dispatched),1)
             self.assertNotIn('inspect_after_region',dispatched[0])
             self.assertNotIn('inspect_after_wait_ms',dispatched[0])
@@ -65,6 +74,26 @@ class PostDispatchCaptureTests(unittest.IsolatedAsyncioTestCase):
             original=Path(row['call_directory'],'report.json').read_bytes()
             retained=await server.call_tool('interface_results',{'call_id':row['call_id'],'include_image':True,'compact':True,'report_refs':True})
             self.assertFalse(self.row(retained)['operation_invoked'])
+            if expect_summary:
+                self.assertIn('raw_report',self.row(retained)['receipt']['source'])
+                self.assertEqual(self.row(retained)['retained_call']['arguments']['program'],request_program)
+                projected=await server.call_tool('interface_results',{'call_id':row['call_id'],'include_image':True,'compact':True,'report_refs':True,'detail':'summary'})
+                self.assertEqual(self.row(projected)['receipt']['schema'],'agent-interface/receipt-view-dispatch-summary-v1')
+                self.assertEqual(projected.content[1].data,reply.content[1].data)
+                from .public_summary import summarize_public_dispatch
+                full=self.row(retained)
+                self.assertEqual(summarize_public_dispatch(full),full)
+                wrong=copy.deepcopy(request_program);wrong['ops'].insert(-1,{'op':'wait_update','timeout_ms':1})
+                self.assertEqual(summarize_public_dispatch(full,source_program=wrong),full)
+                for mutation in ['early_capture','wrong_image','wait_failed','wait_extension']:
+                    broken=copy.deepcopy(full)
+                    context=broken['post_dispatch_inspection']
+                    if mutation=='early_capture':context['observation_report']['observation']['capture_started_ns']=0
+                    if mutation=='wrong_image':broken['image_reference']['post_dispatch_observation_id']='other'
+                    if mutation=='wait_failed':context['capture_wait']['completed']=False
+                    if mutation=='wait_extension':context['capture_wait']['error']='unrecognized'
+                    broken['receipt']['source']['raw_report']['post_dispatch_inspection']=copy.deepcopy(context)
+                    self.assertEqual(summarize_public_dispatch(broken,source_program=request_program),broken,mutation)
             self.assertEqual(Path(row['call_directory'],'report.json').read_bytes(),original)
             self.assertEqual(row['post_dispatch_inspection'],self.row(retained)['post_dispatch_inspection'])
             self.assertEqual([c.data for c in reply.content if c.type=='image'],[c.data for c in retained.content if c.type=='image'])
@@ -107,6 +136,8 @@ class PostDispatchCaptureTests(unittest.IsolatedAsyncioTestCase):
             await server.call_tool('interface_close',{})
     async def test_success_delivers_after_release_image_and_lookup_never_recaptures(self):
         await self.exercise()
+    async def test_no_inline_capture_summary_keeps_image_and_full_program_retrieval(self):
+        await self.exercise(include_prior=False,wait_ms=20,expect_summary=True)
     async def test_program_without_inline_observe_gets_post_release_image(self):
         await self.exercise(include_prior=False)
     async def test_refusal_unverified_release_and_recovery_skip_post_capture(self):
