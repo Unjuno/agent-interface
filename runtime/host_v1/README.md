@@ -257,3 +257,8 @@ cue. Inspect the actual image before deciding the next action; request a fresh
 observation when necessary. Historical `interface_results` returns the retained
 selection without recapturing or renewing the target review request. Full
 receipt fallback remains available when summary eligibility is not met.
+
+The [retained integration candidate](../results/post-release-feedback-01/README.md)
+includes ordinary and held-input failures, the explicit-wait pair, receipt-size
+cost and independent exact-once scoring. Its task-4 scope does not establish
+the full six-task integration spine or human-comparable tempo.

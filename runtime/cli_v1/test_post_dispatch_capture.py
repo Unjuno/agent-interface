@@ -22,6 +22,7 @@ class PostDispatchCaptureTests(unittest.IsolatedAsyncioTestCase):
     async def exercise(self,case='success',include_prior=True,wait_ms=None):
         with tempfile.TemporaryDirectory() as td,ExitStack() as stack:
             capture_root=None;observed=[];dispatched=[]
+            if case=='wait_error':stack.enter_context(patch('runtime.cli_v1.mcp_session.time.sleep',side_effect=OSError('interrupted settling wait')))
             def configure(directory):
                 nonlocal capture_root
                 capture_root=Path(directory)
@@ -80,6 +81,11 @@ class PostDispatchCaptureTests(unittest.IsolatedAsyncioTestCase):
                 self.assertGreaterEqual(wait['started_ns'],raw['result']['execution']['releases'][0]['monotonic_ns'])
                 self.assertGreaterEqual(wait['ended_ns']-wait['started_ns'],wait_ms*1_000_000)
                 self.assertGreaterEqual(context['observation_report']['observation']['capture_started_ns'],wait['ended_ns'])
+            elif case=='wait_error':
+                self.assertFalse(context['capture_wait']['completed'])
+                self.assertIsNone(context['capture_wait']['update_observed'])
+                self.assertIn('ended_ns',context['capture_wait'])
+                self.assertNotIn('observation_report',context)
             elif case!='success':self.assertNotIn('capture_wait',context)
             if case=='success':
                 self.assertEqual(row['image_reference']['post_dispatch_observation_id'],context['observation_report']['observation_id'])
@@ -88,7 +94,7 @@ class PostDispatchCaptureTests(unittest.IsolatedAsyncioTestCase):
                 b=base64.b64decode(next(c.data for c in reply.content if c.type=='image'))
                 import io
                 self.assertEqual(Image.open(io.BytesIO(b)).getpixel((0,0)),(0,255,0))
-            elif case in ['capture_error','changed']:
+            elif case in ['capture_error','changed','wait_error']:
                 self.assertIn('error',context)
                 self.assertNotIn('review_request',context)
                 if case=='changed':self.assertEqual(context['recheck_evidence']['window_id'],456)
@@ -111,6 +117,7 @@ class PostDispatchCaptureTests(unittest.IsolatedAsyncioTestCase):
             with self.subTest(case=case):await self.exercise(case)
     async def test_explicit_wait_is_after_release_and_retained_lookup_never_waits_again(self):
         await self.exercise(wait_ms=20)
+        await self.exercise('wait_error',wait_ms=20)
         for case in ['refused','unverified','recovery']:
             with self.subTest(case=case):await self.exercise(case,wait_ms=20)
     async def test_invalid_wait_rejects_before_session_or_input(self):
