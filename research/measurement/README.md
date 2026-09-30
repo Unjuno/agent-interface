@@ -55,3 +55,7 @@ Do not infer PASS/FAIL/currentness from a directory name or version suffix; open
 4. Do not infer runtime or product support from a measurement directory alone.
 
 The large number of child directories is intentional retained evidence. Repository cleanup should add navigation or archival explanation rather than merge/rename completed evidence paths without a provenance-preserving reason.
+
+## Retained real-input transport accounting
+
+- [Public-summary cost successor to #4395](retained_public_summary_cost_4395_dot_v1/REPORT.md): `STOP_CLOCK_GRANULARITY` after 225 calls; 42 of 54 CPU aggregates failed the frozen guard. Original output identities and fallback facts are retained, but no cost-characterization PASS or formal post-baseline control result is claimed. [Lossless raw restoration](retained_public_summary_cost_4395_dot_v1/PACKAGING.md).
