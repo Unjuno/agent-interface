@@ -22,7 +22,7 @@ def main():
     assert iid["claim_supported"] is True
     expected_rejections = {
         "temporal_shift": "REJECT_STALE",
-        "ui_layout_shift": "REJECT_VERSION_MISMATCH",
+        "ui_layout_shift": "REJECT_POPULATION_MISMATCH",
         "task_family_shift": "REJECT_POPULATION_MISMATCH",
         "adaptive_repeated_query": "REJECT_ASSUMPTION_INVALID",
     }
