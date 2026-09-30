@@ -1,11 +1,9 @@
 """Regression for indexed rejection of JSON-valued operation enum mistakes.
 
-No backend is opened. The static inspector is loaded by its file path so this
-focused core suite does not import cli_v1's unrelated dispatch facade.
+No backend is opened; expansion/location assertions stay inside the sparse core
+checkout used by the portability CI matrix.
 """
 from copy import deepcopy
-import importlib.util
-from pathlib import Path
 import unittest
 
 from runtime.core_v1 import contract as c
@@ -29,13 +27,6 @@ def manifest():
     return c.capability_manifest('test-only', 'linux', 'no-device', c.KNOWN_CAPABILITIES,
                                  frames=sorted(c.COORDINATE_FRAMES))
 
-
-def inspector():
-    path = Path(__file__).parents[1] / 'cli_v1' / 'validate_program.py'
-    spec = importlib.util.spec_from_file_location('enum_static_inspector', path)
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
 
 
 class ProgramEnumTypesTests(unittest.TestCase):
@@ -85,8 +76,7 @@ class ProgramEnumTypesTests(unittest.TestCase):
             c.validate_program(row)
         self.assertFalse(hasattr(caught.exception, 'operation_index'))
 
-    def test_static_source_mapping_survives_mixed_expansion(self):
-        static = inspector()
+    def test_core_error_keeps_expanded_operation_location(self):
         prefix = [{'op': 'text', 'text': 'ab', 'gap_ms': 1},
                   {'op': 'key_chord', 'keys': ['F8'], 'repeat': 2}]
         for template, field, _, message in OPS:
@@ -94,13 +84,13 @@ class ProgramEnumTypesTests(unittest.TestCase):
                 with self.subTest(op=template['op'], value=value):
                     row = program(prefix + [dict(template, **{field: value})])
                     before = deepcopy(row)
-                    report = static.inspect_program(row)
-                    self.assertIs(report['static_valid'], False)
-                    self.assertEqual(report['detail'], message)
-                    self.assertEqual(report['source_operation_index'], 2)
-                    self.assertEqual(report['expanded_operation_index'], 5)
-                    self.assertIs(report['side_effect_authority'], False)
-                    self.assertIsNone(report['task_success'])
+                    expanded, sources = expand_text_gaps(row['ops'])
+                    with self.assertRaises(c.ContractError) as caught:
+                        c.validate_program(dict(row, ops=expanded))
+                    expanded_index = caught.exception.operation_index
+                    self.assertEqual(sources[expanded_index]['source_operation_index'], 2)
+                    self.assertEqual(expanded_index, 5)
+                    self.assertEqual(str(caught.exception), message)
                     self.assertEqual(row, before)
 
     def test_capability_and_freshness_controls_remain(self):
