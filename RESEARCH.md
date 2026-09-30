@@ -85,6 +85,10 @@ One frozen OrbStack allocation replayed 18,432 fixed-seed synthetic inputs acros
 
 One frozen OrbStack T1 compared five policies on 2,048 paired states (4,096 episodes) and 20,480 policy rows. The adaptive composition filter enforced ε≤1.2 in every episode; static, count-only, and non-stopping odometer controls exceeded 1.2 on at least some traces. A secret-independent public predicate preserved all 2,050 task-ready completions with zero secret queries and chance-level synthetic distinguisher accuracy. The only secret-bearing channels were explicit ε=0.4/0.8 randomized-response mechanisms; no screenshot, OCR, UI, consent, side-channel, or production privacy claim follows. See the [full report](research/analysis/adaptive_privacy_filter_5420_t1_v1/REPORT.md) and [Issue #5420](https://github.com/Unjuno/agent-interface/issues/5420).
 
+### Issue #5275 — verification ontology lexical novelty boundary T1 (scoped synthetic PASS; IID validity limited)
+
+One host-only, no-dispatch T1 compared deterministic coverage, a one-class lexical OOV signal, and their fail-closed combination over 13 synthetic rows. Deterministic coverage false-passed 4/7 OOD rows; lexical-only and combined false-passed 0/7, with 0/6 supported abstentions. However, all six supported evaluation summaries were verbatim training rows, so the IID result is a training-overlap check rather than generalization evidence. The two semantic misses from immutable T0 and two known-vocabulary-dilution variants were flagged in this corpus only. No container, semantic generalization, escalation, safety, or runtime claim follows. See the [full report](research/verification/ontology_gap_5275_t1_v1/REPORT.md) and [Issue #5275](https://github.com/Unjuno/agent-interface/issues/5275).
+
 ### Issue #5385 — active lifecycle automata learning (bounded synthetic PASS)
 
 One frozen OrbStack run learned four reachable lifecycle classes in one
