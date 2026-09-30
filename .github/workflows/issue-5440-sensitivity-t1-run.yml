@@ -26,7 +26,7 @@ jobs:
       - name: Checkout frozen experiment source
         uses: actions/checkout@v4
       - name: Prepare output directory
-        run: mkdir -p "$OUTPUT_DIR"
+        run: mkdir -p "$OUTPUT_DIR/raw"
       - name: Pull digest-pinned image
         run: docker pull --platform "$PLATFORM" "$IMAGE"
       - name: Container preflight, one candidate run, independent audit
@@ -41,10 +41,10 @@ jobs:
             --workdir /src "$IMAGE" sh -euc '
               python /src/preflight.py /src/cases.json
               python -c "from pathlib import Path; [compile(p.read_text(), str(p), \"exec\") for p in (Path(\"/src/candidate.py\"), Path(\"/src/audit.py\"))]; print(\"PASS_SOURCE_COMPILE\")"
-              python /src/candidate.py --input /src/cases.json --output /out/raw.json
-              python /src/audit.py --input /src/cases.json --raw /out/raw.json --output /out/audit.json
-              sha256sum /src/cases.json /src/candidate.py /src/audit.py /src/preflight.py > /out/SHA256SUMS
-              sha256sum /out/raw.json /out/audit.json >> /out/SHA256SUMS
+              python /src/candidate.py --input /src/cases.json --output /out/raw/formal.json
+              python /src/audit.py --input /src/cases.json --raw /out/raw/formal.json --output /out/raw/audit.json
+              (cd /src && sha256sum cases.json candidate.py audit.py preflight.py) > /out/SHA256SUMS
+              (cd /out && sha256sum raw/formal.json raw/audit.json) >> /out/SHA256SUMS
               cat /out/SHA256SUMS
             '
       - name: Upload immutable run output
