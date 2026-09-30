@@ -24,6 +24,11 @@ GPU or model.
   audit retry or source repair was made. Its pre-probe test suite had exercised
   five corruption mutations, all rejected, but synthetic controls do not turn
   this raw audit into a pass.
+- The retained `mountinfo_source` is `none` for the tmpfs mount. Static review
+  shows the frozen auditor later requires this field to equal `tmpfs`; because
+  it stopped first at the wrapper-exit gate, that predicate was not reached.
+  Record this as a separate auditor assumption/coverage limitation, not as an
+  observed second audit failure.
 
 The exact `result.json`, `child-record.json`, `xvfb.log`, auditor stdout/stderr
 and exit code are retained in `results/construction-01/`. No formal allocation
