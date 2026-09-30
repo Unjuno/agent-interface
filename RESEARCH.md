@@ -78,6 +78,22 @@ historical Docker construction/replay result. See the
 [audit addendum](research/doom/map01_policy_invalidation_clock_4559_v1/AUDIT_ADDENDUM_20260928.md)
 and [Issue #4563](https://github.com/Unjuno/agent-interface/issues/4563).
 
+### Issue #5134 — OrbStack bind-mount publication boundary pilot
+
+One separate `OBSTAC_CONSTRUCTION=1` OrbStack pilot executed against the exact
+seed-3788 package with four reader processes, one atomic `os.replace`, and a
+matched paused in-place write. The runner exited 0 and retained four atomic,
+four strict-prefix, and four complete-reader rows. Raw inspection shows old
+bytes through retained descriptors, new bytes through fresh opens, and the
+in-place prefix during the write pause. The frozen independent audit exited 1
+with `STOP_BOUNDARY_PILOT` because the runner stores descriptor-open timestamps
+in a separate array while the auditor expects them on each read row. Preserve
+this audit STOP; no patched-auditor replay or pilot retry occurred. This is one
+transition only and does not meet formal allocation -03 denominators or answer
+the full seven-transition Issue hypothesis. See the [pilot report and retained
+raw/audit artifacts](research/system1/needle_orbstack_publication_boundary_5134_20260930_01/REPORT.md)
+and [Issue #5134](https://github.com/Unjuno/agent-interface/issues/5134).
+
 ## Issue #4844 — partial-observation typed-mode successor to #4155
 
 One frozen 4,800-row CPU-only formal allocation was run locally in the pinned, network-disabled Docker image; a separate raw-only Docker audit verified all regenerated rows and predictions with zero errors. The result is **`FAIL_MODE_MISROUTES_RECOVERY`** under the preregistered control hierarchy: one complete LAYOUT_CHANGED prototype produced conservative DIRECT YIELD rather than exact REOBSERVE (14/15 exact prototype matches). On the three partial/composition blocks, wrong recovery was 165/960 vs 180/960 (single missing), 89/960 vs 73/960 (multi missing; 17.98% reduction, below the 25% gate), and 219/960 vs 222/960 (composition holdout). Safe coverage was higher for mode factorization, but no block passed the frozen recovery gate. No retry or post-result tuning. This synthetic classifier-family result does not establish GUI or cross-app performance.

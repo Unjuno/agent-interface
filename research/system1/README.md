@@ -35,6 +35,7 @@ This is a navigation view, not a mandatory runtime pipeline. Individual studies 
 | Online role-adapter update | [needle_lora_3441_online_stream_v1/](../needle_lora_3441_online_stream_v1/) — host-CPU online run; both online and batch misses the 0.90 gate; not container or runtime evidence. |
 | Online update generation fence | [`needle_adaptive_generation_fence_4840_v1/`](needle_adaptive_generation_fence_4840_v1/) — scoped 64-row envelope/oracle pass; no model training or runtime authority. |
 | Role-skill publication boundary | [needle_role_skill_publication_stage1_4986_20260928/](needle_role_skill_publication_stage1_4986_20260928/) — four-reader atomic-publication construction; no model training or skill-quality claim. |
+| OrbStack publication boundary pilot | [needle_orbstack_publication_boundary_5134_20260930_01/](needle_orbstack_publication_boundary_5134_20260930_01/REPORT.md) — one actual OrbStack bind-mount transition; raw captured, frozen audit STOP due to an open-timestamp join defect; not formal allocation -03. |
 | Representation collision / ambiguity | [`map01_representation_collision_v1/`](map01_representation_collision_v1/) |
 
 For lower-level local decision mechanics, route cost, TTC admission, typed evidence, and useful-work-per-frontier-boundary studies, use [`../local_system1/`](../local_system1/).
