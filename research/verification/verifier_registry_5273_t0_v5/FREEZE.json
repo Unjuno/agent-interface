@@ -1,0 +1,32 @@
+{
+  "allocation": "verifier-registry-5273-precedence-v5-20260930-01",
+  "base_commit": "a1d0d0290b8619902d34b13d9e536c4bde063f74",
+  "path": "research/verification/verifier_registry_5273_t0_v5/",
+  "files_sha256": {
+    "candidate.py": "834e3ac58b93af6f73d69ef905306d51cbe79b7e7d66f5bbb7310f011de60c5d",
+    "test_precedence.py": "8e581be57f54900d68dff7e988e5e87ceb3b4faa2c2a39dc300e35db96bd0bb5",
+    "audit.py": "25979a9dcb02c7b6cbf0a3234b0ee7f5cd0b25d811df4a7d7967a911e978ec9e",
+    "oracle.py": "90dc31186d2d3fa9c49459e18307a1216a50a38397b01430aca2ef9646d5a09f",
+    "test_audit.py": "c8baa25047ded864113f4a21103582e3e66c48aea66edeb37fde4bb058b34e29",
+    "cases.json": "b9d0f9828840489a28904beb012337c6025010af156996639e5b6a6f13546eb3",
+    "run_host.py": "5b43703cee19928b8d5d1a4038407ee9b282bdec9ae808b0eb5a12dd132e2d38",
+    "../verification_ir_5268_v1/candidate.py": "0d3fc7b367c98d3b58c41a6da2da0e0db360c902b9b70f0af42cc7c4b89101e0"
+  },
+  "pre_run_construction_tests": "9/9 PASS",
+  "host_runner_invocation_target": 1,
+  "container_invocation_target": 0,
+  "network_model_gui_gpu_dispatch": 0,
+  "decision_precedence": [
+    "primitive-role-version/currentness incompatibility -> REJECTED",
+    "deadline-infeasible assignment -> REJECTED",
+    "temporary resource/network unavailable -> UNAVAILABLE",
+    "otherwise -> COMPATIBLE"
+  ],
+  "limitations": [
+    "synthetic cost and budget units only",
+    "no deadline clock measurement",
+    "dependency scheduling not tested",
+    "no production verifier or runtime qualification"
+  ],
+  "container_disposition": "STOP_NO_EXACT_RESOURCE_LEASE"
+}
