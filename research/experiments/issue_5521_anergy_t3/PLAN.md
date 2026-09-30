@@ -11,7 +11,7 @@
 ## Freeze
 
 - Issue #5521 T3 proposal comment 5913200316.
-- Base: ddd2a4b473f7418665619cdacff60cc2b306ad95.
+- Base: 8be656666be2c9aea7196e33d327fd088cbba6fd.
 - Output: research/experiments/issue_5521_anergy_t3/.
 - No Docker/OrbStack invocation: #5085 prioritizes the outstanding #5156 lane; no #5521 lease is assigned.
 - Network/model/GPU/GUI/input: none.

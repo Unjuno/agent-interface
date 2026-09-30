@@ -6,6 +6,8 @@ PASS_HOST_CONSTRUCTION for the frozen 10-event schedule. Raw JSONL is retained
 in raw-host.jsonl. clear-on-expiry and tombstone-on-expiry use identical event
 inputs and evidence generations; only the tick-9 expired Q/A disposition
 differs.
+After main advanced, source/tests were refreshed and rerun at base
+8be656666be2c9aea7196e33d327fd088cbba6fd; deterministic raw bytes were unchanged.
 
 | Arm | Verifier checks | Admitted effects |
 |---|---:|---:|
