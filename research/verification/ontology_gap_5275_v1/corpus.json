@@ -1,0 +1,65 @@
+[
+  {
+    "case_id": "iid-current-save",
+    "family": "iid_supported",
+    "oracle_unknown": false,
+    "task_summary": "Save the currently selected draft and verify the resulting saved state.",
+    "plan": {"plan_version":"v0.1","checks":[{"primitive":"TARGET.IDENTITY_CURRENT","subject_ref":"target:save","evidence_role":"OBSERVATION_CURRENT","verifier_class":"deterministic_rule","version":"1.0"},{"primitive":"EFFECT.POSTCONDITION","subject_ref":"draft:7","evidence_role":"INDEPENDENT_EFFECT","verifier_class":"local_cpu","version":"1.0"}]}
+  },
+  {
+    "case_id": "iid-reversible-toggle",
+    "family": "iid_supported",
+    "oracle_unknown": false,
+    "task_summary": "Toggle the selected preference and verify it can be reversed.",
+    "plan": {"plan_version":"v0.1","checks":[{"primitive":"TARGET.IDENTITY_CURRENT","subject_ref":"target:preference","evidence_role":"OBSERVATION_CURRENT","verifier_class":"deterministic_rule","version":"1.0"},{"primitive":"EFFECT.REVERSIBILITY","subject_ref":"preference:compact","evidence_role":"INDEPENDENT_EFFECT","verifier_class":"local_cpu","version":"1.0"}]}
+  },
+  {
+    "case_id": "iid-permission",
+    "family": "iid_supported",
+    "oracle_unknown": false,
+    "task_summary": "Confirm the current permission before changing a local setting.",
+    "plan": {"plan_version":"v0.1","checks":[{"primitive":"AUTHORITY.SCOPE_CURRENT","subject_ref":"setting:notifications","evidence_role":"POLICY_RECORD","verifier_class":"deterministic_rule","version":"1.0"},{"primitive":"EFFECT.POSTCONDITION","subject_ref":"setting:notifications","evidence_role":"INDEPENDENT_EFFECT","verifier_class":"local_cpu","version":"1.0"}]}
+  },
+  {
+    "case_id": "compositional-target-semantic-effect",
+    "family": "compositional_supported",
+    "oracle_unknown": false,
+    "task_summary": "Find the intended row, confirm the requested edit matches intent, and verify the resulting state.",
+    "plan": {"plan_version":"v0.1","checks":[{"primitive":"TARGET.IDENTITY_CURRENT","subject_ref":"row:invoice-7","evidence_role":"OBSERVATION_CURRENT","verifier_class":"local_multimodal_placeholder","version":"0.1"},{"primitive":"SEMANTIC.INTENT_MATCH","subject_ref":"edit:due-date","evidence_role":"OBSERVATION_CURRENT","verifier_class":"rich_model","version":"1.0"},{"primitive":"EFFECT.POSTCONDITION","subject_ref":"invoice:7","evidence_role":"INDEPENDENT_EFFECT","verifier_class":"local_cpu","version":"1.0"}]}
+  },
+  {
+    "case_id": "ood-unknown-primitive",
+    "family": "explicit_ontology_gap",
+    "oracle_unknown": true,
+    "task_summary": "Check an unfamiliar retention obligation before archiving.",
+    "plan": {"plan_version":"v0.1","checks":[{"primitive":"LEGAL.RETENTION_CURRENT","subject_ref":"record:12","evidence_role":"POLICY_RECORD","verifier_class":"external_tool","version":"1.0"}]}
+  },
+  {
+    "case_id": "ood-unknown-evidence-role",
+    "family": "explicit_ontology_gap",
+    "oracle_unknown": true,
+    "task_summary": "A model assertion is the only evidence for the current target identity.",
+    "plan": {"plan_version":"v0.1","checks":[{"primitive":"TARGET.IDENTITY_CURRENT","subject_ref":"target:primary","evidence_role":"MODEL_ASSERTION_ONLY","verifier_class":"rich_model","version":"1.0"}]}
+  },
+  {
+    "case_id": "ood-malformed-check",
+    "family": "malformed_unmappable",
+    "oracle_unknown": true,
+    "task_summary": "A target check has no subject reference or evidence role.",
+    "plan": {"plan_version":"v0.1","checks":[{"primitive":"TARGET.IDENTITY_CURRENT","verifier_class":"deterministic_rule","version":"1.0"}]}
+  },
+  {
+    "case_id": "ood-unmodeled-external-recipient",
+    "family": "novel_external_side_effect",
+    "oracle_unknown": true,
+    "task_summary": "Send a customer export to an external recipient; verify recipient authorization and irreversible disclosure risk.",
+    "plan": {"plan_version":"v0.1","checks":[{"primitive":"TARGET.IDENTITY_CURRENT","subject_ref":"target:export","evidence_role":"OBSERVATION_CURRENT","verifier_class":"deterministic_rule","version":"1.0"},{"primitive":"EFFECT.POSTCONDITION","subject_ref":"export:batch-4","evidence_role":"INDEPENDENT_EFFECT","verifier_class":"local_cpu","version":"1.0"}]}
+  },
+  {
+    "case_id": "ood-adversarial-familiar-legal-hold",
+    "family": "adversarial_superficially_familiar",
+    "oracle_unknown": true,
+    "task_summary": "Archive the selected customer record, which is under a legal hold; a hold-status check is mandatory before the irreversible action.",
+    "plan": {"plan_version":"v0.1","checks":[{"primitive":"TARGET.IDENTITY_CURRENT","subject_ref":"record:customer-19","evidence_role":"OBSERVATION_CURRENT","verifier_class":"deterministic_rule","version":"1.0"},{"primitive":"EFFECT.REVERSIBILITY","subject_ref":"record:customer-19","evidence_role":"INDEPENDENT_EFFECT","verifier_class":"local_cpu","version":"1.0"}]}
+  }
+]

@@ -64,6 +64,37 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Research evidence ladder
 
+### Issue #5346 — stigmergic coordination T1 stopped for invalid lease timing
+(`STOP_HARNESS_INVALID`; Issue remains open)
+
+The one-shot, pinned-container successor emitted 2,880 rows over 960 paired
+schedules and the first independent raw auditor returned PASS. Post-run source
+review then found that the crashed owner's lease was released at task-duration
+tick 2 rather than the frozen TTL tick 3. The result is therefore invalid for
+the registered hypothesis; preserve its output and first auditor unchanged and
+do not interpret the apparent policy differences. A new, separately frozen
+successor is required to test corrected expiry semantics and bind the auditor
+to that contract. No runtime, strategic-agent, or product claim follows. See
+the [full T1 report](research/coordination/stigmergy_5346_t1_successor/REPORT.md)
+and [Issue #5346](https://github.com/Unjuno/agent-interface/issues/5346).
+
+### Issue #5346 — scoped TTL-boundary stigmergy successor (T2 finite-model PASS)
+
+The corrected, expanded pinned-container allocation completed 1,600 deterministic
+schedules across NONE, CENTRAL_CLAIMS, and LOCAL_MARKERS. Two raw-only audits
+passed; crash-owner leases expire exactly at TTL 3, all 800 crash schedules
+recover once, authority traces are identical across arms, and both TTL and
+marker-authority mutations are rejected. A supplemental time/fault auditor also
+validated marker visibility delays and rejected an early-observation mutation.
+Across the pooled synthetic schedule, local markers had 3,264 blocked attempts
+versus NONE 3,700, but central claims reduced them further to 2,610. Explicit
+central messages were 0 / 4,300 / 0 respectively; marker write/read/storage
+overhead is not included, so this is a narrow synthetic Pareto tradeoff, not a
+claim that stigmergy is cheaper or faster in a live interface. T1 remains the
+immutable `STOP_HARNESS_INVALID` record. Issue #5346 remains open. See the
+[T2 report](research/coordination/stigmergy_5346_t2_successor/REPORT.md) for
+H/T/D/C/U, exact hashes, outputs, and limits.
+
 ### Issue #5269 — mandatory verification-plan coverage boundary (HOLD)
 
 On the immutable 10-case #5268 IR corpus, the deterministic coverage boundary
