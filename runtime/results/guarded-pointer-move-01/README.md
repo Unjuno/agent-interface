@@ -54,6 +54,17 @@ transport/admission contracts; the actual primary trial supplies separate GUI
 evidence. This remains a candidate, pending a fresh complete six-task matched
 comparison, recovery and cross-domain coverage.
 
+The first hosted native-MCP run on `fc0bec45b` failed because two legacy tests
+called the private `_run_guarded(activate=...)` signature directly (12 subcase
+errors). They now exercise public `click` and `keyboard`, preserving invalid
+gap/capacity rejection and no-guard/no-dispatch assertions. The new move tests
+are also registered in the shared CI harness. The corrected shared local runner
+passed 336 protocol and 146 harness tests. `ci-fix.tar.gz` and its manifest retain
+the original hosted failure log, complete corrected local logs and source pins.
+This changes tests and suite registration only; the frozen live runtime remains
+the source recorded above. Hosted success for the corrected head must be checked
+separately and is not inferred from this local pass.
+
 `raw.tar.gz` retains all three trials, packaged runtime and host, frozen plans,
 requests/replies, full native artifacts, independent score and primary review
 records. `manifest.json` hashes every member. The verifier recomputes request/
