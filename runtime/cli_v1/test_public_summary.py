@@ -14,6 +14,50 @@ def fixture(name):
 
 
 class PublicSummaryTests(unittest.TestCase):
+    def test_cli_summary_requires_exact_retained_report_and_keeps_image(self):
+        import hashlib
+        from runtime.cli_v1.public_summary import summarize_cli_dispatch
+        full = fixture('paced_dispatch_review.json')
+        full.pop('call_id');full.pop('call_directory')
+        full['image'] = {'type': 'image', 'mimeType': 'image/png', 'data': 'unchanged'}
+        raw = json.dumps(full['receipt']['source']['raw_report']).encode()
+        full['receipt']['source'].update(bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest())
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            self.assertEqual(summarize_cli_dispatch(full, root), full)
+            (root/'report.json').write_bytes(raw)
+            brief = summarize_cli_dispatch(full, root)
+            self.assertEqual(brief['receipt']['schema'], SCHEMA)
+            self.assertEqual(brief['image'], full['image'])
+            self.assertEqual(brief['outcome_summary'], full['outcome_summary'])
+            self.assertNotIn('call_id', brief)
+            retrieve = brief['presentation']['retrieve']
+            self.assertEqual(retrieve['command'], 'review')
+            self.assertEqual(retrieve['arguments']['report'], str(root/'report.json'))
+            (root/'report.json').write_bytes(raw+b' ')
+            self.assertEqual(summarize_cli_dispatch(full, root), full)
+
+    def test_cli_presentation_keeps_retention_and_falls_back_on_persistence_failure(self):
+        import hashlib,io
+        from runtime.cli_v1.__main__ import _present_result
+        full = fixture('nonpaced_dispatch_review.json')
+        full.pop('call_id');full.pop('call_directory')
+        raw = json.dumps(full['receipt']['source']['raw_report']).encode()
+        full['receipt']['source'].update(bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest())
+        with tempfile.TemporaryDirectory() as td:
+            (Path(td)/'report.json').write_bytes(raw)
+            for persisted in [True, False]:
+                retention = {'directory':td,'request_persisted':True,'report_persisted':persisted,'replay_allowed':False}
+                output = io.StringIO()
+                with patch('runtime.cli_v1.__main__.present_result',return_value=copy.deepcopy(full)), patch('sys.stdout',output):
+                    code = _present_result({},with_review=True,capture_directory=td,exit_code=0,
+                        compact=True,report_refs=True,retention=retention,detail='summary')
+                row = json.loads(output.getvalue())
+                self.assertEqual(row['retention'], retention)
+                self.assertEqual(row['outcome_summary'], full['outcome_summary'])
+                self.assertEqual(row['receipt']['schema'], SCHEMA if persisted else full['receipt']['schema'])
+                self.assertEqual(code,0 if persisted else 2)
+
     def test_paced_and_nonpaced_keep_outcomes_and_native_evidence(self):
         for name in ("paced_dispatch_review.json", "nonpaced_dispatch_review.json"):
             with self.subTest(name=name):
