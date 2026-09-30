@@ -23,6 +23,12 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /runtime/__init__.py
+            /runtime/cli_v1/
+            /runtime/selector_v1/
+            /research/integration/golden_delivery_join_v1/
       - name: Current repository regression, no dispatch
         run: python3 -S -B -m unittest -v runtime.cli_v1.test_golden_v3 runtime.cli_v1.test_golden_delivery_join
       - name: Packaging refusal controls

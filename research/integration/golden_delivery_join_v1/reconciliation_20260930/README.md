@@ -82,3 +82,42 @@ Earlier #5284 hosted checks used merge ref `830b3c3f98ce3af0ac2a7600832656500237
 they do not qualify this new wiring. Keep the integration HOLD until the new
 candidate's applicable exact-ref CI and review pass. No frozen manifest edit,
 formal-result replacement, old-branch deletion or broader issue closure is implied.
+
+
+## First hosted attempt and checkout-only correction
+
+Initial integration head `2dafb3c7cb1a6f9f50eb10a8df5366625791bc90` passed the
+new split P2 gate (including its pinned-container checks), PR-event Native MCP,
+CLI/build platform jobs, X11, review and retained-evidence/replay checks. Its
+nested-failure workflow also passed syntax and both tests, after approximately
+eight minutes in the slim image's Git-less REST-archive checkout path. That is a
+passing correctness check with an inefficient source-materialization step.
+
+Golden-delivery run [36749414542](https://github.com/Unjuno/agent-interface/actions/runs/36749414542)
+was cancelled at its five-minute limit during full checkout. All three substantive
+steps (current regression, packaging controls and retained raw re-audit) were
+skipped. This is the remaining execution gap; it is not a scientific/semantic
+failure. Duplicate push Native MCP run
+[36749297802](https://github.com/Unjuno/agent-interface/actions/runs/36749297802)
+spent approximately 4m39s in checkout, passed relay-host tests, then was cancelled
+about 19 seconds into shared integration checks without a retained result artifact.
+That duplicate is not a pass; the PR-event Native MCP run passed. No manual retry
+or formal-workflow dispatch was requested.
+
+The follow-up changes only checkout setup in the two affected workflows and adds
+this explanation. Golden retains its original three commands and five-minute cap.
+Nested retains its exact pinned base image and both Python commands, adds an
+explicit five-minute cap, and installs only Git from the image's official Debian
+repositories after fail-closed TLS trust-store/CA-bundle checks. There is no package
+upgrade command, extra privilege or insecure certificate option. Git becomes part
+of the ordinary CI environment; this is not a formal-experiment identity claim.
+Both workflows use complete relevant CLI/selector source subtrees and the complete
+study/capsule directory. Missing required sources fail instead of skipping tests.
+
+Preservation is precise: **20 of the original 21 #5284 paths remain byte-identical**;
+its Golden-delivery workflow now has the reviewed checkout-only delta. The adapter,
+twelve-test module, every scientific source/result/capsule byte and all capsule
+helpers remain exact. Nested-failure's two-test fixture is unchanged. Neither live
+workflow is bound by the frozen/packed source manifest or plan. An independent
+review found no blocking issue in the exact two-workflow delta. The first CI
+outcomes remain in their original runs; the corrected new head needs its own CI.
