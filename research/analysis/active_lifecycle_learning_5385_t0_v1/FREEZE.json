@@ -1,0 +1,16 @@
+{
+  "schema": "issue5385-t0-freeze-v1",
+  "issue": 5385,
+  "intake_main": "bbeee4da02285281e960334f8babefc2d7070358",
+  "branch": "research/active-lifecycle-learning-5385-t0-20260930-v2",
+  "path": "research/analysis/active_lifecycle_learning_5385_t0_v1/",
+  "host": "Windows local; CPython 3.11.9; stdlib only; no files written",
+  "execution": "Exact GitHub-readback bytes, compile/exec from memory with -B; one learner invocation, then separate raw-only auditor process. No Docker CLI, network, model, GPU, CUDA, GUI, input, retries, or tuning.",
+  "source_sha256": {
+    "learner.py": "b712d4c1fe497d3f8d4f3204ed9674f35f59696499bf3680e831169e5e4d1938",
+    "audit.py": "32b15afac5234bb41d29ce9613123f700f1533cd1fe79886b99c44d6587d3e10",
+    "construction_check.py": "3f9c5f83bf02e38edf61c26b192c89d7aefc88b786b1eba6c5a003d115ee40fa"
+  },
+  "construction_gate": "PASS only if construction_check.py outputs PASS_CONSTRUCTION 7 checks",
+  "formal_gate": "Exact target/hypothesis finite-product equivalence; four safety states distinct; shortest false-accept blind spot; 4/4 independent mutation rejection."
+}
