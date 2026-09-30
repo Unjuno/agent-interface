@@ -311,18 +311,27 @@ def main(raw_path, expected_path, audit_path, mode, receipt_path=None, receipt_k
             errors.append("formal-x11 mode requires an out-of-band host launch receipt")
         if receipt_key_path is None:
             errors.append("formal-x11 mode requires a separately provisioned trusted host receipt key")
-        if receipt_path is not None and receipt_key_path is not None and len(fixtures) == 1:
+        receipt = None
+        receipt_bytes = None
+        key = None
+        if receipt_path is not None:
             try:
                 receipt_bytes = Path(receipt_path).read_bytes()
                 receipt_sha256 = hashlib.sha256(receipt_bytes).hexdigest()
                 receipt = json.loads(receipt_bytes)
+            except OSError as exc:
+                errors.append(f"formal X11 host launch receipt unreadable: {type(exc).__name__}")
+            except json.JSONDecodeError:
+                errors.append("formal X11 host launch receipt is invalid JSON")
+        if receipt is not None and receipt_key_path is not None and len(fixtures) == 1:
+            try:
                 key = Path(receipt_key_path).read_bytes()
                 receipt_errors, receipt_authenticated = validate_host_launch_receipt(
                     receipt, raw_bytes, expected_bytes, expected, fixtures[0], key)
                 errors.extend(receipt_errors)
                 receipt_bindings_valid = not receipt_errors
-            except (OSError, json.JSONDecodeError) as exc:
-                errors.append(f"formal X11 host launch receipt/key unreadable: {type(exc).__name__}")
+            except OSError as exc:
+                errors.append(f"trusted host receipt key unreadable: {type(exc).__name__}")
     pass_status = ("PASS_SYNTHETIC_RAW_ONLY_CLI_BOUNDARY" if synthetic_only
                    else "PASS_OWNER_THREAD_KEYUP_BRACKET_SCOPED")
     result = {"status": pass_status if not errors else "FAIL_AUDIT",
