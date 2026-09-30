@@ -25,7 +25,9 @@ risk control for real workloads.
   Docker/CPU coordination Issue #5085 has not assigned this task a slot.
 - **U:** The records and shifts are synthetic and fully specified. A hash
   authenticates neither author nor population; this is not a representative
-  calibration cohort. No SCRC algorithm, shift detector, task-effect,
+  calibration cohort. This checks a supplied CRC summary/formula, not an
+  implemented threshold-search/calibration procedure. No SCRC algorithm,
+  shift detector, task-effect,
   model/GUI/runtime, production safety, or causal guarantee was tested.
 
 ## Observed values
