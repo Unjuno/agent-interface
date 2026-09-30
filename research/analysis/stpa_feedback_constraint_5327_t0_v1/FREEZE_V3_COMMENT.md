@@ -1,0 +1,7 @@
+# Separate successor allocation — Issue #5327
+
+Allocation 02's runner/raw result is preserved; its sole audit invocation returned `STOP_AUDIT_MISMATCH` because the auditor conflated sequence equality with delivery. The original artifact is not edited and the auditor is not rerun against it. Allocation `stpa-feedback-constraint-5327-t0-20260930-03` is a fresh freeze/output path; it changes only the independent auditor to separately recompute sequence equality and delivered/current acknowledgment, and adds a construction assertion for that distinction. Model, scenarios, policy behaviors, thresholds, decision rule, and synthetic causal question remain fixed.
+
+Seven construction tests pass, including the new semantics regression. The new output directory `results/formal-03/` exists as a host bind source; its nested `formal-03/` runner target is verified absent. Source tree is mounted read-only at `/workspace/research`, `PYTHONPATH=/workspace`, working directory `/workspace`; only output mount is writable. Image `python:3.12-slim`, digest `sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9`, network off, read-only root, capabilities dropped, no-new-privileges.
+
+Run formal command once: `python -B -m research.analysis.stpa_feedback_constraint_5327_t0_v1.run /out/formal-03`. Only after exit 0, run independent raw-only audit once: `python -B -m research.analysis.stpa_feedback_constraint_5327_t0_v1.audit /out/formal-03/raw.json /out/formal-03/summary.json`. No retry under this allocation. Source identity is recorded in `FREEZE_V3.json`.

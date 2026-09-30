@@ -1,0 +1,74 @@
+{
+  "Id": "sha256:01ea4e60b03e8a7d48644d0dce596bd2e42ab3815fdc52b0c7a6d4cbcf757dac",
+  "RepoTags": [
+    "mitra-rung0-853-rev4:local-20260927"
+  ],
+  "RepoDigests": [
+    "mitra-rung0-853-rev4@sha256:01ea4e60b03e8a7d48644d0dce596bd2e42ab3815fdc52b0c7a6d4cbcf757dac"
+  ],
+  "Comment": "buildkit.dockerfile.v0",
+  "Created": "2026-09-27T08:35:30.875617779Z",
+  "Config": {
+    "Env": [
+      "PATH=/usr/local/nvidia/bin:/usr/local/cuda/bin:/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "NVIDIA_VISIBLE_DEVICES=all",
+      "NVIDIA_DRIVER_CAPABILITIES=compute,utility",
+      "LD_LIBRARY_PATH=/usr/local/nvidia/lib:/usr/local/nvidia/lib64",
+      "PYTORCH_VERSION=2.5.1",
+      "PIP_DISABLE_PIP_VERSION_CHECK=1",
+      "PIP_NO_CACHE_DIR=1",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "PYTHONUNBUFFERED=1",
+      "HF_HUB_OFFLINE=1",
+      "TRANSFORMERS_OFFLINE=1",
+      "HF_HUB_DISABLE_TELEMETRY=1",
+      "OMP_NUM_THREADS=1",
+      "MKL_NUM_THREADS=1",
+      "OPENBLAS_NUM_THREADS=1"
+    ],
+    "Entrypoint": [
+      "python",
+      "/src/runner.py"
+    ],
+    "WorkingDir": "/src",
+    "Labels": {
+      "com.nvidia.volumes.needed": "nvidia_driver",
+      "org.opencontainers.image.ref.name": "ubuntu",
+      "org.opencontainers.image.version": "22.04"
+    }
+  },
+  "Architecture": "amd64",
+  "Os": "linux",
+  "Size": 10586490173,
+  "RootFS": {
+    "Type": "layers",
+    "Layers": [
+      "sha256:2573e0d8158209ed54ab25c87bcdcb00bd3d2539246960a3d592a1c599d70465",
+      "sha256:889490fbc56f59947837e4f6d5bf8a668997cf50aae7ae1dbcae99a6a2380b49",
+      "sha256:84984c017fbea392a8bd888f9acd908557c9941b292054cd32c293cc680c9698",
+      "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "sha256:10e53ee6d26a9fa72afbd325c0a56d86e08517df9da1b87e795a02da7f79dec4",
+      "sha256:6bafa09f36ab7c4d21ae2bf21dccad86db5fd3369cee98bddd746c651d85821c",
+      "sha256:d44646d13b88835dd70ef31d2179570ec38ad5e2920e3ff8c6154e4bdfbb7d20",
+      "sha256:c25d03cc99a75c5e61307c9735b8cc635466dfa8a9527551cffe78a56cae9268",
+      "sha256:b8a73dfa5f227d397d672fa867a3115fbf4ad0a0f3022ccc3d6ac109584754f7",
+      "sha256:981d529eabb294ac218109f439bbdfdb73cd91d3ec2d4f0bda8ca960913ed52a"
+    ]
+  },
+  "Metadata": {
+    "LastTagTime": "2026-09-27T08:39:13.422559147Z"
+  },
+  "Descriptor": {
+    "mediaType": "application/vnd.oci.image.index.v1+json",
+    "digest": "sha256:01ea4e60b03e8a7d48644d0dce596bd2e42ab3815fdc52b0c7a6d4cbcf757dac",
+    "size": 856
+  },
+  "Identity": {
+    "Build": [
+      {
+        "Ref": "k14twcb6su4bs116yzegfkuo3",
+        "CreatedAt": "2026-09-27T08:39:13.456067664Z"
+      }
+    ]
+  }
+}

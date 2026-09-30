@@ -20,6 +20,24 @@ class X11RuntimeSession:
         self.recovery_required = self.recovery_required or not verified
         return verified
 
+    def recover_input(self):
+        """Explicit neutralization only; never replay the failed program."""
+        if not self.recovery_required:
+            return {'status': 'refused', 'error': 'INPUT_RECOVERY_NOT_REQUIRED',
+                    'release_attempted': False, 'recovery_required': False}
+        try:
+            release = self.backend.release_all()
+        except Exception as error:
+            return {'status': 'recovery_failed', 'error': repr(error),
+                    'release_attempted': True, 'recovery_required': True}
+        verified = self._record_release([release])
+        if verified:
+            self.recovery_required = False
+        return {'status': 'input_recovered' if verified else 'recovery_failed',
+                'release_attempted': True, 'release': release,
+                'recovery_required': self.recovery_required,
+                'task_success': None, 'replay_allowed': False}
+
     def dispatch(
         self,
         program: dict[str, Any],
@@ -63,6 +81,8 @@ class X11RuntimeSession:
             return {
                 "status": "refused",
                 "error": "BACKEND_CONSTRAINT",
+                "program_execution_started": False, "program_emissions": 0,
+                "cleanup_attempted": True,
                 "detail": str(error),
                 "required_capabilities": list(admission.required_capabilities),
                 "backend_emissions": self.backend.emissions,
@@ -80,6 +100,25 @@ class X11RuntimeSession:
                 "required_capabilities": list(admission.required_capabilities),
                 "execution": error.execution,
                 "recovery_required": self.recovery_required,
+            }
+        except X11BackendError as error:
+            # execute repeats preflight before its effect boundary. A managed
+            # client may disappear after the first check; this is still a
+            # pre-input constraint failure, not an unknown execution exception.
+            try:
+                release = self.backend.release_all()
+            except Exception:
+                self.recovery_required = True
+                raise
+            self._record_release([release])
+            return {
+                "status": "refused", "error": "BACKEND_CONSTRAINT",
+                "program_execution_started": False, "program_emissions": 0,
+                "cleanup_attempted": True,
+                "detail": str(error),
+                "required_capabilities": list(admission.required_capabilities),
+                "backend_emissions": self.backend.emissions,
+                "release": release, "recovery_required": self.recovery_required,
             }
         except Exception:
             self.recovery_required = True

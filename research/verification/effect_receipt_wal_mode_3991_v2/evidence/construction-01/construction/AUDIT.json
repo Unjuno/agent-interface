@@ -1,0 +1,32 @@
+{
+  "atomic_external_after_first_duplicates": 2,
+  "atomic_local_exactly_once": 10,
+  "control_rows": 10,
+  "decision": "HOLD_AUDIT_INTEGRITY",
+  "effect_first_after_first_duplicates": 2,
+  "errors": [
+    "formal_matrix_incomplete_or_duplicate",
+    "control_matrix_incomplete_or_duplicate",
+    "receipt_only_status:DELETE-EFFECT_FIRST-AFTER_SECOND-r0",
+    "retry_policy:DELETE-EFFECT_FIRST-AFTER_SECOND-r0",
+    "retry_exit:DELETE-EFFECT_FIRST-AFTER_SECOND-r0",
+    "receipt_only_status:DELETE-RECEIPT_FIRST-AFTER_SECOND-r0",
+    "retry_policy:DELETE-RECEIPT_FIRST-AFTER_SECOND-r0",
+    "retry_exit:DELETE-RECEIPT_FIRST-AFTER_SECOND-r0",
+    "receipt_only_status:DELETE-ATOMIC_EXTERNAL-AFTER_SECOND-r0",
+    "retry_policy:DELETE-ATOMIC_EXTERNAL-AFTER_SECOND-r0",
+    "retry_exit:DELETE-ATOMIC_EXTERNAL-AFTER_SECOND-r0",
+    "receipt_only_status:WAL-EFFECT_FIRST-AFTER_SECOND-r0",
+    "retry_policy:WAL-EFFECT_FIRST-AFTER_SECOND-r0",
+    "retry_exit:WAL-EFFECT_FIRST-AFTER_SECOND-r0",
+    "receipt_only_status:WAL-RECEIPT_FIRST-AFTER_SECOND-r0",
+    "retry_policy:WAL-RECEIPT_FIRST-AFTER_SECOND-r0",
+    "retry_exit:WAL-RECEIPT_FIRST-AFTER_SECOND-r0",
+    "receipt_only_status:WAL-ATOMIC_EXTERNAL-AFTER_SECOND-r0",
+    "retry_policy:WAL-ATOMIC_EXTERNAL-AFTER_SECOND-r0",
+    "retry_exit:WAL-ATOMIC_EXTERNAL-AFTER_SECOND-r0"
+  ],
+  "formal_rows": 40,
+  "receipt_first_false_completed": 2,
+  "schema": "effect-receipt-independent-raw-audit-v1"
+}

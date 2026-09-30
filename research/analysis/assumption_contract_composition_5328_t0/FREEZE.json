@@ -1,0 +1,23 @@
+{
+  "allocation":"assumption-contract-composition-5328-t0-20260930-01",
+  "issue":5328,
+  "registration_main":"e034622e4307b1d2cb2d5e7cbb30211dcea661a9",
+  "source_main":"a1d0d0290b8619902d34b13d9e536c4bde063f74",
+  "branch":"research/assumption-contract-composition-5328-t0-20260930",
+  "runtime":{"python":"3.14.5","platform":"Darwin arm64","dependencies":"stdlib only"},
+  "commands":["python3 -B runner.py formal_raw.json","python3 -B audit.py formal_raw.json audit.json"],
+  "runner_invocations":1,
+  "auditor_invocations":1,
+  "retry_policy":"No retry or tuning; preserve first outcome.",
+  "container":"Not invoked; coordinator assignment required under #5085.",
+  "expected_rows":7,
+  "outputs_absent_before_run":["formal_raw.json","audit.json"],
+  "source_sha256":{
+    "model.py":"1d59ea87d4746a27cdd636219f8566603f8a24fc87a0bb9558fe9b74f1a91d0f",
+    "oracle.py":"b98b65527409d5fea843cccd413fa1485c6e498a2896a02111f67a6439c47cff",
+    "runner.py":"1154ccaa92f99065d39e6cf926e0b8598c1e6a15e3de5894108178198a238780",
+    "audit.py":"fb49f5d96b830b1f0f05d0d1f0b6e1b4df27d705e0b6125ecb4901d1fdbbb41c",
+    "test_model.py":"ac2269dcca29088bfc016734bd8eda1384ad3fc850a49f6b88342875a0a082b8"
+  },
+  "scope_limit":"Synthetic chain semantics only; no external system proof or product-success claim."
+}

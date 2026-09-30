@@ -1,0 +1,30 @@
+{
+  "allocation": "formal01-successor",
+  "state_before_invocation": "UNSPENT",
+  "frozen_main": "57b56de2831204885c55375737580e5d82d3ab98",
+  "source_freeze_commit": "e4ce0d85a1d27b4ba9ea147413cfc2de468afaa1",
+  "prior_source_commit_on_same_branch": "0143598c30d65a461302c4dabeee5afe4df4739d",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/5315",
+  "path": "research/verification/conformal_risk_contract_5315_t0_v2/",
+  "runtime": {
+    "python": "Python 3.14.5",
+    "host": "Darwin arm64",
+    "dependencies": "Python standard library only"
+  },
+  "execution": {
+    "command": "python3 -B run.py --out evidence/formal01/RESULT.json",
+    "container": false,
+    "container_reason": "No task-specific shared Docker/CPU slot is authorized in coordination Issue #5085; this bounded host-only run does not invoke Docker, GPU, model, GUI, or external services."
+  },
+  "sha256": {
+    "PROTOCOL.md": "82e197d95d15256902c2a47c13a3b98ab380bd6f0cd10f2f69b21e96335a87d3",
+    "calibration.json": "03da275376b1c7d6959cb3bb1139889975c0a1338289c8c07a4370c10da5074e",
+    "calibration_records.json": "8aa1c2f7aa293626aaed346a57fbe4928ddb89df9486588517dd5b1339c3aa6b",
+    "scenarios.json": "235db0cc4029ee983a03a70145fc0d36bbdb5cd537dc4fccfb4fdb4e566537e8",
+    "candidate.py": "1e470916fd51899bc8451a3294bdc99d0fb756e9d490dc38524289d00400dd21",
+    "run.py": "dd538c795bdd92cb76776b2a75114eea577029ea981e339500bf67359e01c635",
+    "audit.py": "3cdfdaf0cf2e127ecf3f3639c7d04bc4da7f78288eaf024a9ae642a7f78cc3bf",
+    "test_contract.py": "5841e1eda5e611c1764fff4ff4969fc62d9900ae88fe02b3b66f5b5876424701"
+  },
+  "parallel_work_boundary": "The Issue has a separately recorded split-conformal coverage allocation under research/analysis/conformal_verifier_risk_contract_5315_v1. This is a distinct CRC marginal-vs-selective risk and calibration-byte-integrity fixture under research/verification/conformal_risk_contract_5315_t0_v2; no files or allocations from that lane are used."
+}

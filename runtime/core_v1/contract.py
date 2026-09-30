@@ -20,6 +20,7 @@ INPUT_POINTER = "input.pointer"
 INPUT_SCROLL = "input.scroll"
 INPUT_RELEASE_ALL = "input.release_all"
 WINDOW_FOCUS = "window.focus"
+WINDOW_ACTIVATE = "window.activate"
 DISPLAY_GEOMETRY = "display.geometry"
 CLOCK_MONOTONIC = "clock.monotonic"
 EVENT_FEEDBACK = "event.feedback"
@@ -36,6 +37,7 @@ KNOWN_CAPABILITIES = frozenset({
     INPUT_SCROLL,
     INPUT_RELEASE_ALL,
     WINDOW_FOCUS,
+    WINDOW_ACTIVATE,
     DISPLAY_GEOMETRY,
     CLOCK_MONOTONIC,
     EVENT_FEEDBACK,
@@ -181,6 +183,8 @@ def _op_capabilities(op: dict[str, Any]) -> set[str]:
         return {INPUT_SCROLL}
     if op_type == "focus":
         return {WINDOW_FOCUS}
+    if op_type == "activate":
+        return {WINDOW_ACTIVATE, CLOCK_MONOTONIC}
     if op_type == "observe":
         return {CAPTURE_FRAME, DISPLAY_GEOMETRY}
     if op_type == "wait_update":
@@ -228,6 +232,9 @@ def validate_program(program: dict[str, Any]) -> dict[str, Any]:
             _need(isinstance(op_type, str), f"op[{index}].op must be string")
             if op_type == "focus":
                 _identifier(op.get("target"), "focus target")
+            elif op_type == "activate":
+                _identifier(op.get("target"), "activate target")
+                _bounded_int(op.get("timeout_ms"), "activate timeout_ms", 0, 2000)
             elif op_type == "key_chord":
                 keys = op.get("keys")
                 _need(isinstance(keys, list) and 1 <= len(keys) <= 5, "invalid chord keys")
@@ -246,12 +253,12 @@ def validate_program(program: dict[str, Any]) -> dict[str, Any]:
                 text = op.get("text")
                 _need(isinstance(text, str) and len(text) <= 16384, "invalid text")
             elif op_type == "pointer_move":
-                _need(op.get("frame") in COORDINATE_FRAMES, "invalid pointer frame")
+                _need(isinstance(op.get("frame"), str) and op["frame"] in COORDINATE_FRAMES, "invalid pointer frame")
                 _bounded_int(op.get("x"), "pointer x", -1_000_000, 1_000_000)
                 _bounded_int(op.get("y"), "pointer y", -1_000_000, 1_000_000)
             elif op_type == "pointer_button":
                 button = op.get("button")
-                _need(button in BUTTONS, "invalid pointer button")
+                _need(isinstance(button, str) and button in BUTTONS, "invalid pointer button")
                 _need(type(op.get("down")) is bool, "pointer_button.down must be bool")
                 if op["down"]:
                     _need(button not in held_buttons, f"button {button} already held")
@@ -263,7 +270,7 @@ def validate_program(program: dict[str, Any]) -> dict[str, Any]:
                 _bounded_int(op.get("dx"), "scroll dx", -100_000, 100_000)
                 _bounded_int(op.get("dy"), "scroll dy", -100_000, 100_000)
             elif op_type == "observe":
-                _need(op.get("frame") in COORDINATE_FRAMES, "invalid observe frame")
+                _need(isinstance(op.get("frame"), str) and op["frame"] in COORDINATE_FRAMES, "invalid observe frame")
                 for field in ("x", "y"):
                     _bounded_int(op.get(field), f"observe {field}", -1_000_000, 1_000_000)
                 for field in ("w", "h"):

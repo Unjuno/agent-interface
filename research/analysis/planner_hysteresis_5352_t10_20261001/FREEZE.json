@@ -1,0 +1,68 @@
+{
+  "study": "issue-5352-t10-observed-bound-breach-stop",
+  "allocation_id": "planner-hysteresis-5352-t10-bound-breach-20261001-01",
+  "status_at_freeze": "FROZEN_NOT_FORMALLY_RUN",
+  "base_main_sha": "bde4e1d8a3bedfa16aefbb993a816fb3b0f65c92",
+  "source_commit_before_freeze_manifest": "a7e070808eb8c876f9896aa0be1bffa4c69e9cfe",
+  "branch": "research/planner-hysteresis-5352-t10-bound-breach-20261001",
+  "path": "research/analysis/planner_hysteresis_5352_t10_20261001/",
+  "environment": {
+    "platform": "Windows 10 x64",
+    "python": "CPython 3.11.9 64-bit (AMD64)",
+    "dependencies": "Python standard library only",
+    "container": false,
+    "model": false,
+    "gpu_or_cuda": false,
+    "network_during_experiment": false,
+    "gui_or_effectful_input": false
+  },
+  "parameters": {
+    "declared_disturbance_bound_inclusive": 3,
+    "disturbance_alphabet": [0, 1, 2, 3, 4],
+    "trace_lengths": [1, 2, 3, 4],
+    "trace_count": 780,
+    "literal_control_count": 8,
+    "total_raw_records": 788
+  },
+  "construction": {
+    "command": "py -3.11 -B -m unittest -v test_runner",
+    "result": "PASS 8/8",
+    "syntax_command": "py -3.11 -B -c AST parse runner.py, audit.py, test_runner.py",
+    "syntax_result": "PASS 3 files",
+    "formal_invocations_before_freeze": 0,
+    "auditor_invocations_before_formal": 0
+  },
+  "sources": {
+    "runner.py": {
+      "sha256": "F47E1361E1007537068D590F1A1F879CE35521D7DFAE3827C59A02B7FBBAE59E",
+      "git_blob": "7b50c64314996a54fd573ed1962613b9f08f11ed"
+    },
+    "audit.py": {
+      "sha256": "FFA9164DEE57CB3885C910FFFB86F2FCBA1B3EDA0AD7A4EF3417F4043E69914A",
+      "git_blob": "30ad7c8558dc22972e0e51a84423506beffd4093"
+    },
+    "test_runner.py": {
+      "sha256": "6010EAC23517807FBA303F2DD63CDB6DF3588302BB8F41D585169B0C670C761E",
+      "git_blob": "4cdf96f33721561cb03e6da052ea78edc23800c4"
+    },
+    "PLAN.md": {
+      "sha256": "2257E0930B7BDE7E1483DE72FF1260B81BF1670818A0B948F04A89644DA3A1FA",
+      "git_blob": "974813ae313518c7d070bed57bebcfa7c0648942"
+    }
+  },
+  "frozen_commands": {
+    "formal_runner": "py -3.11 -B runner.py > results/formal-01/RAW.jsonl",
+    "independent_audit": "py -3.11 -B audit.py results/formal-01/RAW.jsonl"
+  },
+  "decision_gates": {
+    "pass": "Independent raw-only reconstruction of all 788 records; 440 traces contain a bound breach; 355 traces have 730 baseline permits after the first breach; candidate post-breach permits are zero; all 780 in-bound prefixes match static continuation; all eight literal controls match.",
+    "fail": "Any candidate local permit after a current observed breach/critical event; any stale or gapped stream silently re-arms; any in-bound sample is suppressed; or any construction/control invariant is contradicted.",
+    "stop": "Source, freeze, raw, or independent-audit integrity is incomplete or mismatched. No retry or tuning."
+  },
+  "scope_limits": [
+    "Synthetic finite model only; the bound is not calibrated.",
+    "No claim that the first out-of-bound event is observable before harm.",
+    "No runtime/action authority, task-quality, latency, GUI, MAP01, model, GPU, reliability, or human-tempo claim."
+  ]
+}
+

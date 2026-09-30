@@ -1,0 +1,10 @@
+{
+  "schema": "arena-isolation-auditor-exception-v1",
+  "status": "AUDITOR_CRASHED",
+  "auditor": "frozen audit.py",
+  "runtime": "separate python:3.12-slim pinned image; --network none; --read-only; --cap-drop=ALL; uid 10000",
+  "exception": "AttributeError: 'list' object has no attribute 'get'",
+  "cause": "Docker inspect artifacts are top-level JSON arrays; audit.py read controller/evaluator inspect as dictionaries without selecting element zero.",
+  "effect": "No initial independent-audit disposition was produced. The later separate posthoc auditor recorded STOP_EVALUATOR_REPORT_UNAVAILABLE and did not upgrade the allocation.",
+  "formal_retry": false
+}

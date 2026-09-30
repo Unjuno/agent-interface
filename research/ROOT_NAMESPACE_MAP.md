@@ -149,6 +149,7 @@ These are research predecessors. Current promoted executable organization lives 
 
 ## Cross-engine JSONL framing replication
 
+- [`issue_3814_jsonl_framing_v1/`](issue_3814_jsonl_framing_v1/) — Issue #3814 Docker Desktop/Linux amd64 newline-framing audit; retain the overall `HOLD_EVIDENCE_INCOMPLETE` (75/76) and the single-dispatch receipt without replay.
 - [`experiments/issue_3840_newline_frame_v2/`](experiments/issue_3840_newline_frame_v2/) — Issue #3840 Docker Desktop/Linux amd64 replication of the terminal-LF strict-prefix result; `RESULT.md` separates the corroborated row-level observation from the unresolved audit-provenance HOLD.
 
 ## Navigation check
@@ -171,6 +172,19 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 - [`gtk/`](gtk/) — retained GTK/X11 fixture and adapter research paths; consult each child report for scope and disposition.
 
 ### Recent additive namespaces
+- [`archive/`](archive/) — Legacy research archive; consult included manifests and reports for scope.
+- [`archives/`](archives/) — Archived research bundles and their retained evidence indexes.
+- [`container_control/`](container_control/) — Container-control research artifacts.
+- [`control_codec/`](control_codec/) — Control-codec research artifacts.
+- [`needle_online_lora_skill_stream_v1/`](needle_online_lora_skill_stream_v1/) — Needle online role-skill streaming study; see REPORT.md for disposition.
+- [`orchestration/`](orchestration/) — Orchestration research artifacts.
+- [`real_apps_v1/`](real_apps_v1/) — Real-application research artifacts, v1.
+- [`real_apps_v2/`](real_apps_v2/) — Real-application research artifacts, v2.
+- [`real_apps_v3/`](real_apps_v3/) — Guarded real-application research artifacts, v3.
+- [`retention/`](retention/) — Retention research artifacts.
+- [`visual_tracking/`](visual_tracking/) — Visual-tracking research artifacts.
+- [`x11_private_xvfb_5286/`](x11_private_xvfb_5286/) — Issue #5286 private-Xvfb termination attempt; STOP retained, not a clean-termination result.
+- [`x11_private_xvfb_5291/`](x11_private_xvfb_5291/) — Issue #5291 successor: scoped local construction/termination PASS; not GUI-input or product validation.
 - [`needle_role_graph_3775_v1/`](needle_role_graph_3775_v1/) — Issue #3778 original role-graph allocation retained as `STOP_RESULT_CAPTURE_TRUNCATED`; see [recovery review](needle_role_graph_3775_v1/RECOVERY_REVIEW.md). Distinct compact successor #3780 is documented separately.
 - [`needle_lora_3441_pilot_04d_corrected_base_v1/`](needle_lora_3441_pilot_04d_corrected_base_v1/) — Issue #4471 GPU formal STOP during result serialization; no scientific metrics were retained.
 - [`needle_lora_3441_pilot_04e_result_schema_v1/`](needle_lora_3441_pilot_04e_result_schema_v1/) — Issue #4471 fresh-seed result-schema successor; scoped one-seed synthetic routing PASS with host-only CUDA limits, not recovery of the earlier STOP.
@@ -204,6 +218,10 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 - [`semantic_checkpoint_contract_2661_v1/`](semantic_checkpoint_contract_2661_v1/)
 
 
+- [`procedural_control_arena_v0/`](procedural_control_arena_v0/) — dependency-light mechanics/regression prototype; see its README and validation record for limits. It is not evidence of candidate or cross-domain performance.
+- [`procedural_control_arena_v1/`](procedural_control_arena_v1/) — construction GUI benchmark with compound input primitives; paired baseline/candidate, held-out promotion, evaluator isolation, formal performance, and cross-domain transfer remain unvalidated.
+- [`procedural_operations_world_v0/`](procedural_operations_world_v0/) — ultra-light native 2.5D operations-world substrate for agent-native concurrent control; usable for automated harness integration after validity-hardening, while secure paired B0/C1 evaluation and held-out promotion remain open.
+
 ### Needle / System-1 adapter research
 
 - [`needle_lora_3441_pilot_02/`](needle_lora_3441_pilot_02/) — retained global-adapter forgetting result.
@@ -226,3 +244,28 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 - [`needle_lora_3441_rank4_online_multiseed_gpu_v1/`](needle_lora_3441_rank4_online_multiseed_gpu_v1/) — Issues #3807/#3819 GPU rank-capacity failure evidence; #3822 separately records the learning-curve HOLD.
 
 - [`procedural_control_arena_v0/`](procedural_control_arena_v0/) - Procedural control arena; consult its README and VALIDATION for scope and current evidence.
+- [`procedural_control_arena_v1/`](procedural_control_arena_v1/) - Procedural control arena v1 construction environment; see README and VALIDATION for scope and open promotion gates.
+
+- [`kernel_receipt_time_5215_20260928/`](kernel_receipt_time_5215_20260928/) — Issue #5215 kernel receipt timestamp construction probe; consult PLAN and REPORT for its contract-only scope and limitations.
+
+### Issue #5236 X11 keymap successor evidence
+
+- [`x11_midprogram_keymap_5236_formal02_20260930/`](x11_midprogram_keymap_5236_formal02_20260930/) — Formal02 import-path STOP; see immutable STOP record.
+- [`x11_midprogram_keymap_5236_formal03_20260930/`](x11_midprogram_keymap_5236_formal03_20260930/) — Formal03 missing-Tk-runtime STOP; no fixture row completed.
+- [`x11_midprogram_keymap_5236_formal04_20260930/`](x11_midprogram_keymap_5236_formal04_20260930/) — Formal04 focused-root delivery/effect STOP; independent audit and corruption controls retained.
+- [`x11_midprogram_keymap_5236_formal05_20260930/`](x11_midprogram_keymap_5236_formal05_20260930/) — Formal05 STOP_PROVENANCE_OR_RUNNER; dispatch completed but independent saved effects were missing.
+- [`x11_midprogram_keymap_docker_diagnostic_20260930/`](x11_midprogram_keymap_docker_diagnostic_20260930/) — Nonformal local Docker focus-versus-Entry-click diagnostic; not formal hypothesis evidence.
+
+
+### Issue #5236 X11 keymap STOP evidence
+
+- [`x11_midprogram_keymap_5236_formal02_20260930/`](x11_midprogram_keymap_5236_formal02_20260930/) — Formal02 import-path STOP.
+- [`x11_midprogram_keymap_5236_formal03_20260930/`](x11_midprogram_keymap_5236_formal03_20260930/) — Formal03 missing-Tk-runtime STOP.
+- [`x11_midprogram_keymap_5236_formal04_20260930/`](x11_midprogram_keymap_5236_formal04_20260930/) — Formal04 fixture-focus/effect STOP.
+- [`x11_midprogram_keymap_5236_formal05_20260930/`](x11_midprogram_keymap_5236_formal05_20260930/) — Formal05 missing completed effects STOP.
+- [`x11_midprogram_keymap_docker_diagnostic_20260930/`](x11_midprogram_keymap_docker_diagnostic_20260930/) — nonformal local Docker focus-versus-click diagnostic.
+
+- [`aoi_43_t0/`](aoi_43_t0/) — executed Age-of-Information critical-event retention T0 for #43 (exploratory; not runtime validation).
+
+- [`x11_midprogram_keymap_5236_formal05_save_diagnostic_20261001/`](x11_midprogram_keymap_5236_formal05_save_diagnostic_20261001/) — Local Docker diagnostics: post-save waits do not change the US control; mid-program XKB remaps produce wrong saved text in Debian Docker (not Arch formal evidence).
+- [`x11_midprogram_keymap_5236_formal06_20261001/`](x11_midprogram_keymap_5236_formal06_20261001/) — Issue #5236 Formal06 `STOP_PROTOCOL_DEVIATION`: preserved raw predates freeze; auditor mismatch is diagnostic only. See `RESULT_DISPOSITION.md`.

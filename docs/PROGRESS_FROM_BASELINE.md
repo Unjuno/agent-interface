@@ -1,10 +1,12 @@
 # Progress from the initial baseline
 
-For the current public CLI, portable distribution, direct primary-use results
-and remaining integration gaps, see the
-[public transport handoff](PUBLIC_TRANSPORT_HANDOFF_2026-09-20.md), which also links
-the earlier [2026-09-20 integration snapshot](INTEGRATION_STATUS_2026-09-20.md).
-The dated historical narrative below retains its original evidence scope.
+For current public entry points, use the [current interface guide](../runtime/USING_CURRENT_INTERFACE.md).
+The [2026-09-30 public six-task comparison](../runtime/results/public-six-task-comparison-04/README.md)
+retains six exact-once saves on both direct and guarded routes, with overall
+integration, useful-feedback and causal efficiency claims still HOLD.
+The [2026-09-20 public transport handoff](PUBLIC_TRANSPORT_HANDOFF_2026-09-20.md)
+and [integration snapshot](INTEGRATION_STATUS_2026-09-20.md) are historical checkpoints.
+The dated narrative below retains its original evidence scope.
 
 Status date: 2026-09-14. This is an evidence-based progress map, not a release
 claim. The repository grew from an initial coordinate-and-screenshot research

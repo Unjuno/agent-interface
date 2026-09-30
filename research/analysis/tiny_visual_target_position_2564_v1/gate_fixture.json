@@ -1,0 +1,39 @@
+[
+  {
+    "case_id": "current_matching_positive",
+    "final_accept": true,
+    "fresh": true,
+    "model_decision": "ACCEPT",
+    "model_probability": 0.99,
+    "positive": true,
+    "receipt_matches": true
+  },
+  {
+    "case_id": "stale_high_positive",
+    "final_accept": false,
+    "fresh": false,
+    "model_decision": "ACCEPT",
+    "model_probability": 0.99,
+    "positive": true,
+    "receipt_matches": true
+  },
+  {
+    "case_id": "digest_mismatch_high_positive",
+    "final_accept": false,
+    "fresh": true,
+    "model_decision": "ACCEPT",
+    "model_probability": 0.99,
+    "positive": true,
+    "receipt_matches": false
+  },
+  {
+    "case_id": "current_negative",
+    "final_accept": false,
+    "fresh": true,
+    "model_decision": "REJECT",
+    "model_probability": 0.01,
+    "positive": false,
+    "receipt_matches": true
+  }
+]
+

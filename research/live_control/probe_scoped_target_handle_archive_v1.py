@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+from guarded_source_dependencies_v1 import complete_guarded_hashes
 
 from PIL import Image
 
@@ -73,9 +74,9 @@ def main():
         "region": [624, 6, 16, 16],
         "window_content": content_result,
         "screen_chrome_negative_control": wrong_frame_result,
-        "sources": {str(path.relative_to(HERE.parent.parent)): sha(path) for path in
+        "sources": complete_guarded_hashes({str(path.relative_to(HERE.parent.parent)): sha(path) for path in
                     (Path(__file__), HERE / "scoped_target_handle_v1.py", source_events,
-                     target_events, source_image_path, target_image_path)},
+                     target_events, source_image_path, target_image_path)}, base=HERE.parent.parent),
         "decision": "pixel/geometry feasibility passes; live same-session mint/revalidation/input remains required",
     }
     (ROOT / "report.json").write_text(json.dumps(report, indent=2) + "\n")

@@ -2,7 +2,15 @@
 
 This roadmap is ordered by research uncertainty, not by feature count.
 
-Current priority (2026-09-19): [integrate one usable desktop path](docs/INTEGRATION_PLAN.md)
+For active task priority, use the explicit precedence in [CURRENT_GOAL](docs/CURRENT_GOAL.md):
+its experiment-first direction governs the current autonomous research task;
+the integration and human-tempo objectives remain. Its latest r133 direction
+and [Issue #59](https://github.com/Unjuno/agent-interface/issues/59) keep unresolved
+real-time control ahead of packaging work after the existing bounded allocation.
+Neither this roadmap nor an unchecked item grants a new allocation or changes
+a retained result.
+
+Integration direction recorded 2026-09-19: [integrate one usable desktop path](docs/INTEGRATION_PLAN.md)
 from the existing components, following [the updated goal](docs/CURRENT_GOAL.md)
 and Issue #57. Other contributors continue research/benchmarks; this task focuses
 on setup, observation, guarded action, useful results and recovery through one
@@ -42,6 +50,14 @@ This diagram is a reading/promotion map of the existing sections, not a claim th
 The scoped O1/O2 studies and actual assistant use are summarized in the
 [research handoff](docs/LOCAL_RESEARCH_HANDOFF.md). Local feedback in tens of
 milliseconds has not yet produced a human-like end-to-end operating tempo.
+
+Public-path checkpoint (2026-09-30): [the retained six-task comparison](runtime/results/public-six-task-comparison-04/README.md)
+completed direct and guarded public MCP routes with six exact-once saves each.
+This fills the completed public direct-baseline accounting gap, while overall
+integration remains HOLD: one final image lacks the completion cue, image delivery
+and capture placement differ, and serial order plus growing context prevent causal
+speed/token ranking. Useful-feedback onset, broad reliability and human tempo
+remain open; the historical allocations and checklist below are unchanged.
 
 - [ ] Persistent asynchronous execution and incremental observations.
 - [ ] Bounded input holds, cancellation/release and stale-state handling.

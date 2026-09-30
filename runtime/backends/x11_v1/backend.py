@@ -8,10 +8,10 @@ from __future__ import annotations
 import hashlib
 import time
 from typing import Any
-from Xlib import X, XK, display
+from Xlib import X, XK, display, protocol
 from Xlib.ext import xtest
 
-from runtime.core_v1.contract import OFFICE_FLOOR, capability_manifest, validate_backend_manifest
+from runtime.core_v1.contract import OFFICE_FLOOR, WINDOW_ACTIVATE, capability_manifest, validate_backend_manifest
 
 BUTTON_MAP = {"left": 1, "middle": 2, "right": 3, "x1": 8, "x2": 9}
 BUTTON_MASKS = {1: X.Button1Mask, 2: X.Button2Mask, 3: X.Button3Mask}
@@ -43,9 +43,9 @@ class X11Backend:
         self.emissions = 0
         self.capture_artifacts = None
 
-    def configure_capture_artifacts(self, directory) -> None:
+    def configure_capture_artifacts(self, directory, *, retain_rgb=False) -> None:
         from .capture_artifacts import CaptureArtifacts
-        self.capture_artifacts = CaptureArtifacts(directory)
+        self.capture_artifacts = CaptureArtifacts(directory, retain_rgb=retain_rgb)
 
     def observe_read_only(self, target, frame, region):
         # Unlike a program's focus/observe sequence this does not change focus,
@@ -60,12 +60,13 @@ class X11Backend:
             "x11-v1",
             "linux",
             "x11",
-            OFFICE_FLOOR,
+            OFFICE_FLOOR | ({WINDOW_ACTIVATE} if self._activation_supported() else set()),
             frames=("screen_physical_px", "window_client"),
             permissions=("x11-display-access",),
         )
         row["capabilities"]["input.text"]["detail"] = "strict ASCII letters/digits/space/._- plus layout-checked :/"
-        row["capabilities"]["event.feedback"]["detail"] = "wait_update is a fixed delay; verify is a no-op; neither proves redraw or task effect"
+        row["capabilities"]["event.feedback"]["detail"] = "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+        row["capabilities"][WINDOW_ACTIVATE]["detail"] = "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
         return validate_backend_manifest(row)
 
     def monotonic_ns(self) -> int:
@@ -76,13 +77,83 @@ class X11Backend:
             raise X11BackendError(f"unknown target {name}")
         return self.targets[name]
 
+    def _focus_within(self, window_id: int) -> bool:
+        # GTK may use an InputOnly child for keyboard input. A transient sibling
+        # is a separate client and is not accepted by this ancestry check.
+        try:
+            focus = self.d.get_input_focus().focus
+            seen = set()
+            for _ in range(64):
+                identifier = getattr(focus, "id", None)
+                if type(identifier) is not int or identifier <= 0 or identifier in seen:
+                    return False
+                if identifier == window_id:
+                    return True
+                seen.add(identifier)
+                focus = focus.query_tree().parent
+        except Exception:
+            return False
+        return False
+
     def focus(self, target: str) -> None:
         win = self._target(target)
+        if self._focus_within(win.id):
+            return
         win.set_input_focus(X.RevertToParent, X.CurrentTime)
         self.d.sync()
-        focus = self.d.get_input_focus().focus
-        if getattr(focus, "id", None) != win.id:
+        if not self._focus_within(win.id):
             raise X11BackendError("focus verification failed")
+
+    def _window_property(self, name):
+        prop = self.root.get_full_property(self.d.intern_atom(name), X.AnyPropertyType)
+        if prop is None or prop.format != 32 or len(prop.value) > 4096:
+            return []
+        return [int(value) for value in prop.value]
+
+    def _activation_supported(self):
+        try:
+            return self.d.intern_atom('_NET_ACTIVE_WINDOW') in self._window_property('_NET_SUPPORTED')
+        except Exception:
+            return False
+
+    def _activation_target(self, target):
+        win = self._target(target)
+        if not self._activation_supported():
+            raise X11BackendError('EWMH activation unavailable')
+        if win.id not in self._window_property('_NET_CLIENT_LIST'):
+            raise X11BackendError('activation target is not a managed client')
+        return win
+
+    def activate(self, target, timeout_ms, receipt):
+        win = self._activation_target(target)
+        started = time.monotonic_ns()
+        receipt.update(target=target, window_id=win.id, started_ns=started,
+                       requested_ms=timeout_ms, request_attempted=False,
+                       status='unconfirmed', visual_confirmation=False)
+        # External window controller, like a task switcher. No fabricated user
+        # timestamp or client identity; the WM may ignore this request.
+        event = protocol.event.ClientMessage(window=win.id,
+            client_type=self.d.intern_atom('_NET_ACTIVE_WINDOW'),
+            data=(32, [2, X.CurrentTime, 0, 0, 0]))
+        try:
+            receipt['request_attempted'] = True
+            self.root.send_event(event, event_mask=X.SubstructureRedirectMask | X.SubstructureNotifyMask)
+            self.d.flush()
+            deadline = started + timeout_ms * 1_000_000
+            while True:
+                active = self._window_property('_NET_ACTIVE_WINDOW')
+                receipt['active_window_ids'] = active
+                receipt['focus_within_target'] = self._focus_within(win.id)
+                if active == [win.id] and receipt['focus_within_target']:
+                    receipt['status'] = 'active_and_focused'
+                    return
+                remaining = deadline - time.monotonic_ns()
+                if remaining <= 0:
+                    receipt['status'] = 'timeout'
+                    raise X11BackendError('activation not confirmed; request may take effect later')
+                time.sleep(min(.01, remaining / 1_000_000_000))
+        finally:
+            receipt['ended_ns'] = time.monotonic_ns()
 
     def geometry(self, target: str) -> dict[str, int]:
         win = self._target(target)
@@ -106,12 +177,14 @@ class X11Backend:
 
     def pointer_button(self, button: str, down: bool) -> None:
         number = BUTTON_MAP[button]
+        # A request can reach the server even if sending/synchronizing raises.
+        # Own the cleanup obligation before attempting the press.
+        if down:
+            self.held_buttons.add(button)
         xtest.fake_input(self.d, X.ButtonPress if down else X.ButtonRelease, number)
         self.emissions += 1
         self.d.sync()
-        if down:
-            self.held_buttons.add(button)
-        else:
+        if not down:
             self.held_buttons.discard(button)
 
     def _keycode(self, key: str) -> int:
@@ -124,19 +197,25 @@ class X11Backend:
             keysym = XK.string_to_keysym(key.lower())
         code = self.d.keysym_to_keycode(keysym)
         if not code:
-            suggestions = {"RIGHT": "Right", "LEFT": "Left", "UP": "Up", "DOWN": "Down"}
+            suggestions = {"RIGHT": "Right", "LEFT": "Left", "UP": "Up", "DOWN": "Down",
+                           "HOME": "Home", "END": "End", "BACKSPACE": "BackSpace",
+                           "DELETE": "Delete", "INSERT": "Insert"}
             hint = f"; X11 keysym names are case-sensitive, use {suggestions[key]}" if key in suggestions else ""
             raise X11BackendError(f"unmapped key {key}{hint}")
         return code
 
     def key_state(self, key: str, down: bool) -> None:
-        code = self._keycode(key)
+        # Release/repeat the physical key originally pressed even if the
+        # logical mapping changed while it was held.
+        code = self.held_keycodes.get(key)
+        if code is None:
+            code = self._keycode(key)
+        if down:
+            self.held_keycodes[key] = code
         xtest.fake_input(self.d, X.KeyPress if down else X.KeyRelease, code)
         self.emissions += 1
         self.d.sync()
-        if down:
-            self.held_keycodes[key] = code
-        else:
+        if not down:
             self.held_keycodes.pop(key, None)
 
     def key_chord(self, keys: list[str]) -> None:
@@ -145,16 +224,50 @@ class X11Backend:
         for key in reversed(keys):
             self.key_state(key, False)
 
-    def preflight(self, program: dict[str, Any]) -> None:
-        """Validate X11-specific constraints before the first physical emission."""
+    def _refresh_keyboard_mapping(self) -> bool:
+        # This connection does not subscribe to window event streams. Consume
+        # queued mapping notifications after a server barrier. The caller must
+        # not continue a preflighted keyboard suffix after a keyboard/modifier
+        # change; refreshing caches alone does not revalidate that suffix.
+        # A notification can repeat an unchanged map, so callers compare snapshots.
+        self.d.sync()
+        notified = False
+        for _ in range(self.d.pending_events()):
+            event = self.d.next_event()
+            if event.type == X.MappingNotify:
+                self.d.refresh_keyboard_mapping(event)
+                if event.request in {X.MappingKeyboard, X.MappingModifier}:
+                    notified = True
+        return notified
+
+    def _keyboard_mapping_snapshot(self):
+        """Read the core keysyms/modifier bindings used by this narrow backend."""
+        info = self.d.display.info
+        return (
+            info.min_keycode, info.max_keycode,
+            tuple(tuple(row) for row in self.d.get_keyboard_mapping(
+                info.min_keycode, info.max_keycode - info.min_keycode + 1)),
+            tuple(tuple(row) for row in self.d.get_modifier_mapping()),
+        )
+
+    def preflight(self, program: dict[str, Any]):
+        """Validate before input; return the core keyboard map used for preflight."""
+        keyboard_mapping = None
+        if any(op["op"] in {"text", "key_chord", "key_state"} for op in program["ops"]):
+            self._refresh_keyboard_mapping()
+            keyboard_mapping = self._keyboard_mapping_snapshot()
         focused = False
         for op in program["ops"]:
             kind = op["op"]
-            if kind == "focus":
+            if kind in {"focus", "activate"}:
                 self._target(op["target"])
+                if kind == 'activate':
+                    self._activation_target(op['target'])
                 focused = True
             elif kind in {"pointer_move", "observe"} and not focused:
-                raise X11BackendError(f"{kind} requires focused target")
+                raise X11BackendError(f"{kind} requires focused target; put focus or activate before this operation in the same program; prior dispatch focus is not inherited")
+            elif kind == "verify":
+                raise X11BackendError("verify predicates are not implemented by the X11 backend; observe and explicitly review application state")
             elif kind == "text":
                 self._text_plan(op["text"])
             elif kind == "key_chord":
@@ -162,10 +275,11 @@ class X11Backend:
                     self._keycode(key)
             elif kind == "key_state":
                 self._keycode(op["key"])
+        return keyboard_mapping
 
     def _text_plan(self, value: str) -> list[list[str]]:
         plan = []
-        symbols = {":": "colon", "/": "slash", "=": "equal", "*": "asterisk"}
+        symbols = {":": "colon", "/": "slash", "=": "equal", "*": "asterisk", "_": "underscore"}
         for ch in value:
             if ch in symbols:
                 # Resolve the symbol from the live map. Do not assume a US
@@ -183,11 +297,11 @@ class X11Backend:
                     self._keycode(key)
                 plan.append(keys)
                 continue
-            if not (ch.isascii() and (ch.isalpha() or ch.isdigit() or ch in ".-_")):
+            if not (ch.isascii() and (ch.isalpha() or ch.isdigit() or ch in ".-")):
                 if ch != " ":
                     raise X11BackendError(f"unsupported text character U+{ord(ch):04X}")
-            if ch in {" ", ".", "-", "_"}:
-                keys = {" ": ["SPACE"], ".": ["period"], "-": ["minus"], "_": ["SHIFT", "minus"]}[ch]
+            if ch in {" ", ".", "-"}:
+                keys = {" ": ["SPACE"], ".": ["period"], "-": ["minus"]}[ch]
             elif ch.isupper():
                 keys = ["SHIFT", ch.lower()]
             else:
@@ -211,7 +325,12 @@ class X11Backend:
             self.emissions += 2
         self.d.sync()
 
+    def take_capture_rgb(self, artifact):
+        return self.capture_artifacts.take_rgb(artifact)
+
     def capture(self, target: str, frame: str, x: int, y: int, w: int, h: int) -> dict[str, Any]:
+        if self.capture_artifacts is not None:
+            self.capture_artifacts.discard_rgb()
         win = self._target(target)
         if frame == "window_client":
             source, sx, sy = win, x, y
@@ -268,10 +387,12 @@ class X11Backend:
             xtest.fake_input(self.d, X.ButtonRelease, BUTTON_MAP[button])
             self.emissions += 1
         self.d.sync()
-        self.held_keycodes.clear()
-        self.held_buttons.clear()
         keys = self._physical_keys_down(tracked)
         buttons = self._physical_buttons_down()
+        # Preserve uncertain/down inputs until readback succeeds. A subsequent
+        # explicit recovery must still know which releases it owes.
+        self.held_keycodes = {name: code for name, code in tracked.items() if name in keys}
+        self.held_buttons.intersection_update(buttons)
         return {
             "keys_down": keys,
             "buttons_down": buttons,
@@ -279,12 +400,17 @@ class X11Backend:
             "monotonic_ns": time.monotonic_ns(),
         }
 
+    def _wait_update(self, timeout_ms: int) -> None:
+        """Fixed delay; scoped backends may interrupt it at their own deadline."""
+        time.sleep(timeout_ms / 1000.0)
+
     def execute(self, program: dict[str, Any]) -> dict[str, Any]:
-        self.preflight(program)
+        keyboard_mapping = self.preflight(program)
         current_target: str | None = None
         observations: list[dict[str, Any]] = []
         releases: list[dict[str, Any]] = []
         waits: list[dict[str, Any]] = []
+        activations: list[dict[str, Any]] = []
         started = time.monotonic_ns()
         emissions_before = self.emissions
         completed_ops = []
@@ -297,15 +423,28 @@ class X11Backend:
                 "program_emissions": self.emissions - emissions_before,
                 "observations": observations, "releases": releases,
                 "waits": waits,
+                "activations": activations,
                 "completed_ops": completed_ops,
             }
 
+        keyboard_mapping_changed = False
         try:
             for index, op in enumerate(program["ops"]):
                 kind = op["op"]
+                if kind in {"text", "key_chord", "key_state"}:
+                    if self._refresh_keyboard_mapping():
+                        keyboard_mapping_changed |= self._keyboard_mapping_snapshot() != keyboard_mapping
+                    releasing_key = kind == "key_state" and op["down"] is False
+                    if keyboard_mapping_changed and not releasing_key:
+                        raise X11BackendError("keyboard mapping changed after program preflight")
                 if kind == "focus":
                     current_target = op["target"]
                     self.focus(current_target)
+                elif kind == 'activate':
+                    current_target = op['target']
+                    receipt = {'operation_index': index}
+                    activations.append(receipt)
+                    self.activate(current_target, op['timeout_ms'], receipt)
                 elif kind == "key_chord": self.key_chord(op["keys"])
                 elif kind == "key_state": self.key_state(op["key"], op["down"])
                 elif kind == "text": self.text(op["text"])
@@ -324,11 +463,12 @@ class X11Backend:
                             "kind": "fixed_delay", "update_observed": None}
                     waits.append(wait)
                     try:
-                        time.sleep(op["timeout_ms"] / 1000.0)
+                        self._wait_update(op["timeout_ms"])
                         wait["completed"] = True
                     finally:
                         wait["ended_ns"] = time.monotonic_ns()
-                elif kind == "verify": pass
+                elif kind == "verify":
+                    raise X11BackendError("verify predicates are not implemented by the X11 backend")
                 elif kind == "release_all": releases.append(self.release_all())
                 else: raise X11BackendError(f"unsupported op {kind}")
                 completed_ops.append(index)

@@ -51,3 +51,9 @@ Observed environment: GitHub hosted Ubuntu 24.04.5 / runner image `ubuntu-24.04 
 - **U:** the actual NativeHandleBridge composition remains open. A future allocation under the same scientific question would need construction that exercises the exact Openbox client/capture topology before a separately frozen new allocation. This STOP must remain immutable.
 
 No runtime/default source is changed by this result.
+
+## Allocation 02 — corrected fixture and scoped result
+
+Allocation 02 was a separate prospectively frozen successor permitted after this allocation-01 STOP; it is not a retry or replacement of the consumed allocation. Its exact-head workflow ran once at `5aefa977c1c6839113fa2fc719475a82e5b5a0dc`, completed 12/12 rows across four fresh sessions, and had zero retries. The retained independent raw audit reports `PASS_NATIVE_DESTROY_GENERATION_COMPOSITION_SCOPED` with no errors/failures; all 11 corruption controls were rejected. The exact workflow artifact, source checksum list, environment receipt, raw rows, audit and control outputs are preserved under [`allocation-02/evidence/formal-01/`](allocation-02/evidence/formal-01/), with the outcome summary in [`allocation-02/RESULT.md`](allocation-02/RESULT.md).
+
+The two allocations remain separate: allocation 01 is still `STOP_FIXTURE_PIXEL_CAPTURE_BADMATCH_BEFORE_BRIDGE` with 0/12 rows; allocation 02 supplies the scoped composition evidence only. Neither result establishes automatic observer wiring or production adoption, and allocation 01 was not rerun.

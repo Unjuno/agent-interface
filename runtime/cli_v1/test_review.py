@@ -13,6 +13,105 @@ from runtime.distribution_v2.build import SOURCE_FILES, build
 
 class PublicReviewTests(unittest.TestCase):
 
+    def test_cli_metadata_review_preserves_default_image_and_validation(self):
+        png = base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aP1cAAAAASUVORK5CYII=')
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / 'frame.png'; path.write_bytes(png)
+            report = {'schema': 'agent-interface/runtime-observation-v1', 'status': 'returned',
+                'observation': {'sha256': 'raw', 'capture_started_ns': 1,
+                    'artifact': {'mime_type': 'image/png', 'path': str(path),
+                        'source_raw_sha256': 'raw', 'sha256': hashlib.sha256(png).hexdigest()}}}
+            raw = json.dumps(report).encode(); report_path = Path(td) / 'report.json'; report_path.write_bytes(raw)
+            for source in (str(report_path), '-'):
+                args = [sys.executable, '-m', 'runtime.cli_v1', 'review', '--report', source,
+                    '--run-directory', td, '--expected-report-sha256', hashlib.sha256(raw).hexdigest()]
+                full = subprocess.run(args, input=raw, capture_output=True)
+                omitted = subprocess.run(args + ['--no-image'], input=raw, capture_output=True)
+                self.assertEqual(full.returncode, 0, full.stderr)
+                self.assertEqual(omitted.returncode, 0, omitted.stderr)
+                expected = dict(json.loads(full.stdout), image=None, image_delivery='omitted_by_request')
+                self.assertEqual(json.loads(omitted.stdout), expected)
+                self.assertEqual(base64.b64decode(json.loads(full.stdout)['image']['data']), png)
+            path.write_bytes(png + b' ')
+            refused = subprocess.run(args + ['--no-image'], input=raw, capture_output=True)
+            self.assertEqual(refused.returncode, 2)
+            self.assertEqual(json.loads(refused.stdout)['image_status'], 'needs_review')
+            self.assertEqual(report_path.read_bytes(), raw)
+
+
+    def test_metadata_only_review_skips_encoding_but_preserves_image_validation(self):
+        from unittest.mock import patch
+        png = base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aP1cAAAAASUVORK5CYII=')
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / 'frame.png'
+            path.write_bytes(png)
+            native = {'sha256': 'raw', 'capture_started_ns': 1,
+                      'artifact': {'mime_type': 'image/png', 'path': str(path),
+                                   'source_raw_sha256': 'raw', 'sha256': hashlib.sha256(png).hexdigest()}}
+            report = {'schema': 'agent-interface/runtime-observation-v1',
+                      'status': 'returned', 'observation': native}
+            raw = json.dumps(report).encode()
+            for options in ({}, {'compact': True}, {'compact': True, 'report_refs': True}):
+                full = review_bytes(raw, td, **options)
+                expected = dict(full, image=None, image_delivery='omitted_by_request')
+                with patch('runtime.cli_v1.review.base64.b64encode', side_effect=AssertionError('must not encode')):
+                    self.assertEqual(review_bytes(raw, td, include_image=False, **options), expected)
+                self.assertEqual(base64.b64decode(full['image']['data']), png)
+            for corruption in ('hash', 'signature', 'missing'):
+                if corruption == 'hash': path.write_bytes(png + b' ')
+                elif corruption == 'signature':
+                    path.write_bytes(b'invalid PNG')
+                    native['artifact']['sha256'] = hashlib.sha256(path.read_bytes()).hexdigest()
+                else: path.unlink()
+                raw = json.dumps(report).encode()
+                full = review_bytes(raw, td)
+                omitted = review_bytes(raw, td, include_image=False)
+                self.assertEqual(omitted, full)
+                self.assertEqual(omitted['image_status'], 'needs_review')
+                self.assertNotIn('image_delivery', omitted)
+            for invalid in ('false', 0, None):
+                with self.assertRaises(ValueError): review_bytes(raw, td, include_image=invalid)
+
+
+    def test_expected_digest_binds_file_and_stdin_before_image_access(self):
+        from unittest.mock import patch
+        raw = json.dumps({'schema': 'agent-interface/runtime-dispatch-result-v1',
+                          'status': 'returned', 'result': {'status': 'refused'}}).encode()
+        digest = hashlib.sha256(raw).hexdigest()
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / 'report.json'
+            path.write_bytes(raw)
+            self.assertEqual(review(path, td, expected_report_sha256=digest), review(path, td))
+            self.assertEqual(review_bytes(raw, td, expected_report_sha256=digest), review_bytes(raw, td))
+            changed = raw + b' '
+            path.write_bytes(changed)
+            for expected in (digest, '', 'g' * 64, digest.upper(), 123, True):
+                with self.subTest(expected=expected), patch('runtime.cli_v1.review._review') as presentation:
+                    with self.assertRaises(ValueError):
+                        review(path, td, expected_report_sha256=expected)
+                    with self.assertRaises(ValueError):
+                        review_bytes(changed, td, expected_report_sha256=expected)
+                    presentation.assert_not_called()
+            self.assertEqual(review_bytes(changed, td)['receipt']['source']['sha256'],
+                             hashlib.sha256(changed).hexdigest())
+
+    def test_cli_expected_digest_refusal_is_machine_readable(self):
+        raw = json.dumps({'schema': 'agent-interface/runtime-dispatch-result-v1',
+                          'status': 'returned', 'result': {'status': 'refused'}}).encode()
+        digest = hashlib.sha256(raw).hexdigest()
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / 'report.json'
+            path.write_bytes(raw + b' ')
+            for source in (str(path), '-'):
+                result = subprocess.run([sys.executable, '-m', 'runtime.cli_v1', 'review',
+                    '--report', source, '--run-directory', td,
+                    '--expected-report-sha256', digest], input=raw + b' ', capture_output=True)
+                self.assertEqual(result.returncode, 2, result.stderr)
+                row = json.loads(result.stdout)
+                self.assertEqual(row['status'], 'invalid_receipt')
+                self.assertEqual(row['error'], 'report SHA-256 does not match expected source')
+
+
     def test_recorded_failure_phase_survives_all_presentations(self):
         from runtime.cli_v1.review import present_result
         from unittest.mock import patch

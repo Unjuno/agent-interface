@@ -1,0 +1,339 @@
+{
+  "schema": "parallel-fanout-t0-input-v1",
+  "config": {
+    "max_parallel_workers": 3,
+    "serial_workers": 1,
+    "verifier_id": "stub-v1",
+    "verifier_version": "1.0",
+    "source_version": "plan-v1"
+  },
+  "cases": [
+    {
+      "case_id": "independent",
+      "deadline_ms": 40,
+      "budget_units": 30,
+      "slowdown_per_other_worker": 0,
+      "expected_decision": "PASS",
+      "jobs": [
+        {
+          "job_id": "a",
+          "required": true,
+          "dependencies": [],
+          "duration_ms": 8,
+          "timeout_ms": null,
+          "cost_units": 5,
+          "outcome": "PASS",
+          "input_sha256": "a1"
+        },
+        {
+          "job_id": "b",
+          "required": true,
+          "dependencies": [],
+          "duration_ms": 6,
+          "timeout_ms": null,
+          "cost_units": 4,
+          "outcome": "PASS",
+          "input_sha256": "b1"
+        },
+        {
+          "job_id": "c",
+          "required": true,
+          "dependencies": [],
+          "duration_ms": 5,
+          "timeout_ms": null,
+          "cost_units": 3,
+          "outcome": "PASS",
+          "input_sha256": "c1"
+        }
+      ]
+    },
+    {
+      "case_id": "dependency_chain",
+      "deadline_ms": 40,
+      "budget_units": 30,
+      "slowdown_per_other_worker": 0,
+      "expected_decision": "PASS",
+      "jobs": [
+        {
+          "job_id": "a",
+          "required": true,
+          "dependencies": [],
+          "duration_ms": 4,
+          "timeout_ms": null,
+          "cost_units": 2,
+          "outcome": "PASS",
+          "input_sha256": "d1"
+        },
+        {
+          "job_id": "b",
+          "required": true,
+          "dependencies": [
+            "a"
+          ],
+          "duration_ms": 5,
+          "timeout_ms": null,
+          "cost_units": 3,
+          "outcome": "PASS",
+          "input_sha256": "d2"
+        },
+        {
+          "job_id": "c",
+          "required": true,
+          "dependencies": [
+            "b"
+          ],
+          "duration_ms": 4,
+          "timeout_ms": null,
+          "cost_units": 2,
+          "outcome": "PASS",
+          "input_sha256": "d3"
+        }
+      ]
+    },
+    {
+      "case_id": "timeout",
+      "deadline_ms": 40,
+      "budget_units": 20,
+      "slowdown_per_other_worker": 0,
+      "expected_decision": "UNCERTAIN",
+      "jobs": [
+        {
+          "job_id": "a",
+          "required": true,
+          "dependencies": [],
+          "duration_ms": 3,
+          "timeout_ms": null,
+          "cost_units": 2,
+          "outcome": "PASS",
+          "input_sha256": "t1"
+        },
+        {
+          "job_id": "b",
+          "required": true,
+          "dependencies": [],
+          "duration_ms": 12,
+          "timeout_ms": 4,
+          "cost_units": 8,
+          "outcome": "PASS",
+          "input_sha256": "t2"
+        }
+      ]
+    },
+    {
+      "case_id": "unknown",
+      "deadline_ms": 40,
+      "budget_units": 20,
+      "slowdown_per_other_worker": 0,
+      "expected_decision": "UNCERTAIN",
+      "jobs": [
+        {
+          "job_id": "a",
+          "required": true,
+          "dependencies": [],
+          "duration_ms": 4,
+          "timeout_ms": null,
+          "cost_units": 2,
+          "outcome": "PASS",
+          "input_sha256": "u1"
+        },
+        {
+          "job_id": "b",
+          "required": true,
+          "dependencies": [],
+          "duration_ms": 6,
+          "timeout_ms": null,
+          "cost_units": 4,
+          "outcome": "UNKNOWN",
+          "input_sha256": "u2"
+        }
+      ]
+    },
+    {
+      "case_id": "optional_deadline",
+      "deadline_ms": 30,
+      "budget_units": 20,
+      "slowdown_per_other_worker": 0,
+      "expected_decision": "PASS",
+      "jobs": [
+        {
+          "job_id": "a",
+          "required": true,
+          "dependencies": [],
+          "duration_ms": 9,
+          "timeout_ms": null,
+          "cost_units": 5,
+          "outcome": "PASS",
+          "input_sha256": "o1"
+        },
+        {
+          "job_id": "opt1",
+          "required": false,
+          "dependencies": [],
+          "duration_ms": 4,
+          "timeout_ms": null,
+          "cost_units": 2,
+          "outcome": "PASS",
+          "input_sha256": "o2",
+          "job_deadline_ms": 8
+        },
+        {
+          "job_id": "opt2",
+          "required": false,
+          "dependencies": [],
+          "duration_ms": 10,
+          "timeout_ms": null,
+          "cost_units": 4,
+          "outcome": "PASS",
+          "input_sha256": "o3",
+          "job_deadline_ms": 7
+        }
+      ]
+    },
+    {
+      "case_id": "mandatory_deadline",
+      "deadline_ms": 7,
+      "budget_units": 20,
+      "slowdown_per_other_worker": 0,
+      "expected_decision": "UNCERTAIN",
+      "jobs": [
+        {
+          "job_id": "a",
+          "required": true,
+          "dependencies": [],
+          "duration_ms": 3,
+          "timeout_ms": null,
+          "cost_units": 2,
+          "outcome": "PASS",
+          "input_sha256": "m1"
+        },
+        {
+          "job_id": "b",
+          "required": true,
+          "dependencies": [],
+          "duration_ms": 10,
+          "timeout_ms": null,
+          "cost_units": 7,
+          "outcome": "PASS",
+          "input_sha256": "m2"
+        }
+      ]
+    },
+    {
+      "case_id": "budget_saturation",
+      "deadline_ms": 30,
+      "budget_units": 6,
+      "slowdown_per_other_worker": 0,
+      "expected_decision": "UNCERTAIN",
+      "jobs": [
+        {
+          "job_id": "a",
+          "required": true,
+          "dependencies": [],
+          "duration_ms": 4,
+          "timeout_ms": null,
+          "cost_units": 5,
+          "outcome": "PASS",
+          "input_sha256": "q1"
+        },
+        {
+          "job_id": "b",
+          "required": true,
+          "dependencies": [],
+          "duration_ms": 4,
+          "timeout_ms": null,
+          "cost_units": 5,
+          "outcome": "PASS",
+          "input_sha256": "q2"
+        },
+        {
+          "job_id": "opt",
+          "required": false,
+          "dependencies": [],
+          "duration_ms": 2,
+          "timeout_ms": null,
+          "cost_units": 1,
+          "outcome": "PASS",
+          "input_sha256": "q3"
+        }
+      ]
+    },
+    {
+      "case_id": "decisive_fail_cancel",
+      "deadline_ms": 30,
+      "budget_units": 30,
+      "slowdown_per_other_worker": 0,
+      "expected_decision": "FAIL",
+      "jobs": [
+        {
+          "job_id": "a",
+          "required": true,
+          "dependencies": [],
+          "duration_ms": 2,
+          "timeout_ms": null,
+          "cost_units": 2,
+          "outcome": "FAIL",
+          "input_sha256": "f1"
+        },
+        {
+          "job_id": "b",
+          "required": true,
+          "dependencies": [],
+          "duration_ms": 10,
+          "timeout_ms": null,
+          "cost_units": 6,
+          "outcome": "PASS",
+          "input_sha256": "f2"
+        },
+        {
+          "job_id": "opt",
+          "required": false,
+          "dependencies": [],
+          "duration_ms": 12,
+          "timeout_ms": null,
+          "cost_units": 5,
+          "outcome": "PASS",
+          "input_sha256": "f3"
+        }
+      ]
+    },
+    {
+      "case_id": "contention_control",
+      "deadline_ms": 40,
+      "budget_units": 30,
+      "slowdown_per_other_worker": 1,
+      "expected_decision": "PASS",
+      "jobs": [
+        {
+          "job_id": "a",
+          "required": true,
+          "dependencies": [],
+          "duration_ms": 4,
+          "timeout_ms": null,
+          "cost_units": 3,
+          "outcome": "PASS",
+          "input_sha256": "c01"
+        },
+        {
+          "job_id": "b",
+          "required": true,
+          "dependencies": [],
+          "duration_ms": 4,
+          "timeout_ms": null,
+          "cost_units": 3,
+          "outcome": "PASS",
+          "input_sha256": "c02"
+        },
+        {
+          "job_id": "c",
+          "required": true,
+          "dependencies": [],
+          "duration_ms": 4,
+          "timeout_ms": null,
+          "cost_units": 3,
+          "outcome": "PASS",
+          "input_sha256": "c03"
+        }
+      ]
+    }
+  ]
+}

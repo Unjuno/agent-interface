@@ -1,0 +1,78 @@
+{
+  "repository": "Unjuno/agent-interface",
+  "intake_main": "a1d0d0290b8619902d34b13d9e536c4bde063f74",
+  "baseline_merge": "ff93fdb5b6b1740d85a79e79764e9dc7789831fe",
+  "sources": [
+    {
+      "local": "source/experiment_5338.py",
+      "repository_path": "research/experiments/action_effect_coalescing_5265_v1/experiment.py",
+      "git_blob": "fa1d6d4edc4c83e6b515586f1aa4f111653658b8",
+      "identical_at_intake_main": true
+    },
+    {
+      "local": "source/workload_5338.json",
+      "repository_path": "research/experiments/action_effect_coalescing_5265_v1/workload.json",
+      "git_blob": "9775324a3fbe41ee3f32553f2e23973c1901195a",
+      "identical_at_intake_main": "not separately checked"
+    }
+  ],
+  "materialization": "UTF-8 tool contents written exactly and Git blob hashes checked. Initial experiment.py patch added one extra final LF; corrected against tool content before review or any execution. No source was imported or executed.",
+  "instructions_read": [
+    "README.md",
+    "CONTRIBUTING.md",
+    "docs/RESEARCH_METHOD.md",
+    "docs/CURRENT_GOAL.md",
+    "RESEARCH.md"
+  ],
+  "instruction_paths_absent": [
+    "AGENTS.md",
+    ".agents",
+    "research/AGENTS.md",
+    "research/coordination/AGENTS.md",
+    "research/analysis/AGENTS.md"
+  ],
+  "overlap_check_utc": "2026-09-30T10:36:00Z/2026-09-30T10:37:30Z",
+  "overlap_checks": [
+    "Issue 5265 all comments",
+    "PR query 5265",
+    "PR query deadline (30 results)",
+    "PR query admission identity (20 results)",
+    "branches matching 5265",
+    "branches matching deadline"
+  ],
+  "overlap_limitation": "Search does not rule out unpushed work or unrelated naming. Observed issue results were PRs 5338 and 5371.",
+  "host": {
+    "python": "3.12.14",
+    "system": "Linux",
+    "release": "6.18.44",
+    "architecture": "x86_64",
+    "allowed_cpus": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "pinned_docker_image": null,
+    "memory_limit": "unverified; cgroup-v2 memory.max and cpu.max paths absent"
+  },
+  "execution": {
+    "policy_evaluations": 0,
+    "formal_invocations": 0,
+    "old_allocations_run": 0,
+    "network_during_test": "no test run",
+    "preparation": "source/documentation reads, local file writes, metadata inspection, JSON parse and hashes only"
+  },
+  "runtime_acceptance": "HOLD_REAL_TARGET_BOUNDARY_UNTESTED",
+  "preparation_failures": [
+    {
+      "command": "cat /sys/fs/cgroup/memory.max; cat /sys/fs/cgroup/cpu.max",
+      "exit_code": 1,
+      "result": "Both paths absent; no memory/cpu quota inferred."
+    }
+  ]
+}

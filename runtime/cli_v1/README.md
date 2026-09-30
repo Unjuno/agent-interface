@@ -2,6 +2,25 @@
 
 This is the model/vendor-neutral local entry point over promoted Agent Interface backends.
 
+Public dispatch observation operations accept `region: [x, y, width, height]`,
+the same array used by the standalone observation tool. For example:
+`{"op":"observe","target":"app","frame":"window_client","region":[0,0,640,360]}`.
+Legacy `x/y/w/h` fields remain supported. Do not combine either form with the
+other or with `width/height` fields: mixed forms, non-integer values (including
+booleans), wrong-length arrays and out-of-range coordinates/dimensions refuse
+before input. Negative x/y are permitted within the existing coordinate bounds;
+width and height must be positive. Target/frame selection and all admission
+requirements remain the caller's responsibility.
+
+The public API lowers this explicit syntax before bounded text-gap/key-repeat
+expansion. Static validation uses the same lowering. The core's x/y/w/h contract
+is unchanged. Dispatch reports retain `normalization.kind=explicit_observation_region`,
+the original `source_program` and `source_operation_indices`; if expansion also
+occurs, its existing `compilation` record describes the normalized intermediate
+program. Normalization changes no operation indices, adds no wait and issues no
+observation, lease or input. This authoring convenience does not establish faster
+task completion or token savings.
+
 Check a local program before attempting input:
 
 ```sh
@@ -261,6 +280,22 @@ asynchronous application update: it does not prove the final application state.
 python -m runtime.cli_v1 review --report dispatch-result.json --run-directory /absolute/run
 ```
 
+
+`review --no-image` returns the receipt, image reference and outcome without the
+Base64 image payload. File and stdin review still validate the selected image's
+path, digest and PNG signature. Missing or altered images remain `needs_review`
+with exit code 2; omitting the image is not evidence that the application has
+updated. The default review includes the image. This is a read-only option and
+never captures a newer frame or sends input.
+
+CLI summaries include `expected_report_sha256` in their read-only retrieval
+arguments. Pass it as `review --expected-report-sha256 <digest>` to require the
+exact original report bytes. This also works with `--report -`. A changed report
+or malformed expected digest returns `invalid_receipt` with exit code 2 before
+loading its referenced image. Whitespace changes count as different bytes.
+Without the option, review retains its existing behavior. This check establishes
+source identity relative to the supplied digest; it does not authenticate the
+producer, prove task success, or authorize replay.
 
 To pass a complete response without creating a report file, use `review --report -`.
 Python callers can pass the original bytes to `runtime.cli_v1.review.review_bytes`.
@@ -526,3 +561,63 @@ null character index. Other operations use one-based `expanded_occurrence`.
 Malformed mappings produce null, and partial-effect uncertainty remains unchanged.
 A character location does not authorize retrying the remainder of an uncertain
 operation. The same program syntax works through CLI, Python API and public MCP.
+
+### Caller-owned Python sessions
+
+Use `dispatch_in_session(session, program, current_observation_seq=...,
+current_binding_revision=...)` when a caller already owns a backend session.
+It shares the public compiler, validation, result envelope and diagnostics with
+one-shot `dispatch`, while retaining that session after success, refusal or error.
+The caller must serialize access and close its backend when finished. The API
+does not clear recovery state, refresh targets or authority, or retry input.
+CLI and public MCP one-shot lifecycle remain unchanged.
+
+The native guarded bridge now uses this function and retains a public dispatch
+report alongside its guard receipts. See
+[the primary Calc run](../results/public-owned-session-live-01/README.md).
+
+For read-only capture on that same caller-owned connection, use
+`runtime.cli_v1.observe.observe_in_session(session, target=..., frame=...,
+region=[x,y,width,height])`. It shares one-shot observation validation and
+failure reporting, but never closes the supplied backend. Capturing remains
+available when input recovery is required and does not clear that state.
+The caller still serializes access and closes its own session.
+
+The native bridge uses this API and retains a public observation report before
+its existing binding/image checks. A returned public capture is not an accepted
+bridge source: if binding changed, the bridge still refuses to advance its source.
+No new readiness detection, automatic capture retry or lease renewal is added.
+
+### Retained CLI dispatch summary
+
+For a CLI dispatch, opt into `--detail summary --review --run-directory <fresh-directory> --compact --report-refs`.
+The existing public success projection keeps execution outcome, observations,
+release records and image data. Complete raw `report.json` is saved first; its
+exact byte length/hash must match the presented source before projection.
+The returned `presentation.retrieve` describes a read-only `review --no-image` command
+for that report. Full is the default and the review command's normal format.
+Missing/changed raw reports, report-persistence failures, action failures and
+unsupported records stay full; no input is replayed. Retention status remains
+outside the partial receipt. Summaries are not reversible receipts themselves.
+The existing MCP projection gates are shared. Smaller serialized metadata is
+not a measurement of model input tokens, cost or faster useful feedback.
+
+
+### Publishing a caller-authored host decision on Linux
+
+For a file-spooled host that waits for JSON at a known path, publish the complete
+value rather than writing directly to that visible filename:
+
+```sh
+python /absolute/runtime.pyz publish-json --path /absolute/new-review.json --value -
+```
+
+Supply the authored JSON on stdin (or a file via `--value`). The destination is
+exclusive and its parent must already exist. This is filesystem publication,
+not computer input or review validation. The receiving protocol still validates
+source identity and the decision. `publication_failed`/exit 2 requires
+reconciliation because a failure after linking may leave a complete occupied
+slot; never overwrite it or treat an error as permission to repeat an action.
+See [host publication](../host_v1/README.md) for its Linux-only scope.
+
+[Retained primary six-task use and publication failure/fix](../results/atomic-host-publication-01/README.md) records the incomplete direct comparison and the no-GUI publication checks. The whole integration spine remains unvalidated.

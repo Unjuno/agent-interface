@@ -1,0 +1,126 @@
+{
+  "db_sha256": "dba2e195e53f26088966a55d574cb306409a6f07d208b19fff10679264fd4bec",
+  "end_ns": 889842157753,
+  "error": null,
+  "exits": {
+    "consumer": 0,
+    "producer": 0
+  },
+  "final": {
+    "ack": [
+      [
+        4,
+        "3cff6eddf223f3d59cac3c0a403bedff8c4ac5839aa2edbb112c0625e74190f9"
+      ]
+    ],
+    "consumer": [
+      [
+        5,
+        "E5",
+        "536c351ae15e5f5e3dc37bcc5dea8ab641e70fc0431a088a1d684aef2ebf3e5b"
+      ]
+    ],
+    "pending": [
+      [
+        7,
+        7,
+        "E7",
+        "03fbd36c05856bca596b0bcb4466f4f30f0119a41be2b9fcebfa71d68178b116"
+      ]
+    ]
+  },
+  "initial": {
+    "ack": [
+      [
+        2,
+        "d80a79bc51654024d9b4eebe7077308236771c1e42aaa961e2b8bf460c333be4"
+      ]
+    ],
+    "consumer": [
+      [
+        3,
+        "E3",
+        "43bb00d0ce7790a53b91256b370c887b24791a5539a6fbfb70c5870e8c91ae5d"
+      ]
+    ],
+    "pending": []
+  },
+  "spec": {
+    "events": [
+      {
+        "ms": 0,
+        "op": "poll"
+      },
+      {
+        "ms": 40,
+        "op": "offer",
+        "seq": 4
+      },
+      {
+        "ms": 60,
+        "op": "poll"
+      },
+      {
+        "ms": 120,
+        "op": "poll"
+      },
+      {
+        "ms": 180,
+        "op": "offer",
+        "seq": 7
+      },
+      {
+        "ms": 180,
+        "op": "poll"
+      },
+      {
+        "ms": 240,
+        "op": "poll"
+      },
+      {
+        "ms": 300,
+        "op": "poll"
+      }
+    ],
+    "id": "local-gap-clock-20260922-01-r1-new_gap-slow-ELAPSED_80MS",
+    "policy": "ELAPSED_80MS",
+    "profile": "slow",
+    "rep": 1,
+    "scenario": "new_gap"
+  },
+  "start_ns": 889272588221,
+  "workers": {
+    "consumer": {
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "-u",
+        "/mnt/data/agent_interface_gap_study/research/event_delivery/gap_elapsed_clock_v1/worker.py",
+        "--db",
+        "local-formal-01/local-gap-clock-20260922-01-r1-new_gap-slow-ELAPSED_80MS/state.sqlite3",
+        "--role",
+        "consumer",
+        "--policy",
+        "ELAPSED_80MS"
+      ],
+      "pid": 1678,
+      "ready_line": "{\"ready\": true, \"pid\": 1678, \"role\": \"consumer\"}\n"
+    },
+    "producer": {
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "-u",
+        "/mnt/data/agent_interface_gap_study/research/event_delivery/gap_elapsed_clock_v1/worker.py",
+        "--db",
+        "local-formal-01/local-gap-clock-20260922-01-r1-new_gap-slow-ELAPSED_80MS/state.sqlite3",
+        "--role",
+        "producer",
+        "--policy",
+        "ELAPSED_80MS"
+      ],
+      "pid": 1668,
+      "ready_line": "{\"ready\": true, \"pid\": 1668, \"role\": \"producer\"}\n"
+    }
+  }
+}

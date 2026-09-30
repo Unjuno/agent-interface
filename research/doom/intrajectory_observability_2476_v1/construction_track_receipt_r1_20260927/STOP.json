@@ -1,0 +1,19 @@
+{
+  "schema": "construction-stop-v1",
+  "allocation": "issue2476-track-receipt-construction-r1-20260927",
+  "decision": "STOP_BEFORE_CONTAINER_START",
+  "frozen_source_head": "a499707c1b15883ab7ecaae71cae68256dd1d8a3",
+  "docker_image_id_precheck": "sha256:4c2cf9917bd1cbacc5e9b07320025bdb7cdf2df7b0ceaccb55e9dd7e30987419",
+  "runner_container_started": false,
+  "auditor_container_started": false,
+  "formal_issue2476_cases_executed": 0,
+  "construction_rows_executed": 0,
+  "rerun": false,
+  "reason": "PowerShell invocation passed Docker run flags without the required 'run' subcommand; the Docker CLI parser rejected --rm before creating a container.",
+  "runner_exit_code": 125,
+  "runner_raw_output": "unknown flag: --rm\n\nUsage:  docker [OPTIONS] COMMAND [ARG...]\n\nRun 'docker --help' for more information\n",
+  "auditor_exit_code": 125,
+  "auditor_raw_output": "unknown flag: --rm\n\nUsage:  docker [OPTIONS] COMMAND [ARG...]\n\nRun 'docker --help' for more information\n",
+  "source_and_output": "The frozen source was not mounted or executed. The dedicated output directory remained empty; no trace, audit, input, game, or OS event was produced.",
+  "disposition": "Preserve this infrastructure STOP. Do not rerun or repair allocation r1. Any later construction is a separately frozen successor allocation with a distinct hypothesis and path."
+}

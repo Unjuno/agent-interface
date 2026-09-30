@@ -1,0 +1,32 @@
+{
+  "A_B_exactly_unchanged": true,
+  "accuracy": {
+    "control16": {
+      "A": 0.9658203125,
+      "B": 0.9462890625,
+      "C": 0.908447265625
+    },
+    "treatment64": {
+      "A": 0.9658203125,
+      "B": 0.9462890625,
+      "C": 0.959716796875
+    }
+  },
+  "allocation": "needle-role-c-support64-diagnostic-4749-v4-seed7866401",
+  "base_immutable": true,
+  "delta_C": 0.05126953125,
+  "issue": 4853,
+  "prefix_exact": true,
+  "runtime": {
+    "device": "cpu",
+    "threads": 1,
+    "torch": "2.5.1+cpu"
+  },
+  "seed": 7866401,
+  "updates": {
+    "B": 120,
+    "C_each_arm": 120,
+    "base": 400
+  },
+  "upstream_runner_git_blob_sha1": "ecd3a0414178f38535406573314793a40b353878"
+}

@@ -8,7 +8,7 @@ import traceback
 
 from run_native_six_task_self_use_v1 import PrivateSession, suite
 from native_handle_bridge_v1 import NativeHandleBridge
-from native_exchange_v1 import publish, encoded, current_owner_identity
+from native_exchange_v1 import publish, encoded, current_owner_identity, OwnerLifetime
 from native_visual_watch_v1 import NativeVisualWatch
 from native_release_observation_v1 import observe_release_failure
 from native_cleanup_v1 import finish_allocation
@@ -16,6 +16,7 @@ from scoped_target_handle_v2 import FlatTargetRefused
 
 
 from native_tail_v1 import paced_text_tail
+from native_review_recovery_v1 import review_source, validate_recovery_decision
 
 
 def review_current_window(bridge):
@@ -34,6 +35,7 @@ def main():
     parser.add_argument('--max-stages', type=int, choices=range(2,65), default=4)
     parser.add_argument('--seed', type=int, default=991084)
     parser.add_argument('--text-gap-ms', type=int, choices=(0, 2, 10), default=0)
+    parser.add_argument('--owner-lifetime-fd', type=int, default=None)
     parser.add_argument('--probe-old-target', action='store_true')
     args = parser.parse_args()
     out = args.out.resolve()
@@ -41,6 +43,7 @@ def main():
     publish(out/'owner.json', encoded(current_owner_identity()))
     publish(out/'exchange-contract.json', encoded({
         'schema': 'agent-interface/native-exchange-contract-v1', 'max_stages': args.max_stages}))
+    lifetime = OwnerLifetime(args.owner_lifetime_fd)
     session = bridge = output = None
     goal = None
     rows = []
@@ -60,6 +63,7 @@ def main():
         publish(out/f'source-{stage}.json', encoded(source))
 
     try:
+        lifetime.check()
         session = PrivateSession()
         apps = ('calc', 'inkscape') if args.app == 'calc-inkscape' else (args.app,)
         for index, app in enumerate(apps):
@@ -88,6 +92,7 @@ def main():
         bridge = NativeHandleBridge(session.name, {'app': window}, 'app', out/'bridge')
         source = bridge.observe()
         for stage in range(1, args.max_stages + 1):
+            lifetime.check()
             decision_hash = None
             if not (out/f'source-{stage}.json').exists():
                 publish_source(stage, source)
@@ -98,12 +103,15 @@ def main():
                 'windows': windows, 'request_file': str(request)}), flush=True)
             deadline = time.monotonic()+300
             while not request.exists():
+                lifetime.check()
                 if time.monotonic() > deadline:
                     raise TimeoutError('primary-assistant decision timeout')
                 time.sleep(.05)
+            lifetime.check()
             request_bytes = request.read_bytes()
             decision_hash = hashlib.sha256(request_bytes).hexdigest()
             decision = json.loads(request_bytes)
+            validate_recovery_decision(source, decision)
             if decision['source_sequence'] != source['sequence']:
                 raise ValueError('decision must refer to exact presented source')
             if decision.get('interaction') == 'observe' and set(decision) - {'source_sequence', 'interaction'}:
@@ -121,11 +129,10 @@ def main():
             if interaction == 'observe':
                 started = time.monotonic_ns()
                 review = review_current_window(bridge)
-                if review['status'] != 'reviewed':
-                    raise RuntimeError('window review failed; no automatic input or replay')
-                source = review['observation']
+                source = review_source(source, review)
                 observation_only = {'started_ns': started, 'ended_ns': time.monotonic_ns(),
-                                    'input_dispatched': False, 'captures': 1,
+                                    'input_dispatched': False,
+                                    'captures': 1 if review['status'] == 'reviewed' else None,
                                     'window_review': review}
                 if stage >= args.max_stages:
                     terminal_context = {'observation': source,
@@ -187,10 +194,18 @@ def main():
             row['ended_ns'] = time.monotonic_ns()
             save('actions.json', rows)
             row['window_review'] = review_current_window(bridge)
-            if row['window_review']['status'] != 'reviewed':
+            source = review_source(source, row['window_review'])
+            if 'review_recovery' in source:
+                row['review_recovery'] = source['review_recovery']
                 save('actions.json', rows)
-                raise RuntimeError('window review failed; no automatic input or replay')
-            source = row['window_review']['observation']
+                if stage >= args.max_stages:
+                    terminal_context = {'action': row, 'observation': source}
+                    raise RuntimeError('bounded stages exhausted during window review; no input replay')
+                publish_source(stage+1, source)
+                publish(out/f'reply-{stage}.json', encoded({'status': 'boundary', 'stage': stage,
+                    'decision_sha256': decision_hash, 'action': row, 'observation': source,
+                    'authority_granted': False, 'task_success': None}))
+                continue
             if args.probe_old_target:
                 before = bridge.backend.emissions
                 stale = bridge.click(alias, offset)
@@ -227,6 +242,7 @@ def main():
                               'window_review': row['window_review']}), flush=True)
         else:
             raise RuntimeError('bounded action stages exhausted without explicit finish')
+        lifetime.check()
         evaluations = {app: suite.evaluate(app, data['output'], data['goal'])
                        for app, data in workloads.items()}
         evaluation = (next(iter(evaluations.values())) if len(evaluations) == 1 else
@@ -247,7 +263,10 @@ def main():
                 'authority_granted': False, 'task_success': None, **terminal_context}
         raise
     finally:
-        cleanup = finish_allocation(out, workloads, bridge, session, terminal_reply)
+        try:
+            cleanup = finish_allocation(out, workloads, bridge, session, terminal_reply)
+        finally:
+            lifetime.close()
     if cleanup['status'] != 'completed':
         raise RuntimeError('allocation cleanup needs review; see cleanup-report.json')
 

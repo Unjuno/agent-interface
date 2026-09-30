@@ -1,0 +1,116 @@
+{
+  "db_sha256": "f307740aad7c1befd47dc33e74ec1e4c77fb06d5486c45652d60f30d543fe234",
+  "end_ns": 912616495642,
+  "error": null,
+  "exits": {
+    "consumer": 0,
+    "producer": 0
+  },
+  "final": {
+    "ack": [
+      [
+        2,
+        "d80a79bc51654024d9b4eebe7077308236771c1e42aaa961e2b8bf460c333be4"
+      ]
+    ],
+    "consumer": [
+      [
+        3,
+        "E3",
+        "43bb00d0ce7790a53b91256b370c887b24791a5539a6fbfb70c5870e8c91ae5d"
+      ]
+    ],
+    "pending": [
+      [
+        5,
+        5,
+        "E5",
+        "536c351ae15e5f5e3dc37bcc5dea8ab641e70fc0431a088a1d684aef2ebf3e5b"
+      ]
+    ]
+  },
+  "initial": {
+    "ack": [
+      [
+        2,
+        "d80a79bc51654024d9b4eebe7077308236771c1e42aaa961e2b8bf460c333be4"
+      ]
+    ],
+    "consumer": [
+      [
+        3,
+        "E3",
+        "43bb00d0ce7790a53b91256b370c887b24791a5539a6fbfb70c5870e8c91ae5d"
+      ]
+    ],
+    "pending": []
+  },
+  "spec": {
+    "events": [
+      {
+        "ms": 0,
+        "op": "poll"
+      },
+      {
+        "ms": 140,
+        "op": "poll"
+      },
+      {
+        "ms": 150,
+        "op": "poll"
+      },
+      {
+        "ms": 180,
+        "op": "poll"
+      },
+      {
+        "ms": 240,
+        "op": "poll"
+      },
+      {
+        "ms": 300,
+        "op": "poll"
+      }
+    ],
+    "id": "local-gap-clock-20260922-01-r2-permanent-paused-ELAPSED_80MS",
+    "policy": "ELAPSED_80MS",
+    "profile": "paused",
+    "rep": 2,
+    "scenario": "permanent"
+  },
+  "start_ns": 912098033555,
+  "workers": {
+    "consumer": {
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "-u",
+        "/mnt/data/agent_interface_gap_study/research/event_delivery/gap_elapsed_clock_v1/worker.py",
+        "--db",
+        "local-formal-01/local-gap-clock-20260922-01-r2-permanent-paused-ELAPSED_80MS/state.sqlite3",
+        "--role",
+        "consumer",
+        "--policy",
+        "ELAPSED_80MS"
+      ],
+      "pid": 1876,
+      "ready_line": "{\"ready\": true, \"pid\": 1876, \"role\": \"consumer\"}\n"
+    },
+    "producer": {
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "-u",
+        "/mnt/data/agent_interface_gap_study/research/event_delivery/gap_elapsed_clock_v1/worker.py",
+        "--db",
+        "local-formal-01/local-gap-clock-20260922-01-r2-permanent-paused-ELAPSED_80MS/state.sqlite3",
+        "--role",
+        "producer",
+        "--policy",
+        "ELAPSED_80MS"
+      ],
+      "pid": 1857,
+      "ready_line": "{\"ready\": true, \"pid\": 1857, \"role\": \"producer\"}\n"
+    }
+  }
+}

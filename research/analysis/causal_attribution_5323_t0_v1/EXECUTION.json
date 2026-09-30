@@ -1,0 +1,34 @@
+{
+  "schema": "causal_attribution_5323_t0_execution_v1",
+  "allocation": "causal-attribution-5323-t0-20260930-01",
+  "base_main_sha": "cf8ad3d1a675af9e64c1be356d03e35699548b33",
+  "formal_runner_invocations": 1,
+  "formal_runner_exit_code": 0,
+  "formal_runner_command": "docker run --rm --pull=never --platform linux/arm64 --network=none --read-only --pids-limit=32 --cpus=1 --memory=256m --mount type=bind,src=$STUDY_DIR,dst=/study,readonly --mount type=bind,src=$RESULT_DIR,dst=/out python@sha256:c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b python -B /study/run.py /out/raw.json",
+  "formal_runner_rows": 40,
+  "formal_runner_cases": 8,
+  "formal_runner_raw_sha256": "1cd99c857eb5d0c488cf9a0c7b6abd1cf634693500cb5490c18acc4d0c856b09",
+  "formal_auditor_invocations": 1,
+  "formal_auditor_record": "results/formal-01/audit.json",
+  "formal_auditor_reported_status": "PASS_AUDIT",
+  "formal_auditor_errors": [],
+  "formal_auditor_docker_exit_code": "NOT_CAPTURED_HOST_WRAPPER_ZSH_READONLY_STATUS_VARIABLE",
+  "formal_auditor_raw_sha256": "c7ab944645c1576ab77a88563a10eda77da8e21228a47b2b34b0b1e61ec1246e",
+  "policy_metrics": {
+    "POSTHOC_ASSOCIATION": {"false_attributions": 5, "missed_attributions": 0, "unknown": 0},
+    "TEMPORAL_LINEAGE": {"false_attributions": 1, "missed_attributions": 0, "unknown": 5},
+    "CONTROL_BASELINE": {"false_attributions": 0, "missed_attributions": 1, "unknown": 6},
+    "CAUSAL_MODEL": {"false_attributions": 0, "missed_attributions": 0, "unknown": 6},
+    "UNKNOWN_ON_CONFOUNDING": {"false_attributions": 0, "missed_attributions": 0, "unknown": 6}
+  },
+  "construction_tests": {"passed": 7, "failed": 0, "command": "python3 -m unittest -v test_experiment.py", "cwd": "research/analysis/causal_attribution_5323_t0_v1"},
+  "py_compile": "PASS",
+  "git_diff_check": "PASS",
+  "analysis_index_local_check": "UNUSABLE_SPARSE_CHECKOUT",
+  "analysis_index_note": "The repository checker was invoked, but this sparse worktree omits hundreds of existing retained-result directories and therefore reports a false stale index. --write was intentionally not run to avoid deleting valid existing entries. The generated index received only the new sorted directory line; full-tree validation is delegated to the PR Analysis Index workflow.",
+  "failed_process_checks": [
+    {"command_context": "python3 -m unittest from repository root", "outcome": "FAIL_IMPORT_PATH", "disposition": "Corrected cwd and passed 7/7; no experiment rerun."},
+    {"command_context": "audit container stdout capture wrapper", "outcome": "HOST_ZSH_READONLY_VARIABLE_ASSIGNMENT", "disposition": "Audit JSON retained PASS_AUDIT; no container retry; exact Docker exit code not captured."}
+  ],
+  "claims": {"scope": "Synthetic finite first unit only", "runtime_or_production_claim": false, "task_success_claim": false, "authority_claim": false}
+}

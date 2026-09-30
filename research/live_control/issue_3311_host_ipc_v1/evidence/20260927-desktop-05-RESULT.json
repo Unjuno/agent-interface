@@ -1,0 +1,31 @@
+{
+  "schema": "3311-dockerdesktop-owneronly-roundtrip-result-v1",
+  "allocation": "dockerdesktop-v1-owneronly-roundtrip-20260927-05",
+  "decision": "STOP_BROKER_DID_NOT_FORWARD_MODEL_INSTRUCTIONS",
+  "formal_container_invocations": 1,
+  "retries": 0,
+  "container_exit": 1,
+  "broker_exit": 1,
+  "permission_boundary": {
+    "request_created": true,
+    "request_read_by_nonroot_broker": true,
+    "request_owner_uid_gid": "1002:1002",
+    "request_mode": "0600",
+    "request_sha256": "d3a69870bc143603fe0b5bed2de8ff191a059c9504410a1ff78c89be5584b1aa"
+  },
+  "failure_stage": {
+    "host_fake_cli_invoked": true,
+    "fake_cli_error": "StopIteration: required model_instructions_file=<path> argument was absent",
+    "broker_response_bytes": 0,
+    "runner_error": "host model IPC response is not one completed turn/message"
+  },
+  "treatment_observation": "The modified runner published the request with WSL host ownership and mode 0600; the non-root broker read and processed it. The fake CLI then rejected the broker invocation because the current broker omitted model_instructions_file.",
+  "related_existing_blocker": "Current main also maps a successful one-shot broker child exit 0 through `return broker.get('returncode') or 1`; PR #4524 addresses that separate contract. This allocation's child exited 1, so zero-exit propagation was not tested.",
+  "scope_limits": [
+    "No real model call, GUI, task input, or authority",
+    "The owner-only request publication/read boundary was exercised in the actual runner/broker container roundtrip",
+    "End-to-end synthetic turn did not complete because of the broker argument contract",
+    "Does not satisfy #3489 or #3311 integrated six-task acceptance"
+  ],
+  "no_retry": true
+}

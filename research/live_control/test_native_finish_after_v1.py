@@ -20,6 +20,7 @@ class NativeFinishAfterTests(unittest.TestCase):
             events = []
             remaining = iter(decisions)
             pending_mint_errors = iter(mint_errors)
+            review_statuses = iter(review_status) if isinstance(review_status, list) else None
 
             class Session:
                 name = ':inert'
@@ -62,7 +63,7 @@ class NativeFinishAfterTests(unittest.TestCase):
 
                 def review_window(self, window):
                     assert window == (1 if focus_within else 2)
-                    return {'status': review_status, 'observation': {
+                    return {'status': next(review_statuses) if review_statuses is not None else review_status, 'observation': {
                         'sequence': 2, 'native': {'artifact': {'path': 'inert-final.png'}}}}
 
                 def close(self):
@@ -201,13 +202,43 @@ class NativeFinishAfterTests(unittest.TestCase):
         self.assertNotIn('mint', events)
         self.assertNotIn('input', events)
 
-    def test_observation_failed_window_review_never_publishes_next_source(self):
-        replies, sources, events = self.exercise([{'interaction': 'observe'}],
-            focus_within=False, review_status='needs_review', expected_error=RuntimeError)
-        self.assertEqual(sources, ['source-1.json'])
-        self.assertEqual(replies[0]['status'], 'needs_review')
-        self.assertNotIn('mint', events)
+    def test_failed_observation_requires_explicit_recovery(self):
+        replies, sources, events = self.exercise(
+            [{'interaction': 'observe'}, {'interaction': 'observe'}, {'finish': True}],
+            focus_within=False, review_status=['needs_review', 'reviewed'])
+        self.assertEqual(replies[0]['observation']['review_recovery']['status'], 'observation_required')
+        self.assertNotIn('review_recovery', replies[1]['observation'])
+        self.assertIsNone(replies[0]['observation_only']['captures'])
+        self.assertEqual(replies[1]['observation_only']['captures'], 1)
         self.assertNotIn('input', events)
+
+    def test_post_input_failed_review_never_replays_and_ignores_finish_after(self):
+        replies, sources, events = self.exercise(
+            [self.action(finish_after=True), {'interaction': 'observe'}, {'finish': True}],
+            review_status=['needs_review', 'reviewed'])
+        self.assertEqual(replies[0]['status'], 'boundary')
+        self.assertEqual(replies[0]['action']['result']['status'], 'completed')
+        self.assertEqual(replies[0]['observation']['sequence'], 1)
+        self.assertEqual(events.count('input'), 1)
+        self.assertEqual(events.count('evaluate'), 1)
+        self.assertEqual(replies[-1]['status'], 'finished')
+
+    def test_repeated_review_failure_exhausts_stage_bound_without_input(self):
+        replies, sources, events = self.exercise(
+            [{'interaction': 'observe'}, {'interaction': 'observe'}],
+            max_stages=2, review_status='needs_review', expected_error=RuntimeError)
+        self.assertEqual(replies[-1]['status'], 'needs_review')
+        self.assertIsNone(replies[-1]['observation_only']['captures'])
+        self.assertEqual(set(sources), {'source-1.json', 'source-2.json'})
+        self.assertNotIn('input', events)
+        self.assertNotIn('evaluate', events)
+
+    def test_pending_review_rejects_input_before_mint(self):
+        replies, sources, events = self.exercise([self.action(), self.action()],
+            review_status='needs_review', expected_error=ValueError)
+        self.assertEqual(events.count('input'), 1)
+        self.assertEqual(events.count('mint'), 1)
+        self.assertEqual(replies[-1]['status'], 'needs_review')
 
     def test_last_stage_returns_terminal_evidence_without_unusable_source(self):
         for last in ({'interaction': 'observe'}, self.action()):

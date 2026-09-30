@@ -1,0 +1,31 @@
+{
+  "schema": "agent-interface/desktop-lifecycle-rebind-freeze-v1",
+  "issue": 3190,
+  "allocation": "desktop-lifecycle-rebind-3190-20260922-01",
+  "base_main": "74d0ebb63c880fc5818bc4bbe6bb0c6b08579d39",
+  "formal_invocations_before_freeze": 0,
+  "construction": {
+    "excluded": true,
+    "unit_tests_passed": 2,
+    "unit_tests_failed": 0
+  },
+  "experiment_blobs": {
+    "PLAN.md": "e264a9b192b6c5a142338d791255c1a2e4d189ca",
+    "SOURCE_MANIFEST.json": "9dac6a9f1a94831d19c66e06d198fba820a33242",
+    "ENVIRONMENT.json": "53f8019ad2ef023755ed814d47b7cd7c4d7f02f4",
+    "audit.py": "a75375ab4c6110e80f8cd8e4c411a0b7abc24fd9",
+    "test_audit.py": "7638b57894156b66330ddb217b9d9e13057e93b7"
+  },
+  "runtime_source_blobs": {
+    "runtime/golden_desktop_demo_v3.py": "26db03b8400b03fbe5272bd4ae5ad9c3a82d31a2",
+    "runtime/cli_v1/api.py": "47193afd3bdb5e8bef91bf539f74f180ce9b9406",
+    "runtime/core_v1/__init__.py": "659531954db218d4c04849fe937df80ad1fcf495",
+    "runtime/GOLDEN_DESKTOP_DEMO_V3.md": "940213efdcb582d6c7399d0cd1f0afc3fecb1c4a"
+  },
+  "predecessor": {
+    "manifest_blob": "183f99b6b3bddd88ca39743a4fa77b0f6ef4dbf9",
+    "result_blob": "f345d7fbb31f2e44d50c62fd19c4890faf0015f4",
+    "old_api_blob": "f9dc26441c5f4ff9d7f57aa6a6a7b3849a1537d7"
+  },
+  "formal_policy": "one source-only audit; no rerun/replacement/tuning; no GUI/model/input/network experiment"
+}

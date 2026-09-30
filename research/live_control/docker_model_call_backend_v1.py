@@ -34,7 +34,7 @@ def build_command(root: Path, prompt: str, image: Path, contract: str, workspace
     for value in (runner, schema, instructions, prompt, image, workspace, Path(ipc)):
         if not Path(value).exists():
             raise FileNotFoundError(value)
-    return [
+    command = [
         os.environ.get("DOCKER", "docker"), "run", "--rm", "--network", "none",
         "-e", "HOST_MODEL_IPC_DIR=/ipc",
         "-v", f"{Path(root).resolve()}:/out",
@@ -50,6 +50,12 @@ def build_command(root: Path, prompt: str, image: Path, contract: str, workspace
         "/repo/workspace", "/out/runner", "coordinate", "/repo/image.png",
         "/repo/instructions.txt", "/repo/schema.json",
     ]
+    if hasattr(os, "getuid") and hasattr(os, "getgid"):
+        command[7:7] = [
+            "-e", f"HOST_MODEL_IPC_OWNER_UID={os.getuid()}",
+            "-e", f"HOST_MODEL_IPC_OWNER_GID={os.getgid()}",
+        ]
+    return command
 
 
 def call(root: Path, prompt: str, image: Path, contract: str, workspace: Path):

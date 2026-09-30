@@ -1,0 +1,20 @@
+{
+  "schema": "broker_path_windows_junction_4882_run_record_v1",
+  "allocation": "broker-path-windows-junction-4882-20260928-02",
+  "source_commit": "d5d3da9532fee644f3754ada6ee5101a2c5aad22",
+  "command": "python -B research/integration/broker_path_windows_junction_4882_v1/runner.py research/integration/broker_path_windows_junction_4882_v1/results/allocation-02/RAW.json",
+  "runner_invocations": 1,
+  "runner_exit_code": 2,
+  "stdout": "{\"allocation\": \"broker-path-windows-junction-4882-20260928-02\", \"status\": \"STOP_SETUP_JUNCTION_UNAVAILABLE\", \"output\": \"results/allocation-02/RAW.json\"}",
+  "raw_sha256": "702ce97a62195ae96890d7dad1c2d041b8d8415036cc07c2025283fcb0e06578",
+  "path_case_rows": 0,
+  "frozen_success_auditor_invocations": 0,
+  "posthoc_stop_integrity_auditor_invocations": 1,
+  "setup_diagnostics_retained": false,
+  "cause": "unknown",
+  "notes": [
+    "Both frozen junction setup subprocesses returned code 1 and setup_ok=false.",
+    "No candidate path case ran; this is not a resolver FAIL or PASS.",
+    "No rerun or alternate fixture was used."
+  ]
+}

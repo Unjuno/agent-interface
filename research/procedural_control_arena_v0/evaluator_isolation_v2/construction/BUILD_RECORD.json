@@ -1,0 +1,43 @@
+{
+  "arena_source_sha256": {
+    "arena.py": "4e555e479ce665af77eedf444cd6bf82b4f93ccfbec52033df7ce8368c533527",
+    "engine.py": "573927ac68772c1d24715a04f7e070360d5632fb599c9821926fc01143d8810f"
+  },
+  "built_unix": 1790478112.3168705,
+  "images": [
+    {
+      "base": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+      "command": [
+        "docker",
+        "build",
+        "--pull",
+        "--platform",
+        "linux/amd64",
+        "--tag",
+        "agent-arena-isolation-evaluator-v2:20260927",
+        "research/procedural_control_arena_v0/evaluator_isolation_v2/images/evaluator"
+      ],
+      "id": "sha256:ed7cb174bbe07d676e5fd0c41dd869923f20559569ccfee55e336265ce6f4fe3",
+      "log_sha256": "9cf04f35100755abcb05adfd881a00d10faa6fe8fa3e76dd199cd7cbfc33b434",
+      "name": "evaluator",
+      "tag": "agent-arena-isolation-evaluator-v2:20260927"
+    },
+    {
+      "base": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+      "command": [
+        "docker",
+        "build",
+        "--pull",
+        "--platform",
+        "linux/amd64",
+        "--tag",
+        "agent-arena-isolation-controller-v2:20260927",
+        "research/procedural_control_arena_v0/evaluator_isolation_v2/images/controller"
+      ],
+      "id": "sha256:871f65d890fe4b0ad5d6cc6c14bc156f98b479f46d1a7852cb2d804fd4ed1acd",
+      "log_sha256": "8ad8f4f71322fdaccacf0430c499b849550871cd1c28f693adbe04d675bc346f",
+      "name": "controller",
+      "tag": "agent-arena-isolation-controller-v2:20260927"
+    }
+  ]
+}

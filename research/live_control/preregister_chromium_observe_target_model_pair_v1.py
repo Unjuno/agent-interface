@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+from guarded_source_dependencies_v1 import complete_guarded_hashes
 import subprocess
 
 
@@ -55,7 +56,7 @@ def main():
         ),
         "failure_policy": "retain both first sessions; no retry, prompt, alias, box or order repair",
         "codex_cli": version,
-        "sources": {name: sha(HERE / name) for name in names},
+        "sources": complete_guarded_hashes({name: sha(HERE / name) for name in names}, base=HERE),
         "scope": (
             "two fresh same-seed Chromium sessions and two Luna-low calls; one stable "
             "success plus one post-model target-loss refusal; no causal latency, monetary "

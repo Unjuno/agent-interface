@@ -1,0 +1,82 @@
+#!/usr/bin/env python3
+"""Raw-only auditor for the frozen Mitra dependency STOP record."""
+import hashlib
+import base64
+import json
+import pathlib
+import re
+import sys
+
+
+def normalized_text(data):
+    """Ignore GitHub's trailing-blank-line display normalization only."""
+    data = data.replace(b"\r\n", b"\n").rstrip(b"\n")
+    return data + (b"\n" if data else b"")
+
+
+def audit(root):
+    root = pathlib.Path(root)
+    errors = []
+    lock_raw = base64.b64decode((root / "requirements.lock.raw.b64").read_text(encoding="ascii"))
+    manifest_raw = base64.b64decode((root / "wheelhouse-manifest.json.raw.b64").read_text(encoding="ascii"))
+    log_raw = base64.b64decode((root / "offline-install-import-preflight.log.raw.b64").read_text(encoding="ascii"))
+    provenance_raw = base64.b64decode((root / "ACQUISITION_PROVENANCE.json.raw.b64").read_text(encoding="ascii"))
+    lock = (root / "requirements.lock").read_bytes()
+    provenance_text = (root / "ACQUISITION_PROVENANCE.json").read_bytes()
+    if normalized_text(provenance_text) != normalized_text(provenance_raw):
+        errors.append("provenance_raw_text_mismatch")
+    prov = json.loads(provenance_raw.decode("utf-8"))
+    log = (root / "offline-install-import-preflight.log").read_bytes()
+    if normalized_text(lock) != normalized_text(lock_raw):
+        errors.append("lock_raw_text_mismatch")
+    if normalized_text(manifest_raw) != normalized_text((root / "wheelhouse-manifest.json").read_bytes()):
+        errors.append("manifest_raw_text_mismatch")
+    if normalized_text(log) != normalized_text(log_raw):
+        errors.append("log_raw_text_mismatch")
+    log_text = log.decode("utf-8", "replace")
+    try:
+        manifest = json.loads(manifest_raw)
+    except Exception:
+        errors.append("manifest_json")
+        manifest = []
+    artifacts = prov.get("artifacts", [])
+    if hashlib.sha256(lock_raw).hexdigest() != "d871eb53e8ed38d5ee5d2c8fbae8ed0b2a3f265523bbf24b0573f42b17864ec9":
+        errors.append("lock_sha256")
+    if hashlib.sha256(manifest_raw).hexdigest() != "158297ee664e598b0648970eb9b630dce7055f0fa75f2ce85a0bb8d700e2e48b":
+        errors.append("manifest_sha256")
+    if hashlib.sha256(log_raw).hexdigest() != "85fbaFaf2397165491b9b6eAaF3445D40c7CB77EC687cB5D342A8F10CE7A8F2F".lower():
+        errors.append("log_sha256")
+    if hashlib.sha256(provenance_raw).hexdigest() != "6af75de734b1e505935a5e993a905acbcbc28e7910dbd8e2efeb70c21d3ce3d8":
+        errors.append("provenance_sha256")
+    if len(manifest) != 59 or len(artifacts) != 59 or prov.get("count") != 59:
+        errors.append("artifact_count")
+    total = sum(x.get("bytes", -1) for x in manifest)
+    if total != 195307446 or prov.get("bytes") != total:
+        errors.append("artifact_bytes")
+    if prov.get("manifest_sha256") != hashlib.sha256(manifest_raw).hexdigest():
+        errors.append("provenance_manifest_identity")
+    if prov.get("errors") != []:
+        errors.append("acquisition_errors")
+    expected = {x["file"]: (x["sha256"], x["bytes"]) for x in manifest}
+    actual = {x.get("file"): (x.get("sha256"), x.get("bytes")) for x in artifacts}
+    if actual != expected:
+        errors.append("provenance_artifact_identity")
+    urls = [x.get("file_url") for x in artifacts]
+    if any(not u or not u.startswith("https://files.pythonhosted.org/") for u in urls):
+        errors.append("distribution_urls")
+    if not re.search(r"OFFLINE_INSTALL_EXIT=0\b", log_text):
+        errors.append("offline_install_not_successful")
+    if "ModuleNotFoundError: No module named 'omegaconf'" not in log_text:
+        errors.append("expected_import_stop_missing")
+    if "/autogluon/tabular/models/mitra/sklearn_interface.py" not in log_text or "config_pretrain.py" not in log_text:
+        errors.append("target_import_not_proven")
+    if re.search(r"(?im)^\s*(?:formal_predictions|prediction_count|optimizer_steps)\s*[=:]\s*[1-9]\d*", log_text):
+        errors.append("formal_work_claimed")
+    return errors
+
+
+if __name__ == "__main__":
+    problems = audit(sys.argv[1] if len(sys.argv) > 1 else pathlib.Path(__file__).parent)
+    print(json.dumps({"disposition": "STOP_LOCAL_ARTIFACT_OR_RUNTIME" if not problems else "AUDIT_FAIL", "errors": problems}, sort_keys=True))
+    raise SystemExit(bool(problems))
+

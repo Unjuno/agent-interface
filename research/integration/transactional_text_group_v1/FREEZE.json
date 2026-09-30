@@ -1,0 +1,32 @@
+{
+  "allocation_id": "transactional-text-group-16-formal01",
+  "commands": [
+    "python run.py --mode formal --batch 0 --out formal/batch00 > formal/batch00.stdout.json 2> formal/batch00.stderr.txt",
+    "python run.py --mode formal --batch 1 --out formal/batch01 > formal/batch01.stdout.json 2> formal/batch01.stderr.txt",
+    "python run.py --mode formal --batch 2 --out formal/batch02 > formal/batch02.stdout.json 2> formal/batch02.stderr.txt"
+  ],
+  "construction": {
+    "eligible_audit_sha256": "ffcc3d27f4090f8ad6302596ac7758a21ca825cc50940406c6c8cd41c75614cb",
+    "eligible_cases": 5,
+    "eligible_controls_rejected": "10/10",
+    "eligible_controls_sha256": "31346c09a9fef58238d174bc02c6d0b2a67eb3e5d0b240f0aaa4a341c4734605",
+    "eligible_run": "construction-08",
+    "failures": [
+      "CONSTRUCTION_FAILURE_01.md",
+      "CONSTRUCTION_FAILURE_02.md",
+      "CONSTRUCTION_FAILURE_03.md",
+      "CONSTRUCTION_FAILURE_04.md"
+    ]
+  },
+  "formal_invocations_at_freeze": 0,
+  "formal_rows_at_freeze": 0,
+  "hashes": {
+    "ENVIRONMENT.json": "23d6d6c44e1c0af8f80ba84c1e3d5314030e12aac4b060571cfa76aeadab0d3f",
+    "PLAN.json": "c14dbd6ed9d2fe74c6703ff16fd1f071479e02184954b2fd17dbf6ebdc3e80cc",
+    "audit.py": "70c462ff1d52a1b857edba21167d5b12d00d65fc9fdc8bd38e613c2d3074f527",
+    "controls.py": "b5660f16e20562927780d81810500748f2544083501fccefab97bb9f0cb12afa",
+    "fixture.py": "063971e0cc846be9f8eca0bda634bb537ab1bae01744d72a89c1c200ce76fa9e",
+    "run.py": "7e6f9ce3a39d050e73ee43a355641321dd47474051a4d14a980d249ea1593af8"
+  },
+  "source_changes_after_formal_start_allowed": false
+}

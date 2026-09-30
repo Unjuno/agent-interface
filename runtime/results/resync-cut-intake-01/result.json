@@ -1,0 +1,40 @@
+{
+  "schema": "agent-interface/resync-cut-intake-v1",
+  "status": "RETAINED_EVIDENCE_PASS_SHARED_RUNTIME_ADOPTION_HOLD",
+  "main": "2a7f598bdd79e81081b293d152d30cd818d210cb",
+  "docker_image": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+  "audit_exact_match": true,
+  "controls_exact_match": true,
+  "new_x11_sessions": 0,
+  "source_pins": {
+    "runtime/guarded_x11_v1/bridge.py": "d51fda978d8304d6cb30b28892ddf418cf414cff02f636d5fd2ebdde46c1c135",
+    "runtime/guarded_x11_v1/history.py": "c03f294f8ce26dc09bfe63809fce05ff330aa0b111c6566039fec0587a5661ca",
+    "runtime/cli_v1/observe.py": "1f7a27c2355955fd13708c26c68bab4f3a167578f8d24a2a19d7c87722bd052a",
+    "runtime/cli_v1/mcp_session.py": "2fc16a02b910a9d1663ad353675ee270fcf3633097971635a1c6b8473cad8336",
+    "research/live_control/native_relay_client_v1.mjs": "446984d2a88f54abf0097c417aaea9b8925c9125c6f6d371772f01b542ce373e",
+    "research/live_control/relay_host_timeline_v1.mjs": "a33410664d1f0b8e833317a8d28b11c2ef0024e903478c4b02e06ea15e0d4e95"
+  },
+  "compatibility": [
+    {
+      "required": "Producer-authored contiguous state sequence and source epoch",
+      "current": "Public capture has UUID/time metadata; guarded sequence increments per capture, not per application state change.",
+      "decision": "missing producer contract"
+    },
+    {
+      "required": "Complete state snapshot at an identified cut",
+      "current": "PNG plus target metadata is not a complete application-state snapshot; metadata recheck is not atomicity.",
+      "decision": "missing snapshot contract"
+    },
+    {
+      "required": "Explicit detected gap/frontier with preserved lost-history identities",
+      "current": "Input recovery verifies key/button neutrality and advances binding revision; it cannot recover event history.",
+      "decision": "different recovery scope"
+    },
+    {
+      "required": "Delayed event envelopes subsequently reduced into reconstructed current state",
+      "current": "Primary relay permits one outstanding call. Image reuse references an explicitly reviewed exact PNG and forwards current metadata; it is not an event reducer.",
+      "decision": "no matching insertion point"
+    }
+  ],
+  "scope": "Independent container execution of retained raw-only auditor/control code, not independent authorship, formal experiment rerun, GUI/model effect, latency or token evidence."
+}

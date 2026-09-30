@@ -1,6 +1,7 @@
 """Freeze one translated-layout compact active-evidence allocation."""
 import json
 from pathlib import Path
+from guarded_source_dependencies_v1 import complete_guarded_hashes
 
 import preregister_openttd_active_evidence_pair_v1 as prior
 
@@ -43,10 +44,10 @@ def main():
             "top, five composed receipts, strict evidence-bound selection, exact rehover, released "
             "ordinary click, and independent finance-title RGB oracle shifted only by observed delta"),
         "failure_policy": "retain the first live allocation; no model, runtime or task retry",
-        "sources": {
+        "sources": complete_guarded_hashes({
             **{name: prior.sha(HERE / name) for name in dict.fromkeys(SOURCES)},
             **{name: prior.sha(HERE.parent / name) for name in prior.TASK_SOURCES},
-        },
+        }, base=HERE),
         "scope": (
             "one fresh fixed-seed OpenTTD translated-window task; same single Luna-low model "
             "proposes and interprets evidence; no subagents; no matched latency/token baseline, "
