@@ -81,9 +81,17 @@ def gate() -> dict:
     commit, tree = git("rev-parse", "HEAD"), git("rev-parse", "HEAD^{tree}")
     if git("merge-base", commit, MAIN) != MAIN:
         raise RuntimeError("source does not include frozen base main")
-    main_result = run(["git", "ls-remote", "origin", "refs/heads/main"])
-    if main_result.returncode or not main_result.stdout.split() or main_result.stdout.split()[0] != MAIN:
-        raise RuntimeError("remote main differs from pilot freeze")
+    fetched = run(["git", "fetch", "origin", "main"])
+    if fetched.returncode:
+        raise RuntimeError("cannot refresh origin/main: " + fetched.stderr.strip())
+    live_main = git("rev-parse", "refs/remotes/origin/main")
+    if git("merge-base", MAIN, live_main) != MAIN:
+        raise RuntimeError("live main is not a descendant of frozen base main")
+    seed_rel = "research/needle_role_skill_reload_3780_v1/formal/seed-3788/builder/skill.json"
+    if run(["git", "diff", "--quiet", MAIN, live_main, "--", seed_rel]).returncode != 0:
+        raise RuntimeError("live main changed the frozen seed after base main")
+    if run(["git", "diff", "--quiet", MAIN, live_main, "--", EXP_REL.as_posix()]).returncode != 0:
+        raise RuntimeError("live main changed the pilot path after base main")
     freeze = json.loads((EXP / "FREEZE.json").read_text())
     if freeze.get("base_main_sha") != MAIN:
         raise RuntimeError("freeze/base-main mismatch")
@@ -110,7 +118,8 @@ def gate() -> dict:
     if inventory.returncode or inventory.stdout.strip():
         raise RuntimeError("shared OrbStack inventory is occupied or unobservable")
     return {"source_commit": commit, "source_tree_sha": tree,
-            "live_main_sha": MAIN, "freeze_sha256": sha((EXP / "FREEZE.json").read_bytes()),
+            "live_main_sha": live_main, "freeze_base_main_sha": MAIN,
+            "freeze_sha256": sha((EXP / "FREEZE.json").read_bytes()),
             "source_sha256": actual_hashes, "image_id": IMAGE,
             "image_platform": "linux/arm64", "context": CONTEXT,
             "inventory_before_launch": inventory.stdout.strip(), "seed_sha256": sha(seed.read_bytes())}
