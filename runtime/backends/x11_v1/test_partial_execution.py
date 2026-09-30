@@ -15,6 +15,7 @@ class PartialExecutionTests(unittest.TestCase):
         backend = object.__new__(X11Backend)
         backend.d = mock.Mock()
         backend.d.pending_events.return_value = 0
+        backend._keyboard_mapping_snapshot = mock.Mock(return_value=('stable-test-map',))
         backend._text_plan = mock.Mock(return_value=[['a']])
         backend.text = mock.Mock()
         backend.release_all = mock.Mock()
@@ -60,6 +61,7 @@ class PartialExecutionTests(unittest.TestCase):
                     backend.held_buttons = set()
                     backend.emissions = 0
                     backend.preflight = mock.Mock()
+                    backend._refresh_keyboard_mapping = mock.Mock(return_value=False)
                     backend._keycode = lambda key: 38
                     backend.text = mock.Mock()
                     physical = {'down': False}
@@ -204,6 +206,7 @@ class PartialExecutionTests(unittest.TestCase):
         backend = object.__new__(X11Backend)
         backend.emissions = 0
         backend.preflight = mock.Mock()
+        backend._refresh_keyboard_mapping = mock.Mock(return_value=False)
         backend.text = mock.Mock()
         backend.release_all = mock.Mock(return_value={
             'verified': True, 'keys_down': [], 'buttons_down': []})
@@ -233,6 +236,7 @@ class PartialExecutionTests(unittest.TestCase):
         backend = object.__new__(X11Backend)
         backend.emissions = 0
         backend.preflight = mock.Mock()
+        backend._refresh_keyboard_mapping = mock.Mock(return_value=False)
         backend.text = mock.Mock(side_effect=OSError('input failure'))
         backend.release_all = mock.Mock(return_value={'verified': True})
         for interrupted in (False, True):
@@ -294,6 +298,7 @@ class PartialExecutionTests(unittest.TestCase):
                 backend = object.__new__(X11Backend)
                 backend.emissions = 0
                 backend.preflight = mock.Mock()
+                backend._refresh_keyboard_mapping = mock.Mock(return_value=False)
                 backend.focus = mock.Mock()
                 backend.capture = mock.Mock(return_value={"sha256": "earlier-observation"})
                 backend.monotonic_ns = lambda: 9000
