@@ -89,4 +89,12 @@ if __name__=='__main__':
   recorded=load(root/'post-release-feedback-02/analysis.json');need(recorded['v1']==v1 and recorded['v2']==v2,'analysis mismatch')
   need(v2['post-wait']['extra_observation']==0 and v2['inline-wait']['extra_observation']==1,'observation delta')
   need(v1['held-post']['extra_observation']==1 and v1['held-inline']['extra_observation']==1,'held failure preserved')
+  boundaries=load(dest/'timing-boundaries.json')['arms']
+  for route in ['post-wait','inline-wait']:
+   events=[json.loads(x) for x in (root/'post-release-feedback-02'/route/'host/host-events.jsonl').read_text().splitlines()]
+   def at(i,k):return next(x['host_monotonic_ms'] for x in events if x.get('attempt')==i and x['kind']==k)
+   useful=8 if route=='post-wait' else 9
+   actual={'save_send_to_useful_presentation_callback_ms':at(useful,'presentation_callbacks_completed')-at(8,'send_requested'),'save_send_to_completion_review_record_ms':at(useful,'review_recorded')-at(8,'send_requested'),'useful_presentation_to_review_record_ms':at(useful,'review_recorded')-at(useful,'presentation_callbacks_completed')}
+   need(boundaries[route]['save_attempt']==8 and boundaries[route]['useful_image_attempt']==useful,'timing attempt')
+   need(all(abs(boundaries[route][k]-v)<1e-6 for k,v in actual.items()),'timing projection')
   print(json.dumps({'status':'PASS_RETAINED_SCOPED_EVIDENCE','files':len(seen),'arms':6,'integration_spine':'HOLD_INTEGRATION_INCOMPLETE','human_tempo':'UNMEASURED','scope':'Byte integrity, recorded capture/release/wait order, primary-review attribution and independent exact-once task-4 score; no authentication or general semantic proof.'}))

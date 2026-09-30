@@ -23,3 +23,16 @@ Capture/inspection failure retains the executed-input receipt and any inline ima
 Validation: local shared protocol 334 tests and Linux harness 141 tests pass. Seven post-capture tests cover actual distinct PNG selection, no-inline programs, retained lookup, release/refusal/recovery skips, capture/target failures, explicit wait ordering and invalid pre-input requests. The portable runtime was used by the primary through the ordinary public relay for each live arm. These checks do not satisfy the full #2789 integration-spine gate.
 
 raw.tar.gz and manifest.json retain 405 files at initial packaging, including requests/replies, raw reports, PNGs, caller code, fixture code, timing/review/close records, failed results, local check logs and actual model usage projections. Run python3 runtime/results/post-release-feedback-01/verify.py to verify byte integrity and recorded ordering/scoring. The standalone verifier never connects to an application or replays inputs. It uses explicit checks that remain active under python -O; archive corruption and missing manifest-member controls must reject. Manifest consistency is not authenticated provenance, and caller-declared image review is not an independent semantic evaluator.
+
+The additive timing-boundaries.json projects the original final-pair host events.
+From Save send to useful image presentation callback: candidate 276.21ms, baseline
+11,000.27ms (the baseline includes the decision to request a fresh observation).
+From Save send to recorded completion review: candidate 31,658.34ms, baseline
+21,808.98ms. Thus fewer observations and earlier useful delivery did **not**
+establish a faster completion-review endpoint in this run. Callback completion
+is delivery, and review receipt is caller-declared attribution; neither is an
+independent perception clock. The candidate close helper was authored between
+delivery and review; tool scheduling, model context and code authoring confound
+that gap. Preserve these full intervals rather than reporting only the smaller
+transport interval. Pre-authored callers and matched presentation are needed
+for the next full-path comparison.
