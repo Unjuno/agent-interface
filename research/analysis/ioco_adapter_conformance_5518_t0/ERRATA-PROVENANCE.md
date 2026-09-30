@@ -14,3 +14,7 @@ CI history (candidate never rerun):
 4. A further audit-only workflow attempt failed before creating a job after the incomplete transfer. These are execution/evidence-delivery failures, not changed scientific outcomes.
 
 The result is scoped to deterministic, hand-authored finite traces and does not test an actual adapter, GUI, task effect, runtime, or product safety.
+
+## Hypothesis novelty correction
+
+After execution, the full Issue #5518 comment history was rechecked. Existing T0–T7 already exercise input/output inclusion, hidden retry/batching, explicit UNKNOWN versus missing output, first forbidden prefixes, target/authority variants, nondeterministic output sets, exhaustive prefix checks, and bounded quiescence. The broad T0 hypothesis here substantially overlaps that completed sequence and is not a novel research result. This corpus adds stale-admission and false-semantic-success mutants, but no preregistered comparison established a distinct residual benefit over T0–T7. Preserve the fixture classifications as an execution record only; do not promote them as a new research PASS or close the Issue. The next experiment must target a clearly non-overlapping unresolved hypothesis or a formally specified successor question.
