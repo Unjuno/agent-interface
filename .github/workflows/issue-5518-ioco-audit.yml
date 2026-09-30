@@ -4,6 +4,8 @@ on:
   pull_request:
     types: [opened, synchronize]
     paths:
+      - ".github/workflows/issue-5518-ioco-audit.yml"
+      - "research/analysis/ioco_adapter_conformance_5518_t0/RESULTS.md"
       - "research/analysis/ioco_adapter_conformance_5518_t0/raw.json"
       - "research/analysis/ioco_adapter_conformance_5518_t0/audit.json"
       - "research/analysis/ioco_adapter_conformance_5518_t0/execution-status.json"
