@@ -1,4 +1,5 @@
 import hashlib
+import hmac
 import json
 import subprocess
 import sys
@@ -125,10 +126,15 @@ class RawOnlyCliBoundaryTests(unittest.TestCase):
             "engine_context": "orbstack",
             "argv": ["python3", "-B", "run_formal_x11.py", "raw.jsonl"],
         }
-        self.assertEqual(validate_host_launch_receipt(receipt, raw, expected_bytes, expected, fixture), [])
+        key = b"unit-test-only-host-receipt-key-32-bytes-minimum"
+        signing_payload = json.dumps(receipt, sort_keys=True, separators=(",", ":")).encode()
+        receipt["hmac_sha256"] = hmac.new(key, signing_payload, hashlib.sha256).hexdigest()
+        self.assertEqual(validate_host_launch_receipt(receipt, raw, expected_bytes, expected, fixture, key), [])
         receipt["raw_sha256"] = "0" * 64
         self.assertTrue(any("raw_sha256 mismatch" in error for error in
-                            validate_host_launch_receipt(receipt, raw, expected_bytes, expected, fixture)))
+                            validate_host_launch_receipt(receipt, raw, expected_bytes, expected, fixture, key)))
+        self.assertTrue(any("signature invalid" in error for error in
+                            validate_host_launch_receipt(receipt, raw, expected_bytes, expected, fixture, key)))
 
 
 if __name__ == "__main__":

@@ -1,5 +1,6 @@
 """Independent raw-only audit for the one-shot #5156 X11 fixture."""
 import hashlib
+import hmac
 import json
 import re
 import sys
@@ -236,10 +237,18 @@ def audit(records, expected):
     return errors
 
 
-def validate_host_launch_receipt(receipt, raw_bytes, expected_bytes, expected, fixture):
+def validate_host_launch_receipt(receipt, raw_bytes, expected_bytes, expected, fixture, key):
     errors = []
     if not isinstance(receipt, dict) or receipt.get("schema") != "formal-x11-host-launch-v1":
         return ["invalid formal X11 host launch receipt schema"]
+    signature = receipt.get("hmac_sha256")
+    unsigned = {name: value for name, value in receipt.items() if name != "hmac_sha256"}
+    canonical = json.dumps(unsigned, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    if not isinstance(key, bytes) or len(key) < 32:
+        errors.append("trusted host receipt key must be at least 32 bytes")
+    elif (not isinstance(signature, str) or not re.fullmatch(r"[0-9a-f]{64}", signature)
+          or not hmac.compare_digest(signature, hmac.new(key, canonical, hashlib.sha256).hexdigest())):
+        errors.append("host launch receipt HMAC signature invalid")
     expected_fields = {
         "allocation": expected.get("allocation"),
         "frozen_main": expected.get("frozen_main"),
@@ -270,7 +279,7 @@ def validate_host_launch_receipt(receipt, raw_bytes, expected_bytes, expected, f
     return errors
 
 
-def main(raw_path, expected_path, audit_path, mode, receipt_path=None):
+def main(raw_path, expected_path, audit_path, mode, receipt_path=None, receipt_key_path=None):
     raw_bytes = Path(raw_path).read_bytes()
     records = [json.loads(line) for line in raw_bytes.splitlines() if line]
     expected_bytes = Path(expected_path).read_bytes()
@@ -278,10 +287,13 @@ def main(raw_path, expected_path, audit_path, mode, receipt_path=None):
     errors = audit(records, expected)
     fixtures = [r for r in records if r.get("event") == "fixture"]
     marker_values = [r.get("synthetic_only") for r in fixtures]
+    receipt_sha256 = None
+    receipt_authenticated = False
+    receipt_bindings_valid = False
     if mode == "synthetic-cli":
         synthetic_only = True
-        if receipt_path is not None:
-            errors.append("synthetic-cli mode must not accept a formal host launch receipt")
+        if receipt_path is not None or receipt_key_path is not None:
+            errors.append("synthetic-cli mode must not accept a formal host launch receipt or key")
         if (len(fixtures) != 1 or marker_values != [True]
                 or fixtures[0].get("evidence_mode") != "synthetic-cli"):
             errors.append("synthetic-cli mode requires exactly one fixture marked synthetic_only=true")
@@ -292,22 +304,35 @@ def main(raw_path, expected_path, audit_path, mode, receipt_path=None):
             errors.append("formal-x11 mode requires exactly one explicit formal-x11 fixture without synthetic markers")
         if receipt_path is None:
             errors.append("formal-x11 mode requires an out-of-band host launch receipt")
-        elif len(fixtures) == 1:
+        if receipt_key_path is None:
+            errors.append("formal-x11 mode requires a separately provisioned trusted host receipt key")
+        if receipt_path is not None and receipt_key_path is not None and len(fixtures) == 1:
             try:
-                receipt = json.loads(Path(receipt_path).read_text(encoding="utf-8"))
-                errors.extend(validate_host_launch_receipt(receipt, raw_bytes, expected_bytes, expected, fixtures[0]))
+                receipt_bytes = Path(receipt_path).read_bytes()
+                receipt_sha256 = hashlib.sha256(receipt_bytes).hexdigest()
+                receipt = json.loads(receipt_bytes)
+                key = Path(receipt_key_path).read_bytes()
+                receipt_errors = validate_host_launch_receipt(
+                    receipt, raw_bytes, expected_bytes, expected, fixtures[0], key)
+                errors.extend(receipt_errors)
+                receipt_authenticated = not any("signature" in error or "trusted host receipt key" in error
+                                                for error in receipt_errors)
+                receipt_bindings_valid = not receipt_errors
             except (OSError, json.JSONDecodeError) as exc:
-                errors.append(f"formal X11 host launch receipt unreadable: {type(exc).__name__}")
+                errors.append(f"formal X11 host launch receipt/key unreadable: {type(exc).__name__}")
     pass_status = ("PASS_SYNTHETIC_RAW_ONLY_CLI_BOUNDARY" if synthetic_only
                    else "PASS_OWNER_THREAD_KEYUP_BRACKET_SCOPED")
     result = {"status": pass_status if not errors else "FAIL_AUDIT",
               "errors": errors, "raw_sha256": hashlib.sha256(raw_bytes).hexdigest(),
+              "host_launch_receipt_sha256": receipt_sha256,
+              "host_launch_receipt_authenticated": receipt_authenticated,
+              "host_launch_receipt_bindings_valid": receipt_bindings_valid,
               "expected_sha256": hashlib.sha256(expected_bytes).hexdigest(),
               "raw_rows": len(records), "allocation": expected["allocation"],
               "scope": ("synthetic JSONL serialization/process boundary only; no X server or physical input evidence"
                         if synthetic_only else
                         ("disposable X11 fixture only; host launch receipt matched to raw/source/image; XSync server-processing bracket, not application consumption"
-                         if not any("host launch receipt" in error or "receipt" in error for error in errors)
+                         if receipt_authenticated and receipt_bindings_valid
                          else "formal X11 provenance unverified; raw bytes alone do not establish server origin"))}
     Path(audit_path).write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps(result, sort_keys=True))
@@ -315,7 +340,7 @@ def main(raw_path, expected_path, audit_path, mode, receipt_path=None):
 
 
 if __name__ == "__main__":
-    if (len(sys.argv) not in (5, 6) or sys.argv[4] not in ("formal-x11", "synthetic-cli")
+    if (len(sys.argv) not in (5, 6, 7) or sys.argv[4] not in ("formal-x11", "synthetic-cli")
             or (sys.argv[4] == "synthetic-cli" and len(sys.argv) != 5)):
-        raise SystemExit("usage: audit_formal_x11.py RAW.jsonl EXPECTED.json AUDIT.json synthetic-cli | formal-x11 HOST_LAUNCH_RECEIPT.json")
+        raise SystemExit("usage: audit_formal_x11.py RAW.jsonl EXPECTED.json AUDIT.json synthetic-cli | formal-x11 HOST_LAUNCH_RECEIPT.json TRUSTED_HOST_KEY_FILE")
     raise SystemExit(main(*sys.argv[1:]))
