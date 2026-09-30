@@ -1,6 +1,7 @@
 """Optional stdio MCP transport; one-shot by default, explicit persistent X11 option."""
 import argparse
 import asyncio
+import contextvars
 from copy import deepcopy
 from contextlib import asynccontextmanager
 import json
@@ -112,6 +113,34 @@ def present_management_report(report, call_root, *, include_image=True):
     return row
 
 
+class _WorkerAdmission:
+    """Transfer a slot to one worker, or revoke it before any invocation."""
+    def __init__(self, slot):
+        self.slot = slot
+        self.guard = threading.Lock()
+        self.state = 'pending'
+
+    def enter(self):
+        with self.guard:
+            if self.state != 'pending':
+                return False
+            self.state = 'running'
+            return True
+
+    def revoke_pending(self):
+        with self.guard:
+            if self.state != 'pending':
+                return False
+            self.state = 'revoked'
+            self.slot.release()
+            return True
+
+    def finish(self):
+        with self.guard:
+            self.state = 'finished'
+            self.slot.release()
+
+
 def create_server(targets, output_directory, *, display_name=None, session_mode="one-shot"):
     if session_mode not in ("one-shot", "persistent-x11", "guarded-x11"):
         raise ValueError("unknown session mode")
@@ -165,7 +194,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         'Inspect action, image and cleanup outcomes separately. '
         'Never replay an uncertain action automatically.'))
 
-    def invoke(operation, kwargs, compact, report_refs, detail="full", observation_refs=False):
+    def invoke(admission, operation, kwargs, compact, report_refs, detail="full", observation_refs=False):
+        if not admission.enter():
+            return None  # A rejected/cancelled queued submission must never invoke.
         call_id = None
         try:
             call_root = root / uuid.uuid4().hex
@@ -299,7 +330,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             if call_id is not None:
                 with calls_lock:
                     calls[call_id]["state"] = "finished"
-            lock.release()
+            admission.finish()
 
     async def submit(operation, kwargs, compact, report_refs, detail="full", observation_refs=False):
         if report_refs and not compact:
@@ -312,10 +343,28 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         # Decide busy before scheduling a worker; thread-pool contention must not queue input.
         if not lock.acquire(blocking=False):
             return content({'status': 'busy', 'operation_invoked': False}, error=True)
-        worker = asyncio.create_task(asyncio.to_thread(invoke, operation, kwargs, compact, report_refs, detail, observation_refs))
+        admission = _WorkerAdmission(lock)
+        try:
+            # Submit synchronously so pre-worker rejection is handled here. Keep
+            # to_thread's context propagation and shield accepted work below.
+            context = contextvars.copy_context()
+            worker = asyncio.get_running_loop().run_in_executor(
+                None, context.run, invoke, admission, operation, kwargs,
+                compact, report_refs, detail, observation_refs)
+        except Exception as error:
+            revoked = admission.revoke_pending()
+            return content({'status': 'worker_submission_failed',
+                'failure_phase': 'worker_submission', 'error': repr(error),
+                'operation_invoked': not revoked,
+                'input_dispatched': False if revoked else None,
+                'effect_status': 'none' if revoked else 'unknown',
+                'replay_allowed': False}, error=True)
         workers.add(worker)
         def finished(task):
             workers.discard(task)
+            # A terminal future can fail/cancel before callable entry. Revoke
+            # only pending work; a running worker still owns its slot.
+            admission.revoke_pending()
             if not task.cancelled():
                 task.exception()
         worker.add_done_callback(finished)
