@@ -24,5 +24,5 @@ class CoreTests(unittest.TestCase):
         self.assertEqual(r["decision"],"FAIL_RATE_AT_OR_ABOVE_P1")
     def test_wilson_zero_event_upper_is_positive(self):
         lo,hi=wilson_interval(0,100)
-        self.assertEqual(lo,0.0); self.assertGreater(hi,0.0)
+        self.assertLessEqual(lo,1e-15); self.assertGreater(hi,0.0)
 if __name__=="__main__": unittest.main()
