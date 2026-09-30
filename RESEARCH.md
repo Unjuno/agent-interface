@@ -79,6 +79,10 @@ authority, task-effect, SLA, or product claim follows. See
 for H/T/D/C/U, hashes, and raw/audit records. Issue #5269 remains open pending
 a frozen bridge with #5266/#5273.
 
+### Issue #5306 — VOI stopping construction probe (gate fail; not scientific evidence)
+
+A retrospective host-side harness probe emitted 27 deterministic policy/case rows and an independently coded reducer/accounting audit found zero structural discrepancies. Its six hand-authored rows labeled held-out showed VOI cost 9 versus 21 for fixed/selective, with identical loss 36 and two required YIELDs. This apparent gain is stipulated by the toy transition model (X is decisive; Y has zero marginal value afterward); source and split were not preregistered. Disposition: `CONSTRUCTION_AUDIT_PASS_GATE_FAIL`; no calibration, empirical verifier, timing, GUI, model, runtime, or product claim. Docker Desktop was available but no fresh exact experiment-lane assignment existed. Full failures, raw output, audit, source, and hashes are in [the retained construction package](research/verification/voi_stopping_5306_construction_v1/); see [Issue #5306](https://github.com/Unjuno/agent-interface/issues/5306).
+
 ### Issue #5315 — finite-sample conformal verifier contract first unit (scoped PASS; Issue HOLD)
 
 One no-model, pinned-Image OrbStack simulation ran 20,000 IID calibration/test
