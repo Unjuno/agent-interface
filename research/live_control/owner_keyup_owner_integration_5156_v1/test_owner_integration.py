@@ -34,6 +34,7 @@ class FakeDisplay:
         self.release_started_ns = None
         self.release_returned_ns = None
         self.release_stage = 0
+        self.focus = 17
         self.root = FakeRoot(self)
 
     def keysym_to_keycode(self, keysym):
@@ -47,7 +48,7 @@ class FakeDisplay:
             self.sync_observer()
 
     def get_input_focus(self):
-        return types.SimpleNamespace(focus=17)
+        return types.SimpleNamespace(focus=self.focus)
 
     def screen(self):
         return types.SimpleNamespace(root=self.root)
@@ -125,6 +126,7 @@ class OwnerIntegrationTests(unittest.TestCase):
         sys.modules["Xlib"] = xlib
         sys.modules["Xlib.ext"] = ext
         cls.v11 = importlib.import_module("input_owner_v11")
+        cls.v10 = importlib.import_module("input_owner_v10")
         cls.transition_v3 = importlib.import_module("input_transition_owner_v3")
 
     @classmethod
@@ -255,6 +257,7 @@ class OwnerIntegrationTests(unittest.TestCase):
             self.assertEqual(records[0]["request_started_ns"], 300)
             self.assertEqual(records[0]["request_returned_ns"], 200)
             self.assertEqual(records[0]["shared_sync_returned_ns"], 100)
+            self.assertFalse(records[0]["timing_valid"])
             self.assertFalse(records[0]["grants_input_authority"])
             self.assertFalse(records[0]["physical_key_up_claimed"])
             self.assertFalse(300 <= 200 <= 100)  # deterministic auditor rejection
@@ -323,6 +326,79 @@ class OwnerIntegrationTests(unittest.TestCase):
             owner.close()
         self.assertEqual(display.keys_down, set())
 
+    def wait_for_release(self, owner, reason):
+        deadline = REAL_PERF_COUNTER_NS() + 500_000_000
+        while REAL_PERF_COUNTER_NS() < deadline and not any(
+                r.get("event") == "owner_release" and r.get("reason") == reason
+                for r in owner.records):
+            threading.Event().wait(.002)
+        return next(r for r in owner.records if r.get("event") == "owner_release"
+                    and r.get("reason") == reason)
+
+    def test_expiry_focus_loss_and_stop_are_classified_without_extra_syncs(self):
+        cases = (("expired", lambda lease, display: setattr(lease, "deadline", REAL_PERF_COUNTER_NS()+25_000_000),
+                  "owner_lease_cleanup"),
+                 ("focus_changed", lambda lease, display: setattr(display, "focus", 18),
+                  "owner_lease_cleanup"),
+                 ("stop_requested", lambda lease, display: None, "owner_stop"))
+        for reason, trigger, expected_class in cases:
+            with self.subTest(reason=reason):
+                owner, display, _clock = self.make_owner()
+                lease = FakeLease()
+                try:
+                    owner.call("down", lease, "a")
+                    before = display.sync_count
+                    if reason == "stop_requested":
+                        owner.stop_requested.set()
+                    else:
+                        trigger(lease, display)
+                    self.wait_for_release(owner, reason)
+                    event = next(r for r in owner.records if r.get("event") == "owner_key_release_bracket"
+                                 and r.get("reason") == reason)
+                    self.assertEqual(event["trigger_class"], expected_class)
+                    self.assertEqual(display.sync_count, before+1)
+                    self.assertEqual(display.keys_down, set())
+                finally:
+                    owner.close()
+
+    def test_fatal_owner_failure_uses_thread_finalizer_release_class(self):
+        owner, display, _clock = self.make_owner()
+        lease = FakeLease()
+        owner.call("down", lease, "a")
+        display.fail_fatal_release = True
+        try:
+            with self.assertRaises((IndexError, RuntimeError)):
+                owner.call("up", lease, "a")
+            deadline = REAL_PERF_COUNTER_NS() + 500_000_000
+            while REAL_PERF_COUNTER_NS() < deadline and not owner.stopped.is_set():
+                threading.Event().wait(.002)
+            self.assertTrue(owner.stopped.is_set())
+            self.assertIsInstance(owner.error, KeyboardInterrupt)
+            self.assertTrue(any(r.get("event") == "owner_failed" for r in owner.records))
+            finalizer = [r for r in owner.records if r.get("event") == "owner_key_release_bracket"
+                         and r.get("trigger_class") == "thread_finalizer"]
+            self.assertEqual(len(finalizer), 1)
+            self.assertEqual(display.keys_down, set())
+        finally:
+            owner.close()
+
+    def test_v10_and_v11_explicit_release_requests_and_sync_counts_match(self):
+        results = []
+        for cls in (self.v10, self.v11):
+            display = self._new_display()
+            owner = cls.InputOwner("fake-display")
+            lease = FakeLease()
+            try:
+                owner.call("down", lease, "a")
+                owner.call("down", lease, "b")
+                owner.call("release", lease)
+                owner.close()
+            finally:
+                if not owner.closed:
+                    owner.close()
+            results.append((display.events, display.sync_count, display.keys_down))
+        self.assertEqual(results[0], results[1])
+
     def test_fatal_owner_release_error_fails_closed_without_success_record(self):
         owner, display, _clock = self.make_owner()
         lease = FakeLease()
@@ -346,7 +422,7 @@ class OwnerIntegrationTests(unittest.TestCase):
         record = dict(event="owner_key_release_bracket", owner_id="owner", intent_token="intent",
                       keycode=38, caller_started_ns=10, request_started_ns=20,
                       request_returned_ns=30, shared_sync_returned_ns=40,
-                      caller_returned_ns=50, grants_input_authority=False,
+                      caller_returned_ns=50, timing_valid=True, grants_input_authority=False,
                       physical_key_up_claimed=False)
         self.assertEqual(audit([record]), [])
 
@@ -354,7 +430,7 @@ class OwnerIntegrationTests(unittest.TestCase):
         record = dict(event="owner_key_release_bracket", owner_id="owner", intent_token="intent",
                       keycode=38, caller_started_ns=10, request_started_ns=30,
                       request_returned_ns=20, shared_sync_returned_ns=40,
-                      caller_returned_ns=50, grants_input_authority=True,
+                      caller_returned_ns=50, timing_valid=True, grants_input_authority=True,
                       physical_key_up_claimed=True)
         failures = audit([record])
         self.assertTrue(any("bracket ordering invalid" in failure for failure in failures))

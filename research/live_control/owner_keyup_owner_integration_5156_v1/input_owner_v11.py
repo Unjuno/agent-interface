@@ -182,6 +182,10 @@ class InputOwner:
                     key=key if isinstance(key, str) else None, keycode=code,
                     request_started_ns=request_started_ns, request_returned_ns=request_returned_ns,
                     shared_sync_returned_ns=sync_returned_ns,
+                    timing_valid=(type(request_started_ns) is int and
+                                  type(request_returned_ns) is int and
+                                  type(sync_returned_ns) is int and
+                                  request_started_ns <= request_returned_ns <= sync_returned_ns),
                     grants_input_authority=False, physical_key_up_claimed=False))
 
         def release(reason):

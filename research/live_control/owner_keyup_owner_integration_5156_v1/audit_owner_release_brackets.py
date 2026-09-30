@@ -11,7 +11,8 @@ def audit(records):
         prefix = f"record[{index}]"
         required = ("owner_id", "intent_token", "keycode", "request_started_ns",
                     "request_returned_ns", "shared_sync_returned_ns", "caller_started_ns",
-                    "caller_returned_ns", "grants_input_authority", "physical_key_up_claimed")
+                    "caller_returned_ns", "timing_valid", "grants_input_authority",
+                    "physical_key_up_claimed")
         missing = [key for key in required if key not in record]
         if missing:
             failures.append(f"{prefix}: missing {','.join(missing)}")
@@ -27,6 +28,8 @@ def audit(records):
             failures.append(f"{prefix}: timestamps must be integers")
         elif not all(left <= right for left, right in zip(times, times[1:])):
             failures.append(f"{prefix}: bracket ordering invalid")
+        if record["timing_valid"] is not True:
+            failures.append(f"{prefix}: timing_valid must be true")
         if record["grants_input_authority"] is not False:
             failures.append(f"{prefix}: authority claim must be false")
         if record["physical_key_up_claimed"] is not False:
