@@ -98,3 +98,7 @@ same packaged public entry, with verified input release and explicit changed-lay
 recovery. The final direct image still lacked its completion cue despite independent
 success. This supports scoped correctness, not overall acceptance, causal speed/token
 benefit or human-tempo operation; earlier interrupted/caller-failed trials are retained.
+
+## Post-release feedback integration candidate
+
+[Public six-task comparison](results/post-release-feedback-04/README.md) retains actual use of the optional post-release capture together with summary presentation: both arms saved six exact tokens once; the candidate needed zero extra completion observations versus six for inline capture. Dispatch text remained larger, and human-comparable tempo is unmeasured. The candidate stays draft pending the current guarded/refusal/recovery integration comparison under #2789 / #57. Earlier no-wait failures remain in [the original scoped evidence](results/post-release-feedback-01/README.md).
