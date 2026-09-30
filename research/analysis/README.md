@@ -276,6 +276,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`real_source_role_adapter_registry_v1/`](real_source_role_adapter_registry_v1/)
 - [`register_automaton_dynamic_identity_r0_v1/`](register_automaton_dynamic_identity_r0_v1/)
 - [`research_failure_detector_5531_t4/`](research_failure_detector_5531_t4/)
+- [`research_failure_detector_5531_t5/`](research_failure_detector_5531_t5/)
 - [`resident_gtk_incremental_3518_v1/`](resident_gtk_incremental_3518_v1/)
 - [`resident_gtk_incremental_3518_v2/`](resident_gtk_incremental_3518_v2/)
 - [`resident_reactive_gtk_evidence_complete_3508_v1/`](resident_reactive_gtk_evidence_complete_3508_v1/)
