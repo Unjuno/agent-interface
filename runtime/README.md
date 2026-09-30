@@ -88,3 +88,13 @@ export AGENT_INTERFACE_CHROMIUM=/usr/bin/google-chrome
 This is a Research Preview path. A fresh persistent-only run checks mechanics and
 correctness; it does not reproduce the three-arm efficiency comparison or prove
 human-level speed and general GUI reliability.
+
+
+## Current public-entry integration evidence
+
+[Primary six-task public MCP comparison](results/public-six-task-comparison-04/README.md)
+records direct and guarded paths completing 6/6 exact-once submissions through the
+same packaged public entry, with verified input release and explicit changed-layout
+recovery. The final direct image still lacked its completion cue despite independent
+success. This supports scoped correctness, not overall acceptance, causal speed/token
+benefit or human-tempo operation; earlier interrupted/caller-failed trials are retained.

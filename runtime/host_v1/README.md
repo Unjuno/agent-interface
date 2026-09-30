@@ -76,3 +76,28 @@ stdio relay does not require a file-spooled decision.
 [Retained primary six-task use and publication failure/fix](../results/atomic-host-publication-01/README.md) records the incomplete direct comparison and the no-GUI publication checks. The whole integration spine remains unvalidated.
 
 [Primary operation after publication integration](../results/atomic-primary-six-task-01/README.md) completed fresh direct and persistent six-task allocations with separate exact scoring, stale refusal and explicit recovery. It records the remaining timing/acceptance limits.
+
+
+## Authoring and checking input programs
+
+Before dispatch, validate the same program shapes the caller actually generates,
+using `runtime.pyz validate --program /absolute/program.json`. Static validity
+checks syntax and expansion; it does not grant runtime admission or freshness.
+For pointer input, use `pointer_move` with integer `x` and `y`, followed by
+`pointer_button` with `button` and boolean `down`. An observation placed inside
+an input program must precede the final `release_all`. Keep the program factory
+in a fixed module when the interactive host can retain earlier function bindings;
+verify the generated request rather than relying on a helper reassignment.
+
+Inspect the returned image before deciding whether to save or proceed. A completed
+dispatch and verified release do not establish application success. If the image
+lacks the needed completion cue, request a fresh observation on the same live
+session. `interface_results` reads the retained result; it does not wait for the
+application to draw a newer frame. Use `include_image: false` when only metadata
+is needed, and use the documented `interface_close` before closing the transport.
+
+[Primary public six-task comparison](../results/public-six-task-comparison-04/README.md)
+records both routes at 6/6 exact once, changed-layout refusal and explicit recovery,
+and a successful submission whose captured image still lacked the final completion
+cue. Timing, primary caller failures and unmatched lookup-image accounting remain
+scoped; the result does not prove human tempo or token savings.
