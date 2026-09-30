@@ -37,7 +37,7 @@ def oracle(events,cut,channels=None,meta=True):
  return "CONSISTENT"
 def row(name,events,cut,channels,meta=True):
  selected=prefix(events,cut);d=oracle(events,cut,channels,meta);streams={e["process"] for e in selected}
- return {"case":name,"cut":cut,"selected_event_ids":[e["id"] for e in selected],"per_record_freshness_admits":bool(selected) and all(e["freshness_age"]<=2 for e in selected),"decision":d,"certified_cross_source_claim":d=="CONSISTENT" and len(streams)>=2,"channel_states":channels,"metadata_complete":meta}
+ return {"case":name,"cut":cut,"selected_event_ids":[e["id"] for e in selected],"unique_received_message_ids":sorted({e["message"] for e in selected if e["kind"]=="RECEIVE"}),"per_record_freshness_admits":bool(selected) and all(e["freshness_age"]<=2 for e in selected),"decision":d,"certified_cross_source_claim":d=="CONSISTENT" and len(streams)>=2,"channel_states":channels,"metadata_complete":meta}
 def expected_raw():
  rows=[]
  for name,events in fixtures().items():
@@ -57,5 +57,5 @@ def audit(raw):
  if raw.get("side_effects")!={"authority_grants":0,"actions_dispatched":0,"network_calls":0,"model_calls":0,"gpu_calls":0}:errors.append("side_effects")
  result={"schema":"causal-cut-5348-t1-audit-v1","errors":errors,"integrity_pass":not errors,"cut_rows_recomputed":25,"control_rows_recomputed":6,"candidate_imported":False}
  print(json.dumps(result,sort_keys=True,separators=(",",":")));return 0 if not errors else 1
-EXPECTED_CORE_SHA="302595c32bdfffc88b54c78c3fc4f54ac4e5c03e"
+EXPECTED_CORE_SHA="d26f28200ff6c50b60d8984978ad14431df67470"
 if __name__=="__main__":raise SystemExit(audit(json.loads(sys.stdin.read())))
