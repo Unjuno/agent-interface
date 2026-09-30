@@ -23,7 +23,7 @@ Frozen main: `0154e7533fb76a67578e0b2789aa42c32a511369`
 - Runner: `8276bd4fb280b370956db20e6e6268fb04eb78d8`
 - Tests: `cb20c71a41e587f8fa3649e06e32663d1fae3e64`
 - Independent auditor (frozen before formal invocation): `9f64916fe96de99715d6c7021a9d2d9c3171e452`
-- Retained construction-01 failure: `undefined`
+- Retained construction-01 failure: `318998471bfdcc44766e14fc5ecf6ceb48c992a2`
 
 Construction-01's floating-point assertion failure is preserved as-is. Construction-02 ran the corrected 9-test suite with 9/9 passing before this freeze. Formal T0 is one runner invocation and one auditor invocation only.
 
