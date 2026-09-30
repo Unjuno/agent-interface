@@ -75,11 +75,16 @@ def audit(raw, expected_freeze_sha):
     for cut in CUTS:
         expected_thresholds[str(cut)]={"typed":expected(cut,"typed"),"timeout_as_failure":expected(cut,"baseline")}
     if raw.get("threshold_results")!=expected_thresholds: errors.append("replay_mismatch")
+    expected_probes={
+      "late_valid_response_after_failed":{"final":"FAILED","suspect_ticks":4,"late_response_rejected_after_failed":1,"clear_tick":None,"failed_tick":6,"terminal_failures":1,"decoys_ignored":2},
+      "decoys_without_valid_response":{"final":"SUSPECTED_UNAVAILABLE","suspect_ticks":15,"late_response_rejected_after_failed":0,"clear_tick":None,"failed_tick":None,"terminal_failures":0,"decoys_ignored":2},
+      "explicit_restart_then_current_response":{"final":"AUTHORIZED","suspect_ticks":8,"late_response_rejected_after_failed":0,"clear_tick":12,"failed_tick":None,"terminal_failures":0,"decoys_ignored":0}
+    }
+    if raw.get("boundary_probes")!=expected_probes: errors.append("boundary_probe_mismatch")
     primary=raw.get("threshold_results",{}).get("4",{})
     typed=primary.get("typed",[])
     baseline=primary.get("timeout_as_failure",[])
     if len(typed)!=len(KINDS) or len(baseline)!=len(KINDS): errors.append("coverage")
-    if sum(x.get("late_response_rejected_after_failed",0) for x in typed)==0: errors.append("no_late_rejection_exercised")
     if any(x.get("decoys_ignored")!=2*COUNT for x in typed): errors.append("decoy_accounting")
     crash=next((x for x in typed if x.get("scenario")=="crashed"),{})
     if crash.get("crash_failed_by_8",0)<8900: errors.append("crash_completeness_gate")
