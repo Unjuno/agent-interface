@@ -1,0 +1,27 @@
+{
+  "timestamp_utc": "2026-09-30T16:32:34.0445434Z",
+  "host": "Windows x64, CPython 3.12.10",
+  "candidate": {
+    "command": "python candidate.py inputs.json results/raw.jsonl",
+    "exit_code": 0,
+    "stdout": "{\"decision\": \"PASS_SERIALIZER_CONSTRUCTION_ONLY\", \"rows_emitted\": 3}",
+    "invocations": 1
+  },
+  "independent_audit": {
+    "command": "python audit.py inputs.json results/raw.jsonl",
+    "exit_code": 0,
+    "stdout": "{\"decision\": \"PASS_RAW_AUDIT\", \"errors\": [], \"rows\": 3}",
+    "invocations": 1
+  },
+  "preflight": {
+    "command": "python -m unittest -v",
+    "result": "5 tests passed; the corruption test rejected 8/8 mutated traces",
+    "repeat_verification": "5/5 passed after the frozen candidate/audit executions"
+  },
+  "compile": "python -m py_compile serialize_release.py candidate.py audit.py test_serializer.py test_audit.py — PASS",
+  "formal_x11_runner_invocations": 0,
+  "docker_container_invocations": 0,
+  "network_calls_from_experiment": 0,
+  "model_gpu_gui_or_input_calls": 0,
+  "retries": 0
+}
