@@ -1,4 +1,4 @@
-# Issue #5318 â construction result and disposition
+# Issue #5318 - construction result and disposition
 
 Allocation `semantic-serializability-fsm-r0-20260930-01`; intake main `c4735cfd27bfca057d9c1fca9a7ea19866f77259`; branch `research/semantic-serializability-5318-20260930`.
 
