@@ -1,0 +1,17 @@
+{
+  "schema": "qwen5139-seed-collision-check-v1",
+  "checked_utc": "2026-09-30T08:35:21Z",
+  "seeds": {
+    "formal_seed": 705482479,
+    "support_seed": 588007343,
+    "heldout_seed": 324463753
+  },
+  "mutually_distinct": true,
+  "github_issue_search": {
+    "queries": ["705482479", "588007343", "324463753"],
+    "repository": "Unjuno/agent-interface",
+    "matches": 0
+  },
+  "known_predecessor_formal_seeds_excluded": [73194109],
+  "note": "Collision checks cover exact-string repository Issue search and known predecessor allocations. Before any later lease/formal start, repeat against then-current open and closed issues, branches, PRs, output paths, and all active allocations. This is not a container-start gate pass."
+}
