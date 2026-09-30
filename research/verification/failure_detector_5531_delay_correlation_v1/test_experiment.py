@@ -10,7 +10,7 @@ class ExperimentTests(unittest.TestCase):
         out=e.run_candidate(ep,2)
         self.assertEqual(out["final"],"SUSPECTED_UNAVAILABLE")
         self.assertEqual(out["decoys_ignored"],2)
-        self.assertEqual(out["false_reactivation"],0)
+        self.assertEqual(out["late_response_rejected_after_failed"],0)
     def test_distinct_domain_quorum_required(self):
         ep={"response_tick":None,"restart_tick":None,"host_a_witness":True,"host_b_witness":False,"decoys":[]}
         self.assertNotEqual(e.run_candidate(ep,2)["final"],"FAILED")
@@ -23,7 +23,7 @@ class ExperimentTests(unittest.TestCase):
         ep={"response_tick":7,"restart_tick":None,"host_a_witness":True,"host_b_witness":True,"decoys":[]}
         out=e.run_candidate(ep,2)
         self.assertEqual(out["final"],"FAILED")
-        self.assertEqual(out["false_reactivation"],1)
+        self.assertEqual(out["late_response_rejected_after_failed"],1)
     def test_current_valid_response_clears_suspicion(self):
         ep={"response_tick":8,"restart_tick":None,"host_a_witness":False,"host_b_witness":False,"decoys":[]}
         self.assertEqual(e.run_candidate(ep,4)["final"],"AUTHORIZED")
