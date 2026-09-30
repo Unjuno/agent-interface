@@ -27,6 +27,10 @@ def audit(records, expected):
             errors.append(f"admission not independently verified/non-authorizing: {identity}")
         if type(row.get("keycode")) is not int or not row.get("owner_id") or not row.get("intent_token"):
             errors.append(f"admission identity malformed: {identity}")
+    for case in expected["cases"]:
+        codes = [row.get("keycode") for (c, _), row in admissions.items() if c == case]
+        if len(codes) != len(set(codes)):
+            errors.append(f"duplicate admitted keycode in case {case}")
 
     # XQueryKeymap witnesses are persisted as raw 256-bit snapshots. Summary
     # booleans are deliberately not accepted as a substitute for these bytes.
@@ -65,13 +69,19 @@ def audit(records, expected):
             witness_errors.append(f"bitmap must encode exactly 32 bytes {ident}")
             continue
         observed_down = set()
+        expected_bitmap = bytearray(32)
         for key, code in case_admissions.items():
             if type(code) is not int or not 0 <= code < 256:
                 witness_errors.append(f"invalid admitted keycode {ident}/{key}")
-            elif raw[code // 8] & (1 << (code % 8)):
-                observed_down.add(key)
+            else:
+                if key in keys:
+                    expected_bitmap[code // 8] |= 1 << (code % 8)
+                if raw[code // 8] & (1 << (code % 8)):
+                    observed_down.add(key)
         if observed_down != keys:
             witness_errors.append(f"bitmap state mismatch {ident}: got={sorted(observed_down)} want={sorted(keys)}")
+        if raw != bytes(expected_bitmap):
+            witness_errors.append(f"bitmap contains unaccounted key state {ident}")
 
     expected_snapshot_ids = {(case, stage) for case, stages in expected_stages.items() for stage in stages}
     if set(snapshots) != expected_snapshot_ids:
@@ -214,6 +224,11 @@ def audit(records, expected):
         errors.append("neutral terminal input state missing")
     if len([r for r in records if r.get("event") == "fixture"]) != 1:
         errors.append("fixture identity missing/duplicated")
+    else:
+        fixture = next(r for r in records if r.get("event") == "fixture")
+        if (fixture.get("allocation") != expected.get("allocation")
+                or fixture.get("frozen_main") != expected.get("frozen_main")):
+            errors.append("fixture identity does not match expected allocation/frozen main")
     complete = [r for r in records if r.get("event") == "runner_complete" and r.get("exit_code") == 0]
     if len(complete) != 1:
         errors.append("runner completion sentinel missing/duplicated")

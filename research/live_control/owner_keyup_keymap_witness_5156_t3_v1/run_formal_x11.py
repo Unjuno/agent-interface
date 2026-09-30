@@ -13,7 +13,7 @@ from serialize_release import join_explicit_release
 HERE = Path(__file__).resolve().parent
 LIVE = HERE.parent
 sys.path.insert(0, str(LIVE))
-V11_DIR = Path(os.environ.get("FORMAL_V11_DIR", str(HERE / "dependencies")))
+V11_DIR = HERE / "dependencies"
 sys.path.insert(0, str(V11_DIR))
 from input_owner_v11 import InputOwner as V11  # noqa: E402
 from input_transition_owner_v3 import InputOwner as TransitionV3  # noqa: E402
@@ -98,8 +98,8 @@ def main(out_path):
     try:
         emit({"event": "fixture", "display": os.environ.get("DISPLAY"),
                     "focus_window": window.id,
-                    "allocation": os.environ.get("FORMAL_ALLOCATION", "MAP01-OWNER-KEYUP-BRACKET-5156-20260930-03"),
-                    "frozen_main": os.environ.get("FORMAL_FROZEN_MAIN", "e9742ae867addd1b78fac65fa48650b52bee3b97"),
+                    "allocation": os.environ.get("FORMAL_ALLOCATION", "MAP01-OWNER-KEYMAP-WITNESS-5156-T3-20261001-01"),
+                    "frozen_main": os.environ.get("FORMAL_FROZEN_MAIN", "8ee4ff891a54827b3df3df297cdb849e2aea428e"),
                     "image_digest": os.environ.get("FORMAL_IMAGE_DIGEST"),
                     "platform": os.environ.get("FORMAL_PLATFORM")})
 

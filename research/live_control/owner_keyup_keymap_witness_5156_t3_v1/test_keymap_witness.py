@@ -77,6 +77,40 @@ class KeymapWitnessTests(unittest.TestCase):
         row["observed_ns"] = 9
         self.assertTrue(any("timestamp" in error for error in audit(rows, EXPECTED)))
 
+    def test_runner_order_pre_admission_snapshots_are_auditable(self):
+        rows = witness_rows()
+        pre = [r for r in rows if r.get("event") == "keymap_snapshot" and r.get("stage") == "pre_down"]
+        rest = [r for r in rows if r.get("event") != "keymap_snapshot"]
+        tail = [r for r in rows if r.get("event") == "keymap_snapshot" and r.get("stage") != "pre_down"]
+        self.assertEqual(audit([rest[0], *pre, *rest[1:], *tail], EXPECTED), [])
+
+    def test_nonadmitted_pressed_key_fails_full_bitmap_state(self):
+        rows = witness_rows()
+        sample = next(r for r in rows if r.get("case") == "single_explicit" and r.get("stage") == "post_release")
+        extra = bytearray.fromhex(sample["bitmap_hex"])
+        extra[7] |= 1 << 3
+        sample["bitmap_hex"] = extra.hex()
+        self.assertTrue(any("keymap witness" in error for error in audit(rows, EXPECTED)))
+
+    def test_fixture_allocation_and_freeze_must_match_expected(self):
+        rows = witness_rows()
+        fixture = next(r for r in rows if r.get("event") == "fixture")
+        fixture["allocation"] = "stale-allocation"
+        self.assertTrue(any("fixture identity" in error for error in audit(rows, EXPECTED)))
+
+    def test_fixture_frozen_main_must_match_expected(self):
+        rows = witness_rows()
+        fixture = next(r for r in rows if r.get("event") == "fixture")
+        fixture["frozen_main"] = "stale-main"
+        self.assertTrue(any("fixture identity" in error for error in audit(rows, EXPECTED)))
+
+    def test_two_admitted_keys_must_have_distinct_keycodes(self):
+        rows = witness_rows()
+        second = next(r for r in rows if r.get("event") == "admission"
+                      and r.get("case") == "two_key_explicit" and r.get("key") == "b")
+        second["keycode"] = 38
+        self.assertTrue(any("duplicate admitted keycode" in error for error in audit(rows, EXPECTED)))
+
 
 if __name__ == "__main__":
     unittest.main()
