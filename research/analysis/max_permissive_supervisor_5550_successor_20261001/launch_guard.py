@@ -56,10 +56,9 @@ def main() -> int:
     parser.add_argument("--image-digest", required=True)
     parser.add_argument("--platform", required=True)
     parser.add_argument("--running-container", action="append", default=[])
-    parser.add_argument("--now-utc", help="test-only clock injection; omit in production")
     args = parser.parse_args()
     freeze = json.loads(args.freeze.read_text(encoding="utf-8"))
-    now = parse_utc(args.now_utc) if args.now_utc else datetime.now(timezone.utc)
+    now = datetime.now(timezone.utc)
     result = assess(freeze, current_main=args.main_sha, image_digest=args.image_digest,
                     platform=args.platform, running_containers=args.running_container, now=now)
     print(json.dumps(result, sort_keys=True, separators=(",", ":")))
