@@ -1,0 +1,73 @@
+{
+  "allocation": "MAP01-OWNER-KEYUP-BRACKET-5156-20260930-04",
+  "frozen_main": "bc57d55d4e0a4e75d1945d541ed27fce7cb2b955",
+  "window_utc": "2026-09-30T16:00:00Z/2026-09-30T16:15:00Z",
+  "container": {
+    "context": "orbstack",
+    "image": "sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27",
+    "platform": "linux/arm64",
+    "network": "none",
+    "cpu_limit": 1,
+    "memory_bytes": 536870912,
+    "pids_limit": 64
+  },
+  "source_inputs": [
+    {
+      "path": "research/live_control/input_owner_v10.py",
+      "blob": "341b3c01649943ddaad5f28431a792c4889cc36e",
+      "sha256": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b"
+    },
+    {
+      "path": "research/live_control/input_transition_owner_v3.py",
+      "blob": "0ea631abcf6272f0538a9ef9198ad8069b47b464",
+      "sha256": "5ffdbb3679451fefdc3836917d43d924f0f43c8082d21327207ecefbd87f5be6"
+    },
+    {
+      "path": "research/live_control/executor_v3.py",
+      "blob": "2b072454fd81c41bf9e025217afc78020c7059de",
+      "sha256": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a"
+    },
+    {
+      "path": "research/live_control/lease.py",
+      "blob": "b9dac6bb4063928354733d79bf371909a288a3d1",
+      "sha256": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+    },
+    {
+      "path": "research/live_control/owner_keyup_owner_integration_5156_v1/input_owner_v11.py",
+      "ref": "research/5156-owner-release-integration-v1-20260930",
+      "blob": "c40db07e596b31557590cec5e90f6ab651573476",
+      "sha256": "14333b8e8450950bcdb60fa7055f7a7d4b279438ab44fbb8d14eb2f45fad057c"
+    }
+  ],
+  "candidate_sha256": {
+    "run_formal_x11.py": "ba24bb7795fec409b30c4a2c7b5362d552a1d70bd1097a52b7160e2ea069b54a",
+    "audit_formal_x11.py": "97e88c693b7b24e08d75e599c7471d1b109f6d64e6ffdccdd1cf12566775311b",
+    "EXPECTED.json": "59154415de034e0bbc08ec0b5fad8c0c798085babfd6e87077433ab98d99d179",
+    "test_audit_formal_x11.py": "fbc59d5ea8a49604b2879d0b1a1bf3d0f052d668aaac0abb85efdc7b95603418",
+    "dependencies/input_owner_v11.py": "14333b8e8450950bcdb60fa7055f7a7d4b279438ab44fbb8d14eb2f45fad057c"
+  },
+  "expected_inventory": [
+    "single_explicit:a",
+    "two_key_explicit:a",
+    "two_key_explicit:b",
+    "partial_cancel:a"
+  ],
+  "decisions": {
+    "H": "Per-key owner-thread KeyRelease request→XSync intervals for explicit client up can be nested in caller timing without changing admission or release semantics.",
+    "T": "One disposable Xvfb fixture: single-key down/up, two-key down/down then sequential up/up with no intervening owner-state query, and cancellation after one admitted key before a second admission. Then independently audit.",
+    "D": "PASS_OWNER_THREAD_KEYUP_BRACKET_SCOPED only if each predeclared release exists in exact order, key/owner/intent identities bind, explicit caller-owner timing nests, server-observed keymap transitions down→up, cancellation is classified without fabricated caller timestamps, authority/physical claims are false, owner/thread/container cleanup is externally verified. Setup gap=STOP; semantic/control change=FAIL.",
+    "C": "XSync is server-processing completion only; one Xvfb server and one fixture, no game/MAP01/model/provider/GPU/network/user desktop.",
+    "U": "No application-consumption instant, MAP01 occupancy, efficacy, safety rate, latency, human tempo, reliability, or transfer claim."
+  },
+  "pre_run_revision": [
+    {
+      "reason": "raw-only auditor additionally requires the cancellation owner_release receipt itself to report verified neutral keys/buttons; mutation coverage is 8/8",
+      "supersedes": "previous pre-formal candidate; no X11 or container invocation had occurred"
+    },
+    {
+      "reason": "GitHub main advanced with an unrelated #3190 host-stop publication; relevant pinned source blobs were re-read and unchanged",
+      "previous_main": "ea61a08a52b4a3b01c5e8f2873433e20a7b77ad1"
+    }
+  ]
+}
+
