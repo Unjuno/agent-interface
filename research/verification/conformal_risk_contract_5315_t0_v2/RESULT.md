@@ -60,6 +60,16 @@ V1 remains immutable as a negative result: its non-empty digest mutation was
 accepted. V2 is a distinct additive follow-up; no v1 raw or the parallel
 split-conformal allocation in `research/analysis/` was modified or reused.
 
+## Relationship to merged PR #5342
+
+PR #5342 is now integrated on main at `e30ed8d5c`; it tests split-conformal
+true-label inclusion/rank boundaries (20,000 synthetic replicates at n=4/10)
+and an oracle-declared score shift. This T0 does not repeat that allocation:
+it tests the distinct CRC marginal bounded-loss versus conditional-selected
+risk contract boundary and byte/count integrity, using another additive
+`research/verification/` path. The two alpha values/metrics and synthetic
+fixtures are not pooled or compared as one experiment.
+
 ## Literature boundary
 
 Classic CRC controls expected bounded monotone-loss risk under its stated
