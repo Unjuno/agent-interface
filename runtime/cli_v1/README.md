@@ -619,3 +619,5 @@ source identity and the decision. `publication_failed`/exit 2 requires
 reconciliation because a failure after linking may leave a complete occupied
 slot; never overwrite it or treat an error as permission to repeat an action.
 See [host publication](../host_v1/README.md) for its Linux-only scope.
+
+[Retained primary six-task use and publication failure/fix](../results/atomic-host-publication-01/README.md) records the incomplete direct comparison and the no-GUI publication checks. The whole integration spine remains unvalidated.

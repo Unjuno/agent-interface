@@ -72,3 +72,5 @@ or replay input after an error/timeout. No filesystem-independent crash guarante
 or producer authentication is implied. Windows/macOS host publication is not
 implemented; use this helper inside the Linux/WSL environment. The sequential
 stdio relay does not require a file-spooled decision.
+
+[Retained primary six-task use and publication failure/fix](../results/atomic-host-publication-01/README.md) records the incomplete direct comparison and the no-GUI publication checks. The whole integration spine remains unvalidated.
