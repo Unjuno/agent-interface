@@ -10,7 +10,7 @@ from pathlib import Path
 from Xlib import X, XK, display
 
 HERE = Path(__file__).resolve().parent
-LIVE = HERE.parents[1]
+LIVE = HERE.parent
 sys.path.insert(0, str(LIVE))
 sys.path.insert(0, str(LIVE / "owner_keyup_owner_integration_5156_v1"))
 from input_owner_v11 import InputOwner as V11  # noqa: E402
@@ -75,7 +75,9 @@ def main(out_path):
     try:
         emit({"event": "fixture", "display": os.environ.get("DISPLAY"),
                     "focus_window": window.id, "allocation": "MAP01-OWNER-KEYUP-BRACKET-5156-20260930-02",
-                    "frozen_main": "ec622974d09e7135816b2c8fe33e7b805bbec787"})
+                    "frozen_main": "ec622974d09e7135816b2c8fe33e7b805bbec787",
+                    "image_digest": os.environ.get("FORMAL_IMAGE_DIGEST"),
+                    "platform": os.environ.get("FORMAL_PLATFORM")})
 
         def down(case, lease, key):
             code = observer.keysym_to_keycode(XK.string_to_keysym(key))
