@@ -192,3 +192,5 @@ A directory existing here does **not** mean its mechanism is promoted. Negative 
 - [`x11_midprogram_keymap_5236_formal04_20260930/`](x11_midprogram_keymap_5236_formal04_20260930/) — Formal04 STOP: focused root did not receive fixture key input/effects.
 - [`x11_midprogram_keymap_5236_formal05_20260930/`](x11_midprogram_keymap_5236_formal05_20260930/) — Formal05 STOP: click/input reached fixture but completed effects were missing; see immutable STOP record.
 - [`x11_midprogram_keymap_docker_diagnostic_20260930/`](x11_midprogram_keymap_docker_diagnostic_20260930/) — Nonformal Docker focus-versus-click diagnostic; not evidence for the formal hypothesis.
+
+- [`aoi_43_t0/`](aoi_43_t0/) — executed Age-of-Information critical-event retention T0 for #43 (exploratory; not runtime validation).

@@ -1,0 +1,61 @@
+{
+  "schema": "issue3311-docker-desktop-replay-reaudit-v1",
+  "classification": "SUPPLEMENTAL_REPLAY_AND_PUBLIC_REPORT_BYTE_AUDIT",
+  "not_a_new_formal_allocation": true,
+  "not_issue3311_acceptance": true,
+  "replay": {
+    "source_main": "d5a8efa79b6f8462c8ce97fc19ca4ddd5875fe68",
+    "image": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "platform": "linux/amd64",
+    "docker_context": "desktop-linux",
+    "network": "none",
+    "root_and_source": "read-only",
+    "resources": {
+      "cpus": 0.25,
+      "memory": "512 MiB",
+      "pids": 64
+    },
+    "runner_exit": 0,
+    "stdout": "compiled_gui_interface_v1_probe_passed",
+    "source_sha256": {
+      "compiled_gui_interface_v1.py": "93e47e1ab5ae3450bb4acf9ec9d21c9abc44ca93ffaee25683b22039d9a722ca",
+      "probe_compiled_gui_interface_v1.py": "963e932dfeb3a94521d600c867319d96ad40883d7ed7c1ad14e9050f4304f18d",
+      "adaptive_acquisition_caller_v1.py": "cba8667e316bbd09403ef01f5c0b4b26a891ef3d8612ff63efa90276dfc6d37d"
+    }
+  },
+  "public_report_audit": {
+    "github_blob": "a674b924350bf8ff05e41f1007d2df4be1700fab",
+    "github_report_sha256": "abef335e3949476510e083b5692e95edec5c971818c44ae9232d943fd315db36",
+    "replayed_report_sha256": "abef335e3949476510e083b5692e95edec5c971818c44ae9232d943fd315db36",
+    "bytes": 75579,
+    "byte_identical": true,
+    "json_structurally_identical": true,
+    "scenarios": 15,
+    "invalid_controls_rejected": 4,
+    "source_digests_match": true,
+    "errors": []
+  },
+  "replay_setup_stops": [
+    {
+      "attempt": 1,
+      "classification": "STOP_READ_ONLY_OUTPUT_PATH",
+      "detail": "Frozen probe writes beside its source; read-only source made fixed output unwritable. Container exited before probe scenarios."
+    },
+    {
+      "attempt": 2,
+      "classification": "STOP_DOCKER_BIND_MOUNT_SETUP",
+      "detail": "Docker could not create nested writable bind under read-only parent; container exited before scenarios."
+    },
+    {
+      "attempt": 3,
+      "classification": "STOP_DOCKER_TMPFS_SETUP",
+      "detail": "Docker could not create results tmpfs mountpoint under read-only parent; container exited before scenarios."
+    }
+  ],
+  "final_disposition": "PASS_REPLAY_BYTE_IDENTITY",
+  "limitations": [
+    "Deterministic test-double mechanics only; no X11, Chromium, user input, model/provider, or live task.",
+    "No tokens, latency benefit, amortization, reliability, product, or broad portability claim.",
+    "Not pooled as a new formal result and does not satisfy Issue #3311."
+  ]
+}

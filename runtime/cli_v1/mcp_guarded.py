@@ -77,7 +77,8 @@ class GuardedSessionOwner(MCPSessionOwner):
                         'minted':[], 'task_success':None, 'replay_allowed':False}
         self.get()
         bridge = self.bridge
-        bridge.backend.configure_capture_artifacts(Path(call_root)/'images')
+        # Guarded observations consume the current capture's producer RGB.
+        bridge.backend.configure_capture_artifacts(Path(call_root)/'images', retain_rgb=True)
         row = {'operation':operation, 'task_success':None, 'replay_allowed':False}
         if operation == 'guarded_input':
             # From here on a thrown exception may follow emitted input. The
