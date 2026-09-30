@@ -26,7 +26,7 @@
   "execution": {
     "container": null,
     "container_reason": "No exact exclusive #5085 slot; shared running container owner remains unidentified. Host-only finite CPU execution is the declared bounded route; no Docker invocation.",
-    "command": "$script=(Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/Unjuno/agent-interface/590c48c9b92a91a992890db240cc0caaf1dacc68/research/analysis/planner_hysteresis_5352_t0_v1/run_local.ps1').Content; & ([scriptblock]::Create($script))",
+    "command": "$frozenRunnerScript=(Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/Unjuno/agent-interface/590c48c9b92a91a992890db240cc0caaf1dacc68/research/analysis/planner_hysteresis_5352_t0_v1/run_local.ps1').Content; & ([scriptblock]::Create($frozenRunnerScript))",
     "output_path": "research/analysis/planner_hysteresis_5352_t0_v1/results/formal-01/",
     "output_collision": "No prior path exists on the new additive branch; outputs are not written to the full local C: volume."
   },
