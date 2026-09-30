@@ -37,7 +37,7 @@ def render_block(names: list[str]) -> str:
         BEGIN,
         "",
         "<details>",
-        f"<summary><strong>Expand all {len(names)} retained result/failure directories</strong></summary>",
+        "<summary><strong>Expand all retained result/failure directories</strong></summary>",
         "",
     ]
     lines.extend(f"- [`{name}/`]({name}/)" for name in names)

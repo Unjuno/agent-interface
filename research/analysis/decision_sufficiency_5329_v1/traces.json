@@ -1,0 +1,17 @@
+{
+  "schema": "decision-sufficiency-finite-traces-v1",
+  "traces": [
+    {"id":"safe_complete_a","outcome":"PASS","fresh":true,"effect_link":true,"lineage":true,"authority":true,"protocol":"OK","causal":"SUPPORTED","raw_digest":"a001"},
+    {"id":"safe_complete_duplicate","outcome":"PASS","fresh":true,"effect_link":true,"lineage":true,"authority":true,"protocol":"OK","causal":"SUPPORTED","raw_digest":"a002"},
+    {"id":"stale_pass","outcome":"PASS","fresh":false,"effect_link":true,"lineage":true,"authority":true,"protocol":"OK","causal":"SUPPORTED","raw_digest":"a003"},
+    {"id":"lineage_missing","outcome":"PASS","fresh":true,"effect_link":true,"lineage":false,"authority":true,"protocol":"OK","causal":"SUPPORTED","raw_digest":"a004"},
+    {"id":"authority_denied","outcome":"PASS","fresh":true,"effect_link":true,"lineage":true,"authority":false,"protocol":"OK","causal":"SUPPORTED","raw_digest":"a005"},
+    {"id":"protocol_broken","outcome":"PASS","fresh":true,"effect_link":true,"lineage":true,"authority":true,"protocol":"BROKEN","causal":"SUPPORTED","raw_digest":"a006"},
+    {"id":"effect_unlinked","outcome":"PASS","fresh":true,"effect_link":false,"lineage":true,"authority":true,"protocol":"OK","causal":"SUPPORTED","raw_digest":"a007"},
+    {"id":"causal_confounder","outcome":"PASS","fresh":true,"effect_link":true,"lineage":true,"authority":true,"protocol":"OK","causal":"CONFOUNDED","raw_digest":"a008"},
+    {"id":"causal_unknown","outcome":"PASS","fresh":true,"effect_link":true,"lineage":true,"authority":true,"protocol":"OK","causal":"UNKNOWN","raw_digest":"a009"},
+    {"id":"uncertain_outcome","outcome":"UNCERTAIN","fresh":true,"effect_link":true,"lineage":true,"authority":true,"protocol":"OK","causal":"SUPPORTED","raw_digest":"a010"},
+    {"id":"failed_outcome","outcome":"FAIL","fresh":true,"effect_link":true,"lineage":true,"authority":true,"protocol":"OK","causal":"SUPPORTED","raw_digest":"a011"},
+    {"id":"stale_unlinked","outcome":"PASS","fresh":false,"effect_link":false,"lineage":false,"authority":false,"protocol":"UNKNOWN","causal":"UNKNOWN","raw_digest":"a012"}
+  ]
+}
