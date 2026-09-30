@@ -1,0 +1,151 @@
+{
+  "alpha": 0.05,
+  "arms": [
+    {
+      "crc_marginal": {
+        "certificate_decision": "ALLOW_MARGINAL_CLAIM_ONLY",
+        "claim_supported": true,
+        "conditional_selected_risk": 1.0,
+        "empirical_population_loss": 0.04
+      },
+      "fail_closed_singleton": {
+        "conditional_selective_certificate": false,
+        "output": "UNCERTAIN"
+      },
+      "fixed_checklist": {
+        "false_passes": 0
+      },
+      "id": "iid_reference",
+      "raw_score": {
+        "coverage": 40,
+        "false_passes": 40
+      },
+      "set_valued": {
+        "output": "{PASS,FAIL}"
+      }
+    },
+    {
+      "crc_marginal": {
+        "certificate_decision": "REJECT_STALE",
+        "claim_supported": false,
+        "conditional_selected_risk": 1.0,
+        "empirical_population_loss": 0.1
+      },
+      "fail_closed_singleton": {
+        "conditional_selective_certificate": false,
+        "output": "UNCERTAIN"
+      },
+      "fixed_checklist": {
+        "false_passes": 5
+      },
+      "id": "temporal_shift",
+      "raw_score": {
+        "coverage": 100,
+        "false_passes": 100
+      },
+      "set_valued": {
+        "output": "{PASS,FAIL}"
+      }
+    },
+    {
+      "crc_marginal": {
+        "certificate_decision": "REJECT_POPULATION_MISMATCH",
+        "claim_supported": false,
+        "conditional_selected_risk": 0.8,
+        "empirical_population_loss": 0.12
+      },
+      "fail_closed_singleton": {
+        "conditional_selective_certificate": false,
+        "output": "UNCERTAIN"
+      },
+      "fixed_checklist": {
+        "false_passes": 10
+      },
+      "id": "ui_layout_shift",
+      "raw_score": {
+        "coverage": 150,
+        "false_passes": 120
+      },
+      "set_valued": {
+        "output": "{PASS,FAIL}"
+      }
+    },
+    {
+      "crc_marginal": {
+        "certificate_decision": "REJECT_POPULATION_MISMATCH",
+        "claim_supported": false,
+        "conditional_selected_risk": 0.5,
+        "empirical_population_loss": 0.1
+      },
+      "fail_closed_singleton": {
+        "conditional_selective_certificate": false,
+        "output": "UNCERTAIN"
+      },
+      "fixed_checklist": {
+        "false_passes": 5
+      },
+      "id": "task_family_shift",
+      "raw_score": {
+        "coverage": 200,
+        "false_passes": 100
+      },
+      "set_valued": {
+        "output": "{PASS,FAIL}"
+      }
+    },
+    {
+      "crc_marginal": {
+        "certificate_decision": "REJECT_ASSUMPTION_INVALID",
+        "claim_supported": false,
+        "conditional_selected_risk": 0.8,
+        "empirical_population_loss": 0.04
+      },
+      "fail_closed_singleton": {
+        "conditional_selective_certificate": false,
+        "output": "UNCERTAIN"
+      },
+      "fixed_checklist": {
+        "false_passes": 20
+      },
+      "id": "adaptive_repeated_query",
+      "raw_score": {
+        "coverage": 50,
+        "false_passes": 40
+      },
+      "set_valued": {
+        "output": "{PASS,FAIL}"
+      }
+    }
+  ],
+  "authority_granted": false,
+  "controls": [
+    {
+      "corruption": "missing_calibration_digest",
+      "decision": "REJECT_MISSING_BINDING"
+    },
+    {
+      "corruption": "population_mismatch",
+      "decision": "REJECT_POPULATION_MISMATCH"
+    },
+    {
+      "corruption": "version_mismatch",
+      "decision": "REJECT_VERSION_MISMATCH"
+    },
+    {
+      "corruption": "stale_calibration",
+      "decision": "REJECT_STALE"
+    },
+    {
+      "corruption": "exchangeability_broken",
+      "decision": "REJECT_ASSUMPTION_INVALID"
+    }
+  ],
+  "crc": {
+    "empirical_risk": 0.04020100502512563,
+    "errors": 8,
+    "finite_sample_upper": 0.045,
+    "loss_bound": 1,
+    "n": 199
+  },
+  "status": "T0_EXECUTED"
+}
