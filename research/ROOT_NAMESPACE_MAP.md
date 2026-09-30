@@ -43,6 +43,7 @@ New work should normally use a category directory. Existing direct-root paths re
 - [`gtk_fresh_post_effect_2673/`](gtk_fresh_post_effect_2673/)
 - [`results/`](results/) — retained native-handle result bundles; each bundle's report defines its scope and status.
 - [`audits/`](audits/) — retained independent audit/review bundles; use the referenced source snapshot and allocation to interpret each result.
+- [`recovery/`](recovery/) — preserved source/evidence recovery capsules for interrupted or parallel research allocations; each status file records provenance and disposition without replacing the original result.
 
 - [`x11/`](x11/)
 
