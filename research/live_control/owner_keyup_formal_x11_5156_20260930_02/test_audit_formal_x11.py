@@ -38,7 +38,7 @@ def fixture_rows():
                  "request_started_ns": 20, "request_returned_ns": 30, "shared_sync_returned_ns": 40}})
     rows.extend([{"event": "case_terminal", "case": c, "all_up_verified": True,
                   "second_admission_rejected": c == "partial_cancel"} for c in EXPECTED["cases"]])
-    rows += [{"event": "process_cleanup", "owner_stopped": True},
+    rows += [{"event": "process_cleanup", "owner_stopped": True, "fixture_child_processes": 0},
              {"event": "terminal_state", "neutral": True, "grants_input_authority": False}]
     return rows
 
@@ -78,6 +78,12 @@ class FormalAuditTests(unittest.TestCase):
         errors = audit(rows, EXPECTED)
         self.assertTrue(any("authority" in e for e in errors))
         self.assertTrue(any("fabricate caller" in e for e in errors))
+
+    def test_wrong_explicit_trigger_class_fails(self):
+        rows = fixture_rows()
+        next(r for r in rows if r.get("event") == "joined_release")["trigger_class"] = "owner_lease_cleanup"
+        self.assertTrue(any("release inventory mismatch" in e or "class mismatch" in e
+                            for e in audit(rows, EXPECTED)))
 
 
 if __name__ == "__main__":
