@@ -62,42 +62,14 @@ def run_case(case: str) -> dict:
                 {"op": "release_all"},
             ]
             if case == "fixture_after_idle_save":
-                ops = [
-                    {"op": "focus", "target": "fixture"},
-                    {"op": "pointer_move", "target": "fixture", "frame": "window_client", "x": 50, "y": 55},
-                    {"op": "pointer_button", "button": "left", "down": True},
-                    {"op": "pointer_button", "button": "left", "down": False},
-                    {"op": "text", "text": "a"},
-                    {"op": "wait_update", "timeout_ms": WAIT_MS},
-                    {"op": "text", "text": "_"},
-                    {"op": "key_chord", "keys": ["CTRL", "S"]},
-                    {"op": "release_all"},
-                ]
-            program = {
-                "schema": "agent-interface/program-v1",
-                "program_id": "issue5236-formal05-save-diag-" + case,
-                "source": {"observation_seq": 7, "binding_revision": 3},
-                "authority": {"lease_id": "diagnostic-only", "expires_at_ns": time.monotonic_ns() + 30_000_000_000},
-                "terminal": {"release_all_required": True},
-                "ops": ops,
-            }
-            started = time.monotonic_ns()
-            dispatch = session.dispatch(program, current_observation_seq=7, current_binding_revision=3)
-            dispatch_ended = time.monotonic_ns()
-            immediate_effect = effect.read_text(encoding="utf-8") if effect.exists() else None
-            immediate_events = events.read_text(encoding="utf-8") if events.exists() else ""
-            if case == "fixture_after_idle_save":
-                display_client = Display(display)
-                fixture_window = display_client.create_resource_object("window", window)
+                fixture_window = anchor.create_resource_object("window", window)
                 fixture_window.send_event(__import__("Xlib.protocol.event", fromlist=["ClientMessage"]).ClientMessage(
                     window=window,
-                    client_type=display_client.intern_atom("_AGENT_INTERFACE_DIAGNOSTIC"),
+                    client_type=anchor.intern_atom("_AGENT_INTERFACE_DIAGNOSTIC"),
                     data=(32, [0, 0, 0, 0, 0]),
                     event_mask=0,
                 ), propagate=False)
-                display_client.flush()
-                callback_code = "import tkinter as tk; t=tk.Tcl();"
-                _ = callback_code  # Keep this branch protocol-neutral; no fixture patching or injected callback.
+                anchor.flush()
             if case == "post_dispatch_wait":
                 time.sleep(1.0)
             final_effect = effect.read_text(encoding="utf-8") if effect.exists() else None
@@ -109,7 +81,7 @@ def run_case(case: str) -> dict:
                 "release_verified": dispatch.get("execution", {}).get("releases", [{}])[-1].get("verified"),
                 "immediate_effect": immediate_effect, "final_effect": final_effect,
                 "immediate_events": immediate_events, "final_events": final_events,
-                "note": "after-idle-save case is not implemented yet" if case == "fixture_after_idle_save" else None,
+                "note": "diagnostic client message is not handled by the fixture; case intentionally measures no save callback" if case == "fixture_after_idle_save" else None,
             }
         finally:
             if backend is not None:
