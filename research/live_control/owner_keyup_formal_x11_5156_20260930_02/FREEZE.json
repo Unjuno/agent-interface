@@ -41,10 +41,16 @@
     }
   ],
   "candidate_sha256": {
-    "run_formal_x11.py": "1798c3b31e6c3df8a32adea354cae016828c2cb8c93eeb7428bf2e367e3abe1e",
-    "audit_formal_x11.py": "54bfa3eb958ef74b67c29b189facc0fda8a32ad9b49ca52cf44c0a9fb639169d",
+    "run_formal_x11.py": "00dd249625ba1d1126f9380c9ea71da85721ae29f80c9390f780acca67864945",
+    "audit_formal_x11.py": "49d30e688bac0e065e1b826097d1b62efb35c1849ff92754a62f1db2c6ab61be",
     "EXPECTED.json": "27836258034cf332ed7b65680b075389c6b083f8feab4c0dac238252645eca5d",
-    "test_audit_formal_x11.py": "736c230dd0e65024f1f39a35f07b5ea3a2bfa3b3b49de4aed7bb9c69df1c9f87"
+    "test_audit_formal_x11.py": "f9a1b7a85adc146f9b17b77efdb3df2279dbcfab571c2b677acba086bcebf11a"
+  },
+  "pre_run_revision": {
+    "supersedes": "initial candidate committed before invocation; never executed",
+    "reason": "static review found incorrect LIVE path; corrected to the parent research/live_control directory; auditor additionally binds explicit trigger class and fixture-process cleanup",
+    "host_validation": "owner-v11 fake-Xlib suite 14/14; formal raw-auditor controls 6/6; py_compile PASS",
+    "immutable_history": true
   },
   "expected_inventory": [
     "single_explicit:a",
