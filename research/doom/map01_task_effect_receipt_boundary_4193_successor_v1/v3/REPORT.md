@@ -5,7 +5,7 @@
 ## Findings
 
 - 3/3 attack sessions have confirmed physical DOWN and UP brackets with native press/release IDs. DOWN and UP adapter edges agree on actuation ID; bracket and adapter-edge owner, intent token, key, and intervals match.
-- The six session streams contain 194 independent progress samples (32, 32, 34 in each group's p1/p2/p3 order); timestamps are strictly increasing within each session. They are not compared across sessions.
+- The six session streams contain 194 independent progress samples (p1: 32+32, p2: 34+32, p3: 32+32); timestamps are strictly increasing within each session. They are not compared across sessions.
 - All attack samples retain kill count 0 and map_exit false. No attack sample has a kill-count increase from its session baseline or a false-to-true map-exit transition. The no-input streams also have no positive endpoint.
 - The producer schema does not provide `source_event_id` or `scorer_event_id` in these retained event records. A scorer endpoint locator can only be derived from session key, array index, `sample_ns`, and endpoint kind when a transition exists. The synthetic v2 event-ID contract is therefore not producer-compatible as a claim about native source fields.
 - The fixed original session schedule binds the one recorded actuation per attack session. This does not establish a general multi-actuation plan-to-receipt join or bounded recovery result.

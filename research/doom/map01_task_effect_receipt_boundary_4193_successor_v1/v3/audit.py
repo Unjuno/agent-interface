@@ -104,7 +104,7 @@ def main():
     assert result["native_source_event_id_present_anywhere"] is False
     assert result["native_scorer_event_id_present_anywhere"] is False
     assert result["disposition"] == "HOLD_NO_POSITIVE_SCORER_EVENT"
-    print("AUDIT_PASS sessions=6 physical_joins=3/3 attack_positive_sessions=0/3 noinput_positive_sessions=0/3 scorer_samples=196 source_event_ids=absent scorer_event_ids=absent")
+    print("AUDIT_PASS sessions=6 physical_joins=3/3 attack_positive_sessions=0/3 noinput_positive_sessions=0/3 scorer_samples=194 source_event_ids=absent scorer_event_ids=absent")
 
 
 if __name__ == "__main__":
