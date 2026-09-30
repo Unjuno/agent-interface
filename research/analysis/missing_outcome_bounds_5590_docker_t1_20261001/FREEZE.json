@@ -1,0 +1,49 @@
+{
+  "schema": "issue-5590-manski-sharp-docker-t1-freeze-v1",
+  "allocation": "MANSKI-SHARP-MISSING-OUTCOME-5590-GHA-T1-20261001-01",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/5590",
+  "branch": "research/5590-manski-sharp-docker-t1-20261001",
+  "frozen_main_sha": "818ebd32a52a74acf26724e4f00739d19d9ecdbf",
+  "predecessor_host_t0": {
+    "commit": "090f523009f93d79b8bf0d58e269ae0b7f688703",
+    "pr": 5627,
+    "allocation": "PASS_BOUNDS_SCOPED_HOST_ONLY"
+  },
+  "consumed_orbstack_stop": "MANSKI-SHARP-MISSING-OUTCOME-5590-DOCKER-20261001-01",
+  "image": {
+    "reference": "python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "platform": "linux/amd64"
+  },
+  "source_sha256": {
+    "audit.py": "9cf398c1915195bb782d2854f171b37ee344d9bab5af85ac969e221889844777",
+    "candidate.py": "c393a5d2f7df250d8b8513d2d97eec393105a5d2fb547e87a04fe1dc1fc473cf",
+    "ledger.json": "acce7bfcc35ba033dcbe403ed41581a077b33b8f67784f4d3eb0b94fc54e7d7f",
+    "test_bounds.py": "03f8005a8f8170ff47a6945099b53dab46b3e754204c3bd9590ec2d60fd10875"
+  },
+  "expected_result": {
+    "N": 10,
+    "S": 6,
+    "F": 1,
+    "M": 3,
+    "threshold": "3/4",
+    "sharp_interval": ["3/5", "9/10"],
+    "decision": "PROMOTION_UNIDENTIFIED",
+    "compatible_completions": 8
+  },
+  "invocations": {
+    "construction_test_container": 1,
+    "candidate_container": 1,
+    "independent_raw_only_auditor_container": 1,
+    "retry": false
+  },
+  "container_policy": {
+    "network": "none",
+    "read_only_rootfs": true,
+    "read_only_source_and_inputs": true,
+    "cpus": 1,
+    "memory_mib": 256,
+    "pids_limit": 64,
+    "capabilities": "drop-all",
+    "no_new_privileges": true
+  }
+}
