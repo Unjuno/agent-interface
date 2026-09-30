@@ -35,6 +35,7 @@ SOURCE_FILES = (
     "runtime/cli_v1/api.py",
     "runtime/cli_v1/attempt.py",
     "runtime/cli_v1/mcp_server.py",
+    "runtime/cli_v1/mcp_relay.py",
     "runtime/cli_v1/mcp_session.py",
     "runtime/cli_v1/mcp_guarded.py",
     "runtime/cli_v1/guarded_presentation.py",
@@ -65,10 +66,13 @@ GENERATED = {
     "runtime/__init__.py": b"\n",
     "runtime/backends/__init__.py": b"\n",
     "__main__.py": b'''import sys
-if len(sys.argv) > 1 and sys.argv[1] == "mcp":
-    del sys.argv[1]
+if len(sys.argv) > 1 and sys.argv[1] in ("mcp", "relay"):
+    mode = sys.argv.pop(1)
     try:
-        from runtime.cli_v1.mcp_server import main
+        if mode == "relay":
+            from runtime.cli_v1.mcp_relay import main
+        else:
+            from runtime.cli_v1.mcp_server import main
     except ModuleNotFoundError as error:
         if error.name != "mcp" and not error.name.startswith("mcp."):
             raise
