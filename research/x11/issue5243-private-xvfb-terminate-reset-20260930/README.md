@@ -19,8 +19,8 @@ GPU, WSLg display, fixture, XTEST/HID or application input.
 distinct child mount namespace; tmpfs exactly at `/tmp/.X11-unix`; successful
 Xlib 640x480 query; natural Xvfb exit 0 within 3 seconds after client close
 with no signal fallback; durable raw output; unchanged host WSLg mode/inode/
-device; and independent raw audit plus five effective corruption controls.
-Otherwise preserve STOP; do not retry this allocation. Six corruption controls
+device; and independent raw audit plus six effective corruption controls.
+Otherwise preserve STOP; do not retry this allocation. The controls
 include cross-record binding of the host mount namespace inode.
 
 **C.** Fixed display and geometry; one client; TCP disabled. Mountinfo source
