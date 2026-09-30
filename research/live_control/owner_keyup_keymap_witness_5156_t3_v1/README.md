@@ -34,10 +34,15 @@ Repository freeze: main `d54d0722195f6fb86158f259ed80754ba046ddea`, observed 202
 From this directory run:
 
 ```sh
-python3 -B -m unittest -v test_keymap_witness test_audit_formal_x11 test_serialize_release
+python3 -B -m unittest -v test_keymap_witness test_audit_formal_x11 test_serialize_release test_cli_boundary
 python3 -B -m py_compile audit_formal_x11.py run_formal_x11.py
-python3 -B -m unittest -v test_cli_boundary
 python3 -B run_cli_construction_experiment.py --results results/construction-cli-NN
+```
+
+When a separately authorized formal X11 run exists, invoke the auditor with the explicit formal mode, for example:
+
+```sh
+python3 -B audit_formal_x11.py /path/to/formal/raw.jsonl EXPECTED.json /path/to/formal/audit.json formal-x11
 ```
 
 Latest host-only result on frozen main `d54d0722195f6fb86158f259ed80754ba046ddea`: 29/29 tests passed; `py_compile`, JSON parsing, vendored-source byte comparison, all result SHA256SUMS, and `git diff --check` passed. `construction-cli-05` emitted `PASS_SYNTHETIC_RAW_ONLY_CLI_BOUNDARY`; candidate/auditor PIDs 5690/5691, raw SHA-256 `585a5473ffeb4f495c242a0de142f57d70f2ee2de46737feb585eda63e04eaac`. Synthetic CLI evidence does not imply Docker/X11 execution. Use a fresh results directory for every experiment and preserve exact stdout and file hashes.
