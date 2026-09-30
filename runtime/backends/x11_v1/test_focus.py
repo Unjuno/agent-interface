@@ -116,7 +116,6 @@ class ActivationTests(unittest.TestCase):
         backend.root.send_event.assert_called_once()
 
 
-if __name__=='__main__':unittest.main()
 
 
 class ProgramLocalTargetTests(unittest.TestCase):
@@ -139,3 +138,6 @@ class ProgramLocalTargetTests(unittest.TestCase):
                                     {'op': 'pointer_move'}, {'op': 'observe'}]})
         backend._target.assert_called_once_with('app')
         backend._activation_target.assert_called_once_with('app')
+
+
+if __name__=='__main__':unittest.main()
