@@ -503,3 +503,25 @@ retained calls before deciding how to continue. This does not authorize replay.
 A terminal accepted future without callable entry also revokes only pending work;
 SDK-level errors may still be returned. Cancelled transports continue to shield
 accepted work, and overlapping calls remain busy rather than queued input.
+## Execution clock without a new WSL process
+
+`interface_clock {}` samples `time.monotonic_ns()` in the same execution host
+as this live MCP server. Use that sample when authoring an already authorized
+absolute `expires_at_ns` for a new program. The response contains a stable
+`server_instance_id` for this server's lifetime; a replacement server has a new
+ID. Compare and keep that identity in your caller. Do not translate Windows
+wall/monotonic time into the sample or reuse it across execution hosts.
+
+For example, an explicitly authorized five-second validity window can be authored
+as `expires_at_ns = sample.monotonic_ns + 5_000_000_000`. Receipt/presentation and
+model waiting consume that window. An old sample is not renewed by reading
+retained results, and a refused expiry does not authorize replay. Request a new
+sample only when authoring a separately authorized new program after reviewing
+current state. Keep the existing source/binding assertions and admission checks.
+
+The clock call opens no backend and issues no lease, source sequence or input.
+It has no arguments and creates no action call ID for `interface_results`.
+The relay host can retain its exact request/reply. It does not prove freshness,
+application readiness, task success, suspend continuity or hard-real-time timing.
+A clock reply remains metadata even after an input session has closed; it cannot
+reopen that session or clear a recovery block.
