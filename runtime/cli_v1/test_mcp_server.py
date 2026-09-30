@@ -83,6 +83,39 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                 observe.assert_called_once()
                 self.assertNotIn('report_refs', observe.call_args.kwargs)
 
+    async def test_retained_public_metadata_lookup_never_encodes_image(self):
+        import base64, hashlib
+        png = base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aP1cAAAAASUVORK5CYII=')
+        with tempfile.TemporaryDirectory() as td:
+            server = create_server({'fixture': 123}, td)
+            def observed(_targets, **kwargs):
+                path = Path(kwargs['capture_directory']) / 'frame.png'
+                path.parent.mkdir(parents=True)
+                path.write_bytes(png)
+                return {'schema': 'agent-interface/runtime-observation-v1', 'status': 'returned',
+                    'observation': {'sha256': 'raw', 'capture_started_ns': 1,
+                        'artifact': {'mime_type': 'image/png', 'path': str(path),
+                            'source_raw_sha256': 'raw', 'sha256': hashlib.sha256(png).hexdigest()}}}
+            with patch('runtime.cli_v1.mcp_server.observe', side_effect=observed) as observe:
+                reply = await server.call_tool('interface_observe', {'target': 'fixture',
+                    'frame': 'window_client', 'region': [0, 0, 1, 1]})
+                metadata = json.loads(reply.content[0].text)
+                call_id = metadata['call_id']
+                before = Path(td, call_id, 'report.json').read_bytes()
+                with patch('runtime.cli_v1.review.base64.b64encode', side_effect=AssertionError('must not encode')):
+                    omitted = await server.call_tool('interface_results', {'call_id': call_id, 'include_image': False})
+                row = json.loads(omitted.content[0].text)
+                self.assertEqual(len(omitted.content), 1)
+                self.assertEqual(row['image_status'], 'image', row)
+                self.assertEqual(row['image_delivery'], 'omitted_by_request')
+                self.assertEqual(row['image_reference'], metadata['image_reference'])
+                self.assertEqual(row['outcome_summary'], metadata['outcome_summary'])
+                self.assertFalse(row['operation_invoked'])
+                self.assertEqual(Path(td, call_id, 'report.json').read_bytes(), before)
+                included = await server.call_tool('interface_results', {'call_id': call_id})
+                self.assertEqual(included.content[1].data, reply.content[1].data)
+                observe.assert_called_once()
+
     async def test_retained_image_can_be_omitted_without_changing_result_or_replaying(self):
         with tempfile.TemporaryDirectory() as td:
             server = create_server({'fixture': 123}, td)

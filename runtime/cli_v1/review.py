@@ -19,28 +19,28 @@ def _check_expected_digest(data, expected):
 
 
 def review(report_path, run_directory, *, compact=False, report_refs=False,
-           expected_report_sha256=None):
+           expected_report_sha256=None, include_image=True):
     view = receipt_view(report_path)
     # Parse the same bytes whose digest is presented to the caller.
     data = Path(view['source']['path']).read_bytes()
     if hashlib.sha256(data).hexdigest() != view['source']['sha256']:
         raise ValueError('report changed during review')
     _check_expected_digest(data, expected_report_sha256)
-    return _review(data, view, run_directory, compact=compact, report_refs=report_refs)
+    return _review(data, view, run_directory, compact=compact, report_refs=report_refs, include_image=include_image)
 
 
 def review_bytes(data: bytes, run_directory, *, compact=False, report_refs=False,
-                 expected_report_sha256=None):
+                 expected_report_sha256=None, include_image=True):
     """Review a complete received response without a temporary report file."""
     _check_expected_digest(data, expected_report_sha256)
-    return _review(data, receipt_bytes(data), run_directory, compact=compact, report_refs=report_refs)
+    return _review(data, receipt_bytes(data), run_directory, compact=compact, report_refs=report_refs, include_image=include_image)
 
 
-def present_result(report, run_directory, *, compact=False, report_refs=False):
+def present_result(report, run_directory, *, compact=False, report_refs=False, include_image=True):
     """Shared transport presentation; a review error never discards the action result."""
     try:
         return review_bytes(json.dumps(report, allow_nan=False).encode('utf-8'),
-                            run_directory, compact=compact, report_refs=report_refs)
+                            run_directory, compact=compact, report_refs=report_refs, include_image=include_image)
     except Exception as error:
         return {'schema': 'agent-interface/review-v1', 'authority': 'none',
                 'image': None, 'image_status': 'needs_review',
@@ -158,7 +158,9 @@ def outcome_summary(report):
     return summary
 
 
-def _review(data, view, run_directory, *, compact=False, report_refs=False):
+def _review(data, view, run_directory, *, compact=False, report_refs=False, include_image=True):
+    if type(include_image) is not bool:
+        raise ValueError("include_image must be a bool")
     if type(report_refs) is not bool or (report_refs and not compact):
         raise ValueError('report_refs requires compact=True and must be a bool')
     if compact:
@@ -234,8 +236,11 @@ def _review(data, view, run_directory, *, compact=False, report_refs=False):
             raise ValueError('image changed during review')
         if not image_bytes.startswith(b'\x89PNG\r\n\x1a\n'):
             raise ValueError('referenced file is not a PNG')
-        result['image'] = {'type': 'image', 'mimeType': 'image/png',
-                           'data': base64.b64encode(image_bytes).decode('ascii')}
+        if include_image:
+            result['image'] = {'type': 'image', 'mimeType': 'image/png',
+                               'data': base64.b64encode(image_bytes).decode('ascii')}
+        else:
+            result['image_delivery'] = 'omitted_by_request'
         result['image_reference'] = selected
         result['image_status'] = 'image'
     except Exception as error:

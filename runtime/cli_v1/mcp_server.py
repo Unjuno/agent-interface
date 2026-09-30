@@ -527,7 +527,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 'error': repr(error), 'operation_invoked': False,
                 'replay_allowed': False}, error=True)
         result = (await asyncio.to_thread(present_management_report, report, call_root) if (record['operation'].startswith('guarded_') or record['operation'] in ('close', 'inspect_target', 'review_target', 'recover_input')) else
-                  await asyncio.to_thread(present_result, report, call_root, compact=compact, report_refs=report_refs))
+                  await asyncio.to_thread(present_result, report, call_root, compact=compact, report_refs=report_refs, include_image=include_image))
         if 'post_dispatch_inspection' in report:
             result['post_dispatch_inspection'] = deepcopy(report['post_dispatch_inspection'])
         result.update(call_id=call_id, call_directory=str(call_root), retained_call=record,
