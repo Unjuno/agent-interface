@@ -36,9 +36,12 @@ def _emit(payload) -> None:
     sys.stdout.flush()
 
 
-def _present_result(row, *, with_review, capture_directory, exit_code, compact=False, report_refs=False, retention=None):
+def _present_result(row, *, with_review, capture_directory, exit_code, compact=False, report_refs=False, retention=None, detail="full"):
     presented = (present_result(row, capture_directory, compact=compact, report_refs=report_refs)
                  if with_review else dict(row))
+    if detail == 'summary' and retention is not None and retention.get('report_persisted') is True:
+        from .public_summary import summarize_cli_dispatch
+        presented = summarize_cli_dispatch(presented, retention['directory'])
     if retention is not None:
         presented['retention'] = retention
         if not retention['report_persisted']:
@@ -89,7 +92,11 @@ def main() -> int:
     run.add_argument("--review", action="store_true", help="return result and last captured image together")
     run.add_argument("--compact", action="store_true", help="use smaller reversible receipt references with --review")
     run.add_argument("--report-refs", action="store_true", help="allow v3 report references; requires --compact and a compatible decoder")
+    run.add_argument('--detail', choices=('full', 'summary'), default='full',
+                     help='summary projects supported successes; requires retained review with compact/report-refs')
     args = parser.parse_args()
+    if getattr(args, 'detail', 'full') == 'summary' and not (args.review and args.run_directory and args.compact and args.report_refs):
+        parser.error('--detail summary requires --review --run-directory --compact --report-refs')
     if args.command == 'validate':
         from .validate_program import inspect_file
         row = inspect_file(args.program)
@@ -154,7 +161,7 @@ def main() -> int:
         display_name=args.display, capture_directory=args.capture_directory),
         args.run_directory, operation='dispatch', timings=args.retention_timings)
     code = 2 if row["status"] != "returned" else (0 if row["result"].get("status") == "completed" else 3)
-    return _present_result(row, with_review=args.review, capture_directory=args.capture_directory, exit_code=code, compact=args.compact, report_refs=args.report_refs, retention=retention)
+    return _present_result(row, with_review=args.review, capture_directory=args.capture_directory, exit_code=code, compact=args.compact, report_refs=args.report_refs, retention=retention, detail=args.detail)
 
 
 if __name__ == "__main__":
