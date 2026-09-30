@@ -1,0 +1,19 @@
+{
+  "schema": "fd5531-construction-v1",
+  "allocation": "fd5531-delay-correlation-20261001-02",
+  "phase": "pre-freeze attempt 01; superseded before formal",
+  "source_blobs": {
+    "experiment.py": "9b87a430671537fae98fc924712aac6fdd5ad77f",
+    "test_experiment.py": "ecf936308e375165fe0349dfa8bd32296e897ccc",
+    "audit.py": "7081a11a72e19a819ffcc9c45554215716b8e1d9"
+  },
+  "result": {
+    "tests_run": 8,
+    "tests_passed": 8,
+    "tests_failed": 0,
+    "auditor_ast_parse": "PASS"
+  },
+  "finding": "Static seed-range review found seed_base 55310100 overlapped the predecessor's allocation range; this construction was not frozen or used for formal execution. Sources were changed to disjoint seed_base 55370000.",
+  "formal_runner_invocations": 0,
+  "audit_invocations": 0
+}
