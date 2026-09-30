@@ -4,6 +4,7 @@ from statistics import median
 DECISION_KEYS = {"decision", "target", "container", "state", "reason"}
 DECISION_TYPES = {"TARGET", "STATE", "NO_ACTION", "YIELD"}
 YIELD_REASONS = {"AMBIGUOUS", "UNSUPPORTED", "INSUFFICIENT_EVIDENCE"}
+STATE_TYPES = {"STATUS_SAVED", "STATUS_PAUSED"}
 
 
 def validate_result(value):
@@ -11,7 +12,7 @@ def validate_result(value):
         raise ValueError("result must be a JSON object")
     if set(value) != DECISION_KEYS:
         raise ValueError("unexpected keys; authority fields are forbidden")
-    if value["decision"] not in DECISION_TYPES:
+    if not isinstance(value["decision"], str) or value["decision"] not in DECISION_TYPES:
         raise ValueError("unknown decision")
 
     decision = value["decision"]
@@ -23,22 +24,22 @@ def validate_result(value):
             raise ValueError("target must be non-empty for TARGET")
         if not isinstance(container, str) or not container.strip():
             raise ValueError("container must be non-empty for TARGET")
-        if state not in {"ENABLED", "DISABLED"} or reason is not None:
+        if not isinstance(state, str) or state not in {"ENABLED", "DISABLED"} or reason is not None:
             raise ValueError("invalid TARGET state or reason")
     elif decision == "STATE":
         if target is not None or container is not None:
             raise ValueError("STATE cannot include target/container")
-        if not isinstance(state, str) or not state.startswith("STATUS_") or reason is not None:
+        if not isinstance(state, str) or state not in STATE_TYPES or reason is not None:
             raise ValueError("invalid STATE label or reason")
     elif decision == "NO_ACTION":
         if target is not None or container is not None or state is not None:
             raise ValueError("NO_ACTION cannot include a target or state")
-        if reason != "TARGET_ABSENT":
+        if not isinstance(reason, str) or reason != "TARGET_ABSENT":
             raise ValueError("NO_ACTION requires TARGET_ABSENT")
     else:
         if target is not None or container is not None or state is not None:
             raise ValueError("YIELD cannot include a target or state")
-        if reason not in YIELD_REASONS:
+        if not isinstance(reason, str) or reason not in YIELD_REASONS:
             raise ValueError("YIELD requires an allowed reason")
     return {key: value[key] for key in ("decision", "target", "container", "state", "reason")}
 

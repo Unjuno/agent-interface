@@ -75,6 +75,25 @@ class DecisionSchemaTests(unittest.TestCase):
                 "reason": None,
             })
 
+    def test_rejects_out_of_vocabulary_state_and_wrong_branch_combinations(self):
+        for state in ("STATUS_UNKNOWN", [], 4):
+            with self.subTest(state=state), self.assertRaises(ValueError):
+                validate_result({
+                    "decision": "STATE",
+                    "target": None,
+                    "container": None,
+                    "state": state,
+                    "reason": None,
+                })
+        with self.assertRaises(ValueError):
+            validate_result({
+                "decision": "YIELD",
+                "target": "Publish",
+                "container": None,
+                "state": None,
+                "reason": "AMBIGUOUS",
+            })
+
 
 class FrozenCorpusTests(unittest.TestCase):
     def test_covers_each_required_grounding_case_twice(self):
