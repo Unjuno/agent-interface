@@ -128,6 +128,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 
 - [`benchmark_discovery/`](benchmark_discovery/) — benchmark/coverage discovery.
 - [`verification/ontology_gap_5275_t1_v1/REPORT.md`](verification/ontology_gap_5275_t1_v1/REPORT.md) — Issue #5275 T1 lexical novelty boundary probe; scoped synthetic result with training/evaluation overlap disclosed, no semantic-generalization claim.
+- [`verification/ontology_gap_5275_t2_v1/REPORT.md`](verification/ontology_gap_5275_t2_v1/REPORT.md) — Issue #5275 T2 held-out surface successor: FAIL, lexical-only abstains on all supported held-out cases and known-vocabulary dilution hides two semantic OOD cases.
 - [`evolution/`](evolution/) — convergence, freeze criteria, evolution ledger, and evaluation contracts.
 - [`conditional_optimization/`](conditional_optimization/) and [`optimization_revisits/`](optimization_revisits/) — conditional reuse and revisit work.
 - [`retention/`](retention/) — retained-evidence utilities/records where applicable.
