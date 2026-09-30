@@ -57,3 +57,7 @@ Historical and superseded integration paths remain in place when their exact nam
 - [`golden_v3_docker_slot_correction_2198_v1/RESOURCE_CORRECTION.md`](golden_v3_docker_slot_correction_2198_v1/RESOURCE_CORRECTION.md) — retrospective correction: the #2198 audit launched Docker containers during #5074's exclusive CPU-slot reservation; no further container run until explicit release.
 
 - [`issue_2195_modal_selection_pilot_v1/REPORT.md`](issue_2195_modal_selection_pilot_v1/REPORT.md) - retained modal PNG, SVG fixture and six-case specification; one request timed out, zero model responses received or retained, `HOLD_PILOT_INFERENCE_TIMEOUT`.
+
+## Retained runtime failure boundaries
+
+- [Public MCP pre-worker executor rejection](mcp_executor_rejection_5375_dot_v1/REPORT.md), Issue #5539: `FAIL_PREWORKER_CAPACITY_RELEASE` in one deliberately injected lifecycle fault. A healthy executor and fresh server recover while the affected server remains busy with no invoked operation. Exact original source/receipts and warning are retained; no native/GUI action or production repair is included. [Lossless module-map restoration](mcp_executor_rejection_5375_dot_v1/PACKAGING.md).
