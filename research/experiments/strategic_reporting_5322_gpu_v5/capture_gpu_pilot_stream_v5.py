@@ -4,7 +4,7 @@ import base64, contextlib, hashlib, io, json, sys, types
 from pathlib import Path
 
 ROOT = Path.cwd() / "research" / "experiments" / "strategic_reporting_5322_gpu_v5"
-EXPECTED = {"pilot": "1f53dd5007afe54d523448126d6cff71f24a29d07e3fd38f5a78348efaa74a36", "audit": "9e3d0c89ac4654c0d2d5d28b47ed7c5434e4ba52743a1f47ee82ba243ebd1c79", "transport": "88aa9b83b1e6e7bce0c9dcb3d2131d730cd44870d412e6e89fe16141b6c2680f"}
+EXPECTED = {"pilot": "1f53dd5007afe54d523448126d6cff71f24a29d07e3fd38f5a78348efaa74a36", "audit": "9e3d0c89ac4654c0d2d5d28b47ed7c5434e4ba52743a1f47ee82ba243ebd1c79", "transport": "982034983289a7c2d5403eae355e148920d64b4fa6f2efa42bc6ba8fad490df1"}
 if len(sys.argv) != 4:
     raise SystemExit("STOP: supply frozen pilot, auditor, and transport module base64")
 pilot_source, audit_source, transport_source = (base64.b64decode(x) for x in sys.argv[1:])
