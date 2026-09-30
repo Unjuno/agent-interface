@@ -1,13 +1,20 @@
 #!/usr/bin/env python3
 """Memory-only row-framed GPU pilot runner. Each call blocks until durable ACK."""
-import base64, contextlib, hashlib, io, json, sys, types
+import base64, contextlib, hashlib, io, json, sys, types, zlib
 from pathlib import Path
 
 ROOT = Path.cwd() / "research" / "experiments" / "strategic_reporting_5322_gpu_v5"
 EXPECTED = {"pilot": "1f53dd5007afe54d523448126d6cff71f24a29d07e3fd38f5a78348efaa74a36", "audit": "9e3d0c89ac4654c0d2d5d28b47ed7c5434e4ba52743a1f47ee82ba243ebd1c79", "transport": "982034983289a7c2d5403eae355e148920d64b4fa6f2efa42bc6ba8fad490df1"}
-if len(sys.argv) != 4:
-    raise SystemExit("STOP: supply frozen pilot, auditor, and transport module base64")
-pilot_source, audit_source, transport_source = (base64.b64decode(x) for x in sys.argv[1:])
+arguments = sys.argv[1:]
+synthetic_smoke = "--synthetic-smoke" in arguments
+arguments = [x for x in arguments if x != "--synthetic-smoke"]
+if len(arguments) != 3:
+    raise SystemExit("STOP: supply frozen pilot, auditor, and transport sources")
+def decode_source(value):
+    if value.startswith("z:"):
+        return zlib.decompress(base64.b64decode(value[2:]))
+    return base64.b64decode(value)
+pilot_source, audit_source, transport_source = (decode_source(x) for x in arguments)
 sources = {"pilot": pilot_source, "audit": audit_source, "transport": transport_source}
 for name, source in sources.items():
     actual = hashlib.sha256(source).hexdigest()
@@ -15,6 +22,31 @@ for name, source in sources.items():
         raise SystemExit(f"STOP: {name} source hash mismatch {actual}")
 transport = types.ModuleType("row_frames")
 exec(compile(transport_source.decode("utf-8"), "row_frames.py", "exec"), transport.__dict__)
+
+if synthetic_smoke:
+    for call_index in range(1, 7):
+        payload = json.dumps({"rows": [{"case_id": i, "text": "x" * 384}
+                                      for i in range(16)]},
+                             separators=(",", ":")).encode("utf-8")
+        for frame in transport.encode_call(call_index, payload):
+            sys.stdout.write(frame + "\n")
+            sys.stdout.flush()
+        ack = sys.stdin.readline().strip()
+        if ack != f"ACK {call_index}":
+            final = json.dumps({"status": "STOP_NO_ACK", "call": call_index,
+                                "observed": ack}, sort_keys=True,
+                               separators=(",", ":")).encode("utf-8")
+            for frame in transport.encode_call(0, final):
+                sys.stdout.write(frame + "\n")
+                sys.stdout.flush()
+            raise SystemExit("STOP: synthetic ACK mismatch")
+    final = json.dumps({"status": "SYNTHETIC_TRANSPORT_PASS",
+                        "completed_call_events": 6, "model_calls": 0},
+                       sort_keys=True, separators=(",", ":")).encode("utf-8")
+    for frame in transport.encode_call(0, final):
+        sys.stdout.write(frame + "\n")
+        sys.stdout.flush()
+    raise SystemExit(0)
 
 LIVE_STDOUT = sys.stdout
 FILES = {}
