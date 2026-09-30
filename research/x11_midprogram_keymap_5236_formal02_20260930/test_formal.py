@@ -254,6 +254,15 @@ class FormalRunnerGuardTests(unittest.TestCase):
         manifest["files"][relative] = "0" * 40
         self.assertIn(relative, " ".join(source_manifest_errors(manifest, ROOT)))
 
+    def test_checked_in_manifest_has_no_self_reference_and_matches_sources(self):
+        import json
+        from .runner import source_manifest_errors
+
+        path = Path(__file__).with_name("SOURCE_MANIFEST.json")
+        manifest = json.loads(path.read_text(encoding="utf-8"))
+        self.assertNotIn(path.relative_to(ROOT).as_posix(), manifest["files"])
+        self.assertEqual(source_manifest_errors(manifest, ROOT), [])
+
     def test_server_is_reaped_when_xlib_anchor_setup_raises(self):
         from . import runner
 
