@@ -26,6 +26,6 @@ Host construction tests:
 python -B -m unittest discover -s tests -t . -p 'test_*.py' -v
 ```
 
-The frozen runner is invoked once by `.github/workflows/issue-5518-ioco-t0.yml` inside the pinned image recorded in `FREEZE.json`. The independent `audit.py` then consumes only the raw result. The PR check repeats only the raw audit; it never executes `run.py`. Frozen source checksums cover only files in `FREEZE.json`, so appending outputs does not invalidate the preregistered input manifest.
+Run the frozen candidate exactly once in Docker Desktop using the pinned image in `FREEZE.json`, with `--network none`, a read-only source mount, and a separate writable output mount. Then run `audit.py` in a second container against that raw output; it never invokes `run.py`. The GitHub Actions PR check repeats only the raw audit. Frozen source checksums cover only files in `FREEZE.json`, so appending outputs does not invalidate the preregistered input manifest.
 
 Raw outputs, execution status, manifests, exact hashes, and the audit outcome are retained in this directory after the first run. Do not rerun the frozen candidate or overwrite its outcome.

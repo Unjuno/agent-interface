@@ -2,7 +2,7 @@ name: Issue 5518 committed evidence audit (audit-only)
 
 on:
   pull_request:
-    types: [synchronize]
+    types: [opened, synchronize]
     paths:
       - "research/analysis/ioco_adapter_conformance_5518_t0/raw.json"
       - "research/analysis/ioco_adapter_conformance_5518_t0/audit.json"
