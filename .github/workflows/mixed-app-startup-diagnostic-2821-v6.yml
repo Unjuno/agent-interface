@@ -1,13 +1,11 @@
 name: Mixed-app startup diagnostic #2821 v6
 on:
   workflow_dispatch:
-  pull_request:
-    paths:
-      - "research/integration/mixed_app_long_session_2499/startup_diagnostic.py"
-      - "research/integration/mixed_app_long_session_2499/Dockerfile.formal"
-      - ".github/workflows/mixed-app-startup-diagnostic-2821-v6.yml"
 jobs:
   diagnostic:
+    # Historical allocation retained for evidence only; never execute this job.
+    # A fresh successor needs independent owner/resource/allocation validation.
+    if: ${{ false }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -22,11 +20,9 @@ jobs:
           mkdir -p "$out"
           docker run --rm --network none -v "$GITHUB_WORKSPACE:/workspace:ro" -v "$out:/out" --entrypoint python3 mixed-formal-2821-v6 /workspace/research/integration/mixed_app_long_session_2499/startup_diagnostic.py > "$out/result.json" 2> "$out/stderr.log"
           code=$?
-          printf '%s
-' "$code" > "$out/container_exit.txt"
+          printf '%s\n' "$code" > "$out/container_exit.txt"
           if [ ! -s "$out/result.json" ]; then
-            printf '%s
-' "STOP_MIXED_APP_STARTUP_DIAGNOSTIC_NO_RESULT" > "$out/decision.txt"
+            printf '%s\n' "STOP_MIXED_APP_STARTUP_DIAGNOSTIC_NO_RESULT" > "$out/decision.txt"
             exit 1
           fi
           python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["decision"])' "$out/result.json" > "$out/decision.txt" 2>/dev/null || true
