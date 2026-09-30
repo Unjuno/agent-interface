@@ -20,11 +20,14 @@ delayed completion, mixed generation, supersession, rollback-after-read,
 duplicate completion, and tentative presentation. Roles: read explicitly
 consumed by action vs display-only and not consumed by action. Policies:
 `FINAL_STATE_ONLY` and `ACTION_RELEVANT_OPACITY`. Each row retains the full
-ordered event history, read provenance, consumer dependency, final generation,
+strictly monotonic event history, read provenance, consumer dependency, final generation,
 decision, first invalid read, and oracle result. This is a deterministic
 finite host experiment; a container run is separately gated by #5085.
 
-**D.** `PASS_T1_SCOPED` iff (1) the final-state-only comparator accepts at
+**D.** The auditor reconstructs status, action use, and generation at the exact
+consume event exclusively from the ordered raw event list; scenario labels and
+cached provenance are not oracle inputs. Sequences must be unique and strictly
+increasing. `PASS_T1_SCOPED` iff (1) the final-state-only comparator accepts at
 least one action whose consumed read is invalid; (2) the opacity checker
 rejects every action depending on a read that was not committed and valid at
 consume time, was later aborted/rolled back, or has a generation different

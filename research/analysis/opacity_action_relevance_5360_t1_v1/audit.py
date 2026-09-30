@@ -14,19 +14,64 @@ PATTERNS = {"clean_commit", "read_then_abort", "delayed_completion", "mixed_gene
 ROLES = {"action_consumed", "presentation_only"}
 
 
-def oracle(row: dict) -> str | None:
-    if row["role"] != "action_consumed":
-        return None
-    p = row["pattern"]
-    if p in {"read_then_abort", "rollback_after_read"}:
-        return "aborted" if p == "read_then_abort" else "rolled_back"
-    if p == "delayed_completion":
-        return "not_committed_at_consume"
-    if row["read_provenance"]["source_generation"] != row["action_epoch"]:
-        return "generation_mismatch"
-    if p == "tentative_presentation":
-        return "not_committed_at_consume"
-    return None
+def oracle(events: list[dict]) -> dict:
+    """Reconstruct action validity from raw chronological events only."""
+    seqs = [e.get("seq") for e in events]
+    if any(not isinstance(s, int) for s in seqs) or seqs != sorted(set(seqs)):
+        raise ValueError("event_sequence_not_strict")
+    reads = [e for e in events if e.get("type") == "read" and e.get("id") == "r1"]
+    if len(reads) != 1:
+        raise ValueError("read_event_cardinality")
+    read = reads[0]
+    uses = [e for e in events if e.get("type") in {"consume", "present_only"}
+            and e.get("read_id") == "r1"]
+    if len(uses) != 1:
+        raise ValueError("read_use_cardinality")
+    use = uses[0]
+    state = "tentative"
+    generation = read.get("generation")
+    status_at_use = None
+    generation_at_use = None
+    for event in events:
+        kind = event.get("type")
+        if kind in {"commit", "abort", "rollback"}:
+            state = {"commit": "committed", "abort": "aborted",
+                     "rollback": "rolled_back"}[kind]
+        elif kind == "supersede":
+            if event.get("old_generation") != generation or event.get("new_generation") <= generation:
+                raise ValueError("invalid_supersession")
+            generation = event["new_generation"]
+        if event is use:
+            status_at_use = state
+            generation_at_use = generation
+    action = use.get("type") == "consume"
+    reason = None
+    if action:
+        before = [e for e in events if e["seq"] < use["seq"]]
+        after = [e for e in events if e["seq"] > use["seq"]]
+        if any(e.get("type") == "abort" for e in before):
+            reason = "aborted_before_consume"
+        elif any(e.get("type") == "rollback" for e in before):
+            reason = "rolled_back_before_consume"
+        elif status_at_use != "committed":
+            reason = "not_committed_at_consume"
+        elif any(e.get("type") == "abort" for e in after):
+            reason = "aborted_after_consume"
+        elif any(e.get("type") == "rollback" for e in after):
+            reason = "rolled_back_after_consume"
+        elif read.get("generation") != use.get("action_epoch") or generation_at_use != read.get("generation"):
+            reason = "generation_mismatch"
+    return {
+        "action_attempted": action,
+        "action_epoch": use.get("action_epoch"),
+        "final_generation": generation,
+        "oracle_invalid_reason": reason,
+        "read_provenance": {
+            "read_id": read["id"], "source_generation": read.get("generation"),
+            "producer_final_status": state, "consume_seq": use["seq"],
+            "action_relevant": action, "consumer_action": use.get("action_id"),
+        },
+    }
 
 
 def check_rows(data: dict) -> list[str]:
@@ -41,19 +86,22 @@ def check_rows(data: dict) -> list[str]:
         errors.append("matrix_not_exact_32")
     grouped = {}
     for row in rows:
-        key = (row["pattern"], row["role"])
-        grouped.setdefault(key, {})[row["policy"]] = row
-        reason = oracle(row)
-        if reason != row.get("oracle_invalid_reason"):
-            errors.append(f"independent_oracle_mismatch:{key}")
-        if row["read_provenance"]["action_relevant"] != (row["role"] == "action_consumed"):
-            errors.append(f"action_relevance_provenance_mismatch:{key}")
-        if row["role"] == "presentation_only":
-            if row["action_attempted"] or row["read_provenance"]["action_relevant"]:
-                errors.append(f"presentation_caused_action:{key}")
+        key = (row.get("pattern"), row.get("role"))
+        grouped.setdefault(key, {})[row.get("policy")] = row
+        try:
+            derived = oracle(row.get("events", []))
+        except (ValueError, TypeError, KeyError):
+            errors.append(f"history_structure_invalid:{key}")
+            continue
+        for field, value in derived.items():
+            if row.get(field) != value:
+                errors.append(f"history_projection_mismatch:{key}:{field}")
+        if row.get("role") != ("action_consumed" if derived["action_attempted"] else "presentation_only"):
+            errors.append(f"action_role_event_mismatch:{key}")
+        reason = derived["oracle_invalid_reason"]
         strict = row["decision"]
         if row["policy"] == "ACTION_RELEVANT_OPACITY":
-            expected_accept = reason is None and row["action_attempted"]
+            expected_accept = reason is None and derived["action_attempted"]
             if strict["accepted"] != expected_accept:
                 errors.append(f"strict_decision_mismatch:{key}")
             expected_first = None if reason is None else "r1"
@@ -62,7 +110,7 @@ def check_rows(data: dict) -> list[str]:
     witnesses = 0
     for key, pair in grouped.items():
         a, b = pair["FINAL_STATE_ONLY"], pair["ACTION_RELEVANT_OPACITY"]
-        if oracle(a) and a["decision"]["accepted"] and not b["decision"]["accepted"]:
+        if oracle(a["events"])["oracle_invalid_reason"] and a["decision"]["accepted"] and not b["decision"]["accepted"]:
             witnesses += 1
     if witnesses == 0:
         errors.append("HOLD_NO_DISCRIMINATOR")
@@ -89,19 +137,19 @@ def check(data: dict) -> list[str]:
         return any(error.startswith(expected_error + ":") for error in check_rows(changed))
 
     mutated = copy.deepcopy(control)
-    mutated["oracle_invalid_reason"] = None
-    if not mutation_rejected(control, mutated, "independent_oracle_mismatch"):
+    next(e for e in mutated["events"] if e["type"] == "abort")["type"] = "commit"
+    if not mutation_rejected(control, mutated, "history_projection_mismatch"):
         errors.append("mutation_abort_to_commit_not_detected")
     mutated = copy.deepcopy(control)
-    mutated["read_provenance"]["action_relevant"] = False
-    if not mutation_rejected(control, mutated, "action_relevance_provenance_mismatch"):
+    next(e for e in mutated["events"] if e["type"] == "consume")["type"] = "present_only"
+    if not mutation_rejected(control, mutated, "action_role_event_mismatch"):
         errors.append("mutation_action_relevance_not_detected")
     generation_control = next(r for r in rows if r["pattern"] == "mixed_generation"
                               and r["role"] == "action_consumed"
                               and r["policy"] == "ACTION_RELEVANT_OPACITY")
     mutated = copy.deepcopy(generation_control)
-    mutated["read_provenance"]["source_generation"] = mutated["action_epoch"]
-    if not mutation_rejected(generation_control, mutated, "independent_oracle_mismatch"):
+    next(e for e in mutated["events"] if e["type"] == "consume")["action_epoch"] = 1
+    if not mutation_rejected(generation_control, mutated, "history_projection_mismatch"):
         errors.append("mutation_generation_not_detected")
     return sorted(set(errors))
 

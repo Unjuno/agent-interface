@@ -23,68 +23,107 @@ POLICIES = ("FINAL_STATE_ONLY", "ACTION_RELEVANT_OPACITY")
 
 
 def make_history(pattern: str, role: str) -> dict:
-    """Build an explicit event trace and the read's consume-time validity."""
-    generation = 2 if pattern == "mixed_generation" else 1
-    status = "tentative"
-    events = [{"seq": 1, "type": "begin", "tx": "read-tx", "generation": generation}]
-    events.append({"seq": 2, "type": "read", "id": "r1", "generation": generation,
-                   "producer_status": status})
+    """Build ordered events; validity metadata is derived from those events."""
+    events = []
+
+    def emit(event_type: str, **fields) -> None:
+        events.append({"seq": len(events) + 1, "type": event_type, **fields})
+
+    read_generation = 1
+    action_epoch = 2 if pattern in {"mixed_generation", "supersession"} else 1
+    emit("begin", tx="read-tx", generation=read_generation)
+    emit("read", id="r1", generation=read_generation, producer_status="tentative")
+
+    def use_read() -> None:
+        consumes = role == "action_consumed"
+        emit("consume" if consumes else "present_only", read_id="r1",
+             action_id="a1" if consumes else None,
+             action_epoch=action_epoch if consumes else None)
+
     if pattern == "clean_commit":
-        status = "committed"
-        events.append({"seq": 3, "type": "commit", "tx": "read-tx"})
+        emit("commit", tx="read-tx")
+        use_read()
     elif pattern == "read_then_abort":
-        status = "aborted"
-        events.append({"seq": 3, "type": "abort", "tx": "read-tx"})
+        emit("abort", tx="read-tx")
+        use_read()
     elif pattern == "delayed_completion":
-        status = "committed"
-        events.append({"seq": 3, "type": "commit", "tx": "read-tx", "after_consume": True})
+        use_read()
+        emit("commit", tx="read-tx", completion="delayed")
     elif pattern == "mixed_generation":
-        status = "committed"
-        events.append({"seq": 3, "type": "commit", "tx": "read-tx"})
+        emit("commit", tx="read-tx")
+        use_read()
     elif pattern == "supersession":
-        status = "committed"
-        events.extend(({"seq": 3, "type": "commit", "tx": "read-tx"},
-                       {"seq": 4, "type": "supersede", "old_generation": 1,
-                        "new_generation": 2}))
+        emit("commit", tx="read-tx")
+        emit("supersede", old_generation=1, new_generation=2)
+        use_read()
     elif pattern == "rollback_after_read":
-        status = "rolled_back"
-        events.append({"seq": 3, "type": "rollback", "tx": "read-tx"})
+        emit("commit", tx="read-tx")
+        use_read()
+        emit("rollback", tx="read-tx", rollback_scope="read-owner")
     elif pattern == "duplicate_completion":
-        status = "committed"
-        events.extend(({"seq": 3, "type": "commit", "tx": "read-tx"},
-                       {"seq": 4, "type": "commit", "tx": "read-tx", "duplicate": True}))
+        emit("commit", tx="read-tx")
+        emit("completion_duplicate", tx="read-tx")
+        use_read()
     elif pattern == "tentative_presentation":
-        events.append({"seq": 3, "type": "present", "read_id": "r1"})
+        emit("present", read_id="r1")
+        use_read()
 
-    action_epoch = 1
-    consume_seq = 4
-    consumes = role == "action_consumed"
-    events.append({"seq": consume_seq, "type": "consume" if consumes else "present_only",
-                   "read_id": "r1", "action_id": "a1" if consumes else None,
-                   "action_epoch": action_epoch if consumes else None})
+    return {"pattern": pattern, "role": role, "events": events}
 
-    invalid_reason = None
-    if consumes:
-        if pattern in ("read_then_abort", "rollback_after_read"):
-            invalid_reason = status
-        elif pattern == "delayed_completion":
-            invalid_reason = "not_committed_at_consume"
-        elif generation != action_epoch:
-            invalid_reason = "generation_mismatch"
-        elif pattern == "tentative_presentation":
-            invalid_reason = "not_committed_at_consume"
 
+def derive(events: list[dict]) -> dict:
+    """Producer-side projection from chronology; independent audit re-derives it."""
+    read = next(e for e in events if e["type"] == "read")
+    consumers = [e for e in events if e["type"] in {"consume", "present_only"}]
+    consumer = consumers[0]
+    state = "tentative"
+    current_generation = read["generation"]
+    status_at_consume = None
+    invalidating_event = None
+    for event in events:
+        if event["type"] in {"commit", "abort", "rollback"}:
+            state = {"commit": "committed", "abort": "aborted",
+                     "rollback": "rolled_back"}[event["type"]]
+        elif event["type"] == "supersede":
+            current_generation = event["new_generation"]
+        if event is consumer:
+            status_at_consume = state
+    action = consumer["type"] == "consume"
+    reason = None
+    if action:
+        earlier = [e for e in events if e["seq"] < consumer["seq"]]
+        later = [e for e in events if e["seq"] > consumer["seq"]]
+        before_abort = next((e for e in earlier if e["type"] == "abort"), None)
+        before_rollback = next((e for e in earlier if e["type"] == "rollback"), None)
+        after_abort = next((e for e in later if e["type"] == "abort"), None)
+        after_rollback = next((e for e in later if e["type"] == "rollback"), None)
+        if before_abort:
+            reason = "aborted_before_consume"
+        elif before_rollback:
+            reason = "rolled_back_before_consume"
+        elif status_at_consume != "committed":
+            reason = "not_committed_at_consume"
+        elif after_abort:
+            reason = "aborted_after_consume"
+        elif after_rollback:
+            reason = "rolled_back_after_consume"
+        elif read["generation"] != consumer["action_epoch"] or any(
+                e["type"] == "supersede" and e["old_generation"] == read["generation"]
+                and e["seq"] < consumer["seq"] for e in earlier):
+            reason = "generation_mismatch"
     return {
-        "pattern": pattern,
-        "role": role,
-        "events": events,
-        "read_provenance": {"read_id": "r1", "source_generation": generation,
-                            "producer_final_status": status, "consume_seq": consume_seq,
-                            "action_relevant": consumes, "consumer_action": "a1" if consumes else None},
-        "final_generation": 2 if pattern in ("mixed_generation", "supersession") else 1,
-        "action_epoch": action_epoch if consumes else None,
-        "action_attempted": consumes,
-        "oracle_invalid_reason": invalid_reason,
+        "action_attempted": action,
+        "action_epoch": consumer.get("action_epoch"),
+        "final_generation": current_generation,
+        "oracle_invalid_reason": reason,
+        "read_provenance": {
+            "read_id": read["id"],
+            "source_generation": read["generation"],
+            "producer_final_status": state,
+            "consume_seq": consumer["seq"],
+            "action_relevant": action,
+            "consumer_action": consumer.get("action_id"),
+        },
     }
 
 
@@ -106,6 +145,7 @@ def run() -> dict:
     for pattern in PATTERNS:
         for role in ROLES:
             history = make_history(pattern, role)
+            history.update(derive(history["events"]))
             for policy in POLICIES:
                 decision = decide(history, policy)
                 rows.append({**history, "policy": policy, "decision": decision})
