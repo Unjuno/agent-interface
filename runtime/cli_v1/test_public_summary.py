@@ -37,6 +37,7 @@ class PublicSummaryTests(unittest.TestCase):
             self.assertNotIn('call_id', brief)
             retrieve = brief['presentation']['retrieve']
             self.assertEqual(retrieve['command'], 'review')
+            self.assertTrue(retrieve['arguments']['no_image'])
             self.assertEqual(retrieve['arguments']['expected_report_sha256'], hashlib.sha256(raw).hexdigest())
             self.assertEqual(retrieve['arguments']['report'], str(root/'report.json'))
             (root/'report.json').write_bytes(raw+b' ')

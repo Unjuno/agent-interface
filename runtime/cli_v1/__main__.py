@@ -78,6 +78,7 @@ def main() -> int:
     image_review = sub.add_parser("review")
     image_review.add_argument("--report", required=True)
     image_review.add_argument("--run-directory", required=True)
+    image_review.add_argument("--no-image", action="store_true", help="validate the retained image but omit its encoded payload")
     image_review.add_argument("--expected-report-sha256", help="require the exact source bytes identified by an earlier summary")
     image_review.add_argument("--compact", action="store_true", help="replace duplicate receipt events with reversible local references")
     image_review.add_argument("--report-refs", action="store_true", help="allow v3 report references; requires --compact and a compatible decoder")
@@ -125,8 +126,8 @@ def main() -> int:
         return 0 if row['status'] == 'report_recorded' else 2
     if args.command == "review":
         try:
-            row = (review_bytes(sys.stdin.buffer.read(), args.run_directory, compact=args.compact, report_refs=args.report_refs, expected_report_sha256=args.expected_report_sha256) if args.report == "-"
-                   else review(args.report, args.run_directory, compact=args.compact, report_refs=args.report_refs, expected_report_sha256=args.expected_report_sha256))
+            row = (review_bytes(sys.stdin.buffer.read(), args.run_directory, compact=args.compact, report_refs=args.report_refs, expected_report_sha256=args.expected_report_sha256, include_image=not args.no_image) if args.report == "-"
+                   else review(args.report, args.run_directory, compact=args.compact, report_refs=args.report_refs, expected_report_sha256=args.expected_report_sha256, include_image=not args.no_image))
         except (OSError, ValueError, TypeError) as error:
             _emit({"schema": "agent-interface/review-v1", "status": "invalid_receipt", "error": str(error)})
             return 2

@@ -13,6 +13,32 @@ from runtime.distribution_v2.build import SOURCE_FILES, build
 
 class PublicReviewTests(unittest.TestCase):
 
+    def test_cli_metadata_review_preserves_default_image_and_validation(self):
+        png = base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aP1cAAAAASUVORK5CYII=')
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / 'frame.png'; path.write_bytes(png)
+            report = {'schema': 'agent-interface/runtime-observation-v1', 'status': 'returned',
+                'observation': {'sha256': 'raw', 'capture_started_ns': 1,
+                    'artifact': {'mime_type': 'image/png', 'path': str(path),
+                        'source_raw_sha256': 'raw', 'sha256': hashlib.sha256(png).hexdigest()}}}
+            raw = json.dumps(report).encode(); report_path = Path(td) / 'report.json'; report_path.write_bytes(raw)
+            for source in (str(report_path), '-'):
+                args = [sys.executable, '-m', 'runtime.cli_v1', 'review', '--report', source,
+                    '--run-directory', td, '--expected-report-sha256', hashlib.sha256(raw).hexdigest()]
+                full = subprocess.run(args, input=raw, capture_output=True)
+                omitted = subprocess.run(args + ['--no-image'], input=raw, capture_output=True)
+                self.assertEqual(full.returncode, 0, full.stderr)
+                self.assertEqual(omitted.returncode, 0, omitted.stderr)
+                expected = dict(json.loads(full.stdout), image=None, image_delivery='omitted_by_request')
+                self.assertEqual(json.loads(omitted.stdout), expected)
+                self.assertEqual(base64.b64decode(json.loads(full.stdout)['image']['data']), png)
+            path.write_bytes(png + b' ')
+            refused = subprocess.run(args + ['--no-image'], input=raw, capture_output=True)
+            self.assertEqual(refused.returncode, 2)
+            self.assertEqual(json.loads(refused.stdout)['image_status'], 'needs_review')
+            self.assertEqual(report_path.read_bytes(), raw)
+
+
     def test_metadata_only_review_skips_encoding_but_preserves_image_validation(self):
         from unittest.mock import patch
         png = base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aP1cAAAAASUVORK5CYII=')
