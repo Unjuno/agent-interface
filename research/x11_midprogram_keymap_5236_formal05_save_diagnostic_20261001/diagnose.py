@@ -10,17 +10,17 @@ import sys
 import tempfile
 import time
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 from Xlib.display import Display
 from runtime.backends.x11_v1.backend import X11Backend
 from runtime.backends.x11_v1.session import X11RuntimeSession
 
 WAIT_MS = 1500
-CASES = ("original_ops", "post_dispatch_wait", "fixture_after_idle_save")
 
 
-def run_case(case: str) -> dict:
+def run_case(post_dispatch_wait: bool) -> dict:
+    case = "post_dispatch_wait" if post_dispatch_wait else "original_ops"
     with tempfile.TemporaryDirectory(prefix="issue5236-save-diag-") as temp:
         root = Path(temp)
         log = (root / "xvfb.log").open("wb")
@@ -50,38 +50,40 @@ def run_case(case: str) -> dict:
             window = json.loads(meta.read_text(encoding="utf-8"))["window_id"]
             backend = X11Backend(display, {"fixture": window})
             session = X11RuntimeSession(backend)
-            ops = [
-                {"op": "focus", "target": "fixture"},
-                {"op": "pointer_move", "target": "fixture", "frame": "window_client", "x": 50, "y": 55},
-                {"op": "pointer_button", "button": "left", "down": True},
-                {"op": "pointer_button", "button": "left", "down": False},
-                {"op": "text", "text": "a"},
-                {"op": "wait_update", "timeout_ms": WAIT_MS},
-                {"op": "text", "text": "_"},
-                {"op": "key_chord", "keys": ["CTRL", "S"]},
-                {"op": "release_all"},
-            ]
-            if case == "fixture_after_idle_save":
-                fixture_window = anchor.create_resource_object("window", window)
-                fixture_window.send_event(__import__("Xlib.protocol.event", fromlist=["ClientMessage"]).ClientMessage(
-                    window=window,
-                    client_type=anchor.intern_atom("_AGENT_INTERFACE_DIAGNOSTIC"),
-                    data=(32, [0, 0, 0, 0, 0]),
-                    event_mask=0,
-                ), propagate=False)
-                anchor.flush()
-            if case == "post_dispatch_wait":
+            program = {
+                "schema": "agent-interface/program-v1",
+                "program_id": "issue5236-formal05-save-diag-" + case,
+                "source": {"observation_seq": 7, "binding_revision": 3},
+                "authority": {"lease_id": "diagnostic-only", "expires_at_ns": time.monotonic_ns() + 30_000_000_000},
+                "terminal": {"release_all_required": True},
+                "ops": [
+                    {"op": "focus", "target": "fixture"},
+                    {"op": "pointer_move", "target": "fixture", "frame": "window_client", "x": 50, "y": 55},
+                    {"op": "pointer_button", "button": "left", "down": True},
+                    {"op": "pointer_button", "button": "left", "down": False},
+                    {"op": "text", "text": "a"},
+                    {"op": "wait_update", "timeout_ms": WAIT_MS},
+                    {"op": "text", "text": "_"},
+                    {"op": "key_chord", "keys": ["CTRL", "S"]},
+                    {"op": "release_all"},
+                ],
+            }
+            started = time.monotonic_ns()
+            dispatch = session.dispatch(program, current_observation_seq=7, current_binding_revision=3)
+            ended = time.monotonic_ns()
+            immediate_effect = effect.read_text(encoding="utf-8") if effect.exists() else None
+            immediate_events = events.read_text(encoding="utf-8") if events.exists() else ""
+            if post_dispatch_wait:
                 time.sleep(1.0)
             final_effect = effect.read_text(encoding="utf-8") if effect.exists() else None
             final_events = events.read_text(encoding="utf-8") if events.exists() else ""
             return {
                 "case": case, "layout": "us", "dispatch_status": dispatch.get("status"),
-                "dispatch_started_ns": started, "dispatch_ended_ns": dispatch_ended,
+                "dispatch_started_ns": started, "dispatch_ended_ns": ended,
                 "completed_ops": dispatch.get("execution", {}).get("completed_ops"),
                 "release_verified": dispatch.get("execution", {}).get("releases", [{}])[-1].get("verified"),
                 "immediate_effect": immediate_effect, "final_effect": final_effect,
                 "immediate_events": immediate_events, "final_events": final_events,
-                "note": "diagnostic client message is not handled by the fixture; case intentionally measures no save callback" if case == "fixture_after_idle_save" else None,
             }
         finally:
             if backend is not None:
@@ -100,5 +102,12 @@ def run_case(case: str) -> dict:
 
 
 if __name__ == "__main__":
-    results = [run_case(case) for case in CASES]
-    print(json.dumps({"scope": "nonformal local Docker diagnostic; no XKB remap and no formal allocation", "cases": results}, sort_keys=True))
+    cases = [run_case(False), run_case(True)]
+    result = {"scope": "nonformal local Docker diagnostic; no XKB remap and no formal allocation", "cases": cases}
+    output = Path(__file__).with_name("results") / "diagnostic01" / "raw.json"
+    output.parent.mkdir(parents=True, exist_ok=False)
+    output.write_text(json.dumps(result, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps({"result_path": str(output), "cases": [
+        {key: case[key] for key in ("case", "dispatch_status", "completed_ops", "release_verified", "immediate_effect", "final_effect")}
+        for case in cases
+    ]}, sort_keys=True))
