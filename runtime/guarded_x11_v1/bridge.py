@@ -335,13 +335,17 @@ class NativeHandleBridge:
         return outcome
 
     def click(self, alias, offset, *, tail=()):
-        return self._run_guarded(alias, offset, tail=tail, activate=True)
+        return self._run_guarded(alias, offset, tail=tail, interaction='click')
+
+    def move(self, alias, offset, *, tail=()):
+        """Guarded pointer motion only; hover may change the screen. No click."""
+        return self._run_guarded(alias, offset, tail=tail, interaction='move')
 
     def keyboard(self, alias, offset, *, tail):
         """Continue in the currently focused, visually guarded context; no click."""
-        return self._run_guarded(alias, offset, tail=tail, activate=False)
+        return self._run_guarded(alias, offset, tail=tail, interaction='keyboard')
 
-    def _run_guarded(self, alias, offset, *, tail, activate):
+    def _run_guarded(self, alias, offset, *, tail, interaction):
         if self.active is not None:
             raise RuntimeError("native bridge already executing")
         if getattr(getattr(self, 'session', None), 'recovery_required', False):
@@ -353,13 +357,15 @@ class NativeHandleBridge:
             row = {'status': 'refused', 'error': 'WINDOW_REVIEW_REQUIRED', 'input_dispatched': False}
             self._save('result-' + uuid.uuid4().hex + '.json', row)
             return row
-        # At most one guarded click; keyboard continuation emits no pointer ops.
+        # Motion can change hover state. It grants no press or keyboard authority.
         from runtime.core_v1.sequence import expand_text_gaps
-        # Core permits 128 ops: focus + optional pointer triplet + release.
-        tail = expand_text_gaps(tail, max_ops=123 if activate else 126)[0]
+        # Core permits 128 ops including focus, action and terminal release.
+        tail = expand_text_gaps(tail, max_ops={'click':123, 'move':125, 'keyboard':126}[interaction])[0]
+        if interaction == 'move' and any(op.get('op') not in {'wait_update', 'observe'} for op in tail):
+            raise ValueError('guarded move tail permits only wait_update and observe')
         if any(op.get("op") not in {"text", "key_chord", "wait_update", "observe"} for op in tail):
             raise ValueError("unsupported guarded-click tail")
-        if not activate and not any(op.get('op') in {'text', 'key_chord'} for op in tail):
+        if interaction == 'keyboard' and not any(op.get('op') in {'text', 'key_chord'} for op in tail):
             raise ValueError('keyboard continuation requires explicit keyboard input')
         self.active = (alias, offset)
         self.checks = []
@@ -371,11 +377,12 @@ class NativeHandleBridge:
             except Exception as error:
                 row = {"status": "refused", "error": repr(error), "input_dispatched": False}
             else:
-                pointer_ops = ([
-                    {"op": "pointer_move", "frame": "screen_physical_px", "x": point[0], "y": point[1]},
-                    {"op": "pointer_button", "button": "left", "down": True},
-                    {"op": "pointer_button", "button": "left", "down": False},
-                ] if activate else [])
+                pointer_ops = ([] if interaction == 'keyboard' else [
+                    {"op": "pointer_move", "frame": "screen_physical_px", "x": point[0], "y": point[1]}])
+                if interaction == 'click':
+                    pointer_ops.extend([
+                        {"op": "pointer_button", "button": "left", "down": True},
+                        {"op": "pointer_button", "button": "left", "down": False}])
                 program = {
                     "schema": SCHEMA_PROGRAM, "program_id": "guarded-" + uuid.uuid4().hex,
                     "source": {"observation_seq": self.sequence,

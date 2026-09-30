@@ -24,6 +24,7 @@ class FakeBridge:
         self.mint=Mock(return_value=[12,7])
         self.click=Mock(side_effect=self.input)
         self.keyboard=Mock(side_effect=self.input)
+        self.move=Mock(side_effect=self.input)
         self.review_window=Mock(return_value={'status':'needs_review','input_dispatched':False})
 
     def configure(self, directory, *, retain_rgb=False):
@@ -54,6 +55,28 @@ def metadata(response):
 
 
 class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
+    async def test_pointer_only_move_returns_fresh_image_without_click_or_keyboard(self):
+        from mcp.server.fastmcp.exceptions import ToolError
+        opened = []
+        def fixture(*args):
+            bridge = FakeBridge(*args); opened.append(bridge); return bridge
+        with tempfile.TemporaryDirectory() as td, patch('runtime.cli_v1.mcp_guarded.open_bridge', side_effect=fixture):
+            server = create_server({'app':123}, td, session_mode='guarded-x11')
+            try:
+                response = await server.call_tool('interface_guarded_input', {
+                    'alias':'save', 'offset':[12,7], 'tail':[], 'interaction':'move'})
+            except ToolError as error:
+                self.fail('public guarded move must be supported: '+str(error))
+            self.assertFalse(response.isError)
+            self.assertEqual(metadata(response)['feedback_status'], 'captured')
+            self.assertEqual(response.content[1].type, 'image')
+            opened[0].move.assert_called_once_with('save', [12,7], tail=[])
+            opened[0].click.assert_not_called()
+            opened[0].keyboard.assert_not_called()
+            request = json.loads(next(Path(td).glob('*/request.json')).read_text())
+            self.assertEqual(request['arguments']['interaction'], 'move')
+            await server.call_tool('interface_close', {})
+
     async def test_metadata_only_guarded_lookup_skips_encoding_and_preserves_capture(self):
         import base64
         with tempfile.TemporaryDirectory() as td:

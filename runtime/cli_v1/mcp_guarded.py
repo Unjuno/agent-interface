@@ -84,7 +84,8 @@ class GuardedSessionOwner(MCPSessionOwner):
             # From here on a thrown exception may follow emitted input. The
             # transport retains uncertainty; it must not claim no input or retry.
             self.dispatch_attempted = True
-            method = bridge.click if arguments['interaction'] == 'click' else bridge.keyboard
+            method = {'click': bridge.click, 'keyboard': bridge.keyboard,
+                      'move': bridge.move}[arguments['interaction']]
             result = method(arguments['alias'], arguments['offset'], tail=arguments['tail'])
             row.update(status=result['status'], result=result)
             if arguments['observe_after']:
@@ -180,7 +181,7 @@ def register_guarded_tools(server, submit):
 
     @server.tool()
     async def interface_guarded_input(alias: StrictStr, offset: list[StrictInt], tail: list[dict],
-                                     interaction: Literal['click','keyboard']='click',
+                                     interaction: Literal['click','keyboard','move']='click',
                                      observe_after: StrictBool=True,
                                      detail: Literal["full","brief"]="full",
                                      observation_refs: StrictBool=False) -> CallToolResult:
@@ -188,6 +189,10 @@ def register_guarded_tools(server, submit):
 
         tail uses text, key_chord, wait_update or observe operations, within the
         existing expanded program limit. keyboard emits no pointer click.
+        move emits guarded pointer motion without pressing; its tail permits
+        only wait_update and observe. Hover can change pixels. Review its fresh
+        image and explicitly mint a new reference before a later click; no
+        automatic re-grounding, click or replay follows motion.
         The five-second guarded lease includes typing/waits. Expiry stops later
         presses, interrupts waits and attempts release; partial effects remain.
         Blocking X11 calls are not preempted; no hard real-time bound is promised.

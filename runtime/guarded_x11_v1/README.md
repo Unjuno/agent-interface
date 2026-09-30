@@ -30,6 +30,14 @@ choices. Existing source capture, scope, texture, exact-pixel matching, bounded
 window translation and fresh guards remain unchanged. Missing/stale/changed
 references refuse input; they never trigger automatic grounding or replay.
 `keyboard(alias, offset, tail=...)` guards keyboard continuation without clicking.
+`move(alias, offset, tail=...)` checks the target and moves the pointer without
+pressing. Its tail permits only `wait_update` and `observe`, with at most 125
+expanded tail operations. Hover may change pixels or application state. Observe
+and review the resulting image, then explicitly mint a new alias from that image
+before clicking. Old aliases retain their original exact-pixel guards; motion
+does not refresh them. No redraw wait or automatic click is added.
+The public tool exposes this as `interface_guarded_input(interaction="move")`,
+with its existing `observe_after=True` default returning a fresh capture.
 `review_window(window_id)` explicitly revokes all old aliases even when review
 fails; successful review does not infer semantic equivalence of windows.
 Call `close()` in a finally block. It closes this connection, not the application.
