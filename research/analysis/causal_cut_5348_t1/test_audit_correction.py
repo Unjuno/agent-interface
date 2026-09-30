@@ -8,10 +8,7 @@ def accepted_expected():
  return raw
 class CorrectionTests(unittest.TestCase):
  def errors(self,raw):
-  with contextlib.redirect_stdout(io.StringIO()):
-   try:audit.audit(raw)
-   except SystemExit:pass
-  # audit() returns an exit code, while emitted JSON reports detailed integrity.
+  # The auditor returns an exit code; its JSON output carries detailed integrity.
   with contextlib.redirect_stdout(io.StringIO()) as output:audit.audit(raw)
   import json
   return json.loads(output.getvalue())["errors"]
