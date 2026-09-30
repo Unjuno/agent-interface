@@ -343,6 +343,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`model_api_canary_6001_t0_a02_20261001/`](model_api_canary_6001_t0_a02_20261001/)
 - [`model_api_canary_detection_6001_t0_20261001/`](model_api_canary_detection_6001_t0_20261001/)
 - [`model_api_canary_interference_6001_t0_20261001/`](model_api_canary_interference_6001_t0_20261001/)
+- [`missing_outcome_bounds_5590_t0_20261001/`](missing_outcome_bounds_5590_t0_20261001/)
 - [`multi_actuator_state_domain_independence_r0_v1/`](multi_actuator_state_domain_independence_r0_v1/)
 - [`multi_app_transition_retained_audit_r0_v1/`](multi_app_transition_retained_audit_r0_v1/)
 - [`multi_principal_effect_auth_5805_t0_v1/`](multi_principal_effect_auth_5805_t0_v1/)
