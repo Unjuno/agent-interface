@@ -1,0 +1,31 @@
+name: Golden delivery evidence join
+on:
+  pull_request:
+    paths:
+      - 'runtime/cli_v1/**'
+      - 'runtime/selector_v1/**'
+      - 'research/integration/golden_delivery_join_v1/**'
+      - '.github/workflows/golden-delivery-join-v1.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'runtime/cli_v1/**'
+      - 'runtime/selector_v1/**'
+      - 'research/integration/golden_delivery_join_v1/**'
+      - '.github/workflows/golden-delivery-join-v1.yml'
+permissions:
+  contents: read
+jobs:
+  offline-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Current repository regression, no dispatch
+        run: python3 -S -B -m unittest -v runtime.cli_v1.test_golden_v3 runtime.cli_v1.test_golden_delivery_join
+      - name: Packaging refusal controls
+        run: python3 -S -B research/integration/golden_delivery_join_v1/test_unpack.py
+      - name: Frozen raw re-audit, never rerun formal
+        run: python3 -S -B research/integration/golden_delivery_join_v1/verify.py
