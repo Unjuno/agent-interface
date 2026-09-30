@@ -1,0 +1,59 @@
+name: Issue 5440 hidden-cause sensitivity T1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/issue-5440-sensitivity-t1-run.yml"
+      - "research/analysis/hidden_cause_sensitivity_5440_t1/cases.json"
+      - "research/analysis/hidden_cause_sensitivity_5440_t1/candidate.py"
+      - "research/analysis/hidden_cause_sensitivity_5440_t1/audit.py"
+      - "research/analysis/hidden_cause_sensitivity_5440_t1/preflight.py"
+
+permissions:
+  contents: read
+
+jobs:
+  container-experiment:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      IMAGE: python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9
+      PLATFORM: linux/amd64
+      BASE_MAIN_SHA: d3340deaf147ca23a3d1a7295f04540488adaa8e
+      EXPERIMENT_DIR: research/analysis/hidden_cause_sensitivity_5440_t1
+      OUTPUT_DIR: ${{ runner.temp }}/sensitivity-output
+    steps:
+      - name: Checkout frozen experiment source
+        uses: actions/checkout@v4
+      - name: Prepare output directory
+        run: mkdir -p "$OUTPUT_DIR"
+      - name: Pull digest-pinned image
+        run: docker pull --platform "$PLATFORM" "$IMAGE"
+      - name: Container preflight, one candidate run, independent audit
+        run: |
+          docker run --rm --network none --platform "$PLATFORM" --read-only \
+            --tmpfs /tmp:rw,noexec,nosuid,size=16m \
+            -e PYTHONDONTWRITEBYTECODE=1 \
+            -e EXPERIMENT_IMAGE="$IMAGE" -e EXPERIMENT_PLATFORM="$PLATFORM" \
+            -e EXPERIMENT_BASE_SHA="$BASE_MAIN_SHA" \
+            --mount "type=bind,source=$GITHUB_WORKSPACE/$EXPERIMENT_DIR,target=/src,readonly" \
+            --mount "type=bind,source=$OUTPUT_DIR,target=/out" \
+            --workdir /src "$IMAGE" sh -euc '
+              python /src/preflight.py /src/cases.json
+              python -c "from pathlib import Path; [compile(p.read_text(), str(p), \"exec\") for p in (Path(\"/src/candidate.py\"), Path(\"/src/audit.py\"))]; print(\"PASS_SOURCE_COMPILE\")"
+              python /src/candidate.py --input /src/cases.json --output /out/raw.json
+              python /src/audit.py --input /src/cases.json --raw /out/raw.json --output /out/audit.json
+              sha256sum /src/cases.json /src/candidate.py /src/audit.py /src/preflight.py > /out/SHA256SUMS
+              sha256sum /out/raw.json /out/audit.json >> /out/SHA256SUMS
+              cat /out/SHA256SUMS
+            '
+      - name: Upload immutable run output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue-5440-t1-container-output
+          path: ${{ runner.temp }}/sensitivity-output
+          if-no-files-found: error
+          retention-days: 90
