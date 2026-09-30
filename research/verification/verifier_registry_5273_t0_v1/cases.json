@@ -1,0 +1,14 @@
+{
+  "schema": "verifier_registry_cases.v0.1",
+  "resources": {"cpu": true, "gpu": false, "frontier_model": false, "network": false},
+  "cases": [
+    {"case_id":"warm_cpu_feasible","check":{"check_id":"c1","verifier_id":"local_cpu","version":"2.1.0","primitive":"TARGET.IDENTITY_CURRENT","evidence_role":"CURRENT_OBSERVATION","mode":"warm","budget_ms":20,"deadline_ms":30,"side_effects_allowed":false},"expected":"COMPATIBLE","reasons":[]},
+    {"case_id":"unsupported_primitive","check":{"check_id":"c2","verifier_id":"local_cpu","version":"2.1.0","primitive":"AUTHORITY.PERMISSION_CURRENT","evidence_role":"CURRENT_PERMISSION","mode":"warm","budget_ms":20,"deadline_ms":30,"side_effects_allowed":false},"expected":"REJECTED","reasons":["unsupported_primitive","wrong_evidence_role"]},
+    {"case_id":"wrong_role","check":{"check_id":"c3","verifier_id":"deterministic_rule","version":"1.0.0","primitive":"META.COVERAGE","evidence_role":"CURRENT_OBSERVATION","mode":"warm","budget_ms":2,"deadline_ms":5,"side_effects_allowed":false},"expected":"REJECTED","reasons":["wrong_evidence_role"]},
+    {"case_id":"stale_version","check":{"check_id":"c4","verifier_id":"local_cpu","version":"2.0.0","primitive":"TARGET.IDENTITY_CURRENT","evidence_role":"CURRENT_OBSERVATION","mode":"warm","budget_ms":20,"deadline_ms":30,"side_effects_allowed":false},"expected":"REJECTED","reasons":["stale_version"]},
+    {"case_id":"resource_unavailable","check":{"check_id":"c5","verifier_id":"local_multimodal","version":"0.1.0-placeholder","primitive":"TARGET.IDENTITY_CURRENT","evidence_role":"CURRENT_OBSERVATION","mode":"warm","budget_ms":500,"deadline_ms":500,"side_effects_allowed":false},"expected":"UNAVAILABLE","reasons":["resource_unavailable","latency_unqualified"]},
+    {"case_id":"cold_budget_violation","check":{"check_id":"c6","verifier_id":"local_cpu","version":"2.1.0","primitive":"TARGET.IDENTITY_CURRENT","evidence_role":"CURRENT_OBSERVATION","mode":"cold","budget_ms":50,"deadline_ms":100,"side_effects_allowed":false},"expected":"REJECTED","reasons":["budget_exceeded"]},
+    {"case_id":"side_effect_prohibited","check":{"check_id":"c7","verifier_id":"external_tool","version":"1.0.0-placeholder","primitive":"AUTHORITY.PERMISSION_CURRENT","evidence_role":"CURRENT_PERMISSION","mode":"warm","budget_ms":2000,"deadline_ms":2000,"side_effects_allowed":false},"expected":"UNAVAILABLE","reasons":["resource_unavailable","latency_unqualified","side_effect_prohibited"]},
+    {"case_id":"deadline_infeasible","check":{"check_id":"c8","verifier_id":"local_cpu","version":"2.1.0","primitive":"TARGET.IDENTITY_CURRENT","evidence_role":"CURRENT_OBSERVATION","mode":"warm","budget_ms":20,"deadline_ms":5,"side_effects_allowed":false},"expected":"REJECTED","reasons":["deadline_infeasible"]}
+  ]
+}

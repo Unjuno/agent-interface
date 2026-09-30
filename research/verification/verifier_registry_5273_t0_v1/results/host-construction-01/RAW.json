@@ -1,0 +1,93 @@
+{
+  "allocation": "verifier-registry-5273-t0-20260930-01",
+  "base_commit": "322faf504a5ac993b092f154733d83bc13767e60",
+  "candidate_sha256": "5d0b0b24def896de100d32816f5aee18e8bd4ad1655ceafef2070d28e7eee4a1",
+  "cases_sha256": "3b63e7ca37f52fc0d54916dc5db241d2b0c93cedaa2a27b2f3fc5fbd8645f4af",
+  "decisions": [
+    {
+      "authority": "none",
+      "check_id": "c1",
+      "cost_basis": "declared_estimate_not_measurement",
+      "dispatch_count": 0,
+      "reasons": [],
+      "status": "COMPATIBLE"
+    },
+    {
+      "authority": "none",
+      "check_id": "c2",
+      "cost_basis": "declared_estimate_not_measurement",
+      "dispatch_count": 0,
+      "reasons": [
+        "unsupported_primitive",
+        "wrong_evidence_role"
+      ],
+      "status": "REJECTED"
+    },
+    {
+      "authority": "none",
+      "check_id": "c3",
+      "cost_basis": "declared_estimate_not_measurement",
+      "dispatch_count": 0,
+      "reasons": [
+        "wrong_evidence_role"
+      ],
+      "status": "REJECTED"
+    },
+    {
+      "authority": "none",
+      "check_id": "c4",
+      "cost_basis": "declared_estimate_not_measurement",
+      "dispatch_count": 0,
+      "reasons": [
+        "stale_version"
+      ],
+      "status": "REJECTED"
+    },
+    {
+      "authority": "none",
+      "check_id": "c5",
+      "cost_basis": "declared_estimate_not_measurement",
+      "dispatch_count": 0,
+      "reasons": [
+        "resource_unavailable",
+        "latency_unqualified"
+      ],
+      "status": "UNAVAILABLE"
+    },
+    {
+      "authority": "none",
+      "check_id": "c6",
+      "cost_basis": "declared_estimate_not_measurement",
+      "dispatch_count": 0,
+      "reasons": [
+        "budget_exceeded"
+      ],
+      "status": "REJECTED"
+    },
+    {
+      "authority": "none",
+      "check_id": "c7",
+      "cost_basis": "declared_estimate_not_measurement",
+      "dispatch_count": 0,
+      "reasons": [
+        "resource_unavailable",
+        "latency_unqualified",
+        "side_effect_prohibited"
+      ],
+      "status": "UNAVAILABLE"
+    },
+    {
+      "authority": "none",
+      "check_id": "c8",
+      "cost_basis": "declared_estimate_not_measurement",
+      "dispatch_count": 0,
+      "reasons": [
+        "deadline_infeasible"
+      ],
+      "status": "REJECTED"
+    }
+  ],
+  "freeze_sha256": "bceb99ad68103e8d080d00aae0fe6094a56bd404b6051c41b36f9874cdbc8c46",
+  "registry_sha256": "193758a67d8eb28779f911d32c29f8b44aba89af7b0ebed18e88eb22c901314e",
+  "schema": "verifier_registry_5273_raw.v1"
+}
