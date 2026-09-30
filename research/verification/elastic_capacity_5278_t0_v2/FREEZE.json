@@ -1,0 +1,48 @@
+{
+  "schema": "elastic-capacity-t0-freeze-v1",
+  "issue": 5278,
+  "allocation": "elastic-verifier-capacity-5278-t0-20260930-02",
+  "intake_main": "eddcf7a47c1f3c47165288037e66f66da0c3138a",
+  "branch": "research/elastic-verifier-capacity-5278-t0-20260930-r2",
+  "source": {
+    "simulator.py": {
+      "git_blob_sha1": "cbfe26f5e59937e7173012d1df04b740b8f5b5f1",
+      "sha256": "e1a509ce8fc8be2f6cd5cfa90caa5f3e9a169f99a67029958210ebaf4c4fbebd"
+    },
+    "audit.py": {
+      "git_blob_sha1": "d0ded9c8ad6c7a978d54435644d107d32c0eba1e",
+      "sha256": "cf2f503a53d6946ed93c72874d4695a4c1e9f15468182068ddf4926488c7beef"
+    },
+    "test_model.py": {
+      "git_blob_sha1": "2d8eaf83ccb671e4f01095f6c5ae463d932381f5",
+      "sha256": "5fa1e7c403b038e3c0ab087794f188857315da8aed518332c88364307c546a8c"
+    },
+    "workloads.json": {
+      "git_blob_sha1": "d44b2bc9e81ac94fc293bdfa29fc3d648d090964",
+      "sha256": "0ef066c1d199615b49f2baa373c05c7415f1378008196ac94262d3239022d06c"
+    },
+    "prior_construction_stop.txt": {
+      "git_blob_sha1": "01c58ba5231f20279c54d83f632eb017db030681"
+    }
+  },
+  "construction": {
+    "host": "Windows 11",
+    "python": "3.12.10",
+    "command": "python -m unittest discover -s . -p test_model.py -v",
+    "result": "8/8 PASS"
+  },
+  "formal": {
+    "invocations_before_freeze": 0,
+    "allowed_invocations": 1,
+    "command": "python simulator.py",
+    "raw_out": "evidence/formal01/raw.json",
+    "docker": false
+  },
+  "audit": {
+    "command": "python audit.py",
+    "raw_path": "evidence/formal01/raw.json",
+    "separate_process": true,
+    "corruption_controls": 5
+  },
+  "scope": "synthetic deterministic T0 only; no real verifier, GUI, model, input, hardware contention, or production claim"
+}
