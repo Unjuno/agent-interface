@@ -1,6 +1,6 @@
 {
   "allocation": "MAP01-OWNER-KEYUP-BRACKET-5156-20260930-04",
-  "kind": "pre-formal construction-only checks; not live X11 evidence",
+  "kind": "pre-formal construction only",
   "host_python": "CPython 3.14.5",
   "checks": [
     {
@@ -9,13 +9,13 @@
     },
     {
       "command": "python3 -m unittest -v test_audit_formal_x11",
-      "result": "PASS 7/7; exact inventory, order, identity, timestamp, authority and corruption controls"
+      "result": "PASS 8/8; exact inventory/order, missing-row, authority, clock, explicit-trigger, and cancellation-neutrality corruptions"
     },
     {
       "command": "PYTHONPATH=.. python3 -m unittest -v test_owner_integration",
       "result": "PASS 14/14",
-      "source": "PR #5298 branch research/5156-owner-release-integration-v1-20260930"
+      "source": "PR #5298 pinned v11 copy"
     }
   ],
-  "excluded": "Host construction only; no real X server/input, Xvfb, container, GUI, game, model, GPU, or formal allocation."
+  "excluded": "No real X server, input, Xvfb, container, game, model, GPU or formal allocation."
 }
