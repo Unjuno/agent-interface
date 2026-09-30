@@ -1,0 +1,25 @@
+{
+  "study": "dependency-aware-verifier-quorums-5314-v1",
+  "issue": 5314,
+  "intake_main": "b0190453a787102189429e4b8c32032cf60efd17",
+  "runtime": "CPython 3.12.10, standard library only, host-side exact analysis; no container",
+  "formal_container_runs": 0,
+  "construction_runs": 1,
+  "audit_runs": 1,
+  "sha256": {
+    "FREEZE.json": "B107C3AF3F143E8E6966BA7FF450236CCC1E8787F2C0CF14653341085A62DACA",
+    "enumerate.py": "DD31D4B6A12741A204165633A80BC3CEBDB695BBCA3809EF8DF9FD4AE1AD0D76",
+    "independent_audit.py": "9D96F88FB6CB801DD939792C75429BC722134C55FF50D1B0A8A65A7FDBB15639",
+    "raw.json": "EC2EE61F24064DBD4902CDA060889F85A15230A418D7B2A66A055515777FCFFD",
+    "audit.json": "ED7891AD090349AC95AAB0868409500D1FB3CEAB21DD8946D7AEFB5CF43DF482",
+    "REPORT.md": "0208EA1F2E53EBA76B4EC1B0A66B6D9F890D0AF418CEC9DDDE9263662BAE6732"
+  },
+  "audit": {
+    "rows_checked": 908,
+    "discrepancies": 0,
+    "mutation_controls_passed": 4,
+    "mutation_controls_total": 4,
+    "disposition": "PASS_FINITE_CONTRACT_ONLY"
+  },
+  "scope": "Synthetic exhaustive contract result only; no production, runtime, statistical, independence-attestation, or deployment claim."
+}
