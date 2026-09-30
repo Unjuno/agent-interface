@@ -13,6 +13,8 @@ FIXED_TIME = (1980, 1, 1, 0, 0, 0)
 SCHEMA = "agent-interface/portable-runtime-build-v1"
 
 SOURCE_FILES = (
+    "runtime/host_v1/__init__.py",
+    "runtime/host_v1/file_publication.py",
     "runtime/guarded_x11_v1/__init__.py",
     "runtime/guarded_x11_v1/frames.py",
     "runtime/guarded_x11_v1/handles_base.py",

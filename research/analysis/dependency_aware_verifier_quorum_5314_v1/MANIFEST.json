@@ -5,20 +5,30 @@
   "runtime": "CPython 3.12.10, standard library only, host-side exact analysis; no container",
   "formal_container_runs": 0,
   "construction_runs": 1,
-  "audit_runs": 1,
+  "audit_runs": 4,
+  "audit_v2_runs": 3,
   "sha256": {
     "FREEZE.json": "B107C3AF3F143E8E6966BA7FF450236CCC1E8787F2C0CF14653341085A62DACA",
     "enumerate.py": "DD31D4B6A12741A204165633A80BC3CEBDB695BBCA3809EF8DF9FD4AE1AD0D76",
     "independent_audit.py": "9D96F88FB6CB801DD939792C75429BC722134C55FF50D1B0A8A65A7FDBB15639",
     "raw.json": "EC2EE61F24064DBD4902CDA060889F85A15230A418D7B2A66A055515777FCFFD",
     "audit.json": "ED7891AD090349AC95AAB0868409500D1FB3CEAB21DD8946D7AEFB5CF43DF482",
-    "REPORT.md": "0208EA1F2E53EBA76B4EC1B0A66B6D9F890D0AF418CEC9DDDE9263662BAE6732"
+    "audit_v2.json": "5016F6C861F6B2DCE91E50CE049B7E92D8C774CEB73B29C86BA0DD0253698A01",
+    "audit_v2_gate_failure.json": "F5B948F6BE30BAAC032802C98981F91EC834455F87CEE13D46D9CCE2629598E9",
+    "audit_v2_final.json": "2264B699E889E06D9CE768651F68EC2F68832E85023CDED26AA8F4E715CDC12C",
+    "audit_v2.py": "5949F9C0804E34B975788D5EA27FBFCC81D25F884BB421008EF7316D4A5DA1BC",
+    "test_audit_coverage.py": "2146ED3C54AF8FC680BEF9EB34E05DDD17C334813DA8761D0853172847A30FB7",
+    "REPORT.md": "AE76CD56F69C9981546318CCDEFCA5A4B52B56679787D5098E075622327814CE"
   },
   "audit": {
     "rows_checked": 908,
-    "discrepancies": 0,
-    "mutation_controls_passed": 4,
-    "mutation_controls_total": 4,
+    "v1_disposition": "INSUFFICIENT_COVERAGE_CHECK_REPRODUCED",
+    "v2_initial_disposition": "PASS_FINITE_CONTRACT_ONLY",
+    "v2_gate_failure_disposition": "HOLD_AUDIT",
+    "v2_final_discrepancies": 0,
+    "partitions_checked": 52,
+    "mutation_controls_passed": 8,
+    "mutation_controls_total": 8,
     "disposition": "PASS_FINITE_CONTRACT_ONLY"
   },
   "scope": "Synthetic exhaustive contract result only; no production, runtime, statistical, independence-attestation, or deployment claim."

@@ -64,6 +64,19 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Research evidence ladder
 
+### Issue #5404 — typed resumption packet (scoped deterministic PASS)
+
+One frozen OrbStack run compared opaque summary, full replay, and typed packet
+policies over 50 interruption/fault/idempotency scenarios (150 policy rows).
+The typed packet had zero unsafe admissions and detected all 48 non-benign
+invalidation/receipt cases; committed or unknown effects were reconciled without
+resending. On benign pre-action pauses, its synthetic recovery-step count was 2
+versus 7 for full replay. Opaque summary had 45 unsafe admissions in this
+constructed fixture. These are deterministic model counts, not rates, latency,
+or production claims; oracle completeness, receipt lookup, and event semantics
+are assumptions. See the [full report](research/analysis/typed_resumption_packet_5404_t0_v1/REPORT.md)
+and [Issue #5404](https://github.com/Unjuno/agent-interface/issues/5404).
+
 ### Issue #5385 — active lifecycle automata learning (bounded synthetic PASS)
 
 One frozen OrbStack run learned four reachable lifecycle classes in one
@@ -139,6 +152,10 @@ rows, aggregates, analytic bounds, and mutation controls. This is finite
 synthetic score-law evidence only. It does not establish real verifier risk,
 adaptive exchangeability, a shift detector, or a deployed certificate. Issue
 #5315 remains open. See the full [H/T/D/C/U report and raw evidence](research/analysis/conformal_verifier_risk_contract_5315_v1/REPORT.md).
+
+### Issue #5306 — one-step VOI / irreversibility boundary T1 (scoped PASS; Issue remains open)
+
+A frozen exhaustive host-CPU run covered 405 combinations of binary-state prior, downside, signal sensitivity/false-pass rate, and delay cost. Risk-aware one-step VOI matched the exact Bellman stop/continue oracle on all 405 rows. A separately added expected-downside premium changed 45 decisions: 27 were strictly dominated waits and 18 were ties within tolerance. A separate Decimal raw-only audit passed with zero errors and binds raw SHA-256 `fa237492dd6657da2b98a3b48bc994851e057a70df1c252fbe974a2a5ea22f3a`. This rejects only that separate-premium formulation in the stipulated one-step model; it does not reject multi-step real-options methods or validate the parent VOI hypothesis, empirical calibration, or live action safety. The raw record is retained losslessly as gzip+base64 because the host had no free C: space. Docker was not used because #5085 had no exact assignment. See the [H/T/D/C/U report](research/analysis/voi_option_5306_t1/REPORT.md) and [Issue #5306](https://github.com/Unjuno/agent-interface/issues/5306).
 
 ### Issue #4563 — controlled MAP01 clock-boundary raw-audit addendum
 
