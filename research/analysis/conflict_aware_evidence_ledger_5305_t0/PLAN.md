@@ -59,7 +59,7 @@ Evidence independence is trusted fixture metadata only.
 ## Execution freeze
 
 - Base `main`: `02bff58173426efc2288bd375f283a6500f80784`
-- Branch: `research/conflict-ledger-5305-t0`
+- Branch: `research/conflict-aware-ledger-5305-t0-20260930`
 - Path: `research/analysis/conflict_aware_evidence_ledger_5305_t0/`
 - Runtime: host Python standard library only; no Docker, network, model, GPU,
   GUI, or external state. This is a finite exhaustive model check; the research
