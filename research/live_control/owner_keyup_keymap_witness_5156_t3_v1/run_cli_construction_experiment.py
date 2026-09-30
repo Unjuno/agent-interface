@@ -45,7 +45,8 @@ def run(results_dir):
     auditor = None
     if candidate["returncode"] == 0:
         auditor = invoke_once([sys.executable, "-B", str(HERE / "audit_formal_x11.py"),
-                               str(raw_path), str(expected_path), str(results / "audit.json")], 10)
+                               str(raw_path), str(expected_path), str(results / "audit.json"),
+                               "synthetic-cli"], 10)
         (results / "auditor.stdout.txt").write_text(auditor["stdout"], encoding="utf-8")
         (results / "auditor.stderr.txt").write_text(auditor["stderr"], encoding="utf-8")
 
@@ -78,6 +79,8 @@ def run(results_dir):
         "raw_sha256": sha256(raw_path),
         "candidate_sha256": sha256(HERE / "emit_synthetic_candidate.py"),
         "auditor_sha256": sha256(HERE / "audit_formal_x11.py"),
+        "candidate_fixture_source_sha256": sha256(HERE / "test_audit_formal_x11.py"),
+        "experiment_driver_sha256": sha256(HERE / "run_cli_construction_experiment.py"),
         "expected_sha256": sha256(expected_path),
         "disposition": disposition,
         "scope": "synthetic JSONL serialization/process boundary only; no X server or physical input evidence",

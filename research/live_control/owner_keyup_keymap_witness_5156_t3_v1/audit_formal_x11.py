@@ -235,14 +235,24 @@ def audit(records, expected):
     return errors
 
 
-def main(raw_path, expected_path, audit_path):
+def main(raw_path, expected_path, audit_path, mode):
     raw_bytes = Path(raw_path).read_bytes()
     records = [json.loads(line) for line in raw_bytes.splitlines() if line]
     expected_bytes = Path(expected_path).read_bytes()
     expected = json.loads(expected_bytes)
     errors = audit(records, expected)
     fixtures = [r for r in records if r.get("event") == "fixture"]
-    synthetic_only = len(fixtures) == 1 and fixtures[0].get("synthetic_only") is True
+    marker_values = [r.get("synthetic_only") for r in fixtures]
+    if mode == "synthetic-cli":
+        synthetic_only = True
+        if (len(fixtures) != 1 or marker_values != [True]
+                or fixtures[0].get("evidence_mode") != "synthetic-cli"):
+            errors.append("synthetic-cli mode requires exactly one fixture marked synthetic_only=true")
+    else:
+        synthetic_only = False
+        if (len(fixtures) != 1 or fixtures[0].get("evidence_mode") != "formal-x11"
+                or any("synthetic_only" in fixture for fixture in fixtures)):
+            errors.append("formal-x11 mode requires exactly one explicit formal-x11 fixture without synthetic markers")
     pass_status = ("PASS_SYNTHETIC_RAW_ONLY_CLI_BOUNDARY" if synthetic_only
                    else "PASS_OWNER_THREAD_KEYUP_BRACKET_SCOPED")
     result = {"status": pass_status if not errors else "FAIL_AUDIT",
@@ -258,6 +268,6 @@ def main(raw_path, expected_path, audit_path):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 4:
-        raise SystemExit("usage: audit_formal_x11.py RAW.jsonl EXPECTED.json AUDIT.json")
+    if len(sys.argv) != 5 or sys.argv[4] not in ("formal-x11", "synthetic-cli"):
+        raise SystemExit("usage: audit_formal_x11.py RAW.jsonl EXPECTED.json AUDIT.json {formal-x11|synthetic-cli}")
     raise SystemExit(main(*sys.argv[1:]))

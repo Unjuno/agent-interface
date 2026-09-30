@@ -97,7 +97,7 @@ def main(out_path):
     admitted = {}
     explicit_joined = []
     try:
-        emit({"event": "fixture", "display": os.environ.get("DISPLAY"),
+        emit({"event": "fixture", "evidence_mode": "formal-x11", "display": os.environ.get("DISPLAY"),
                     "focus_window": window.id,
                     "allocation": os.environ.get("FORMAL_ALLOCATION", expected["allocation"]),
                     "frozen_main": os.environ.get("FORMAL_FROZEN_MAIN", expected["frozen_main"]),
