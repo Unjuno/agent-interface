@@ -100,5 +100,7 @@ keys = ("inventory.json", "runtime_evidence.json", "summary.json", "RESULT_STATU
 final_files = {key: FILES[key] for key in keys if key in FILES}
 event = {"pilot_exit": pilot_exit, "audit_exit": audit_exit, "files": final_files,
          "completed_call_events": emitted_calls, "completed_raw_rows": emitted_rows}
-LIVE_STDOUT.write("FINAL_EVENT:" + json.dumps(event, sort_keys=True, separators=(",", ":")) + "\n")
-LIVE_STDOUT.flush()
+final_payload = json.dumps(event, sort_keys=True, separators=(",", ":")).encode("utf-8")
+for frame in transport.encode_call(0, final_payload):
+    LIVE_STDOUT.write(frame + "\n")
+    LIVE_STDOUT.flush()
