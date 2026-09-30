@@ -1,0 +1,28 @@
+{
+  "allocation": "x11-server-grab-liveness-4297-20260924-02",
+  "changed_from_allocation_01": "atomic observer_ready/observer_started markers and parent waits observer_ready before owner grab; scientific schedules/gates unchanged",
+  "conditions": [
+    "NO_GRAB",
+    "HEALTHY_1MS",
+    "HEALTHY_20MS",
+    "KILL_OWNER_20MS",
+    "HUNG_OWNER_100MS_WATCHDOG"
+  ],
+  "construction": [
+    "allocation01 STOP_HARNESS_MARKER_RACE preserved",
+    "allocation02 construction-a02 STOP_OBSERVER_CONNECT_RACE",
+    "allocation02 construction-a02b PASS_EXCLUDED_HEALTHY20_FINAL_SOURCE"
+  ],
+  "formal_invocations_before_freeze": 0,
+  "formal_rows": 15,
+  "reps": 3,
+  "reruns_before_freeze": 0,
+  "source_sha256": {
+    "PLAN.md": "ca17a9001b60fa8e9084b3bea49753d4fdaa98cee410e75a0d339504ff427398",
+    "audit.py": "ee00827d78aa6d4138f437a6676c313fa62e65f89313873efc10a7d424778a7e",
+    "controls.py": "ed1c9999017ec098913a4c52f241cb097a8576150aaac58bf3bfc2aca2bb56ec",
+    "observer.py": "fa92bda93a502d36b3c5bedcb6972e9c2add12736ba0045ef86cc218ff1efd41",
+    "owner.py": "8268b7b60c5e065a9d70dc77e80aa90106fbb92eb2bb4bb55dc8c59f67131027",
+    "runner.py": "1ca85b3016d9615e9b2c916ae089184966374f1898565c3298e6cfe949885c8e"
+  }
+}
