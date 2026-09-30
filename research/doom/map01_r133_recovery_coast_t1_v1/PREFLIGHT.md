@@ -45,6 +45,7 @@ Run against the sparse local checkout of the exact base above; these checks do n
 | Existing scorer polling tests, WSL Ubuntu | 12/12 PASS | Fake I/O/pipe construction only |
 | Existing scorer file-adapter tests, WSL Ubuntu | 5/5 PASS | Retention/schema construction only |
 | Same polling/adapter tests, Windows | 1 failure in each file | Platform limitation: Python `select()` cannot watch these Windows pipes (`WinError 10093`); WSL reruns passed. Preserve this host-specific failure; do not count the native-Windows invocation as green. |
+| New integrated scorer-wait construction, WSL2/Linux CPython 3.12.3 | PASS | One real anonymous pipe delayed 350.323 ms; 13 samples, 0 missed periods; independent KILL/DEATH events at +86.094/+143.239 ms; command returned unchanged; separate raw-only audit passed and rejected all three frozen mutations. This is not MAP01/live/model or plan-actuation evidence. See [`scorer_wait_construction_v1/RESULT.md`](scorer_wait_construction_v1/RESULT.md). |
 
 These are existing component suites, not a new hypothesis result. No Docker command, image inspection, game process, model call, candidate, auditor, seed, or formal allocation was run.
 
