@@ -19,11 +19,4 @@
 Construction suite, run in the pinned image before the frozen candidate:
 
 ```sh
-python -B -m unittest discover -s tests -t . -p 'test_*.py' -v
-```
-
-Result: **12/12 passed** after checksum verification. The frozen candidate then ran once with `python -B run.py --output /out/raw.json --root /src`; exit code 0. A separate container ran `python -B audit.py --raw /out/raw.json --output /out/audit.json --root /src`; exit code 0. No retry or second candidate invocation occurred.
-
-Audit: zero errors; statuses `CONFORMANT=3`, `NONCONFORMANT=4`, `UNKNOWN=1`; all four mutation controls rejected. Raw result SHA-256: `f5036159dbe4d49a8da87b1baf74cb3028f86583a320d8166a7c9e39bee48e4b`. Independent audit SHA-256: `f497501dce122b613e10d842b31986205975ca451eb8b7ab39a5b2a74d875cb1`.
-
-STOP/failure record: none during the frozen run. Earlier pre-freeze construction-test failures and the corrected workflow/checksum design are retained in the task work history; no frozen result was overwritten.
+python -B -m unittest discover -s tests -t .
