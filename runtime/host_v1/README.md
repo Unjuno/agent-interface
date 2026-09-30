@@ -54,3 +54,21 @@ summary/image reviews, full receipt retrieval without input, and independent SVG
 validation. The exact requests are retained as an example, not portable screen
 coordinates or default waiting times. No comparison against unbatched use, token
 usage or human pace was measured.
+
+
+For Linux file-spooled host exchanges, the portable runtime also provides
+`publish-json --path /absolute/fresh-slot.json --value -` and the Python helper
+`runtime.host_v1.file_publication.publish_json`. Supply an already authored JSON
+value; no model, input or authority decision is provided. The existing directory
+must be caller-owned. The helper writes and fsyncs a private temporary file, then
+links the complete bytes exclusively to the final name and syncs the directory.
+A reader waiting on that final name cannot see its partial write. Existing slots
+are never overwritten. This is the unchanged native-exchange publication
+mechanism, exposed for host use.
+
+A post-link failure may leave a complete occupied slot even though the command
+returns exit 2. Inspect it and reconcile the original request; do not republish
+or replay input after an error/timeout. No filesystem-independent crash guarantee
+or producer authentication is implied. Windows/macOS host publication is not
+implemented; use this helper inside the Linux/WSL environment. The sequential
+stdio relay does not require a file-spooled decision.

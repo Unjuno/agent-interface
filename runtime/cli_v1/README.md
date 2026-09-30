@@ -601,3 +601,21 @@ unsupported records stay full; no input is replayed. Retention status remains
 outside the partial receipt. Summaries are not reversible receipts themselves.
 The existing MCP projection gates are shared. Smaller serialized metadata is
 not a measurement of model input tokens, cost or faster useful feedback.
+
+
+### Publishing a caller-authored host decision on Linux
+
+For a file-spooled host that waits for JSON at a known path, publish the complete
+value rather than writing directly to that visible filename:
+
+```sh
+python /absolute/runtime.pyz publish-json --path /absolute/new-review.json --value -
+```
+
+Supply the authored JSON on stdin (or a file via `--value`). The destination is
+exclusive and its parent must already exist. This is filesystem publication,
+not computer input or review validation. The receiving protocol still validates
+source identity and the decision. `publication_failed`/exit 2 requires
+reconciliation because a failure after linking may leave a complete occupied
+slot; never overwrite it or treat an error as permission to repeat an action.
+See [host publication](../host_v1/README.md) for its Linux-only scope.
