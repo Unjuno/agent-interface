@@ -128,3 +128,26 @@ because its navigation image was still blank; that timing difference prevents a
 causal speed or token-saving claim. Completed input/release does not acknowledge
 rendering. Review the returned image before the next input; if it is insufficient,
 request a fresh image on the same session rather than replaying the action.
+
+## When input release remains unverified
+
+On the public `persistent-x11` route, `recovery_required=true` blocks further
+programs. A synchronized release request is not enough to infer that input is
+neutral: a synchronous pointer grab can defer processing of a queued release.
+A later read showing an empty button mask does not clear the session's block.
+The [retained native discriminator](../results/x11-grab-recovery-01/README.md)
+checks this with a separate X connection; it does not identify the cause of every
+historical release failure.
+
+Inspect the retained failed receipt and resolve the condition holding input.
+Then explicitly call `interface_recover_input` with the open session's current
+binding revision. The call only attempts release of tracked inputs. If it returns
+`recovery_failed`, keep ordinary input stopped. Do not replay the old program.
+The interface does not take over another application's grab or silently retry.
+
+After `input_recovered`, use the returned new binding revision. Request or review
+a fresh observation before authoring a new program; the prior program may have
+already changed the application. Optional `target` and `region` request a capture
+after recovery. An unavailable capture does not undo the completed recovery;
+observe separately instead of repeating it. Recovery issues no new lease and
+proves neither task success nor redraw completion.
