@@ -1,0 +1,17 @@
+# Issue #5504 — counterexample-guided Verification IR refinement (T0)
+
+## H/T/D/C/U
+
+- **H:** On this frozen synthetic finite corpus, counterexample-guided refinement from replayable training cases can reduce held-out false admissions versus the deliberately coarse initial abstraction, without false rejections or UNKNOWN promotion, while using fewer checks than a predeclared over-specific static control.
+- **T:** Compare four arms on 8 training and 8 held-out cases: one-check `TARGET_CURRENT` coarse abstraction; CEGAR that adds one independently replayable missing check at a time; a fixed five-check complete ontology; and an eight-check over-specific static gate with three irrelevant receipt/clock attestations. Include authority revocation, target replacement/ambiguity, stale evidence receipts, unsafe external effects, two-node training and three-node held-out dependency cycles, malformed cases, and unresolved counterexamples. Candidate and raw-only auditor run once each in separate network-disabled Docker containers against the frozen corpus.
+- **D:** Scoped PASS only if CEGAR has fewer held-out false admissions than coarse and exactly zero; held-out false rejections are zero; both held-out UNKNOWNs stay UNKNOWN; no arm grants authority; every refinement has an exact replayable training parent and the independent auditor returns `PASS`; CEGAR uses fewer checks than the eight-check over-specific arm; and the fixed five-check arm agrees with the independent oracle on every case. Any violated safety gate is FAIL. If gates pass without a discrimination in false-admission count, classify UNCERTAIN.
+- **C:** A manually specified five-check ontology may be as good as CEGAR; the eight-check control is an intentionally stricter, over-specified comparator, not a universal baseline. Refinement rules may simply encode the authored fixture.
+- **U:** Synthetic 16-case corpus, no live verifier/runtime/GUI/model/user effect, no latency/cost/safety benefit, no ontology completeness or domain transfer claim. Training and held-out mutation families are related by predicate type; no independent human authored the oracle.
+
+## Frozen scope and execution
+
+The raw corpus is `cases.json`; split and case IDs are immutable for this allocation. The concrete oracle is authored in `oracle.py`; the candidate abstraction/refinement is in `harness.py` and `experiment.py`; the independent auditor is in `auditor.py` and imports no candidate module. All code, tests and raw input are SHA-256-bound by `FREEZE.json` before formal execution.
+
+Construction uses `python -B -m unittest -v` in a network-disabled container with read-only source and root mounts. Construction tests are not formal results. Formal execution is exactly one `run_candidate.py` invocation followed, only after exit 0, by exactly one separate `run_audit.py` invocation. Both use the same digest-pinned Python image, no network, read-only root/source, and a dedicated bounded writable output mount. Existing output causes a STOP; never retry, overwrite, tune or replace this allocation. Formal output lives under `results/t0/`.
+
+One earlier container launch failed before process start because PowerShell passed a quoted Windows path invalidly to Docker's mount parser. It is retained as transport evidence in `results/preflight/docker-mount-stop.json`; it is not a scientific result and is not counted as a formal attempt. A subsequent read-only construction-test invocation succeeded.

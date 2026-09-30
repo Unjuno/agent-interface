@@ -49,9 +49,30 @@ class CommittedTreeTests(unittest.TestCase):
         self.git('commit', '-qm', 'fixture', '--allow-empty')
 
     def run_checker(self, tree=False):
+        if tree:
+            return self.run_current(True)
+        # Independent filesystem reference for the supported-tree parity checks.
+        # Current main's default auto-Git behavior is tested separately below.
+        with patch.object(checker, 'top_level_dirs', lambda: {
+            p.name for p in self.root.iterdir()
+            if p.is_dir() and not p.name.startswith('.')
+        }):
+            return self.run_current()
+
+    def run_current(self, tree=False):
         with patch.object(checker, 'ROOT', self.root), patch.object(checker, 'INDEX_FILES', (self.root/'README.md', self.root/'ROOT_NAMESPACE_MAP.md')), patch('sys.argv', ['check_workspace_index.py'] + (['--git-tree'] if tree else [])), contextlib.redirect_stdout(io.StringIO()) as out, contextlib.redirect_stderr(io.StringIO()) as err:
             result = checker.main()
         return result, out.getvalue(), err.getvalue()
+
+    def test_current_default_git_discovery_is_preserved(self):
+        self.prepare()
+        (self.root/'untracked').mkdir()
+        self.assertEqual(self.run_current()[0],0)
+
+    def test_current_default_fallback_without_git_is_preserved(self):
+        self.prepare()
+        shutil.rmtree(self.repo/'.git')
+        self.assertEqual(self.run_current()[0],0)
 
     def test_same_commit_not_tampered_worktree(self):
         self.prepare()

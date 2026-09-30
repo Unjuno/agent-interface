@@ -141,6 +141,17 @@ def committed_inventory(repo: Path) -> tuple[set[str], tuple[str, str]]:
 
 
 def top_level_dirs() -> set[str]:
+    try:
+        result = subprocess.run(
+            ["git", "-C", str(ROOT), "ls-tree", "-d", "--name-only", "HEAD"],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        return {name for name in result.stdout.splitlines() if name and not name.startswith(".")}
+    except (OSError, subprocess.CalledProcessError):
+        # Keep direct script use functional outside a Git worktree.
+        pass
     return {
         path.name
         for path in ROOT.iterdir()
