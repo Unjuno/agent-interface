@@ -1,4 +1,5 @@
 # Issue #5236 formal successor 06
+> **Disposition correction:** The preserved output predates the Issue freeze and is `STOP_PROTOCOL_DEVIATION`; see [RESULT_DISPOSITION.md](RESULT_DISPOSITION.md). Its auditor's `FAIL_STALE_MAP_EFFECT` is diagnostic only, not a formal finding.
 
 This additive allocation probes an XKB layout change during the wait between two keyboard operations in one admitted X11 program. It preserves allocation01 and formal02–04 STOP results and their evidence. Formal02 found the child import-path defect; formal03 found missing Tcl/Tk libraries; formal04's Docker diagnostic isolated a missing pointer click to focus the fixture Entry. The separate local Docker diagnostic found no saved effect without the click and `{"saved": true, "text": "a"}` with the click. This successor includes the Entry click and an auditor that validates the exact `-c`/runpy bootstrap and Tk preflight records.
 
