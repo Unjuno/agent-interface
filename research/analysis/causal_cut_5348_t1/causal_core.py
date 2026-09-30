@@ -1,5 +1,4 @@
 """Candidate causal-cut certificate for a tiny asynchronous evidence corpus."""
-import itertools
 PROCESSES=("A","B")
 FRESH_AGE=1
 MAX_FRESH_AGE=2
@@ -44,7 +43,7 @@ def classify(events,cut,channel_states=None,metadata_complete=True):
  return "CONSISTENT"
 def decision_row(name,events,cut,channel_states=None,metadata_complete=True):
  selected=selected_events(events,cut);fresh=bool(selected) and all(e["freshness_age"]<=MAX_FRESH_AGE for e in selected);decision=classify(events,cut,channel_states,metadata_complete);streams={e["process"] for e in selected}
- return {"case":name,"cut":dict(cut),"selected_event_ids":[e["id"] for e in selected],"per_record_freshness_admits":fresh,"decision":decision,"certified_cross_source_claim":decision=="CONSISTENT" and len(streams)>=2,"channel_states":channel_states or {},"metadata_complete":metadata_complete}
+ return {"case":name,"cut":dict(cut),"selected_event_ids":[e["id"] for e in selected],"unique_received_message_ids":sorted({e["message"] for e in selected if e["kind"]=="RECEIVE"}),"per_record_freshness_admits":fresh,"decision":decision,"certified_cross_source_claim":decision=="CONSISTENT" and len(streams)>=2,"channel_states":channel_states or {},"metadata_complete":metadata_complete}
 def build_raw():
  rows=[]
  for name,events in topologies().items():
