@@ -51,6 +51,14 @@ The scoped O1/O2 studies and actual assistant use are summarized in the
 [research handoff](docs/LOCAL_RESEARCH_HANDOFF.md). Local feedback in tens of
 milliseconds has not yet produced a human-like end-to-end operating tempo.
 
+Public-path checkpoint (2026-09-30): [the retained six-task comparison](runtime/results/public-six-task-comparison-04/README.md)
+completed direct and guarded public MCP routes with six exact-once saves each.
+This fills the completed public direct-baseline accounting gap, while overall
+integration remains HOLD: one final image lacks the completion cue, image delivery
+and capture placement differ, and serial order plus growing context prevent causal
+speed/token ranking. Useful-feedback onset, broad reliability and human tempo
+remain open; the historical allocations and checklist below are unchanged.
+
 - [ ] Persistent asynchronous execution and incremental observations.
 - [ ] Bounded input holds, cancellation/release and stale-state handling.
 - [ ] Guarded local progress that eliminates unnecessary agent/tool round trips.
