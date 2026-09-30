@@ -19,7 +19,7 @@ from runtime.backends.x11_v1.session import X11RuntimeSession
 ROWS = (("control_us", "us", None), ("jp_to_us", "jp", "us"), ("us_to_jp", "us", "jp"))
 
 
-def run_row(row: str, initial: str, target: str | None) -> dict:
+def run_row(row: str, initial: str, target: str | None, post_save_wait_ms: int = 0) -> dict:
     with tempfile.TemporaryDirectory(prefix="issue5236-remap-diag-") as temp:
         root = Path(temp)
         log = (root / "xvfb.log").open("wb")
@@ -59,23 +59,26 @@ def run_row(row: str, initial: str, target: str | None) -> dict:
             actor_path = root / "actor.json"
             if target:
                 actor = subprocess.Popen([sys.executable, "-c", actor_code, display, target, str(actor_path)], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            ops = [
+                {"op": "focus", "target": "fixture"},
+                {"op": "pointer_move", "target": "fixture", "frame": "window_client", "x": 50, "y": 55},
+                {"op": "pointer_button", "button": "left", "down": True},
+                {"op": "pointer_button", "button": "left", "down": False},
+                {"op": "text", "text": "a"},
+                {"op": "wait_update", "timeout_ms": 1500},
+                {"op": "text", "text": "_"},
+                {"op": "key_chord", "keys": ["CTRL", "S"]},
+            ]
+            if post_save_wait_ms:
+                ops.append({"op": "wait_update", "timeout_ms": post_save_wait_ms})
+            ops.append({"op": "release_all"})
             program = {
                 "schema": "agent-interface/program-v1",
                 "program_id": "issue5236-docker-remap-diag-" + row,
                 "source": {"observation_seq": 7, "binding_revision": 3},
                 "authority": {"lease_id": "diagnostic-only", "expires_at_ns": time.monotonic_ns() + 30_000_000_000},
                 "terminal": {"release_all_required": True},
-                "ops": [
-                    {"op": "focus", "target": "fixture"},
-                    {"op": "pointer_move", "target": "fixture", "frame": "window_client", "x": 50, "y": 55},
-                    {"op": "pointer_button", "button": "left", "down": True},
-                    {"op": "pointer_button", "button": "left", "down": False},
-                    {"op": "text", "text": "a"},
-                    {"op": "wait_update", "timeout_ms": 1500},
-                    {"op": "text", "text": "_"},
-                    {"op": "key_chord", "keys": ["CTRL", "S"]},
-                    {"op": "release_all"},
-                ],
+                "ops": ops,
             }
             started = time.monotonic_ns()
             dispatch = session.dispatch(program, current_observation_seq=7, current_binding_revision=3)
@@ -84,6 +87,7 @@ def run_row(row: str, initial: str, target: str | None) -> dict:
             final_layout = subprocess.run(["setxkbmap", "-display", display, "-query"], capture_output=True, text=True)
             return {
                 "row": row, "initial": initial, "target": target, "layout_after": final_layout.stdout,
+                "post_save_wait_ms": post_save_wait_ms,
                 "dispatch_status": dispatch.get("status"), "completed_ops": dispatch.get("execution", {}).get("completed_ops"),
                 "release_verified": dispatch.get("execution", {}).get("releases", [{}])[-1].get("verified"),
                 "started_ns": started, "ended_ns": ended, "actor": json.loads(actor_path.read_text()) if actor_path.exists() else None,
