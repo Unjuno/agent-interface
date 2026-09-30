@@ -96,7 +96,7 @@ class NativeHandleBridge:
         self.backend = _GuardedBackend(display_name, dict(targets))
         self.backend.owner = self
         try:
-            self.backend.configure_capture_artifacts(self.out / "images")
+            self.backend.configure_capture_artifacts(self.out / "images", retain_rgb=True)
             self.session = X11RuntimeSession(self.backend)
         except Exception:
             self.backend.close()
@@ -157,13 +157,15 @@ class NativeHandleBridge:
                 artifact["source_raw_sha256"] != native["sha256"]):
             raise X11BackendError("native artifact identity mismatch")
         artifact_verified_ns = time.monotonic_ns()
-        with Image.open(io.BytesIO(data)) as opened:
-            image = opened.convert("RGB")
+        # Use the very RGB pixels that produced this verified PNG. No new
+        # capture, older-frame reuse or reduced target revalidation occurs.
+        image = self.backend.take_capture_rgb(artifact)
         decoded_ns = time.monotonic_ns()
         self.sequence += 1
         observation = {"sequence": self.sequence, "observation_id": report["observation_id"],
                        "binding_revision": self.binding_revision,
                        "capture_ns": native["capture_started_ns"],
+                       "image_source": "exact_capture_rgb_handoff",
                        "pointer_binding": before, "native": native,
                        # Ends before history publication; not model-visible latency.
                        "timing_ns": {"started": started_ns,
