@@ -247,3 +247,12 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 - [`procedural_control_arena_v1/`](procedural_control_arena_v1/) - Procedural control arena v1 construction environment; see README and VALIDATION for scope and open promotion gates.
 
 - [`kernel_receipt_time_5215_20260928/`](kernel_receipt_time_5215_20260928/) — Issue #5215 kernel receipt timestamp construction probe; consult PLAN and REPORT for its contract-only scope and limitations.
+
+
+### Issue #5236 X11 keymap STOP evidence
+
+- [`x11_midprogram_keymap_5236_formal02_20260930/`](x11_midprogram_keymap_5236_formal02_20260930/) — Formal02 import-path STOP.
+- [`x11_midprogram_keymap_5236_formal03_20260930/`](x11_midprogram_keymap_5236_formal03_20260930/) — Formal03 missing-Tk-runtime STOP.
+- [`x11_midprogram_keymap_5236_formal04_20260930/`](x11_midprogram_keymap_5236_formal04_20260930/) — Formal04 fixture-focus/effect STOP.
+- [`x11_midprogram_keymap_5236_formal05_20260930/`](x11_midprogram_keymap_5236_formal05_20260930/) — Formal05 missing completed effects STOP.
+- [`x11_midprogram_keymap_docker_diagnostic_20260930/`](x11_midprogram_keymap_docker_diagnostic_20260930/) — nonformal local Docker focus-versus-click diagnostic.
