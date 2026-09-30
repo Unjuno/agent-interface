@@ -7,8 +7,8 @@ MAX_PAYLOAD_BYTES = 128 * 1024
 
 
 def encode_call(call_index: int, payload: bytes) -> list[str]:
-    if not 1 <= call_index <= 6:
-        raise ValueError("call index outside frozen six-call allocation")
+    if not 0 <= call_index <= 6:
+        raise ValueError("event index must be 0 (final event) or a frozen call 1..6")
     if not isinstance(payload, bytes) or not payload or len(payload) > MAX_PAYLOAD_BYTES:
         raise ValueError("invalid payload length")
     chunks = [payload[i:i + CHUNK_BYTES] for i in range(0, len(payload), CHUNK_BYTES)]
@@ -27,6 +27,8 @@ def decode_call(lines: list[str], expected_call: int) -> bytes:
     try:
         h = lines[0].split(":")
         s = lines[1].split(":")
+        if not 0 <= expected_call <= 6:
+            raise ValueError("event index out of range")
         if len(h) != 4 or h[:2] != ["H1", str(expected_call)]:
             raise ValueError("bad header")
         count, size = int(h[2]), int(h[3])
