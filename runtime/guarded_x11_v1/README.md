@@ -117,3 +117,5 @@ stop. Scheduling or blocking X11 calls can delay detection and physical release.
 It adds no continuous focus sensor or autonomous input owner. The ordinary X11
 backend's fixed-delay behavior and admission-only lease check are unchanged.
 A completed fixed delay still does not acknowledge application redraw.
+
+Guarded observations use the RGB pixels from the current PNG producer after verifying that saved PNG and its raw-capture link. The private handoff is consumed once; fresh capture and every guard check remain. [Primary use and retained checks](../results/capture-rgb-handoff-01/README.md) documents the removed decode round trip, corruption refusals and timing limits.

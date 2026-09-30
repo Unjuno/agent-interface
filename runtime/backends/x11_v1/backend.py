@@ -43,9 +43,9 @@ class X11Backend:
         self.emissions = 0
         self.capture_artifacts = None
 
-    def configure_capture_artifacts(self, directory) -> None:
+    def configure_capture_artifacts(self, directory, *, retain_rgb=False) -> None:
         from .capture_artifacts import CaptureArtifacts
-        self.capture_artifacts = CaptureArtifacts(directory)
+        self.capture_artifacts = CaptureArtifacts(directory, retain_rgb=retain_rgb)
 
     def observe_read_only(self, target, frame, region):
         # Unlike a program's focus/observe sequence this does not change focus,
@@ -306,7 +306,12 @@ class X11Backend:
             self.emissions += 2
         self.d.sync()
 
+    def take_capture_rgb(self, artifact):
+        return self.capture_artifacts.take_rgb(artifact)
+
     def capture(self, target: str, frame: str, x: int, y: int, w: int, h: int) -> dict[str, Any]:
+        if self.capture_artifacts is not None:
+            self.capture_artifacts.discard_rgb()
         win = self._target(target)
         if frame == "window_client":
             source, sx, sy = win, x, y
