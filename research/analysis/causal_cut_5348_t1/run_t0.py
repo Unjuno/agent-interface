@@ -1,7 +1,7 @@
 """One-shot exhaustive prefix-cut replay for Issue #5348 T1."""
 import json,platform,sys
 from causal_core import build_raw
-CORE_GIT_BLOB_SHA="302595c32bdfffc88b54c78c3fc4f54ac4e5c03e"
+CORE_GIT_BLOB_SHA="d26f28200ff6c50b60d8984978ad14431df67470"
 def main():
  raw=build_raw();raw["source_identity"]["core_git_blob_sha"]=CORE_GIT_BLOB_SHA
  raw["runtime"]={"python":platform.python_version(),"platform":sys.platform,"container":False,"output_file_written":False};raw["disposition"]="PASS_CAUSAL_CUT_CONSTRUCTION_SCOPED"
