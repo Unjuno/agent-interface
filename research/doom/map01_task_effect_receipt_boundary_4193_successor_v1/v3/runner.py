@@ -28,6 +28,14 @@ def parse_lines(values):
     return [json.loads(line) for line in values]
 
 
+def contains_key(value, target):
+    if isinstance(value, dict):
+        return target in value or any(contains_key(item, target) for item in value.values())
+    if isinstance(value, list):
+        return any(contains_key(item, target) for item in value)
+    return False
+
+
 def inspect_session(name, session):
     events = parse_lines(session["events_exact_jsonl"])
     samples = parse_lines(session["scorer_samples_exact_jsonl"])
@@ -65,8 +73,8 @@ def inspect_session(name, session):
         "any_map_exit": any(bool(p["map_exit"]) for p in payloads),
         "positive_endpoint_count": len(positive),
         "positive_endpoints": positive,
-        "native_source_event_id_present": any("source_event_id" in e for e in events),
-        "native_scorer_event_id_present": any("scorer_event_id" in e for e in events),
+        "native_source_event_id_present": contains_key(session, "source_event_id"),
+        "native_scorer_event_id_present": contains_key(session, "scorer_event_id"),
     }
 
     if name.endswith("-attack"):
@@ -81,9 +89,15 @@ def inspect_session(name, session):
         checks = {
             "down_confirmed": down.get("status") == "CONFIRMED_PHYSICAL_DOWN",
             "up_confirmed": up.get("status") == "CONFIRMED_PHYSICAL_UP",
+            "down_adapter_edge_confirmed": down_edge.get("edge") == "down" and down_edge.get("status") == "CONFIRMED_PHYSICAL_DOWN",
+            "up_adapter_edge_confirmed": up_edge.get("edge") == "up" and up_edge.get("status") == "CONFIRMED_PHYSICAL_UP",
             "press_id_present": bool(down.get("press_id")),
             "release_id_present": bool(up.get("release_id")),
+            "actuation_id_present": bool(down_edge.get("actuation_id")),
             "actuation_id_equal": down_edge.get("actuation_id") == up_edge.get("actuation_id"),
+            "owner_id_present": bool(down.get("owner_id")),
+            "intent_token_present": bool(down.get("intent_token")),
+            "key_present": bool(down.get("key")),
             "owner_id_equal": down.get("owner_id") == up.get("owner_id") == down_edge.get("owner_id") == up_edge.get("owner_id"),
             "intent_token_equal": down.get("intent_token") == up.get("intent_token") == down_edge.get("intent_token") == up_edge.get("intent_token"),
             "key_equal": down.get("key") == up.get("key") == down_edge.get("key") == up_edge.get("key"),

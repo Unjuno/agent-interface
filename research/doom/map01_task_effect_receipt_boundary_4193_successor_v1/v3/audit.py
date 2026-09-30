@@ -23,6 +23,14 @@ def decode(path):
     return decoded
 
 
+def contains_key(value, target):
+    if isinstance(value, dict):
+        return target in value or any(contains_key(item, target) for item in value.values())
+    if isinstance(value, list):
+        return any(contains_key(item, target) for item in value)
+    return False
+
+
 def verify_session(key, value, recorded):
     events = [json.loads(row) for row in value["events_exact_jsonl"]]
     samples = [json.loads(row)["payload"] for row in value["scorer_samples_exact_jsonl"]]
@@ -46,8 +54,8 @@ def verify_session(key, value, recorded):
         prior_exit = now_exit
     assert recorded["positive_endpoint_count"] == len(locators)
     assert [item["locator"] for item in recorded["positive_endpoints"]] == locators
-    assert recorded["native_source_event_id_present"] == any("source_event_id" in e for e in events)
-    assert recorded["native_scorer_event_id_present"] == any("scorer_event_id" in e for e in events)
+    assert recorded["native_source_event_id_present"] == contains_key(value, "source_event_id")
+    assert recorded["native_scorer_event_id_present"] == contains_key(value, "scorer_event_id")
 
     if key.endswith("-attack"):
         down_events = [e for e in events if e.get("event") == "input_admission"]
@@ -60,9 +68,15 @@ def verify_session(key, value, recorded):
         expected = {
             "down_confirmed": db["status"] == "CONFIRMED_PHYSICAL_DOWN",
             "up_confirmed": ub["status"] == "CONFIRMED_PHYSICAL_UP",
+            "down_adapter_edge_confirmed": de["edge"] == "down" and de["status"] == "CONFIRMED_PHYSICAL_DOWN",
+            "up_adapter_edge_confirmed": ue["edge"] == "up" and ue["status"] == "CONFIRMED_PHYSICAL_UP",
             "press_id_present": bool(db.get("press_id")),
             "release_id_present": bool(ub.get("release_id")),
+            "actuation_id_present": bool(de.get("actuation_id")),
             "actuation_id_equal": de["actuation_id"] == ue["actuation_id"],
+            "owner_id_present": bool(db.get("owner_id")),
+            "intent_token_present": bool(db.get("intent_token")),
+            "key_present": bool(db.get("key")),
             "owner_id_equal": db["owner_id"] == ub["owner_id"] == de["owner_id"] == ue["owner_id"],
             "intent_token_equal": db["intent_token"] == ub["intent_token"] == de["intent_token"] == ue["intent_token"],
             "key_equal": db["key"] == ub["key"] == de["key"] == ue["key"],
