@@ -31,7 +31,7 @@ def audit_data(data: dict, input_bytes: bytes, raw: dict, candidate_bytes: bytes
         errors.append("input_hash")
     if raw.get("candidate_sha256") != hashlib.sha256(candidate_bytes).hexdigest():
         errors.append("candidate_hash")
-    if raw.get("base_main_sha") != "cbca212667bc0c256184ef71bd8c1000d8c9a8aa":
+    if raw.get("base_main_sha") != "ffb0d43b5f0408011a3f70223da43d4aa3f27fe4":
         errors.append("base_main_sha")
     if raw.get("container") != {
         "image": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
