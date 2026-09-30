@@ -101,3 +101,30 @@ records both routes at 6/6 exact once, changed-layout refusal and explicit recov
 and a successful submission whose captured image still lacked the final completion
 cue. Timing, primary caller failures and unmatched lookup-image accounting remain
 scoped; the result does not prove human tempo or token savings.
+
+## Cropped feedback and click coordinates
+
+After inspecting the target layout, an explicit smaller `observe` region can
+keep the field, button and completion cue together. For a capture in
+`screen_physical_px` with returned region `[left, top, width, height]`, a point
+`[u, v]` in the delivered image maps to screen `[left + u, top + v]`. Pointer
+operations in `screen_physical_px` still use those screen coordinates. Cropping
+does not move the target or change the pointer coordinate frame. This formula
+assumes the original image pixel dimensions; account for any host display scaling
+before choosing image coordinates. Do not apply a screen origin to a
+`window_client` capture; that is a different coordinate frame.
+
+For example, the retained private browser task used region `[10,154,1050,400]`.
+Its Save center at image `[365,247]` mapped to screen `[375,401]`. These are
+fixture-specific numbers, not reusable target coordinates. Read the current
+capture metadata and keep the cues needed for the next decision inside the crop.
+A crop excluding the address bar is unsuitable when navigation identity is part
+of the task. Widen an observation explicitly when required context is missing.
+
+[Primary full/ROI comparison](../results/primary-roi-feedback-01/README.md)
+records correct one-time saves in both fresh sessions and 59% fewer pixels in
+the three cropped dispatch captures. The full route needed one explicit requery
+because its navigation image was still blank; that timing difference prevents a
+causal speed or token-saving claim. Completed input/release does not acknowledge
+rendering. Review the returned image before the next input; if it is insufficient,
+request a fresh image on the same session rather than replaying the action.
