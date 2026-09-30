@@ -64,6 +64,22 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Research evidence ladder
 
+### Issue #5385 — bounded active lifecycle discovery (PASS_BOUNDED_DISCOVERY_ONLY)
+
+A frozen local-CPU L*-style observation-table learner separated all four named
+lifecycle states in a six-state deterministic oracle. Across the finite
+target/hypothesis product it used 187 membership queries, 3 equivalence queries
+and checked 18 product pairs; counterexamples were EC and ERBP. A deliberately
+coarse hand suite matched a mutant that admitted the shortest missing unsafe
+trace EBP. The separate raw-only audit reported errors=[] and rejected 4/4
+corruptions. Raw SHA-256 is
+`6b10540abad66c336e5ce446045ebc716043824b06aab7da75a293dc2cce4037`.
+This is only a closed synthetic DFA result, not runtime discovery, authority
+safety, or product evidence. The preferred container rung was unavailable
+because #5085 withheld Docker CLI use absent an exact lease; no Docker/GPU/model
+call was made. See the [full #5385 T0 report](research/analysis/active_lifecycle_learning_5385_t0_v1/REPORT.md).
+
+
 ### Issue #5346 — stigmergic coordination T1 stopped for invalid lease timing
 (`STOP_HARNESS_INVALID`; Issue remains open)
 
