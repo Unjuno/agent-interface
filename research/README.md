@@ -192,7 +192,7 @@ A directory existing here does **not** mean its mechanism is promoted. Negative 
 - [`x11_midprogram_keymap_5236_formal03_20260930/`](x11_midprogram_keymap_5236_formal03_20260930/) — Formal03 STOP: missing Tk runtime library prevented fixture startup.
 - [`x11_midprogram_keymap_5236_formal04_20260930/`](x11_midprogram_keymap_5236_formal04_20260930/) — Formal04 STOP: focused root did not receive fixture key input/effects.
 - [`x11_midprogram_keymap_5236_formal05_20260930/`](x11_midprogram_keymap_5236_formal05_20260930/) — Formal05 STOP: click/input reached fixture but completed effects were missing; see immutable STOP record.
-- [`x11_midprogram_keymap_5236_formal06_20261001/`](x11_midprogram_keymap_5236_formal06_20261001/) — Formal06 one-shot Arch WSL2 `FAIL_STALE_MAP_EFFECT`; raw/wrapper and independent audit retained.
+- [`x11_midprogram_keymap_5236_formal06_20261001/`](x11_midprogram_keymap_5236_formal06_20261001/) — Formal06 `STOP_PROTOCOL_DEVIATION`: raw predates freeze; auditor mismatch is diagnostic only. See `RESULT_DISPOSITION.md`.
 - [`x11_midprogram_keymap_docker_diagnostic_20260930/`](x11_midprogram_keymap_docker_diagnostic_20260930/) — Nonformal Docker focus-versus-click diagnostic; not evidence for the formal hypothesis.
 
 - [`aoi_43_t0/`](aoi_43_t0/) — #43 retained toy construction; [accounting-defect/HOLD correction](aoi_43_t0/README.md): identical queue policies and incomparable drop counters; no demonstrated critical-retention benefit.
