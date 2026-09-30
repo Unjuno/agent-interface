@@ -1,0 +1,125 @@
+{
+  "allocation": "conformal-risk-5315-v01-20260930-01",
+  "alpha": 0.1,
+  "rows": 20000,
+  "sample_sizes": [
+    4,
+    10
+  ],
+  "seed": 5315,
+  "summary": {
+    "n10/id/conformal": {
+      "empty_rate": 0.0159,
+      "mean_set_size": 1.807,
+      "singleton_rate": 0.1612,
+      "trials": 10000,
+      "true_inclusion_rate": 0.9025,
+      "wrong_singleton_rate": 0.0816
+    },
+    "n10/id/plugin": {
+      "empty_rate": 0.0475,
+      "mean_set_size": 1.6225,
+      "singleton_rate": 0.2825,
+      "trials": 10000,
+      "true_inclusion_rate": 0.8125,
+      "wrong_singleton_rate": 0.14
+    },
+    "n10/id/raw": {
+      "empty_rate": 0.0373,
+      "mean_set_size": 1.6103,
+      "singleton_rate": 0.3151,
+      "trials": 10000,
+      "true_inclusion_rate": 0.8053,
+      "wrong_singleton_rate": 0.1574
+    },
+    "n10/shift/conformal": {
+      "empty_rate": 0.052,
+      "mean_set_size": 1.6612,
+      "singleton_rate": 0.2348,
+      "trials": 10000,
+      "true_inclusion_rate": 0.8261,
+      "wrong_singleton_rate": 0.1219
+    },
+    "n10/shift/known_shift_contract": {
+      "empty_rate": 0.0,
+      "mean_set_size": 2.0,
+      "singleton_rate": 0.0,
+      "trials": 10000,
+      "true_inclusion_rate": 1.0,
+      "wrong_singleton_rate": 0.0
+    },
+    "n10/shift/plugin": {
+      "empty_rate": 0.1304,
+      "mean_set_size": 1.3647,
+      "singleton_rate": 0.3745,
+      "trials": 10000,
+      "true_inclusion_rate": 0.6746,
+      "wrong_singleton_rate": 0.195
+    },
+    "n10/shift/raw": {
+      "empty_rate": 0.119,
+      "mean_set_size": 1.3106,
+      "singleton_rate": 0.4514,
+      "trials": 10000,
+      "true_inclusion_rate": 0.6468,
+      "wrong_singleton_rate": 0.2342
+    },
+    "n4/id/conformal": {
+      "empty_rate": 0.0,
+      "mean_set_size": 2.0,
+      "singleton_rate": 0.0,
+      "trials": 10000,
+      "true_inclusion_rate": 1.0,
+      "wrong_singleton_rate": 0.0
+    },
+    "n4/id/plugin": {
+      "empty_rate": 0.0676,
+      "mean_set_size": 1.6013,
+      "singleton_rate": 0.2635,
+      "trials": 10000,
+      "true_inclusion_rate": 0.8005,
+      "wrong_singleton_rate": 0.1319
+    },
+    "n4/id/raw": {
+      "empty_rate": 0.0364,
+      "mean_set_size": 1.6213,
+      "singleton_rate": 0.3059,
+      "trials": 10000,
+      "true_inclusion_rate": 0.8156,
+      "wrong_singleton_rate": 0.148
+    },
+    "n4/shift/conformal": {
+      "empty_rate": 0.0,
+      "mean_set_size": 2.0,
+      "singleton_rate": 0.0,
+      "trials": 10000,
+      "true_inclusion_rate": 1.0,
+      "wrong_singleton_rate": 0.0
+    },
+    "n4/shift/known_shift_contract": {
+      "empty_rate": 0.0,
+      "mean_set_size": 2.0,
+      "singleton_rate": 0.0,
+      "trials": 10000,
+      "true_inclusion_rate": 1.0,
+      "wrong_singleton_rate": 0.0
+    },
+    "n4/shift/plugin": {
+      "empty_rate": 0.1659,
+      "mean_set_size": 1.3284,
+      "singleton_rate": 0.3398,
+      "trials": 10000,
+      "true_inclusion_rate": 0.6623,
+      "wrong_singleton_rate": 0.1718
+    },
+    "n4/shift/raw": {
+      "empty_rate": 0.121,
+      "mean_set_size": 1.2998,
+      "singleton_rate": 0.4582,
+      "trials": 10000,
+      "true_inclusion_rate": 0.6466,
+      "wrong_singleton_rate": 0.2324
+    }
+  },
+  "trials_per_sample_size": 10000
+}

@@ -79,6 +79,21 @@ authority, task-effect, SLA, or product claim follows. See
 for H/T/D/C/U, hashes, and raw/audit records. Issue #5269 remains open pending
 a frozen bridge with #5266/#5273.
 
+### Issue #5315 — finite-sample conformal verifier contract first unit (scoped PASS; Issue HOLD)
+
+One no-model, pinned-Image OrbStack simulation ran 20,000 IID calibration/test
+replicates at sample sizes 4 and 10 and separately applied a known score shift.
+The rank-above-sample-size case returned the full outcome set (no singleton);
+at n=10, split-conformal true-label inclusion was 90.25% IID and 82.61% after
+the declared shift, versus a 90% target. An oracle-provided SHIFT_DETECTED
+control returned the full set but did not test shift detection. The first raw
+auditor's mutation self-test failed as a no-op and remains preserved; an
+additive, separately frozen raw-only audit of the identical bytes passed all
+rows, aggregates, analytic bounds, and mutation controls. This is finite
+synthetic score-law evidence only. It does not establish real verifier risk,
+adaptive exchangeability, a shift detector, or a deployed certificate. Issue
+#5315 remains open. See the full [H/T/D/C/U report and raw evidence](research/analysis/conformal_verifier_risk_contract_5315_v1/REPORT.md).
+
 ### Issue #4563 — controlled MAP01 clock-boundary raw-audit addendum
 
 An independent raw-only audit rechecked the retained −1/0/+1 ns controlled
