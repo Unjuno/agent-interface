@@ -1,0 +1,652 @@
+{
+  "cases": {
+    "bounded_safe": {
+      "input": {
+        "forbidden": [],
+        "goals": [
+          "DONE"
+        ],
+        "initial": "A",
+        "model": [
+          {
+            "action": "advance",
+            "state": "A",
+            "successors": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "action": "recover",
+            "state": "B",
+            "successors": [
+              "RECOVER"
+            ]
+          },
+          {
+            "action": "recover",
+            "state": "C",
+            "successors": [
+              "RECOVER"
+            ]
+          }
+        ],
+        "model_quality": "bounded",
+        "plan": [
+          "advance"
+        ],
+        "recoveries": [
+          "RECOVER"
+        ],
+        "truth": [
+          {
+            "action": "advance",
+            "state": "A",
+            "successors": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "action": "recover",
+            "state": "B",
+            "successors": [
+              "RECOVER"
+            ]
+          },
+          {
+            "action": "recover",
+            "state": "C",
+            "successors": [
+              "RECOVER"
+            ]
+          }
+        ]
+      },
+      "policies": {
+        "HORIZON_FILTER": {
+          "admitted": true,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": false,
+          "reason": "HORIZON_SAFE",
+          "stranded": false,
+          "unsafe_prefix": false
+        },
+        "ONE_STEP_FILTER": {
+          "admitted": true,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": false,
+          "reason": "ONE_STEP_SAFE",
+          "stranded": false,
+          "unsafe_prefix": false
+        },
+        "POSTHOC_VERIFY": {
+          "admitted": true,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": false,
+          "reason": "EXECUTE_THEN_CHECK",
+          "stranded": false,
+          "unsafe_prefix": false
+        },
+        "UNKNOWN_FAIL_CLOSED": {
+          "admitted": false,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": false,
+          "reason": "MODEL_NOT_EXACT",
+          "stranded": false,
+          "unsafe_prefix": false
+        },
+        "VIABILITY_FILTER": {
+          "admitted": true,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": false,
+          "reason": "ALL_PREFIXES_VIABLE",
+          "stranded": false,
+          "unsafe_prefix": false
+        }
+      }
+    },
+    "bounded_with_bad_outcome": {
+      "input": {
+        "forbidden": [
+          "BAD"
+        ],
+        "goals": [
+          "DONE"
+        ],
+        "initial": "A",
+        "model": [
+          {
+            "action": "advance",
+            "state": "A",
+            "successors": [
+              "B",
+              "BAD"
+            ]
+          }
+        ],
+        "model_quality": "bounded",
+        "plan": [
+          "advance"
+        ],
+        "recoveries": [
+          "RECOVER"
+        ],
+        "truth": [
+          {
+            "action": "advance",
+            "state": "A",
+            "successors": [
+              "B",
+              "BAD"
+            ]
+          }
+        ]
+      },
+      "policies": {
+        "HORIZON_FILTER": {
+          "admitted": false,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": false,
+          "reason": "BLOCKED_UNSAFE_PREFIX",
+          "stranded": false,
+          "unsafe_prefix": false
+        },
+        "ONE_STEP_FILTER": {
+          "admitted": false,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": false,
+          "reason": "BLOCKED_UNSAFE_OR_UNKNOWN_NEXT",
+          "stranded": false,
+          "unsafe_prefix": false
+        },
+        "POSTHOC_VERIFY": {
+          "admitted": true,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": false,
+          "reason": "EXECUTE_THEN_CHECK",
+          "stranded": true,
+          "unsafe_prefix": true
+        },
+        "UNKNOWN_FAIL_CLOSED": {
+          "admitted": false,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": false,
+          "reason": "MODEL_NOT_EXACT",
+          "stranded": false,
+          "unsafe_prefix": false
+        },
+        "VIABILITY_FILTER": {
+          "admitted": false,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": false,
+          "reason": "BLOCKED_NO_VIABLE_RECOVERY",
+          "stranded": false,
+          "unsafe_prefix": false
+        }
+      }
+    },
+    "dead_end": {
+      "input": {
+        "forbidden": [],
+        "goals": [
+          "DONE"
+        ],
+        "initial": "A",
+        "model": [
+          {
+            "action": "close_backup",
+            "state": "A",
+            "successors": [
+              "STRANDED"
+            ]
+          }
+        ],
+        "model_quality": "exact",
+        "plan": [
+          "close_backup"
+        ],
+        "recoveries": [
+          "RECOVER"
+        ],
+        "truth": [
+          {
+            "action": "close_backup",
+            "state": "A",
+            "successors": [
+              "STRANDED"
+            ]
+          }
+        ]
+      },
+      "policies": {
+        "HORIZON_FILTER": {
+          "admitted": true,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": false,
+          "reason": "HORIZON_SAFE",
+          "stranded": true,
+          "unsafe_prefix": false
+        },
+        "ONE_STEP_FILTER": {
+          "admitted": true,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": false,
+          "reason": "ONE_STEP_SAFE",
+          "stranded": true,
+          "unsafe_prefix": false
+        },
+        "POSTHOC_VERIFY": {
+          "admitted": true,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": false,
+          "reason": "EXECUTE_THEN_CHECK",
+          "stranded": true,
+          "unsafe_prefix": false
+        },
+        "UNKNOWN_FAIL_CLOSED": {
+          "admitted": true,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": false,
+          "reason": "KNOWN_SAFE_WITHIN_HORIZON",
+          "stranded": true,
+          "unsafe_prefix": false
+        },
+        "VIABILITY_FILTER": {
+          "admitted": false,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": false,
+          "reason": "BLOCKED_NO_VIABLE_RECOVERY",
+          "stranded": false,
+          "unsafe_prefix": false
+        }
+      }
+    },
+    "missing_transition": {
+      "input": {
+        "forbidden": [],
+        "goals": [
+          "DONE"
+        ],
+        "initial": "A",
+        "model": [],
+        "model_quality": "missing",
+        "plan": [
+          "act"
+        ],
+        "recoveries": [
+          "RECOVER"
+        ],
+        "truth": [
+          {
+            "action": "act",
+            "state": "A",
+            "successors": [
+              "DONE"
+            ]
+          }
+        ]
+      },
+      "policies": {
+        "HORIZON_FILTER": {
+          "admitted": false,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": false,
+          "reason": "UNKNOWN_REACHABILITY",
+          "stranded": false,
+          "unsafe_prefix": false
+        },
+        "ONE_STEP_FILTER": {
+          "admitted": false,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": false,
+          "reason": "UNKNOWN_REACHABILITY",
+          "stranded": false,
+          "unsafe_prefix": false
+        },
+        "POSTHOC_VERIFY": {
+          "admitted": true,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": true,
+          "reason": "EXECUTE_THEN_CHECK",
+          "stranded": false,
+          "unsafe_prefix": false
+        },
+        "UNKNOWN_FAIL_CLOSED": {
+          "admitted": false,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": false,
+          "reason": "UNKNOWN_REACHABILITY",
+          "stranded": false,
+          "unsafe_prefix": false
+        },
+        "VIABILITY_FILTER": {
+          "admitted": false,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": false,
+          "reason": "UNKNOWN_REACHABILITY",
+          "stranded": false,
+          "unsafe_prefix": false
+        }
+      }
+    },
+    "safe_goal": {
+      "input": {
+        "forbidden": [],
+        "goals": [
+          "DONE"
+        ],
+        "initial": "A",
+        "model": [
+          {
+            "action": "advance",
+            "state": "A",
+            "successors": [
+              "B"
+            ]
+          },
+          {
+            "action": "backtrack",
+            "state": "B",
+            "successors": [
+              "RECOVER"
+            ]
+          },
+          {
+            "action": "finish",
+            "state": "B",
+            "successors": [
+              "DONE"
+            ]
+          }
+        ],
+        "model_quality": "exact",
+        "plan": [
+          "advance",
+          "finish"
+        ],
+        "recoveries": [
+          "RECOVER"
+        ],
+        "truth": [
+          {
+            "action": "advance",
+            "state": "A",
+            "successors": [
+              "B"
+            ]
+          },
+          {
+            "action": "backtrack",
+            "state": "B",
+            "successors": [
+              "RECOVER"
+            ]
+          },
+          {
+            "action": "finish",
+            "state": "B",
+            "successors": [
+              "DONE"
+            ]
+          }
+        ]
+      },
+      "policies": {
+        "HORIZON_FILTER": {
+          "admitted": true,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": true,
+          "reason": "HORIZON_SAFE",
+          "stranded": false,
+          "unsafe_prefix": false
+        },
+        "ONE_STEP_FILTER": {
+          "admitted": true,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": true,
+          "reason": "ONE_STEP_SAFE",
+          "stranded": false,
+          "unsafe_prefix": false
+        },
+        "POSTHOC_VERIFY": {
+          "admitted": true,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": true,
+          "reason": "EXECUTE_THEN_CHECK",
+          "stranded": false,
+          "unsafe_prefix": false
+        },
+        "UNKNOWN_FAIL_CLOSED": {
+          "admitted": true,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": true,
+          "reason": "KNOWN_SAFE_WITHIN_HORIZON",
+          "stranded": false,
+          "unsafe_prefix": false
+        },
+        "VIABILITY_FILTER": {
+          "admitted": true,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": true,
+          "reason": "ALL_PREFIXES_VIABLE",
+          "stranded": false,
+          "unsafe_prefix": false
+        }
+      }
+    },
+    "stale_optimistic": {
+      "input": {
+        "forbidden": [
+          "BAD"
+        ],
+        "goals": [
+          "DONE"
+        ],
+        "initial": "A",
+        "model": [
+          {
+            "action": "act",
+            "state": "A",
+            "successors": [
+              "B"
+            ]
+          }
+        ],
+        "model_quality": "stale",
+        "plan": [
+          "act"
+        ],
+        "recoveries": [
+          "RECOVER"
+        ],
+        "truth": [
+          {
+            "action": "act",
+            "state": "A",
+            "successors": [
+              "BAD"
+            ]
+          }
+        ]
+      },
+      "policies": {
+        "HORIZON_FILTER": {
+          "admitted": false,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": false,
+          "reason": "UNKNOWN_REACHABILITY",
+          "stranded": false,
+          "unsafe_prefix": false
+        },
+        "ONE_STEP_FILTER": {
+          "admitted": false,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": false,
+          "reason": "UNKNOWN_REACHABILITY",
+          "stranded": false,
+          "unsafe_prefix": false
+        },
+        "POSTHOC_VERIFY": {
+          "admitted": true,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": false,
+          "reason": "EXECUTE_THEN_CHECK",
+          "stranded": true,
+          "unsafe_prefix": true
+        },
+        "UNKNOWN_FAIL_CLOSED": {
+          "admitted": false,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": false,
+          "reason": "UNKNOWN_REACHABILITY",
+          "stranded": false,
+          "unsafe_prefix": false
+        },
+        "VIABILITY_FILTER": {
+          "admitted": false,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": false,
+          "reason": "UNKNOWN_REACHABILITY",
+          "stranded": false,
+          "unsafe_prefix": false
+        }
+      }
+    },
+    "two_step_unsafe": {
+      "input": {
+        "forbidden": [
+          "BAD"
+        ],
+        "goals": [
+          "DONE"
+        ],
+        "initial": "A",
+        "model": [
+          {
+            "action": "prepare",
+            "state": "A",
+            "successors": [
+              "B"
+            ]
+          },
+          {
+            "action": "commit",
+            "state": "B",
+            "successors": [
+              "BAD"
+            ]
+          }
+        ],
+        "model_quality": "exact",
+        "plan": [
+          "prepare",
+          "commit"
+        ],
+        "recoveries": [
+          "RECOVER"
+        ],
+        "truth": [
+          {
+            "action": "prepare",
+            "state": "A",
+            "successors": [
+              "B"
+            ]
+          },
+          {
+            "action": "commit",
+            "state": "B",
+            "successors": [
+              "BAD"
+            ]
+          }
+        ]
+      },
+      "policies": {
+        "HORIZON_FILTER": {
+          "admitted": false,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": false,
+          "reason": "BLOCKED_UNSAFE_PREFIX",
+          "stranded": false,
+          "unsafe_prefix": false
+        },
+        "ONE_STEP_FILTER": {
+          "admitted": true,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": false,
+          "reason": "ONE_STEP_SAFE",
+          "stranded": true,
+          "unsafe_prefix": true
+        },
+        "POSTHOC_VERIFY": {
+          "admitted": true,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": false,
+          "reason": "EXECUTE_THEN_CHECK",
+          "stranded": true,
+          "unsafe_prefix": true
+        },
+        "UNKNOWN_FAIL_CLOSED": {
+          "admitted": false,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": false,
+          "reason": "UNKNOWN_OR_UNSAFE",
+          "stranded": false,
+          "unsafe_prefix": false
+        },
+        "VIABILITY_FILTER": {
+          "admitted": false,
+          "authority_created": false,
+          "effect_claim_created": false,
+          "goal_reached": false,
+          "reason": "BLOCKED_NO_VIABLE_RECOVERY",
+          "stranded": false,
+          "unsafe_prefix": false
+        }
+      }
+    }
+  },
+  "metadata": {
+    "container_invocations": 0,
+    "horizon": 2,
+    "issue": 5317,
+    "mode": "host-only-construction",
+    "source_main": "70b69b47845b35afde59c2a5f0b56c6f906c6904"
+  }
+}
