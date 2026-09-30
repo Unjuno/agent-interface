@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -49,18 +50,44 @@ def assess(freeze: dict, *, current_main: str, image_digest: str, platform: str,
     }
 
 
-def main() -> int:
+def query_running_containers(docker_context: str, *, runner=None) -> list[str]:
+    if runner is None:
+        runner = subprocess.run
+    completed = runner(
+        ["docker", "--context", docker_context, "ps", "--quiet"],
+        check=True, capture_output=True, text=True, timeout=10,
+    )
+    return [line.strip() for line in completed.stdout.splitlines() if line.strip()]
+
+
+def main(argv=None, *, runner=None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("freeze", type=Path)
     parser.add_argument("--main-sha", required=True)
     parser.add_argument("--image-digest", required=True)
     parser.add_argument("--platform", required=True)
-    parser.add_argument("--running-container", action="append", default=[])
-    args = parser.parse_args()
+    parser.add_argument("--docker-context", choices=("orbstack",), required=True)
+    args = parser.parse_args(argv)
     freeze = json.loads(args.freeze.read_text(encoding="utf-8"))
     now = datetime.now(timezone.utc)
+    preflight = assess(freeze, current_main=args.main_sha, image_digest=args.image_digest,
+                       platform=args.platform, running_containers=[], now=now)
+    if preflight["status"] != "PASS_PRELAUNCH_GATE":
+        print(json.dumps(preflight, sort_keys=True, separators=(",", ":")))
+        return 2
+    try:
+        running = query_running_containers(args.docker_context, runner=runner)
+    except (OSError, subprocess.CalledProcessError, subprocess.TimeoutExpired) as exc:
+        result = {
+            "status": "STOP_DOCKER_INVENTORY_UNAVAILABLE",
+            "docker_authorized_by_guard": False,
+            "allocation": freeze.get("allocation"),
+            "error_type": type(exc).__name__,
+        }
+        print(json.dumps(result, sort_keys=True, separators=(",", ":")))
+        return 2
     result = assess(freeze, current_main=args.main_sha, image_digest=args.image_digest,
-                    platform=args.platform, running_containers=args.running_container, now=now)
+                    platform=args.platform, running_containers=running, now=now)
     print(json.dumps(result, sort_keys=True, separators=(",", ":")))
     return 0 if result["docker_authorized_by_guard"] else 2
 
