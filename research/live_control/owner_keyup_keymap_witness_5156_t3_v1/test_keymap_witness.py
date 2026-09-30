@@ -79,10 +79,26 @@ class KeymapWitnessTests(unittest.TestCase):
 
     def test_runner_order_pre_admission_snapshots_are_auditable(self):
         rows = witness_rows()
-        pre = [r for r in rows if r.get("event") == "keymap_snapshot" and r.get("stage") == "pre_down"]
-        rest = [r for r in rows if r.get("event") != "keymap_snapshot"]
-        tail = [r for r in rows if r.get("event") == "keymap_snapshot" and r.get("stage") != "pre_down"]
-        self.assertEqual(audit([rest[0], *pre, *rest[1:], *tail], EXPECTED), [])
+        def select(event, case=None, stage=None, key=None):
+            return next(r for r in rows if r.get("event") == event
+                        and (case is None or r.get("case") == case)
+                        and (stage is None or r.get("stage") == stage)
+                        and (key is None or r.get("key") == key))
+
+        ordered = [select("fixture")]
+        for case, admits, terminal_stage in (
+            ("single_explicit", ["a"], "post_release"),
+            ("two_key_explicit", ["a", "b"], "post_release"),
+            ("partial_cancel", ["a"], "post_cleanup"),
+        ):
+            ordered.append(select("keymap_snapshot", case, "pre_down"))
+            ordered.extend(select("admission", case, key=key) for key in admits)
+            ordered.append(select("keymap_snapshot", case, "post_down"))
+            ordered.append(select("keymap_snapshot", case, terminal_stage))
+            ordered.append(select("case_terminal", case))
+        used = {id(row) for row in ordered}
+        ordered.extend(row for row in rows if id(row) not in used)
+        self.assertEqual(audit(ordered, EXPECTED), [])
 
     def test_nonadmitted_pressed_key_fails_full_bitmap_state(self):
         rows = witness_rows()

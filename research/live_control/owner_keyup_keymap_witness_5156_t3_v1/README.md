@@ -29,4 +29,4 @@ python3 -B -m unittest -v test_keymap_witness test_audit_formal_x11 test_seriali
 python3 -B -m py_compile audit_formal_x11.py run_formal_x11.py
 ```
 
-Latest host-only result: 20/20 tests passed; `py_compile` and `git diff --check` passed. This does not imply Docker/X11 execution. Preserve the exact stdout and file hashes when recording a new run.
+Latest host-only result: 25/25 tests passed; `py_compile`, JSON parsing, vendored-source byte comparison, and `git diff --check` passed. This does not imply Docker/X11 execution. Preserve the exact stdout and file hashes when recording a new run.
