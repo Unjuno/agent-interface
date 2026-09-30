@@ -64,6 +64,21 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Research evidence ladder
 
+### Issue #5269 — mandatory verification-plan coverage boundary (HOLD)
+
+On the immutable 10-case #5268 IR corpus, the deterministic coverage boundary
+accepted 12 complete/valid plans and rejected 39/39 omission/corruption
+proposals; all 31 non-OPTIONAL rows received individual omission controls and
+an independent audit found zero decision disagreements. Corrected disposition
+is `HOLD_UNREPRESENTED_RISK_ESCALATION`: frozen IR v0.1 cannot express the
+required risk-tier escalation, while the deadline profile is synthetic rather
+than a qualified verifier registry. Initial auditor-label and duplicate-control
+construction failures are preserved alongside their corrections. No runtime
+authority, task-effect, SLA, or product claim follows. See
+[`research/verification/verification_coverage_5269_v1/REPORT.md`](research/verification/verification_coverage_5269_v1/REPORT.md)
+for H/T/D/C/U, hashes, and raw/audit records. Issue #5269 remains open pending
+a frozen bridge with #5266/#5273.
+
 ### Issue #4563 — controlled MAP01 clock-boundary raw-audit addendum
 
 An independent raw-only audit rechecked the retained −1/0/+1 ns controlled

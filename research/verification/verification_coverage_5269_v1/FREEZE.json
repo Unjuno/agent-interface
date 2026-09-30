@@ -1,0 +1,52 @@
+{
+  "schema": "unjuno_research_freeze_v1",
+  "issue": 5269,
+  "allocation": "verification-coverage-5269-v01-20260930-01",
+  "base_ref": "main",
+  "base_sha": "972fd822dd75dba7def4d0601d6b96830903d184",
+  "branch": "research/verification-coverage-5269-v1-20260930",
+  "parent_issue": 5267,
+  "parent_ir_issue": 5268,
+  "parent_allocation": "verification-ir-5268-v01-20260930-01",
+  "parent_inputs": {
+    "research/verification/verification_ir_5268_v1/FORMAL-01.json": "a1c9f38ffeea5a8bbd700fa59a1482330bf685d4b8e696f1199e95d53e053b30",
+    "research/verification/verification_ir_5268_v1/oracle_expected.json": "1aabc735af4d1feb00771f55e5d029a3f9b8c917a628ab8ce86ae1c10c9277a0"
+  },
+  "source_sha256": {
+    "research/verification/verification_coverage_5269_v1/coverage.py": "8fd2ede5e300ff2265ee0f427a8476ca5e42795e8c08f2cc304f9d5edee86fd7",
+    "research/verification/verification_coverage_5269_v1/test_coverage.py": "81cf4594315dd7a1f602c5dc582e6c72234fc818c896bb5710638430f9f92d12",
+    "research/verification/verification_coverage_5269_v1/run_formal.py": "8304874e7ddcb30334059d8c938c0fff34b26f50079344185c3489ca5dc5c7ed",
+    "research/verification/verification_coverage_5269_v1/audit.py": "441d5984c6909b88fbecc41b176df61b7764b85503ca54b1d0beec529d775d76",
+    "research/verification/verification_coverage_5269_v1/launch.py": "f5a5fdaf7c80ca902bdd49d8614c0cd764439514d546e2ac6037471f5896f144"
+  },
+  "container": {
+    "engine_context": "orbstack",
+    "image": "python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "platform": "linux/arm64",
+    "python": "3.12.14",
+    "network": "none",
+    "cpus": 1,
+    "memory_mib": 512,
+    "pids_limit": 128,
+    "root_filesystem": "read-only",
+    "tmpfs": "/tmp:rw,noexec,nosuid,size=32m",
+    "writable_mount": "results/formal-01 only"
+  },
+  "commands": {
+    "construction_red": "python -I -S -B -c 'import sys,runpy; sys.path.insert(0, STUDY); runpy.run_path(\"test_coverage.py\",run_name=\"__main__\")' before coverage.py existed",
+    "construction_green": "same pinned image and resource envelope; unittest 9 tests; exit 0",
+    "formal": "python launch.py --formal (one-shot; runner also runs the frozen unittest suite)",
+    "independent_audit": "python launch.py --audit (one-shot; separate fresh container)"
+  },
+  "scope": {
+    "models": false,
+    "task_input": false,
+    "gui_or_input": false,
+    "network_or_external_service": false,
+    "formal_retries": 0,
+    "authority_or_effect_claim": false,
+    "deadline_profile_status": "synthetic caller-supplied upper-bound fixture; not registry evidence",
+    "high_risk_status": "external-side-effect proxy only; frozen IR has no escalation primitive"
+  },
+  "overwrite_policy": "launcher writes a started marker before each invocation and refuses repeat or existing output"
+}
