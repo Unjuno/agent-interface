@@ -89,6 +89,10 @@ One frozen OrbStack T1 compared five policies on 2,048 paired states (4,096 epis
 
 One host-only, no-dispatch T1 compared deterministic coverage, a one-class lexical OOV signal, and their fail-closed combination over 13 synthetic rows. Deterministic coverage false-passed 4/7 OOD rows; lexical-only and combined false-passed 0/7, with 0/6 supported abstentions. However, all six supported evaluation summaries were verbatim training rows, so the IID result is a training-overlap check rather than generalization evidence. The two semantic misses from immutable T0 and two known-vocabulary-dilution variants were flagged in this corpus only. No container, semantic generalization, escalation, safety, or runtime claim follows. See the [full report](research/verification/ontology_gap_5275_t1_v1/REPORT.md) and [Issue #5275](https://github.com/Unjuno/agent-interface/issues/5275).
 
+### Issue #5275 — held-out lexical novelty T2 (FAIL: unsupported/supported tradeoff)
+
+One host-only successor kept T1's one-class OOV threshold fixed and removed exact training/evaluation text overlap. On 16 synthetic cases, the lexical and combined arms abstained on all 8 supported held-out surface forms, yet false-passed 2/8 semantic OOD cases padded with known training vocabulary; deterministic coverage false-passed 5/8 OOD. Both preregistered combined gates failed. Independent audit passed with 11/11 corruption controls rejected. This falsifies the frozen lexical rule for this fixture, not semantic-model detection in general; all labels remain synthetic. No container or runtime claim. See the [T2 report](research/verification/ontology_gap_5275_t2_v1/REPORT.md), [T1 Draft PR #5457](https://github.com/Unjuno/agent-interface/pull/5457), and [Issue #5275](https://github.com/Unjuno/agent-interface/issues/5275).
+
 ### Issue #5385 — active lifecycle automata learning (bounded synthetic PASS)
 
 One frozen OrbStack run learned four reachable lifecycle classes in one
