@@ -485,3 +485,21 @@ The default `include_image=true` continues to return the retained image.
 [Guarded public-path regression and primary use](../results/guarded-metadata-no-encode-01/README.md)
 records the forwarding repair and scoped checks. Avoiding this conversion does
 not by itself establish lower model tokens/cost or measured response latency.
+
+### Worker submission failures
+
+A synchronous worker submission rejection returns `status=worker_submission_failed`,
+`failure_phase=worker_submission` and `replay_allowed=false`. If the callable has
+not entered, its admission is revoked: `operation_invoked=false`,
+`input_dispatched=false`, `effect_status=none`. It creates no operation call ID,
+backend session or retained operation artifact. Capacity becomes available for a
+new explicit call once the host's executor is usable; the server does not replace
+the executor or retry the rejected request.
+
+If callable entry raced with a submission error, the response instead preserves
+`operation_invoked=true`, `input_dispatched=null`, `effect_status=unknown`. The
+running worker keeps the admission slot until its existing finalization; inspect
+retained calls before deciding how to continue. This does not authorize replay.
+A terminal accepted future without callable entry also revokes only pending work;
+SDK-level errors may still be returned. Cancelled transports continue to shield
+accepted work, and overlapping calls remain busy rather than queued input.
