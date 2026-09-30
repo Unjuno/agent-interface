@@ -326,6 +326,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`tiny_visual_extent_readout_4817_v1/`](tiny_visual_extent_readout_4817_v1/)
 - [`tiny_visual_extent_readout_4817_v2/`](tiny_visual_extent_readout_4817_v2/)
 - [`tiny_visual_target_position_2564_v1/`](tiny_visual_target_position_2564_v1/)
+- [`trace_enforcer_buffer_overflow_5413_t0/`](trace_enforcer_buffer_overflow_5413_t0/)
 - [`transactional_belief_action_safe_a2_v1/`](transactional_belief_action_safe_a2_v1/)
 - [`transactional_belief_action_safe_r0_v1/`](transactional_belief_action_safe_r0_v1/)
 - [`transactional_belief_action_safe_r1_batched_v1/`](transactional_belief_action_safe_r1_batched_v1/)
