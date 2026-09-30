@@ -1,4 +1,4 @@
-# Issue #5318 â first construction allocation
+# Issue #5318 - first construction allocation
 
 Allocation: `semantic-serializability-fsm-r0-20260930-01`
 Intake main: `c4735cfd27bfca057d9c1fca9a7ea19866f77259`
