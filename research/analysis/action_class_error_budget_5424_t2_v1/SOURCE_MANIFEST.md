@@ -2,7 +2,13 @@
 
 Frozen base `main`: `5a741e5fe4d427a560c21975b8a0b693fb48fd66`.
 
-Formal experiment source commit: `24cfb823d3ac0b2c30e5d353d76543a7198a2c90`.
+Pre-run formal source-freeze commit (recorded in the preregistration): `24cfb823d3ac0b2c30e5d353d76543a7198a2c90`. While the experiment was being published, `main` advanced; the research branch was rebased onto `9abdfdc48d61c3d25d538a3acb1444d774a905d1`. The exact frozen source blobs were preserved byte-for-byte; Git tree blob IDs before/after rebase are identical:
+
+| File | Frozen and published Git blob |
+|---|---|
+| `PLAN.md` | `52edca03dd820a21c2d11b6080a4ac8a05c5ea7a` |
+| `experiment.py` | `74b4a45fb01b95d58b9804cb297c7e14a24d2fae` |
+| `audit.py` | `5f3394c13bc1e28299f1898e7f19aa8a13776a8f` |
 
 | File | SHA-256 |
 |---|---|
