@@ -127,7 +127,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
 <details>
-<summary><strong>Expand all 197 retained result/failure directories</strong></summary>
+<summary><strong>Expand all 199 retained result/failure directories</strong></summary>
 
 - [`action_conditioned_routing_repair_successor_2059_r2_v1/`](action_conditioned_routing_repair_successor_2059_r2_v1/)
 - [`action_conditioned_routing_repair_successor_2059_v1/`](action_conditioned_routing_repair_successor_2059_v1/)
@@ -163,6 +163,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`composition_heldout_fixture_2068_v1/`](composition_heldout_fixture_2068_v1/)
 - [`conflict_aware_evidence_ledger_5305_t0/`](conflict_aware_evidence_ledger_5305_t0/)
 - [`conformal_verifier_risk_contract_5315_v1/`](conformal_verifier_risk_contract_5315_v1/)
+- [`constrained_interaction_testing_5330_t0_v1/`](constrained_interaction_testing_5330_t0_v1/)
 - [`cost_predicate_order_4258_v1/`](cost_predicate_order_4258_v1/)
 - [`deterministic_replay_boundary_r0_v1/`](deterministic_replay_boundary_r0_v1/)
 - [`effect_time_contract_authorization_successor_532_v1/`](effect_time_contract_authorization_successor_532_v1/)
@@ -295,6 +296,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`transactional_belief_action_safe_a2_v1/`](transactional_belief_action_safe_a2_v1/)
 - [`transactional_belief_action_safe_r0_v1/`](transactional_belief_action_safe_r0_v1/)
 - [`transactional_belief_action_safe_r1_batched_v1/`](transactional_belief_action_safe_r1_batched_v1/)
+- [`trust_coverage_5339_t1/`](trust_coverage_5339_t1/)
 - [`two_tier_dependency_commit_gate_v1/`](two_tier_dependency_commit_gate_v1/)
 - [`typed_dynamic_branch_readset_v1/`](typed_dynamic_branch_readset_v1/)
 - [`typed_effect_outcome_successor_464_v1/`](typed_effect_outcome_successor_464_v1/)
