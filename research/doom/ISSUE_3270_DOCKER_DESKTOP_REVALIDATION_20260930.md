@@ -5,7 +5,7 @@
 - **H:** The immutable #3270 scorer-jitter replay test still reproduces its retained one-overdue-period accounting in a local Docker Desktop container, and the separately frozen recovery-v2 preregistration still passes construction validation.
 - **T:** Re-fetch the exact replay test, preregistration, and validator from GitHub `main`; verify their SHA-256 values; run both checks inside the existing local Python container image with networking disabled, source mounted read-only, and image pulls disabled. Do not invoke ViZDoom, the formal recovery runner, a model, or a GPU.
 - **D:** **PASS — replay reproduction (2/2 unit tests) and construction validation.** Exact commands and output are below.
-- **C:** This is a local deterministic replay/construction revalidation only. It does not resolve #3259 allocation -07's formal `FAIL`, measure recovery efficacy, or authorize/consume a fresh MAP01 allocation. Earlier #3270/CΙ evidence remains unchanged.
+- **C:** This is a local deterministic replay/construction revalidation only. It does not resolve #3259 allocation -07's formal `FAIL`, measure recovery efficacy, or authorize/consume a fresh MAP01 allocation. Earlier #3270/CI evidence remains unchanged.
 - **U:** The remaining fresh formal MAP01 allocation requires its own current-main source freeze, exact owner-confirmed shared-resource lease, collision check, and independent audit. The latest inspected coordination record (#5085) did not grant this lane a lease; this revalidation therefore stopped before live execution.
 
 ## Provenance and environment
@@ -33,7 +33,7 @@ docker run --rm --network none --pull never \
 Output:
 
 ```text
-test_observed_single_overdue_period_is_local_and_non_catchup ... ok
+test_observed_single_overdue_period_is_local_and_non-catchup ... ok
 test_replay_preserves_sample_cardinality ... ok
 
 Ran 2 tests
