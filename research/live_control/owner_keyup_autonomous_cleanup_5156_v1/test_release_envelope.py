@@ -170,6 +170,34 @@ class ReleaseEnvelopeTests(unittest.TestCase):
         self.assertIn("row_0:time_order", errors)
         self.assertIn("row_0:overclaim", errors)
 
+    def test_frozen_auditor_corruption_matrix(self):
+        nominal = {
+            "event": "owner_key_release_bracket", "schema": "owner-key-release-bracket-v1",
+            "owner_id": "o", "intent_token": "i", "reason": "cancel",
+            "trigger_class": "owner_loop", "key": "a", "keycode": 38,
+            "request_started_ns": 10, "request_returned_ns": 20,
+            "shared_sync_returned_ns": 30, "grants_input_authority": False,
+            "physical_key_up_claimed": False,
+        }
+        mutations = {
+            "missing_identity": lambda row: row.pop("owner_id"),
+            "wrong_event": lambda row: row.update(event="not_a_release"),
+            "wrong_schema": lambda row: row.update(schema="unknown"),
+            "empty_reason": lambda row: row.update(reason=""),
+            "inverted_clock": lambda row: row.update(shared_sync_returned_ns=5),
+            "authority_claim": lambda row: row.update(grants_input_authority=True),
+            "physical_edge_claim": lambda row: row.update(physical_key_up_claimed=True),
+            "bad_keycode": lambda row: row.update(keycode="38"),
+        }
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / "trace.jsonl"
+            for name, mutate in mutations.items():
+                with self.subTest(mutation=name):
+                    row = dict(nominal)
+                    mutate(row)
+                    path.write_text(json.dumps(row) + "\n", encoding="utf-8")
+                    self.assertTrue(audit(path), name)
+
     def test_autonomous_cancel_expiry_focus_stop_and_finalizer_labels(self):
         cases = [
             ("cancelled", "owner_cancel"),
