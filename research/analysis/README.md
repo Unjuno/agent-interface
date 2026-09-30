@@ -156,6 +156,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`belief_recommit_epoch_aba_r2_v1/`](belief_recommit_epoch_aba_r2_v1/)
 - [`belief_repair_decision_lattice_r4_v1/`](belief_repair_decision_lattice_r4_v1/)
 - [`bounded_skew_context_join_successor_1218_v1/`](bounded_skew_context_join_successor_1218_v1/)
+- [`conditional_route_rescue_5598_t0_20261001/`](conditional_route_rescue_5598_t0_20261001/)
 - [`bounded_voi_scheduler_4263_v1/`](bounded_voi_scheduler_4263_v1/)
 - [`breakdown_t7/`](breakdown_t7/)
 - [`cache_epoch_completeness_2928_v1/`](cache_epoch_completeness_2928_v1/)
