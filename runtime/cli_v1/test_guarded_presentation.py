@@ -26,6 +26,17 @@ def normal_report():
 
 
 class GuardedPresentationTests(unittest.TestCase):
+    def test_known_metadata_only_delivery_preserves_brief_and_unknown_stays_full(self):
+        full=normal_report();full.pop('image');full['image_delivery']='omitted_by_request'
+        projected=brief_guarded_report(full)
+        self.assertEqual(projected['presentation']['returned'],'brief')
+        self.assertEqual(projected['image_delivery'],'omitted_by_request')
+        for value in ('new-policy', False, None):
+            unknown=deepcopy(full);unknown['image_delivery']=value
+            shown=brief_guarded_report(unknown)
+            self.assertEqual(shown.pop('presentation')['returned'],'full')
+            self.assertEqual(shown,unknown)
+
     def test_only_guard_detail_changes_and_full_retrieval_is_explicit(self):
         full=normal_report();original=deepcopy(full);brief=brief_guarded_report(full)
         self.assertEqual(full,original)
