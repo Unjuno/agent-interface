@@ -198,6 +198,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`full_golden_ipc_2813_v5/`](full_golden_ipc_2813_v5/)
 - [`generation_bound_container_revalidation_2166_v1/`](generation_bound_container_revalidation_2166_v1/)
 - [`generation_bound_evidence_2047_v1/`](generation_bound_evidence_2047_v1/)
+- [`gluing_approx_irreversible_5537_t10_v1/`](gluing_approx_irreversible_5537_t10_v1/)
 - [`gluing_parity_cycle_5537_t4_v1/`](gluing_parity_cycle_5537_t4_v1/)
 - [`gpu_grounding_template_diversity_2912_issue4567_successor02/`](gpu_grounding_template_diversity_2912_issue4567_successor02/)
 - [`gpu_grounding_template_diversity_2912_v1/`](gpu_grounding_template_diversity_2912_v1/)
