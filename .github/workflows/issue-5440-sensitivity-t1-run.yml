@@ -21,17 +21,18 @@ jobs:
     env:
       IMAGE: python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9
       PLATFORM: linux/amd64
-      BASE_MAIN_SHA: d3340deaf147ca23a3d1a7295f04540488adaa8e
+      BASE_MAIN_SHA: ffb0d43b5f0408011a3f70223da43d4aa3f27fe4
       EXPERIMENT_DIR: research/analysis/hidden_cause_sensitivity_5440_t1
-      OUTPUT_DIR: ${{ runner.temp }}/sensitivity-output
     steps:
       - name: Checkout frozen experiment source
         uses: actions/checkout@v4
       - name: Prepare output directory
-        run: mkdir -p "$OUTPUT_DIR"
+        run: mkdir -p "$RUNNER_TEMP/sensitivity-output/raw"
       - name: Pull digest-pinned image
+        id: pull_image
         run: docker pull --platform "$PLATFORM" "$IMAGE"
       - name: Container preflight, one candidate run, independent audit
+        id: container_run
         run: |
           docker run --rm --network none --platform "$PLATFORM" --read-only \
             --tmpfs /tmp:rw,noexec,nosuid,size=16m \
@@ -39,16 +40,30 @@ jobs:
             -e EXPERIMENT_IMAGE="$IMAGE" -e EXPERIMENT_PLATFORM="$PLATFORM" \
             -e EXPERIMENT_BASE_SHA="$BASE_MAIN_SHA" \
             --mount "type=bind,source=$GITHUB_WORKSPACE/$EXPERIMENT_DIR,target=/src,readonly" \
-            --mount "type=bind,source=$OUTPUT_DIR,target=/out" \
+            --mount "type=bind,source=$RUNNER_TEMP/sensitivity-output,target=/out" \
             --workdir /src "$IMAGE" sh -euc '
               python /src/preflight.py /src/cases.json
               python -c "from pathlib import Path; [compile(p.read_text(), str(p), \"exec\") for p in (Path(\"/src/candidate.py\"), Path(\"/src/audit.py\"))]; print(\"PASS_SOURCE_COMPILE\")"
-              python /src/candidate.py --input /src/cases.json --output /out/raw.json
-              python /src/audit.py --input /src/cases.json --raw /out/raw.json --output /out/audit.json
-              sha256sum /src/cases.json /src/candidate.py /src/audit.py /src/preflight.py > /out/SHA256SUMS
-              sha256sum /out/raw.json /out/audit.json >> /out/SHA256SUMS
+              python /src/candidate.py --input /src/cases.json --output /out/raw/formal.json
+              python /src/audit.py --input /src/cases.json --raw /out/raw/formal.json --output /out/raw/audit.json
+              (cd /src && sha256sum cases.json candidate.py audit.py preflight.py README.md construction_oracle.py construction-result.json workflow-stops.json) > /out/SHA256SUMS
+              (cd /out && sha256sum raw/formal.json raw/audit.json) >> /out/SHA256SUMS
               cat /out/SHA256SUMS
             '
+      - name: Record run outcomes and hash receipt
+        if: always()
+        env:
+          IMAGE_PULL_OUTCOME: ${{ steps.pull_image.outcome }}
+          CONTAINER_OUTCOME: ${{ steps.container_run.outcome }}
+        run: |
+          OUTPUT_DIR="$RUNNER_TEMP/sensitivity-output"
+          mkdir -p "$OUTPUT_DIR"
+          printf '{"schema":"hidden-cause-sensitivity-t1-execution-status-v1","image":"%s","platform":"%s","base_main_sha":"%s","image_pull_step":"%s","container_step":"%s"}\n' "$IMAGE" "$PLATFORM" "$BASE_MAIN_SHA" "$IMAGE_PULL_OUTCOME" "$CONTAINER_OUTCOME" > "$OUTPUT_DIR/execution-status.json"
+          if [ -f "$OUTPUT_DIR/SHA256SUMS" ]; then
+            (cd "$OUTPUT_DIR" && sha256sum execution-status.json) >> "$OUTPUT_DIR/SHA256SUMS"
+          else
+            (cd "$OUTPUT_DIR" && sha256sum execution-status.json > SHA256SUMS)
+          fi
       - name: Upload immutable run output
         if: always()
         uses: actions/upload-artifact@v4
