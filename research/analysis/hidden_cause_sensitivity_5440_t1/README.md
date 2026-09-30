@@ -1,6 +1,6 @@
 # Issue #5440 T1 — multi-factor hidden-cause sensitivity gate
 
-Status at source freeze: **CONSTRUCTION_CHECK_PASS / FORMAL_DOCKER_PENDING**. This file is the preregistration and scope contract; it is not a formal container result.
+Status at source freeze: **CONSTRUCTION_CHECK_PASS / WORKFLOW_STOP / FORMAL_DOCKER_PENDING**. This file is the preregistration and scope contract; it is not a formal container result.
 
 ## H / T / D / C / U
 
@@ -23,3 +23,11 @@ Host-side construction check (not container) passed on Python 3.12.10: the froze
 The local Docker Desktop lane remains unused because current #5085 still records no exact owner-confirmed exclusive local lease. The formal workflow runs on a `main` push that changes the frozen candidate/input/auditor/preflight/workflow paths. If no run appears for that source commit, the same workflow can be manually dispatched once; check run history first to prevent duplication. It uses a digest-pinned hosted Docker container with `--network none`, read-only source, and a separate output mount. This is hosted Docker, not Docker Desktop. It executes the candidate once, independent raw-only audit, and corruption controls, then uploads the raw output and source hash manifest. A later results PR is checked by a separate audit-only workflow without rerunning the candidate. No formal T1 conclusion is claimed until that hosted artifact and committed-evidence audit are both read back.
 
 Base main at source freeze: `ffb0d43b5f0408011a3f70223da43d4aa3f27fe4`.
+
+
+## Formal workflow STOP
+
+The first push-triggered workflow run (`36715852694`, source `f09a0bd0a5a8d683a950df1b360670aaa1f194ca`) failed before creating any job: GitHub reported a workflow-file issue; jobs=0, artifacts=0, Docker pull=not started, candidate invocations=0. The report is preserved in `workflow-stops.json`. The likely defect was `runner.temp` referenced from job-level `env`; GitHub's context table excludes `runner` at that key, so the repair uses the default `RUNNER_TEMP` in runner steps. Both run and audit workflows are repaired. The next accepted run is the first candidate invocation; do not retry if any candidate step starts.
+
+
+Workflow repair validation is frozen in the repair PR. It statically parses both workflows, removes the invalid job-level `runner` context use, and confirms the pinned input/candidate SHA values before the candidate can start. The prior run was pre-job and consumed zero candidate invocations.

@@ -6,6 +6,7 @@ on:
       - "research/analysis/hidden_cause_sensitivity_5440_t1/raw/formal.json"
       - "research/analysis/hidden_cause_sensitivity_5440_t1/raw/audit.json"
       - "research/analysis/hidden_cause_sensitivity_5440_t1/SHA256SUMS"
+      - "research/analysis/hidden_cause_sensitivity_5440_t1/execution-status.json"
 
 permissions:
   contents: read
@@ -18,12 +19,11 @@ jobs:
       IMAGE: python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9
       PLATFORM: linux/amd64
       EXPERIMENT_DIR: research/analysis/hidden_cause_sensitivity_5440_t1
-      OUTPUT_DIR: ${{ runner.temp }}/audit-output
     steps:
       - name: Checkout committed evidence
         uses: actions/checkout@v4
       - name: Prepare output directory
-        run: mkdir -p "$OUTPUT_DIR"
+        run: mkdir -p "$RUNNER_TEMP/audit-output"
       - name: Pull digest-pinned image
         run: docker pull --platform "$PLATFORM" "$IMAGE"
       - name: Independently audit committed raw without rerunning candidate
@@ -32,8 +32,9 @@ jobs:
             --tmpfs /tmp:rw,noexec,nosuid,size=16m \
             -e PYTHONDONTWRITEBYTECODE=1 \
             --mount "type=bind,source=$GITHUB_WORKSPACE/$EXPERIMENT_DIR,target=/src,readonly" \
-            --mount "type=bind,source=$OUTPUT_DIR,target=/out" \
+            --mount "type=bind,source=$RUNNER_TEMP/audit-output,target=/out" \
             --workdir /src "$IMAGE" sh -euc '
+              python -c "import json; s=json.loads(open(\"/src/execution-status.json\").read()); assert s.get(\"image_pull_step\")==\"success\" and s.get(\"container_step\")==\"success\", \"execution_not_successful\""
               python /src/audit.py --input /src/cases.json --raw /src/raw/formal.json --output /out/recomputed-audit.json
               cmp /src/raw/audit.json /out/recomputed-audit.json
               sha256sum -c /src/SHA256SUMS

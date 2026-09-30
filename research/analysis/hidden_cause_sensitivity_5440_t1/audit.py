@@ -27,10 +27,16 @@ def audit_data(data: dict, input_bytes: bytes, raw: dict, candidate_bytes: bytes
         errors.append("input_schema")
     if raw.get("schema") != "hidden-cause-sensitivity-t1-raw-v1":
         errors.append("raw_schema")
-    if raw.get("input_sha256") != hashlib.sha256(input_bytes).hexdigest():
+    actual_input_hash = hashlib.sha256(input_bytes).hexdigest()
+    if raw.get("input_sha256") != actual_input_hash:
         errors.append("input_hash")
-    if raw.get("candidate_sha256") != hashlib.sha256(candidate_bytes).hexdigest():
+    if actual_input_hash != "02ba32c8f1a4c8ab3d65e7fa138f459602a22a8ab2224859d9b916315a14f20e":
+        errors.append("frozen_input_hash")
+    actual_candidate_hash = hashlib.sha256(candidate_bytes).hexdigest()
+    if raw.get("candidate_sha256") != actual_candidate_hash:
         errors.append("candidate_hash")
+    if actual_candidate_hash != "ec6adc9966d439a247f30ccb50b42f1185f7522393e60f2b65daabaf36e1a680":
+        errors.append("frozen_candidate_hash")
     if raw.get("base_main_sha") != "ffb0d43b5f0408011a3f70223da43d4aa3f27fe4":
         errors.append("base_main_sha")
     if raw.get("container") != {
