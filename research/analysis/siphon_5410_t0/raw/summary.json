@@ -1,0 +1,478 @@
+[
+  {
+    "scenario": "opposed_order_deadlock",
+    "policy": "NAIVE",
+    "completed_workflows": 2,
+    "unrecovered_deadlock": true,
+    "makespan_ticks": 4,
+    "false_rejected_workflows": 0,
+    "counters": {
+      "cancelled": 0,
+      "guard_cycles": 0,
+      "guard_replans": 0,
+      "lease_expiries": 0,
+      "oracle_denials": 0,
+      "revoked": 0,
+      "unknown_rejections": 0
+    }
+  },
+  {
+    "scenario": "opposed_order_deadlock",
+    "policy": "GLOBAL_EXCLUSIVE",
+    "completed_workflows": 4,
+    "unrecovered_deadlock": false,
+    "makespan_ticks": 8,
+    "false_rejected_workflows": 0,
+    "counters": {
+      "cancelled": 0,
+      "guard_cycles": 0,
+      "guard_replans": 0,
+      "lease_expiries": 0,
+      "oracle_denials": 0,
+      "revoked": 0,
+      "unknown_rejections": 0
+    }
+  },
+  {
+    "scenario": "opposed_order_deadlock",
+    "policy": "SCC_GUARD",
+    "completed_workflows": 4,
+    "unrecovered_deadlock": false,
+    "makespan_ticks": 6,
+    "false_rejected_workflows": 0,
+    "counters": {
+      "cancelled": 0,
+      "guard_cycles": 1,
+      "guard_replans": 1,
+      "lease_expiries": 0,
+      "oracle_denials": 0,
+      "revoked": 0,
+      "unknown_rejections": 0
+    }
+  },
+  {
+    "scenario": "opposed_order_deadlock",
+    "policy": "SAFE_REACHABILITY",
+    "completed_workflows": 4,
+    "unrecovered_deadlock": false,
+    "makespan_ticks": 5,
+    "false_rejected_workflows": 0,
+    "counters": {
+      "cancelled": 0,
+      "guard_cycles": 0,
+      "guard_replans": 0,
+      "lease_expiries": 0,
+      "oracle_denials": 1,
+      "revoked": 0,
+      "unknown_rejections": 0
+    }
+  },
+  {
+    "scenario": "lease_expiry_recovery",
+    "policy": "NAIVE",
+    "completed_workflows": 3,
+    "unrecovered_deadlock": true,
+    "makespan_ticks": 40,
+    "false_rejected_workflows": 0,
+    "counters": {
+      "cancelled": 0,
+      "guard_cycles": 0,
+      "guard_replans": 0,
+      "lease_expiries": 13,
+      "oracle_denials": 0,
+      "revoked": 0,
+      "unknown_rejections": 0
+    }
+  },
+  {
+    "scenario": "lease_expiry_recovery",
+    "policy": "GLOBAL_EXCLUSIVE",
+    "completed_workflows": 3,
+    "unrecovered_deadlock": true,
+    "makespan_ticks": 40,
+    "false_rejected_workflows": 0,
+    "counters": {
+      "cancelled": 0,
+      "guard_cycles": 0,
+      "guard_replans": 0,
+      "lease_expiries": 11,
+      "oracle_denials": 0,
+      "revoked": 0,
+      "unknown_rejections": 0
+    }
+  },
+  {
+    "scenario": "lease_expiry_recovery",
+    "policy": "SCC_GUARD",
+    "completed_workflows": 3,
+    "unrecovered_deadlock": true,
+    "makespan_ticks": 40,
+    "false_rejected_workflows": 0,
+    "counters": {
+      "cancelled": 0,
+      "guard_cycles": 1,
+      "guard_replans": 1,
+      "lease_expiries": 12,
+      "oracle_denials": 0,
+      "revoked": 0,
+      "unknown_rejections": 0
+    }
+  },
+  {
+    "scenario": "lease_expiry_recovery",
+    "policy": "SAFE_REACHABILITY",
+    "completed_workflows": 3,
+    "unrecovered_deadlock": true,
+    "makespan_ticks": 40,
+    "false_rejected_workflows": 0,
+    "counters": {
+      "cancelled": 0,
+      "guard_cycles": 0,
+      "guard_replans": 0,
+      "lease_expiries": 12,
+      "oracle_denials": 1,
+      "revoked": 0,
+      "unknown_rejections": 0
+    }
+  },
+  {
+    "scenario": "cancellation_release",
+    "policy": "NAIVE",
+    "completed_workflows": 3,
+    "unrecovered_deadlock": false,
+    "makespan_ticks": 3,
+    "false_rejected_workflows": 0,
+    "counters": {
+      "cancelled": 1,
+      "guard_cycles": 0,
+      "guard_replans": 0,
+      "lease_expiries": 0,
+      "oracle_denials": 0,
+      "revoked": 0,
+      "unknown_rejections": 0
+    }
+  },
+  {
+    "scenario": "cancellation_release",
+    "policy": "GLOBAL_EXCLUSIVE",
+    "completed_workflows": 3,
+    "unrecovered_deadlock": false,
+    "makespan_ticks": 6,
+    "false_rejected_workflows": 0,
+    "counters": {
+      "cancelled": 1,
+      "guard_cycles": 0,
+      "guard_replans": 0,
+      "lease_expiries": 0,
+      "oracle_denials": 0,
+      "revoked": 0,
+      "unknown_rejections": 0
+    }
+  },
+  {
+    "scenario": "cancellation_release",
+    "policy": "SCC_GUARD",
+    "completed_workflows": 3,
+    "unrecovered_deadlock": false,
+    "makespan_ticks": 3,
+    "false_rejected_workflows": 0,
+    "counters": {
+      "cancelled": 1,
+      "guard_cycles": 0,
+      "guard_replans": 0,
+      "lease_expiries": 0,
+      "oracle_denials": 0,
+      "revoked": 0,
+      "unknown_rejections": 0
+    }
+  },
+  {
+    "scenario": "cancellation_release",
+    "policy": "SAFE_REACHABILITY",
+    "completed_workflows": 3,
+    "unrecovered_deadlock": false,
+    "makespan_ticks": 3,
+    "false_rejected_workflows": 0,
+    "counters": {
+      "cancelled": 1,
+      "guard_cycles": 0,
+      "guard_replans": 0,
+      "lease_expiries": 0,
+      "oracle_denials": 1,
+      "revoked": 0,
+      "unknown_rejections": 0
+    }
+  },
+  {
+    "scenario": "authority_revocation_release",
+    "policy": "NAIVE",
+    "completed_workflows": 3,
+    "unrecovered_deadlock": false,
+    "makespan_ticks": 3,
+    "false_rejected_workflows": 0,
+    "counters": {
+      "cancelled": 0,
+      "guard_cycles": 0,
+      "guard_replans": 0,
+      "lease_expiries": 0,
+      "oracle_denials": 0,
+      "revoked": 1,
+      "unknown_rejections": 0
+    }
+  },
+  {
+    "scenario": "authority_revocation_release",
+    "policy": "GLOBAL_EXCLUSIVE",
+    "completed_workflows": 3,
+    "unrecovered_deadlock": false,
+    "makespan_ticks": 7,
+    "false_rejected_workflows": 0,
+    "counters": {
+      "cancelled": 0,
+      "guard_cycles": 0,
+      "guard_replans": 0,
+      "lease_expiries": 0,
+      "oracle_denials": 0,
+      "revoked": 1,
+      "unknown_rejections": 0
+    }
+  },
+  {
+    "scenario": "authority_revocation_release",
+    "policy": "SCC_GUARD",
+    "completed_workflows": 3,
+    "unrecovered_deadlock": false,
+    "makespan_ticks": 3,
+    "false_rejected_workflows": 0,
+    "counters": {
+      "cancelled": 0,
+      "guard_cycles": 0,
+      "guard_replans": 0,
+      "lease_expiries": 0,
+      "oracle_denials": 0,
+      "revoked": 1,
+      "unknown_rejections": 0
+    }
+  },
+  {
+    "scenario": "authority_revocation_release",
+    "policy": "SAFE_REACHABILITY",
+    "completed_workflows": 3,
+    "unrecovered_deadlock": false,
+    "makespan_ticks": 4,
+    "false_rejected_workflows": 0,
+    "counters": {
+      "cancelled": 0,
+      "guard_cycles": 0,
+      "guard_replans": 0,
+      "lease_expiries": 0,
+      "oracle_denials": 1,
+      "revoked": 1,
+      "unknown_rejections": 0
+    }
+  },
+  {
+    "scenario": "hidden_dependency",
+    "policy": "NAIVE",
+    "completed_workflows": 2,
+    "unrecovered_deadlock": true,
+    "makespan_ticks": 4,
+    "false_rejected_workflows": 0,
+    "counters": {
+      "cancelled": 0,
+      "guard_cycles": 0,
+      "guard_replans": 0,
+      "lease_expiries": 0,
+      "oracle_denials": 0,
+      "revoked": 0,
+      "unknown_rejections": 0
+    }
+  },
+  {
+    "scenario": "hidden_dependency",
+    "policy": "GLOBAL_EXCLUSIVE",
+    "completed_workflows": 3,
+    "unrecovered_deadlock": false,
+    "makespan_ticks": 6,
+    "false_rejected_workflows": 1,
+    "counters": {
+      "cancelled": 0,
+      "guard_cycles": 0,
+      "guard_replans": 0,
+      "lease_expiries": 0,
+      "oracle_denials": 0,
+      "revoked": 0,
+      "unknown_rejections": 1
+    }
+  },
+  {
+    "scenario": "hidden_dependency",
+    "policy": "SCC_GUARD",
+    "completed_workflows": 3,
+    "unrecovered_deadlock": false,
+    "makespan_ticks": 3,
+    "false_rejected_workflows": 1,
+    "counters": {
+      "cancelled": 0,
+      "guard_cycles": 0,
+      "guard_replans": 0,
+      "lease_expiries": 0,
+      "oracle_denials": 0,
+      "revoked": 0,
+      "unknown_rejections": 1
+    }
+  },
+  {
+    "scenario": "hidden_dependency",
+    "policy": "SAFE_REACHABILITY",
+    "completed_workflows": 4,
+    "unrecovered_deadlock": false,
+    "makespan_ticks": 5,
+    "false_rejected_workflows": 0,
+    "counters": {
+      "cancelled": 0,
+      "guard_cycles": 0,
+      "guard_replans": 0,
+      "lease_expiries": 0,
+      "oracle_denials": 1,
+      "revoked": 0,
+      "unknown_rejections": 0
+    }
+  },
+  {
+    "scenario": "retry_backoff",
+    "policy": "NAIVE",
+    "completed_workflows": 2,
+    "unrecovered_deadlock": true,
+    "makespan_ticks": 4,
+    "false_rejected_workflows": 0,
+    "counters": {
+      "cancelled": 0,
+      "guard_cycles": 0,
+      "guard_replans": 0,
+      "lease_expiries": 0,
+      "oracle_denials": 0,
+      "revoked": 0,
+      "unknown_rejections": 0
+    }
+  },
+  {
+    "scenario": "retry_backoff",
+    "policy": "GLOBAL_EXCLUSIVE",
+    "completed_workflows": 4,
+    "unrecovered_deadlock": false,
+    "makespan_ticks": 8,
+    "false_rejected_workflows": 0,
+    "counters": {
+      "cancelled": 0,
+      "guard_cycles": 0,
+      "guard_replans": 0,
+      "lease_expiries": 0,
+      "oracle_denials": 0,
+      "revoked": 0,
+      "unknown_rejections": 0
+    }
+  },
+  {
+    "scenario": "retry_backoff",
+    "policy": "SCC_GUARD",
+    "completed_workflows": 4,
+    "unrecovered_deadlock": false,
+    "makespan_ticks": 6,
+    "false_rejected_workflows": 0,
+    "counters": {
+      "cancelled": 0,
+      "guard_cycles": 1,
+      "guard_replans": 1,
+      "lease_expiries": 0,
+      "oracle_denials": 0,
+      "revoked": 0,
+      "unknown_rejections": 0
+    }
+  },
+  {
+    "scenario": "retry_backoff",
+    "policy": "SAFE_REACHABILITY",
+    "completed_workflows": 4,
+    "unrecovered_deadlock": false,
+    "makespan_ticks": 5,
+    "false_rejected_workflows": 0,
+    "counters": {
+      "cancelled": 0,
+      "guard_cycles": 0,
+      "guard_replans": 0,
+      "lease_expiries": 0,
+      "oracle_denials": 1,
+      "revoked": 0,
+      "unknown_rejections": 0
+    }
+  },
+  {
+    "scenario": "independent_workflows",
+    "policy": "NAIVE",
+    "completed_workflows": 4,
+    "unrecovered_deadlock": false,
+    "makespan_ticks": 3,
+    "false_rejected_workflows": 0,
+    "counters": {
+      "cancelled": 0,
+      "guard_cycles": 0,
+      "guard_replans": 0,
+      "lease_expiries": 0,
+      "oracle_denials": 0,
+      "revoked": 0,
+      "unknown_rejections": 0
+    }
+  },
+  {
+    "scenario": "independent_workflows",
+    "policy": "GLOBAL_EXCLUSIVE",
+    "completed_workflows": 4,
+    "unrecovered_deadlock": false,
+    "makespan_ticks": 6,
+    "false_rejected_workflows": 0,
+    "counters": {
+      "cancelled": 0,
+      "guard_cycles": 0,
+      "guard_replans": 0,
+      "lease_expiries": 0,
+      "oracle_denials": 0,
+      "revoked": 0,
+      "unknown_rejections": 0
+    }
+  },
+  {
+    "scenario": "independent_workflows",
+    "policy": "SCC_GUARD",
+    "completed_workflows": 4,
+    "unrecovered_deadlock": false,
+    "makespan_ticks": 3,
+    "false_rejected_workflows": 0,
+    "counters": {
+      "cancelled": 0,
+      "guard_cycles": 0,
+      "guard_replans": 0,
+      "lease_expiries": 0,
+      "oracle_denials": 0,
+      "revoked": 0,
+      "unknown_rejections": 0
+    }
+  },
+  {
+    "scenario": "independent_workflows",
+    "policy": "SAFE_REACHABILITY",
+    "completed_workflows": 4,
+    "unrecovered_deadlock": false,
+    "makespan_ticks": 3,
+    "false_rejected_workflows": 0,
+    "counters": {
+      "cancelled": 0,
+      "guard_cycles": 0,
+      "guard_replans": 0,
+      "lease_expiries": 0,
+      "oracle_denials": 0,
+      "revoked": 0,
+      "unknown_rejections": 0
+    }
+  }
+]
