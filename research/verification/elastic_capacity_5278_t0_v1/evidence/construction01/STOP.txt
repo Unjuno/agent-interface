@@ -1,0 +1,32 @@
+# Construction STOP — Issue #5278 T0
+
+Date: 2026-09-30 (Asia/Tokyo)
+Scope: host-only unittest construction attempt; no formal simulation.
+
+Command:
+`python -m unittest discover -s scratch-5278 -p test_model.py -v`
+Host: Python 3.11.9
+Exit: 1 (suite import failure before any test methods ran)
+
+Observed exception:
+```
+ImportError: Failed to import test module: test_model
+  File "scratch-5278/test_model.py", line 7
+    from auditor import audit, corruption_controls
+ModuleNotFoundError: No module named 'auditor'
+```
+
+The published bundle path names the independent auditor `audit.py`, while the test imports module `auditor`. The fetched branch files were not modified. Windows scratch copies were materialized with local text-file line endings, so the following local SHA-256 values identify only those scratch copies, not GitHub blobs:
+
+- simulator.py: `EABA815ED1FED3D33A0AFDD20EEB502139827B272FFDB923EE0062F227C1F415`
+- audit.py: `3F51E8DB237B2C7916B2B6D92B530D010957A437DC449652A2C9C1484BCE2D1E`
+- test_model.py: `C210483AE2A6CD9023676DF94366091DF6CE0810F3A1ED8420494643F247F098`
+- workloads.json: `4F944507B0ED0C0ECD85F3AEB6F49B51E165246C002A9DCD4B548603CC8646C5`
+
+Fetched GitHub blob identities at the tested branch:
+- simulator.py: `cbfe26f5e59937e7173012d1df04b740b8f5b5f1`
+- audit.py: `d0ded9c8ad6c7a978d54435644d107d32c0eba1e`
+- test_model.py: `ea5b39c5a0915fee8447cadc91e548d6bc8f47d7`
+- workloads.json: `d44b2bc9e81ac94fc293bdfa29fc3d648d090964`
+
+Disposition: `STOP_CONSTRUCTION_IMPORT_PATH_MISMATCH`. Formal T0 invocations: 0. No raw simulation, independent audit, Docker, model, CUDA, or GPU use occurred. Preserve this failure unchanged; any correction must be additive with a fresh current-main source freeze and a new construction receipt.
