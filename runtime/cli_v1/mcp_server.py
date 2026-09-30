@@ -102,11 +102,11 @@ class PublicArgumentMCP(FastMCP):
         return await super().call_tool(name, arguments)
 
 
-def present_management_report(report, call_root):
+def present_management_report(report, call_root, *, include_image=True):
     row = dict(report)
     if 'observation_report' in report:
-        shown = present_result(report['observation_report'], call_root)
-        for key in ('image', 'image_status', 'image_error'):
+        shown = present_result(report['observation_report'], call_root, include_image=include_image)
+        for key in ('image', 'image_status', 'image_error', 'image_delivery'):
             if key in shown:
                 row[key] = shown[key]
     return row
@@ -526,7 +526,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             return content({'status': 'receipt_unavailable', 'call': record,
                 'error': repr(error), 'operation_invoked': False,
                 'replay_allowed': False}, error=True)
-        result = (await asyncio.to_thread(present_management_report, report, call_root) if (record['operation'].startswith('guarded_') or record['operation'] in ('close', 'inspect_target', 'review_target', 'recover_input')) else
+        result = (await asyncio.to_thread(present_management_report, report, call_root, include_image=include_image) if (record['operation'].startswith('guarded_') or record['operation'] in ('close', 'inspect_target', 'review_target', 'recover_input')) else
                   await asyncio.to_thread(present_result, report, call_root, compact=compact, report_refs=report_refs, include_image=include_image))
         if 'post_dispatch_inspection' in report:
             result['post_dispatch_inspection'] = deepcopy(report['post_dispatch_inspection'])

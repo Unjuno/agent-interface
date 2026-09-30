@@ -54,6 +54,45 @@ def metadata(response):
 
 
 class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
+    async def test_metadata_only_guarded_lookup_skips_encoding_and_preserves_capture(self):
+        import base64
+        with tempfile.TemporaryDirectory() as td:
+            bridge = FakeBridge(None, {'app': 123}, 'app', Path(td)/'bridge')
+            with patch('runtime.cli_v1.mcp_guarded.open_bridge', return_value=bridge):
+                server = create_server({'app': 123}, td, session_mode='guarded-x11')
+                original = await server.call_tool('interface_guarded_observe', {})
+                before = metadata(original)
+                call_id = before['call_id']
+                raw_path = Path(td, call_id, 'report.json')
+                saved_bytes = raw_path.read_bytes()
+                with patch('runtime.cli_v1.review.base64.b64encode', wraps=base64.b64encode) as encode:
+                    omitted = await server.call_tool('interface_results', {
+                        'call_id': call_id, 'include_image': False})
+                    self.assertEqual(encode.call_count, 0)
+                row = metadata(omitted)
+                self.assertEqual(len(omitted.content), 1)
+                self.assertEqual(row['image_status'], before['image_status'])
+                self.assertEqual(row['image_delivery'], 'omitted_by_request')
+                self.assertEqual(row['source'], before['source'])
+                self.assertEqual(row['observation_report'], before['observation_report'])
+                self.assertIs(row['operation_invoked'], False)
+                self.assertEqual(raw_path.read_bytes(), saved_bytes)
+                included = await server.call_tool('interface_results', {'call_id': call_id})
+                self.assertEqual(included.content[1].data, original.content[1].data)
+                image_path = Path(before['source']['native']['artifact']['path'])
+                image_path.write_bytes(image_path.read_bytes()+b'corruption')
+                with patch('runtime.cli_v1.review.base64.b64encode', wraps=base64.b64encode) as encode:
+                    corrupted = await server.call_tool('interface_results', {
+                        'call_id': call_id, 'include_image': False})
+                    self.assertEqual(encode.call_count, 0)
+                self.assertEqual(metadata(corrupted)['image_status'], 'needs_review')
+                self.assertIn('image_error', metadata(corrupted))
+                self.assertEqual(raw_path.read_bytes(), saved_bytes)
+                bridge.observe.assert_called_once()
+                bridge.click.assert_not_called()
+                bridge.keyboard.assert_not_called()
+                await server.call_tool('interface_close', {})
+
     async def test_public_observation_keeps_current_rgb_across_capture_directory_changes(self):
         # Removing the guarded owner's retain_rgb policy must refuse the real
         # bridge observation, rather than silently pass an inert bridge fake.
