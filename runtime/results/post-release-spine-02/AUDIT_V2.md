@@ -10,7 +10,7 @@
 
 ## Result
 
-`verify_v2.py` passed normally and with `python3 -O`; 617 archived members were checked. `test_audit_v2.py` passed 4/4 tests, covering the retained package, refusal permutation, duplicate attempts, refusal-content sensitivity, and strict ordering of other fields. `controls.py` rejected all five negative controls in both execution modes. `py_compile` passed for all three v2 Python files.
+`verify_v2.py` passed normally and with `python3 -O`; 617 archived members were checked. `test_audit_v2.py` passed 7/7 tests, including end-to-end verifier mutations on temporary copies of the published analysis: refusal-order permutation accepted; refusal-content change and non-refusal `rows` reorder rejected. Duplicate attempts and refusal-field strictness also pass. `controls.py` rejected all five negative controls in both execution modes. `py_compile` passed for all three v2 Python files.
 
 The one discrepancy is exactly the unordered refusal inventory: v1 recomputation produced attempts `[14, 16, 17]`, whereas the frozen published analysis has `[16, 14, 17]`. Canonical ordering restores exact equality; no other field is normalized.
 

@@ -1,4 +1,7 @@
 import copy
+import json
+import shutil
+import tempfile
 import unittest
 
 from analyze import analyze
@@ -48,6 +51,49 @@ class AuditV2Tests(unittest.TestCase):
         reordered["routes"]["x"]["rows"] = [2, 1]
         self.assertNotEqual(canonical(base), canonical(changed))
         self.assertNotEqual(canonical(base), canonical(reordered))
+
+    def _temporary_published_package(self):
+        temp = tempfile.TemporaryDirectory()
+        dest = Path(temp.name)
+        for name in ("manifest.json", "raw.tar.gz", "analysis.json", "model-usage-projection.json"):
+            shutil.copy2(HERE / name, dest / name)
+        return temp, dest
+
+    def test_full_verifier_accepts_only_refusal_inventory_permutation(self):
+        temp, dest = self._temporary_published_package()
+        try:
+            analysis_path = dest / "analysis.json"
+            published = json.loads(analysis_path.read_text())
+            published["routes"]["guarded-local"]["refusals"].reverse()
+            analysis_path.write_text(json.dumps(published))
+            self.assertEqual(verify(dest)["integration_gate"], "HOLD_INTEGRATION_INCOMPLETE")
+        finally:
+            temp.cleanup()
+
+    def test_full_verifier_rejects_changed_refusal_content(self):
+        temp, dest = self._temporary_published_package()
+        try:
+            analysis_path = dest / "analysis.json"
+            published = json.loads(analysis_path.read_text())
+            published["routes"]["guarded-local"]["refusals"][0]["detail"] += " altered"
+            analysis_path.write_text(json.dumps(published))
+            with self.assertRaisesRegex(ValueError, "analysis mismatch"):
+                verify(dest)
+        finally:
+            temp.cleanup()
+
+    def test_full_verifier_rejects_other_list_reordering(self):
+        temp, dest = self._temporary_published_package()
+        try:
+            analysis_path = dest / "analysis.json"
+            published = json.loads(analysis_path.read_text())
+            rows = published["routes"]["guarded-local"]["rows"]
+            rows[0], rows[1] = rows[1], rows[0]
+            analysis_path.write_text(json.dumps(published))
+            with self.assertRaisesRegex(ValueError, "analysis mismatch"):
+                verify(dest)
+        finally:
+            temp.cleanup()
 
 
 if __name__ == "__main__":

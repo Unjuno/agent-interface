@@ -3,7 +3,13 @@
   "retained_analysis_status": "PASS_RETAINED_MANUAL_GUARDED_DIRECT_SIX_PAIR",
   "archive_members": 617,
   "verification_modes": ["python3 verify_v2.py", "python3 -O verify_v2.py"],
-  "unit_tests": {"passed": 4, "failed": 0},
+  "unit_tests": {"passed": 7, "failed": 0},
+  "verifier_mutations": {
+    "refusal_inventory_permutation": "accepted",
+    "changed_refusal_content": "rejected",
+    "other_rows_reordering": "rejected",
+    "scope": "temporary copies of analysis.json; original archive and published evidence unchanged"
+  },
   "negative_controls": {
     "count": 5,
     "all_rejected_normal_and_optimized": true,
