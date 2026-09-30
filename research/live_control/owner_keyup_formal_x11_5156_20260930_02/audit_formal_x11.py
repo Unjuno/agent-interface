@@ -73,6 +73,8 @@ def audit(records, expected):
         if any(type(x) is not int for x in times) or not times[0] <= times[1] <= times[2]:
             errors.append(f"owner request/sync ordering invalid: {identity}")
         if trigger == "explicit_up":
+            if row.get("trigger_class") != "explicit_up":
+                errors.append(f"explicit release class mismatch: {identity}")
             caller = [row.get("caller_started_ns"), row.get("caller_returned_ns")]
             if row.get("key") != key or any(type(x) is not int for x in caller):
                 errors.append(f"explicit release caller/key receipt malformed: {identity}")
@@ -96,6 +98,8 @@ def audit(records, expected):
         errors.append("cancel did not reject second admission")
     if len([r for r in records if r.get("event") == "process_cleanup" and r.get("owner_stopped") is True]) != 1:
         errors.append("owner process cleanup not verified exactly once")
+    if any(r.get("event") == "process_cleanup" and r.get("fixture_child_processes") != 0 for r in records):
+        errors.append("fixture child-process cleanup mismatch")
     if len([r for r in records if r.get("event") == "terminal_state" and r.get("neutral") is True
              and r.get("grants_input_authority") is False]) != 1:
         errors.append("neutral terminal input state missing")
