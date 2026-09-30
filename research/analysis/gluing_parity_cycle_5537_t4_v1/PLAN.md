@@ -14,12 +14,12 @@
 
 ## Freeze and execution
 
-- Base: `10f94d57fb91f3c656aeb16f81c693a9e70deb26`.
-- Freeze time: `2026-09-30T14:59:48Z`.
+- Initial source freeze base: `10f94d57fb91f3c656aeb16f81c693a9e70deb26`.
+- Execution-base refresh: `da9b4b24999282f5168da969808827ad3ba6dbb0`, observed at `2026-09-30T15:01:06Z`.
+- Candidate/auditor source bytes are unchanged from source-freeze commit `2fcd1a32b146f02e3ee7f5e8261caefbcfbe8eb5`; their hashes below were rechecked after the mainline merge. No input rows or results existed at refresh time.
 - Candidate SHA-256: `a474c96b2b950e91ac8e32a1246ca21bd5a31bb6f84e7263304d5360136f8a6f`.
 - Independent auditor SHA-256: `b27bf3175dcc6eabd16abc07cd5bb3addb804c3095c8a76ae1f54972a4ba4a3b`.
-- Freeze commit: recorded in the PR body and execution report after this source-only commit is created; no candidate/auditor edits are permitted afterward.
-- Planned image: already-present `python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f`, `linux/arm64`; network disabled, read-only root/source, only raw output mount writable, 1 CPU, 256 MiB, 64 pids, all capabilities dropped, no-new-privileges.
-- Commands: one `python /src/experiment.py` invocation; only if exit 0, one independent `python /src/audit.py` invocation.
-- Shared resource: do not invoke until #5156's exact exclusive slot has ended and its owner/coordinator explicitly releases it. No launch is covered by the #5156 lease.
+- Execution mode: one independent host-local T4, CPython 3.14.5, because #5085 comment #5913845233 permits only independent host-local work while the shared lane remains unassigned. No Docker/OrbStack daemon or image will be inspected or used.
+- Commands: one `python3 research/analysis/gluing_parity_cycle_5537_t4_v1/experiment.py` invocation; only if exit 0, one independent `python3 research/analysis/gluing_parity_cycle_5537_t4_v1/audit.py` invocation.
+- Container successor: requires a new exact coordinator assignment after #5156 STOP/release; this host result must not be presented as satisfying Docker reproducibility.
 - After formal invocation, no candidate/auditor edits, reruns, replacements, tuning, or raw rewriting. A failed gate is retained verbatim.
