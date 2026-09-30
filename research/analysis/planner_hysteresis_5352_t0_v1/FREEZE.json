@@ -1,0 +1,52 @@
+{
+  "study": "issue-5352-deterministic-hysteresis-t0",
+  "allocation_id": "planner-hysteresis-5352-t0-20260930-01",
+  "status_at_freeze": "FROZEN_NOT_YET_FORMALLY_RUN",
+  "main_base_sha": "14c1513c7ac516e5dc5b766b4fc99c1b8cbaa2ca",
+  "source_code_commit": "6463a31cdd89e38e6023c924b182798a99f19b39",
+  "source_sha256_utf8_lf": {
+    "PLAN.md": "4fee33f5229cdd89a7d38db3f24fb2f1e7d7a432f8b1d70cc29ae1cc3b4c8f29",
+    "simulator.py": "ddb701a0d7af3f1e641573547c2597ff2ca6fe86072fe05581bb4ae7da3ee0dc",
+    "test_simulator.py": "54cd14a54f183cb3fd1e09ce9c65965e6cc84b99469355d0a2bb3f6066893796",
+    "audit.py": "b6e0c291cb36ee76034891f17b9a5bcb3d3feaca5dcfb2fd2d8c5ec8332a4aaf"
+  },
+  "construction": {
+    "command": "python -B construction launcher (run via test_local.ps1)",
+    "result": "PASS 8/8",
+    "runtime": "CPython 3.11.9, Windows host, stdlib only",
+    "wrapper_commit": "a06317b56bd532e78d6f5eab25742c13ce0204bf",
+    "wrapper_sha256_utf8": "4adc62f9c9132f9d4885f9c40abf296500b87ca6a822db62864c57b1f355642a"
+  },
+  "formal_wrapper": {
+    "commit": "47e673f86e7c467acb2d442be6647953097d5474",
+    "sha256_utf8": "58548ab9f9ecfd541163d4ce476bebb08f8d9a6f088e83b266718b624dce344b",
+    "behavior": "fetches only pinned Python sources into memory; runs frozen formal runner then separate auditor process; compresses successful raw to gzip/base64 for additive GitHub retention; writes no local files"
+  },
+  "execution": {
+    "container": null,
+    "container_reason": "No exact exclusive #5085 slot; shared running container owner remains unidentified. Host-only finite CPU execution is the declared bounded route; no Docker invocation.",
+    "command": "$script=(Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/Unjuno/agent-interface/47e673f86e7c467acb2d442be6647953097d5474/research/analysis/planner_hysteresis_5352_t0_v1/run_local.ps1').Content; & ([scriptblock]::Create($script))",
+    "output_path": "research/analysis/planner_hysteresis_5352_t0_v1/results/formal-01/",
+    "output_collision": "No prior path exists on the new additive branch; outputs are not written to the full local C: volume."
+  },
+  "frozen_decision": {
+    "trace_alphabet": 20,
+    "lengths": [
+      1,
+      2,
+      3
+    ],
+    "total_traces": 8420,
+    "risk_levels": [
+      0,
+      0.3,
+      0.5,
+      0.7,
+      1
+    ],
+    "high_enter": 0.7,
+    "low_exit": 0.3,
+    "minimum_dwell_following_fresh_observations": 2,
+    "retry_or_tune": false
+  }
+}
