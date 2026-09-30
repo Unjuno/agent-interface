@@ -57,5 +57,5 @@ def audit(raw):
  if raw.get("side_effects")!={"authority_grants":0,"actions_dispatched":0,"network_calls":0,"model_calls":0,"gpu_calls":0}:errors.append("side_effects")
  result={"schema":"causal-cut-5348-t1-audit-v1","errors":errors,"integrity_pass":not errors,"cut_rows_recomputed":25,"control_rows_recomputed":6,"candidate_imported":False}
  print(json.dumps(result,sort_keys=True,separators=(",",":")));return 0 if not errors else 1
-EXPECTED_CORE_SHA="PENDING"
+EXPECTED_CORE_SHA="302595c32bdfffc88b54c78c3fc4f54ac4e5c03e"
 if __name__=="__main__":raise SystemExit(audit(json.loads(sys.stdin.read())))
