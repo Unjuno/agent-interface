@@ -38,3 +38,19 @@ The callback bodies above must be implemented by the host; empty callbacks do no
 Optional `reuseReviewedImages: true` references only a byte-identical PNG previously delivered and explicitly reviewed within this live host. Current metadata remains separate; identical pixels do not acknowledge task completion. Default false preserves full image delivery. Host timestamps partition transport/presentation/caller intervals; they do not measure isolated model reasoning, useful feedback, actual tokens/cost or human tempo.
 
 Run `node --test runtime/host_v1/test_*.mjs`. The original research modules and frozen evidence remain unchanged; promotion changes only the local import paths. No performance or generic task-quality improvement is claimed.
+
+
+A program can batch several ordered pointer operations in one dispatch. A drag
+uses `pointer_move` to the observed start, `pointer_button` with `down: true`,
+`pointer_move` to the observed end, then `pointer_button` with `down: false`.
+Focus the configured target in that same program and end with `release_all`.
+This is one pointer executing sequentially. Split programs where the next action
+requires a fresh visual decision; an `observe` inside a program captures a frame
+but does not pause the remaining operations for the model.
+
+[Primary Inkscape batch use](../results/public-inkscape-batch-01/README.md)
+records two visually selected drags in one program, a separate save, returned
+summary/image reviews, full receipt retrieval without input, and independent SVG
+validation. The exact requests are retained as an example, not portable screen
+coordinates or default waiting times. No comparison against unbatched use, token
+usage or human pace was measured.

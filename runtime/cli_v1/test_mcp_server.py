@@ -204,7 +204,7 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual(program_schema['type'], 'object')
                     for term in ('agent-interface/program-v1', 'expires_at_ns',
                                  'execution host monotonic clock', 'release_all',
-                                 'gap_ms', 'repeat', '128', 'Home', 'BackSpace', 'case-sensitive', 'key_state'):
+                                 'gap_ms', 'repeat', '128', 'Home', 'BackSpace', 'case-sensitive', 'key_state', 'pointer_move', 'pointer_button', 'concurrent cursors', 'decision boundary'):
                         self.assertIn(term, program_schema['description'])
                     reply = await client.call_tool('interface_dispatch', {
                         'program': {}, 'current_observation_seq': -1, 'current_binding_revision': 0})
@@ -375,7 +375,7 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual(program_schema['type'], 'object')
                     for term in ('agent-interface/program-v1', 'expires_at_ns',
                                  'execution host monotonic clock', 'release_all',
-                                 'gap_ms', 'repeat', '128', 'Home', 'BackSpace', 'case-sensitive', 'key_state'):
+                                 'gap_ms', 'repeat', '128', 'Home', 'BackSpace', 'case-sensitive', 'key_state', 'pointer_move', 'pointer_button', 'concurrent cursors', 'decision boundary'):
                         self.assertIn(term, program_schema['description'])
                     reply = await client.call_tool('interface_dispatch', {
                         'program': {}, 'current_observation_seq': -1, 'current_binding_revision': 0})
