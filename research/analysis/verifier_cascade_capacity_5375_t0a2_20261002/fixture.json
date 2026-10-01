@@ -1,0 +1,22 @@
+{
+  "schema": "verifier-cascade-capacity-t0a2-v1",
+  "ticks": 30,
+  "total_capacity_per_tick": 4,
+  "queue_limit": 64,
+  "safety_arrival_per_tick": 1,
+  "outage_failed_attempt_resource_per_tick": 1,
+  "trigger_retry_arrival_per_fault_tick": 2,
+  "feedback_retry_arrival_per_tick": 3,
+  "policies": ["legacy_shared_retry", "debt_shed_reserved", "no_retry_shared"],
+  "cases": [
+    {"id":"underload_no_trigger","fault_ticks":0,"external_primary_per_tick":1,"feedback_after_trigger":false},
+    {"id":"finite_fault_debt_no_feedback","fault_ticks":3,"external_primary_per_tick":1,"feedback_after_trigger":false},
+    {"id":"finite_fault_debt_feedback_on","fault_ticks":3,"external_primary_per_tick":1,"feedback_after_trigger":true}
+  ],
+  "decision_rule": {
+    "legacy_shared_retry": "ordinary-first; after fault, generate 3 retry units per tick while retry queue is nonempty only in feedback-on case; safety receives remaining capacity",
+    "debt_shed_reserved": "during fault reserve one safety unit; on first recovered tick cancel all retry debt (primary work is never cancelled); thereafter generate no retries, serve safety first up to one unit, then ordinary work",
+    "no_retry_shared": "no feedback retries and no debt cancellation; ordinary-first shared service; safety receives remaining capacity",
+    "fallback_authority": "never; all rows must have authority_admissions=0"
+  }
+}

@@ -243,11 +243,53 @@ _GUARDED_REF_SCOPE = ('Only the listed observation_report.observation is a refer
                       'values are literal. This is not a new capture or authority.')
 
 
+GUARDED_FEEDBACK_REFS = 'agent-interface/guarded-feedback-observation-refs-v1'
+_GUARDED_FEEDBACK_MAP = {**_GUARDED_REF_MAP, '/feedback/observation': '/source'}
+_GUARDED_FEEDBACK_SCOPE = ('Only the listed observation_report.observation and feedback.observation '
+    'are references to the complete source.native and source in this response. '
+    'Other reference-shaped values are literal. No new capture or authority.')
+
+
+def _compact_guarded_feedback(view):
+    result = copy.deepcopy(view)
+    try:
+        source, report, feedback = view['source'], view['observation_report'], view['feedback']
+        result_receipt, session = view['result'], view['session']
+        releases = result_receipt['execution']['releases']
+        if (view['operation'] != 'guarded_input' or view['status'] != 'completed'
+            or view['task_success'] is not None or view['replay_allowed'] is not False
+            or view['image_status'] != 'image' or 'error' in view or 'persistence_error' in view
+            or feedback['status'] != 'matched' or 'error' in feedback
+            or feedback['task_success'] is not None or feedback['authority_granted'] is not False
+            or feedback['input_dispatched'] is not False
+            or not isinstance(feedback['expected_title'], str) or not feedback['expected_title']
+            or feedback['title'] != feedback['expected_title'] or feedback['after_title'] != feedback['title']
+            or result_receipt['status'] != 'completed' or result_receipt['recovery_required'] is not False
+            or session['recovery_required'] is not False or session['review_required'] is not False
+            or session.get('error') is not None or not releases
+            or any(r['verified'] is not True or r['keys_down'] != [] or r['buttons_down'] != [] or 'error' in r for r in releases)
+            or report['status'] != 'returned' or not isinstance(source['native'], dict) or not source['native']
+            or not isinstance(source['observation_id'], str) or source['observation_id'] != report['observation_id']
+            or _encoded(source['native']) != _encoded(report['observation'])
+            or _encoded(source) != _encoded(feedback['observation'])):
+            return result
+        result['observation_report']['observation'] = {'observation_ref': '/source/native'}
+        result['feedback']['observation'] = {'observation_ref': '/source'}
+        result.update(reference_schema=GUARDED_FEEDBACK_REFS,
+            observation_references=dict(_GUARDED_FEEDBACK_MAP), reference_scope=_GUARDED_FEEDBACK_SCOPE)
+        size = lambda row: len(json.dumps({k:v for k,v in row.items() if k != 'image'}, allow_nan=False).encode())
+        return result if size(result) < size(view) else copy.deepcopy(view)
+    except (KeyError, TypeError, ValueError, AttributeError):
+        return copy.deepcopy(view)
+
+
 def compact_guarded_observation(view):
     """Losslessly replace one exact duplicate; preserve literal/critical reports."""
     result = copy.deepcopy(view)
     if any(k in view for k in ('reference_schema', 'observation_references', 'reference_scope')):
         return result
+    if view.get('feedback_status') == 'cue_returned':
+        return _compact_guarded_feedback(view)
     try:
         source, report = view['source'], view['observation_report']
         native = source['native']
@@ -279,6 +321,20 @@ def expand_guarded_observation(view):
     if 'reference_schema' not in result:
         return result
     try:
+        if result['reference_schema'] == GUARDED_FEEDBACK_REFS:
+            if (result['observation_references'] != _GUARDED_FEEDBACK_MAP
+                or result['reference_scope'] != _GUARDED_FEEDBACK_SCOPE
+                or result['feedback']['observation'] != {'observation_ref':'/source'}
+                or result['observation_report']['observation'] != {'observation_ref':'/source/native'}
+                or not isinstance(result['source']['native'], dict) or not result['source']['native']
+                or not isinstance(result['source']['observation_id'], str)
+                or result['source']['observation_id'] != result['observation_report']['observation_id']):
+                raise ValueError('invalid guarded feedback reference')
+            result['feedback']['observation'] = copy.deepcopy(result['source'])
+            result['observation_report']['observation'] = copy.deepcopy(result['source']['native'])
+            for key in ('reference_schema', 'observation_references', 'reference_scope'):
+                result.pop(key)
+            return result
         if (result['reference_schema'] != GUARDED_OBSERVATION_REFS
                 or result['observation_references'] != _GUARDED_REF_MAP
                 or result['reference_scope'] != _GUARDED_REF_SCOPE
