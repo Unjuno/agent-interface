@@ -336,6 +336,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`phase_overlap_resource_footprint_r0_v2/`](phase_overlap_resource_footprint_r0_v2/)
 - [`planner_hysteresis_5352_t10_20261001/`](planner_hysteresis_5352_t10_20261001/)
 - [`portfolio_multiplicity_5890_t0_v2_20261001/`](portfolio_multiplicity_5890_t0_v2_20261001/)
+- [`post_success_collateral_5593_t0_20261002/`](post_success_collateral_5593_t0_20261002/)
 - [`predicate_cache_persist_4217_v1/`](predicate_cache_persist_4217_v1/)
 - [`predicate_dependency_cache_4217_v1/`](predicate_dependency_cache_4217_v1/)
 - [`predicate_dependency_completeness_4217_v1/`](predicate_dependency_completeness_4217_v1/)
@@ -484,6 +485,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`xterm_resource_footprint_transfer_v1/`](xterm_resource_footprint_transfer_v1/)
 - [`xterm_resource_footprint_transfer_v2/`](xterm_resource_footprint_transfer_v2/)
 - [`xterm_resource_footprint_transfer_v3/`](xterm_resource_footprint_transfer_v3/)
+
 
 </details>
 
