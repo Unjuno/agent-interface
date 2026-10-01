@@ -10,3 +10,8 @@ Formal candidate/auditor runs: **0**. This records pre-formal test construction 
 The correction changed only the assertion/reporting distinction between `cover_count=4` and `minimum_tie_count=1`. The formal H/T/D/C/U and cost threshold were not changed. Attempt 01 is retained, not relabeled as a scientific failure or silently erased.
 
 Source and fixture identities are in [FREEZE.json](FREEZE.json). The one-shot formal window is 2026-10-01T18:37:00Z–2026-10-01T18:52:00Z; no formal work occurs outside a fresh start-gate check.
+
+
+## Attempt 03 — refreshed-source construction gate
+
+After updating the pinned main SHA and candidate/auditor constants to `8d6ad7be277fff929a665e4fed44f8ee89b33bad`, the exact frozen blobs were re-read and materialized without byte changes (all five Git blob IDs matched FREEZE.json). `python -B -m unittest test_t0 -v`: 7/7 passed; AST parse: PASS. Candidate formal invocations=0; auditor=0. This is construction only.
