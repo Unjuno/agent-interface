@@ -86,6 +86,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 - [`public_mcp_binding_review_2907_construction01_v1/`](integration/public_mcp_binding_review_2907_construction01_v1/REPORT.md) — local Docker public-MCP Calc modal review/rebind; old binding refused with zero emissions, new binding neutral Escape/release; scoped construction only, not observation freshness or full #2907 integration.
 - [`public_mcp_replacement_review_2907_construction01_v1/`](integration/public_mcp_replacement_review_2907_construction01_v1/REPORT.md) — public MCP Chromium root replacement boundary: a new process/window was refused by the original transient-family review, with target/revision preserved; HOLD retained because old launcher liveness was not recorded.
 - [`measurement/`](measurement/) — scoped measurement and composition studies.
+- [#4389 / Draft PR #4410 archival qualification](measurement/key_state_piggyback_q4s8_v1/ARCHIVAL_QUALIFICATION.md) — 18 exact source/freeze/audit blobs; historical same-connection contract PASS and full-cost HOLD are preserved, but the 261-file raw capsule is missing and the reported allocation is not independently re-audited here.
 - [`cross_domain/`](cross_domain/) — cross-domain transfer work.
 
 ### Fast local decision / System-1 research
