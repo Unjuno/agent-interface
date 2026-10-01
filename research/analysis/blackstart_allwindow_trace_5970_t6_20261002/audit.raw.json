@@ -1,0 +1,72 @@
+{
+  "all_record_recipients_selected": false,
+  "app_events": [
+    {
+      "actuation_id": "t6-b90825251ace427691353ef5a0f2708c:keypress",
+      "causal_parent_ids": [
+        "act:t6-b90825251ace427691353ef5a0f2708c:keypress"
+      ],
+      "event_id": "app:1",
+      "keycode": 50,
+      "keysym": "Shift_L",
+      "kind": "KeyPress",
+      "mono_ns": 27791004367874,
+      "source": "app",
+      "source_seq": 1,
+      "state": 0,
+      "time": 27791000,
+      "value": ""
+    },
+    {
+      "actuation_id": "t6-b90825251ace427691353ef5a0f2708c:keyrelease",
+      "causal_parent_ids": [
+        "act:t6-b90825251ace427691353ef5a0f2708c:keyrelease"
+      ],
+      "event_id": "app:2",
+      "keycode": 50,
+      "keysym": "Shift_L",
+      "kind": "KeyRelease",
+      "mono_ns": 27791028457754,
+      "source": "app",
+      "source_seq": 2,
+      "state": 1,
+      "time": 27791025,
+      "value": ""
+    }
+  ],
+  "errors": [],
+  "observer_events": [],
+  "record_errors": [],
+  "record_events": [
+    {
+      "detail": 50,
+      "kind": "KeyPress",
+      "root_xid": 543,
+      "time": 27791000,
+      "type": 2,
+      "window_xid": 2097170
+    },
+    {
+      "detail": 50,
+      "kind": "KeyRelease",
+      "root_xid": 543,
+      "time": 27791025,
+      "type": 3,
+      "window_xid": 2097170
+    }
+  ],
+  "release_attempted": true,
+  "schema": "blackstart-allwindow-trace-t6-audit-v1",
+  "scope": "single synthetic Shift pair in private Xvfb; no physical-input, production, generalized provenance, recovery or task-benefit claim",
+  "selected_xids": [
+    2097169,
+    2097171
+  ],
+  "source_sha256": {
+    "candidate.py": "0ef64a6d6cb77f5443ff6bbbb9724e5fce6d9202bfb2d68c1e9701ac7f5e60f8",
+    "observer.py": "7a88ea16afcb00f3376ea28485ae998ef31458ef41456bf94c490b31b4dff1b7",
+    "runner.py": "b4944e68298ce2bc9f8480d3eeb5e51a2a78bec975f1133681978defd76e68bd"
+  },
+  "status": "HOLD_STREAMS_DIVERGE_OR_INCOMPLETE",
+  "terminal_neutral": true
+}

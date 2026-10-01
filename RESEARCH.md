@@ -37,6 +37,20 @@ The frozen #4135 archive was reconstructed in memory and its exact Tk app/observ
 
 Using the exact T3-derived #4135 app and selected-window observer hashes in a fresh private Xvfb, one synthetic Shift pair produced two app events, zero selected-observer events, and two server-side X RECORD `FromServer` core events (KeyPress and KeyRelease, keycode 50). An independent parser decoded retained raw 32-byte payloads; event times matched the app rows. The cleanup release was attempted and terminal keymap was neutral. Disposition: `PASS_RECORD_DISAMBIGUATES_OBSERVER_GAP` for this narrow delivery-boundary trial only. Python-Xlib emitted a teardown `NoneType` diagnostic after capture; it is retained and does not erase the captured raw events. This does not identify the observer failure mechanism or prove physical input, production behavior, general causal provenance, recovery or product benefit. Docker Desktop engine remained unavailable; isolated WSL2/Xvfb fallback was used. No formal #4135 allocation rerun. See [T4 report](research/analysis/blackstart_xrecord_5970_t4_20261001/REPORT.md).
 
+### Issue #5970 T5: window-tree and mask diagnostic
+
+An input-free fixture inventoried Tk root/Entry XIDs and tried selecting KeyPress from a second client. Both selections succeeded, so the frozen BadAccess/mask-exclusivity expectation was falsified for the tested root. The X RECORD recipient XID from T4 was absent from this no-input window tree, leaving the target mismatch unresolved. Independent audit disposition: `HOLD_T4_EVENT_WINDOW_NOT_IN_NO_INPUT_TREE`. No input was dispatched. See [T5 report](research/analysis/blackstart_xevent_target_5970_t5_20261002/REPORT.md).
+
+### Issue #5970 T6: all-window observer vs X RECORD
+
+One private-Xvfb Shift pair was observed twice by the T3-derived app and twice by server-side X RECORD; a separate observer selected all windows in the recursively enumerated Tk tree but recorded zero. The X RECORD recipient XID (2097170) was outside the selected set (2097169, 2097171). Cleanup release and terminal neutrality were verified. Independent audit retained `HOLD_STREAMS_DIVERGE_OR_INCOMPLETE`; the all-enumerated-window capture hypothesis is not supported. This does not determine why the recipient is absent, transfer to deployed #4135, or establish physical input/recovery/task benefit. Docker Desktop was unavailable; private WSL2 Xvfb fallback. See [T6 report](research/analysis/blackstart_allwindow_trace_5970_t6_20261002/REPORT.md).
+
+### Issue #5970 T7-T11: X target liveness and parent-window diagnostics
+
+T7 found the T4/T6 event recipient XID 2097170 already viewable before input, as the immediate parent of the Tk `winfo_id()` root; it was outside the Tk-root subtree, and a second client could select key events on it (`HOLD_TARGET_PRESENT_MAPPED`). T8's full ancestor enumerator STOPped before input at observer readiness timeout; its auditor also STOPped on a null ready object, both retained. T9/T10 selected the mapped immediate parent and did receive press/release classes, but each observer stream had an extra Release at the press timestamp and RECORD retained five per-delivery events; exact stream gates HOLDed. T11 showed the same extra Release for normal `a`, not only Shift; initial/terminal key neutrality and cleanup passed, but exact three-stream agreement remained HOLD. These are private-Xvfb mechanism diagnostics, not deployed #4135 behavior, physical-input evidence, recovery, or task benefit. Docker Desktop engine remained unavailable; WSL2/Xvfb fallback. See each T7-T11 report and raw/hash manifests.
+
+T12 ran a 500 ms no-input baseline with the exact app, parent-only observer, and X RECORD armed. Both key-event streams remained empty and both `a`/Shift keymaps neutral; independent disposition `PASS_EMPTY_NO_INPUT_BASELINE`. This rules out spontaneous startup key events only and does not explain the input-time extra Release. See [T12 report](research/analysis/blackstart_x11_noinput_baseline_5970_t12_20261002/REPORT.md).
+
 | Need | Read |
 |---|---|
 | Current governing objective | [docs/CURRENT_GOAL.md](docs/CURRENT_GOAL.md) |
@@ -1826,6 +1840,10 @@ and PR (to be added after evidence publication).
 ### Cross-process role skill reload — Issue #3890
 
 The successor to #3780 passed a preregistered three-seed synthetic lifecycle in local network-isolated CPU Docker: each JSON tensor skill was independently loaded by two fresh containers, all 12,288 role predictions matched per seed, all roles met the 0.90 threshold, and both fresh graph generations completed receipt-gated A→B→C with fail-closed controls. Independent audit passed with zero errors. Seed 3789 / role C is a narrow pass (0.900635). Construction-only seeds and the post-formal auditor/path/hash correction are explicitly retained; no model rerun or production-authority claim. See [formal report](research/needle_role_skill_reload_3780_v1/REPORT.md), [raw evidence and checksums](research/needle_role_skill_reload_3780_v1/formal/SHA256SUMS.txt), and [Issue #3890](https://github.com/Unjuno/agent-interface/issues/3890).
+
+### Issue #6243 — method-selection accounting T0 successor-02
+
+The one-shot OrbStack Docker candidate and independent raw-only auditor both exited 0; the auditor returned `METHOD_PASS_SCOPED` for 24 constructed attempts across four scenarios, with zero audit errors and 4/4 mutation controls rejected. Equal per-method fixture times yielded identical method-conditioned means while the designed natural-method mix and one-time acquisition charge changed the horizon ordering; the exact equal-method null remained 72,000 ms per arm. This validates only synthetic accounting and gate implementation. No human or GUI observations, coder reliability, empirical tempo, causal effect, population, or product claim is established. The predecessor allocation's `FAIL_AUDIT_GATE` is preserved unchanged. See [H/T/D/C/U report and reproduction package](research/analysis/method_selection_fairness_6243_t0_successor02_v1/REPORT.md) and [Issue #6243](https://github.com/Unjuno/agent-interface/issues/6243).
 
 ### Role-C support16/64 synthetic diagnostic — Issue #4853
 
