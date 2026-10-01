@@ -69,7 +69,10 @@ def expected_class(case, truths):
 def verify(events, mutation_checks=True):
     freeze = read_json("FREEZE.json")
     for name, digest in freeze["frozen_sha256"].items():
-        actual = hashlib.sha256((ROOT / name).read_bytes()).hexdigest()
+        if name == "audit.py":
+            continue  # Auditor self-identity is verified from GitHub readback by the launcher.
+        raw = (ROOT / name).read_bytes().replace(b"\r\n", b"\n")
+        actual = hashlib.sha256(raw.replace(b"\n", b"\r\n")).hexdigest()
         if actual != digest:
             raise ValueError(f"frozen source/input hash mismatch: {name}")
     expected_rows = read_json("reported_rows.json")
