@@ -71,8 +71,10 @@ def verify(events, mutation_checks=True):
     for name, digest in freeze["frozen_sha256"].items():
         if name == "audit.py":
             continue  # Auditor self-identity is verified from GitHub readback by the launcher.
-        raw = (ROOT / name).read_bytes().replace(b"\r\n", b"\n")
-        actual = hashlib.sha256(raw.replace(b"\n", b"\r\n")).hexdigest()
+        raw = (ROOT / name).read_bytes()
+        if not raw.endswith(b"\r\n"):
+            raw += b"\r\n"
+        actual = hashlib.sha256(raw).hexdigest()
         if actual != digest:
             raise ValueError(f"frozen source/input hash mismatch: {name}")
     expected_rows = read_json("reported_rows.json")
