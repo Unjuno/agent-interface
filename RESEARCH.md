@@ -29,6 +29,14 @@ The frozen #4135 archive was reconstructed in memory and its exact Tk app/observ
 
 Using the exact T3-derived #4135 app and selected-window observer hashes in a fresh private Xvfb, one synthetic Shift pair produced two app events, zero selected-observer events, and two server-side X RECORD `FromServer` core events (KeyPress and KeyRelease, keycode 50). An independent parser decoded retained raw 32-byte payloads; event times matched the app rows. The cleanup release was attempted and terminal keymap was neutral. Disposition: `PASS_RECORD_DISAMBIGUATES_OBSERVER_GAP` for this narrow delivery-boundary trial only. Python-Xlib emitted a teardown `NoneType` diagnostic after capture; it is retained and does not erase the captured raw events. This does not identify the observer failure mechanism or prove physical input, production behavior, general causal provenance, recovery or product benefit. Docker Desktop engine remained unavailable; isolated WSL2/Xvfb fallback was used. No formal #4135 allocation rerun. See [T4 report](research/analysis/blackstart_xrecord_5970_t4_20261001/REPORT.md).
 
+### Issue #5970 T5: window-tree and mask diagnostic
+
+An input-free fixture inventoried Tk root/Entry XIDs and tried selecting KeyPress from a second client. Both selections succeeded, so the frozen BadAccess/mask-exclusivity expectation was falsified for the tested root. The X RECORD recipient XID from T4 was absent from this no-input window tree, leaving the target mismatch unresolved. Independent audit disposition: `HOLD_T4_EVENT_WINDOW_NOT_IN_NO_INPUT_TREE`. No input was dispatched. See [T5 report](research/analysis/blackstart_xevent_target_5970_t5_20261002/REPORT.md).
+
+### Issue #5970 T6: all-window observer vs X RECORD
+
+One private-Xvfb Shift pair was observed twice by the T3-derived app and twice by server-side X RECORD; a separate observer selected all windows in the recursively enumerated Tk tree but recorded zero. The X RECORD recipient XID (2097170) was outside the selected set (2097169, 2097171). Cleanup release and terminal neutrality were verified. Independent audit retained `HOLD_STREAMS_DIVERGE_OR_INCOMPLETE`; the all-enumerated-window capture hypothesis is not supported. This does not determine why the recipient is absent, transfer to deployed #4135, or establish physical input/recovery/task benefit. Docker Desktop was unavailable; private WSL2 Xvfb fallback. See [T6 report](research/analysis/blackstart_allwindow_trace_5970_t6_20261002/REPORT.md).
+
 | Need | Read |
 |---|---|
 | Current governing objective | [docs/CURRENT_GOAL.md](docs/CURRENT_GOAL.md) |
