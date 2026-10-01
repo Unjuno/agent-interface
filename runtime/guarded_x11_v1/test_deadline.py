@@ -12,6 +12,7 @@ class DeadlineTests(unittest.TestCase):
         self.now = 1_000_000
         self.backend = object.__new__(_GuardedBackend)
         self.backend.owner = SimpleNamespace(active=('field',[0,0]), deadline=11_000_000)
+        self.backend.owner._focus_within_target = Mock(return_value=True)
         self.backend.emissions = 0
         self.backend.preflight = Mock()
         # This fixture isolates expiry at physical emission, without an X server.
@@ -26,6 +27,29 @@ class DeadlineTests(unittest.TestCase):
 
     def advance(self, seconds):
         self.now += round(seconds*1_000_000_000)
+
+    def test_focus_loss_before_press_refuses_but_release_is_allowed(self):
+        self.backend.owner._focus_within_target.return_value = False
+        with patch.object(X11Backend, 'key_state') as emit:
+            with self.assertRaisesRegex(X11BackendError, 'focus.*outside'):
+                self.backend.key_state('a', True)
+            emit.assert_not_called()
+            self.backend.key_state('CTRL', False)
+            emit.assert_called_once_with('CTRL', False)
+
+    def test_focus_loss_after_modifier_releases_without_following_key(self):
+        emitted = []
+        def emit(key, down):
+            emitted.append((key, down))
+            self.backend.owner._focus_within_target.return_value = False
+        with patch.object(X11Backend, 'key_state', side_effect=emit):
+            with self.assertRaises(X11ExecutionError) as caught:
+                self.backend.execute({'ops':[{'op':'key_chord','keys':['CTRL','a']},
+                                            {'op':'text','text':'must-not-run'}]})
+        self.assertEqual(emitted, [('CTRL', True)])
+        self.assertEqual(caught.exception.execution['failed_op'], 0)
+        self.backend.release_all.assert_called_once()
+        self.backend.text.assert_not_called()
 
     def test_wait_expires_releases_and_never_starts_tail(self):
         with self.assertRaises(X11ExecutionError) as caught:

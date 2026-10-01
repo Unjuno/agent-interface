@@ -38,6 +38,10 @@ class _GuardedBackend(X11Backend):
         if (down and self.owner.active is not None and self.owner.deadline is not None
                 and time.monotonic_ns() >= self.owner.deadline):
             raise X11BackendError('native target guard lease expired')
+        # A wait or an earlier modifier can outlive the original focus binding.
+        # Do not refocus automatically: release remains possible after focus loss.
+        if down and self.owner.active is not None and not self.owner._focus_within_target():
+            raise X11BackendError('focused window is outside guarded target before key press')
         return super().key_state(key, down)
 
     def _wait_update(self, timeout_ms):
