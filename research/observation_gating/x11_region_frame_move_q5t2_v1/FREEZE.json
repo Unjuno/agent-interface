@@ -1,0 +1,69 @@
+{
+  "allocation": "x11-region-frame-move-q5t2-20260926-01",
+  "branch": "research/x11-region-frame-move-20260926-q5t2",
+  "construction": {
+    "corruption_controls_rejected": 12,
+    "corruption_controls_total": 12,
+    "excluded_cases": 9,
+    "final_audit_cases": 9,
+    "final_audit_checks": 327,
+    "final_audit_errors": [],
+    "final_audit_sha256": "ab1b4b4337117a19eec76787f9229cdc8e590e2f4c921e99da7d0804d99be716",
+    "preserved_auditor_failures": [
+      "AUDITOR_CONSTRUCTION_FAILURE.json",
+      "AUDITOR_CONSTRUCTION_FAILURE_V1.json"
+    ],
+    "unit_methods_passed": 6
+  },
+  "decision": "PASS_X11_REGION_FRAME_MOVE_BOUNDARY_SCOPED iff frozen PLAN.json gates all hold; complete contradiction FAIL; missing source/process/raw/audit/cleanup evidence HOLD/STOP",
+  "formal_batches_executed": 0,
+  "formal_batches_planned": 3,
+  "formal_cases_executed": 0,
+  "formal_cases_planned": 27,
+  "intake_main": "3666992ab2b5e1b41b159b361d1c690d8e720fdf",
+  "issue": 4439,
+  "path": "research/observation_gating/x11_region_frame_move_q5t2_v1",
+  "postfreeze_tuning": 0,
+  "replacements": 0,
+  "reruns": 0,
+  "schema": "x11-region-frame-move-freeze-v1",
+  "scope": "observation-only coordinate-frame/lifetime fixture; no input/replay/task-success authority",
+  "source_files": [
+    {
+      "bytes": 1751,
+      "git_blob": "8493b1fb969e40669f5b2a490a3ab6713c1e7ac8",
+      "path": "fixture.py",
+      "sha256": "8449f3812ab3d8349c6416fdbdcee0b34686ac9a9a85df14f411de6de8666918"
+    },
+    {
+      "bytes": 10431,
+      "git_blob": "217f601806dfff632a02c5fff426eaf59dad807e",
+      "path": "study.py",
+      "sha256": "6e16d90d597e4bb88f489426c8238b7922a6f9bf5d02f876ea38414f9416da2b"
+    },
+    {
+      "bytes": 8822,
+      "git_blob": "80d3d76d2a33bcf0ea16000e27589e7d1149a5ac",
+      "path": "audit.py",
+      "sha256": "f73fb2af50c1746cc60bfbec4670f135b32cf444e134ac77fa2f39de8e5194f7"
+    },
+    {
+      "bytes": 953,
+      "git_blob": "8c1ea06c5a406652a7ba314ab130d62728fc4dba",
+      "path": "test_audit.py",
+      "sha256": "764e1fe2c996c1036ef7f1f6d2531c487682f3a843ee146e44d73a5f2a76619e"
+    },
+    {
+      "bytes": 1096,
+      "git_blob": "20441bb08a80e17052ac0342abe11fb60848a56e",
+      "path": "PLAN.json",
+      "sha256": "ebea55a57a386affa88e62c1ca69242af162c680df2fa419150f3998872b13eb"
+    },
+    {
+      "bytes": 422,
+      "git_blob": "d98174c0ed976b659532970d9861ea357266da4b",
+      "path": "ENVIRONMENT.json",
+      "sha256": "6f4fb0c4849f6f54343d5959adef8f613a9d54d76d75cf502356d0ee4854c0ef"
+    }
+  ]
+}
