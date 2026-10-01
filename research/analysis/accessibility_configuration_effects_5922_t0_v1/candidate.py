@@ -12,10 +12,6 @@ def hit(elements, point):
     return None
 
 
-def center(rect):
-    return {"x": rect["x"] + rect["w"] // 2, "y": rect["y"] + rect["h"] // 2}
-
-
 def admitted_action(element_id, obj, value):
     return {"element_id": element_id, "object": obj, "value": value,
             "authority": "save-display-name-only", "released": True}
