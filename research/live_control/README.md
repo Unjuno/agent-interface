@@ -15,6 +15,7 @@
 | X-server reincarnation identity boundary (Issue #3574; scoped, no promotion) | [lifetime replication report](../integration/typed_recovery_xserver_lifetime_v1/issue_3574_lifetime_01/evidence/REPORT.md) |
 | Implemented live-control surface | [What is implemented](#what-is-implemented) |
 | Reproduction notes | [Reproduce](#reproduce) |
+| Issue #2221 cross-domain retained-evidence transfer T1 | [Result and scope](cross_domain_handback_transfer_2221_t1_20261002/RESULT.md) |
 
 ## Track map
 
