@@ -1,0 +1,1015 @@
+{
+  "allocation_id": "ISSUE5841-T1-HOST-20261001-01",
+  "cases": [
+    {
+      "case_id": "clean_null",
+      "rows": [
+        {
+          "assignment_id": "A0",
+          "route": "A",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "A0",
+            "route": "A",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "A1",
+          "route": "A",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "A1",
+            "route": "A",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "A2",
+          "route": "A",
+          "ground_truth": {
+            "primary": false,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "A2",
+            "route": "A",
+            "primary": false,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "A3",
+          "route": "A",
+          "ground_truth": {
+            "primary": false,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "A3",
+            "route": "A",
+            "primary": false,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "B0",
+          "route": "B",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "B0",
+            "route": "B",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "B1",
+          "route": "B",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "B1",
+            "route": "B",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "B2",
+          "route": "B",
+          "ground_truth": {
+            "primary": false,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "B2",
+            "route": "B",
+            "primary": false,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "B3",
+          "route": "B",
+          "ground_truth": {
+            "primary": false,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "B3",
+            "route": "B",
+            "primary": false,
+            "sentinel": false,
+            "terminal": true
+          }
+        }
+      ],
+      "all_attempt": "PASS_COMPLETE",
+      "negative_control_shift": false,
+      "observed_sentinel_rates": {
+        "A": 0.0,
+        "B": 0.0
+      },
+      "observed_primary_rates": {
+        "A": 0.5,
+        "B": 0.5
+      },
+      "disposition": "NO_SIGNAL"
+    },
+    {
+      "case_id": "true_primary_benefit",
+      "rows": [
+        {
+          "assignment_id": "A0",
+          "route": "A",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "A0",
+            "route": "A",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "A1",
+          "route": "A",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "A1",
+            "route": "A",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "A2",
+          "route": "A",
+          "ground_truth": {
+            "primary": false,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "A2",
+            "route": "A",
+            "primary": false,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "A3",
+          "route": "A",
+          "ground_truth": {
+            "primary": false,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "A3",
+            "route": "A",
+            "primary": false,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "B0",
+          "route": "B",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "B0",
+            "route": "B",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "B1",
+          "route": "B",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "B1",
+            "route": "B",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "B2",
+          "route": "B",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "B2",
+            "route": "B",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "B3",
+          "route": "B",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "B3",
+            "route": "B",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        }
+      ],
+      "all_attempt": "PASS_COMPLETE",
+      "negative_control_shift": false,
+      "observed_sentinel_rates": {
+        "A": 0.0,
+        "B": 0.0
+      },
+      "observed_primary_rates": {
+        "A": 0.5,
+        "B": 1.0
+      },
+      "disposition": "NO_SIGNAL"
+    },
+    {
+      "case_id": "shared_export_fault",
+      "rows": [
+        {
+          "assignment_id": "A0",
+          "route": "A",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "A0",
+            "route": "A",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "A1",
+          "route": "A",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "A1",
+            "route": "A",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "A2",
+          "route": "A",
+          "ground_truth": {
+            "primary": false,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "A2",
+            "route": "A",
+            "primary": false,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "A3",
+          "route": "A",
+          "ground_truth": {
+            "primary": false,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "A3",
+            "route": "A",
+            "primary": false,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "B0",
+          "route": "B",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "B0",
+            "route": "B",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "B1",
+          "route": "B",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "B1",
+            "route": "B",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "B2",
+          "route": "B",
+          "ground_truth": {
+            "primary": false,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "B2",
+            "route": "B",
+            "primary": true,
+            "sentinel": true,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "B3",
+          "route": "B",
+          "ground_truth": {
+            "primary": false,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "B3",
+            "route": "B",
+            "primary": false,
+            "sentinel": false,
+            "terminal": true
+          }
+        }
+      ],
+      "all_attempt": "PASS_COMPLETE",
+      "negative_control_shift": true,
+      "observed_sentinel_rates": {
+        "A": 0.0,
+        "B": 0.25
+      },
+      "observed_primary_rates": {
+        "A": 0.5,
+        "B": 0.75
+      },
+      "disposition": "SHARED_PATH_HOLD"
+    },
+    {
+      "case_id": "primary_only_fault",
+      "rows": [
+        {
+          "assignment_id": "A0",
+          "route": "A",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "A0",
+            "route": "A",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "A1",
+          "route": "A",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "A1",
+            "route": "A",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "A2",
+          "route": "A",
+          "ground_truth": {
+            "primary": false,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "A2",
+            "route": "A",
+            "primary": false,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "A3",
+          "route": "A",
+          "ground_truth": {
+            "primary": false,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "A3",
+            "route": "A",
+            "primary": false,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "B0",
+          "route": "B",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "B0",
+            "route": "B",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "B1",
+          "route": "B",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "B1",
+            "route": "B",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "B2",
+          "route": "B",
+          "ground_truth": {
+            "primary": false,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "B2",
+            "route": "B",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "B3",
+          "route": "B",
+          "ground_truth": {
+            "primary": false,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "B3",
+            "route": "B",
+            "primary": false,
+            "sentinel": false,
+            "terminal": true
+          }
+        }
+      ],
+      "all_attempt": "PASS_COMPLETE",
+      "negative_control_shift": false,
+      "observed_sentinel_rates": {
+        "A": 0.0,
+        "B": 0.0
+      },
+      "observed_primary_rates": {
+        "A": 0.5,
+        "B": 0.75
+      },
+      "disposition": "OUT_OF_SCOPE_UNDETECTED"
+    },
+    {
+      "case_id": "missing_terminal",
+      "rows": [
+        {
+          "assignment_id": "A0",
+          "route": "A",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "A0",
+            "route": "A",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "A1",
+          "route": "A",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "A1",
+            "route": "A",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "A2",
+          "route": "A",
+          "ground_truth": {
+            "primary": false,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "A2",
+            "route": "A",
+            "primary": false,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "A3",
+          "route": "A",
+          "ground_truth": {
+            "primary": false,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "A3",
+            "route": "A",
+            "primary": false,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "B0",
+          "route": "B",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "B0",
+            "route": "B",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "B1",
+          "route": "B",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "B1",
+            "route": "B",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "B2",
+          "route": "B",
+          "ground_truth": {
+            "primary": false,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "B2",
+            "route": "B",
+            "primary": false,
+            "sentinel": false,
+            "terminal": false
+          }
+        },
+        {
+          "assignment_id": "B3",
+          "route": "B",
+          "ground_truth": {
+            "primary": false,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "B3",
+            "route": "B",
+            "primary": false,
+            "sentinel": false,
+            "terminal": true
+          }
+        }
+      ],
+      "all_attempt": "HOLD_MISSING",
+      "negative_control_shift": false,
+      "observed_sentinel_rates": {
+        "A": 0.0,
+        "B": 0.0
+      },
+      "observed_primary_rates": {
+        "A": 0.5,
+        "B": 0.6666666666666666
+      },
+      "disposition": "MISSING_HOLD"
+    },
+    {
+      "case_id": "foreign_join",
+      "rows": [
+        {
+          "assignment_id": "A0",
+          "route": "A",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "A0",
+            "route": "A",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "A1",
+          "route": "A",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "A1",
+            "route": "A",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "A2",
+          "route": "A",
+          "ground_truth": {
+            "primary": false,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "A2",
+            "route": "A",
+            "primary": false,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "A3",
+          "route": "A",
+          "ground_truth": {
+            "primary": false,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "A3",
+            "route": "A",
+            "primary": false,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "B0",
+          "route": "B",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "B0",
+            "route": "B",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "B1",
+          "route": "B",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "B1",
+            "route": "B",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "B2",
+          "route": "B",
+          "ground_truth": {
+            "primary": false,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "B2",
+            "route": "B",
+            "primary": false,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "B3",
+          "route": "B",
+          "ground_truth": {
+            "primary": false,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "A3",
+            "route": "B",
+            "primary": false,
+            "sentinel": false,
+            "terminal": true
+          }
+        }
+      ],
+      "all_attempt": "HOLD_IDENTITY",
+      "negative_control_shift": false,
+      "observed_sentinel_rates": {
+        "A": 0.0,
+        "B": 0.0
+      },
+      "observed_primary_rates": {
+        "A": 0.5,
+        "B": 0.5
+      },
+      "disposition": "IDENTITY_HOLD"
+    },
+    {
+      "case_id": "true_collateral",
+      "rows": [
+        {
+          "assignment_id": "A0",
+          "route": "A",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "A0",
+            "route": "A",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "A1",
+          "route": "A",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "A1",
+            "route": "A",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "A2",
+          "route": "A",
+          "ground_truth": {
+            "primary": false,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "A2",
+            "route": "A",
+            "primary": false,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "A3",
+          "route": "A",
+          "ground_truth": {
+            "primary": false,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "A3",
+            "route": "A",
+            "primary": false,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "B0",
+          "route": "B",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "B0",
+            "route": "B",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "B1",
+          "route": "B",
+          "ground_truth": {
+            "primary": true,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "B1",
+            "route": "B",
+            "primary": true,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "B2",
+          "route": "B",
+          "ground_truth": {
+            "primary": false,
+            "sentinel": false,
+            "collateral": false
+          },
+          "observed": {
+            "assignment_id": "B2",
+            "route": "B",
+            "primary": false,
+            "sentinel": false,
+            "terminal": true
+          }
+        },
+        {
+          "assignment_id": "B3",
+          "route": "B",
+          "ground_truth": {
+            "primary": false,
+            "sentinel": true,
+            "collateral": true
+          },
+          "observed": {
+            "assignment_id": "B3",
+            "route": "B",
+            "primary": false,
+            "sentinel": true,
+            "terminal": true
+          }
+        }
+      ],
+      "all_attempt": "PASS_COMPLETE",
+      "negative_control_shift": true,
+      "observed_sentinel_rates": {
+        "A": 0.0,
+        "B": 0.25
+      },
+      "observed_primary_rates": {
+        "A": 0.5,
+        "B": 0.5
+      },
+      "disposition": "COLLATERAL_FAIL"
+    }
+  ],
+  "incremental_shared_faults_detected": 1,
+  "primary_only_false_all_clear": 1
+}
