@@ -429,6 +429,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`typed_readout_corpus_eol_audit_4871_v1/`](typed_readout_corpus_eol_audit_4871_v1/)
 - [`typed_resolve_dependency_v1/`](typed_resolve_dependency_v1/)
 - [`typed_resumption_packet_5404_t0_v1/`](typed_resumption_packet_5404_t0_v1/)
+- [`verifier_exposure_5941_t0_20261001/`](verifier_exposure_5941_t0_20261001/)
 - [`versioned_predicate_specialist_switch_4284_reconciled_4603_v1/`](versioned_predicate_specialist_switch_4284_reconciled_4603_v1/)
 - [`visual_cue_coordinate_map_successor_2043_v1/`](visual_cue_coordinate_map_successor_2043_v1/)
 - [`visual_edge_aux_570_r8_v1/`](visual_edge_aux_570_r8_v1/)
