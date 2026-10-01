@@ -86,4 +86,43 @@ class CompiledBoundaryTests(unittest.TestCase):
  def test_unavailable_effect_blocks_second_input(self):
   d=Driver();d.verify=lambda p:dict(status='unavailable',evidence_ref=p['observation']['evidence_ref']);r=d.run();self.assertEqual(r['reason'],'effect_unavailable');self.assertEqual(len(d.calls['execute']),1)
 
+ def test_explicit_no_input_refusal_yields_without_inventing_release(self):
+  d=Driver(terminal='refused',released=False);base=d.execute
+  d.execute=lambda p:dict(base(p),input_dispatched=False)
+  r=d.run();self.assertEqual((r['outcome'],r['reason']),('SAFE_YIELD','execution_refused'))
+  self.assertEqual(r['completed_transitions'],0);self.assertEqual(len(d.calls['execute']),1)
+  self.assertEqual(len(d.calls['observe']),1);self.assertEqual(d.calls['verify_effect'],[])
+  terminal=next(e for e in r['critical_events'] if e['event']=='action_terminal')
+  self.assertIs(terminal['input_dispatched'],False);self.assertIs(terminal['release_verified'],False)
+ def test_no_input_refusal_after_verified_prefix_keeps_completed_action(self):
+  d=Driver();base=d.execute
+  def execute(p):
+   result=base(p)
+   if len(d.calls['execute'])==2:result.update(status='refused',input_dispatched=False,release={'verified':False,'keys_down':[],'buttons_down':[]})
+   return result
+  d.execute=execute;r=d.run();self.assertEqual(r['reason'],'execution_refused')
+  self.assertEqual(r['completed_transitions'],1);self.assertEqual(r['transitions'][0]['action'],'enter')
+  self.assertEqual(len(d.calls['execute']),2);self.assertEqual(len(d.calls['observe']),2)
+ def test_unattested_refusal_still_requires_actual_neutral_release(self):
+  d=Driver(terminal='refused',released=False);r=d.run()
+  self.assertEqual((r['outcome'],r['reason']),('RUNTIME_FAILED','execution_failed'))
+ def test_no_input_flag_cannot_downgrade_other_execution_statuses(self):
+  for status in ('completed','delivery_uncertain'):
+   with self.subTest(status=status):
+    d=Driver(terminal=status,released=False);base=d.execute
+    d.execute=lambda p:dict(base(p),input_dispatched=False)
+    with self.assertRaises(ValueError):d.run()
+ def test_input_dispatched_requires_strict_boolean(self):
+  for value in (0,1,None,'false'):
+   with self.subTest(value=value):
+    d=Driver(terminal='refused',released=False);base=d.execute
+    d.execute=lambda p:dict(base(p),input_dispatched=value)
+    with self.assertRaises(ValueError):d.run()
+ def test_dispatch_or_held_input_cannot_be_downgraded_to_abstention(self):
+  for flag,keys in ((True,[]),(False,['CTRL'])):
+   with self.subTest(flag=flag,keys=keys):
+    d=Driver(terminal='refused',released=False);base=d.execute
+    def execute(p):
+     r=base(p);r['input_dispatched']=flag;r['release']['keys_down']=keys;return r
+    d.execute=execute;r=d.run();self.assertEqual(r['outcome'],'RUNTIME_FAILED')
 if __name__=='__main__':unittest.main()

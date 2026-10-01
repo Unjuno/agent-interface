@@ -121,4 +121,52 @@ class CompiledX11Tests(unittest.TestCase):
         run(b,spec(),bindings_value,perceive=mutate,verify_effect=verify)
         self.assertEqual(b.inputs[0][2]['tail'],[])
 
+    def test_changed_binding_after_admission_is_no_input_safe_yield(self):
+        from unittest.mock import patch
+        b=Bridge(); original=_Adapter.admit
+        def changed(adapter,request):
+            result=original(adapter,request); b.binding_revision+=1; return result
+        with patch.object(_Adapter,'admit',changed):
+            r=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+        self.assertEqual((r['outcome'],r['reason']),('SAFE_YIELD','execution_refused'))
+        self.assertEqual(b.inputs,[]);self.assertEqual(r['completed_transitions'],0)
+        terminals=[row for name,row in b.saved if name.endswith('-terminal.json')]
+        self.assertIs(terminals[0]['input_dispatched'],False)
+        self.assertIs(terminals[0]['release']['verified'],False)
+    def test_changed_binding_before_second_input_preserves_verified_prefix(self):
+        from unittest.mock import patch
+        b=Bridge();original=_Adapter.admit
+        def changed(adapter,request):
+            result=original(adapter,request)
+            if b.phase==1:b.binding_revision+=1
+            return result
+        with patch.object(_Adapter,'admit',changed):
+            r=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+        self.assertEqual((r['outcome'],r['reason']),('SAFE_YIELD','execution_refused'))
+        self.assertEqual(len(b.inputs),1);self.assertEqual(r['completed_transitions'],1)
+        self.assertEqual(r['transitions'][0]['action'],'enter')
+    def test_native_guard_refusal_without_input_is_not_release_failure(self):
+        b=Bridge();b.click=lambda *a,**k:{'status':'refused','input_dispatched':False,'error':'STALE'}
+        r=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+        self.assertEqual(r['reason'],'execution_refused');self.assertEqual(b.inputs,[])
+    def test_no_input_attestation_does_not_hide_native_release_failure(self):
+        b=Bridge()
+        b.click=lambda *a,**k:{'status':'refused','input_dispatched':False,
+          'execution':{'releases':[{'verified':False,'keys_down':['CTRL'],'buttons_down':[]}]}}
+        r=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+        self.assertEqual(r['outcome'],'RUNTIME_FAILED');self.assertEqual(b.inputs,[])
+    def test_no_input_refusal_does_not_hide_recovery_required(self):
+        b=Bridge()
+        def refused(*a,**k):
+            b.session.recovery_required=True
+            return {'status':'refused','input_dispatched':False,'recovery_required':True}
+        b.click=refused
+        r=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+        self.assertEqual(r['outcome'],'RUNTIME_FAILED');self.assertEqual(b.inputs,[])
+    def test_no_input_attestation_does_not_hide_execution_without_release(self):
+        b=Bridge()
+        b.click=lambda *a,**k:{'status':'refused','input_dispatched':False,
+          'execution':{'program_emissions':1,'releases':[]}}
+        r=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+        self.assertEqual(r['outcome'],'RUNTIME_FAILED');self.assertEqual(b.inputs,[])
 if __name__=='__main__': unittest.main()
