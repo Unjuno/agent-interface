@@ -1,7 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {PassThrough,Writable} from 'node:stream';
-import {servePrimaryLines,validatePrimaryConfig} from './primary_stdio.mjs';
+import {mkdtemp,readFile} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {servePrimaryLines,validatePrimaryConfig,runPrimaryStdio} from './primary_stdio.mjs';
 
 function setup(execute) {
   const input=new PassThrough(),output=new PassThrough();let bytes='';
@@ -58,4 +61,21 @@ test('config refuses unknown routes and fields before starting a host',()=>{
   for(const config of [{...valid,route:'typo'},{...valid,extra:true},{...valid,host:{...valid.host,shell:true}},
     {...valid,host:{...valid.host,args:[null]}},{...valid,exchangeDirectory:''}])
     assert.throws(()=>validatePrimaryConfig(config));
+});
+
+test('terminal output refuses before starting a relay or allocating its evidence',async()=>{
+  const output=new PassThrough();output.isTTY=true;
+  await assert.rejects(runPrimaryStdio(valid,{input:new PassThrough(),output}),/stdout must be a pipe or file/);
+});
+
+test('startup output failure keeps original exception, closes one relay and never writes again',async()=>{
+  const root=await mkdtemp(join(tmpdir(),'primary-stdio-output-'));
+  const error=Error('original startup output failure');let writes=0;
+  const output=new Writable({write(_chunk,_encoding,callback){writes++;callback(error);}});
+  output.on('error',()=>{});
+  const config={host:{command:process.execPath,args:['-e','process.stdin.resume()'],evidenceDirectory:join(root,'host')},
+    route:'guarded-local',exchangeDirectory:join(root,'exchange')};
+  await assert.rejects(runPrimaryStdio(config,{input:new PassThrough(),output}),value=>value===error);
+  assert.equal(writes,1);
+  assert.deepEqual(JSON.parse(await readFile(join(root,'host/exit.json'))),{code:0,signal:null});
 });

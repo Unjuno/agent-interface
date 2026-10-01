@@ -76,19 +76,25 @@ export async function servePrimaryLines({exchange,input,output}) {
 
 export async function runPrimaryStdio(config,{input=process.stdin,output=process.stdout}={}) {
   validatePrimaryConfig(config);
+  if(output.isTTY)throw TypeError('primary stdout must be a pipe or file; terminal rendering is not a JSON-lines transport');
   const host=await createInstrumentedRelayClient(config.host);
-  let exchange;
+  let exchange,failure=null;
   try {
     exchange=await createPrimaryExchange({host,route:config.route,directory:config.exchangeDirectory,
       expectations:config.expectations??[],options:config.primaryOptions??{}});
     await emit(output,{schema,status:'ready',state:exchange.state()});
     await servePrimaryLines({exchange,input,output});
-  } finally {
-    // This closes only the original transport after EOF/failure. No synthetic
-    // public close, input cancellation, replay, app restart or success inference.
-    const exit=await host.close();
-    await emit(output,{schema,status:'terminal',exit,state:exchange?.state()??null});
+  } catch(error){failure=error;}
+  // Close only the original transport after EOF/failure. A failed output must
+  // not be written again in a finally block that hides its original exception.
+  let exit;
+  try {exit=await host.close();}
+  catch(error){
+    if(failure)throw new AggregateError([failure,error],'primary stream and transport cleanup failed');
+    throw error;
   }
+  if(failure)throw failure;
+  await emit(output,{schema,status:'terminal',exit,state:exchange.state()});
 }
 
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href) {
