@@ -9,4 +9,3 @@
 - **U:** All quantities and schedules are synthetic. No LLM/PID equivalence, live accumulated state, real effect/harm, calibrated prevalence, causal claim, runtime promotion or product/speed claim.
 
 V1's construction/audit failure remains immutable. V2 uses a distinct allocation and path. Freeze hashes before run; pinned local Docker, network none, 1 CPU/256 MiB/64 pids; no retry.
-
