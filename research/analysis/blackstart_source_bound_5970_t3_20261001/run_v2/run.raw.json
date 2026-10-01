@@ -1,0 +1,80 @@
+{
+  "app_returncode": -15,
+  "app_rows": [
+    {
+      "actuation_id": "t3-d15a03961131427db4b071be9c9a66ff:keypress",
+      "causal_parent_ids": [
+        "act:t3-d15a03961131427db4b071be9c9a66ff:keypress"
+      ],
+      "event_id": "app:1",
+      "keycode": 50,
+      "keysym": "Shift_L",
+      "kind": "KeyPress",
+      "mono_ns": 25358589486767,
+      "source": "app",
+      "source_seq": 1,
+      "state": 0,
+      "time": 25358586,
+      "value": ""
+    },
+    {
+      "actuation_id": "t3-d15a03961131427db4b071be9c9a66ff:keyrelease",
+      "causal_parent_ids": [
+        "act:t3-d15a03961131427db4b071be9c9a66ff:keyrelease"
+      ],
+      "event_id": "app:2",
+      "keycode": 50,
+      "keysym": "Shift_L",
+      "kind": "KeyRelease",
+      "mono_ns": 25361611705327,
+      "source": "app",
+      "source_seq": 2,
+      "state": 1,
+      "time": 25361607,
+      "value": ""
+    }
+  ],
+  "driver_rows": [
+    {
+      "actuation_id": "t3-d15a03961131427db4b071be9c9a66ff:keypress",
+      "keycode": 50,
+      "mono_ns": 25358584833633,
+      "phase": "press_dispatch"
+    },
+    {
+      "error": {
+        "message": "bounded fixture wait expired",
+        "type": "TimeoutError"
+      },
+      "mono_ns": 25361599934280,
+      "phase": "candidate_error"
+    },
+    {
+      "actuation_id": "t3-d15a03961131427db4b071be9c9a66ff:keyrelease",
+      "keycode": 50,
+      "mono_ns": 25361606534402,
+      "phase": "release_dispatch_cleanup"
+    },
+    {
+      "error": "TimeoutError",
+      "mono_ns": 25363621079592,
+      "phase": "release_pair_missing"
+    },
+    {
+      "mono_ns": 25363630961433,
+      "phase": "terminal_keymap",
+      "shift_down": false
+    }
+  ],
+  "epoch": "t3-d15a03961131427db4b071be9c9a66ff",
+  "error": {
+    "message": "bounded fixture wait expired",
+    "type": "TimeoutError"
+  },
+  "keycode": 50,
+  "observer_returncode": 0,
+  "observer_rows": [],
+  "release_attempted": true,
+  "schema": "blackstart-source-bound-t3-run-v1",
+  "terminal_neutral": true
+}
