@@ -131,7 +131,7 @@ for (const cue of ['matched','pending','rejected','needs_review'])
   test('explicit input feedback '+cue+' retains evidence and enforces STOP',async()=>{
     const meta={status:cue==='matched'?'completed':'needs_review',
       image_status:'image',task_success:null,replay_allowed:false,
-      feedback:{status:cue},result:{status:'completed',execution:{releases:[
+      feedback:{status:cue,expected_title:'saved',rejected_titles:[],title:'saved',after_title:'saved',task_success:null,authority_granted:false,input_dispatched:false},result:{status:'completed',execution:{releases:[
         {verified:true,keys_down:[],buttons_down:[]}]}}};
     const reply={result:{isError:cue!=='matched',content:[
       {type:'text',text:JSON.stringify(meta)},{type:'image',data:'original-cue'}]}};

@@ -386,3 +386,13 @@ claiming visible completion. Choose an observation budget and stopping rule for
 the task; if its cue is still absent, retain an unresolved outcome rather than
 repeating input or observing indefinitely. This authored single case establishes
 the continuation mechanics, not a general semantic detector or a wait default.
+
+
+`inputWithFeedback(alias, offset, interaction, tail, policy)` explicitly requests
+the existing guarded input's read-only app cue composition. `policy` requires
+`expected_title`; `rejected_titles` defaults to [] and `timeout_ms` to 2000
+(0..10000). Arguments are snapshotted before dispatch. The existing four-argument
+`input` method remains unchanged. Missing or inconsistent requested cue data
+latches STOP while returning original evidence, even if input says completed.
+Pending/rejected/unstable responses also stop ordinary calls; close remains
+available. Matched titles are app conventions, not task completion or authority.

@@ -24,25 +24,44 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
     }
     return meta;
   }
+  function inputArguments(values) {
+    const [alias, offset, interaction, tail] = values;
+    if (route !== 'guarded-local' || values.length !== 4 ||
+        typeof alias !== 'string' || !alias.trim() ||
+        !Array.isArray(offset) || offset.length !== 2 ||
+        !Array.from(offset).every(Number.isSafeInteger) ||
+        !['click', 'keyboard', 'move'].includes(interaction) || !Array.isArray(tail)) {
+      stop('invalid primary input arguments');
+      throw TypeError(stopped);
+    }
+    let copiedTail;
+    try { copiedTail = structuredClone(tail); }
+    catch (error) { stop('invalid primary input tail'); throw error; }
+    return { alias, offset: [...offset], interaction, tail: copiedTail,
+      detail: 'brief', observation_refs: true };
+  }
   const caller = {
     state: () => ({ stopped }),
     async input(...values) {
-      const [alias, offset, interaction, tail] = values;
-      if (route !== 'guarded-local' || values.length !== 4 ||
-          typeof alias !== 'string' || !alias.trim() ||
-          !Array.isArray(offset) || offset.length !== 2 ||
-          !offset.every(Number.isSafeInteger) ||
-          !['click', 'keyboard', 'move'].includes(interaction) || !Array.isArray(tail)) {
-        stop('invalid primary input arguments');
+      return caller.call('interface_guarded_input', inputArguments(values));
+    },
+    async inputWithFeedback(...values) {
+      let policy;
+      try { policy = structuredClone(values[4]); }
+      catch (error) { stop('invalid primary feedback policy'); throw error; }
+      if (values.length !== 5 || !policy || typeof policy !== 'object' || Array.isArray(policy) ||
+          Object.keys(policy).some(key => !['expected_title','rejected_titles','timeout_ms'].includes(key)) ||
+          typeof policy.expected_title !== 'string' || policy.expected_title.length === 0 ||
+          (policy.rejected_titles !== undefined && (!Array.isArray(policy.rejected_titles) ||
+            !Array.from(policy.rejected_titles).every(title => typeof title === 'string' && title.length && title !== policy.expected_title))) ||
+          (policy.timeout_ms !== undefined && (!Number.isSafeInteger(policy.timeout_ms) || policy.timeout_ms < 0 || policy.timeout_ms > 10000))) {
+        stop('invalid primary feedback policy');
         throw TypeError(stopped);
       }
-      let copiedTail;
-      try { copiedTail = structuredClone(tail); }
-      catch (error) { stop('invalid primary input tail'); throw error; }
-      return caller.call('interface_guarded_input', {
-        alias, offset: [...offset], interaction, tail: copiedTail,
-        detail: 'brief', observation_refs: true
-      });
+      const args = inputArguments(values.slice(0,4));
+      args.feedback = { expected_title: policy.expected_title,
+        rejected_titles: [...(policy.rejected_titles ?? [])], timeout_ms: policy.timeout_ms ?? 2000 };
+      return caller.call('interface_guarded_input', args);
     },
     async reviewWindow(...unexpected) {
       if (route !== 'guarded-local' || unexpected.length ||
@@ -158,6 +177,15 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
           if (!completed || meta.image_status !== 'image' || !releases?.length ||
               releases.some(r => r.verified !== true || r.keys_down?.length !== 0 || r.buttons_down?.length !== 0)) {
             stop('incomplete input or unverified neutral release');
+          }
+          if (tool === 'interface_guarded_input' && args?.feedback !== undefined) {
+            const cue = meta.feedback;
+            if (cue?.status !== 'matched' || cue.expected_title !== args.feedback.expected_title ||
+                canonical(cue.rejected_titles) !== canonical(args.feedback.rejected_titles ?? []) ||
+                cue.title !== cue.expected_title || cue.after_title !== cue.title ||
+                cue.task_success !== null || cue.authority_granted !== false || cue.input_dispatched !== false) {
+              stop('missing or inconsistent requested feedback');
+            }
           }
         }
         // Return the original response even after latching STOP. The primary must
