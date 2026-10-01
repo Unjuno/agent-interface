@@ -55,4 +55,3 @@ function Invoke-GpuLeasePreflight {
         apps_query_exit_code = $appsExit
     }
 }
-
