@@ -563,9 +563,4 @@ preserves the rendered-JSON fidelity failure and refused public close under a
 nonpersistent no-GUI server. It is not a successful GUI/close trial. The [corrected raw-file clock connection](../results/primary-stdio-pipe-01/README.md)
 checks original metadata, exported source and EOF/exit through the actual primary
 terminal handle without per-command input files. It proves a no-GUI transport
-path. The [fresh guarded primary stdio case](../results/primary-stdio-live-01/README.md)
-personally uses the packaged CLI for READY/Save/SAVED, original image reviews
-and verified public close before EOF. Full raw stream, original replies, exact
-encoded tool images, independent app events and actual usage remain retained.
-The 74.60-second host span is not human-comparable tempo or a matched token gain;
-this establishes one functional integration path only.
+path; real guarded image/input/close use remains unverified for this CLI.
