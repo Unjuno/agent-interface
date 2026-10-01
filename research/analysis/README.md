@@ -321,6 +321,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`safe_probe_cost_optimal_tree_r1_v1/`](safe_probe_cost_optimal_tree_r1_v1/)
 - [`safe_probe_identification_successor_1716_v1/`](safe_probe_identification_successor_1716_v1/)
 - [`safe_probe_minimax_r0_v1/`](safe_probe_minimax_r0_v1/)
+- [`safety_constrained_portfolios_5797_t0_v1/`](safety_constrained_portfolios_5797_t0_v1/)
 - [`safety_plane_data_cutset_r0_v1/`](safety_plane_data_cutset_r0_v1/)
 - [`safety_watchdog_claim_sink_cutset_r1_a2_v1/`](safety_watchdog_claim_sink_cutset_r1_a2_v1/)
 - [`safety_watchdog_claim_sink_cutset_r1_v1/`](safety_watchdog_claim_sink_cutset_r1_v1/)
