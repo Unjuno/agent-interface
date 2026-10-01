@@ -1,0 +1,41 @@
+{
+  "schema": "peer-verdict-exposure-5941-t0-freeze-v1",
+  "allocation_id": "PEER-VERDICT-EXPOSURE-5941-T0-20261001-01",
+  "branch": "research/peer-verdict-5941-t0-20261001-01",
+  "path": "research/analysis/peer_verdict_exposure_5941_t0_v1/",
+  "branch_base_main_sha": "e1ebee404930401665c1fef64022b0ad3c373793",
+  "latest_main_before_freeze": "bc172ffa38ea8c1c40785e328fae87250d9189af",
+  "main_delta_review": {
+    "ahead_by": 2,
+    "behind_by": 0,
+    "changed_paths": [
+      "docs/WORKER_QUICKSTART.md"
+    ],
+    "relevance": "none; T0 runner/auditor depend only on Issue #5941 frozen specification and this additive package"
+  },
+  "scientific_source": "https://github.com/Unjuno/agent-interface/issues/5941",
+  "design_refinements": [
+    "https://github.com/Unjuno/agent-interface/issues/5941#issuecomment-5928633534",
+    "https://github.com/Unjuno/agent-interface/issues/5941#issuecomment-5928659213"
+  ],
+  "sha256": {
+    "PREREGISTRATION.md": "0ea25f9bccab16065a51ace9e7820afb408ded9d6ef43ddf4294fb020f7ff8f0",
+    "runner.py": "8e2260b2f385996c9b65c250c99d5e5030fc82500c0d14b4aad69a38593b2729",
+    "audit.py": "b37604895d77c8de8497f76c623bca03d841459292e0329828f1975ae6402e3c",
+    "test_peer_verdict.py": "bd03ae42a20f19fcf7369eefc01cf996974d0a9bbf855b14ce66434221f6dde9"
+  },
+  "construction": {
+    "command": "python -B -m unittest -v test_peer_verdict.py (executed in-memory from exact GitHub-MCP-fetched branch blobs because workspace is not a git checkout)",
+    "runtime": "CPython 3.11.9",
+    "result": "PASS 4/4; initial audit-parser defect failed the exact-inventory test, was corrected on branch, then this full 4-test suite passed once",
+    "formal_candidate_invocations": 0,
+    "formal_auditor_invocations": 0
+  },
+  "formal_gate": {
+    "candidate": "python -B runner.py RAW.json (one invocation only; only after immediate current-main/branch/process/unique-output checks)",
+    "auditor": "python -B audit.py RAW.json AUDIT.json (one independent raw-only invocation only if candidate exit 0)",
+    "container": "not used; deterministic 128-row logic test; shared OrbStack inventory is currently unknown/occupied and Docker is unnecessary to test this platform-independent finite rule",
+    "gpu": "not applicable to exact logic; no CUDA work is in scope",
+    "retries": 0
+  }
+}
