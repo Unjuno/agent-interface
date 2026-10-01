@@ -49,4 +49,3 @@ for r in raw['rows']:
     x=summary.setdefault(r['case_id'],{})
     x[r['policy']]={'overshoot':r['overshoot'],'final_error':r['final_error'],'duplicate_effects':r['duplicate_effects'],'unknown':r['unknown'],'stale_generation_effects':r['stale_generation_effects'],'cancel_latency':r['cancel_latency']}
 print(json.dumps({'audit':'PASS_METHOD_SCOPED','rows':len(seen),'errors':0,'summary':summary},sort_keys=True,separators=(',',':')))
-
