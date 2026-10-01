@@ -211,6 +211,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`conformal_verifier_risk_contract_5315_v1/`](conformal_verifier_risk_contract_5315_v1/)
 - [`consent_scoped_preparation_5793_t0_v1/`](consent_scoped_preparation_5793_t0_v1/)
 - [`constrained_interaction_testing_5330_t0_v1/`](constrained_interaction_testing_5330_t0_v1/)
+- [`crossed_verdict_repeatability_6222_t1_eligibility_20261002_01/`](crossed_verdict_repeatability_6222_t1_eligibility_20261002_01/) — bounded read-only r133 v38/v39 corpus eligibility check; all manifest paths/sizes present, but no identical-outcome crossed panel, no clear MAP01-positive terminal, and no verified second scorer replay path; `HOLD_T1_NO_CROSSABLE_PANEL`.
 - [`cost_predicate_order_4258_v1/`](cost_predicate_order_4258_v1/)
 - [`danger_context_triage_5764_t0_v1/`](danger_context_triage_5764_t0_v1/)
 - [`deadline_identity_5265_dot/`](deadline_identity_5265_dot/)
