@@ -24,6 +24,7 @@ class PortableDistributionTests(unittest.TestCase):
             bundled = build(root, td/'bundle.pyz', td/'bundle.json', td/'bundle.sum', host_directory=td/'host')
             self.assertEqual((td/'plain.pyz').read_bytes(), (td/'bundle.pyz').read_bytes())
             self.assertNotIn('host_bundle', plain)
+            self.assertTrue((td/'host/FEEDBACK.md').is_file(), 'linked feedback guide must ship with host')
             meta = json.loads((td/'host/HOST_MANIFEST.json').read_bytes())
             self.assertEqual(meta['source_revision'], revision)
             for rel in HOST_SOURCE_FILES:
