@@ -5,6 +5,10 @@ Agent Interface is being developed by analysis and experiment rather than by loc
 
 This file is intentionally comprehensive. For public navigation, use the shorter status documents first and come here for the retained evidence history.
 
+### Issue #59: workflow-path owner event/head invariance T0 (2026-10-01)
+
+An additive frozen-source factorial composed the current live-04 workflow's Actions run query with the production global-owner helper over eight synthetic event/head-SHA cases. The query includes `event=$GITHUB_EVENT_NAME`, so all four different-event prior-owner cases are hidden and synthetically admitted by the helper; complete workflow-path history denies all four. Same-event owners are denied, first-run admission works, and truncated views fail closed. The independent audit passed with zero audit-integrity errors. Disposition: `FAIL_EVENT_FILTER_ESCAPES_PATH_GLOBAL_OWNER`, limited to source/query composition; it is not evidence of a real overlapping run or live allocation. See [the immutable T0 report](research/analysis/map01_global_owner_invariance_59_t0_20261001/REPORT.md). Existing Issue #59 and #5936/#5953/#5948/#5969 records remain unchanged; no live Actions run was launched.
+
 | Need | Read |
 |---|---|
 | Current governing objective | [docs/CURRENT_GOAL.md](docs/CURRENT_GOAL.md) |
