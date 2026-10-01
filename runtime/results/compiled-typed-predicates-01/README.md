@@ -38,3 +38,12 @@ records outcomes and archive hash. Archive core source bytes equal tested source
 shared CI log SHA links and tested-source hashes were verified before publication.
 This probe uses the same finite fixture contract as unit tests and is not an
 independent task oracle. Initial host bundle is retained with its initial manifest.
+
+Additional review/static/replay checks: first invocation ran 24 checks but one
+replay import failed because the tracked test was not materialized in the sparse
+checkout (25 entries including loader error). Preserve that log. Materialized
+only the exact tracked test from HEAD, then the complete requested review/static
+validator/replay set passed 36 tests. No runtime source or old evidence changed.
+Remote base meanwhile advanced to fe37b6913 via unrelated research-only paths;
+no overlap with this runtime closure. Hosted jobs are queued at publication,
+so local evidence is the merge basis, not a claim of complete hosted green CI.
