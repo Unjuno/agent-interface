@@ -1,0 +1,26 @@
+{
+  "allocation": "intent-generation-fencing-3442-t0-20261001-01",
+  "issue": 3442,
+  "base_main": "5865c5e74842b5bba6a6291e141afae75ca4a147",
+  "branch": "research/intent-generation-fencing-3442-t0-20261001",
+  "paths": {
+    "plan": "research/system1/intent_generation_fencing_3442_t0_v1/PLAN.md",
+    "candidate": "research/system1/intent_generation_fencing_3442_t0_v1/candidate.py",
+    "auditor": "research/system1/intent_generation_fencing_3442_t0_v1/audit.py",
+    "raw": "research/system1/intent_generation_fencing_3442_t0_v1/raw/formal-01.jsonl",
+    "audit": "research/system1/intent_generation_fencing_3442_t0_v1/raw/audit-01.json"
+  },
+  "git_blob_sha1": {
+    "candidate": "8934de6a249ab8d4eed11519485bd2dc59d5a59e",
+    "auditor": "44924fb1159cd6a3f2b6dad7a2004518d6453228",
+    "plan": "8deb488469d77f7e27de99bcfd2f7761de9446fd"
+  },
+  "source_comment_ids": [
+    5924618706,
+    5925292524
+  ],
+  "formal_candidate_invocations": 0,
+  "auditor_invocations": 0,
+  "environment_policy": "Host CPU only if Docker daemon remains unavailable; RAM-only pipes; python -B; no GUI/GPU/model/input/task effect",
+  "gate": "Single candidate process -> only on exit 0, separate raw-only auditor process. No retry."
+}
