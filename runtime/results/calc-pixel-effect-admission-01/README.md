@@ -41,3 +41,12 @@ Shared Python CI also passed protocol383/harness183; five reader cases passed.
 case-audit.json verifies the preserved failed request, one original image identity,
 public close, terminal owned processes, empty post-terminal workbook and CI log
 hash links. It proves retention/accounting of this failure, not a successful task.
+
+Final source-pinned bundle412bddf0f passes an isolated Node probe from/tmp using
+its exported primary stdio/exchange. Invalid review returns command_id1/method
+review, next_id2, STOP and replay=false with0 host calls. New reader consumes this
+actual packaged error record as command_failed, wait=false, resend=false. Host
+module bytes match the tested source. This does not rerun the failed GUI case.
+The initial package-probe preparation failed after index exclusion lacked --sparse
+and no probe file was created; retained construction note and empty output.
+Local profile/cache/lock file excluded from publication; original local data kept.
