@@ -10,14 +10,6 @@ Retained disposition: **PASS_LOCAL_CLI_REPORT_PERSISTENCE_BOUNDARY**. Sixteen fr
 
 `capsule/` reconstructs a deterministic tar.xz containing **624/625 original study files**: source, plans/freezes, all formal/construction rows, requests/reports/temp records, stdout/stderr, event journals, PNGs, audits, controls, manifests and process receipts. The only omitted member is the 173181-byte portable runtime executable, because its exact SHA-256 and GitHub Actions provenance are already retained and it is reproducible/downloadable from the repository workflow artifact.
 
-Transport-integrity repair: `part-05.b64` in the historical source branch did not match its declared decoded digest. `restore.py` therefore assembles part 05 from the four retained exact fragments `part-05a.b64` through `part-05d.b64`, then checks the declared encoded-part digest, decoded-part digest, and complete capsule digest. The other part digests in `CAPSULE.json` now bind the exact checked-in text bytes. This changes only retrospective transport metadata; no study member is rewritten.
-
-The exact pre-repair `CAPSULE.json` is preserved separately as [`CAPSULE_PRE_REPAIR.json`](CAPSULE_PRE_REPAIR.json); its blob identity and the 15 original part-digest mismatches are documented in [`DELIVERY_REPAIR.md`](DELIVERY_REPAIR.md). It is archival failure evidence and is not used by `restore.py`.
-
-The exact original branch restorer is also preserved separately as [`restore_PRE_REPAIR.py`](restore_PRE_REPAIR.py); see [`DELIVERY_REPAIR.md`](DELIVERY_REPAIR.md) for its source blob identity and why it stops on the original transport mismatch. It is archival failure evidence and is not the active restoration path.
-
-The exact original branch README is preserved as [`README_PRE_REPAIR.md`](README_PRE_REPAIR.md); retrospective transport-repair and verifier-reproduction guidance is additive and kept in this active README.
-
 Reconstruct:
 
 ```sh
@@ -27,7 +19,5 @@ python -S -B restore.py
 Core capsule SHA-256: `4acdf7feec6f3bca6e1116241f37013855c96e1a80d6fed91f616ee5b5bf9dc1` (89168 bytes).  
 Original full evidence ZIP SHA-256: `9f9ef47584e2d6de6a264f1482b9ce91bf90e29427d8c7b289afc2d535c1eed4` (522175 bytes).  
 Omitted runtime SHA-256: `b7490f97a01991009e72e1b03410ca244cceeabba12103549c1288ef464c5f19`.
-
-To reproduce the archived read-only verifier, restore the named `portable-runtime-ubuntu-latest` artifact from run `36096442879` into `vendor/`; verify its SHA-256 against the value above before running `python -S -B verify_readonly.py`. The exact artifact was available during this retrospective check (artifact ID `10847727571`).
 
 This delivery changes publication state only. It does not upgrade the scientific scope, does not claim independent human review, and does not close #3711, #57, #2789 or the global ROADMAP.
