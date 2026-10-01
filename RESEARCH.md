@@ -64,6 +64,27 @@ Can a strong planner control arbitrary GUI applications through a local interfac
 
 ## Research evidence ladder
 
+### Issue #5951 — source-anchored constraint preservation (finite METHOD construction)
+
+One host-only candidate run over eight hand-authored source/derived-contract
+cases detected omitted prohibition, weakened condition, unsupported permission,
+and source-span mismatch; it preserved a later authenticated supersession and
+an explicit UNKNOWN ambiguity. The first independent audit's error taxonomy
+failed and remains retained; a separate auditor-only successor passed all eight
+against the immutable candidate output. A stronger static clause-to-targeted-
+test comparator rejected omission, weakening, unsupported additions, and the
+valid supersession (because it retained the old prohibition); its first
+construction incorrectly rejected UNKNOWN and remains retained, while a
+separate baseline successor corrected that rule, matched all eight frozen
+outcomes, and passed an independent hash-bound raw-table audit. Five local
+mutation-test methods pass. This demonstrates only a
+finite hand-authored method distinction, not natural-language extraction,
+real instruction authority, runtime safety, downstream task effect, or product
+benefit. Docker Desktop was unavailable at the daemon boundary, so no container
+ran. See the [retained report and raw evidence](research/analysis/source_constraint_preservation_5951_t0_20261001/RESULT.md),
+[Issue #5951](https://github.com/Unjuno/agent-interface/issues/5951), and its
+[successor evidence](research/analysis/source_constraint_preservation_5951_t0_20261001/).
+
 ### Issue #5404 — typed resumption packet (scoped deterministic PASS)
 
 One frozen OrbStack run compared opaque summary, full replay, and typed packet

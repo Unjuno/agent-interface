@@ -59,6 +59,7 @@ Prefer the narrowest existing namespace. The diagram is a placement guide; retai
 - [`analysis/adaptive_screen_5739_t0_v1/REPORT.md`](analysis/adaptive_screen_5739_t0_v1/REPORT.md) — Issue #5739 claim-boundary successor: read-only audit-v2 PASS after preserving the audit-v1 report-serialization STOP; synthetic-only.
 
 - [`analysis/obligation_conservation_5817_t0_v1/REPORT.md`](analysis/obligation_conservation_5817_t0_v1/REPORT.md) — Issue #5817 cross-task obligation conservation T0: finite synthetic Docker PASS with independent prefix audit; allocation-01 gate STOP preserved, no live effect/durability claim.
+- [`analysis/source_constraint_preservation_5951_t0_20261001/RESULT.md`](analysis/source_constraint_preservation_5951_t0_20261001/RESULT.md) — Issue #5951 finite host-only source-clause METHOD construction; auditor-v1 FAIL and UNKNOWN-baseline review failure retained, corrected independent audit and stronger baseline successor pass; no natural-language, live, container, or runtime claim.
 
 - [`analysis/`](analysis/) — proofs, exact derivations, exhaustive state-space checks, break-even/identifiability analysis, and the empirical residuals they expose.
 - [`analysis/backward_evidence_slice_5329_t0_v1/README.md`](analysis/backward_evidence_slice_5329_t0_v1/README.md) — Issue #5329 Formal01 auditor STOP preserved unchanged; distinct Formal02 passes the finite backward-slice method gate with explicit scope limits.
