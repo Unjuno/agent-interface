@@ -1,0 +1,50 @@
+{
+  "cards": {
+    "baseline_low_sunk": {
+      "choice": "SWITCH",
+      "values": {
+        "CONTINUE": "4",
+        "SWITCH": "5"
+      }
+    },
+    "same_forward_high_sunk": {
+      "choice": "SWITCH",
+      "values": {
+        "CONTINUE": "4",
+        "SWITCH": "5"
+      }
+    },
+    "stale_nonapplicable_artifact": {
+      "choice": "SWITCH",
+      "values": {
+        "CONTINUE": "4",
+        "SWITCH": "5"
+      }
+    },
+    "verified_reusable_artifact": {
+      "choice": "CONTINUE",
+      "values": {
+        "CONTINUE": "8",
+        "SWITCH": "5"
+      }
+    }
+  },
+  "pairs": {
+    "stale_artifact_is_not_future_value": {
+      "accepted_as_matched": true,
+      "decision_invariant": null,
+      "forward_equivalent": false
+    },
+    "sunk_only": {
+      "accepted_as_matched": true,
+      "decision_invariant": true,
+      "forward_equivalent": true
+    },
+    "verified_artifact_changes_forward_value": {
+      "accepted_as_matched": true,
+      "decision_invariant": null,
+      "forward_equivalent": false
+    }
+  },
+  "schema": "sunk-cost-artifact-value-result-t0b-v1"
+}
