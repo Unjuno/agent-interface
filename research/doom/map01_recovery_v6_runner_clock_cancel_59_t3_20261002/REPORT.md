@@ -17,7 +17,7 @@ The single candidate invocation completed both cases:
 | Case | Timer-to-clock return | Clock return to cancel | Outcome |
 |---|---:|---:|---|
 | A, 400 ms clock delay / 2 s lease | about 414.8 ms | about 0.110 ms | verified mock release; terminal status `completed` |
-| B, 1600 ms clock delay / 1.5 s lease | lease release about 893.6 ms before clock return | cancel unmatched after expiry | verified mock release; terminal status `expired` |
+| B, 1600 ms clock delay / 1.5 s lease | lease release about 706.2 ms before clock return | cancel unmatched after expiry | verified mock release; terminal status `expired` |
 
 These values are descriptive only. The ordering protocol violation invalidates formal interpretation regardless of the observed values. Exact monotonic timestamps, event rows, and runner summaries are in `raw_trace.json`.
 
