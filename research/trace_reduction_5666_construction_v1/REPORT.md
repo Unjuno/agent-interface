@@ -11,3 +11,6 @@
 - Decision: `CONSTRUCTION_CHECK_ONLY`; T0 `HOLD_NO_REPLAYABLE_FAILURE` unchanged. No METHOD_PASS, live efficacy, causal attribution, or safety claim.
 
 See [Issue comment](https://github.com/Unjuno/agent-interface/issues/5666#issuecomment-5922299325).
+## Construction correction v2
+
+After publication of v1, review exposed an inadequate `legal()` predicate: it accepted required nodes regardless of order. V2 requires the reduced trace to be a duplicate-free subsequence of the original, with no unknown nodes, and adds a negative control for `act` before `grant`. Host CPython 3.12.10 invocation exited 0. V2 local source SHA-256: `721c951b8c1decd4f3e2e359e9c0f1507b3778d70c2dc5367a88687f5a051152`. V2 canonical printed-result SHA-256: `df503bb1b4cb810d229c89b8b42bb1d3100db49c57e5105193424455f285dfbf`. V1's limited scope and first construction assertion error remain documented above. No independent auditor, container, actual search algorithm, or real trace replay has been added; decision remains `CONSTRUCTION_CHECK_ONLY`.
