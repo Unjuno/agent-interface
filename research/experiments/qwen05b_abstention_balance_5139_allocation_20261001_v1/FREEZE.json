@@ -1,0 +1,231 @@
+{
+  "schema": "qwen5139-support-balance-freeze-v1",
+  "stage": "PREPARATION_ONLY",
+  "issue": 5139,
+  "allocation": "QWEN-SUPPORT-BALANCE-5139-20261001-01",
+  "created_utc": "2026-10-01T06:48:32Z",
+  "owner_task": "01a0b990-3d17-72f1-a908-9a2072104ce5",
+  "current_main_sha": "2408506e425b7ba790cbba9c593239a373cc262f",
+  "main_sha_is_launch_freeze": false,
+  "window": {
+    "start_utc": "2026-10-01T08:20:00Z",
+    "end_utc": "2026-10-01T10:15:00Z",
+    "resource": "local RTX 3080 Laptop + Docker Desktop desktop-linux",
+    "reservation_comment": 5925608736,
+    "handoff_note": "#5752 GPU-only slot ends 08:15 UTC; five-minute non-overlap buffer"
+  },
+  "historical_predecessor": {
+    "sad_cannon_identity": "unknown_unreconciled",
+    "fit_count": "unknown_unreconciled",
+    "disposition": "preserve prior terminal HOLD; new time-separated allocation does not resolve or rewrite it"
+  },
+  "hypothesis": "Under an equal 32-row support budget, same Qwen base, LoRA, optimizer, updates, parser and heldout set, balanced 4-per-class support improves exact semantic action/effect quality and abstention safety versus 16/4/4/1/1/1/1/4.",
+  "design": {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "model_snapshot": "7ae557604adf67be50417f59c2c2f167def9a775",
+    "support_pool": 128,
+    "heldout_pool": 256,
+    "heldout": 64,
+    "heldout_per_class": 8,
+    "support_per_arm": 32,
+    "arms": [
+      "imbalanced",
+      "balanced"
+    ],
+    "lora_rank": 8,
+    "optimizer": "AdamW",
+    "steps_per_arm": 16,
+    "batch_size": 2,
+    "network": "disabled",
+    "remote_execution": false,
+    "formal_orchestrations": 1,
+    "retries": 0
+  },
+  "seeds": {
+    "formal_seed": 898659560,
+    "support_seed": 582882955,
+    "heldout_seed": 292197310
+  },
+  "data": {
+    "formal_input_path": "research/experiments/qwen05b_abstention_balance_5139_allocation_20261001_v1/formal-dataset.json",
+    "formal_input_bytes": 805111,
+    "formal_input_sha256": "2359da75ebe7a96d60a24c215d3d70da4ecc4351c328387a56ac279b41615fa0",
+    "coverage_summary_sha256": "2109bd818e846dbf167a2380540ed8d6faea83bad7ec9045b0cb7b4cfeb0b076",
+    "classes": [
+      "set",
+      "save",
+      "toggle",
+      "yield:forbidden",
+      "yield:ambiguous",
+      "yield:stale_scope",
+      "yield:missing_evidence",
+      "no_action:already_satisfied"
+    ],
+    "support_counts": {
+      "balanced": {
+        "set": 4,
+        "save": 4,
+        "toggle": 4,
+        "yield:forbidden": 4,
+        "yield:ambiguous": 4,
+        "yield:stale_scope": 4,
+        "yield:missing_evidence": 4,
+        "no_action:already_satisfied": 4
+      },
+      "imbalanced": {
+        "set": 16,
+        "save": 4,
+        "toggle": 4,
+        "yield:forbidden": 1,
+        "yield:ambiguous": 1,
+        "yield:stale_scope": 1,
+        "yield:missing_evidence": 1,
+        "no_action:already_satisfied": 4
+      }
+    },
+    "training_case_order_sha256": {
+      "balanced": "c73841b528f58dd8bcf05a82f8c034bb5c6fd7f238723e7917d2c589a688ff89",
+      "imbalanced": "6079b2b0694373142584f0dcf7865c3627448394965943e692162ac3e2d4f1a8"
+    },
+    "heldout_case_order_sha256": "e89335b49ee9f02b215448252f811b2d0846bc1ffe5019014fb4b02229c0c6e8",
+    "seed_collision_scope": "exact search of fetched #5139/#5085 comments, default-branch code search, known predecessor/test values; not exhaustive of unindexed/private objects"
+  },
+  "external_sources": [
+    {
+      "repo_path": "research/experiments/qwen05b_abstention_balance_5139_v1/README.md",
+      "container_path": "README.md",
+      "experiments_path": "qwen05b_abstention_balance_5139_v1/README.md",
+      "sha256": "5ed6ea5650932164bed2a63312d403a0527a9e6e09e3134d7e9a044fbb32ae9f"
+    },
+    {
+      "repo_path": "research/experiments/qwen05b_abstention_balance_5139_v1/PREREGISTRATION.md",
+      "container_path": "PREREGISTRATION.md",
+      "experiments_path": "qwen05b_abstention_balance_5139_v1/PREREGISTRATION.md",
+      "sha256": "7cfcd77e92cf92daee66d9e21a97d2969474bed49dd53cf418c27b53a3812a5b"
+    },
+    {
+      "repo_path": "research/experiments/qwen05b_abstention_balance_5139_v1/requirements.lock",
+      "container_path": "requirements.lock",
+      "experiments_path": "qwen05b_abstention_balance_5139_v1/requirements.lock",
+      "sha256": "6604a5961650648d9e9b132aefc30479a07012a6e3e95a5590458abf71b2499e"
+    },
+    {
+      "repo_path": "research/experiments/qwen05b_abstention_balance_5139_v1/protocol.py",
+      "container_path": "protocol.py",
+      "experiments_path": "qwen05b_abstention_balance_5139_v1/protocol.py",
+      "sha256": "a047f9af1131c6f00603caaae759acf14554ee1c410c5ed94a1defa9a95774b3"
+    },
+    {
+      "repo_path": "research/experiments/qwen05b_abstention_balance_5139_v1/sampler.py",
+      "container_path": "sampler.py",
+      "experiments_path": "qwen05b_abstention_balance_5139_v1/sampler.py",
+      "sha256": "6798f9062f61123d553496edcaf6f41bb4c5940e211b05d8cb340444585764ea"
+    },
+    {
+      "repo_path": "research/experiments/qwen05b_abstention_balance_5139_v1/make_dataset.py",
+      "container_path": "make_dataset.py",
+      "experiments_path": "qwen05b_abstention_balance_5139_v1/make_dataset.py",
+      "sha256": "282eb9697bad7ad5747256f09867b2ed16cdd648d444b2b8ba21135ef016622c"
+    },
+    {
+      "repo_path": "research/experiments/qwen05b_abstention_balance_5139_v1/audit_reference.py",
+      "container_path": "audit_reference.py",
+      "experiments_path": "qwen05b_abstention_balance_5139_v1/audit_reference.py",
+      "sha256": "9d7aa13b689f0d9ceb29f071e40726128b56f2158cf7b79daeec7c3a7037bf73"
+    },
+    {
+      "repo_path": "research/experiments/qwen05b_abstention_balance_5139_v1/audit_raw.py",
+      "container_path": "audit_raw.py",
+      "experiments_path": "qwen05b_abstention_balance_5139_v1/audit_raw.py",
+      "sha256": "fb9e57376161ed29a6e15463c1f54f427bea59d1e81302d3817a3b43df6f0869"
+    },
+    {
+      "repo_path": "research/experiments/qwen05b_abstention_balance_5139_v1/controls.py",
+      "container_path": "controls.py",
+      "experiments_path": "qwen05b_abstention_balance_5139_v1/controls.py",
+      "sha256": "94563cc7ce04aeedf547c178a0186622c178c001f44356189a72542950c42741"
+    },
+    {
+      "repo_path": "research/experiments/qwen05b_abstention_balance_5139_v1/train_arm.py",
+      "container_path": "train_arm.py",
+      "experiments_path": "qwen05b_abstention_balance_5139_v1/train_arm.py",
+      "sha256": "e8c8496d866462625b67a30fd6d993c60963432494d5bd3abbc1677ffcec3d7f"
+    },
+    {
+      "repo_path": "research/experiments/qwen05b_abstention_balance_5139_v1/evaluate_arm.py",
+      "container_path": "evaluate_arm.py",
+      "experiments_path": "qwen05b_abstention_balance_5139_v1/evaluate_arm.py",
+      "sha256": "95ee109e8c8dea2e801f3b94f6d796b2a89b56639ba4ebdd22987cae52045488"
+    },
+    {
+      "repo_path": "research/experiments/qwen05b_abstention_balance_5139_v1/test_protocol.py",
+      "container_path": "test_protocol.py",
+      "experiments_path": "qwen05b_abstention_balance_5139_v1/test_protocol.py",
+      "sha256": "2cd4ed53378e7bb9b8945acc6cb1339ce9654182647dc757d34a3bba8d84c0ca"
+    },
+    {
+      "repo_path": "research/experiments/qwen05b_abstention_balance_5139_v1/test_freeze_schema.py",
+      "container_path": "test_freeze_schema.py",
+      "experiments_path": "qwen05b_abstention_balance_5139_v1/test_freeze_schema.py",
+      "sha256": "79e4ab2b07abc7383641a193ce93046f32d027fabfd2a1f8641402c75a3f7bc3"
+    }
+  ],
+  "model": {
+    "repository": "Qwen/Qwen2.5-0.5B-Instruct",
+    "snapshot_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+    "local_path": "C:/Users/junny/.cache/huggingface/hub/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775",
+    "model_safetensors_sha256": "fdf756fa7fcbe7404d5c60e26bff1a0c8b8aa1f72ced49e7dd0210fe288fb7fe",
+    "files": {
+      ".gitattributes": "11ad7efa24975ee4b0c3c3a38ed18737f0658a5f75a0a96787b576a78a023361",
+      "config.json": "18e18afcaccafade98daf13a54092927904649e1dd4eba8299ab717d5d94ff45",
+      "generation_config.json": "e558847a8b4402616f1273797b015104dc266fe4b520056fca88823ba8f8ebe6",
+      "LICENSE": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+      "merges.txt": "599bab54075088774b1733fde865d5bd747cbcc7a547c5bc12610e874e26f5e3",
+      "model.safetensors": "fdf756fa7fcbe7404d5c60e26bff1a0c8b8aa1f72ced49e7dd0210fe288fb7fe",
+      "README.md": "b19c806a904db6dc878a0462e70b551f6b7ac78dfbb88c2eb966ca2b9109ae15",
+      "tokenizer_config.json": "5b5d4f65d0acd3b2d56a35b56d374a36cbc1c8fa5cf3b3febbbfabf22f359583",
+      "tokenizer.json": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539",
+      "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+    }
+  },
+  "image": {
+    "digest": "sha256:63ce8205b5e0cf7daddac087d6c1bd5489d51e3af345cf923af925026bdd600c",
+    "platform": "linux/amd64",
+    "reference_hint": "qwen05b-action-sft:build01",
+    "policy": "must already exist locally at exact digest; no pull/build"
+  },
+  "limits": {
+    "fit_timeout_seconds": 300,
+    "evaluation_timeout_seconds": 1800,
+    "container_memory": "12g",
+    "container_cpus": 8,
+    "container_pids": 512,
+    "peak_cuda_bytes_max": 12884901888,
+    "balanced_p95_nanoseconds_max": 1200000000
+  },
+  "source_sha256": {
+    "README.md": "4298ec5889e499f51a7f22cc199806c18715f6aaae6005cf977e3874e025551c",
+    "SEED_COLLISION_CHECK.json": "0bc83f0830ea985d4d7f13eb118a6f6b7dc587796238ccc089f4521407c5e223",
+    "PREPARATION_ATTEMPTS.md": "68c2137e4671abeb227d5eff49313b7f5c98a1c51dda3570f43f9fa5e0896c40",
+    "dataset_builder.py": "a412ba6e19d57ec3458db37f4a3eb4a33a0ea8f77d24c529384454079c9c1549",
+    "test_allocation.py": "bd0947c4c3597f0b65b8da9804e4e0e1e18cb7b5642115b143fcb1c26934b276",
+    "allocation_runner.py": "73a13c8133fef8502ca5cefae29cc988f3f590a27990b7141616f153b05268a7",
+    "audit_allocation.py": "c1142c806f7365db275908108786277d0a6e66e9f748100bf34fa4c7a1f98ec3",
+    "coverage_summary.py": "4e60ccb2d77e5132900397ace5fbff79d2c5851037a6b2b44af48c1cf4010c1e",
+    "pinned_construction_tests.py": "0a32be17829c2111338814a649b03df91d0153e052ed9d92c98ed701707d45e2",
+    "COVERAGE_SUMMARY.json": "2109bd818e846dbf167a2380540ed8d6faea83bad7ec9045b0cb7b4cfeb0b076"
+  },
+  "outputs": {
+    "formal": "research/experiments/qwen05b_abstention_balance_5139_allocation_20261001_v1/results/formal-01",
+    "preflight": "research/experiments/qwen05b_abstention_balance_5139_allocation_20261001_v1/results/preflight-01",
+    "audit": "research/experiments/qwen05b_abstention_balance_5139_allocation_20261001_v1/results/audit-01"
+  },
+  "decision": {
+    "pass": "PASS_BALANCED_SUPPORT_ABSTENTION_SCOPED",
+    "resource_hold": "HOLD_LOCAL_ENVELOPE",
+    "scientific_fail": "FAIL_BALANCED_SUPPORT_GATE",
+    "integrity_stop": "STOP_RAW_AUDIT_OR_PROVENANCE",
+    "retry_policy": "none"
+  },
+  "launch_condition": "Preparation-only. At launch refresh main and all hashes, verify queue, empty outputs and free disk reserve; pass pinned CPU tests and no-load preflight; take immediate GPU/process/container inventory. This manifest cannot start a workload."
+}
