@@ -118,3 +118,7 @@ Read each child experiment for its allowed decision vocabulary, authority bounda
 ## Role-skill v6 contract and thread-instrumentation archive
 
 - [#5081 / source PR #5226 archival qualification](needle_role_skill_joint_retention_v6_20260928/ARCHIVAL_QUALIFICATION.md) — preserves 29 exact historical files, the 27-fixture construction record, and thread-only placeholder-overlap instrumentation. The Windows Docker observation lacked the required coordinator release and is not authorized Stage-0. Formal role-retention remains UNRUN / STOP_RESOURCE_GATE; the source PR stays Draft and #5081 stays open. No rerun or runtime promotion.
+
+## Multimodal grounding corpus/protocol archive
+
+- [#5263 / source PR #5300 archival qualification](multimodal_grounding_5263_t0_20260930/ARCHIVAL_QUALIFICATION.md) — 27 exact historical files, including 14 synthetic PNGs, separate oracle, typed contract, and comparator preparation. Zero inference; reported host tests and Docker preflight are construction only, with the shared-Docker coordination deviation retained. No grounding/latency/Astra-free result, runtime promotion, rerun, or issue closure; #5263 remains open.
