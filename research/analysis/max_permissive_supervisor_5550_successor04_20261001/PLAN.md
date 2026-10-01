@@ -33,7 +33,8 @@ the expired T0 allocation and all raw/audit files unchanged.
 
 - Allocation: `MAXPERM-SUPERVISOR-5550-T0-ORBSTACK-SUCCESSOR-20261001-04B`.
 - Named owner: Unjuno. Self-assignment comment: #5085 comment
-  `5922184340`; direct user instruction to continue experiments is in this task.
+  `5922184340`; preregistration recorded on Issue #5550 comment `5922258479`.
+  Direct user instruction to continue experiments is in this task.
 - Window: 2026-10-01 00:50:00–01:05:00 UTC (half-open). This starts five
   minutes after the #5156 sentinel's recorded 00:30–00:45 window. At start,
   refresh the coordination issue and STOP if any conflicting allocation or
