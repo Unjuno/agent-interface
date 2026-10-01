@@ -60,6 +60,10 @@ The large number of child directories is intentional retained evidence. Reposito
 
 - [`o2_stream_real_capture_dot_v1/REPORT.md`](o2_stream_real_capture_dot_v1/REPORT.md) — Issue #4362 offline retained Calc/Inkscape/xterm transfer: 144-call exact wire/pixel/state parity; 12 changed transitions had median paired temporary traced-allocation ratio 0.667. No speedup, total-RSS, live-GUI, model or runtime-adoption claim; first outcomes and independent audit retained.
 
+## Frozen O2 streaming source with formal-result publication HOLD
+
+- [`o2_stream_memory_m6r1_v1/RECOVERY_STATUS.md`](o2_stream_memory_m6r1_v1/RECOVERY_STATUS.md) — Issue #4362 synthetic O2 streaming allocation: exact preformal sources and 12 inputs preserved and locally reconstruction-checked. The Issue reports a 12/12 formal PASS, but its raw result package is not in this branch/PR and the branch's two Actions runs have no artifacts; the reported formal outcome remains unaudited from repository-retained raw data. No formal rerun or runtime-adoption claim.
+
 ## Retained real-input transport accounting
 
 - [Public-summary cost successor to #4395](retained_public_summary_cost_4395_dot_v1/REPORT.md): `STOP_CLOCK_GRANULARITY` after 225 calls; 42 of 54 CPU aggregates failed the frozen guard. Original output identities and fallback facts are retained, but no cost-characterization PASS or formal post-baseline control result is claimed. [Lossless raw restoration](retained_public_summary_cost_4395_dot_v1/PACKAGING.md).

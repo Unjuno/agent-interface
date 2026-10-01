@@ -31,3 +31,7 @@ jobs:
           python-version: '3.12'
       - name: Check retained analytical results are indexed
         run: python research/analysis/check_index.py
+      - name: Test endogenous-demand rebound T0
+        run: python -B -m unittest discover -s research/analysis/endogenous_demand_rebound_5702_t0_v1 -p 'test_*.py' -v
+      - name: Test selection-aware shadow-audit T1
+        run: python -B -m unittest discover -s research/analysis/selection_aware_shadow_audit_5681_t1_v1 -p 'test_*.py' -v

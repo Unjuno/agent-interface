@@ -50,6 +50,10 @@ Prefer the narrowest existing namespace. The diagram is a placement guide; retai
 
 ## Analytical studies
 
+- [`analysis/preference_uncertainty_5749_t0_v1/REPORT.md`](analysis/preference_uncertainty_5749_t0_v1/REPORT.md) — Issue #5749 T0 method-only PASS: safe preference-query boundary, choice-version binding, neutral construction, framing-sensitivity hold; no human or runtime claim.
+
+- [`analysis/route_assignment_exposure_5760_t0_v1/REPORT.md`](analysis/route_assignment_exposure_5760_t0_v1/REPORT.md) — Issue #5760 T0 method-scoped PASS: constructed selection reversal detected, null control matched, six mutations rejected; not empirical or causal evidence.
+
 - [`analysis/adaptive_screen_5739_t0_v1/REPORT.md`](analysis/adaptive_screen_5739_t0_v1/REPORT.md) — Issue #5739 claim-boundary successor: read-only audit-v2 PASS after preserving the audit-v1 report-serialization STOP; synthetic-only.
 
 - [`analysis/`](analysis/) — proofs, exact derivations, exhaustive state-space checks, break-even/identifiability analysis, and the empirical residuals they expose.
@@ -201,3 +205,5 @@ A directory existing here does **not** mean its mechanism is promoted. Negative 
 - [`x11_midprogram_keymap_docker_diagnostic_20260930/`](x11_midprogram_keymap_docker_diagnostic_20260930/) — Nonformal Docker focus-versus-click diagnostic; not evidence for the formal hypothesis.
 
 - [`aoi_43_t0/`](aoi_43_t0/) — #43 retained toy construction; [accounting-defect/HOLD correction](aoi_43_t0/README.md): identical queue policies and incomparable drop counters; no demonstrated critical-retention benefit.
+
+- [`doom/map01_cuda_hud_5752_preflight_stop_20261001/REPORT.md`](doom/map01_cuda_hud_5752_preflight_stop_20261001/REPORT.md) — Issue #5752 allocation-01 pre-candidate record; its authoritative STOP reason and timestamp are reconciled in [CORRECTION.md](doom/map01_cuda_hud_5752_preflight_stop_20261001/CORRECTION.md). CUDA hypothesis remains untested.
