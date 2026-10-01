@@ -39,3 +39,5 @@ failures are retained in PLAN.md and audit-first-failure.txt; no favorable rerun
 
 Run `python3 audit.py` and `python3 test_audit.py` in this directory. REPORT.json
 contains local timings, independent events, cleanup results and limitations.
+
+Full local native integration checks pass: protocol 371 tests and harness 176 tests. Live audit also compares public result and feedback byte-derived JSON to their original native retained receipts, and confirms six captures per case (initial, four guards, final cue), without a second default post-input capture.

@@ -50,6 +50,12 @@ def audit():
             if reply['image_path']:
                 image=case/Path(reply['image_path']).name
                 require(hashlib.sha256(image.read_bytes()).hexdigest()==reply['image_sha256'],'image bytes')
+        bridge=next((case/'calls').glob('guarded-session-*'))
+        results=list(bridge.glob('result-*.json'));feedbacks=list(bridge.glob('feedback-*.json'))
+        require(len(results)==len(feedbacks)==1,'unexpected extra input/feedback')
+        require(json.loads(results[0].read_text())==replies[2]['metadata']['result'],'original input receipt changed')
+        require(json.loads(feedbacks[0].read_text())==replies[2]['metadata']['feedback'],'original cue evidence changed')
+        require(len(list(bridge.glob('observation-*.json')))==6,'extra/default post capture')
         events=[json.loads(s) for s in (case/'events.jsonl').read_text().splitlines()]
         row=validate(replies[2],events,expected);row.update(case=name,control_requests=4,primary_images=2)
         rows.append(row)
