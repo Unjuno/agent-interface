@@ -446,6 +446,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`temporal_contract_monitor_compilation_a3_v1/`](temporal_contract_monitor_compilation_a3_v1/)
 - [`temporal_contract_monitor_compilation_r0_v1/`](temporal_contract_monitor_compilation_r0_v1/)
 - [`temporal_observation_transfer_2013_v1/`](temporal_observation_transfer_2013_v1/)
+- [`temporal_predictivity_6071_t0_20261002/`](temporal_predictivity_6071_t0_20261002/)
 - [`temporal_query_specificity_2050_v1/`](temporal_query_specificity_2050_v1/)
 - [`temporal_ring_disambiguation_2045_v1/`](temporal_ring_disambiguation_2045_v1/)
 - [`temporal_ring_provenance_repair_successor_2053_v1/`](temporal_ring_provenance_repair_successor_2053_v1/)
