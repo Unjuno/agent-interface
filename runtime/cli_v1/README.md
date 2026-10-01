@@ -639,3 +639,16 @@ editing until explicit review. Default calls still capture once immediately.
 Unknown extended receipt shapes retain the full presentation even if brief is
 requested. An ordinary primary caller can use `call` with this explicit option;
 its existing STOP policy keeps failed/pending evidence and permits only close.
+
+
+With `observation_refs=true`, a known matched input feedback response may use
+`agent-interface/guarded-feedback-observation-refs-v1`: the exact duplicate at
+`feedback.observation` references complete `source`, and
+`observation_report.observation` references `source.native`. Only the two paths
+listed in `observation_references` are references. Other similarly shaped values
+remain literal. `expand_guarded_observation` restores exact original metadata.
+Input receipt, cue samples/verdicts and PNG are unchanged. Critical, unmatched,
+unverified-release or near-duplicate reports remain full. This lossless layer
+is separate from lossy guard summaries; unsupported brief shapes still retain
+all guard detail. Full retained retrieval never repeats input. Byte reduction
+does not by itself establish model token, billing or task-speed reduction.
