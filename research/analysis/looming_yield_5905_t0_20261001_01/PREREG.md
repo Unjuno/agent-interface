@@ -1,7 +1,7 @@
 # Issue #5905 — T0 preregistration
 
 Allocation: `LOOMING-YIELD-5905-T0-ISOLATED-ORB-20261001-01`
-Frozen main: `906198f2b7b72db7d359921b50d9b6a22f503548`
+Frozen main: `430e6b3aeedb34ac2b1bf808def5445482f31948`
 Planned execution: isolated OrbStack Ubuntu 24.04 ARM64 guest; Docker daemon inside guest; candidate and auditor in separate network-disabled containers.
 Candidate/auditor/retry budget: 1 / 1 / 0.
 
