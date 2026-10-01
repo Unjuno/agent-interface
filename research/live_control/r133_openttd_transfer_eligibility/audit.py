@@ -51,6 +51,8 @@ def analyze(event_rows: list[dict], observer_rows: list[dict], posthoc: dict) ->
     pointer = [r for r in event_rows if r.get("event") == "pointer_admission"]
     downs = [r for r in pointer if r.get("operation") == "button_down"]
     ups = [r for r in pointer if r.get("operation") == "button_up"]
+    if len(downs) != 7 or len(ups) != 0:
+        raise ValueError("button-down/up event coverage mismatch")
     terminals = {r.get("id"): r for r in event_rows if r.get("event") == "terminal"}
     joined = []
     for down in downs:
