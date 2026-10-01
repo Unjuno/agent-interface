@@ -155,7 +155,7 @@ def audit(f, candidate, fixture_raw):
     if candidate.get("analysis")!=independent: errors.append("candidate_oracle_mismatch")
     mutations=mutation_controls(f,candidate)
     if any(not x["rejected"] for x in mutations.values()): errors.append("mutation_accepted")
-    if independent["minimum"]!={"status":"COVER","channels":["app_status","os_focus_input"],"cost":7,"minimum_tie_count":1,"cover_count":1}:
+    if independent["minimum"]!={"status":"COVER","channels":["app_status","os_focus_input"],"cost":7,"minimum_tie_count":1,"cover_count":4}:
         errors.append("preregistered_minimum")
     if independent["greedy"]["cost"]!=8: errors.append("greedy_cost")
     if independent["full_bundle"]["cost"]!=11 or independent["full_bundle"]["status"]!="COVER": errors.append("full_bundle")
