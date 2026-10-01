@@ -1,9 +1,9 @@
 # MAP01 v6 planner-window arithmetic audit — T1 result
 
-**Issue:** #6220 (successor to closed #1632; parent research objective #59)  
-**Disposition:** `PASS_WINDOW_ARITHMETIC_AUDIT_SCOPED`  
-**Execution:** one synthetic candidate invocation; one independent raw-only audit invocation; zero retries  
-**Frozen main:** `14b81dd1f6853623a694266b98538f812847257a`  
+**Issue:** #6220 (successor to closed #1632; parent research objective #59)
+**Disposition:** `PASS_WINDOW_ARITHMETIC_AUDIT_SCOPED`
+**Execution:** one synthetic candidate invocation; one independent raw-only audit invocation; zero retries
+**Frozen main:** `14b81dd1f6853623a694266b98538f812847257a`
 **Frozen package commit:** `20eaab9e450e4f36f0b6d4adc7f2fb687ec5f02a`
 
 ## Result
@@ -30,8 +30,8 @@ python research/doom/map01_recovery_v6_window_integrity_1632_t1_20261002/candida
 python research/doom/map01_recovery_v6_window_integrity_1632_t1_20261002/audit_raw.py research/doom/map01_recovery_v6_window_integrity_1632_t1_20261002/out/t1-01/candidate.json --out research/doom/map01_recovery_v6_window_integrity_1632_t1_20261002/out/t1-01/audit.json
 ```
 
-Candidate: exit 0; six arm summaries; v6 decision `PASS_MECHANISM_ONLY`; zero boundary failures.  
-Independent audit: exit 0; `PASS_WINDOW_ARITHMETIC_AUDIT_SCOPED`; failures=0; mutations rejected=6/6.  
+Candidate: exit 0; six arm summaries; v6 decision `PASS_MECHANISM_ONLY`; zero boundary failures.
+Independent audit: exit 0; `PASS_WINDOW_ARITHMETIC_AUDIT_SCOPED`; failures=0; mutations rejected=6/6.
 Raw artifacts: `out/t1-01/candidate.json`, `audit.json`, and six `arm-summary.json` files; SHA-256 values are in `SHA256SUMS`.
 
 Post-run package verification independently matched the candidate's recorded v6 source SHA-256 to the frozen source and compared all six on-disk arm summaries byte-semantically against the candidate records (6/6); the audit receipt fields also matched. The 13-file SHA256SUMS manifest verified completely.
