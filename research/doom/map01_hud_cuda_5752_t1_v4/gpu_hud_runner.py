@@ -215,4 +215,3 @@ def main():
     print(json.dumps({"rows":23,"pairs":len(cpu_ns),"cpu_p50_ns":result["measurement"]["cpu_p50_ns"],
       "gpu_p50_ns":result["measurement"]["gpu_p50_ns"],"candidate_disposition":result["candidate_disposition"]},sort_keys=True))
 if __name__=="__main__": main()
-
