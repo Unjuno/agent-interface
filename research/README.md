@@ -52,6 +52,8 @@ Prefer the narrowest existing namespace. The diagram is a placement guide; retai
 
 - [`analysis/preference_uncertainty_5749_t0_v1/REPORT.md`](analysis/preference_uncertainty_5749_t0_v1/REPORT.md) — Issue #5749 T0 method-only PASS: safe preference-query boundary, choice-version binding, neutral construction, framing-sensitivity hold; no human or runtime claim.
 
+- [`analysis/route_assignment_exposure_5760_t0_v1/REPORT.md`](analysis/route_assignment_exposure_5760_t0_v1/REPORT.md) — Issue #5760 T0 method-scoped PASS: constructed selection reversal detected, null control matched, six mutations rejected; not empirical or causal evidence.
+
 - [`analysis/adaptive_screen_5739_t0_v1/REPORT.md`](analysis/adaptive_screen_5739_t0_v1/REPORT.md) — Issue #5739 claim-boundary successor: read-only audit-v2 PASS after preserving the audit-v1 report-serialization STOP; synthetic-only.
 
 - [`analysis/`](analysis/) — proofs, exact derivations, exhaustive state-space checks, break-even/identifiability analysis, and the empirical residuals they expose.
