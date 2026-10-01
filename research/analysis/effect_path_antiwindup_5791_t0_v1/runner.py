@@ -53,4 +53,3 @@ def simulate(case, policy):
 
 rows=[simulate(c,p) for c in fx['cases'] for p in fx['policies']]
 print(json.dumps({'schema':'effect-path-antiwindup-raw-v1','fixture_sha256':hashlib.sha256(f.read_bytes()).hexdigest(),'rows':rows},sort_keys=True,separators=(',',':')))
-
