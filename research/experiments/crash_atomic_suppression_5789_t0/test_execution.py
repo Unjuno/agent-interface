@@ -75,7 +75,10 @@ class ProcessMatrixConstructionTests(unittest.TestCase):
                 "OBSTAC_CONSTRUCTION_CONTEXT", "OBSTAC_CONSTRUCTION_DOCKER_HOST"
             )}
             with mock.patch.object(container_runner.subprocess, "run") as mocked_run:
-                mocked_run.return_value.returncode = 0
+                mocked_run.side_effect = [
+                    mock.Mock(returncode=0, stdout='"tcp://construction-guest:2376"', stderr=""),
+                    mock.Mock(returncode=0),
+                ]
                 try:
                     os.environ.update(env)
                     with mock.patch.object(sys, "argv", [
@@ -90,8 +93,9 @@ class ProcessMatrixConstructionTests(unittest.TestCase):
                         else:
                             os.environ[key] = value
             command = mocked_run.call_args.args[0]
-            self.assertIn("--host", command)
-            self.assertIn("tcp://construction-guest:2376", command)
+            self.assertIn("--context", command)
+            self.assertIn("isolated-construction-context", command)
+            self.assertNotIn("--host", command)
             self.assertIn("--construction", command)
             self.assertIn("--network", command)
             self.assertFalse(any("orbstack" in item for item in command))
