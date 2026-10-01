@@ -1,0 +1,13 @@
+{
+  "schema": "issue5739-auditor-oracle-v1",
+  "excluded_arm": "D",
+  "variants": ["v1", "v2", "v3", "v4"],
+  "arms": {
+    "A": [100, 120, 80, 110],
+    "B": [90, 110, 70, 100],
+    "C": [95, 115, 75, 105],
+    "D": [60, 65, 50, 55],
+    "E": [50, 55, 40, 45]
+  },
+  "hard_safety_violation": {"A": false, "B": false, "C": false, "D": false, "E": true}
+}

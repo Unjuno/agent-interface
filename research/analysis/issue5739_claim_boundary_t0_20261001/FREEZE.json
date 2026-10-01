@@ -1,0 +1,52 @@
+{
+  "allocation": "ISSUE-5739-CLAIM-BOUNDARY-T0-20261001-01",
+  "base_main": "8627fb4ad928479be363c3d7754146dfc8afb793",
+  "base_tree": "8f01aaed9e3e69f96c3cb6ec4e6b08bf7d536eb7",
+  "branch": "research/5739-claim-boundary-t0-20261001",
+  "path": "research/analysis/issue5739_claim_boundary_t0_20261001/",
+  "runtime": "CPython 3.11.9 / Windows x86_64 / standard library only",
+  "source_sha256": {
+    "PREREG.md": "fa93582f03515f4dac40a14deba171d3a439318fb51228c2880b9de6b1f86071",
+    "screen.json": "7741bf67543477b4ec2bbd86270ca6c2afa7ed6eb826db82a52663a3b7d2b7f0",
+    "confirmatory.json": "74a6c10f9fa1bc693d460e436e35ab7279e192fdddfdce29c42a731bd852bdcd",
+    "sealed_oracle.json": "6ae29fa753879a239470a47741c820c04b5307a5de6f844ed2ee2aeb905ecbdc",
+    "candidate.py": "c9c5088f4d04f19b4f6f3bc8751065023997e5c167abdfd74f9aa193a8086da6",
+    "test_candidate.py": "3b12ff34039db86f2ab34d085b6d082255a66c0c4bdbdf3ff5b0c71fd5c1df0d",
+    "audit.py": "f9207239b0834eee694f152ce611093e23253d2d17d45006c387ae7732aa9a7e",
+    "test_audit.py": "ea0acb9c6bbc90547e4a059ee395af0b5a7ec2aaa62d4bb2f1ece2447e1aeea4"
+  },
+  "output_paths_absent_before_candidate": [
+    "CANDIDATE.json",
+    "STDOUT.bin",
+    "STDERR.bin",
+    "EXECUTION.json",
+    "AUDIT.json",
+    "AUDIT_STDOUT.bin",
+    "AUDIT_STDERR.bin",
+    "AUDIT_EXECUTION.json"
+  ],
+  "candidate_invocation_budget": 1,
+  "auditor_invocation_budget": 1,
+  "retry_budget": 0,
+  "resources": {
+    "host_cpu": true,
+    "gpu": false,
+    "docker_orbstack": false,
+    "network": false,
+    "model": false,
+    "gui_game_input": false
+  },
+  "candidate_visibility": [
+    "screen.json",
+    "confirmatory.json",
+    "candidate.py"
+  ],
+  "auditor_only_input": ["sealed_oracle.json"],
+  "mutations": [
+    "missing confirmation attempt",
+    "duplicate attempt id",
+    "repeated sealed variant",
+    "altered comparison family",
+    "forged hard-safety record"
+  ]
+}

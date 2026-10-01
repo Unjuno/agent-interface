@@ -1,0 +1,32 @@
+{
+  "schema": "issue5739-confirmatory-v1",
+  "family_id": "sealed-family-01",
+  "baseline": "A",
+  "variants": ["v1", "v2", "v3", "v4"],
+  "arms": {
+    "A": [
+      {"variant": "v1", "latency_ms": 100, "hard_safety_violation": false},
+      {"variant": "v2", "latency_ms": 120, "hard_safety_violation": false},
+      {"variant": "v3", "latency_ms": 80, "hard_safety_violation": false},
+      {"variant": "v4", "latency_ms": 110, "hard_safety_violation": false}
+    ],
+    "B": [
+      {"variant": "v1", "latency_ms": 90, "hard_safety_violation": false},
+      {"variant": "v2", "latency_ms": 110, "hard_safety_violation": false},
+      {"variant": "v3", "latency_ms": 70, "hard_safety_violation": false},
+      {"variant": "v4", "latency_ms": 100, "hard_safety_violation": false}
+    ],
+    "C": [
+      {"variant": "v1", "latency_ms": 95, "hard_safety_violation": false},
+      {"variant": "v2", "latency_ms": 115, "hard_safety_violation": false},
+      {"variant": "v3", "latency_ms": 75, "hard_safety_violation": false},
+      {"variant": "v4", "latency_ms": 105, "hard_safety_violation": false}
+    ],
+    "E": [
+      {"variant": "v1", "latency_ms": 50, "hard_safety_violation": false},
+      {"variant": "v2", "latency_ms": 55, "hard_safety_violation": true},
+      {"variant": "v3", "latency_ms": 40, "hard_safety_violation": false},
+      {"variant": "v4", "latency_ms": 45, "hard_safety_violation": false}
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "schema": "issue5739-screen-v1",
+  "baseline": "A",
+  "family_id": "sealed-family-01",
+  "survivor_family_rule": "DESCRIPTIVE_ONLY_NO_PROMOTION_WITHOUT_FROZEN_FAMILYWISE_INFERENCE",
+  "arms": {
+    "A": {"correct": 4, "opportunities": 4, "hard_safety_violation": false},
+    "B": {"correct": 4, "opportunities": 4, "hard_safety_violation": false},
+    "C": {"correct": 4, "opportunities": 4, "hard_safety_violation": false},
+    "D": {"correct": 1, "opportunities": 4, "hard_safety_violation": false},
+    "E": {"correct": 4, "opportunities": 4, "hard_safety_violation": false}
+  },
+  "selection": {"minimum_correct": 3, "exclude_hard_safety_violation": true},
+  "expected_survivors": ["B", "C", "E"],
+  "expected_screened_out": ["D"]
+}
