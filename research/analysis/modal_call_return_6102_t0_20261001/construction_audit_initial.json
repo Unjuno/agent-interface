@@ -1,0 +1,20 @@
+{
+  "cases": 14,
+  "disposition": "FAIL_AUDIT",
+  "errors": [
+    "fsm_mismatch:wrong_parent_close",
+    "fsm_mismatch:duplicate_close",
+    "fsm_mismatch:parent_destroyed_with_child",
+    "fsm_mismatch:non_lifo_switch",
+    "fsm_mismatch:missing_open",
+    "fsm_mismatch:stale_generation_after_reuse",
+    "fsm_mismatch:interleaved_window",
+    "fsm_mismatch:unknown_identity",
+    "fsm_mismatch:wrong_action_context",
+    "fsm_mismatch:depth_overflow"
+  ],
+  "flat_wrong_parent_counterexample": true,
+  "invalid_cases_fail_closed": 10,
+  "max_supported_depth": 3,
+  "stack_fsm_exact_matches": 4
+}
