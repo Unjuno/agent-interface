@@ -2,7 +2,7 @@
 
 ## Status
 
-WSL Containers (`wslc`) is the preferred **pilot runtime for eligible local, single-container research iterations on this Windows host**. It can avoid starting Docker Desktop for those runs and provides resource limits and disposable containers. This is a scoped migration, not a claim that every Docker workflow is interchangeable.
+WSL Containers (`wslc`) is the preferred **pilot runtime for eligible local, single-container research iterations on this Windows host**. It can avoid starting Docker Desktop for those runs and provides disposable containers and accepted CPU/memory options. This is a scoped migration, not a claim that every Docker workflow is interchangeable or that memory limits are enforced.
 
 Pilot verified on 2026-10-02 with WSL `3.0.1.0`, WSLc `3.0.1`, and `python:3.12-slim` (`python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f`, linux/amd64):
 
@@ -32,7 +32,7 @@ To smoke-check that WSLc is installed, the approved Python image is already cach
 
 1. **Eligible now for pilot:** disposable single-container local tests that need a pinned Linux image, no network, bounded CPU/memory, read-only source bind mounts, and ordinary process exit codes.
 2. **Validate before migration:** image architecture/digest behavior, bind-mount path and permission semantics, UID/GID mapping, signal/timeout propagation, artifact write paths, memory enforcement under pressure, and cleanup after abnormal termination. Record a representative Docker baseline and WSLc result without pooling them as scientific outcomes.
-3. **Keep Docker/OrbStack or another validated runtime for now:** Docker Engine API/socket consumers, Compose orchestration, workflows requiring unsupported isolation flags or cgroup/swap guarantees, privileged/capability manipulation, daemon-specific behavior, or any study whose frozen protocol names a required runtime/engine version. Use a separately frozen successor to test a runtime substitution; never rewrite a consumed allocation or its historical STOP/FAIL/HOLD.
+3. **Keep Docker/OrbStack or another validated runtime for now:** Docker Engine API/socket consumers, Compose orchestration, workflows requiring unsupported isolation flags or effective cgroup/swap guarantees, privileged/capability manipulation, daemon-specific behavior, or any study whose frozen protocol names a required runtime/engine version. In particular, the observed `--memory` flag acceptance did not prevent a 384 MiB allocation under a 128 MiB setting on this host (#6309); do not use this option as a hard memory ceiling until a cgroup-capable environment passes a fresh successor test. Use a separately frozen successor to test a runtime substitution; never rewrite a consumed allocation or its historical STOP/FAIL/HOLD.
 4. **Keep hosted CI unchanged:** GitHub Actions remains the shared review gate. WSLc is a local iteration and resource-control option, not an Actions runner or a substitute for successful required checks.
 5. **Promote only after evidence:** update a workflow or repository-wide default only after an audited compatibility matrix and representative runtime/resource measurements pass. Do not infer lower memory use or faster iterations from this smoke test.
 
