@@ -1,0 +1,17 @@
+{
+  "schema": "issue5962_session_eligibility_process_v1",
+  "allocation": "mission-survival-5962-t1-eligibility-20261001-02",
+  "successor_to": "mission-survival-5962-t1-eligibility-20261001-01",
+  "predecessor_disposition": "FAIL_INTEGRITY_REPORT_SNAPSHOT_MISMATCH, preserved unchanged",
+  "main_snapshot": "ad123c3875d81ebdc8bdfbdb59340005d705a60d",
+  "formal_invocations": 1,
+  "invocation": "python audit_sessions.py manifest.json raw.tar.gz",
+  "exit_code": 0,
+  "output_sha256": "7d368d8a53a75ef2f56e69f3b65d64af14e9ae528184fe5772e521f3c0a24e88",
+  "input_manifest_sha256": "3249b770f3b28b14662535d74edad0b76a52fa52909756f0cd82883d6252f5ba",
+  "input_archive_sha256": "811e63849956658bdbb0fecc1a7237308dd93c71d96644050b1581bc243c4dd2",
+  "runtime": "Python 3.12.10, standard library",
+  "container": "Not used: archived bytes audited offline as data; Docker daemon was not needed",
+  "result": "HOLD_T2_NO_COMPARABLE_SESSION_COHORT",
+  "scope": "Retained-data integrity/session eligibility only; no empirical route reliability estimate"
+}
