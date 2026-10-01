@@ -81,6 +81,12 @@ only Python's standard library. See [the timing contract](../../research/live_co
 and [retrospective primary-use evidence](../results/host-timing-summary-01/README.md).
 It cannot measure model ingestion, independent semantic completion or model tokens.
 
+Text-only acknowledgment events are also bound to the original reply hash,
+tool, relay ID, text block count, error flag and completed presentation. They
+remain separate from image reviews and do not prove comprehension or success.
+See the [retained primary input self-use pair](../results/primary-input-self-use-01/README.md)
+for the live log that exposed this reader gap and its post-run verification.
+
 ## Count reported work separately from transport replies
 
 Run `python3 -m runtime.integration_checks.workload /absolute/host-directory` after a retained host lifetime. It validates the host timeline, hashes the same replies, and counts explicit public dispatch completion/refusal/failure separately from relay refusal and unknown results. Other tool calls remain counted by name. Unsupported receipt forms stay unclassified. No input is dispatched.

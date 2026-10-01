@@ -1,0 +1,81 @@
+{
+  "source": "e032ff186e784b7c5486dd9d48eac7b53390eb5a",
+  "seed": 1001060,
+  "adoption": "HOLD",
+  "arms": {
+    "guarded-local": {
+      "tasks_exact_once": 6,
+      "calls": 74,
+      "ordinary_programs": 24,
+      "emissions": 594,
+      "original_images": 29,
+      "fixture_child_cleanup": [
+        {
+          "pid": 28,
+          "returncode": 0
+        },
+        {
+          "pid": 32,
+          "returncode": 1
+        },
+        {
+          "pid": 38,
+          "returncode": 0
+        }
+      ],
+      "fixed_wait_requested_ms": 4800,
+      "ordinary_send_to_reply_median_ms": 343.09870000043884,
+      "release_to_capture_end_median_ms": 5.0920105,
+      "time_partition": {
+        "span": "first_send_to_last_reply",
+        "total_ms": 316588.8229,
+        "request_outstanding_ms": 11636.83960000053,
+        "presentation_callbacks_ms": 89.66029999870807,
+        "other_host_intervals_ms": 304862.3230000008,
+        "scope": "Disjoint host-clock intervals only. Other includes orchestration, logging and caller gaps; not isolated model reasoning or wait."
+      },
+      "scope": "host intervals and capture boundaries; not useful feedback or semantic latency"
+    },
+    "direct-post": {
+      "tasks_exact_once": 6,
+      "calls": 29,
+      "ordinary_programs": 12,
+      "emissions": 588,
+      "original_images": 13,
+      "fixture_child_cleanup": [
+        {
+          "pid": 639,
+          "returncode": 0
+        },
+        {
+          "pid": 643,
+          "returncode": 1
+        },
+        {
+          "pid": 649,
+          "returncode": 0
+        }
+      ],
+      "fixed_wait_requested_ms": 4800,
+      "ordinary_send_to_reply_median_ms": 487.4887500000186,
+      "release_to_capture_end_median_ms": 11.243508,
+      "time_partition": {
+        "span": "first_send_to_last_reply",
+        "total_ms": 198423.66170000006,
+        "request_outstanding_ms": 7181.308300001547,
+        "presentation_callbacks_ms": 41.890600002370775,
+        "other_host_intervals_ms": 191200.46279999614,
+        "scope": "Disjoint host-clock intervals only. Other includes orchestration, logging and caller gaps; not isolated model reasoning or wait."
+      },
+      "scope": "host intervals and capture boundaries; not useful feedback or semantic latency"
+    }
+  },
+  "unmeasured": [
+    "first useful model-visible feedback",
+    "semantic completion latency",
+    "isolated model wait",
+    "provider tokens/cost",
+    "human comparison",
+    "causal speedup"
+  ]
+}
