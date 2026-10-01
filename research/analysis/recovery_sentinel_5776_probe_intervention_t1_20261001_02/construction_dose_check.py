@@ -11,6 +11,7 @@ import runner
 
 HERE = Path(__file__).resolve().parent
 FIXTURE = HERE / "fixture.json"
+FIXTURE_ORIGINAL = runner.FIXTURE
 DOSES = (1, 2, 3, 4, 6, 8, 12, 16, 20, 24, 28, 32, 36, 40)
 TARGET = "gradual_capacity_loss"
 NO_LOSS_CONTROLS = (
@@ -27,7 +28,11 @@ def median(values):
 def summarize(fixture, units):
     dose_fixture = copy.deepcopy(fixture)
     dose_fixture["probe_units"] = units
-    pairs = runner.build(dose_fixture)["pairs"]
+    runner.FIXTURE = FIXTURE
+    try:
+        pairs = runner.build(dose_fixture)["pairs"]
+    finally:
+        runner.FIXTURE = FIXTURE_ORIGINAL
     by_mechanism = {name: [] for name in fixture["mechanisms"]}
     for pair in pairs:
         by_mechanism[pair["probe"]["mechanism"]].append(pair)
