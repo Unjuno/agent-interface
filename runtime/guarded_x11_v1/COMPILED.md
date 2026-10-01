@@ -58,3 +58,17 @@ Primary use, raw evidence and limits are recorded in
 Its private fixture has an application-specific accepted/saved cue and stable
 canvas Save control. General GUI text verification, hover recovery, comparable
 model token/cost savings and human-tempo performance remain unproven.
+
+## Comparison with an existing method
+
+The [finite primary comparison](../results/compiled-composition-comparison-01/README.md)
+uses the existing `form.fill_and_submit` with an explicit read-only on_step
+callback that retains receipts, checks neutral release and fresh application
+cues, and can raise before Save. In the fixed two-stage fixture, both this
+composition and the graph conditionally continued in one caller invocation with
+the same inputs, captures and primary images. Graph structure alone did not
+reduce roundtrips. Descriptive timings and whole-context usage do not justify
+speed/token/default-route promotion. The unmodified form helper still does not
+verify text or saving; an adequate application callback and independent scoring
+remain necessary. Choose the existing method or graph according to the needed
+control/evidence contract, rather than assuming that the graph is faster.
