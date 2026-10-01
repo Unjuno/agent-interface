@@ -340,6 +340,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`tiny_predicate_specialist_4218_v1/`](tiny_predicate_specialist_4218_v1/)
 - [`tiny_visual_equivariant_2564_v1/`](tiny_visual_equivariant_2564_v1/)
 - [`tiny_visual_extent_init_sensitivity_4817_v1/`](tiny_visual_extent_init_sensitivity_4817_v1/)
+- [`tiny_visual_extent_readout_4817_cuda_v2/`](tiny_visual_extent_readout_4817_cuda_v2/)
 - [`tiny_visual_extent_readout_4817_cuda_v3/`](tiny_visual_extent_readout_4817_cuda_v3/)
 - [`tiny_visual_extent_readout_4817_v1/`](tiny_visual_extent_readout_4817_v1/)
 - [`tiny_visual_extent_readout_4817_v2/`](tiny_visual_extent_readout_4817_v2/)
