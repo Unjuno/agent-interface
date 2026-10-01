@@ -124,3 +124,9 @@ verified and empty and the session to require no recovery. Reported held input
 is retained; malformed or unverified cleanup cannot become a safe abstention.
 A missing receipt still does not invent neutrality. No-input evidence is not
 inferred from counters or from a release receipt, and a refusal remains incomplete.
+
+Bindings use the backend's actual key names. Linux/X11 keysym names are
+case-sensitive: `Home` is valid, while `HOME` is rejected unless explicitly
+supported as an alias. Backend preflight can refuse such a program before
+execution; read its retained detail and cleanup rather than claiming an action
+completed or blindly retrying it.
