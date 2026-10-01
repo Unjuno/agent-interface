@@ -189,6 +189,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`desktop_lifecycle_rebind_3190_host_preflight_v1/`](desktop_lifecycle_rebind_3190_host_preflight_v1/)
 - [`deterministic_replay_boundary_r0_v1/`](deterministic_replay_boundary_r0_v1/)
 - [`effect_time_contract_authorization_successor_532_v1/`](effect_time_contract_authorization_successor_532_v1/)
+- [`endogenous_demand_rebound_5702_t0_v1/`](endogenous_demand_rebound_5702_t0_v1/)
 - [`entrypoint_argv_preflight_5156_v2_20261001/`](entrypoint_argv_preflight_5156_v2_20261001/)
 - [`epistemic_commit_5441_t4/`](epistemic_commit_5441_t4/)
 - [`event_sourced_projection_r0_v1/`](event_sourced_projection_r0_v1/)
