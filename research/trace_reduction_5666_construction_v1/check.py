@@ -23,7 +23,12 @@ def simulate(trace):
 
 def legal(trace):
     present = set(trace)
-    return REQUIRED.issubset(present) and len(present) == len(trace)
+    if not REQUIRED.issubset(present) or len(present) != len(trace):
+        return False
+    if not present.issubset(set(ORIGINAL)):
+        return False
+    # A reduced trace must retain the original causal order, not just node names.
+    return tuple(x for x in ORIGINAL if x in present) == trace
 
 
 def check():
@@ -45,6 +50,10 @@ def check():
     assert simulate(missing_release)[1] != original_fp
     assert not legal(missing_release)
 
+    reordered = ("setup", "observe", "act", "grant", "release")
+    assert set(reordered) == set(reduced)
+    assert not legal(reordered)
+
     # One-minimal only under this frozen legal grammar.
     legal_deletions = [tuple(x for x in reduced if x != y) for y in reduced]
     assert not any(legal(t) and simulate(t) == (1, FINGERPRINT) for t in legal_deletions)
@@ -55,6 +64,7 @@ def check():
         "fingerprint": list(FINGERPRINT),
         "exit_only_wrong_failure_rejected": True,
         "authority_and_release_deletion_rejected": True,
+        "reordered_authority_rejected": True,
         "one_minimal_under_declared_grammar": True,
     }
 
