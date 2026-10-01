@@ -18,6 +18,18 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def invocation_argv(args: argparse.Namespace) -> list[str]:
+    """Return the exact outer command recorded for this assigned allocation."""
+    return [
+        "python3", "-B", str(Path(__file__).resolve()),
+        "--mode", args.mode,
+        "--candidate-out", str(args.candidate_out.resolve()),
+        "--audit-out", str(args.audit_out.resolve()),
+        "--audit-raw", str(args.audit_raw.resolve()),
+        "--docker", args.docker,
+    ]
+
+
 def load_freeze() -> tuple[dict[str, object], str]:
     path = BASE / "FREEZE.json"
     try:
@@ -33,6 +45,8 @@ def load_freeze() -> tuple[dict[str, object], str]:
         raise SystemExit("STOP_SOURCE_HASH_MISMATCH")
     if data.get("audit_sha256") != sha256(BASE / "audit.py"):
         raise SystemExit("STOP_AUDIT_HASH_MISMATCH")
+    if data.get("launcher_sha256") != sha256(Path(__file__)):
+        raise SystemExit("STOP_LAUNCHER_HASH_MISMATCH")
     if data.get("schedule_sha256") != schedule_sha256():
         raise SystemExit("STOP_SCHEDULE_HASH_MISMATCH")
     return data, digest
@@ -104,6 +118,10 @@ def main() -> int:
     if args.mode == "formal" and os.environ.get("OBSTAC_RUN_KIND") != "formal":
         raise SystemExit("STOP_NO_FORMAL_ALLOCATION")
     mode = args.mode
+    if mode == "formal":
+        frozen, _ = load_freeze()
+        if frozen.get("formal_argv") != invocation_argv(args):
+            raise SystemExit("STOP_FORMAL_ARGV_MISMATCH")
     if mode == "construction":
         context = os.environ.get("OBSTAC_CONSTRUCTION_CONTEXT", "")
         endpoint = os.environ.get("OBSTAC_CONSTRUCTION_DOCKER_HOST", "")
