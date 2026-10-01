@@ -1,6 +1,6 @@
 # Issue #5776 — does the probe itself move the endpoint?
 
-This successor allocation isolates a concrete limitation explicitly raised in #5776: repeated disturbances can alter the system being measured. The comparison is paired probe versus no-probe under the same authored latent schedule; its endpoint is queue backlog, not the sentinel warning. Prior Issue #5776 outcomes remain untouched.
+This successor allocation-02 isolates a concrete limitation explicitly raised in #5776: repeated disturbances can alter the system being measured. Allocation-01 stopped before candidate when `main` advanced at its start gate; it generated no scientific rows. This comparison is paired probe versus no-probe under the same authored latent schedule; its endpoint is queue backlog, not the sentinel warning. Prior Issue #5776 outcomes remain untouched.
 
 ## H / T / D / C / U
 

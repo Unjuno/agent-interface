@@ -1,0 +1,39 @@
+{
+  "allocation": "recovery-sentinel-5776-probe-intervention-t1-20261001-02",
+  "issue": 5776,
+  "state": "PREPARATION_ONLY",
+  "base_main": "f2e37e798892de1f8f305334c24533791007200c",
+  "branch": "research/5776-probe-intervention-t1-02-20261001",
+  "path": "research/analysis/recovery_sentinel_5776_probe_intervention_t1_20261001_02",
+  "source_sha256": {
+    "README.md": "39e48487819507f2b03b35bc34c2f8bf2f9fa6bf593a43a642356aecc25636c8",
+    "PREREG.md": "61cda4ffce13d0f21fd42ea1f7ad3863f1253b31e4c7473d5cf79274d803b0c2",
+    "fixture.json": "163f85659dabb59861627f4641d6df211d45a1965352d5d5e2e3f396b39256ab",
+    "runner.py": "d332bea86527efc1c08f84fc4a0760f7bc41ed2fc07a1da38d13cfda2c418c15",
+    "audit.py": "4e4a997cc5dfed5fb7f04ce322215dc8ca2906abc26e10c13fb4ca7698d5c64f",
+    "test_audit.py": "84916b99762e0b9c9a2dece2142dab1a7ed9473cb484674287490704f210a22a"
+  },
+  "pre_run_image": {
+    "reference": "python:3.12-slim@sha256:950206c37262dd86c55659797f6ee418fee30535072f65a82ed470d985f5cda5",
+    "image_id": "sha256:950206c37262dd86c55659797f6ee418fee30535072f65a82ed470d985f5cda5",
+    "platform": "linux/arm64",
+    "repo_digest": "python@sha256:950206c37262dd86c55659797f6ee418fee30535072f65a82ed470d985f5cda5"
+  },
+  "guest": {
+    "name": "obs-5776-probe-intervention-t1-02-20261001",
+    "platform": "Ubuntu 24.04 ARM64",
+    "planned_source_clone": "obs-5776-probe-intervention-t1-20261001-01",
+    "planned_isolation": "OrbStack isolated clone; candidate/auditor containers additionally use --network none",
+    "cpu_max_expected": "100000 100000",
+    "memory_max_bytes_expected": 2147483648
+  },
+  "invocations": {"candidate": 0, "independent_auditor": 0, "retry": 0},
+  "commands": {
+    "candidate": "sudo docker run --network none --cpus 1 --memory 256m --pids-limit 64 --read-only --tmpfs /tmp --mount type=bind,src=/home/taka/study/recovery_sentinel_5776_probe_intervention_t1_20261001_02,dst=/src,readonly --mount type=bind,src=/home/taka/out,dst=/out python:3.12-slim@sha256:950206c37262dd86c55659797f6ee418fee30535072f65a82ed470d985f5cda5 python -B /src/runner.py /out/raw.json",
+    "auditor": "sudo docker run --network none --cpus 1 --memory 256m --pids-limit 64 --read-only --tmpfs /tmp --mount type=bind,src=/home/taka/study/recovery_sentinel_5776_probe_intervention_t1_20261001_02,dst=/src,readonly --mount type=bind,src=/home/taka/out,dst=/out,readonly python:3.12-slim@sha256:950206c37262dd86c55659797f6ee418fee30535072f65a82ed470d985f5cda5 python -B /src/audit.py /out/raw.json"
+  },
+  "proposed_window_utc": {"start": "2026-10-01T10:20:00Z", "end": "2026-10-01T10:50:00Z"},
+  "invocations": {"candidate": 0, "independent_auditor": 0, "retry": 0},
+  "expected_image": "python:3.12-slim@sha256:950206c37262dd86c55659797f6ee418fee30535072f65a82ed470d985f5cda5",
+  "preparation_note": "Allocation-01 STOPped before candidate on main advance. Allocation-02 is a fresh, distinct allocation and must pass a new main/queue/machine/image/hash/output gate before any formal invocation."
+}
