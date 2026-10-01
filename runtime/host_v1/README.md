@@ -414,3 +414,72 @@ Original response and review records are preserved; presentation events record
 the same source identity. It does not overwrite a prior mistaken review, record
 a correction automatically, or permit a second ordinary `review` at the same
 exclusive receipt path. No automatic reread policy or efficiency claim is added.
+
+
+## File presentation for explicit primary commands
+
+The optional `primary_exchange.mjs` adapter extracts the primary command and
+file-presentation mechanics previously authored separately in live trials.
+It uses the existing instrumented host and primary policy; it starts no process
+and supplies no task decisions. Configure and retain the host as above, then:
+
+```js
+import { createPrimaryExchange } from './host-bundle/primary_exchange.mjs';
+const exchange = await createPrimaryExchange({
+  host: client, route: 'guarded-local', directory: '/absolute/fresh-exchange',
+});
+const observed = await exchange.execute({ id: 1, method: 'observe', args: [] });
+// Deliver observed.presented_text and actually view observed.images[].path.
+// Forward the image viewer's returned fidelity option when emitting that image.
+await exchange.execute({ id: 2, method: 'review', args: [observed.attempt, {
+  task: 'edit', phase: 'observe', reason: 'Describe the actual image inspected',
+}] });
+// Mint/input require the same explicit positional arguments as the primary.
+// Explicit public close and inspected release outcome come before host close.
+const closed = await exchange.execute({ id: 3, method: 'call',
+  args: ['interface_close', {}] });
+// Read the returned close text. An acknowledgment is still a separate decision.
+await client.close();
+```
+
+The exact envelope is `{id,method,args}`. IDs are sequential safe integers,
+beginning at 1; positional args are finite JSON. Methods are `observe`, `mint`,
+`mintMany`, `input`, `inputWithFeedback`, `reviewWindow`, `review`,
+`acknowledgeText`, `presentOriginal` and allowlisted primary `call`. Guarded and
+direct-post routes retain their existing arguments/configuration. Each command
+is snapshotted and consumes its ID before persistence/dispatch. Concurrent or
+duplicate commands are refused; no queue, input replay or implicit review exists.
+
+The fresh directory is exclusive and its parent must already exist. Each
+accepted command retains an exclusive request file, the JSON-serialized original
+returned value, exact PNG bytes from the existing presentation callback, and
+the presentation descriptor. `original_reply_path` points to this serialized
+returned value (including the host attempt), not the relay's byte-identical raw
+reply file; that existing raw reply remains in the host evidence directory.
+Void local presentation completion serializes as null and creates no new attempt.
+`presented_text` retains strings and structured status objects in their original
+callback order. Images include absolute path, byte count, MIME type and SHA256.
+Files are ordinary exclusive writes, not an atomic polling protocol, crash
+durability guarantee or authenticated evidence. Use the returned descriptor only
+after successful execute completion; do not poll partially written files.
+
+File callback completion means file publication, not delivery to or perception
+by a model. The outer caller must deliver the text/image, inspect them and
+explicitly review/acknowledge the same original attempt. Descriptors neither
+refresh source time nor grant authority or task success. No image resizing,
+reencoding or requested image-fidelity policy is supplied by this adapter.
+
+A request-file failure sends no host operation; a later image/reply/descriptor
+write failure can follow a completed input. Either latches exchange STOP and
+retains the consumed ID. Only explicit `call('interface_close', {})` is allowed
+after that exchange failure. Primary STOP remains separately visible and sticky.
+Inspect the same host's retained reply and actual application state; never resend
+an uncertain command. The owner must retain and close the same transport; this
+adapter does not manage EOF, process lifetime or application cleanup.
+
+Contract tests include duplicate/overlapping commands, argument mutation,
+request/image/reply persistence failures and explicit original presentation.
+They use synthetic host data, not a model/GUI performance comparison. Fewer
+lines of per-trial adapter code do not prove fewer model tokens, lower cost or
+human-like task tempo. A fresh source-frozen self-use case is required before
+claiming improved practical usability.
