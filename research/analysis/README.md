@@ -300,6 +300,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`real_option_5428_t1/`](real_option_5428_t1/)
 - [`real_source_adapter_admission_v1/`](real_source_adapter_admission_v1/)
 - [`real_source_role_adapter_registry_v1/`](real_source_role_adapter_registry_v1/)
+- [`recovery_sentinel_5776_t0_integrity_audit_v1/`](recovery_sentinel_5776_t0_integrity_audit_v1/)
 - [`recovery_sentinel_5776_t0_v1/`](recovery_sentinel_5776_t0_v1/)
 - [`recovery_sentinel_5776_t0_v2/`](recovery_sentinel_5776_t0_v2/)
 - [`register_automaton_dynamic_identity_r0_v1/`](register_automaton_dynamic_identity_r0_v1/)
