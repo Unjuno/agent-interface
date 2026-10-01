@@ -23,6 +23,8 @@ The single verified v39 interruption (`plan-3-primary-0-1`, step 0; requested 50
 
 Values are `owner-commanded interval [lower, upper] ms`; requested duration and interval width are included. Rows are in retained event order.
 
+Machine-readable companion: [AUDITED_INTERVALS.json](AUDITED_INTERVALS.json). It is a posthoc transcription of this report's three-decimal row table plus the exact aggregate values captured in the run output; arithmetic consistency was checked without rerunning the candidate or auditor. It is not the original candidate JSON or raw auditor output.
+
 | Trace | Decision / step | Requested | Bound (ms) | Width (ms) |
 |---|---|---:|---:|---:|
 | v38 | plan-0-primary-0-0 / 0 | 100 | 101.011–129.390 | 28.379 |
