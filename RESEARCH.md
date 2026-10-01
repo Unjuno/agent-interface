@@ -1685,6 +1685,10 @@ independent first useful outcome and explicit bounded recovery coverage under
 a matched condition, with cross-domain transfer before general promotion.
 See `research/doom/MAP01_V38_V39_CONTROL_TEMPO_POSTHOC_V1.md`.
 
+## Latest follow-up — full-trace held-input occupancy is bounded, not directly timed (2026-10-02)
+
+Candidate v4 and independent raw JSONL auditor v5 pass against retained v38/v39 traces. V38 contains 11 completed holds with planner-wait overlap bounded3.049–4.040s; v39 contains29, bounded6.301–8.453s. One v39 Down-only admission raced cancel/ack and is conservatively bounded [0,13.209ms] through verified empty release. Earlier v1–v3 STOPs, the v4 auditor schema STOP, and v5 audit freeze remain preserved; the candidate was not rerun to repair an auditor-only defect. This is posthoc occupancy-envelope evidence across different trajectories, not exact ordinary key-up duration, causal comparison, independent useful feedback, bounded-recovery efficacy, real-time threat control, or MAP01 completion. No exclusive Docker lane was available, so this deterministic parser/audit ran on macOS and is not a container validation. See [full H/T/D/C/U report and retained artifacts](research/doom/results/map01-held-input-occupancy-fulltrace-v4/README.md), [audit output](research/doom/results/map01-held-input-occupancy-fulltrace-v4/audit-v5.json), and [canonical current direction](docs/CURRENT_GOAL.md). Issue #59 remains open.
+
 ## Previous follow-up — v39 coast liveness and active revocation exposed (2026-09-15)
 
 V38's interrupted-tail loop came from an unauthored, empty-coast fallback
