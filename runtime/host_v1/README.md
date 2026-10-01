@@ -46,6 +46,26 @@ This uses the same retained send/present path, snapshots and validates both call
 
 The host creates `evidenceDirectory` exclusively. Supply a path that does not exist; do not create that directory before constructing the client. Keep the returned client in a durable caller binding before starting subsequent presentation work.
 
+For a returned response containing only text, use a separate acknowledgment after
+delivering and reading the original text:
+
+```js
+await client.acknowledgeText(response.attempt, {
+  task: 'edit', phase: 'refusal', reason: 'Describe the original text read',
+});
+```
+
+This requires completed presentation callbacks for that exact retained reply
+digest. It rejects unpresented or changed replies, empty content, images and
+non-text content. It preserves an explicit `isError` flag and writes an exclusive
+`text-acknowledgment-N.json` plus a `text_acknowledgment_recorded` host event.
+This is caller attribution to original text, not an image review or proof of
+comprehension, task success, safe input or permission to retry. `review` still
+requires its original sourced report and image. Neither acknowledgment method
+dispatches another tool call. Missing attribution arguments are rejected before
+starting a host operation; evidence failures block ordinary calls while leaving
+transport cleanup available. Original replies and existing receipts stay intact.
+
 The `text` callback receives both strings and structured objects, including the MCP result-status object. Pass each value to a sink that accepts its type, or format objects explicitly with `JSON.stringify(value)`; do not unconditionally parse callback values as JSON strings. For a sink accepting only text, use `text: async value => deliverText(typeof value === "string" ? value : JSON.stringify(value))`. A callback failure blocks further ordinary calls; reconcile retained replies and close the original transport rather than replaying input.
 
 A returned MCP reply may have `result.isError: true` while carrying a typed refusal and its critical image. Present and retain that reply before raising a caller exception; keep its attempt and reply identity available for reconciliation. Do not treat every error flag as uncertain input, or treat a refusal as permission to retry. Inspect the typed outcome, input-dispatched flag, completed effects and release state. Any read-only target review and re-grounding must follow an explicit bounded caller decision; partial/unknown delivery must not enter the normal field→Save continuation. [The guarded/direct six-task comparison](../results/post-release-spine-02/README.md) records a caller that lost this presentation step and required primary intervention.
