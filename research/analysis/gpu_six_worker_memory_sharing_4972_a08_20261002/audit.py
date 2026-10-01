@@ -21,7 +21,7 @@ def audit_rows(rows: list[dict]) -> list[str]:
     ids = [row.get("worker_id") for row in rows]
     if len(rows) != WORKERS:
         errors.append(f"expected {WORKERS} rows, got {len(rows)}")
-    if sorted(ids) != list(range(WORKERS)):
+    if any(type(worker_id) is not int for worker_id in ids) or set(ids) != set(range(WORKERS)):
         errors.append("worker IDs must be exactly 0..5 with no duplicates")
     aggregate_peak = 0
     for row in rows:
@@ -35,8 +35,8 @@ def audit_rows(rows: list[dict]) -> list[str]:
             errors.append(f"{prefix}: device mismatch")
         if row.get("numel") != NUMEL or row.get("ops") != OPS:
             errors.append(f"{prefix}: work contract mismatch")
-        if row.get("allocated_bytes", 0) < WORKING_BYTES:
-            errors.append(f"{prefix}: allocated working set below 192 MiB")
+        if row.get("allocated_bytes") != WORKING_BYTES:
+            errors.append(f"{prefix}: allocated working set is not exactly 192 MiB")
         if row.get("peak_allocated_bytes", 0) > int(row.get("device_total_bytes", 0) * 0.05):
             errors.append(f"{prefix}: allocator peak exceeded 5% device cap")
         aggregate_peak += row.get("peak_allocated_bytes", 0)
