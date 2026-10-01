@@ -149,3 +149,16 @@ backend's fixed-delay behavior and admission-only lease check are unchanged.
 A completed fixed delay still does not acknowledge application redraw.
 
 Guarded observations use the RGB pixels from the current PNG producer after verifying that saved PNG and its raw-capture link. The private handoff is consumed once; fresh capture and every guard check remain. [Primary use and retained checks](../results/capture-rgb-handoff-01/README.md) documents the removed decode round trip, corruption refusals and timing limits.
+# Explicit hover and finite reference deadlines
+
+`NativeHandleBridge.move(alias, offset, tail=...)` and the public
+`interface_guarded_input(interaction="move")` move the pointer without pressing.
+The tail permits only waits and observations. Hover may change pixels: review
+the resulting image and explicitly ground a new alias before clicking. This
+does not weaken pixel guards, choose an action, or automatically retry input.
+
+Public mint replies now include `lifetime`: the execution host's monotonic
+mint time, actual alias expiry, and capture freshness limit. Compare only with
+that same host's clock. Reading retained results does not renew the deadline;
+an unexpired alias still requires fresh pixels, focus and ordinary admission.
+Python `mint` retains its offset-only return; `mint_reference` includes metadata.
