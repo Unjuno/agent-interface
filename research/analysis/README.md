@@ -255,6 +255,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`mixed_criticality_temporal_feasibility_5557_t15_transport_v1/`](mixed_criticality_temporal_feasibility_5557_t15_transport_v1/)
 - [`multi_actuator_state_domain_independence_r0_v1/`](multi_actuator_state_domain_independence_r0_v1/)
 - [`multi_app_transition_retained_audit_r0_v1/`](multi_app_transition_retained_audit_r0_v1/)
+- [`multi_principal_effect_auth_5805_t0_v1/`](multi_principal_effect_auth_5805_t0_v1/)
 - [`multicursor_parking_reposition_r0_v1/`](multicursor_parking_reposition_r0_v1/)
 - [`multicursor_target_handle_regrounding_r0_v1/`](multicursor_target_handle_regrounding_r0_v1/)
 - [`needle_role_skill_lifecycle_4916_first_rung_v2/`](needle_role_skill_lifecycle_4916_first_rung_v2/)
