@@ -5,7 +5,7 @@ This is a fresh successor allocation for Issue #5882. Allocation-03's HOLD_INTEG
 ## Frozen package
 
 - Allocation: GPU-SUPERVISOR-TRANSFER-BREAK-EVEN-4972-20261001-05
-- Base main at source freeze: c7346fe1ad0c0d40254c6aa7898a8ed6de76c0dc
+- Base main at source freeze: 5adc891e35ea7244b60335fd5c35a7a92bf76e6d
 - Seed: 49720261005; 1,024 newly generated synthetic rows
 - Runner: transfer-inclusive CPU/CUDA comparison at 1, 4, 16, 64, 256 and 1,024 rows
 - Corrected auditor: unsafe-admission negative control flips a guaranteed zero, with a fail-closed error when no zero exists
