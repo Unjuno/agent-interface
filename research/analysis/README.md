@@ -22,6 +22,8 @@ flowchart TD
 
 ## Analysis families
 
+- [Issue #6081 error-carry T0](error_carry_6081_t0_20261001/REPORT.md) — `STOP_METHOD_INVALID_BASELINE`; 672 rows reconstructed, but the 8-way dot-product baseline is not Euclidean-nearest. Frozen outputs are preserved; no PASS or application-transfer claim.
+
 ```mermaid
 flowchart TD
     A[research/analysis]

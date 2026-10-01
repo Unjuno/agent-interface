@@ -1,0 +1,31 @@
+{
+  "allocation": "ERROR-CARRY-6081-T0-20261001-01",
+  "source_commit": "6cd70ad4bfad74e11658057bf024918bffb24add",
+  "environment": {
+    "platform": "Windows host",
+    "python": "3.12.10",
+    "docker_engine": "unavailable at intake; no start attempted due unresolved shared owner/lifecycle",
+    "network_calls": false,
+    "gui_game_model_physical_input": false
+  },
+  "construction": {
+    "initial_failure": "The first error-carry rule oscillated on exact-east control; retained as pre-formal construction failure, then clarified to exact cumulative squared-position error minimization. A separate exact-east construction test then passed.",
+    "final_tests": "4/4 passed before freeze",
+    "py_compile": "passed before freeze"
+  },
+  "formal": {
+    "candidate_invocations": 1,
+    "candidate_rows": 672,
+    "auditor_invocations": 1,
+    "auditor_rows": 672,
+    "auditor_errors": 0,
+    "retries": 0,
+    "wrong_working_directory_launch": "One attempted auditor process could not resolve the path and started no auditor code; no output was created. The valid auditor then ran once from the correct isolated worktree.",
+    "post_freeze_review_finding": "Both implementations use maximum dot product for the horizon-nearest / independent-round policy. In an 8-way alphabet, diagonal command vectors have norm sqrt(2), so maximizing dot product is not equivalent to minimizing Euclidean distance to the desired vector. The preregistered nearest-direction baselines are therefore invalid for the 8-way arm. Formal data are retained unchanged and not reinterpreted as a PASS.",
+    "unexecuted_controls": ["unavailable_combo refusal", "one-slot deadline", "omitted-release mutation", "calibration-mismatch refusal", "nonlinear collision/acceleration held-out control"]
+  },
+  "raw_sha256": "32B3F21A805E52175CDC11F502F4B516079D0E949AB31EA5B33A3C4F66A4BDE8",
+  "audit_sha256": "D20D558F053E2C27F97A0E27C209ECDAC1666D72A8BCB35CD11C3D18A67FC844",
+  "disposition": "STOP_METHOD_INVALID_BASELINE",
+  "prohibition": "Do not edit or rerun this frozen formal allocation. Any corrected metric definition requires a new source freeze and successor allocation."
+}
