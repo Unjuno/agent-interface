@@ -16,6 +16,10 @@ Allocation `trusted-confirmation-5836-t0-successor-20261001-01`; exact main at f
 
 This is semantics/construction evidence only. It does not prove a real trusted UI/channel, human approval quality, correctness of a consequential action, or integration with Agent Interface admission. No product code changed.
 
+## Alignment with the updated Issue
+
+During PR review, Issue #5836 added the Verifiable Action Card (VAC) as direct prior art and narrowed the open research question to whether a genuinely independent confirmation boundary can exist for non-browser desktop/native effects. This allocation was frozen before that correction and contains neither a VAC comparator nor a real non-browser trusted channel; its PASS is not independent empirical validation of VAC, not a novelty claim, and not evidence that the cross-desktop transfer is feasible. Any next comparative allocation must include VAC as the principal baseline and return `HOLD_NO_TRUSTED_PATH` if the target platform lacks a genuinely independent user channel. Preserve this result at its original, narrower scope.
+
 ## Exact environment and artifacts
 
 - Local Docker Desktop Engine `29.8.0`, context `desktop-linux`; local image already present, no pull: `python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f`, image ID same digest, `linux/amd64`.
