@@ -1,6 +1,10 @@
 # Research index
 
 Agent Interface is being developed by analysis and experiment rather than by locking an API early. This file is the evidence ledger for the public repository.
+
+### Issue #6147: safe distinguishing probes T0 allocation 02 — STOP (2026-10-01)
+
+The single frozen host-CPU candidate process exited 1 after writing an 11,020-byte raw file, then failed in its final summary (`KeyError: 'enumerated_policy_trees'`). Disposition: `STOP_CANDIDATE_RUNTIME_ERROR / NOT_EVALUATED`; the independent auditor ran zero times, with no retry. The raw file and its digest are retained but unverified and are not a method result. See [the STOP packet and freeze](research/analysis/safe_probe_identifiability_6147_t0_20261002_a02/STOP.md). No GUI, model, game, container, network, or GPU/CUDA work occurred.
 ## How to read this ledger
 
 This file is intentionally comprehensive. For public navigation, use the shorter status documents first and come here for the retained evidence history.
