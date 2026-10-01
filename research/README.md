@@ -152,6 +152,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 
 ### Evaluation and research governance
 
+- [Verifier registry #5273 / Draft PR #5436 host-construction archive](verification/verifier_registry_5273_t0_v6/ARCHIVAL_QUALIFICATION.md) — twelve exact published files; reported 21 host tests/eight synthetic cases, README test-count discrepancy and post-freeze reruns preserved; formal STOP, zero container invocations, no runtime promotion.
 - [Status-cache snapshot #4403 / Draft PR #4406 metadata archive](verification/status_data_version_v3h8_v1/ARCHIVAL_QUALIFICATION.md) — three exact published metadata files; pre-allocation publication STOP/HOLD remains, source/raw absent, no construction or formal result independently established.
 - [`verification/postcondition_evidence_ablation_v1/ARCHIVAL_QUALIFICATION.md`](verification/postcondition_evidence_ablation_v1/ARCHIVAL_QUALIFICATION.md) — Issue #3951 / Draft PR #3960: exact three-file provenance/STOP archive; original source/raw remain incomplete, allocation consumed, no independent reproduction or runtime promotion.
 - [`benchmark_discovery/`](benchmark_discovery/) — benchmark/coverage discovery.
@@ -226,4 +227,5 @@ A directory existing here does **not** mean its mechanism is promoted. Negative 
 
 - [`aoi_43_t0/`](aoi_43_t0/) — #43 retained toy construction; [accounting-defect/HOLD correction](aoi_43_t0/README.md): identical queue policies and incomparable drop counters; no demonstrated critical-retention benefit.
 
-- [`doom/map01_cuda_hud_5752_preflight_stop_20261001/REPORT.md`](doom/map01_cuda_hud_5752_preflight_stop_20261001/REPORT.md) — Issue #5752 allocation-01 pre-candidate record; its authoritative STOP reason and timestamp are reconciled in [CORRECTION.md](doom/map01_cuda_hud_5752_preflight_stop_20261001/CORRECTION.md). CUDA hypothesis remains untested.
+- [`doom/map01_cuda_hud_5752_preflight_stop_20261001/REPORT.md`](doom/map01_cuda_hud_5752_preflight_stop_20261001/REPORT.md) — Issue #5752 allocation-01 pre-candidate record; its authoritative STOP reason and timestamp are reconciled in [CORRECTION.md](doom/map01_cuda_hud_5752_preflight_stop_20261001/CORRECTION.md). CUDA hypothesis remains untested.- [Issue #6156 escrowed optional-resource budget T0](analysis/escrow_optional_budget_6156_t0_20261002/REPORT.md) — Docker PASS_METHOD_SCOPED over 9,988 reachable states / 27,748 transitions; balanced coordination benefit and skew/crash stranded-right cost retained; no runtime claim.
+

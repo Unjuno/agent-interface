@@ -1,3 +1,7 @@
+### Issue #6156: escrowed optional-resource budgets T0 (2026-10-02)
+
+A bounded two-worker, four-right escrow state machine was exhaustively enumerated through depth 6: 9,988 reachable states and 27,748 transitions. The independent auditor reproduced both state and transition digests (`PASS_METHOD_SCOPED`); pre-freeze Docker construction tests passed 13/13. Balanced synthetic demand completed 4/4 optional units with two setup round-trips versus four central per-use checks; skew/crash completed 2/4 with two rights stranded. Heartbeat-only reclaim permitted a planted fifth consume against B=4; old generations, duplicate/delayed ACKs, mandatory verifier bypass, and role-label laundering were rejected. This is a finite protocol-method result, not measured latency, arbitrary distributed implementation, live GUI, or product evidence. See [the report and raw candidate/audit](research/analysis/escrow_optional_budget_6156_t0_20261002/REPORT.md).
+
 # Research index
 
 Agent Interface is being developed by analysis and experiment rather than by locking an API early. This file is the evidence ledger for the public repository.
