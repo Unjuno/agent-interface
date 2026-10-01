@@ -1,0 +1,29 @@
+{
+  "schema": "6284-pending-handoff-correction-freeze-v1",
+  "allocation": "6284-PENDING-HANDOFF-CORRECTION-T0-20261002-01",
+  "issue": 6284,
+  "base_main": "99731a1b19e4f9d90ab58d76257b4ab23a4d8337",
+  "branch": "research/6284-pending-handoff-correction-t0-20261002",
+  "package": "research/analysis/cross_handoff_pending_correction_6284_t0_20261002",
+  "image": "python:3.12-alpine",
+  "image_id": "sha256:c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b",
+  "platform": "linux/arm64",
+  "network": "none",
+  "root_filesystem": "read-only",
+  "capabilities": "drop ALL",
+  "no_new_privileges": true,
+  "pids_limit": 64,
+  "memory_mib": 256,
+  "cpus": 0.5,
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "retries": 0,
+  "case_count": 6,
+  "source_sha256": {
+    "fixture.json": "6719fd147dda9f65ffe2bce8ccf6d3430b7415174449efff19a88bb73e394294",
+    "candidate.py": "2abcc56ccd35cd6ec5432ed7529870d7cb197f9df11c5fd491bde7f268b2313e",
+    "audit.py": "9d3fff1d379e5240554f40c4217213e4aaa20c4d0677687a25f94315e8eb9c6f",
+    "test_construction.py": "8c684f388a1c49e198bc4ba54b9579edea10649848befff90c55c3457e83b8d9"
+  },
+  "formal_started": false
+}

@@ -5,7 +5,7 @@ This is a fresh successor allocation for Issue #5882. It does not alter allocati
 ## Frozen experiment
 
 - Allocation: GPU-SUPERVISOR-TRANSFER-BREAK-EVEN-4972-20261002-06
-- Source base: main 0b8fcbd1ee8e1ac7c5ebfc137dcecd7226ea7477 at freeze
+- Source base: main 0e1248375a0fbdbc8d0d2f0247f62a8a64a275da at freeze
 - Fresh seed: 49720261006; 1,024 typed synthetic rows, 256 per stratum
 - Batch sizes: 1, 4, 16, 64, 256, 1,024; 5 warmups and 30 alternating paired repetitions
 - Image: pytorch/pytorch@sha256:831247999fbf7e08f61b3e39f6d77ee434f38f6f07f769d00db451e853878067 (linux/amd64; cached locally)
