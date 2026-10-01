@@ -1,0 +1,26 @@
+{
+  "allocation": "RENT-COMPILE-5870-T0-20261001-01",
+  "status": "FROZEN_BEFORE_FORMAL_CANDIDATE",
+  "issue": 5870,
+  "source_main": "da7770df8bd896738a8a7e0ccc8ea45e10b3e645",
+  "branch": "research/rent-compile-5870-t0-20261001",
+  "path": "research/analysis/rent_compile_5870_t0_v1/",
+  "host": "Microsoft Windows 11 Home 10.0.26200; CPython 3.12.10",
+  "containerized": false,
+  "container_reason": "Docker Desktop CLI is installed but com.docker.service is Stopped/Manual and read-only Engine version lookup timed out; no container inventory was available.",
+  "construction_command": "python -B -m unittest -v test_construction.py",
+  "construction_result": "5 tests passed before freeze; construction helpers only, no formal raw rows",
+  "candidate_command": "python -B candidate.py",
+  "auditor_command": "python -B audit.py raw.jsonl",
+  "formal_candidate_invocations_before_freeze": 0,
+  "formal_auditor_invocations_before_freeze": 0,
+  "no_retry": true,
+  "model_gui_input_gpu_network": false,
+  "source_sha256": {
+    "PLAN.md": "d0d6bd841d3d8e9744b832afa934b58888445a73acabc3ee219ef976f7520fe5",
+    "fixtures.json": "2508aa9d0dbe49322fb3d001e103a0181c814886b12e975c2f37bbb41571bda6",
+    "candidate.py": "93c51eb57e527e7d94b2d9d48a1077be4030adfed0dcde13ee2c56b37ab5dabc",
+    "audit.py": "6f545c8a1889fa8cfdaaf2d70f665fbc4b856b9374d7dbed86b7d0f4dca2f55e",
+    "test_construction.py": "b0623bdbb02ce63f0c978cd3985ce2ee1643c897196e2bdc746ba85fc5b89552"
+  }
+}
