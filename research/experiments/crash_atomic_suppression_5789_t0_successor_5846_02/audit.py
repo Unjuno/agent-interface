@@ -30,6 +30,9 @@ SCHEDULE = (
     ("malformed_record", "C", None, "UNKNOWN", "NOT_ACKNOWLEDGED"),
     ("repeated_restart", "C", None, "DENY_SUPPRESSED", "ACKNOWLEDGED"),
 )
+IMAGE_INDEX_DIGEST = "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9"
+PLATFORM_MANIFEST_DIGEST = "sha256:950206c37262dd86c55659797f6ee418fee30535072f65a82ed470d985f5cda5"
+IMAGE_CONFIG_ID = "sha256:8630ab77c5adf06e1f914483db4dd70e3fa59118160daab9b0ee75e685344221"
 
 
 def canonical_identity(fields: dict[str, str]) -> str:
@@ -169,6 +172,22 @@ def main() -> int:
         raise SystemExit("STOP_AUDIT_PLATFORM")
     if os.environ.get("OBSTAC_AUDIT_SHA256") != hashlib.sha256(Path(__file__).read_bytes()).hexdigest():
         raise SystemExit("STOP_AUDIT_SOURCE_HASH")
+    runtime_provenance = {
+        "image_index_digest": os.environ.get("OBSTAC_IMAGE_INDEX_DIGEST"),
+        "platform_manifest_digest": os.environ.get("OBSTAC_PLATFORM_MANIFEST_DIGEST"),
+        "image_id": os.environ.get("OBSTAC_IMAGE_ID"),
+        "image_config_id": os.environ.get("OBSTAC_IMAGE_CONFIG_ID"),
+    }
+    expected_image_provenance = {
+        "image_index_digest": IMAGE_INDEX_DIGEST,
+        "platform_manifest_digest": PLATFORM_MANIFEST_DIGEST,
+        "image_config_id": IMAGE_CONFIG_ID,
+    }
+    if any(runtime_provenance[key] != value for key, value in expected_image_provenance.items()):
+        raise SystemExit("STOP_AUDIT_IMAGE_PROVENANCE")
+    image_id = runtime_provenance["image_id"]
+    if not isinstance(image_id, str) or not image_id.startswith("sha256:"):
+        raise SystemExit("STOP_AUDIT_IMAGE_ID")
     raw_path = Path(args.raw)
     output = Path(args.out)
     if output.exists():
@@ -180,6 +199,7 @@ def main() -> int:
     rows = [json.loads(line) for line in raw_path.read_text(encoding="utf-8").splitlines() if line]
     result = audit_rows(rows)
     result["raw_sha256"] = hashlib.sha256(raw_path.read_bytes()).hexdigest()
+    result["image_provenance"] = runtime_provenance
     output_file.write_text(json.dumps(result, sort_keys=True, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(result, sort_keys=True))
     return 0 if result["decision"] == "PASS_CRASH_ATOMIC_SUPPRESSION_T0_SCOPED" else 2

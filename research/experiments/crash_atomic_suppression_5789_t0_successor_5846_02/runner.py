@@ -292,10 +292,15 @@ def verify_formal_provenance() -> dict[str, object]:
         "docker_host": os.environ.get("OBSTAC_DOCKER_HOST"),
         "platform": os.environ.get("OBSTAC_PLATFORM"),
         "source_commit": os.environ.get("OBSTAC_SOURCE_COMMIT"),
+        "image_index_digest": os.environ.get("OBSTAC_IMAGE_INDEX_DIGEST"),
+        "platform_manifest_digest": os.environ.get("OBSTAC_PLATFORM_MANIFEST_DIGEST"),
         "image_id": os.environ.get("OBSTAC_IMAGE_ID"),
+        "image_config_id": os.environ.get("OBSTAC_IMAGE_CONFIG_ID"),
     }
     if any(value is None or value == "" for value in expected.values()):
         raise SystemExit("STOP_OBSTAC_PROVENANCE_MISSING")
+    if expected["image_id"] == "pending-final-start-gate-freeze":
+        raise SystemExit("STOP_IMAGE_ID_NOT_FROZEN")
     frozen_runtime = frozen.get("runtime")
     if not isinstance(frozen_runtime, dict) or any(
         frozen_runtime.get(name) != value for name, value in expected.items()
@@ -310,6 +315,12 @@ def verify_formal_provenance() -> dict[str, object]:
         raise SystemExit("STOP_AUDIT_ENV_HASH_MISMATCH")
     if frozen.get("image_ref") != "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9":
         raise SystemExit("STOP_IMAGE_REFERENCE_NOT_PINNED")
+    if expected["image_index_digest"] != frozen.get("runtime", {}).get("image_index_digest"):
+        raise SystemExit("STOP_IMAGE_INDEX_DIGEST_MISMATCH")
+    if expected["platform_manifest_digest"] != frozen.get("runtime", {}).get("platform_manifest_digest"):
+        raise SystemExit("STOP_PLATFORM_MANIFEST_DIGEST_MISMATCH")
+    if expected["image_config_id"] != frozen.get("runtime", {}).get("image_config_id"):
+        raise SystemExit("STOP_IMAGE_CONFIG_ID_MISMATCH")
     return {"manifest_sha256": manifest_digest, **expected}
 
 

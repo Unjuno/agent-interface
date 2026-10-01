@@ -11,6 +11,9 @@ import subprocess
 
 
 IMAGE = "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9"
+IMAGE_INDEX_DIGEST = "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9"
+PLATFORM_MANIFEST_DIGEST = "sha256:950206c37262dd86c55659797f6ee418fee30535072f65a82ed470d985f5cda5"
+IMAGE_CONFIG_ID = "sha256:8630ab77c5adf06e1f914483db4dd70e3fa59118160daab9b0ee75e685344221"
 BASE = Path(__file__).parent
 
 
@@ -52,6 +55,15 @@ def load_freeze() -> tuple[dict[str, object], str]:
     digest = hashlib.sha256(json.dumps(data, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
     if data.get("image_ref") != IMAGE:
         raise SystemExit("STOP_IMAGE_REFERENCE_NOT_PINNED")
+    if data.get("platform_manifest_digest") != PLATFORM_MANIFEST_DIGEST:
+        raise SystemExit("STOP_PLATFORM_MANIFEST_DIGEST_NOT_PINNED")
+    runtime = data.get("runtime")
+    if not isinstance(runtime, dict) or any(runtime.get(name) != value for name, value in {
+        "image_index_digest": IMAGE_INDEX_DIGEST,
+        "platform_manifest_digest": PLATFORM_MANIFEST_DIGEST,
+        "image_config_id": IMAGE_CONFIG_ID,
+    }.items()):
+        raise SystemExit("STOP_IMAGE_RUNTIME_METADATA_NOT_PINNED")
     if data.get("source_sha256") != {
         name: sha256(BASE / name) for name in ("protocol.py", "worker.py", "runner.py", "audit.py")
     }:
@@ -88,6 +100,46 @@ def verify_context_endpoint(*, docker: str, context: str, endpoint: str) -> None
         raise SystemExit("STOP_CONTEXT_ENDPOINT_MISMATCH")
 
 
+def verify_image_identity(*, docker: str, context: str, platform: str,
+                          expected_image_id: str) -> dict[str, str]:
+    """Pull the immutable index ref and verify daemon-observed image identity/platform."""
+    pull = subprocess.run(
+        [docker, "--context", context, "pull", "--platform", platform, IMAGE],
+        check=False, capture_output=True, text=True,
+    )
+    if pull.returncode != 0:
+        raise SystemExit(f"STOP_PINNED_IMAGE_PULL:{pull.stderr.strip()}")
+    inspect = subprocess.run(
+        [docker, "--context", context, "image", "inspect", IMAGE,
+         "--format", "{{json .}}"],
+        check=False, capture_output=True, text=True,
+    )
+    if inspect.returncode != 0:
+        raise SystemExit(f"STOP_PINNED_IMAGE_INSPECT:{inspect.stderr.strip()}")
+    try:
+        metadata = json.loads(inspect.stdout)
+    except json.JSONDecodeError as exc:
+        raise SystemExit("STOP_PINNED_IMAGE_INSPECT_SCHEMA") from exc
+    observed = {
+        "image_id": metadata.get("Id"),
+        "platform": f"{metadata.get('Os')}/{metadata.get('Architecture')}",
+    }
+    repo_digests = metadata.get("RepoDigests")
+    expected_repos = {f"python@{IMAGE_INDEX_DIGEST}", f"python@{PLATFORM_MANIFEST_DIGEST}"}
+    if observed["platform"] != platform:
+        raise SystemExit(f"STOP_PINNED_IMAGE_PLATFORM_MISMATCH:{observed!r}")
+    if observed["image_id"] != expected_image_id:
+        raise SystemExit(f"STOP_PINNED_IMAGE_ID_MISMATCH:{observed!r}")
+    if not isinstance(repo_digests, list) or not expected_repos.intersection(repo_digests):
+        raise SystemExit("STOP_PINNED_IMAGE_REPO_DIGEST_MISMATCH")
+    if expected_image_id == "pending-final-start-gate-freeze":
+        raise SystemExit("STOP_PINNED_IMAGE_ID_NOT_FROZEN")
+    if not isinstance(observed["image_id"], str) or not observed["image_id"].startswith("sha256:"):
+        raise SystemExit(f"STOP_PINNED_IMAGE_IDENTITY_MISMATCH:{observed!r}")
+    observed["repo_digests"] = ",".join(sorted(repo_digests))
+    return observed
+
+
 def docker_command(
     *, docker: str, context: str, platform: str, source: Path, output: Path,
     runtime: dict[str, str], freeze_digest: str, mode: str,
@@ -96,7 +148,11 @@ def docker_command(
 ) -> list[str]:
     environment = ["-e", f"OBSTAC_RUN_KIND={mode}", "-e", f"OBSTAC_DOCKER_CONTEXT={context}",
         "-e", f"OBSTAC_PLATFORM={platform}", "-e", f"OBSTAC_SOURCE_COMMIT={runtime['source_commit']}",
-        "-e", f"OBSTAC_IMAGE_ID={runtime['image_id']}", "-e", f"OBSTAC_FREEZE_SHA256={freeze_digest}"]
+        "-e", f"OBSTAC_IMAGE_INDEX_DIGEST={runtime['image_index_digest']}",
+        "-e", f"OBSTAC_PLATFORM_MANIFEST_DIGEST={runtime['platform_manifest_digest']}",
+        "-e", f"OBSTAC_IMAGE_ID={runtime['image_id']}",
+        "-e", f"OBSTAC_IMAGE_CONFIG_ID={runtime['image_config_id']}",
+        "-e", f"OBSTAC_FREEZE_SHA256={freeze_digest}"]
     if include_manifest:
         environment.extend(["-e", f"OBSTAC_DOCKER_HOST={runtime['docker_host']}",
                             "-e", f"OBSTAC_AUDIT_SHA256={sha256(BASE / 'audit.py')}"])
@@ -162,7 +218,10 @@ def main() -> int:
         verify_context_endpoint(docker=args.docker, context=context, endpoint=endpoint)
         runtime = {
             "source_commit": "construction-only",
-            "image_id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+            "image_index_digest": IMAGE_INDEX_DIGEST,
+            "platform_manifest_digest": PLATFORM_MANIFEST_DIGEST,
+            "image_id": "construction-only",
+            "image_config_id": IMAGE_CONFIG_ID,
             "docker_host": endpoint,
         }
         args.candidate_out.mkdir(parents=True, exist_ok=True)
@@ -175,7 +234,10 @@ def main() -> int:
             "OBSTAC_DOCKER_HOST": endpoint,
             "OBSTAC_PLATFORM": "linux/arm64",
             "OBSTAC_SOURCE_COMMIT": "construction-only",
+            "OBSTAC_IMAGE_INDEX_DIGEST": runtime["image_index_digest"],
+            "OBSTAC_PLATFORM_MANIFEST_DIGEST": runtime["platform_manifest_digest"],
             "OBSTAC_IMAGE_ID": runtime["image_id"],
+            "OBSTAC_IMAGE_CONFIG_ID": runtime["image_config_id"],
             "OBSTAC_FREEZE_SHA256": "construction-only",
             "OBSTAC_AUDIT_SHA256": sha256(BASE / "audit.py"),
         }
@@ -203,18 +265,21 @@ def main() -> int:
             raise SystemExit("STOP_ASSIGNED_FREEZE_DIGEST_MISMATCH")
         if os.environ.get("OBSTAC_SOURCE_COMMIT") != runtime.get("source_commit"):
             raise SystemExit("STOP_ASSIGNED_SOURCE_COMMIT_MISMATCH")
-        if os.environ.get("OBSTAC_IMAGE_ID") != runtime.get("image_id"):
-            raise SystemExit("STOP_ASSIGNED_IMAGE_ID_MISMATCH")
         if os.environ.get("OBSTAC_PLATFORM") != runtime.get("platform"):
             raise SystemExit("STOP_ASSIGNED_PLATFORM_MISMATCH")
-        if os.environ.get("OBSTAC_FREEZE_SHA256") != digest:
-            raise SystemExit("STOP_ASSIGNED_FREEZE_DIGEST_MISMATCH")
-        if os.environ.get("OBSTAC_SOURCE_COMMIT") != runtime.get("source_commit"):
-            raise SystemExit("STOP_ASSIGNED_SOURCE_COMMIT_MISMATCH")
+        if os.environ.get("OBSTAC_IMAGE_INDEX_DIGEST") != runtime.get("image_index_digest"):
+            raise SystemExit("STOP_ASSIGNED_IMAGE_INDEX_DIGEST_MISMATCH")
+        if os.environ.get("OBSTAC_PLATFORM_MANIFEST_DIGEST") != runtime.get("platform_manifest_digest"):
+            raise SystemExit("STOP_ASSIGNED_PLATFORM_MANIFEST_DIGEST_MISMATCH")
         if os.environ.get("OBSTAC_IMAGE_ID") != runtime.get("image_id"):
             raise SystemExit("STOP_ASSIGNED_IMAGE_ID_MISMATCH")
-        if os.environ.get("OBSTAC_AUDIT_SHA256") != frozen.get("audit_sha256"):
-            raise SystemExit("STOP_ASSIGNED_AUDIT_HASH_MISMATCH")
+        if os.environ.get("OBSTAC_IMAGE_CONFIG_ID") != runtime.get("image_config_id"):
+            raise SystemExit("STOP_ASSIGNED_IMAGE_CONFIG_ID_MISMATCH")
+        image_identity = verify_image_identity(docker=args.docker, context=context,
+                                               platform=str(runtime.get("platform")),
+                                               expected_image_id=str(runtime.get("image_id")))
+        if image_identity.get("image_id") != runtime.get("image_id"):
+            raise SystemExit("STOP_ASSIGNED_IMAGE_ID_NOT_VERIFIED")
         if args.audit_out is None or args.audit_raw is None:
             raise SystemExit("STOP_AUDIT_PATHS_REQUIRED")
         for path in (args.candidate_out, args.audit_out):

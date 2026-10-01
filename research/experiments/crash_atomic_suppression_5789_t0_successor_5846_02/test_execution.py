@@ -15,6 +15,7 @@ from unittest import mock
 import protocol
 import runner
 import container_runner
+import finalize_freeze
 
 
 class ProcessMatrixConstructionTests(unittest.TestCase):
@@ -25,7 +26,11 @@ class ProcessMatrixConstructionTests(unittest.TestCase):
             platform="linux/arm64",
             source=Path("/source"),
             output=Path("/candidate-out"),
-            runtime={"source_commit": "a" * 40, "image_id": "sha256:" + "b" * 64,
+            runtime={"source_commit": "a" * 40,
+                     "image_index_digest": container_runner.IMAGE_INDEX_DIGEST,
+                     "platform_manifest_digest": container_runner.PLATFORM_MANIFEST_DIGEST,
+                     "image_id": container_runner.IMAGE_CONFIG_ID,
+                     "image_config_id": container_runner.IMAGE_CONFIG_ID,
                      "docker_host": "tcp://isolated-guest:2376"},
             freeze_digest="c" * 64,
             mode="formal",
@@ -42,6 +47,56 @@ class ProcessMatrixConstructionTests(unittest.TestCase):
         self.assertEqual(command.count("--network"), 1)
         self.assertIn("OBSTAC_DOCKER_HOST", " ".join(command))
         self.assertIn("OBSTAC_AUDIT_SHA256", " ".join(command))
+        self.assertIn("OBSTAC_IMAGE_CONFIG_ID=" + container_runner.IMAGE_CONFIG_ID, command)
+
+    def test_pinned_image_preflight_pulls_and_checks_actual_config_and_platform(self):
+        metadata = {"Id": container_runner.IMAGE_CONFIG_ID, "Os": "linux", "Architecture": "arm64",
+                    "RepoDigests": ["python@" + container_runner.IMAGE_INDEX_DIGEST]}
+        with mock.patch.object(container_runner.subprocess, "run", side_effect=[
+            mock.Mock(returncode=0, stderr=""), mock.Mock(returncode=0, stdout=json.dumps(metadata))
+        ]) as run:
+            self.assertEqual(container_runner.verify_image_identity(
+                docker="docker", context="guest-context", platform="linux/arm64",
+                expected_image_id=container_runner.IMAGE_CONFIG_ID),
+                {"image_id": container_runner.IMAGE_CONFIG_ID, "platform": "linux/arm64",
+                 "repo_digests": "python@" + container_runner.IMAGE_INDEX_DIGEST})
+        self.assertEqual(run.call_args_list[0].args[0], [
+            "docker", "--context", "guest-context", "pull", "--platform", "linux/arm64",
+            container_runner.IMAGE,
+        ])
+        with mock.patch.object(container_runner.subprocess, "run", side_effect=[
+            mock.Mock(returncode=0, stderr=""),
+            mock.Mock(returncode=0, stdout=json.dumps({**metadata, "Id": "sha256:" + "0" * 64})),
+        ]):
+            with self.assertRaisesRegex(SystemExit, "STOP_PINNED_IMAGE_ID_MISMATCH"):
+                container_runner.verify_image_identity(
+                    docker="docker", context="guest-context", platform="linux/arm64",
+                    expected_image_id=container_runner.IMAGE_CONFIG_ID)
+
+    def test_final_freeze_binds_actual_guest_image_id_source_and_mapped_argv(self):
+        base = Path(container_runner.BASE).resolve()
+        manifest = json.loads((base / "FREEZE.json").read_text())
+        image_id = "sha256:" + "b" * 64
+        frozen = finalize_freeze.finalize_manifest(
+            manifest, base=base, host_source_root=base,
+            source_commit="a" * 40, image_id=image_id,
+            docker_context="crash-atomic-5846-local-02",
+            docker_host="unix:///var/run/docker.sock",
+        )
+        self.assertEqual(frozen["runtime"]["image_id"], image_id)
+        self.assertEqual(frozen["runtime"]["image_config_id"], container_runner.IMAGE_CONFIG_ID)
+        self.assertEqual(frozen["source_sha256"]["audit.py"], container_runner.sha256(base / "audit.py"))
+        argv = frozen["formal_argv"]
+        self.assertEqual(argv[argv.index("--candidate-out") + 1],
+                         str(base / "results/5846-02/candidate"))
+        self.assertEqual(argv[argv.index("--audit-out") + 1],
+                         str(base / "results/5846-02/audit"))
+        with self.assertRaisesRegex(SystemExit, "STOP_DOCKER_CONTEXT_NOT_ASSIGNED"):
+            finalize_freeze.finalize_manifest(
+                manifest, base=base, host_source_root=base,
+                source_commit="a" * 40, image_id=image_id,
+                docker_context="orbstack", docker_host="unix:///var/run/docker.sock",
+            )
 
     def test_formal_launcher_freeze_covers_launcher_bytes_and_exact_argv(self):
         import argparse
@@ -120,7 +175,11 @@ class ProcessMatrixConstructionTests(unittest.TestCase):
         command = container_runner.docker_command(
             docker="docker", context="assigned", platform="linux/arm64",
             source=Path("/src"), output=Path("/out"),
-            runtime={"source_commit": "a" * 40, "image_id": "sha256:" + "b" * 64,
+            runtime={"source_commit": "a" * 40,
+                     "image_index_digest": container_runner.IMAGE_INDEX_DIGEST,
+                     "platform_manifest_digest": container_runner.PLATFORM_MANIFEST_DIGEST,
+                     "image_id": "sha256:" + "b" * 64,
+                     "image_config_id": container_runner.IMAGE_CONFIG_ID,
                      "docker_host": "unix:///var/run/docker.sock"},
             freeze_digest="c" * 64, mode="formal", include_manifest=True,
         )
@@ -135,6 +194,11 @@ class ProcessMatrixConstructionTests(unittest.TestCase):
             audit.mkdir()
             with mock.patch.object(container_runner, "load_freeze") as mocked_freeze, \
                  mock.patch.object(container_runner, "verify_context_endpoint"), \
+                 mock.patch.object(container_runner, "verify_image_identity", return_value={
+                     "image_id": "sha256:" + "b" * 64,
+                     "platform": "linux/arm64",
+                     "repo_digests": "python@" + container_runner.IMAGE_INDEX_DIGEST,
+                 }), \
                  mock.patch.object(container_runner.subprocess, "run", return_value=mock.Mock(returncode=0)) as mocked_run:
                 manifest = {
                     "audit_sha256": container_runner.sha256(container_runner.BASE / "audit.py"),
@@ -143,7 +207,10 @@ class ProcessMatrixConstructionTests(unittest.TestCase):
                         "docker_host": "unix:///var/run/docker.sock",
                         "platform": "linux/arm64",
                         "source_commit": "a" * 40,
+                        "image_index_digest": container_runner.IMAGE_INDEX_DIGEST,
+                        "platform_manifest_digest": container_runner.PLATFORM_MANIFEST_DIGEST,
                         "image_id": "sha256:" + "b" * 64,
+                        "image_config_id": container_runner.IMAGE_CONFIG_ID,
                         "host_source_root": str(Path("/host/package")),
                     },
                 }
@@ -163,7 +230,10 @@ class ProcessMatrixConstructionTests(unittest.TestCase):
                     "OBSTAC_AUDIT_SHA256": manifest["audit_sha256"],
                     "OBSTAC_FREEZE_SHA256": digest,
                     "OBSTAC_SOURCE_COMMIT": "a" * 40,
+                    "OBSTAC_IMAGE_INDEX_DIGEST": container_runner.IMAGE_INDEX_DIGEST,
+                    "OBSTAC_PLATFORM_MANIFEST_DIGEST": container_runner.PLATFORM_MANIFEST_DIGEST,
                     "OBSTAC_IMAGE_ID": "sha256:" + "b" * 64,
+                    "OBSTAC_IMAGE_CONFIG_ID": container_runner.IMAGE_CONFIG_ID,
                     "OBSTAC_PLATFORM": "linux/arm64",
                 }
                 def create_raw(*args, **kwargs):
@@ -293,7 +363,10 @@ class ProcessMatrixConstructionTests(unittest.TestCase):
                     "docker_context": "assigned-isolated-context",
                     "platform": "linux/arm64",
                     "source_commit": "a" * 40,
+                    "image_index_digest": container_runner.IMAGE_INDEX_DIGEST,
+                    "platform_manifest_digest": container_runner.PLATFORM_MANIFEST_DIGEST,
                     "image_id": "sha256:" + "b" * 64,
+                    "image_config_id": container_runner.IMAGE_CONFIG_ID,
                 },
             }
             env = os.environ.copy()
@@ -302,7 +375,10 @@ class ProcessMatrixConstructionTests(unittest.TestCase):
                 "OBSTAC_DOCKER_CONTEXT": "assigned-isolated-context",
                 "OBSTAC_PLATFORM": "linux/arm64",
                 "OBSTAC_SOURCE_COMMIT": "a" * 40,
+                "OBSTAC_IMAGE_INDEX_DIGEST": container_runner.IMAGE_INDEX_DIGEST,
+                "OBSTAC_PLATFORM_MANIFEST_DIGEST": container_runner.PLATFORM_MANIFEST_DIGEST,
                 "OBSTAC_IMAGE_ID": "sha256:" + "b" * 64,
+                "OBSTAC_IMAGE_CONFIG_ID": container_runner.IMAGE_CONFIG_ID,
                 "OBSTAC_FREEZE_SHA256": hashlib.sha256(
                     json.dumps(manifest, sort_keys=True, separators=(",", ":")).encode()
                 ).hexdigest(),
@@ -364,6 +440,10 @@ class ProcessMatrixConstructionTests(unittest.TestCase):
                 "OBSTAC_AUDIT_SHA256": hashlib.sha256(
                     Path(__file__).with_name("audit.py").read_bytes()
                 ).hexdigest(),
+                "OBSTAC_IMAGE_INDEX_DIGEST": container_runner.IMAGE_INDEX_DIGEST,
+                "OBSTAC_PLATFORM_MANIFEST_DIGEST": container_runner.PLATFORM_MANIFEST_DIGEST,
+                "OBSTAC_IMAGE_ID": container_runner.IMAGE_CONFIG_ID,
+                "OBSTAC_IMAGE_CONFIG_ID": container_runner.IMAGE_CONFIG_ID,
             })
             audited = subprocess.run(
                 [sys.executable, "-B", str(Path(__file__).with_name("audit.py")),
@@ -379,6 +459,8 @@ class ProcessMatrixConstructionTests(unittest.TestCase):
             self.assertEqual(result["rows"], 15)
             self.assertEqual(result["candidate_rows_matching_frozen_gate"], 10)
             self.assertTrue(result["baseline_failures_reproduced"])
+            self.assertEqual(result["image_provenance"]["image_config_id"],
+                             container_runner.IMAGE_CONFIG_ID)
 
             lines = raw.read_text().splitlines()
             mutated = json.loads(lines[12])

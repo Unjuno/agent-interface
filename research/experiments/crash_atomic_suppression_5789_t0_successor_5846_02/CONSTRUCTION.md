@@ -43,6 +43,25 @@ host source root; tests cover valid mapping and reject paths outside the mount
 or a relative host root. Those checks are construction-only and do not count
 as candidate/auditor rows for either allocation.
 
+## Allocation-02 provenance hardening (2026-10-01)
+
+Read-only registry inspection separated three identifiers for the pinned
+Python image: multi-platform index digest
+`sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9`,
+Linux/ARM64 manifest digest
+`sha256:950206c37262dd86c55659797f6ee418fee30535072f65a82ed470d985f5cda5`,
+and image-config digest
+`sha256:8630ab77c5adf06e1f914483db4dd70e3fa59118160daab9b0ee75e685344221`.
+The host OrbStack daemon's read-only `image inspect` returned `.Id` equal to
+the index digest, demonstrating that the actual guest daemon `.Id` must be
+observed rather than inferred from registry metadata. Formal preflight pulls
+only the pinned ref through the assigned guest context and checks `.Id`,
+platform, and repo digest. `finalize_freeze.py` binds that observed ID, source
+commit, and host/guest path mapping into `FREEZE.json` and regenerates
+`SHA256SUMS`. These are construction gates only: no allocation-02
+guest/container/candidate/auditor was started by these checks; counts remain
+0/0.
+
 The inherited host rehearsal of the 15-row matrix and independent auditor
 recorded 15/15 rows historically. That is host construction evidence only,
 not a result for H and not fresh allocation-02 evidence. Setup/test failures

@@ -73,15 +73,28 @@ guest-local Docker context `crash-atomic-5846-local-02` whose endpoint is
 `unix:///var/run/docker.sock`. At 12:30 UTC, re-fetch main, Issues/PRs/branches
 and coordination queue; confirm no overlapping active guest, unique guest and
 context, pinned image identity, host/guest path mapping, source/freeze hashes,
-empty separate outputs, and resource limits. The image is pinned as
-`python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9`
-(`linux/arm64`). The candidate itself uses Docker `--network none`, read-only
+empty separate outputs, and resource limits. The registry index digest is
+`sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9`;
+the Linux/ARM64 platform manifest digest is
+`sha256:950206c37262dd86c55659797f6ee418fee30535072f65a82ed470d985f5cda5`,
+and its image-config digest is
+`sha256:8630ab77c5adf06e1f914483db4dd70e3fa59118160daab9b0ee75e685344221`.
+These are not interchangeable with the guest daemon's `image inspect .Id`;
+that exact runtime value is captured and verified before candidate launch.
+The candidate itself uses Docker `--network none`, read-only
 root/source, one CPU, 256 MiB, 64 PIDs, bounded tmpfs and output mounts. Any
 failed or ambiguous gate is retained as STOP with candidate/auditor counts 0/0;
 do not invoke candidate or retry. If the candidate exits zero, run the separate
 auditor once. Stop this guest by 13:10 UTC and preserve its evidence.
 
-Formal outputs are distinct from all host construction checks. The exact
-guest-side launcher argv, host-side output mapping, assigned runtime, source
-commit and hashes are pinned in `FREEZE.json`. Do not change this protocol after
-the first formal candidate invocation.
+Formal outputs are distinct from all host construction checks. Within the
+reserved window, provision the named guest, create its guest-local Docker
+context for `unix:///var/run/docker.sock`, and verify that context from inside
+the guest. Pull the exact image ref with `--platform linux/arm64`, then inspect
+it through that context. Confirm `.Id`, `Os`, `Architecture`, and `RepoDigests`.
+Run `finalize_freeze.py` with the observed `.Id`, source commit, context,
+endpoint, and mounted host source root; it writes final source/launcher/audit/
+schedule hashes, the guest-argv→host-output mapping, and refreshed
+`SHA256SUMS`. Rerun local CI and checksum validation before candidate launch.
+The formal launcher independently rechecks the frozen `.Id` and platform.
+Do not change this protocol after the first formal candidate invocation.
