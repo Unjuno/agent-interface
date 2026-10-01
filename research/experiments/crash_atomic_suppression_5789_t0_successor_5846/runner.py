@@ -1,4 +1,4 @@
-"""One-shot parent runner for Issue #5795's frozen process-crash schedule."""
+"""One-shot parent runner for Issue #5846's frozen process-crash schedule."""
 
 from __future__ import annotations
 
@@ -343,7 +343,7 @@ def main() -> int:
                     break
     result = {
         "mode": "formal",
-        "allocation": "issue-5795-t0-20261001-01",
+        "allocation": "crash-atomic-suppression-5846-t0-20261001-01",
         "schedule_sha256": protocol.schedule_sha256(),
         "source_sha256": source_sha256(),
         "runtime_provenance": runtime_provenance,

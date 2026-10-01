@@ -75,6 +75,29 @@ class ProcessMatrixConstructionTests(unittest.TestCase):
         with self.assertRaisesRegex(SystemExit, "STOP_HOST_SOURCE_ROOT_NOT_ABSOLUTE"):
             container_runner.guest_path(Path("/study/raw.jsonl"), Path("relative/package"))
 
+    def test_formal_host_argv_is_absolute_after_guest_path_translation(self):
+        import argparse
+        host_root = Path("/private/work/repo/research/experiments/package")
+        args = argparse.Namespace(
+            mode="formal", candidate_out=Path("/study/results/5846-01/candidate"),
+            audit_out=Path("/study/results/5846-01/audit"),
+            audit_raw=Path("/study/results/5846-01/candidate/raw.jsonl"), docker="docker",
+        )
+        host_args = argparse.Namespace(
+            mode=args.mode,
+            candidate_out=container_runner.guest_path(args.candidate_out, host_root),
+            audit_out=container_runner.guest_path(args.audit_out, host_root),
+            audit_raw=container_runner.guest_path(args.audit_raw, host_root),
+            docker=args.docker,
+        )
+        argv = container_runner.invocation_argv(host_args)
+        self.assertEqual(argv[argv.index("--candidate-out") + 1],
+                         str(host_root / "results/5846-01/candidate"))
+        self.assertEqual(argv[argv.index("--audit-out") + 1],
+                         str(host_root / "results/5846-01/audit"))
+        self.assertEqual(argv[argv.index("--audit-raw") + 1],
+                         str(host_root / "results/5846-01/candidate/raw.jsonl"))
+
     def test_auditor_mounts_a_report_directory_not_a_file_as_directory(self):
         with tempfile.TemporaryDirectory(prefix="construction-5795-audit-command-") as temp:
             root = Path(temp)
@@ -100,9 +123,9 @@ class ProcessMatrixConstructionTests(unittest.TestCase):
                 manifest["launcher_sha256"] = container_runner.sha256(Path(container_runner.__file__))
                 manifest["formal_argv"] = [
                     "python3", "-B", "/study/container_runner.py",
-                    "--mode", "formal", "--candidate-out", str(candidate),
-                    "--audit-out", str(audit), "--audit-raw",
-                    str(candidate / "raw.jsonl"), "--docker", "docker",
+                    "--mode", "formal", "--candidate-out", str(candidate.resolve()),
+                    "--audit-out", str(audit.resolve()), "--audit-raw",
+                    str((candidate / "raw.jsonl").resolve()), "--docker", "docker",
                 ]
                 mocked_freeze.return_value = (manifest, digest)
                 env = {
@@ -118,7 +141,7 @@ class ProcessMatrixConstructionTests(unittest.TestCase):
                 def create_raw(*args, **kwargs):
                     (candidate / "raw.jsonl").write_text("{}\n")
                     return 0
-                with mock.patch.object(container_runner, "guest_path", side_effect=lambda path, _root: path), \
+                with mock.patch.object(container_runner, "guest_path", side_effect=lambda path, _root: path.resolve()), \
                      mock.patch.object(container_runner, "run_candidate", side_effect=create_raw), \
                      mock.patch.dict(os.environ, env, clear=False), \
                      mock.patch.object(sys, "argv", [

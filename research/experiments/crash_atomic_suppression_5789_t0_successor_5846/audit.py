@@ -1,4 +1,4 @@
-"""Raw-only independent decision-gate audit for Issue #5795 T0.
+"""Raw-only independent decision-gate audit for Issue #5846 T0.
 
 This file deliberately imports no candidate, protocol, or runner code.
 """

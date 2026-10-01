@@ -1,4 +1,4 @@
-"""Frozen finite schedule and identity rules for Issue #5795 T0."""
+"""Frozen finite schedule and identity rules for Issue #5846 successor T0."""
 
 from __future__ import annotations
 

@@ -144,6 +144,10 @@ def main() -> int:
             audit_raw=guest_path(args.audit_raw, host_source_root) if args.audit_raw is not None else None,
             docker=args.docker,
         )
+        for name in ("candidate_out", "audit_out", "audit_raw"):
+            value = getattr(host_args, name)
+            if value is not None:
+                setattr(host_args, name, value.resolve())
         if frozen.get("formal_argv") != invocation_argv(host_args):
             raise SystemExit("STOP_FORMAL_ARGV_MISMATCH")
     if mode == "construction":
