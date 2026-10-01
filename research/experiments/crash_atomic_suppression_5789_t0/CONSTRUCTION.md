@@ -7,7 +7,7 @@ count = 0. This file does not report a result for H.
 ## Frozen inputs
 
 - Intake main: `ff2164a8b16d386571c91ebba19f6604b4776581`.
-- Rebased main before formal execution: `b7b724ee06125a146c68071c1d03e9556a70c5f6`.
+- Rebased main before formal execution: `8986380d8ec265f9cdc4a282fcd4ed93254acd49`.
 - Branch: `research/crash-atomic-suppression-5795-t0-20261001`.
 - Additive path: `research/experiments/crash_atomic_suppression_5789_t0/`.
 - Protocol: `FREEZE.md`.
@@ -26,7 +26,8 @@ python3 research/analysis/check_index.py
 ```
 
 Result: 5/5 unit tests passed; `py_compile` passed; `git diff --check` passed;
-analysis index passed with 272 retained result/failure directories indexed.
+analysis index passed with 272 retained result/failure directories on the first
+run and 274 after main advanced; the final run passed at 274.
 The first index invocation was an environment STOP because the checkout's
 sparse patterns omitted `research/analysis/README.md`; the required read-only
 paths were then materialized in this worktree and the unchanged checker passed.
