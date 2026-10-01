@@ -2,6 +2,10 @@
 
 A bounded two-worker, four-right escrow state machine was exhaustively enumerated through depth 6: 9,988 reachable states and 27,748 transitions. The independent auditor reproduced both state and transition digests (`PASS_METHOD_SCOPED`); pre-freeze Docker construction tests passed 13/13. Balanced synthetic demand completed 4/4 optional units with two setup round-trips versus four central per-use checks; skew/crash completed 2/4 with two rights stranded. Heartbeat-only reclaim permitted a planted fifth consume against B=4; old generations, duplicate/delayed ACKs, mandatory verifier bypass, and role-label laundering were rejected. This is a finite protocol-method result, not measured latency, arbitrary distributed implementation, live GUI, or product evidence. See [the report and raw candidate/audit](research/analysis/escrow_optional_budget_6156_t0_20261002/REPORT.md).
 
+### Issue #6195: retained MAP01 delay–gain trace eligibility T1 (2026-10-01)
+
+Two SHA-pinned v38/v39 logs were inventoried once on local host CPU. Both had source captures, but neither contained the consumed-generation binding, fully identity-joined held-input release, same-domain decision/action/effect clock, independently task-relevant effect, or repeated correction chain required for a delay×policy T2. Candidate: `HOLD_NO_CLOSED_LOOP_TRACE`, 0/2 eligible. The separate raw audit reconstructed both summaries and rejected five corruptions, but failed to bind its shared stale allocation-01 literal to registered allocation-02. Final package disposition: `FAIL_ALLOCATION_BINDING_AUDIT_GAP; DATA_HOLD_NO_CLOSED_LOOP_TRACE`; no retry or T2. Scope is retained-log eligibility only—not physical occupancy, stability, task effect, GUI/DOOM safety, or product behavior. See [frozen report and raw artifacts](research/analysis/map01_delay_gain_t1_trace_eligibility_6195_20261001_01/REPORT.md).
+
 # Research index
 
 Agent Interface is being developed by analysis and experiment rather than by locking an API early. This file is the evidence ledger for the public repository.
