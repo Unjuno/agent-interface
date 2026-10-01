@@ -45,7 +45,11 @@ def run(bridge,refs,token,route):
                 return predicates
             class BudgetBridge:
                 def click(self,*args,**kwargs):
-                    return bridge.click(*args,**kwargs,expires_at_ns=deadline)
+                    native,rgb=bridge.history[bridge.sequence]
+                    resolution=bridge.store.resolve_point(args[0],args[1],native,rgb,time.monotonic_ns(),session_scope=initial_scope)
+                    if not resolution['eligible']: raise Stop('authority_unavailable')
+                    expiry=min(deadline,resolution['valid_until_ns'])
+                    return bridge.click(*args,**kwargs,expires_at_ns=expiry)
             def on_step(name,result):
                 nonlocal completed
                 releases=result.get('execution',{}).get('releases',[])
