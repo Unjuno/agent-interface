@@ -36,5 +36,9 @@ The older, similarly named remote ref
 Its committed tree contains 11 files but omits the `src/main.c`,
 `src/facility.c`, and `src/facility.h` named by its Makefile. Its own Docker
 build stopped at `make clean test` with `No rule to make target 'src/main.c'`;
-zero tests ran. That distinct ref remains untouched and must not be described as
-validated or equivalent to this implementation.
+zero tests ran. Its exact tip is now preserved by annotated tag
+`archive/recovered/procedural-operations-facility-v0-incomplete-20260928`
+(`644fe8f2dd0ccfaeb02e677f1eb17a3cb6f76799`), and only the remote source ref
+was removed after confirming no associated Issue/open PR and verifying the
+tag's peeled commit. The archived prototype must not be described as validated
+or equivalent to this implementation.
