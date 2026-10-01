@@ -120,7 +120,7 @@ Public close still requires the primary to inspect its release/cleanup outcome.
 import { createPrimaryCaller } from './primary_caller.mjs';
 const primary = createPrimaryCaller(client, 'guarded-local', {
   text: deliverText, image: deliverImage,
-});
+}, [], { reviewWindowId: configuredNativeWindowId });
 const frame = await primary.observe(); // same helper for initial/fresh grounding
 // Actually view the original delivered image, then record that exact attempt:
 await primary.review(frame.attempt, {
@@ -154,6 +154,17 @@ Malformed helper arguments latch STOP before host dispatch. It does not select
 coordinates, observe, review an image, renew a reference automatically, retry,
 or issue input. Alias admissibility, image binding, freshness and geometry are
 still checked by the server. Use `call` for exact preregistered refusal controls.
+
+When an explicit window review is needed, call `await primary.reviewWindow()`.
+Configure `reviewWindowId` once from the actual selected target registry (for
+example `targets.browser` in the explicit targets file). The helper snapshots
+that positive safe integer and sends exactly `interface_guarded_review_window`
+with `window_id`. It accepts no per-call arguments; missing/invalid configuration,
+wrong route or accidental arguments latch STOP before host dispatch. Its original
+response and image must still be inspected and attributed. This is an explicit
+read-only binding review, not automatic recovery, window discovery or permission
+to retry input. It does not verify that a caller-selected ID belongs to a window;
+that remains a server check. Existing generic `call` remains available.
 
 The settings are snapshotted; later caller mutation does not change observation
 scope. Missing direct observation configuration or accidental helper arguments

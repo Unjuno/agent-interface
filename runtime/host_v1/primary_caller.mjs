@@ -5,6 +5,7 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
   const consumed = new Set();
   const observationArguments = route === 'guarded-local' ? {} :
     structuredClone(options.observationArguments);
+  const reviewWindowId = options.reviewWindowId;
   const canonical = value => JSON.stringify(value, (_key, v) => v && typeof v === 'object' && !Array.isArray(v)
     ? Object.fromEntries(Object.keys(v).sort().map(k => [k,v[k]])) : v);
   const tools = new Set(['interface_clock', 'interface_close', 'interface_results',
@@ -25,6 +26,14 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
   }
   const caller = {
     state: () => ({ stopped }),
+    async reviewWindow(...unexpected) {
+      if (route !== 'guarded-local' || unexpected.length ||
+          !Number.isSafeInteger(reviewWindowId) || reviewWindowId < 1) {
+        stop('invalid primary window review configuration or arguments');
+        throw TypeError(stopped);
+      }
+      return caller.call('interface_guarded_review_window', { window_id: reviewWindowId });
+    },
     async mint(...values) {
       const [alias, sourceSequence, point, regionSize] = values;
       const pair = value => Array.isArray(value) && value.length === 2 &&
