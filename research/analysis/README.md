@@ -22,6 +22,8 @@ flowchart TD
 
 ## Analysis families
 
+Issue #6331 wake-fenced lease T0: [`wake_fence_6331_t0_v1/`](wake_fence_6331_t0_v1/). A finite synthetic Docker run against the exact current `Lease` source found relative-clock LIVE vs suspend-inclusive EXPIRED after a long modelled gap; the wake-fence arm blocked stale generation and returned UNKNOWN on missing wake evidence. Two post-freeze main-advance STOPs and the scoped runtime limits are retained. No actual host sleep or physical input.
+
 ```mermaid
 flowchart TD
     A[research/analysis]
@@ -495,6 +497,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`visual_encoding_570_gpu_local_successor_v1/`](visual_encoding_570_gpu_local_successor_v1/)
 - [`voi_exact_boundary_5411_dot_v1/`](voi_exact_boundary_5411_dot_v1/)
 - [`voi_option_5306_t1/`](voi_option_5306_t1/)
+- [`wake_fence_6331_t0_v1/`](wake_fence_6331_t0_v1/)
 - [`x11_adaptation_multiseed_2459_v1/`](x11_adaptation_multiseed_2459_v1/)
 - [`x11_augmentation_fail_2394_v1/`](x11_augmentation_fail_2394_v1/)
 - [`x11_composed_ood_gate_2419_v1/`](x11_composed_ood_gate_2419_v1/)
