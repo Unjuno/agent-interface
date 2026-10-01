@@ -1,7 +1,7 @@
 # Issue #5752 GPU HUD reader spike — preregistration
 
 Allocation GPU-HUD-CUDA-5752-20261001-04; successor to closed Issue #503; supports measurement readiness under #59 only.
-Provisional preparation base main: 7dbe196b8d1fb519139d15240ecb3f377a07b51d (observed 2026-10-01 07:12:37 UTC; re-read and refreeze exact current main at 08:05 UTC).
+Provisional preparation base main: da7770df8bd896738a8a7e0ccc8ea45e10b3e645 (observed 2026-10-01 07:26:44 UTC; re-read and refreeze exact current main at 08:05 UTC).
 Branch: research/gpu-hud-cuda-5752-20261001-04.
 Evidence path: research/doom/map01_hud_cuda_5752_t1_v4/.
 
