@@ -483,8 +483,3 @@ They use synthetic host data, not a model/GUI performance comparison. Fewer
 lines of per-trial adapter code do not prove fewer model tokens, lower cost or
 human-like task tempo. A fresh source-frozen self-use case is required before
 claiming improved practical usability.
-A [fresh packaged primary exchange case](../results/primary-exchange-live-01/README.md)
-retains personal READY/Save/SAVED operation through this adapter, one independent
-app effect, exact PNG identity, explicit release/cleanup and actual source usage.
-It establishes one functional self-use path; the roughly 87-second host span and
-unmatched usage do not establish general efficiency or human-comparable tempo.
