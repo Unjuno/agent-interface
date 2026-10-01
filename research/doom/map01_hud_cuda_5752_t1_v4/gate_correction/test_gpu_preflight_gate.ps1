@@ -23,4 +23,3 @@ $results = @(
 $failed = @($results | Where-Object { -not $_.pass })
 [pscustomobject]@{ passed = $results.Count - $failed.Count; total = $results.Count; failures = $failed } | ConvertTo-Json -Depth 6 -Compress
 if ($failed.Count -gt 0) { exit 1 }
-
