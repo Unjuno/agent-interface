@@ -20,6 +20,14 @@ For claims and scientific disposition, start with the top-level [research index]
 | Issue #5970 prospective X11 event-provenance T2 | [analysis/blackstart_prospective_trace_5970_t2_20261001/REPORT.md](analysis/blackstart_prospective_trace_5970_t2_20261001/REPORT.md) |
 | Issue #5970 source-bound prospective provenance T3 | [analysis/blackstart_source_bound_5970_t3_20261001/REPORT.md](analysis/blackstart_source_bound_5970_t3_20261001/REPORT.md) |
 | Issue #5970 X RECORD delivery-boundary successor T4 | [analysis/blackstart_xrecord_5970_t4_20261001/REPORT.md](analysis/blackstart_xrecord_5970_t4_20261001/REPORT.md) |
+| Issue #5970 X window-tree target diagnostic T5 | [analysis/blackstart_xevent_target_5970_t5_20261002/REPORT.md](analysis/blackstart_xevent_target_5970_t5_20261002/REPORT.md) |
+| Issue #5970 all-window observer successor T6 | [analysis/blackstart_allwindow_trace_5970_t6_20261002/REPORT.md](analysis/blackstart_allwindow_trace_5970_t6_20261002/REPORT.md) |
+| Issue #5970 pre-input target liveness T7 | [analysis/blackstart_record_target_liveness_5970_t7_20261002/REPORT.md](analysis/blackstart_record_target_liveness_5970_t7_20261002/REPORT.md) |
+| Issue #5970 ancestor observer startup STOP T8 | [analysis/blackstart_record_target_ancestor_5970_t8_20261002/REPORT.md](analysis/blackstart_record_target_ancestor_5970_t8_20261002/REPORT.md) |
+| Issue #5970 immediate-parent observer T9 | [analysis/blackstart_tk_parent_window_5970_t9_20261002/REPORT.md](analysis/blackstart_tk_parent_window_5970_t9_20261002/REPORT.md) |
+| Issue #5970 parent-only stream diagnostic T10 | [analysis/blackstart_tk_parent_only_5970_t10_20261002/REPORT.md](analysis/blackstart_tk_parent_only_5970_t10_20261002/REPORT.md) |
+| Issue #5970 non-modifier control T11 | [analysis/blackstart_nonmodifier_trace_5970_t11_20261002/REPORT.md](analysis/blackstart_nonmodifier_trace_5970_t11_20261002/REPORT.md) |
+| Issue #5970 no-input X event baseline T12 | [analysis/blackstart_x11_noinput_baseline_5970_t12_20261002/REPORT.md](analysis/blackstart_x11_noinput_baseline_5970_t12_20261002/REPORT.md) |
 | Issue #6074 interval-robustness finite-method T0 | [analysis/interval_robustness_6074_t0_20261002/REPORT.md](analysis/interval_robustness_6074_t0_20261002/REPORT.md) |
 | Revisit history | [REVISIT_LEDGER.md](REVISIT_LEDGER.md) |
 | Analysis vs experiment decision flow | [../docs/RESEARCH_METHOD.md](../docs/RESEARCH_METHOD.md) |
