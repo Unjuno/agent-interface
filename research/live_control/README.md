@@ -47,6 +47,7 @@ flowchart TD
 | Adaptive caller / local repair | [`ADAPTIVE_ACQUISITION_CALLER_V3.md`](ADAPTIVE_ACQUISITION_CALLER_V3.md), [`ADAPTIVE_SEMANTIC_REPAIR_LIVE_V2.md`](ADAPTIVE_SEMANTIC_REPAIR_LIVE_V2.md) |
 | Compiled / persistent interface | [`COMPILED_GUI_INTERFACE_LIVE_V5.md`](COMPILED_GUI_INTERFACE_LIVE_V5.md), [`INTEGRATED_EFFICIENCY_LIVE_V1.md`](INTEGRATED_EFFICIENCY_LIVE_V1.md) |
 | Cross-domain transfer | OpenTTD reports under `OPENTTD_*`, plus retained Calc/Inkscape/browser/Mindustry studies in this directory |
+| Issue #3311 allocation-01 pre-test STOP (historical source and disposition) | [Recovery record](issue3311_termination_report_v1/RECOVERY_STATUS.md) |
 
 This is a navigation map, not a dependency graph or promotion hierarchy. Individual reports remain authoritative for scope and disposition.
 
