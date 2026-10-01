@@ -35,7 +35,7 @@ Hand-authored finite frame, independent Bernoulli design, exact labels; no tempo
 
 ## Execution-route amendment — isolated local daemon allocation #02
 
-H/T/D/C/U and the finite construction above are unchanged. The successor request is `SELECTION-AWARE-SHADOW-AUDIT-5681-T1-ISOLATED-ORB-20261001-02`, proposed for 2026-10-01 04:20–05:20 UTC; queue record: #5085 comment #5924222877, issue amendment: #5681 comment #5924224968. It remains request-only until the fresh exact start gate.
+H/T/D/C/U and the finite construction above are unchanged. The successor allocation is `SELECTION-AWARE-SHADOW-AUDIT-5681-T1-ISOLATED-ORB-20261001-02`, assigned for 2026-10-01 04:20–05:20 UTC; request/mode: #5085 comment #5924222877, issue amendment: #5681 comment #5924224968, coordinator disposition: #5085 comment #5924304367. It is not execution permission until the fresh exact start gate passes.
 
 - Use a newly created OrbStack isolated Ubuntu 24.04 machine named `obs-audit-t1-5681-20261001`, capped at 1 CPU, 2 GiB memory, and 16 GiB disk; no host filesystem mount or SSH-agent forwarding. Install a distinct Docker daemon inside the guest; never use or inspect the shared macOS `orbstack` Docker endpoint for this allocation.
 - This reduces engine-state and host-integration collisions but is not a separate kernel boundary: OrbStack Linux machines and containers share the OrbStack Linux VM/kernel. The workload is benign, finite synthetic arithmetic.
