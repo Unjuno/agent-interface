@@ -7,7 +7,7 @@ import json
 from fractions import Fraction
 from pathlib import Path
 
-MAIN_SHA = "69a1bf509eb432e5e3c0c294d05ad7671d86adb6"
+MAIN_SHA = "8d6ad7be277fff929a665e4fed44f8ee89b33bad"
 NO_COVER = "NO_SUFFICIENT_PASSIVE_COVER"
 
 
