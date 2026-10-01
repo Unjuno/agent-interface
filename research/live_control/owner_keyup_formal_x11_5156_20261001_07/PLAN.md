@@ -5,7 +5,7 @@ Status: **source preparation only; no container/X11 invocation and no scientific
 - Allocation: `MAP01-OWNER-KEYUP-BRACKET-5156-ORB-20261001-07`
 - Proposed owner: Unjuno / this Codex task
 - Proposed engine/window: local OrbStack, 2026-10-01 02:00–02:15 UTC
-- Proposed source freeze: main `40885011a5d8e15ab10bb6cc0e8eef65661718ee`
+- Proposed source freeze: main `72f2acdbdd5da3c490873e5efda213f3a55ff210`
 - Additive path: `research/live_control/owner_keyup_formal_x11_5156_20261001_07/`
 - New branch: `research/5156-owner-keyup-x11-a07-20261001`
 - Prior #5156 A03/A05/A06 and completion-sentinel A03/A04 STOP records remain unchanged; none is reused as authority or scientific evidence.
@@ -20,7 +20,7 @@ Status: **source preparation only; no container/X11 invocation and no scientific
 
 ## Pinned implementation and runtime
 
-The candidate is the additive Allocation 05 Xvfb runner/auditor/expected inventory, copied byte-for-byte before this plan's allocation-specific edits. It includes the merged `join_explicit_release` helper; predecessor raw data and STOP records are not copied or edited. Expected inventory is three cases: single explicit up, two sequential explicit ups, and partial cancel/autonomous cleanup.
+The candidate is the additive Allocation 05 Xvfb runner/auditor/expected inventory, copied byte-for-byte before this plan's allocation-specific edits. It includes the merged `join_explicit_release` helper; predecessor raw data and STOP records are not copied or edited. Expected inventory is three cases: single explicit up, two sequential explicit ups, and partial cancel/autonomous cleanup. The initial freeze at `40885011a5d8e15ab10bb6cc0e8eef65661718ee` was refreshed before container invocation to `72f2acdbdd5da3c490873e5efda213f3a55ff210` after a README-only main commit; that intervening commit changed no runtime source or dependency blobs. This allocation-specific re-freeze is recorded append-only on #5156 and #5085 before any candidate run.
 
 At the proposed freeze, these current-main Git blobs are required and locally parity-checked against the candidate's vendored copies:
 

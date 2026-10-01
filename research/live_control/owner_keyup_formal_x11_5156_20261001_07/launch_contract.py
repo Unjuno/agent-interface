@@ -6,7 +6,7 @@ _IMAGE = re.compile(r"[A-Za-z0-9][A-Za-z0-9._:/-]*@(sha256:[0-9a-f]{64})\Z")
 _PLATFORM = "linux/arm64"
 _WORKDIR_NAME = "owner_keyup_formal_x11_5156_20261001_07"
 _ALLOCATION = "MAP01-OWNER-KEYUP-BRACKET-5156-ORB-20261001-07"
-_FROZEN_MAIN = "40885011a5d8e15ab10bb6cc0e8eef65661718ee"
+_FROZEN_MAIN = "72f2acdbdd5da3c490873e5efda213f3a55ff210"
 _IMAGE_REF = "agent-interface-2972@sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27"
 
 

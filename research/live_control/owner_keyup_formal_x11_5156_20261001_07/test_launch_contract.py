@@ -46,7 +46,7 @@ class LaunchContractTests(unittest.TestCase):
         self.assertIn('python3 -c "import Xlib; from Xlib import display"', script[1])
         self.assertLess(script[1].index("import Xlib"), script[1].index("xvfb-run"))
         self.assertIn("FORMAL_ALLOCATION=MAP01-OWNER-KEYUP-BRACKET-5156-ORB-20261001-07", script[1])
-        self.assertIn("FORMAL_FROZEN_MAIN=40885011a5d8e15ab10bb6cc0e8eef65661718ee", script[1])
+        self.assertIn("FORMAL_FROZEN_MAIN=72f2acdbdd5da3c490873e5efda213f3a55ff210", script[1])
         self.assertIn("FORMAL_IMAGE_DIGEST=sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27", script[1])
         self.assertIn("FORMAL_PLATFORM=linux/arm64", script[1])
         self.assertIn("FORMAL_V11_DIR=/src/dependencies", script[1])
