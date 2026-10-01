@@ -331,3 +331,18 @@ completed and one aborted after expiry/recovery. All28 frames and delivery audit
 The perceived black recovery image is a normal saved PNG; an older failed PNG
 also matches its published bytes and renders normally at original detail.
 Investigate end-to-end image presentation before more timing claims.
+
+## Repeated-key occupancy boundary (Issue #59)
+
+Three separate synthetic/source-boundary allocations are retained in PR #6105:
+the unchanged per-key ledger fails closed on repeated `W` occurrences; a
+successor occurrence-key ledger represents separate synthetic intervals; and a
+fake-Xlib exercise of the pinned #5630 `InputOwner` records two admissions and
+two release brackets without an occurrence ID or per-interval keymap sample.
+That last allocation's first auditor returned `FAIL_AUDIT` because its oracle
+incorrectly required terminal cleanup to retain the key name rather than only
+keycode; its raw/audit records are immutable and the defect is documented in
+its RESULT. None of these results is a live X11, Docker, physical-key,
+application-effect, or gameplay result. A corrected criterion needs a distinct
+successor allocation before promotion. See
+[`owner occurrence-binding T0`](map01_owner_occurrence_binding_59_t0_20261001/RESULT.md).
