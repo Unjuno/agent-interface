@@ -108,8 +108,6 @@ A fresh [completed primary trial](../results/guarded-mcp-primary-02/README.md)
 subsequently verified six exact saves and explicit recovery through the public
 mode. This supports opt-in integration; efficiency claims remain unproven.
 
-## Guarded tail deadline
-
 ## Explicit activation before a new guarded action
 
 The opt-in Python bridge exposes `activate_window(window_id=...,
