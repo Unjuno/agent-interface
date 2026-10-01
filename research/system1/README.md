@@ -110,3 +110,7 @@ Read each child experiment for its allowed decision vocabulary, authority bounda
 ## Publication-overlap construction archive
 
 - [#5082 / source PR #5163 archival qualification](needle_cross_process_publication_5066_v4_20260928/ARCHIVAL_QUALIFICATION.md) — preserves eleven exact source/freeze/input files and the reported 17/17 host and pinned-Docker construction checks. The 4,096-publication formal run and independent formal raw audit remain STOP / NOT STARTED; #5082 remains OPEN and the source PR stays Draft. Preservation only, with no execution, allocation, or runtime promotion.
+
+## Role-skill construction-boundary HOLD archive
+
+- [`needle_role_skill_joint_retention_v3_20260928/ARCHIVAL_QUALIFICATION.md`](needle_role_skill_joint_retention_v3_20260928/ARCHIVAL_QUALIFICATION.md) — Issue #4929 / source PR #4940; all 13 original blobs preserve `HOLD_SOURCE_FREEZE_MISMATCH`. The reported 9/12 boundary tests and zero fits are historical summary claims, without original stdout/stderr or a retained independent raw-only audit. Three FREEZE blob IDs and two mounted-file hashes disagree with the published inventory; the malformed intake identity and CPU-description difference also remain. No valid-binding PASS, rerun, formal authorization, promotion, or issue closure.
