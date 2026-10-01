@@ -1,0 +1,6 @@
+{
+  "command": "python evidence/malformed-class-op-20260929/reproduce.py",
+  "error": "ModuleNotFoundError: No module named 'audit_results'",
+  "interpretation": "The first invocation did not add the package directory to Python's module search path. This is a launcher/setup STOP, not an auditor result. The same frozen script was rerun with PYTHONPATH=. and the import succeeded.",
+  "status": "STOP_LAUNCHER_IMPORT_PATH"
+}
