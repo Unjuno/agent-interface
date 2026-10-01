@@ -1,0 +1,28 @@
+{
+  "schema": "5817-obligation-conservation-freeze-v1",
+  "issue": 5817,
+  "allocation": "5817-OBLIGATION-CONSERVATION-T0-20261001-01",
+  "branch": "research/obligation-conservation-5817-t0-20261001-a1",
+  "publicationBaseMain": "d3df971ec5e78f557a9798860a4ceefe9c9138fd",
+  "sourcePath": "research/analysis/obligation_conservation_5817_t0_v1",
+  "candidateInvocations": 1,
+  "auditorInvocations": 1,
+  "image": "python:3.12.14-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "platform": "linux/amd64",
+  "network": "none",
+  "readOnlyRoot": true,
+  "pidsLimit": 32,
+  "memoryMiB": 128,
+  "cpus": 1,
+  "expectedCases": 11,
+  "expectedEvents": 25,
+  "expectedObligationIds": 14,
+  "corruptionControls": 5,
+  "sourceSha256": {
+    "candidate.py": "41a3d96ef3a0e2a3a18f9582e0e4d8083b10fb4b2d4f555ebea8597aefa19e3e",
+    "fixture.json": "739c7f737e55d2aac6927b39ab54c6c79bc80e6ae8f18e8db4c8bc87b743a29f",
+    "audit.py": "388a5933202eb1d760682705e5fcddaaaccba0c826c50d42b4e1d7b616f453c9",
+    "test_t0.py": "aa7bec4e18506fecea49715d25c4bc7b32bb0e101fb86cdb2b69916b20b45a04",
+    "workflow": "b88709069727c8f5d189fe005dbf7354ff096cc643b105fb0c302018052bcd4c"
+  }
+}
