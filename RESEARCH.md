@@ -17,6 +17,10 @@ Six finite asynchronous evidence traces compared dependency-graph-only readiness
 
 A read-only audit reconstructed the frozen Issue #4135 X11/Tk archive from five Git blobs in memory and inspected four reconnect/bootstrap rows. All four raw observer/Tk event files matched their case aggregates; bootstrap and observer epochs matched; both streams contained monotonic timestamps. Yet no row retained explicit causal-parent or send/receive IDs between the separate observer and app streams. Disposition: `HOLD_CAUSAL_EDGE_PROVENANCE_MISSING`: a relevant recovery state exists, but no historical multi-source causal cut can be established from timestamps alone. This does not regrade #4135 or prove the causal-cut mechanism in a real runtime. See [the retained-trace T1 report](research/analysis/blackstart_causal_cut_5970_t1_20261001/REPORT.md).
 
+### Issue #5970 T2: prospective event-provenance instrumentation (2026-10-01)
+
+An isolated Xvfb/Tk probe preserved three attempts: inventory-preflight STOP; a no-dispatch runner path STOP after both arm acknowledgements; then one Shift press dispatch after both acknowledgements. The Tk test copy recorded the press and explicit actuation parent, while the observer stream recorded only its arm acknowledgement. Candidate stopped before release (`HOLD_INCOMPLETE_OR_NONNEUTRAL`); an independent raw-trace audit agreed (`PASS_AUDIT_HOLD_OBSERVER_EVENT_MISSING`). No terminal keymap was queried. Important limitation: the experiment executed purpose-built instrumented replicas modeled on the archived #4135 Tk/Xlib boundary, not a mechanical patch of the archived source, so no result is transferred to #4135's original observer. Docker Desktop's Linux engine was unavailable; isolated WSL2 Xvfb was used. See [T2 report](research/analysis/blackstart_prospective_trace_5970_t2_20261001/REPORT.md) and [method deviation](research/analysis/blackstart_prospective_trace_5970_t2_20261001/METHOD_DEVIATION.md).
+
 | Need | Read |
 |---|---|
 | Current governing objective | [docs/CURRENT_GOAL.md](docs/CURRENT_GOAL.md) |
