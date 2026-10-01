@@ -31,4 +31,21 @@ A and B have the same metrics by the symmetric frozen fixture. For the selected-
 
 The experiment used local CPU only; this arithmetic method has no reason to consume the idle RTX 3080. Docker was not invoked because the host Docker CLI/inventory was unresponsive; the local method test requires only stdlib and ran with no persistent local output writes. This is a disclosed host-CPU execution deviation, not a container reproduction. No cloud/remote experiment, model load, CUDA, GUI/input, or network call was made by either experiment process.
 
-Reproduction: run `python candidate.py < fixture.json` and pipe its JSON output to `python audit.py` as `{"fixture": <fixture.json>, "candidate": <candidate output>}`; both scripts are Python-stdlib-only. The independent auditor imports no candidate implementation.
+Reproduction from this directory (stdlib only; preserves separate candidate/auditor processes):
+
+```python
+import json, subprocess, sys
+fixture = json.load(open("fixture.json", encoding="utf-8"))
+candidate = subprocess.run(
+    [sys.executable, "candidate.py"],
+    input=json.dumps(fixture, separators=(",", ":")).encode(),
+    stdout=subprocess.PIPE, check=True,
+)
+bundle = json.dumps(
+    {"fixture": fixture, "candidate": json.loads(candidate.stdout)},
+    separators=(",", ":"),
+).encode()
+subprocess.run([sys.executable, "audit.py"], input=bundle, check=True)
+```
+
+The independent auditor imports no candidate implementation.
