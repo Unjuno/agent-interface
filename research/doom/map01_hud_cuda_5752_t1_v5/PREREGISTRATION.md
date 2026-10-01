@@ -1,7 +1,7 @@
 # Issue #5752 GPU HUD reader spike — allocation-05 preregistration
 
 Allocation GPU-HUD-CUDA-5752-20261001-05; successor to closed Issue #503; supports measurement readiness under #59 only. Allocation-04 is preserved as terminal STOP_INSUFFICIENT_DISK_SPACE and is not reused.
-Preparation base main: b54ec8fac5d005d510a5787d98b9ad7a24d96923 (observed 2026-10-01 09:53:52 UTC; exact current main must be re-read at 10:20 UTC).
+Start-gate base main: c427c704404fc2b35ea9e06a57e61d239b77b369 (observed 2026-10-01 10:20:54 UTC; comparison from preparation base showed no changes to the frozen Doom HUD source/input paths).
 Branch: research/gpu-hud-cuda-5752-20261001-05.
 Evidence path: research/doom/map01_hud_cuda_5752_t1_v5/.
 
