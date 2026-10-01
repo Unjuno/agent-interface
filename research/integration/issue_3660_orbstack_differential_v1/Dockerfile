@@ -1,2 +1,0 @@
-FROM sha256:f8ae93cfedd412cfe39ca575a97abc32c4d6e99ee7b5cc7848e79e0ce08bdc9f
-ENTRYPOINT []

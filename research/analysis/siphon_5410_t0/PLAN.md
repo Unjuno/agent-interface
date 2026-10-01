@@ -1,3 +1,0 @@
-# T0 plan — Issue #5410
-
-Preregistered in Issue comment `5911036464` before formal execution. Five resources/four workflows; seven deterministic traces including opposed acquisition order, expiry, cancellation, revocation, hidden dependency, retry/backoff, and independent work. Compare NAIVE, GLOBAL_EXCLUSIVE, SCC_GUARD, and a bounded completion-sequence oracle. The frozen D gate requires zero unrecovered deadlocks across the fault matrix, safe handling of incomplete dependencies, and useful progress/permissiveness. Formal candidate ran once; retain the FAIL and do not tune/replay this allocation.
