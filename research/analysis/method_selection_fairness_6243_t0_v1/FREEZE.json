@@ -1,0 +1,40 @@
+{
+  "allocation": "method-selection-6243-t0-v1-20261002-01",
+  "issue": 6243,
+  "base_main": "fe37b6913f75706fc6bd536ae3afd6ed6a72b674",
+  "branch": "research/method-selection-6243-t0-20261002",
+  "path": "research/analysis/method_selection_fairness_6243_t0_v1/",
+  "claim_scope": "synthetic method-accounting validation only; existing-data feasibility is HOLD_NO_MATCHED_METHOD_DATA",
+  "protocol": {
+    "agreement_threshold": 0.9,
+    "candidate_invocations": 1,
+    "independent_auditor_invocations": 1,
+    "formal_retries": 0,
+    "construction_assertions": 11,
+    "mutation_controls": ["drop_failed_attempt", "erase_switch", "arm_visible_to_coder"],
+    "scenario_count": 3,
+    "attempt_segment_rows": 11,
+    "horizons": [1, 4, 10],
+    "network": false,
+    "gui": false,
+    "model": false,
+    "human_participants": false
+  },
+  "runtime": {
+    "implementation": "CPython 3.14.5",
+    "container": null,
+    "reason": "Issue #5085 prohibits new container launch while unrelated container unjuno-native-ci-6092 is running; no explicit slot release was found",
+    "obstac": "not available in CLI/tool inventory"
+  },
+  "sha256": {
+    "README.md": "bf333c29758fcde63141e15bf05127e99d8a64842a46012aefe0c5750d5eec23",
+    "RESULT.md": "67e4ffb700ba76cd8dcac1dca3f0eb0aeabd5fcdfd361871697200785d393ff0",
+    "cases.json": "9d25150b00748f489bf584ee85e8a99129ac5031beae75754c1e4043001a842f",
+    "key.json": "9475cb46ee160ce416f6103194525eb82b556670f7644f9a38013e0aa9802b2c",
+    "annotator_a.py": "6cae3d1b3db8facc0ed5df63531b32fa4864f756104867459e2d30e967abdbc2",
+    "annotator_b.py": "b03cb999d3249cb3b66ecad2404ba31102333408192ffa3b028b6aca45840b28",
+    "candidate.py": "d4d1f3054cb93e5213352b8fc9eb1961a259fb41725a1dd4f59260def22ea4c0",
+    "auditor.py": "0bd4c9024f327cbca1e85dd1a568f413185ad9f4c686a762bd948b4f92668a63",
+    "test_method.py": "8a072bed6b21bdf1899fb372516e8f5c453cafa950216105f57be007c84c0d37"
+  }
+}

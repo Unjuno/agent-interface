@@ -1,0 +1,546 @@
+{
+  "horizon_sensitivity": {
+    "1": {
+      "A": 10000,
+      "H": 39000
+    },
+    "10": {
+      "A": 100000,
+      "H": 75000
+    },
+    "4": {
+      "A": 40000,
+      "H": 51000
+    }
+  },
+  "scenario_results": [
+    {
+      "acquisition_inclusive_horizon_ms": {
+        "A": 40000,
+        "H": 51000
+      },
+      "all_rows_preserved": true,
+      "annotation_pairs": [
+        {
+          "a": {
+            "acquisition_ms": 0,
+            "duration_ms": 4000,
+            "errors": 0,
+            "goal": "save",
+            "method": "shortcut",
+            "operators": [
+              "semantic-save"
+            ],
+            "row_id": "s1-h-shortcut",
+            "switches": 0,
+            "terminal": "correct"
+          },
+          "b": {
+            "acquisition_ms": 0,
+            "duration_ms": 4000,
+            "errors": 0,
+            "goal": "save",
+            "method": "shortcut",
+            "operators": [
+              "semantic-save"
+            ],
+            "row_id": "s1-h-shortcut",
+            "switches": 0,
+            "terminal": "correct"
+          },
+          "row_id": "s1-h-shortcut"
+        },
+        {
+          "a": {
+            "acquisition_ms": 0,
+            "duration_ms": 10000,
+            "errors": 0,
+            "goal": "save",
+            "method": "ordinary",
+            "operators": [
+              "observe",
+              "locate",
+              "click",
+              "verify"
+            ],
+            "row_id": "s1-h-ordinary",
+            "switches": 0,
+            "terminal": "correct"
+          },
+          "b": {
+            "acquisition_ms": 0,
+            "duration_ms": 10000,
+            "errors": 0,
+            "goal": "save",
+            "method": "ordinary",
+            "operators": [
+              "observe",
+              "locate",
+              "click",
+              "verify"
+            ],
+            "row_id": "s1-h-ordinary",
+            "switches": 0,
+            "terminal": "correct"
+          },
+          "row_id": "s1-h-ordinary"
+        },
+        {
+          "a": {
+            "acquisition_ms": 0,
+            "duration_ms": 9000,
+            "errors": 0,
+            "goal": "save",
+            "method": "shortcut",
+            "operators": [
+              "semantic-save"
+            ],
+            "row_id": "s1-a-shortcut",
+            "switches": 0,
+            "terminal": "correct"
+          },
+          "b": {
+            "acquisition_ms": 0,
+            "duration_ms": 9000,
+            "errors": 0,
+            "goal": "save",
+            "method": "shortcut",
+            "operators": [
+              "semantic-save"
+            ],
+            "row_id": "s1-a-shortcut",
+            "switches": 0,
+            "terminal": "correct"
+          },
+          "row_id": "s1-a-shortcut"
+        },
+        {
+          "a": {
+            "acquisition_ms": 0,
+            "duration_ms": 10000,
+            "errors": 0,
+            "goal": "save",
+            "method": "ordinary",
+            "operators": [
+              "observe",
+              "locate",
+              "click",
+              "verify"
+            ],
+            "row_id": "s1-a-ordinary",
+            "switches": 0,
+            "terminal": "correct"
+          },
+          "b": {
+            "acquisition_ms": 0,
+            "duration_ms": 10000,
+            "errors": 0,
+            "goal": "save",
+            "method": "ordinary",
+            "operators": [
+              "observe",
+              "locate",
+              "click",
+              "verify"
+            ],
+            "row_id": "s1-a-ordinary",
+            "switches": 0,
+            "terminal": "correct"
+          },
+          "row_id": "s1-a-ordinary"
+        }
+      ],
+      "coder_agreement": 1.0,
+      "coder_rows": 4,
+      "horizon": 4,
+      "method_summary": [
+        {
+          "arm": "A",
+          "correct": 1,
+          "elapsed_ms": 10000,
+          "errors": 0,
+          "failed": 0,
+          "method": "ordinary",
+          "n": 1,
+          "switches": 0
+        },
+        {
+          "arm": "A",
+          "correct": 1,
+          "elapsed_ms": 9000,
+          "errors": 0,
+          "failed": 0,
+          "method": "shortcut",
+          "n": 1,
+          "switches": 0
+        },
+        {
+          "arm": "H",
+          "correct": 1,
+          "elapsed_ms": 10000,
+          "errors": 0,
+          "failed": 0,
+          "method": "ordinary",
+          "n": 1,
+          "switches": 0
+        },
+        {
+          "arm": "H",
+          "correct": 1,
+          "elapsed_ms": 4000,
+          "errors": 0,
+          "failed": 0,
+          "method": "shortcut",
+          "n": 1,
+          "switches": 0
+        }
+      ],
+      "natural_method_elapsed_ms": {
+        "A": 10000,
+        "H": 4000
+      },
+      "row_ids": [
+        "s1-a-ordinary",
+        "s1-a-shortcut",
+        "s1-h-ordinary",
+        "s1-h-shortcut"
+      ],
+      "scenario": "shortcut_asymmetry"
+    },
+    {
+      "acquisition_inclusive_horizon_ms": {
+        "A": 10000,
+        "H": 12000
+      },
+      "all_rows_preserved": true,
+      "annotation_pairs": [
+        {
+          "a": {
+            "acquisition_ms": 0,
+            "duration_ms": 7000,
+            "errors": 1,
+            "goal": "save",
+            "method": "ordinary",
+            "operators": [
+              "observe",
+              "click"
+            ],
+            "row_id": "s2-h-fail",
+            "switches": 1,
+            "terminal": "failed"
+          },
+          "b": {
+            "acquisition_ms": 0,
+            "duration_ms": 7000,
+            "errors": 1,
+            "goal": "save",
+            "method": "ordinary",
+            "operators": [
+              "observe",
+              "click"
+            ],
+            "row_id": "s2-h-fail",
+            "switches": 1,
+            "terminal": "failed"
+          },
+          "row_id": "s2-h-fail"
+        },
+        {
+          "a": {
+            "acquisition_ms": 0,
+            "duration_ms": 5000,
+            "errors": 0,
+            "goal": "save",
+            "method": "shortcut",
+            "operators": [
+              "semantic-save"
+            ],
+            "row_id": "s2-h-recover",
+            "switches": 0,
+            "terminal": "correct"
+          },
+          "b": {
+            "acquisition_ms": 0,
+            "duration_ms": 5000,
+            "errors": 0,
+            "goal": "save",
+            "method": "shortcut",
+            "operators": [
+              "semantic-save"
+            ],
+            "row_id": "s2-h-recover",
+            "switches": 0,
+            "terminal": "correct"
+          },
+          "row_id": "s2-h-recover"
+        },
+        {
+          "a": {
+            "acquisition_ms": 0,
+            "duration_ms": 10000,
+            "errors": 0,
+            "goal": "save",
+            "method": "ordinary",
+            "operators": [
+              "observe",
+              "locate",
+              "click",
+              "verify"
+            ],
+            "row_id": "s2-a-success",
+            "switches": 0,
+            "terminal": "correct"
+          },
+          "b": {
+            "acquisition_ms": 0,
+            "duration_ms": 10000,
+            "errors": 0,
+            "goal": "save",
+            "method": "ordinary",
+            "operators": [
+              "observe",
+              "locate",
+              "click",
+              "verify"
+            ],
+            "row_id": "s2-a-success",
+            "switches": 0,
+            "terminal": "correct"
+          },
+          "row_id": "s2-a-success"
+        }
+      ],
+      "coder_agreement": 1.0,
+      "coder_rows": 3,
+      "horizon": 1,
+      "method_summary": [
+        {
+          "arm": "A",
+          "correct": 1,
+          "elapsed_ms": 10000,
+          "errors": 0,
+          "failed": 0,
+          "method": "ordinary",
+          "n": 1,
+          "switches": 0
+        },
+        {
+          "arm": "H",
+          "correct": 0,
+          "elapsed_ms": 7000,
+          "errors": 1,
+          "failed": 1,
+          "method": "ordinary",
+          "n": 1,
+          "switches": 1
+        },
+        {
+          "arm": "H",
+          "correct": 1,
+          "elapsed_ms": 5000,
+          "errors": 0,
+          "failed": 0,
+          "method": "shortcut",
+          "n": 1,
+          "switches": 0
+        }
+      ],
+      "natural_method_elapsed_ms": {
+        "A": 10000,
+        "H": 12000
+      },
+      "row_ids": [
+        "s2-a-success",
+        "s2-h-fail",
+        "s2-h-recover"
+      ],
+      "scenario": "switch_and_failure"
+    },
+    {
+      "acquisition_inclusive_horizon_ms": {
+        "A": 22000,
+        "H": 22000
+      },
+      "all_rows_preserved": true,
+      "annotation_pairs": [
+        {
+          "a": {
+            "acquisition_ms": 0,
+            "duration_ms": 10000,
+            "errors": 0,
+            "goal": "save",
+            "method": "ordinary",
+            "operators": [
+              "observe",
+              "locate",
+              "click",
+              "verify"
+            ],
+            "row_id": "s3-h1",
+            "switches": 0,
+            "terminal": "correct"
+          },
+          "b": {
+            "acquisition_ms": 0,
+            "duration_ms": 10000,
+            "errors": 0,
+            "goal": "save",
+            "method": "ordinary",
+            "operators": [
+              "observe",
+              "locate",
+              "click",
+              "verify"
+            ],
+            "row_id": "s3-h1",
+            "switches": 0,
+            "terminal": "correct"
+          },
+          "row_id": "s3-h1"
+        },
+        {
+          "a": {
+            "acquisition_ms": 0,
+            "duration_ms": 12000,
+            "errors": 0,
+            "goal": "save",
+            "method": "ordinary",
+            "operators": [
+              "observe",
+              "locate",
+              "click",
+              "verify"
+            ],
+            "row_id": "s3-h2",
+            "switches": 0,
+            "terminal": "correct"
+          },
+          "b": {
+            "acquisition_ms": 0,
+            "duration_ms": 12000,
+            "errors": 0,
+            "goal": "save",
+            "method": "ordinary",
+            "operators": [
+              "observe",
+              "locate",
+              "click",
+              "verify"
+            ],
+            "row_id": "s3-h2",
+            "switches": 0,
+            "terminal": "correct"
+          },
+          "row_id": "s3-h2"
+        },
+        {
+          "a": {
+            "acquisition_ms": 0,
+            "duration_ms": 11000,
+            "errors": 0,
+            "goal": "save",
+            "method": "ordinary",
+            "operators": [
+              "observe",
+              "locate",
+              "click",
+              "verify"
+            ],
+            "row_id": "s3-a1",
+            "switches": 0,
+            "terminal": "correct"
+          },
+          "b": {
+            "acquisition_ms": 0,
+            "duration_ms": 11000,
+            "errors": 0,
+            "goal": "save",
+            "method": "ordinary",
+            "operators": [
+              "observe",
+              "locate",
+              "click",
+              "verify"
+            ],
+            "row_id": "s3-a1",
+            "switches": 0,
+            "terminal": "correct"
+          },
+          "row_id": "s3-a1"
+        },
+        {
+          "a": {
+            "acquisition_ms": 0,
+            "duration_ms": 11000,
+            "errors": 0,
+            "goal": "save",
+            "method": "ordinary",
+            "operators": [
+              "observe",
+              "locate",
+              "click",
+              "verify"
+            ],
+            "row_id": "s3-a2",
+            "switches": 0,
+            "terminal": "correct"
+          },
+          "b": {
+            "acquisition_ms": 0,
+            "duration_ms": 11000,
+            "errors": 0,
+            "goal": "save",
+            "method": "ordinary",
+            "operators": [
+              "observe",
+              "locate",
+              "click",
+              "verify"
+            ],
+            "row_id": "s3-a2",
+            "switches": 0,
+            "terminal": "correct"
+          },
+          "row_id": "s3-a2"
+        }
+      ],
+      "coder_agreement": 1.0,
+      "coder_rows": 4,
+      "horizon": 1,
+      "method_summary": [
+        {
+          "arm": "A",
+          "correct": 2,
+          "elapsed_ms": 22000,
+          "errors": 0,
+          "failed": 0,
+          "method": "ordinary",
+          "n": 2,
+          "switches": 0
+        },
+        {
+          "arm": "H",
+          "correct": 2,
+          "elapsed_ms": 22000,
+          "errors": 0,
+          "failed": 0,
+          "method": "ordinary",
+          "n": 2,
+          "switches": 0
+        }
+      ],
+      "natural_method_elapsed_ms": {
+        "A": 22000,
+        "H": 22000
+      },
+      "row_ids": [
+        "s3-a1",
+        "s3-a2",
+        "s3-h1",
+        "s3-h2"
+      ],
+      "scenario": "equal_method_null"
+    }
+  ],
+  "schema": "issue6243-t0-candidate-v1"
+}

@@ -229,3 +229,5 @@ A directory existing here does **not** mean its mechanism is promoted. Negative 
 
 - [`doom/map01_cuda_hud_5752_preflight_stop_20261001/REPORT.md`](doom/map01_cuda_hud_5752_preflight_stop_20261001/REPORT.md) — Issue #5752 allocation-01 pre-candidate record; its authoritative STOP reason and timestamp are reconciled in [CORRECTION.md](doom/map01_cuda_hud_5752_preflight_stop_20261001/CORRECTION.md). CUDA hypothesis remains untested.- [Issue #6156 escrowed optional-resource budget T0](analysis/escrow_optional_budget_6156_t0_20261002/REPORT.md) — Docker PASS_METHOD_SCOPED over 9,988 reachable states / 27,748 transitions; balanced coordination benefit and skew/crash stranded-right cost retained; no runtime claim.
 
+- [`analysis/method_selection_fairness_6243_t0_v1/REPORT.md`](analysis/method_selection_fairness_6243_t0_v1/REPORT.md) — Issue #6243 T0 synthetic accounting PASS only; matched-human-data eligibility HOLD.
+
