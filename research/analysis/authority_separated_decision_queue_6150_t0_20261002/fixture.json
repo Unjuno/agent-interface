@@ -1,0 +1,18 @@
+{
+  "schema": "authority-queue-fixture-v1",
+  "service_proxy_only": true,
+  "batch_wait": 2,
+  "urgent_release": {"id": "R0", "at": 2, "duration": 1, "must_bypass": true},
+  "events": [
+    {"type": "arrive", "id": "A", "version": 1, "at": 0, "deadline": 8, "duration": 2, "principal": "pA", "target": "doc-A", "effect": "save", "decision": "accept"},
+    {"type": "arrive", "id": "B", "version": 1, "at": 0, "deadline": 12, "duration": 3, "principal": "pB", "target": "doc-B", "effect": "delete", "decision": "deny"},
+    {"type": "arrive", "id": "C", "version": 1, "at": 1, "deadline": 9, "duration": 2, "principal": "pC", "target": "file-C-old", "effect": "publish", "decision": "accept"},
+    {"type": "arrive", "id": "D", "version": 1, "at": 1, "deadline": 6, "duration": 2, "principal": "pD", "target": "file-D", "effect": "share", "decision": "no_response"},
+    {"type": "arrive", "id": "E", "version": 1, "at": 1, "deadline": 11, "duration": 2, "principal": "pE", "target": "report-E", "effect": "export", "decision": "accept"},
+    {"type": "cancel", "id": "C", "version": 1, "at": 2, "reason": "effect_changed"},
+    {"type": "arrive", "id": "C", "version": 2, "at": 3, "deadline": 10, "duration": 2, "principal": "pC", "target": "file-C-new", "effect": "publish", "decision": "accept"}
+  ],
+  "policy_names": ["IMMEDIATE", "FIFO", "EARLIEST_DEADLINE", "BOUNDED_BATCH"],
+  "required_corruptions": ["cross_card_receipt", "stale_version_receipt", "wrong_target_or_effect", "duplicate_receipt", "defer_urgent_release"]
+}
+
