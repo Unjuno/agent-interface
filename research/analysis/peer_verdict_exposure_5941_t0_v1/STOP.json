@@ -1,0 +1,28 @@
+{
+  "schema": "peer-verdict-exposure-5941-stop-v1",
+  "allocation_id": "PEER-VERDICT-EXPOSURE-5941-T0-20261001-01",
+  "disposition": "STOP_DUPLICATE_ACTIVE_T0_PR",
+  "stopped_at_utc": "2026-10-01T09:53:00Z",
+  "latest_main_at_stop": "733981dda72414c33d12c0687430989f12366db0",
+  "collision": {
+    "pr": 5954,
+    "url": "https://github.com/Unjuno/agent-interface/pull/5954",
+    "state": "open_draft",
+    "disposition": "HOLD_AUDITOR_NEGATIVE_CONTROL_NOOP",
+    "overlap": "same Issue #5941, finite synthetic peer-verdict exposure/quorum-credit T0 hypothesis; different row encoding does not justify a duplicate candidate allocation"
+  },
+  "counts": {
+    "construction_tests_passed": 4,
+    "formal_candidate_invocations": 0,
+    "formal_auditor_invocations": 0,
+    "gpu_calls": 0,
+    "model_calls": 0,
+    "containers": 0,
+    "retries": 0
+  },
+  "h": "A finite exposure-aware quorum accounting rule must not double-credit peer-exposed verdicts; this allocation did not test that hypothesis because an overlapping active T0 already exists.",
+  "t": "Frozen additive package and construction suite were prepared on a distinct branch. Before the formal candidate gate, GitHub-MCP open-PR search and PR fetch found #5954, an active same-Issue T0 with a retained one-shot candidate/auditor result and HOLD.",
+  "d": "STOP_DUPLICATE_ACTIVE_T0_PR; scientific result NOT_EVALUATED. Do not run candidate, auditor, or CUDA work under this allocation.",
+  "c": "The competing PR's different finite deck (66 rows) and this package's 128 graph rows are method encodings of the same scientific question; they are not independent empirical replications.",
+  "u": "No statement about LLM conformity, capture authenticity, GUI effects, GPU benefit, verifier policy, or task outcome. Existing #5954 result remains owned by its branch and unchanged."
+}
