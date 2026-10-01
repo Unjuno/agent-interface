@@ -2,12 +2,15 @@
   "allocation": "recovery-sentinel-5776-probe-intervention-t1-20261001-02",
   "issue": 5776,
   "state": "PREPARATION_ONLY",
+  "allocation_status": "STOP_RESOURCE_COORDINATION_BEFORE_CANDIDATE",
+  "stop_reason": "No explicit exclusive #5776 slot grant; requested neighboring #5846 slot remains allocated to a different task, and shared A07 Created-container ownership/lifecycle gate is unresolved.",
+  "stop_observed_utc": "2026-10-01T07:35:17Z",
   "base_main": "da7770df8bd896738a8a7e0ccc8ea45e10b3e645",
   "branch": "research/5776-probe-intervention-t1-02-20261001",
   "path": "research/analysis/recovery_sentinel_5776_probe_intervention_t1_20261001_02",
   "source_sha256": {
     "README.md": "48a40c9e288d62d2188c4a7f0e5a5cbcb0faf1f56948ba672315376e264aa1fc",
-    "PREREG.md": "af55c2cf85ba516f601f189472cbb3772d693c194423a69d0dec75b6bd4d1fff",
+    "PREREG.md": "e6cdd7eb103fd71cb58ace2b2c88cb0f9261b715c24b753c65f96f3aa3d651ef",
     "fixture.json": "163f85659dabb59861627f4641d6df211d45a1965352d5d5e2e3f396b39256ab",
     "runner.py": "d332bea86527efc1c08f84fc4a0760f7bc41ed2fc07a1da38d13cfda2c418c15",
     "audit.py": "4e4a997cc5dfed5fb7f04ce322215dc8ca2906abc26e10c13fb4ca7698d5c64f",
@@ -17,7 +20,8 @@
     "scope": "host-only probe-dose sensitivity; not formal candidate/audit",
     "script_sha256": "98ec1814bcddebb679fb616b7f8f76f75a517f0ad19755336904749e9c06aa5f",
     "output_sha256": "32d3ccaa832ba189dc380d37e5aa10f988f2892f6d956d48dff61f60425d6da8",
-    "invalid_predecessor_sha256": "32d3ccaa832ba189dc380d37e5aa10f988f2892f6d956d48dff61f60425d6da8"
+    "invalid_predecessor_sha256": "32d3ccaa832ba189dc380d37e5aa10f988f2892f6d956d48dff61f60425d6da8",
+    "independent_replay": "PASS_14_DOSES_EXACT"
   },
   "pre_run_image": {
     "reference": "python:3.12-slim@sha256:950206c37262dd86c55659797f6ee418fee30535072f65a82ed470d985f5cda5",
@@ -39,7 +43,8 @@
     "auditor": "sudo docker run --network none --cpus 1 --memory 256m --pids-limit 64 --read-only --tmpfs /tmp --mount type=bind,src=/home/taka/study/recovery_sentinel_5776_probe_intervention_t1_20261001_02,dst=/src,readonly --mount type=bind,src=/home/taka/out,dst=/out,readonly python:3.12-slim@sha256:950206c37262dd86c55659797f6ee418fee30535072f65a82ed470d985f5cda5 python -B /src/audit.py /out/raw.json"
   },
   "proposed_window_utc": {"start": "2026-10-01T10:20:00Z", "end": "2026-10-01T10:50:00Z"},
+  "formal_stop": {"candidate": 0, "independent_auditor": 0, "retry": 0, "container_started": false},
   "invocations": {"candidate": 0, "independent_auditor": 0, "retry": 0},
   "expected_image": "python:3.12-slim@sha256:950206c37262dd86c55659797f6ee418fee30535072f65a82ed470d985f5cda5",
-  "preparation_note": "Allocation-01 STOPped before candidate on main advance. Allocation-02 is a fresh, distinct allocation and must pass a new main/queue/machine/image/hash/output gate before any formal invocation."
+  "preparation_note": "Allocation-01 STOPped before candidate on main advance. Allocation-02 is terminally STOPped before candidate due to no explicit exclusive slot grant and unresolved shared A07 Created-container ownership/lifecycle. Do not invoke candidate/auditor or reuse this allocation."
 }
