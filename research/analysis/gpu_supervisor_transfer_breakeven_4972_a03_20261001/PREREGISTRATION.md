@@ -18,3 +18,4 @@ This allocation is an independent follow-up to #4972/#5813. Their resident-input
 
 Candidate: `python runner.py`, once. Separate auditor: `python audit.py`, once only after candidate exit 0. The result path is unique to this allocation. At launch, recheck exact current main, queue handoff/lease, local pinned image digest/platform and source/data hashes, empty outputs and adequate stable disk space, GPU/process/container inventory, and no path/ref collision. Any failed gate is a pre-candidate STOP; never retry this allocation.
 
+
