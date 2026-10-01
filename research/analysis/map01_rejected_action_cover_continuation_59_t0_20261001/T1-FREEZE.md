@@ -42,3 +42,21 @@ any gate differs or the daemon is unavailable, stop before candidate and
 record the reason. Candidate and auditor receipts (CID, stdout, stderr, exit
 code, inspect) live under `results/container-t1/receipts/`; their only shared
 data is the candidate JSON in the dedicated initially empty `output/` folder.
+
+The frozen study mount is
+`/Users/taka/Documents/Codex/2026-09-19/new-chat-7/work/agent-interface-59-rejected-action-cover-continuation-t0-20261001/research/analysis/map01_rejected_action_cover_continuation_59_t0_20261001`;
+the output mount is its `results/container-t1/output` child, while receipts
+are in the sibling `results/container-t1/receipts`. After creating those two
+directories and verifying output is empty, run the candidate exactly once:
+
+```sh
+docker --context orbstack run --pull=never --name ai59-cover-cont-t1-candidate --cidfile /Users/taka/Documents/Codex/2026-09-19/new-chat-7/work/agent-interface-59-rejected-action-cover-continuation-t0-20261001/research/analysis/map01_rejected_action_cover_continuation_59_t0_20261001/results/container-t1/receipts/candidate.cid --mount type=bind,src=/Users/taka/Documents/Codex/2026-09-19/new-chat-7/work/agent-interface-59-rejected-action-cover-continuation-t0-20261001/research/analysis/map01_rejected_action_cover_continuation_59_t0_20261001,dst=/src,readonly --mount type=bind,src=/Users/taka/Documents/Codex/2026-09-19/new-chat-7/work/agent-interface-59-rejected-action-cover-continuation-t0-20261001/research/analysis/map01_rejected_action_cover_continuation_59_t0_20261001/results/container-t1/output,dst=/out --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --cap-drop ALL --security-opt no-new-privileges --pids-limit 64 --memory 512m --cpus 1 --env PYTHONDONTWRITEBYTECODE=1 --workdir /tmp python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B /src/candidate.py --output /out/candidate_output.json > /Users/taka/Documents/Codex/2026-09-19/new-chat-7/work/agent-interface-59-rejected-action-cover-continuation-t0-20261001/research/analysis/map01_rejected_action_cover_continuation_59_t0_20261001/results/container-t1/receipts/candidate.stdout 2> /Users/taka/Documents/Codex/2026-09-19/new-chat-7/work/agent-interface-59-rejected-action-cover-continuation-t0-20261001/research/analysis/map01_rejected_action_cover_continuation_59_t0_20261001/results/container-t1/receipts/candidate.stderr
+```
+
+Only after exit 0 and a valid six-row candidate file, run the auditor once in a
+separate container with the same isolation/resource flags and mounts, using
+the distinct name `ai59-cover-cont-t1-auditor`, CID file
+`results/container-t1/receipts/auditor.cid`, command
+`python -B /src/auditor.py --input /out/candidate_output.json --output /out/audit.json`,
+and stdout/stderr files `auditor.stdout`/`auditor.stderr` in the receipts
+directory. Capture inspect JSON by container name. Do not remove containers.
