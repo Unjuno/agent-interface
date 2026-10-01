@@ -1,0 +1,42 @@
+{
+  "allocation": "GPU-SUPERVISOR-TRANSFER-BREAK-EVEN-4972-20261002-08",
+  "audit_sha256": "08d3a5ee130e3e9215d5fdf56527650cc18ac9cd096f717adb5f768dbfbbcccf",
+  "base_main_sha": "093b39fdab8d8cd04c422f8d9956deef1b40a692",
+  "branch": "research/gpu-supervisor-transfer-breakeven-4972-a08-20261002",
+  "cdi_spec_sha256": "724b8c7d0e582ac5c51e45a61e3ed3fd98c859f287315d3fd62da38cca482398",
+  "container_image_ref": "pytorch/pytorch@sha256:831247999fbf7e08f61b3e39f6d77ee434f38f6f07f769d00db451e853878067",
+  "container_platform": "linux/amd64",
+  "contract_test_sha256": "035fcfaa320b1924dad41e4d0bc1a4201529eb72e4191aab6584cfcfc4c54fda",
+  "dataset_sha256": "cff2fd4aeaa0856bc2cc282272230d647b5bb23b039b541d47e22386ae9d2f0b",
+  "formal_auditor_invocations": 0,
+  "formal_candidate_invocations": 0,
+  "fresh_dataset_rows": 1024,
+  "issue": 6322,
+  "mutation_control_test_sha256": "b0cc70626e0b622888e27f9bb628e519cc822bf210439c1d4f4974ea749eeba7",
+  "output_path": "research/analysis/gpu_supervisor_transfer_breakeven_4972_a08_20261002/",
+  "platform": "Arch Linux WSL 2; Podman 6.1.3 rootful/crun; PyTorch 2.5.1+cu121; CUDA 12.1; RTX 3080 Laptop GPU via NVIDIA CDI",
+  "prepare_sha256": "ca2ff18c3e42092a580a0779d48a9ef9df016afd00d3613f9e7674a640e6e9f9",
+  "preregistration_sha256": "297a2b4f0b971547dfa69e7ddbd1b3bace994b379bc4c426b18b429fc5a4e0f9",
+  "readme_sha256": "9e591ecf94853b4a3a06e70512294d0b5b62c32f20eab8de26a2376987c4e1c8",
+  "retries": 0,
+  "run_commands_sha256": "e38bd3e51fc6da09ac32c2822745309956d84a37809bf5304cbea1cc5c9a6da2",
+  "runner_sha256": "eb596e9a875b24f553a9306007e652571944849b216ac8e2dcbe6f499a093a55",
+  "runtime_output_path": "/root/research/outputs/gpu_supervisor_transfer_breakeven_4972_a08_20261002/",
+  "runtime_request": {
+    "coordination_issue": 5085,
+    "must_follow_issue_6308_release": true,
+    "requested_window_utc": "2026-10-02T00:45:00Z/2026-10-02T01:00:00Z",
+    "status": "REQUEST_ONLY"
+  },
+  "schema": "gpu-supervisor-transfer-break-even-freeze-v1",
+  "seed": 49720261008,
+  "source_freeze_created_utc": "2026-10-01T23:30:42.176899Z",
+  "stratum_counts": {
+    "ambiguous": 256,
+    "forced_yield": 256,
+    "fresh_valid": 256,
+    "stale": 256
+  },
+  "synthetic_auditor_test_sha256": "b192b501d4681fe9849c9ddbdcc18ae049b583921611e91e12c07147b3e5efbc",
+  "wsl_runtime_sha256": "b53d4b8548148cbddfd65384e0665903c40ce4d252d514bff9e9bd7fb2426b17"
+}
