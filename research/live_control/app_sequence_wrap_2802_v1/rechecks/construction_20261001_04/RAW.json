@@ -1,0 +1,195 @@
+{
+  "bound_ns": 20000000,
+  "mode": "construction",
+  "rows": [
+    {
+      "candidate": "SATISFIED",
+      "expected": "SATISFIED",
+      "linear_sequence": "SATISFIED",
+      "rep": 0,
+      "returncode": 0,
+      "rows": [
+        {
+          "counter_mod": 256,
+          "generation": "g-0",
+          "label": "A",
+          "rep": 0,
+          "scenario": "NORMAL_CONTIG",
+          "seq": 10,
+          "source_ns": 239989116268919
+        },
+        {
+          "counter_mod": 256,
+          "generation": "g-0",
+          "label": "B",
+          "rep": 0,
+          "scenario": "NORMAL_CONTIG",
+          "seq": 11,
+          "source_ns": 239989120268919
+        }
+      ],
+      "scenario": "NORMAL_CONTIG",
+      "stderr": "",
+      "timestamp_only": "SATISFIED"
+    },
+    {
+      "candidate": "SATISFIED",
+      "expected": "SATISFIED",
+      "linear_sequence": "UNKNOWN_ORDER",
+      "rep": 0,
+      "returncode": 0,
+      "rows": [
+        {
+          "counter_mod": 256,
+          "generation": "g-0",
+          "label": "A",
+          "rep": 0,
+          "scenario": "WRAP_CONTIG",
+          "seq": 255,
+          "source_ns": 239989298023498
+        },
+        {
+          "counter_mod": 256,
+          "generation": "g-0",
+          "label": "B",
+          "rep": 0,
+          "scenario": "WRAP_CONTIG",
+          "seq": 0,
+          "source_ns": 239989302023498
+        }
+      ],
+      "scenario": "WRAP_CONTIG",
+      "stderr": "",
+      "timestamp_only": "SATISFIED"
+    },
+    {
+      "candidate": "SATISFIED",
+      "expected": "SATISFIED",
+      "linear_sequence": "UNKNOWN_ORDER",
+      "rep": 0,
+      "returncode": 0,
+      "rows": [
+        {
+          "counter_mod": 256,
+          "generation": "g-0",
+          "label": "A",
+          "rep": 0,
+          "scenario": "WRAP_HEARTBEAT",
+          "seq": 254,
+          "source_ns": 239989475591835
+        },
+        {
+          "counter_mod": 256,
+          "generation": "g-0",
+          "label": "H",
+          "rep": 0,
+          "scenario": "WRAP_HEARTBEAT",
+          "seq": 255,
+          "source_ns": 239989477591835
+        },
+        {
+          "counter_mod": 256,
+          "generation": "g-0",
+          "label": "B",
+          "rep": 0,
+          "scenario": "WRAP_HEARTBEAT",
+          "seq": 0,
+          "source_ns": 239989479591835
+        }
+      ],
+      "scenario": "WRAP_HEARTBEAT",
+      "stderr": "",
+      "timestamp_only": "SATISFIED"
+    },
+    {
+      "candidate": "UNKNOWN_GAP",
+      "expected": "UNKNOWN_GAP",
+      "linear_sequence": "UNKNOWN_ORDER",
+      "rep": 0,
+      "returncode": 0,
+      "rows": [
+        {
+          "counter_mod": 256,
+          "generation": "g-0",
+          "label": "A",
+          "rep": 0,
+          "scenario": "WRAP_GAP",
+          "seq": 254,
+          "source_ns": 239989660093506
+        },
+        {
+          "counter_mod": 256,
+          "generation": "g-0",
+          "label": "B",
+          "rep": 0,
+          "scenario": "WRAP_GAP",
+          "seq": 0,
+          "source_ns": 239989664093506
+        }
+      ],
+      "scenario": "WRAP_GAP",
+      "stderr": "",
+      "timestamp_only": "SATISFIED"
+    },
+    {
+      "candidate": "UNKNOWN_COUNTER",
+      "expected": "UNKNOWN_COUNTER",
+      "linear_sequence": "UNKNOWN_ORDER",
+      "rep": 0,
+      "returncode": 0,
+      "rows": [
+        {
+          "counter_mod": 256,
+          "generation": "g-0",
+          "label": "A",
+          "rep": 0,
+          "scenario": "MISSING_MODULUS",
+          "seq": 255,
+          "source_ns": 239989831110266
+        },
+        {
+          "counter_mod": null,
+          "generation": "g-0",
+          "label": "B",
+          "rep": 0,
+          "scenario": "MISSING_MODULUS",
+          "seq": 0,
+          "source_ns": 239989835110266
+        }
+      ],
+      "scenario": "MISSING_MODULUS",
+      "stderr": "",
+      "timestamp_only": "SATISFIED"
+    },
+    {
+      "candidate": "EXPIRED",
+      "expected": "EXPIRED",
+      "linear_sequence": "UNKNOWN_ORDER",
+      "rep": 0,
+      "returncode": 0,
+      "rows": [
+        {
+          "counter_mod": 256,
+          "generation": "g-0",
+          "label": "A",
+          "rep": 0,
+          "scenario": "LATE_WRAP",
+          "seq": 255,
+          "source_ns": 239990132653220
+        },
+        {
+          "counter_mod": 256,
+          "generation": "g-0",
+          "label": "B",
+          "rep": 0,
+          "scenario": "LATE_WRAP",
+          "seq": 0,
+          "source_ns": 239990162653220
+        }
+      ],
+      "scenario": "LATE_WRAP",
+      "stderr": "",
+      "timestamp_only": "EXPIRED"
+    }
+  ]
+}
