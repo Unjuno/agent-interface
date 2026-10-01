@@ -39,5 +39,6 @@ The diagram is an intake/navigation view. It does not require every idea to beco
 
 - [`workflows/`](workflows/) — GitHub Actions for runtime checks, release packaging, pages, research retention, and scoped live research workflows.
 - [`workflows/README.md`](workflows/README.md) — workflow map and interpretation notes.
+- [`wslc-local-containers.md`](wslc-local-containers.md) — local WSL Containers (`wslc`) pilot and migration gates for container-backed research.
 
 Workflow presence is not a support or promotion claim. Scientific status is recorded in the relevant research report and [`../RESEARCH.md`](../RESEARCH.md); user-facing release status is defined under [`../release/`](../release/).
