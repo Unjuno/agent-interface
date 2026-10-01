@@ -174,6 +174,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`belief_auto_recommit_semantic_boundary_r3_v1/`](belief_auto_recommit_semantic_boundary_r3_v1/)
 - [`belief_recommit_epoch_aba_r2_v1/`](belief_recommit_epoch_aba_r2_v1/)
 - [`belief_repair_decision_lattice_r4_v1/`](belief_repair_decision_lattice_r4_v1/)
+- [`belief_stream_scheduling_6097_t0_20261001/`](belief_stream_scheduling_6097_t0_20261001/)
 - [`blackstart_causal_cut_5970_t0_20261001/`](blackstart_causal_cut_5970_t0_20261001/)
 - [`blackstart_causal_cut_5970_t1_20261001/`](blackstart_causal_cut_5970_t1_20261001/)
 - [`blackstart_prospective_trace_5970_t2_20261001/`](blackstart_prospective_trace_5970_t2_20261001/)
