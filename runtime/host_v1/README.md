@@ -338,6 +338,11 @@ There is no rollback, automatic remint, action queue or input replay. Each alias
 retains its own expiry, and every later input still needs fresh visual guards
 and ordinary admission. One registration request does not establish token or
 latency savings.
+The [fresh primary batch case](../results/primary-batch-01/README.md) uses the
+built host helper to register two references in one request, then completes one
+exact-once guarded save with explicit hover re-grounding and bounded completion
+observation. Partial-registration stopping is separately covered by contract
+tests; the live case is not a matched efficiency comparison.
 # Optional feedback after public input release
 
 The `persistent-x11` public MCP route accepts `inspect_after: "app"` with
