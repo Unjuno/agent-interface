@@ -6,7 +6,8 @@ count = 0. This file does not report a result for H.
 
 ## Frozen inputs
 
-- Base main at worktree creation: `ff2164a8b16d386571c91ebba19f6604b4776581`.
+- Intake main: `ff2164a8b16d386571c91ebba19f6604b4776581`.
+- Rebased main before formal execution: `b7b724ee06125a146c68071c1d03e9556a70c5f6`.
 - Branch: `research/crash-atomic-suppression-5795-t0-20261001`.
 - Additive path: `research/experiments/crash_atomic_suppression_5789_t0/`.
 - Protocol: `FREEZE.md`.

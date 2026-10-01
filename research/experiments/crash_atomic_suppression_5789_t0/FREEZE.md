@@ -1,7 +1,9 @@
 # Issue #5795 — T0 protocol freeze (pre-construction)
 
-Parent idea: GitHub Issue #5789. Allocation request: Issue #5795. Base main
-observed locally before construction: `ff2164a8b16d386571c91ebba19f6604b4776581`.
+Parent idea: GitHub Issue #5789. Allocation request: Issue #5795. Intake main
+before construction: `ff2164a8b16d386571c91ebba19f6604b4776581`. The branch was
+subsequently rebased, before formal execution, onto newer main
+`b7b724ee06125a146c68071c1d03e9556a70c5f6`.
 
 ## H/T/D/C/U
 
