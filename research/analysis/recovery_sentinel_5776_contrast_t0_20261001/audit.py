@@ -117,11 +117,25 @@ def audit(doc, fx):
         margins = [x["pointwise_margin"] for x in ev if x["tick"] in fx["probe_ticks"]]
         margin_min = min(margins) if margins else None
         pointwise_warning = margin_min is not None and margin_min <= fx["pointwise_margin_warning_threshold"]
-        future_loss = any(x["loss_units"] > 0 for x in ev if x["tick"] > fx["probe_ticks"][-1])
+        future_loss_tick = next((x["tick"] for x in ev
+                                 if x["tick"] > fx["probe_ticks"][-1] and x["loss_units"] > 0), None)
+        future_loss = future_loss_tick is not None
+        recovery_warning_tick = observed_returns[-1]["return_tick"] if recovery_warning and observed_returns else None
+        pointwise_warning_tick = next((x["tick"] for x in ev if x["tick"] in fx["probe_ticks"]
+                                       and x["pointwise_margin"] <= fx["pointwise_margin_warning_threshold"]), None)
+        recovery_lead = future_loss_tick - recovery_warning_tick \
+            if future_loss_tick is not None and recovery_warning_tick is not None else None
+        pointwise_lead = future_loss_tick - pointwise_warning_tick \
+            if future_loss_tick is not None and pointwise_warning_tick is not None else None
         unknown = pending is not None
         for key, val in (("recovery_ratio", ratio), ("recovery_warning", recovery_warning),
+                         ("recovery_warning_tick", recovery_warning_tick),
+                         ("recovery_warning_lead_ticks", recovery_lead),
                          ("pointwise_margin_min", margin_min), ("pointwise_warning", pointwise_warning),
-                         ("future_loss", future_loss), ("unknown_return", unknown)):
+                         ("pointwise_warning_tick", pointwise_warning_tick),
+                         ("pointwise_warning_lead_ticks", pointwise_lead),
+                         ("future_loss", future_loss), ("future_loss_tick", future_loss_tick),
+                         ("unknown_return", unknown)):
             if e.get(key) != val:
                 errors.append(f"derived_{key}:{mechanism}:{eid}")
 
@@ -131,17 +145,22 @@ def audit(doc, fx):
     recovery_sens = sum(e["recovery_warning"] for e in target) / len(target) if target else None
     margin_sens = sum(e["pointwise_warning"] for e in target) / len(target) if target else None
     recovery_fpr = sum(e["recovery_warning"] for e in negatives) / len(negatives) if negatives else None
+    target_leads = [e["recovery_warning_lead_ticks"] for e in target if e["recovery_warning"]]
+    minimum_target_lead = min(target_leads) if target_leads else None
     false_alarm_by_load = {
         load: (sum(e["recovery_warning"] for e in negatives if e.get("load") == load)
                / sum(e.get("load") == load for e in negatives))
         for load in fx["loads"]
     }
     pass_gate = bool(target and recovery_sens >= 0.75 and recovery_sens - margin_sens >= 0.25
+                     and minimum_target_lead is not None
+                     and minimum_target_lead >= fx["minimum_warning_lead_ticks"]
                      and recovery_fpr is not None and recovery_fpr <= 0.10 and not errors)
     metrics = {"heldout_episodes": len(heldout), "target_gradual_loss_episodes": len(target),
                "gradual_recovery_sensitivity": recovery_sens,
                "pointwise_margin_sensitivity": margin_sens,
                "incremental_sensitivity": recovery_sens - margin_sens if target else None,
+               "minimum_target_warning_lead_ticks": minimum_target_lead,
                "negative_episodes": len(negatives), "recovery_false_alarm_rate": recovery_fpr,
                "recovery_false_alarm_rate_by_load": false_alarm_by_load,
                "gradual_recovery_warnings": sum(e["recovery_warning"] for e in target),

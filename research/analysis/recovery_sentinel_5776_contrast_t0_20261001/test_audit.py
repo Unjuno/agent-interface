@@ -30,6 +30,7 @@ class ContrastAuditTests(unittest.TestCase):
         self.assertEqual(result["disposition"], "FAIL_METHOD_SCOPED")
         self.assertEqual(result["metrics"]["gradual_recovery_sensitivity"], 1.0)
         self.assertEqual(result["metrics"]["pointwise_margin_sensitivity"], 0.0)
+        self.assertEqual(result["metrics"]["minimum_target_warning_lead_ticks"], 14)
         self.assertEqual(result["metrics"]["recovery_false_alarm_rate"], 0.25)
         self.assertEqual(result["metrics"]["recovery_false_alarm_rate_by_load"],
                          {"low": 0.25, "near": 0.25, "high": 0.25})

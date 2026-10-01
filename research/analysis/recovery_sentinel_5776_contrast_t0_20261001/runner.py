@@ -54,6 +54,13 @@ def episode(fx, load, mechanism, eid):
 
     durations = [r["duration_ticks"] for r in returns]
     ratio = durations[-1] / durations[0] if len(durations) >= 2 and durations[0] else None
+    recovery_warning = ratio is not None and ratio >= fx["recovery_ratio_warning_threshold"]
+    pointwise_margin_min = min(x["pointwise_margin"] for x in rows if x["tick"] in probes)
+    pointwise_warning = pointwise_margin_min <= fx["pointwise_margin_warning_threshold"]
+    future_loss_tick = next((x["tick"] for x in rows if x["tick"] > probes[-1] and x["loss_units"] > 0), None)
+    recovery_warning_tick = returns[-1]["return_tick"] if recovery_warning and returns else None
+    pointwise_warning_tick = next((x["tick"] for x in rows if x["tick"] in probes
+                                   and x["pointwise_margin"] <= fx["pointwise_margin_warning_threshold"]), None)
     return {
         "episode_id": f"{load}-{mechanism}-{eid:02d}",
         "load": load,
@@ -63,10 +70,17 @@ def episode(fx, load, mechanism, eid):
         "events": rows,
         "returns": returns,
         "recovery_ratio": ratio,
-        "recovery_warning": ratio is not None and ratio >= fx["recovery_ratio_warning_threshold"],
-        "pointwise_margin_min": min(x["pointwise_margin"] for x in rows if x["tick"] in probes),
-        "pointwise_warning": min(x["pointwise_margin"] for x in rows if x["tick"] in probes) <= fx["pointwise_margin_warning_threshold"],
-        "future_loss": any(x["loss_units"] > 0 for x in rows if x["tick"] > probes[-1]),
+        "recovery_warning": recovery_warning,
+        "recovery_warning_tick": recovery_warning_tick,
+        "recovery_warning_lead_ticks": future_loss_tick - recovery_warning_tick
+            if future_loss_tick is not None and recovery_warning_tick is not None else None,
+        "pointwise_margin_min": pointwise_margin_min,
+        "pointwise_warning": pointwise_warning,
+        "pointwise_warning_tick": pointwise_warning_tick,
+        "pointwise_warning_lead_ticks": future_loss_tick - pointwise_warning_tick
+            if future_loss_tick is not None and pointwise_warning_tick is not None else None,
+        "future_loss": future_loss_tick is not None,
+        "future_loss_tick": future_loss_tick,
         "unknown_return": pending_return is not None,
     }
 
