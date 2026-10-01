@@ -91,13 +91,22 @@ class NativeHandleBridgeTests(unittest.TestCase):
             width_in_pixels=1280, height_in_pixels=800)
         bridge.backend.observe_read_only.return_value = {"sha256": "captured"}
         bridge.session.backend = bridge.backend
-        with self.assertRaisesRegex(X11BackendError, "binding changed"):
+        with self.assertRaisesRegex(X11BackendError, "binding changed") as raised:
             NativeHandleBridge.observe(bridge)
         self.assertEqual(bridge.sequence, 7)
         self.assertEqual(set(bridge.history), {7})
         bridge.backend.close.assert_not_called()
         bridge.session.dispatch.assert_not_called()
-        self.assertEqual(bridge._save.call_args.args[1]["status"], "returned")
+        self.assertEqual(type(raised.exception).__name__, 'CaptureBindingChanged')
+        self.assertTrue(bridge.review_required)
+        public=[call.args[1] for call in bridge._save.call_args_list
+                if call.args[0].startswith('public-observation-')]
+        self.assertEqual(public[-1]['status'],'returned')
+        refusal=bridge._save.call_args.args[1]
+        self.assertEqual(refusal['reason'],'association_changed')
+        self.assertEqual(refusal['before'],{'focus':20})
+        self.assertEqual(refusal['after'],{'focus':21})
+        self.assertFalse(refusal['authority_granted'])
 
     def test_public_dispatch_retains_report_and_caller_owned_session(self):
         bridge = self.review_bridge()

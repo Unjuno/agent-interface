@@ -130,3 +130,17 @@ case-sensitive: `Home` is valid, while `HOME` is rejected unless explicitly
 supported as an alias. Backend preflight can refuse such a program before
 execution; read its retained detail and cleanup rather than claiming an action
 completed or blindly retrying it.
+
+## Binding changes during capture
+
+If the bridge detects a different focus/surface/geometry before and after a
+capture, it retains the public report and a `capture-binding-changed-*.json`
+record, requires explicit window review, and raises `CaptureBindingChanged`
+(an `X11BackendError` subtype). The compiled graph recognizes only its typed
+`ObservationAssociationChanged` boundary and returns `SAFE_YIELD /
+association_changed`, preserving completed transitions and pending effects.
+No valid observation sequence/history entry is published for that capture.
+The latest evidence still refers to the last valid frame, not the changed
+capture. Review the actual window and obtain fresh grounding before new input.
+There is no automatic window selection, retry, confirmation or effect success.
+Other capture, callback, artifact and I/O errors still propagate and are retained.
