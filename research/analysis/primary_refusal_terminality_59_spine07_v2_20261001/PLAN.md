@@ -6,7 +6,7 @@ Status: construction candidate only. No candidate, auditor, Docker container, or
 
 **H.** In exact spine-07 source, response-envelope extraction ran after the transport catch. A malformed reply could throw before STOP latched, allowing a primary that caught the exception to dispatch again. This candidate moves `read(reply)` and `isError` extraction inside the existing fail-and-latch boundary, preserving the original exception and reply.
 
-**T.** Four deterministic mock cases in one candidate invocation: malformed envelope, valid response, declared refusal, and transport throw. The malformed and transport cases attempt one further effectful dispatch and public close. A separate raw-only auditor runs once iff candidate exits 0. No MCP, game, GUI, model, X11, GPU, or OS input.
+**T.** Four deterministic mock cases in one candidate invocation: missing-content and JSON-null malformed envelopes, valid response, declared refusal, and transport throw. The malformed and transport cases attempt one further effectful dispatch and public close. A separate raw-only auditor runs once iff candidate exits 0. No MCP, game, GUI, model, X11, GPU, or OS input.
 
 **D.** PASS only if malformed and transport cases latch STOP before exception propagation, reject the second effectful attempt locally (host effectful-call count exactly 1), and allow close; valid and declared-refusal controls remain usable without STOP; exact source identity and raw rows pass the independent auditor. Any second effectful call is `FAIL_UNCERTAIN_DELIVERY_REPLAY`. Provenance, image, queue, or audit failure is STOP.
 

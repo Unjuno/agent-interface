@@ -37,6 +37,9 @@ export function createPrimaryTrialCaller(host, route, sinks, expectations = []) 
         reply = await host.sendPresented(tool, args, sinks);
         // Envelope extraction is inside the fail-and-latch boundary.
         meta = read(reply);
+        if (meta === null || typeof meta !== 'object' || Array.isArray(meta)) {
+          throw new TypeError('malformed response envelope');
+        }
         isError = reply.result.isError === true;
       } catch (error) {
         stop('transport, presentation, or response-envelope failure');
