@@ -67,3 +67,7 @@ Historical and superseded integration paths remain in place when their exact nam
 - [Broker timeout-start #5074 / PR #5113 preservation](broker_fake_child_timeout_start_5074_v5_20260928/ARCHIVE_QUALIFICATION_20261001.md): `STOP_PRECHECK_ONLY_NOT_FORMAL`; 29 exact historical source/construction files, no formal raw or audit. The self-release declaration and freeze/receipt mismatches are preserved with explicit qualifications; no lease or scientific PASS/FAIL is established.
 
 - [Mindustry three-arm economics #5130 / PR #5136 preservation](mindustry_three_arm_economics_20260928/ARCHIVAL_QUALIFICATION.md): 44 exact historical source/synthetic-construction blobs; `PASS_CONSTRUCTION_ONLY`, sentinel identities and historical-only 86/86 host checks. Docker coordination violations remain disclosed; no live/model/formal economics result. Source PR remains Draft and owner #5130 stays open.
+
+## Retained source with result-publication HOLD
+
+- [Inkscape ROI reanchor #4359](inkscape_roi_reanchor_d4p1_v1/RECOVERY_STATUS.md): exact frozen source capsule is recoverable; Issue #4359 reports the completed 30-case scoped PASS, but formal raw/result/audit/control bytes are absent from the branch and its Actions runs. This source-only preservation does not independently verify or integrate the reported formal result; keep the Issue and original branch open for exact-byte recovery.
