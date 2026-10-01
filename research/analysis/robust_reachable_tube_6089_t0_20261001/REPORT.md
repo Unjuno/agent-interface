@@ -19,7 +19,9 @@ The seven valid-model cases produced robust horizons: wide corridor 4; near uppe
 
 The release-boundary negative control began at x=28 with safe upper bound 30, zero commanded movement, disturbances {-1,0,+1}, and one release-in-flight slot. A two-slot active hold can reach x=30 at its observation deadline, but release can reach x=31; therefore h=2 is refused. The largest certified horizon is h=1, whose release completes at tick 2 without leaving the safe set.
 
-In the wide corridor the selector admits the cap h=4; in the four constrained cases where fixed h=4 is refused, the robust selector still admits h=1. The nominal-point arm's longer request in the uncertain corridor is rejected by the common bounded-disturbance gate. The separate +3 disturbance stress exits the safe set at x=8, but +3 is outside the frozen {-1,0,+1} assumption and is not counted as an in-bound tube failure; it demonstrates why the hard bound must be valid.
+In the wide corridor the selector admits the cap h=4. In three constrained cases with a positive +1 command, fixed h=4 is refused while the robust selector admits h=1. The fourth constrained case is the deliberate release-boundary negative control with action=0; it tests release safety only and is not counted as useful commanded occupancy. These are per-case admission outcomes, not a matched-duration observation-cost comparison. The nominal-point arm's longer request in the uncertain corridor is rejected by the common bounded-disturbance gate. The separate +3 disturbance stress exits the safe set at x=8, but +3 is outside the frozen {-1,0,+1} assumption and is not counted as an in-bound tube failure; it demonstrates why the hard bound must be valid.
+
+Post-run record clarification: the frozen protocol describes useful displacement as `h` in the unit-action examples. The release-boundary control explicitly overrides the action to zero; the candidate output and auditor correctly record `h × action = 0` for that case. Treat that fixture strictly as a release gate, not as useful movement. The frozen protocol remains unchanged for provenance.
 
 ## Interpretation and limits
 
