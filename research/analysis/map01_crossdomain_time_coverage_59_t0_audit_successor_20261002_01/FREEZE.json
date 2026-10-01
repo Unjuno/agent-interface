@@ -1,0 +1,78 @@
+{
+  "schema": "r133-6164-raw-audit-successor-freeze-v1",
+  "allocation_id": "R133-6164-RAW-AUDIT-SUCCESSOR-20261002-01",
+  "status": "FORMAL_RAW_AUDIT_CONSUMED",
+  "owner": "current local Codex autonomous-research task (GitHub account Unjuno)",
+  "allocation_window_utc": {
+    "start": "2026-10-01T17:45:00Z",
+    "end": "2026-10-01T18:15:00Z"
+  },
+  "source_main_sha": "f16663ef3d7176613ade9217e5747b5e03ceb004",
+  "parent_pr": {
+    "number": 6164,
+    "head_sha": "edb62ea4f935c3bf987010623c6aa103306ce14e"
+  },
+  "parent_issue": 6169,
+  "parent_allocation_id": "R133-CROSSDOMAIN-TIME-COVERAGE-59-T0-20261002-01",
+  "parent_freeze_sha256": "35f158b207746affd76147a6a9a752253023b21b2ff978bbc65632b0529b173e",
+  "parent_candidate_result_sha256": "255040f5bdc78e62161a8d1391820f64c28b0355810090249c519c06b359f0d5",
+  "parent_original_audit_result_sha256": "a7edac9fe0fa342bcf09d2c173842bfb17ab99fdbf78d8cbbf0b227b39ca745d",
+  "input_source_commit": "279ee4aee96c5646360239409931821726566aa2",
+  "inputs": {
+    "doom-v38-events.jsonl": {
+      "path": "research/doom/results/map01-v38-integrated-threat-live-01/runtime/events.jsonl",
+      "git_blob_sha": "02d65d49b61feadbdec2e051bd23d1ca845d5df1",
+      "sha256": "80b964c9ab7d86fbd0b2bc56957157e018e9dbb90457f286995a2e6036192bc3",
+      "bytes": 308873
+    },
+    "doom-v39-events.jsonl": {
+      "path": "research/doom/results/map01-v39-coast-liveness-live-01/runtime/events.jsonl",
+      "git_blob_sha": "cbaeed9c7ba27b53cef9d10730ae33313371ad9a",
+      "sha256": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381",
+      "bytes": 565849
+    },
+    "doom-analysis.json": {
+      "path": "research/doom/results/map01-v38-v39-control-tempo-posthoc-v1/analysis.json",
+      "git_blob_sha": "dc2286e956dfbc2481710cd6400cd58470bae4b7",
+      "sha256": "7b7541174c39fac708ba6c28f371f40fb68bf71743e66c9fbcb517d45e78bf71",
+      "bytes": 11433
+    },
+    "openttd-events.jsonl": {
+      "path": "research/live_control/results/timing-envelope-openttd-l-06/fixed-astra/runtime/events.jsonl",
+      "git_blob_sha": "8ccb166927329313bb316b2cd40208c49119c10c",
+      "sha256": "b9e707b006a918b232f6d8915adc6a95e4d7e4ee789fec7ef4e1fba7e2df61ae",
+      "bytes": 108100
+    },
+    "openttd-observer.txt": {
+      "path": "research/live_control/results/timing-envelope-openttd-l-06/fixed-astra/runtime/game-stderr.txt",
+      "git_blob_sha": "1a5c1167d15cddf674ad9060f3d44bbedcfcf005",
+      "sha256": "4bcfb5b2632e9b2dc76f5e3f67a73f30cbd6b142578b495f0b204a2ec9696ca4",
+      "bytes": 591020
+    },
+    "openttd-audit.json": {
+      "path": "research/live_control/results/timing-envelope-openttd-l-06/posthoc-audit.json",
+      "git_blob_sha": "4875434559d95b7049bc4e4aa278e496e46a2f6e",
+      "sha256": "8377e663d6f3b88eb41b73d85212f903f21b4879010835f9e2d1f100de4bee5c",
+      "bytes": 8002
+    }
+  },
+  "runtime": {
+    "python": "3.11.9",
+    "duration_seconds": 5.6,
+    "container": false,
+    "wsl": false,
+    "gpu": false,
+    "model": false,
+    "game": false,
+    "gui": false,
+    "os_input": false,
+    "local_disk_write": false,
+    "network_fetch_before_audit": true
+  },
+  "invocation_accounting": {
+    "successor_auditor_invocations": 1,
+    "candidate_invocations": 0,
+    "predecessor_auditor_invocations": 0,
+    "retries": 0
+  }
+}
