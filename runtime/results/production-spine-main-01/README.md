@@ -41,8 +41,9 @@ order. Context was not reset. Exact provider model/settings are not independentl
 identified by this harness. Host timing includes tool, logging, conversation and
 orchestration gaps; it is not model thinking, useful feedback or semantic latency.
 There is no independently measured model token/cost or human comparison.
-Consequently **the correctness check passes but Issue #2789's overall integration
-acceptance remains `HOLD_INTEGRATION_INCOMPLETE` at the model-boundary requirement**.
+Consequently the initial archival assessment recorded
+`HOLD_INTEGRATION_INCOMPLETE` at the model-boundary requirement despite passing
+correctness. That initial assessment and its frozen records remain unchanged.
 This result does not establish causal speedup, token savings, general GUI success,
 WSL superiority over Docker, human tempo or product completion.
 
@@ -66,4 +67,35 @@ After rebasing onto main `0283bcc90f2d33cbbe74358fa3bcb5bb80ee95a0`, the runtime
 implementation bytes remained unchanged from the frozen source. At rebased head
 `14847eda8a2faa411ed951e1733beef5ea7fe8b7`, local native checks passed all 345
 protocol and 156 harness tests. Full logs and the compatibility receipt are in
-`rebased-checks/`; these contract checks do not remove the model-boundary HOLD.
+`rebased-checks/`; these contract checks alone do not identify model configuration.
+
+## Post-hoc requested-model configuration assessment
+
+The integration owner subsequently inspected this chat's own Codex session records.
+Forty-six selected outer tool calls cover all 25 explicit guarded input choices
+(including the clock-only expired-alias choice) and all 12 direct input choices.
+Their preceding Codex `turn_context` records consistently name **gpt-6.1-sol,
+reasoning effort medium**. The appendix derives the ordered input choices from
+the selected call records and matches them to the original 24 guarded and 12
+direct executed programs. It rejects a substituted model configuration.
+
+`model-boundary-appendix/` explicitly retains projections of the original tool
+records and context fields, including source-record hashes. It does not retain
+the complete private chat or claim lossless context retention. Both normal and
+optimized post-hoc auditors pass. This is evidence of the **requested Codex model
+configuration**, not the provider's resolved internal revision or billing.
+No new input, task, GUI allocation, or experiment was run for this assessment.
+
+With those matched requested settings and the already verified six-task
+setup/observation/action/effect/refusal/recovery pair, the revised adoption decision
+is **`PASS_INTEGRATION_SPINE_SCOPED` for the optional post-release runtime port**.
+The original HOLD, first STOP and raw archive are preserved. Fixed order and
+shared context still prevent causal speed/token inference; useful feedback,
+semantic completion latency, actual tokens/cost, human tempo and general product
+completion remain unproven. This revised decision qualifies the runtime change
+for integration and does not mark the overall Agent Interface objective complete.
+
+```sh
+python3 runtime/results/production-spine-main-01/model-boundary-appendix/verify.py
+python3 -O runtime/results/production-spine-main-01/model-boundary-appendix/verify.py
+```
