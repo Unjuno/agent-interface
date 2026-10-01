@@ -21,7 +21,7 @@ All arms retain every offered row, including skipped and unsafe opportunities. H
 ## Freeze identities
 
 - Issue: `Unjuno/agent-interface#5702`; preregistration clarification: comment `#5923389962`.
-- Source main: `4bf4cb04eade179be9f5a25b130ebe53ea3a71b7`.
+- Source main at final pre-candidate freeze: `0764c928f1a32a3c7f992f1b80cb62f774e2d7ed` (the original source commit `4bf4cb04eade179be9f5a25b130ebe53ea3a71b7` was advanced by an unrelated merge; this branch was rebased before candidate execution and all eight preflight tests passed again; candidate/auditor/test bytes are unchanged).
 - Branch: `research/endogenous-demand-rebound-5702-t0-20261001`.
 - Evidence path: `research/analysis/endogenous_demand_rebound_5702_t0_v1/`.
 - This T0 is explicitly no-model and requests no container/GPU allocation. Obstac is unavailable in this tool/runtime inventory; because the issue's T0 is a tiny deterministic stdlib decision table with no resource request, execute on CPython 3.12. Do not interpret host execution as container validation.
