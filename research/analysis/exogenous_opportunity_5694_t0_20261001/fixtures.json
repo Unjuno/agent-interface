@@ -1,0 +1,13 @@
+{
+  "schema": "exogenous-opportunity-5694-fixtures-v1",
+  "allocation": "EXOGENOUS-OPPORTUNITY-5694-T0-20261001-01",
+  "deadline_ticks": 4,
+  "cases": [
+    {"case_id": "no_stall", "opportunities": [0,10,20,30,40,50,60,70,80,90], "service_ticks": 2, "busy_intervals": [], "safe_stop_on_busy": false, "clock_synchronized": true},
+    {"case_id": "busy_silent", "opportunities": [0,10,20,30,40,50,60,70,80,90], "service_ticks": 2, "busy_intervals": [[25,65]], "safe_stop_on_busy": false, "clock_synchronized": true},
+    {"case_id": "busy_safe_stop", "opportunities": [0,10,20,30,40,50,60,70,80,90], "service_ticks": 2, "busy_intervals": [[25,65]], "safe_stop_on_busy": true, "clock_synchronized": true},
+    {"case_id": "cue_expiry", "opportunities": [0,10,20,30], "service_ticks": 5, "busy_intervals": [], "safe_stop_on_busy": false, "clock_synchronized": true},
+    {"case_id": "overlap_serial", "opportunities": [0,1,2,3], "service_ticks": 2, "deadline_ticks": 2, "busy_intervals": [], "safe_stop_on_busy": false, "clock_synchronized": true},
+    {"case_id": "clock_unknown", "opportunities": [0,10,20], "service_ticks": 2, "busy_intervals": [], "safe_stop_on_busy": false, "clock_synchronized": false}
+  ]
+}

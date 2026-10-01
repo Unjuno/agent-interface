@@ -1,47 +1,26 @@
 {
-  "schema": "exogenous-opportunity-5694-t0-freeze-v1",
+  "schema": "exogenous-opportunity-5694-freeze-v1",
   "allocation": "EXOGENOUS-OPPORTUNITY-5694-T0-20261001-01",
-  "preregistration_issue_comments": [5923917257, 5924041213],
-  "registration_main": "d522a44d247bbdb33ed25ae66a2ed650de3e8e80",
-  "pre_run_main": "3ed5d7865daaaf202c59054c3545ade968446fc8",
-  "main_delta_scope": "17 commits since registration; compare found no change under research/analysis/exogenous_opportunity_5694_t0_20261001/**",
-  "branch": "research/5694-exogenous-opportunity-ledger-t0-20261001",
+  "issue": 5694,
+  "frozen_main": "348ca56ef7c85a77d6a1118a8443d4787d932810",
+  "branch": "research/exogenous-opportunity-5694-t0-20261001",
   "path": "research/analysis/exogenous_opportunity_5694_t0_20261001/",
+  "host": "Microsoft Windows 11; CPython 3.12.10",
+  "containerized": false,
+  "container_reason": "Docker Desktop context is desktop-linux, but com.docker.service is Stopped/Manual and neither Docker Desktop nor com.docker.backend is running. No container inventory is available; this finite standard-library T0 uses host CPU without starting shared services.",
+  "construction_command": "python -B -m unittest -v test_construction.py",
+  "construction_result": "5 tests passed; construction only, before formal candidate/auditor invocation",
+  "candidate_command": "python -B candidate.py raw.jsonl",
+  "auditor_command": "python -B audit.py raw.jsonl audit.json",
+  "formal_candidate_invocations_before_freeze": 0,
+  "formal_auditor_invocations_before_freeze": 0,
+  "no_retry": true,
+  "model_gui_input_gpu_network": false,
   "source_sha256": {
-    "PLAN.md": "8b231269531384e334bd4dd703c12a9e47a62b1f510ffebcb28a56835a533ada",
-    "README.md": "9fea4671f2f09eea80feff7cc8d57fdcd68a9703934732edaacd9f933030bb98",
-    "runner.py": "473c7f0081e834358785be89d5e5e1cd453c66a1e669d2bf280f8cc9d0d731d7",
-    "audit.py": "2852af075e4167bf21ba664d06b5ba637a77dbc04bf896f4a3b713e0a96303cf",
-    "test_contract.py": "ea3a8411c8876cfbc7168c66e5fb78160dd45f9219a6755d739acc7028bf180f"
-  },
-  "fixture": {
-    "canonical_json_sha256": "9a1f4068afbc95244dbd5e9331a136e3e441df23d3f19b4c9bd23374e90a9cee",
-    "scenario_order": ["inversion", "no_stall", "safe_stop", "expiry", "censored", "overlap", "unsynced", "no_exogenous"],
-    "formal_expected_rows": 8
-  },
-  "environment": {
-    "platform": "Ubuntu WSL2, local host",
-    "python": "CPython 3.12.3",
-    "dependencies": "Python standard library only",
-    "docker_invocations": 0,
-    "model_or_network_invocations": 0,
-    "shared_resource_slot": false
-  },
-  "construction": {
-    "unittest": "12/12 PASS",
-    "py_compile": "PASS",
-    "formal_candidate_invocations": 0,
-    "formal_auditor_invocations": 0
-  },
-  "formal": {
-    "candidate_max_invocations": 1,
-    "auditor_max_invocations": 1,
-    "retries": 0,
-    "candidate_command": "python3 -B runner.py raw.json",
-    "auditor_command": "python3 -B audit.py raw.json --out audit.json",
-    "auditor_only_if_candidate_exit": 0,
-    "candidate_stdout_capture": "candidate.stdout",
-    "auditor_stdout_capture": "audit.stdout",
-    "source_or_test_changes_after_freeze": false
+    "PLAN.md": "c83e0aa37267ac21c13de6303c2d72116b2e6c956178eaae8c4d62925feb204b",
+    "fixtures.json": "ac1330dc00afa96130fbe19272e2d36306f8bc42c5c990781226a041382c99a5",
+    "candidate.py": "8269a02509145022f9d5bea8a5bb43e02da1fa29b867e71f5793944aac88c7e8",
+    "audit.py": "bf29cd90c47b71aba2d922e2f4f78ef44a313540722d19216e5f6b067ee714e6",
+    "test_construction.py": "629ccdafa9e4971a2350af0f24720bef0ec95acb94893691c56900580fc6028c"
   }
 }
