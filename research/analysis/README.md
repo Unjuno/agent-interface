@@ -236,6 +236,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`iconfluence_5547_t0_v1/`](iconfluence_5547_t0_v1/)
 - [`incremental_focus_fold_z7r2_v1/`](incremental_focus_fold_z7r2_v1/)
 - [`independent_effect_evidence_successor_1295_v1/`](independent_effect_evidence_successor_1295_v1/)
+- [`integrated_decision_scope_57_t0_v1/`](integrated_decision_scope_57_t0_v1/)
 - [`interaction_consistency_product_lattice_r0_v1/`](interaction_consistency_product_lattice_r0_v1/)
 - [`interface_mutation_adequacy_5541_t0_20261001_v1/`](interface_mutation_adequacy_5541_t0_20261001_v1/)
 - [`interrupt_stack_resume_contract_v1/`](interrupt_stack_resume_contract_v1/)
