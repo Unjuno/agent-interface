@@ -67,10 +67,10 @@ resistance, GUI behavior, or product safety.
 
 The directly user-authorized fresh allocation-02 slot is recorded in
 coordination Issue #5085 as `crash-atomic-suppression-5846-t0-20261001-02`,
-12:30–13:10 UTC. It requires a new isolated ARM64 Ubuntu 24.04 OrbStack guest
+11:50–12:30 UTC. It requires a new isolated ARM64 Ubuntu 24.04 OrbStack guest
 `crash-atomic-5846-20261001-02`, 1 vCPU, 2 GiB memory, 16 GiB disk, and a
 guest-local Docker context `crash-atomic-5846-local-02` whose endpoint is
-`unix:///var/run/docker.sock`. At 12:30 UTC, re-fetch main, Issues/PRs/branches
+`unix:///var/run/docker.sock`. At 11:50 UTC, re-fetch main, Issues/PRs/branches
 and coordination queue; confirm no overlapping active guest, unique guest and
 context, pinned image identity, host/guest path mapping, source/freeze hashes,
 empty separate outputs, and resource limits. The registry index digest is
@@ -85,7 +85,7 @@ The candidate itself uses Docker `--network none`, read-only
 root/source, one CPU, 256 MiB, 64 PIDs, bounded tmpfs and output mounts. Any
 failed or ambiguous gate is retained as STOP with candidate/auditor counts 0/0;
 do not invoke candidate or retry. If the candidate exits zero, run the separate
-auditor once. Stop this guest by 13:10 UTC and preserve its evidence.
+auditor once. Stop this guest by 12:30 UTC and preserve its evidence.
 
 Formal outputs are distinct from all host construction checks. Within the
 reserved window, provision the named guest, create its guest-local Docker

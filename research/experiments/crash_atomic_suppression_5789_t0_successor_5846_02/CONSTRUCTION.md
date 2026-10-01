@@ -12,7 +12,7 @@ container, candidate, or auditor; formal counts are 0/0.
 - Additive path: `research/experiments/crash_atomic_suppression_5789_t0_successor_5846_02/`.
 - Preparation base: main `0707d2254b2789c0bbab97d65645772c8da76a9f`; refreeze to exact main at the allocation-02 start gate.
 - Allocation ID: `crash-atomic-suppression-5846-t0-20261001-02`.
-- Reserved slot: 12:30–13:10 UTC in coordination Issue #5085.
+- Reserved slot: 11:50–12:30 UTC in coordination Issue #5085, after a queue collision forced two successive advances to be reconciled and the conflicting provisional interval released.
 - Guest/context: `crash-atomic-5846-20261001-02` / `crash-atomic-5846-local-02`.
 
 The frozen 15-row process-crash schedule and pass/fail/STOP limits are in
@@ -82,10 +82,10 @@ retained result/failure directories) passed. These are host construction
 checks only. Allocation-02's exact source commit and manifest hashes will be
 re-frozen after the start-window rebase; no formal rows are implied.
 
-At 12:30 UTC re-read main, issues/PRs/branches/queue and active guest/container
+At 11:50 UTC re-read main, issues/PRs/branches/queue and active guest/container
 inventory, rebase and freeze to that exact main, rerun the commands above, and
 verify context endpoint, image digest/platform, source/freeze/argv/mount hashes,
 unique guest/path and absent/empty output paths. Any failed/ambiguous gate is a
 terminal allocation-02 STOP with candidate/auditor 0/0. If gates pass, invoke
 candidate exactly once and auditor only after candidate exit 0. Stop/release
-the guest by 13:10 UTC, preserve all evidence, and do not retry.
+the guest by 12:30 UTC, preserve all evidence, and do not retry.

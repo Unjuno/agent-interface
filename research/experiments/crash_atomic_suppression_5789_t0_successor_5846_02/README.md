@@ -11,7 +11,7 @@ and independent auditor have actually run.
 Branch: `research/crash-atomic-suppression-5846-t0-20261001-02`.
 Path: `research/experiments/crash_atomic_suppression_5789_t0_successor_5846_02/`.
 Allocation: `crash-atomic-suppression-5846-t0-20261001-02`, reserved for
-12:30–13:10 UTC in coordination Issue #5085. New isolated guest/context are
+11:50–12:30 UTC in coordination Issue #5085. New isolated guest/context are
 `crash-atomic-5846-20261001-02` / `crash-atomic-5846-local-02`.
 
 ## Files
