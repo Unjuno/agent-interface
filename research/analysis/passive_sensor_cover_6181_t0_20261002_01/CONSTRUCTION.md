@@ -1,6 +1,6 @@
 # Construction receipt — Issue #6184
 
-Formal candidate/auditor runs: **0**. This records pre-formal test construction only.
+Formal candidate/auditor runs after construction: **1 / 1**, each one-shot and separately recorded in results/RUN.json. Construction attempts below remain pre-formal receipts.
 
 | Attempt | Outcome | Detail |
 |---|---|---|
@@ -15,3 +15,8 @@ Source and fixture identities are in [FREEZE.json](FREEZE.json). The one-shot fo
 ## Attempt 03 — refreshed-source construction gate
 
 After updating the pinned main SHA and candidate/auditor constants to `8d6ad7be277fff929a665e4fed44f8ee89b33bad`, the exact frozen blobs were re-read and materialized without byte changes (all five Git blob IDs matched FREEZE.json). `python -B -m unittest test_t0 -v`: 7/7 passed; AST parse: PASS. Candidate formal invocations=0; auditor=0. This is construction only.
+
+
+## Formal outcome
+
+Candidate and independent CPU-only raw auditor each ran exactly once on 2026-10-01 18:44 UTC; both exited 0. Disposition: `PASS_METHOD_SCOPED`; audit errors=0; retries=0. See [the result and raw artifacts](results/RESULT.md).
