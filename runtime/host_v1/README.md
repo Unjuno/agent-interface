@@ -34,6 +34,30 @@ await client.close();
 
 The host creates `evidenceDirectory` exclusively. Supply a path that does not exist; do not create that directory before constructing the client. Keep the returned client in a durable caller binding before starting subsequent presentation work.
 
+[The main integration record](../results/presented-host-main-01/README.md)
+retains the missing-API stop, the source-frozen personal recovery trial, and
+original replies/images. Its extra clock request and image preview are counted;
+it does not establish a matched speed or token improvement.
+
+`sendPresented(tool, args, {text, image})` explicitly composes one request with
+presentation of its original reply. Both callbacks are checked before dispatch
+and snapshotted before waiting. The host owns the full send/presentation interval:
+another send, review or close cannot slip between them. `wait()` returns the same
+pending promise; it never resends. A presentation failure retains the original
+reply and blocks further ordinary input. Direct transport `close()` remains
+available after a failure. This is synchronous sequencing at the caller API,
+not a background queue, automatic replay or proof that pixels were understood.
+
+After reading a presented text-only response, callers may use
+`acknowledgeText(response.attempt, {task, phase, reason})`. It writes a separate
+text acknowledgment bound to the unchanged original reply and completed
+presentation, including any original MCP error flag. It sends no new request,
+cannot stand in for image review, and grants no input authority or task success.
+Image-containing replies still require `review(response.attempt, ...)` after
+actual inspection. Changed retained reply bytes cannot be presented or reviewed
+as the originally delivered response. Callback completion and acknowledgment
+are separate events; neither measures model comprehension or semantic latency.
+
 Both `createRelayClient` and `createInstrumentedRelayClient` check the existing
 parent's filesystem capacity before directory allocation, then check the fresh
 directory and write `storage-preflight.json` before starting the relay child.
