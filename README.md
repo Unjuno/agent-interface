@@ -1,116 +1,27 @@
-# Agent Interface
+# #59 per-key occupancy ledger — host-only T0
 
-**A faster interface between AI agents and computers.**
+## H / T / D / C / U
 
-> **Research thesis:** AI agents are becoming highly capable, but the computer-control tools they use are still primitive. If the model is held fixed, a better interface should let the same agent use computers with less waiting, fewer redundant observations, fewer model boundaries, and less recovery work at the same correctness.
+- **H:** A per-key press/release ledger bound to one action and epoch can yield conservative server-processing occupancy bounds; missing or inconsistent receipts must yield `UNKNOWN`, never a duration inferred from the outer program envelope.
+- **T:** One deterministic synthetic two-key overlap ledger; run the candidate once, then a separate raw-only auditor once. Apply five evidence corruptions inside the auditor. No retry.
+- **D:** `PASS_METHOD_SCOPED` only if the auditor independently reproduces `SPACE=32..50 ns` and `W=70..90 ns`, binds one verified-empty terminal receipt, and rejects all five corruptions. This is a construction test, not live occupancy.
+- **C:** Windows host, stdlib Python only; no Docker/X11/GUI/input/model/GPU/network. Docker Desktop service was stopped and the user-level service-start attempt did not start it. This host-only rung does not consume the separately requested #59 live T1 Docker slot.
+- **U:** XSync brackets processing, not application delivery or task usefulness; keymap snapshots are discrete; no live key hold, safety, effect, latency, MAP01, or human-tempo claim follows.
 
-> **Status: Research Preview.** This repository is the public research record. User-facing GitHub Releases are reserved for runnable distributions people can actually download and try.
+The lower bound for a key is `release_request_ns - press_sync_ns`; the upper bound is `release_sync_ns - press_request_ns`. These bounds assume a single owner and no unlogged external input. The candidate does not aggregate overlapping per-key intervals into a continuous-control claim.
 
-[Landing page](https://unjuno.github.io/agent-interface/) · [Docs](docs/README.md) · [Research](RESEARCH.md) · [Architecture](docs/architecture.md) · [Roadmap](ROADMAP.md) · [Runtime](runtime/README.md) · [Contribute](CONTRIBUTING.md)
+## Run
 
-## What this project is
-
-Agent Interface holds the model fixed and asks whether a better computer interface can reduce avoidable waiting and repeated work without weakening correctness.
-
-- The rich model keeps semantic intent and strategy.
-- Bounded local mechanisms handle high-frequency refinement, verification, and invalidation when they can do so safely.
-- Fresh evidence governs authority; stale, ambiguous, or novel state must yield back to stronger reasoning.
-- Universal computer control remains the fallback floor when optimized routes are unavailable.
-- The project optimizes for solving computer control, not mechanism novelty: existing or standard techniques are preferred when they are the smallest sufficient solution; new mechanisms need a measured residual.
-
-## System shape
-
-```mermaid
-flowchart LR
-    A["Rich model / planner<br/>intent · semantics · strategy"]
-    B{"Agent Interface"}
-    C["Bounded local refinement<br/>macro · servo · watcher"]
-    D{"Fresh evidence<br/>still valid?"}
-    E["Deterministic authority<br/>admission · lease · release"]
-    F["OS / GUI"]
-    G["Incremental feedback"]
-
-    A --> B
-    B -->|"direct operation"| E
-    B -->|"bounded delegation"| C
-    C --> D
-    D -->|"yes"| E
-    D -->|"stale / ambiguous / novel → YIELD"| A
-    E --> F
-    F --> G
-    G --> C
-    G --> A
+```powershell
+python -m unittest discover -s . -p 'test_*.py' -v
+python run_candidate.py
+python audit.py
 ```
 
-## Start here
+Allocation label: `MAP01-PER-KEY-OCCUPANCY-LEDGER-59-T0-20261001-01` (host-only construction; no shared-container lease). Main freeze: `6cd70ad4bfad74e11658057bf024918bffb24add`.
 
-Read the current direction first; check ownership before starting work. Read the relevant sections and linked evidence rather than loading every historical record.
+## First outcome
 
-For the short worker workflow, see [Worker Quickstart](docs/WORKER_QUICKSTART.md). It covers intake, parallel ownership checks, evidence handling, publication, and safe branch disposition.
+On 2026-10-01, Windows host Python 3.11.9 ran the candidate once and a separate raw-only auditor once. The auditor returned `PASS_METHOD_SCOPED`; it reconstructed `SPACE=32..50 ns`, `W=70..90 ns`, and rejected all five declared evidence corruptions. The six host tests pass. The raw and audit JSON are retained under `results/t0-01/`.
 
-| Need | Start with |
-|---|---|
-| Current goal | [Current direction](docs/CURRENT_GOAL.md) and [remaining roadmap gates](ROADMAP.md) |
-| Evidence and remaining gaps | [Progress](docs/PROGRESS_FROM_BASELINE.md) → [evidence map](docs/EVIDENCE_MAP.md) → the selected [ledger entry](RESEARCH.md), report, raw evidence and audit |
-| Ideas and validation gaps | The relevant [Issues](https://github.com/Unjuno/agent-interface/issues), including closed predecessors and their latest updates |
-| Ownership and overlap | [Current handoff](docs/LOCAL_RESEARCH_HANDOFF.md), the selected Issue’s explicit owner/allocation, and related open/closed [PRs](https://github.com/Unjuno/agent-interface/pulls); follow [parallel coordination rules](docs/ISSUE_FAILURE_CLASSIFICATION.md#parallel-coordination-and-evidence-preservation) |
-| Branch cleanup | Check the [branch inventory snapshot](docs/BRANCH_INVENTORY_20261001.md), then refresh PR/Issue links and commit ancestry before any deletion |
-| Archives and provenance | [Retained research namespaces](research/README.md#historical-archival-namespaces) and [document roles](docs/README.md#document-authority-map) |
-
-An open Issue, PR or branch does not mean work is unclaimed. An archival merge does not change a result’s scope or authorize a new allocation.
-
-For architecture, methods and releases, use the [documentation map](docs/README.md). For the current action/image interface, use the [interface guide](runtime/USING_CURRENT_INTERFACE.md).
-
-## Research method
-
-Questions that are exactly determined by contracts, invariants, finite state spaces, or reference oracles are reduced analytically first. Experiments are reserved for the residual that depends on real operating systems, applications, models, timing distributions, workloads, or other environment-dependent behavior.
-
-The clean comparison keeps model, task, environment, and correctness requirement fixed while changing only the interface. See [Research method](docs/RESEARCH_METHOD.md).
-
-Before opening a follow-up Issue, apply [failure classification and Issue routing](docs/ISSUE_FAILURE_CLASSIFICATION.md). A local tool/setup/upload failure is an execution record, not automatically a new research question or a fleet-wide blocker. Preserve its evidence without multiplying wrapper-only successor tasks.
-
-## Evidence and scope
-
-This repository contains analytical results, controlled experiments, live GUI studies, retained failures, audits, and integration work. A component PASS is not automatically an integrated PASS or product claim.
-
-- Evidence ledger: [RESEARCH.md](RESEARCH.md)
-- Research workspace: [research/README.md](research/README.md)
-- Analytical research: [research/analysis/README.md](research/analysis/README.md)
-- Latest detailed handoff: [docs/LOCAL_RESEARCH_HANDOFF.md](docs/LOCAL_RESEARCH_HANDOFF.md)
-- Terminology and status words: [docs/TERMINOLOGY.md](docs/TERMINOLOGY.md)
-
-Current evidence remains scoped. Broad human-tempo computer use, stable cross-platform runtime semantics, and a finished user-facing distribution are not established by this repository.
-
-## Repository layout
-
-```text
-.
-├── README.md              # public entry point
-├── RESEARCH.md            # detailed evidence ledger
-├── ROADMAP.md             # research and release sequence
-├── docs/                  # current goal, architecture, method, evidence map
-├── research/              # analysis, experiments, raw evidence, retained failures
-├── runtime/               # promoted executable semantics and runnable preview
-├── release/               # packaging and release-readiness evidence
-└── site/                  # public presentation layer
-```
-
-Completed evidence paths are generally kept stable for provenance; navigation is added around them instead of cosmetically moving historical artifacts.
-
-## Reproduce and contribute
-
-Research harnesses can inject real input. Use an isolated session or disposable environment and follow the specific experiment's instructions.
-
-```bash
-python -m pip install -r research/requirements.txt
-```
-
-Design ideas and analytical or empirical research proposals are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) and the [Idea issue form](https://github.com/Unjuno/agent-interface/issues/new?template=idea.yml).
-
-## More detail
-
-The previous extended root README material is retained in [docs/PUBLIC_README_DETAILS.md](docs/PUBLIC_README_DETAILS.md). It is kept for continuity and provenance, not as the recommended starting point.
-
-## License
-
-Apache License 2.0. See [LICENSE](LICENSE).
+Provenance caveat: the H/T/D/C/U description and deterministic fixture were written before the candidate invocation, but the complete source-hash manifest was generated after the first outcome. This is therefore an exploratory host-only construction result, not a prospectively source-hash-frozen formal allocation. No rerun was made. The first outcome is preserved as-is; any stronger successor needs a new allocation identity and a pre-run hash freeze.
