@@ -593,15 +593,3 @@ schema before authoring a request; unexpected top-level fields are refused
 before input, and this primary's STOP forbids correcting/resending that trial.
 The syntax-only `interface_validate` tool checks the bounded program, not input
 authority, current target dependencies or outer dispatch argument correctness.
-
-
-Primary stdio command failures include `command_id` and `command_method` to
-identify the rejected request. Non-integer IDs and non-string/unbounded method names are null. These are
-correlation metadata, not completion, input-delivery or replay evidence.
-`state.next_id` remains authoritative for the next envelope: envelope validation
-can reject before consuming an ID, while a later failure consumes it. Do not
-infer a failed ID by subtracting one from next_id. Preserve the error and state;
-a stopped exchange permits only the existing explicit interface_close call.
-Image review uses `review(attempt, {task, phase, reason})` with a positive integer
-attempt and nonempty strings after actually inspecting the image. Nested image/
-text attribution is not this method's review contract.
