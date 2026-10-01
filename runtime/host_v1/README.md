@@ -345,6 +345,9 @@ observation. Partial-registration stopping is separately covered by contract
 tests; the live case is not a matched efficiency comparison.
 # Optional feedback after public input release
 
+For a primary-facing decision sequence and the immediate/delayed/cue tradeoff,
+see [choosing input feedback](FEEDBACK.md).
+
 The `persistent-x11` public MCP route accepts `inspect_after: "app"` with
 `inspect_after_region: [0, 0, 1280, 800]`. It captures that explicit physical
 screen region after completed input and verified neutral release, and rechecks
