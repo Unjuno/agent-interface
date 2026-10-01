@@ -2,7 +2,7 @@
 
 Allocation: `MAP01-ROI-BREAK-EVEN-59-GPU-20261001-01`  
 Branch: `research/doom-gpu-roi-break-even-20261001-01`  
-Source main: `c3227bccfbb7f95ff950edb0d86888ed26f99ece`  
+Source main: `d2567fe0999136fc351d1728b94586c457b0d9d3`  
 Window: 2026-10-01 03:05–03:15 UTC (local Windows RTX 3080 Laptop only)
 
 ## H / T / D / C / U
@@ -21,4 +21,4 @@ Before the one invocation, recheck the allocation window, owner/task overlap, an
 python -B benchmark.py
 ```
 
-The single stdout JSON is the raw record. The independent auditor will parse that retained raw once, regenerate deterministic fixtures from the pinned seed/config, verify every fixture digest and all 21 CPU/CUDA per-frame count vectors against an independent NumPy oracle, then recompute timing summaries and check cardinality. No retrials, threshold changes, warmed data edits, or performance tuning are allowed after invocation.
+The benchmark is self-contained and imports no project code; its additive branch may be based on an earlier commit, while this source-main pin records the repository state at allocation freeze. The single stdout JSON is the raw record. The independent auditor will parse that retained raw once, regenerate deterministic fixtures from the pinned seed/config, verify every fixture digest and all 21 CPU/CUDA per-frame count vectors against an independent NumPy oracle, then recompute timing summaries and check cardinality. No retrials, threshold changes, warmed data edits, or performance tuning are allowed after invocation.
