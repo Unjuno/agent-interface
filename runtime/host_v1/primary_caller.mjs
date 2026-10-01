@@ -1,0 +1,118 @@
+// Opt-in sequential primary caller policy; not runtime input authority.
+export function createPrimaryCaller(host, route, sinks, expectations = [], options = {}) {
+  const controls = new Map(expectations.map(e => [e.id, structuredClone(e)]));
+  if (controls.size !== expectations.length) throw Error('duplicate control id');
+  const consumed = new Set();
+  const observationArguments = route === 'guarded-local' ? {} :
+    structuredClone(options.observationArguments);
+  const canonical = value => JSON.stringify(value, (_key, v) => v && typeof v === 'object' && !Array.isArray(v)
+    ? Object.fromEntries(Object.keys(v).sort().map(k => [k,v[k]])) : v);
+  const tools = new Set(['interface_clock', 'interface_close', 'interface_results',
+    'interface_validate', ...(route === 'guarded-local'
+      ? ['interface_guarded_observe', 'interface_guarded_mint', 'interface_guarded_mint_many',
+        'interface_guarded_input', 'interface_guarded_review_window']
+      : ['interface_observe', 'interface_dispatch'])]);
+  let stopped = null;
+  function stop(reason) { stopped ??= reason; }
+  function read(reply) {
+    const text = reply.result.content.find(c => c.type === 'text')?.text;
+    if (typeof text !== 'string') throw TypeError('missing response JSON text');
+    const meta = JSON.parse(text);
+    if (!meta || typeof meta !== 'object' || Array.isArray(meta)) {
+      throw TypeError('response metadata must be an object');
+    }
+    return meta;
+  }
+  const caller = {
+    state: () => ({ stopped }),
+    async observe(...unexpected) {
+      if (unexpected.length || !observationArguments ||
+          typeof observationArguments !== 'object' || Array.isArray(observationArguments)) {
+        stop('invalid primary observation arguments');
+        throw TypeError(stopped);
+      }
+      return caller.call(route === 'guarded-local' ? 'interface_guarded_observe' :
+        'interface_observe', structuredClone(observationArguments));
+    },
+    async call(tool, args, controlId = null) {
+      if (stopped && tool !== 'interface_close') throw Error('trial stopped: ' + stopped);
+      if (!tools.has(tool)) {
+        stop('unavailable tool ' + tool);
+        throw Error(stopped); // Local rejection before host dispatch.
+      }
+      if (tool === 'interface_guarded_input' && args?.interaction !== undefined &&
+          !['click', 'keyboard', 'move'].includes(args.interaction)) {
+        stop('invalid guarded interaction');
+        throw TypeError(stopped); // Match the public MCP enum before dispatch.
+      }
+      const expected = controlId === null ? null : controls.get(controlId);
+      if (controlId !== null) {
+        if (consumed.has(controlId)) { stop('control already consumed'); throw Error(stopped); }
+        if (!expected || expected.tool !== tool || canonical(expected.args) !== canonical(args)) {
+          stop('control request mismatch'); throw Error(stopped);
+        }
+        consumed.add(controlId);
+      }
+      let reply;
+      try { reply = await host.sendPresented(tool, args, sinks); }
+      catch (error) { stop('transport or presentation failure'); throw error; }
+      try {
+        if (reply.result.isError === true && !expected) {
+          stop('unexpected MCP refusal');
+          return reply; // Framework errors may contain free text, not typed JSON.
+        }
+        const meta = read(reply);
+        const declaredRefusal = expected && reply.result.isError === true && meta.status === 'refused' &&
+          meta.replay_allowed === false && meta.session?.binding_revision === expected.revision &&
+          meta.session?.recovery_required === false && (expected.kind === 'source'
+            ? meta.input_dispatched === false && meta.error === expected.error
+            : meta.result?.input_dispatched === false && !meta.result.execution &&
+              meta.result.guard_checks?.length === 1 && meta.result.guard_checks[0].stage === 'before_admission' &&
+              meta.result.guard_checks[0].status === 'MISSING' && meta.result.guard_checks[0].reason === expected.reason &&
+              meta.result.guard_checks[0].handle === expected.alias);
+        if (expected && !declaredRefusal) stop('control outcome mismatch');
+        if (reply.result.isError && !declaredRefusal) stop('unexpected MCP refusal');
+        if (!declaredRefusal && (tool === 'interface_guarded_input' || tool === 'interface_dispatch')) {
+          const summary = tool === 'interface_dispatch' && meta.schema === 'agent-interface/review-v1' &&
+            meta.receipt?.schema === 'agent-interface/receipt-view-dispatch-summary-v1';
+          const execution = summary ? meta.receipt.execution_summary : meta.result?.execution;
+          const releases = execution?.releases;
+          const completed = summary ? meta.outcome_summary?.execution_status === 'completed' &&
+            meta.outcome_summary.input_release_verified === true && meta.outcome_summary.recovery_required === false &&
+            meta.outcome_summary.error === null : meta.status === 'completed';
+          if (!completed || meta.image_status !== 'image' || !releases?.length ||
+              releases.some(r => r.verified !== true || r.keys_down?.length !== 0 || r.buttons_down?.length !== 0)) {
+            stop('incomplete input or unverified neutral release');
+          }
+        }
+        // Return the original response even after latching STOP. The primary must
+        // receive its text/image evidence; the next ordinary call is prohibited.
+        return reply;
+      } catch (error) {
+        // sendPresented already delivered the original evidence. Extraction or
+        // outcome validation must fail closed before the primary can catch it.
+        stop('response extraction or validation failure');
+        throw error;
+      }
+    },
+    async acknowledgeText(attempt, attribution) {
+      if (!Number.isSafeInteger(attempt) || attempt < 1 ||
+          !['task', 'phase', 'reason'].every(k => typeof attribution?.[k] === 'string' && attribution[k].trim())) {
+        stop('invalid primary acknowledgment arguments');
+        throw TypeError(stopped);
+      }
+      try { return await host.acknowledgeText(attempt, attribution); }
+      catch (error) { stop('text acknowledgment recording failure'); throw error; }
+    },
+    async review(attempt, review) {
+      if (!Number.isSafeInteger(attempt) || attempt < 1 ||
+          !['task', 'phase', 'reason'].every(k => typeof review?.[k] === 'string' && review[k].trim())) {
+        stop('invalid primary review arguments');
+        throw TypeError(stopped); // Do not poison the underlying evidence host.
+      }
+      try { return await host.review(attempt, review); }
+      catch (error) { stop('review recording failure'); throw error; }
+    }
+  };
+  return caller;
+}

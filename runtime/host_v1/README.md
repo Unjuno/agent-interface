@@ -1,6 +1,6 @@
 # Sequential relay host API
 
-These two Node.js ES modules expose the already exercised relay client and optional host instrumentation outside the research tree. They use only Node built-ins and launch an explicit command supplied by the caller. Copy `relay_client.mjs` and `relay_host.mjs` together to use them outside a checkout. They are separate host files, not Python zipapp entries, and require Node.js 22 or newer. The execution relay can be the portable Python archive; see [public MCP transport](../cli_v1/MCP.md).
+These Node.js ES modules expose the already exercised relay client, optional host instrumentation and primary caller policy outside the research tree. They use only Node built-ins and launch an explicit command supplied by the caller. Copy `relay_client.mjs` and `relay_host.mjs` together to use them outside a checkout; include `primary_caller.mjs` when using the opt-in policy. The optional portable host bundle contains all three. They are separate host files, not Python zipapp entries, and require Node.js 22 or newer. The execution relay can be the portable Python archive; see [public MCP transport](../cli_v1/MCP.md).
 
 ```js
 import { createInstrumentedRelayClient } from './relay_host.mjs';
@@ -76,7 +76,66 @@ The callback bodies above must be implemented by the host; empty callbacks do no
 
 Optional `reuseReviewedImages: true` references only a byte-identical PNG previously delivered and explicitly reviewed within this live host. Current metadata remains separate; identical pixels do not acknowledge task completion. Default false preserves full image delivery. Host timestamps partition transport/presentation/caller intervals; they do not measure isolated model reasoning, useful feedback, actual tokens/cost or human tempo.
 
-Run `node --test runtime/host_v1/test_*.mjs`. The original research modules and frozen evidence remain unchanged; promotion changes only the local import paths. No performance or generic task-quality improvement is claimed.
+Run `node --test runtime/host_v1/test_*.mjs`. The original research modules and frozen evidence remain unchanged. The optional primary policy and its regressions are described below. No performance or generic task-quality improvement is claimed.
+
+## Optional primary caller policy
+
+`primary_caller.mjs` exposes the policy used in the primary integration trials
+as `createPrimaryCaller`. It composes an instrumented host and the same delivery
+callbacks, checks the selected mode's tool set and guarded interaction enum,
+and latches STOP on unexpected refusals, uncertain transport/presentation,
+incomplete input, nonneutral release, or response extraction/validation failure.
+A caught extraction exception cannot authorize a second ordinary call. The
+original exception propagates after STOP is set; the host has already presented
+and retained the original response. To reconcile a retained response, use the
+same host's `wait()`; never resubmit the input. Caller STOP permits only
+`interface_close` tool calls, plus attribution and host transport cleanup.
+Public close still requires the primary to inspect its release/cleanup outcome.
+
+```js
+import { createPrimaryCaller } from './primary_caller.mjs';
+const primary = createPrimaryCaller(client, 'guarded-local', {
+  text: deliverText, image: deliverImage,
+});
+const frame = await primary.observe(); // same helper for initial/fresh grounding
+// Actually view the original delivered image, then record that exact attempt:
+await primary.review(frame.attempt, {
+  task: 'edit', phase: 'observe', reason: 'Describe the image actually viewed',
+});
+// Mint references and explicitly choose later actions with primary.call(...).
+```
+
+`observe()` accepts no per-call arguments and sends `interface_guarded_observe`
+with `{}` in `guarded-local` mode. It does not mint or renew a reference, choose
+a target, check expiry, retry input, or claim the primary saw the frame. For
+`direct-post` mode provide the target/frame/region explicitly once:
+
+```js
+const primary = createPrimaryCaller(client, 'direct-post', sinks, [], {
+  observationArguments: {
+    target: 'editor', frame: 'screen_physical_px', region: [0, 0, 800, 600],
+  },
+});
+```
+
+The settings are snapshotted; later caller mutation does not change observation
+scope. Missing direct observation configuration or accidental helper arguments
+latch STOP locally. `call`, `review`, `acknowledgeText` and `state` remain
+explicit methods. Input authority, geometry, source binding, leases and runtime
+admission remain separate server responsibilities. This wrapper does not enforce
+semantic correctness or attest image comprehension.
+
+The fourth argument optionally supplies exact, one-use expected-refusal controls
+for preregistered experiments; normal use should leave it empty. Only the
+declared matching no-input refusal may leave this policy running. It grants no
+runtime authority and never changes the delivered `isError`, text or image.
+Ordinary non-error response metadata must contain a JSON object; malformed
+metadata causes STOP rather than silently becoming an untyped success.
+Unexpected MCP errors may contain free text: the original response is returned
+unchanged after STOP is latched. Frozen spine07/08
+callers and their failures are unchanged. Regression tests address the reported
+malformed-envelope gap and the spine08 observation mistake; they do not establish
+a new completed GUI comparison, real transport uncertainty or speedup.
 
 
 A program can batch several ordered pointer operations in one dispatch. A drag

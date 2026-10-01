@@ -137,7 +137,7 @@ python -m runtime.distribution_v2.build \
   --host-directory results-local/my-bundle/host
 ```
 
-The builder exports `relay_client.mjs`, `relay_host.mjs`, their usage README,
+The builder exports `relay_client.mjs`, `relay_host.mjs`, `primary_caller.mjs`, their usage README,
 `HOST_MANIFEST.json` and host-local `SHA256SUMS`. Both distributions read from
 the same committed revision pinned at build start. Uncommitted host edits are
 excluded. The Python archive bytes are unchanged by this option; Node files
