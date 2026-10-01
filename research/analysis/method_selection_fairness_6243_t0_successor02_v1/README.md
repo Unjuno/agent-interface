@@ -1,6 +1,6 @@
-# Issue #6243 T0 successor-02 — construction only
+# Issue #6243 T0 successor-02 — frozen, not launched
 
-This is a **preparation package**, not a frozen or formal result. It is kept
+This is a **frozen source package**, not a formal result. It is kept
 separate from predecessor allocation 20261002-01, whose one-shot Docker result
 is FAIL_AUDIT_GATE because the equal-method-null fixture was not null.
 
@@ -20,10 +20,12 @@ CONSTRUCTION are not formal outputs.
 
 Formal candidate and auditor invocations: **0/0**. No container was started.
 The exact CPU OrbStack slot is pending explicit release/grant on coordination
-issue #5085; two unrelated containers were running at the last read-only
-inventory. Cached python:3.12-alpine digest was inspected, but that is not an
-allocation. OrbStack's orb CLI is available; the image was read-only inspected,
-but no formal container was launched without the slot grant.
+issue #5085. The latest inventory showed unrelated Docker container
+unjuno-native-ci-6092 and OrbStack VM obs-audit-t1-5681-20261001 running; a
+short-lived container seen earlier had exited. Neither active workload was
+inspected or changed. Cached python:3.12-alpine digest was inspected, but that
+is not an allocation. OrbStack's orb CLI is available; no formal container was
+launched without the slot grant.
 
 Read PLAN.md for H/T/D/C/U, gates and limitations. No human, GUI, causal,
 population, or product claim is supported.

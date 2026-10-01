@@ -11,6 +11,7 @@
 - Slot status: requested, not granted. No container was launched.
 - Construction failures: see FAILURE_CONSTRUCTION_01.txt.
 
-Formal commands must be run only after exact-source freeze and explicit shared
-CPU slot grant. Candidate is one-shot; auditor runs once only if candidate
-exits 0. Do not rerun a consumed formal allocation.
+Exact inputs and gates are frozen in FREEZE.json. Formal commands require the
+explicit shared CPU slot grant and a fresh final inventory. Candidate is
+one-shot; auditor runs once only if candidate exits 0. Do not rerun a consumed
+formal allocation.

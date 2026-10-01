@@ -1,0 +1,74 @@
+{
+  "allocation": "METHOD-SELECTION-FAIRNESS-6243-T0-SUCCESSOR-02-20261002",
+  "issue": 6243,
+  "predecessor_allocation": "method-selection-fairness-6243-t0-v1-20261002-01",
+  "predecessor_disposition": "FAIL_AUDIT_GATE; preserved unchanged",
+  "frozen_at_utc": "2026-10-01T21:21:17Z",
+  "base_main": "4cf0a3dfde1219671b671bf0a9079a11dcb2e159",
+  "source_commit": "96147bf0d7e455779ee38b8419a65aea5ea66657",
+  "branch": "research/method-selection-6243-t0-successor02-20261002",
+  "path": "research/analysis/method_selection_fairness_6243_t0_successor02_v1/",
+  "status_at_freeze": "FROZEN_NOT_LAUNCHED",
+  "formal_candidate_invocations": 0,
+  "formal_auditor_invocations": 0,
+  "formal_retries": 0,
+  "slot_request_comment_id": 5940463632,
+  "latest_slot_inventory_comment_id": 5940734308,
+  "launch_authorized": false,
+  "protocol": {
+    "hypothesis": "With identical method-specific times across arms, differing method-selection frequencies can change natural-method whole-task ordering while descriptive common-method means remain equal.",
+    "trace_pairs": 12,
+    "attempt_rows": 24,
+    "scenario_count": 4,
+    "coder_agreement_threshold": 0.9,
+    "unfinished_penalty_ms": 120000,
+    "horizons": [1, 4, 10],
+    "construction_assertions": 15,
+    "mutation_controls": [
+      "drop_failed_attempt",
+      "omit_acquisition_cost",
+      "use_prohibited_shortcut",
+      "arm_visible_to_coder"
+    ],
+    "expected": {
+      "shortcut_common_method_mean_ms": {"shortcut": 4000, "ordinary": 10000},
+      "shortcut_natural_elapsed_ms": {"H": 22000, "A": 34000},
+      "shortcut_horizon_ms": {
+        "1": {"H": 57000, "A": 34000},
+        "4": {"H": 123000, "A": 136000},
+        "10": {"H": 255000, "A": 340000}
+      },
+      "equal_method_null_total_ms": {"H": 72000, "A": 72000},
+      "switch_case_elapsed_ms": {"H": 24000, "A": 20000},
+      "unfinished_case_h_ms": {"observed": 16000, "penalty": 240000, "scored": 256000}
+    },
+    "scope": "synthetic accounting-method validation only; no human, GUI, causal, population, product, or external-validity claim"
+  },
+  "runtime": {
+    "docker_context": "orbstack",
+    "image": "python:3.12-alpine@sha256:c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b",
+    "platform": "linux/arm64",
+    "image_present_at_freeze": true,
+    "network": "none",
+    "resource_limits": {"cpus": 1, "memory": "512m", "pids": 64},
+    "one_shot_shell": "python3 candidate.py > candidate_stdout.txt 2>&1 && python3 auditor.py > auditor_stdout.txt 2>&1",
+    "container_launch_command_template": "docker run --rm --network none --cpus=1 --memory=512m --pids-limit=64 --read-only --tmpfs /tmp:rw,size=64m --mount type=bind,source=/Users/taka/Documents/Codex/2026-09-19/unjuno-agent-interface-github-mcp-main/outputs/method_selection_fairness_6243_t0_successor02_v1,target=/work -e PYTHONDONTWRITEBYTECODE=1 -w /work python:3.12-alpine@sha256:c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b sh -c 'cd /work && python3 candidate.py > candidate_stdout.txt 2>&1 && python3 auditor.py > auditor_stdout.txt 2>&1'",
+    "slot_granted": false,
+    "reason_not_launched": "Coordination issue #5085 has no explicit release/grant; latest read-only inventory showed unrelated unjuno-native-ci-6092 container and obs-audit-t1-5681-20261001 OrbStack VM running."
+  },
+  "sha256": {
+    "README.md": "f3e0364e185d089ae3533ef08385dccdbd63344ea3e335d0d525922f9938aebf",
+    "CONSTRUCTION.md": "1a6e948ad89f8af636d1498d6a7920e0156429c1f2d23464495ea22a8c6d2226",
+    "PLAN.md": "07ac194d38f1d5c4d5eda9499f7b18f5d1551ab31f543daf2aabbb54765c5f62",
+    "traces.json": "eb1d474523980286b8dcd9a72b24b75ba2b36875ea33e04eda3f49744c7fde43",
+    "key.json": "258c4f28d78ebd1ef7fb09ac0d68eada6b010bb6285ac85dbbd5ab350135ec46",
+    "coder_a.py": "a4a167dda1a0af2d5b84c876830d6d321dc8e0300486689d02d88fa6eac91867",
+    "coder_b.py": "803448fc8c45a542fbf68ea01743a3974d7ac645fa4b253ff5ff48149f65f856",
+    "candidate.py": "87b92c08965be7af1877b31f0d32d60eca6e8444e12f7eb5512a9aec610f08b0",
+    "auditor.py": "f0a6fc7d82faf4ff63a793fbfde2c0dea7ef01c3ed2e4534968eae7604731f0d",
+    "test_method.py": "4536165364b36fc518fa393b9a6fc2b8d8d4bba6cf2872e73bb221a3fdb83140",
+    "FAILURE_CONSTRUCTION_01.txt": "570bb7bf9681bbef950d6d1f63e62ba052754a16eba2f37279554bbbd655b7b2",
+    "CONSTRUCTION_candidate_result.json": "b0b05eb388d1e175ff547dbdc32a6a2b029071e6bd644e1fca67273a124bd754",
+    "CONSTRUCTION_audit_result.json": "8ee74e7b8f396f5a85b5ea51d09cfe6da6063fbff47b24641f9437c4543c60b0"
+  }
+}

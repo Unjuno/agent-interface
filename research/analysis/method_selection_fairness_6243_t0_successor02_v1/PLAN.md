@@ -1,6 +1,6 @@
 # Issue #6243 T0 successor-02 — preparation record
 
-Status: PREPARATION ONLY — not frozen, no formal candidate/auditor run.
+Status: FROZEN_NOT_LAUNCHED — no formal candidate/auditor run.
 
 Predecessor allocation method-selection-fairness-6243-t0-v1-20261002-01 is consumed and remains FAIL_AUDIT_GATE; its GitHub Issue comment and artifacts must not be changed or rerun. This package is an additive successor to correct the invalid equal-method-null fixture (18,000 vs 21,000 ms) and explicitly test the natural-method versus descriptive common-method views.
 
