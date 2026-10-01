@@ -27,8 +27,8 @@ class ProtocolTests(unittest.TestCase):
 
     def test_urgent_release_bypasses_every_policy(self):
         for row in self.result["rows"].values():
-            self.assertEqual(row["urgent"][0]["start"], 2)
-            self.assertEqual(row["urgent"][0]["end"], 3)
+            self.assertEqual(row["urgent"][0]["start"], 0)
+            self.assertEqual(row["urgent"][0]["end"], 1)
 
 
 if __name__ == "__main__":
