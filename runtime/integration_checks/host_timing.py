@@ -69,7 +69,8 @@ def summarize(directory):
             require(active is None and attempt == len(calls) + 1, 'overlap or attempt order')
             require(isinstance(event.get('tool'), str), 'tool identity')
             calls[attempt] = {'attempt': attempt, 'tool': event['tool'], 'send_ms': stamp,
-                              'reply_ms': None, 'presentations': [], 'reviews': []}
+                              'reply_ms': None, 'presentations': [], 'reviews': [],
+                              'text_acknowledgments': []}
             active = ('send', attempt)
             continue
         require(attempt in calls, 'event without send')
@@ -134,6 +135,33 @@ def summarize(directory):
             if presentation.get('image_delivery', {}).get('mode') == 'full':
                 image_base = None
             active = None
+        elif kind == 'text_acknowledgment_recorded':
+            require(active is None and not call['text_acknowledgments'] and
+                    any(p['completed_ms'] is not None for p in call['presentations']),
+                    'unpresented or duplicate text acknowledgment')
+            receipt = json.loads(read(f'text-acknowledgment-{attempt}.json'))
+            reply = json.loads(read(f'reply-{attempt}.json'))
+            content = reply.get('result', {}).get('content')
+            require(reply.get('status') == 'returned' and isinstance(content, list) and content and
+                    all(isinstance(b, dict) and b.get('type') == 'text' and
+                        isinstance(b.get('text'), str) for b in content), 'text-only reply required')
+            require(receipt.get('schema') == 'agent-interface/text-acknowledgment-v1' and
+                    type(receipt.get('attempt')) is int and receipt['attempt'] == attempt and
+                    type(receipt.get('relay_id')) is int and receipt['relay_id'] == reply['id'] and
+                    receipt.get('tool') == call['tool'] and
+                    type(receipt.get('text_blocks')) is int and receipt['text_blocks'] == len(content) and
+                    all(receipt.get(k) == event.get(k) for k in
+                        ('reply_sha256', 'relay_id', 'tool', 'task', 'phase')) and
+                    all(isinstance(receipt.get(k), str) and receipt[k].strip() for k in
+                        ('task', 'phase', 'reason')), 'text acknowledgment identity')
+            result = reply['result']
+            require(('isError' in receipt) == ('isError' in result) and
+                    ('isError' not in result or (type(result['isError']) is bool and
+                     type(receipt['isError']) is bool and receipt['isError'] == result['isError'])),
+                    'text acknowledgment error identity')
+            # Attribution only: this does not establish comprehension or success.
+            call['text_acknowledgments'].append({'recorded_ms': stamp,
+                                                'task': receipt['task'], 'phase': receipt['phase']})
         elif kind == 'review_recorded':
             require(active is None and not call['reviews'], 'overlapping or duplicate review')
             receipt = json.loads(read(f'review-{attempt}.json'))

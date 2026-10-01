@@ -34,6 +34,30 @@ await client.close();
 
 The host creates `evidenceDirectory` exclusively. Supply a path that does not exist; do not create that directory before constructing the client. Keep the returned client in a durable caller binding before starting subsequent presentation work.
 
+[The main integration record](../results/presented-host-main-01/README.md)
+retains the missing-API stop, the source-frozen personal recovery trial, and
+original replies/images. Its extra clock request and image preview are counted;
+it does not establish a matched speed or token improvement.
+
+`sendPresented(tool, args, {text, image})` explicitly composes one request with
+presentation of its original reply. Both callbacks are checked before dispatch
+and snapshotted before waiting. The host owns the full send/presentation interval:
+another send, review or close cannot slip between them. `wait()` returns the same
+pending promise; it never resends. A presentation failure retains the original
+reply and blocks further ordinary input. Direct transport `close()` remains
+available after a failure. This is synchronous sequencing at the caller API,
+not a background queue, automatic replay or proof that pixels were understood.
+
+After reading a presented text-only response, callers may use
+`acknowledgeText(response.attempt, {task, phase, reason})`. It writes a separate
+text acknowledgment bound to the unchanged original reply and completed
+presentation, including any original MCP error flag. It sends no new request,
+cannot stand in for image review, and grants no input authority or task success.
+Image-containing replies still require `review(response.attempt, ...)` after
+actual inspection. Changed retained reply bytes cannot be presented or reviewed
+as the originally delivered response. Callback completion and acknowledgment
+are separate events; neither measures model comprehension or semantic latency.
+
 Both `createRelayClient` and `createInstrumentedRelayClient` check the existing
 parent's filesystem capacity before directory allocation, then check the fresh
 directory and write `storage-preflight.json` before starting the relay child.
@@ -244,3 +268,48 @@ in the summary arm; unchanged image data remains separate. Actual whole-context
 model usage is retained with cache and fixed-order limits. Neither that byte
 reduction nor the single pair proves lower model cost, faster semantic judgment
 or human-comparable live tempo.
+## Optional sequential primary caller
+
+[Main packaging and personal use](../results/primary-helper-main-01/README.md)
+retains the source-pinned distribution failure, corrected checks, original
+six-task candidate evidence, and a fresh exported-helper trial.
+
+The host bundle also exports `createPrimaryCaller` from `primary_caller.mjs`.
+This is an explicit trial policy with positional operation helpers. It latches
+STOP on unexpected refusals, malformed results, incomplete input, nonneutral
+release, transport/presentation failures, or invalid helper arguments. Once
+stopped, only `interface_close` may be sent; review/acknowledgment still bind
+original retained responses. Choose this policy explicitly for a bounded trial.
+The generic instrumented host remains available for caller-decided recovery.
+
+```js
+import { createPrimaryCaller } from './host-bundle/primary_caller.mjs';
+const primary = createPrimaryCaller(client, 'guarded-local', sinks, [], {
+  reviewWindowId: explicitlyConfiguredWindowId,
+});
+const observed = await primary.observe();
+// Actually inspect the image, then record the returned attempt's review.
+await primary.review(observed.attempt, { task, phase: 'observe', reason });
+const minted = await primary.mint(alias, sourceSequence, point, regionSize);
+await primary.acknowledgeText(minted.attempt, {
+  task, phase: 'mint', reason: 'Read this original mint response',
+});
+const acted = await primary.input(alias, offset, 'click', explicitTail);
+// Review the acted image before the next decision. Do not infer task success
+// from neutral execution alone. Close the public session before the host.
+const closed = await primary.call('interface_close', {});
+await primary.acknowledgeText(closed.attempt, {
+  task, phase: 'close', reason: 'Read the original close outcome',
+});
+await client.close();
+```
+
+`mint` requires four positional arguments and `input` requires alias, explicit
+offset, interaction and tail. `reviewWindow()` uses its configured window ID;
+guarded `observe()` accepts no per-call scope. Direct-route observation uses
+the constructor's explicit snapshotted observation arguments. Image reviews and
+text acknowledgments require `response.attempt`, not the entire response object.
+Exact one-use declared refusal controls are optional trial configuration. They
+do not authorize retries, refresh evidence, infer targets, select actions or
+prove semantic completion. This wrapper's tool allowlist excludes activation;
+the generic host exposes the separately documented activation/recovery route.
