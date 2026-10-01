@@ -1,0 +1,162 @@
+name: issue-5521-anergy-t3-container
+
+on:
+  push:
+    branches:
+      - research/5521-anergy-t3-container-20261001-01
+    paths:
+      - research/experiments/issue_5521_anergy_t3/PLAN.md
+      - research/experiments/issue_5521_anergy_t3/run.py
+      - research/experiments/issue_5521_anergy_t3/audit.py
+      - research/experiments/issue_5521_anergy_t3/test_t3.py
+      - research/experiments/issue_5521_anergy_t3/container_arm.py
+      - research/experiments/issue_5521_anergy_t3/assemble_container_raw.py
+      - research/experiments/issue_5521_anergy_t3/audit_container.py
+      - research/experiments/issue_5521_anergy_t3/test_container_arm.py
+      - .github/workflows/issue-5521-anergy-t3-container.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: issue-5521-anergy-t3-container-20261001-01
+  cancel-in-progress: false
+
+jobs:
+  candidate:
+    name: candidate-${{ matrix.policy }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        policy: [clear, tombstone]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Run exactly one frozen policy arm in Docker
+        shell: bash
+        env:
+          POLICY: ${{ matrix.policy }}
+          IMAGE: python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f
+        run: |
+          set -euo pipefail
+          out="$RUNNER_TEMP/issue-5521-candidate-$POLICY"
+          mkdir -p "$out"
+          {
+            date -u +'%Y-%m-%dT%H:%M:%SZ'
+            printf 'workflow_sha=%s\nparent_sha=%s\n' "$(git rev-parse HEAD)" "$(git rev-parse HEAD^)"
+            uname -a
+            python3 --version
+            docker version
+            docker info --format 'Server={{.ServerVersion}} OS={{.OperatingSystem}} Arch={{.Architecture}}'
+          } > "$out/$POLICY.host-environment.txt" 2>&1
+          python3 - "$GITHUB_WORKSPACE/research/experiments/issue_5521_anergy_t3/results/gha-01/FREEZE.json" "$GITHUB_WORKSPACE/research/experiments/issue_5521_anergy_t3" <<'PY'
+          import hashlib, json, pathlib, sys
+          freeze = json.loads(pathlib.Path(sys.argv[1]).read_text())
+          root = pathlib.Path(sys.argv[2])
+          parent = __import__("subprocess").check_output(["git", "rev-parse", "HEAD^"], text=True).strip()
+          if parent != freeze["main_sha"]:
+              raise SystemExit("branch parent does not match preregistered main SHA")
+          actual = {name: hashlib.sha256((root / name).read_bytes()).hexdigest() for name in freeze["source_sha256"]}
+          if actual != freeze["source_sha256"]:
+              raise SystemExit("frozen source hash mismatch")
+          PY
+          docker pull --platform linux/arm64 "$IMAGE" > "$out/$POLICY.image-pull.log" 2>&1
+          docker image inspect "$IMAGE" > "$out/$POLICY.image-inspect.json"
+          name="issue-5521-${POLICY}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          set +e
+          docker run --name "$name" --platform linux/arm64 \
+            --network none --read-only --cpus=1 --memory=256m --pids-limit=64 \
+            --cap-drop=ALL --security-opt=no-new-privileges:true \
+            --tmpfs /tmp:rw,nosuid,nodev,noexec,size=16m \
+            --mount "type=bind,src=$GITHUB_WORKSPACE/research/experiments/issue_5521_anergy_t3,dst=/src,readonly" \
+            --workdir /src "$IMAGE" python -B /src/container_arm.py "$POLICY" \
+            > "$out/$POLICY.jsonl" 2> "$out/$POLICY.stderr"
+          rc=$?
+          set -e
+          printf '{"container_name":"%s","docker_run_exit_code":%s}\n' "$name" "$rc" > "$out/$POLICY.exit.json"
+          docker inspect "$name" > "$out/$POLICY.container-inspect.json"
+          docker rm "$name" > "$out/$POLICY.container-removal.txt"
+          if [ "$rc" -ne 0 ]; then
+            exit "$rc"
+          fi
+
+      - name: Preserve first candidate outcome
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue-5521-t3-candidate-${{ matrix.policy }}
+          path: ${{ runner.temp }}/issue-5521-candidate-${{ matrix.policy }}/
+          if-no-files-found: warn
+          retention-days: 90
+
+  independent-audit:
+    name: independent-raw-only-audit
+    needs: candidate
+    if: ${{ always() && needs.candidate.result == 'success' }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Retrieve both immutable candidate streams
+        uses: actions/download-artifact@v4
+        with:
+          pattern: issue-5521-t3-candidate-*
+          merge-multiple: true
+          path: ${{ runner.temp }}/issue-5521-candidates
+
+      - name: Assemble raw and audit in a separate Docker container
+        shell: bash
+        env:
+          IMAGE: python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f
+        run: |
+          set -euo pipefail
+          out="$RUNNER_TEMP/issue-5521-independent-audit"
+          candidates="$RUNNER_TEMP/issue-5521-candidates"
+          mkdir -p "$out"
+          test -s "$candidates/clear.jsonl"
+          test -s "$candidates/tombstone.jsonl"
+          python3 -c 'import json,pathlib,sys; expected={"clear":0,"tombstone":0}; root=pathlib.Path(sys.argv[1]); actual={p:json.loads((root/f"{p}.exit.json").read_text())["docker_run_exit_code"] for p in expected}; print(json.dumps(actual,sort_keys=True)); assert actual==expected' "$candidates"
+          python3 research/experiments/issue_5521_anergy_t3/assemble_container_raw.py \
+            "$candidates/clear.jsonl" "$candidates/tombstone.jsonl" "$out/raw-container.jsonl" \
+            > "$out/assembly.json"
+          sha256sum "$out/raw-container.jsonl" > "$out/raw-container.sha256"
+          name="issue-5521-auditor-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          docker pull --platform linux/arm64 "$IMAGE" > "$out/auditor.image-pull.log" 2>&1
+          docker image inspect "$IMAGE" > "$out/auditor.image-inspect.json"
+          set +e
+          docker run --name "$name" --platform linux/arm64 \
+            --network none --read-only --cpus=1 --memory=256m --pids-limit=64 \
+            --cap-drop=ALL --security-opt=no-new-privileges:true \
+            --tmpfs /tmp:rw,nosuid,nodev,noexec,size=16m \
+            --mount "type=bind,src=$GITHUB_WORKSPACE/research/experiments/issue_5521_anergy_t3,dst=/src,readonly" \
+            --mount "type=bind,src=$out/raw-container.jsonl,dst=/data/raw-container.jsonl,readonly" \
+            --workdir /src "$IMAGE" /bin/sh -c \
+            'python -B /src/audit_container.py < /data/raw-container.jsonl' \
+            > "$out/audit.stdout" 2> "$out/audit.stderr"
+          rc=$?
+          set -e
+          printf '{"container_name":"%s","docker_run_exit_code":%s}\n' "$name" "$rc" > "$out/auditor.exit.json"
+          docker inspect "$name" > "$out/auditor.container-inspect.json"
+          docker rm "$name" > "$out/auditor.container-removal.txt"
+          cat "$out/audit.stdout"
+          if [ "$rc" -ne 0 ]; then
+            exit "$rc"
+          fi
+
+      - name: Preserve raw stream and independent audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue-5521-t3-independent-audit
+          path: ${{ runner.temp }}/issue-5521-independent-audit/
+          if-no-files-found: warn
+          retention-days: 90
