@@ -1,0 +1,83 @@
+{
+  "allocation": "exact-crop-partial-recompute-1663-20260922-01",
+  "base_main": "2c76b9e41fd9757cba43dd1968ed71695d8e1fd0",
+  "branch": "research/exact-crop-partial-recompute-1663-20260922",
+  "construction": {
+    "failures": 0,
+    "formal_rows": 0,
+    "tests": 6
+  },
+  "environment": {
+    "docker_cli": false,
+    "numpy": "2.3.5",
+    "pillow": "12.3.0",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.13.5"
+  },
+  "files": {
+    "ENVIRONMENT.json": {
+      "bytes": 287,
+      "sha256": "6f00faa60d9ec6675b85a94f997036bd4ac9fadb1ecc109df739d5f25d6740a8"
+    },
+    "PLAN.md": {
+      "bytes": 899,
+      "sha256": "356873b9780041404f69c603159fc9d5dc2c2a2005e24874fbde6c5ba4f7eac3"
+    },
+    "audit.py": {
+      "bytes": 5422,
+      "sha256": "d1b012075e40a762e217ad61f4782d8f253bbd7d4f0c82fe086bb85771531d1b"
+    },
+    "candidate.py": {
+      "bytes": 3149,
+      "sha256": "6686b1b0ac0bd065d9dd4a4dade6d6527ecec534e1e3a12e304d9eef3c159ae3"
+    },
+    "study.py": {
+      "bytes": 5560,
+      "sha256": "098a1e2f1b983480077364e3ec54669de2e978ed58da39d03bcb06043fdfe53d"
+    },
+    "test_study.py": {
+      "bytes": 2555,
+      "sha256": "e28d173c4c14f15e6a5849cd9a936060c192ecc6d741fcf50e459fdd18f796d2"
+    },
+    "upstream/exact_crop_semantic_probe_v1.py": {
+      "bytes": 3957,
+      "sha256": "22e85fbc628dc713f121a4d023885f0b509912618a4bca715105285dd92af4b1"
+    },
+    "upstream/inkscape_selection_frame_probe_v1.py": {
+      "bytes": 5219,
+      "sha256": "b7d21eb76741b84120730334f21ef0692c13f10b2a49064ca7386ae4d877ab42"
+    }
+  },
+  "formal_invocations_before_freeze": 0,
+  "gates": {
+    "contract": "216/216 candidate results exactly equal baseline; authority false; audit errors empty; >=8 corruption controls reject",
+    "metadata_cpu_ratio_max": 0.75
+  },
+  "issue": 4083,
+  "path": "research/measurement/exact_crop_partial_recompute_1663_v1",
+  "rules": {
+    "post_result_tuning": false,
+    "replacement": false,
+    "same_id_retry": false,
+    "shared_runtime_edit": false
+  },
+  "schedule": {
+    "cases": 9,
+    "repetitions": [
+      0,
+      1,
+      2
+    ],
+    "requests_per_case": 24,
+    "workloads": [
+      "METADATA",
+      "ROI",
+      "IMAGE"
+    ]
+  },
+  "schema": "exact-crop-partial-recompute-freeze-v1",
+  "upstream_git_blobs": {
+    "research/live_control/exact_crop_semantic_probe_v1.py": "22a5c022d613039b0386535304cbc432009699af",
+    "research/live_control/inkscape_selection_frame_probe_v1.py": "f4a68e95e6bbeb2896a00168f0c88282551be4e4"
+  }
+}
