@@ -1,0 +1,29 @@
+{
+  "schema": "map01-global-owner-cross-event-fixture-v1",
+  "source_commit": "2b899413d30fcee0ce97e7c69d83f7b2f69e89dd",
+  "workflow_path": ".github/workflows/map01-measurement-integration-live-04.yml",
+  "owner_helper_path": "research/orchestration/o3-g7/global-owner/formal_allocation_global_owner_v1.py",
+  "allocation_id": "map01-measurement-integration-live-04",
+  "required_branch": "main",
+  "runs": [
+    {
+      "id": 34971205791,
+      "run_number": 1,
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "e947b9809a3449de837e45211a4cb416d990279a",
+      "path": ".github/workflows/map01-measurement-integration-live-04.yml",
+      "source": "retained GitHub Actions run"
+    },
+    {
+      "id": 90000000001,
+      "run_number": 2,
+      "event": "workflow_dispatch",
+      "head_branch": "main",
+      "head_sha": "3d6ffc76d535309cf3820ed33cb9327354f03648",
+      "path": ".github/workflows/map01-measurement-integration-live-04.yml",
+      "source": "synthetic counterexample row; not a real GitHub run"
+    }
+  ],
+  "claim": "Workflow path/allocation identity is fixed across both event rows; the dispatch may explicitly supply the same allocation_id because the workflow_dispatch input is caller-selectable."
+}
