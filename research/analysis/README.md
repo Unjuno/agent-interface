@@ -476,7 +476,11 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`x11_shift_gate_hold_2388_v1/`](x11_shift_gate_hold_2388_v1/)
 - [`xterm_resource_footprint_transfer_v1/`](xterm_resource_footprint_transfer_v1/)
 - [`xterm_resource_footprint_transfer_v2/`](xterm_resource_footprint_transfer_v2/)
-- [`xterm_resource_footprint_transfer_v3/`](xterm_resource_footprint_transfer_v3/)<!-- END GENERATED ANALYSIS RESULT INDEX -->
+- [`xterm_resource_footprint_transfer_v3/`](xterm_resource_footprint_transfer_v3/)
+
+</details>
+
+<!-- END GENERATED ANALYSIS RESULT INDEX -->
 
 ## Interpretation
 
