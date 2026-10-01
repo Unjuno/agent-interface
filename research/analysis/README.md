@@ -132,6 +132,7 @@ The table below summarizes major analytical chains and representative retained o
 
 - [Recovery-rate T0 source and reported host failure: #5776 / source PR #5788](recovery_rate_5776_t0_v1/ARCHIVAL_QUALIFICATION.md) — five exact source/plan files; reported host FAIL_METHOD and Docker STOP retained. No committed raw/result bundle or new replay; distinct from merged #5792/#5859 allocations. Owner #5776 and source Draft #5788 remain open.
 - [Predictive safety-filter T0 host evidence and withdrawn container rung: #5317 / source PR #5336](predictive_safety_filter_5317_v1/ARCHIVAL_QUALIFICATION.md) — six exact files including the 35-cell host raw; reported scoped host PASS and later STOP/HOLD withdrawal retained, with zero container invocations. Distinct from merged T3 #5505; no new replay or runtime-safety claim. Owner #5317 and source Draft #5336 remain open.
+- [Issue #5008 lifecycle allocation-01 STOP](needle_role_skill_lifecycle_4916_v2/RECOVERY_STATUS.md) — exact three-file recovery of the freeze-identity STOP, 11,464/12,288 construction parity failure, and no formal timing run; distinct from #5023/#5053 successors.
 
 ## Complete retained result directory index
 
