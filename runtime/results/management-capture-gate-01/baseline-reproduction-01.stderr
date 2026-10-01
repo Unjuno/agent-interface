@@ -1,0 +1,54 @@
+test_management_capture_disagreement_withholds_image_on_call_and_lookup (runtime.cli_v1.test_mcp_session.OwnedMCPTests.test_management_capture_disagreement_withholds_image_on_call_and_lookup) ... 
+  test_management_capture_disagreement_withholds_image_on_call_and_lookup (runtime.cli_v1.test_mcp_session.OwnedMCPTests.test_management_capture_disagreement_withholds_image_on_call_and_lookup) (operation='inspect_target', consistency='changed') ... FAIL
+  test_management_capture_disagreement_withholds_image_on_call_and_lookup (runtime.cli_v1.test_mcp_session.OwnedMCPTests.test_management_capture_disagreement_withholds_image_on_call_and_lookup) (operation='review_target', consistency='changed') ... FAIL
+  test_management_capture_disagreement_withholds_image_on_call_and_lookup (runtime.cli_v1.test_mcp_session.OwnedMCPTests.test_management_capture_disagreement_withholds_image_on_call_and_lookup) (operation='review_target', consistency='unconfirmed') ... FAIL
+
+======================================================================
+FAIL: test_management_capture_disagreement_withholds_image_on_call_and_lookup (runtime.cli_v1.test_mcp_session.OwnedMCPTests.test_management_capture_disagreement_withholds_image_on_call_and_lookup) (operation='inspect_target', consistency='changed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/cli_v1/test_mcp_session.py", line 43, in test_management_capture_disagreement_withholds_image_on_call_and_lookup
+    self.assertEqual([item.type for item in reply.content],['text'])
+AssertionError: Lists differ: ['text', 'image'] != ['text']
+
+First list contains 1 additional elements.
+First extra element 1:
+'image'
+
+- ['text', 'image']
++ ['text']
+
+======================================================================
+FAIL: test_management_capture_disagreement_withholds_image_on_call_and_lookup (runtime.cli_v1.test_mcp_session.OwnedMCPTests.test_management_capture_disagreement_withholds_image_on_call_and_lookup) (operation='review_target', consistency='changed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/cli_v1/test_mcp_session.py", line 43, in test_management_capture_disagreement_withholds_image_on_call_and_lookup
+    self.assertEqual([item.type for item in reply.content],['text'])
+AssertionError: Lists differ: ['text', 'image'] != ['text']
+
+First list contains 1 additional elements.
+First extra element 1:
+'image'
+
+- ['text', 'image']
++ ['text']
+
+======================================================================
+FAIL: test_management_capture_disagreement_withholds_image_on_call_and_lookup (runtime.cli_v1.test_mcp_session.OwnedMCPTests.test_management_capture_disagreement_withholds_image_on_call_and_lookup) (operation='review_target', consistency='unconfirmed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/cli_v1/test_mcp_session.py", line 43, in test_management_capture_disagreement_withholds_image_on_call_and_lookup
+    self.assertEqual([item.type for item in reply.content],['text'])
+AssertionError: Lists differ: ['text', 'image'] != ['text']
+
+First list contains 1 additional elements.
+First extra element 1:
+'image'
+
+- ['text', 'image']
++ ['text']
+
+----------------------------------------------------------------------
+Ran 1 test in 0.126s
+
+FAILED (failures=3)
