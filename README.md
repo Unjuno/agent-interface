@@ -46,6 +46,8 @@ flowchart LR
 
 Read the current direction first; check ownership before starting work. Read the relevant sections and linked evidence rather than loading every historical record.
 
+For the short worker workflow, see [Worker Quickstart](docs/WORKER_QUICKSTART.md). It covers intake, parallel ownership checks, evidence handling, publication, and safe branch disposition.
+
 | Need | Start with |
 |---|---|
 | Current goal | [Current direction](docs/CURRENT_GOAL.md) and [remaining roadmap gates](ROADMAP.md) |
