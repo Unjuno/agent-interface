@@ -227,6 +227,27 @@ class ProcessMatrixConstructionTests(unittest.TestCase):
             self.assertEqual(result["candidate_rows_matching_frozen_gate"], 10)
             self.assertTrue(result["baseline_failures_reproduced"])
 
+            lines = raw.read_text().splitlines()
+            mutated = json.loads(lines[12])
+            mutated["gc"]["retained"] = False
+            tampered = root / "tampered.jsonl"
+            lines[12] = json.dumps(mutated, sort_keys=True)
+            tampered.write_text("\n".join(lines) + "\n")
+            tamper_out = root / "tamper-audit"
+            tamper_out.mkdir()
+            rejected = subprocess.run(
+                [sys.executable, "-B", str(Path(__file__).with_name("audit.py")),
+                 "--raw", str(tampered), "--out", str(tamper_out)],
+                capture_output=True,
+                text=True,
+                timeout=15,
+                env=audit_env,
+            )
+            self.assertEqual(rejected.returncode, 2)
+            self.assertIn("gc_tombstone_retention", json.loads(
+                (tamper_out / "audit.json").read_text()
+            )["errors"][-1])
+
 
 if __name__ == "__main__":
     unittest.main()

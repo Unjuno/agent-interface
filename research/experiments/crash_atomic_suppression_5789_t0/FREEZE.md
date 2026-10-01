@@ -22,16 +22,26 @@ separate candidate and generation writes; C, one SQLite transaction. A parent
 runner owns the child and sends SIGKILL at frozen observable barriers. Cases
 cover pre-write, after first split write, pre-commit, post-commit/pre-ack,
 acknowledged commit/restart, same fingerprint/new generation, changed target
-under same label, reactivation, explicit retirement with a retained tombstone,
-malformed record, and repeated restart. Expiry timing and physical/semantic GC
-are not exercised. One container candidate writes JSONL to its sole output mount. A
+under same label, reactivation, frozen-clock TTL expiry at an exact boundary,
+pre/post-expiry probes, transactional GC to a retained retirement tombstone,
+malformed record, and repeated restart. This is logical fixture GC, not physical
+database-file compaction. One container candidate writes JSONL to its sole output mount. A
 separate raw-only auditor process/container reads retained bytes read-only and
 does not import candidate modules. No GUI, model, network, external receiver,
 shared runtime, multi-writer, or power-loss semantics.
 
+Expiry/GC schedule row: suppression is created at fixture time 100 with TTL 50
+(`expires_at=150`); probe at 149 must deny as unexpired; GC at 149 must perform
+zero transitions and preserve the live row; probe at 150 must fail closed while
+expired state awaits GC; transactional GC at 150 must change exactly one row to
+`RETIRED` with `retired_at=150`; the row must still exist; probe at 150 after GC
+must deny through the retained tombstone. The independent auditor checks every
+clock, row count, retained field, and disposition. No wall-clock sleeps occur.
+
 **D.** PASS is restricted to the frozen process-crash schedule: all
 acknowledged commits survive restart, no stale-generation admission occurs,
-expired/retired identities cannot regain authority, and pre-commit or
+expired identities fail closed before GC and remain denied by a retained
+tombstone after logical GC, retired identities cannot regain authority, and pre-commit or
 post-commit/pre-ack states remain UNKNOWN until positively reconciled. A stale
 admission or lost acknowledged record is FAIL. Incomplete provenance, corrupt
 input, ambiguous process outcome, absent rows/exits, or audit disagreement is
