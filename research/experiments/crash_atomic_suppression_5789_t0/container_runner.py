@@ -30,7 +30,7 @@ def invocation_argv(args: argparse.Namespace) -> list[str]:
     ]
 
 
-def guest_path(path: Path) -> Path:
+def guest_path(path: Path, host_source_root: Path) -> Path:
     """Translate this guest's mounted repo path to its host-side alias."""
     resolved = path.resolve()
     study = Path("/study")
@@ -38,7 +38,9 @@ def guest_path(path: Path) -> Path:
         relative = resolved.relative_to(study)
     except ValueError as exc:
         raise SystemExit("STOP_PATH_OUTSIDE_ASSIGNED_GUEST_MOUNT") from exc
-    return Path(__file__).resolve().parent / relative
+    if not host_source_root.is_absolute():
+        raise SystemExit("STOP_HOST_SOURCE_ROOT_NOT_ABSOLUTE")
+    return host_source_root / relative
 
 
 def load_freeze() -> tuple[dict[str, object], str]:
@@ -131,11 +133,15 @@ def main() -> int:
     mode = args.mode
     if mode == "formal":
         frozen, _ = load_freeze()
+        runtime = frozen.get("runtime")
+        if not isinstance(runtime, dict) or not isinstance(runtime.get("host_source_root"), str):
+            raise SystemExit("STOP_HOST_SOURCE_ROOT_MISSING")
+        host_source_root = Path(runtime["host_source_root"])
         host_args = argparse.Namespace(
             mode=mode,
-            candidate_out=guest_path(args.candidate_out),
-            audit_out=guest_path(args.audit_out) if args.audit_out is not None else None,
-            audit_raw=guest_path(args.audit_raw) if args.audit_raw is not None else None,
+            candidate_out=guest_path(args.candidate_out, host_source_root),
+            audit_out=guest_path(args.audit_out, host_source_root) if args.audit_out is not None else None,
+            audit_raw=guest_path(args.audit_raw, host_source_root) if args.audit_raw is not None else None,
             docker=args.docker,
         )
         if frozen.get("formal_argv") != invocation_argv(host_args):

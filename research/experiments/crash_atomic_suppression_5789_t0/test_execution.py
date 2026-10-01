@@ -59,6 +59,22 @@ class ProcessMatrixConstructionTests(unittest.TestCase):
         self.assertEqual(container_runner.sha256(Path(container_runner.__file__)),
                          hashlib.sha256(Path(container_runner.__file__).read_bytes()).hexdigest())
 
+    def test_guest_path_uses_frozen_host_mount_root_not_guest_file_parent(self):
+        host_root = Path("/private/work/repo/research/experiments/package")
+        mapped = container_runner.guest_path(
+            Path("/study/results/formal-02/candidate"), host_root
+        )
+        self.assertEqual(
+            mapped,
+            host_root / "results/formal-02/candidate",
+        )
+
+    def test_guest_path_rejects_paths_outside_assigned_mount(self):
+        with self.assertRaisesRegex(SystemExit, "STOP_PATH_OUTSIDE_ASSIGNED_GUEST_MOUNT"):
+            container_runner.guest_path(Path("/tmp/not-mounted"), Path("/host/package"))
+        with self.assertRaisesRegex(SystemExit, "STOP_HOST_SOURCE_ROOT_NOT_ABSOLUTE"):
+            container_runner.guest_path(Path("/study/raw.jsonl"), Path("relative/package"))
+
     def test_auditor_mounts_a_report_directory_not_a_file_as_directory(self):
         with tempfile.TemporaryDirectory(prefix="construction-5795-audit-command-") as temp:
             root = Path(temp)
@@ -77,6 +93,7 @@ class ProcessMatrixConstructionTests(unittest.TestCase):
                         "platform": "linux/arm64",
                         "source_commit": "a" * 40,
                         "image_id": "sha256:" + "b" * 64,
+                        "host_source_root": str(Path("/host/package")),
                     },
                 }
                 digest = "c" * 64
@@ -101,7 +118,7 @@ class ProcessMatrixConstructionTests(unittest.TestCase):
                 def create_raw(*args, **kwargs):
                     (candidate / "raw.jsonl").write_text("{}\n")
                     return 0
-                with mock.patch.object(container_runner, "guest_path", side_effect=lambda path: path), \
+                with mock.patch.object(container_runner, "guest_path", side_effect=lambda path, _root: path), \
                      mock.patch.object(container_runner, "run_candidate", side_effect=create_raw), \
                      mock.patch.dict(os.environ, env, clear=False), \
                      mock.patch.object(sys, "argv", [
