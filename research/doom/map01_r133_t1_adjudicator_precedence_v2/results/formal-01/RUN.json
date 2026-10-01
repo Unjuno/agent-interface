@@ -1,0 +1,25 @@
+{
+  "allocation": "issue-5658-identity-precedence-v2-20261002-01",
+  "freeze_commit": "6663353f3999666f275a00dd01439b5eb79d7e9b",
+  "current_main_at_freeze": "a44541541546290c4d2d5e6e6913ef07bc1f01f8",
+  "environment": {
+    "python": "CPython 3.14.5",
+    "platform": "Darwin arm64",
+    "dependencies": "standard library only",
+    "container": false
+  },
+  "construction_command": "python3 -m unittest -v test_construction.py",
+  "construction_exit": 0,
+  "candidate_command": "python3 formal_candidate.py",
+  "candidate_invocations": 1,
+  "candidate_exit": 0,
+  "auditor_command": "python3 audit.py results/formal-01/RAW.json results/formal-01/AUDIT.json",
+  "auditor_invocations": 1,
+  "auditor_exit": 0,
+  "rows": 729,
+  "identity_controls": 4,
+  "mutation_controls_rejected": 4,
+  "retries": 0,
+  "result": "PASS_CONSTRUCTION_ONLY",
+  "scope": "Synthetic finite adjudicator construction only; no MAP01 live evidence or T1 authorization"
+}

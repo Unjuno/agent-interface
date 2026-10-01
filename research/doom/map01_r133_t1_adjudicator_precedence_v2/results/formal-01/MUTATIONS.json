@@ -1,0 +1,37 @@
+{
+  "controls": [
+    {
+      "errors": [
+        "row_count",
+        "row_missing:0",
+        "row_missing:1"
+      ],
+      "mutation": "delete_row",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "row_mismatch:0"
+      ],
+      "mutation": "wrong_decision",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "row_mismatch:0",
+        "row_mismatch:1",
+        "row_mismatch:2"
+      ],
+      "mutation": "reordered_rows",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "identity_case_mismatch"
+      ],
+      "mutation": "precedence_corruption",
+      "rejected": true
+    }
+  ],
+  "status": "PASS_MUTATION_CONTROLS"
+}
