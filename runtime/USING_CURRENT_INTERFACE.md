@@ -4,6 +4,9 @@ The current Linux/X11 interface supports explicit actions, referenced images and
 bounded continuation. It remains a research preview. The primary model chooses
 the action; these entry points do not require a second model or a subagent.
 
+On Windows, use [WSL-native development](WSL_NATIVE.md) for local setup and
+contract checks. Docker Desktop is not required for these entry points.
+
 ## Choose an entry point
 
 | Entry point | Use | Lifecycle |

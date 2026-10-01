@@ -132,7 +132,6 @@ The table below summarizes major analytical chains and representative retained o
 
 - [Recovery-rate T0 source and reported host failure: #5776 / source PR #5788](recovery_rate_5776_t0_v1/ARCHIVAL_QUALIFICATION.md) — five exact source/plan files; reported host FAIL_METHOD and Docker STOP retained. No committed raw/result bundle or new replay; distinct from merged #5792/#5859 allocations. Owner #5776 and source Draft #5788 remain open.
 - [Predictive safety-filter T0 host evidence and withdrawn container rung: #5317 / source PR #5336](predictive_safety_filter_5317_v1/ARCHIVAL_QUALIFICATION.md) — six exact files including the 35-cell host raw; reported scoped host PASS and later STOP/HOLD withdrawal retained, with zero container invocations. Distinct from merged T3 #5505; no new replay or runtime-safety claim. Owner #5317 and source Draft #5336 remain open.
-
 - [Issue #4956 audit-hardening HOLD source](predicate_order_drift_audit_integrity_4733_v4/RECOVERY_STATUS.md) — source/protocol archive only; the unchanged baseline was rejected by an over-strict exact-float gate, before mutation/audit results. Successor #4959 is distinct and does not change the recorded HOLD.
 
 ## Complete retained result directory index
@@ -223,6 +222,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`consent_scoped_preparation_5793_t0_v1/`](consent_scoped_preparation_5793_t0_v1/)
 - [`constrained_interaction_testing_5330_t0_v1/`](constrained_interaction_testing_5330_t0_v1/)
 - [`cost_predicate_order_4258_v1/`](cost_predicate_order_4258_v1/)
+- [`cross_handoff_pending_correction_6284_t0_20261002/`](cross_handoff_pending_correction_6284_t0_20261002/)
 - [`danger_context_triage_5764_t0_v1/`](danger_context_triage_5764_t0_v1/)
 - [`deadline_identity_5265_dot/`](deadline_identity_5265_dot/)
 - [`decision_opportunity_audit_5986_t0_20261002/`](decision_opportunity_audit_5986_t0_20261002/)
@@ -271,6 +271,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`guard_policy_calibration_identifiability_r1_v1/`](guard_policy_calibration_identifiability_r1_v1/)
 - [`guard_stale_cost_2494_v1/`](guard_stale_cost_2494_v1/)
 - [`hard_boundary_equivalence_6109_t0_20261001/`](hard_boundary_equivalence_6109_t0_20261001/)
+- [`hazard_discretionary_capture_6086_t0_20261002/`](hazard_discretionary_capture_6086_t0_20261002/)
 - [`hazard_discretionary_capture_6086_t0_v1/`](hazard_discretionary_capture_6086_t0_v1/)
 - [`hedged_evidence_start_4277_v1/`](hedged_evidence_start_4277_v1/)
 - [`hidden_cause_sensitivity_5440_t2/`](hidden_cause_sensitivity_5440_t2/)
@@ -342,6 +343,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`observation_reveal_support_closure_v1/`](observation_reveal_support_closure_v1/)
 - [`occupancy_gate_frontier_1592_v1/`](occupancy_gate_frontier_1592_v1/)
 - [`opacity_action_relevance_5360_t1_v1/`](opacity_action_relevance_5360_t1_v1/)
+- [`opportunity_conditioned_actuated_info_6045_t0_20261002/`](opportunity_conditioned_actuated_info_6045_t0_20261002/)
 - [`optimistic_concurrent_readwrite_commit_r0_v1/`](optimistic_concurrent_readwrite_commit_r0_v1/)
 - [`optimistic_readwrite_x11_retained_audit_a3_v1/`](optimistic_readwrite_x11_retained_audit_a3_v1/)
 - [`oracle_bracket_5766_t0_v1/`](oracle_bracket_5766_t0_v1/)
@@ -368,6 +370,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`predicate_readset_runtime_proxy_4233_v1/`](predicate_readset_runtime_proxy_4233_v1/)
 - [`predicate_specialist_switch_4284_v1/`](predicate_specialist_switch_4284_v1/)
 - [`predictive_safety_filter_5317_t3_v1/`](predictive_safety_filter_5317_t3_v1/)
+- [`preference_explicit_choice_6274_t0_20261002/`](preference_explicit_choice_6274_t0_20261002/)
 - [`preference_uncertainty_5749_t0_v1/`](preference_uncertainty_5749_t0_v1/)
 - [`primary_refusal_terminality_59_spine07_20261001/`](primary_refusal_terminality_59_spine07_20261001/)
 - [`primary_refusal_terminality_59_t0_20261001/`](primary_refusal_terminality_59_t0_20261001/)
@@ -402,6 +405,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`response_capacity_5771_successor_v1/`](response_capacity_5771_successor_v1/)
 - [`reusable_receipt_session_binding_v1/`](reusable_receipt_session_binding_v1/)
 - [`reusable_receipt_session_binding_v2/`](reusable_receipt_session_binding_v2/)
+- [`robust_reachable_tube_6089_t0_20261001/`](robust_reachable_tube_6089_t0_20261001/)
 - [`robust_recourse_5862_t0_v1/`](robust_recourse_5862_t0_v1/)
 - [`role_bound_ledger_lifetime_v1/`](role_bound_ledger_lifetime_v1/)
 - [`route_assignment_exposure_5760_t0_v1/`](route_assignment_exposure_5760_t0_v1/)

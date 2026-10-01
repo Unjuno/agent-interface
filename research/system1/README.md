@@ -100,6 +100,10 @@ Read each child experiment for its allowed decision vocabulary, authority bounda
 
 - [`needle_single_invocation_guard_4678_v1/README.md`](needle_single_invocation_guard_4678_v1/README.md) — Issue #4678 preflight STOP: the exact #4205 GPU image is cached and matches, but its pinned safetensors checkpoint is absent; no training-image container or optimizer step ran. Two offline CPU-only audit containers validated the retained STOP record.
 
+## Mitra inference-mode diagnostic STOP archive
+
+- [`mitra_inference_mode_4821_v1/RECOVERY_STATUS.md`](mitra_inference_mode_4821_v1/RECOVERY_STATUS.md) — Issue #4935; exact recovery of all 20 source files from the original remote branch. The sole formal invocation stopped before model load (`HFValidationError`), with zero inference calls and optimizer steps; independent STOP audit reports zero errors. Preservation only; no rerun or scientific conclusion.
+
 ## Online role-router LoRA archive
 
 - [`needle_role_router_online_lora_replay_v1/ARCHIVAL_QUALIFICATION.md`](needle_role_router_online_lora_replay_v1/ARCHIVAL_QUALIFICATION.md) — Issue #4899 / source PR #4906; exact original source and formal/construction-r4 archives. Registered `HOLD_AUDIT_INTEGRITY` and the missed +0.10 A-retention gain remain unchanged; earlier construction r1–r3 full raw/report sets remain outside this committed archive. Preservation only, with no rerun, promotion, or closure of #4899.
@@ -127,3 +131,7 @@ Read each child experiment for its allowed decision vocabulary, authority bounda
 ## Concurrent online-LoRA latency HOLD archive
 
 - [#4658 / source PR #4674 archival qualification](needle_concurrent_online_lora_4658_v3/ARCHIVAL_QUALIFICATION.md) — 17 exact published files preserving `HOLD_LATENCY_BUDGET`; missing raw evidence, freeze/audit identity mismatches, timestamp-gate audit gap, and unused broken formal wrapper remain unresolved. No reproduced result, rerun, promotion, or issue closure; source PR stays Draft and #4658 stays open.
+
+## Needle intent-capacity audit-only STOP archive
+
+- [`needle_intent_capacity_4679_v2/audit_only_recheck_20260928/RECOVERY_STATUS.md`](needle_intent_capacity_4679_v2/audit_only_recheck_20260928/RECOVERY_STATUS.md) — Issue #4778; exact recovery of the five audit-only protocol/source files. The sole invocation stopped before the auditor ran; no audit output JSON was produced and the Issue prohibits retry. The original `STOP_AUDIT_INTEGRITY` remains unchanged; no result promotion or retraining.
