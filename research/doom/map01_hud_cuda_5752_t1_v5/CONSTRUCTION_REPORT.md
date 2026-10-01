@@ -1,6 +1,6 @@
 # Allocation-05 construction report
 
-Status: preparation only; no candidate, CUDA kernel, or independent formal auditor invocation.
+Status: formal allocation-05 completed; candidate=1, independent auditor=1, retry=0.
 
 ## Freeze
 
@@ -19,7 +19,9 @@ Status: preparation only; no candidate, CUDA kernel, or independent formal audit
 
 ## Formal boundary
 
-The exclusive host RTX 3080 window is 2026-10-01 10:20–10:40 UTC. At start, refetch main and queue, verify exact source/input/WAD hashes, ensure at least 64 MiB free durable-output space, check for competing GPU processes and an empty unique output, and ensure the reserved slot remains clear. Then run the single frozen candidate; run the independent CPU-only auditor only if candidate exit is 0. Candidate/auditor/retry limits are 1/1/0. Any failed gate is STOP/NOT_EVALUATED; allocation-04 is never retried.
+The exclusive host RTX 3080 window was 2026-10-01 10:20–10:40 UTC. Start-gate main and queue were refreshed; comparison found no changed pinned HUD inputs/source paths. The output path was absent, C: had >5 GiB free, CUDA reported 0 MiB / 0%, and the compute-process table was empty. CPU construction tests passed 3/3; start gate exited 0; exact 23 PNG/RGB, four report/event, WAD, runner and reference hashes all matched. Candidate ran once, 10:23:42.991–10:25:08.894 UTC, exit 0; independent CPU auditor ran once, 10:25:24.296–10:25:30.260 UTC, exit 0. The active CUDA process was observed using 207 MiB at 3% and later 347 MiB; no retry occurred. Raw evidence and detailed outcome are in `results/t1-host-gpu-05/` and `RESULT.md`. Allocation-04 is never retried.
+
+Outcome: `PASS_CUDA_HUD_EQUIVALENCE_SPEED_SCOPED`; exact CPU/CUDA parity on all 23 frames and both signals; 690 paired timing observations; CPU p50 37.33115 ms, CUDA p50 15.91615 ms, median ratio 0.42635 (2.35× speedup). Independent audit errors=0; all three mutation controls rejected. A PyTorch warning about the read-only NumPy array was emitted; it did not cause a candidate failure and is preserved in the console log. No claim beyond the preregistered narrow method scope follows.
 
 Scope is exact HUD parity and warm per-frame CUDA speed over 23 retained images only. No threat detection, causal effect, gameplay, MAP01 clearance, integrated #59 result, or broad GPU-performance claim follows.
 
