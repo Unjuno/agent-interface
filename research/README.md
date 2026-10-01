@@ -90,6 +90,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 - [`public_mcp_replacement_review_2907_construction01_v1/`](integration/public_mcp_replacement_review_2907_construction01_v1/REPORT.md) — public MCP Chromium root replacement boundary: a new process/window was refused by the original transient-family review, with target/revision preserved; HOLD retained because old launcher liveness was not recorded.
 - [`measurement/`](measurement/) — scoped measurement and composition studies.
 - [#4389 / Draft PR #4410 archival qualification](measurement/key_state_piggyback_q4s8_v1/ARCHIVAL_QUALIFICATION.md) — 18 exact source/freeze/audit blobs; historical same-connection contract PASS and full-cost HOLD are preserved, but the 261-file raw capsule is missing and the reported allocation is not independently re-audited here.
+- [#3880 / Draft PR #4440 K2M6 archival qualification](measurement/clock_ipc_asymmetry_k2m6_v1/ARCHIVAL_QUALIFICATION.md) — six exact historical report/proof/verification/publication blobs; the owner-reported local PASS and raw-publication HOLD remain, with the 321-file ZIP absent and #3880's separate OrbStack gate still unresolved.
 - [`cross_domain/`](cross_domain/) — cross-domain transfer work.
 
 ### Fast local decision / System-1 research

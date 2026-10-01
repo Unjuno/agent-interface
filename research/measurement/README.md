@@ -76,3 +76,7 @@ The large number of child directories is intentional retained evidence. Reposito
 ## Same-connection focus/key-state acquisition — raw-publication HOLD
 
 - [#4389 / Draft PR #4410 archival qualification](key_state_piggyback_q4s8_v1/ARCHIVAL_QUALIFICATION.md): 18 exact source/freeze/audit blobs. The Issue-reported 612-acquisition contract PASS and full-cost HOLD are preserved as historical outcomes; the complete 261-file capsule and raw receipts remain absent, so no repository-only raw re-audit or full-cost benefit is claimed. Ten pure contract tests were run locally for this preservation; no allocation rerun. Keep the original Draft and branch for exact-byte recovery.
+
+## K2M6 clock/lease boundary — remote raw publication HOLD
+
+- [#3880 / Draft PR #4440 archival qualification](clock_ipc_asymmetry_k2m6_v1/ARCHIVAL_QUALIFICATION.md): six exact original report/proof/verification/publication blobs, 29,842 bytes. The local allocation's reported clock-asymmetry result and `HOLD_REMOTE_RAW_INCOMPLETE` are retained separately; the 321-file canonical ZIP/patch are missing, so this archive does not independently reproduce the raw audit. This does not satisfy #3880's distinct OrbStack gate; keep its original Draft/branch and Issue open.
