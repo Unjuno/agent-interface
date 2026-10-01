@@ -12,7 +12,8 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
     'interface_validate', ...(route === 'guarded-local'
       ? ['interface_guarded_observe', 'interface_guarded_mint', 'interface_guarded_mint_many',
         'interface_guarded_input', 'interface_guarded_review_window']
-      : ['interface_observe', 'interface_dispatch'])]);
+      : ['interface_observe', 'interface_dispatch',
+        'interface_inspect_target', 'interface_review_target'])]);
   let stopped = null;
   function stop(reason) { stopped ??= reason; }
   function read(reply) {

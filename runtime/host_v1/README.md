@@ -569,3 +569,17 @@ and verified public close before EOF. Full raw stream, original replies, exact
 encoded tool images, independent app events and actual usage remain retained.
 The 74.60-second host span is not human-comparable tempo or a matched token gain;
 this establishes one functional integration path only.
+
+For a `direct-post` configuration backed by `persistent-x11`, the primary also
+accepts explicit `call` commands for `interface_inspect_target` and
+`interface_review_target`. These are the existing public modal-selection tools,
+not a new activation or recovery policy. Read/view the inspection evidence,
+then separately choose the review request with its one-use ID. A returned
+`review_request` is never executed automatically. Selecting a target does not
+supply an input lease, prove task success or replace reviewing its image.
+Pass the current returned binding revision explicitly with subsequent dispatch.
+Both calls may request their existing `screen_region` image. Expired/changed
+selection errors retain the original response and latch the existing STOP;
+no automatic retry or after-STOP inspection is enabled. Guarded mode continues
+to use its own explicit window-review contract. A one-shot public server does
+not provide these persistent tools and its MCP refusal still stops the caller.
