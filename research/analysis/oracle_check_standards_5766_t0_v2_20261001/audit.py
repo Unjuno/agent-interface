@@ -15,6 +15,9 @@ def validate(raw, freeze, deck):
     errors=[]
     if raw.get('freeze_id') != freeze.get('freeze_id'): errors.append('freeze_id_mismatch')
     if raw.get('deck_sha256') != freeze.get('deck_canonical_sha256'): errors.append('deck_hash_mismatch')
+    if hashlib.sha256(pathlib.Path('deck.json').read_bytes()).hexdigest() != freeze.get('deck_source_sha256'): errors.append('deck_source_hash_mismatch')
+    if hashlib.sha256(json.dumps(deck,sort_keys=True,separators=(',',':')).encode()).hexdigest() != freeze.get('deck_canonical_sha256'): errors.append('deck_canonical_hash_mismatch')
+    if hashlib.sha256(json.dumps(deck['frozen_reference_labels'],sort_keys=True,separators=(',',':')).encode()).hexdigest() != freeze.get('reference_lock_sha256'): errors.append('reference_lock_file_mismatch')
     if raw.get('reference_lock_sha256') != freeze.get('reference_lock_sha256'): errors.append('reference_lock_mismatch')
     if raw.get('candidate_source_sha256') != freeze.get('candidate_source_sha256'): errors.append('candidate_source_mismatch')
     if raw.get('run_order') != ['precheck','candidate_event','postcheck']: errors.append('postcheck_order_missing_or_changed')

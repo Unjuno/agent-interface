@@ -14,4 +14,4 @@ This is a new frozen allocation, not a rerun or edit of allocation 01. Allocatio
 
 **U.** Even a method-scoped pass says nothing about real semantic drift, reference adjudication quality, unseen semantics, task outcomes, #12/#57/#59 or production suitability. T1 requires replayable real raw outcomes and independent adjudication, and a separate authorization.
 
-**Execution boundary:** CPU-only Docker; exact image pinned by digest; container network disabled, root filesystem and source mount read-only, output mounted separately. No GPU, GUI, model, OS input or live task. Freeze, branch, path, all source hashes and decision gates are committed and read back before the candidate call.
+**Execution boundary:** CPU-only Docker; exact image pinned by digest; container network disabled, root filesystem and source mount read-only, output mounted separately. No GPU, GUI, model, OS input or live task. Candidate and auditor both verify the frozen deck byte hash, canonical deck hash and reference-lock hash. Freeze, branch, path, all source hashes and decision gates are committed and read back before the candidate call.

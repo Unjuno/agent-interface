@@ -57,6 +57,8 @@ def main():
     deck=json.loads(pathlib.Path(a.deck).read_text(encoding='utf-8-sig')); freeze=json.loads(pathlib.Path(a.freeze).read_text())
     if file_sha(__file__) != freeze['candidate_source_sha256']:
         raise SystemExit('FROZEN_CANDIDATE_HASH_MISMATCH')
+    if file_sha(a.deck) != freeze['deck_source_sha256'] or sha(deck) != freeze['deck_canonical_sha256'] or sha(deck['frozen_reference_labels']) != freeze['reference_lock_sha256']:
+        raise SystemExit('FROZEN_DECK_OR_REFERENCE_HASH_MISMATCH')
     cases=deck['cases']; refs=deck['frozen_reference_labels']; profiles=deck['app_profiles']; results=[]
     for name, profile_name, score_name, source_hash in [
         ('nominal','app-v1','v1',SCORER_SHA),
