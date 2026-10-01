@@ -265,6 +265,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`interaction_consistency_product_lattice_r0_v1/`](interaction_consistency_product_lattice_r0_v1/)
 - [`interface_mutation_adequacy_5541_t0_20261001_v1/`](interface_mutation_adequacy_5541_t0_20261001_v1/)
 - [`interrupt_stack_resume_contract_v1/`](interrupt_stack_resume_contract_v1/)
+- [`interval_robustness_6074_t0_20261002/`](interval_robustness_6074_t0_20261002/)
 - [`ioco_5518_t7_tick_bound/`](ioco_5518_t7_tick_bound/)
 - [`issue3152_broker_path_confinement_20260927_v1/`](issue3152_broker_path_confinement_20260927_v1/)
 - [`issue5541_mutation_t5_20260930/`](issue5541_mutation_t5_20260930/)
