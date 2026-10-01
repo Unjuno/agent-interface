@@ -1,0 +1,33 @@
+{
+  "schema": "braess-route-verifier-t0-freeze-v1",
+  "allocation": "BRAESS-ROUTE-VERIFIER-5855-T0-20261001-01",
+  "source_main_sha": "7e94ba9fdbfbff8d32d5dde27c086f2eb7582775",
+  "issue": 5855,
+  "branch": "research/issue-5855-braess-route-verifier-t0-20261001",
+  "path": "research/analysis/braess_route_verifier_5855_t0_v1/",
+  "runtime": {
+    "os": "Windows 10.0.26200",
+    "python": "CPython 3.11.9",
+    "python_executable_sha256": "5f7b89a612c9b8af1d6456cdfcd1dbe5ca630849e79aebced9bee9a6694952ec",
+    "execution": "single-process local host CPU; deterministic finite simulator"
+  },
+  "fixture_sha256": {
+    "candidate.py": "0a07e111f95322a4f0d033cc89ff19199ce279f6c4ab1f2b54f97cf2b611909b",
+    "audit.py": "402dc8d0bcf4e370f50f822af89d24847023d82966849d8fdf572047438a9787",
+    "PREREGISTRATION.md": "1210cbcba91925119847188704714a6b9f4a5ac2a80bf43cb1162a92dc01b3d5"
+  },
+  "parameters": {
+    "offers_per_scenario": 16,
+    "arrival_intervals_ticks": [16, 8, 2],
+    "fast_verifier_work_ticks": [8, 12],
+    "deadline_ticks": 32,
+    "central_assignment_vectors_per_scenario": 65536
+  },
+  "candidate_command": "python -B candidate.py",
+  "independent_audit_command": "python -B audit.py",
+  "candidate_invocation_limit": 1,
+  "auditor_invocation_limit": 1,
+  "retry_limit": 0,
+  "container": "not used; deterministic CPU-only host simulation, Docker/OrbStack shared resource state is reserved/unverified",
+  "external_effects": "none; no model, network, GPU, GUI, input, shared runtime, or task mutation"
+}
