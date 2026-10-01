@@ -201,3 +201,5 @@ A directory existing here does **not** mean its mechanism is promoted. Negative 
 - [`x11_midprogram_keymap_docker_diagnostic_20260930/`](x11_midprogram_keymap_docker_diagnostic_20260930/) — Nonformal Docker focus-versus-click diagnostic; not evidence for the formal hypothesis.
 
 - [`aoi_43_t0/`](aoi_43_t0/) — #43 retained toy construction; [accounting-defect/HOLD correction](aoi_43_t0/README.md): identical queue policies and incomparable drop counters; no demonstrated critical-retention benefit.
+
+- [`doom/map01_cuda_hud_5752_preflight_stop_20261001/REPORT.md`](doom/map01_cuda_hud_5752_preflight_stop_20261001/REPORT.md) — Issue #5752 pre-candidate source/auditor-freeze STOP; candidate, auditor, GPU, and container calls were all zero; CUDA hypothesis remains untested.
