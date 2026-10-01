@@ -33,7 +33,12 @@ A plan cannot remint a reference, renew the scope or replay an uncertain action.
 
 `verify_effect(payload, native_observation, rgb)` supplies the graph's typed
 `status` and `evidence_ref` verdict. The graph checks its declared expected
-predicates first. The callback must establish the intended effect for that
+predicates first. Branch conditions and expected effects require both the same
+scalar type and value: boolean `true` does not satisfy integer `1`, and boolean
+`false` does not satisfy integer `0`. A branch mismatch yields `unknown_state`;
+an effect mismatch yields `effect_failed`, preserves the completed prefix and
+pending effect, and stops before the verifier or any next action.
+The callback must establish the intended effect for that
 application; returning succeeded without an adequate contract does not verify
 text or durable saving. Both callbacks are trusted caller code, not sandboxed,
 not an independent oracle and not a generic vision/OCR service. Scope/sequence

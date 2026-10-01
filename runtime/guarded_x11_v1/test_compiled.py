@@ -48,6 +48,20 @@ def perceive(native,image): return {'phase':image.getpixel((0,0))[0],'present':T
 def verify(payload,native,image): return {'status':'succeeded','evidence_ref':payload['observation']['evidence_ref']}
 
 class CompiledX11Tests(unittest.TestCase):
+    def test_boolean_phase_cannot_verify_integer_effect_or_dispatch_next_action(self):
+        b=Bridge()
+        def typed(native,image):
+            values=perceive(native,image)
+            if values['phase']==1:values['phase']=True
+            return values
+        verifier=Mock(side_effect=verify)
+        r=run(b,spec(),bindings(),perceive=typed,verify_effect=verifier)
+        self.assertEqual((r['outcome'],r['reason']),('SAFE_YIELD','effect_failed'))
+        self.assertEqual(r['completed_transitions'],1);self.assertEqual(r['pending_effect']['action'],'enter')
+        self.assertEqual(len(b.inputs),1);verifier.assert_not_called()
+        effects=[row for name,row in b.saved if name.endswith('-event.json') and row.get('event')=='effect_checked']
+        self.assertEqual(effects[-1]['status'],'failed')
+
     def test_live_adapter_selects_second_action_from_new_pixels_and_clamps_deadline(self):
         b=Bridge(); before=time.monotonic_ns()
         r=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
