@@ -21,7 +21,7 @@ def run(case,policy):
   if policy=="FENCE_RECONCILE": admit="REFUSED_EPOCH_MISMATCH"; emit=False; status="NO_EFFECT"
   else: status="UNKNOWN_EFFECT_PENDING"
  elif k=="race":
-  if policy=="FENCE_RECONCILE": admit="REFUSED_AT_COMMIT_FENCE"; emit=False; status="NO_EFFECT"
+  if policy!="START_ONLY": admit="REFUSED_AT_COMMIT_FENCE"; emit=False; status="NO_EFFECT"
   else: status="UNKNOWN_EFFECT_PENDING"
  elif k=="late_receipt": release=(policy=="FENCE_RECONCILE")
  return {"case":case,"policy":policy,"admission":admit,"emitted":emit,"terminal_effect_status":status,"release_sent":release,"stale_generation_reactivated":stale,"intermediate_unknown_before_receipt":k=="late_receipt"}
