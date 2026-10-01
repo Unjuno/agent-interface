@@ -194,7 +194,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`deterministic_replay_boundary_r0_v1/`](deterministic_replay_boundary_r0_v1/)
 - [`disturbance_response_5771_t1_v3/`](disturbance_response_5771_t1_v3/)
 - [`effect_path_antiwindup_5791_t0_v1/`](effect_path_antiwindup_5791_t0_v1/)
-- [`effect_path_antiwindup_5791_t0_v2/`](effect_path_antiwindup_5791_t0_v2/)
+- [`effect_path_antiwindup_5791_eligibility_v1/`](effect_path_antiwindup_5791_eligibility_v1/)\n- [`effect_path_antiwindup_5791_t0_v2/`](effect_path_antiwindup_5791_t0_v2/)
 - [`effect_time_contract_authorization_successor_532_v1/`](effect_time_contract_authorization_successor_532_v1/)
 - [`endogenous_demand_rebound_5702_t0_v1/`](endogenous_demand_rebound_5702_t0_v1/)
 - [`entrypoint_argv_preflight_5156_v2_20261001/`](entrypoint_argv_preflight_5156_v2_20261001/)
