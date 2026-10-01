@@ -1,5 +1,0 @@
-# Excluded construction record
-
-Before the source/gate freeze for allocation target-belief-audit-4150-posthoc-01, two local exploratory diagnostic drafts were exercised against the copied ID003 result. Both confirmed the same aggregate-only acceptance issue. The first used scores[0]; the frozen score profiles are sorted, so that draft's outcome matched. The second used the exact comparator rule max(scores) and independently confirmed zero baseline mismatches and twelve copied-result mismatches while the frozen auditor still returned pass=true.
-
-These were exploratory harness checks: no candidate/model execution, training, optimizer step, GUI/input, or new formal result row occurred. They are excluded from the allocated post-hoc diagnostic. Their local outputs are retained in the workspace history; only the frozen probe and its one post-freeze output determine the successor's recorded result.

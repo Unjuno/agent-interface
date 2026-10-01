@@ -1,8 +1,0 @@
-{"case_id": "valid_one_invocation", "decision": "PASS_INVOCATION_BOUNDARY_CONTRACT", "errors": [], "invocation_count": 1, "invocation_ids": ["inv-001"]}
-{"case_id": "historical_three_attempt_collision", "decision": "STOP_INVOCATION_PROVENANCE_OR_BOUNDARY", "errors": ["invocation identity missing; legacy artifacts remain unbound", "legacy artifact set cannot establish invocation count"], "invocation_count": null, "invocation_ids": [null, null, null]}
-{"case_id": "two_tagged_invocations_exceed_limit", "decision": "STOP_INVOCATION_PROVENANCE_OR_BOUNDARY", "errors": ["allocation invocation limit exceeded: 2>1"], "invocation_count": 2, "invocation_ids": ["inv-008", "inv-009"]}
-{"case_id": "mixed_artifacts_same_id", "decision": "STOP_INVOCATION_PROVENANCE_OR_BOUNDARY", "errors": ["raw events exist before runner start: inv-002"], "invocation_count": 1, "invocation_ids": ["inv-002"]}
-{"case_id": "runner_not_started_but_raw_exists", "decision": "STOP_INVOCATION_PROVENANCE_OR_BOUNDARY", "errors": ["raw events exist before runner start: inv-003"], "invocation_count": 1, "invocation_ids": ["inv-003"]}
-{"case_id": "duplicate_invocation_id", "decision": "STOP_INVOCATION_PROVENANCE_OR_BOUNDARY", "errors": ["invocation identity duplicated"], "invocation_count": null, "invocation_ids": ["inv-004", "inv-004"]}
-{"case_id": "cross_invocation_artifact_path", "decision": "STOP_INVOCATION_PROVENANCE_OR_BOUNDARY", "errors": ["artifact path escapes invocation namespace: inv-005"], "invocation_count": 1, "invocation_ids": ["inv-005"]}
-{"case_id": "audit_after_runner_failure", "decision": "STOP_INVOCATION_PROVENANCE_OR_BOUNDARY", "errors": ["audit invoked without runner exit 0: inv-007"], "invocation_count": 1, "invocation_ids": ["inv-007"]}

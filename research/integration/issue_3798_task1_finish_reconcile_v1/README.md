@@ -1,3 +1,0 @@
-# Issue #3798 — Issue #2849 finish-time task-trace reconciliation probe
-
-Frozen offline OrbStack replay of Issue #2849 seed 284929's retained task trace and post-finish exact submission-history snapshot. The probe derives a separate corrected trace/scope view using the same finish-time, task-ID reconciliation shape already present in `research/live_control/run_integrated_efficiency_live_v1.py`. It never changes the predecessor artifacts and makes no task/model/GUI/IPC call. Passing means only that this accounting reconciliation resolves the saved-record contradiction; it is not a formal task pass or six-task result.

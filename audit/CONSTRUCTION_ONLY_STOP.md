@@ -1,3 +1,0 @@
-# Construction-only output stop
-
-Construction-only invocations consumed seeds 3781 and 3787 in incomplete pipeline checks, then 3791 in an end-to-end builder/loader smoke test. They wrote evidence under this untracked construction directory. None had a frozen formal manifest or the full two-fresh-loader orchestration; they are **not formal evidence** and cannot contribute to the formal decision. Seeds 3781–3783, 3787, and 3791 are retired from the allocation (3782–3783 were reserved alongside 3781 before the runner defect was discovered). Formal seeds are 3788–3790 only, in a separately named evidence directory with fresh containers and output paths. No construction output is reused for formal metrics.

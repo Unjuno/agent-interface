@@ -1,7 +1,0 @@
-{
-  "platform": "Windows",
-  "type": "AssertionError",
-  "check": "raw prompt byte identity",
-  "cause": "the model runner normalized line endings while retaining identical prompt text",
-  "resolution": "audit decoded prompt text rather than platform-specific newline bytes"
-}

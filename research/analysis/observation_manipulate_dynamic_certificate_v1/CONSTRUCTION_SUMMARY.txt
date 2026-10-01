@@ -1,6 +1,0 @@
-PREPARE (1, 1, 0, 1) ABORT ['S'] 1 phase_union ['D', 'S', 'T']
-PREPARE (1, 1, 0, 0) READY ['D', 'S', 'T'] 3 phase_union ['D', 'S', 'T']
-EFFECT_PENDING (1, 1, 1, 0) COMPLETE ['E', 'S'] 2 phase_union ['D', 'E', 'S', 'T']
-EFFECT_PENDING (1, 1, 0, 0) CONTINUE ['D', 'E', 'S', 'T'] 4 phase_union ['D', 'E', 'S', 'T']
-TERMINAL (0, 0, 0, 1) ABORT ['S'] 1 phase_union ['E', 'S']
-TERMINAL (0, 0, 1, 0) COMPLETE ['E', 'S'] 2 phase_union ['E', 'S']
