@@ -155,6 +155,18 @@ coordinates, observe, review an image, renew a reference automatically, retry,
 or issue input. Alias admissibility, image binding, freshness and geometry are
 still checked by the server. Use `call` for exact preregistered refusal controls.
 
+`input(alias, offset, interaction, tail)` sends an ordinary guarded input with
+an explicit integer offset pair, one of `click`, `keyboard`, or `move`, and an
+explicit tail array (use `[]` when empty). For example:
+`await primary.input('field_b', [12, 19], 'click', fieldOps)`.
+The helper preserves the original response, requests brief feedback and
+observation references, and uses the same STOP and neutral-release checks as
+`call`. Missing or malformed positional arguments stop before host dispatch.
+It does not infer a reference center, sample a clock, check alias expiry, grant
+authority, or retry. The primary must still review the resulting image; the
+server still checks tail operations, pixel binding, freshness and admission.
+Use generic `call` for exact preregistered refusal controls.
+
 When an explicit window review is needed, call `await primary.reviewWindow()`.
 Configure `reviewWindowId` once from the actual selected target registry (for
 example `targets.browser` in the explicit targets file). The helper snapshots

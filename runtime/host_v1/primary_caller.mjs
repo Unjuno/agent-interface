@@ -26,6 +26,24 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
   }
   const caller = {
     state: () => ({ stopped }),
+    async input(...values) {
+      const [alias, offset, interaction, tail] = values;
+      if (route !== 'guarded-local' || values.length !== 4 ||
+          typeof alias !== 'string' || !alias.trim() ||
+          !Array.isArray(offset) || offset.length !== 2 ||
+          !offset.every(Number.isSafeInteger) ||
+          !['click', 'keyboard', 'move'].includes(interaction) || !Array.isArray(tail)) {
+        stop('invalid primary input arguments');
+        throw TypeError(stopped);
+      }
+      let copiedTail;
+      try { copiedTail = structuredClone(tail); }
+      catch (error) { stop('invalid primary input tail'); throw error; }
+      return caller.call('interface_guarded_input', {
+        alias, offset: [...offset], interaction, tail: copiedTail,
+        detail: 'brief', observation_refs: true
+      });
+    },
     async reviewWindow(...unexpected) {
       if (route !== 'guarded-local' || unexpected.length ||
           !Number.isSafeInteger(reviewWindowId) || reviewWindowId < 1) {
