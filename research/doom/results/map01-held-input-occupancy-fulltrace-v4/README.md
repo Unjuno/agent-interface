@@ -19,6 +19,19 @@ empty keys at the cancellation boundary. Its any-key interval is conservatively
 continued occupancy. This is an observed in-flight cancellation race, not a
 claim that no input occurred.
 
+## Relationship to prior held-input records (#6175 / #6198)
+
+This is a separately versioned boundary extension, not a reproduction or
+replacement of the prior reports. #6175 and its receipt successor #6198
+retained 27 completed v39 holds plus one verified interruption (28 rows).
+The raw event trace also contains a later-started `cover-4` step 10 whose
+`Down` admission straddles cancellation and whose `space` key was never
+admitted. V4 represents that start explicitly with zero positive lower bound
+and a release-bounded upper bound; v5 independently audits all 29 starts.
+The earlier allocations, their output files, and their dispositions remain
+unchanged. The metric here is any-key occupancy / planner-wait overlap, not a
+reinterpretation of the earlier requested-versus-owner-commanded totals.
+
 In the aggregate, lower/upper bounds overlap with the declared model-wait
 windows as shown above. Those intersections and the per-hold sums are
 interval-censored descriptive totals, not exact physical key-up times. They
