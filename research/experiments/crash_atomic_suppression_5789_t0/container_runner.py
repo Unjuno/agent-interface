@@ -199,7 +199,7 @@ def main() -> int:
         mode="formal",
         include_manifest=True,
         script="/work/source/audit.py",
-        arguments=("--raw", "/work/raw.jsonl", "--out", "/work/out/audit.json"),
+        arguments=("--raw", "/work/raw.jsonl", "--out", "/work/out"),
     )
     source_mount = f"type=bind,src={BASE.resolve()},dst=/work/source,readonly"
     output_mount = f"type=bind,src={args.audit_out.resolve()},dst=/work/out"

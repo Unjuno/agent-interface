@@ -7,7 +7,7 @@ uses a deterministic TTL boundary, pre/expired-pre-GC/post-GC probes, a
 pre-expiry GC no-op, and transactional logical GC that retains a denying
 tombstone; it makes no physical compaction claim. The host matrix is construction evidence only;
 formal candidate and auditor counts remain 0/0 until an explicit isolated
-Obstac allocation is recorded on Issue #5795.
+isolated Obstac allocation is recorded on Issue #5795.
 
 ## Files
 
@@ -24,12 +24,13 @@ Obstac allocation is recorded on Issue #5795.
 
 ## Construction checks
 
-The optional container construction path itself requires an explicitly named
-isolated construction context/endpoint in `OBSTAC_CONSTRUCTION_CONTEXT` and
+The optional container construction path requires an explicitly named isolated
+context/endpoint in `OBSTAC_CONSTRUCTION_CONTEXT` and
 `OBSTAC_CONSTRUCTION_DOCKER_HOST`; it never defaults to the shared OrbStack
-context. No endpoint is currently assigned, so the host-only matrix is what has
-been exercised. Construction mode does not require `FREEZE.json` and writes no
-formal rows.
+context. Formal allocation `crash-atomic-suppression-5795-t0-20261001-01` is
+recorded in coordination Issue #5085. The dedicated guest, endpoint and image
+are frozen in `FREEZE.json`. Construction mode does not require the manifest
+and writes no formal rows.
 
 From repository root:
 
@@ -47,9 +48,7 @@ runs only after a zero candidate exit, in a separate container with read-only
 source/raw input and a distinct output mount.
 
 Do not use the shared OrbStack context merely because it exists. Formal mode
-requires an exact non-overlapping allocation naming owner, context and daemon
-endpoint; it verifies those values and all source/schedule/auditor/image hashes
-against `FREEZE.json`. A missing endpoint is STOP, not a reason to probe Docker.
-After allocation, create the manifest once, update hashes and Issue #5795,
-then execute the frozen candidate exactly once and preserve the independent
-audit plus every STOP/FAIL unchanged.
+requires the exact non-overlapping allocation, context and daemon endpoint; it
+verifies those values and all source/schedule/auditor/image hashes against
+`FREEZE.json`. A mismatch is STOP. Execute the frozen candidate exactly once
+and preserve the independent audit plus every STOP/FAIL unchanged.

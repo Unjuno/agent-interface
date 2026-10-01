@@ -8,7 +8,7 @@ result for H. Formal candidate and formal auditor counts remain 0/0.
 ## Frozen inputs
 
 - Intake main: `ff2164a8b16d386571c91ebba19f6604b4776581`.
-- Rebased main before construction matrix: `2a69173110856607c02e5213561679938c5988e3`.
+- Rebased main before construction matrix: `49db21e330768800e8b3486203b70306f4e402f6` (rechecked before formal freeze; main can advance).
 - Branch: `research/crash-atomic-suppression-5795-t0-20261001`.
 - Additive path: `research/experiments/crash_atomic_suppression_5789_t0/`.
 - Protocol: `FREEZE.md`.
@@ -39,15 +39,13 @@ git diff --check
 python3 research/analysis/check_index.py
 ```
 
-Result: 14/14 tests passed (5 protocol checks, two SIGKILL/child lifecycle
+Result: 15/15 tests passed (5 protocol checks, two SIGKILL/child lifecycle
 checks, one full 15-row host matrix plus separate auditor CLI, five
-preflight/output-gate checks, and two bounded container-command checks); the
+preflight/output-gate checks, two bounded container-command checks, and an
+audit-container output-directory regression check); the
 audit matched 15/15 frozen rows, including 10/10 policy-C rows and reproduced
 the expected baseline failures. `py_compile` and `git diff --check` passed. Analysis index
-passed with 274 retained result/failure directories on the latest checked main.
-The first index invocation was an environment STOP because the checkout's
-sparse patterns omitted `research/analysis/README.md`; the required read-only
-paths were then materialized in this worktree and the unchanged checker passed.
+passed with 285 retained result/failure directories on the latest checked main.
 No generated index file was edited.
 
 The full host rehearsal exercises subprocess SIGKILL boundaries, SQLite state,
@@ -115,37 +113,27 @@ denominator.
   endpoint; it does not query daemon state. The first mock run then omitted
   stdout for that new context-inspect process; after stubbing the JSON endpoint,
   all 14 tests passed. No Docker daemon/container was invoked.
+- A later regression test exercised the actual auditor Docker argv assembly and
+  caught a file-vs-directory `--out` mismatch. The launcher now mounts an empty
+  report directory and passes `/work/out`; 15/15 host tests pass. This changed
+  only orchestration, not the frozen candidate/auditor bytes.
 
 ## Formal allocation status
 
-At the latest recheck, Issue #5795 has no explicit isolated guest/daemon
-assignment. Queue requests for #5776 and #5803 are not grants to #5795. The
-proposed 07:35–08:05 UTC window is also only a request, not a lease. The
-`FREEZE.json` endpoint/runtime manifest is intentionally absent until an
-explicit grant provides real context and daemon endpoint; therefore formal
-mode refuses before Docker. Existing
-repository Obstac precedents use an OrbStack Docker context, but that shared
-context is not treated as a dedicated guest. No Docker context, daemon, guest,
-container, prior task-owned machine, or container inventory was queried or
-touched.
-
-Formal status: `NOT_STARTED_WAITING_FOR_EXPLICIT_ISOLATED_ALLOCATION` (no formal
-STOPPED candidate attempt). Obstac's repository convention is understood as
-OrbStack Docker plus frozen `OBSTAC_*` provenance values; there is no standalone
-Obstac CLI/MCP exposed here. Use only the exact assigned isolated endpoint and
-record runner/version configuration if the coordinator provides it.
+An explicit user-authorized allocation was recorded in coordination Issue
+#5085: `crash-atomic-suppression-5795-t0-20261001-01`, 06:00–06:20 UTC, a new
+ARM64 Ubuntu 24.04 OrbStack guest, 1 vCPU, 2 GiB memory, 16 GiB disk, isolated
+from host and peer networking. A Docker daemon and named context were created
+inside that guest only; endpoint `unix:///var/run/docker.sock`. The pinned
+`python:3.12-slim` image was pulled and inspected in the guest as
+`sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9`
+(`linux/arm64`). Formal candidate/auditor have not yet been invoked.
 
 ## Next gate
 
-Before any formal command: obtain explicit non-overlapping assignment for
-Issue #5795 naming owner, time window, isolated guest/daemon and endpoint; then
-recheck main, active branches/PRs/queue, output emptiness, pinned Linux/arm64
-image identity, source/schedule/auditor hashes and bounded resources. The
-in-container runner now compares source, schedule, freeze digest and runtime
-identity against `FREEZE.json` before entering the row loop. A local outer
-launcher still must invoke the candidate and auditor only through the exact
-assigned endpoint with read-only source, no network, bounded resources and
-separate output mounts; implement and mock-test that launcher before requesting
-formal execution. Then run candidate once; run the separate auditor only if
-candidate exits zero. Preserve any failed gate as STOP with candidate/auditor
-counts 0/0 and do not retry.
+Before formal invocation: recheck main, active branches/PRs/queue, endpoint,
+image identity, source/schedule/auditor hashes, empty output paths and resource
+limits. The in-container runner and host launcher compare source, schedule,
+freeze digest and runtime identity against `FREEZE.json`. Run the candidate
+once; run the separate auditor only if candidate exits zero. Preserve any
+failed gate as STOP with candidate/auditor counts 0/0 and do not retry.
