@@ -21,7 +21,7 @@ for p in policies:
  ck("late_effect_receipt_after_revision",p,"terminal_effect_status","VERIFIED_EFFECT")
 ck("published_but_delivery_uncertain","FENCE_RECONCILE","admission","HOLD_UNDELIVERED_REVISION"); ck("published_but_delivery_uncertain","FENCE_RECONCILE","emitted",False)
 ck("planner_restart_generation_reuse","FENCE_RECONCILE","admission","REFUSED_EPOCH_MISMATCH"); ck("planner_restart_generation_reuse","FENCE_RECONCILE","emitted",False)
-ck("revision_between_check_and_commit","FENCE_RECONCILE","admission","REFUSED_AT_COMMIT_FENCE"); ck("revision_between_check_and_commit","FENCE_RECONCILE","emitted",False)
+ck("revision_between_check_and_commit","ADMISSION_FENCE","admission","REFUSED_AT_COMMIT_FENCE")\nck("revision_between_check_and_commit","FENCE_RECONCILE","admission","REFUSED_AT_COMMIT_FENCE"); ck("revision_between_check_and_commit","FENCE_RECONCILE","emitted",False)
 def detects(mut):
  k=[(r["case"],r["policy"]) for r in mut]
  if len(mut)!=33 or len(set(k))!=33 or set(k)!=expected:return True
