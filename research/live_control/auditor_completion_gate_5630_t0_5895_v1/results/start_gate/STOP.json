@@ -1,0 +1,49 @@
+{
+  "allocation": "OWNER-KEYUP-AUDIT-COMPLETION-GATE-5156-T0-20261001-01",
+  "observed_at_utc": "2026-10-01T07:30:18Z",
+  "disposition": "STOP_ALLOCATION_SCOPE_AND_SHARED_RESOURCE_CONFLICT",
+  "scientific_result": "NOT_EVALUATED",
+  "scope_gate": {
+    "preregistration_comment": 5926417922,
+    "superseding_issue_scope_stop_comment": 5926720911,
+    "superseding_comment_found_after_start_window": true,
+    "start_gate_missed_latest_5156_comment_refresh": true,
+    "required_disposition": "separate successor issue and fresh allocation"
+  },
+  "candidate_invocations": 0,
+  "independent_auditor_invocations": 0,
+  "containers_created_or_modified": 0,
+  "docker_context": "desktop-linux",
+  "docker_service": {
+    "name": "com.docker.service",
+    "status": "Stopped",
+    "start_type": "Manual"
+  },
+  "desktop_processes": "Docker Desktop and com.docker.backend processes responded to process inventory",
+  "engine_probe": {
+    "command": "docker --context desktop-linux version --format 'client={{.Client.Version}} server={{.Server.Version}}'",
+    "waited_seconds": 10,
+    "result": "No server-version output; command remained pending and the read-only CLI request was interrupted"
+  },
+  "container_inventory": "UNKNOWN; daemon did not respond",
+  "cached_image_identity": "UNKNOWN; daemon did not respond",
+  "frozen_target": {
+    "pr": 5630,
+    "head": "288d0498d11cf16657e523a04616bf4f49cd94f4",
+    "audit_git_blob": "da805fb83f70a57ad68a0768186e214524689d40",
+    "expected_git_blob": "3d33bda096c4c8789e183e3f864ee7626e643a7e",
+    "fixture_git_blob": "d1eb9a854cc810fa77ca173d7e2de287ee1bd64a",
+    "sha256_verified": true
+  },
+  "main_at_start_gate": "8da9346c3505673256f96a0d967b3325149dc16c",
+  "output_path": "scratch/issue5156_completion_gate_20261001/results/formal-01",
+  "output_path_was_absent": true,
+  "actions_not_taken": [
+    "Docker service start/restart",
+    "container inspect/start/stop/remove",
+    "image inspect/pull/build",
+    "candidate or auditor invocation",
+    "X11/GUI/input/model/GPU/network operation"
+  ],
+  "allocation_reuse": "forbidden; preregistration was superseded before start and the 07:30-07:35 UTC window has elapsed"
+}
