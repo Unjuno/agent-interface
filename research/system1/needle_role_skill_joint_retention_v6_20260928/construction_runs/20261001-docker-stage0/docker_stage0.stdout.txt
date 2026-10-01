@@ -1,0 +1,40 @@
+FROZEN_BRANCH=d32a771ac9aa090fc39ff596c55e75484f437dc5
+CURRENT_MAIN=55c467786b3b98e5f8d1746f9c2970b7ada8b47c
+IMAGE=sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e|linux/amd64|["needle-pilot05@sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e"]
+ARGV_JSON=["run","--rm","--pull=never","--platform=linux/amd64","--network=none","--read-only","--cpus=1","--memory=2g","--pids-limit=64","--tmpfs","/tmp:rw,nosuid,nodev,size=256m","--entrypoint=python","--mount","type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\goal-unjuno-agent-interface-github-mcp-6\\work\\needle-role-skill-joint-retention-v6-20260928\\research\\system1\\needle_role_skill_joint_retention_v6_20260928,target=/src,readonly","--workdir=/src","sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e","-B","-m","unittest","-v","test_protocol.py"]
+BEGIN_DOCKER_TESTS
+test_realized_argv_matches_exact_frozen_token_array (test_protocol.DockerArgvContract.test_realized_argv_matches_exact_frozen_token_array) ... ok
+test_rejects_aliasing_and_nonexistent_mounts (test_protocol.DockerArgvContract.test_rejects_aliasing_and_nonexistent_mounts) ... ok
+test_rejects_token_split_missing_extra_reordered_and_mount_mutations (test_protocol.DockerArgvContract.test_rejects_token_split_missing_extra_reordered_and_mount_mutations) ... ok
+test_audit_rejects_nonexact_realized_argv (test_protocol.FrozenSourceAndConstructionContract.test_audit_rejects_nonexact_realized_argv) ... ok
+test_auditor_requires_full_receipt_argv_and_independent_lineage (test_protocol.FrozenSourceAndConstructionContract.test_auditor_requires_full_receipt_argv_and_independent_lineage) ... ok
+test_container_watchdog_kills_child_at_lease_hard_stop (test_protocol.FrozenSourceAndConstructionContract.test_container_watchdog_kills_child_at_lease_hard_stop) ... ok
+test_formal_launcher_has_only_one_run_call_and_requires_lease_before_it (test_protocol.FrozenSourceAndConstructionContract.test_formal_launcher_has_only_one_run_call_and_requires_lease_before_it) ... ok
+test_independent_audit_binds_owner_url_and_rejects_duplicate_payload_keys (test_protocol.FrozenSourceAndConstructionContract.test_independent_audit_binds_owner_url_and_rejects_duplicate_payload_keys) ... /usr/local/lib/python3.12/site-packages/torch/_subclasses/functional_tensor.py:295: UserWarning: Failed to initialize NumPy: No module named 'numpy' (Triggered internally at ../torch/csrc/utils/tensor_numpy.cpp:84/)
+  cpu = _conversion_method_template(device=torch.device("cpu"))
+ok
+test_independent_auditor_holds_when_formal_receipt_is_absent (test_protocol.FrozenSourceAndConstructionContract.test_independent_auditor_holds_when_formal_receipt_is_absent) ... ok
+test_independent_auditor_rebuilds_argv_and_live_window_contract (test_protocol.FrozenSourceAndConstructionContract.test_independent_auditor_rebuilds_argv_and_live_window_contract) ... ok
+test_independent_online_auditor_rejects_clock_identity_and_interval_mutations (test_protocol.FrozenSourceAndConstructionContract.test_independent_online_auditor_rejects_clock_identity_and_interval_mutations) ... ok
+test_launcher_fetch_binds_api_record_id_to_url_comment_id (test_protocol.FrozenSourceAndConstructionContract.test_launcher_fetch_binds_api_record_id_to_url_comment_id) ... ok
+test_launcher_rechecks_owner_window_at_docker_boundaries (test_protocol.FrozenSourceAndConstructionContract.test_launcher_rechecks_owner_window_at_docker_boundaries) ... ok
+test_launcher_rejects_absent_owner_lease_without_subprocess (test_protocol.FrozenSourceAndConstructionContract.test_launcher_rejects_absent_owner_lease_without_subprocess) ... ok
+test_launcher_requires_live_owner_comment_payload_exactly_bound_to_lease (test_protocol.FrozenSourceAndConstructionContract.test_launcher_requires_live_owner_comment_payload_exactly_bound_to_lease) ... ok
+test_launcher_times_out_formal_run_and_force_removes_cid_before_lease_end (test_protocol.FrozenSourceAndConstructionContract.test_launcher_times_out_formal_run_and_force_removes_cid_before_lease_end) ... ok
+test_lineage_sources_match_the_registered_frozen_digests (test_protocol.FrozenSourceAndConstructionContract.test_lineage_sources_match_the_registered_frozen_digests) ... ok
+test_mounted_source_paths_do_not_assume_repository_parent_tree (test_protocol.FrozenSourceAndConstructionContract.test_mounted_source_paths_do_not_assume_repository_parent_tree) ... ok
+test_runner_and_auditor_load_the_pinned_lineage_without_fitting (test_protocol.FrozenSourceAndConstructionContract.test_runner_and_auditor_load_the_pinned_lineage_without_fitting) ... ok
+test_runner_generates_feedback_after_live_query_start_and_audits_calls (test_protocol.FrozenSourceAndConstructionContract.test_runner_generates_feedback_after_live_query_start_and_audits_calls) ... ok
+test_runner_timestamps_feedback_consumption_at_first_forward (test_protocol.FrozenSourceAndConstructionContract.test_runner_timestamps_feedback_consumption_at_first_forward) ... ok
+test_accepts_new_feedback_consumed_and_updated_inside_live_query (test_protocol.OnlineWindowContract.test_accepts_new_feedback_consumed_and_updated_inside_live_query) ... ok
+test_rejects_consumption_at_half_open_update_end (test_protocol.OnlineWindowContract.test_rejects_consumption_at_half_open_update_end) ... ok
+test_rejects_empty_and_malformed_evidence (test_protocol.OnlineWindowContract.test_rejects_empty_and_malformed_evidence) ... ok
+test_rejects_nonoverlap_same_worker_and_missing_query (test_protocol.OnlineWindowContract.test_rejects_nonoverlap_same_worker_and_missing_query) ... ok
+test_rejects_precomputed_or_late_feedback (test_protocol.OnlineWindowContract.test_rejects_precomputed_or_late_feedback) ... ok
+test_rejects_wait_only_window_without_overlapping_inference_call (test_protocol.OnlineWindowContract.test_rejects_wait_only_window_without_overlapping_inference_call) ... ok
+
+----------------------------------------------------------------------
+Ran 27 tests in 2.308s
+
+OK
+DOCKER_EXIT_CODE=0

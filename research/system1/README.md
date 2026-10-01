@@ -114,3 +114,7 @@ Read each child experiment for its allowed decision vocabulary, authority bounda
 ## Role-skill construction-boundary HOLD archive
 
 - [`needle_role_skill_joint_retention_v3_20260928/ARCHIVAL_QUALIFICATION.md`](needle_role_skill_joint_retention_v3_20260928/ARCHIVAL_QUALIFICATION.md) — Issue #4929 / source PR #4940; all 13 original blobs preserve `HOLD_SOURCE_FREEZE_MISMATCH`. The reported 9/12 boundary tests and zero fits are historical summary claims, without original stdout/stderr or a retained independent raw-only audit. Three FREEZE blob IDs and two mounted-file hashes disagree with the published inventory; the malformed intake identity and CPU-description difference also remain. No valid-binding PASS, rerun, formal authorization, promotion, or issue closure.
+
+## Role-skill v6 contract and thread-instrumentation archive
+
+- [#5081 / source PR #5226 archival qualification](needle_role_skill_joint_retention_v6_20260928/ARCHIVAL_QUALIFICATION.md) — preserves 29 exact historical files, the 27-fixture construction record, and thread-only placeholder-overlap instrumentation. The Windows Docker observation lacked the required coordinator release and is not authorized Stage-0. Formal role-retention remains UNRUN / STOP_RESOURCE_GATE; the source PR stays Draft and #5081 stays open. No rerun or runtime promotion.
