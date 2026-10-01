@@ -31,3 +31,5 @@ jobs:
           python-version: '3.12'
       - name: Check retained analytical results are indexed
         run: python research/analysis/check_index.py
+      - name: Test selection-aware shadow-audit T1
+        run: python -B -m unittest discover -s research/analysis/selection_aware_shadow_audit_5681_t1_v1 -p 'test_*.py' -v
