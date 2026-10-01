@@ -583,3 +583,13 @@ selection errors retain the original response and latch the existing STOP;
 no automatic retry or after-STOP inspection is enabled. Guarded mode continues
 to use its own explicit window-review contract. A one-shot public server does
 not provide these persistent tools and its MCP refusal still stops the caller.
+
+`interface_dispatch` MCP arguments differ from CLI switches: do not send the
+CLI `review` flag. The actual MCP tool schema lists its accepted fields. To
+receive an image, include an explicit `observe` program operation or request
+supported `inspect_after` + `inspect_after_region` in persistent mode. A capture
+flag cannot replace inspecting the returned image/release. Read the actual
+schema before authoring a request; unexpected top-level fields are refused
+before input, and this primary's STOP forbids correcting/resending that trial.
+The syntax-only `interface_validate` tool checks the bounded program, not input
+authority, current target dependencies or outer dispatch argument correctness.
