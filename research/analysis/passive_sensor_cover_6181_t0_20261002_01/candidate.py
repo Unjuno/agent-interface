@@ -98,7 +98,7 @@ def greedy(fixture):
 def minimum_cover(fixture):
     covers = [x for x in all_subsets(fixture) if x["status"] == "COVER"]
     if not covers:
-        return {"status": NO_COVER, "channels": [], "cost": None}
+        return {"status": NO_COVER, "channels": [], "cost": None, "minimum_tie_count": 0, "cover_count": 0}
     winner = min(covers, key=lambda x: (x["cost"], len(x["channels"]), x["channels"]))
     tied = [x for x in covers if (x["cost"], len(x["channels"])) ==
             (winner["cost"], len(winner["channels"]))]
