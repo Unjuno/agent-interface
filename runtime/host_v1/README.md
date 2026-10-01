@@ -268,3 +268,44 @@ in the summary arm; unchanged image data remains separate. Actual whole-context
 model usage is retained with cache and fixed-order limits. Neither that byte
 reduction nor the single pair proves lower model cost, faster semantic judgment
 or human-comparable live tempo.
+## Optional sequential primary caller
+
+The host bundle also exports `createPrimaryCaller` from `primary_caller.mjs`.
+This is an explicit trial policy with positional operation helpers. It latches
+STOP on unexpected refusals, malformed results, incomplete input, nonneutral
+release, transport/presentation failures, or invalid helper arguments. Once
+stopped, only `interface_close` may be sent; review/acknowledgment still bind
+original retained responses. Choose this policy explicitly for a bounded trial.
+The generic instrumented host remains available for caller-decided recovery.
+
+```js
+import { createPrimaryCaller } from './host-bundle/primary_caller.mjs';
+const primary = createPrimaryCaller(client, 'guarded-local', sinks, [], {
+  reviewWindowId: explicitlyConfiguredWindowId,
+});
+const observed = await primary.observe();
+// Actually inspect the image, then record the returned attempt's review.
+await primary.review(observed.attempt, { task, phase: 'observe', reason });
+const minted = await primary.mint(alias, sourceSequence, point, regionSize);
+await primary.acknowledgeText(minted.attempt, {
+  task, phase: 'mint', reason: 'Read this original mint response',
+});
+const acted = await primary.input(alias, offset, 'click', explicitTail);
+// Review the acted image before the next decision. Do not infer task success
+// from neutral execution alone. Close the public session before the host.
+const closed = await primary.call('interface_close', {});
+await primary.acknowledgeText(closed.attempt, {
+  task, phase: 'close', reason: 'Read the original close outcome',
+});
+await client.close();
+```
+
+`mint` requires four positional arguments and `input` requires alias, explicit
+offset, interaction and tail. `reviewWindow()` uses its configured window ID;
+guarded `observe()` accepts no per-call scope. Direct-route observation uses
+the constructor's explicit snapshotted observation arguments. Image reviews and
+text acknowledgments require `response.attempt`, not the entire response object.
+Exact one-use declared refusal controls are optional trial configuration. They
+do not authorize retries, refresh evidence, infer targets, select actions or
+prove semantic completion. This wrapper's tool allowlist excludes activation;
+the generic host exposes the separately documented activation/recovery route.
