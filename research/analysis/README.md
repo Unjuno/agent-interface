@@ -150,6 +150,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`anytime_t5/`](anytime_t5/)
 - [`arena_v1_cv_grounding_rescue_4695_v1/`](arena_v1_cv_grounding_rescue_4695_v1/)
 - [`arena_v1_cv_grounding_rescue_4695_v2/`](arena_v1_cv_grounding_rescue_4695_v2/)
+- [`assistive_cue_noninterference_5800_t0_v1/`](assistive_cue_noninterference_5800_t0_v1/)
 - [`attention_budgeting_successor_1940_v1/`](attention_budgeting_successor_1940_v1/)
 - [`attention_cue_provenance_diagnostic_2755_v1/`](attention_cue_provenance_diagnostic_2755_v1/)
 - [`attention_provenance_successor_1936_v1/`](attention_provenance_successor_1936_v1/)
