@@ -501,3 +501,4 @@ The checker compares the generated block against every child directory with a re
 ## Retained construction archives
 
 - [Issue #5346 / PR #5365 T0 chronology STOP](stigmergic_coordination_5346_t0_v1/ARCHIVAL_QUALIFICATION.md) — 11 exact original files (86,873 bytes), including the host raw; pre-formal model/audit STOP and stale plan-hash field preserved, container invocations zero, no rerun or scientific promotion.
+- [Issue #5325 / PR #5377 capability-chain construction archive](attenuated_capability_5325_t0_v1/ARCHIVAL_QUALIFICATION.md) — eight exact published files (36,073 bytes); 55-row host construction only, withdrawn CPU request, formal runner/auditor 0/0, intake-main mismatch retained; later toy T0/T1 records remain separate, with no security-efficacy claim.
