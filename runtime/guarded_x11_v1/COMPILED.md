@@ -93,3 +93,20 @@ no-input evidence, actual delivery, held keys/buttons, native execution metadata
 recovery-required state keep the existing stricter failure handling. Existing
 adapter terminal shapes remain supported. [Boundary regression evidence](../results/compiled-refusal-integration-01/README.md)
 uses deterministic adapters, not a live GUI performance comparison.
+
+## Pixel-only effect callbacks and deadlines
+
+The [real Calc pixel admission](../results/calc-pixel-effect-admission-02/README.md)
+read two visible cell values from an exact delivered capture using caller-grounded
+regions and a fixed OCR rule. A blank control produced a spurious word that the
+rule classified unknown. This supplies narrow feasibility evidence for common
+read-only assistance; it does not qualify a generic text verifier, saved effect,
+all comparison arms or this compiled adapter on Calc. The primary workflow's
+final confirmation expired and its independent saved-task score failed.
+
+Keep input expiry separate from the entire task's elapsed time. The existing
+compiled adapter checks each action's current reference and clamps its deadline
+to the method/reference minimum. Neither pixel recognition nor a fresh clock
+renews authority. After a model wait, use the ordinary target/dependency review
+and admission; preserve a refusal instead of replaying input with a longer lease.
+A useful visible predicate is separate from independently scored persisted effects.
