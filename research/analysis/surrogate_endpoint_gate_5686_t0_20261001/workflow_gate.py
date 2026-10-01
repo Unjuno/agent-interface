@@ -10,9 +10,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 
-ALLOCATION = "SURROGATE-ENDPOINT-GATE-5686-T0-GHA-20261001-02"
+ALLOCATION = "SURROGATE-ENDPOINT-GATE-5686-T0-GHA-20261001-03"
 IMAGE = "python:3.12-slim-bookworm@sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a"
-BRANCH = "research/surrogate-endpoint-gate-5686-t0-a02-20261001"
+BRANCH = "research/surrogate-endpoint-gate-5686-t0-a03-20261001"
 ROOT = Path(__file__).resolve().parents[3]
 
 

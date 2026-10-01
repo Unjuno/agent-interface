@@ -3,7 +3,7 @@ name: Issue 5686 T0 surrogate-gate Docker experiment
 on:
   push:
     branches:
-      - research/surrogate-endpoint-gate-5686-t0-a02-20261001
+      - research/surrogate-endpoint-gate-5686-t0-a03-20261001
     paths:
       - research/analysis/surrogate_endpoint_gate_5686_t0_20261001/FREEZE.json
       - research/analysis/surrogate_endpoint_gate_5686_t0_20261001/README.md
@@ -29,6 +29,7 @@ jobs:
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
+          fetch-depth: 0
 
       - name: Freeze, current-main, and one-shot start gate
         run: >-
@@ -61,6 +62,7 @@ jobs:
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
+          fetch-depth: 0
 
       - name: Download candidate raw artifact
         uses: actions/download-artifact@v4

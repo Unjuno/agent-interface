@@ -45,7 +45,7 @@ def main():
         print("STOP_OUTPUT_NOT_EMPTY", file=sys.stderr)
         return 2
     out.mkdir(parents=True, exist_ok=True)
-    result = {"allocation": "SURROGATE-ENDPOINT-GATE-5686-T0-GHA-20261001-02",
+    result = {"allocation": "SURROGATE-ENDPOINT-GATE-5686-T0-GHA-20261001-03",
               "role": args.role, "image_ref": IMAGE, "expected_platform": "linux/amd64",
               "host_python": sys.version, "host_platform": platform.platform(),
               "workflow_run_id": os.environ.get("GITHUB_RUN_ID"),
