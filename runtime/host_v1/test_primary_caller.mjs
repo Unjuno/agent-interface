@@ -182,3 +182,35 @@ test('stopped observation transport failure preserves STOP and never retries',as
   assert.equal(caller.state().stopped,reason);assert.equal(calls,2);
   await assert.rejects(caller.input('save',[12,12],'click',[]),/stopped/);assert.equal(calls,2);
 });
+
+for (const route of ['guarded-local','direct-post']) test('explicit stopped results preserves original historical evidence on '+route,async()=>{
+  const failed={result:{isError:true,content:[{type:'text',text:'original refusal'}]}};
+  const retained={result:{isError:false,content:[{type:'text',text:JSON.stringify({status:'needs_review',call_id:'a'.repeat(32),operation_invoked:false,replay_allowed:false})}]}};
+  const calls=[];const caller=createPrimaryCaller({sendPresented:async(tool,args)=>{calls.push({tool,args});return tool==='interface_results'?retained:failed;}},route,{});
+  await caller.call('interface_clock',{});const reason=caller.state().stopped;
+  assert.equal(typeof caller.resultsAfterStop,'function');
+  assert.equal(await caller.resultsAfterStop('a'.repeat(32)),retained);
+  assert.equal(caller.state().stopped,reason);
+  await assert.rejects(caller.call('interface_results',{call_id:'a'.repeat(32)},null,'interface_results'),/stopped/);
+  await assert.rejects(caller.call(route==='guarded-local'?'interface_guarded_input':'interface_dispatch',{}),/stopped/);
+  assert.deepEqual(calls,[{tool:'interface_clock',args:{}},{tool:'interface_results',args:{call_id:'a'.repeat(32),include_image:false,detail:'full'}}]);
+});
+test('stopped results rejects missing IDs, malformed IDs, extra options and an unstopped caller before dispatch',async()=>{
+  for(const values of [[],[''],['../report'],['a'.repeat(31)],['A'.repeat(32)],[{}],['a'.repeat(32),{include_image:true}]]){
+    let count=0;const caller=createPrimaryCaller({sendPresented:async()=>{count++;return {result:{isError:true,content:[]}};}},'guarded-local',{});
+    await caller.call('interface_clock',{});const reason=caller.state().stopped;
+    assert.equal(typeof caller.resultsAfterStop,'function');
+    await assert.rejects(caller.resultsAfterStop(...values),/stopped results/);
+    assert.equal(caller.state().stopped,reason);assert.equal(count,1);
+  }
+  let count=0;const caller=createPrimaryCaller({sendPresented:async()=>{count++;}},'guarded-local',{});
+  assert.equal(typeof caller.resultsAfterStop,'function');
+  await assert.rejects(caller.resultsAfterStop('a'.repeat(32)),/stopped results/);assert.equal(count,0);
+});
+test('stopped results never retries a transport failure or replaces the original STOP',async()=>{
+  let count=0;const error=new Error('host blocked');const caller=createPrimaryCaller({sendPresented:async()=>{if(++count===1)return {result:{isError:true,content:[]}};throw error;}},'guarded-local',{});
+  await caller.call('interface_clock',{});const reason=caller.state().stopped;
+  assert.equal(typeof caller.resultsAfterStop,'function');
+  await assert.rejects(caller.resultsAfterStop('a'.repeat(32)),e=>e===error);
+  assert.equal(count,2);assert.equal(caller.state().stopped,reason);
+});

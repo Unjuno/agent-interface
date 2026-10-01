@@ -40,8 +40,8 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
     return { alias, offset: [...offset], interaction, tail: copiedTail,
       detail: 'brief', observation_refs: true };
   }
-  async function performCall(tool, args, controlId = null, stoppedObservation = false) {
-      if (stopped && tool !== 'interface_close' && !(stoppedObservation && tool === 'interface_guarded_observe')) throw Error('trial stopped: ' + stopped);
+  async function performCall(tool, args, controlId = null, stoppedReadTool = null) {
+      if (stopped && tool !== 'interface_close' && !(tool === stoppedReadTool && ['interface_guarded_observe','interface_results'].includes(tool))) throw Error('trial stopped: ' + stopped);
       if (!tools.has(tool)) {
         stop('unavailable tool ' + tool);
         throw Error(stopped); // Local rejection before host dispatch.
@@ -208,7 +208,20 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
       }
       // One explicit read only. STOP remains sticky; no action, review-window,
       // remint, recovery or ordinary call is implicitly enabled by this image.
-      return performCall('interface_guarded_observe', {}, null, true);
+      return performCall('interface_guarded_observe', {}, null, 'interface_guarded_observe');
+    },
+    async resultsAfterStop(...values) {
+      const [callId] = values;
+      if (!stopped || values.length !== 1 || typeof callId !== 'string' ||
+          !/^[a-f0-9]{32}$/.test(callId)) {
+        stop('explicit stopped results requires one retained call ID');
+        throw TypeError('explicit stopped results requires one retained call ID');
+      }
+      // Historical metadata only. No capture, listing, replay, compact projection,
+      // authority recovery or ordinary call is implicitly enabled by this receipt.
+      return performCall('interface_results', {
+        call_id: callId, include_image: false, detail: 'full'
+      }, null, 'interface_results');
     },
     async acknowledgeText(attempt, attribution) {
       if (!Number.isSafeInteger(attempt) || attempt < 1 ||
