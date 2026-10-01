@@ -52,6 +52,7 @@ Prefer the narrowest existing namespace. The diagram is a placement guide; retai
 
 - [`analysis/`](analysis/) — proofs, exact derivations, exhaustive state-space checks, break-even/identifiability analysis, and the empirical residuals they expose.
 - [`analysis/backward_evidence_slice_5329_t0_v1/README.md`](analysis/backward_evidence_slice_5329_t0_v1/README.md) — Issue #5329 backward-slice T0 retained as `STOP_PROVENANCE_OR_RUNNER`; the frozen independent auditor stopped on an unresolved external-cause edge.
+- [`security/ui_redress_5692_x11_a02_20261001/README.md`](security/ui_redress_5692_x11_a02_20261001/README.md) — Issue #5692 X11 UI-redress formal-01 STOP retained as an independent security result; see frozen stop record.
 
 Use analytical work to eliminate questions that are already decidable from explicit assumptions; do not treat it as measurement of a real backend/model unless the retained evidence actually contains those endpoints.
 
