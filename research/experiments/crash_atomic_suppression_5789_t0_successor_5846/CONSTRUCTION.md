@@ -9,7 +9,7 @@ predecessor allocation record and any result remain immutable.
 - Successor Issue: #5846; parent idea: #5789.
 - Branch: `research/crash-atomic-suppression-5846-t0-20261001`.
 - Additive path: `research/experiments/crash_atomic_suppression_5789_t0_successor_5846/`.
-- Rebased preparation base: main `da7770df8bd896738a8a7e0ccc8ea45e10b3e645`; confirm current main again at the start gate.
+- Rebased preparation base: main `56ef267db50a8937f04d940a425b2b1819f714fb`; confirm current main again at the start gate.
 - Protocol/schedule/candidate/auditor: `FREEZE.md`, `protocol.py`, `worker.py`, `runner.py`, `audit.py`.
 - Launcher and host/guest output mapping: `container_runner.py`.
 
@@ -46,7 +46,7 @@ rows, including the baseline failures; it is historical construction evidence,
 not an Issue #5846 result. Earlier setup/test errors and their corrections are
 retained in the predecessor Issue #5795 record rather than rewritten here.
 
-Successor local check command (first on source commit `552f4852e9a341a75a7281d908ef8712b022005d`, then repeated after rebase on main `ab0c2ba02def108f16890654c39c9960c9db4b32`, and again on latest main `da7770df8bd896738a8a7e0ccc8ea45e10b3e645` at source commit `892cdcc70e15bbcb766b7375d690a533dfbd1133`):
+Successor local check command (first on source commit `552f4852e9a341a75a7281d908ef8712b022005d`, then repeated after rebase on main `ab0c2ba02def108f16890654c39c9960c9db4b32`, again on main `da7770df8bd896738a8a7e0ccc8ea45e10b3e645`, and most recently on main `56ef267db50a8937f04d940a425b2b1819f714fb` at source commit `e96d9aabd4f64547f4f67a50b27596d9523b6fa5`):
 
 ```sh
 python3 -B -m unittest discover -s research/experiments/crash_atomic_suppression_5789_t0_successor_5846 -p 'test_*.py' -v
