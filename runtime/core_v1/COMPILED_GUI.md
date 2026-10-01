@@ -46,5 +46,12 @@ release builds continue to pin committed HEAD through the normal builder.
 On the guarded Python X11 path, pass `valid_until_ns` as the bridge action's
 `expires_at_ns`. The bridge clamps its existing five-second cap rather than
 renewing the outer method budget. This argument must use the execution host's
-monotonic clock. A full live compiled adapter and independent task evaluation
-are still needed; the deadline bridge alone is not that integration.
+monotonic clock. The deadline bridge alone does not supply perception, effect verification
+or independent task scoring.
+
+The opt-in shared X11 Python adapter now supplies this connection:
+[`runtime.guarded_x11_v1.compiled`](../guarded_x11_v1/COMPILED.md).
+It uses the existing graph with fresh bridge captures, boolean target prerequisites,
+caller-owned perception/effect callbacks, per-action revalidation, one-use
+admission tokens and retained raw receipts. Its application-specific primary
+live trial does not establish general text verification or efficiency gains.

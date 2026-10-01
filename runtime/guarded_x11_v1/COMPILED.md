@@ -1,0 +1,60 @@
+# Bounded compiled methods over the shared X11 bridge
+
+`runtime.guarded_x11_v1.compiled.run` connects the existing shared
+`runtime.core_v1.compiled_gui` graph to a caller-owned `NativeHandleBridge`.
+This is an opt-in portable Python API for Linux/X11. It imports no research
+implementation, does not spawn a model, and does not change MCP routing.
+
+Ground the existing aliases from a reviewed bridge observation. Author the
+bounded graph with `session_scope=bridge.scope` and
+`surface=compiled.surface(bridge)`. For each graph action, provide an exact
+binding with `interaction` (`click`, `move`, or `keyboard`), its alias-local
+`offset`, and an explicit `tail` list using the existing bridge contract.
+Bindings and graph are copied before any perception callback can change them.
+
+```python
+from runtime.guarded_x11_v1 import compiled
+receipt = compiled.run(
+    bridge, interface, bindings,
+    perceive=perceive, verify_effect=verify_effect,
+    cancelled=lambda: False,
+)
+```
+
+`perceive(native_observation, rgb)` returns declared scalar predicates from
+copies of the newly captured observation and its exact RGB. Symbol identity
+and dependencies in this adapter are boolean prerequisites: all must be True.
+Unknown/false prerequisites cannot be overridden by a matching action branch.
+The adapter uses the existing handle store against that same capture, then
+passes a one-use authorization and the original minimum method/admission
+deadline to the bridge's ordinary click/move/keyboard path. The ordinary
+captures, pixel/focus checks, admission, partial execution and release remain.
+A plan cannot remint a reference, renew the scope or replay an uncertain action.
+
+`verify_effect(payload, native_observation, rgb)` supplies the graph's typed
+`status` and `evidence_ref` verdict. The graph checks its declared expected
+predicates first. The callback must establish the intended effect for that
+application; returning succeeded without an adequate contract does not verify
+text or durable saving. Both callbacks are trusted caller code, not sandboxed,
+not an independent oracle and not a generic vision/OCR service. Scope/sequence
+changes in either callback prevent continuation or completion. They are
+synchronous per-iteration reads, not installed or background sensors.
+
+Every graph iteration retains a fresh native image and metadata through the
+bridge. Its output directory also retains the fixed plan, graph events,
+reference resolutions, admissions, full input receipts, effect verdicts and
+final graph receipt. These files are not fsync-backed crash durability. Keep
+the raw bridge artifacts with their recorded paths/hash links. Retained receipts
+or authorization strings cannot resume a finished invocation. A callback or
+I/O exception is retained and propagated; inspect completed/uncertain input
+before choosing a new action. There is no automatic retry or release claim
+when an execution supplies no actual release evidence.
+
+`TASK_SUCCEEDED` is a local graph verdict. Independently score application task
+and collateral effects after the controller is terminal. Method deadline
+checks remain cooperative; blocking X11/callback I/O is not preempted.
+Primary use, raw evidence and limits are recorded in
+[the main integration trial](../results/compiled-x11-live-01/README.md).
+Its private fixture has an application-specific accepted/saved cue and stable
+canvas Save control. General GUI text verification, hover recovery, comparable
+model token/cost savings and human-tempo performance remain unproven.

@@ -175,3 +175,12 @@ Python `mint` retains its offset-only return; `mint_reference` includes metadata
 
 [Main integration and personal use](../results/hover-lifetime-main-01/README.md)
 retains pointer-only motion, old-reference refusal, fresh grounding and one Save.
+
+## Bounded evidence-dependent continuation
+
+The opt-in [compiled Python adapter](COMPILED.md) connects the existing shared
+state graph to this bridge. It captures intermediate pixels, evaluates explicit
+caller-owned predicates, revalidates each alias and forwards the shorter method
+budget into ordinary guarded input. The [primary live trial](../results/compiled-x11-live-01/README.md)
+retains one correct Save and a changed-control stop with no Save. This does not
+promote a generic text verifier or establish efficiency gains.
