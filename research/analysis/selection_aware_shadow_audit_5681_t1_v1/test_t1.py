@@ -71,6 +71,13 @@ class SelectionAwareShadowAuditTests(unittest.TestCase):
         self.assertEqual(audited["status"], "FAIL")
         self.assertTrue(audited["errors"])
 
+    def test_independent_auditor_fails_closed_on_wrong_case_type(self):
+        result = candidate.build()
+        result["cases"]["event_dependent"] = ["not-a-case"]
+        audited = audit.audit(result)
+        self.assertEqual(audited["status"], "FAIL")
+        self.assertTrue(audited["errors"])
+
     def test_candidate_cli_emits_json(self):
         import json
         import subprocess
