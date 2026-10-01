@@ -42,3 +42,9 @@ Validation uses `runtime.core_v1.test_compiled_gui` and
 `runtime.distribution_v2.test_compiled_archive` in the shared local/CI native runner.
 The isolated archive test uses an explicit working-source snapshot without Git;
 release builds continue to pin committed HEAD through the normal builder.
+
+On the guarded Python X11 path, pass `valid_until_ns` as the bridge action's
+`expires_at_ns`. The bridge clamps its existing five-second cap rather than
+renewing the outer method budget. This argument must use the execution host's
+monotonic clock. A full live compiled adapter and independent task evaluation
+are still needed; the deadline bridge alone is not that integration.
