@@ -630,3 +630,5 @@ or human-tempo claim.
 
 
 - [#2802 allocation 04 source-only qualification](app_event_obligation_keying_2802_v1/ARCHIVAL_QUALIFICATION.md): ten exact preformal source/freeze files; formal 0/18. The reported macOS/CPython 3.14.5 host policy check (4/4) is supplemental only; the frozen Linux/CPython 3.13.5 gate remains open. Original freeze and branch retained; no execution or runtime promotion.
+
+- [#2466 dwell-censor allocations 01/02 recovery status](dwell_censor_reason_2466_v2/RECOVERY_STATUS.md): preserves both exact allocations and the allocation-01 STOP without pooling rows. Allocation-02 remains frozen at 0/48; host contract tests do not replace its Linux/Python 3.13.5/Xvfb gate. No formal execution or policy promotion is claimed.
