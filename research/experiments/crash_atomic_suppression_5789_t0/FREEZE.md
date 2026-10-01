@@ -2,8 +2,8 @@
 
 Parent idea: GitHub Issue #5789. Allocation request: Issue #5795. Intake main
 before construction: `ff2164a8b16d386571c91ebba19f6604b4776581`. The branch was
-subsequently rebased, before formal execution, onto newer main
-`b7b724ee06125a146c68071c1d03e9556a70c5f6`.
+subsequently rebased, before formal execution, onto main
+`8986380d8ec265f9cdc4a282fcd4ed93254acd49`.
 
 ## H/T/D/C/U
 
