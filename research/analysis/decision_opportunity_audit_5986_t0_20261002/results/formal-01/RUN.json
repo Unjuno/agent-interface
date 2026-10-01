@@ -1,1 +1,17 @@
-ÎÈuž‹.râ•ê+v*ÞrÚ+ËúkŠö­{ûf§ö z{bž×«}§jçb·Ÿ|ëm6ë]4ÛúÞ²ém³÷è®f¥Ó_ÑPØì¢
+{
+  "allocation_id": "DECISION-OPPORTUNITY-5986-AUDIT-20261002-01",
+  "source_main_commit": "d6229435f9d651b5309a01dca30c2edd7de2f54a",
+  "predecessor_pr": 6131,
+  "predecessor_head": "357989191b85cd4ed4ecacb313170b6294e56a62",
+  "candidate_invocations": 0,
+  "independent_auditor_invocations": 1,
+  "retries": 0,
+  "construction_tests": {"command": "python3 -m unittest -v test_independent_audit.py", "passed": 9, "failed": 0},
+  "formal_command": "docker run --rm --network none --read-only --cpus 0.5 --memory 256m --pids-limit 32 --cap-drop ALL --security-opt no-new-privileges -v /private/tmp/agent-interface-audit5986-20261002:/study:ro -v /private/tmp/agent-interface-audit5986-20261002/out:/out:rw python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python /study/independent_audit.py /study/frozen/fixture.json /study/frozen/candidate.json /out/audit.json",
+  "completed_utc": "2026-10-01T16:09:54Z",
+  "container_exit_code": 0,
+  "stdout": "{\"exit\": 0, \"cases\": 6, \"mutations_rejected\": 6, \"errors\": []}",
+  "audit_sha256": "0d07fb11f1bf509296db04764ce2311d0ce4590457b42c8ac4c529b78f1899f7",
+  "disposition": "PASS_AUDIT_REPRODUCED_SCOPED",
+  "scope": "independent container audit of frozen synthetic candidate raw; no new candidate allocation or empirical feedback-value claim"
+}
