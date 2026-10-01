@@ -5,6 +5,11 @@ A bounded two-worker, four-right escrow state machine was exhaustively enumerate
 # Research index
 
 Agent Interface is being developed by analysis and experiment rather than by locking an API early. This file is the evidence ledger for the public repository.
+
+### Issue #6045: opportunity-conditioned age of actuated information T0 (2026-10-02)
+
+The 18-row synthetic method fixture ran once in a pinned `linux/arm64` CPU container; a separate network-disabled raw-only auditor independently reconstructed all rows and returned `PASS_METHOD_SCOPED`, errors `[]`. Planted witnesses showed a route with lower delivery age can miss the declared opportunity while the older-observation route is timely, and identical onset→effect latency can hide different source ages/validity. Unattributed multi-observation use, uncertain clock order, interval/deadline overlap, and irrelevant activity fail closed. This is a first-row measurement-method result only: no live model/GUI/task, causal-use, safety, or efficacy evidence. The run had no separate #5085 slot grant; this coordination caveat is retained explicitly and no existing container/VM was inspected or modified. See [the immutable report and raw run](research/analysis/opportunity_conditioned_actuated_info_6045_t0_20261002/REPORT.md) and [Issue #6045](https://github.com/Unjuno/agent-interface/issues/6045). Issue #6045 remains open.
+
 ## How to read this ledger
 
 This file is intentionally comprehensive. For public navigation, use the shorter status documents first and come here for the retained evidence history.
@@ -32,6 +37,10 @@ An isolated Xvfb/Tk probe preserved three attempts: inventory-preflight STOP; a 
 ### Issue #5970 T3: source-bound prospective provenance
 
 The frozen #4135 archive was reconstructed in memory and its exact Tk app/observer hashes were verified. A deterministic transformer derived the executable pair from those exact sources. In one bounded Xvfb Shift press/release, the app derivative recorded both events with explicit action parents; the observer derivative recorded zero key events. An independent auditor reconstructed the source/archive again and confirmed the HOLD. Cleanup release was still attempted and the isolated server's terminal Shift keymap was neutral. Disposition: `HOLD_SOURCE_BOUND_TRACE_INCOMPLETE`, not a transfer to general #4135 behavior. Eight construction tests pass; candidate and auditor each ran once. Docker Desktop's backend was present but its service was stopped and could not be started with current permissions; WSL2/Xvfb was the isolated fallback. No #4135 formal allocation was rerun. See [T3 report](research/analysis/blackstart_source_bound_5970_t3_20261001/REPORT.md).
+
+### Issue #6086: hazard-shaped discretionary capture T0
+
+The partial frozen exact-rational probe evaluated peaked, flat, and inverted onset weights at two cue widths, with three discretionary captures and immutable sentinels. At width 1/2 hazard scored 16/73 versus uniform 10/73 and phase-diversified 9/73, below the preregistered 1/10 gain gate; at width 1 it exceeded both baselines. Flat schedules tied and the inverted distribution penalized hazard concentration. Overall `FAIL_METHOD` because both widths were required. The auditor did not establish raw candidate/oracle equality: its whole-row comparison included a candidate-only delay field and separate oracle rows were not retained. This was also an incomplete Issue T0, omitting imperfect exposure, false-positive accounting, worst-onset/max-gap, explicit no-cue, leakage rejection, zero/unknown hazard, and all-budget-mandatory controls. No repair/retry was made. This finite synthetic result is not live capture, safety, or task evidence. Docker Desktop server probe was unresponsive; local Python only. See [frozen T0 report](research/analysis/hazard_discretionary_capture_6086_t0_20261002/REPORT.md) and [Issue #6086](https://github.com/Unjuno/agent-interface/issues/6086).
 
 ### Issue #5970 T4: X RECORD delivery-boundary successor
 
