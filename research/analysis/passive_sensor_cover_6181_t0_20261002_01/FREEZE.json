@@ -1,0 +1,77 @@
+{
+  "schema": "passive-sensor-cover-freeze-v1",
+  "issue": 6184,
+  "idea_issue": 6181,
+  "allocation_id": "PASSIVE-SENSOR-COVER-6181-T0-20261002-01",
+  "main_sha": "69a1bf509eb432e5e3c0c294d05ad7671d86adb6",
+  "candidate_window_utc": {
+    "start": "2026-10-01T18:45:00Z",
+    "end": "2026-10-01T19:00:00Z"
+  },
+  "execution": {
+    "host": "Windows-10-10.0.26200-SP0",
+    "python": "3.11.9",
+    "mode": "local-host-CPU-only",
+    "docker_orb_wsl": false,
+    "gpu": false,
+    "network_for_candidate": false,
+    "model_gui_or_os_input": false
+  },
+  "files": [
+    {
+      "path": "research/analysis/passive_sensor_cover_6181_t0_20261002_01/fixture.json",
+      "git_blob": "333475a9c7a678b606a6e0e1d1b7de7b880687d3",
+      "bytes": 4217,
+      "sha256": "06be3cddbf77190c79103b382ce4360123d730828988330eee4404079bd8a832"
+    },
+    {
+      "path": "research/analysis/passive_sensor_cover_6181_t0_20261002_01/candidate.py",
+      "git_blob": "d78aed97b4baef576c46a4a80ce08b9ff6ceb024",
+      "bytes": 5991,
+      "sha256": "a9ccdcea6d85e642e3098634b52e74c2cb7262daa63515d0334893c17d14382d"
+    },
+    {
+      "path": "research/analysis/passive_sensor_cover_6181_t0_20261002_01/audit.py",
+      "git_blob": "174f74b8ea352f8e356afa3346fe0070c34d1c02",
+      "bytes": 8487,
+      "sha256": "97f1a081ac9a37ea84564adb71e7cc80e3f9ec849ade4749f684cc0ef99589d7"
+    },
+    {
+      "path": "research/analysis/passive_sensor_cover_6181_t0_20261002_01/fixture_data.py",
+      "git_blob": "6fee7933cccbe18358d7c276c448c3573365e412",
+      "bytes": 126,
+      "sha256": "16a80980c3745d6120ab79a236ecd3440e61f0657073d04da22f6f500d9eb26e"
+    },
+    {
+      "path": "research/analysis/passive_sensor_cover_6181_t0_20261002_01/test_t0.py",
+      "git_blob": "ab288be8aa45ca0360c2f721357d7d312140461a",
+      "bytes": 2417,
+      "sha256": "2513de187db0e57b3b708a2f0e41c19de7c62edf73b146f76086f62cf120726a"
+    }
+  ],
+  "construction": {
+    "attempt_01": {
+      "result": "FAIL_TEST_HARNESS_ONLY",
+      "tests": "6/7",
+      "py_compile": "PASS",
+      "candidate_invocations": 0,
+      "auditor_invocations": 0,
+      "reason": "expected feasible-cover count 1; exhaustive truth is 4 feasible covers with one unique minimum-cost tie"
+    },
+    "attempt_02": {
+      "result": "PASS_CONSTRUCTION",
+      "tests": "7/7",
+      "py_compile": "PASS",
+      "candidate_invocations": 0,
+      "auditor_invocations": 0,
+      "branch_head": "3dfdcccd08467c31cffc525cbba171a984fd9016"
+    }
+  },
+  "formal_limits": {
+    "candidate_invocations_max": 1,
+    "auditor_invocations_max": 1,
+    "retries": 0,
+    "mutation_controls": 4,
+    "subsets": 16
+  }
+}
