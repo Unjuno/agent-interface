@@ -84,3 +84,31 @@ pre-execution construction correction, not evidence about the hypothesis.
 5. Preserve every status; no retries, substitutions, historical relabeling, or
    model/game/GUI/OS-input calls.
 
+## Executed result
+
+Revision 2 construction passed 5/5 corruption tests. The one frozen candidate
+ran once and exited 0; the separate raw-only auditor ran once and exited 0 with
+PASS_RAW_AUDIT_OF_HOLD_CLASSIFICATION. The research disposition is
+HOLD_CROSS_DOMAIN_EFFECT_CLOCK_JOIN, not an occupancy or latency estimate.
+
+At candidate start main had advanced from frozen base b63fe08 to
+871c0aca73fae16552977975f584c7d3c6ed56a8. The four-commit comparison showed
+no change to CURRENT_GOAL, ROADMAP, or any pinned source blob. The result stays
+bound to the exact b63fe08 base and is not represented as run against the later
+main tip.
+
+Candidate output SHA-256:
+3b3126c30dfaa1e6e1c7e8a6b0dd82aa2872787e45108a829388f16ca4987349
+
+Independent audit output SHA-256:
+f7053023be0422c0837ccea827ddef691d000a35b0c847ba7520c2697edab773
+
+Full run accounting is in RUN.md; interpretation and scope are in RESULT.md.
+The JSON outputs are result.json and independent-audit.json.
+
+Publication note: the first output upload accidentally stored a path-expansion
+error in both result paths (commits eed21a6 and af5dea2). The exact local JSON
+outputs were uploaded correctly afterward (commits b5b3b52 and a8da3f8); the
+candidate/auditor were not rerun, and the correction remains visible in branch
+history.
+
