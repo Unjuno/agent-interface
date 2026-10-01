@@ -128,6 +128,10 @@ The table below summarizes major analytical chains and representative retained o
 This compact list is generated from child directories that contain `REPORT.md` or `FORMAL_FAILURE.md`. It is the completeness surface used by the index checker.
 
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
+
+<details>
+<summary><strong>Expand all retained result/failure directories</strong></summary>
+
 - [`action_class_error_budget_5424_t2_v1/`](action_class_error_budget_5424_t2_v1/)
 - [`action_class_error_budget_5424_t3_v1/`](action_class_error_budget_5424_t3_v1/)
 - [`action_conditioned_routing_repair_successor_2059_r2_v1/`](action_conditioned_routing_repair_successor_2059_r2_v1/)
@@ -234,11 +238,11 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`interface_mutation_adequacy_5541_t0_20261001_v1/`](interface_mutation_adequacy_5541_t0_20261001_v1/)
 - [`interrupt_stack_resume_contract_v1/`](interrupt_stack_resume_contract_v1/)
 - [`ioco_5518_t7_tick_bound/`](ioco_5518_t7_tick_bound/)
-- [`issue_3655_committed_evidence_audit_v1/`](issue_3655_committed_evidence_audit_v1/)
-- [`issue_5504_cegar_t0_v1/`](issue_5504_cegar_t0_v1/)
 - [`issue3152_broker_path_confinement_20260927_v1/`](issue3152_broker_path_confinement_20260927_v1/)
 - [`issue5541_mutation_t5_20260930/`](issue5541_mutation_t5_20260930/)
 - [`issue5760_assignment_exposure_t0_20261001/`](issue5760_assignment_exposure_t0_20261001/)
+- [`issue_3655_committed_evidence_audit_v1/`](issue_3655_committed_evidence_audit_v1/)
+- [`issue_5504_cegar_t0_v1/`](issue_5504_cegar_t0_v1/)
 - [`justification_bound_action_safe_r1_v1/`](justification_bound_action_safe_r1_v1/)
 - [`justification_graph_invalidation_r0_v1/`](justification_graph_invalidation_r0_v1/)
 - [`justification_graph_truth_maintenance_r0_v1/`](justification_graph_truth_maintenance_r0_v1/)
@@ -420,6 +424,9 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`xterm_resource_footprint_transfer_v1/`](xterm_resource_footprint_transfer_v1/)
 - [`xterm_resource_footprint_transfer_v2/`](xterm_resource_footprint_transfer_v2/)
 - [`xterm_resource_footprint_transfer_v3/`](xterm_resource_footprint_transfer_v3/)
+
+</details>
+
 <!-- END GENERATED ANALYSIS RESULT INDEX -->
 
 ## Interpretation
