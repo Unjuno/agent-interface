@@ -98,3 +98,7 @@ Read each child experiment for its allowed decision vocabulary, authority bounda
 ## Local Needle training invocation guard
 
 - [`needle_single_invocation_guard_4678_v1/README.md`](needle_single_invocation_guard_4678_v1/README.md) — Issue #4678 preflight STOP: the exact #4205 GPU image is cached and matches, but its pinned safetensors checkpoint is absent; no training-image container or optimizer step ran. Two offline CPU-only audit containers validated the retained STOP record.
+
+## Online role-router LoRA archive
+
+- [`needle_role_router_online_lora_replay_v1/ARCHIVAL_QUALIFICATION.md`](needle_role_router_online_lora_replay_v1/ARCHIVAL_QUALIFICATION.md) — Issue #4899 / source PR #4906; exact original source and formal/construction-r4 archives. Registered `HOLD_AUDIT_INTEGRITY` and the missed +0.10 A-retention gain remain unchanged; earlier construction r1–r3 full raw/report sets remain outside this committed archive. Preservation only, with no rerun, promotion, or closure of #4899.
