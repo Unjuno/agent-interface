@@ -6,6 +6,7 @@ This directory is the public documentation map for Agent Interface. It organizes
 
 | Question | Canonical document |
 |---|---|
+| How should a worker start, avoid overlap, and hand off safely? | [WORKER_QUICKSTART.md](WORKER_QUICKSTART.md) |
 | What is the project trying to do? | [Project README](../README.md) and [principles](principles.md) |
 | What is the current research objective? | [CURRENT_GOAL.md](CURRENT_GOAL.md) |
 | What architecture is currently promoted? | [architecture.md](architecture.md) |
