@@ -9,6 +9,10 @@ This file is intentionally comprehensive. For public navigation, use the shorter
 
 An additive frozen-source factorial composed the current live-04 workflow's Actions run query with the production global-owner helper over eight synthetic event/head-SHA cases. The query includes `event=$GITHUB_EVENT_NAME`, so all four different-event prior-owner cases are hidden and synthetically admitted by the helper; complete workflow-path history denies all four. Same-event owners are denied, first-run admission works, and truncated views fail closed. The independent audit passed with zero audit-integrity errors. Disposition: `FAIL_EVENT_FILTER_ESCAPES_PATH_GLOBAL_OWNER`, limited to source/query composition; it is not evidence of a real overlapping run or live allocation. See [the immutable T0 report](research/analysis/map01_global_owner_invariance_59_t0_20261001/REPORT.md). Existing Issue #59 and #5936/#5953/#5948/#5969 records remain unchanged; no live Actions run was launched.
 
+### Issue #5970 × #5348: causal-cut validation of recovery reachability T0 (2026-10-01)
+
+Six finite asynchronous evidence traces compared dependency-graph-only readiness with readiness gated by exhaustive causal-cut checks. All six were syntactically graph-ready; the cut-aware candidate admitted only the valid same-epoch positive and denied five incoherent bundles (cross-epoch invalidation, an in-flight release, missing parent, midway reset, and wrong-epoch alternative root). An independent subset enumerator agreed on all legal-cut counts; six construction tests passed. Disposition: `PASS_METHOD_SCOPED` for this synthetic semantic question only. It does not prove semantic truth, source independence, authorization, real recovery reachability, or product benefit. No Docker/runtime experiment was possible: Docker Desktop service was stopped and shared-container availability ambiguous. See [the frozen T0 report](research/analysis/blackstart_causal_cut_5970_t0_20261001/REPORT.md); this refines the cross-issue direction already recorded on #5970 and does not replace #5348.
+
 | Need | Read |
 |---|---|
 | Current governing objective | [docs/CURRENT_GOAL.md](docs/CURRENT_GOAL.md) |

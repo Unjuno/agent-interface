@@ -393,18 +393,18 @@ class NativeHandleBridge:
             raise X11BackendError("native target guard lease expired during capture")
         return outcome
 
-    def click(self, alias, offset, *, tail=()):
-        return self._run_guarded(alias, offset, tail=tail, interaction='click')
+    def click(self, alias, offset, *, tail=(), expires_at_ns=None):
+        return self._run_guarded(alias, offset, tail=tail, interaction='click', expires_at_ns=expires_at_ns)
 
-    def move(self, alias, offset, *, tail=()):
+    def move(self, alias, offset, *, tail=(), expires_at_ns=None):
         """Guarded pointer motion only; hover may change the screen. No click."""
-        return self._run_guarded(alias, offset, tail=tail, interaction='move')
+        return self._run_guarded(alias, offset, tail=tail, interaction='move', expires_at_ns=expires_at_ns)
 
-    def keyboard(self, alias, offset, *, tail):
+    def keyboard(self, alias, offset, *, tail, expires_at_ns=None):
         """Continue in the currently focused, visually guarded context; no click."""
-        return self._run_guarded(alias, offset, tail=tail, interaction='keyboard')
+        return self._run_guarded(alias, offset, tail=tail, interaction='keyboard', expires_at_ns=expires_at_ns)
 
-    def _run_guarded(self, alias, offset, *, tail, interaction):
+    def _run_guarded(self, alias, offset, *, tail, interaction, expires_at_ns=None):
         if self.active is not None:
             raise RuntimeError("native bridge already executing")
         if getattr(getattr(self, 'session', None), 'recovery_required', False):
@@ -416,6 +416,16 @@ class NativeHandleBridge:
             row = {'status': 'refused', 'error': 'WINDOW_REVIEW_REQUIRED', 'input_dispatched': False}
             self._save('result-' + uuid.uuid4().hex + '.json', row)
             return row
+        # An outer method may shorten, never renew, this input lease. The caller
+        # must use this process's monotonic clock domain (not wall-clock time).
+        if expires_at_ns is not None:
+            if type(expires_at_ns) is not int or expires_at_ns < 1:
+                raise ValueError('expires_at_ns must be a positive monotonic integer')
+            if time.monotonic_ns() >= expires_at_ns:
+                row = {'status': 'refused', 'error': 'CALLER_DEADLINE_EXPIRED',
+                       'input_dispatched': False}
+                self._save('result-' + uuid.uuid4().hex + '.json', row)
+                return row
         # Motion can change hover state. It grants no press or keyboard authority.
         from runtime.core_v1.sequence import expand_text_gaps
         # Core permits 128 ops including focus, action and terminal release.
@@ -429,10 +439,14 @@ class NativeHandleBridge:
         self.active = (alias, offset)
         self.checks = []
         self.deadline = time.monotonic_ns() + 5_000_000_000
+        if expires_at_ns is not None:
+            self.deadline = min(self.deadline, expires_at_ns)
         self.moved_point = None
         try:
             try:
                 point = self.check("before_admission")["point"]
+                if time.monotonic_ns() >= self.deadline:
+                    raise X11BackendError('native target guard lease expired before dispatch')
             except Exception as error:
                 row = {"status": "refused", "error": repr(error), "input_dispatched": False}
             else:
