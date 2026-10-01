@@ -12,8 +12,12 @@ Issue: #5686, prospective T2 extension; T0's result remains unchanged.
 
 ## Frozen design details
 
-Allocation: `SURROGATE-SELECTION-5686-T2-GHA-20261001-01`.
-Frozen base main: `9bd464d7063d563dda1095e2e9b6d7aeb1b4f4a6`.
+Predecessor allocation `SURROGATE-SELECTION-5686-T2-GHA-20261001-01` ran the candidate container successfully (exit 0; candidate artifact retained) but the auditor container was not launched because the workflow resolved the downloaded artifact under an incorrect extra directory. It is terminal, `NOT_EVALUATED`, and will not be retried; see Actions run https://github.com/Unjuno/agent-interface/actions/runs/36809600904 and raw artifacts under `raw/formal/allocation-01/`.
+
+Successor allocation: `SURROGATE-SELECTION-5686-T2-GHA-20261001-02`.
+Distinct branch: `research/surrogate-selection-feedback-5686-t2-a02-20261001`.
+Frozen base main: `5ff239141f49c1603c0f6b078268f4a2f6e082df`.
+Only operational correction: use the actual download-artifact layout `candidate-input/candidate-evidence/candidate.jsonl`. Fixture, candidate, independent audit, expected dispositions and D remain unchanged. The candidate is run once in this new allocation and the auditor runs once only after reading its exact JSONL. No retry or source mutation after dispatch.
 
 The four authored worlds and expected dispositions are:
 

@@ -44,7 +44,7 @@ def main():
         return 2
     out.mkdir(parents=True, exist_ok=True)
     uid, gid = os.getuid(), os.getgid()
-    report = {"allocation": "SURROGATE-SELECTION-5686-T2-GHA-20261001-01", "role": args.role,
+    report = {"allocation": "SURROGATE-SELECTION-5686-T2-GHA-20261001-02", "role": args.role,
               "image_ref": IMAGE, "expected_platform": "linux/amd64", "host_python": sys.version,
               "host_platform": platform.platform(), "workflow_run_id": os.environ.get("GITHUB_RUN_ID"),
               "started_utc": now(), "image_pull": None, "image_inspect": None, "container": None}

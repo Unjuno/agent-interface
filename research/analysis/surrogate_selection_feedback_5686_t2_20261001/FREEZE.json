@@ -1,25 +1,31 @@
 {
-  "allocation": "SURROGATE-SELECTION-5686-T2-GHA-20261001-01",
-  "base_main_sha": "9bd464d7063d563dda1095e2e9b6d7aeb1b4f4a6",
-  "created_utc": "2026-10-01T03:13:24Z",
+  "allocation": "SURROGATE-SELECTION-5686-T2-GHA-20261001-02",
+  "base_main_sha": "5ff239141f49c1603c0f6b078268f4a2f6e082df",
+  "created_utc": "2026-10-01T03:20:18Z",
   "docker_image": "python:3.12-slim-bookworm@sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a",
   "expected_platform": "linux/amd64",
   "files_sha256": {
-    ".github/workflows/issue-5686-surrogate-selection-t2.yml": "8fa159e3d47ed88c4eaf4aafd0e7d001e78465ccb01d252978dfc4eb9f95d2ee",
+    ".github/workflows/issue-5686-surrogate-selection-t2.yml": "816ce04acb4e285e0ce92e14b68531ee38bb83425090db5d7a1c76940d9bd0f7",
     "research/analysis/surrogate_selection_feedback_5686_t2_20261001/README.md": "529464ed251d426814af2f44adecbcb80f782905031bef570b24ce3594920841",
-    "research/analysis/surrogate_selection_feedback_5686_t2_20261001/PREREGISTRATION.md": "61658f67e117fd04d76316d79603ee8ff1aa356769b27b4af7f1fe183472f19c",
+    "research/analysis/surrogate_selection_feedback_5686_t2_20261001/PREREGISTRATION.md": "741f3cea7f22eb31511d88bbd4af0aae585cd2fc752e4ea952b34ae7dd2211fe",
     "research/analysis/surrogate_selection_feedback_5686_t2_20261001/LOCAL_CI.md": "1a88bd4fdbda5dc0c6b48e50c9e88cc57584741e1e6f6ffc187231e92c838d87",
     "research/analysis/surrogate_selection_feedback_5686_t2_20261001/fixtures.json": "770f0318a798268164d62a7e7b057c9aca9f68bcc982d8a16145c97f72134524",
     "research/analysis/surrogate_selection_feedback_5686_t2_20261001/candidate.py": "e00e2283e10b504c63aab479377367e4a3d36e8a5b6a8c1251b01bc6b7410bda",
     "research/analysis/surrogate_selection_feedback_5686_t2_20261001/audit.py": "0df5f0ac95f2b474065407335be6a639255aa6c151f07c69a23d3af1d09bdab1",
     "research/analysis/surrogate_selection_feedback_5686_t2_20261001/test_gate.py": "56e30944c7f352b9516e0db2f53157a42e653e9d0ad86cc0a866b122e1a5ce89",
-    "research/analysis/surrogate_selection_feedback_5686_t2_20261001/workflow_gate.py": "99e1ce84612c24d3563b89e189d089c258b2126303f407121a90ae2f2e161aa6",
-    "research/analysis/surrogate_selection_feedback_5686_t2_20261001/workflow_runner.py": "6fe6a968837dcf8133b380e04b163ccc0b3ee448ce537b4d0236c9c6e839c85c"
+    "research/analysis/surrogate_selection_feedback_5686_t2_20261001/workflow_gate.py": "2d2081f48477d079185ff630b7cec2675f319edcfae714cac1b82b26ed7660c1",
+    "research/analysis/surrogate_selection_feedback_5686_t2_20261001/workflow_runner.py": "ef77d439b8e6ea434b174b1c8623c40477b8801485acc05af73377bbf1e6d775"
   },
   "development_artifacts_sha256": {
     "research/analysis/surrogate_selection_feedback_5686_t2_20261001/raw/development/audit.json": "bce3a67d70a2ea4dc73a26eadc61c827d8f15e82cd0fae48ca0daec1873cefd5",
     "research/analysis/surrogate_selection_feedback_5686_t2_20261001/raw/development/candidate.jsonl": "655da10fe994db0ed8e120eed69d29c64810393972e53a0578323eee95d26573"
   },
-  "dispatch": "The first push creating the named branch launches once. Subsequent pushes fail closed. Both jobs check out full history, verify frozen base ancestry and source hashes, and verify exact branch/head/repository/first-push event before Docker operations. Live main is recorded but later unrelated advances do not invalidate the frozen synthetic experiment.",
+  "predecessor_artifacts_sha256": {
+    "candidate_start_gate": "0b902155acb0e661820aa9e24a167d900bc4634003badd145443b1ecf3e917f2",
+    "candidate_execution": "f6826d78a5e4cb77f7d1e5ee37950506392c18ffac76ea05e2aede95a284d6c4",
+    "candidate_jsonl": "655da10fe994db0ed8e120eed69d29c64810393972e53a0578323eee95d26573",
+    "audit_execution": "b68bfe7a15032fe11ce36783a27edd94df1b43e4199c76346528a64c2294332b"
+  },
+  "dispatch": "The first push creating the named branch launches once. Subsequent pushes fail closed. Both jobs check out full history, verify frozen base ancestry and source hashes, and verify exact branch/head/repository/first-push event before Docker operations. The independent runner consumes candidate-input/candidate-evidence/candidate.jsonl exactly as downloaded. Live main is recorded but later unrelated advances do not invalidate the frozen synthetic experiment.",
   "self_hash_excluded": true
 }

@@ -9,9 +9,9 @@ import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
-ALLOCATION = "SURROGATE-SELECTION-5686-T2-GHA-20261001-01"
+ALLOCATION = "SURROGATE-SELECTION-5686-T2-GHA-20261001-02"
 IMAGE = "python:3.12-slim-bookworm@sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a"
-BRANCH = "research/surrogate-selection-feedback-5686-t2-20261001"
+BRANCH = "research/surrogate-selection-feedback-5686-t2-a02-20261001"
 PACKAGE_REL = "research/analysis/surrogate_selection_feedback_5686_t2_20261001"
 ROOT = Path(__file__).resolve().parents[3]
 

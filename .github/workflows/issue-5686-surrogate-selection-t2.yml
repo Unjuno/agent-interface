@@ -3,7 +3,7 @@ name: Issue 5686 T2 selection-feedback Docker experiment
 on:
   push:
     branches:
-      - research/surrogate-selection-feedback-5686-t2-20261001
+      - research/surrogate-selection-feedback-5686-t2-a02-20261001
     paths:
       - research/analysis/surrogate_selection_feedback_5686_t2_20261001/FREEZE.json
       - research/analysis/surrogate_selection_feedback_5686_t2_20261001/README.md
@@ -72,7 +72,7 @@ jobs:
       - name: Audit raw candidate once in a separate pinned Docker container
         run: >-
           python3 research/analysis/surrogate_selection_feedback_5686_t2_20261001/workflow_runner.py
-          audit --input-dir "$RUNNER_TEMP/candidate-input/issue-5686-t2-candidate-${{ github.run_id }}/candidate-evidence"
+          audit --input-dir "$RUNNER_TEMP/candidate-input/candidate-evidence"
           --output-dir "$RUNNER_TEMP/audit-evidence"
       - name: Preserve independent audit and exit evidence
         if: always()
