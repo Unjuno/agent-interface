@@ -1,0 +1,19 @@
+{
+  "allocation_id": "MAP01-DELAY-GAIN-TRACE-ELIGIBILITY-6195-T1-20261001-02",
+  "owner": {"name": "Unjuno / local Windows Codex task", "task_id": "01a0b990-3d17-72f1-a908-9a2072104ce5"},
+  "window_utc": {"start": "2026-10-01T20:00:00Z", "end": "2026-10-01T20:15:00Z"},
+  "repository": "Unjuno/agent-interface",
+  "issue": 6195,
+  "source_main_sha": "14b81dd1f6853623a694266b98538f812847257a",
+  "branch": "research/6195-delay-gain-t1-trace-eligibility-20261001-02",
+  "package_path": "research/analysis/map01_delay_gain_t1_trace_eligibility_6195_20261001_01/",
+  "candidate": {"file": "candidate.py", "sha256": "aa1c0b74f825c3f11405903c3a61a4a4e7573924b54a3b828a117c5cd5b9b699", "invocations": 1},
+  "independent_auditor": {"file": "auditor.py", "sha256": "ec92b8ec117997cb2d6a8ba2720d6119a24569a0417116b443ac74c225b4d32a", "invocations": 1, "condition": "Only after candidate exit 0"},
+  "inputs": {
+    "v38": {"repo_path": "research/doom/results/map01-v38-integrated-threat-live-01/runtime/events.jsonl", "git_blob": "02d65d49b61feadbdec2e051bd23d1ca845d5df1", "bytes": 308873, "sha256": "80b964c9ab7d86fbd0b2bc56957157e018e9dbb90457f286995a2e6036192bc3"},
+    "v39": {"repo_path": "research/doom/results/map01-v39-coast-liveness-live-01/runtime/events.jsonl", "git_blob": "cbaeed9c7ba27b53cef9d10730ae33313371ad9a", "bytes": 565849, "sha256": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381"}
+  },
+  "decision": "T1_ELIGIBLE_TRACE_FOUND only if one trace passes all six frozen endpoint gates and an independent raw-only auditor reconstructs every field and rejects all five corruption controls; otherwise HOLD_NO_CLOSED_LOOP_TRACE.",
+  "execution": "Read-only host CPU / CPython 3.11.9; no model, GPU/CUDA, network during run, container/WSL, GUI/game, application, input, or task effect.",
+  "retry_policy": "No retries, substitutions, or reuse of another allocation."
+}
