@@ -20,3 +20,5 @@ The existing compiled adapter is an opt-in Python API with trusted caller-owned 
 
 This boundary fix is suitable for integration after shared CI/portable checks, but #57/#56 and the full human-tempo/product objective remain unachieved. Full acquisition/repair and actual model costs must still be measured in the finite integrated comparison.
 Shared local CI on executable source 6584856abe39c5006e7564496b58ee34f177d5cd passes protocol380/harness182. Portable distribution/archive tests10 pass; the final-source zipapp is retained with manifest/hash and an isolated /tmp import probe returning SAFE_YIELD/execution_refused without fabricating neutral release. These are deterministic contract/packaging checks, not model/GUI efficacy. Final report-only commit leaves tested executable source unchanged.
+
+Publication correction: repository-wide *.log ignore initially excluded copied logs from the first PR file list. This was detected by exact Git inventory before merge; the specific report logs were explicitly staged, including original names/empty stdout files required by native-ci-result.json. No experiment or verification was rerun or reclassified.
