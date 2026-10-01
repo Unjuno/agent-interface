@@ -515,6 +515,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`xterm_resource_footprint_transfer_v2/`](xterm_resource_footprint_transfer_v2/)
 - [`xterm_resource_footprint_transfer_v3/`](xterm_resource_footprint_transfer_v3/)
 
+- [`effect_terminal_feedback_6301_t0_20261002/`](effect_terminal_feedback_6301_t0_20261002/)
+
 </details>
 
 <!-- END GENERATED ANALYSIS RESULT INDEX -->
