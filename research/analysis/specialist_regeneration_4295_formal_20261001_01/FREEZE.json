@@ -1,0 +1,40 @@
+{
+  "allocation": "specialist-regeneration-4295-20261001-01",
+  "base_main": "1cb035f81a17a8122231c55f4a9eb804fdca40c9",
+  "candidate_source_path": "research/analysis/specialist_regeneration_4284_preformal_preserved_4295_v1/source/runner.py",
+  "candidate_source_sha256": "378f5e58f66d81dbb3045aa420284ffc87e2670fd4deb33875dd1642128e6c13",
+  "frozen_audit_sha256": "d4d70a22b26e9c32f474417d7fc6c4e34ad776e7e34c65ab176e680bf8f51055",
+  "frozen_controls_sha256": "e23d7af971a4f25acdbce379cf7161db4c4ebbe969f0a9aaa6efaf9202e545f0",
+  "frozen_source_manifest_sha256": "a8e28a4816d3496a2374228a7f778d42f38d2064a35d3e41aaa78dcee146db38",
+  "source_capsule_sha256_xz": "4bd7965d9119a222ca37bdc1cabdb0c2bdc33c61f104d65f1a21571125a36ec9",
+  "source_capsule_transport_sha256": "5ad8d91be8a3e8800a025bd11fafc1d84372ac5aa91a69309c0748219e5b2ba0",
+  "construction_runner_count": 0,
+  "formal_candidate_invocations_before_run": 0,
+  "formal_audit_invocations_before_run": 0,
+  "formal_control_invocations_before_run": 0,
+  "formal_denominator": {
+    "schedules": 8,
+    "repetitions": [10, 11],
+    "requests_per_schedule": 8,
+    "rows": 128
+  },
+  "candidate_command": "python3 -B research/analysis/specialist_regeneration_4284_preformal_preserved_4295_v1/source/runner.py formal research/analysis/specialist_regeneration_4295_formal_20261001_01/results/formal/FORMAL_RAW.json",
+  "audit_command": "python3 -B research/analysis/specialist_regeneration_4284_preformal_preserved_4295_v1/source/audit.py research/analysis/specialist_regeneration_4295_formal_20261001_01/results/formal/FORMAL_RAW.json research/analysis/specialist_regeneration_4295_formal_20261001_01/results/formal/AUDIT.json",
+  "controls_command": "python3 -B research/analysis/specialist_regeneration_4284_preformal_preserved_4295_v1/source/controls.py research/analysis/specialist_regeneration_4295_formal_20261001_01/results/formal/FORMAL_RAW.json research/analysis/specialist_regeneration_4295_formal_20261001_01/results/formal/AUDIT.json research/analysis/specialist_regeneration_4295_formal_20261001_01/results/formal/CONTROLS.json",
+  "completeness_audit_sha256": "7a13c7594c9d35fe47b488c674ce75e34b768d506bf5a336fa9a0a7734367c7d",
+  "completeness_test_sha256": "a0585d79a5d433b162d5557492cce6f29ea150eca0650eb2df9eca6519f756b4",
+  "completeness_audit_command": "python3 -B research/analysis/specialist_regeneration_4295_formal_20261001_01/audit_completeness.py research/analysis/specialist_regeneration_4295_formal_20261001_01/results/formal/FORMAL_RAW.json research/analysis/specialist_regeneration_4295_formal_20261001_01/results/formal/COMPLETENESS_AUDIT.json",
+  "local_environment": {
+    "os": "Darwin 25.6.0",
+    "architecture": "arm64",
+    "python": "3.14.5",
+    "network_calls_permitted_by_candidate": 0,
+    "network_isolation": "not applied to host process",
+    "model_provider_calls": 0,
+    "gui_input": false
+  },
+  "one_shot": true,
+  "reruns": 0,
+  "replacements": 0,
+  "tuning": 0
+}
