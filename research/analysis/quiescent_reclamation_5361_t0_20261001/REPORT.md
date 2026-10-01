@@ -19,6 +19,11 @@
   fence moved active readers to FENCED and blocks their later use.
 - Raw candidate SHA-256:
   `0ca7432af56eb035b1a88fcf122a81596c7113c49a65c01f68ca9e450b135f1e`.
+- The PR's first hosted `analysis-index` check failed because the generated
+  index omitted this result directory and a concurrent main-branch result.
+  The exact failure was reproduced locally in Docker; the two sorted entries
+  were then added to `research/analysis/README.md` and the corrected index was
+  rechecked in Docker. CI reproduction details are in `CI_REPRO.json`.
 
 ## Frozen execution
 
