@@ -560,7 +560,5 @@ retry, background sensor or model policy, and no generic tempo/cost gain is prov
 
 The [first terminal connection record](../results/primary-stdio-terminal-01/README.md)
 preserves the rendered-JSON fidelity failure and refused public close under a
-nonpersistent no-GUI server. It is not a successful GUI/close trial. The [corrected raw-file clock connection](../results/primary-stdio-pipe-01/README.md)
-checks original metadata, exported source and EOF/exit through the actual primary
-terminal handle without per-command input files. It proves a no-GUI transport
-path; real guarded image/input/close use remains unverified for this CLI.
+nonpersistent no-GUI server. It is not a successful GUI/close trial. Corrected
+pipe/file use and real guarded self-use require their own source-pinned evidence.

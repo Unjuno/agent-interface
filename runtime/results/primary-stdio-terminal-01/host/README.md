@@ -494,9 +494,6 @@ unmatched usage do not establish general efficiency or human-comparable tempo.
 
 The optional CLI `node host-bundle/primary_stdio.mjs --config /absolute/config.json`
 starts one explicitly configured relay host and uses the existing primary exchange.
-Its stdout must be a managed pipe or caller-owned fresh output file, not a TTY.
-TTY stdout is refused before starting a relay: terminal rendering can insert
-wraps/cursor controls into long output and is not a byte-exact JSON-lines channel.
 It starts no application or display, discovers no target and chooses no action.
 For a packaged runtime, an example configuration is:
 
@@ -551,16 +548,6 @@ owner remains responsible for application/display lifecycle and reconciliation.
 This avoids caller-authored command/reply polling files while preserving the
 existing exchange evidence writes. A host with a persistent terminal handle can
 send a line, parse its result and present the referenced image in one outer tool
-turn. Read only complete schema-tagged JSON lines from the raw pipe/file. Do not
-decode the terminal's rendered output as raw JSON. For interactive stdin with
-file output, redirect stdout to a fresh owned file and read completed records;
-original image descriptors still refer to the exchange's unchanged PNGs. There is no automatic token/image compression,
+turn. Terminal echo/control sequences are host behavior; parse only complete
+schema-tagged JSON output lines. There is no automatic token/image compression,
 retry, background sensor or model policy, and no generic tempo/cost gain is proved.
-
-
-The [first terminal connection record](../results/primary-stdio-terminal-01/README.md)
-preserves the rendered-JSON fidelity failure and refused public close under a
-nonpersistent no-GUI server. It is not a successful GUI/close trial. The [corrected raw-file clock connection](../results/primary-stdio-pipe-01/README.md)
-checks original metadata, exported source and EOF/exit through the actual primary
-terminal handle without per-command input files. It proves a no-GUI transport
-path; real guarded image/input/close use remains unverified for this CLI.
