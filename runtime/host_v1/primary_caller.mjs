@@ -40,6 +40,86 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
     return { alias, offset: [...offset], interaction, tail: copiedTail,
       detail: 'brief', observation_refs: true };
   }
+  async function performCall(tool, args, controlId = null, stoppedObservation = false) {
+      if (stopped && tool !== 'interface_close' && !(stoppedObservation && tool === 'interface_guarded_observe')) throw Error('trial stopped: ' + stopped);
+      if (!tools.has(tool)) {
+        stop('unavailable tool ' + tool);
+        throw Error(stopped); // Local rejection before host dispatch.
+      }
+      if (tool === 'interface_guarded_input' && args?.interaction !== undefined &&
+          !['click', 'keyboard', 'move'].includes(args.interaction)) {
+        stop('invalid guarded interaction');
+        throw TypeError(stopped); // Match the public MCP enum before dispatch.
+      }
+      const expected = controlId === null ? null : controls.get(controlId);
+      if (controlId !== null) {
+        if (consumed.has(controlId)) { stop('control already consumed'); throw Error(stopped); }
+        if (!expected || expected.tool !== tool || canonical(expected.args) !== canonical(args)) {
+          stop('control request mismatch'); throw Error(stopped);
+        }
+        consumed.add(controlId);
+      }
+      let reply;
+      try { reply = await host.sendPresented(tool, args, sinks); }
+      catch (error) { stop('transport or presentation failure'); throw error; }
+      try {
+        if (reply.result.isError === true && !expected) {
+          stop('unexpected MCP refusal');
+          return reply; // Framework errors may contain free text, not typed JSON.
+        }
+        const meta = read(reply);
+        const declaredRefusal = expected && reply.result.isError === true && meta.status === 'refused' &&
+          meta.replay_allowed === false && meta.session?.binding_revision === expected.revision &&
+          meta.session?.recovery_required === false && (expected.kind === 'source'
+            ? meta.input_dispatched === false && meta.error === expected.error
+            : meta.result?.input_dispatched === false && !meta.result.execution &&
+              meta.result.guard_checks?.length === 1 && meta.result.guard_checks[0].stage === 'before_admission' &&
+              meta.result.guard_checks[0].status === 'MISSING' && meta.result.guard_checks[0].reason === expected.reason &&
+              meta.result.guard_checks[0].handle === expected.alias);
+        if (expected && !declaredRefusal) stop('control outcome mismatch');
+        if (reply.result.isError && !declaredRefusal) stop('unexpected MCP refusal');
+        if (!declaredRefusal && tool === 'interface_guarded_mint_many') {
+          // Registration can partially mutate the server store. Keep its original
+          // response, but never continue input or retry an uncertain batch.
+          if (meta.status !== 'minted' || meta.source_sequence !== args?.source_sequence ||
+              !Array.isArray(args?.references) || !Array.isArray(meta.minted) ||
+              meta.minted.length !== args.references.length ||
+              meta.minted.some((reference, index) => reference?.alias !== args.references[index]?.alias)) {
+            stop('incomplete or inconsistent batch mint result');
+          }
+        }
+        if (!declaredRefusal && (tool === 'interface_guarded_input' || tool === 'interface_dispatch')) {
+          const summary = tool === 'interface_dispatch' && meta.schema === 'agent-interface/review-v1' &&
+            meta.receipt?.schema === 'agent-interface/receipt-view-dispatch-summary-v1';
+          const execution = summary ? meta.receipt.execution_summary : meta.result?.execution;
+          const releases = execution?.releases;
+          const completed = summary ? meta.outcome_summary?.execution_status === 'completed' &&
+            meta.outcome_summary.input_release_verified === true && meta.outcome_summary.recovery_required === false &&
+            meta.outcome_summary.error === null : meta.status === 'completed';
+          if (!completed || meta.image_status !== 'image' || !releases?.length ||
+              releases.some(r => r.verified !== true || r.keys_down?.length !== 0 || r.buttons_down?.length !== 0)) {
+            stop('incomplete input or unverified neutral release');
+          }
+          if (tool === 'interface_guarded_input' && args?.feedback !== undefined) {
+            const cue = meta.feedback;
+            if (cue?.status !== 'matched' || cue.expected_title !== args.feedback.expected_title ||
+                canonical(cue.rejected_titles) !== canonical(args.feedback.rejected_titles ?? []) ||
+                cue.title !== cue.expected_title || cue.after_title !== cue.title ||
+                cue.task_success !== null || cue.authority_granted !== false || cue.input_dispatched !== false) {
+              stop('missing or inconsistent requested feedback');
+            }
+          }
+        }
+        // Return the original response even after latching STOP. The primary must
+        // receive its text/image evidence; the next ordinary call is prohibited.
+        return reply;
+      } catch (error) {
+        // sendPresented already delivered the original evidence. Extraction or
+        // outcome validation must fail closed before the primary can catch it.
+        stop('response extraction or validation failure');
+        throw error;
+      }
+  }
   const caller = {
     state: () => ({ stopped }),
     async input(...values) {
@@ -119,84 +199,16 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
         'interface_observe', structuredClone(observationArguments));
     },
     async call(tool, args, controlId = null) {
-      if (stopped && tool !== 'interface_close') throw Error('trial stopped: ' + stopped);
-      if (!tools.has(tool)) {
-        stop('unavailable tool ' + tool);
-        throw Error(stopped); // Local rejection before host dispatch.
+      return performCall(tool, args, controlId);
+    },
+    async observeAfterStop(...unexpected) {
+      if (route !== 'guarded-local' || !stopped || unexpected.length) {
+        stop('explicit stopped guarded observation requires no arguments');
+        throw TypeError('explicit stopped guarded observation requires no arguments');
       }
-      if (tool === 'interface_guarded_input' && args?.interaction !== undefined &&
-          !['click', 'keyboard', 'move'].includes(args.interaction)) {
-        stop('invalid guarded interaction');
-        throw TypeError(stopped); // Match the public MCP enum before dispatch.
-      }
-      const expected = controlId === null ? null : controls.get(controlId);
-      if (controlId !== null) {
-        if (consumed.has(controlId)) { stop('control already consumed'); throw Error(stopped); }
-        if (!expected || expected.tool !== tool || canonical(expected.args) !== canonical(args)) {
-          stop('control request mismatch'); throw Error(stopped);
-        }
-        consumed.add(controlId);
-      }
-      let reply;
-      try { reply = await host.sendPresented(tool, args, sinks); }
-      catch (error) { stop('transport or presentation failure'); throw error; }
-      try {
-        if (reply.result.isError === true && !expected) {
-          stop('unexpected MCP refusal');
-          return reply; // Framework errors may contain free text, not typed JSON.
-        }
-        const meta = read(reply);
-        const declaredRefusal = expected && reply.result.isError === true && meta.status === 'refused' &&
-          meta.replay_allowed === false && meta.session?.binding_revision === expected.revision &&
-          meta.session?.recovery_required === false && (expected.kind === 'source'
-            ? meta.input_dispatched === false && meta.error === expected.error
-            : meta.result?.input_dispatched === false && !meta.result.execution &&
-              meta.result.guard_checks?.length === 1 && meta.result.guard_checks[0].stage === 'before_admission' &&
-              meta.result.guard_checks[0].status === 'MISSING' && meta.result.guard_checks[0].reason === expected.reason &&
-              meta.result.guard_checks[0].handle === expected.alias);
-        if (expected && !declaredRefusal) stop('control outcome mismatch');
-        if (reply.result.isError && !declaredRefusal) stop('unexpected MCP refusal');
-        if (!declaredRefusal && tool === 'interface_guarded_mint_many') {
-          // Registration can partially mutate the server store. Keep its original
-          // response, but never continue input or retry an uncertain batch.
-          if (meta.status !== 'minted' || meta.source_sequence !== args?.source_sequence ||
-              !Array.isArray(args?.references) || !Array.isArray(meta.minted) ||
-              meta.minted.length !== args.references.length ||
-              meta.minted.some((reference, index) => reference?.alias !== args.references[index]?.alias)) {
-            stop('incomplete or inconsistent batch mint result');
-          }
-        }
-        if (!declaredRefusal && (tool === 'interface_guarded_input' || tool === 'interface_dispatch')) {
-          const summary = tool === 'interface_dispatch' && meta.schema === 'agent-interface/review-v1' &&
-            meta.receipt?.schema === 'agent-interface/receipt-view-dispatch-summary-v1';
-          const execution = summary ? meta.receipt.execution_summary : meta.result?.execution;
-          const releases = execution?.releases;
-          const completed = summary ? meta.outcome_summary?.execution_status === 'completed' &&
-            meta.outcome_summary.input_release_verified === true && meta.outcome_summary.recovery_required === false &&
-            meta.outcome_summary.error === null : meta.status === 'completed';
-          if (!completed || meta.image_status !== 'image' || !releases?.length ||
-              releases.some(r => r.verified !== true || r.keys_down?.length !== 0 || r.buttons_down?.length !== 0)) {
-            stop('incomplete input or unverified neutral release');
-          }
-          if (tool === 'interface_guarded_input' && args?.feedback !== undefined) {
-            const cue = meta.feedback;
-            if (cue?.status !== 'matched' || cue.expected_title !== args.feedback.expected_title ||
-                canonical(cue.rejected_titles) !== canonical(args.feedback.rejected_titles ?? []) ||
-                cue.title !== cue.expected_title || cue.after_title !== cue.title ||
-                cue.task_success !== null || cue.authority_granted !== false || cue.input_dispatched !== false) {
-              stop('missing or inconsistent requested feedback');
-            }
-          }
-        }
-        // Return the original response even after latching STOP. The primary must
-        // receive its text/image evidence; the next ordinary call is prohibited.
-        return reply;
-      } catch (error) {
-        // sendPresented already delivered the original evidence. Extraction or
-        // outcome validation must fail closed before the primary can catch it.
-        stop('response extraction or validation failure');
-        throw error;
-      }
+      // One explicit read only. STOP remains sticky; no action, review-window,
+      // remint, recovery or ordinary call is implicitly enabled by this image.
+      return performCall('interface_guarded_observe', {}, null, true);
     },
     async acknowledgeText(attempt, attribution) {
       if (!Number.isSafeInteger(attempt) || attempt < 1 ||

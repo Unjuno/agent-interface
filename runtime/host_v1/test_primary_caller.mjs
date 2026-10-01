@@ -149,3 +149,36 @@ for (const cue of ['matched','pending','rejected','needs_review'])
       assert.equal(calls.length,2);
     }
   });
+
+test('explicit observation after STOP retains original evidence without resuming input',async()=>{
+  const failed={result:{isError:true,content:[{type:'text',text:'pending app'}]}};
+  const observed={result:{isError:false,content:[{type:'text',text:JSON.stringify({status:'observed',image_status:'image',input_dispatched:false})},{type:'image',data:'original-later-image'}]}};
+  const calls=[];const caller=createPrimaryCaller({sendPresented:async(tool,args)=>{calls.push({tool,args});return tool==='interface_guarded_observe'?observed:failed;}},'guarded-local',{});
+  await caller.call('interface_guarded_input',{alias:'save'});const originalStop=caller.state().stopped;
+  assert.equal(typeof caller.observeAfterStop,'function');
+  assert.equal(await caller.observeAfterStop(),observed);
+  assert.equal(caller.state().stopped,originalStop);
+  await assert.rejects(caller.input('save',[12,12],'click',[]),/stopped/);
+  await assert.rejects(caller.observe(),/stopped/);
+  await assert.rejects(caller.call('interface_guarded_input',{alias:'save'},null,true),/stopped/);
+  assert.deepEqual(calls,[{tool:'interface_guarded_input',args:{alias:'save'}},{tool:'interface_guarded_observe',args:{}}]);
+  await caller.call('interface_close',{});assert.equal(calls.length,3);
+});
+test('explicit stopped observation requires a stopped guarded caller and no arguments',async()=>{
+  for(const route of ['guarded-local','direct-post']){
+    let calls=0;const caller=createPrimaryCaller({sendPresented:async()=>{calls++;}},route,{});
+    assert.equal(typeof caller.observeAfterStop,'function');
+    await assert.rejects(caller.observeAfterStop(),/stopped guarded/);assert.equal(calls,0);
+  }
+  let calls=0;const caller=createPrimaryCaller({sendPresented:async()=>{calls++;return {result:{isError:true,content:[]}};}},'guarded-local',{});
+  await caller.call('interface_clock',{});
+  await assert.rejects(caller.observeAfterStop({tool:'interface_guarded_input'}),/stopped guarded/);assert.equal(calls,1);
+});
+test('stopped observation transport failure preserves STOP and never retries',async()=>{
+  const failed={result:{isError:true,content:[]}};const error=new Error('host evidence remains blocked');let calls=0;
+  const caller=createPrimaryCaller({sendPresented:async()=>{calls++;if(calls===1)return failed;throw error;}},'guarded-local',{});
+  await caller.call('interface_clock',{});const reason=caller.state().stopped;
+  assert.equal(typeof caller.observeAfterStop,'function');await assert.rejects(caller.observeAfterStop(),e=>e===error);
+  assert.equal(caller.state().stopped,reason);assert.equal(calls,2);
+  await assert.rejects(caller.input('save',[12,12],'click',[]),/stopped/);assert.equal(calls,2);
+});
