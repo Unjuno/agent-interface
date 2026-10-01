@@ -54,7 +54,9 @@ def audit(f, result):
     source = {(x["id"], x["version"]): x for x in f["events"] if x["type"] == "arrive"}
     for p in POLICIES:
         row = result["rows"][p]
-        if row["urgent"] != [{"id": "R0", "start": 2, "end": 3, "released": True}]:
+        if row.get("policy") != p:
+            raise ValueError("policy identity mismatch")
+        if row["urgent"] != [{"id": "R0", "start": 0, "end": 1, "released": True}]:
             raise ValueError("urgent release was deferred or altered")
         actual_order = [((x["id"], x["version"]), x["start"], x["end"]) for x in row["reviews"]]
         if actual_order != expected[p]["order"]:
