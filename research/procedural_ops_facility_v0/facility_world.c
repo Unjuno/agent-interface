@@ -260,4 +260,3 @@ void fac_apply_movement(Facility *f, const FacilityInput *in) {
 }
 
 void fac_schedule_watcher(Facility *f, int i) { f->watchers[i].next_tick=f->tick+fac_watcher_interval(f); }
-

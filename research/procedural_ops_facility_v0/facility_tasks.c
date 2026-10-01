@@ -152,4 +152,3 @@ void facility_step(Facility *f, const FacilityInput *in) {
     }else if(f->phase==PHASE_TERMINAL){ update_terminal(f,in); }
     else if(f->phase==PHASE_ASSEMBLY){ update_assembly(f,in); }
 }
-

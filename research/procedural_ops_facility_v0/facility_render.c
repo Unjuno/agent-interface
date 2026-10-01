@@ -86,4 +86,3 @@ void facility_render(Facility *f,uint32_t *pix,int w,int h){
     else { fill_rect(pix,w,h,160,140,w-160,220,rgb(30,41,59)); }
     uint64_t hsh=FNV_OFFSET; hsh=r_fnv(hsh,pix,(size_t)w*h*sizeof(uint32_t)); f->frame_hash=hsh;
 }
-
