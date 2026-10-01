@@ -15,7 +15,9 @@ Malformed `model_contract_sha256` that also differs across sessions is rejected 
 
 ## Provenance limitation
 
-The predecessor implementation and raw cited in #5658 remain unavailable in the public tree; its referenced local commit was not present in this checkout, and the branch name now resolves to an unrelated commit. Accordingly this result is an independently frozen successor, not a rerun or repair of that predecessor. Its source does not validate broader preregistration adequacy: the three-pair ordinal rule is explicitly a bounded construction contract and does not establish useful-progress measurement, live threat exposure, or population-level evidence.
+At initial intake, the predecessor package was unavailable in the public tree and its cited local commit was not present in this checkout. A later live readback found it published in PR #5660 at `research/doom/map01_r133_recovery_coast_t1_v1/decision_rule_construction_v1/`. The predecessor audit's exact failure is retained: its `identity_hash_malformed` control expected `identity_format:model_contract_sha256`, while the frozen adjudicator returned `identity_mismatch:model_contract_sha256` first.
+
+Review of #5660 also shows this v2 package implements a narrower sign classifier, not the predecessor's full six-session `adjudicate()` path or its twelve frozen control cases. It does **not** satisfy #5658's full successor acceptance criteria and must not be treated as closing that Issue. Its `PASS_CONSTRUCTION_ONLY` remains valid only for the smaller contract declared in this package. The predecessor PR #5660 and raw failure remain unchanged. A direct full-adjudicator successor needs a distinct freeze/path and its own one-shot candidate/auditor sequence.
 
 ## Environment and limits
 
