@@ -43,6 +43,54 @@ class ProcessMatrixConstructionTests(unittest.TestCase):
         self.assertIn("OBSTAC_DOCKER_HOST", " ".join(command))
         self.assertIn("OBSTAC_AUDIT_SHA256", " ".join(command))
 
+    def test_auditor_mounts_a_report_directory_not_a_file_as_directory(self):
+        with tempfile.TemporaryDirectory(prefix="construction-5795-audit-command-") as temp:
+            root = Path(temp)
+            candidate = root / "candidate"
+            audit = root / "audit"
+            candidate.mkdir()
+            audit.mkdir()
+            with mock.patch.object(container_runner, "load_freeze") as mocked_freeze, \
+                 mock.patch.object(container_runner, "verify_context_endpoint"), \
+                 mock.patch.object(container_runner.subprocess, "run", return_value=mock.Mock(returncode=0)) as mocked_run:
+                manifest = {
+                    "audit_sha256": container_runner.sha256(container_runner.BASE / "audit.py"),
+                    "runtime": {
+                        "docker_context": "assigned-context",
+                        "docker_host": "unix:///var/run/docker.sock",
+                        "platform": "linux/arm64",
+                        "source_commit": "a" * 40,
+                        "image_id": "sha256:" + "b" * 64,
+                    },
+                }
+                digest = "c" * 64
+                mocked_freeze.return_value = (manifest, digest)
+                env = {
+                    "OBSTAC_RUN_KIND": "formal",
+                    "OBSTAC_DOCKER_CONTEXT": "assigned-context",
+                    "OBSTAC_DOCKER_HOST": "unix:///var/run/docker.sock",
+                    "OBSTAC_AUDIT_SHA256": manifest["audit_sha256"],
+                    "OBSTAC_FREEZE_SHA256": digest,
+                    "OBSTAC_SOURCE_COMMIT": "a" * 40,
+                    "OBSTAC_IMAGE_ID": "sha256:" + "b" * 64,
+                    "OBSTAC_PLATFORM": "linux/arm64",
+                }
+                def create_raw(*args, **kwargs):
+                    (candidate / "raw.jsonl").write_text("{}\n")
+                    return 0
+                with mock.patch.object(container_runner, "run_candidate", side_effect=create_raw), \
+                     mock.patch.dict(os.environ, env, clear=False), \
+                     mock.patch.object(sys, "argv", [
+                         "container_runner.py", "--mode", "formal",
+                         "--candidate-out", str(candidate), "--audit-out", str(audit),
+                         "--audit-raw", str(candidate / "raw.jsonl"),
+                     ]):
+                    self.assertEqual(container_runner.main(), 0)
+            audit_command = mocked_run.call_args.args[0]
+            out_index = audit_command.index("--out")
+            self.assertEqual(audit_command[out_index + 1], "/work/out")
+            self.assertIn(f"src={audit.resolve()},dst=/work/out", " ".join(audit_command))
+
     def test_formal_container_runner_refuses_missing_allocation_before_docker(self):
         with tempfile.TemporaryDirectory(prefix="construction-5795-launcher-") as temp:
             root = Path(temp)
@@ -120,18 +168,27 @@ class ProcessMatrixConstructionTests(unittest.TestCase):
     def test_formal_gate_rejects_missing_or_mismatched_freeze_before_rows(self):
         with tempfile.TemporaryDirectory(prefix="construction-5795-gate-") as temp:
             root = Path(temp)
-            proc = subprocess.run(
-                [sys.executable, "-B", str(Path(__file__).with_name("runner.py")),
-                 "--out", str(root / "out")],
-                capture_output=True,
-                text=True,
-                timeout=10,
-            )
+            freeze_path = Path(runner.__file__).with_name("FREEZE.json")
+            original = freeze_path.read_bytes() if freeze_path.exists() else None
+            try:
+                freeze_path.unlink(missing_ok=True)
+                env = {key: value for key, value in os.environ.items()
+                       if not key.startswith("OBSTAC_")}
+                proc = subprocess.run(
+                    [sys.executable, "-B", str(Path(runner.__file__)),
+                     "--out", str(root / "out")],
+                    capture_output=True,
+                    text=True,
+                    timeout=10,
+                    env=env,
+                )
+            finally:
+                if original is not None:
+                    freeze_path.write_bytes(original)
             self.assertNotEqual(proc.returncode, 0)
             self.assertIn("STOP_FREEZE_MANIFEST", proc.stderr)
-            output = root / "out"
-            self.assertTrue(output.is_dir())
-            self.assertEqual(list(output.iterdir()), [])
+            self.assertTrue((root / "out").is_dir())
+            self.assertEqual(list((root / "out").iterdir()), [])
 
     def test_formal_gate_rejects_source_drift_before_rows(self):
         with tempfile.TemporaryDirectory(prefix="construction-5795-gate-ok-") as temp:

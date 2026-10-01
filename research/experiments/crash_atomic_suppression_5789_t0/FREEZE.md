@@ -3,9 +3,11 @@
 Parent idea: GitHub Issue #5789. Allocation request: Issue #5795. Intake main
 before construction: `ff2164a8b16d386571c91ebba19f6604b4776581`. After host
 construction, the branch was rebased onto current main
-`2a69173110856607c02e5213561679938c5988e3`; this remains before any formal
-candidate. The executable manifest is `FREEZE.json`. Construction code
-remains in this additive package but is not counted as formal evidence.
+`49db21e330768800e8b3486203b70306f4e402f6`. The executable manifest is
+`FREEZE.json`; it pins source commit
+`6aa357d1b27c44b591b9d640b5ef440d007bb3e5` and the dedicated guest-local
+Docker endpoint. Construction code remains in this additive package but is
+not counted as formal evidence.
 
 ## H/T/D/C/U
 
@@ -57,15 +59,20 @@ resistance, GUI behavior, or product safety.
 
 ## Allocation gate
 
-This is a protocol freeze, not authorization to start a Docker,
-OrbStack, or Obstac-managed guest. Run no formal candidate until Issue #5795 is
-explicitly assigned a non-overlapping isolated guest/daemon slot, endpoint and
-owner by the resource coordinator. Existing repository Obstac launchers use a
-shared OrbStack Docker context and are not reused as an isolation grant. At the
-formal start gate, refetch main, Issues/PRs/branches/queue, verify the exact
-guest-local Docker endpoint, pinned image identity, source/freeze digests,
-fresh empty mounts, and all process/output limits. Any failed or ambiguous gate
-is retained as STOP with candidate/auditor counts 0/0.
+An explicit user-authorized, non-overlapping allocation is recorded in the
+coordination issue: `crash-atomic-suppression-5795-t0-20261001-01`,
+06:00–06:20 UTC, one new ARM64 Ubuntu 24.04 OrbStack guest
+(`crash-atomic-5795-20261001`), 1 vCPU, 2 GiB memory, 16 GiB disk, isolated
+from host and peer networking. The daemon and named Docker context live inside
+that guest; the endpoint is `unix:///var/run/docker.sock`. The candidate itself
+additionally uses Docker `--network none`, read-only root/source, one CPU,
+256 MiB, 64 PIDs, and bounded tmpfs/output mounts. The fixed image was pulled
+and inspected in this guest as
+`sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9`,
+`linux/arm64`. At the formal start gate, refetch main,
+Issues/PRs/branches/queue, verify endpoint, image identity, source/freeze
+digests, fresh empty mounts, and limits. Any failed or ambiguous gate is
+retained as STOP with candidate/auditor counts 0/0.
 
 Construction outputs and tests are excluded from formal denominators. Do not
 change this protocol after the first formal candidate invocation.
