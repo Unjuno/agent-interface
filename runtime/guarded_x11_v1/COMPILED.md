@@ -84,7 +84,7 @@ of task completion. Read the retained raw refusal before choosing a new action.
 
 The optional terminal field is strict boolean. A false value is valid only with
 `status: refused`; malformed or contradictory metadata is rejected. Missing
-no-input evidence, actual delivery, held keys/buttons, failed native release or
+no-input evidence, actual delivery, held keys/buttons, native execution metadata or failed release or
 recovery-required state keep the existing stricter failure handling. Existing
 adapter terminal shapes remain supported. [Boundary regression evidence](../results/compiled-refusal-integration-01/README.md)
 uses deterministic adapters, not a live GUI performance comparison.

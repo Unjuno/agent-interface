@@ -163,4 +163,10 @@ class CompiledX11Tests(unittest.TestCase):
         b.click=refused
         r=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
         self.assertEqual(r['outcome'],'RUNTIME_FAILED');self.assertEqual(b.inputs,[])
+    def test_no_input_attestation_does_not_hide_execution_without_release(self):
+        b=Bridge()
+        b.click=lambda *a,**k:{'status':'refused','input_dispatched':False,
+          'execution':{'program_emissions':1,'releases':[]}}
+        r=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+        self.assertEqual(r['outcome'],'RUNTIME_FAILED');self.assertEqual(b.inputs,[])
 if __name__=='__main__': unittest.main()

@@ -139,7 +139,7 @@ class _Adapter:
             # No new input is not a claim that earlier input is neutral. Keep
             # release/recovery uncertainty on the existing stricter path.
             unresolved = (raw.get('recovery_required', False) or
-                          self.bridge.session.recovery_required or (bool(releases) and not neutral))
+                          self.bridge.session.recovery_required or bool(raw.get('execution')))
             if not (raw['input_dispatched'] is False and unresolved):
                 terminal['input_dispatched'] = raw['input_dispatched']
         self.retain('terminal',terminal)
