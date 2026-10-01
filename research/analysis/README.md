@@ -438,6 +438,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`typed_resolve_dependency_v1/`](typed_resolve_dependency_v1/)
 - [`typed_resumption_packet_5404_t0_v1/`](typed_resumption_packet_5404_t0_v1/)
 - [`unicode_target_binding_5993_t0_v1/`](unicode_target_binding_5993_t0_v1/)
+- [`route_switching_costs_6009_t0_20261001/`](route_switching_costs_6009_t0_20261001/)
 - [`verifier_exposure_5941_t0_20261001/`](verifier_exposure_5941_t0_20261001/)
 - [`verifier_exposure_5941_t0_v2_20261001/`](verifier_exposure_5941_t0_v2_20261001/)
 - [`verifier_metastability_5375_t0_20261001_a1/`](verifier_metastability_5375_t0_20261001_a1/)
