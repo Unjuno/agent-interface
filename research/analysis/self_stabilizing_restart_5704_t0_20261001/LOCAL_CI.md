@@ -1,6 +1,8 @@
 # Local construction CI (not formal container evidence)
 
-Environment: macOS arm64, CPython 3.14.5. Commands from this directory:
+Environment: macOS arm64, CPython 3.14.5; the same development replay was also run under CPython 3.12.13. These are host-side construction/replay checks, not formal container evidence. Latest recheck: 2026-10-01, all seven tests passed, `METHOD_PASS_SCOPED`, 13,824 states and 1,658,880 fair traces; independent auditor reported no errors. Candidate SHA-256 `5fcab832c45b2a081121aa68fd93eaf60d3e0826df0c71015d5e7b3d7de1746c`; audit SHA-256 `840bf1af12b5dffae95392dc2ea87cb1f46d5a7820c450b2f5d661f630442450`. See `raw/development/iteration-04-recheck/`.
+
+Commands from this directory:
 
 ```sh
 python3 -m py_compile model.py audit.py test_model.py
