@@ -7,7 +7,7 @@ This note re-reads the immutable `formal/formal-01/FORMAL_RESULT.json` from Issu
 - Formal raw SHA-256: `0878c39a68fe2abea218132b307ceff77df1e9a52291ba14186f2c8c423e37a7` (3,701,595 bytes).
 - Existing corrected independent audit: `AUDIT_FINAL.json`, SHA-256 `8a922fce11fcbc0daa67683ddf84e21cd99344cef4598546f56dbb49c3fc458f`; it binds the raw hash and reports `errors: []`.
 - Frozen label oracle: watch if confidence `<0.72` or not visible; otherwise CONTINUE iff `|dx|<0.06`, `|dy|<0.06`, and `|vx|+|vy|<0.12`; otherwise CORRECT.
-- Analysis implementation: PowerShell 7.5.4, JSON-only, no Python/model imports, no container. For the CORRECT-labelled rows, group by `|dx|` bands `[0.071,0.090)`, `[0.090,0.120)`, `[0.120,0.149)`; count raw proposal=`CORRECT`, null proposal (YIELD), and other accepted proposals. Reconstruct the frozen oracle from each raw feature vector before inclusion. Counts cover 3 seeds × 1,024 CORRECT rows = 3,072.
+- The initial independent reconstruction used PowerShell 7.5.4. A retained stdlib-only Python reproducer, `reconstruct.py`, now re-derives the frozen teacher labels from each raw feature vector, verifies the exact raw/audit SHA-256 bindings and zero audit errors, then groups CORRECT rows by fixed descriptive `|dx|` bands `[0.071,0.090)`, `[0.090,0.120)`, `[0.120,0.149)`. It counts raw proposal=`CORRECT`, null proposal (YIELD), and other accepted proposals; expected coverage is 3 seeds × 1,024 rows = 3,072. No model import or training occurs.
 
 ## H / T / D / C / U
 
