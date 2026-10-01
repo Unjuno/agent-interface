@@ -1,9 +1,17 @@
+### Issue #6156: escrowed optional-resource budgets T0 (2026-10-02)
+
+A bounded two-worker, four-right escrow state machine was exhaustively enumerated through depth 6: 9,988 reachable states and 27,748 transitions. The independent auditor reproduced both state and transition digests (`PASS_METHOD_SCOPED`); pre-freeze Docker construction tests passed 13/13. Balanced synthetic demand completed 4/4 optional units with two setup round-trips versus four central per-use checks; skew/crash completed 2/4 with two rights stranded. Heartbeat-only reclaim permitted a planted fifth consume against B=4; old generations, duplicate/delayed ACKs, mandatory verifier bypass, and role-label laundering were rejected. This is a finite protocol-method result, not measured latency, arbitrary distributed implementation, live GUI, or product evidence. See [the report and raw candidate/audit](research/analysis/escrow_optional_budget_6156_t0_20261002/REPORT.md).
+
 # Research index
 
 Agent Interface is being developed by analysis and experiment rather than by locking an API early. This file is the evidence ledger for the public repository.
 ## How to read this ledger
 
 This file is intentionally comprehensive. For public navigation, use the shorter status documents first and come here for the retained evidence history.
+
+### Issue #6061: prediction-error-triggered motor chunks T0 (2026-10-01)
+
+One host-only deterministic fixture compared fixed-period observation, prediction-triggered bounded chunks, nonpredictive bounded holds, and one-tick/no-continuation across nine frozen trajectories. The independent auditor reconstructed all 36 case-policy traces with zero errors. Predictive control reached the synthetic proximity endpoint in 6/9 cases versus 5/9 fixed-period and 5/9 bounded-hold, with 62 full captures versus 71 fixed-period; the stale-tracker negative control required 23 predictive captures. All arms released on the declared identity/focus/lease/disappearance gates. Disposition: `PASS_METHOD_SCOPED`; the directional pattern is limited to this idealized one-dimensional fixture and declared cheap-probe assumption. Docker Desktop's service was stopped and its server query did not respond; no shared container launch was attempted. See [the frozen plan/report and raw audit](research/doom/intermittent_control_6061_t0_20261001/REPORT.md). This is not a live #59 effect, physical-input, safety, or human-tempo result.
 
 ### Issue #59: workflow-path owner event/head invariance T0 (2026-10-01)
 
@@ -1890,6 +1898,10 @@ Parallel Issue comment [#5925853020](https://github.com/Unjuno/agent-interface/i
 A frozen host-only finite construction compared a same-cohort sentinel against existing all-attempt reconciliation across seven cases and 56 assigned rows. The candidate ran once and the independent raw auditor ran once (PASS_INDEPENDENT_AUDIT, zero errors); omitted-case and relabelled-false-all-clear controls were both rejected. A declared shared export fault shifted the sentinel route rate 0.00→0.25 while all-attempt reconciliation passed, so the sentinel added one scoped signal. A primary-only classifier fault shifted the primary rate 0.50→0.75 while both the comparator and sentinel returned no signal; it remains OUT_OF_SCOPE_UNDETECTED. Missing terminal and foreign-join faults were already stopped by all-attempt completeness/identity checks. A true sentinel change was classified COLLATERAL_FAIL using the synthetic independent oracle.
 
 This does not validate any production scorer's path sharing, sentinel invariance, or sensitivity, and the synthetic truth oracle is not an operationally available signal. It is not #57 or live agent evidence. Docker Desktop's Linux context was configured but its service was stopped and the server probe timed out; no container or application was used. See [the frozen report](research/analysis/same_cohort_negative_control_5841_t1_v1/REPORT.md), [freeze](research/analysis/same_cohort_negative_control_5841_t1_v1/FREEZE.json), [raw output](research/analysis/same_cohort_negative_control_5841_t1_v1/results/candidate.stdout.json), [independent audit](research/analysis/same_cohort_negative_control_5841_t1_v1/results/AUDIT.json), and [Issue #5841](https://github.com/Unjuno/agent-interface/issues/5841). Issue #5841 remains open.
+
+## Issue #6074 — interval robustness finite-method T0
+
+A frozen finite synthetic corpus compared a nominal label and interval-based scoped disposition for nine numeric/provenance cases. A separately implemented endpoint oracle agreed on all nine; threshold-straddling, exact-zero-margin, near-deadline, sparse between-sample temporal, timestamp-overlap, missing-coverage, and wrong-binding cases all returned UNKNOWN. Three fail-closed mutations passed. Disposition: `METHOD_PASS_SCOPED` only. This does not calibrate GUI uncertainty, support continuous-time inference, establish semantic identity, authority, runtime integration, or task benefit. Docker Desktop's `desktop-linux` context did not answer the server-version probe; the once-only run used local Python. See [frozen H/T/D/C/U report](research/analysis/interval_robustness_6074_t0_20261002/REPORT.md) and [Issue #6074](https://github.com/Unjuno/agent-interface/issues/6074). Issue #6074 remains open.
 
 ## Issue #5869 — bounded complementarity T0
 

@@ -1,0 +1,38 @@
+{
+  "schema": "issue4588_synthetic_confidence_trajectory_probe_v2",
+  "seed": 20260928,
+  "replicates_per_scenario": 128,
+  "scenario_count": 16,
+  "n_per_condition": 2048,
+  "noise_bounds": {"clean": 0.0, "mild_noise": 0.01, "stress_noise": 0.12},
+  "rules_frozen_in_source": true,
+  "model_trained": false,
+  "authority_granted": false,
+  "contract_controls": "PASS",
+  "source": "Transcribed from the single Docker JSON stdout; not verbatim stdout.",
+  "metrics": {
+    "clean": {
+      "CURRENT_ONLY": {"correct": 1280, "accuracy": 0.625, "false_executable": 512, "false_executable_rate": 0.3333333333, "missed_action": 128, "action_recall": 0.75, "false_noop_on_action": 0, "correct_noop_rate": 0.0, "confusion": {"ACTION->ACTION": 384, "ACTION->YIELD": 128, "NO_OP->ACTION": 512, "YIELD->NO_OP": 128, "YIELD->YIELD": 896}},
+      "LEVEL_VELOCITY": {"correct": 1920, "accuracy": 0.9375, "false_executable": 128, "false_executable_rate": 0.0833333333, "missed_action": 0, "action_recall": 1.0, "false_noop_on_action": 0, "correct_noop_rate": 0.75, "confusion": {"ACTION->ACTION": 512, "NO_OP->ACTION": 128, "NO_OP->NO_OP": 384, "YIELD->YIELD": 1024}},
+      "LEVEL_VELOCITY_ACCEL": {"correct": 1834, "accuracy": 0.8955078125, "false_executable": 0, "false_executable_rate": 0.0, "missed_action": 214, "action_recall": 0.58203125, "false_noop_on_action": 188, "correct_noop_rate": 1.0, "confusion": {"ACTION->ACTION": 298, "ACTION->NO_OP": 188, "ACTION->YIELD": 26, "NO_OP->NO_OP": 512, "YIELD->YIELD": 1024}},
+      "SMOOTHED": {"correct": 1676, "accuracy": 0.818359375, "false_executable": 0, "false_executable_rate": 0.0, "missed_action": 284, "action_recall": 0.4453125, "false_noop_on_action": 262, "correct_noop_rate": 1.0, "confusion": {"ACTION->ACTION": 228, "ACTION->NO_OP": 262, "ACTION->YIELD": 22, "NO_OP->NO_OP": 512, "YIELD->NO_OP": 88, "YIELD->YIELD": 936}}
+    },
+    "mild_noise": {
+      "CURRENT_ONLY": {"correct": 1280, "accuracy": 0.625, "false_executable": 512, "false_executable_rate": 0.3333333333, "missed_action": 128, "action_recall": 0.75, "false_noop_on_action": 0, "correct_noop_rate": 0.0, "confusion": {"ACTION->ACTION": 384, "ACTION->YIELD": 128, "NO_OP->ACTION": 512, "YIELD->NO_OP": 128, "YIELD->YIELD": 896}},
+      "LEVEL_VELOCITY": {"correct": 1917, "accuracy": 0.93603515625, "false_executable": 128, "false_executable_rate": 0.0833333333, "missed_action": 3, "action_recall": 0.994140625, "false_noop_on_action": 0, "correct_noop_rate": 0.75, "confusion": {"ACTION->ACTION": 509, "ACTION->YIELD": 3, "NO_OP->ACTION": 128, "NO_OP->NO_OP": 384, "YIELD->YIELD": 1024}},
+      "LEVEL_VELOCITY_ACCEL": {"correct": 1815, "accuracy": 0.88623046875, "false_executable": 3, "false_executable_rate": 0.001953125, "missed_action": 230, "action_recall": 0.55078125, "false_noop_on_action": 188, "correct_noop_rate": 0.994140625, "confusion": {"ACTION->ACTION": 282, "ACTION->NO_OP": 188, "ACTION->YIELD": 42, "NO_OP->ACTION": 3, "NO_OP->NO_OP": 509, "YIELD->YIELD": 1024}},
+      "SMOOTHED": {"correct": 1637, "accuracy": 0.79931640625, "false_executable": 0, "false_executable_rate": 0.0, "missed_action": 313, "action_recall": 0.388671875, "false_noop_on_action": 275, "correct_noop_rate": 1.0, "confusion": {"ACTION->ACTION": 199, "ACTION->NO_OP": 275, "ACTION->YIELD": 38, "NO_OP->NO_OP": 512, "YIELD->NO_OP": 98, "YIELD->YIELD": 926}}
+    },
+    "stress_noise": {
+      "CURRENT_ONLY": {"correct": 1231, "accuracy": 0.60107421875, "false_executable": 422, "false_executable_rate": 0.2747395833, "missed_action": 229, "action_recall": 0.552734375, "false_noop_on_action": 101, "correct_noop_rate": 0.25, "confusion": {"ACTION->ACTION": 283, "ACTION->NO_OP": 101, "ACTION->YIELD": 128, "NO_OP->ACTION": 384, "NO_OP->NO_OP": 128, "YIELD->ACTION": 38, "YIELD->NO_OP": 166, "YIELD->YIELD": 820}},
+      "LEVEL_VELOCITY": {"correct": 1485, "accuracy": 0.72509765625, "false_executable": 100, "false_executable_rate": 0.0651041667, "missed_action": 253, "action_recall": 0.505859375, "false_noop_on_action": 94, "correct_noop_rate": 0.427734375, "confusion": {"ACTION->ACTION": 259, "ACTION->NO_OP": 94, "ACTION->YIELD": 159, "NO_OP->ACTION": 83, "NO_OP->NO_OP": 219, "NO_OP->YIELD": 210, "YIELD->ACTION": 17, "YIELD->YIELD": 1007}},
+      "LEVEL_VELOCITY_ACCEL": {"correct": 1403, "accuracy": 0.68505859375, "false_executable": 57, "false_executable_rate": 0.037109375, "missed_action": 378, "action_recall": 0.26171875, "false_noop_on_action": 210, "correct_noop_rate": 0.50390625, "confusion": {"ACTION->ACTION": 134, "ACTION->NO_OP": 210, "ACTION->YIELD": 168, "NO_OP->ACTION": 44, "NO_OP->NO_OP": 258, "NO_OP->YIELD": 210, "YIELD->ACTION": 13, "YIELD->YIELD": 1011}},
+      "SMOOTHED": {"correct": 1373, "accuracy": 0.67041015625, "false_executable": 54, "false_executable_rate": 0.03515625, "missed_action": 413, "action_recall": 0.193359375, "false_noop_on_action": 283, "correct_noop_rate": 0.755859375, "confusion": {"ACTION->ACTION": 99, "ACTION->NO_OP": 283, "ACTION->YIELD": 130, "NO_OP->ACTION": 39, "NO_OP->NO_OP": 387, "NO_OP->YIELD": 86, "YIELD->ACTION": 15, "YIELD->NO_OP": 122, "YIELD->YIELD": 887}}
+    }
+  },
+  "paired_alias_controls": {
+    "clean": {"acceleration_alias": {"feature_equal_replicates": {"level": 128, "velocity": 128}, "decision_agreement_replicates": {"CURRENT_ONLY": 128, "LEVEL_VELOCITY": 128, "LEVEL_VELOCITY_ACCEL": 0, "SMOOTHED": 6}}, "velocity_alias": {"feature_equal_replicates": {"level": 128}, "decision_agreement_replicates": {"CURRENT_ONLY": 128, "LEVEL_VELOCITY": 0, "LEVEL_VELOCITY_ACCEL": 110, "SMOOTHED": 128}}},
+    "mild_noise": {"acceleration_alias": {"feature_equal_replicates": {"level": 128, "velocity": 128}, "decision_agreement_replicates": {"CURRENT_ONLY": 128, "LEVEL_VELOCITY": 128, "LEVEL_VELOCITY_ACCEL": 4, "SMOOTHED": 19}}, "velocity_alias": {"feature_equal_replicates": {"level": 128}, "decision_agreement_replicates": {"CURRENT_ONLY": 128, "LEVEL_VELOCITY": 0, "LEVEL_VELOCITY_ACCEL": 108, "SMOOTHED": 128}}},
+    "stress_noise": {"acceleration_alias": {"feature_equal_replicates": {"level": 128, "velocity": 128}, "decision_agreement_replicates": {"CURRENT_ONLY": 128, "LEVEL_VELOCITY": 94, "LEVEL_VELOCITY_ACCEL": 82, "SMOOTHED": 95}}, "velocity_alias": {"feature_equal_replicates": {"level": 128}, "decision_agreement_replicates": {"CURRENT_ONLY": 128, "LEVEL_VELOCITY": 27, "LEVEL_VELOCITY_ACCEL": 63, "SMOOTHED": 91}}}
+  }
+}

@@ -33,7 +33,12 @@ A plan cannot remint a reference, renew the scope or replay an uncertain action.
 
 `verify_effect(payload, native_observation, rgb)` supplies the graph's typed
 `status` and `evidence_ref` verdict. The graph checks its declared expected
-predicates first. The callback must establish the intended effect for that
+predicates first. Branch conditions and expected effects require both the same
+scalar type and value: boolean `true` does not satisfy integer `1`, and boolean
+`false` does not satisfy integer `0`. A branch mismatch yields `unknown_state`;
+an effect mismatch yields `effect_failed`, preserves the completed prefix and
+pending effect, and stops before the verifier or any next action.
+The callback must establish the intended effect for that
 application; returning succeeded without an adequate contract does not verify
 text or durable saving. Both callbacks are trusted caller code, not sandboxed,
 not an independent oracle and not a generic vision/OCR service. Scope/sequence
@@ -72,3 +77,36 @@ speed/token/default-route promotion. The unmodified form helper still does not
 verify text or saving; an adequate application callback and independent scoring
 remain necessary. Choose the existing method or graph according to the needed
 control/evidence contract, rather than assuming that the graph is faster.
+
+## Refusal immediately before input
+
+A native target/sequence change after admission can refuse execution before any
+input. The adapter preserves explicit `input_dispatched: false` evidence and the
+graph stops with `SAFE_YIELD / execution_refused`. It retains completed actions,
+records `release_verified: false` if no release occurred, and does not continue
+or automatically retry. This is a typed abstention, not proof of neutral input or
+of task completion. Read the retained raw refusal before choosing a new action.
+
+The optional terminal field is strict boolean. A false value is valid only with
+`status: refused`; malformed or contradictory metadata is rejected. Missing
+no-input evidence, actual delivery, held keys/buttons, native execution metadata or failed release or
+recovery-required state keep the existing stricter failure handling. Existing
+adapter terminal shapes remain supported. [Boundary regression evidence](../results/compiled-refusal-integration-01/README.md)
+uses deterministic adapters, not a live GUI performance comparison.
+
+## Pixel-only effect callbacks and deadlines
+
+The [real Calc pixel admission](../results/calc-pixel-effect-admission-02/README.md)
+read two visible cell values from an exact delivered capture using caller-grounded
+regions and a fixed OCR rule. A blank control produced a spurious word that the
+rule classified unknown. This supplies narrow feasibility evidence for common
+read-only assistance; it does not qualify a generic text verifier, saved effect,
+all comparison arms or this compiled adapter on Calc. The primary workflow's
+final confirmation expired and its independent saved-task score failed.
+
+Keep input expiry separate from the entire task's elapsed time. The existing
+compiled adapter checks each action's current reference and clamps its deadline
+to the method/reference minimum. Neither pixel recognition nor a fresh clock
+renews authority. After a model wait, use the ordinary target/dependency review
+and admission; preserve a refusal instead of replaying input with a longer lease.
+A useful visible predicate is separate from independently scored persisted effects.
