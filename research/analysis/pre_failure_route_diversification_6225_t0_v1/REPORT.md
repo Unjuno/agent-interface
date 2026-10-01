@@ -25,6 +25,7 @@ The hidden-shock result depends on the simulator's predeclared three-consecutive
 ## Execution and audit
 
 - Frozen source commit: `d51556de103bb780eacbe50862c30971820c466d` (base `14b81dd1f6853623a694266b98538f812847257a`).
+- During integration, main advanced to `673763554192ae26636e07d5a48f03b3cd7fb044` (#6226). A changed-path comparison found no overlap with this additive analysis package; that exact main commit was merged before publication, preserving the frozen source commit unchanged.
 - Candidate: `python -B candidate.py`, one formal invocation, exit 0; started `2026-10-01T20:01:17Z`; wrote `candidate.json` with 2,970 records.
 - Independent auditor: `python -B auditor.py`, one formal invocation, exit 0; started `2026-10-01T20:01:27Z`; stdout `METHOD_PASS_SCOPED`.
 - Formal retries, replacements, tuning, model calls, GUI calls, and live actions: zero.

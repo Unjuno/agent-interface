@@ -1,11 +1,12 @@
 {
   "allocation_id": "PREFailure-ROUTE-DIVERSIFICATION-6225-T0-HOST-20261002-01",
   "base_commit": "14b81dd1f6853623a694266b98538f812847257a",
+  "integration_main_commit": "673763554192ae26636e07d5a48f03b3cd7fb044",
   "freeze_commit": "d51556de103bb780eacbe50862c30971820c466d",
   "environment": "Windows host CPU; CPython 3.12.10; no container, model, GUI, network, user data, or live action",
   "commands": [
     {"command": "python -B candidate.py", "started_utc": "2026-10-01T20:01:17Z", "exit_code": 0, "stdout": "WROTE candidate.json: 2970 complete session-policy records", "formal_candidate_invocations": 1},
-    {"command": "python -B auditor.py", "started_utc": "2026-10-01T20:01:27Z", "exit_code": 0, "stdout": "METHOD_PASS_SCOPED\\n", "formal_auditor_invocations": 1}
+    {"command": "python -B auditor.py", "started_utc": "2026-10-01T20:01:27Z", "exit_code": 0, "stdout": "METHOD_PASS_SCOPED", "formal_auditor_invocations": 1}
   ],
   "retries_replacements_tuning": 0,
   "construction": {"command": "python -B -m unittest -v test_method.py", "tests_passed": 5, "initial_import_failure_retained": true},
