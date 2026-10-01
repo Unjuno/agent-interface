@@ -127,3 +127,7 @@ Read each child experiment for its allowed decision vocabulary, authority bounda
 ## Concurrent online-LoRA latency HOLD archive
 
 - [#4658 / source PR #4674 archival qualification](needle_concurrent_online_lora_4658_v3/ARCHIVAL_QUALIFICATION.md) — 17 exact published files preserving `HOLD_LATENCY_BUDGET`; missing raw evidence, freeze/audit identity mismatches, timestamp-gate audit gap, and unused broken formal wrapper remain unresolved. No reproduced result, rerun, promotion, or issue closure; source PR stays Draft and #4658 stays open.
+
+## Needle intent-capacity audit-only STOP archive
+
+- [`needle_intent_capacity_4679_v2/audit_only_recheck_20260928/RECOVERY_STATUS.md`](needle_intent_capacity_4679_v2/audit_only_recheck_20260928/RECOVERY_STATUS.md) — Issue #4778; exact recovery of the five audit-only protocol/source files. The sole invocation stopped before the auditor ran; no audit output JSON was produced and the Issue prohibits retry. The original `STOP_AUDIT_INTEGRITY` remains unchanged; no result promotion or retraining.
