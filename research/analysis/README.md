@@ -22,6 +22,8 @@ flowchart TD
 
 ## Analysis families
 
+Issue #6315 finite-trace coalescing T0: see [`temporal_coalescing_6315_t0_v1/`](temporal_coalescing_6315_t0_v1/). The corrected synthetic evaluator distinguishes edge-count/deadline-changing projections from preserved controls and returns UNKNOWN under missing time/coverage; the allocation's first auditor defect is explicitly retained. No live GUI or runtime claim.
+
 ```mermaid
 flowchart TD
     A[research/analysis]
@@ -453,6 +455,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`target_belief_audit_4150_v1/`](target_belief_audit_4150_v1/)
 - [`task_ownership_horizon_4152_reopen_review_v1/`](task_ownership_horizon_4152_reopen_review_v1/)
 - [`temporal_break_even_retained_identifiability_v1/`](temporal_break_even_retained_identifiability_v1/)
+- [`temporal_coalescing_6315_t0_v1/`](temporal_coalescing_6315_t0_v1/)
 - [`temporal_contract_monitor_compilation_a2_v1/`](temporal_contract_monitor_compilation_a2_v1/)
 - [`temporal_contract_monitor_compilation_a3_v1/`](temporal_contract_monitor_compilation_a3_v1/)
 - [`temporal_contract_monitor_compilation_r0_v1/`](temporal_contract_monitor_compilation_r0_v1/)
