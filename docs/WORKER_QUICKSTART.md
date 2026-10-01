@@ -13,7 +13,8 @@ This page is the short operational route into the repository. It is navigation a
 ## During work
 
 - Keep construction checks separate from formal results. Freeze source, image, inputs, commands, decision gates, and audit before a formal run.
-- Preserve the first PASS, FAIL, HOLD, STOP, or infrastructure outcome with raw output and hashes. Do not retry, relabel, or overwrite a consumed result; use a justified, distinct successor when the question changes.
+- Preserve each attempt's first PASS, FAIL, HOLD, STOP, or infrastructure outcome with its identity, raw output, and hashes. Construction may be repaired and repeated with separate retained records; never retry a consumed formal allocation, overwrite or relabel its outcome, or pool old rows into a new result.
+- A justified new formal allocation needs a separate identity, prospective freeze, and explicit deltas. A new allocation ID does not automatically require a successor Issue; reserve one for a genuinely new question or required integration decision. Follow the [allocation, construction, and successor boundaries](ISSUE_FAILURE_CLASSIFICATION.md#allocation-construction-and-successor-boundaries).
 - Keep work scoped to the Issue. Do not edit another worker's branch/path or interrupt a frozen allocation. Coordinate a genuine overlap with its recorded owner.
 
 ## Before handing work off

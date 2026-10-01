@@ -10,7 +10,7 @@ This is a point-in-time inventory, not a deletion list. Branch tips, PR state, a
 - Main advanced during this audit to `bd9c4c5ceca68f4dc09bb39d27b140a987b68656` (`research(#5791): audit anti-windup source eligibility (#5844)`). The maintenance branch was rebased onto this tip before PR creation.
 - GitHub REST returned 320 branch refs on pages 1–4 (100 + 100 + 100 + 20). Names and tips were inspected in the task session, but not captured as a complete local table; do not treat the transcript as an auditable inventory artifact.
 - PR APIs disagreed during the session about current counts/states, and an initial open-PR search returned only five results while a later REST listing returned 67 open PRs. This establishes that the first list was incomplete. Refresh the canonical [open PR list](https://github.com/Unjuno/agent-interface/pulls?q=is%3Apr+is%3Aopen) and verify each target directly before acting.
-- Open Issues are numerous (repo metadata reported 1,243); no full issue export or mass issue state change was performed.
+- At capture, repository metadata reported `open_issues_count: 1243`; this is a historical metadata value, not an independently counted issue-only total. No full issue export or mass issue state change was performed.
 
 ## Disposition rules
 
