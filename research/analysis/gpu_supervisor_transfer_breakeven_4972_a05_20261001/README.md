@@ -15,6 +15,6 @@ At preparation time, the exact branch sources were read back from GitHub and che
 
 ## Start gate
 
-At 11:30 UTC, refresh current main and the complete #5085 queue, verify the owner-bound exact interval, current runtime/device, source/data/freeze hashes, output path absence, process/GPU inventory and stable disk reserve. If main changed since FREEZE.json, synchronize the additive branch and update only the base-main/time fields, then reverify all source/data hashes. Any failed or ambiguous gate means STOP before candidate. No retry.
+At 11:30 UTC, refresh current main and the complete #5085 queue, verify the owner-bound exact interval, current runtime/device, source/data/freeze hashes, output path absence, process/GPU inventory and at least 1 GiB free C: space stable across two readings 60 seconds apart. If main changed since FREEZE.json, synchronize the additive branch and update only the base-main/time fields, then reverify all source/data hashes. Any failed or ambiguous gate means STOP before candidate. No retry.
 
 The formal candidate and independent auditor outputs will be added here only after the bounded allocation.
