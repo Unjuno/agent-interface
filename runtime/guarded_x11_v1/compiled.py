@@ -135,6 +135,13 @@ class _Adapter:
         # A refusal with no actual release receipt does not invent neutrality.
         terminal = {'status':raw['status'],'action_id':action_id,'effect_ref':effect_ref,
                     'release':{'verified':neutral,'keys_down':[],'buttons_down':[]}}
+        if 'input_dispatched' in raw:
+            # No new input is not a claim that earlier input is neutral. Keep
+            # release/recovery uncertainty on the existing stricter path.
+            unresolved = (raw.get('recovery_required', False) or
+                          self.bridge.session.recovery_required or (bool(releases) and not neutral))
+            if not (raw['input_dispatched'] is False and unresolved):
+                terminal['input_dispatched'] = raw['input_dispatched']
         self.retain('terminal',terminal)
         return terminal
 

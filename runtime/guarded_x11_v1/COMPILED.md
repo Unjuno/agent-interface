@@ -72,3 +72,19 @@ speed/token/default-route promotion. The unmodified form helper still does not
 verify text or saving; an adequate application callback and independent scoring
 remain necessary. Choose the existing method or graph according to the needed
 control/evidence contract, rather than assuming that the graph is faster.
+
+## Refusal immediately before input
+
+A native target/sequence change after admission can refuse execution before any
+input. The adapter preserves explicit `input_dispatched: false` evidence and the
+graph stops with `SAFE_YIELD / execution_refused`. It retains completed actions,
+records `release_verified: false` if no release occurred, and does not continue
+or automatically retry. This is a typed abstention, not proof of neutral input or
+of task completion. Read the retained raw refusal before choosing a new action.
+
+The optional terminal field is strict boolean. A false value is valid only with
+`status: refused`; malformed or contradictory metadata is rejected. Missing
+no-input evidence, actual delivery, held keys/buttons, failed native release or
+recovery-required state keep the existing stricter failure handling. Existing
+adapter terminal shapes remain supported. [Boundary regression evidence](../results/compiled-refusal-integration-01/README.md)
+uses deterministic adapters, not a live GUI performance comparison.
