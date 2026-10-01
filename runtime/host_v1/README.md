@@ -11,6 +11,7 @@ const client = await createInstrumentedRelayClient({
     '--output-directory', '/absolute/new-server-records',
     '--session-mode', 'persistent-x11', '--display', ':99'],
   evidenceDirectory: '/absolute/new-host-records',
+  minimumEvidenceFreeBytes: 32 * 1024 * 1024,
   reuseReviewedImages: false,
 });
 const response = await client.send('interface_observe', {
@@ -45,6 +46,29 @@ const response = await client.sendPresented('interface_guarded_input', args, {
 This uses the same retained send/present path, snapshots and validates both callbacks before dispatch, and reserves the host until presentation finishes. Another send, review or close during that interval is refused rather than queued. If interrupted, await `client.wait()` on the same host: it returns the original combined promise. Rendering failure leaves the reply retained, blocks further input and permits transport cleanup. A successful callback is delivery only; explicit review, outcome interpretation, release validation and any bounded recovery remain caller responsibilities. Existing separate `send`/`present` behavior is unchanged.
 
 The host creates `evidenceDirectory` exclusively. Supply a path that does not exist; do not create that directory before constructing the client. Keep the returned client in a durable caller binding before starting subsequent presentation work.
+
+Both `createRelayClient` and `createInstrumentedRelayClient` check the existing
+parent's filesystem capacity before directory allocation, then check the fresh
+directory and write `storage-preflight.json` before starting the relay child.
+`minimumEvidenceFreeBytes` defaults to 32 MiB and must be a positive safe integer;
+choose a larger floor for the expected session evidence. A known shortage throws
+`EVIDENCE_CAPACITY`; an unavailable capacity measurement throws
+`EVIDENCE_CAPACITY_UNKNOWN`. Neither starts a child or sends an operation. A
+failed directory/write check also occurs before child startup. Construction does
+not fall back to another filesystem, delete evidence, retry, or launch another
+client. An allocated directory left by a failed check remains preserved and
+cannot be reused as a fresh session.
+
+The receipt records filesystem-reported availability at that instant and a
+successful ordinary write, not reserved capacity or crash durability. It does
+not prove quota headroom, WSL virtual-disk physical backing space, or successful
+future writes. In particular, free space reported inside Ubuntu does not imply
+free space on the Windows drive holding its virtual disk. Check backing storage
+separately before a large allocation. Concurrent writers can consume space after
+the check; the existing evidence-failure STOP and no-replay reconciliation rules
+still apply. The receipt is separate from the per-call host timeline and grants
+no input authority or task-success claim. A startup receipt is not an image,
+per-call observation, provider-token measurement or benchmark result.
 
 For a returned response containing only text, use a separate acknowledgment after
 delivering and reading the original text:
