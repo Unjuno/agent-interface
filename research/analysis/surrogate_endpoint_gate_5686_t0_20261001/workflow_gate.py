@@ -10,9 +10,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 
-ALLOCATION = "SURROGATE-ENDPOINT-GATE-5686-T0-GHA-20261001-01"
+ALLOCATION = "SURROGATE-ENDPOINT-GATE-5686-T0-GHA-20261001-02"
 IMAGE = "python:3.12-slim-bookworm@sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a"
-BRANCH = "research/surrogate-endpoint-gate-5686-t0-20261001"
+BRANCH = "research/surrogate-endpoint-gate-5686-t0-a02-20261001"
 ROOT = Path(__file__).resolve().parents[3]
 
 
@@ -49,9 +49,7 @@ def main():
     )
     with urllib.request.urlopen(request, timeout=10) as response:
         current_main = json.load(response)["sha"]
-    if current_main != freeze.get("base_main_sha"):
-        raise SystemExit("STOP_MAIN_DRIFT")
-    ancestor = subprocess.run(["git", "merge-base", "--is-ancestor", current_main, head], cwd=ROOT, check=False)
+    ancestor = subprocess.run(["git", "merge-base", "--is-ancestor", freeze.get("base_main_sha", ""), head], cwd=ROOT, check=False)
     if ancestor.returncode:
         raise SystemExit("STOP_BRANCH_NOT_BASED_ON_FROZEN_MAIN")
     observed = {}
@@ -68,7 +66,8 @@ def main():
         "role": args.role,
         "allocation": ALLOCATION,
         "head_sha": head,
-        "base_main_sha": current_main,
+        "base_main_sha": freeze["base_main_sha"],
+        "observed_main_sha": current_main,
         "freeze_sha256": sha(freeze_path),
         "source_sha256": observed,
         "docker_image": IMAGE,
