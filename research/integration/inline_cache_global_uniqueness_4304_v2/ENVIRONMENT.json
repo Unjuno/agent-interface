@@ -1,0 +1,32 @@
+{
+  "environment_kind": "local WSL2 distro; not Docker",
+  "host_execution_scope": "This PC only; no remote execution or external experiment services",
+  "windows_build": "10.0.26200.9457",
+  "wsl_version": "2.7.3.0",
+  "wsl_kernel": "6.6.114.1-microsoft-standard-WSL2 x86_64",
+  "distro": "Arch Linux (rolling)",
+  "formal_process_uid_gid": "1000:1000 after mount setup in a private mount namespace",
+  "cpu_architecture": "x86_64",
+  "python": "CPython 3.14.5; Arch package python 3.14.5-1",
+  "python_xlib": "0.33; Arch package python-xlib 0.33-7",
+  "xlib_protocol_rq_py_sha256": "5e060aa4fff3f1d518d995a6f083dcd9c4238e79deedcd45f406b53f282c1e61",
+  "xvfb": "xorg-server-xvfb 21.1.24-1; xorg-server-common 21.1.24-1",
+  "xvfb_executable": "/usr/sbin/Xvfb",
+  "xvfb_executable_sha256": "567a9b39284e303522fdc178059fe60d0e9917b811bd5066fb63260fd198a97c",
+  "xauth": "xorg-xauth 1.1.5-1",
+  "xkeyboard_config": "xkeyboard-config 2.48-1",
+  "namespace_utility": "util-linux 2.42.1-1 (unshare, mount, setpriv)",
+  "utility_binary_sha256": {
+    "/usr/bin/timeout": "1eabb51f45f6d9f8b013bddbd70aeceb2c45daecbcbab5869f9c6177a685b521",
+    "/usr/bin/unshare": "e6de8d27cf97946cb27213284735846cf07b075766573e53964df780bfc0dda7",
+    "/usr/bin/setpriv": "de3c0e05743564323f81fa32da53817b024aaa5f8c72ea2385bbc937097175f4"
+  },
+  "private_x11_wrapper": "src/run_private_x11.sh; mounts a private tmpfs over WSLg's read-only /tmp/.X11-unix only inside an unshared mount namespace, then drops to uid/gid 1000",
+  "network": "No external network calls; Xvfb TCP listener disabled with -nolisten tcp",
+  "gpu_cuda_model": "Not applicable to this X11 hypothesis; none used",
+  "docker": "Not used",
+  "known_xvfb_stderr_sha256": "12dcabf0449b9ff85d589b86d110c814777977daca56e7ba8ec300c5334fe397",
+  "known_xvfb_stderr_description": "Exact repeated XKB keymap compiler warning from the installed keymap data; nonfatal per Xvfb diagnostic. Any byte difference is rejected by the independent audit. Actor and policy stderr must be empty.",
+  "construction_run": "construction-02; four excluded fresh private Xvfb sessions; outputs retained under results/construction-02/",
+  "package_mutation_policy": "No package updates/installs after this environment snapshot and before formal execution. Recheck listed versions and Xlib source hash immediately before each formal invocation."
+}
