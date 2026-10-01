@@ -271,3 +271,4 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 
 - [`x11_midprogram_keymap_5236_formal05_save_diagnostic_20261001/`](x11_midprogram_keymap_5236_formal05_save_diagnostic_20261001/) — Local Docker diagnostics: post-save waits do not change the US control; mid-program XKB remaps produce wrong saved text in Debian Docker (not Arch formal evidence).
 - [`x11_midprogram_keymap_5236_formal06_20261001/`](x11_midprogram_keymap_5236_formal06_20261001/) — Issue #5236 Formal06 `STOP_PROTOCOL_DEVIATION`: preserved raw predates freeze; auditor mismatch is diagnostic only. See `RESULT_DISPOSITION.md`.
+- [`x11_midprogram_keymap_5236_formal07_20261001/`](x11_midprogram_keymap_5236_formal07_20261001/) — Issue #5236 Formal07 `STOP_PROVENANCE_OR_RUNNER`: the `missing_post_save_wait` corruption was a no-op and escaped; see the result disposition.
