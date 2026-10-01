@@ -8,7 +8,6 @@ import json
 import os
 from pathlib import Path
 import subprocess
-import sys
 
 
 IMAGE = "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9"
@@ -45,6 +44,23 @@ def schedule_sha256() -> str:
     return calculate()
 
 
+def verify_context_endpoint(*, docker: str, context: str, endpoint: str) -> None:
+    result = subprocess.run(
+        [docker, "context", "inspect", context, "--format", "{{json .Endpoints.docker.Host}}"],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        raise SystemExit(f"STOP_CONTEXT_INSPECT:{result.stderr.strip()}")
+    try:
+        observed = json.loads(result.stdout.strip())
+    except json.JSONDecodeError as exc:
+        raise SystemExit("STOP_CONTEXT_ENDPOINT_SCHEMA") from exc
+    if observed != endpoint:
+        raise SystemExit("STOP_CONTEXT_ENDPOINT_MISMATCH")
+
+
 def docker_command(
     *, docker: str, context: str, platform: str, source: Path, output: Path,
     runtime: dict[str, str], freeze_digest: str, mode: str,
@@ -74,7 +90,6 @@ def run_candidate(*, docker: str, context: str, platform: str, output: Path,
         source=BASE, output=output, runtime={**runtime, "source_commit": source_commit},
         freeze_digest=digest, mode=mode,
         include_manifest=True)
-    command[2:2] = ["--host", endpoint]
     return subprocess.run(command, check=False).returncode
 
 
@@ -94,6 +109,7 @@ def main() -> int:
         endpoint = os.environ.get("OBSTAC_CONSTRUCTION_DOCKER_HOST", "")
         if not context or not endpoint:
             raise SystemExit("STOP_CONSTRUCTION_ENDPOINT_MISSING")
+        verify_context_endpoint(docker=args.docker, context=context, endpoint=endpoint)
         runtime = {
             "source_commit": "construction-only",
             "image_id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
@@ -117,7 +133,6 @@ def main() -> int:
         command = docker_command(docker=args.docker, context=context, platform="linux/arm64",
             source=BASE, output=args.candidate_out, runtime=runtime, freeze_digest="construction-only",
             mode=mode, include_manifest=True, arguments=("--out", "/work/out", "--construction"))
-        command[2:2] = ["--host", endpoint]
         return subprocess.run(command, check=False).returncode
 
     frozen, digest = load_freeze()
@@ -131,6 +146,7 @@ def main() -> int:
             raise SystemExit("STOP_ASSIGNED_ENDPOINT_MISSING")
         if context != runtime.get("docker_context") or endpoint != runtime.get("docker_host"):
             raise SystemExit("STOP_ASSIGNED_ENDPOINT_MISMATCH")
+        verify_context_endpoint(docker=args.docker, context=context, endpoint=endpoint)
         if os.environ.get("OBSTAC_AUDIT_SHA256") != frozen.get("audit_sha256"):
             raise SystemExit("STOP_ASSIGNED_AUDIT_HASH_MISMATCH")
         if os.environ.get("OBSTAC_FREEZE_SHA256") != digest:
@@ -194,7 +210,6 @@ def main() -> int:
         "--mount", output_mount,
         "--mount", f"type=bind,src={raw},dst=/work/raw.jsonl,readonly",
     ]
-    audit_command[2:2] = ["--host", endpoint]
     return subprocess.run(audit_command, check=False).returncode
 
 

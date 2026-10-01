@@ -109,6 +109,12 @@ denominator.
   INSERT still supplied six values for the expanded row. The one row INSERT was
   corrected before further work; the complete matrix then passed. That STOP
   was host construction only, not a formal allocation outcome.
+- A final Docker CLI review found `--context` and `--host` were being specified
+  together. The launcher now uses the named context as the sole connection
+  selector and first compares its local configured endpoint with the assigned
+  endpoint; it does not query daemon state. The first mock run then omitted
+  stdout for that new context-inspect process; after stubbing the JSON endpoint,
+  all 14 tests passed. No Docker daemon/container was invoked.
 
 ## Formal allocation status
 
