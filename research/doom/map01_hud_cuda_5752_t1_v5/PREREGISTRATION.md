@@ -13,6 +13,8 @@ Evidence path: research/doom/map01_hud_cuda_5752_t1_v5/.
 - **C:** Windows 10 host, RTX 3080 Laptop GPU, CPython 3.11.9, PyTorch 2.5.1+cu121 / CUDA 12.1, Pillow 10.4.0; local thermal/clock and page-cache effects; 23 selected screenshots are a tiny fixed set. Pair order is alternating by repetition and frame index.
 - **U:** This tests exact HUD state extraction, not threat recognition, beneficial action effect, action causality, closed-loop gameplay, survival, MAP01 exit, broad latency, or human tempo. It does not satisfy #59's live threat-exposure condition.
 
+The separately reported `gpu_cold_setup_ms` starts immediately before the first CUDA synchronization/template creation and includes template transfer/allocation plus first-frame decode, H2D, scoring, D2H and synchronization. Python/Torch imports, WAD parsing, and CPU template extraction occur before that interval; the field is not end-to-end application startup latency. Warm paired single-frame samples remain the primary speed gate.
+
 ## Frozen invocation and resource boundary
 
 Run preflight tests and then the corrected fail-closed gpu_preflight_gate.ps1. Require PREFLIGHT_OK; capture full stdout/stderr/status. Candidate output directory must be newly created and empty. Candidate command:
