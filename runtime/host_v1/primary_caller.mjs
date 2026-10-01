@@ -68,6 +68,28 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
         point: [...point], region_size: [...regionSize]
       });
     },
+    async mintMany(...values) {
+      const [sourceSequence, references] = values;
+      const pair = value => Array.isArray(value) && value.length === 2 &&
+        Array.from(value).every(Number.isSafeInteger);
+      const validReference = reference => reference && typeof reference === 'object' &&
+        !Array.isArray(reference) &&
+        Object.keys(reference).sort().join(',') === 'alias,point,region_size' &&
+        typeof reference.alias === 'string' && /^[a-z][a-z0-9_]{0,31}$/.test(reference.alias) &&
+        pair(reference.point) && pair(reference.region_size) &&
+        reference.region_size.every(value => value >= 4 && value <= 96);
+      if (route !== 'guarded-local' || values.length !== 2 ||
+          !Number.isSafeInteger(sourceSequence) || sourceSequence < 1 ||
+          !Array.isArray(references) || references.length < 1 || references.length > 8 ||
+          !Array.from(references).every(validReference) ||
+          new Set(references.map(reference => reference.alias)).size !== references.length) {
+        stop('invalid primary batch mint arguments');
+        throw TypeError(stopped);
+      }
+      return caller.call('interface_guarded_mint_many', {
+        source_sequence: sourceSequence, references: structuredClone(references)
+      });
+    },
     async observe(...unexpected) {
       if (unexpected.length || !observationArguments ||
           typeof observationArguments !== 'object' || Array.isArray(observationArguments)) {
@@ -115,6 +137,16 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
               meta.result.guard_checks[0].handle === expected.alias);
         if (expected && !declaredRefusal) stop('control outcome mismatch');
         if (reply.result.isError && !declaredRefusal) stop('unexpected MCP refusal');
+        if (!declaredRefusal && tool === 'interface_guarded_mint_many') {
+          // Registration can partially mutate the server store. Keep its original
+          // response, but never continue input or retry an uncertain batch.
+          if (meta.status !== 'minted' || meta.source_sequence !== args?.source_sequence ||
+              !Array.isArray(args?.references) || !Array.isArray(meta.minted) ||
+              meta.minted.length !== args.references.length ||
+              meta.minted.some((reference, index) => reference?.alias !== args.references[index]?.alias)) {
+            stop('incomplete or inconsistent batch mint result');
+          }
+        }
         if (!declaredRefusal && (tool === 'interface_guarded_input' || tool === 'interface_dispatch')) {
           const summary = tool === 'interface_dispatch' && meta.schema === 'agent-interface/review-v1' &&
             meta.receipt?.schema === 'agent-interface/receipt-view-dispatch-summary-v1';
