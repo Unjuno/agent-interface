@@ -126,7 +126,10 @@ const frame = await primary.observe(); // same helper for initial/fresh groundin
 await primary.review(frame.attempt, {
   task: 'edit', phase: 'observe', reason: 'Describe the image actually viewed',
 });
-// Mint references and explicitly choose later actions with primary.call(...).
+// Choose a unique alias and a point from that reviewed image:
+const reference = await primary.mint('save_fresh', sourceSequence,
+  [376, 401], [24, 38]);
+// Read the original mint response, then explicitly choose actions with call(...).
 ```
 
 `observe()` accepts no per-call arguments and sends `interface_guarded_observe`
@@ -141,6 +144,16 @@ const primary = createPrimaryCaller(client, 'direct-post', sinks, [], {
   },
 });
 ```
+
+`mint(alias, sourceSequence, point, regionSize)` is an explicit guarded-only
+helper. It sends exactly `interface_guarded_mint` with `source_sequence` and
+`region_size`, preserving the original response and STOP behavior. It requires
+four arguments, a nonempty alias, a positive safe integer source sequence,
+integer point coordinates, and two integer region dimensions in 4..96.
+Malformed helper arguments latch STOP before host dispatch. It does not select
+coordinates, observe, review an image, renew a reference automatically, retry,
+or issue input. Alias admissibility, image binding, freshness and geometry are
+still checked by the server. Use `call` for exact preregistered refusal controls.
 
 The settings are snapshotted; later caller mutation does not change observation
 scope. Missing direct observation configuration or accidental helper arguments

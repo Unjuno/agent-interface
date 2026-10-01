@@ -25,6 +25,22 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
   }
   const caller = {
     state: () => ({ stopped }),
+    async mint(...values) {
+      const [alias, sourceSequence, point, regionSize] = values;
+      const pair = value => Array.isArray(value) && value.length === 2 &&
+        value.every(Number.isSafeInteger);
+      if (route !== 'guarded-local' || values.length !== 4 ||
+          typeof alias !== 'string' || !alias.trim() ||
+          !Number.isSafeInteger(sourceSequence) || sourceSequence < 1 ||
+          !pair(point) || !pair(regionSize) || regionSize.some(v => v < 4 || v > 96)) {
+        stop('invalid primary mint arguments');
+        throw TypeError(stopped);
+      }
+      return caller.call('interface_guarded_mint', {
+        alias, source_sequence: sourceSequence,
+        point: [...point], region_size: [...regionSize]
+      });
+    },
     async observe(...unexpected) {
       if (unexpected.length || !observationArguments ||
           typeof observationArguments !== 'object' || Array.isArray(observationArguments)) {
