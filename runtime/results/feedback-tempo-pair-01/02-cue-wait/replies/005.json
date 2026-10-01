@@ -1,0 +1,36 @@
+{
+  "request": {
+    "op": "review",
+    "attempt": 3,
+    "phase": "first-saved",
+    "reason": "Original first post-input PNG shows SAVED t1001072; cue matched and caller not stopped. No later observation needed for this fixture. Independent app events unread until terminal close; title alone is not oracle."
+  },
+  "started_ns": "32688433409749",
+  "ended_ns": "32688438167480",
+  "attempt": null,
+  "isError": null,
+  "metadata": {
+    "schema": "agent-interface/primary-review-receipt-v1",
+    "source_sequence": 6,
+    "observation_id": "73cdc1a2e9554e559ae0bfcad941243a",
+    "task": "t1001072",
+    "phase": "first-saved",
+    "reason": "Original first post-input PNG shows SAVED t1001072; cue matched and caller not stopped. No later observation needed for this fixture. Independent app events unread until terminal close; title alone is not oracle.",
+    "recorded_at": "2026-10-01T14:35:26.062Z",
+    "relay_id": 3,
+    "tool": "interface_guarded_input",
+    "call_id": "d6bac265ffe24758833d3d093ab5b510",
+    "reply_sha256": "415872e64de027f4ae817c0b985922b72aa6fe102898f774f08708b4c3766cec",
+    "images": [
+      {
+        "mime_type": "image/png",
+        "sha256": "0b1022a09d2f128bc305827e927ffa354295c95fbf911f40a0432e4f935a3feb"
+      }
+    ],
+    "evidence_scope": "caller-declared review; attribution only; not semantic success or measured model latency"
+  },
+  "image_path": null,
+  "caller_state": {
+    "stopped": null
+  }
+}
