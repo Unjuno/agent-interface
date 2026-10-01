@@ -112,14 +112,17 @@ def main():
     if tokenizer_files != FREEZE["tokenizer_file_hashes"]:
         fail("tokenizer_file_inventory_changed_after_preflight")
 
+    run_started_utc = datetime.now(timezone.utc).isoformat()
+    gpu_before_load = smi(["--query-gpu=index,name,uuid,memory.used,utilization.gpu",
+                           "--format=csv,noheader"])
+    if "RTX 3080" not in gpu_before_load:
+        fail("rtx3080_not_visible_immediately_before_load")
+
     # Import the GPU runtime only after all frozen CPU/source/model checks pass.
     import torch
     from transformers import AutoModelForCausalLM, AutoTokenizer
     torch.manual_seed(FREEZE["data_seed"])
     torch.cuda.manual_seed_all(FREEZE["data_seed"])
-    run_started_utc = datetime.now(timezone.utc).isoformat()
-    gpu_before_load = smi(["--query-gpu=index,name,uuid,memory.used,utilization.gpu",
-                           "--format=csv,noheader"])
     try:
         tokenizer = AutoTokenizer.from_pretrained(
             str(snapshot), local_files_only=True, trust_remote_code=False)
