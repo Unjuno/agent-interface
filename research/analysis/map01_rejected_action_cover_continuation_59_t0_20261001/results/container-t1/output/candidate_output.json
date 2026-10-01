@@ -1,0 +1,52 @@
+{
+  "rows": [
+    {
+      "case": "retained_boundary",
+      "action": "REJECT",
+      "action_floor": 89,
+      "cover": "ADMIT_BOUNDED_CONTINUATION",
+      "cover_floor": 85,
+      "input_authority": false
+    },
+    {
+      "case": "one_below_floor",
+      "action": "REJECT",
+      "action_floor": 89,
+      "cover": "REJECT",
+      "cover_floor": 85,
+      "input_authority": false
+    },
+    {
+      "case": "one_above_floor",
+      "action": "REJECT",
+      "action_floor": 89,
+      "cover": "ADMIT_BOUNDED_CONTINUATION",
+      "cover_floor": 85,
+      "input_authority": false
+    },
+    {
+      "case": "missing_health",
+      "action": "REJECT",
+      "action_floor": 89,
+      "cover": "REJECT",
+      "cover_floor": 85,
+      "input_authority": false
+    },
+    {
+      "case": "stale_evidence",
+      "action": "REJECT",
+      "action_floor": 89,
+      "cover": "REJECT",
+      "cover_floor": 85,
+      "input_authority": false
+    },
+    {
+      "case": "mismatched_source",
+      "action": "REJECT",
+      "action_floor": 89,
+      "cover": "REJECT",
+      "cover_floor": 85,
+      "input_authority": false
+    }
+  ]
+}
