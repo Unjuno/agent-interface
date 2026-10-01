@@ -1,0 +1,63 @@
+{
+  "valid_status": "accepted",
+  "negative": {
+    "status": "refused",
+    "detail": "unmapped key HOME; X11 keysym names are case-sensitive, use Home"
+  },
+  "planned": {
+    "ops": [
+      {
+        "op": "focus",
+        "target": "app"
+      },
+      {
+        "op": "key_chord",
+        "keys": [
+          "CTRL",
+          "Home"
+        ]
+      },
+      {
+        "op": "text",
+        "text": "317"
+      },
+      {
+        "op": "key_chord",
+        "keys": [
+          "ENTER"
+        ]
+      },
+      {
+        "op": "text",
+        "text": "529"
+      },
+      {
+        "op": "key_chord",
+        "keys": [
+          "ENTER"
+        ]
+      },
+      {
+        "op": "key_chord",
+        "keys": [
+          "CTRL",
+          "s"
+        ]
+      },
+      {
+        "op": "key_chord",
+        "keys": [
+          "ENTER"
+        ]
+      },
+      {
+        "op": "release_all"
+      }
+    ]
+  },
+  "keyboard_mapping_sha256": "e8bd207c3eaf79110de73dd1d30486c9ef379455f20e5a971cc05fe4cd7e27ad",
+  "emissions_before": 0,
+  "emissions_after": 0,
+  "authority_granted": false,
+  "scope": "backend binding feasibility only; actual dispatch repeats admission/mapping checks"
+}
