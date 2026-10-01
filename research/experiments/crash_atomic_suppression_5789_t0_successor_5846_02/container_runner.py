@@ -110,6 +110,22 @@ def docker_command(
     return command
 
 
+def validate_formal_argv(frozen: dict[str, object], args: argparse.Namespace,
+                         host_source_root: Path) -> None:
+    """Reject path/argv drift before touching the allocated Docker daemon."""
+    expected = argparse.Namespace(
+        mode=args.mode,
+        candidate_out=guest_path(args.candidate_out, host_source_root).resolve(),
+        audit_out=guest_path(args.audit_out, host_source_root).resolve()
+        if args.audit_out is not None else None,
+        audit_raw=guest_path(args.audit_raw, host_source_root).resolve()
+        if args.audit_raw is not None else None,
+        docker=args.docker,
+    )
+    if frozen.get("formal_argv") != invocation_argv(expected):
+        raise SystemExit("STOP_FORMAL_ARGV_MISMATCH")
+
+
 def run_candidate(*, docker: str, context: str, platform: str, output: Path,
                   runtime: dict[str, str], digest: str, mode: str, endpoint: str,
                   source_commit: str) -> int:
@@ -137,19 +153,7 @@ def main() -> int:
         if not isinstance(runtime, dict) or not isinstance(runtime.get("host_source_root"), str):
             raise SystemExit("STOP_HOST_SOURCE_ROOT_MISSING")
         host_source_root = Path(runtime["host_source_root"])
-        host_args = argparse.Namespace(
-            mode=mode,
-            candidate_out=guest_path(args.candidate_out, host_source_root),
-            audit_out=guest_path(args.audit_out, host_source_root) if args.audit_out is not None else None,
-            audit_raw=guest_path(args.audit_raw, host_source_root) if args.audit_raw is not None else None,
-            docker=args.docker,
-        )
-        for name in ("candidate_out", "audit_out", "audit_raw"):
-            value = getattr(host_args, name)
-            if value is not None:
-                setattr(host_args, name, value.resolve())
-        if frozen.get("formal_argv") != invocation_argv(host_args):
-            raise SystemExit("STOP_FORMAL_ARGV_MISMATCH")
+        validate_formal_argv(frozen, args, host_source_root)
     if mode == "construction":
         context = os.environ.get("OBSTAC_CONSTRUCTION_CONTEXT", "")
         endpoint = os.environ.get("OBSTAC_CONSTRUCTION_DOCKER_HOST", "")
@@ -203,6 +207,14 @@ def main() -> int:
             raise SystemExit("STOP_ASSIGNED_IMAGE_ID_MISMATCH")
         if os.environ.get("OBSTAC_PLATFORM") != runtime.get("platform"):
             raise SystemExit("STOP_ASSIGNED_PLATFORM_MISMATCH")
+        if os.environ.get("OBSTAC_FREEZE_SHA256") != digest:
+            raise SystemExit("STOP_ASSIGNED_FREEZE_DIGEST_MISMATCH")
+        if os.environ.get("OBSTAC_SOURCE_COMMIT") != runtime.get("source_commit"):
+            raise SystemExit("STOP_ASSIGNED_SOURCE_COMMIT_MISMATCH")
+        if os.environ.get("OBSTAC_IMAGE_ID") != runtime.get("image_id"):
+            raise SystemExit("STOP_ASSIGNED_IMAGE_ID_MISMATCH")
+        if os.environ.get("OBSTAC_AUDIT_SHA256") != frozen.get("audit_sha256"):
+            raise SystemExit("STOP_ASSIGNED_AUDIT_HASH_MISMATCH")
         if args.audit_out is None or args.audit_raw is None:
             raise SystemExit("STOP_AUDIT_PATHS_REQUIRED")
         for path in (args.candidate_out, args.audit_out):

@@ -98,6 +98,34 @@ class ProcessMatrixConstructionTests(unittest.TestCase):
         self.assertEqual(argv[argv.index("--audit-raw") + 1],
                          str(host_root / "results/5846-02/candidate/raw.jsonl"))
 
+    def test_formal_manifest_argv_must_match_current_host_mount_mapping(self):
+        import argparse
+        host_root = Path("/private/tmp/unjuno-crash-atomic-suppression-5846-02/") / "package"
+        args = argparse.Namespace(
+            mode="formal", candidate_out=Path("/study/results/5846-02/candidate"),
+            audit_out=Path("/study/results/5846-02/audit"),
+            audit_raw=Path("/study/results/5846-02/candidate/raw.jsonl"), docker="docker",
+        )
+        frozen = {"formal_argv": container_runner.invocation_argv(argparse.Namespace(
+            mode="formal", candidate_out=host_root / "results/5846-02/candidate",
+            audit_out=host_root / "results/5846-02/audit",
+            audit_raw=host_root / "results/5846-02/candidate/raw.jsonl", docker="docker",
+        ))}
+        container_runner.validate_formal_argv(frozen, args, host_root)
+        frozen["formal_argv"][frozen["formal_argv"].index("--candidate-out") + 1] = "/old/worktree/results/candidate"
+        with self.assertRaisesRegex(SystemExit, "STOP_FORMAL_ARGV_MISMATCH"):
+            container_runner.validate_formal_argv(frozen, args, host_root)
+
+    def test_candidate_docker_command_injects_frozen_manifest_digest(self):
+        command = container_runner.docker_command(
+            docker="docker", context="assigned", platform="linux/arm64",
+            source=Path("/src"), output=Path("/out"),
+            runtime={"source_commit": "a" * 40, "image_id": "sha256:" + "b" * 64,
+                     "docker_host": "unix:///var/run/docker.sock"},
+            freeze_digest="c" * 64, mode="formal", include_manifest=True,
+        )
+        self.assertIn("OBSTAC_FREEZE_SHA256=" + "c" * 64, command)
+
     def test_auditor_mounts_a_report_directory_not_a_file_as_directory(self):
         with tempfile.TemporaryDirectory(prefix="construction-5795-audit-command-") as temp:
             root = Path(temp)
