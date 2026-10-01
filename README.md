@@ -54,6 +54,7 @@ For the short worker workflow, see [Worker Quickstart](docs/WORKER_QUICKSTART.md
 | Evidence and remaining gaps | [Progress](docs/PROGRESS_FROM_BASELINE.md) → [evidence map](docs/EVIDENCE_MAP.md) → the selected [ledger entry](RESEARCH.md), report, raw evidence and audit |
 | Ideas and validation gaps | The relevant [Issues](https://github.com/Unjuno/agent-interface/issues), including closed predecessors and their latest updates |
 | Ownership and overlap | [Current handoff](docs/LOCAL_RESEARCH_HANDOFF.md), the selected Issue’s explicit owner/allocation, and related open/closed [PRs](https://github.com/Unjuno/agent-interface/pulls); follow [parallel coordination rules](docs/ISSUE_FAILURE_CLASSIFICATION.md#parallel-coordination-and-evidence-preservation) |
+| Branch cleanup | Check the [branch inventory snapshot](research/maintenance/branch-audit-20261001.md), then refresh PR/Issue links and commit ancestry before any deletion |
 | Archives and provenance | [Retained research namespaces](research/README.md#historical-archival-namespaces) and [document roles](docs/README.md#document-authority-map) |
 
 An open Issue, PR or branch does not mean work is unclaimed. An archival merge does not change a result’s scope or authorize a new allocation.
