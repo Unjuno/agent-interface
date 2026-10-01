@@ -34,6 +34,11 @@ await client.close();
 
 The host creates `evidenceDirectory` exclusively. Supply a path that does not exist; do not create that directory before constructing the client. Keep the returned client in a durable caller binding before starting subsequent presentation work.
 
+[The main integration record](../results/presented-host-main-01/README.md)
+retains the missing-API stop, the source-frozen personal recovery trial, and
+original replies/images. Its extra clock request and image preview are counted;
+it does not establish a matched speed or token improvement.
+
 `sendPresented(tool, args, {text, image})` explicitly composes one request with
 presentation of its original reply. Both callbacks are checked before dispatch
 and snapshotted before waiting. The host owns the full send/presentation interval:
