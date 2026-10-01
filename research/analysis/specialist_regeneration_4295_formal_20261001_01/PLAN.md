@@ -2,7 +2,7 @@
 
 Allocation: `specialist-regeneration-4295-20261001-01`
 
-Frozen main: `1cb035f81a17a8122231c55f4a9eb804fdca40c9`
+Frozen main: `219439dbf803398a7283dc6c0244c598758be043`
 Source capsule: `research/analysis/specialist_regeneration_4284_preformal_preserved_4295_v1/source/`
 
 This is a fresh allocation after the original 2026-09-23 allocation remained
