@@ -21,5 +21,13 @@
   "os_input": false,
   "note": "Formal Python source was supplied on stdin; no temporary script/raw files were written. Exact structured stdout is preserved in audit_result.json. A second raw-audit invocation is prohibited.",
   "formal_program_source_retained": false,
-  "source_preservation_note": "The one-shot Python stdin program was not separately saved or hashed at invocation time. auditor.py and test_auditor.py are a post-run reproducibility implementation of the recorded checks, not claimed byte-identical to the ephemeral stdin source and not themselves invoked against the formal raw bundle. The audit result itself is preserved; do not rerun this consumed allocation."
+  "source_preservation_note": "The one-shot Python stdin program was not separately saved or hashed at invocation time. auditor.py and test_auditor.py are a post-run reproducibility implementation of the recorded checks, not claimed byte-identical to the ephemeral stdin source and not themselves invoked against the formal raw bundle. The audit result itself is preserved; do not rerun this consumed allocation.",
+  "post_run_reproducibility_tests": {
+    "command": "In-memory import of committed auditor.py and test_auditor.py; CPython 3.11.9",
+    "passed": 3,
+    "failed": 0,
+    "status": "PASS",
+    "scope": "Synthetic unit tests only; no frozen raw inputs loaded and no formal raw audit/candidate/predecessor invocation.",
+    "first_harness_attempt": "Harness failed before test discovery because its in-memory module lacked __file__; corrected harness supplied __file__, then the three synthetic tests passed. No source change and no raw-audit retry."
+  }
 }
