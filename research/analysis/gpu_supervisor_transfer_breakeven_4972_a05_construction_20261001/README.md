@@ -4,16 +4,18 @@
 
 **H.** A corrected negative control for allocation-03's retained auditor defect should always change a known-safe admission bit from 0 to 1, and should fail closed if no 0 exists.
 
-**T.** Extracted the proposed helper from the allocation-03 audit note and exercised deterministic positive fixtures plus an all-ones negative fixture. The same Python source retained at `research/analysis/gpu_supervisor_transfer_breakeven_4972_a05_construction_20261001/test_unsafe_admission_control.py` was piped to `python -` on the Windows host. No candidate result, timings, CUDA call, model, GUI, input, container, network, or live allocation was used.
+**T.** Reused the allocation-03 raw auditor with one isolated correction: select the first `cuda_admitted == 0` in the 1,024-row CUDA pair, flip it to 1, and assert a real mutation. A deterministic synthetic candidate was built with 1,024 rows (256 per stratum), all six batch sizes and 30 paired repetitions. No prior candidate raw/timings were used. The construction harness and corrected auditor are retained as `test_full_auditor_controls.py` and `audit.py`.
 
-**D.** Exit 0; all 3 checks passed: select and flip the first 0 in `[1,0,0]`; select and flip the first 0 in `[0,1]`; reject `[1,1]` with `ValueError`. This verifies only the isolated mutation helper. It does not execute the full raw auditor against a synthetic candidate or establish that all five corruption controls reject.
+**D.** Baseline audit returned zero errors. All five frozen corruption controls were rejected: `flip_cuda_hint`, `drop_timing_sample`, `wrong_source_hash`, `duplicate_pair`, and `unsafe_admission`. The committed remote source was fetched back from the branch, placed in a temporary directory, and executed on the Windows host using Python; exit 0 with `PASS synthetic raw-auditor baseline; all 5/5 corruption controls rejected`. The separate minimal helper regression also passed 3/3.
 
-**C.** Local Windows Python; CPU-only deterministic fixtures. Current C: free space was about 5.7 GB at this work segment; host RTX 3080 remained idle. The exact-source test execution used a PowerShell here-string piped to Python, followed by the identical source being retained on the GitHub branch.
+**C.** Local Windows Python; CPU-only synthetic fixtures and temporary files. No CUDA, candidate timing, model, GUI, input, network, container, or live allocation was used.
 
-**U.** No formal allocation-04/05 GPU candidate or auditor invocation; allocation-03 remains immutable `HOLD_INTEGRITY`. No CPU/CUDA parity, crossover, scientific, or performance result is claimed. This is construction evidence only; a fresh current-main source freeze and exclusive GPU assignment are still required.
+**U.** Construction-only auditor evidence; it does not validate a real candidate result, consume an allocation, establish CPU/CUDA parity, or claim a crossover. Allocation-03 remains immutable `HOLD_INTEGRITY`. A fresh current-main freeze and exclusive GPU assignment remain required for formal work.
 
 ## Reproduction
 
 `python test_unsafe_admission_control.py`
 
-Expected: `PASS 3/3: mutation flips a zero; no safe value fails closed`
+`python test_full_auditor_controls.py`
+
+Expected for the full-auditor test: `PASS synthetic raw-auditor baseline; all 5/5 corruption controls rejected`.
