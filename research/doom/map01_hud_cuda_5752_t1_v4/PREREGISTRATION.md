@@ -23,4 +23,3 @@ python audit.py --raw results/t1-host-gpu-04/candidate_result.json --out results
 Host-only local GPU allocation by the user's direct instruction: 08:05–08:15 UTC on 2026-10-01. No shared Docker/OrbStack resources. If the device is busy, inputs/source/hash changes, any start gate fails, or the slot expires, preserve STOP before candidate. No retry or result-driven modification.
 
 Preparation gates are separate from this formal allocation: CPU construction tests may run before the window; no CUDA candidate, model, Docker/OrbStack, GUI, input or task effect may occur before 08:05 UTC. At launch, refreeze to then-current main and independently read back every source identity before the sole candidate invocation.
-
