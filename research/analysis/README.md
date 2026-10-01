@@ -188,6 +188,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`censored_useful_effect_membership_successor_1838_v1/`](censored_useful_effect_membership_successor_1838_v1/)
 - [`cli_v1_lineage_direct_tests_2428_v1/`](cli_v1_lineage_direct_tests_2428_v1/)
 - [`competence_location_map_3446_v1/`](competence_location_map_3446_v1/)
+- [`complementarity_marginal_evidence_5869_t0_v1/`](complementarity_marginal_evidence_5869_t0_v1/)
 - [`composition_heldout_fixture_2068_v1/`](composition_heldout_fixture_2068_v1/)
 - [`conditional_route_rescue_5598_t0_20261001/`](conditional_route_rescue_5598_t0_20261001/)
 - [`conflict_aware_evidence_ledger_5305_t0/`](conflict_aware_evidence_ledger_5305_t0/)
