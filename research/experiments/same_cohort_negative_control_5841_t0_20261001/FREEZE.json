@@ -4,7 +4,7 @@
   "issue": 5841,
   "branch": "research/5841-same-cohort-negative-control-t0-20261001",
   "path": "research/experiments/same_cohort_negative_control_5841_t0_20261001/",
-  "main_sha": "0f141ee798325290f0eb46506169fe325d208d69",
+  "main_sha": "443bcb63333c4614d9a6fee5cb3ca3f9f6ea9710",
   "allocation": "one host-CPU candidate invocation followed by one separate raw-only audit; no retries",
   "environment": {
     "os": "Windows host",
@@ -55,8 +55,8 @@
     "threshold": "exact nonzero finite contrast for binary outcomes; no statistical significance test or empirical-rate inference"
   },
   "frozen_sha256": {
-    "candidate.py": "82b20f923367fe59787c23207617e7fe05da0fda2227676304514a3b6ebe913d",
-    "audit.py": "7411c5efdb960a68728a45bdf8a2c9e09b7fbe3b071489dd012f31865d3a7e0d",
+    "candidate.py": "fd353db3abd05f38c6ababf2aa3f5f1e8dce1d82be54f85381d24cf66158980d",
+    "audit.py": "dffd2c331de2fa8f901a45ae68aa4d041a9a4524325e4b5bfcb1943bdbd1b6e6",
     "build_fixtures.py": "c2e27a4eb68972d988ca7e68c35a6f2fbd05e840db4bb5d4d6fb82bf6eb4496c",
     "reported_rows.json": "e502e2d5e8a924766c5e3f4bdd922f0bb8f6c6f782f9f62e15366b2313d62838",
     "oracle.json": "379bbb7014a54dc962b3acbc0984db92fca1cb07549e1dd23db2f9cf18ab2535",
@@ -70,5 +70,13 @@
     "joint_export_error",
     "real_sentinel_collateral"
   ],
-  "line_ending_canonicalization": "Frozen SHA-256 values identify GitHub UTF-8 file bytes with LF normalized to CRLF; the local Windows copies are LF and are normalized before comparison."
+  "line_ending_canonicalization": "The GitHub Contents connector preserves the original LF file bytes and appends one final CRLF. Frozen SHA-256 values identify the exact GitHub file bytes; the local copies are checked by appending that same final CRLF.",
+  "branch_base_sha": "0f141ee798325290f0eb46506169fe325d208d69",
+  "main_drift_check": {
+    "compare_base": "0f141ee798325290f0eb46506169fe325d208d69",
+    "compare_head": "443bcb63333c4614d9a6fee5cb3ca3f9f6ea9710",
+    "ahead_by": 14,
+    "behind_by": 0,
+    "scope": "GitHub compare found intervening changes only outside research/experiments/same_cohort_negative_control_5841_t0_20261001; candidate/auditor import no repository runtime code and use only Python standard library plus frozen files."
+  }
 }
