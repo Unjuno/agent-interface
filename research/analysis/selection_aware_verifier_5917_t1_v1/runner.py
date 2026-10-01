@@ -31,6 +31,7 @@ def main():
       "audit_sha256":hashlib.sha256(audit).hexdigest(),"fixture_input_sha256":hashlib.sha256(fixture_bytes).hexdigest(),
       "candidate_stdout_sha256":hashlib.sha256(cp.stdout).hexdigest(),
       "candidate_stdout_zlib_base64":base64.b64encode(compressed).decode("ascii"),
-      "auditor_result":audit_result}
+      "auditor_stdout_sha256":hashlib.sha256(ap.stdout).hexdigest(),
+      "auditor_stdout":ap.stdout.decode("utf-8"),"auditor_result":audit_result}
     print(json.dumps(out,sort_keys=True,separators=(",",":")))
 if __name__=="__main__": main()
