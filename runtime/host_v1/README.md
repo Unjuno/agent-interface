@@ -396,3 +396,13 @@ the existing guarded input's read-only app cue composition. `policy` requires
 latches STOP while returning original evidence, even if input says completed.
 Pending/rejected/unstable responses also stop ordinary calls; close remains
 available. Matched titles are app conventions, not task completion or authority.
+
+
+A stopped guarded caller can explicitly use `observeAfterStop()` to request one
+read-only current screen through the same host. It takes no arguments and sends
+only `interface_guarded_observe`. It preserves the original response and sticky
+STOP: ordinary input, mint and observe calls remain blocked; close remains
+available. The returned screen can clarify an application effect that completed
+after a Pending reply, but does not certify durable task success or renew aliases.
+It is not automatic polling, new input authority or recovery of a broken host.
+Transport/evidence failures can still prevent this read-only request.
