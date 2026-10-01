@@ -308,6 +308,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`observation_relevance_completeness_v1/`](observation_relevance_completeness_v1/)
 - [`observation_reveal_support_closure_v1/`](observation_reveal_support_closure_v1/)
 - [`occupancy_gate_frontier_1592_v1/`](occupancy_gate_frontier_1592_v1/)
+- [`opacity_action_relevance_5360_t1_v1/`](opacity_action_relevance_5360_t1_v1/)
 - [`optimistic_concurrent_readwrite_commit_r0_v1/`](optimistic_concurrent_readwrite_commit_r0_v1/)
 - [`optimistic_readwrite_x11_retained_audit_a3_v1/`](optimistic_readwrite_x11_retained_audit_a3_v1/)
 - [`oracle_bracket_5766_t0_v1/`](oracle_bracket_5766_t0_v1/)
@@ -502,3 +503,4 @@ The checker compares the generated block against every child directory with a re
 
 - [Issue #5346 / PR #5365 T0 chronology STOP](stigmergic_coordination_5346_t0_v1/ARCHIVAL_QUALIFICATION.md) — 11 exact original files (86,873 bytes), including the host raw; pre-formal model/audit STOP and stale plan-hash field preserved, container invocations zero, no rerun or scientific promotion.
 - [Issue #5325 / PR #5377 capability-chain construction archive](attenuated_capability_5325_t0_v1/ARCHIVAL_QUALIFICATION.md) — eight exact published files (36,073 bytes); 55-row host construction only, withdrawn CPU request, formal runner/auditor 0/0, intake-main mismatch retained; later toy T0/T1 records remain separate, with no security-efficacy claim.
+- [Issue #5360 / PR #5408 T1 opacity construction history](opacity_action_relevance_5360_t1_v1/ARCHIVAL_QUALIFICATION.md) — 23 exact original files; eight historical host-attempt records including failed/repeated output; latest 32-row toy matrix; deferred/withdrawn formal request, container invocations zero, source/audit gaps retained, no rerun or scientific promotion.
