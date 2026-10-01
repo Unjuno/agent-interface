@@ -13,3 +13,5 @@ Current contents remain at their existing paths for provenance. Use [`../../RESE
 ## Historical diagnostic archives
 
 - [Recovered-adapter diagnostic FAIL: #4861 / source PR #4874](qwen_intent_grammar_4792_v2/ARCHIVAL_QUALIFICATION.md) — 22 unchanged published Git blobs retained by object identity; semantic and corruption-control gates remain failed (7/8 controls; one no-op mutation). Full input/raw remain local-only. Preservation only: no execution, re-audit, result promotion, or rerun. #4861 remains open and source PR #4874 remains Draft.
+
+- [T2b host-construction FAIL: #5407 / source PR #5727](issue_5407_market_t2b/ARCHIVAL_QUALIFICATION.md) — eight exact published evidence files; historical scarcity-first FAIL and reported audit PASS retained, with explicit frozen-byte qualifications. Container reproduction remains unrun; owner #5407 and source Draft #5727 remain open.
