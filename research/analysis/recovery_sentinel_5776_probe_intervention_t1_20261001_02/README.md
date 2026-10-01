@@ -11,3 +11,7 @@ See `PREREG.md` for the frozen H/T/D/C/U, complete population, independent endpo
 After the formal run, `RUN.json`, raw candidate output, stdout receipts, independent audit and `SHA256SUMS` bind the exact commands, image, environment and results. `runner.py` is the candidate; `audit.py` independently replays raw events without importing the candidate. `test_audit.py` is construction-only and does not consume the formal allocation.
 
 Scope is restricted to this deterministic finite work-queue fixture; no deployment, predictive, live-agent, safety, or product claim follows.
+
+## Pre-formal construction dose check
+
+`CONSTRUCTION_DOSE_CHECK.json` is a reproducible host-only sensitivity check, explicitly not the formal candidate/audit. It replays the same finite fixture at 14 fixed probe magnitudes (1–40 units); the exact script and output hashes are recorded in `FREEZE.json` and `SHA256SUMS`. The target gradual-capacity-loss median advance is 0 ticks at doses 1–12, 32 at 16, and 64 at 40, while probe-created losses rise in the no-loss controls (54/54 at dose 40). This exposes an authored dose/harm tradeoff and means the 40-unit formal arm is interpreted as a high-dose intervention-harm stress test, not evidence of safe/repeated probing. Candidate and independent auditor remain unrun until the exclusive OrbStack start gate.
