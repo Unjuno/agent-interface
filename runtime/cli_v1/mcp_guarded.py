@@ -80,6 +80,12 @@ class GuardedSessionOwner(MCPSessionOwner):
         # Guarded observations consume the current capture's producer RGB.
         bridge.backend.configure_capture_artifacts(Path(call_root)/'images', retain_rgb=True)
         row = {'operation':operation, 'task_success':None, 'replay_allowed':False}
+        if operation == 'guarded_activate_window':
+            # A failed reply may follow a WM request with a delayed effect.
+            self.dispatch_attempted = True
+            result = bridge.activate_window(**arguments)
+            row.update(status=result['status'], result=result)
+            return row
         if operation == 'guarded_input':
             # From here on a thrown exception may follow emitted input. The
             # transport retains uncertainty; it must not claim no input or retry.
@@ -138,6 +144,28 @@ class GuardedSessionOwner(MCPSessionOwner):
 
 
 def register_guarded_tools(server, submit):
+    @server.tool()
+    async def interface_guarded_activate_window(window_id: StrictInt, source_sequence: StrictInt,
+            current_binding_revision: StrictInt, expires_at_ns: StrictInt,
+            timeout_ms: Annotated[StrictInt, Field(ge=0,le=2000)]) -> CallToolResult:
+        """Explicitly activate the registered target through ordinary admission.
+
+        Requires exact target window ID, latest delivered source sequence,
+        current binding revision and caller-supplied expiry on interface_clock's
+        host clock. EWMH activation must be supported by the window manager.
+        Sends no text/click and returns no image. Success is a momentary focus
+        check, not visual or task confirmation. After admitted or uncertain
+        activation, explicitly review the window with guarded_review_window,
+        review its image, then mint a new alias and choose a new action.
+        Timeout is a polling budget, not a blocking X11 deadline; the WM may
+        apply the request later. No replay or lease renewal. Unverified input
+        cleanup blocks activation. This does not clear a caller's STOP policy.
+        """
+        return await submit('guarded_activate_window',dict(window_id=window_id,
+            source_sequence=source_sequence,current_binding_revision=current_binding_revision,
+            expires_at_ns=expires_at_ns,timeout_ms=timeout_ms),False,False)
+
+
     @server.tool()
     async def interface_guarded_observe(observation_refs: StrictBool=False) -> CallToolResult:
         """Capture the full screen on the configured X11 connection; send no input.

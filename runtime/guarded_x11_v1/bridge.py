@@ -227,6 +227,52 @@ class NativeHandleBridge:
         self._save("mint-" + alias + ".json", result)
         return [w // 2, h // 2]
 
+    def activate_window(self, *, window_id, source_sequence, current_binding_revision,
+                        expires_at_ns, timeout_ms):
+        """Explicitly activate the registered target; require a later window review.
+
+        Uses ordinary admission and the caller's lease. No editing, automatic
+        replay, alias renewal or successful-task assertion follows activation.
+        """
+        if (self.active is not None or self.session.recovery_required or
+                type(window_id) is not int or window_id != self.backend.targets[self.target].id or
+                type(source_sequence) is not int or source_sequence < 1 or source_sequence != self.sequence or
+                type(current_binding_revision) is not int or current_binding_revision != self.binding_revision or
+                type(expires_at_ns) is not int or expires_at_ns < 1 or
+                type(timeout_ms) is not int or not 0 <= timeout_ms <= 2000):
+            return {'status': 'refused', 'error': 'ACTIVATION_CONTEXT_MISMATCH',
+                    'input_dispatched': False, 'task_success': None, 'replay_allowed': False}
+        program = {
+            'schema': SCHEMA_PROGRAM, 'program_id': 'activate-' + uuid.uuid4().hex,
+            'source': {'observation_seq': source_sequence, 'binding_revision': current_binding_revision},
+            'authority': {'lease_id': self.scope.replace(':', '-'), 'expires_at_ns': expires_at_ns},
+            'terminal': {'release_all_required': True},
+            'ops': [{'op': 'activate', 'target': self.target, 'timeout_ms': timeout_ms},
+                    {'op': 'release_all'}],
+        }
+        self._save('program-' + program['program_id'] + '.json', program)
+        previous_review_required = self.review_required
+        self.active = ('activation', None)
+        try:
+            # Any thrown exception here may follow a WM request. Keep editing
+            # blocked until the caller explicitly reviews the current window.
+            self.review_required = True
+            report = dispatch_in_session(self.session, program,
+                current_observation_seq=source_sequence,
+                current_binding_revision=current_binding_revision)
+            self._save('public-dispatch-' + program['program_id'] + '.json', report)
+            if report['status'] != 'returned':
+                return {'status': 'activation_failed', 'error': report.get('error'),
+                        'dispatch_report': report, 'effect_status': 'unknown',
+                        'task_success': None, 'replay_allowed': False}
+            result = report['result']
+            if result.get('status') == 'refused':
+                self.review_required = previous_review_required
+            return result
+        finally:
+            self.active = None
+
+
     def review_window(self, window_id):
         """Explicit read-only handoff on this connection; revoke old aliases.
 
