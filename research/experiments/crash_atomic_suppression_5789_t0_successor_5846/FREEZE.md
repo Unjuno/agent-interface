@@ -6,9 +6,9 @@ one-shot allocation with candidate/auditor counts 0/0; it is not retried or
 reclassified here. Issue #5846 is the successor request. The package is on
 branch `research/crash-atomic-suppression-5846-t0-20261001`, under
 `research/experiments/crash_atomic_suppression_5789_t0_successor_5846/`.
-Preparation is based on main `8f18bb65d75deaaafed8b4e6ebbd430371c1d05`;
-the final source commit and manifest hashes are bound in `FREEZE.json` before
-the start gate. This successor preserves the protocol and corrects host/guest
+Preparation was rebased onto main `da7770df8bd896738a8a7e0ccc8ea45e10b3e645`;
+source commit `892cdcc70e15bbcb766b7375d690a533dfbd1133` and manifest hashes are
+bound in `FREEZE.json` before the start gate. This successor preserves the protocol and corrects host/guest
 path mapping; that mapping has construction tests only and is not formal
 evidence.
 
