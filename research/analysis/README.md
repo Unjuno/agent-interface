@@ -433,6 +433,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`specialist_regeneration_4295_controls_20261001_01/`](specialist_regeneration_4295_controls_20261001_01/)
 - [`specialist_regeneration_4295_formal_20261001_01/`](specialist_regeneration_4295_formal_20261001_01/)
 - [`sqlite_schema_readset_reprepare_v1/`](sqlite_schema_readset_reprepare_v1/)
+- [`stagewise_perturbation_6053_t0_20261002/`](stagewise_perturbation_6053_t0_20261002/)
 - [`stop_evidence_4678_audit_v1/`](stop_evidence_4678_audit_v1/)
 - [`stop_evidence_4678_revalidation_v2/`](stop_evidence_4678_revalidation_v2/)
 - [`stpa_feedback_constraint_5327_t0_v1/`](stpa_feedback_constraint_5327_t0_v1/)
