@@ -1,0 +1,24 @@
+{
+  "issue": 5156,
+  "allocation": "5156-RUNNER-COMPLETE-SENTINEL-T0-ORB-20261001-03",
+  "target_pr": 5630,
+  "target_pr_head": "288d0498d11cf16657e523a04616bf4f49cd94f4",
+  "target": "research/live_control/owner_keyup_keymap_witness_5156_t3_v1/audit_formal_x11.py",
+  "hypothesis": "The independent T3 auditor accepts runner completion sentinel false and 0.0 as equal to integer zero, and ignores an extra nonzero completion record even though stricter evidence requires exactly one integer-zero completion.",
+  "mutations": [
+    {"id": "bool_false", "kind": "exit_code_false", "expected_audit_exit": 0},
+    {"id": "float_zero", "kind": "exit_code_float_zero", "expected_audit_exit": 0},
+    {"id": "string_zero", "kind": "exit_code_string_zero", "expected_audit_exit": 1},
+    {"id": "null_exit", "kind": "exit_code_null", "expected_audit_exit": 1},
+    {"id": "missing_exit", "kind": "remove_exit_code", "expected_audit_exit": 1},
+    {"id": "nonzero_exit", "kind": "exit_code_one", "expected_audit_exit": 1},
+    {"id": "duplicate_success", "kind": "append_integer_zero_completion", "expected_audit_exit": 1},
+    {"id": "success_plus_failure", "kind": "append_nonzero_completion", "expected_audit_exit": 0}
+  ],
+  "control": {"id": "integer_zero_control", "kind": "unchanged", "expected_audit_exit": 0},
+  "decision": {
+    "pass": "PASS_COMPLETION_SENTINEL_HYPOTHESIS_SCOPED if the unchanged control and the three equality/extra-nonzero counterexamples are accepted and the five other adversarial mutations are rejected by the actual target auditor CLI, with independent receipt audit passing.",
+    "fail": "Any mismatch from the preregistered actual-auditor exit expectations after valid fixture setup is FAIL_EXPERIMENTAL_EXPECTATION; source/runtime provenance failures are STOP.",
+    "limits": "Synthetic JSONL/auditor boundary only; no Docker runner execution, X11, physical input, MAP01, task effect, or formal #5156 result."
+  }
+}
