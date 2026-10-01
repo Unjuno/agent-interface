@@ -6,7 +6,7 @@ import sys
 
 IDS = ["V1", "V2", "V3"]
 EDGES = [("V1", "V2"), ("V1", "V3"), ("V2", "V3")]
-CASE_ID = re.compile(r"t([01])-v([01]{3})-e([0-7])\\Z")
+CASE_ID = re.compile(r"t([01])-v([01]{3})-e([0-7])\Z")
 
 
 def decode_case_id(value):
