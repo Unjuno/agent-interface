@@ -61,6 +61,24 @@ def metadata(response):
 
 
 class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
+    async def test_explicit_activation_uses_retained_worker_without_edit_or_review(self):
+        opened=[]
+        def fixture(*args):
+            bridge=FakeBridge(*args)
+            bridge.activate_window=Mock(return_value={'status':'completed','execution':{'releases':[{'verified':True,'keys_down':[],'buttons_down':[]}]}})
+            opened.append(bridge);return bridge
+        with tempfile.TemporaryDirectory() as td, patch('runtime.cli_v1.mcp_guarded.open_bridge',side_effect=fixture):
+            server=create_server({'app':123},td,session_mode='guarded-x11')
+            response=await server.call_tool('interface_guarded_activate_window',dict(window_id=123,source_sequence=1,current_binding_revision=0,expires_at_ns=5000,timeout_ms=300))
+            row=metadata(response);self.assertEqual(row['status'],'completed')
+            opened[0].activate_window.assert_called_once_with(window_id=123,source_sequence=1,current_binding_revision=0,expires_at_ns=5000,timeout_ms=300)
+            opened[0].click.assert_not_called();opened[0].review_window.assert_not_called();opened[0].observe.assert_not_called()
+            self.assertIsNone(row['task_success']);self.assertFalse(row['replay_allowed'])
+            result=metadata(await server.call_tool('interface_results',{'call_id':row['call_id']}))
+            self.assertEqual(result['result'],row['result']);self.assertFalse(result['operation_invoked'])
+            opened[0].activate_window.assert_called_once()
+            await server.call_tool('interface_close',{})
+
     async def test_minted_reference_deadline_is_retained_without_renewal(self):
         with tempfile.TemporaryDirectory() as td, patch('runtime.cli_v1.mcp_guarded.open_bridge',side_effect=FakeBridge):
             server=create_server({'app':123},td,session_mode='guarded-x11')

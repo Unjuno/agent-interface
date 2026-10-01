@@ -110,6 +110,28 @@ mode. This supports opt-in integration; efficiency claims remain unproven.
 
 ## Guarded tail deadline
 
+## Explicit activation before a new guarded action
+
+The opt-in Python bridge exposes `activate_window(window_id=...,
+source_sequence=..., current_binding_revision=..., expires_at_ns=...,
+timeout_ms=...)`. Public MCP exposes `interface_guarded_activate_window` with
+the same required arguments. It activates only the currently registered target
+through the existing `window.activate` program admission; other IDs, old source
+sequences and stale revisions refuse before dispatch. The caller supplies the
+lease expiry using the execution host's `interface_clock`; no expiry is inferred.
+
+Activation emits no text or pointer press. A WM request can affect focus later,
+even after a timeout, so successful or uncertain activation blocks guarded
+editing until explicit `interface_guarded_review_window`. Review the returned
+image, mint a fresh alias and choose a new action. Existing aliases are revoked
+by review. Core refusal preserves any earlier review requirement. No activation
+replay or automatic refocus occurs, and a strict primary caller's STOP remains
+latched. The operation requires EWMH support and a registered managed client;
+it does not solve intra-window editing focus, held-input interruption or task
+completion. `timeout_ms` is 0..2000 and bounds polling, not blocking X11 calls.
+
+### Deadline enforcement
+
 The existing five-second guarded lease includes admission captures, pointer
 checks, typing and explicit waits. Every new key press now checks that deadline;
 key release remains permitted afterward. A fixed wait ends at the earlier of
