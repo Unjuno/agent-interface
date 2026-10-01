@@ -12,6 +12,8 @@ Retained disposition: **PASS_LOCAL_CLI_REPORT_PERSISTENCE_BOUNDARY**. Sixteen fr
 
 Transport-integrity repair: `part-05.b64` in the historical source branch did not match its declared decoded digest. `restore.py` therefore assembles part 05 from the four retained exact fragments `part-05a.b64` through `part-05d.b64`, then checks the declared encoded-part digest, decoded-part digest, and complete capsule digest. The other part digests in `CAPSULE.json` now bind the exact checked-in text bytes. This changes only retrospective transport metadata; no study member is rewritten.
 
+The exact pre-repair `CAPSULE.json` is preserved separately as [`CAPSULE_PRE_REPAIR.json`](CAPSULE_PRE_REPAIR.json); its blob identity and the 15 original part-digest mismatches are documented in [`DELIVERY_REPAIR.md`](DELIVERY_REPAIR.md). It is archival failure evidence and is not used by `restore.py`.
+
 Reconstruct:
 
 ```sh
