@@ -19,7 +19,7 @@ The single candidate invocation completed both cases:
 | A, 400 ms clock delay / 2 s lease | about 415.837 ms | about 0.111 ms | verified mock release; terminal status `completed` |
 | B, 1600 ms clock delay / 1.5 s lease | lease release about 706.2 ms before clock return | cancel unmatched after expiry | verified mock release; terminal status `expired` |
 
-These values are descriptive only. The ordering protocol violation invalidates formal interpretation regardless of the observed values. Exact monotonic timestamps, event rows, and runner summaries are in `raw_trace.json`.
+These values are descriptive only. The ordering protocol violation invalidates formal interpretation regardless of the observed values. Exact monotonic timestamps, event rows, and embedded runner summaries are in `raw_trace.json`; the three exact on-disk `arm-summary.json` outputs are retained under `candidate/` and `construction/`.
 
 A later read-only arithmetic check of the preserved JSON recomputed A timer→clock as 415.837 ms and clock→cancel as 0.111 ms, and B release→clock as 706.169 ms. This corrects the rounded A value in the initial report; it is a posthoc consistency check, not the preregistered independent audit.
 
