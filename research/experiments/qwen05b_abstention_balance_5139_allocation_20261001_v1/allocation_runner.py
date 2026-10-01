@@ -7,9 +7,16 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import time
+
+DISK_RESERVE_BYTES = 64 * 1024 * 1024
+
+
+def has_disk_reserve(free_bytes: int) -> bool:
+    return free_bytes >= DISK_RESERVE_BYTES
 
 
 def sha(path: Path) -> str:
@@ -29,7 +36,8 @@ def write_json(path: Path, document: dict) -> None:
         os.fsync(stream.fileno())
 
 
-def claim_formal_attempt(out: Path, allocation: str, freeze_sha: str) -> None:
+def claim_formal_attempt(out: Path, allocation: str, freeze_sha: str,
+                         free_bytes: int) -> None:
     """Permanently consume the one formal attempt before any model/CUDA work."""
     try:
         write_json(out / "FORMAL_ATTEMPT.json", {
@@ -37,6 +45,8 @@ def claim_formal_attempt(out: Path, allocation: str, freeze_sha: str) -> None:
             "allocation": allocation,
             "freeze_sha256": freeze_sha,
             "claimed_utc": datetime.now(timezone.utc).isoformat(),
+            "host_free_bytes_at_claim": free_bytes,
+            "disk_reserve_bytes": DISK_RESERVE_BYTES,
             "retry_policy": "none",
         })
     except FileExistsError as exc:
@@ -163,7 +173,10 @@ def main() -> None:
 
     # Persist an exclusive one-shot marker before importing torch or asking CUDA.
     # A failed availability/model/runtime gate therefore cannot be retried in-place.
-    claim_formal_attempt(out, freeze["allocation"], freeze_sha)
+    free_bytes = shutil.disk_usage(out).free
+    if not has_disk_reserve(free_bytes):
+        raise SystemExit(f"STOP_HOST_DISK_RESERVE:{free_bytes}")
+    claim_formal_attempt(out, freeze["allocation"], freeze_sha, free_bytes)
     import torch
     if not torch.cuda.is_available():
         raise SystemExit("STOP_GPU_UNAVAILABLE")

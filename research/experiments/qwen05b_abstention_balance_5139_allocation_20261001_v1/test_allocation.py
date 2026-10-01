@@ -12,7 +12,8 @@ sys.path.insert(0, str(FORMAL_DIR))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from audit_reference import reconstruct_dataset  # noqa: E402
-from allocation_runner import claim_formal_attempt  # noqa: E402
+from allocation_runner import (DISK_RESERVE_BYTES, claim_formal_attempt,
+                               has_disk_reserve)  # noqa: E402
 from dataset_builder import ALLOCATION, SEEDS, build  # noqa: E402
 from coverage_summary import summarize  # noqa: E402
 
@@ -55,9 +56,13 @@ class AllocationConstructionTests(unittest.TestCase):
     def test_formal_attempt_is_exclusive_and_cannot_be_reclaimed(self):
         with tempfile.TemporaryDirectory() as directory:
             out = Path(directory)
-            claim_formal_attempt(out, ALLOCATION, "a" * 64)
+            claim_formal_attempt(out, ALLOCATION, "a" * 64, DISK_RESERVE_BYTES)
             marker = out / "FORMAL_ATTEMPT.json"
             original = marker.read_bytes()
             with self.assertRaisesRegex(SystemExit, "STOP_FORMAL_ATTEMPT_ALREADY_CLAIMED"):
-                claim_formal_attempt(out, ALLOCATION, "b" * 64)
+                claim_formal_attempt(out, ALLOCATION, "b" * 64, DISK_RESERVE_BYTES)
             self.assertEqual(marker.read_bytes(), original)
+
+    def test_host_disk_reserve_fails_closed_at_exact_boundary(self):
+        self.assertTrue(has_disk_reserve(DISK_RESERVE_BYTES))
+        self.assertFalse(has_disk_reserve(DISK_RESERVE_BYTES - 1))
