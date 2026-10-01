@@ -1,0 +1,32 @@
+{
+  "allocation": "GPU-SUPERVISOR-TRANSFER-BREAK-EVEN-4972-20261001-02",
+  "audit_sha256": "227d33dc414180c00dc30b51d873f689071015c3d42836f14824ae0ecdc8bac4",
+  "auditor_command": "python -B audit.py",
+  "auditor_invocations_allowed": 1,
+  "base_main_observed_utc": "2026-10-01T09:09:59Z",
+  "base_main_sha": "6872f2f028dde8a20cd27d71416b2a8d04f0b8cf",
+  "branch": "research/gpu-supervisor-transfer-breakeven-4972-a02-20261001",
+  "candidate_command": "python -B runner.py",
+  "candidate_invocations_allowed": 1,
+  "dataset_rows": 1024,
+  "dataset_sha256": "19d8ef37fc9d1d5a4e64d05ebb94e56e07e8de19b03fc5ac0b0e4286d2ea347f",
+  "execution": "WINDOWS_HOST_ONLY_NO_CONTAINER",
+  "issue": 5882,
+  "launch_state": "DO_NOT_START_BEFORE_BOUNDED_WINDOW_AND_ALL_FRESH_GATES",
+  "path": "research/analysis/gpu_supervisor_transfer_breakeven_4972_a02_20261001/",
+  "prepare_sha256": "3aaa2974375e16d65348aac75e8d9a8098d76fa52c3a43164ee74aea7202ba85",
+  "preregistration_sha256": "ba9f4a818eed210baa6d28f8651ae405a30651ac40bcdcf30de0052ead6c18b9",
+  "requested_window_utc": "2026-10-01T09:26:00Z/2026-10-01T09:32:00Z",
+  "runner_sha256": "7894d649445d40cb19dd42dde9cfc7e252639ac906d605b1a26f7911eb1930ac",
+  "runtime": {
+    "cuda": "12.1",
+    "device": "NVIDIA GeForce RTX 3080 Laptop GPU",
+    "python": "3.11.9",
+    "torch": "2.5.1+cu121"
+  },
+  "schema": "gpu-supervisor-transfer-break-even-freeze-v1",
+  "seed": 49720261002,
+  "stage": "PREPARED_FRESH_ALLOCATION_NOT_STARTED",
+  "test_contract_sha256": "3c5bd1c44d3d1897fa3a6ca291b60bfcfd87ebdf631b81e37243a10d247f200f"
+}
+
