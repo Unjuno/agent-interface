@@ -13,6 +13,10 @@ An additive frozen-source factorial composed the current live-04 workflow's Acti
 
 Six finite asynchronous evidence traces compared dependency-graph-only readiness with readiness gated by exhaustive causal-cut checks. All six were syntactically graph-ready; the cut-aware candidate admitted only the valid same-epoch positive and denied five incoherent bundles (cross-epoch invalidation, an in-flight release, missing parent, midway reset, and wrong-epoch alternative root). An independent subset enumerator agreed on all legal-cut counts; six construction tests passed. Disposition: `PASS_METHOD_SCOPED` for this synthetic semantic question only. It does not prove semantic truth, source independence, authorization, real recovery reachability, or product benefit. No Docker/runtime experiment was possible: Docker Desktop service was stopped and shared-container availability ambiguous. See [the frozen T0 report](research/analysis/blackstart_causal_cut_5970_t0_20261001/REPORT.md); this refines the cross-issue direction already recorded on #5970 and does not replace #5348.
 
+### Issue #5970 T1: retained reconnect trace applicability (2026-10-01)
+
+A read-only audit reconstructed the frozen Issue #4135 X11/Tk archive from five Git blobs in memory and inspected four reconnect/bootstrap rows. All four raw observer/Tk event files matched their case aggregates; bootstrap and observer epochs matched; both streams contained monotonic timestamps. Yet no row retained explicit causal-parent or send/receive IDs between the separate observer and app streams. Disposition: `HOLD_CAUSAL_EDGE_PROVENANCE_MISSING`: a relevant recovery state exists, but no historical multi-source causal cut can be established from timestamps alone. This does not regrade #4135 or prove the causal-cut mechanism in a real runtime. See [the retained-trace T1 report](research/analysis/blackstart_causal_cut_5970_t1_20261001/REPORT.md).
+
 | Need | Read |
 |---|---|
 | Current governing objective | [docs/CURRENT_GOAL.md](docs/CURRENT_GOAL.md) |
