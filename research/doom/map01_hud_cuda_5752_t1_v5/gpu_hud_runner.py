@@ -150,12 +150,14 @@ def main():
             raise RuntimeError("PNG RGB mismatch: "+item["image"])
     reader,mod=load_reader(a.wad)
     if sha(Path(a.wad))!="a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b": raise RuntimeError("WAD SHA mismatch")
-    templates=make_templates(reader)
     records=dataset["selected_records"]
     images=[ROOT/r["image"] for r in records]
     bindings=[r["binding"] for r in records]
-    # Warm both implementations; retain cold GPU setup separately.
-    cold_start=time.perf_counter_ns(); torch.cuda.synchronize()
+    # Capture first CUDA context/template setup plus the first decoded frame.
+    # Python/Torch import and CPU WAD-template extraction happen before this window.
+    cold_start=time.perf_counter_ns()
+    torch.cuda.synchronize()
+    templates=make_templates(reader)
     preframes=[frame_tensor(images[0])]
     _=score_frames(preframes,[bindings[0]],templates); torch.cuda.synchronize()
     cold_gpu_ms=(time.perf_counter_ns()-cold_start)/1e6
