@@ -23,6 +23,8 @@ class SelectionAwareShadowAuditTests(unittest.TestCase):
         case = candidate.build()["cases"]["zero_inclusion"]
         self.assertEqual(case["status"], "NOT_ESTIMABLE")
         self.assertNotIn("ht_expected_prevalence", case)
+        self.assertNotIn("full_prevalence", case)
+        self.assertNotIn("delivered_prevalence", case)
         self.assertIn("zero_inclusion_target", case["reasons"])
 
     def test_uncaptured_transient_is_outside_estimand_and_not_estimated(self):
@@ -36,7 +38,9 @@ class SelectionAwareShadowAuditTests(unittest.TestCase):
         result = candidate.build()
         audited = audit.audit(result)
         self.assertEqual(audited["status"], "PASS")
-        self.assertEqual(audited["corruption_controls_passed"], 7)
+        self.assertEqual(audited["corruption_controls_passed"], 9)
+        self.assertTrue(audited["corruption_controls"]["zero_support_estimate"])
+        self.assertTrue(audited["corruption_controls"]["out_of_frame_estimate"])
         self.assertEqual(audited["errors"], [])
 
     def test_independent_auditor_rejects_changed_design_probability(self):

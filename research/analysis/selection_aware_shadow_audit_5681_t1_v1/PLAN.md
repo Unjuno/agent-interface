@@ -13,7 +13,7 @@ Issue #5681 T1; frozen design from Issue comment #5922739514. The finite frame c
 3. Zero inclusion: four positive suppressed units with π=0 and four negative delivered units with π=1; refuse a numeric recovery estimate.
 4. Out-of-frame transient: an additional labeled transition between captures is not part of the N=8 frame and is refused as not estimable.
 
-The candidate exhaustively enumerates exact rational design probabilities and Horvitz–Thompson prevalence for every draw. The independent raw-only auditor re-derives the scenario frame and expectation without importing candidate code, validates all rows and draws, and applies seven corruption controls. It consumes only the candidate JSON.
+The candidate exhaustively enumerates exact rational design probabilities and Horvitz–Thompson prevalence for every draw. The independent raw-only auditor re-derives the scenario frame and expectation without importing candidate code, validates all rows and draws, and applies nine corruption controls, including attempts to emit numeric estimates for the zero-support and out-of-frame cases. It consumes only the candidate JSON.
 
 ## D — decision
 

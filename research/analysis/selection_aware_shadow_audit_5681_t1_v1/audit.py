@@ -94,20 +94,24 @@ def _core(raw):
         except (KeyError, TypeError, ValueError, ZeroDivisionError):
             errors.append(f"{name}: invalid row values")
             continue
-        if case.get("frame_size") != 8 or case.get("full_prevalence") != _s(truth):
-            errors.append(f"{name}: finite-frame truth mismatch")
-        if case.get("delivered_prevalence") != _s(delivered_truth):
-            errors.append(f"{name}: delivered-only prevalence mismatch")
-
         if name == "zero_inclusion":
+            if case.get("frame_size") != 8:
+                errors.append("zero_inclusion: finite-frame size mismatch")
             if case.get("status") != "NOT_ESTIMABLE" or "ht_expected_prevalence" in case:
                 errors.append("zero_inclusion: recovery claim was not refused")
+            if "full_prevalence" in case or "delivered_prevalence" in case or "estimate" in case:
+                errors.append("zero_inclusion: numeric prevalence was emitted despite zero support")
             if (case.get("reasons") != ["zero_inclusion_target"]
                     or case.get("draws") != [] or case.get("draw_count") != 0):
                 errors.append("zero_inclusion: refusal metadata mismatch")
             if not any(row["label"] == 1 and row["inclusion_probability"] == "0" for row in rows):
                 errors.append("zero_inclusion: missing zero-support target")
             continue
+
+        if case.get("frame_size") != 8 or case.get("full_prevalence") != _s(truth):
+            errors.append(f"{name}: finite-frame truth mismatch")
+        if case.get("delivered_prevalence") != _s(delivered_truth):
+            errors.append(f"{name}: delivered-only prevalence mismatch")
 
         try:
             expected_draws, expectation = _expected_draws(rows)
@@ -158,6 +162,8 @@ def _corruption_controls(raw):
         "draw_probability": lambda value: value["cases"]["event_dependent"]["draws"][0].__setitem__("design_probability", "0"),
         "ht_value": lambda value: value["cases"]["event_dependent"]["draws"][0].__setitem__("ht_prevalence", "999"),
         "missing_draw": lambda value: value["cases"]["event_dependent"]["draws"].pop(),
+        "zero_support_estimate": lambda value: value["cases"]["zero_inclusion"].__setitem__("ht_expected_prevalence", "1/2"),
+        "out_of_frame_estimate": lambda value: value["cases"]["uncaptured_transient"].__setitem__("ht_expected_prevalence", "1/8"),
     }
     return {
         name: bool(_core((lambda altered: (mutation(altered), altered)[1])(deepcopy(raw))))
@@ -171,7 +177,7 @@ def audit(raw):
     if controls and not all(controls.values()):
         errors.append("one or more independent corruption controls were not rejected")
     return {
-        "status": "PASS" if not errors and len(controls) == 7 else "FAIL",
+        "status": "PASS" if not errors and len(controls) == 9 else "FAIL",
         "errors": errors,
         "corruption_controls_passed": sum(controls.values()),
         "corruption_controls": controls,

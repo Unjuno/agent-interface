@@ -79,8 +79,6 @@ def build():
         "status": "NOT_ESTIMABLE",
         "frame_size": 8,
         "units": zero_rows,
-        "full_prevalence": "1/2",
-        "delivered_prevalence": "0",
         "reasons": ["zero_inclusion_target"],
         "draws": [],
         "draw_count": 0,
