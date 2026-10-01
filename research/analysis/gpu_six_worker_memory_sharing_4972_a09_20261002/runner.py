@@ -73,8 +73,9 @@ def worker(worker_id: int, barrier, results) -> None:
 
 def main() -> int:
     OUT.mkdir(parents=True, exist_ok=True)
-    if any(OUT.iterdir()):
-        raise SystemExit("output directory must be empty")
+    reserved = ("candidate.jsonl", "candidate_summary.json", "audit.json", "candidate.exit", "audit.exit")
+    if any((OUT / name).exists() for name in reserved):
+        raise SystemExit("candidate output artifacts must not pre-exist")
     ctx = mp.get_context("spawn")
     barrier = ctx.Barrier(WORKERS)
     results = ctx.Queue()
