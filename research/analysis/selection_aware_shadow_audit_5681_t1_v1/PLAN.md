@@ -31,6 +31,14 @@ Hand-authored finite frame, independent Bernoulli design, exact labels; no tempo
 
 - Branch: `research/selection-aware-shadow-audit-5681-t1-20261001`
 - Additive evidence path: `research/analysis/selection_aware_shadow_audit_5681_t1_v1/`
-- Allocation request: `SELECTION-AWARE-SHADOW-AUDIT-5681-T1-ORB-20261001-01`, 2026-10-01 04:20–04:35 UTC; conditional on fresh #5085 arbitration and start gate.
-- Cached image only; no pull/build/network; read-only source; separate candidate and (only after candidate exit 0) raw-only audit containers; one CPU, ≤512 MiB, bounded PIDs.
-- Any drift, occupied/ambiguous lane, missing image/platform, or nonempty output path is STOP before invocation. No retry.
+- Original allocation request `SELECTION-AWARE-SHADOW-AUDIT-5681-T1-ORB-20261001-01` for 04:20–04:35 UTC was withdrawn before start and remains unconsumed; candidate=0, auditor=0.
+
+## Execution-route amendment — isolated local daemon allocation #02
+
+H/T/D/C/U and the finite construction above are unchanged. The successor request is `SELECTION-AWARE-SHADOW-AUDIT-5681-T1-ISOLATED-ORB-20261001-02`, proposed for 2026-10-01 04:20–05:20 UTC; queue record: #5085 comment #5924222877, issue amendment: #5681 comment #5924224968. It remains request-only until the fresh exact start gate.
+
+- Use a newly created OrbStack isolated Ubuntu 24.04 machine named `obs-audit-t1-5681-20261001`, capped at 1 CPU, 2 GiB memory, and 16 GiB disk; no host filesystem mount or SSH-agent forwarding. Install a distinct Docker daemon inside the guest; never use or inspect the shared macOS `orbstack` Docker endpoint for this allocation.
+- This reduces engine-state and host-integration collisions but is not a separate kernel boundary: OrbStack Linux machines and containers share the OrbStack Linux VM/kernel. The workload is benign, finite synthetic arithmetic.
+- Resolve and pin the Python OCI image digest and platform, plus exact engine/package versions, before candidate execution. Use only separate candidate and raw-only auditor containers, each network-disabled, read-only except designated output, 1 CPU, at most 512 MiB, and at most 64 PIDs. Transfer the source and result bundle with OrbStack file-transfer commands rather than a host filesystem mount.
+- Fresh queue, main/source freeze, isolated daemon, pinned image/platform, and empty output path are mandatory. Any conflict, drift, ambiguous resource boundary, bootstrap failure, or failed audit precondition is STOP before scientific candidate; do not retry the consumed allocation. Candidate=0/auditor=0 on pre-candidate STOP. Only a completed candidate followed by its independent raw-only audit can support `METHOD_PASS_SCOPED`.
+- After the bounded execution, retain the evidence bundle and isolated machine, stop that task-owned machine, rerun local CI, then batch-push and open a PR for review/merge. No result is claimed by this plan amendment.
