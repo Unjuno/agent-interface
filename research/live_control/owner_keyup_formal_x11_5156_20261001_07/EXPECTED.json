@@ -1,0 +1,9 @@
+{
+  "allocation": "MAP01-OWNER-KEYUP-BRACKET-5156-ORB-20261001-07",
+  "frozen_main": "40885011a5d8e15ab10bb6cc0e8eef65661718ee",
+  "cases": {
+    "single_explicit": {"admit": ["a"], "release": [{"key": "a", "class": "explicit_up"}]},
+    "two_key_explicit": {"admit": ["a", "b"], "release": [{"key": "a", "class": "explicit_up"}, {"key": "b", "class": "explicit_up"}]},
+    "partial_cancel": {"admit": ["a"], "release": [{"key": "a", "class": "owner_lease_cleanup", "reason": "cancelled"}]}
+  }
+}
