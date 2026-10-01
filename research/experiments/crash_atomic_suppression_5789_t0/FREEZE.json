@@ -1,6 +1,22 @@
 {
   "audit_sha256": "f922a01b16b4711884305039eebc4caed95517c5de6ee9d8a7605ddae36e4a15",
+  "formal_argv": [
+    "python3",
+    "-B",
+    "/private/tmp/unjuno-crash-atomic-suppression-5795/research/experiments/crash_atomic_suppression_5789_t0/container_runner.py",
+    "--mode",
+    "formal",
+    "--candidate-out",
+    "/private/tmp/unjuno-crash-atomic-suppression-5795/research/experiments/crash_atomic_suppression_5789_t0/results/formal-01/candidate",
+    "--audit-out",
+    "/private/tmp/unjuno-crash-atomic-suppression-5795/research/experiments/crash_atomic_suppression_5789_t0/results/formal-01/audit",
+    "--audit-raw",
+    "/private/tmp/unjuno-crash-atomic-suppression-5795/research/experiments/crash_atomic_suppression_5789_t0/results/formal-01/candidate/raw.jsonl",
+    "--docker",
+    "docker"
+  ],
   "image_ref": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+  "launcher_sha256": "5188c4c637d0524aeaefb8c291e9b40eb458036bb232bc87a2c991079ec9f7c8",
   "runtime": {
     "docker_context": "crash-atomic-5795-local",
     "docker_host": "unix:///var/run/docker.sock",
