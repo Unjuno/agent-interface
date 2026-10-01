@@ -106,4 +106,3 @@ if __name__ == "__main__":
     result = audit(sys.argv[1])
     print(json.dumps(result, sort_keys=True))
     raise SystemExit(0 if not result["errors"] else 1)
-
