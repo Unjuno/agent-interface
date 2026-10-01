@@ -65,5 +65,13 @@
     "The checkpoint permutation is a constructed two-checkpoint demonstration, not a live GUI trace.",
     "No finite sample certifies exact population ties; rejected potential outcomes remain missing and are bounded, not imputed.",
     "Does not establish useful feedback, safety or recovery benefit in #59, runtime integration, product readiness, or historical-result invalidity."
-  ]
+  ],
+  "integration_verification": {
+    "analysis_index": "PASS; python -B research/analysis/check_index.py reported 350 retained result/failure directories indexed",
+    "analysis_index_workflow_tests": {
+      "endogenous_demand_rebound_5702_t0_v1": "PASS; 8 tests",
+      "selection_aware_shadow_audit_5681_t1_v1": "PASS; 12 tests"
+    },
+    "setup_diagnostics": "Initial workflow test attempts in the sparse checkout failed import discovery because sibling audit.py files were omitted from the checkout; after broadening sparse patterns to include both full test package directories, the same workflow commands passed without source changes. These setup failures are retained and are not candidate/auditor formal-run retries."
+  }
 }

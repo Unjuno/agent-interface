@@ -40,6 +40,12 @@ The checkpoint binding control preserved action marginals (`A=1/2`, `B=1/2`) whi
 - Construction record: an initial unittest invocation from the checkout root failed sibling-module discovery; the same five tests passed from the package directory without source changes. This pre-freeze construction event is not the formal result.
 - Raw candidate and audit JSON, source blob IDs, SHA-256 values, gates and mutation results are retained in this directory and `RUN.json`.
 
+## Repository integration verification
+
+- The canonical analysis index was refreshed and checked with `python -B research/analysis/check_index.py`; it passed with 350 retained result/failure directories indexed.
+- The analysis-index workflow's existing regression suites passed: `endogenous_demand_rebound_5702_t0_v1` (8 tests) and `selection_aware_shadow_audit_5681_t1_v1` (12 tests).
+- Initial attempts in the partial sparse checkout failed test-module discovery because sibling `audit.py` files were not present. After including both complete test package directories in the checkout, the same workflow commands passed with no source changes. These are retained as checkout-setup diagnostics, not experiment retries.
+
 ## Limits
 
 This is exact synthetic method evidence only. It does not measure an actual recovery policy, human choice, GUI task, #59 real-time-control benefit, safety rate, runtime integration, or product readiness. The symmetry result applies to the frozen equal-cost independent Bernoulli construction; checkpoint permutation and typed controls are small authored examples. No historic benchmark result is invalidated, and no unsafe/rejected real action was executed.
