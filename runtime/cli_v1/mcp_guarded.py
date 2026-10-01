@@ -104,7 +104,7 @@ class GuardedSessionOwner(MCPSessionOwner):
                 minted = []
                 for index, reference in enumerate(references):
                     try:
-                        offset = bridge.mint(reference.alias, arguments['source_sequence'],
+                        grounded = bridge.mint_reference(reference.alias, arguments['source_sequence'],
                             reference.point, region_size=tuple(reference.region_size))
                     except Exception as error:
                         # mint may mutate its store before persistence fails. Keep
@@ -114,16 +114,16 @@ class GuardedSessionOwner(MCPSessionOwner):
                             failed_index=index, failed_alias=reference.alias,
                             failed_alias_state='unknown', error=repr(error),
                             unattempted_aliases=aliases[index+1:], input_dispatched=False)
-                    minted.append({'alias':reference.alias, 'offset':offset})
+                    minted.append({'alias':reference.alias, **grounded})
                 return dict(row, status='minted', minted=minted,
                             source_sequence=arguments['source_sequence'], input_dispatched=False)
             if operation == 'guarded_mint':
                 point, size = arguments['point'], arguments['region_size']
                 if len(point) != 2 or len(size) != 2 or any(not 4 <= v <= 96 for v in size):
                     raise ValueError('point pair and region_size pair in 4..96 required')
-                offset = bridge.mint(arguments['alias'], arguments['source_sequence'], point,
+                grounded = bridge.mint_reference(arguments['alias'], arguments['source_sequence'], point,
                                      region_size=tuple(size))
-                return dict(row, status='minted', alias=arguments['alias'], offset=offset,
+                return dict(row, status='minted', alias=arguments['alias'], **grounded,
                             source_sequence=arguments['source_sequence'], input_dispatched=False)
             if operation == 'guarded_review_window':
                 result = bridge.review_window(arguments['window_id'])
@@ -156,8 +156,11 @@ def register_guarded_tools(server, submit):
         """Name an explicitly image-grounded point from an exact delivered source.
 
         point=[screen_x,screen_y]; region_size=[width,height], each 4..96 pixels.
-        Flat source regions refuse. Returns alias and offset for input. This
-        creates no input, target discovery or semantic identity guarantee.
+        Flat source regions refuse. Returns alias, offset and finite lifetime
+        in this execution host's monotonic clock; compare with interface_clock.
+        Lifetime does not guarantee fresh pixels or admission; retained lookup
+        never renews it. After a pause, explicitly observe/review and ground a
+        new alias if needed. Creates no input or semantic identity guarantee.
         """
         return await submit('guarded_mint', dict(alias=alias,source_sequence=source_sequence,
                             point=point,region_size=region_size),False,False)
@@ -174,6 +177,8 @@ def register_guarded_tools(server, submit):
         because registration may precede persistence failure. Later aliases are
         unattempted. Inspect the result; do not replay or reuse the failed alias.
         Each later input still requires fresh visual guards and ordinary admission.
+        Each successful reference includes its own finite lifetime in this host's
+        monotonic clock. Reading retained results does not renew that deadline.
         """
         return await submit('guarded_mint_many',{
             'source_sequence':source_sequence,

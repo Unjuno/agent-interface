@@ -206,6 +206,11 @@ class NativeHandleBridge:
         return None
 
     def mint(self, alias, source_sequence, point, *, region_size=(24, 38)):
+        """Legacy offset-only grounding; use mint_reference for expiry metadata."""
+        return self.mint_reference(alias, source_sequence, point, region_size=region_size)['offset']
+
+    def mint_reference(self, alias, source_sequence, point, *, region_size=(24, 38)):
+        """Ground a finite alias without capture, renewal, input or authority."""
         if getattr(getattr(self, 'session', None), 'recovery_required', False):
             raise X11BackendError('input recovery required before minting')
         if getattr(self, 'review_required', False):
@@ -216,12 +221,17 @@ class NativeHandleBridge:
         observation, image = self.history[source_sequence]
         w, h = region_size
         box = [point[0] - w // 2, point[1] - h // 2, w, h]
+        minted_ns = time.monotonic_ns()
         result = self.store.mint(alias, "window_content", box, observation, image,
-                                 time.monotonic_ns(), ttl_ms=300000, freshness_ms=1500,
+                                 minted_ns, ttl_ms=300000, freshness_ms=1500,
                                  search_radius=0, allowed_transformations=("window_translation",))
         self.used_aliases = getattr(self, 'used_aliases', set()) | {alias}
         self._save("mint-" + alias + ".json", result)
-        return [w // 2, h // 2]
+        return {'offset': [w // 2, h // 2], 'lifetime': {
+            'clock': 'time.monotonic_ns', 'minted_ns': minted_ns,
+            'expires_ns': result['expires_ns'], 'capture_freshness_ms': 1500,
+            'authority_granted': False,
+            'scope': 'Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it.'}}
 
     def review_window(self, window_id):
         """Explicit read-only handoff on this connection; revoke old aliases.

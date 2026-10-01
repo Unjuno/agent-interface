@@ -27,6 +27,12 @@ class FakeBridge:
         self.move=Mock(side_effect=self.input)
         self.review_window=Mock(return_value={'status':'needs_review','input_dispatched':False})
 
+    def mint_reference(self, alias, source_sequence, point, *, region_size):
+        return {'offset':self.mint(alias,source_sequence,point,region_size=region_size),
+                'lifetime':{'clock':'time.monotonic_ns','minted_ns':1_000_000_000,
+                    'expires_ns':301_000_000_000,'capture_freshness_ms':1500,
+                    'authority_granted':False,'scope':'Same execution host clock; deadline does not grant input authority.'}}
+
     def configure(self, directory, *, retain_rgb=False):
         self.capture_directory=Path(directory);self.capture_directory.mkdir(parents=True,exist_ok=True)
 
@@ -55,6 +61,22 @@ def metadata(response):
 
 
 class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
+    async def test_minted_reference_deadline_is_retained_without_renewal(self):
+        with tempfile.TemporaryDirectory() as td, patch('runtime.cli_v1.mcp_guarded.open_bridge',side_effect=FakeBridge):
+            server=create_server({'app':123},td,session_mode='guarded-x11')
+            response=await server.call_tool('interface_guarded_mint',{'alias':'field','source_sequence':1,'point':[20,20],'region_size':[24,14]})
+            row=metadata(response)
+            self.assertIn('lifetime',row,'public response omits finite reference deadline')
+            self.assertEqual(row['lifetime']['expires_ns'],301_000_000_000)
+            self.assertFalse(row['lifetime']['authority_granted']);self.assertFalse(row['input_dispatched'])
+            lookup=metadata(await server.call_tool('interface_results',{'call_id':row['call_id'],'include_image':False}))
+            self.assertEqual(lookup['lifetime'],row['lifetime'])
+            self.assertFalse(lookup['operation_invoked'])
+            many=metadata(await server.call_tool('interface_guarded_mint_many',{'source_sequence':1,'references':[{'alias':'save','point':[20,20],'region_size':[24,14]}]}))
+            self.assertEqual(many['minted'][0]['lifetime'],row['lifetime'])
+            self.assertEqual(many['minted'][0]['offset'],[12,7])
+            await server.call_tool('interface_close',{})
+
     async def test_pointer_only_move_returns_fresh_image_without_click_or_keyboard(self):
         from mcp.server.fastmcp.exceptions import ToolError
         opened = []
@@ -204,7 +226,8 @@ class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
                 response=await server.call_tool('interface_guarded_mint_many',{'source_sequence':7,'references':refs})
                 row=metadata(response)
                 self.assertEqual(row['status'],'minted')
-                self.assertEqual(row['minted'],[{'alias':r['alias'],'offset':[12,7]} for r in refs])
+                self.assertEqual([{'alias':r['alias'],'offset':r['offset']} for r in row['minted']],
+                                 [{'alias':r['alias'],'offset':[12,7]} for r in refs])
                 self.assertEqual(bridge.mint.call_args_list,[
                     unittest.mock.call('field',7,[20,30],region_size=(24,14)),
                     unittest.mock.call('save',7,[20,30],region_size=(24,14))])
@@ -225,7 +248,8 @@ class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
                 reply=await server.call_tool('interface_guarded_mint_many',{'source_sequence':7,'references':refs})
                 row=metadata(reply)
                 self.assertTrue(reply.isError);self.assertEqual(row['status'],'mint_incomplete')
-                self.assertEqual(row['minted'],[{'alias':'field','offset':[12,7]}])
+                self.assertEqual([{'alias':r['alias'],'offset':r['offset']} for r in row['minted']],
+                                 [{'alias':'field','offset':[12,7]}])
                 self.assertEqual(row['failed_index'],1);self.assertEqual(row['failed_alias'],'save')
                 self.assertEqual(row['failed_alias_state'],'unknown')
                 self.assertEqual(row['unattempted_aliases'],['later'])
@@ -405,7 +429,7 @@ with patch('runtime.cli_v1.mcp_guarded.open_bridge',side_effect=FakeBridge):
                         'source_sequence':1,'references':[
                             {'alias':'field','point':[20,30],'region_size':[24,14]},
                             {'alias':'save','point':[40,30],'region_size':[24,14]}]})
-                    self.assertEqual(metadata(minted)['minted'],[
+                    self.assertEqual([{'alias':r['alias'],'offset':r['offset']} for r in metadata(minted)['minted']],[
                         {'alias':'field','offset':[12,7]},{'alias':'save','offset':[12,7]}])
                     action=await client.call_tool('interface_guarded_input',{'alias':'x','offset':[1,2],'tail':[]})
                     row=metadata(action);self.assertEqual(row['status'],'completed')
