@@ -16,4 +16,25 @@ podman run --rm --pull=never --network=none --device nvidia.com/gpu=all \
   python /src/runner.py
 ```
 
-Save the complete argv/stdout/stderr/exit sidecars. Capture `nvidia-smi --query-gpu=timestamp,utilization.gpu,memory.used,memory.free --format=csv -l 1` for the bounded candidate interval and stop the sampler immediately after the single candidate exits. Verify global free VRAM never falls below 4 GiB. Run `python /src/audit.py /ABS/FRESH_OUTPUT/candidate.jsonl /ABS/FRESH_OUTPUT/audit.json` once, CPU-only and raw-only, only if candidate exit is 0. Never retry.
+Save the complete argv/stdout/stderr/exit sidecars. From the same WSL shell, run one bounded host sampler around the candidate:
+\`\`\`sh
+set -eu
+OUT=/ABS/FRESH_OUTPUT
+nvidia-smi --query-gpu=timestamp,utilization.gpu,memory.used,memory.free --format=csv -l 1 > "$OUT/host_gpu_samples.csv" &
+sampler_pid=$!
+set +e
+podman run --rm --pull=never --network=none --device nvidia.com/gpu=all \
+  --cpus=6 --memory=8g --pids-limit=64 --read-only \
+  --security-opt=no-new-privileges --tmpfs /tmp:rw,noexec,nosuid,size=32m \
+  -e PYTHONDONTWRITEBYTECODE=1 \
+  -v /ABS/SOURCE:/src:ro -v "$OUT":/out:rw \
+  pytorch/pytorch@sha256:831247999fbf7e08f61b3e39f6d77ee434f38f6f07f769d00db451e853878067 \
+  python /src/runner.py > "$OUT/candidate.stdout.txt" 2> "$OUT/candidate.stderr.txt"
+candidate_exit=$?
+kill "$sampler_pid" 2>/dev/null
+wait "$sampler_pid" 2>/dev/null
+printf '%s\\n' "$candidate_exit" > "$OUT/candidate.exit"
+exit "$candidate_exit"
+\`\`\`
+
+The runner requires the mounted output directory to be empty and writes candidate.jsonl plus candidate_summary.json. Verify global free VRAM never falls below 4 GiB. Run the separate raw-only CPU auditor once only if candidate exit is 0. Never retry.
