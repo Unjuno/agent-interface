@@ -1,0 +1,51 @@
+{
+  "base_main": "e2be13b9af699cfe9de8cc6d0ce2c32846cb6530",
+  "branch": "research/reader-memoryview-hash-20260926-m3v1",
+  "construction": {
+    "final_controls": "10/10 rejected",
+    "run01_audit": "FAIL_RESOURCE_COUNT_HARNESS",
+    "run01_raw_sha256": "4ab91db99ac736be6af6736ed9ab716d13ac96c8d4ab193c04898abef6c5e8a8",
+    "run02_audit": "PASS_CONSTRUCTION",
+    "run02_raw_sha256": "0cd61445f7ac3185ce06dd70d000539ff4812fa60e2ccc182e25c9fbedce7255",
+    "scientific_rows": 0
+  },
+  "contract_workers": 2,
+  "formal_corpus_bytes": 1048576,
+  "formal_corpus_sha256": "cf1f260335c010a36382254c275b6b0776f9b792c202a518302d101e4a9d3f26",
+  "formal_cursors": [
+    0,
+    2048,
+    4064,
+    4096
+  ],
+  "formal_invocations_before_freeze": 0,
+  "formal_records": 4096,
+  "formal_repetitions": 3,
+  "gates": {
+    "effective_corruptions": 10,
+    "peak_ratio_max": 0.75,
+    "required_peak_cursors": [
+      2048,
+      4064
+    ],
+    "time_ratio_guardrail_max": 1.2
+  },
+  "issue": 4451,
+  "max_records": 32,
+  "record_bytes": 256,
+  "resource_workers": 24,
+  "schema": "reader-memoryview-hash-freeze-v1",
+  "source_sha256": {
+    "ENVIRONMENT.json": "8d7161ccc98a176dd5259f9e6c23fa2c9e75d09319ef3cc71357bc1a3a2cfcf0",
+    "PLAN.md": "0cd981a2791358dbd5d91043744732439992bbe91de10e15c90563c469ecef40",
+    "source/audit.py": "f9e18c49ad865e215fa37354b1a3394f40c0dda06689b87463713f3c98ed3c83",
+    "source/baseline_reader.py": "922e8e933324387e255179a7157d607548d768ae42b83d0cae47352bf774795d",
+    "source/candidate_reader.py": "125b54ce60a72bbbe82cbd02796a2689374dee6b7caed232f4ab9d7b9859486c",
+    "source/common.py": "f57b57960b89fea23202aa831d8675fe40319a8610cf9c5d2e540c1aaa2e2371",
+    "source/contract_worker.py": "6261f8f0bfbf94fb1fe089cc1047aa495d895c6214cabf7a6ab0444bed5ca39b",
+    "source/controls.py": "fd14a4471a43ced17c1d74d1baad677d74c1421142bc448b73233eff0ae72bf0",
+    "source/run.py": "6e678cb82697fbd6a52d9be4dc849dfcb5ba70929739d6714b13348f1d835df6",
+    "source/worker.py": "3f93534510b657d5f764eb1dc683ce265f3c2a56ff5aa7d34aab58c4be0c5add"
+  },
+  "upstream_reader_git_blob": "3b4ac9af076bdc5dee94e09cbab22b17bc45173a"
+}
