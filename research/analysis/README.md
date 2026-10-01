@@ -353,6 +353,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`skill_router_adapter_selection_3446_v1/`](skill_router_adapter_selection_3446_v1/)
 - [`source_bound_gui_frame_preflight_2193_v1/`](source_bound_gui_frame_preflight_2193_v1/)
 - [`source_window_type_boundary_4782_v1/`](source_window_type_boundary_4782_v1/)
+- [`specialist_regeneration_4295_controls_20261001_01/`](specialist_regeneration_4295_controls_20261001_01/)
+- [`specialist_regeneration_4295_formal_20261001_01/`](specialist_regeneration_4295_formal_20261001_01/)
 - [`sqlite_schema_readset_reprepare_v1/`](sqlite_schema_readset_reprepare_v1/)
 - [`stop_evidence_4678_audit_v1/`](stop_evidence_4678_audit_v1/)
 - [`stop_evidence_4678_revalidation_v2/`](stop_evidence_4678_revalidation_v2/)
