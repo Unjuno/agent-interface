@@ -4,6 +4,7 @@ import json
 import sys
 
 BASE = ["opp-01", "opp-02", "opp-03", "opp-04"]
+CASES = ["comfortable", "thin", "crossing", "safe_stop", "missing_time", "altered_opportunities"]
 
 def row(case):
     if case in ("comfortable", "thin"):
@@ -20,9 +21,8 @@ def row(case):
     raise ValueError(case)
 
 def main():
-    cases = ["comfortable", "thin", "crossing", "safe_stop", "missing_time", "altered_opportunities"]
     with open(sys.argv[1], "w", encoding="utf-8") as out:
-        for case in cases:
+        for case in CASES:
             out.write(json.dumps(row(case), sort_keys=True, separators=(",", ":")) + "\n")
 
 if __name__ == "__main__":
