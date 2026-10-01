@@ -1,0 +1,104 @@
+{
+  "status": "execution_failed",
+  "admission": "accepted",
+  "error": "BACKEND_EXECUTION_FAILED",
+  "required_capabilities": [
+    "clock.monotonic",
+    "display.geometry",
+    "event.feedback",
+    "input.pointer",
+    "input.release_all",
+    "input.text",
+    "window.focus"
+  ],
+  "execution": {
+    "started_ns": 19532561934220,
+    "ended_ns": 19532576156954,
+    "emissions": 0,
+    "program_emissions": 0,
+    "observations": [],
+    "releases": [
+      {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 19532576153437
+      }
+    ],
+    "waits": [],
+    "activations": [],
+    "completed_ops": [],
+    "error": "X11BackendError('focused window is outside guarded target')",
+    "failed_op": 0,
+    "failed_op_effect": "unknown; may have emitted partial input"
+  },
+  "recovery_required": false,
+  "guard_checks": [
+    {
+      "stage": "before_admission",
+      "observation_sequence": 2,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "field",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "field",
+      "point": [
+        200,
+        84
+      ],
+      "observed_box": [
+        188,
+        72,
+        24,
+        24
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 2,
+      "valid_until_ns": 19534042811060,
+      "patch_sha256": "5146b3ae15a4fa72ef357b95321aa3422f072edb070225225f3d3b02bfbc3056",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    },
+    {
+      "stage": "before_focus",
+      "observation_sequence": 3,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "field",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "field",
+      "point": [
+        200,
+        84
+      ],
+      "observed_box": [
+        188,
+        72,
+        24,
+        24
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 3,
+      "valid_until_ns": 19534062480869,
+      "patch_sha256": "5146b3ae15a4fa72ef357b95321aa3422f072edb070225225f3d3b02bfbc3056",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    }
+  ]
+}
