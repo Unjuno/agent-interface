@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {mkdtemp,readFile} from 'node:fs/promises';
+import {mkdtemp,readFile,writeFile} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {createInstrumentedRelayClient} from './relay_host.mjs';
@@ -131,7 +131,7 @@ for (const cue of ['matched','pending','rejected','needs_review'])
   test('explicit input feedback '+cue+' retains evidence and enforces STOP',async()=>{
     const meta={status:cue==='matched'?'completed':'needs_review',
       image_status:'image',task_success:null,replay_allowed:false,
-      feedback:{status:cue},result:{status:'completed',execution:{releases:[
+      feedback:{status:cue,expected_title:'saved',rejected_titles:[],title:'saved',after_title:'saved',task_success:null,authority_granted:false,input_dispatched:false},result:{status:'completed',execution:{releases:[
         {verified:true,keys_down:[],buttons_down:[]}]}}};
     const reply={result:{isError:cue!=='matched',content:[
       {type:'text',text:JSON.stringify(meta)},{type:'image',data:'original-cue'}]}};
@@ -149,3 +149,140 @@ for (const cue of ['matched','pending','rejected','needs_review'])
       assert.equal(calls.length,2);
     }
   });
+
+
+test('original presentation resends only retained bytes even after primary STOP', async () => {
+  const directory=join(await mkdtemp(join(tmpdir(),'primary-original-')), 'host');
+  const fixture=`require('node:readline').createInterface({input:process.stdin}).on('line',line=>{
+    const r=JSON.parse(line); console.log(JSON.stringify({id:r.id,tool:r.tool,status:'returned',next_id:r.id+1,
+      result:{isError:false,content:[{type:'text',text:JSON.stringify({status:'returned',call_id:'c1',
+      source:{sequence:1,observation_id:'o1'}})},{type:'image',data:'AAECAw==',mimeType:'image/png'}]}}));});`;
+  const host=await createInstrumentedRelayClient({command:process.execPath,args:['-e',fixture],
+    evidenceDirectory:directory,reuseReviewedImages:true});
+  const seen=[]; const caller=createPrimaryCaller(host,'guarded-local',{
+    text:value=>seen.push(value), image:value=>seen.push(value.bytes.toString('base64'))});
+  try {
+    const original=await caller.observe();
+    await caller.review(original.attempt,{task:'t',phase:'initial',reason:'Original attribution, not semantic proof'});
+    const reply=await readFile(join(directory,'reply-1.json'));
+    const review=await readFile(join(directory,'review-1.json'));
+    await assert.rejects(caller.observe('not allowed'));
+    const stopped=caller.state().stopped;
+    const first=seen.slice();
+    await caller.presentOriginal(original.attempt);
+    assert.deepEqual(seen.slice(first.length),first,'force the original image instead of an image reference');
+    assert.equal(host.state().attempts,1,'no second relay request or capture');
+    assert.equal(caller.state().stopped,stopped);
+    assert.deepEqual(await readFile(join(directory,'reply-1.json')),reply);
+    assert.deepEqual(await readFile(join(directory,'review-1.json')),review);
+    const rows=(await readFile(join(directory,'host-events.jsonl'),'utf8')).trim().split('\n').map(JSON.parse);
+    assert.equal(rows.filter(row=>row.kind==='send_requested').length,1);
+    const shown=rows.filter(row=>row.kind==='presentation_callbacks_completed');
+    assert.equal(shown.length,2);
+    assert.equal(shown[0].reply_sha256,shown[1].reply_sha256);
+    assert.equal(shown[1].image_delivery.mode,'full');
+    await assert.rejects(caller.observe(),/stopped/);
+    assert.equal(host.state().attempts,1);
+  } finally { await host.close(); }
+});
+
+test('original presentation snapshots sinks and preserves the host exception', async () => {
+  const firstText=()=>{}, firstImage=()=>{};
+  const sinks={text:firstText,image:firstImage}; let submitted;
+  const error=new Error('presentation failed');
+  const caller=createPrimaryCaller({present:async(attempt,callbacks,options)=>{
+    submitted={attempt,callbacks,options}; await Promise.resolve(); throw error;
+  }},'guarded-local',sinks);
+  const pending=caller.presentOriginal(3);
+  sinks.text=()=>assert.fail('changed text'); sinks.image=()=>assert.fail('changed image');
+  await assert.rejects(pending,value=>value===error);
+  assert.deepEqual(submitted,{attempt:3,callbacks:{text:firstText,image:firstImage},options:{forceImage:true}});
+  assert.ok(caller.state().stopped);
+});
+
+for (const args of [[],[0],[1.5],['1'],[1,{forceImage:false}]])
+  test('original presentation rejects invalid arguments before host: '+JSON.stringify(args),async()=>{
+    let calls=0;const caller=createPrimaryCaller({present:()=>{calls++;}},'guarded-local',{
+      text:()=>{},image:()=>{}});
+    await assert.rejects(caller.presentOriginal(...args),TypeError);
+    assert.equal(calls,0);assert.ok(caller.state().stopped);
+  });
+
+test('missing original presentation sinks refuse before the host',async()=>{
+  let calls=0; const caller=createPrimaryCaller({present:()=>{calls++;}},'guarded-local',{});
+  await assert.rejects(caller.presentOriginal(1),TypeError);
+  assert.equal(calls,0);assert.ok(caller.state().stopped);
+});
+
+
+for (const corruption of ['unknown-attempt','changed-reply'])
+  test('original presentation fails closed on '+corruption+' without another relay request',async()=>{
+    const directory=join(await mkdtemp(join(tmpdir(),'primary-original-invalid-')),'host');
+    const fixture=`require('node:readline').createInterface({input:process.stdin}).on('line',line=>{
+      const r=JSON.parse(line);console.log(JSON.stringify({id:r.id,tool:r.tool,status:'returned',next_id:r.id+1,
+      result:{content:[{type:'text',text:JSON.stringify({status:'returned',source:{sequence:1}})},
+      {type:'image',mimeType:'image/png',data:'AAECAw=='}]}}));});`;
+    const host=await createInstrumentedRelayClient({command:process.execPath,args:['-e',fixture],evidenceDirectory:directory});
+    let delivered=0; const caller=createPrimaryCaller(host,'guarded-local',{
+      text:()=>{delivered++;},image:()=>{delivered++;}});
+    try {
+      const original=await caller.observe();const before=delivered;
+      if(corruption==='changed-reply') {
+        const path=join(directory,'reply-1.json');
+        await writeFile(path,Buffer.concat([await readFile(path),Buffer.from(' ')]));
+      }
+      await assert.rejects(caller.presentOriginal(corruption==='unknown-attempt'?2:original.attempt),
+        /delivered attempt|retained bytes differ/);
+      assert.equal(delivered,before,'unverified source must not be delivered');
+      assert.ok(caller.state().stopped);assert.ok(host.state().host_blocked);
+      await assert.rejects(caller.call('interface_guarded_input',{}),/stopped/);
+      assert.equal(host.state().attempts,1);
+    } finally {await host.close();}
+  });
+
+
+test('original presentation sink getter failure stops before dispatch and preserves its exception',async()=>{
+  const error=new TypeError('sink getter failed');let calls=0;
+  const sinks={get text(){throw error;},image:()=>{}};
+  const caller=createPrimaryCaller({present:()=>{calls++;},sendPresented:()=>{calls++;}},'guarded-local',sinks);
+  await assert.rejects(caller.presentOriginal(1),value=>value===error);
+  assert.ok(caller.state().stopped);
+  await assert.rejects(caller.call('interface_clock',{}),/stopped/);
+  assert.equal(calls,0);
+});
+
+// The public modal tools already exist. Removing either from the direct route
+// must break this test; no synthetic task success or automatic selection is used.
+for (const [tool, args, metadata] of [
+  ['interface_inspect_target', {target:'app',screen_region:[0,0,640,480]},
+    {status:'needs_review',input_dispatched:false,authority_granted:false,
+      review_request:{tool:'interface_review_target',arguments:{target:'app',window_id:21,review_id:'once'}}}],
+  ['interface_review_target', {target:'app',window_id:21,review_id:'once',screen_region:[0,0,640,480]},
+    {status:'target_reviewed',input_dispatched:false,authority_granted:false,binding_revision:2}],
+]) test('direct primary forwards one explicit '+tool+' without following its result',async()=>{
+  const calls=[];
+  const reply={attempt:1,result:{isError:false,content:[{type:'text',text:JSON.stringify(metadata)}]}};
+  const caller=createPrimaryCaller({sendPresented:async(t,a)=>{calls.push([t,a]);return reply;}},'direct-post',{});
+  assert.equal(await caller.call(tool,args),reply);
+  assert.deepEqual(calls,[[tool,args]],'inspection must not auto-select, and selection must not auto-input');
+  assert.equal(caller.state().stopped,null);
+});
+
+test('direct primary returns failed target selection once and blocks inspection/review retry',async()=>{
+  let calls=0;
+  const reply={result:{isError:true,content:[{type:'text',text:JSON.stringify({status:'needs_review',error:'target changed',input_dispatched:false,authority_granted:false})}]}};
+  const caller=createPrimaryCaller({sendPresented:async()=>{calls++;return reply;}},'direct-post',{});
+  assert.equal(await caller.call('interface_review_target',{target:'app',window_id:21,review_id:'once'}),reply);
+  assert.ok(caller.state().stopped);
+  await assert.rejects(caller.call('interface_inspect_target',{target:'app'}),/trial stopped/);
+  await assert.rejects(caller.call('interface_review_target',{target:'app',window_id:21,review_id:'once'}),/trial stopped/);
+  assert.equal(calls,1);
+});
+
+test('guarded primary rejects persistent target tools locally',async()=>{
+  let calls=0;
+  const caller=createPrimaryCaller({sendPresented:async()=>{calls++;}},'guarded-local',{});
+  await assert.rejects(caller.call('interface_inspect_target',{target:'app'}),/unavailable tool/);
+  assert.equal(calls,0);
+  await assert.rejects(caller.call('interface_guarded_observe',{}),/trial stopped/);
+});

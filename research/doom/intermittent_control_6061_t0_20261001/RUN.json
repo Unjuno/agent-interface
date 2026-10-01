@@ -1,0 +1,46 @@
+{
+  "allocation": "INTERMITTENT-CONTROL-6061-T0-20261001-01",
+  "frozen_commit": "92e213146d3b1e4c96a796630f36b6b42215aae8",
+  "base_main": "cc804427c14a5c98370b84f9d63809cb5ca0c0ca",
+  "protocol_deviation": "host-only because Docker Desktop server did not respond; shared inventory ownership remains unresolved",
+  "tool_launch_attempt_before_candidate": {
+    "attempts": 1,
+    "candidate_process_started": false,
+    "reason": "outer process creation rejected due invalid working directory (Windows os error 267)",
+    "scientific_rows": 0,
+    "reused": false
+  },
+  "formal_invocations": {
+    "candidate": {
+      "count": 1,
+      "command": "python -B candidate.py --input input_fixture.json --output runs/formal-01/raw.jsonl",
+      "exit_code": 0,
+      "stdout": "{\"output\": \"runs/formal-01/raw.jsonl\", \"rows\": 36}",
+      "stderr": ""
+    },
+    "independent_auditor": {
+      "count": 1,
+      "command": "python -B audit.py --input input_fixture.json --truth truth_oracle.json --raw runs/formal-01/raw.jsonl --output runs/formal-01/audit.json",
+      "exit_code": 0,
+      "stdout": "{\"errors\": [], \"rows\": 36, \"status\": \"PASS_METHOD_SCOPED\"}",
+      "stderr": ""
+    },
+    "retries": 0
+  },
+  "outputs": {
+    "raw_jsonl": {
+      "path": "runs/formal-01/raw.jsonl",
+      "bytes": 232607,
+      "sha256": "90F29E6BB888531A155A491E1228ABC5C9F7EB53F916A70E4652AEA19121074E",
+      "rows": 36
+    },
+    "audit_json": {
+      "path": "runs/formal-01/audit.json",
+      "bytes": 20687,
+      "sha256": "606DD171B4822DB32D6C92BB3F2369B435EBB88C5CD431AD8A6D1D37A61BC1BE",
+      "status": "PASS_METHOD_SCOPED",
+      "errors": []
+    }
+  },
+  "interpretation": "method-fixture result only; no live game, GUI, model, physical input, GPU or Docker execution"
+}
