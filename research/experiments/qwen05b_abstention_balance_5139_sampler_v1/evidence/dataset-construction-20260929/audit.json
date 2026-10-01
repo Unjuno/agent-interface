@@ -1,0 +1,26 @@
+{
+  "checks": [
+    "canonical raw JSON",
+    "allocation/sentinels",
+    "pool and heldout denominators",
+    "independent SHA-ranked support reconstruction",
+    "heldout per-class prefix reconstruction",
+    "case ID uniqueness",
+    "support/heldout scope and task disjointness",
+    "arm class quotas"
+  ],
+  "corruption_controls": {
+    "missing_heldout_rejected": true,
+    "reordered_heldout_rejected": true,
+    "split_scope_overlap_detected": false,
+    "support_seed_mutation_rejected": true
+  },
+  "errors": [
+    "control_failed"
+  ],
+  "raw_bytes": 803928,
+  "raw_sha256": "d96c4072db2ee3bb1af7503a8ae98e062794072385a15099f32121a7a8caad4b",
+  "scope": "synthetic dataset construction only; no model/CUDA/GPU/Docker/formal output",
+  "status": "STOP_DATASET_CONSTRUCTION_AUDIT"
+}
+
