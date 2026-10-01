@@ -42,6 +42,17 @@ class ProbeInterventionTests(unittest.TestCase):
         self.assertGreaterEqual(target["median_loss_advance_ticks"], 4)
         self.assertEqual(result["disposition"], "PASS_PROBE_ADVANCES_ENDPOINT_IN_FIXTURE")
 
+    def test_high_dose_probe_harm_is_visible_on_no_loss_controls(self):
+        result = self.auditor.audit(self.runner.build(self.fx), self.fx)
+        metrics = result["metrics_by_mechanism"]
+        for mechanism in (
+            "gradual_capacity_no_loss",
+            "demand_drift_no_loss",
+            "stable_no_loss",
+        ):
+            self.assertEqual(metrics[mechanism]["eligible_no_probe_losses"], 0)
+            self.assertEqual(metrics[mechanism]["probe_false_losses"], 18)
+
     def test_auditor_rejects_event_mutation(self):
         raw = self.runner.build(self.fx)
         raw["pairs"][0]["probe"]["events"][20]["served"] += 1
