@@ -48,6 +48,25 @@ def perceive(native,image): return {'phase':image.getpixel((0,0))[0],'present':T
 def verify(payload,native,image): return {'status':'succeeded','evidence_ref':payload['observation']['evidence_ref']}
 
 class CompiledX11Tests(unittest.TestCase):
+
+    def test_invalid_native_alias_fails_before_capture_or_callback(self):
+        for alias in ('sheet-context','Sheet','a'*33,'x y'):
+            with self.subTest(alias=alias):
+                b=Bridge();s=spec();s['symbols']['field']['target_reference']=alias
+                perception=Mock(side_effect=perceive);verifier=Mock(side_effect=verify)
+                with self.assertRaisesRegex(ValueError,'target alias'):
+                    run(b,s,bindings(),perceive=perception,verify_effect=verifier)
+                self.assertEqual(b.sequence,0);self.assertEqual(b.inputs,[])
+                perception.assert_not_called();verifier.assert_not_called()
+    def test_valid_native_aliases_preserve_symbolic_name_flexibility(self):
+        for alias in ('sheet_context','a'*32):
+            with self.subTest(alias=alias):
+                b=Bridge();s=spec();symbol=s['symbols'].pop('field')
+                symbol['target_reference']=alias
+                s['symbols']['symbol-with-hyphen']=symbol
+                for action in s['actions'].values():action['target_symbol']='symbol-with-hyphen'
+                r=run(b,s,bindings(),perceive=perceive,verify_effect=verify)
+                self.assertEqual(r['outcome'],'TASK_SUCCEEDED')
     def test_boolean_phase_cannot_verify_integer_effect_or_dispatch_next_action(self):
         b=Bridge()
         def typed(native,image):
