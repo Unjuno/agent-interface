@@ -308,6 +308,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`resident_reactive_rung0_successor_2110_r1_v1/`](resident_reactive_rung0_successor_2110_r1_v1/)
 - [`reusable_receipt_session_binding_v1/`](reusable_receipt_session_binding_v1/)
 - [`reusable_receipt_session_binding_v2/`](reusable_receipt_session_binding_v2/)
+- [`route_assignment_exposure_5760_t0_v1/`](route_assignment_exposure_5760_t0_v1/) — Issue #5760 T0 assignment-versus-exposure ledger; synthetic method-scoped PASS, no causal/live claim.
 - [`role_bound_ledger_lifetime_v1/`](role_bound_ledger_lifetime_v1/)
 - [`safe_probe_cost_optimal_tree_r1_v1/`](safe_probe_cost_optimal_tree_r1_v1/)
 - [`safe_probe_identification_successor_1716_v1/`](safe_probe_identification_successor_1716_v1/)
