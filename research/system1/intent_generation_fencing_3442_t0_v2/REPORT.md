@@ -16,4 +16,4 @@ Raw SHA-256: `ac463423fbc353e04fe570caa139f5bbb8050f86e23f6a092524acdb6a2300bb`.
 
 ## Execution environment
 
-Python 3.11.9 on Windows host, using RAM-only pipes and `-B`. Docker Desktop was open but bounded `docker info` timed out; C: had zero free bytes. No Docker/container/GPU/model/GUI/input/task effect was used. The predecessor allocation-01 auditor syntax STOP and missing raw capture are preserved separately at [v1 STOP](../intent_generation_fencing_3442_t0_v1/STOP.json); this is a distinct allocation and path, not a retry under allocation-01.
+Python 3.11.9 on Windows host, using RAM-only pipes and `-B`. Docker Desktop was open but bounded `docker info` timed out; C: had zero free bytes. No Docker/container/GPU/model/GUI/input/task effect was used. The predecessor allocation-01 auditor syntax STOP and missing raw capture are preserved separately at [v1 STOP](predecessor/allocation-01/STOP.json); this is a distinct allocation and path, not a retry under allocation-01.
