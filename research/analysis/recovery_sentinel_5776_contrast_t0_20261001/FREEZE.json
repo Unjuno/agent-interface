@@ -1,0 +1,32 @@
+{
+  "issue": 5776,
+  "allocation": "recovery-sentinel-5776-contrast-t0-20261001-01",
+  "base_main": "1548fc9c556a8a690c40ad30e6dd604c3754bf94",
+  "state": "PREREGISTERED_FORMAL_NOT_STARTED",
+  "container": {
+    "image": "python:3.12-slim@sha256:950206c37262dd86c55659797f6ee418fee30535072f65a82ed470d985f5cda5",
+    "platform": "linux/arm64/v8",
+    "network": "none",
+    "cpus": 1,
+    "memory": "256m",
+    "pids_limit": 64,
+    "guest": "pending explicit OrbStack CPU slot grant"
+  },
+  "invocations": {
+    "candidate": 1,
+    "independent_audit_if_candidate_exit_0": 1,
+    "retry": 0
+  },
+  "commands": {
+    "candidate": "python -B /src/research/analysis/recovery_sentinel_5776_contrast_t0_20261001/runner.py /out/raw.json",
+    "auditor": "python -B /src/research/analysis/recovery_sentinel_5776_contrast_t0_20261001/audit.py /out/raw.json"
+  },
+  "source_hashes_sha256": {
+    "fixture.json": "f92176963a0856268a67de1c0a8200dee094822530593bef5fa1e8ded84ef93d",
+    "runner.py": "0240767d1e48812eed20c3fcdb2e3435cb7a8d16be7f2814f72e8b56b07a673c",
+    "audit.py": "c20b0103b116ebea93d0c29b3e4baceebe37f53b25788bace2b53a62ce4b32de",
+    "PREREG.md": "f1470a8c6395ba337c5d45253c19b1ddf40007700f2f723f2f89827b526fbf42",
+    "README.md": "db63f1d339af502692301c9ee62e27a92538d6fb7004855d7c90b54b503d4fea",
+    "test_audit.py": "f2177b08b2707a63f1bd9717e6500460e00170235bf2867ed3dba37c0160ec6d"
+  }
+}
