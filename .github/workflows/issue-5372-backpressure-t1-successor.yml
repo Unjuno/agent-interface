@@ -1,0 +1,116 @@
+name: Issue 5372 T1 successor allocation 02
+
+on:
+  push:
+    branches:
+      - research/backpressure-endogenous-demand-5372-t1b-20261001
+    paths:
+      - research/analysis/safety_backpressure_5372_t1_successor_20261001/candidate.py
+      - research/analysis/safety_backpressure_5372_t1_successor_20261001/audit_successor.py
+      - research/analysis/safety_backpressure_5372_t1_successor_20261001/test_successor.py
+      - research/analysis/safety_backpressure_5372_t1_successor_20261001/FREEZE.json
+      - research/analysis/safety_backpressure_5372_t1_successor_20261001/SHA256SUMS
+      - .github/workflows/issue-5372-backpressure-t1-successor.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: issue-5372-backpressure-t1-successor-02
+  cancel-in-progress: false
+
+jobs:
+  candidate:
+    if: "github.event.head_commit.message == 'research(#5372): freeze successor allocation 02'"
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Local construction CI
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m py_compile research/analysis/safety_backpressure_5372_t1_successor_20261001/*.py
+          python3 -m unittest discover -s research/analysis/safety_backpressure_5372_t1_successor_20261001 -p 'test*.py' -v
+          git diff --check
+      - name: Verify source hashes and pinned image digest
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd research/analysis/safety_backpressure_5372_t1_successor_20261001
+          sha256sum --check SHA256SUMS
+          sha256sum candidate.py audit_successor.py test_successor.py FREEZE.json README.md PREREGISTRATION.md ../safety_backpressure_5372_t1_v1/simulate.py ../safety_backpressure_5372_t1_v1/audit.py
+          image=$(jq -r .container_image FREEZE.json)
+          docker pull "$image"
+          actual=$(docker image inspect "$image" --format '{{index .RepoDigests 0}}')
+          actual_digest=${actual##*@}
+          expected_digest=${image##*@}
+          test "$actual_digest" = "$expected_digest"
+          printf 'IMAGE_DIGEST_OK %s\n' "$actual_digest"
+      - name: Execute successor candidate once in isolated Docker
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/candidate"
+          image=$(jq -r .container_image research/analysis/safety_backpressure_5372_t1_successor_20261001/FREEZE.json)
+          docker run --rm --network none --read-only --cpus 1 --memory 256m --pids-limit 64 \
+            --tmpfs /tmp:rw,noexec,nosuid,size=16m \
+            --mount "type=bind,src=$GITHUB_WORKSPACE/research/analysis/safety_backpressure_5372_t1_successor_20261001/candidate.py,dst=/candidate.py,readonly" \
+            --mount "type=bind,src=$GITHUB_WORKSPACE/research/analysis/safety_backpressure_5372_t1_v1/simulate.py,dst=/simulate_original.py,readonly" \
+            --mount "type=bind,src=$RUNNER_TEMP/candidate,dst=/out" \
+            "$image" python -B /candidate.py /simulate_original.py > "$RUNNER_TEMP/candidate/candidate.jsonl"
+          test -s "$RUNNER_TEMP/candidate/candidate.jsonl"
+          sha256sum "$RUNNER_TEMP/candidate/candidate.jsonl" | tee "$RUNNER_TEMP/candidate/CANDIDATE_SHA256SUM"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: issue-5372-t1b-candidate
+          path: ${{ runner.temp }}/candidate/
+          if-no-files-found: warn
+          retention-days: 90
+
+  independent-audit:
+    needs: candidate
+    if: needs.candidate.result == 'success'
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: issue-5372-t1b-candidate
+          path: ${{ runner.temp }}/candidate
+      - name: Verify source hashes and pinned image digest
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd research/analysis/safety_backpressure_5372_t1_successor_20261001
+          sha256sum --check SHA256SUMS
+          image=$(jq -r .container_image FREEZE.json)
+          docker pull "$image"
+          actual=$(docker image inspect "$image" --format '{{index .RepoDigests 0}}')
+          actual_digest=${actual##*@}
+          expected_digest=${image##*@}
+          test "$actual_digest" = "$expected_digest"
+          printf 'IMAGE_DIGEST_OK %s\n' "$actual_digest"
+      - name: Audit candidate once in a separate isolated Docker
+        shell: bash
+        run: |
+          set -euo pipefail
+          image=$(jq -r .container_image research/analysis/safety_backpressure_5372_t1_successor_20261001/FREEZE.json)
+          mkdir -p "$RUNNER_TEMP/audit"
+          docker run --rm --network none --read-only --cpus 1 --memory 256m --pids-limit 64 \
+            --tmpfs /tmp:rw,noexec,nosuid,size=16m \
+            --mount "type=bind,src=$GITHUB_WORKSPACE/research/analysis/safety_backpressure_5372_t1_successor_20261001/audit_successor.py,dst=/audit.py,readonly" \
+            --mount "type=bind,src=$GITHUB_WORKSPACE/research/analysis/safety_backpressure_5372_t1_v1/audit.py,dst=/audit_original.py,readonly" \
+            --mount "type=bind,src=$RUNNER_TEMP/candidate,dst=/input,readonly" \
+            --mount "type=bind,src=$RUNNER_TEMP/audit,dst=/out" \
+            "$image" python -B /audit.py /input/candidate.jsonl /audit_original.py | tee "$RUNNER_TEMP/audit/AUDIT.txt"
+          sha256sum "$RUNNER_TEMP/audit/AUDIT.txt" "$RUNNER_TEMP/candidate/candidate.jsonl" > "$RUNNER_TEMP/audit/EVIDENCE_SHA256SUMS"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: issue-5372-t1b-independent-audit
+          path: ${{ runner.temp }}/audit/
+          if-no-files-found: warn
+          retention-days: 90
