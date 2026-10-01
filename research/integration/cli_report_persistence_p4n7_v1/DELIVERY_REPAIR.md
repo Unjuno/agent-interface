@@ -29,3 +29,5 @@ On 2026-10-01, the repaired capsule was restored again from a disposable copy us
 ## Exact pre-repair restorer preservation
 
 `restore_PRE_REPAIR.py` is a byte-for-byte copy of `restore.py` from the same original branch head `8ffc61f8ab45e88ff52828db2ee5f390e349630c`. Its Git blob is `6e419cc2bfb82a4376d30c18f7f082016ff3c253`. The original program validates each encoded part against the mismatching historical `CAPSULE.json` and therefore stops on the first transport digest mismatch; it is retained as failure evidence, not used to restore the capsule. The current `restore.py` and repaired `CAPSULE.json` remain the validated reconstruction path. No original files or results were rewritten.
+
+`README_PRE_REPAIR.md` is a byte-for-byte copy of the original branch's README. Later additive paragraphs in the active README document the transport repair, preserve the exact original manifest and restorer, and give the retained verifier-artifact reproduction instructions; the historical README snapshot intentionally contains none of those retrospective additions.
