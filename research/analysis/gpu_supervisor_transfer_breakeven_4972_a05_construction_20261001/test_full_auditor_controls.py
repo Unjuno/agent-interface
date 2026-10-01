@@ -81,6 +81,7 @@ def run():
         (audit.ROOT / "dataset.json").write_text(
             json.dumps(doc), encoding="utf-8"
         )
+        result["dataset_sha256"] = audit.sha(audit.ROOT / "dataset.json")
         assert audit.audit(result, doc, freeze) == []
 
         mutations = {
