@@ -1,0 +1,65 @@
+{
+  "allocation": "review-snapshot-c7r8-20260926-01",
+  "issue": 4404,
+  "base": "4c701cc51b06296268ad8d9ae3eff1dd6f2d379d",
+  "pairs": 21,
+  "warmup_pairs": 2,
+  "conditions": [
+    {
+      "id": "c0",
+      "width": 64,
+      "height": 48,
+      "level": 0
+    },
+    {
+      "id": "c1",
+      "width": 64,
+      "height": 48,
+      "level": 6
+    },
+    {
+      "id": "c2",
+      "width": 256,
+      "height": 192,
+      "level": 0
+    },
+    {
+      "id": "c3",
+      "width": 256,
+      "height": 192,
+      "level": 6
+    },
+    {
+      "id": "c4",
+      "width": 768,
+      "height": 512,
+      "level": 0
+    },
+    {
+      "id": "c5",
+      "width": 768,
+      "height": 512,
+      "level": 6
+    }
+  ],
+  "control_conditions": [
+    "missing",
+    "digest_mismatch",
+    "no_observation",
+    "partial_release_failed"
+  ],
+  "policy_order": [
+    "baseline",
+    "candidate"
+  ],
+  "pair_order": "baseline first on even pair index; candidate first on odd, separately in warmup and measurement",
+  "timing_scope": "review_bytes(compact=False) plus canonical JSON serialization; imports/corpus creation/hashing outside",
+  "affinity": 0,
+  "worker_timeout_seconds": 20,
+  "source_envelope": "trusted quiescent immutable files; no mutable-artifact equivalence or production adoption",
+  "pixel_formula": "R=(17*x+31*y)%256; G=(x^y)%256; B=(3*x+5*y)%256",
+  "png": "RGB8, noninterlaced, filter0, one IDAT, zlib levels0/6",
+  "n_min": "six conditions x21 matched pairs =126 pairs/252 measured calls;24 excluded warmup calls",
+  "decision": "fidelity/complete-evidence PASS; timing is characterization, not a required speedup",
+  "no_retries": true
+}
