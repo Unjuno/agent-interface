@@ -52,20 +52,27 @@ identity, unverified release, and non-neutral release.
 
 ## Frozen analysis sources — before execution
 
-The prospective source snapshot is commit
-551dd86ef7e3455b1c310b62a41a9ac50226735a on the additive branch. Exact Git
-blobs:
+Construction revision 1 was frozen at commit
+551dd86ef7e3455b1c310b62a41a9ac50226735a. It failed corruption test 02 and
+was not used for the candidate. Revision 2 is frozen at branch commit
+a22e5f7e11cda77f99194939c201560cd83b00a9. Exact current Git blobs:
 
 | Role | Path | Git blob |
 | --- | --- | --- |
-| Candidate | research/live_control/r133_openttd_transfer_eligibility/audit.py | 32be8e1c56b0efc62cc42084f8dec2cae64aad99 |
-| Independent auditor | research/live_control/r133_openttd_transfer_eligibility/independent_audit.py | 85e43dea1d882949dcef42908613b61696fe9e51 |
+| Candidate | research/live_control/r133_openttd_transfer_eligibility/audit.py | 7dee30e396acbcb088cf8ec58cd97f9220f64239 |
+| Independent auditor | research/live_control/r133_openttd_transfer_eligibility/independent_audit.py | f88d0345bb4e3f24ad0fc18e7826b00ce09f9214 |
 | Five corruption controls | research/live_control/r133_openttd_transfer_eligibility/test_audit.py | f93885a90a98dc0b8b93faf959fede7775500b8c |
 
 The local Windows working copies were byte-for-byte text-compared with these
-three branch files before this freeze note was added. These code blobs are
-immutable for the candidate and raw-only audit; any correction would be a new
-successor and would not replace this result.
+three branch files. These revision-2 code blobs are immutable for the candidate
+and raw-only audit; any correction would be a new successor and would not
+replace this result.
+
+Construction revision 1's first host test run failed only the fabricated
+button-up corruption control (4/5 passed). No candidate or raw-only auditor was
+invoked. The failure is preserved here; revision 2 adds an explicit frozen
+7-down/0-up coverage invariant to candidate and independent auditor. This is a
+pre-execution construction correction, not evidence about the hypothesis.
 
 ## Execution plan
 
