@@ -28,6 +28,8 @@ The auditor's first assertion failed: `candidate output differs from independent
 - A pre-formal wrapper attempt failed before creating a candidate container because nested PowerShell/Bash variable quoting produced an empty bind-mount host path (`:/src:ro`). It is a setup failure, not a scientific run. The command was corrected and the frozen formal sequence then ran once.
 - WSL emitted: “kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.” The requested 512 MiB cap was passed, but swap/cgroup memory isolation and peak-memory enforcement are unverified.
 - A separate WSL-native runtime smoke passed. Its result does not alter the formal candidate/auditor outcome.
+
+- The exact formal invocations' complete argv and separately persisted exit-code sidecars were not retained; the WSL shell history contains no matching command. The pinned image, resource/network/mount settings, stage order, candidate stdout and auditor traceback are retained, but command-level replayability is incomplete. Do not reconstruct or present an inferred command as the original.
 - The candidate/auditor disagreement prevents `PASS_METHOD_SCOPED`; no claim about cue quality, model behavior, effect size, safety, or transfer is supported.
 
 ## Reproduction and retained evidence
