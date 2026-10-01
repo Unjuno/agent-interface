@@ -7,6 +7,7 @@ import copy
 import time
 import uuid
 from runtime.core_v1.compiled_gui import run as run_graph, validate
+from .handles import ALIAS
 
 
 def surface(bridge):
@@ -16,6 +17,11 @@ def surface(bridge):
 class _Adapter:
     def __init__(self, bridge, interface, bindings, perceive, verify_effect, cancelled):
         self.interface = validate(interface)
+        # Symbol labels belong to the graph language; target references name
+        # the existing native registry and must obey its actual alias contract.
+        for symbol in self.interface['symbols'].values():
+            if ALIAS.fullmatch(symbol['target_reference']) is None:
+                raise ValueError('target alias must match [a-z][a-z0-9_]{0,31}')
         if self.interface['session_scope'] != bridge.scope or self.interface['surface'] != surface(bridge):
             raise ValueError('interface must name this bridge scope and X11 surface')
         if not all(callable(fn) for fn in (perceive, verify_effect, cancelled)):
