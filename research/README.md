@@ -19,6 +19,7 @@ For claims and scientific disposition, start with the top-level [research index]
 | Issue #5970 retained reconnect-trace applicability T1 | [analysis/blackstart_causal_cut_5970_t1_20261001/REPORT.md](analysis/blackstart_causal_cut_5970_t1_20261001/REPORT.md) |
 | Issue #5970 prospective X11 event-provenance T2 | [analysis/blackstart_prospective_trace_5970_t2_20261001/REPORT.md](analysis/blackstart_prospective_trace_5970_t2_20261001/REPORT.md) |
 | Issue #5970 source-bound prospective provenance T3 | [analysis/blackstart_source_bound_5970_t3_20261001/REPORT.md](analysis/blackstart_source_bound_5970_t3_20261001/REPORT.md) |
+| Issue #5970 X RECORD delivery-boundary successor T4 | [analysis/blackstart_xrecord_5970_t4_20261001/REPORT.md](analysis/blackstart_xrecord_5970_t4_20261001/REPORT.md) |
 | Revisit history | [REVISIT_LEDGER.md](REVISIT_LEDGER.md) |
 | Analysis vs experiment decision flow | [../docs/RESEARCH_METHOD.md](../docs/RESEARCH_METHOD.md) |
 | Public evidence/document relationship map | [../docs/EVIDENCE_MAP.md](../docs/EVIDENCE_MAP.md) |
