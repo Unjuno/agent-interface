@@ -88,3 +88,7 @@ The large number of child directories is intentional retained evidence. Reposito
 ## Retained preformal temporal design — formal not started
 
 - [X11 history depth #2542](x11_reversal_history_depth_2542_v1/ARCHIVAL_QUALIFICATION.md) — exact preformal ancestry, environment, freeze, plan and excluded construction summary retained; formal_started=false/reruns=0. Missing source and construction audit bytes remain explicit; no formal outcome is claimed.
+
+## AoI critical-retention successor — runner-output STOP
+
+- [#5494 / Draft PR #5497 archival qualification](aoi_backpressure_43_v2/ARCHIVAL_QUALIFICATION.md): five exact source/freeze/STOP blobs, 21,407 bytes. One wrapper invocation returned exit 1 without stdout/stderr; runner execution and independent-audit completion remain unknown. Preserve `STOP_RUNNER_OUTPUT_UNAVAILABLE` and the separate transport sentinel STOP; no queue-policy benefit, scientific PASS/FAIL, or rerun is claimed. Original Draft, branch, #5494, and #43 remain open.

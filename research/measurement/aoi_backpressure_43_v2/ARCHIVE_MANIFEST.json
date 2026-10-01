@@ -1,0 +1,67 @@
+{
+  "schema": "archive-original-blob-manifest-v1",
+  "repository": "Unjuno/agent-interface",
+  "source_pr": 5497,
+  "owner_issue": 5494,
+  "parent_issue": 43,
+  "source_head": "1bc9583b6dc54ca3f44045c81f8783fc9b5bfd9e",
+  "source_branch": "research/issue43-aoi-critical-retention-20260930-01",
+  "inspection_main": "0b8fcbd1ee8e1ac7c5ebfc137dcecd7226ea7477",
+  "disposition": "STOP_RUNNER_OUTPUT_UNAVAILABLE",
+  "original_files": [
+    {
+      "path": "research/measurement/aoi_backpressure_43_v2/FREEZE.json",
+      "bytes": 1668,
+      "git_blob_sha": "8756d597e1b75e593b6ca485d4d61a8345badc60"
+    },
+    {
+      "path": "research/measurement/aoi_backpressure_43_v2/README.md",
+      "bytes": 1686,
+      "git_blob_sha": "eec783049cb88141b822ffc7fe91824e4323c4ea",
+      "frozen_sha256": "04bfeb8ebd9945a8d5dd9224cdfac4d5217137a1f677fe522e12fcee91cba708"
+    },
+    {
+      "path": "research/measurement/aoi_backpressure_43_v2/RUN.json",
+      "bytes": 1171,
+      "git_blob_sha": "f284db9dd649a9f26f8c0c2a27d6a78188b55692"
+    },
+    {
+      "path": "research/measurement/aoi_backpressure_43_v2/audit.py",
+      "bytes": 8061,
+      "git_blob_sha": "e0c227f3f157e963a97cb8dda0191344d4d67e37",
+      "frozen_sha256": "c5e8d101dad4aea0c8334b38eacc74f93f0a9b1e528168fd6a0278db4641aca8"
+    },
+    {
+      "path": "research/measurement/aoi_backpressure_43_v2/study.py",
+      "bytes": 8821,
+      "git_blob_sha": "eda6af323a412767594d6e68dd6585688efb3023",
+      "frozen_sha256": "8069d4bdea060a3d6093fcdeb499203143eb977682b9273622a6d1a90d4ba0e8"
+    }
+  ],
+  "original_file_count": 5,
+  "original_bytes": 21407,
+  "constraints": [
+    "Preserve all original blobs unchanged",
+    "Keep original Draft, branch, and owner Issues open",
+    "No archived program, test, audit, or experiment execution",
+    "No scientific PASS/FAIL reclassification",
+    "Publication does not authorize merging the original held Draft or changing scientific status"
+  ],
+  "collision_check": {
+    "scope": "Targeted exact namespace, relevant complete main subtrees, bounded all-state PR searches",
+    "global_absence_claim": false
+  },
+  "publication_base": "d7e20a0d25e0c361d1e7cf56fd103f61fb927a2d",
+  "publication_preflight": {
+    "source_head_unchanged": true,
+    "owner_issue_open": true,
+    "source_namespace_absent": true,
+    "workflow_yaml_inventory_count": 221,
+    "workflow_blob_changes": 0,
+    "applicable_executable_jobs": [
+      "replay-gate",
+      "research-workspace-index"
+    ],
+    "archived_program_execution": false
+  }
+}
