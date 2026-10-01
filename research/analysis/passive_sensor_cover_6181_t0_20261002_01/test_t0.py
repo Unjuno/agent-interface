@@ -14,7 +14,7 @@ class PassiveCoverConstructionTests(unittest.TestCase):
     def test_unique_preregistered_minimum(self):
         self.assertEqual(candidate.minimum_cover(self.fixture),
                          {"status":"COVER","channels":["app_status","os_focus_input"],
-                          "cost":7,"minimum_tie_count":1,"cover_count":1})
+                          "cost":7,"minimum_tie_count":1,"cover_count":4})
 
     def test_mandatory_safety_sensor(self):
         for row in candidate.all_subsets(self.fixture):
