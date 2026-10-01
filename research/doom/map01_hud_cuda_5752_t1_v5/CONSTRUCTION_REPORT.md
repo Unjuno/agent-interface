@@ -5,7 +5,7 @@ Status: preparation only; no candidate, CUDA kernel, or independent formal audit
 ## Freeze
 
 - Allocation: `GPU-HUD-CUDA-5752-20261001-05`.
-- Preparation base: `b54ec8fac5d005d510a5787d98b9ad7a24d96923`, observed at 2026-10-01 09:53:52 UTC. Exact main must be refreshed and the source dependency closure rechecked at the reserved start.
+- Preparation base: `b54ec8fac5d005d510a5787d98b9ad7a24d96923`, observed at 2026-10-01 09:53:52 UTC. Start-gate main: `c427c704404fc2b35ea9e06a57e61d239b77b369`, observed at 2026-10-01 10:20:54 UTC; comparison showed 0 changes to the pinned Doom HUD source/input paths.
 - Branch/path: `research/gpu-hud-cuda-5752-20261001-05` / `research/doom/map01_hud_cuda_5752_t1_v5/`.
 - Prior allocation-04 remains terminal `STOP_INSUFFICIENT_DISK_SPACE`, candidate=0; its ID, branch, STOP receipt, and history are not reused or modified.
 
