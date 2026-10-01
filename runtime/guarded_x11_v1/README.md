@@ -132,6 +132,15 @@ lower semantic latency, human tempo or token cost and performs no automatic inpu
 
 ### Deadline enforcement
 
+Python `click`, `move` and `keyboard` accept optional `expires_at_ns` from the
+same execution-host monotonic clock. The effective deadline is the earlier of
+that absolute deadline and the existing five-second cap. An expired caller
+deadline refuses before capture or dispatch; admission cost never renews it.
+For a compiled continuation, pass the executor's `valid_until_ns` unchanged
+as this argument. This does not expose a new MCP parameter or automatically
+construct a compiled adapter. Omitting it preserves the existing cap.
+
+
 The existing five-second guarded lease includes admission captures, pointer
 checks, typing and explicit waits. Every new key press now checks that deadline;
 key release remains permitted afterward. A fixed wait ends at the earlier of
