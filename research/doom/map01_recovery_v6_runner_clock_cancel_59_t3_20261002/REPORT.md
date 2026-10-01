@@ -16,10 +16,12 @@ The single candidate invocation completed both cases:
 
 | Case | Timer-to-clock return | Clock return to cancel | Outcome |
 |---|---:|---:|---|
-| A, 400 ms clock delay / 2 s lease | about 414.8 ms | about 0.110 ms | verified mock release; terminal status `completed` |
+| A, 400 ms clock delay / 2 s lease | about 415.837 ms | about 0.111 ms | verified mock release; terminal status `completed` |
 | B, 1600 ms clock delay / 1.5 s lease | lease release about 706.2 ms before clock return | cancel unmatched after expiry | verified mock release; terminal status `expired` |
 
 These values are descriptive only. The ordering protocol violation invalidates formal interpretation regardless of the observed values. Exact monotonic timestamps, event rows, and runner summaries are in `raw_trace.json`.
+
+A later read-only arithmetic check of the preserved JSON recomputed A timer→clock as 415.837 ms and clock→cancel as 0.111 ms, and B release→clock as 706.169 ms. This corrects the rounded A value in the initial report; it is a posthoc consistency check, not the preregistered independent audit.
 
 Construction-only smoke passed before the candidate: exact `_run_arm` reached verified release and cancel observation, with release about 15.7 ms after the 30 ms timer. The initial smoke attempt failed before execution due to a harness instrumentation issue (timer import overwritten), which was corrected before the successful smoke and before the candidate.
 
