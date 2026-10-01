@@ -32,9 +32,12 @@ Two harness invocations stopped before the producer was called and produced **ze
 - `git diff --check`: PASS.
 - `python -B -m unittest discover -s research -p 'test_*workspace*.py' -v`: **21/21 PASS**.
 - `python research/check_workspace_index.py --git-tree`: PASS; **152** top-level research directories indexed.
-- `python -B research/analysis/check_index.py`: PASS; **306** retained result/failure directories indexed. Advisory only because this addition is outside `research/analysis/`.
+- `python -B research/analysis/check_index.py`: PASS; **309** retained result/failure directories indexed. Advisory only because this addition is outside `research/analysis/`.
+- The parallel-main test `research/live_control/test_primary_usage_projection.py`: **7/7 PASS** in Python 3.12. An initial direct module import omitted `research/live_control` from the module path; workflow-style discovery with the declared `PYTHONPATH` passed.
 - Native MCP CI's exact Node test list in Node **22.23.3**: **109/109 PASS**. One initial Node-only container lacked `python3` (107 passed, two `ENOENT`); installing the CI helper interpreter in the disposable container resolved it.
 - `python runtime/integration_checks/native.py --output /tmp/native-ci` in Python **3.12.14**, with the workflow dependencies and Git: **156/156 PASS**, both `protocol` and `harness` suites. The first minimal image lacked Git (9 environment errors); the next attempt used global `GIT_DIR` variables, which leaked into two tests creating temporary repos. The passing run instead mounted this linked worktree's Git metadata read-only at the absolute location named by `.git`, without Git environment overrides. No repository source was changed by these local CI runs.
+
+The final full local suite was run after rebasing onto main `c6c103f31e3483c5856cc19b8e13ce279657083d`, at recovery HEAD `35be77afd4b814c7b9d5efd50dc5dc41682470a4`.
 
 An earlier invocation with unsupported `--git-tree` on the analysis-index script returned its usage error without running the check; the workflow's exact command was then run successfully. All check commands above were rerun successfully under the applicable workflow invocation.
 
