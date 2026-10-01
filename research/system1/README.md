@@ -102,3 +102,7 @@ Read each child experiment for its allowed decision vocabulary, authority bounda
 ## Online role-router LoRA archive
 
 - [`needle_role_router_online_lora_replay_v1/ARCHIVAL_QUALIFICATION.md`](needle_role_router_online_lora_replay_v1/ARCHIVAL_QUALIFICATION.md) — Issue #4899 / source PR #4906; exact original source and formal/construction-r4 archives. Registered `HOLD_AUDIT_INTEGRITY` and the missed +0.10 A-retention gain remain unchanged; earlier construction r1–r3 full raw/report sets remain outside this committed archive. Preservation only, with no rerun, promotion, or closure of #4899.
+
+## Role-skill construction STOP archive
+
+- [`needle_role_skill_joint_retention_v2/ARCHIVAL_QUALIFICATION.md`](needle_role_skill_joint_retention_v2/ARCHIVAL_QUALIFICATION.md): Issue #4908 / source PR #4911; exact historical published blobs preserving `STOP_CONSTRUCTION_OUTPUT_NOT_EMPTY`. Source, freeze, receipt and log bindings do not match the retained identity claims. The historical 7/7 tests and `PASS_STOP_EVIDENCE_AUDIT` are retained claims, not independently reproduced here. No rerun, result promotion, seed authorization, or issue closure.
