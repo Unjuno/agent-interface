@@ -1,0 +1,16 @@
+{
+  "schema": "typed-decision-equivalence-construction-stop-v1",
+  "issue": 4652,
+  "construction_attempt": 1,
+  "freeze_revision": 1,
+  "freeze_sha256": "5d50f4c68cdb311177b65da359143c104dca0ac2608c5297abecadbbb6f06a9b",
+  "formal_invocation_count": 0,
+  "docker_exit_code": 1,
+  "reason": "STOP_TOOLCHAIN_IMPORT_BEFORE_MODEL_OR_GPU",
+  "error": "ImportError: cannot import name 'CacheHandle' from 'cache_mechanics' (/study/source/cache_mechanics.py)",
+  "model_loaded": false,
+  "question_evaluations": 0,
+  "formal_rows": 0,
+  "interpretation": "Harness source mismatch: construction expected the generation/bundle/prefix-bound #4639 CacheHandle but the packaged helper was copied from #4623. This is not an experimental result. Preserve this STOP; corrected helper is a new freeze revision.",
+  "original_branch_commit": "5362c4dd7711adffcbc397ec8470b27685ab1f15"
+}

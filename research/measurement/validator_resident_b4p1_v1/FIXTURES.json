@@ -1,0 +1,58 @@
+[
+  {
+    "label": "observe",
+    "content": "{\"authority\":{\"expires_at_ns\":1,\"lease_id\":\"static-only\"},\"ops\":[{\"frame\":\"window_client\",\"h\":24,\"op\":\"observe\",\"w\":24,\"x\":0,\"y\":0},{\"op\":\"release_all\"}],\"program_id\":\"static-b4p1\",\"schema\":\"agent-interface/program-v1\",\"source\":{\"binding_revision\":0,\"observation_seq\":0},\"terminal\":{\"release_all_required\":true}}\n",
+    "status": "valid",
+    "error": null,
+    "detail": null
+  },
+  {
+    "label": "bad_width",
+    "content": "{\"authority\":{\"expires_at_ns\":1,\"lease_id\":\"static-only\"},\"ops\":[{\"frame\":\"window_client\",\"h\":24,\"op\":\"observe\",\"w\":true,\"x\":0,\"y\":0},{\"op\":\"release_all\"}],\"program_id\":\"static-b4p1\",\"schema\":\"agent-interface/program-v1\",\"source\":{\"binding_revision\":0,\"observation_seq\":0},\"terminal\":{\"release_all_required\":true}}\n",
+    "status": "invalid",
+    "error": "INVALID_PROGRAM",
+    "detail": "observe w must be int"
+  },
+  {
+    "label": "corrected_width",
+    "content": "{\"authority\":{\"expires_at_ns\":1,\"lease_id\":\"static-only\"},\"ops\":[{\"frame\":\"window_client\",\"h\":24,\"op\":\"observe\",\"w\":400,\"x\":0,\"y\":0},{\"op\":\"release_all\"}],\"program_id\":\"static-b4p1\",\"schema\":\"agent-interface/program-v1\",\"source\":{\"binding_revision\":0,\"observation_seq\":0},\"terminal\":{\"release_all_required\":true}}\n",
+    "status": "valid",
+    "error": null,
+    "detail": null
+  },
+  {
+    "label": "removed",
+    "content": null,
+    "status": "input_error",
+    "error": "INPUT_UNREADABLE",
+    "detail": null
+  },
+  {
+    "label": "invalid_json",
+    "content": "{\n",
+    "status": "input_error",
+    "error": "INVALID_JSON",
+    "detail": null
+  },
+  {
+    "label": "unicode_gap",
+    "content": "{\"authority\":{\"expires_at_ns\":1,\"lease_id\":\"static-only\"},\"ops\":[{\"gap_ms\":1,\"op\":\"text\",\"text\":\"\u65e5\u672c\"},{\"op\":\"release_all\"}],\"program_id\":\"static-b4p1\",\"schema\":\"agent-interface/program-v1\",\"source\":{\"binding_revision\":0,\"observation_seq\":0},\"terminal\":{\"release_all_required\":true}}\n",
+    "status": "valid",
+    "error": null,
+    "detail": null
+  },
+  {
+    "label": "over_capacity",
+    "content": "{\"authority\":{\"expires_at_ns\":1,\"lease_id\":\"static-only\"},\"ops\":[{\"keys\":[\"A\"],\"op\":\"key_chord\",\"repeat\":126},{\"keys\":[\"B\"],\"op\":\"key_chord\",\"repeat\":2},{\"op\":\"release_all\"}],\"program_id\":\"static-b4p1\",\"schema\":\"agent-interface/program-v1\",\"source\":{\"binding_revision\":0,\"observation_seq\":0},\"terminal\":{\"release_all_required\":true}}\n",
+    "status": "invalid",
+    "error": "INVALID_KEY_REPEAT",
+    "detail": "expanded operations exceed program capacity"
+  },
+  {
+    "label": "release_only",
+    "content": "{\"authority\":{\"expires_at_ns\":1,\"lease_id\":\"static-only\"},\"ops\":[{\"op\":\"release_all\"}],\"program_id\":\"static-b4p1\",\"schema\":\"agent-interface/program-v1\",\"source\":{\"binding_revision\":0,\"observation_seq\":0},\"terminal\":{\"release_all_required\":true}}\n",
+    "status": "valid",
+    "error": null,
+    "detail": null
+  }
+]

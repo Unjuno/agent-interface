@@ -1,0 +1,22 @@
+{
+  "kind": "act",
+  "steps": [
+    {
+      "op": "pointer_move",
+      "x": 1030,
+      "y": 110
+    },
+    {
+      "op": "dwell_observe",
+      "delay_ms": 800
+    }
+  ],
+  "rationale": "Inspect the pending A-to-B segment after the presentation change before building the second segment.",
+  "intent": "inspect",
+  "expected_effect": "A fresh unobstructed pointer view of the fixture allows checking pavement along A-to-B and the shared B corner.",
+  "checkpoint": {
+    "prior_turn": 5,
+    "status": "uncertain",
+    "evidence": "Tree textures and overlapping B/X labels still obscure the A-to-B alignment; continuous pavement and the shared corner cannot be confirmed."
+  }
+}

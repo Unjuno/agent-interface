@@ -1,0 +1,17 @@
+{
+  "allocation_id": "ISSUE3311-LOCAL-X11-INTERMEDIATE-FEEDBACK-20260928-01",
+  "schema": "issue3311_intermediate_feedback_x11_launch_stop_v1",
+  "disposition": "STOP_CONTAINER_ENTRYPOINT_PREEMPTED_RUNNER",
+  "docker_exit_code": 2,
+  "runner_started": false,
+  "gui_actions": 0,
+  "model_calls": 0,
+  "network": "none",
+  "image_id": "sha256:dff1c7b56201b4c299883655d98aee3b3f8d7c0c6dd1e4ad6320b942fb5d17fb",
+  "requested_command": "docker run --rm --network none --read-only --tmpfs /tmp:rw,nosuid,size=512m --cpus=1 --memory=512m --pids-limit=64 --shm-size=128m -e DISPLAY=:97 -e PYTHONPATH=/src/research/live_control -e XDG_CACHE_HOME=/tmp/cache -e XDG_CONFIG_HOME=/tmp/config -v <repo>:/src:ro -v <formal01>:/out:rw -w /src issue-2849-task1-runtime:20260921 python3.11 /src/research/integration/issue3311_intermediate_feedback_x11_v1/runner.py",
+  "observed_output": "python3: can't open file '/workspace/research/integration/mixed_app_long_session_2499/formal_session.py': [Errno 2] No such file or directory",
+  "cause": "The image defines an ENTRYPOINT for a different historical runner; the requested python3.11 script was passed as arguments to that ENTRYPOINT. Docker exited before the registered runner started.",
+  "no_retry": true,
+  "predecessor_runner_sha256": "815c633673efa8a8cb983a5953d93ebd418034455dca8a7fa928525a2424d845",
+  "predecessor_auditor_sha256": "4fa7a5ad9a4b0307d11ff17e8e8f2fb0415d60e2a299f189a7ea3f0d8a83f77b"
+}

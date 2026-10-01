@@ -1,0 +1,38 @@
+{
+  "schema": "needle-online-snapshot-cadence-post-run-v1",
+  "issue": 4621,
+  "allocation": "needle-online-snapshot-cadence-4621-v2",
+  "status": "HOLD_NO_PERSISTENCE_BENEFIT",
+  "formal_invocations": 1,
+  "training_container_invocations": 1,
+  "audit_container_invocations": 1,
+  "training_exit_code": 0,
+  "audit_exit_code": 0,
+  "retries": 0,
+  "optimizer_base_steps": 1200,
+  "optimizer_adapter_steps": 1536,
+  "seeds": [
+    {"seed": 77111, "role_a_accuracy": 0.956787109375, "role_b_accuracy": 0.90625},
+    {"seed": 77222, "role_a_accuracy": 0.96826171875, "role_b_accuracy": 0.922119140625},
+    {"seed": 77333, "role_a_accuracy": 0.97509765625, "role_b_accuracy": 0.879638671875}
+  ],
+  "aggregate": {
+    "1": {"update_p95_ms": 8.880801666666667, "boundary_p95_ms": 2449.313718666667, "persistence_per_feedback_mean_ms": 1803.0921567083333, "persistence_per_feedback_p95_ms": 2449.313718666667, "total_per_feedback_p95_ms": 2454.3589796666665, "max_unsaved_feedback_on_crash": 0},
+    "4": {"update_p95_ms": 6.821535333333333, "boundary_p95_ms": 1869.6123213333333, "persistence_per_feedback_mean_ms": 444.4510269583334, "persistence_per_feedback_p95_ms": 467.4030803333333, "total_per_feedback_p95_ms": 473.1202276666666, "max_unsaved_feedback_on_crash": 3},
+    "16": {"update_p95_ms": 4.913397333333333, "boundary_p95_ms": 1713.6921306666666, "persistence_per_feedback_mean_ms": 107.10575816666666, "persistence_per_feedback_p95_ms": 107.10575816666666, "total_per_feedback_p95_ms": 112.0191555, "max_unsaved_feedback_on_crash": 15}
+  },
+  "audit_errors": 0,
+  "exact_resumed_state_and_prediction_matches": 144,
+  "durable_checkpoints": 63,
+  "fresh_worker_processes_including_final_validators": 72,
+  "corruption_controls_passed": 9,
+  "role_route_control_types_passed_per_seed": 5,
+  "raw_training_zip_bytes": 2845319,
+  "raw_training_zip_sha256": "6405c1f72aadcdfed45c411470c7ee3f542e94b2f6d464b173fe969e5c08ef6f",
+  "raw_training_zip_entry_sha256_mismatches": 0,
+  "limitations": [
+    "Synthetic authored labels and three deterministic seeds only.",
+    "Tiny network on one local Linux/amd64 CPU image; cold Python process startup and JSON snapshot reload dominate.",
+    "No Astra feedback, GUI/task effect, concurrent inference/training, live action authority, or runtime promotion."
+  ]
+}

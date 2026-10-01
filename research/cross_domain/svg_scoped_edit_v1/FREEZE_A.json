@@ -1,0 +1,19 @@
+{
+  "decision": "RETAIN scoped_current only if all15 exact task outcomes correct, stale_document exposes non-write loss and whole_file_guard exposes false refusals. Evidence-integrity failure stops. Refuse concurrent fill and late ref changes. No same-ID reruns.",
+  "issue": 344,
+  "plan_sha256": "5a7ec184b6849b52ecf37b0ad07a8d34da48127f56b70da9b8d2d80fe989d87b",
+  "publication_base": "0dd239b7db10831a4e8ac078d3a32d4be6370e3d",
+  "scored_cases": 45,
+  "source_sha256": {
+    "ENVIRONMENT.json": "331473907a96066afa13631bbc9fe4706c96280879cbe3602784dba2b77a3fcd",
+    "audit.py": "ff55ea4643b8c14b3485aae9da5298f88141d3f4b0f4854d5ec3df520b0c13c2",
+    "experiment.py": "8a3922e2da536c46dfac251aa8e9ad04709fab512f12c7a3aa9f4655f32a640c",
+    "test_contract.py": "6c346c670cfb25f17f7d4d02d732e79b883d9a72cea20db6454283e77ebb5e0d"
+  },
+  "task": "SVG-SCOPED-EDIT-20260916-A",
+  "unit_tests": {"failed": 0, "passed": 12},
+  "source_archive_sha256": "d5b3f05fa29e7d28f382ee3341d586a72cf1b92a048a8abd60bccde0d3216eb0",
+  "source_archive_bytes": 8348,
+  "schedule": "seed344916; reps1..3; shuffle five scenarios outer (stable,other_move,target_move,fill_conflict,late_ref) and three policies inner (stale_document,whole_file_guard,scoped_current) per rep; exact plan bound above",
+  "scope": "Native Inkscape1.4 actions and PNG export; local bare Git2.47.3 publication CAS. No GUI/XTEST/Executor/model/Doom. Known simple SVG rectangle task, not arbitrary SVG semantics."
+}

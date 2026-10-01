@@ -1,0 +1,27 @@
+{
+  "status": "PREREGISTERED_BEFORE_TURN_START",
+  "allocation_id": "codex-app-server-interrupt-live-01",
+  "objective": "verify one auditable model-turn interruption without force-killing the process tree",
+  "issue": 59,
+  "codex_version": "0.153.4",
+  "model": "gpt-5.6-luna",
+  "effort": "low",
+  "thread_ephemeral": true,
+  "prompt": "Return {\"answer\":\"ready\"} only.",
+  "interrupt_boundary": "wait for matching turn/started, then send exactly one turn/interrupt immediately",
+  "success_condition": "interrupt acknowledgment, matching turn/completed status interrupted, no answer eligibility, and retained per-turn usage or explicit null",
+  "race_disposition": "if turn completes before interrupt, retain as completion race and do not retry this allocation",
+  "failure_disposition": "retain exact protocol failure and diagnose before a differently versioned allocation",
+  "output": "results-local/codex-app-server-interrupt-live-01",
+  "command": [
+    "python",
+    "research/live_control/probe_codex_app_server_interrupt_v1.py",
+    "results-local/codex-app-server-interrupt-live-01"
+  ],
+  "source_sha256": {
+    "research/live_control/codex_app_server_client_v2.py": "8ed4e3496ef8154d3c4573fb1386efe6e036292a3809e43aa37fc22aecc5b42b",
+    "research/live_control/probe_codex_app_server_interrupt_v1.py": "94ba71f5a1cb03172659d02e7013ba0ff90fce24927581dd3776db85fccd0917"
+  },
+  "parent_commit": "0805da3acfc07ca83f81325120dc1807ed6d138a",
+  "scope": "single no-tool Luna turn; interruption mechanics only; no token-savings, session-continuity, planner-quality or DOOM claim"
+}

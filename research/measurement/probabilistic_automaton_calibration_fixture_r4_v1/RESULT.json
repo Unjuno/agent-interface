@@ -1,0 +1,20 @@
+{
+  "decision": "PASS_PROBABILISTIC_AUTOMATON_CALIBRATION_FIXTURE_SCOPED",
+  "formal_invocations": 1,
+  "reruns": 0,
+  "replacements": 0,
+  "tuning": 0,
+  "passed": true,
+  "ledger_sha256": "493d05357f9ddd41ecb97eacf52ed6364b938e9a5a90364b2cc28a5e91396b65",
+  "rows": 1000,
+  "unique_ids": 1000,
+  "counts": {"A": 600, "B": 400},
+  "p_A": "3/5",
+  "intervals": {
+    "A": {"lower": "11/3", "upper": "4", "complete": 400, "censored": 200},
+    "B": {"lower": "3", "upper": "4", "complete": 200, "censored": 200}
+  },
+  "authored_mean": {"A": "4", "B": "7/2"},
+  "completion_only_p_A": "2/3",
+  "environment": "Python standard library; no GUI, X11, model, provider, network, or task input"
+}

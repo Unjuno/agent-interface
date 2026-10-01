@@ -1,0 +1,92 @@
+{
+  "scope": "independent postrun parsing; declared cell values only, not arbitrary workbook equivalence or general GUI effects",
+  "sources": {
+    "audit_persisted_effect_v1.py": "69e240e371e411a39e0433739294bc1e367a10ad6ea74404ecfff4bd22b8cd5f",
+    "workbook-snapshots.json": "248b62c58dd61d34dc1554fd34fe7363fa0f942bcbcfe0ca2fb1851670603de4",
+    "turns.json": "b4c1c4dff9a22d7f37ba6f8b26f2b6d02705a63dd34e7fb5f14d0d30f414c5ad"
+  },
+  "before": {
+    "label": "after-sampling-1",
+    "cells": [
+      null,
+      null
+    ]
+  },
+  "after": {
+    "label": "after-phase-2",
+    "file": "workbook-snapshot-03.xlsx",
+    "sha256": "0ef806c65486260a0b0520b4038d89dfff3aa5798594398fadc6305fdaa8c7e3",
+    "cells": [
+      480,
+      192
+    ]
+  },
+  "terminal": {
+    "event": "terminal",
+    "id": "durable-4f3bb3e5122045a0a08f4133bc41c1c5",
+    "status": "needs_decision",
+    "error": null,
+    "steps_completed": 0,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 30363309080,
+      "valid_until_ns": null
+    },
+    "interruption": {
+      "intent_token": "0f9152130aff4ce9a55d735029580dc9",
+      "record": {
+        "event": "owner_release",
+        "reason": "focus_changed",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 30275944728,
+        "valid_until_ns": 30957697003
+      }
+    },
+    "decision_reason": "focus_changed",
+    "post_release_observation": {
+      "captures": 2,
+      "sequences": [
+        15,
+        16
+      ],
+      "equal_sample_pair": false,
+      "error": null,
+      "stopped": false,
+      "authority": "none; no input or lease renewal",
+      "scope": "up to two samples with 80ms waits before capture; not readiness or semantic completion",
+      "elapsed_ms": 305.767128
+    },
+    "terminal_ns": 30682916661,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emit_started_ns": 30682920865
+  },
+  "already_persisted_before_next_model": true,
+  "later_model_action": {
+    "kind": "act",
+    "steps": [
+      {
+        "op": "pointer_click",
+        "x": 79,
+        "y": 190,
+        "duration_ms": 80
+      },
+      {
+        "op": "chord",
+        "modifier": "Control_L",
+        "key": "s"
+      }
+    ],
+    "rationale": "The worksheet visibly already contains A1=480 and A2=192. Click the visible A1 cell to establish focus, then save the existing workbook."
+  },
+  "changed_zip_members_after_later_save": [
+    "xl/worksheets/sheet1.xml"
+  ],
+  "model_received_saved_snapshots": false,
+  "authority": "none"
+}

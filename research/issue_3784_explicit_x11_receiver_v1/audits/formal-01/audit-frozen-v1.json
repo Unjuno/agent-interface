@@ -1,0 +1,84 @@
+{
+  "allocation": "issue3784-explicit-x11-receiver-formal-01",
+  "artifact_count": 8,
+  "disposition": "FAIL_AUDIT_INTEGRITY",
+  "errors": [
+    "MAP_ARTIFACT_MISSING:de-01:baseline",
+    "MAP_ARTIFACT_MISSING:de-01:after",
+    "MAP_ARTIFACT_MISSING:de-02:baseline",
+    "MAP_ARTIFACT_MISSING:de-02:after",
+    "MAP_ARTIFACT_MISSING:de-03:baseline",
+    "MAP_ARTIFACT_MISSING:de-03:after",
+    "MAP_ARTIFACT_MISSING:us-control:baseline",
+    "MAP_ARTIFACT_MISSING:us-control:after"
+  ],
+  "raw_disposition": "STOP_GERMAN_FORMULA_DELIVERY",
+  "raw_sha256": "34f6e18f90a0af9af75c3fdecf74297f9b562e052b139b076b1aaa060edf9859",
+  "rows": [
+    {
+      "case_id": "de-01",
+      "event_count": 0,
+      "layout_gate": {},
+      "receiver_control_ok": false,
+      "status": "STOP_RECEIVER_CONTROL",
+      "typed": ""
+    },
+    {
+      "case_id": "de-02",
+      "event_count": 0,
+      "layout_gate": {},
+      "receiver_control_ok": false,
+      "status": "STOP_RECEIVER_CONTROL",
+      "typed": ""
+    },
+    {
+      "case_id": "de-03",
+      "event_count": 0,
+      "layout_gate": {},
+      "receiver_control_ok": false,
+      "status": "STOP_RECEIVER_CONTROL",
+      "typed": ""
+    },
+    {
+      "case_id": "us-control",
+      "event_count": 0,
+      "layout_gate": {},
+      "receiver_control_ok": false,
+      "status": "STOP_RECEIVER_CONTROL",
+      "typed": ""
+    }
+  ],
+  "runner_sha256": "bb202694699595887735b9121324b402751c5171087ad993853dde4cde2b1e9e",
+  "schema": "agent-interface/issue3784-audit-v1",
+  "semantic_failures": [],
+  "setup_stops": [
+    "XTEST_RECEIVER_CONTROL:de-01",
+    "LAYOUT_QUERY:de-01:baseline",
+    "LAYOUT_QUERY:de-01:after",
+    "ACTIVE_MAP_GATE:de-01",
+    "LAYOUT_APPLY:de-01",
+    "UNSUPPORTED_PREFLIGHT_MISSING:de-01",
+    "ROW_STOP:de-01:STOP_RECEIVER_CONTROL",
+    "XTEST_RECEIVER_CONTROL:de-02",
+    "LAYOUT_QUERY:de-02:baseline",
+    "LAYOUT_QUERY:de-02:after",
+    "ACTIVE_MAP_GATE:de-02",
+    "LAYOUT_APPLY:de-02",
+    "UNSUPPORTED_PREFLIGHT_MISSING:de-02",
+    "ROW_STOP:de-02:STOP_RECEIVER_CONTROL",
+    "XTEST_RECEIVER_CONTROL:de-03",
+    "LAYOUT_QUERY:de-03:baseline",
+    "LAYOUT_QUERY:de-03:after",
+    "ACTIVE_MAP_GATE:de-03",
+    "LAYOUT_APPLY:de-03",
+    "UNSUPPORTED_PREFLIGHT_MISSING:de-03",
+    "ROW_STOP:de-03:STOP_RECEIVER_CONTROL",
+    "XTEST_RECEIVER_CONTROL:us-control",
+    "LAYOUT_QUERY:us-control:baseline",
+    "LAYOUT_QUERY:us-control:after",
+    "ACTIVE_MAP_GATE:us-control",
+    "UNSUPPORTED_PREFLIGHT_MISSING:us-control",
+    "ROW_STOP:us-control:STOP_RECEIVER_CONTROL"
+  ],
+  "source_manifest_sha256": "a75320185da90945ebca6b442df4972b032c687c6f8710a5aa4856f41ddc9374"
+}

@@ -1,0 +1,11 @@
+[
+  {
+    "stage": "first cross-OS diagnostic audit",
+    "failures": [
+      "expected a prompt_sha256 field that model_pair_runner_v2 does not emit",
+      "joined a Windows-style relative image path without normalizing separators under WSL"
+    ],
+    "correction": "verify the runner-copied prompt bytes directly and normalize the frozen relative image path before joining",
+    "model_calls_repeated": false
+  }
+]

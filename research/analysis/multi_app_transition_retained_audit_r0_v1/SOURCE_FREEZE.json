@@ -1,0 +1,31 @@
+{
+  "task":"MULTI-APP-TRANSITION-RETAINED-INTEGRATION-AUDIT-R0-20260918-001",
+  "issue":1690,
+  "base":"fd17331b7859e697c75bb8a805ae2d3bc141e726",
+  "branch":"research/multi-app-transition-retained-audit-r0-1690",
+  "git_blobs":{
+    "PLAN.md":"01c6eaa837cfe01ec999488772a2cc48284471ee",
+    "SOURCE_MAP.json":"93248a6997ec2113e35667b853769913d0a9f708",
+    "LEDGER.json":"e0f225f45c74eb7824dc710ac51d29bb010874e1",
+    "formal.py":"cefebeeb0858152a3bb4d6fcad4487d37c12fb1c",
+    "audit.py":"f386292ae1341287116f8e8de8991a7f3d445374"
+  },
+  "local_git_hash_object":{
+    "SOURCE_MAP.json":"93248a6997ec2113e35667b853769913d0a9f708",
+    "LEDGER.json":"e0f225f45c74eb7824dc710ac51d29bb010874e1",
+    "formal.py":"cefebeeb0858152a3bb4d6fcad4487d37c12fb1c",
+    "audit.py":"f386292ae1341287116f8e8de8991a7f3d445374"
+  },
+  "sha256":{
+    "LEDGER.json":"16e510abe4ba8c498033e071715847786a45df81789ee242bf44ed4a577f7788",
+    "formal.py":"c92ed68fe3718c6e92ba7af5f006741965880deda3b040550c99c1387b1b20e5",
+    "audit.py":"49ce22cac7e782696d084cd5f37adf9e38b5dd7a17f204b3fdbc1af447b3e1b2",
+    "RESULT.json":"e25c88314ba1dfe30d842c87abe173aaa992f7ab398f6400d363041fe9e632fe",
+    "AUDIT.json":"c0989c915dda5d3d8cc8fbd326665572834430af8f6346f0c116805881ac6094"
+  },
+  "preformal_integrity_incident":"The first local post-freeze analysis used a semantically identical but byte-nonidentical compact LEDGER.json. It was rejected before formal classification. The exact remote ledger blob was then reconstructed and git-hash verified before formal1. No source meaning, threshold or decision rule changed.",
+  "formal_invocations":1,
+  "reruns":0,
+  "replacements":0,
+  "tuning":0
+}

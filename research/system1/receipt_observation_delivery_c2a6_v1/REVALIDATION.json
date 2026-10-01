@@ -1,0 +1,116 @@
+{
+  "environment": {
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]"
+  },
+  "intake_main": "4c701cc51b06296268ad8d9ae3eff1dd6f2d379d",
+  "original_reverification": {
+    "decision": "PASS_READONLY_BYTE_RECONSTRUCTION",
+    "files_verified": 971,
+    "frozen_files_verified": 18,
+    "member_bytes": 668006,
+    "pilot_cases": 42,
+    "public_preregistration": false,
+    "receipts": [
+      {
+        "argv": [
+          "/opt/pyvenv/bin/python",
+          "-S",
+          "-B",
+          "/mnt/data/r9k4_delivery_20260926/restored/receipt_observation_r9k4_v1/source/audit.py",
+          "/mnt/data/r9k4_delivery_20260926/restored/receipt_observation_r9k4_v1",
+          "--mode",
+          "pilot",
+          "--batches",
+          "0,1,2",
+          "--out",
+          "/tmp/r9k4-readonly-34pnjn8_/audit.json"
+        ],
+        "byte_identical_to": "AUDIT.json",
+        "pid": 512,
+        "result_sha256": "511442989d098ec21853db7782f9f50023a734b09dbeeb2d8ae535d01bec018b",
+        "returncode": 0,
+        "returned_ns": 186815518315,
+        "role": "pilot_raw_audit",
+        "started_ns": 186713259446,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "511442989d098ec21853db7782f9f50023a734b09dbeeb2d8ae535d01bec018b"
+      },
+      {
+        "argv": [
+          "/opt/pyvenv/bin/python",
+          "-S",
+          "-B",
+          "/mnt/data/r9k4_delivery_20260926/restored/receipt_observation_r9k4_v1/source/controls.py",
+          "/mnt/data/r9k4_delivery_20260926/restored/receipt_observation_r9k4_v1",
+          "--mode",
+          "pilot",
+          "--batches",
+          "0,1,2",
+          "--out",
+          "/tmp/r9k4-readonly-34pnjn8_/controls.json"
+        ],
+        "byte_identical_to": "CONTROLS.json",
+        "pid": 513,
+        "result_sha256": "9bcdf094110c53571c870451fda3d774532b86f657671be8f0add05daea62b90",
+        "returncode": 0,
+        "returned_ns": 189474253298,
+        "role": "pilot_evidence_controls",
+        "started_ns": 186815675732,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e61da490d0b4bc38668054a97b0b09fc13893cf1df98ec5c265381bc8881703d"
+      },
+      {
+        "argv": [
+          "/opt/pyvenv/bin/python",
+          "-S",
+          "-B",
+          "/mnt/data/r9k4_delivery_20260926/restored/receipt_observation_r9k4_v1/source/audit.py",
+          "/mnt/data/r9k4_delivery_20260926/restored/receipt_observation_r9k4_v1",
+          "--mode",
+          "development",
+          "--batches",
+          "0",
+          "--out",
+          "/tmp/r9k4-readonly-34pnjn8_/development.json"
+        ],
+        "byte_identical_to": "DEVELOPMENT_REVIEW_AUDIT.json",
+        "pid": 514,
+        "result_sha256": "efd92bb00c6720a15225b9d18280b63f628b1e47036aa5a56d29300977ff1cdc",
+        "returncode": 0,
+        "returned_ns": 189587903814,
+        "role": "development_raw_audit",
+        "started_ns": 189474535494,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "efd92bb00c6720a15225b9d18280b63f628b1e47036aa5a56d29300977ff1cdc"
+      },
+      {
+        "argv": [
+          "/opt/pyvenv/bin/python",
+          "-S",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "/mnt/data/r9k4_delivery_20260926/restored/receipt_observation_r9k4_v1/source",
+          "-p",
+          "test_policy.py",
+          "-v"
+        ],
+        "pid": 515,
+        "returncode": 0,
+        "returned_ns": 189764667686,
+        "role": "pure_units",
+        "started_ns": 189588076111,
+        "stderr_sha256": "84e57b9091d06c66d89889a8f97c180e7f99877b6fe7b04d21f1f761ab7d3915",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "remote_evidence_complete": false,
+    "scientific_actor_reruns": 0
+  },
+  "readback_pending_at_record": true,
+  "scientific_actor_reruns": 0,
+  "scope": "READ_ONLY_REPUBLICATION_CHECK"
+}

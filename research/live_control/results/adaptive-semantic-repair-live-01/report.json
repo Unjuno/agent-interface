@@ -1,0 +1,840 @@
+{
+  "schema": "adaptive-semantic-repair-live-report-v1",
+  "passed": false,
+  "results": [
+    {
+      "schema": "adaptive-semantic-repair-live-case-v1",
+      "ordinal": 0,
+      "mode": "local",
+      "seed": 216,
+      "status": "COMPLETED",
+      "retry_count": 0,
+      "initial_outcome": {
+        "schema": "semantic-grounding-invocation-outcome-v1",
+        "requested_model": "gpt-5.6-luna",
+        "requested_effort": "low",
+        "process_exit_code": 0,
+        "runner_elapsed_ms": 9512.3966,
+        "model_threads_started": 1,
+        "completed_turns": 1,
+        "completed_messages": 1,
+        "grants_semantic_authority": false,
+        "grants_input_authority": false,
+        "status": "COMPLETED",
+        "reason": "validated_grounding",
+        "usage": {
+          "input_tokens": 9348,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 205,
+          "reasoning_output_tokens": 90
+        },
+        "result": {
+          "raw": {
+            "format": "compiled-form-grounding-v1",
+            "field": {
+              "point_space": "source_observation_pixels",
+              "point": {
+                "x": 150,
+                "y": 243
+              },
+              "motion_model": "surface_origin_translation"
+            },
+            "submit": {
+              "point_space": "source_observation_pixels",
+              "point": {
+                "x": 270,
+                "y": 243
+              },
+              "motion_model": "surface_origin_translation"
+            },
+            "method": {
+              "first_action": "enter_exact_token",
+              "continue_when": "field_pixels_changed_and_submit_revalidated",
+              "second_action": "activate_submit",
+              "complete_when": "submission_pixels_changed_then_independent_score"
+            }
+          },
+          "grounding": {
+            "field_point": [
+              150,
+              243
+            ],
+            "submit_point": [
+              270,
+              243
+            ],
+            "method": {
+              "first_action": "enter_exact_token",
+              "continue_when": "field_pixels_changed_and_submit_revalidated",
+              "second_action": "activate_submit",
+              "complete_when": "submission_pixels_changed_then_independent_score"
+            }
+          },
+          "usage": {
+            "input_tokens": 9348,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 205,
+            "reasoning_output_tokens": 90
+          },
+          "call_id": "01a0a33e-5b2b-7772-8195-c45f70fb7797",
+          "runner_ms": 9512.3966,
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "cost": null
+        },
+        "errors": [],
+        "caller_elapsed_ms": 9894.576268,
+        "visible_images_submitted": 1
+      },
+      "initial_admission": {
+        "schema": "semantic-grounding-admission-v1",
+        "invocation_status": "COMPLETED",
+        "requested_model": "gpt-5.6-luna",
+        "requested_effort": "low",
+        "grants_semantic_authority": false,
+        "grants_input_authority": false,
+        "ordinary_executor_admission_required": true,
+        "status": "TASK_MUTATION_ELIGIBLE",
+        "reason": "current_grounding_completed",
+        "task_mutation_eligible": true,
+        "grounding_reference": {
+          "field_point": [
+            150,
+            243
+          ],
+          "submit_point": [
+            270,
+            243
+          ],
+          "method": {
+            "first_action": "enter_exact_token",
+            "continue_when": "field_pixels_changed_and_submit_revalidated",
+            "second_action": "activate_submit",
+            "complete_when": "submission_pixels_changed_then_independent_score"
+          }
+        },
+        "model_call_id": "01a0a33e-5b2b-7772-8195-c45f70fb7797",
+        "usage": {
+          "input_tokens": 9348,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 205,
+          "reasoning_output_tokens": 90
+        }
+      },
+      "task_mutation_started": true,
+      "passed": false,
+      "checks": {
+        "old_contract_invalid": true,
+        "expected_repair_path": true,
+        "expected_calls": true,
+        "correct": false,
+        "useful_feedback": false,
+        "reconciled": false,
+        "released": true,
+        "programs_attested": true,
+        "no_retry": true,
+        "accounted_images": true,
+        "accounted_wait": true
+      },
+      "goal": {
+        "token": "t000216",
+        "a": 312,
+        "b": 757,
+        "dx": 24,
+        "url": "http://127.0.0.1:40019/",
+        "setup_readiness_captures": 0
+      },
+      "source_observation": {
+        "event": "observation",
+        "id": "adaptive-source",
+        "step": 0,
+        "sequence": 11,
+        "capture_ns": 50624406556945,
+        "context_ns": 50624412831933,
+        "context": [
+          [
+            "windows",
+            "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+          ],
+          [
+            "active_window",
+            6291459
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/adaptive-semantic-repair-live-01/case-01-local/010.png",
+        "image_reused": true,
+        "image_prepare_ns": 5240378,
+        "image_ready_ns": 50624425516837,
+        "input_focus_before": 6291459,
+        "input_focus_after": 6291459,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            1050,
+            780
+          ]
+        },
+        "capture_ms": 5.84203,
+        "wire_bytes": 303,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "semantic_probe_sequence": null,
+        "semantic_probe_reconciliation": null,
+        "runtime_emit_ns": 50624444779681
+      },
+      "mutation_observation": {
+        "event": "observation",
+        "id": "adaptive-mutated",
+        "step": 0,
+        "sequence": 12,
+        "capture_ns": 50624484151300,
+        "context_ns": 50624492685037,
+        "context": [
+          [
+            "windows",
+            "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+          ],
+          [
+            "active_window",
+            6291459
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/adaptive-semantic-repair-live-01/case-01-local/012.png",
+        "image_reused": false,
+        "image_prepare_ns": 19395623,
+        "image_ready_ns": 50624533575162,
+        "input_focus_before": 6291459,
+        "input_focus_after": 6291459,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            930,
+            780
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            930,
+            780
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291459,
+          "surface": 6291459,
+          "geometry": [
+            10,
+            10,
+            930,
+            780
+          ]
+        },
+        "capture_ms": 10.698167,
+        "wire_bytes": 4596,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "semantic_probe_sequence": null,
+        "semantic_probe_reconciliation": null,
+        "runtime_emit_ns": 50624549209305
+      },
+      "mutation_kind": "window_resize",
+      "old_contract_score": {
+        "schema": "target-relative-rgb-crop-semantic-score-v1",
+        "probe_id": "adaptive_completion_1",
+        "target_reference": "submission_heading",
+        "success": false,
+        "reason": "surface_size_changed",
+        "binding_status": "surface_size_changed",
+        "source_surface": 6291459,
+        "source_geometry": [
+          10,
+          10,
+          1050,
+          780
+        ],
+        "current_surface": 6291459,
+        "current_geometry": null,
+        "translation": null,
+        "resolved_box": null,
+        "observed_crop_sha256": null,
+        "expected_crop_sha256": "879ad35b666f63b1c9a401c359bd563c52170146b3e4ca5c7314448fdfb5784c",
+        "scored_frame_sha256": "693dc01e6daa7e24b1cbd7d308f4b6f89aa34dd703cf41c7e8015e7d342b9856",
+        "frame": {
+          "width": 1280,
+          "height": 800,
+          "mode": "RGB"
+        },
+        "grants_input_authority": false
+      },
+      "initial_mint": {
+        "handle": "initial-save-1",
+        "name": "save_form",
+        "status": "VALID",
+        "created_sequence": 11,
+        "expires_ns": 50684470306448,
+        "allowed_transformations": [
+          "window_translation"
+        ],
+        "patch_sha256": "d59dee2e1d41b3d20bcd608da8671873bc9d7a620cf36eb39e96ca04bd5f0a35",
+        "authority": "observational reference only; grants no input authority"
+      },
+      "initial_resolution": {
+        "eligible": true,
+        "status": "VALID",
+        "handle": "initial-save-1",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "save_form",
+        "point": [
+          270,
+          243
+        ],
+        "observed_box": [
+          250,
+          234,
+          42,
+          18
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 11,
+        "valid_until_ns": 50627406556945,
+        "patch_sha256": "d59dee2e1d41b3d20bcd608da8671873bc9d7a620cf36eb39e96ca04bd5f0a35"
+      },
+      "adaptive": {
+        "outcome": "SAFE_STOP",
+        "reason": "association_changed",
+        "task_effect": null,
+        "delivery": null,
+        "execution_progress": null,
+        "selected_target": {
+          "handle": "initial-save-1",
+          "mint": {
+            "handle": "initial-save-1",
+            "name": "save_form",
+            "status": "VALID",
+            "created_sequence": 11,
+            "expires_ns": 50684470306448,
+            "allowed_transformations": [
+              "window_translation"
+            ],
+            "patch_sha256": "d59dee2e1d41b3d20bcd608da8671873bc9d7a620cf36eb39e96ca04bd5f0a35",
+            "authority": "observational reference only; grants no input authority"
+          },
+          "relation": {
+            "schema": "target-semantic-region-relation-v1",
+            "anchor": "target_box_origin",
+            "offset": [
+              -235,
+              -64
+            ],
+            "size": [
+              315,
+              45
+            ]
+          },
+          "contract": {
+            "schema": "target-relative-rgb-crop-semantic-probe-v1",
+            "probe_id": "adaptive_completion_1",
+            "target_reference": "submission_heading",
+            "coordinate_frame": "window_content",
+            "source_surface": 6291459,
+            "source_geometry": [
+              10,
+              10,
+              930,
+              780
+            ],
+            "box_in_frame": [
+              5,
+              160,
+              320,
+              205
+            ],
+            "expected_crop_sha256": "879ad35b666f63b1c9a401c359bd563c52170146b3e4ca5c7314448fdfb5784c",
+            "success_reason": "submission_title_exactly_visible",
+            "allowed_transformations": [
+              "window_translation"
+            ],
+            "grants_input_authority": false
+          },
+          "point": [
+            270,
+            243
+          ],
+          "source_sequence": 12
+        },
+        "cache_update": {
+          "handle": "initial-save-1",
+          "mint": {
+            "handle": "initial-save-1",
+            "name": "save_form",
+            "status": "VALID",
+            "created_sequence": 11,
+            "expires_ns": 50684470306448,
+            "allowed_transformations": [
+              "window_translation"
+            ],
+            "patch_sha256": "d59dee2e1d41b3d20bcd608da8671873bc9d7a620cf36eb39e96ca04bd5f0a35",
+            "authority": "observational reference only; grants no input authority"
+          },
+          "relation": {
+            "schema": "target-semantic-region-relation-v1",
+            "anchor": "target_box_origin",
+            "offset": [
+              -235,
+              -64
+            ],
+            "size": [
+              315,
+              45
+            ]
+          },
+          "contract": {
+            "schema": "target-relative-rgb-crop-semantic-probe-v1",
+            "probe_id": "adaptive_completion_1",
+            "target_reference": "submission_heading",
+            "coordinate_frame": "window_content",
+            "source_surface": 6291459,
+            "source_geometry": [
+              10,
+              10,
+              930,
+              780
+            ],
+            "box_in_frame": [
+              5,
+              160,
+              320,
+              205
+            ],
+            "expected_crop_sha256": "879ad35b666f63b1c9a401c359bd563c52170146b3e4ca5c7314448fdfb5784c",
+            "success_reason": "submission_title_exactly_visible",
+            "allowed_transformations": [
+              "window_translation"
+            ],
+            "grants_input_authority": false
+          },
+          "point": [
+            270,
+            243
+          ],
+          "source_sequence": 12
+        },
+        "repair_path": "local",
+        "route": "reuse",
+        "repair_trace": [
+          {
+            "stage": "reuse_revalidate",
+            "status": "association_changed"
+          },
+          {
+            "stage": "local_repair",
+            "status": "repaired"
+          }
+        ],
+        "coarse_origin": "caller_provided",
+        "comparison": {
+          "class": "warm_reuse",
+          "omitted_stages": [
+            "observe_source",
+            "coarse_model",
+            "acquire_anchor",
+            "anchor_model"
+          ],
+          "comparable_to_full_cold": false
+        },
+        "stages": {
+          "observe_source": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "coarse_model": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "acquire_anchor": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "anchor_model": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "reuse_revalidate": {
+            "status": "completed",
+            "reason": null
+          },
+          "local_repair": {
+            "status": "completed",
+            "reason": null
+          },
+          "acquire_expansion": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "expanded_model": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "post_model_observe": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "post_model_revalidate": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "final_revalidate": {
+            "status": "completed",
+            "reason": null
+          },
+          "execute": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "verify_effect": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          }
+        },
+        "attempt_ledger": [],
+        "model_call_ledger": [],
+        "accounting": {
+          "attempted_calls": 0,
+          "completed_calls": 0,
+          "duplicate_call_ids": [],
+          "usage_totals": {
+            "input_tokens": 0,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0
+          },
+          "usage_coverage": {
+            "input_tokens": 0,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0
+          },
+          "visible_images_submitted": 0,
+          "visible_image_coverage": 0,
+          "model_wait_ns": 0,
+          "model_wait_coverage": 0,
+          "cost": 0,
+          "cached_input_semantics": "subset of input_tokens; never added to input total"
+        },
+        "phase_timings": [
+          {
+            "stage": "reuse_revalidate",
+            "started_ns": 50624605997429,
+            "ended_ns": 50624606036143,
+            "elapsed_ns": 38714
+          },
+          {
+            "stage": "local_repair",
+            "started_ns": 50624606051931,
+            "ended_ns": 50624606432124,
+            "elapsed_ns": 380193
+          },
+          {
+            "stage": "final_revalidate",
+            "started_ns": 50624606496953,
+            "ended_ns": 50624732459115,
+            "elapsed_ns": 125962162
+          }
+        ],
+        "input_authority": "none"
+      },
+      "model_outcomes": [
+        {
+          "label": "initial-model",
+          "outcome": {
+            "schema": "semantic-grounding-invocation-outcome-v1",
+            "requested_model": "gpt-5.6-luna",
+            "requested_effort": "low",
+            "process_exit_code": 0,
+            "runner_elapsed_ms": 9512.3966,
+            "model_threads_started": 1,
+            "completed_turns": 1,
+            "completed_messages": 1,
+            "grants_semantic_authority": false,
+            "grants_input_authority": false,
+            "status": "COMPLETED",
+            "reason": "validated_grounding",
+            "usage": {
+              "input_tokens": 9348,
+              "cached_input_tokens": 0,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 205,
+              "reasoning_output_tokens": 90
+            },
+            "result": {
+              "raw": {
+                "format": "compiled-form-grounding-v1",
+                "field": {
+                  "point_space": "source_observation_pixels",
+                  "point": {
+                    "x": 150,
+                    "y": 243
+                  },
+                  "motion_model": "surface_origin_translation"
+                },
+                "submit": {
+                  "point_space": "source_observation_pixels",
+                  "point": {
+                    "x": 270,
+                    "y": 243
+                  },
+                  "motion_model": "surface_origin_translation"
+                },
+                "method": {
+                  "first_action": "enter_exact_token",
+                  "continue_when": "field_pixels_changed_and_submit_revalidated",
+                  "second_action": "activate_submit",
+                  "complete_when": "submission_pixels_changed_then_independent_score"
+                }
+              },
+              "grounding": {
+                "field_point": [
+                  150,
+                  243
+                ],
+                "submit_point": [
+                  270,
+                  243
+                ],
+                "method": {
+                  "first_action": "enter_exact_token",
+                  "continue_when": "field_pixels_changed_and_submit_revalidated",
+                  "second_action": "activate_submit",
+                  "complete_when": "submission_pixels_changed_then_independent_score"
+                }
+              },
+              "usage": {
+                "input_tokens": 9348,
+                "cached_input_tokens": 0,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 205,
+                "reasoning_output_tokens": 90
+              },
+              "call_id": "01a0a33e-5b2b-7772-8195-c45f70fb7797",
+              "runner_ms": 9512.3966,
+              "requested_model": "gpt-5.6-luna",
+              "requested_effort": "low",
+              "cost": null
+            },
+            "errors": [],
+            "caller_elapsed_ms": 9894.576268,
+            "visible_images_submitted": 1
+          },
+          "admission": {
+            "schema": "semantic-grounding-admission-v1",
+            "invocation_status": "COMPLETED",
+            "requested_model": "gpt-5.6-luna",
+            "requested_effort": "low",
+            "grants_semantic_authority": false,
+            "grants_input_authority": false,
+            "ordinary_executor_admission_required": true,
+            "status": "TASK_MUTATION_ELIGIBLE",
+            "reason": "current_grounding_completed",
+            "task_mutation_eligible": true,
+            "grounding_reference": {
+              "field_point": [
+                150,
+                243
+              ],
+              "submit_point": [
+                270,
+                243
+              ],
+              "method": {
+                "first_action": "enter_exact_token",
+                "continue_when": "field_pixels_changed_and_submit_revalidated",
+                "second_action": "activate_submit",
+                "complete_when": "submission_pixels_changed_then_independent_score"
+              }
+            },
+            "model_call_id": "01a0a33e-5b2b-7772-8195-c45f70fb7797",
+            "usage": {
+              "input_tokens": 9348,
+              "cached_input_tokens": 0,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 205,
+              "reasoning_output_tokens": 90
+            }
+          }
+        }
+      ],
+      "actual": {},
+      "actions": [
+        {
+          "id": "adaptive-nav-1",
+          "program": [
+            {
+              "op": "chord",
+              "modifier": "Control_L",
+              "key": "l"
+            },
+            {
+              "op": "text",
+              "text": "http://127.0.0.1:40019/"
+            },
+            {
+              "op": "key",
+              "key": "Return"
+            },
+            {
+              "op": "wait_title",
+              "contains": "AI FORM READY",
+              "timeout_ms": 1500
+            }
+          ],
+          "submitted_ns": 50613603162175,
+          "accepted": {
+            "event": "accepted",
+            "id": "adaptive-nav-1",
+            "steps": 4,
+            "program_sha256": "29eadef99af2241db818a4a4e032a41c4699f9234e3ade705141cb2814264860",
+            "intent_token": "fc6c180292184ec6ba9901dbe17dcaea",
+            "valid_until_ns": 50621603164446,
+            "accepted_ns": 50613603407493,
+            "runtime_emit_ns": 50613603408607
+          },
+          "terminal": {
+            "event": "terminal",
+            "id": "adaptive-nav-1",
+            "status": "completed",
+            "error": null,
+            "steps_completed": 4,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 50614012237498,
+              "valid_until_ns": 50621603164446
+            },
+            "interruption": null,
+            "decision_reason": null,
+            "terminal_ns": 50614012292592,
+            "semantic_completion": "program status only; task scoring is separate",
+            "runtime_emit_ns": 50614012293625
+          }
+        },
+        {
+          "id": "adaptive-fill-1",
+          "program": [
+            {
+              "op": "pointer_click",
+              "x": 150,
+              "y": 243,
+              "duration_ms": 80
+            },
+            {
+              "op": "chord",
+              "modifier": "Control_L",
+              "key": "a"
+            },
+            {
+              "op": "text",
+              "text": "t000216"
+            },
+            {
+              "op": "observe"
+            }
+          ],
+          "submitted_ns": 50623982230209,
+          "accepted": {
+            "event": "accepted",
+            "id": "adaptive-fill-1",
+            "steps": 4,
+            "program_sha256": "11037c45d048532f40754031de49847134f0a22258bb2943e0159fefbda28351",
+            "intent_token": "976c0b97dcc3438a90f4ec8b9ff2c328",
+            "valid_until_ns": 50631982232904,
+            "accepted_ns": 50623982379505,
+            "runtime_emit_ns": 50623982380541
+          },
+          "terminal": {
+            "event": "terminal",
+            "id": "adaptive-fill-1",
+            "status": "completed",
+            "error": null,
+            "steps_completed": 4,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 50624399725419,
+              "valid_until_ns": 50631982232904
+            },
+            "interruption": null,
+            "decision_reason": null,
+            "terminal_ns": 50624399786439,
+            "semantic_completion": "program status only; task scoring is separate",
+            "runtime_emit_ns": 50624399787707
+          }
+        }
+      ],
+      "client": {
+        "feedback": [],
+        "exchanges": []
+      },
+      "reconciliations": [],
+      "metrics": {
+        "mutation_capture_to_caller_return_ms": 248.426323,
+        "adaptive_model_wait_ms": 0.0,
+        "total_input_tokens": 9348,
+        "total_model_calls": 1,
+        "model_visible_images": 1,
+        "client_exchanges": 0
+      },
+      "allocation_eligible": true
+    }
+  ],
+  "scope": "One finite no-retry Linux/X11 Chromium integration allocation through adaptive_acquisition_caller_v3. The two mutations differ, so this is not a latency or token comparison. It tests one natural local resize repair and one hover-patch model fallback with independent task/release evidence. No general repair rate, savings, portability or human-tempo claim follows."
+}

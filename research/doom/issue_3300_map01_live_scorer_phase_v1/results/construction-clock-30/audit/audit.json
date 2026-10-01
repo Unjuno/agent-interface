@@ -1,0 +1,67 @@
+{
+  "decision": "HOLD_PASSIVE_ASYNC_TIC_STATIC_PROCESS_IDLE",
+  "errors": [],
+  "formal_allocation": false,
+  "raw_sha256": "b892a8e9fb12a98d3ac8162c2712bdc05cea75c61bcc2bfcb95f01fe0b5cc2cd",
+  "rows": [
+    {
+      "child_cpu_deltas": [
+        {
+          "comm": "vizdoom",
+          "cpu_ticks_delta": 4,
+          "end_state": "S",
+          "pid": 11,
+          "start_state": "S"
+        }
+      ],
+      "closed": true,
+      "elapsed_ns": 1557945799,
+      "final_tic": 1,
+      "initial_tic": 1,
+      "process_clk_tck": 100,
+      "repetition": 0,
+      "samples": 27,
+      "scorer_call_span_ns": 348846
+    },
+    {
+      "child_cpu_deltas": [
+        {
+          "comm": "vizdoom",
+          "cpu_ticks_delta": 2,
+          "end_state": "S",
+          "pid": 26,
+          "start_state": "S"
+        }
+      ],
+      "closed": true,
+      "elapsed_ns": 1522781985,
+      "final_tic": 1,
+      "initial_tic": 1,
+      "process_clk_tck": 100,
+      "repetition": 1,
+      "samples": 26,
+      "scorer_call_span_ns": 553830
+    },
+    {
+      "child_cpu_deltas": [
+        {
+          "comm": "vizdoom",
+          "cpu_ticks_delta": 3,
+          "end_state": "S",
+          "pid": 30,
+          "start_state": "S"
+        }
+      ],
+      "closed": true,
+      "elapsed_ns": 1528380649,
+      "final_tic": 1,
+      "initial_tic": 1,
+      "process_clk_tck": 100,
+      "repetition": 2,
+      "samples": 26,
+      "scorer_call_span_ns": 452546
+    }
+  ],
+  "schema": "passive-process-activity-audit-v1",
+  "scope": "construction-only; excluded from formal 120-row allocation"
+}

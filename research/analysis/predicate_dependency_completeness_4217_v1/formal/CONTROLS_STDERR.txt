@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/mnt/data/predicate_dependency_completeness_4217_v1/controls.py", line 22, in <module>
+    x=copy.deepcopy(base); fn(x); p=root/'formal'/f'control-{name}.json'; p.write_text(json.dumps(x,sort_keys=True,indent=2)+'\n'); results[name]=bool(audit(root,p)['errors'])
+                                                                                                                                                       ~~~~~^^^^^^^^
+  File "/mnt/data/predicate_dependency_completeness_4217_v1/audit.py", line 86, in audit
+    if rows[idx]['policies'][policy]['events'][predicate]['hit'] is not False: errors.append(f'{idx}:{policy}:{predicate}:identity_hit')
+       ~~~~^^^^^
+IndexError: list index out of range

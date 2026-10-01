@@ -1,0 +1,47 @@
+{
+  "a1_complete_cases": 5,
+  "a1_disposition": "INCOMPLETE_SUPERVISION_TIMEOUT",
+  "a1_partial_cases": 1,
+  "a1_reruns": 0,
+  "a2_cases_complete": 16,
+  "a2_frozen_automated_decision": "HOLD_REFERENCE_DIVERSITY_NOT_REALIZED",
+  "a2_preregistered_disposition": "HOLD_CROSS_SCENE_TRANSFER",
+  "a2_same_id_reruns": 0,
+  "aligned_controls": "3/3 MATCHED zero correction",
+  "audit_pass": true,
+  "failed_case": {
+    "correction_pulses": 1,
+    "decisions": [
+      {
+        "correction": 0,
+        "decision": {"corr": 0.11132782372228327, "margin": 0.006635206232645963, "shift_px": -158, "status": "CONTINUE"},
+        "yaw_error": -33.39843750777618
+      },
+      {
+        "correction": 1,
+        "decision": {"corr": 0.25358859489888175, "margin": 0.15767440192851828, "shift_px": 160, "status": "UNKNOWN_BOUNDARY"},
+        "yaw_error": -28.125000006548362
+      }
+    ],
+    "displacement": 6,
+    "id": "a2-11-s12-b-d6",
+    "seed": 996302,
+    "setup_right_pulses": 12,
+    "terminal_status": "UNKNOWN_BOUNDARY",
+    "terminal_yaw_error": -28.125000006548362
+  },
+  "false_matched": 0,
+  "full_png_bytes_github_retained": false,
+  "main_within_6deg": "11/12",
+  "metric_sha256": "04f8ea8c42f950b5e8df9e45cf5a19cc7cc0ab38558b3f7568aabdcb298f93c9",
+  "missing_reference_control": "UNKNOWN_MISSING_REFERENCE zero correction",
+  "nonzero_heading_within": "7/8",
+  "png_manifest_retained": true,
+  "reference_spans_deg": {"996301": 135.35156244769496, "996302": 135.35156244769496, "996303": 131.83593744687641},
+  "release_neutral": true,
+  "source_rehash_exact": true,
+  "task_a1": "MAP01-PIXEL-SHIFT-MULTISTART-20260917-003",
+  "task_a2": "MAP01-PIXEL-SHIFT-MULTISTART-20260917-004",
+  "verify_output": "PASS_VERIFY",
+  "zero_deaths": true
+}

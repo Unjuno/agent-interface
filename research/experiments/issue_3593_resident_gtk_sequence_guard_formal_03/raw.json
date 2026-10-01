@@ -1,0 +1,5692 @@
+{
+  "allocation_id": "issue3588-resident-gtk-sequence-guard-formal-03",
+  "formal_invocations": 1,
+  "freeze_sha256": "9a99b29ed1f148ea416b8296de72361bcf1cc63f2bc1fa7ed54e6859a7ecd882",
+  "image_id": "sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27",
+  "issue": 3593,
+  "reruns": 0,
+  "result_sha256": "6aecbb9ab44345464f1f31d5bd92ee0521fa161568aa7ad1518a16c0d80a9f03",
+  "rows": [
+    {
+      "action_count": 2,
+      "after_height": 120,
+      "after_path": "frames/UPSTREAM_RESIDENT__current_rising_edges__on__after.raw",
+      "after_sha256": "d63c608e8098b4134e6e2fbfdee5d17b90c84f74123872ddcb97f0d79e4cbf92",
+      "after_width": 320,
+      "before_path": "frames/UPSTREAM_RESIDENT__current_rising_edges__on__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "current_rising_edges",
+      "effect_mode": "on",
+      "emitted_event_indices": [
+        0,
+        2
+      ],
+      "error": null,
+      "events": [
+        {
+          "gen": 1,
+          "id": "r1",
+          "kind": "obs",
+          "seq": 1,
+          "target": 1,
+          "value": true
+        },
+        {
+          "gen": 1,
+          "id": "f2",
+          "kind": "obs",
+          "seq": 2,
+          "target": 1,
+          "value": false
+        },
+        {
+          "gen": 1,
+          "id": "r3",
+          "kind": "obs",
+          "seq": 3,
+          "target": 1,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 10,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5647389",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:2",
+      "height": 120,
+      "key_release_reads": [
+        true,
+        true
+      ],
+      "key_release_verified": true,
+      "policy": "UPSTREAM_RESIDENT",
+      "prefix_effect_counts": [
+        1,
+        1,
+        2
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "emit",
+              "r1"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "emit",
+              "r1"
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "id": "r1",
+            "kind": "obs",
+            "seq": 1,
+            "target": 1,
+            "value": true
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 1,
+          "visible_title": "resident-fixture:1"
+        },
+        {
+          "action_delta": [],
+          "actions_so_far": [
+            [
+              "emit",
+              "r1"
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "id": "f2",
+            "kind": "obs",
+            "seq": 2,
+            "target": 1,
+            "value": false
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 1,
+          "visible_title": "resident-fixture:1"
+        },
+        {
+          "action_delta": [
+            [
+              "emit",
+              "r3"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "emit",
+              "r1"
+            ],
+            [
+              "emit",
+              "r3"
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "id": "r3",
+            "kind": "obs",
+            "seq": 3,
+            "target": 1,
+            "value": true
+          },
+          "index": 2,
+          "space_key_up": true,
+          "visible_effect_count": 2,
+          "visible_title": "resident-fixture:2"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 2,
+      "transport_count": 2,
+      "width": 320,
+      "window_pixels_changed": true,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 6,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5647386"
+    },
+    {
+      "action_count": 2,
+      "after_height": 120,
+      "after_path": "frames/UPSTREAM_RESIDENT__current_rising_edges__off__after.raw",
+      "after_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "after_width": 320,
+      "before_path": "frames/UPSTREAM_RESIDENT__current_rising_edges__off__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "current_rising_edges",
+      "effect_mode": "off",
+      "emitted_event_indices": [
+        0,
+        2
+      ],
+      "error": null,
+      "events": [
+        {
+          "gen": 1,
+          "id": "r1",
+          "kind": "obs",
+          "seq": 1,
+          "target": 1,
+          "value": true
+        },
+        {
+          "gen": 1,
+          "id": "f2",
+          "kind": "obs",
+          "seq": 2,
+          "target": 1,
+          "value": false
+        },
+        {
+          "gen": 1,
+          "id": "r3",
+          "kind": "obs",
+          "seq": 3,
+          "target": 1,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 18,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5647422",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:0",
+      "height": 120,
+      "key_release_reads": [
+        true,
+        true
+      ],
+      "key_release_verified": true,
+      "policy": "UPSTREAM_RESIDENT",
+      "prefix_effect_counts": [
+        0,
+        0,
+        0
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "emit",
+              "r1"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "emit",
+              "r1"
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "id": "r1",
+            "kind": "obs",
+            "seq": 1,
+            "target": 1,
+            "value": true
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [],
+          "actions_so_far": [
+            [
+              "emit",
+              "r1"
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "id": "f2",
+            "kind": "obs",
+            "seq": 2,
+            "target": 1,
+            "value": false
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "emit",
+              "r3"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "emit",
+              "r1"
+            ],
+            [
+              "emit",
+              "r3"
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "id": "r3",
+            "kind": "obs",
+            "seq": 3,
+            "target": 1,
+            "value": true
+          },
+          "index": 2,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 0,
+      "transport_count": 2,
+      "width": 320,
+      "window_pixels_changed": false,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 15,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5647419"
+    },
+    {
+      "action_count": 2,
+      "after_height": 120,
+      "after_path": "frames/SEQUENCE_GUARDED__current_rising_edges__on__after.raw",
+      "after_sha256": "d63c608e8098b4134e6e2fbfdee5d17b90c84f74123872ddcb97f0d79e4cbf92",
+      "after_width": 320,
+      "before_path": "frames/SEQUENCE_GUARDED__current_rising_edges__on__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "current_rising_edges",
+      "effect_mode": "on",
+      "emitted_event_indices": [
+        0,
+        2
+      ],
+      "error": null,
+      "events": [
+        {
+          "gen": 1,
+          "id": "r1",
+          "kind": "obs",
+          "seq": 1,
+          "target": 1,
+          "value": true
+        },
+        {
+          "gen": 1,
+          "id": "f2",
+          "kind": "obs",
+          "seq": 2,
+          "target": 1,
+          "value": false
+        },
+        {
+          "gen": 1,
+          "id": "r3",
+          "kind": "obs",
+          "seq": 3,
+          "target": 1,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 26,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5647445",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:2",
+      "height": 120,
+      "key_release_reads": [
+        true,
+        true
+      ],
+      "key_release_verified": true,
+      "policy": "SEQUENCE_GUARDED",
+      "prefix_effect_counts": [
+        1,
+        1,
+        2
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "emit",
+              "r1"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "emit",
+              "r1"
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "id": "r1",
+            "kind": "obs",
+            "seq": 1,
+            "target": 1,
+            "value": true
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 1,
+          "visible_title": "resident-fixture:1"
+        },
+        {
+          "action_delta": [],
+          "actions_so_far": [
+            [
+              "emit",
+              "r1"
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "id": "f2",
+            "kind": "obs",
+            "seq": 2,
+            "target": 1,
+            "value": false
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 1,
+          "visible_title": "resident-fixture:1"
+        },
+        {
+          "action_delta": [
+            [
+              "emit",
+              "r3"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "emit",
+              "r1"
+            ],
+            [
+              "emit",
+              "r3"
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "id": "r3",
+            "kind": "obs",
+            "seq": 3,
+            "target": 1,
+            "value": true
+          },
+          "index": 2,
+          "space_key_up": true,
+          "visible_effect_count": 2,
+          "visible_title": "resident-fixture:2"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 2,
+      "transport_count": 2,
+      "width": 320,
+      "window_pixels_changed": true,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 23,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5647442"
+    },
+    {
+      "action_count": 2,
+      "after_height": 120,
+      "after_path": "frames/SEQUENCE_GUARDED__current_rising_edges__off__after.raw",
+      "after_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "after_width": 320,
+      "before_path": "frames/SEQUENCE_GUARDED__current_rising_edges__off__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "current_rising_edges",
+      "effect_mode": "off",
+      "emitted_event_indices": [
+        0,
+        2
+      ],
+      "error": null,
+      "events": [
+        {
+          "gen": 1,
+          "id": "r1",
+          "kind": "obs",
+          "seq": 1,
+          "target": 1,
+          "value": true
+        },
+        {
+          "gen": 1,
+          "id": "f2",
+          "kind": "obs",
+          "seq": 2,
+          "target": 1,
+          "value": false
+        },
+        {
+          "gen": 1,
+          "id": "r3",
+          "kind": "obs",
+          "seq": 3,
+          "target": 1,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 34,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5647470",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:0",
+      "height": 120,
+      "key_release_reads": [
+        true,
+        true
+      ],
+      "key_release_verified": true,
+      "policy": "SEQUENCE_GUARDED",
+      "prefix_effect_counts": [
+        0,
+        0,
+        0
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "emit",
+              "r1"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "emit",
+              "r1"
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "id": "r1",
+            "kind": "obs",
+            "seq": 1,
+            "target": 1,
+            "value": true
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [],
+          "actions_so_far": [
+            [
+              "emit",
+              "r1"
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "id": "f2",
+            "kind": "obs",
+            "seq": 2,
+            "target": 1,
+            "value": false
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "emit",
+              "r3"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "emit",
+              "r1"
+            ],
+            [
+              "emit",
+              "r3"
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "id": "r3",
+            "kind": "obs",
+            "seq": 3,
+            "target": 1,
+            "value": true
+          },
+          "index": 2,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 0,
+      "transport_count": 2,
+      "width": 320,
+      "window_pixels_changed": false,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 31,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5647468"
+    },
+    {
+      "action_count": 1,
+      "after_height": 120,
+      "after_path": "frames/UPSTREAM_RESIDENT__delayed_replacement_rollback__on__after.raw",
+      "after_sha256": "c4103cad0e0671111693e6218e348d5ec95f9874bc34935f1f867cdbe2b24e95",
+      "after_width": 320,
+      "before_path": "frames/UPSTREAM_RESIDENT__delayed_replacement_rollback__on__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "delayed_replacement_rollback",
+      "effect_mode": "on",
+      "emitted_event_indices": [
+        2
+      ],
+      "error": null,
+      "events": [
+        {
+          "gen": 2,
+          "kind": "replace",
+          "seq": 3,
+          "target": 2
+        },
+        {
+          "gen": 1,
+          "kind": "replace",
+          "seq": 2,
+          "target": 1
+        },
+        {
+          "gen": 1,
+          "id": "old-after-rollback",
+          "kind": "obs",
+          "seq": 4,
+          "target": 1,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 42,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5647494",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:1",
+      "height": 120,
+      "key_release_reads": [
+        true
+      ],
+      "key_release_verified": true,
+      "policy": "UPSTREAM_RESIDENT",
+      "prefix_effect_counts": [
+        0,
+        0,
+        1
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "replace",
+            "seq": 3,
+            "target": 2
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              1,
+              1
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "invalidate",
+              1,
+              1
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "kind": "replace",
+            "seq": 2,
+            "target": 1
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "emit",
+              "old-after-rollback"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "invalidate",
+              1,
+              1
+            ],
+            [
+              "emit",
+              "old-after-rollback"
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "id": "old-after-rollback",
+            "kind": "obs",
+            "seq": 4,
+            "target": 1,
+            "value": true
+          },
+          "index": 2,
+          "space_key_up": true,
+          "visible_effect_count": 1,
+          "visible_title": "resident-fixture:1"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 1,
+      "transport_count": 1,
+      "width": 320,
+      "window_pixels_changed": true,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 39,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5647492"
+    },
+    {
+      "action_count": 1,
+      "after_height": 120,
+      "after_path": "frames/UPSTREAM_RESIDENT__delayed_replacement_rollback__off__after.raw",
+      "after_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "after_width": 320,
+      "before_path": "frames/UPSTREAM_RESIDENT__delayed_replacement_rollback__off__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "delayed_replacement_rollback",
+      "effect_mode": "off",
+      "emitted_event_indices": [
+        2
+      ],
+      "error": null,
+      "events": [
+        {
+          "gen": 2,
+          "kind": "replace",
+          "seq": 3,
+          "target": 2
+        },
+        {
+          "gen": 1,
+          "kind": "replace",
+          "seq": 2,
+          "target": 1
+        },
+        {
+          "gen": 1,
+          "id": "old-after-rollback",
+          "kind": "obs",
+          "seq": 4,
+          "target": 1,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 50,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5647519",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:0",
+      "height": 120,
+      "key_release_reads": [
+        true
+      ],
+      "key_release_verified": true,
+      "policy": "UPSTREAM_RESIDENT",
+      "prefix_effect_counts": [
+        0,
+        0,
+        0
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "replace",
+            "seq": 3,
+            "target": 2
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              1,
+              1
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "invalidate",
+              1,
+              1
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "kind": "replace",
+            "seq": 2,
+            "target": 1
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "emit",
+              "old-after-rollback"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "invalidate",
+              1,
+              1
+            ],
+            [
+              "emit",
+              "old-after-rollback"
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "id": "old-after-rollback",
+            "kind": "obs",
+            "seq": 4,
+            "target": 1,
+            "value": true
+          },
+          "index": 2,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 0,
+      "transport_count": 1,
+      "width": 320,
+      "window_pixels_changed": false,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 47,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5647516"
+    },
+    {
+      "action_count": 0,
+      "after_height": 120,
+      "after_path": "frames/SEQUENCE_GUARDED__delayed_replacement_rollback__on__after.raw",
+      "after_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "after_width": 320,
+      "before_path": "frames/SEQUENCE_GUARDED__delayed_replacement_rollback__on__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "delayed_replacement_rollback",
+      "effect_mode": "on",
+      "emitted_event_indices": [],
+      "error": null,
+      "events": [
+        {
+          "gen": 2,
+          "kind": "replace",
+          "seq": 3,
+          "target": 2
+        },
+        {
+          "gen": 1,
+          "kind": "replace",
+          "seq": 2,
+          "target": 1
+        },
+        {
+          "gen": 1,
+          "id": "old-after-rollback",
+          "kind": "obs",
+          "seq": 4,
+          "target": 1,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 58,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5647541",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:0",
+      "height": 120,
+      "key_release_reads": [],
+      "key_release_verified": true,
+      "policy": "SEQUENCE_GUARDED",
+      "prefix_effect_counts": [
+        0,
+        0,
+        0
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "replace",
+            "seq": 3,
+            "target": 2
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "refuse_control",
+              "replace",
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "refuse_control",
+              "replace",
+              2
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "kind": "replace",
+            "seq": 2,
+            "target": 1
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "refuse",
+              "old-after-rollback"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "refuse_control",
+              "replace",
+              2
+            ],
+            [
+              "refuse",
+              "old-after-rollback"
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "id": "old-after-rollback",
+            "kind": "obs",
+            "seq": 4,
+            "target": 1,
+            "value": true
+          },
+          "index": 2,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 0,
+      "transport_count": 0,
+      "width": 320,
+      "window_pixels_changed": false,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 55,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5647539"
+    },
+    {
+      "action_count": 0,
+      "after_height": 120,
+      "after_path": "frames/SEQUENCE_GUARDED__delayed_replacement_rollback__off__after.raw",
+      "after_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "after_width": 320,
+      "before_path": "frames/SEQUENCE_GUARDED__delayed_replacement_rollback__off__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "delayed_replacement_rollback",
+      "effect_mode": "off",
+      "emitted_event_indices": [],
+      "error": null,
+      "events": [
+        {
+          "gen": 2,
+          "kind": "replace",
+          "seq": 3,
+          "target": 2
+        },
+        {
+          "gen": 1,
+          "kind": "replace",
+          "seq": 2,
+          "target": 1
+        },
+        {
+          "gen": 1,
+          "id": "old-after-rollback",
+          "kind": "obs",
+          "seq": 4,
+          "target": 1,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 66,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5647563",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:0",
+      "height": 120,
+      "key_release_reads": [],
+      "key_release_verified": true,
+      "policy": "SEQUENCE_GUARDED",
+      "prefix_effect_counts": [
+        0,
+        0,
+        0
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "replace",
+            "seq": 3,
+            "target": 2
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "refuse_control",
+              "replace",
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "refuse_control",
+              "replace",
+              2
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "kind": "replace",
+            "seq": 2,
+            "target": 1
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "refuse",
+              "old-after-rollback"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "refuse_control",
+              "replace",
+              2
+            ],
+            [
+              "refuse",
+              "old-after-rollback"
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "id": "old-after-rollback",
+            "kind": "obs",
+            "seq": 4,
+            "target": 1,
+            "value": true
+          },
+          "index": 2,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 0,
+      "transport_count": 0,
+      "width": 320,
+      "window_pixels_changed": false,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 63,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5647561"
+    },
+    {
+      "action_count": 1,
+      "after_height": 120,
+      "after_path": "frames/UPSTREAM_RESIDENT__valid_new_generation__on__after.raw",
+      "after_sha256": "c4103cad0e0671111693e6218e348d5ec95f9874bc34935f1f867cdbe2b24e95",
+      "after_width": 320,
+      "before_path": "frames/UPSTREAM_RESIDENT__valid_new_generation__on__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "valid_new_generation",
+      "effect_mode": "on",
+      "emitted_event_indices": [
+        1
+      ],
+      "error": null,
+      "events": [
+        {
+          "gen": 2,
+          "kind": "replace",
+          "seq": 3,
+          "target": 2
+        },
+        {
+          "gen": 2,
+          "id": "new-r4",
+          "kind": "obs",
+          "seq": 4,
+          "target": 2,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 74,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5647585",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:1",
+      "height": 120,
+      "key_release_reads": [
+        true
+      ],
+      "key_release_verified": true,
+      "policy": "UPSTREAM_RESIDENT",
+      "prefix_effect_counts": [
+        0,
+        1
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "replace",
+            "seq": 3,
+            "target": 2
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "emit",
+              "new-r4"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "emit",
+              "new-r4"
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "new-r4",
+            "kind": "obs",
+            "seq": 4,
+            "target": 2,
+            "value": true
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 1,
+          "visible_title": "resident-fixture:1"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 1,
+      "transport_count": 1,
+      "width": 320,
+      "window_pixels_changed": true,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 71,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5647583"
+    },
+    {
+      "action_count": 1,
+      "after_height": 120,
+      "after_path": "frames/UPSTREAM_RESIDENT__valid_new_generation__off__after.raw",
+      "after_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "after_width": 320,
+      "before_path": "frames/UPSTREAM_RESIDENT__valid_new_generation__off__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "valid_new_generation",
+      "effect_mode": "off",
+      "emitted_event_indices": [
+        1
+      ],
+      "error": null,
+      "events": [
+        {
+          "gen": 2,
+          "kind": "replace",
+          "seq": 3,
+          "target": 2
+        },
+        {
+          "gen": 2,
+          "id": "new-r4",
+          "kind": "obs",
+          "seq": 4,
+          "target": 2,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 82,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5647610",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:0",
+      "height": 120,
+      "key_release_reads": [
+        true
+      ],
+      "key_release_verified": true,
+      "policy": "UPSTREAM_RESIDENT",
+      "prefix_effect_counts": [
+        0,
+        0
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "replace",
+            "seq": 3,
+            "target": 2
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "emit",
+              "new-r4"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "emit",
+              "new-r4"
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "new-r4",
+            "kind": "obs",
+            "seq": 4,
+            "target": 2,
+            "value": true
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 0,
+      "transport_count": 1,
+      "width": 320,
+      "window_pixels_changed": false,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 79,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5647607"
+    },
+    {
+      "action_count": 1,
+      "after_height": 120,
+      "after_path": "frames/SEQUENCE_GUARDED__valid_new_generation__on__after.raw",
+      "after_sha256": "c4103cad0e0671111693e6218e348d5ec95f9874bc34935f1f867cdbe2b24e95",
+      "after_width": 320,
+      "before_path": "frames/SEQUENCE_GUARDED__valid_new_generation__on__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "valid_new_generation",
+      "effect_mode": "on",
+      "emitted_event_indices": [
+        1
+      ],
+      "error": null,
+      "events": [
+        {
+          "gen": 2,
+          "kind": "replace",
+          "seq": 3,
+          "target": 2
+        },
+        {
+          "gen": 2,
+          "id": "new-r4",
+          "kind": "obs",
+          "seq": 4,
+          "target": 2,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 90,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5647631",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:1",
+      "height": 120,
+      "key_release_reads": [
+        true
+      ],
+      "key_release_verified": true,
+      "policy": "SEQUENCE_GUARDED",
+      "prefix_effect_counts": [
+        0,
+        1
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "replace",
+            "seq": 3,
+            "target": 2
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "emit",
+              "new-r4"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "emit",
+              "new-r4"
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "new-r4",
+            "kind": "obs",
+            "seq": 4,
+            "target": 2,
+            "value": true
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 1,
+          "visible_title": "resident-fixture:1"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 1,
+      "transport_count": 1,
+      "width": 320,
+      "window_pixels_changed": true,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 87,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5647629"
+    },
+    {
+      "action_count": 1,
+      "after_height": 120,
+      "after_path": "frames/SEQUENCE_GUARDED__valid_new_generation__off__after.raw",
+      "after_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "after_width": 320,
+      "before_path": "frames/SEQUENCE_GUARDED__valid_new_generation__off__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "valid_new_generation",
+      "effect_mode": "off",
+      "emitted_event_indices": [
+        1
+      ],
+      "error": null,
+      "events": [
+        {
+          "gen": 2,
+          "kind": "replace",
+          "seq": 3,
+          "target": 2
+        },
+        {
+          "gen": 2,
+          "id": "new-r4",
+          "kind": "obs",
+          "seq": 4,
+          "target": 2,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 98,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5647654",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:0",
+      "height": 120,
+      "key_release_reads": [
+        true
+      ],
+      "key_release_verified": true,
+      "policy": "SEQUENCE_GUARDED",
+      "prefix_effect_counts": [
+        0,
+        0
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "replace",
+            "seq": 3,
+            "target": 2
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "emit",
+              "new-r4"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "emit",
+              "new-r4"
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "new-r4",
+            "kind": "obs",
+            "seq": 4,
+            "target": 2,
+            "value": true
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 0,
+      "transport_count": 1,
+      "width": 320,
+      "window_pixels_changed": false,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 95,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5647652"
+    },
+    {
+      "action_count": 0,
+      "after_height": 120,
+      "after_path": "frames/UPSTREAM_RESIDENT__duplicate_replacement__on__after.raw",
+      "after_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "after_width": 320,
+      "before_path": "frames/UPSTREAM_RESIDENT__duplicate_replacement__on__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "duplicate_replacement",
+      "effect_mode": "on",
+      "emitted_event_indices": [],
+      "error": null,
+      "events": [
+        {
+          "gen": 2,
+          "kind": "replace",
+          "seq": 3,
+          "target": 2
+        },
+        {
+          "gen": 3,
+          "kind": "replace",
+          "seq": 3,
+          "target": 3
+        },
+        {
+          "gen": 2,
+          "id": "gen2-r4",
+          "kind": "obs",
+          "seq": 4,
+          "target": 2,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 106,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5647677",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:0",
+      "height": 120,
+      "key_release_reads": [],
+      "key_release_verified": true,
+      "policy": "UPSTREAM_RESIDENT",
+      "prefix_effect_counts": [
+        0,
+        0,
+        0
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "replace",
+            "seq": 3,
+            "target": 2
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              3,
+              3
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "invalidate",
+              3,
+              3
+            ]
+          ],
+          "event": {
+            "gen": 3,
+            "kind": "replace",
+            "seq": 3,
+            "target": 3
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "refuse",
+              "gen2-r4"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "invalidate",
+              3,
+              3
+            ],
+            [
+              "refuse",
+              "gen2-r4"
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "gen2-r4",
+            "kind": "obs",
+            "seq": 4,
+            "target": 2,
+            "value": true
+          },
+          "index": 2,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 0,
+      "transport_count": 0,
+      "width": 320,
+      "window_pixels_changed": false,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 103,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5647674"
+    },
+    {
+      "action_count": 0,
+      "after_height": 120,
+      "after_path": "frames/UPSTREAM_RESIDENT__duplicate_replacement__off__after.raw",
+      "after_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "after_width": 320,
+      "before_path": "frames/UPSTREAM_RESIDENT__duplicate_replacement__off__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "duplicate_replacement",
+      "effect_mode": "off",
+      "emitted_event_indices": [],
+      "error": null,
+      "events": [
+        {
+          "gen": 2,
+          "kind": "replace",
+          "seq": 3,
+          "target": 2
+        },
+        {
+          "gen": 3,
+          "kind": "replace",
+          "seq": 3,
+          "target": 3
+        },
+        {
+          "gen": 2,
+          "id": "gen2-r4",
+          "kind": "obs",
+          "seq": 4,
+          "target": 2,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 114,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5647698",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:0",
+      "height": 120,
+      "key_release_reads": [],
+      "key_release_verified": true,
+      "policy": "UPSTREAM_RESIDENT",
+      "prefix_effect_counts": [
+        0,
+        0,
+        0
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "replace",
+            "seq": 3,
+            "target": 2
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              3,
+              3
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "invalidate",
+              3,
+              3
+            ]
+          ],
+          "event": {
+            "gen": 3,
+            "kind": "replace",
+            "seq": 3,
+            "target": 3
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "refuse",
+              "gen2-r4"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "invalidate",
+              3,
+              3
+            ],
+            [
+              "refuse",
+              "gen2-r4"
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "gen2-r4",
+            "kind": "obs",
+            "seq": 4,
+            "target": 2,
+            "value": true
+          },
+          "index": 2,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 0,
+      "transport_count": 0,
+      "width": 320,
+      "window_pixels_changed": false,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 111,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5647695"
+    },
+    {
+      "action_count": 1,
+      "after_height": 120,
+      "after_path": "frames/SEQUENCE_GUARDED__duplicate_replacement__on__after.raw",
+      "after_sha256": "c4103cad0e0671111693e6218e348d5ec95f9874bc34935f1f867cdbe2b24e95",
+      "after_width": 320,
+      "before_path": "frames/SEQUENCE_GUARDED__duplicate_replacement__on__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "duplicate_replacement",
+      "effect_mode": "on",
+      "emitted_event_indices": [
+        2
+      ],
+      "error": null,
+      "events": [
+        {
+          "gen": 2,
+          "kind": "replace",
+          "seq": 3,
+          "target": 2
+        },
+        {
+          "gen": 3,
+          "kind": "replace",
+          "seq": 3,
+          "target": 3
+        },
+        {
+          "gen": 2,
+          "id": "gen2-r4",
+          "kind": "obs",
+          "seq": 4,
+          "target": 2,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 122,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5647720",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:1",
+      "height": 120,
+      "key_release_reads": [
+        true
+      ],
+      "key_release_verified": true,
+      "policy": "SEQUENCE_GUARDED",
+      "prefix_effect_counts": [
+        0,
+        0,
+        1
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "replace",
+            "seq": 3,
+            "target": 2
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "refuse_control",
+              "replace",
+              3
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "refuse_control",
+              "replace",
+              3
+            ]
+          ],
+          "event": {
+            "gen": 3,
+            "kind": "replace",
+            "seq": 3,
+            "target": 3
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "emit",
+              "gen2-r4"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "refuse_control",
+              "replace",
+              3
+            ],
+            [
+              "emit",
+              "gen2-r4"
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "gen2-r4",
+            "kind": "obs",
+            "seq": 4,
+            "target": 2,
+            "value": true
+          },
+          "index": 2,
+          "space_key_up": true,
+          "visible_effect_count": 1,
+          "visible_title": "resident-fixture:1"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 1,
+      "transport_count": 1,
+      "width": 320,
+      "window_pixels_changed": true,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 119,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5647717"
+    },
+    {
+      "action_count": 1,
+      "after_height": 120,
+      "after_path": "frames/SEQUENCE_GUARDED__duplicate_replacement__off__after.raw",
+      "after_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "after_width": 320,
+      "before_path": "frames/SEQUENCE_GUARDED__duplicate_replacement__off__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "duplicate_replacement",
+      "effect_mode": "off",
+      "emitted_event_indices": [
+        2
+      ],
+      "error": null,
+      "events": [
+        {
+          "gen": 2,
+          "kind": "replace",
+          "seq": 3,
+          "target": 2
+        },
+        {
+          "gen": 3,
+          "kind": "replace",
+          "seq": 3,
+          "target": 3
+        },
+        {
+          "gen": 2,
+          "id": "gen2-r4",
+          "kind": "obs",
+          "seq": 4,
+          "target": 2,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 128,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5647741",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:0",
+      "height": 120,
+      "key_release_reads": [
+        true
+      ],
+      "key_release_verified": true,
+      "policy": "SEQUENCE_GUARDED",
+      "prefix_effect_counts": [
+        0,
+        0,
+        0
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "replace",
+            "seq": 3,
+            "target": 2
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "refuse_control",
+              "replace",
+              3
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "refuse_control",
+              "replace",
+              3
+            ]
+          ],
+          "event": {
+            "gen": 3,
+            "kind": "replace",
+            "seq": 3,
+            "target": 3
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "emit",
+              "gen2-r4"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "refuse_control",
+              "replace",
+              3
+            ],
+            [
+              "emit",
+              "gen2-r4"
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "gen2-r4",
+            "kind": "obs",
+            "seq": 4,
+            "target": 2,
+            "value": true
+          },
+          "index": 2,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 0,
+      "transport_count": 1,
+      "width": 320,
+      "window_pixels_changed": false,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 125,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5647738"
+    },
+    {
+      "action_count": 1,
+      "after_height": 120,
+      "after_path": "frames/UPSTREAM_RESIDENT__delayed_old_observation__on__after.raw",
+      "after_sha256": "c4103cad0e0671111693e6218e348d5ec95f9874bc34935f1f867cdbe2b24e95",
+      "after_width": 320,
+      "before_path": "frames/UPSTREAM_RESIDENT__delayed_old_observation__on__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "delayed_old_observation",
+      "effect_mode": "on",
+      "emitted_event_indices": [
+        2
+      ],
+      "error": null,
+      "events": [
+        {
+          "gen": 2,
+          "kind": "replace",
+          "seq": 3,
+          "target": 2
+        },
+        {
+          "gen": 1,
+          "id": "old-seq2",
+          "kind": "obs",
+          "seq": 2,
+          "target": 1,
+          "value": true
+        },
+        {
+          "gen": 2,
+          "id": "new-r4",
+          "kind": "obs",
+          "seq": 4,
+          "target": 2,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 136,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5647765",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:1",
+      "height": 120,
+      "key_release_reads": [
+        true
+      ],
+      "key_release_verified": true,
+      "policy": "UPSTREAM_RESIDENT",
+      "prefix_effect_counts": [
+        0,
+        0,
+        1
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "replace",
+            "seq": 3,
+            "target": 2
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "refuse",
+              "old-seq2"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "refuse",
+              "old-seq2"
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "id": "old-seq2",
+            "kind": "obs",
+            "seq": 2,
+            "target": 1,
+            "value": true
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "emit",
+              "new-r4"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "refuse",
+              "old-seq2"
+            ],
+            [
+              "emit",
+              "new-r4"
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "new-r4",
+            "kind": "obs",
+            "seq": 4,
+            "target": 2,
+            "value": true
+          },
+          "index": 2,
+          "space_key_up": true,
+          "visible_effect_count": 1,
+          "visible_title": "resident-fixture:1"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 1,
+      "transport_count": 1,
+      "width": 320,
+      "window_pixels_changed": true,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 133,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5647762"
+    },
+    {
+      "action_count": 1,
+      "after_height": 120,
+      "after_path": "frames/UPSTREAM_RESIDENT__delayed_old_observation__off__after.raw",
+      "after_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "after_width": 320,
+      "before_path": "frames/UPSTREAM_RESIDENT__delayed_old_observation__off__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "delayed_old_observation",
+      "effect_mode": "off",
+      "emitted_event_indices": [
+        2
+      ],
+      "error": null,
+      "events": [
+        {
+          "gen": 2,
+          "kind": "replace",
+          "seq": 3,
+          "target": 2
+        },
+        {
+          "gen": 1,
+          "id": "old-seq2",
+          "kind": "obs",
+          "seq": 2,
+          "target": 1,
+          "value": true
+        },
+        {
+          "gen": 2,
+          "id": "new-r4",
+          "kind": "obs",
+          "seq": 4,
+          "target": 2,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 144,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5647789",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:0",
+      "height": 120,
+      "key_release_reads": [
+        true
+      ],
+      "key_release_verified": true,
+      "policy": "UPSTREAM_RESIDENT",
+      "prefix_effect_counts": [
+        0,
+        0,
+        0
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "replace",
+            "seq": 3,
+            "target": 2
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "refuse",
+              "old-seq2"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "refuse",
+              "old-seq2"
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "id": "old-seq2",
+            "kind": "obs",
+            "seq": 2,
+            "target": 1,
+            "value": true
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "emit",
+              "new-r4"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "refuse",
+              "old-seq2"
+            ],
+            [
+              "emit",
+              "new-r4"
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "new-r4",
+            "kind": "obs",
+            "seq": 4,
+            "target": 2,
+            "value": true
+          },
+          "index": 2,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 0,
+      "transport_count": 1,
+      "width": 320,
+      "window_pixels_changed": false,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 141,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5647787"
+    },
+    {
+      "action_count": 1,
+      "after_height": 120,
+      "after_path": "frames/SEQUENCE_GUARDED__delayed_old_observation__on__after.raw",
+      "after_sha256": "c4103cad0e0671111693e6218e348d5ec95f9874bc34935f1f867cdbe2b24e95",
+      "after_width": 320,
+      "before_path": "frames/SEQUENCE_GUARDED__delayed_old_observation__on__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "delayed_old_observation",
+      "effect_mode": "on",
+      "emitted_event_indices": [
+        2
+      ],
+      "error": null,
+      "events": [
+        {
+          "gen": 2,
+          "kind": "replace",
+          "seq": 3,
+          "target": 2
+        },
+        {
+          "gen": 1,
+          "id": "old-seq2",
+          "kind": "obs",
+          "seq": 2,
+          "target": 1,
+          "value": true
+        },
+        {
+          "gen": 2,
+          "id": "new-r4",
+          "kind": "obs",
+          "seq": 4,
+          "target": 2,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 152,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5647811",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:1",
+      "height": 120,
+      "key_release_reads": [
+        true
+      ],
+      "key_release_verified": true,
+      "policy": "SEQUENCE_GUARDED",
+      "prefix_effect_counts": [
+        0,
+        0,
+        1
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "replace",
+            "seq": 3,
+            "target": 2
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "refuse_control",
+              "obs",
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "refuse_control",
+              "obs",
+              2
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "id": "old-seq2",
+            "kind": "obs",
+            "seq": 2,
+            "target": 1,
+            "value": true
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "emit",
+              "new-r4"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "refuse_control",
+              "obs",
+              2
+            ],
+            [
+              "emit",
+              "new-r4"
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "new-r4",
+            "kind": "obs",
+            "seq": 4,
+            "target": 2,
+            "value": true
+          },
+          "index": 2,
+          "space_key_up": true,
+          "visible_effect_count": 1,
+          "visible_title": "resident-fixture:1"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 1,
+      "transport_count": 1,
+      "width": 320,
+      "window_pixels_changed": true,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 149,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5647809"
+    },
+    {
+      "action_count": 1,
+      "after_height": 120,
+      "after_path": "frames/SEQUENCE_GUARDED__delayed_old_observation__off__after.raw",
+      "after_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "after_width": 320,
+      "before_path": "frames/SEQUENCE_GUARDED__delayed_old_observation__off__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "delayed_old_observation",
+      "effect_mode": "off",
+      "emitted_event_indices": [
+        2
+      ],
+      "error": null,
+      "events": [
+        {
+          "gen": 2,
+          "kind": "replace",
+          "seq": 3,
+          "target": 2
+        },
+        {
+          "gen": 1,
+          "id": "old-seq2",
+          "kind": "obs",
+          "seq": 2,
+          "target": 1,
+          "value": true
+        },
+        {
+          "gen": 2,
+          "id": "new-r4",
+          "kind": "obs",
+          "seq": 4,
+          "target": 2,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 160,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5647836",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:0",
+      "height": 120,
+      "key_release_reads": [
+        true
+      ],
+      "key_release_verified": true,
+      "policy": "SEQUENCE_GUARDED",
+      "prefix_effect_counts": [
+        0,
+        0,
+        0
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "replace",
+            "seq": 3,
+            "target": 2
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "refuse_control",
+              "obs",
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "refuse_control",
+              "obs",
+              2
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "id": "old-seq2",
+            "kind": "obs",
+            "seq": 2,
+            "target": 1,
+            "value": true
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "emit",
+              "new-r4"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "refuse_control",
+              "obs",
+              2
+            ],
+            [
+              "emit",
+              "new-r4"
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "new-r4",
+            "kind": "obs",
+            "seq": 4,
+            "target": 2,
+            "value": true
+          },
+          "index": 2,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 0,
+      "transport_count": 1,
+      "width": 320,
+      "window_pixels_changed": false,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 157,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5647833"
+    },
+    {
+      "action_count": 1,
+      "after_height": 120,
+      "after_path": "frames/UPSTREAM_RESIDENT__delayed_current_generation_observation__on__after.raw",
+      "after_sha256": "c4103cad0e0671111693e6218e348d5ec95f9874bc34935f1f867cdbe2b24e95",
+      "after_width": 320,
+      "before_path": "frames/UPSTREAM_RESIDENT__delayed_current_generation_observation__on__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "delayed_current_generation_observation",
+      "effect_mode": "on",
+      "emitted_event_indices": [
+        1
+      ],
+      "error": null,
+      "events": [
+        {
+          "gen": 2,
+          "kind": "replace",
+          "seq": 3,
+          "target": 2
+        },
+        {
+          "gen": 2,
+          "id": "old-seq-same-gen",
+          "kind": "obs",
+          "seq": 2,
+          "target": 2,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 166,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5647857",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:1",
+      "height": 120,
+      "key_release_reads": [
+        true
+      ],
+      "key_release_verified": true,
+      "policy": "UPSTREAM_RESIDENT",
+      "prefix_effect_counts": [
+        0,
+        1
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "replace",
+            "seq": 3,
+            "target": 2
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "emit",
+              "old-seq-same-gen"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "emit",
+              "old-seq-same-gen"
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "old-seq-same-gen",
+            "kind": "obs",
+            "seq": 2,
+            "target": 2,
+            "value": true
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 1,
+          "visible_title": "resident-fixture:1"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 1,
+      "transport_count": 1,
+      "width": 320,
+      "window_pixels_changed": true,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 163,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5647854"
+    },
+    {
+      "action_count": 1,
+      "after_height": 120,
+      "after_path": "frames/UPSTREAM_RESIDENT__delayed_current_generation_observation__off__after.raw",
+      "after_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "after_width": 320,
+      "before_path": "frames/UPSTREAM_RESIDENT__delayed_current_generation_observation__off__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "delayed_current_generation_observation",
+      "effect_mode": "off",
+      "emitted_event_indices": [
+        1
+      ],
+      "error": null,
+      "events": [
+        {
+          "gen": 2,
+          "kind": "replace",
+          "seq": 3,
+          "target": 2
+        },
+        {
+          "gen": 2,
+          "id": "old-seq-same-gen",
+          "kind": "obs",
+          "seq": 2,
+          "target": 2,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 174,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5647882",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:0",
+      "height": 120,
+      "key_release_reads": [
+        true
+      ],
+      "key_release_verified": true,
+      "policy": "UPSTREAM_RESIDENT",
+      "prefix_effect_counts": [
+        0,
+        0
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "replace",
+            "seq": 3,
+            "target": 2
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "emit",
+              "old-seq-same-gen"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "emit",
+              "old-seq-same-gen"
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "old-seq-same-gen",
+            "kind": "obs",
+            "seq": 2,
+            "target": 2,
+            "value": true
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 0,
+      "transport_count": 1,
+      "width": 320,
+      "window_pixels_changed": false,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 171,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5647879"
+    },
+    {
+      "action_count": 0,
+      "after_height": 120,
+      "after_path": "frames/SEQUENCE_GUARDED__delayed_current_generation_observation__on__after.raw",
+      "after_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "after_width": 320,
+      "before_path": "frames/SEQUENCE_GUARDED__delayed_current_generation_observation__on__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "delayed_current_generation_observation",
+      "effect_mode": "on",
+      "emitted_event_indices": [],
+      "error": null,
+      "events": [
+        {
+          "gen": 2,
+          "kind": "replace",
+          "seq": 3,
+          "target": 2
+        },
+        {
+          "gen": 2,
+          "id": "old-seq-same-gen",
+          "kind": "obs",
+          "seq": 2,
+          "target": 2,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 182,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5647903",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:0",
+      "height": 120,
+      "key_release_reads": [],
+      "key_release_verified": true,
+      "policy": "SEQUENCE_GUARDED",
+      "prefix_effect_counts": [
+        0,
+        0
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "replace",
+            "seq": 3,
+            "target": 2
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "refuse_control",
+              "obs",
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "refuse_control",
+              "obs",
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "old-seq-same-gen",
+            "kind": "obs",
+            "seq": 2,
+            "target": 2,
+            "value": true
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 0,
+      "transport_count": 0,
+      "width": 320,
+      "window_pixels_changed": false,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 179,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5647901"
+    },
+    {
+      "action_count": 0,
+      "after_height": 120,
+      "after_path": "frames/SEQUENCE_GUARDED__delayed_current_generation_observation__off__after.raw",
+      "after_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "after_width": 320,
+      "before_path": "frames/SEQUENCE_GUARDED__delayed_current_generation_observation__off__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "delayed_current_generation_observation",
+      "effect_mode": "off",
+      "emitted_event_indices": [],
+      "error": null,
+      "events": [
+        {
+          "gen": 2,
+          "kind": "replace",
+          "seq": 3,
+          "target": 2
+        },
+        {
+          "gen": 2,
+          "id": "old-seq-same-gen",
+          "kind": "obs",
+          "seq": 2,
+          "target": 2,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 190,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5647924",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:0",
+      "height": 120,
+      "key_release_reads": [],
+      "key_release_verified": true,
+      "policy": "SEQUENCE_GUARDED",
+      "prefix_effect_counts": [
+        0,
+        0
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "replace",
+            "seq": 3,
+            "target": 2
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "refuse_control",
+              "obs",
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "refuse_control",
+              "obs",
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "old-seq-same-gen",
+            "kind": "obs",
+            "seq": 2,
+            "target": 2,
+            "value": true
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 0,
+      "transport_count": 0,
+      "width": 320,
+      "window_pixels_changed": false,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 187,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5647921"
+    },
+    {
+      "action_count": 1,
+      "after_height": 120,
+      "after_path": "frames/UPSTREAM_RESIDENT__delayed_same_generation_revoke__on__after.raw",
+      "after_sha256": "c4103cad0e0671111693e6218e348d5ec95f9874bc34935f1f867cdbe2b24e95",
+      "after_width": 320,
+      "before_path": "frames/UPSTREAM_RESIDENT__delayed_same_generation_revoke__on__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "delayed_same_generation_revoke",
+      "effect_mode": "on",
+      "emitted_event_indices": [
+        1
+      ],
+      "error": null,
+      "events": [
+        {
+          "gen": 2,
+          "kind": "replace",
+          "seq": 1,
+          "target": 2
+        },
+        {
+          "gen": 2,
+          "id": "new-r3",
+          "kind": "obs",
+          "seq": 3,
+          "target": 2,
+          "value": true
+        },
+        {
+          "gen": 2,
+          "kind": "revoke",
+          "seq": 2
+        },
+        {
+          "gen": 2,
+          "id": "new-f4",
+          "kind": "obs",
+          "seq": 4,
+          "target": 2,
+          "value": false
+        },
+        {
+          "gen": 2,
+          "id": "new-r5",
+          "kind": "obs",
+          "seq": 5,
+          "target": 2,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 198,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5647947",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:1",
+      "height": 120,
+      "key_release_reads": [
+        true
+      ],
+      "key_release_verified": true,
+      "policy": "UPSTREAM_RESIDENT",
+      "prefix_effect_counts": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "replace",
+            "seq": 1,
+            "target": 2
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "emit",
+              "new-r3"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "emit",
+              "new-r3"
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "new-r3",
+            "kind": "obs",
+            "seq": 3,
+            "target": 2,
+            "value": true
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 1,
+          "visible_title": "resident-fixture:1"
+        },
+        {
+          "action_delta": [
+            [
+              "release",
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "emit",
+              "new-r3"
+            ],
+            [
+              "release",
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "revoke",
+            "seq": 2
+          },
+          "index": 2,
+          "space_key_up": true,
+          "visible_effect_count": 1,
+          "visible_title": "resident-fixture:1"
+        },
+        {
+          "action_delta": [
+            [
+              "refuse",
+              "new-f4"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "emit",
+              "new-r3"
+            ],
+            [
+              "release",
+              2
+            ],
+            [
+              "refuse",
+              "new-f4"
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "new-f4",
+            "kind": "obs",
+            "seq": 4,
+            "target": 2,
+            "value": false
+          },
+          "index": 3,
+          "space_key_up": true,
+          "visible_effect_count": 1,
+          "visible_title": "resident-fixture:1"
+        },
+        {
+          "action_delta": [
+            [
+              "refuse",
+              "new-r5"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "emit",
+              "new-r3"
+            ],
+            [
+              "release",
+              2
+            ],
+            [
+              "refuse",
+              "new-f4"
+            ],
+            [
+              "refuse",
+              "new-r5"
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "new-r5",
+            "kind": "obs",
+            "seq": 5,
+            "target": 2,
+            "value": true
+          },
+          "index": 4,
+          "space_key_up": true,
+          "visible_effect_count": 1,
+          "visible_title": "resident-fixture:1"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 1,
+      "transport_count": 1,
+      "width": 320,
+      "window_pixels_changed": true,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 195,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5647944"
+    },
+    {
+      "action_count": 1,
+      "after_height": 120,
+      "after_path": "frames/UPSTREAM_RESIDENT__delayed_same_generation_revoke__off__after.raw",
+      "after_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "after_width": 320,
+      "before_path": "frames/UPSTREAM_RESIDENT__delayed_same_generation_revoke__off__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "delayed_same_generation_revoke",
+      "effect_mode": "off",
+      "emitted_event_indices": [
+        1
+      ],
+      "error": null,
+      "events": [
+        {
+          "gen": 2,
+          "kind": "replace",
+          "seq": 1,
+          "target": 2
+        },
+        {
+          "gen": 2,
+          "id": "new-r3",
+          "kind": "obs",
+          "seq": 3,
+          "target": 2,
+          "value": true
+        },
+        {
+          "gen": 2,
+          "kind": "revoke",
+          "seq": 2
+        },
+        {
+          "gen": 2,
+          "id": "new-f4",
+          "kind": "obs",
+          "seq": 4,
+          "target": 2,
+          "value": false
+        },
+        {
+          "gen": 2,
+          "id": "new-r5",
+          "kind": "obs",
+          "seq": 5,
+          "target": 2,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 206,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5647971",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:0",
+      "height": 120,
+      "key_release_reads": [
+        true
+      ],
+      "key_release_verified": true,
+      "policy": "UPSTREAM_RESIDENT",
+      "prefix_effect_counts": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "replace",
+            "seq": 1,
+            "target": 2
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "emit",
+              "new-r3"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "emit",
+              "new-r3"
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "new-r3",
+            "kind": "obs",
+            "seq": 3,
+            "target": 2,
+            "value": true
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "release",
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "emit",
+              "new-r3"
+            ],
+            [
+              "release",
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "revoke",
+            "seq": 2
+          },
+          "index": 2,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "refuse",
+              "new-f4"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "emit",
+              "new-r3"
+            ],
+            [
+              "release",
+              2
+            ],
+            [
+              "refuse",
+              "new-f4"
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "new-f4",
+            "kind": "obs",
+            "seq": 4,
+            "target": 2,
+            "value": false
+          },
+          "index": 3,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "refuse",
+              "new-r5"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "emit",
+              "new-r3"
+            ],
+            [
+              "release",
+              2
+            ],
+            [
+              "refuse",
+              "new-f4"
+            ],
+            [
+              "refuse",
+              "new-r5"
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "new-r5",
+            "kind": "obs",
+            "seq": 5,
+            "target": 2,
+            "value": true
+          },
+          "index": 4,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 0,
+      "transport_count": 1,
+      "width": 320,
+      "window_pixels_changed": false,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 203,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5647969"
+    },
+    {
+      "action_count": 2,
+      "after_height": 120,
+      "after_path": "frames/SEQUENCE_GUARDED__delayed_same_generation_revoke__on__after.raw",
+      "after_sha256": "d63c608e8098b4134e6e2fbfdee5d17b90c84f74123872ddcb97f0d79e4cbf92",
+      "after_width": 320,
+      "before_path": "frames/SEQUENCE_GUARDED__delayed_same_generation_revoke__on__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "delayed_same_generation_revoke",
+      "effect_mode": "on",
+      "emitted_event_indices": [
+        1,
+        4
+      ],
+      "error": null,
+      "events": [
+        {
+          "gen": 2,
+          "kind": "replace",
+          "seq": 1,
+          "target": 2
+        },
+        {
+          "gen": 2,
+          "id": "new-r3",
+          "kind": "obs",
+          "seq": 3,
+          "target": 2,
+          "value": true
+        },
+        {
+          "gen": 2,
+          "kind": "revoke",
+          "seq": 2
+        },
+        {
+          "gen": 2,
+          "id": "new-f4",
+          "kind": "obs",
+          "seq": 4,
+          "target": 2,
+          "value": false
+        },
+        {
+          "gen": 2,
+          "id": "new-r5",
+          "kind": "obs",
+          "seq": 5,
+          "target": 2,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 214,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5647992",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:2",
+      "height": 120,
+      "key_release_reads": [
+        true,
+        true
+      ],
+      "key_release_verified": true,
+      "policy": "SEQUENCE_GUARDED",
+      "prefix_effect_counts": [
+        0,
+        1,
+        1,
+        1,
+        2
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "replace",
+            "seq": 1,
+            "target": 2
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "emit",
+              "new-r3"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "emit",
+              "new-r3"
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "new-r3",
+            "kind": "obs",
+            "seq": 3,
+            "target": 2,
+            "value": true
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 1,
+          "visible_title": "resident-fixture:1"
+        },
+        {
+          "action_delta": [
+            [
+              "refuse_control",
+              "revoke",
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "emit",
+              "new-r3"
+            ],
+            [
+              "refuse_control",
+              "revoke",
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "revoke",
+            "seq": 2
+          },
+          "index": 2,
+          "space_key_up": true,
+          "visible_effect_count": 1,
+          "visible_title": "resident-fixture:1"
+        },
+        {
+          "action_delta": [],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "emit",
+              "new-r3"
+            ],
+            [
+              "refuse_control",
+              "revoke",
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "new-f4",
+            "kind": "obs",
+            "seq": 4,
+            "target": 2,
+            "value": false
+          },
+          "index": 3,
+          "space_key_up": true,
+          "visible_effect_count": 1,
+          "visible_title": "resident-fixture:1"
+        },
+        {
+          "action_delta": [
+            [
+              "emit",
+              "new-r5"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "emit",
+              "new-r3"
+            ],
+            [
+              "refuse_control",
+              "revoke",
+              2
+            ],
+            [
+              "emit",
+              "new-r5"
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "new-r5",
+            "kind": "obs",
+            "seq": 5,
+            "target": 2,
+            "value": true
+          },
+          "index": 4,
+          "space_key_up": true,
+          "visible_effect_count": 2,
+          "visible_title": "resident-fixture:2"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 2,
+      "transport_count": 2,
+      "width": 320,
+      "window_pixels_changed": true,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 211,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5647990"
+    },
+    {
+      "action_count": 2,
+      "after_height": 120,
+      "after_path": "frames/SEQUENCE_GUARDED__delayed_same_generation_revoke__off__after.raw",
+      "after_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "after_width": 320,
+      "before_path": "frames/SEQUENCE_GUARDED__delayed_same_generation_revoke__off__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "delayed_same_generation_revoke",
+      "effect_mode": "off",
+      "emitted_event_indices": [
+        1,
+        4
+      ],
+      "error": null,
+      "events": [
+        {
+          "gen": 2,
+          "kind": "replace",
+          "seq": 1,
+          "target": 2
+        },
+        {
+          "gen": 2,
+          "id": "new-r3",
+          "kind": "obs",
+          "seq": 3,
+          "target": 2,
+          "value": true
+        },
+        {
+          "gen": 2,
+          "kind": "revoke",
+          "seq": 2
+        },
+        {
+          "gen": 2,
+          "id": "new-f4",
+          "kind": "obs",
+          "seq": 4,
+          "target": 2,
+          "value": false
+        },
+        {
+          "gen": 2,
+          "id": "new-r5",
+          "kind": "obs",
+          "seq": 5,
+          "target": 2,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 222,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5648018",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:0",
+      "height": 120,
+      "key_release_reads": [
+        true,
+        true
+      ],
+      "key_release_verified": true,
+      "policy": "SEQUENCE_GUARDED",
+      "prefix_effect_counts": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "replace",
+            "seq": 1,
+            "target": 2
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "emit",
+              "new-r3"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "emit",
+              "new-r3"
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "new-r3",
+            "kind": "obs",
+            "seq": 3,
+            "target": 2,
+            "value": true
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "refuse_control",
+              "revoke",
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "emit",
+              "new-r3"
+            ],
+            [
+              "refuse_control",
+              "revoke",
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "revoke",
+            "seq": 2
+          },
+          "index": 2,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "emit",
+              "new-r3"
+            ],
+            [
+              "refuse_control",
+              "revoke",
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "new-f4",
+            "kind": "obs",
+            "seq": 4,
+            "target": 2,
+            "value": false
+          },
+          "index": 3,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "emit",
+              "new-r5"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "emit",
+              "new-r3"
+            ],
+            [
+              "refuse_control",
+              "revoke",
+              2
+            ],
+            [
+              "emit",
+              "new-r5"
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "new-r5",
+            "kind": "obs",
+            "seq": 5,
+            "target": 2,
+            "value": true
+          },
+          "index": 4,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 0,
+      "transport_count": 2,
+      "width": 320,
+      "window_pixels_changed": false,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 219,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5648016"
+    },
+    {
+      "action_count": 1,
+      "after_height": 120,
+      "after_path": "frames/UPSTREAM_RESIDENT__valid_revoke__on__after.raw",
+      "after_sha256": "c4103cad0e0671111693e6218e348d5ec95f9874bc34935f1f867cdbe2b24e95",
+      "after_width": 320,
+      "before_path": "frames/UPSTREAM_RESIDENT__valid_revoke__on__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "valid_revoke",
+      "effect_mode": "on",
+      "emitted_event_indices": [
+        0
+      ],
+      "error": null,
+      "events": [
+        {
+          "gen": 1,
+          "id": "old-r1",
+          "kind": "obs",
+          "seq": 1,
+          "target": 1,
+          "value": true
+        },
+        {
+          "gen": 1,
+          "kind": "revoke",
+          "seq": 2
+        },
+        {
+          "gen": 1,
+          "id": "old-r3",
+          "kind": "obs",
+          "seq": 3,
+          "target": 1,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 230,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5648040",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:1",
+      "height": 120,
+      "key_release_reads": [
+        true
+      ],
+      "key_release_verified": true,
+      "policy": "UPSTREAM_RESIDENT",
+      "prefix_effect_counts": [
+        1,
+        1,
+        1
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "emit",
+              "old-r1"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "emit",
+              "old-r1"
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "id": "old-r1",
+            "kind": "obs",
+            "seq": 1,
+            "target": 1,
+            "value": true
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 1,
+          "visible_title": "resident-fixture:1"
+        },
+        {
+          "action_delta": [
+            [
+              "release",
+              1
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "emit",
+              "old-r1"
+            ],
+            [
+              "release",
+              1
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "kind": "revoke",
+            "seq": 2
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 1,
+          "visible_title": "resident-fixture:1"
+        },
+        {
+          "action_delta": [
+            [
+              "refuse",
+              "old-r3"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "emit",
+              "old-r1"
+            ],
+            [
+              "release",
+              1
+            ],
+            [
+              "refuse",
+              "old-r3"
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "id": "old-r3",
+            "kind": "obs",
+            "seq": 3,
+            "target": 1,
+            "value": true
+          },
+          "index": 2,
+          "space_key_up": true,
+          "visible_effect_count": 1,
+          "visible_title": "resident-fixture:1"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 1,
+      "transport_count": 1,
+      "width": 320,
+      "window_pixels_changed": true,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 227,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5648037"
+    },
+    {
+      "action_count": 1,
+      "after_height": 120,
+      "after_path": "frames/UPSTREAM_RESIDENT__valid_revoke__off__after.raw",
+      "after_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "after_width": 320,
+      "before_path": "frames/UPSTREAM_RESIDENT__valid_revoke__off__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "valid_revoke",
+      "effect_mode": "off",
+      "emitted_event_indices": [
+        0
+      ],
+      "error": null,
+      "events": [
+        {
+          "gen": 1,
+          "id": "old-r1",
+          "kind": "obs",
+          "seq": 1,
+          "target": 1,
+          "value": true
+        },
+        {
+          "gen": 1,
+          "kind": "revoke",
+          "seq": 2
+        },
+        {
+          "gen": 1,
+          "id": "old-r3",
+          "kind": "obs",
+          "seq": 3,
+          "target": 1,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 238,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5648064",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:0",
+      "height": 120,
+      "key_release_reads": [
+        true
+      ],
+      "key_release_verified": true,
+      "policy": "UPSTREAM_RESIDENT",
+      "prefix_effect_counts": [
+        0,
+        0,
+        0
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "emit",
+              "old-r1"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "emit",
+              "old-r1"
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "id": "old-r1",
+            "kind": "obs",
+            "seq": 1,
+            "target": 1,
+            "value": true
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "release",
+              1
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "emit",
+              "old-r1"
+            ],
+            [
+              "release",
+              1
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "kind": "revoke",
+            "seq": 2
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "refuse",
+              "old-r3"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "emit",
+              "old-r1"
+            ],
+            [
+              "release",
+              1
+            ],
+            [
+              "refuse",
+              "old-r3"
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "id": "old-r3",
+            "kind": "obs",
+            "seq": 3,
+            "target": 1,
+            "value": true
+          },
+          "index": 2,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 0,
+      "transport_count": 1,
+      "width": 320,
+      "window_pixels_changed": false,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 235,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5648061"
+    },
+    {
+      "action_count": 1,
+      "after_height": 120,
+      "after_path": "frames/SEQUENCE_GUARDED__valid_revoke__on__after.raw",
+      "after_sha256": "c4103cad0e0671111693e6218e348d5ec95f9874bc34935f1f867cdbe2b24e95",
+      "after_width": 320,
+      "before_path": "frames/SEQUENCE_GUARDED__valid_revoke__on__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "valid_revoke",
+      "effect_mode": "on",
+      "emitted_event_indices": [
+        0
+      ],
+      "error": null,
+      "events": [
+        {
+          "gen": 1,
+          "id": "old-r1",
+          "kind": "obs",
+          "seq": 1,
+          "target": 1,
+          "value": true
+        },
+        {
+          "gen": 1,
+          "kind": "revoke",
+          "seq": 2
+        },
+        {
+          "gen": 1,
+          "id": "old-r3",
+          "kind": "obs",
+          "seq": 3,
+          "target": 1,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 246,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5648085",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:1",
+      "height": 120,
+      "key_release_reads": [
+        true
+      ],
+      "key_release_verified": true,
+      "policy": "SEQUENCE_GUARDED",
+      "prefix_effect_counts": [
+        1,
+        1,
+        1
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "emit",
+              "old-r1"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "emit",
+              "old-r1"
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "id": "old-r1",
+            "kind": "obs",
+            "seq": 1,
+            "target": 1,
+            "value": true
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 1,
+          "visible_title": "resident-fixture:1"
+        },
+        {
+          "action_delta": [
+            [
+              "release",
+              1
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "emit",
+              "old-r1"
+            ],
+            [
+              "release",
+              1
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "kind": "revoke",
+            "seq": 2
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 1,
+          "visible_title": "resident-fixture:1"
+        },
+        {
+          "action_delta": [
+            [
+              "refuse",
+              "old-r3"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "emit",
+              "old-r1"
+            ],
+            [
+              "release",
+              1
+            ],
+            [
+              "refuse",
+              "old-r3"
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "id": "old-r3",
+            "kind": "obs",
+            "seq": 3,
+            "target": 1,
+            "value": true
+          },
+          "index": 2,
+          "space_key_up": true,
+          "visible_effect_count": 1,
+          "visible_title": "resident-fixture:1"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 1,
+      "transport_count": 1,
+      "width": 320,
+      "window_pixels_changed": true,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 243,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5648082"
+    },
+    {
+      "action_count": 1,
+      "after_height": 120,
+      "after_path": "frames/SEQUENCE_GUARDED__valid_revoke__off__after.raw",
+      "after_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "after_width": 320,
+      "before_path": "frames/SEQUENCE_GUARDED__valid_revoke__off__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "valid_revoke",
+      "effect_mode": "off",
+      "emitted_event_indices": [
+        0
+      ],
+      "error": null,
+      "events": [
+        {
+          "gen": 1,
+          "id": "old-r1",
+          "kind": "obs",
+          "seq": 1,
+          "target": 1,
+          "value": true
+        },
+        {
+          "gen": 1,
+          "kind": "revoke",
+          "seq": 2
+        },
+        {
+          "gen": 1,
+          "id": "old-r3",
+          "kind": "obs",
+          "seq": 3,
+          "target": 1,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 254,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5648109",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:0",
+      "height": 120,
+      "key_release_reads": [
+        true
+      ],
+      "key_release_verified": true,
+      "policy": "SEQUENCE_GUARDED",
+      "prefix_effect_counts": [
+        0,
+        0,
+        0
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "emit",
+              "old-r1"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "emit",
+              "old-r1"
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "id": "old-r1",
+            "kind": "obs",
+            "seq": 1,
+            "target": 1,
+            "value": true
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "release",
+              1
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "emit",
+              "old-r1"
+            ],
+            [
+              "release",
+              1
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "kind": "revoke",
+            "seq": 2
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "refuse",
+              "old-r3"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "emit",
+              "old-r1"
+            ],
+            [
+              "release",
+              1
+            ],
+            [
+              "refuse",
+              "old-r3"
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "id": "old-r3",
+            "kind": "obs",
+            "seq": 3,
+            "target": 1,
+            "value": true
+          },
+          "index": 2,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 0,
+      "transport_count": 1,
+      "width": 320,
+      "window_pixels_changed": false,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 251,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5648107"
+    },
+    {
+      "action_count": 0,
+      "after_height": 120,
+      "after_path": "frames/UPSTREAM_RESIDENT__newer_sequence_but_older_generation_replace__on__after.raw",
+      "after_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "after_width": 320,
+      "before_path": "frames/UPSTREAM_RESIDENT__newer_sequence_but_older_generation_replace__on__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "newer_sequence_but_older_generation_replace",
+      "effect_mode": "on",
+      "emitted_event_indices": [],
+      "error": null,
+      "events": [
+        {
+          "gen": 2,
+          "kind": "replace",
+          "seq": 3,
+          "target": 2
+        },
+        {
+          "gen": 1,
+          "kind": "replace",
+          "seq": 4,
+          "target": 1
+        },
+        {
+          "gen": 2,
+          "id": "gen2-r5",
+          "kind": "obs",
+          "seq": 5,
+          "target": 2,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 262,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5648130",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:0",
+      "height": 120,
+      "key_release_reads": [],
+      "key_release_verified": true,
+      "policy": "UPSTREAM_RESIDENT",
+      "prefix_effect_counts": [
+        0,
+        0,
+        0
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "replace",
+            "seq": 3,
+            "target": 2
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              1,
+              1
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "invalidate",
+              1,
+              1
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "kind": "replace",
+            "seq": 4,
+            "target": 1
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "refuse",
+              "gen2-r5"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "invalidate",
+              1,
+              1
+            ],
+            [
+              "refuse",
+              "gen2-r5"
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "gen2-r5",
+            "kind": "obs",
+            "seq": 5,
+            "target": 2,
+            "value": true
+          },
+          "index": 2,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 0,
+      "transport_count": 0,
+      "width": 320,
+      "window_pixels_changed": false,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 259,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5648128"
+    },
+    {
+      "action_count": 0,
+      "after_height": 120,
+      "after_path": "frames/UPSTREAM_RESIDENT__newer_sequence_but_older_generation_replace__off__after.raw",
+      "after_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "after_width": 320,
+      "before_path": "frames/UPSTREAM_RESIDENT__newer_sequence_but_older_generation_replace__off__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "newer_sequence_but_older_generation_replace",
+      "effect_mode": "off",
+      "emitted_event_indices": [],
+      "error": null,
+      "events": [
+        {
+          "gen": 2,
+          "kind": "replace",
+          "seq": 3,
+          "target": 2
+        },
+        {
+          "gen": 1,
+          "kind": "replace",
+          "seq": 4,
+          "target": 1
+        },
+        {
+          "gen": 2,
+          "id": "gen2-r5",
+          "kind": "obs",
+          "seq": 5,
+          "target": 2,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 270,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5648153",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:0",
+      "height": 120,
+      "key_release_reads": [],
+      "key_release_verified": true,
+      "policy": "UPSTREAM_RESIDENT",
+      "prefix_effect_counts": [
+        0,
+        0,
+        0
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "replace",
+            "seq": 3,
+            "target": 2
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              1,
+              1
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "invalidate",
+              1,
+              1
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "kind": "replace",
+            "seq": 4,
+            "target": 1
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "refuse",
+              "gen2-r5"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "invalidate",
+              1,
+              1
+            ],
+            [
+              "refuse",
+              "gen2-r5"
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "gen2-r5",
+            "kind": "obs",
+            "seq": 5,
+            "target": 2,
+            "value": true
+          },
+          "index": 2,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 0,
+      "transport_count": 0,
+      "width": 320,
+      "window_pixels_changed": false,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 267,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5648150"
+    },
+    {
+      "action_count": 1,
+      "after_height": 120,
+      "after_path": "frames/SEQUENCE_GUARDED__newer_sequence_but_older_generation_replace__on__after.raw",
+      "after_sha256": "c4103cad0e0671111693e6218e348d5ec95f9874bc34935f1f867cdbe2b24e95",
+      "after_width": 320,
+      "before_path": "frames/SEQUENCE_GUARDED__newer_sequence_but_older_generation_replace__on__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "newer_sequence_but_older_generation_replace",
+      "effect_mode": "on",
+      "emitted_event_indices": [
+        2
+      ],
+      "error": null,
+      "events": [
+        {
+          "gen": 2,
+          "kind": "replace",
+          "seq": 3,
+          "target": 2
+        },
+        {
+          "gen": 1,
+          "kind": "replace",
+          "seq": 4,
+          "target": 1
+        },
+        {
+          "gen": 2,
+          "id": "gen2-r5",
+          "kind": "obs",
+          "seq": 5,
+          "target": 2,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 278,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5648174",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:1",
+      "height": 120,
+      "key_release_reads": [
+        true
+      ],
+      "key_release_verified": true,
+      "policy": "SEQUENCE_GUARDED",
+      "prefix_effect_counts": [
+        0,
+        0,
+        1
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "replace",
+            "seq": 3,
+            "target": 2
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "refuse_control",
+              "replace",
+              4
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "refuse_control",
+              "replace",
+              4
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "kind": "replace",
+            "seq": 4,
+            "target": 1
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "emit",
+              "gen2-r5"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "refuse_control",
+              "replace",
+              4
+            ],
+            [
+              "emit",
+              "gen2-r5"
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "gen2-r5",
+            "kind": "obs",
+            "seq": 5,
+            "target": 2,
+            "value": true
+          },
+          "index": 2,
+          "space_key_up": true,
+          "visible_effect_count": 1,
+          "visible_title": "resident-fixture:1"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 1,
+      "transport_count": 1,
+      "width": 320,
+      "window_pixels_changed": true,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 275,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5648171"
+    },
+    {
+      "action_count": 1,
+      "after_height": 120,
+      "after_path": "frames/SEQUENCE_GUARDED__newer_sequence_but_older_generation_replace__off__after.raw",
+      "after_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "after_width": 320,
+      "before_path": "frames/SEQUENCE_GUARDED__newer_sequence_but_older_generation_replace__off__before.raw",
+      "before_sha256": "03a682f689fcbcf1cae80e321226ccbeedb4191ff5f670a42cb8e43e3321395b",
+      "bytes_per_frame": 153600,
+      "case": "newer_sequence_but_older_generation_replace",
+      "effect_mode": "off",
+      "emitted_event_indices": [
+        2
+      ],
+      "error": null,
+      "events": [
+        {
+          "gen": 2,
+          "kind": "replace",
+          "seq": 3,
+          "target": 2
+        },
+        {
+          "gen": 1,
+          "kind": "replace",
+          "seq": 4,
+          "target": 1
+        },
+        {
+          "gen": 2,
+          "id": "gen2-r5",
+          "kind": "obs",
+          "seq": 5,
+          "target": 2,
+          "value": true
+        }
+      ],
+      "fixture_exit_code": -15,
+      "fixture_pid": 286,
+      "fixture_reaped": true,
+      "fixture_start_ticks": "5648196",
+      "focus_verified": true,
+      "gui_title": "resident-fixture:0",
+      "height": 120,
+      "key_release_reads": [
+        true
+      ],
+      "key_release_verified": true,
+      "policy": "SEQUENCE_GUARDED",
+      "prefix_effect_counts": [
+        0,
+        0,
+        0
+      ],
+      "prefixes": [
+        {
+          "action_delta": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "kind": "replace",
+            "seq": 3,
+            "target": 2
+          },
+          "index": 0,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "refuse_control",
+              "replace",
+              4
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "refuse_control",
+              "replace",
+              4
+            ]
+          ],
+          "event": {
+            "gen": 1,
+            "kind": "replace",
+            "seq": 4,
+            "target": 1
+          },
+          "index": 1,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        },
+        {
+          "action_delta": [
+            [
+              "emit",
+              "gen2-r5"
+            ]
+          ],
+          "actions_so_far": [
+            [
+              "invalidate",
+              2,
+              2
+            ],
+            [
+              "refuse_control",
+              "replace",
+              4
+            ],
+            [
+              "emit",
+              "gen2-r5"
+            ]
+          ],
+          "event": {
+            "gen": 2,
+            "id": "gen2-r5",
+            "kind": "obs",
+            "seq": 5,
+            "target": 2,
+            "value": true
+          },
+          "index": 2,
+          "space_key_up": true,
+          "visible_effect_count": 0,
+          "visible_title": "resident-fixture:0"
+        }
+      ],
+      "socket_disappeared": true,
+      "task_effect_count": 0,
+      "transport_count": 1,
+      "width": 320,
+      "window_pixels_changed": false,
+      "xvfb_exit_code": 0,
+      "xvfb_pid": 283,
+      "xvfb_reaped": true,
+      "xvfb_start_ticks": "5648193"
+    }
+  ],
+  "source_commit": "bec31389157ae5237bcc6474dfd9bf9b16d30752",
+  "source_manifest_sha256": "d46a0954c808bda786a2e19751c421f0e0e93c70be25558374f7def43aaaf20c",
+  "trace_names": [
+    "current_rising_edges",
+    "delayed_replacement_rollback",
+    "valid_new_generation",
+    "duplicate_replacement",
+    "delayed_old_observation",
+    "delayed_current_generation_observation",
+    "delayed_same_generation_revoke",
+    "valid_revoke",
+    "newer_sequence_but_older_generation_replace"
+  ]
+}

@@ -1,0 +1,425 @@
+{
+  "base_commit": "71dea2279dd4b8fb5a1d6f64e7c773a756feeb5b",
+  "decision": "HOLD_COMPOSITE_MANIFEST_NO_STATE_REINTERPRETATION",
+  "dependency_sha256": {
+    "authority_end_identity_binding_v1.py": "a305c1f70bc7bf849421ad41a7539966d539e1037f7db2fa5116b41af4f5f730",
+    "authority_ended_bridge_v1.py": "2c9684d8f731b36469df06532fc2ce566716c0380002d18da1f317814f7acb1e",
+    "binder_byte_pinned_bound_issue_v1.py": "c725ca222920acf7dde9e5e0950a7178da92dbac41b49f65452acd0939241060",
+    "bridge_v2_semantic_snapshot.py": "f16ba93fabef5c395b349d91e2ea9ec4139f6f993a763269879fc8ccd6ee35f9",
+    "diagnostic_drift_binder.py": "e75b6851f37525e6230cde448392a248edf78d10c3e38dc2aeba4a518384ad26",
+    "diagnostic_validator_byte_drift.py": "1f40ea48def2e99823c8e254dc1f95927d9c5600bfb3fc420185e76ca5f71a81",
+    "durable_token_state_v2.py": "72a3481653cf9c41ec1a03f4c7a7bf1c482ff69468b5d92986bad8cf814950b4",
+    "process_worker.py": "1ad0ca3937e361f1e4e2fd98921649a50b03361157709228fd650f9faf81834b",
+    "validator_byte_pinned_ledger_v3.py": "a0744260a48b3575a451c63139fdb2fde898e0493317d1edd1d731ce3d227be5"
+  },
+  "formal_retries": 0,
+  "hard_gate_pass": true,
+  "limitations": [
+    "restart-state continuity only; not external authorization of an allowed binder/validator pair",
+    "diagnostic validator differs from exact source only by trailing comment",
+    "offline separate-process only",
+    "no live GUI/model/network/durable-submit",
+    "PR #168 executed-source provenance remains independent"
+  ],
+  "result_id": "authority-split-pin-atomicity-v1-20260916-01",
+  "rows": [
+    {
+      "case": "baseline_exact_init_issue",
+      "detail": {
+        "binder_pin": {
+          "binder_id": "authority-end-intent-token-v1",
+          "binder_sha256": "a305c1f70bc7bf849421ad41a7539966d539e1037f7db2fa5116b41af4f5f730",
+          "function_name": "bind_authority_end_identity",
+          "schema": "authority-end-identity-binder-byte-pin-v1"
+        },
+        "binder_pin_exists": true,
+        "binder_sha256": "a305c1f70bc7bf849421ad41a7539966d539e1037f7db2fa5116b41af4f5f730",
+        "entries_in_memory": {
+          "runtime-intent-token": {
+            "post_sequence": 11,
+            "status": "pending"
+          }
+        },
+        "entries_on_disk": {
+          "runtime-intent-token": {
+            "post_sequence": 11,
+            "status": "pending"
+          }
+        },
+        "seq": 11,
+        "state_exists": true,
+        "status": "ISSUED",
+        "token_id": "runtime-intent-token",
+        "validator_pin": {
+          "function_name": "to_caller_execution_decision",
+          "schema": "authority-ended-validator-byte-pin-v3",
+          "validator_id": "bridge-v2-two-capture",
+          "validator_sha256": "f16ba93fabef5c395b349d91e2ea9ec4139f6f993a763269879fc8ccd6ee35f9"
+        },
+        "validator_pin_exists": true,
+        "validator_sha256": "f16ba93fabef5c395b349d91e2ea9ec4139f6f993a763269879fc8ccd6ee35f9"
+      },
+      "pass": true
+    },
+    {
+      "case": "binder_sidecar_crash_leaves_no_validator_or_state",
+      "detail": {
+        "binder_pin": {
+          "binder_id": "authority-end-intent-token-v1",
+          "binder_sha256": "a305c1f70bc7bf849421ad41a7539966d539e1037f7db2fa5116b41af4f5f730",
+          "function_name": "bind_authority_end_identity",
+          "schema": "authority-end-identity-binder-byte-pin-v1"
+        },
+        "binder_pin_exists": true,
+        "entries_on_disk": null,
+        "error": "after_binder_sidecar",
+        "state_exists": false,
+        "status": "REJECTED",
+        "type": "InjectedBinderInitCrash",
+        "validator_pin": null,
+        "validator_pin_exists": false
+      },
+      "pass": true
+    },
+    {
+      "case": "pre_state_unpinned_validator_can_become_initial_choice",
+      "detail": {
+        "classification": "pre_state_initialization_choice",
+        "worker": {
+          "binder_pin": {
+            "binder_id": "authority-end-intent-token-v1",
+            "binder_sha256": "a305c1f70bc7bf849421ad41a7539966d539e1037f7db2fa5116b41af4f5f730",
+            "function_name": "bind_authority_end_identity",
+            "schema": "authority-end-identity-binder-byte-pin-v1"
+          },
+          "binder_pin_exists": true,
+          "binder_sha256": "a305c1f70bc7bf849421ad41a7539966d539e1037f7db2fa5116b41af4f5f730",
+          "entries_in_memory": {
+            "runtime-intent-token": {
+              "post_sequence": 11,
+              "status": "pending"
+            }
+          },
+          "entries_on_disk": {
+            "runtime-intent-token": {
+              "post_sequence": 11,
+              "status": "pending"
+            }
+          },
+          "seq": 11,
+          "state_exists": true,
+          "status": "ISSUED",
+          "token_id": "runtime-intent-token",
+          "validator_pin": {
+            "function_name": "to_caller_execution_decision",
+            "schema": "authority-ended-validator-byte-pin-v3",
+            "validator_id": "bridge-v2-two-capture",
+            "validator_sha256": "1f40ea48def2e99823c8e254dc1f95927d9c5600bfb3fc420185e76ca5f71a81"
+          },
+          "validator_pin_exists": true,
+          "validator_sha256": "1f40ea48def2e99823c8e254dc1f95927d9c5600bfb3fc420185e76ca5f71a81"
+        }
+      },
+      "pass": true
+    },
+    {
+      "case": "validator_sidecar_crash_leaves_both_pins_no_state",
+      "detail": {
+        "binder_pin": {
+          "binder_id": "authority-end-intent-token-v1",
+          "binder_sha256": "a305c1f70bc7bf849421ad41a7539966d539e1037f7db2fa5116b41af4f5f730",
+          "function_name": "bind_authority_end_identity",
+          "schema": "authority-end-identity-binder-byte-pin-v1"
+        },
+        "binder_pin_exists": true,
+        "entries_on_disk": null,
+        "error": "after_sidecar",
+        "state_exists": false,
+        "status": "REJECTED",
+        "type": "InjectedInitCrash",
+        "validator_pin": {
+          "function_name": "to_caller_execution_decision",
+          "schema": "authority-ended-validator-byte-pin-v3",
+          "validator_id": "bridge-v2-two-capture",
+          "validator_sha256": "f16ba93fabef5c395b349d91e2ea9ec4139f6f993a763269879fc8ccd6ee35f9"
+        },
+        "validator_pin_exists": true
+      },
+      "pass": true
+    },
+    {
+      "case": "both_pins_binder_drift_rejects_without_mutation",
+      "detail": {
+        "binder_pin": {
+          "binder_id": "authority-end-intent-token-v1",
+          "binder_sha256": "a305c1f70bc7bf849421ad41a7539966d539e1037f7db2fa5116b41af4f5f730",
+          "function_name": "bind_authority_end_identity",
+          "schema": "authority-end-identity-binder-byte-pin-v1"
+        },
+        "binder_pin_exists": true,
+        "entries_on_disk": null,
+        "error": "binder pin mismatch",
+        "state_exists": false,
+        "status": "REJECTED",
+        "type": "BinderPinError",
+        "validator_pin": {
+          "function_name": "to_caller_execution_decision",
+          "schema": "authority-ended-validator-byte-pin-v3",
+          "validator_id": "bridge-v2-two-capture",
+          "validator_sha256": "f16ba93fabef5c395b349d91e2ea9ec4139f6f993a763269879fc8ccd6ee35f9"
+        },
+        "validator_pin_exists": true
+      },
+      "pass": true
+    },
+    {
+      "case": "both_pins_validator_drift_rejects_without_mutation",
+      "detail": {
+        "binder_pin": {
+          "binder_id": "authority-end-intent-token-v1",
+          "binder_sha256": "a305c1f70bc7bf849421ad41a7539966d539e1037f7db2fa5116b41af4f5f730",
+          "function_name": "bind_authority_end_identity",
+          "schema": "authority-end-identity-binder-byte-pin-v1"
+        },
+        "binder_pin_exists": true,
+        "entries_on_disk": null,
+        "error": "validator pin mismatch",
+        "state_exists": false,
+        "status": "REJECTED",
+        "type": "ValidatorPinError",
+        "validator_pin": {
+          "function_name": "to_caller_execution_decision",
+          "schema": "authority-ended-validator-byte-pin-v3",
+          "validator_id": "bridge-v2-two-capture",
+          "validator_sha256": "f16ba93fabef5c395b349d91e2ea9ec4139f6f993a763269879fc8ccd6ee35f9"
+        },
+        "validator_pin_exists": true
+      },
+      "pass": true
+    },
+    {
+      "case": "complete_state_binder_drift_rejects_without_mutation",
+      "detail": {
+        "restart": {
+          "binder_pin": {
+            "binder_id": "authority-end-intent-token-v1",
+            "binder_sha256": "a305c1f70bc7bf849421ad41a7539966d539e1037f7db2fa5116b41af4f5f730",
+            "function_name": "bind_authority_end_identity",
+            "schema": "authority-end-identity-binder-byte-pin-v1"
+          },
+          "binder_pin_exists": true,
+          "entries_on_disk": {
+            "runtime-intent-token": {
+              "post_sequence": 11,
+              "status": "pending"
+            }
+          },
+          "error": "binder pin mismatch",
+          "state_exists": true,
+          "status": "REJECTED",
+          "type": "BinderPinError",
+          "validator_pin": {
+            "function_name": "to_caller_execution_decision",
+            "schema": "authority-ended-validator-byte-pin-v3",
+            "validator_id": "bridge-v2-two-capture",
+            "validator_sha256": "f16ba93fabef5c395b349d91e2ea9ec4139f6f993a763269879fc8ccd6ee35f9"
+          },
+          "validator_pin_exists": true
+        },
+        "setup": {
+          "binder_pin": {
+            "binder_id": "authority-end-intent-token-v1",
+            "binder_sha256": "a305c1f70bc7bf849421ad41a7539966d539e1037f7db2fa5116b41af4f5f730",
+            "function_name": "bind_authority_end_identity",
+            "schema": "authority-end-identity-binder-byte-pin-v1"
+          },
+          "binder_pin_exists": true,
+          "binder_sha256": "a305c1f70bc7bf849421ad41a7539966d539e1037f7db2fa5116b41af4f5f730",
+          "entries_in_memory": {
+            "runtime-intent-token": {
+              "post_sequence": 11,
+              "status": "pending"
+            }
+          },
+          "entries_on_disk": {
+            "runtime-intent-token": {
+              "post_sequence": 11,
+              "status": "pending"
+            }
+          },
+          "seq": 11,
+          "state_exists": true,
+          "status": "ISSUED",
+          "token_id": "runtime-intent-token",
+          "validator_pin": {
+            "function_name": "to_caller_execution_decision",
+            "schema": "authority-ended-validator-byte-pin-v3",
+            "validator_id": "bridge-v2-two-capture",
+            "validator_sha256": "f16ba93fabef5c395b349d91e2ea9ec4139f6f993a763269879fc8ccd6ee35f9"
+          },
+          "validator_pin_exists": true,
+          "validator_sha256": "f16ba93fabef5c395b349d91e2ea9ec4139f6f993a763269879fc8ccd6ee35f9"
+        }
+      },
+      "pass": true
+    },
+    {
+      "case": "complete_state_validator_drift_rejects_without_mutation",
+      "detail": {
+        "binder_pin": {
+          "binder_id": "authority-end-intent-token-v1",
+          "binder_sha256": "a305c1f70bc7bf849421ad41a7539966d539e1037f7db2fa5116b41af4f5f730",
+          "function_name": "bind_authority_end_identity",
+          "schema": "authority-end-identity-binder-byte-pin-v1"
+        },
+        "binder_pin_exists": true,
+        "entries_on_disk": {
+          "runtime-intent-token": {
+            "post_sequence": 11,
+            "status": "pending"
+          }
+        },
+        "error": "validator pin mismatch",
+        "state_exists": true,
+        "status": "REJECTED",
+        "type": "ValidatorPinError",
+        "validator_pin": {
+          "function_name": "to_caller_execution_decision",
+          "schema": "authority-ended-validator-byte-pin-v3",
+          "validator_id": "bridge-v2-two-capture",
+          "validator_sha256": "f16ba93fabef5c395b349d91e2ea9ec4139f6f993a763269879fc8ccd6ee35f9"
+        },
+        "validator_pin_exists": true
+      },
+      "pass": true
+    },
+    {
+      "case": "existing_state_missing_binder_pin_rejects_without_mutation",
+      "detail": {
+        "restart": {
+          "binder_pin": null,
+          "binder_pin_exists": false,
+          "entries_on_disk": {
+            "runtime-intent-token": {
+              "post_sequence": 11,
+              "status": "pending"
+            }
+          },
+          "error": "existing token state missing binder pin",
+          "state_exists": true,
+          "status": "REJECTED",
+          "type": "BinderPinError",
+          "validator_pin": {
+            "function_name": "to_caller_execution_decision",
+            "schema": "authority-ended-validator-byte-pin-v3",
+            "validator_id": "bridge-v2-two-capture",
+            "validator_sha256": "f16ba93fabef5c395b349d91e2ea9ec4139f6f993a763269879fc8ccd6ee35f9"
+          },
+          "validator_pin_exists": true
+        },
+        "setup": {
+          "binder_pin": {
+            "binder_id": "authority-end-intent-token-v1",
+            "binder_sha256": "a305c1f70bc7bf849421ad41a7539966d539e1037f7db2fa5116b41af4f5f730",
+            "function_name": "bind_authority_end_identity",
+            "schema": "authority-end-identity-binder-byte-pin-v1"
+          },
+          "binder_pin_exists": true,
+          "binder_sha256": "a305c1f70bc7bf849421ad41a7539966d539e1037f7db2fa5116b41af4f5f730",
+          "entries_in_memory": {
+            "runtime-intent-token": {
+              "post_sequence": 11,
+              "status": "pending"
+            }
+          },
+          "entries_on_disk": {
+            "runtime-intent-token": {
+              "post_sequence": 11,
+              "status": "pending"
+            }
+          },
+          "seq": 11,
+          "state_exists": true,
+          "status": "ISSUED",
+          "token_id": "runtime-intent-token",
+          "validator_pin": {
+            "function_name": "to_caller_execution_decision",
+            "schema": "authority-ended-validator-byte-pin-v3",
+            "validator_id": "bridge-v2-two-capture",
+            "validator_sha256": "f16ba93fabef5c395b349d91e2ea9ec4139f6f993a763269879fc8ccd6ee35f9"
+          },
+          "validator_pin_exists": true,
+          "validator_sha256": "f16ba93fabef5c395b349d91e2ea9ec4139f6f993a763269879fc8ccd6ee35f9"
+        }
+      },
+      "pass": true
+    },
+    {
+      "case": "existing_state_missing_validator_pin_rejects_without_mutation",
+      "detail": {
+        "restart": {
+          "binder_pin": {
+            "binder_id": "authority-end-intent-token-v1",
+            "binder_sha256": "a305c1f70bc7bf849421ad41a7539966d539e1037f7db2fa5116b41af4f5f730",
+            "function_name": "bind_authority_end_identity",
+            "schema": "authority-end-identity-binder-byte-pin-v1"
+          },
+          "binder_pin_exists": true,
+          "entries_on_disk": {
+            "runtime-intent-token": {
+              "post_sequence": 11,
+              "status": "pending"
+            }
+          },
+          "error": "existing token state missing validator pin",
+          "state_exists": true,
+          "status": "REJECTED",
+          "type": "ValidatorPinError",
+          "validator_pin": null,
+          "validator_pin_exists": false
+        },
+        "setup": {
+          "binder_pin": {
+            "binder_id": "authority-end-intent-token-v1",
+            "binder_sha256": "a305c1f70bc7bf849421ad41a7539966d539e1037f7db2fa5116b41af4f5f730",
+            "function_name": "bind_authority_end_identity",
+            "schema": "authority-end-identity-binder-byte-pin-v1"
+          },
+          "binder_pin_exists": true,
+          "binder_sha256": "a305c1f70bc7bf849421ad41a7539966d539e1037f7db2fa5116b41af4f5f730",
+          "entries_in_memory": {
+            "runtime-intent-token": {
+              "post_sequence": 11,
+              "status": "pending"
+            }
+          },
+          "entries_on_disk": {
+            "runtime-intent-token": {
+              "post_sequence": 11,
+              "status": "pending"
+            }
+          },
+          "seq": 11,
+          "state_exists": true,
+          "status": "ISSUED",
+          "token_id": "runtime-intent-token",
+          "validator_pin": {
+            "function_name": "to_caller_execution_decision",
+            "schema": "authority-ended-validator-byte-pin-v3",
+            "validator_id": "bridge-v2-two-capture",
+            "validator_sha256": "f16ba93fabef5c395b349d91e2ea9ec4139f6f993a763269879fc8ccd6ee35f9"
+          },
+          "validator_pin_exists": true,
+          "validator_sha256": "f16ba93fabef5c395b349d91e2ea9ec4139f6f993a763269879fc8ccd6ee35f9"
+        }
+      },
+      "pass": true
+    }
+  ],
+  "schema": "authority-split-pin-atomicity-v1-formal-result",
+  "source_sha256": {
+    "diagnostic_validator_byte_drift.py": "1f40ea48def2e99823c8e254dc1f95927d9c5600bfb3fc420185e76ca5f71a81",
+    "formal_runner.py": "d942dc75c19bb993b35ff919a944db84b3c0461ea53e96c970b64f218ff5defa",
+    "process_worker.py": "1ad0ca3937e361f1e4e2fd98921649a50b03361157709228fd650f9faf81834b"
+  }
+}

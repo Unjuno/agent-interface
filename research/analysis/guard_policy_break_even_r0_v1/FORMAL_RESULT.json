@@ -1,0 +1,37 @@
+{
+  "decision": "PASS_GUARD_POLICY_BREAK_EVEN_ANALYTIC_SCOPED",
+  "decision_stream_sha256": "c55a2fd1287a2d62b1bfde99e5c73f5c0ac8e8be40cec834877a15789e81d1c2",
+  "directed": [
+    {"closed":"TIE","direct":"TIE","hard_safety":false,"naive":"TIE","params":["1/100","1/1","1/1","0/1","0/1","0/1","100/1"]},
+    {"closed":"GUARD","direct":"GUARD","hard_safety":false,"naive":"GUARD","params":["1/50","1/1","1/1","0/1","0/1","0/1","100/1"]},
+    {"closed":"POST","direct":"POST","hard_safety":false,"naive":"POST","params":["1/200","1/1","1/1","0/1","0/1","0/1","100/1"]},
+    {"closed":"GUARD","direct":"GUARD","hard_safety":false,"naive":"GUARD","params":["1/2","1/1","1/2","0/1","1/1","0/1","10/1"]},
+    {"closed":"GUARD","direct":"GUARD","hard_safety":false,"naive":"GUARD","params":["1/2","1/1","1/1","1/10","1/1","10/1","10/1"]},
+    {"closed":"POST","direct":"POST","hard_safety":false,"naive":"GUARD","params":["1/1","1/1","1/1","0/1","10/1","0/1","5/1"]},
+    {"closed":"POST","direct":"POST","hard_safety":false,"naive":"POST","params":["1/1","10/1","1/1","0/1","0/1","0/1","5/1"]},
+    {"closed":"TIE","direct":"TIE","hard_safety":false,"naive":"TIE","params":["0/1","0/1","0/1","0/1","10/1","0/1","1/1"]},
+    {"decision":"GUARD_REQUIRED","hard_safety":true,"params":["0/1","100/1","0/1","0/1","0/1","0/1","1/1"]},
+    {"decision":"GUARD_REQUIRED","hard_safety":true,"params":["1/1","0/1","0/1","0/1","0/1","0/1","0/1"]}
+  ],
+  "exhaustive_rows": 4860,
+  "formal_invocations": 1,
+  "parameter_stream_sha256": "1d7b7fabf9449bad9bfaa5c9e7ffcd740d47684fc60819e4626b8383eb537128",
+  "phase": "formal",
+  "random_rows": 250000,
+  "replacements": 0,
+  "reruns": 0,
+  "seed": 164620260918001,
+  "stats": {
+    "closed_direct_mismatch": 0,
+    "d_nonpositive": 71580,
+    "hard_safety_post_selection": 0,
+    "hard_safety_rows": 10002,
+    "naive_mismatch": 142927,
+    "recoverable_rows": 254868,
+    "threshold_exact_tie": 188,
+    "threshold_gt1": 109780,
+    "ties": 676
+  },
+  "task": "GUARD-POLICY-BREAK-EVEN-ANALYTIC-R0-20260918-001",
+  "tuning": 0
+}

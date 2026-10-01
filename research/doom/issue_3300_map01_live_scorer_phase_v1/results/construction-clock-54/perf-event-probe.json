@@ -1,0 +1,25 @@
+[
+  {
+    "probe": "perf_event_open_self_software_cpu_clock",
+    "container_capability": "default",
+    "result": "STOP",
+    "errno": 1,
+    "error": "Operation not permitted",
+    "seccomp": 2,
+    "perf_event_paranoid": 2
+  },
+  {
+    "probe": "perf_event_open_self_software_cpu_clock",
+    "container_capability": "CAP_PERFMON",
+    "fd": 3,
+    "errno": 0,
+    "error": null
+  },
+  {
+    "probe": "resolve_engine_clock_symbol",
+    "engine_pid": 30,
+    "engine_executable": "/usr/local/lib/python3.11/site-packages/vizdoom/vizdoom",
+    "result": "no candidate symbol",
+    "candidate_symbols": []
+  }
+]

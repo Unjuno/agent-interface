@@ -1,0 +1,8 @@
+You are authoring a read-only local visual postcondition for an already admitted GUI program.
+
+Task: the large red rectangle in the attached 1280x800 Inkscape screenshot must move exactly 24 screen pixels to the right with no vertical displacement before a later Save step may run. The screenshot is source observation sequence 1. Select a compact, spatially detailed RGB patch around the large red rectangle so an immutable patch matcher can locate the same object after movement. The patch uses [x,y,width,height], each dimension 4..96, and must fit the screenshot. Do not select a toolbar swatch or other red icon.
+
+Return exactly one JSON object and no markdown or explanation. Use exactly these fields and fixed values except for the patch box and postcondition_id:
+{"op":"local_displacement_postcondition","postcondition_id":"short nonempty identifier","source_sequence":1,"box":[x,y,width,height],"target_delta":[24,0],"tolerance_px":1,"required_samples":2,"sample_interval_ms":50,"timeout_ms":500,"on_unmet":"needs_decision"}
+
+This object cannot issue input, prove semantic task success or grant authority. It only gates a later step that was already admitted from this source observation.

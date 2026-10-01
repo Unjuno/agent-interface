@@ -1,0 +1,47 @@
+{
+  "issue": 5486,
+  "successor_of": 5156,
+  "base_main": "d536335e56c87aec5f2258567171cedab69ddb6f",
+  "pinned_legacy_branch": "research/5156-audit-interop-20260930",
+  "pinned_legacy_head": "1675b2e3b3deb4ffbd2651098ccfc819aa53d123",
+  "pinned_inputs": {
+    "legacy_auditor": {
+      "path": "research/live_control/owner_keyup_audit_interop_5156_v1/audit_v2.py",
+      "git_blob": "c37b6372f4e5a7306b98049c834559fdd60cadee",
+      "sha256": "191fdabdd289e49b03514d1dfc66ba475b885ab078b733a7ef7030daf9cfe906"
+    },
+    "expected_inventory": {
+      "path": "research/live_control/owner_keyup_audit_interop_5156_v1/expected_inventory.json",
+      "git_blob": "affa71e53457bb903353ce67b3477ef20b1d488c",
+      "sha256": "9ef72a837ce4f5d802dcc7fdb72a843a0e768154dbe30897a00f270cfaabde2b"
+    },
+    "raw": {
+      "path": "research/live_control/owner_keyup_audit_interop_5156_v1/results/construction-01/raw.json",
+      "git_blob": "451247a5180348b8c29d09994dc0264f822585d1",
+      "sha256": "56842934b9f9b13fe0e52d515d31bd0c3d598cdb1cfa8b719dfb4c8ba463cbc2"
+    }
+  },
+  "candidate_auditor_sha256": "79f95eadb29bc6cc35036c6ff424cb284e55849ecd76ccd2a841ae186a18d1cf",
+  "runner_sha256": "044465ed408dde88d680e24d05ff507ec8564756a297da4edecbcd767017b20c",
+  "independent_auditor_sha256": "da6804eb3d1344efedd47d95b4287e5903a75692093892b55c27360eb32f61f5",
+  "allowed_invocations": {
+    "candidate_run": 1,
+    "separate_independent_audit": 1,
+    "retries": 0
+  },
+  "resource": {
+    "local_disk_free_bytes": 0,
+    "docker": false,
+    "x11": false,
+    "formal_live_allocation": false
+  },
+  "gates": [
+    "pristine accepted",
+    "explicit key tamper rejected",
+    "cleanup null tamper rejected",
+    "missing key rejected",
+    "missing expected release rejected",
+    "legacy fail-open mutation reproduced",
+    "independent raw-only audit pass"
+  ]
+}

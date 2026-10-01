@@ -1,0 +1,46 @@
+{
+  "schema": "issue3809-fullpath-byte-audit-localamd64-freeze-v1",
+  "issue": 4649,
+  "allocation": "issue3809-fullpath-byte-audit-localamd64-20260927",
+  "branch": "research/issue3809-fullpath-byte-audit-localamd64-20260927",
+  "additive_path": "research/audits/issue_3809_fullpath_byte_audit_localamd64_20260927/",
+  "intake_main": "522ff97664c12399e94e28462688afc905732373",
+  "manifest_path": "research/audits/issue_3793_delivery_byte_binding_v2/MANIFEST.json",
+  "manifest_git_blob": "d5127266279299ada9ecb30af14a942370a3cc21",
+  "manifest_sha256": "8180a34bb58ca94ac2734baba0cc84e6316144f37ffac7bb5977d2d6927e7438",
+  "image_id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+  "image_ref": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+  "execution_platform": "linux/amd64",
+  "python": "3.12.14 (main, Sep 19 2026, 01:04:57) [GCC 14.2.0]",
+  "formal_invocations_allowed": 1,
+  "formal_invocations_completed": 0,
+  "formal_output_path": "outputs/issue3809-fullpath-audit-localamd64-20260927/formal01",
+  "formal_argv": [
+    "docker", "run", "--rm", "--pull=never", "--network", "none",
+    "--cpus=1", "--memory=1g", "--pids-limit=64", "--read-only",
+    "--tmpfs", "/tmp:rw,noexec,nosuid,size=64m",
+    "-v", "<bundle>:/study:ro", "-v", "<inputs>:/inputs:ro",
+    "-v", "<formal-output>:/out/formal01:rw", "-w", "/study",
+    "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "python", "-B", "source/run.py", "--phase", "formal", "--out", "/out/formal01"
+  ],
+  "source_sha256": {
+    "PLAN.md": "a72768b9921e50f551a4d8e2124fe7c5532a460690977c1c5af23ad8a4bdba58",
+    "ENVIRONMENT.json": "9f915376f73258f34b6d738d047ae5c88ae7f2bca1f5854b61364f62611643ca",
+    "source/run.py": "b21ddef670772d8688721090f87e4cfde5ba5013531e434a07d8db42e68265c6",
+    "source/audit.py": "dc12e14860296b0d8900aaa66d1465101a0fcd7d4ede69d0b24dd775ad5fee66",
+    "source/controls.py": "5893bb46ac503943cd0b2d329a18f8dca2267a83b345e82059b5b3103dcb1938"
+  },
+  "input_sha256": {
+    "audit_freeze": "2d9b0e4ee289bad1402e5e6fe58f4734a788becd56d5e783dda1816518fbaf94",
+    "audit_plan": "79741322f5c4b43d7d6a5a7b847bf3505bf94d2bc2f486ff27e40592515dd795",
+    "audit_source": "ca3ccf5191d876eeda824555589c4580537dc04ec771fc52ef8914300ec289be",
+    "audit_result": "4bb36c596ee85a48f79c21b18ae4dd6a08b09b7e6e72d351e89bb1188196ae54",
+    "formal_freeze": "b7b2d2bebd24bfc54abc4a20bb00da452eafb084ed09fa7b2a2c57ad146658cd",
+    "formal_raw": "3f51dc5a4c9c8acb48fc2929a8219260575271e5794cd5bd4afedf6f712afc73",
+    "accepted": "e8ef9f6dd897325a22b1927d27e7fba2948051bb309cc472bbf2a1bfaba863d1",
+    "delivered_prefix": "0450145d98f8ff197766d91827a438db1aa5800d556b4bee24eb57b33e168d4a",
+    "audit_v1_result": "69454ea54a9c3b6b91ca6331645e4b0a7dc071cd9da4abb9b88bff7888afa7ca",
+    "audit_v2_01_failure": "faeed58dc95b32ffc29add42f4e860ac5049db654b790d903b6ee3cb48931315"
+  }
+}

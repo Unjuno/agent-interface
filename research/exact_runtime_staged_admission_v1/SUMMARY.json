@@ -1,0 +1,109 @@
+{
+  "allocation": "er197-v1",
+  "base": "4e8e197115969df81a946176e08362c130136603",
+  "runtime_blob": "0c02db714127c8e0f770f9d4ac03699749899d2b",
+  "runtime_sha256": "93e47e1ab5ae3450bb4acf9ec9d21c9abc44ca93ffaee25683b22039d9a722ca",
+  "primary_runtime_invocations": 736,
+  "primary_distinct_cases": 168,
+  "candidate_pair_agreement": 168,
+  "boundary_runtime_invocations": 6,
+  "total_runtime_invocations": 742,
+  "groups": {
+    "cert_grid/certified": {
+      "rows": 96,
+      "allowed": 8,
+      "executed": 8,
+      "stale": 0,
+      "false_stop": 0
+    },
+    "cert_grid/naive": {
+      "rows": 96,
+      "allowed": 8,
+      "executed": 24,
+      "stale": 16,
+      "false_stop": 0
+    },
+    "cert_grid/union": {
+      "rows": 96,
+      "allowed": 8,
+      "executed": 4,
+      "stale": 0,
+      "false_stop": 4
+    },
+    "cert_grid/unique": {
+      "rows": 96,
+      "allowed": 8,
+      "executed": 8,
+      "stale": 0,
+      "false_stop": 0
+    },
+    "cert_named/certified": {
+      "rows": 8,
+      "allowed": 2,
+      "executed": 2,
+      "stale": 0,
+      "false_stop": 0
+    },
+    "cert_named/naive": {
+      "rows": 8,
+      "allowed": 2,
+      "executed": 4,
+      "stale": 2,
+      "false_stop": 0
+    },
+    "cert_named/union": {
+      "rows": 8,
+      "allowed": 2,
+      "executed": 2,
+      "stale": 0,
+      "false_stop": 0
+    },
+    "cert_named/unique": {
+      "rows": 8,
+      "allowed": 2,
+      "executed": 2,
+      "stale": 0,
+      "false_stop": 0
+    },
+    "overlap/certified": {
+      "rows": 64,
+      "allowed": 6,
+      "executed": 6,
+      "stale": 0,
+      "false_stop": 0
+    },
+    "overlap/naive": {
+      "rows": 64,
+      "allowed": 6,
+      "executed": 16,
+      "stale": 10,
+      "false_stop": 0
+    },
+    "overlap/unchecked_selected": {
+      "rows": 64,
+      "allowed": 6,
+      "executed": 8,
+      "stale": 2,
+      "false_stop": 0
+    },
+    "overlap/union": {
+      "rows": 64,
+      "allowed": 6,
+      "executed": 3,
+      "stale": 0,
+      "false_stop": 3
+    },
+    "overlap/unique": {
+      "rows": 64,
+      "allowed": 6,
+      "executed": 6,
+      "stale": 0,
+      "false_stop": 0
+    }
+  },
+  "negative_audit_corruptions_rejected": 4,
+  "model_calls": 0,
+  "physical_input_events": 0,
+  "shared_runtime_files_changed": 0,
+  "decision": "PASS finite exact-runtime development gate; HOLD production/GUI promotion"
+}

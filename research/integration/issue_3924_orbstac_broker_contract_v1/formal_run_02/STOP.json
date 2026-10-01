@@ -1,0 +1,15 @@
+{
+  "allocation": "formal_run_02",
+  "decision": "STOP_FAKE_EXECUTABLE_MOUNT_MISSING",
+  "scientific_pass_or_fail": false,
+  "formal_matrix_rows_started": 7,
+  "fake_invocations": 0,
+  "real_model_calls": 0,
+  "root_cause": "The frozen CODEX_EXE path /study/fake_codex.py was not mounted in the formal container; the checkout was mounted read-only only at /repo.",
+  "independent_audit": "HOLD_AUDIT_ERRORS errors=9 files_hashed=41",
+  "one_shot_observation": "Exactly one receipt/response for queued-a; queued-b remains unprocessed, but fake execution provenance failed.",
+  "explicit_unavailable_observation": "Intentional unavailable executable produced HOST_BROKER_EXECUTABLE_UNAVAILABLE with returncode null.",
+  "malformed_observation": "Malformed request failed closed with process exit 1 and no response/receipt.",
+  "idle_observation": "--once with no request remained idle until external 300 ms timeout; harness killed broker, returncode -9.",
+  "retry_policy": "No formal case is repeated under this allocation. A later experiment requires a separately reviewed preregistration and distinct allocation."
+}

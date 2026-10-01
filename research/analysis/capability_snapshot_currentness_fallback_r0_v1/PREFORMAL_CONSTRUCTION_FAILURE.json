@@ -1,0 +1,16 @@
+{
+  "phase": "preformal_construction_v1",
+  "formal_invocations": 0,
+  "rows": 5000,
+  "disposition": "CONSTRUCTION_HARNESS_GATE_MISMATCH",
+  "candidate_oracle_mismatch": 0,
+  "invalid_snapshot_selection_counters_all_zero": true,
+  "failed_gates": [
+    "no_direct",
+    "no_fallback",
+    "no_capability_equals_authority"
+  ],
+  "cause": "first5000 lexicographic formal rows contained no runtime_owned=true positive region; independent construction auditor also regenerated full formal corpus",
+  "repair": "balanced18-case directed construction and phase-specific independent auditor; formal corpus/H/T/D/C/U unchanged",
+  "cross_obligation_negative_refinement": "invented-cross explicitly synthesizes SEMANTIC_ACTIVATE -> OBSERVE_CONTEXT in negative baseline before source freeze"
+}

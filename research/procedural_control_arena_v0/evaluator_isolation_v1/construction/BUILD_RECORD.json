@@ -1,0 +1,49 @@
+{
+  "arena_source_sha256": {
+    "arena.py": "4e555e479ce665af77eedf444cd6bf82b4f93ccfbec52033df7ce8368c533527",
+    "engine.py": "573927ac68772c1d24715a04f7e070360d5632fb599c9821926fc01143d8810f"
+  },
+  "built_unix": 1790476389.8491852,
+  "images": [
+    {
+      "base": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+      "build_command": [
+        "docker",
+        "build",
+        "--pull",
+        "--platform",
+        "linux/amd64",
+        "--tag",
+        "agent-arena-isolation-evaluator:20260927",
+        "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\agent-interface-arena-validation\\research\\procedural_control_arena_v0\\evaluator_isolation_v1\\images\\evaluator"
+      ],
+      "image_id": "sha256:1381f1d3522c69e011e62340167497b02b3b5e81bc4d719641f7e3b34b905ecd",
+      "log_sha256": "dc47c53ac9eb874465af98277398baa0947f1f235445d77f5c837b465216c286",
+      "name": "evaluator",
+      "repo_digests": [
+        "agent-arena-isolation-evaluator@sha256:1381f1d3522c69e011e62340167497b02b3b5e81bc4d719641f7e3b34b905ecd"
+      ],
+      "tag": "agent-arena-isolation-evaluator:20260927"
+    },
+    {
+      "base": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+      "build_command": [
+        "docker",
+        "build",
+        "--pull",
+        "--platform",
+        "linux/amd64",
+        "--tag",
+        "agent-arena-isolation-controller:20260927",
+        "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\agent-interface-arena-validation\\research\\procedural_control_arena_v0\\evaluator_isolation_v1\\images\\controller"
+      ],
+      "image_id": "sha256:4a800a24ca4ed4e8249cf35559b37ffca7e23a8cd76e7df1434fe4622e22d389",
+      "log_sha256": "7846ae3e55c87ba37f709810496add4a1dfb504888f23622c7f6ee0e83dc04b7",
+      "name": "controller",
+      "repo_digests": [
+        "agent-arena-isolation-controller@sha256:4a800a24ca4ed4e8249cf35559b37ffca7e23a8cd76e7df1434fe4622e22d389"
+      ],
+      "tag": "agent-arena-isolation-controller:20260927"
+    }
+  ]
+}

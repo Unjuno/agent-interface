@@ -1,0 +1,39 @@
+{
+  "passed": true,
+  "checks": {
+    "manifest": true,
+    "frozen_sources": true,
+    "first_pass": true,
+    "coherent_ready": true,
+    "program_attested": true,
+    "first_then_useful": true,
+    "live_clocks": true,
+    "terminal_release": true,
+    "timing": true,
+    "zero_model_retry": true
+  },
+  "allocation_passed": true,
+  "metrics_ms": {
+    "focus_to_runtime_release_ms": 2.050853,
+    "focus_to_early_client_ms": 3.115446,
+    "focus_to_terminal_client_ms": 83.150015,
+    "early_client_wait_advantage_ms": 80.034569,
+    "focus_to_early_candidate_ready_ms": 46.040804,
+    "focus_to_terminal_candidate_ready_ms": 107.989321,
+    "focus_to_early_useful_ready_ms": 105.835056,
+    "focus_to_terminal_useful_ready_ms": 133.248552,
+    "useful_ready_advantage_ms": 27.413496,
+    "early_preparation_overlap_before_terminal_ms": 79.281612,
+    "runtime_release_to_terminal_ms": 80.451231,
+    "focus_to_selection_admission_ms": 252.015316,
+    "selection_admission_to_first_feedback_capture_ms": 89.364017,
+    "selection_admission_to_first_feedback_received_ms": 157.062145,
+    "selection_admission_to_semantic_score_ms": 279.520295,
+    "selection_admission_to_first_useful_feedback_capture_ms": 162.540225,
+    "focus_to_semantic_score_ms": 531.535611,
+    "semantic_score_to_terminal_ms": -37.875947
+  },
+  "files_in_manifest": 18,
+  "bytes_before_receipt": 540548,
+  "scope": "one distinct private-Xvfb Inkscape neutral-fault prepared selection with coherent binding, canonical program attestation, ordered observation scoring through first semantic success or terminal, completed execution and verified release; terminal-first preparation baseline; no model, token, general speedup or human-tempo claim"
+}

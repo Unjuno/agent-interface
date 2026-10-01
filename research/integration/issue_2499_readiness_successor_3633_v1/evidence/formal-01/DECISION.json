@@ -1,0 +1,29 @@
+{
+  "allocation_id": "issue3633-readiness-identity-v4-formal-01",
+  "issue": 3633,
+  "runner_decision": "PASS_READINESS_IDENTITY_V4_SCOPED",
+  "initial_auditor_decision": "AUDIT_PASS_PASS_CLASSIFICATION",
+  "final_decision": "HOLD_PROCESS_LIFECYCLE_UNVERIFIED",
+  "formal_invocations": 1,
+  "retries": 0,
+  "live_app_identities_admitted": "3/3",
+  "negative_gate_unit_tests": "4/4",
+  "forbidden_operations": {
+    "geometry": 0,
+    "focus": 0,
+    "input": 0,
+    "model": 0,
+    "network": 0
+  },
+  "window_owner_pids_reconciled": "2/3",
+  "untracked_window_owner": {
+    "app": "libreoffice",
+    "pid": 95,
+    "tracked_launcher_pid": 66,
+    "launcher_returncode": 255
+  },
+  "x_socket_absent": true,
+  "raw_sha256": "2cbba7489555d241ea3a6fe136e73fccde267726092a33d438e424ce42d55bf7",
+  "identity_readiness_gate": "observed_pass_but_overall_acceptance_hold",
+  "full_mixed_app_session_tested": false
+}

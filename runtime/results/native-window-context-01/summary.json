@@ -1,0 +1,133 @@
+{
+  "scope": "two construction allocations; real native MCP SDK primary use, not registered-host refresh or general performance proof",
+  "runs": [
+    {
+      "name": "native-window-context-01",
+      "source": "c42ad645c",
+      "inventory_statuses": {
+        "unavailable": 5,
+        "recorded": 2
+      },
+      "tool_calls": {
+        "native_submit": 6,
+        "native_start": 1,
+        "native_observe": 1,
+        "native_status": 1
+      },
+      "guarded_actions": 4,
+      "owner_exit_code": 0,
+      "client_exit_code_observed_in_tool": 0,
+      "saved_readback": {
+        "scope": "independent saved-file reopen after GUI owner exited",
+        "calc": [
+          858,
+          326
+        ],
+        "inkscape": {
+          "x": "54",
+          "y": "50",
+          "width": "40",
+          "height": "30",
+          "transform": null
+        },
+        "hashes": {
+          "sheet.xlsx": "8ab1cf874aaeec5f843ce55504a97ca9d172682e6c4b3e7a2fbffc822e1a1b2f",
+          "shape.svg": "cc5d7d02d38ae45ff821d2fc6423fd8388480b0768b729e433995e04599d7409"
+        }
+      },
+      "cleanup": {
+        "descendants_verified": false,
+        "ended_ns": 15908281021890,
+        "errors": [],
+        "owner_exit_verified": false,
+        "processes": [
+          {
+            "pid": 18315,
+            "returncode": 0
+          },
+          {
+            "pid": 18319,
+            "returncode": 1
+          },
+          {
+            "pid": 18324,
+            "returncode": 255
+          },
+          {
+            "pid": 18524,
+            "returncode": -15
+          }
+        ],
+        "schema": "agent-interface/native-cleanup-v1",
+        "scope": "artifact_copy_connections_and_tracked_processes",
+        "started_ns": 15908228674234,
+        "status": "completed",
+        "tracked_processes_terminal": true
+      }
+    },
+    {
+      "name": "native-window-context-02",
+      "source": "82b0d0160",
+      "inventory_statuses": {
+        "recorded": 6
+      },
+      "tool_calls": {
+        "native_submit": 6,
+        "native_start": 1,
+        "native_status": 1
+      },
+      "guarded_actions": 4,
+      "owner_exit_code": 0,
+      "client_exit_code_observed_in_tool": 0,
+      "saved_readback": {
+        "scope": "independent saved-file reopen after GUI owner exited",
+        "calc": [
+          858,
+          326
+        ],
+        "inkscape": {
+          "x": "54",
+          "y": "50",
+          "width": "40",
+          "height": "30",
+          "transform": null
+        },
+        "hashes": {
+          "sheet.xlsx": "ee7ffeaa163ae8e2de28cd5dd0e8b35480f33730d480c21a0ccdd72ebf49112b",
+          "shape.svg": "cc5d7d02d38ae45ff821d2fc6423fd8388480b0768b729e433995e04599d7409"
+        }
+      },
+      "cleanup": {
+        "descendants_verified": false,
+        "ended_ns": 16181003454486,
+        "errors": [],
+        "owner_exit_verified": false,
+        "processes": [
+          {
+            "pid": 19614,
+            "returncode": 0
+          },
+          {
+            "pid": 19618,
+            "returncode": 1
+          },
+          {
+            "pid": 19623,
+            "returncode": 255
+          },
+          {
+            "pid": 19765,
+            "returncode": -15
+          }
+        ],
+        "schema": "agent-interface/native-cleanup-v1",
+        "scope": "artifact_copy_connections_and_tracked_processes",
+        "started_ns": 16180951135173,
+        "status": "completed",
+        "tracked_processes_terminal": true
+      }
+    }
+  ],
+  "actual_model_tokens": null,
+  "model_identity_independently_attested": false
+}

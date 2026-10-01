@@ -1,0 +1,97 @@
+{
+  "schema": "map01-cover-threat-v23-live-audit-v1",
+  "passed": true,
+  "allocation_id": "map01-cover-threat-v23-live-02",
+  "disposition": "RETAINED_LIVE_THREAT_EXPOSURE",
+  "score": {
+    "map_exit": false,
+    "episode_finished": false,
+    "player_dead": false,
+    "death_count": 0,
+    "kill_count": 2
+  },
+  "iterations": 12,
+  "model_wall_seconds": 122.457936027,
+  "usage": {
+    "input_tokens": 148670,
+    "cached_input_tokens": 72192,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 1172,
+    "reasoning_output_tokens": 102
+  },
+  "cover_programs": 16,
+  "cover_renewals": 4,
+  "maximum_renewal_gap_ms": 21.258722,
+  "verified_cover_releases": 16,
+  "threat_policy": {
+    "authored_at": [
+      3,
+      4
+    ],
+    "executed_at": [
+      4,
+      5
+    ],
+    "exact_link_verified": true
+  },
+  "visual_transcription": {
+    "health": [
+      100,
+      100,
+      100,
+      100,
+      97,
+      74,
+      28,
+      28,
+      28,
+      28,
+      28,
+      28
+    ],
+    "ammo": [
+      50,
+      50,
+      50,
+      50,
+      47,
+      41,
+      47,
+      47,
+      47,
+      47,
+      47,
+      47
+    ],
+    "scope": "manual values reviewable in hash-checked HUD contact sheet"
+  },
+  "health_change_during_cover": {
+    "3": {
+      "sequence": 138,
+      "source_image": "138.png",
+      "changed_pixels": 1015,
+      "after_cover_accept_ms": 5863.481296,
+      "after_source_capture_ms": 6030.138756,
+      "before_model_return_ms": 4333.628381
+    },
+    "4": {
+      "sequence": 163,
+      "source_image": "163.png",
+      "changed_pixels": 542,
+      "after_cover_accept_ms": 56.795419,
+      "after_source_capture_ms": 264.621044,
+      "before_model_return_ms": 12587.379098
+    },
+    "5": {
+      "sequence": 250,
+      "source_image": "250.png",
+      "changed_pixels": 400,
+      "after_cover_accept_ms": 1623.142394,
+      "after_source_capture_ms": 1807.589094,
+      "before_model_return_ms": 9801.735321
+    }
+  },
+  "central_observation": "decision 4 reauthored the same threat cover at health 97; decision 5 began at health 74 with changed geometry and then repeated that policy, while the health ROI changed 1.623 seconds after cover admission and 9.802 seconds before the model returned; the next decision frame was health 28",
+  "decision": "integrate the one-way change guard in a new version so an invalidated cover and its concurrently computed stale primary action are both refused; do not infer damage direction or grant fallback input from pixel change",
+  "limits": "single bounded run and posthoc replay; decision HUD values are manually transcribed; ROI change does not identify semantic direction or causally attribute damage; no matched guard comparison, reliability, human-speed or MAP01-clear claim"
+}

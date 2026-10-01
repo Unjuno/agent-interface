@@ -1,0 +1,51 @@
+{
+  "controls": {
+    "alter_decimal_probability": {
+      "audit": {
+        "audit": "FAIL",
+        "errors": [
+          "rho=1/4: fixed_A_anytime decimal mismatch"
+        ],
+        "independent_reimplementation": true,
+        "rows_audited": 4
+      },
+      "rejected": true
+    },
+    "alter_exact_probability": {
+      "audit": {
+        "audit": "FAIL",
+        "errors": [
+          "rho=0: posthoc_max_branch_anytime exact fraction mismatch",
+          "rho=0/1: preregistered post-hoc inflation discriminator absent"
+        ],
+        "independent_reimplementation": true,
+        "rows_audited": 4
+      },
+      "rejected": true
+    },
+    "missing_dependence_row": {
+      "audit": {
+        "audit": "FAIL",
+        "errors": [
+          "rho grid mismatch"
+        ],
+        "independent_reimplementation": true,
+        "rows_audited": 3
+      },
+      "rejected": true
+    },
+    "wrong_threshold": {
+      "audit": {
+        "audit": "FAIL",
+        "errors": [
+          "frozen parameter mismatch"
+        ],
+        "independent_reimplementation": true,
+        "rows_audited": 4
+      },
+      "rejected": true
+    }
+  },
+  "passed": 4,
+  "total": 4
+}

@@ -1,0 +1,21 @@
+{
+  "allocation": "temporal-resume-control-map-20260927-01",
+  "freeze_commit": "d3cd713e6b2adad865367f5b4ff4b82afc42b93c",
+  "input_evidence_commit": "de1064b335a6567c57817209485cf18d25d9e3f2",
+  "input_manifest_sha256": "1584edb3a45202b3e816d2a9735708265dae279fd4e18d8680fded7756cc3855",
+  "successor_verifier_commit": "3a5557245fd1f57e9d65e9ddfd732d67abd41b69",
+  "docker_engine": "29.8.0",
+  "image": "python:3.13.5-slim-bookworm",
+  "image_id": "sha256:4c2cf9917bd1cbacc5e9b07320025bdb7cdf2df7b0ceaccb55e9dd7e30987419",
+  "platform": "linux/amd64",
+  "network": "none",
+  "root_filesystem": "read-only",
+  "successful_container_invocation_count": 1,
+  "verifier_invocation_count": 1,
+  "docker_exit_code": 1,
+  "invoked_at_utc": "not captured by frozen runner",
+  "disposition": "HOLD_POSITIVE_CONTROL_CLEANUP_RECEIPT",
+  "summary": "The baseline verifier passed with 54 rows, 48 candidate matches, 40 comparator disagreements and six corruption refusals. All 11 byte-changing mutations were rejected, including the correctly mapped case_id=48 control_accept corruption; the unchanged acceptance control was accepted. However, the frozen runner records positive_control.copy_removed=false because it checks that value before exiting the TemporaryDirectory context. The run therefore did not retain a positive cleanup receipt and exited 1. No rerun or post-outcome source/gate change was made.",
+  "prior_cli_preflight_failure": "PREFLIGHT01.log",
+  "outer_receipt": "OUTER_RUN.json"
+}

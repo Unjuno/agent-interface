@@ -1,0 +1,81 @@
+[
+  {
+    "case": "matching",
+    "result": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "finalization_status",
+          "state": "pending",
+          "outcome": null,
+          "transport_request_id": "query"
+        }
+      ],
+      "cursor": 1,
+      "returned_ns": 43612938242,
+      "authority": "none",
+      "acknowledgement": "not implied"
+    }
+  },
+  {
+    "case": "different",
+    "result": {
+      "status": "timeout",
+      "records": [
+        {
+          "event": "finalization_status",
+          "state": "pending",
+          "outcome": null,
+          "transport_request_id": "other"
+        }
+      ],
+      "cursor": 1,
+      "returned_ns": 43612994639,
+      "authority": "none",
+      "acknowledgement": "not implied"
+    }
+  },
+  {
+    "case": "missing",
+    "result": {
+      "status": "identity_unknown",
+      "records": [
+        {
+          "event": "finalization_status",
+          "state": "pending",
+          "outcome": null
+        }
+      ],
+      "cursor": 1,
+      "returned_ns": 43613029363,
+      "authority": "none",
+      "acknowledgement": "not implied"
+    }
+  },
+  {
+    "case": "other_snapshot_retained_until_matching_pending",
+    "result": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "finalization_status",
+          "transport_request_id": "other",
+          "state": "available",
+          "outcome": {
+            "final_program": "other"
+          }
+        },
+        {
+          "event": "finalization_status",
+          "transport_request_id": "query",
+          "state": "pending",
+          "outcome": null
+        }
+      ],
+      "cursor": 2,
+      "returned_ns": 43613109138,
+      "authority": "none",
+      "acknowledgement": "not implied"
+    }
+  }
+]

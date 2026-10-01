@@ -1,0 +1,61 @@
+{
+  "allocation": "issue-3690-dockerdesktop-host-01",
+  "checks": {
+    "all_21_mutations_rejected": true,
+    "all_source_hashes_match": true,
+    "checksum_inventory_matches": true,
+    "cli_bytes_match_retained": true,
+    "cli_errors_empty": true,
+    "cli_sha_matches_frozen": true,
+    "cli_status_pass": true,
+    "docker_cli_exit_zero": true,
+    "docker_test_exit_zero": true,
+    "five_unittests_passed": true,
+    "formal_wrapper_assertion_bug_identified": true
+  },
+  "checksum_checks": {
+    "CONSTRUCTION.md": true,
+    "PREREG.md": true,
+    "README.md": true,
+    "RESULT.md": true,
+    "SOURCE_MANIFEST.json": true,
+    "posthoc_verify.py": true,
+    "results/formal01/cli.exit": true,
+    "results/formal01/cli.log": true,
+    "results/formal01/hardening_audit.json": true,
+    "results/formal01/tests.exit": true,
+    "results/formal01/tests.log": true,
+    "run_formal.ps1": true
+  },
+  "cli_byte_identical_to_retained": true,
+  "cli_error_count": 0,
+  "cli_sha256": "e2ac7b32c1da563cbcd3cbea285ac5ace4f98d43b3cb9ea046d2bf6c1adbbbc0",
+  "cli_status": "PASS_OFFLINE_STRUCTURAL_AUDIT",
+  "container_stdout_sha256": {
+    "cli.log": "677da223ac6387eb18344a62c4a64d45c65bdbca0101b4226adddfe64e1376d5",
+    "tests.log": "2f6eb51a34d7ba8506852004e9abd43a8b9b8698bc473188cb9685e95d475d38"
+  },
+  "decision": "PASS_DOCKERDESKTOP_HOST_VALIDATION_SCOPED_POSTHOC_AUDIT",
+  "execution_record": "Both Docker containers exited zero; frozen PowerShell wrapper then exited nonzero because PSCustomObject.Count was treated as the map key count. No container was repeated.",
+  "limitations": [
+    "Posthoc verification reads retained outputs only; no Docker or candidate process was rerun.",
+    "The frozen orchestration script itself ended with an assertion error; this is retained, not rewritten.",
+    "This is an exact-source, finite container host-path validation, not arbitrary auditor soundness or XRes correctness evidence."
+  ],
+  "mutation_count": 21,
+  "source_checks": {
+    "audit.py": true,
+    "evidence/FREEZE.json": true,
+    "evidence/hardening_audit.json": true,
+    "evidence/predecessor_FREEZE.json": true,
+    "evidence/raw.json": true,
+    "test_audit.py": true
+  },
+  "test_names": [
+    "test_contradiction_and_noncanonical_trace_controls_rejected (test_audit.StrictAuditTests.test_contradiction_and_noncanonical_trace_controls_rejected) ... ok",
+    "test_direct_and_documented_cli_routes_match (test_audit.StrictAuditTests.test_direct_and_documented_cli_routes_match) ... ok",
+    "test_original_raw_and_freeze_are_byte_bound (test_audit.StrictAuditTests.test_original_raw_and_freeze_are_byte_bound) ... ok",
+    "test_prior_three_controls_still_rejected (test_audit.StrictAuditTests.test_prior_three_controls_still_rejected) ... ok",
+    "test_study_manifest_binds_exact_predecessor_raw_and_freeze (test_audit.StrictAuditTests.test_study_manifest_binds_exact_predecessor_raw_and_freeze) ... ok"
+  ]
+}

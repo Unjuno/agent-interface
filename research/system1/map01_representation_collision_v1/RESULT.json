@@ -1,0 +1,27 @@
+{
+  "collisions": [
+    {
+      "distinct_labels": 2,
+      "iterations": [1, 2],
+      "labels": [
+        "{\"commands\":[{\"action\":\"fire\",\"extent\":\"pulse\"}],\"contingencies\":[],\"next_cover\":[{\"action\":\"strafe_left\",\"extent\":\"short\"},{\"action\":\"strafe_right\",\"extent\":\"short\"}],\"next_cover_validity\":[{\"critical_health_minimum\":45,\"max_source_age_ms\":30000,\"maximum_health_loss\":8,\"signal_id\":\"health\"}],\"state\":\"active\"}",
+        "{\"commands\":[{\"action\":\"retreat_fire\",\"extent\":\"short\"}],\"contingencies\":[],\"next_cover\":[{\"action\":\"strafe_left\",\"extent\":\"short\"},{\"action\":\"strafe_right\",\"extent\":\"short\"},{\"action\":\"backward\",\"extent\":\"short\"}],\"next_cover_validity\":[{\"critical_health_minimum\":45,\"max_source_age_ms\":30000,\"maximum_health_loss\":8,\"signal_id\":\"health\"}],\"state\":\"active\"}"
+      ],
+      "model_image_sha256": [
+        "94756cb03d7969ace7e884831a64d7e86776c01a80772cad550843938f8feb1a",
+        "c5af6c7b965e121a318fb35839819cf58adb7c94db1cf5d7d03a760dda1b9a82"
+      ],
+      "prompt_git_blobs": ["02edc59200629518b01080e16f7a4e132cda5c60"],
+      "prompt_sha256": "019b57a7433c1c9292c2d90021250c39f88994ca7a1ceead9ea61f2315b2047e",
+      "row_count": 2
+    }
+  ],
+  "decision": "PASS_TYPED_REPRESENTATION_COLLISION_REPLICATED_SCOPED",
+  "eligible_rows": 5,
+  "formal_invocations": 1,
+  "formal_reruns": 0,
+  "report_git_blob": "2aed2e7e3f58b4f8b013fc98c79482a4036225ae",
+  "rows_total": 8,
+  "signature_groups": 4,
+  "task": "LOCAL-SYSTEM1-MAP01-TYPED-REPRESENTATION-COLLISION-20260917-001"
+}

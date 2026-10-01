@@ -1,0 +1,12 @@
+{
+  "base64_text_bytes": 1373,
+  "compressed_bytes": 1027,
+  "compressed_sha256": "30f5737a0f03b3b2ea253372ed60f780505cd686bd93929ccfbba61383549ffe",
+  "encoding": "base64(gzip(RESULT.json))",
+  "gzip_compresslevel": 9,
+  "gzip_mtime": 0,
+  "original_bytes": 16681,
+  "original_sha256": "f0c30d8dcae1b98074557207d9fdf76f2683ac0ca33308cbeac354672caec0fd",
+  "reconstruct": "base64 -d RESULT.json.gz.b64 | gzip -dc > RESULT.json",
+  "verify": "sha256sum RESULT.json"
+}

@@ -1,0 +1,45 @@
+{
+  "construction_excluded": {
+    "A_B_A": "PASS",
+    "stable": "PASS",
+    "switch_to_B": "PASS_REFUSAL",
+    "unrelated_pointer": "PASS"
+  },
+  "issue": 371,
+  "measured_cases_run_at_freeze": 0,
+  "ordered_scenarios": [
+    "unrelated_pointer",
+    "stable",
+    "unrelated_pointer",
+    "A_B_A",
+    "stable",
+    "unrelated_pointer",
+    "stable",
+    "stable",
+    "switch_to_B",
+    "unrelated_pointer",
+    "switch_to_B",
+    "A_B_A",
+    "switch_to_B",
+    "A_B_A",
+    "switch_to_B",
+    "A_B_A",
+    "switch_to_B",
+    "unrelated_pointer",
+    "A_B_A",
+    "stable"
+  ],
+  "predicate": {
+    "dark_rgb_lt": 60,
+    "min_dark_each_side": 100
+  },
+  "publication_base": "0dd239b7db10831a4e8ac078d3a32d4be6370e3d",
+  "schedule_seed": 37120260916,
+  "source_sha256": {
+    "audit.py": "113207c2d3ed249ed966f327961615e2eee82c01726e66e81f447c1d18798a7e",
+    "prereg.json": "27bb7437d063186724f2a65fdf34db40afa24ca3f5383a85ad515973becc56f4",
+    "run_block.py": "2f1098cf5cba37badbb87087701d207ab3ba8ea4438161c7b3761243da9400c1",
+    "run_case.py": "f80f01e2be7c590c8e64d06f00d12007d8a7bbd3db1a0907ee2d237445f00a80"
+  },
+  "task": "INKSCAPE-SELECTION-FINAL-CHECK-20260916-371"
+}

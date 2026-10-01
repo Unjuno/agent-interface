@@ -1,0 +1,18 @@
+{
+  "allocation": "o3-live-receipt-transport-2692-v1-first-readonly-20260921-01",
+  "disposition": "HOLD_ORACLE_AFTER_SOURCE_CLEANUP",
+  "formal_runner_exit_code": 0,
+  "live_capture_rows": 36,
+  "raw_events": 36,
+  "candidate_admitted": 4,
+  "model_calls": 0,
+  "input_events": 0,
+  "action_emissions": 0,
+  "image_id": "sha256:8c37d3a0ff21d1205a00c567fd184184816ab00d81292cb0feee7be92d572f64",
+  "platform": "linux/arm64",
+  "network": "none",
+  "root_filesystem": "read-only",
+  "independent_oracle_exit_code": 1,
+  "independent_oracle_error": "Connection refused connecting to DISPLAY=:99: the allocation runner had already terminated GTK/Xvfb before the independent oracle was invoked.",
+  "interpretation": "The transport/candidate rows are retained, but no independent live-source audit is claimed. This is a HOLD, not a PASS. The ordering defect motivated a separately numbered allocation with its live oracle inside the capture lifetime."
+}

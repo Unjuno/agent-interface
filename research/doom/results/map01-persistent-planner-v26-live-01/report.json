@@ -1,0 +1,652 @@
+{
+  "claim": "persistent typed planner invalidation integration feasibility",
+  "model": "gpt-5.6-luna",
+  "effort": "low",
+  "iterations": 4,
+  "decisions": [
+    {
+      "iteration": 0,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-persistent-planner-v26-live-01/runtime/001.png",
+      "model_image": "results-local/doom/map01-persistent-planner-v26-live-01/decision-0/temporal-sheet.png",
+      "model_image_sha256": "7bd335c1cbe0927a07626879cbfe96766981e7b9f4b6f03b94917eafcc67964c",
+      "action": {
+        "assessment": "Facing a short corridor with a visible doorway or switch ahead; advance cautiously toward it.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ],
+        "contingencies": [
+          {
+            "after_command": 0,
+            "condition": "no_visible_effect",
+            "commands": [
+              {
+                "action": "use",
+                "extent": "pulse"
+              }
+            ]
+          }
+        ],
+        "next_cover": []
+      },
+      "usage": {
+        "total": {
+          "totalTokens": 8989,
+          "inputTokens": 8823,
+          "cachedInputTokens": 0,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 166,
+          "reasoningOutputTokens": 85
+        },
+        "last": {
+          "totalTokens": 8989,
+          "inputTokens": 8823,
+          "cachedInputTokens": 0,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 166,
+          "reasoningOutputTokens": 85
+        },
+        "modelContextWindow": 258400
+      },
+      "model_ns": 5640686708,
+      "effect_memory": [],
+      "effect_receipts": [
+        {
+          "action": "forward",
+          "extent": "medium",
+          "result": "visible_change",
+          "normalized_mae": 0.060856481481481484,
+          "no_visible_effect_threshold_lte": 0.015,
+          "after_sequence": 27,
+          "effect_observed_ns": 20986040665116,
+          "samples": 6,
+          "plan_accept_to_first_capture_ms": 68.473412,
+          "plan_accept_to_last_capture_ms": 668.697824,
+          "capture_ms_total": 23.245283,
+          "scope": "viewport pixels only"
+        }
+      ],
+      "effect_observation_samples": 6,
+      "effect_observation_capture_ms": 23.245283,
+      "execution_trace": [
+        {
+          "id": "plan-0-primary-0-0",
+          "role": "primary",
+          "command_index": 0,
+          "command": {
+            "action": "forward",
+            "extent": "medium"
+          },
+          "accepted_ns": 20985371967292,
+          "terminal_ns": 20986126017545,
+          "receipt": {
+            "action": "forward",
+            "extent": "medium",
+            "result": "visible_change",
+            "normalized_mae": 0.060856481481481484,
+            "no_visible_effect_threshold_lte": 0.015,
+            "after_sequence": 27,
+            "effect_observed_ns": 20986040665116,
+            "samples": 6,
+            "plan_accept_to_first_capture_ms": 68.473412,
+            "plan_accept_to_last_capture_ms": 668.697824,
+            "capture_ms_total": 23.245283,
+            "scope": "viewport pixels only"
+          },
+          "observation_samples": 6,
+          "observation_capture_ms": 23.245283
+        }
+      ],
+      "contingency_branch": null,
+      "compiled_commands": [
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "model_session_id": "01a0a17a-066d-7f13-8dd3-af1b318cb0c1",
+      "planner_turn_id": "01a0a17a-22af-7a41-b9bb-66a2b64028a3",
+      "planner_turn_status": "completed",
+      "planner_answer_eligible": true,
+      "planner_cancellation_requested": false,
+      "planner_interrupt": null,
+      "controller_model_started_ns": 20979681094945,
+      "controller_model_ended_ns": 20985321781653,
+      "model_image_to_plan_accept_ns": 6109696559,
+      "fresh_observation_to_plan_accept_ns": 231260434,
+      "fresh_sequence_at_plan": 21,
+      "cover_terminal_before_plan": true,
+      "cover_program_ids": [
+        "cover-0"
+      ],
+      "cover_renewals": 0,
+      "cover_renewal_gaps_ms": [],
+      "cover_policy": [],
+      "cover_policy_source_iteration": null,
+      "plan_terminal": "completed",
+      "model_action_discarded": false
+    },
+    {
+      "iteration": 1,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-persistent-planner-v26-live-01/runtime/027.png",
+      "model_image": "results-local/doom/map01-persistent-planner-v26-live-01/decision-1/temporal-sheet.png",
+      "model_image_sha256": "b8afa848ab3d470b3809d50cb3c9711ce7f2276b04307d857ed954f9ac0e2647",
+      "action": {
+        "assessment": "Now close to the wall switch on the left beside the doorway; activate it.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "use",
+            "extent": "pulse"
+          }
+        ],
+        "contingencies": [
+          {
+            "after_command": 0,
+            "condition": "no_visible_effect",
+            "commands": [
+              {
+                "action": "forward",
+                "extent": "short"
+              }
+            ]
+          }
+        ],
+        "next_cover": []
+      },
+      "usage": {
+        "total": {
+          "totalTokens": 18561,
+          "inputTokens": 18293,
+          "cachedInputTokens": 7936,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 268,
+          "reasoningOutputTokens": 107
+        },
+        "last": {
+          "totalTokens": 9572,
+          "inputTokens": 9470,
+          "cachedInputTokens": 7936,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 102,
+          "reasoningOutputTokens": 22
+        },
+        "modelContextWindow": 258400
+      },
+      "model_ns": 3281633296,
+      "effect_memory": [],
+      "effect_receipts": [
+        {
+          "action": "use",
+          "extent": "pulse",
+          "result": "no_visible_effect",
+          "normalized_mae": 0.0,
+          "no_visible_effect_threshold_lte": 0.015,
+          "after_sequence": 40,
+          "effect_observed_ns": 20989926022882,
+          "samples": 2,
+          "plan_accept_to_first_capture_ms": 49.349391,
+          "plan_accept_to_last_capture_ms": 130.815149,
+          "capture_ms_total": 7.899875,
+          "scope": "viewport pixels only"
+        },
+        {
+          "action": "forward",
+          "extent": "short",
+          "result": "visible_change",
+          "normalized_mae": 0.18532135076252723,
+          "no_visible_effect_threshold_lte": 0.015,
+          "after_sequence": 44,
+          "effect_observed_ns": 20990417743509,
+          "samples": 4,
+          "plan_accept_to_first_capture_ms": 63.34452,
+          "plan_accept_to_last_capture_ms": 413.123886,
+          "capture_ms_total": 14.06972,
+          "scope": "viewport pixels only"
+        }
+      ],
+      "effect_observation_samples": 6,
+      "effect_observation_capture_ms": 21.969594999999998,
+      "execution_trace": [
+        {
+          "id": "plan-1-primary-0-0",
+          "role": "primary",
+          "command_index": 0,
+          "command": {
+            "action": "use",
+            "extent": "pulse"
+          },
+          "accepted_ns": 20989795207733,
+          "terminal_ns": 20989959488844,
+          "receipt": {
+            "action": "use",
+            "extent": "pulse",
+            "result": "no_visible_effect",
+            "normalized_mae": 0.0,
+            "no_visible_effect_threshold_lte": 0.015,
+            "after_sequence": 40,
+            "effect_observed_ns": 20989926022882,
+            "samples": 2,
+            "plan_accept_to_first_capture_ms": 49.349391,
+            "plan_accept_to_last_capture_ms": 130.815149,
+            "capture_ms_total": 7.899875,
+            "scope": "viewport pixels only"
+          },
+          "observation_samples": 2,
+          "observation_capture_ms": 7.899875
+        },
+        {
+          "id": "plan-1-fallback-0",
+          "role": "fallback",
+          "command_index": 0,
+          "command": {
+            "action": "forward",
+            "extent": "short"
+          },
+          "accepted_ns": 20990004619623,
+          "terminal_ns": 20990495754453,
+          "receipt": {
+            "action": "forward",
+            "extent": "short",
+            "result": "visible_change",
+            "normalized_mae": 0.18532135076252723,
+            "no_visible_effect_threshold_lte": 0.015,
+            "after_sequence": 44,
+            "effect_observed_ns": 20990417743509,
+            "samples": 4,
+            "plan_accept_to_first_capture_ms": 63.34452,
+            "plan_accept_to_last_capture_ms": 413.123886,
+            "capture_ms_total": 14.06972,
+            "scope": "viewport pixels only"
+          },
+          "observation_samples": 4,
+          "observation_capture_ms": 14.06972
+        }
+      ],
+      "contingency_branch": {
+        "after_command": 0,
+        "condition": "no_visible_effect",
+        "skipped_primary_commands": 0,
+        "fallback_commands": [
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ],
+        "latency_ms": 78.596741
+      },
+      "compiled_commands": [
+        {
+          "action": "use",
+          "extent": "pulse"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "model_session_id": "01a0a17a-066d-7f13-8dd3-af1b318cb0c1",
+      "planner_turn_id": "01a0a17a-3d30-7472-bc80-994dd441ae65",
+      "planner_turn_status": "completed",
+      "planner_answer_eligible": true,
+      "planner_cancellation_requested": false,
+      "planner_interrupt": null,
+      "controller_model_started_ns": 20986462473581,
+      "controller_model_ended_ns": 20989744106877,
+      "model_image_to_plan_accept_ns": 3754542617,
+      "fresh_observation_to_plan_accept_ns": 326402770,
+      "fresh_sequence_at_plan": 38,
+      "cover_terminal_before_plan": true,
+      "cover_program_ids": [
+        "cover-1"
+      ],
+      "cover_renewals": 0,
+      "cover_renewal_gaps_ms": [],
+      "cover_policy": [],
+      "cover_policy_source_iteration": 0,
+      "plan_terminal": "completed",
+      "model_action_discarded": false
+    },
+    {
+      "iteration": 2,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-persistent-planner-v26-live-01/runtime/044.png",
+      "model_image": "results-local/doom/map01-persistent-planner-v26-live-01/decision-2/temporal-sheet.png",
+      "model_image_sha256": "22356e5a86bacdfc311ffd35da19d82cfe262e4fdabc3a0a4a066b7c4c364a8c",
+      "action": {
+        "assessment": "The view is now directly in front of a large AGMY doorway. Approach it first, then try activation only if forward movement does not open or pass through.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ],
+        "contingencies": [
+          {
+            "after_command": 0,
+            "condition": "no_visible_effect",
+            "commands": [
+              {
+                "action": "use",
+                "extent": "pulse"
+              }
+            ]
+          }
+        ],
+        "next_cover": []
+      },
+      "usage": {
+        "total": {
+          "totalTokens": 28886,
+          "inputTokens": 28348,
+          "cachedInputTokens": 17024,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 538,
+          "reasoningOutputTokens": 281
+        },
+        "last": {
+          "totalTokens": 10325,
+          "inputTokens": 10055,
+          "cachedInputTokens": 9088,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 270,
+          "reasoningOutputTokens": 174
+        },
+        "modelContextWindow": 258400
+      },
+      "model_ns": 6981840508,
+      "effect_memory": [
+        "use"
+      ],
+      "effect_receipts": [
+        {
+          "action": "forward",
+          "extent": "short",
+          "result": "visible_change",
+          "normalized_mae": 0.07980255991285402,
+          "no_visible_effect_threshold_lte": 0.015,
+          "after_sequence": 75,
+          "effect_observed_ns": 20998302740499,
+          "samples": 5,
+          "plan_accept_to_first_capture_ms": 60.720803,
+          "plan_accept_to_last_capture_ms": 444.734656,
+          "capture_ms_total": 15.410695,
+          "scope": "viewport pixels only"
+        }
+      ],
+      "effect_observation_samples": 5,
+      "effect_observation_capture_ms": 15.410695,
+      "execution_trace": [
+        {
+          "id": "plan-2-primary-0-0",
+          "role": "primary",
+          "command_index": 0,
+          "command": {
+            "action": "forward",
+            "extent": "short"
+          },
+          "accepted_ns": 20997858005843,
+          "terminal_ns": 20998363378589,
+          "receipt": {
+            "action": "forward",
+            "extent": "short",
+            "result": "visible_change",
+            "normalized_mae": 0.07980255991285402,
+            "no_visible_effect_threshold_lte": 0.015,
+            "after_sequence": 75,
+            "effect_observed_ns": 20998302740499,
+            "samples": 5,
+            "plan_accept_to_first_capture_ms": 60.720803,
+            "plan_accept_to_last_capture_ms": 444.734656,
+            "capture_ms_total": 15.410695,
+            "scope": "viewport pixels only"
+          },
+          "observation_samples": 5,
+          "observation_capture_ms": 15.410695
+        }
+      ],
+      "contingency_branch": null,
+      "compiled_commands": [
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "model_session_id": "01a0a17a-066d-7f13-8dd3-af1b318cb0c1",
+      "planner_turn_id": "01a0a17a-4e43-7a73-a3ea-17c26c5e5d55",
+      "planner_turn_status": "completed",
+      "planner_answer_eligible": true,
+      "planner_cancellation_requested": false,
+      "planner_interrupt": null,
+      "controller_model_started_ns": 20990833346899,
+      "controller_model_ended_ns": 20997815187407,
+      "model_image_to_plan_accept_ns": 7440262334,
+      "fresh_observation_to_plan_accept_ns": 176929027,
+      "fresh_sequence_at_plan": 70,
+      "cover_terminal_before_plan": true,
+      "cover_program_ids": [
+        "cover-2"
+      ],
+      "cover_renewals": 0,
+      "cover_renewal_gaps_ms": [],
+      "cover_policy": [],
+      "cover_policy_source_iteration": 1,
+      "plan_terminal": "completed",
+      "model_action_discarded": false
+    },
+    {
+      "iteration": 3,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-persistent-planner-v26-live-01/runtime/075.png",
+      "model_image": "results-local/doom/map01-persistent-planner-v26-live-01/decision-3/temporal-sheet.png",
+      "model_image_sha256": "2ff0ccbd326f4291e44acf251afc78da784934df7bec2c6d9ef8b21e9006947b",
+      "action": {
+        "assessment": "The latest view is pressed against a surface with no clear passage. Back up briefly to recover spacing, then make a small left correction.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "backward",
+            "extent": "short"
+          },
+          {
+            "action": "turn_left",
+            "extent": "pulse"
+          }
+        ],
+        "contingencies": [],
+        "next_cover": []
+      },
+      "usage": {
+        "total": {
+          "totalTokens": 39861,
+          "inputTokens": 39154,
+          "cachedInputTokens": 26112,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 707,
+          "reasoningOutputTokens": 373
+        },
+        "last": {
+          "totalTokens": 10975,
+          "inputTokens": 10806,
+          "cachedInputTokens": 9088,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 169,
+          "reasoningOutputTokens": 92
+        },
+        "modelContextWindow": 258400
+      },
+      "model_ns": 4750781668,
+      "effect_memory": [],
+      "effect_receipts": [
+        {
+          "action": "backward",
+          "extent": "short",
+          "result": "visible_change",
+          "normalized_mae": 0.11559504357298475,
+          "no_visible_effect_threshold_lte": 0.015,
+          "after_sequence": 98,
+          "effect_observed_ns": 21003870977324,
+          "samples": 4,
+          "plan_accept_to_first_capture_ms": 54.896488,
+          "plan_accept_to_last_capture_ms": 354.683666,
+          "capture_ms_total": 14.586102,
+          "scope": "viewport pixels only"
+        },
+        {
+          "action": "turn_left",
+          "extent": "pulse",
+          "result": "visible_change",
+          "normalized_mae": 0.14018246187363834,
+          "no_visible_effect_threshold_lte": 0.015,
+          "after_sequence": 100,
+          "effect_observed_ns": 21004086466088,
+          "samples": 2,
+          "plan_accept_to_first_capture_ms": 469.989202,
+          "plan_accept_to_last_capture_ms": 570.17243,
+          "capture_ms_total": 8.213865,
+          "scope": "viewport pixels only"
+        }
+      ],
+      "effect_observation_samples": 6,
+      "effect_observation_capture_ms": 22.799967000000002,
+      "execution_trace": [
+        {
+          "id": "plan-3-primary-0-1",
+          "role": "primary",
+          "command_index": 0,
+          "command": {
+            "action": "backward",
+            "extent": "short"
+          },
+          "accepted_ns": 21003516293658,
+          "terminal_ns": 21004162034348,
+          "receipt": {
+            "action": "backward",
+            "extent": "short",
+            "result": "visible_change",
+            "normalized_mae": 0.11559504357298475,
+            "no_visible_effect_threshold_lte": 0.015,
+            "after_sequence": 98,
+            "effect_observed_ns": 21003870977324,
+            "samples": 4,
+            "plan_accept_to_first_capture_ms": 54.896488,
+            "plan_accept_to_last_capture_ms": 354.683666,
+            "capture_ms_total": 14.586102,
+            "scope": "viewport pixels only"
+          },
+          "observation_samples": 4,
+          "observation_capture_ms": 14.586102
+        },
+        {
+          "id": "plan-3-primary-0-1",
+          "role": "primary",
+          "command_index": 1,
+          "command": {
+            "action": "turn_left",
+            "extent": "pulse"
+          },
+          "accepted_ns": 21003516293658,
+          "terminal_ns": 21004162034348,
+          "receipt": {
+            "action": "turn_left",
+            "extent": "pulse",
+            "result": "visible_change",
+            "normalized_mae": 0.14018246187363834,
+            "no_visible_effect_threshold_lte": 0.015,
+            "after_sequence": 100,
+            "effect_observed_ns": 21004086466088,
+            "samples": 2,
+            "plan_accept_to_first_capture_ms": 469.989202,
+            "plan_accept_to_last_capture_ms": 570.17243,
+            "capture_ms_total": 8.213865,
+            "scope": "viewport pixels only"
+          },
+          "observation_samples": 2,
+          "observation_capture_ms": 8.213865
+        }
+      ],
+      "contingency_branch": null,
+      "compiled_commands": [
+        {
+          "action": "backward",
+          "extent": "short"
+        },
+        {
+          "action": "turn_left",
+          "extent": "pulse"
+        }
+      ],
+      "model_session_id": "01a0a17a-066d-7f13-8dd3-af1b318cb0c1",
+      "planner_turn_id": "01a0a17a-6ced-7f42-b3a3-52e1b7fd7d9a",
+      "planner_turn_status": "completed",
+      "planner_answer_eligible": true,
+      "planner_cancellation_requested": false,
+      "planner_interrupt": null,
+      "controller_model_started_ns": 20998683322051,
+      "controller_model_ended_ns": 21003434103719,
+      "model_image_to_plan_accept_ns": 5213553159,
+      "fresh_observation_to_plan_accept_ns": 84491828,
+      "fresh_sequence_at_plan": 94,
+      "cover_terminal_before_plan": true,
+      "cover_program_ids": [
+        "cover-3"
+      ],
+      "cover_renewals": 0,
+      "cover_renewal_gaps_ms": [],
+      "cover_policy": [],
+      "cover_policy_source_iteration": 2,
+      "plan_terminal": "completed",
+      "model_action_discarded": false
+    }
+  ],
+  "score": {
+    "event": "post_control_score",
+    "map": "MAP01",
+    "skill": 1,
+    "map_exit": false,
+    "episode_finished": false,
+    "player_dead": false,
+    "wall_control_ns": 24879294559,
+    "death_count": 0,
+    "kill_count": 0,
+    "one_life_map_exit": false,
+    "episode_timeout_seconds": 600,
+    "reward": 0.0,
+    "scorer_refresh_calls_after_control": 1,
+    "emit_ns": 21004247108952
+  },
+  "model_session_span": 4,
+  "model_session_ids": [
+    "01a0a17a-066d-7f13-8dd3-af1b318cb0c1"
+  ],
+  "motor_contract": "semantic commands compiled to <=450ms turns and <=900ms movement",
+  "effect_receipt_contract": "reuse the final exact sample already emitted by each hold; retain full local receipts but expose only no-visible-effect action names to the model",
+  "effect_receipt_extra_steps": 0,
+  "contingency_contract": "preplanned no-visible-effect fallback skips the primary tail and runs without another model call",
+  "contingencies_authored": 3,
+  "contingency_branches_taken": 1,
+  "contingency_branch_latency_ms": [
+    78.596741
+  ],
+  "program_admissions": 5,
+  "extra_program_admissions_vs_one_bundle": 1,
+  "effect_receipt_commands": 6,
+  "effect_observation_samples": 23,
+  "effect_observation_capture_ms": 83.42554,
+  "game_continued_during_model_calls": true,
+  "planner_contract": "one capability-minimized app-server process; stable typed thread/turn ownership; invalidation interrupts the matching turn and no cancelled or stale answer is admitted",
+  "planner_turns": 4,
+  "planner_interruption_requests": 0,
+  "planner_interrupted_completions": 0,
+  "planner_ineligible_answers": 0,
+  "policy_invalidation_contract": "every dequeued exact observation is evaluated; changed or unknown configured ROI cancels existing cover and discards the dependent model action; it never grants input authority or proves success",
+  "policy_invalidations": 0,
+  "model_actions_discarded": 0,
+  "cover_programs": 4,
+  "cover_renewals": 0,
+  "cover_renewal_gaps_ms": [],
+  "model_authored_cover_policies": 4,
+  "model_wall_seconds": 20.65494218
+}

@@ -1,0 +1,29 @@
+{
+  "allocation": "issue-3876-live-reader-20260921-01",
+  "authority_none_all_reads": true,
+  "disposition": "PASS_LIVE_PRODUCER_READ_SCOPED",
+  "errors": [],
+  "freeze_input_count": 40,
+  "input_commands": [
+    {
+      "op": "clock"
+    },
+    {
+      "op": "finish"
+    }
+  ],
+  "live_reader_producer_alive": true,
+  "producer_records": 6,
+  "reader_counts": [
+    4,
+    2,
+    0
+  ],
+  "schema": "issue-3876-live-reader-audit-v1",
+  "sha256": {
+    "delivered.jsonl": "46a495d982fa4fe1dc410a68dc1ae09e6a35ab6795421979c516c09f3f1ae384",
+    "delivery-flush.jsonl": "280e42deed30daf219bb0f125323e76ef55951a8fc284472a5d65c0cacca015e",
+    "events.jsonl": "d4fa6df26056f238286ef425f4b0bfeb78049c157b07db1a16d142da81a77e95",
+    "producer_stdout.jsonl": "46a495d982fa4fe1dc410a68dc1ae09e6a35ab6795421979c516c09f3f1ae384"
+  }
+}

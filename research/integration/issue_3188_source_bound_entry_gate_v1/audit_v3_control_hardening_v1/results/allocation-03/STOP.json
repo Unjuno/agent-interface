@@ -1,0 +1,16 @@
+{
+  "schema": "issue-3188-audit-v3-allocation-stop-v1",
+  "allocation": "issue3188-audit-v3-control-schema-20260921-03",
+  "status": "STOP_RUNNER_PAYLOAD_ALIAS_MISMATCH",
+  "date": "2026-09-21",
+  "frozen_suite_attempts": 1,
+  "test_cases_started": 0,
+  "test_cases_completed": 0,
+  "error": "KeyError: 'protocol' in runner_v2.run_once; harness payload map supplied protocol3 and candidate instead of protocol and candidate_audit",
+  "interpretation": "Runner failed while assembling frozen-input hashes, before unittest discovery. This is a host harness payload-alias STOP, not a candidate result.",
+  "source_freeze_preserved": true,
+  "formal_02_raw_mutated": false,
+  "raw_sha256": "8460a9ca79611929cbd6d2f6930067a06c6f177e7da3287ad07d1b7f483cb324",
+  "same_allocation_retry": "prohibited",
+  "next_action": "Create a distinct allocation and preflight exact payload key-set equality against runner_v2.run_once before a single test-suite call."
+}

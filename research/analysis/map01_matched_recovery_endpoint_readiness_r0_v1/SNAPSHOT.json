@@ -1,0 +1,162 @@
+{
+  "task": "MAP01-MATCHED-RECOVERY-ENDPOINT-READINESS-R0-20260919-001",
+  "base_main_sha": "7eaa6f5ffdf710e729db0abe00a3dfa617979309",
+  "expected_current_decision": "HOLD",
+  "expected_current_hold_gates": [
+    "physical_occupancy",
+    "task_effect",
+    "audit_binding"
+  ],
+  "supporting_contracts": {
+    "useful_control_lineage": {
+      "ready": true,
+      "path": "research/measurement/useful_control_interval_contract_v3/RESULT_SUMMARY.json",
+      "git_blob": "d70d89647f0ec84537ca1e7f567abb45617d8868",
+      "decision": "PASS_USEFUL_CONTROL_LINEAGE_VALIDATED_SCOPED",
+      "scope": "synthetic interval/evidence-role prerequisite only"
+    }
+  },
+  "gates": {
+    "physical_occupancy": {
+      "ready": false,
+      "evidence_role": "PHYSICAL_OCCUPANCY",
+      "closure": "RETAINED_BLOCKED",
+      "lineage_bound": true,
+      "comparable_clock": false,
+      "precision_adequate": false,
+      "reasons": [
+        "retained MAP01 any-key occupancy decision is SCHEMA_CENSORING_TOO_WIDE",
+        "v39 timing endpoint readiness reports clock_provenance_complete=false"
+      ],
+      "sources": [
+        {
+          "path": "research/doom/map01_held_input_occupancy_partial_posthoc_v2/RESULT_SUMMARY.json",
+          "git_blob": "64ae125866a8e58f6deb90c8433506577ccd0a95",
+          "decision": "SCHEMA_CENSORING_TOO_WIDE"
+        },
+        {
+          "path": "research/measurement/v39_timing_endpoint_readiness_v1/RESULT.json",
+          "git_blob": "cee63788cab0bab376fd8ecfdb613f7ada01a049",
+          "decision": "BLOCKED_RETAINED_V39_TIMING_ENDPOINTS"
+        }
+      ]
+    },
+    "task_effect": {
+      "ready": false,
+      "evidence_role": "TASK_EFFECT",
+      "closure": "ACTIVE_NOT_RETAINED",
+      "plan_bound": false,
+      "causal_bound": false,
+      "comparable_clock": false,
+      "explicit_no_effect": false,
+      "reasons": [
+        "retained #503 decision is SCHEMA_INSUFFICIENT_FIRST_USEFUL_FEEDBACK",
+        "#1838 shows causal binding alone or timestamp alone remains ambiguous",
+        "#1839 snapshot is open and construction-only; source-frozen formal result not retained"
+      ],
+      "sources": [
+        {
+          "path": "research/doom/map01_first_useful_feedback_posthoc_v1/publication_manifest.json",
+          "git_blob": "40a9e3a0af3446ea3f9887c8ae44f7f0777428c4",
+          "decision": "SCHEMA_INSUFFICIENT_FIRST_USEFUL_FEEDBACK"
+        },
+        {
+          "path": "research/analysis/map01_useful_occupied_control_identifiability_v1/RESULT.json",
+          "git_blob": "9046ab6765662ccd648d8a4a4842c567d5adbf14",
+          "decision": "PASS_USEFUL_OCCUPIED_CONTROL_NONIDENTIFIABLE_SCOPED",
+          "base_ambiguous_classes": 405,
+          "cause_only_ambiguous_classes": 405,
+          "timestamp_only_ambiguous_classes": 1485,
+          "both_ambiguous_classes": 0
+        }
+      ],
+      "active_prerequisite": {
+        "issue": 1839,
+        "title": "MAP01 instrumentation contract: plan-bound task-effect timestamps",
+        "state": "open",
+        "updated_at": "2026-09-18T16:56:24Z",
+        "latest_comment_id": 5733313643,
+        "latest_comment_disposition": "PASS_CONSTRUCTION_ELIGIBLE",
+        "scientific_formal_invocations": 0,
+        "reruns": 0
+      }
+    },
+    "matched_arms": {
+      "ready": true,
+      "evidence_role": "MATCHED_ARM_CONTRACT",
+      "closure": "RETAINED_READY",
+      "matched_condition": "ONE_FACTOR_MATCHED",
+      "same_runtime_policy_except_recovery": true,
+      "counterbalanced_pairs": 3,
+      "source": {
+        "path": "research/doom/map01_recovery_cover_mechanism_v6_prereg.json",
+        "git_blob": "c8cd4193771d83a0d3ff112dd9c99b8e9664e3c1",
+        "allocation_id": "map01-recovery-cover-mechanism-live-v6-01",
+        "status": "FROZEN_CONSTRUCTION_BEFORE_FORMAL_WORKFLOW",
+        "claim_scope": "zero-model real-MAP01 local continuation mechanism only; not frontier-model efficacy"
+      }
+    },
+    "audit_binding": {
+      "ready": false,
+      "evidence_role": "RECOVERY_DECISION_AUDIT",
+      "closure": "ACTIVE_NOT_RETAINED",
+      "arm_bound_pair_inputs": false,
+      "independent_audit": true,
+      "reasons": [
+        "#1609 confirmed that pair-level decision numbers are not bound to the six arm summaries",
+        "#1632 snapshot is open with claim only; repair result not retained"
+      ],
+      "source": {
+        "path": "research/measurement/map01_recovery_v6_audit_integrity_v1/RESULT.json",
+        "git_blob": "3c4c0b50259395bbb3f9320b81d3100a580eca0c",
+        "decision": "CONFIRMED_V6_SUMMARY_ARM_BINDING_GAP",
+        "truthful_decision": "HOLD",
+        "summary_only_corrupt_decision": "PASS_MECHANISM_ONLY",
+        "identical_non_summary_tree": true
+      },
+      "active_prerequisite": {
+        "issue": 1632,
+        "title": "Successor: fail-closed bind MAP01 v6 pair metrics to arm evidence",
+        "state": "open",
+        "updated_at": "2026-09-18T14:29:01Z",
+        "latest_comment_id": 5731466739,
+        "latest_comment_disposition": "CLAIM_ONLY_NO_RETAINED_RESULT"
+      }
+    },
+    "terminal_release_independence": {
+      "ready": true,
+      "evidence_role": "TERMINAL_RELEASE_INTEGRITY",
+      "closure": "RETAINED_READY",
+      "release_terminal_independent": true,
+      "semantic_authority_promoted": false,
+      "input_authority_promoted": false,
+      "reasons": [
+        "#1609 inherited controls still fail closed on invalid arm input_bounds and wrong planner boundary phase",
+        "this gate is contract readiness only and does not imply live recovery efficacy"
+      ],
+      "source": {
+        "path": "research/measurement/map01_recovery_v6_audit_integrity_v1/RESULT.json",
+        "git_blob": "3c4c0b50259395bbb3f9320b81d3100a580eca0c",
+        "invalid_arm_control": "FAIL",
+        "wrong_phase_control": "FAIL"
+      }
+    }
+  },
+  "forbidden_substitutions": [
+    "VIEWPORT_CHANGE_AS_TASK_EFFECT",
+    "STATE_FEEDBACK_AS_TASK_EFFECT",
+    "PROGRAM_TERMINAL_AS_TASK_EFFECT",
+    "RUN_LEVEL_SCORE_AS_PLAN_BOUND_TASK_EFFECT",
+    "OPEN_PREREQUISITE_AS_RETAINED_READY",
+    "PAIR_SUMMARY_WITHOUT_ARM_BINDING_AS_AUDIT_READY"
+  ],
+  "formal_policy": {
+    "authorize_only_if_all_five_valid_and_ready": true,
+    "synthetic_gate_vectors": 32,
+    "expected_authorize_vectors": 1,
+    "formal_invocations": 1,
+    "reruns": 0,
+    "replacements": 0,
+    "tuning_after_freeze": 0
+  }
+}

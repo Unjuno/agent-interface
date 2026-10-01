@@ -1,0 +1,31 @@
+{
+  "schema": "issue-4809-formal-evidence-manifest-v1",
+  "allocation": "mitra-gpu-rung0-853-rev4-successor-local-20260927-01",
+  "formal_invocation_count": 1,
+  "freeze_sha256": "55331ed229a9bf8c4e89c505b92cef29e6e0d4cdae0ab177237ebaa49af5b8cb",
+  "evidence": {
+    "COLLISION_EVIDENCE.json": "6c5deb9307780d31f3f9d0908b1b2292e0ae85c7ccd197c3276398e79a975769",
+    "FORMAL_INVOCATION.json": "65d1b361f42fa81ebbb6a46ac82ce45ff4f2583ba31ce5efbbca7d8aa5498c9cd",
+    "GPU_POST.csv": "93a0fd418db49a56f008baeccbb72dafeb60d291caf354b37feaa842773c22e6",
+    "GPU_PRE.csv": "93a0fd418db49a56f008baeccbb72dafeb60d291caf354b37feaa842773c22e6",
+    "INVOCATION_STARTED.json": "af780ed91fdd3fc473d479ee458a0e1b13cb62059c527f2999db336f7f369673",
+    "runner-container-inspect.json": "74eac37fb30333e88cc683b7a575781cb5b342919e486f664df27da77f8e96dd",
+    "runner.log": "d0a195d37f6e512827b91d307c14d31119d719a2b6bea4d796ae3d60c319b86e",
+    "stop-audit-container-inspect.json": "a7057443e52d2d3453b5ee391cdef91461db55989360b0ad6252ab9efe26f617",
+    "stop-audit.log": "85d21bbbf41edc89c9fc5776cdb66764cbd0ad9ccda3ab8b158d4e8ff10f4eb3",
+    "STOP.json": "09ca6758119b4ecdb73fc2544f094e9f753b76c22bd0c82a273dd0bce6a978d5"
+  },
+  "outcome": {
+    "status": "STOP",
+    "stage": "support_context_setup",
+    "exception_type": "TypeError",
+    "exception": "Cannot cast array data from dtype('O') to dtype('int64') according to the rule 'safe'",
+    "model_load_count": 0,
+    "optimizer_step_calls": 0,
+    "partial_query_count": 0,
+    "independent_stop_audit_pass": true,
+    "formal_gpu_requested": true,
+    "gpu_idle_after": true,
+    "retry_authorized": false
+  }
+}

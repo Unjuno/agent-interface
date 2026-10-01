@@ -1,0 +1,51 @@
+{
+  "schema": "agent-interface-golden-artifact-closure-v1",
+  "base_commit": "37fd96c5233d9a3404d9ffb3a87358a79993fe7a",
+  "status": "FAIL_OFFLINE_LAB_AS_RUNTIME_ARTIFACT__MINIMUM_CLOSURE_IDENTIFIED",
+  "source_artifact": {
+    "workflow_run_id": 34973453255,
+    "artifact_id": 10398313098,
+    "name": "offline-container-lab-9e6d5ecd",
+    "sha256": "522763418610ea10e57e55615fa71e76445200b9f86d208820ea97c77c234f0b",
+    "source_base_commit": "9e6d5ecdbb5440fd5df1883161f2c63b2c3bb245"
+  },
+  "retained_audit_contract": {
+    "retained_directory": "research/live_control/results/integrated-efficiency-live-01",
+    "direct_result_files_required": [
+      "preregistration.json",
+      "report.json",
+      "audit.json"
+    ],
+    "preregistered_source_count": 29,
+    "artifact_exact_sha_matches": 26,
+    "artifact_missing_preregistered_sources": 3,
+    "artifact_hash_mismatches": 0
+  },
+  "missing_preregistered_sources": [
+    {
+      "path": "research/live_control/schema_preflight_responder_v1.txt",
+      "expected_sha256": "fd2785852cd55d2a742fba02f3f214839c912a016e9782339e1eb888d2cfb4ef",
+      "current_main_bytes_match_expected": true
+    },
+    {
+      "path": "research/live_control/plain_form_points_responder_v1.txt",
+      "expected_sha256": "7ca5369168fe878d7d446dc61a7b7a2ff260d72d390aa0468ff4d07bd86cc2dd",
+      "current_main_bytes_match_expected": true
+    },
+    {
+      "path": "research/live_control/compiled_form_grounding_responder_v1.txt",
+      "expected_sha256": "d641719d3cdac5e9a036c4bf7306ec1f91414aa4910da670a24d3edb20f9401d",
+      "current_main_bytes_match_expected": true
+    }
+  ],
+  "minimum_observed_omission_set": [
+    "research/live_control/results/integrated-efficiency-live-01/preregistration.json",
+    "research/live_control/results/integrated-efficiency-live-01/report.json",
+    "research/live_control/results/integrated-efficiency-live-01/audit.json",
+    "research/live_control/schema_preflight_responder_v1.txt",
+    "research/live_control/plain_form_points_responder_v1.txt",
+    "research/live_control/compiled_form_grounding_responder_v1.txt"
+  ],
+  "interpretation": "The offline research lab artifact contains 26/29 preregistered source files with exact SHA matches and zero observed mismatches, but omits three hash-bound responder sources and the three retained result JSON files directly required by the golden audit. This is an artifact-composition gap, not evidence that the full repository checkout is corrupt.",
+  "next_gate": "Build the user-facing runtime preview artifact from one frozen release-candidate checkout and require golden_desktop_demo_v3.py audit-retained to pass inside the extracted artifact before publication."
+}

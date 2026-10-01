@@ -1,0 +1,3 @@
+# Independent audit invocation
+
+The audit was run after the one-shot formal invocation in a distinct Docker Desktop container. Image: `python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9`; context `desktop-linux`; network `none`; read-only root, repo, evidence, and IPC mounts; only `/audit` writable; 1 CPU, 512 MiB, 64 PIDs, all capabilities dropped, no-new-privileges, bounded `/tmp` tmpfs. Command was `python audit.py /repo /evidence /ipc`. Exit code 0. Captured result: `PASS_DOCKER_DESKTOP_CURRENT_MAIN_INSTRUCTIONS_PREFLIGHT_ONLY`, 45 checks, 0 errors. Full machine-readable output is `AUDIT.json`.

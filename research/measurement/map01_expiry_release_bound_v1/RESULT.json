@@ -1,0 +1,58 @@
+{
+  "decision": "PASS_EXPIRY_RELEASE_BOUND_RECONSTRUCTION_SCOPED",
+  "formal_invocations": 1,
+  "pairs": [
+    {
+      "historical_valid": true,
+      "pair": 1,
+      "reconstructed": {
+        "valid": true,
+        "substitutions": [],
+        "retained_input_lower_bound_ns": 136957024,
+        "retained_input_upper_bound_ns": 137945142,
+        "no_retained_input_lower_bound_ns": 465006918,
+        "no_retained_input_upper_bound_ns": 465995036
+      }
+    },
+    {
+      "historical_valid": false,
+      "historical_invalid": ["d:unverified_release"],
+      "pair": 2,
+      "reconstructed": {
+        "valid": true,
+        "substitutions": [{
+          "index": 2,
+          "key": "d",
+          "release_interval": [140899286892, 140900507559],
+          "redundant_release_started_ns": 140960815535
+        }],
+        "retained_input_lower_bound_ns": 137666359,
+        "retained_input_upper_bound_ns": 140109955,
+        "no_retained_input_lower_bound_ns": 463756187,
+        "no_retained_input_upper_bound_ns": 466199783
+      }
+    },
+    {
+      "historical_valid": false,
+      "historical_invalid": ["d:unverified_release"],
+      "pair": 3,
+      "reconstructed": {
+        "valid": true,
+        "substitutions": [{
+          "index": 2,
+          "key": "d",
+          "release_interval": [160941656037, 160942234565],
+          "redundant_release_started_ns": 160997215669
+        }],
+        "retained_input_lower_bound_ns": 136225925,
+        "retained_input_upper_bound_ns": 137954010,
+        "no_retained_input_lower_bound_ns": 479897171,
+        "no_retained_input_upper_bound_ns": 481625256
+      }
+    }
+  ],
+  "reruns": 0,
+  "schema": "map01-expiry-release-bound-v1",
+  "formal_result_sha256": "ce30e77a43a921306f132625a020765700ad2fb4ed1866e18a9eb434a1c52a0d",
+  "artifact_sha256": "571be29b4501b7e697f5edcfdc373519f6e404190ae93fdee0f87ba3cfb39f49"
+}

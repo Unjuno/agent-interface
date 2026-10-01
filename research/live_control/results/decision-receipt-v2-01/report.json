@@ -1,0 +1,27 @@
+{
+  "sources": {
+    "probe_decision_receipt_v2.py": "1ac2283cd83211da97b42b5e08afa72b88675902202a184c1af7b809011443bf",
+    "decision_receipt_v1.py": "65f2241704ba15f4ffb4c95a59455b9001f19e3d35924678d21073b90a355bd6",
+    "decision_receipt_v2.py": "5aa1a1456e5c9a3bf8f62434ebb30092421a190f7089beb55a63dfa9cd009a61"
+  },
+  "recorded": [
+    {
+      "source": "results/paged-live-01/move/original-report.json",
+      "binding_present": true,
+      "detail_review_required": false
+    },
+    {
+      "source": "results/recovery-pair1-01/B/move/move-save-report.json",
+      "binding_present": true,
+      "detail_review_required": true
+    },
+    {
+      "source": "results/recovery-pair3-01/B/prepare/stale-right-report.json",
+      "binding_present": false,
+      "detail_review_required": true
+    }
+  ],
+  "binding_mutations_rejected": 8,
+  "nested_error_surfaced": true,
+  "scope": "Offline recorded consistency; no live integration or input authority."
+}

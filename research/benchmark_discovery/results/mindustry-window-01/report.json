@@ -1,0 +1,174 @@
+{
+  "passed": true,
+  "archived_score_unchanged": true,
+  "invalid_controls": [
+    {
+      "case": "nan_tick",
+      "old_status": "VERIFIED",
+      "old_satisfied": true,
+      "new": {
+        "status": "UNKNOWN",
+        "contract_satisfied": null,
+        "reason": "invalid_delivery_measurement",
+        "detail": "invalid phase tick"
+      }
+    },
+    {
+      "case": "positive_infinity",
+      "old_status": "UNKNOWN",
+      "old_satisfied": null,
+      "new": {
+        "status": "UNKNOWN",
+        "contract_satisfied": null,
+        "reason": "invalid_delivery_measurement",
+        "detail": "invalid phase tick"
+      }
+    },
+    {
+      "case": "negative_infinity",
+      "old_status": "VERIFIED",
+      "old_satisfied": true,
+      "new": {
+        "status": "UNKNOWN",
+        "contract_satisfied": null,
+        "reason": "invalid_delivery_measurement",
+        "detail": "invalid phase tick"
+      }
+    },
+    {
+      "case": "boolean_tick",
+      "old_status": "VERIFIED",
+      "old_satisfied": true,
+      "new": {
+        "status": "UNKNOWN",
+        "contract_satisfied": null,
+        "reason": "invalid_delivery_measurement",
+        "detail": "invalid phase tick"
+      }
+    },
+    {
+      "case": "reversed_phase",
+      "old_status": "VERIFIED",
+      "old_satisfied": true,
+      "new": {
+        "status": "UNKNOWN",
+        "contract_satisfied": null,
+        "reason": "invalid_delivery_measurement",
+        "detail": "phase ticks are not ordered"
+      }
+    },
+    {
+      "case": "boolean_plans",
+      "old_status": "VERIFIED",
+      "old_satisfied": true,
+      "new": {
+        "status": "UNKNOWN",
+        "contract_satisfied": null,
+        "reason": "invalid_delivery_measurement",
+        "detail": "delivery requires an integer zero pending-plan count"
+      }
+    },
+    {
+      "case": "nan_duration",
+      "old_status": "VERIFIED",
+      "old_satisfied": true,
+      "new": {
+        "status": "UNKNOWN",
+        "contract_satisfied": null,
+        "reason": "invalid_delivery_measurement",
+        "detail": "invalid minimum delivery duration"
+      }
+    },
+    {
+      "case": "zero_duration",
+      "old_status": "VERIFIED",
+      "old_satisfied": true,
+      "new": {
+        "status": "UNKNOWN",
+        "contract_satisfied": null,
+        "reason": "invalid_delivery_measurement",
+        "detail": "invalid minimum delivery duration"
+      }
+    },
+    {
+      "case": "boolean_copper_goal",
+      "old_status": "VERIFIED",
+      "old_satisfied": true,
+      "new": {
+        "status": "UNKNOWN",
+        "contract_satisfied": null,
+        "reason": "invalid_delivery_measurement",
+        "detail": "invalid minimum delivery copper"
+      }
+    }
+  ],
+  "existing_negatives": [
+    {
+      "case": "zero_delivery",
+      "result": {
+        "status": "CONTRADICTED",
+        "contract_satisfied": false,
+        "wrong_targets": [],
+        "collateral_tiles": [],
+        "source_config_preserved": true,
+        "core_location_preserved": true,
+        "copper_delta": 0,
+        "delivery_observed": false,
+        "simulation_ticks": 1780.0522077083588,
+        "guard_tiles": 112,
+        "initial_to_final_copper_net": 75,
+        "delivery_ticks": 601.4376245737076,
+        "delivery_layout_unchanged": true,
+        "scope": "development six-conveyor contract; no global causal guarantee"
+      }
+    },
+    {
+      "case": "pending_build",
+      "result": {
+        "status": "UNKNOWN",
+        "contract_satisfied": null,
+        "reason": "invalid_delivery_measurement",
+        "detail": "delivery requires an integer zero pending-plan count"
+      }
+    },
+    {
+      "case": "short_window",
+      "result": {
+        "status": "UNKNOWN",
+        "contract_satisfied": null,
+        "reason": "delivery window too short"
+      }
+    },
+    {
+      "case": "changed_layout",
+      "result": {
+        "status": "CONTRADICTED",
+        "contract_satisfied": false,
+        "wrong_targets": [],
+        "collateral_tiles": [],
+        "source_config_preserved": true,
+        "core_location_preserved": true,
+        "copper_delta": 48,
+        "delivery_observed": true,
+        "simulation_ticks": 1780.0522077083588,
+        "guard_tiles": 112,
+        "initial_to_final_copper_net": 123,
+        "delivery_ticks": 601.4376245737076,
+        "delivery_layout_unchanged": false,
+        "scope": "development six-conveyor contract; no global causal guarantee"
+      }
+    }
+  ],
+  "sources": {
+    "mindustry_build_score_v1.py": "5696dc473144c699d73c5ca98e37d7dcc23aa5f2c8ae442428ad26a4b408fba1",
+    "mindustry_build_score_v2.py": "0524266b12468b8e05ef1314a9cb3353f4ddb752bfbe8a6bdc655af3073bdfa9",
+    "probe_mindustry_window_v1.py": "df7de5111a8c7309d4bfb7500e3b1c2ecdbfbe13d1aedfc06d26da43c02c4233"
+  },
+  "inputs": {
+    "before.json": "07da8557a0bb4a1aebbaa7ff58ff87473091aed21a9771fdf17209542e8e3792",
+    "delivery-before.json": "4176e8330034d053faf3439855c4dd58b65569da2fdeb2a6601b89ba345ad66f",
+    "after.json": "563b410f2ff66db9255ecebca2cff5831fbbecf635deb2c0404073cc35ca2573",
+    "evaluation.json": "4fca65e750b16a60c4c0848e0fb22ade6e1de2029ae4f8be1f2fc90d301acd02"
+  },
+  "scope": "Offline measurement validation; actual archived positive unchanged, no new GUI or domain-performance claim."
+}

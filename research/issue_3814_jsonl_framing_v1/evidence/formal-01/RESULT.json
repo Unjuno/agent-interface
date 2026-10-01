@@ -1,0 +1,88 @@
+{
+  "allocation": "issue-3814-jsonl-framing-formal-01",
+  "attempt_file_sha256_after": {
+    "report.json": "4f95fd5f395199f62ddaf9ada1571ea55abccb806709aad8d6a68ed9b179f3f2",
+    "request.json": "77c4df677fae8ad0e3d1b489bcfb4eac166da9de887f85550e69f180bf9f3f80"
+  },
+  "attempt_file_sha256_before": {
+    "report.json": "4f95fd5f395199f62ddaf9ada1571ea55abccb806709aad8d6a68ed9b179f3f2",
+    "request.json": "77c4df677fae8ad0e3d1b489bcfb4eac166da9de887f85550e69f180bf9f3f80"
+  },
+  "base_commit": "de9eb00fb05dc98d71607742eb0c90a4f2c041a1",
+  "container": {
+    "docker_server": "29.8.0",
+    "image_id": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "image_ref": "python@sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "platform": "linux/amd64"
+  },
+  "controls": {
+    "complete_delivery_pass": true,
+    "preexisting_facade_calls_unchanged": true,
+    "preexisting_returncode": 2,
+    "preexisting_sentinel_unchanged": true,
+    "request_only_report_missing": true,
+    "request_only_returncode": 2,
+    "request_only_status": "unknown_or_incomplete"
+  },
+  "dispatch_facade_calls": 1,
+  "framing_guard": {
+    "rejects_missing_lf": true
+  },
+  "parser_only": {
+    "reports_completed": true,
+    "valid_json": true
+  },
+  "preflight": {
+    "architecture": "x86_64",
+    "disposition": "PASS_SOURCE_FREEZE",
+    "docker_server": "29.8.0",
+    "image_id": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "image_ref": "python@sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "mismatches": [],
+    "platform": "linux/amd64",
+    "python": "3.12.14",
+    "schema": "issue-3814-source-image-preflight-v1",
+    "source_check_count": 14,
+    "source_checks": {
+      "research/issue_3814_jsonl_framing_v1/PREREG.md": true,
+      "research/issue_3814_jsonl_framing_v1/audit.py": true,
+      "research/issue_3814_jsonl_framing_v1/preflight.py": true,
+      "research/issue_3814_jsonl_framing_v1/runner.py": true,
+      "research/issue_3814_jsonl_framing_v1/test_runner.py": true,
+      "runtime/cli_v1/__main__.py": true,
+      "runtime/cli_v1/api.py": true,
+      "runtime/cli_v1/attempt.py": true,
+      "runtime/cli_v1/receipt.py": true,
+      "runtime/cli_v1/receipt_image.py": true,
+      "runtime/cli_v1/review.py": true,
+      "runtime/cli_v1/test_cli.py": true,
+      "runtime/selector_v1/__init__.py": true,
+      "runtime/selector_v1/selector.py": true
+    }
+  },
+  "producer": {
+    "delivered_bytes": 267,
+    "delivered_is_exact_prefix_without_lf": true,
+    "delivered_sha256": "77a96d986f74c82330e9509828be057a5b3d3dd730e8b3a23d8d921f9a86b47d",
+    "ends_lf": true,
+    "returncode": 0,
+    "stdout_bytes": 268,
+    "stdout_sha256": "ee7db911c9b00196c47ccffe104d8b2b3d8ae618aaec25acb94d2d860e2e1e91"
+  },
+  "recovery": {
+    "attempt_files_unchanged": true,
+    "attempt_report_value_matches": true,
+    "attempt_status": "report_recorded",
+    "attempt_status_returncode": 0,
+    "receipt_raw_matches_report": true,
+    "receipt_returncode": 0,
+    "replay_allowed": false,
+    "report_bytes_unchanged": true,
+    "retained_report_sha256": "4f95fd5f395199f62ddaf9ada1571ea55abccb806709aad8d6a68ed9b179f3f2",
+    "review_returncode": 0,
+    "review_source_sha256": "4f95fd5f395199f62ddaf9ada1571ea55abccb806709aad8d6a68ed9b179f3f2"
+  },
+  "report_bytes": 148,
+  "report_bytes_sha256": "4f95fd5f395199f62ddaf9ada1571ea55abccb806709aad8d6a68ed9b179f3f2",
+  "scope": "synthetic CLI dispatch and in-memory downstream final-LF truncation only"
+}

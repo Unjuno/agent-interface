@@ -1,0 +1,10 @@
+{
+  "pass": true,
+  "controls": [
+    {"name":"stale","rejected":true,"decision":"FAIL_STALE_POLICY_LAUNDERING"},
+    {"name":"guard","rejected":true,"decision":"FAIL_ACTION_GUARD_COMPOSITION"},
+    {"name":"mismatch","rejected":true,"decision":"FAIL_INTEGRITY"},
+    {"name":"discriminator","rejected":true,"decision":"HOLD_NO_COMPOSITION_DISCRIMINATOR"},
+    {"name":"replay","rejected":true,"decision":"FAIL_INTEGRITY"}
+  ]
+}

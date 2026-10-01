@@ -1,0 +1,29 @@
+{
+  "issue": 4463,
+  "allocation": "gpu-photometric-2912-successor-20260926-01",
+  "formal_invocations": 1,
+  "retries": 0,
+  "tuning": 0,
+  "disposition": "STOP_CUDA_DETERMINISTIC_OPERATOR_UNAVAILABLE",
+  "runner_exit_code": 1,
+  "result_json_produced": false,
+  "audit_run": false,
+  "execution": {
+    "host": "Windows local PC",
+    "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU",
+    "torch": "2.5.1+cu121",
+    "cuda": "12.1",
+    "free_system_disk_bytes_before_run": 334537392128,
+    "free_gpu_bytes_before_run": 15991832576,
+    "cublas_workspace_config": ":4096:8",
+    "deterministic_algorithms": true,
+    "docker_claim": false
+  },
+  "runner_log": {
+    "path": "results/formal01/runner.log",
+    "bytes": 1567,
+    "sha256": "68d53c1b6e0b30d7ff838d2c32663997e1d3b384e21f39d697e15da359df2def"
+  },
+  "cause": "PyTorch adaptive_avg_pool2d_backward_cuda has no deterministic implementation on this stack.",
+  "scope": "Infrastructure/protocol STOP before any completed optimizer step or evaluation; no scientific conclusion."
+}

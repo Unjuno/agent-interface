@@ -1,0 +1,96 @@
+{
+  "cases": [
+    {
+      "arm": "coast",
+      "errors": [],
+      "id": "m01-coast",
+      "mae": 0.013354034163057804,
+      "pair": 1,
+      "pass": true,
+      "validity": "VALID_CURRENT",
+      "visible_change": false
+    },
+    {
+      "arm": "recovery",
+      "errors": [],
+      "id": "m01-recovery",
+      "mae": 0.040874872356653214,
+      "pair": 1,
+      "pass": true,
+      "validity": "VALID_CURRENT",
+      "visible_change": true
+    },
+    {
+      "arm": "coast",
+      "errors": [],
+      "id": "m02-coast",
+      "mae": 0.014397032558918,
+      "pair": 2,
+      "pass": true,
+      "validity": "VALID_CURRENT",
+      "visible_change": false
+    },
+    {
+      "arm": "recovery",
+      "errors": [],
+      "id": "m02-recovery",
+      "mae": 0.0386781245470047,
+      "pair": 2,
+      "pass": true,
+      "validity": "VALID_CURRENT",
+      "visible_change": true
+    },
+    {
+      "arm": "coast",
+      "errors": [],
+      "id": "m03-coast",
+      "mae": 0.014398002997040749,
+      "pair": 3,
+      "pass": true,
+      "validity": "VALID_CURRENT",
+      "visible_change": false
+    },
+    {
+      "arm": "recovery",
+      "errors": [],
+      "id": "m03-recovery",
+      "mae": 0.03863317519426346,
+      "pair": 3,
+      "pass": true,
+      "validity": "VALID_CURRENT",
+      "visible_change": true
+    }
+  ],
+  "decision": "PASS_BLINDSPOT_SCOPED",
+  "pairs": [
+    {
+      "both_valid": true,
+      "coast_mae": 0.013354034163057804,
+      "pair": 1,
+      "ratio": 3.06086324608396,
+      "recovery_gt_coast": true,
+      "recovery_mae": 0.040874872356653214,
+      "recovery_visible": true
+    },
+    {
+      "both_valid": true,
+      "coast_mae": 0.014397032558918,
+      "pair": 2,
+      "ratio": 2.686534491654406,
+      "recovery_gt_coast": true,
+      "recovery_mae": 0.0386781245470047,
+      "recovery_visible": true
+    },
+    {
+      "both_valid": true,
+      "coast_mae": 0.014398002997040749,
+      "pair": 3,
+      "ratio": 2.683231501077185,
+      "recovery_gt_coast": true,
+      "recovery_mae": 0.03863317519426346,
+      "recovery_visible": true
+    }
+  ],
+  "pass": true,
+  "schema": "recovery-admission-blindspot-audit-v1"
+}

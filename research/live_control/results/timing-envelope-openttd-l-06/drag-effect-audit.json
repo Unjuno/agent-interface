@@ -1,0 +1,114 @@
+{
+  "audit_passed": true,
+  "study": "retained OpenTTD L v6 posthoc diagnostic",
+  "rows": [
+    {
+      "turn": 5,
+      "drag_points": [
+        {
+          "x": 705,
+          "y": 240
+        },
+        {
+          "x": 673,
+          "y": 256
+        },
+        {
+          "x": 641,
+          "y": 272
+        }
+      ],
+      "before_sequence": 22,
+      "after_sequence": 24,
+      "before_image": "runtime/022.png",
+      "after_image": "runtime/024.png",
+      "crop_box": [
+        621,
+        220,
+        725,
+        292
+      ],
+      "crop_changed_pixels": 3628,
+      "crop_pixels": 7488,
+      "full_frame_changed_pixels": 152384,
+      "full_frame_pixels": 1024000,
+      "sheet": "drag-effect-turn-5.png",
+      "sheet_sha256": "6337bbca6cdb03aef3120163dbdda66bb554dd4066a5c9e40aa987699e169ba7",
+      "semantic_limit": "pixel change alone does not establish construction success"
+    },
+    {
+      "turn": 9,
+      "drag_points": [
+        {
+          "x": 705,
+          "y": 240
+        },
+        {
+          "x": 673,
+          "y": 256
+        },
+        {
+          "x": 641,
+          "y": 272
+        }
+      ],
+      "before_sequence": 38,
+      "after_sequence": 40,
+      "before_image": "runtime/038.png",
+      "after_image": "runtime/040.png",
+      "crop_box": [
+        621,
+        220,
+        725,
+        292
+      ],
+      "crop_changed_pixels": 250,
+      "crop_pixels": 7488,
+      "full_frame_changed_pixels": 143475,
+      "full_frame_pixels": 1024000,
+      "sheet": "drag-effect-turn-9.png",
+      "sheet_sha256": "06ddefc109d0d0d0ec9c79defd53f766682bb1ab7504fc9df3e50cd7c4cdacf5",
+      "semantic_limit": "pixel change alone does not establish construction success"
+    },
+    {
+      "turn": 11,
+      "drag_points": [
+        {
+          "x": 705,
+          "y": 240
+        },
+        {
+          "x": 673,
+          "y": 256
+        },
+        {
+          "x": 641,
+          "y": 272
+        }
+      ],
+      "before_sequence": 45,
+      "after_sequence": 48,
+      "before_image": "runtime/045.png",
+      "after_image": "runtime/048.png",
+      "crop_box": [
+        621,
+        220,
+        725,
+        292
+      ],
+      "crop_changed_pixels": 451,
+      "crop_pixels": 7488,
+      "full_frame_changed_pixels": 174150,
+      "full_frame_pixels": 1024000,
+      "sheet": "drag-effect-turn-11.png",
+      "sheet_sha256": "d44e453632d97328e22ddbc61e413744bf68d189b2b7059453b73783b81fbad0",
+      "semantic_limit": "pixel change alone does not establish construction success"
+    }
+  ],
+  "interpretation": "the first A-to-B drag has a larger local pixel effect than the two repeated same-path drags; semantic attribution comes only from the separate source-pinned observer audit",
+  "scope": "one archived episode; no live planner comparison, causal interface benefit, or general threshold claim",
+  "source_sha256": {
+    "builder": "d32cc0b131d37389d9fb4d7d134e483fb743f5c77e1799f08d0e4f35ce10b4cf",
+    "audit": "95f45f00a46c8cc600842031b432c4b20e32aba67603353bd414b1ff0a750267"
+  }
+}

@@ -1,0 +1,49 @@
+#0 building with "orbstack" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.16kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/agent-interface-map01-clock-review-fixed:20260920
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 transferring context: 2.47kB done
+#4 DONE 0.0s
+
+#5 [1/9] FROM docker.io/library/agent-interface-map01-clock-review-fixed:20260920@sha256:4320dd483b24ea91c1481f12fd5799c903d9daa99a517b994f607037098ea41d
+#5 resolve docker.io/library/agent-interface-map01-clock-review-fixed:20260920@sha256:4320dd483b24ea91c1481f12fd5799c903d9daa99a517b994f607037098ea41d
+#5 resolve docker.io/library/agent-interface-map01-clock-review-fixed:20260920@sha256:4320dd483b24ea91c1481f12fd5799c903d9daa99a517b994f607037098ea41d 0.0s done
+#5 DONE 0.0s
+
+#6 [2/9] RUN apt-get update && apt-get install -y --no-install-recommends     build-essential cmake git libboost-all-dev libsdl2-dev libopenal-dev     python3-dev pkg-config ca-certificates binutils     && rm -rf /var/lib/apt/lists/*
+#6 CACHED
+
+#7 [3/9] RUN git clone --depth 1 --branch 1.3.0 --recurse-submodules       https://github.com/Farama-Foundation/ViZDoom.git /tmp/vizdoom-src     && test "$(git -C /tmp/vizdoom-src rev-parse HEAD)" =       c8e0a31182d98c6f40a65674283e736b851e8e59     && git -C /tmp/vizdoom-src submodule update --init --recursive
+#7 CACHED
+
+#8 [4/9] COPY vizdoom-tic-counter-v1.patch /tmp/vizdoom-tic-counter-v1.patch
+#8 DONE 0.0s
+
+#9 [5/9] RUN git -C /tmp/vizdoom-src apply /tmp/vizdoom-tic-counter-v1.patch     && python -m pip install --no-cache-dir /tmp/vizdoom-src     && python -c 'import vizdoom; print(vizdoom.__version__, vizdoom.__file__)'
+#9 0.137 error: patch failed: src/vizdoom/src/viz_main.cpp:215
+#9 0.137 error: src/vizdoom/src/viz_main.cpp: patch does not apply
+#9 ERROR: process "/bin/sh -c git -C /tmp/vizdoom-src apply /tmp/vizdoom-tic-counter-v1.patch     && python -m pip install --no-cache-dir /tmp/vizdoom-src     && python -c 'import vizdoom; print(vizdoom.__version__, vizdoom.__file__)'" did not complete successfully: exit code: 1
+------
+ > [5/9] RUN git -C /tmp/vizdoom-src apply /tmp/vizdoom-tic-counter-v1.patch     && python -m pip install --no-cache-dir /tmp/vizdoom-src     && python -c 'import vizdoom; print(vizdoom.__version__, vizdoom.__file__)':
+0.137 error: patch failed: src/vizdoom/src/viz_main.cpp:215
+0.137 error: src/vizdoom/src/viz_main.cpp: patch does not apply
+------
+Dockerfile:12
+--------------------
+  11 |     COPY vizdoom-tic-counter-v1.patch /tmp/vizdoom-tic-counter-v1.patch
+  12 | >>> RUN git -C /tmp/vizdoom-src apply /tmp/vizdoom-tic-counter-v1.patch \
+  13 | >>>     && python -m pip install --no-cache-dir /tmp/vizdoom-src \
+  14 | >>>     && python -c 'import vizdoom; print(vizdoom.__version__, vizdoom.__file__)'
+  15 |     WORKDIR /probe
+--------------------
+ERROR: failed to build: failed to solve: process "/bin/sh -c git -C /tmp/vizdoom-src apply /tmp/vizdoom-tic-counter-v1.patch     && python -m pip install --no-cache-dir /tmp/vizdoom-src     && python -c 'import vizdoom; print(vizdoom.__version__, vizdoom.__file__)'" did not complete successfully: exit code: 1

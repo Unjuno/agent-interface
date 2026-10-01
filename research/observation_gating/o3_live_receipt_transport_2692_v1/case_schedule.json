@@ -1,0 +1,24 @@
+{
+  "surfaces": ["surface_a", "surface_b"],
+  "regions": {
+    "entry": [16, 16, 380, 36],
+    "status": [16, 80, 380, 32]
+  },
+  "cases": [
+    "complete_current",
+    "stale_frame",
+    "missing_region",
+    "partial_coverage",
+    "focus_window_change",
+    "generation_mismatch",
+    "malformed_receipt",
+    "authority_bearing",
+    "contradictory_effect_binding"
+  ],
+  "expected_rows": 36,
+  "max_receipt_age_ns": 1000000000,
+  "expected_positive": 4,
+  "expected_fail_open": 32,
+  "model_calls": 0,
+  "action_emissions": 0
+}

@@ -1,0 +1,9 @@
+Return exactly one JSON object matching the supplied schema. Inspect only the
+task and source image. If the requested toolbar control is visually unambiguous,
+use op target_reference, its center in point, exactly three distinct most-likely
+toolbar icon centers in points including the direct point,
+surface_origin_translation, and visually_unambiguous. Otherwise use op
+request_hover_probe, point {"x":0,"y":0}, exactly three distinct toolbar icon
+centers in points, not_applicable, and icons_ambiguous. The three points are
+probe candidates and never grant input authority. Do not infer or invent
+tooltip text. Coordinates are pixels in the supplied source observation.

@@ -1,0 +1,67 @@
+[
+  {
+    "case": "stale",
+    "rejection": {
+      "event": "rejected",
+      "reason": "evidence/expected sequence mismatch",
+      "runtime_request_sequence": 2,
+      "declared_action_id": "stale",
+      "command_op": "submit",
+      "correlation_scope": "current runtime input line; action ID is caller-declared",
+      "emit_started_ns": 3275172241,
+      "delivery_id": "delivery:6"
+    }
+  },
+  {
+    "case": "expired",
+    "rejection": {
+      "event": "rejected",
+      "reason": "intent validity expired",
+      "runtime_request_sequence": 3,
+      "declared_action_id": "expired",
+      "command_op": "submit",
+      "correlation_scope": "current runtime input line; action ID is caller-declared",
+      "emit_started_ns": 3310437459,
+      "delivery_id": "delivery:9"
+    }
+  },
+  {
+    "case": "malformed_steps",
+    "rejection": {
+      "event": "rejected",
+      "reason": "unsupported operation",
+      "runtime_request_sequence": 4,
+      "declared_action_id": "malformed_steps",
+      "command_op": "submit",
+      "correlation_scope": "current runtime input line; action ID is caller-declared",
+      "emit_started_ns": 3347899661,
+      "delivery_id": "delivery:12"
+    }
+  },
+  {
+    "case": "bad_json",
+    "rejection": {
+      "event": "rejected",
+      "reason": "Expecting property name enclosed in double quotes: line 2 column 1 (char 2)",
+      "runtime_request_sequence": 5,
+      "declared_action_id": null,
+      "command_op": null,
+      "correlation_scope": "current runtime input line; action ID is caller-declared",
+      "emit_started_ns": 3359481134,
+      "delivery_id": "delivery:13"
+    }
+  },
+  {
+    "case": "non_object",
+    "rejection": {
+      "event": "rejected",
+      "reason": "command object required",
+      "runtime_request_sequence": 6,
+      "declared_action_id": null,
+      "command_op": null,
+      "correlation_scope": "current runtime input line; action ID is caller-declared",
+      "emit_started_ns": 3384628135,
+      "delivery_id": "delivery:15"
+    }
+  }
+]

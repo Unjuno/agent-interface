@@ -1,0 +1,273 @@
+{
+  "case_count": 56,
+  "case_dispositions": {
+    "AMBIGUOUS_RECEIPT": 16,
+    "CONTRADICTORY_EFFECT": 8,
+    "NO_RELEASE_RECEIPT": 16,
+    "VALID_RELEASE_RECEIPT": 16
+  },
+  "decision_metrics": {
+    "action_reduction_bootstrap95": [
+      0.0,
+      0.0
+    ],
+    "latency_reduction_bootstrap95_ns": [
+      -5979676.5,
+      5333550.637499988
+    ],
+    "median_latency_reduction_ns": 25867,
+    "median_nonterminal_action_reduction": 0,
+    "median_of_arm_latencies_relative_reduction": 0.008181028131370338,
+    "nonterminal_action_counts_by_condition": {
+      "AMBIGUOUS_RECEIPT": {
+        "QUERY": 38,
+        "RETRY": 0,
+        "WAIT": 22
+      },
+      "CONTRADICTORY_EFFECT": {
+        "QUERY": 111,
+        "RETRY": 8,
+        "WAIT": 95
+      },
+      "NO_RELEASE_RECEIPT": {
+        "QUERY": 37,
+        "RETRY": 0,
+        "WAIT": 21
+      },
+      "VALID_RELEASE_RECEIPT": {
+        "QUERY": 37,
+        "RETRY": 0,
+        "WAIT": 21
+      }
+    },
+    "paired_count": 16,
+    "pairs": [
+      {
+        "action_reduction": 0,
+        "latency_reduction_ns": -3502224,
+        "no_receipt_latency_ns": 30918939,
+        "no_receipt_nonterminal_actions": 1,
+        "rep": 1,
+        "scenario": "before",
+        "valid_receipt_latency_ns": 34421163,
+        "valid_receipt_nonterminal_actions": 1
+      },
+      {
+        "action_reduction": 0,
+        "latency_reduction_ns": -20821302,
+        "no_receipt_latency_ns": 186402366,
+        "no_receipt_nonterminal_actions": 5,
+        "rep": 1,
+        "scenario": "after",
+        "valid_receipt_latency_ns": 207223668,
+        "valid_receipt_nonterminal_actions": 5
+      },
+      {
+        "action_reduction": 0,
+        "latency_reduction_ns": 25867,
+        "no_receipt_latency_ns": 30541737,
+        "no_receipt_nonterminal_actions": 1,
+        "rep": 2,
+        "scenario": "before",
+        "valid_receipt_latency_ns": 30515870,
+        "valid_receipt_nonterminal_actions": 1
+      },
+      {
+        "action_reduction": 0,
+        "latency_reduction_ns": 14437964,
+        "no_receipt_latency_ns": 275836594,
+        "no_receipt_nonterminal_actions": 7,
+        "rep": 2,
+        "scenario": "after",
+        "valid_receipt_latency_ns": 261398630,
+        "valid_receipt_nonterminal_actions": 7
+      },
+      {
+        "action_reduction": 0,
+        "latency_reduction_ns": 692680,
+        "no_receipt_latency_ns": 30012023,
+        "no_receipt_nonterminal_actions": 1,
+        "rep": 3,
+        "scenario": "before",
+        "valid_receipt_latency_ns": 29319343,
+        "valid_receipt_nonterminal_actions": 1
+      },
+      {
+        "action_reduction": 0,
+        "latency_reduction_ns": -8529088,
+        "no_receipt_latency_ns": 270098072,
+        "no_receipt_nonterminal_actions": 7,
+        "rep": 3,
+        "scenario": "after",
+        "valid_receipt_latency_ns": 278627160,
+        "valid_receipt_nonterminal_actions": 7
+      },
+      {
+        "action_reduction": 0,
+        "latency_reduction_ns": 1704765,
+        "no_receipt_latency_ns": 31522902,
+        "no_receipt_nonterminal_actions": 1,
+        "rep": 4,
+        "scenario": "before",
+        "valid_receipt_latency_ns": 29818137,
+        "valid_receipt_nonterminal_actions": 1
+      },
+      {
+        "action_reduction": 0,
+        "latency_reduction_ns": 1560410,
+        "no_receipt_latency_ns": 186437813,
+        "no_receipt_nonterminal_actions": 5,
+        "rep": 4,
+        "scenario": "after",
+        "valid_receipt_latency_ns": 184877403,
+        "valid_receipt_nonterminal_actions": 5
+      },
+      {
+        "action_reduction": 0,
+        "latency_reduction_ns": -9484883,
+        "no_receipt_latency_ns": 29706004,
+        "no_receipt_nonterminal_actions": 1,
+        "rep": 5,
+        "scenario": "before",
+        "valid_receipt_latency_ns": 39190887,
+        "valid_receipt_nonterminal_actions": 1
+      },
+      {
+        "action_reduction": 0,
+        "latency_reduction_ns": -4644701,
+        "no_receipt_latency_ns": 266933642,
+        "no_receipt_nonterminal_actions": 7,
+        "rep": 5,
+        "scenario": "after",
+        "valid_receipt_latency_ns": 271578343,
+        "valid_receipt_nonterminal_actions": 7
+      },
+      {
+        "action_reduction": 0,
+        "latency_reduction_ns": 9171598,
+        "no_receipt_latency_ns": 36621200,
+        "no_receipt_nonterminal_actions": 1,
+        "rep": 6,
+        "scenario": "before",
+        "valid_receipt_latency_ns": 27449602,
+        "valid_receipt_nonterminal_actions": 1
+      },
+      {
+        "action_reduction": 0,
+        "latency_reduction_ns": 14711668,
+        "no_receipt_latency_ns": 291269700,
+        "no_receipt_nonterminal_actions": 7,
+        "rep": 6,
+        "scenario": "after",
+        "valid_receipt_latency_ns": 276558032,
+        "valid_receipt_nonterminal_actions": 7
+      },
+      {
+        "action_reduction": 0,
+        "latency_reduction_ns": -8186826,
+        "no_receipt_latency_ns": 28934811,
+        "no_receipt_nonterminal_actions": 1,
+        "rep": 7,
+        "scenario": "before",
+        "valid_receipt_latency_ns": 37121637,
+        "valid_receipt_nonterminal_actions": 1
+      },
+      {
+        "action_reduction": 0,
+        "latency_reduction_ns": -4775298,
+        "no_receipt_latency_ns": 206662954,
+        "no_receipt_nonterminal_actions": 5,
+        "rep": 7,
+        "scenario": "after",
+        "valid_receipt_latency_ns": 211438252,
+        "valid_receipt_nonterminal_actions": 5
+      },
+      {
+        "action_reduction": 0,
+        "latency_reduction_ns": -3772527,
+        "no_receipt_latency_ns": 34987341,
+        "no_receipt_nonterminal_actions": 1,
+        "rep": 8,
+        "scenario": "before",
+        "valid_receipt_latency_ns": 38759868,
+        "valid_receipt_nonterminal_actions": 1
+      },
+      {
+        "action_reduction": 0,
+        "latency_reduction_ns": 23230409,
+        "no_receipt_latency_ns": 307976005,
+        "no_receipt_nonterminal_actions": 7,
+        "rep": 8,
+        "scenario": "after",
+        "valid_receipt_latency_ns": 284745596,
+        "valid_receipt_nonterminal_actions": 7
+      }
+    ],
+    "receipt_object_construction_tail_ns": [
+      6842,
+      5402,
+      3659,
+      4718,
+      5513,
+      6267,
+      6763,
+      5578,
+      6237,
+      4908,
+      8482,
+      3322,
+      2717,
+      3661,
+      7808,
+      6821
+    ],
+    "receipt_rpc_duration_ns": [
+      815912,
+      536279,
+      392677,
+      511405,
+      494610,
+      395538,
+      492249,
+      426759,
+      455269,
+      434135,
+      588013,
+      411941,
+      633677,
+      525264,
+      383646,
+      481217
+    ],
+    "receipt_rpc_overhead_vs_v10_ns": {
+      "bootstrap95": [
+        -58599.5,
+        150500.0
+      ],
+      "median": 64418,
+      "paired_deltas": [
+        359984,
+        48396,
+        -150704,
+        -10247,
+        120773,
+        -14891,
+        -161384,
+        64418,
+        150500,
+        162803,
+        -106952,
+        253759,
+        197575,
+        81054,
+        55902,
+        -140502
+      ]
+    }
+  },
+  "disposition": "HOLD_NO_DECISION_VALUE",
+  "errors": [],
+  "mode": "formal",
+  "schema": "issue2107_gtk_release_decision_audit_v1",
+  "scope": "One deterministic policy / one private GTK3-Xvfb route; release telemetry is not app-effect or physical-HID authority."
+}

@@ -1,0 +1,12 @@
+{
+  "task":"ROUTE-CAPABILITY-CONTRACT-20260917-001",
+  "base":"40072ec1962afe9fe1a9f6ade79ce36a2e8cc93f",
+  "issue":828,
+  "formal_invocation_budget":1,
+  "policies":["flat_route_success","effect_dimension_match"],
+  "retained_inputs":[
+    {"path":"research/live_control/inkscape_zoom_two_lowerings_v1/audit-result.json","git_blob":"389fe8cd93603c0415480fc398664a903dede0f4"},
+    {"path":"research/live_control/inkscape_zoom_center_contract_v1/results-summary.json","git_blob":"28bc4a8c07958db58efe98eb73881cbced46c481"}
+  ],
+  "decision":"PASS_EFFECT_DIMENSION_CAPABILITY_NEGOTIATION_SCOPED iff all 10 candidate rows match frozen semantics, no selected route weakens required dimensions, one-contact negative is never selected, unknown/malformed provenance is rejected, retained evidence identity passes, and flat baseline exposes exactly two centered-semantic false admissions."
+}

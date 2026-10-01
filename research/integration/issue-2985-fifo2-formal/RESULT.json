@@ -1,0 +1,19 @@
+{
+  "task_id": "FIFO2-SEMANTIC-ORDER-2985-20260920-01",
+  "issue": 2985,
+  "decision": "PASS_SEMANTIC_FIFO2_ORDER_SCOPED",
+  "image": "python:3.13-slim",
+  "network": "none",
+  "runner_sha256": "77b8f60b84d114f8c6f22593b77fc4b0cd2d72628304283a3a91f7964ceaf40a",
+  "rows": 10,
+  "independent_producer_processes": true,
+  "audit_errors": 0,
+  "reverse_candidate": ["EVENT_ACCEPTED", "EVENT_ACCEPTED"],
+  "reverse_control": ["EVENT_ACCEPTED", "EVENT_NON_MONOTONIC"],
+  "ack_replay": "ACK_ALREADY_APPLIED",
+  "restart_resend": "DUPLICATE_REJECTED",
+  "same_sequence": "DUPLICATE_REJECTED",
+  "unknown_sequence": "UNKNOWN_SEQUENCE",
+  "prior_731_modified": false
+}
+

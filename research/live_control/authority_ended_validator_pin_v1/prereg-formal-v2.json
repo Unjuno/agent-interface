@@ -1,0 +1,19 @@
+{
+  "schema": "authority-ended-validator-source-pin-v2-formal-prereg",
+  "result_id": "authority-ended-validator-source-pin-v2-20260916-01",
+  "base_commit": "1308b57d3209bc32b3bea5b84efb4911c915d8e9",
+  "formal_retries": 0,
+  "source_sha256": {
+    "validator_source_pinned_ledger_v2.py": "189bd81dd884b7840b31ef01e453e62a6d850f5c14dbe925bce8fb4b016558d2",
+    "bridge_v2_semantic_snapshot.py": "f16ba93fabef5c395b349d91e2ea9ec4139f6f993a763269879fc8ccd6ee35f9",
+    "formal_runner_v2.py": "d317da77de5908c92d5cf9fbd49d3987355a04954f8dcd3db947d236380ee874"
+  },
+  "dependency_sha256": {
+    "durable_token_state_v2.py": "72a3481653cf9c41ec1a03f4c7a7bf1c482ff69468b5d92986bad8cf814950b4",
+    "authority_ended_bridge_v1.py": "2c9684d8f731b36469df06532fc2ce566716c0380002d18da1f317814f7acb1e"
+  },
+  "baseline_expected_failure": "A process-memory-only validator change can reopen the same unpinned token-state file under different validator semantics and issue a second, distinct authority epoch.",
+  "candidate": "Compute validator SHA-256 internally from exact source bytes, load the pinned function from those bytes, and atomically persist validator_id + actual source hash + function_name in a sidecar while leaving token-state-v2 JSON unchanged.",
+  "hard_gate": "Exactly 15/15 rows pass: baseline drift reproduced; matching v1/v2 sources issue their intended receipt forms; mismatched validator id/source/function, missing/corrupt sidecar, and cross-version reopen fail closed; duplicate and consumed restart semantics remain intact; token-state JSON remains exactly schema+entries; sidecar-only initialization crash resumes only with the same pinned source/function.",
+  "scope": "offline, single-writer local filesystem; no GUI/model/network/durable-submit transport; bridge-v2 semantic snapshot is an interface contract, not certification of PR #168 formal executed bytes"
+}

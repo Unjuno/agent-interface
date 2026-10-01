@@ -1,0 +1,37 @@
+name: Analysis Index
+
+on:
+  pull_request:
+    paths:
+      - 'research/analysis/**'
+      - '.github/workflows/analysis-index.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'research/analysis/**'
+      - '.github/workflows/analysis-index.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  analysis-index:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            research/analysis
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check retained analytical results are indexed
+        run: python research/analysis/check_index.py
+      - name: Test endogenous-demand rebound T0
+        run: python -B -m unittest discover -s research/analysis/endogenous_demand_rebound_5702_t0_v1 -p 'test_*.py' -v
+      - name: Test selection-aware shadow-audit T1
+        run: python -B -m unittest discover -s research/analysis/selection_aware_shadow_audit_5681_t1_v1 -p 'test_*.py' -v

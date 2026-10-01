@@ -1,0 +1,30 @@
+{
+  "issue": 5455,
+  "attempt": 3,
+  "branch": "research/issue5455-large-readback-20260930-01",
+  "status": "FROZEN_FOR_SYNTHETIC_READBACK",
+  "modelCalls": 0,
+  "sourceHashes": {
+    "large_frame_probe_attempt03_py": "65922eaf9e793babf088d6fd8bce2137de7b40cdaae20fa858f0d6aedfea4342",
+    "row_frames_py": "982034983289a7c2d5403eae355e148920d64b4fa6f2efa42bc6ba8fad490df1"
+  },
+  "payload": {
+    "bytes": 13449,
+    "pattern": "z",
+    "expectedDataFrames": 561,
+    "chunkBytes": 24,
+    "maxLineBytes": 78
+  },
+  "gate": {
+    "pollIntervalMs": 1000,
+    "maxReadOnlyPolls": 30,
+    "readbackReportBeforeAck": true,
+    "independentAuditBeforeAck": true,
+    "ackOnlyAfterAllReadbacksMatch": true
+  },
+  "runtime": {
+    "os": "Windows-10-10.0.26200-SP0",
+    "python": "3.11.9"
+  },
+  "noInference": true
+}

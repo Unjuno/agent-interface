@@ -1,0 +1,264 @@
+{
+  "adapter_host_receipt": {
+    "monitor_received_ns": 12740931061916,
+    "outcome": {
+      "current_value": 68,
+      "format": "observable-signal-guard-outcome-v1",
+      "grants_input_authority": false,
+      "guard_id": "cover-health",
+      "hard_minimum": 78,
+      "keep_existing_policy": false,
+      "may_only_preserve_or_reduce_existing_authority": true,
+      "reason": "below_hard_minimum",
+      "requires_new_decision": true,
+      "semantic_change_identified": true,
+      "signal_id": "health",
+      "source_age_ms": 900.029666,
+      "source_value": 91,
+      "status": "HARD_INVALIDATED",
+      "task_success_verified": false
+    },
+    "outcome_evaluated_ns": 12740931132375,
+    "outcome_evaluation_ms": 0.044084,
+    "sequence": 2,
+    "signal": {
+      "binding": {
+        "session": "clock-boundary-experiment"
+      },
+      "capture_ns": 12740828855416,
+      "sequence": 2,
+      "signal_id": "health",
+      "status": "observed",
+      "value": 68
+    },
+    "signal_extracted_ns": 12740931088291,
+    "signal_extraction_ms": 0.026375,
+    "timestamp_domain": "host_monotonic_ns"
+  },
+  "classification": "PASS_SCOPED",
+  "clock_probes": [
+    {
+      "host_receive_ns": 12741276455500,
+      "host_send_ns": 12740931139458,
+      "runtime_ns": 12002139450770
+    },
+    {
+      "host_receive_ns": 12741281481166,
+      "host_send_ns": 12741276470208,
+      "runtime_ns": 12002146899007
+    },
+    {
+      "host_receive_ns": 12741285071416,
+      "host_send_ns": 12741281486375,
+      "runtime_ns": 12002149058694
+    }
+  ],
+  "experiment": "observable-monitor-host-to-docker-runtime-clock-v1",
+  "late_controller_boundary_rejected": true,
+  "limitations": [
+    "single local allocation; no statistical timing claim",
+    "does not diagnose seed 990641 running-action freshness operands",
+    "monitor source identity is bound by the current-main Git blob SHA1"
+  ],
+  "monitor_receipt": {
+    "monitor_received_ns": 12740931061916,
+    "outcome": {
+      "current_value": 68,
+      "format": "observable-signal-guard-outcome-v1",
+      "grants_input_authority": false,
+      "guard_id": "cover-health",
+      "hard_minimum": 78,
+      "keep_existing_policy": false,
+      "may_only_preserve_or_reduce_existing_authority": true,
+      "reason": "below_hard_minimum",
+      "requires_new_decision": true,
+      "semantic_change_identified": true,
+      "signal_id": "health",
+      "source_age_ms": 900.029666,
+      "source_value": 91,
+      "status": "HARD_INVALIDATED",
+      "task_success_verified": false
+    },
+    "outcome_evaluated_ns": 12740931132375,
+    "outcome_evaluation_ms": 0.044084,
+    "sequence": 2,
+    "signal": {
+      "binding": {
+        "session": "clock-boundary-experiment"
+      },
+      "capture_ns": 12740828855416,
+      "sequence": 2,
+      "signal_id": "health",
+      "status": "observed",
+      "value": 68
+    },
+    "signal_extracted_ns": 12740931088291,
+    "signal_extraction_ms": 0.026375
+  },
+  "monitor_receipt_fields": [
+    "monitor_received_ns",
+    "outcome",
+    "outcome_evaluated_ns",
+    "outcome_evaluation_ms",
+    "sequence",
+    "signal",
+    "signal_extracted_ns",
+    "signal_extraction_ms"
+  ],
+  "monitor_source_sha1": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+  "pinned_image": "issue2679-map01-runtime@sha256:029e1867aeb843f2d63080343bfbb61540b64852ce00d4d99ec0be51796a093e",
+  "runtime_gate": {
+    "controller_decided_ns": 12002148164228,
+    "executor_admission": null,
+    "grants_input_authority": false,
+    "input_authority_admitted": false,
+    "planner_terminal": {
+      "answer_eligible": false,
+      "status": "interrupted",
+      "terminal_observed_ns": 12002147164228,
+      "turn_id": "interrupted-stale"
+    },
+    "policy_invalidation": {
+      "monitor_received_ns": 12740931061916,
+      "outcome": {
+        "current_value": 68,
+        "format": "observable-signal-guard-outcome-v1",
+        "grants_input_authority": false,
+        "guard_id": "cover-health",
+        "hard_minimum": 78,
+        "keep_existing_policy": false,
+        "may_only_preserve_or_reduce_existing_authority": true,
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "semantic_change_identified": true,
+        "signal_id": "health",
+        "source_age_ms": 900.029666,
+        "source_value": 91,
+        "status": "HARD_INVALIDATED",
+        "task_success_verified": false
+      },
+      "outcome_evaluated_ns": 12001794127645,
+      "outcome_evaluation_ms": 0.044084,
+      "sequence": 2,
+      "signal": {
+        "binding": {
+          "session": "clock-boundary-experiment"
+        },
+        "capture_ns": 12740828855416,
+        "sequence": 2,
+        "signal_id": "health",
+        "status": "observed",
+        "value": 68
+      },
+      "signal_extracted_ns": 12740931088291,
+      "signal_extraction_ms": 0.026375,
+      "timestamp_domain": "runtime_monotonic_ns"
+    },
+    "reason": "below_hard_minimum",
+    "revocation": null,
+    "schema": "final-action-admission-v1",
+    "status": "REJECTED_POLICY_INVALIDATED"
+  },
+  "scope": "one real host monitor receipt, three same-session Docker clock probes, pure final-admission gate; no game/model/input",
+  "translation": {
+    "calibrated_host_ns": 12741285071416,
+    "calibration_age_ns": 353939041,
+    "calibration_samples": [
+      {
+        "host_receive_ns": 12741276455500,
+        "host_send_ns": 12740931139458,
+        "runtime_ns": 12002139450770
+      },
+      {
+        "host_receive_ns": 12741281481166,
+        "host_send_ns": 12741276470208,
+        "runtime_ns": 12002146899007
+      },
+      {
+        "host_receive_ns": 12741285071416,
+        "host_send_ns": 12741281486375,
+        "runtime_ns": 12002149058694
+      }
+    ],
+    "host_timestamp_ns": 12740931132375,
+    "input_authority_admitted": false,
+    "offset_lower_ns": -739137004730,
+    "offset_upper_ns": -738791688688,
+    "runtime_receipt": {
+      "monitor_received_ns": 12740931061916,
+      "outcome": {
+        "current_value": 68,
+        "format": "observable-signal-guard-outcome-v1",
+        "grants_input_authority": false,
+        "guard_id": "cover-health",
+        "hard_minimum": 78,
+        "keep_existing_policy": false,
+        "may_only_preserve_or_reduce_existing_authority": true,
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "semantic_change_identified": true,
+        "signal_id": "health",
+        "source_age_ms": 900.029666,
+        "source_value": 91,
+        "status": "HARD_INVALIDATED",
+        "task_success_verified": false
+      },
+      "outcome_evaluated_ns": 12001794127645,
+      "outcome_evaluation_ms": 0.044084,
+      "sequence": 2,
+      "signal": {
+        "binding": {
+          "session": "clock-boundary-experiment"
+        },
+        "capture_ns": 12740828855416,
+        "sequence": 2,
+        "signal_id": "health",
+        "status": "observed",
+        "value": 68
+      },
+      "signal_extracted_ns": 12740931088291,
+      "signal_extraction_ms": 0.026375,
+      "timestamp_domain": "runtime_monotonic_ns"
+    },
+    "runtime_timestamp_ns": 12001794127645,
+    "same_session": true,
+    "schema": "policy-invalidation-clock-translation-v2",
+    "source_receipt": {
+      "monitor_received_ns": 12740931061916,
+      "outcome": {
+        "current_value": 68,
+        "format": "observable-signal-guard-outcome-v1",
+        "grants_input_authority": false,
+        "guard_id": "cover-health",
+        "hard_minimum": 78,
+        "keep_existing_policy": false,
+        "may_only_preserve_or_reduce_existing_authority": true,
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "semantic_change_identified": true,
+        "signal_id": "health",
+        "source_age_ms": 900.029666,
+        "source_value": 91,
+        "status": "HARD_INVALIDATED",
+        "task_success_verified": false
+      },
+      "outcome_evaluated_ns": 12740931132375,
+      "outcome_evaluation_ms": 0.044084,
+      "sequence": 2,
+      "signal": {
+        "binding": {
+          "session": "clock-boundary-experiment"
+        },
+        "capture_ns": 12740828855416,
+        "sequence": 2,
+        "signal_id": "health",
+        "status": "observed",
+        "value": 68
+      },
+      "signal_extracted_ns": 12740931088291,
+      "signal_extraction_ms": 0.026375,
+      "timestamp_domain": "host_monotonic_ns"
+    }
+  },
+  "untranslated_mixed_domain_error": "controller decision precedes observed boundary"
+}

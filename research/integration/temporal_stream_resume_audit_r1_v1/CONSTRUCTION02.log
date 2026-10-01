@@ -1,0 +1,7 @@
+Pre-freeze synthetic-unit construction result — no #4447 evidence mounted or read.
+
+Command: Docker Desktop, python:3.13.5-slim-bookworm, linux/amd64, --network none, --read-only, python -I -S -B /study/test_verify_receipts.py
+
+First outcome: 4 tests ran; 3 passed and `test_exact_80ms_deadline` failed because the test expected the strict-time policy to remain PENDING for A@10 followed by B@90.
+
+Review against the frozen #4447 policy contract: strict-time permits B when `tick > anchor_tick`, so B at 90 is SATISFIED. Only the synthetic test expectation was corrected. The verifier implementation and #4447 evidence were not changed or executed; no formal allocation was consumed.

@@ -1,0 +1,53 @@
+{
+  "scientific_disposition": "HOLD_FORMAL_INCOMPLETE",
+  "execution": "STOP_SUPERVISOR_TIMEOUT",
+  "characterization": "EXACT_RETAINED_PREFIX_RECONSTRUCTED",
+  "planned_cases": 48,
+  "complete_cases": 40,
+  "missing_complete_cases": 8,
+  "operations": 188,
+  "distinct_child_pids": 188,
+  "policies": {
+    "legacy": {
+      "complete_cases": 13,
+      "accepted_events": 5,
+      "old_replays": 2,
+      "gap_escapes": 0,
+      "unearned_acks": 1,
+      "blocked_next": 5
+    },
+    "frontier": {
+      "complete_cases": 13,
+      "accepted_events": 11,
+      "old_replays": 0,
+      "gap_escapes": 1,
+      "unearned_acks": 1,
+      "blocked_next": 0
+    },
+    "bounded": {
+      "complete_cases": 14,
+      "accepted_events": 11,
+      "old_replays": 0,
+      "gap_escapes": 0,
+      "unearned_acks": 0,
+      "blocked_next": 0
+    }
+  },
+  "partial_cases": [
+    {
+      "case": "r1-ACK_REPLAY-frontier",
+      "retained_operation_receipts": 3,
+      "sha256": "2d05b93e65af97994899c220d310f6ff82b16da8698059526c7f869e51ec1d26",
+      "final_db_sha256": "6bd2034022223dbca56d7e0f2a4c73a420473bf7808d559a5b437f18a6057c95",
+      "unobserved_later_commit_possible": true
+    }
+  ],
+  "source_hashes_verified": 13,
+  "raw_sha256": "bb850fc2f4f3e0d2f5b5f9b72a5aa082924ed167017f15e1aa5c443380d016ad",
+  "formal_reruns": 0,
+  "formal_PASS": false,
+  "limitations": "Posthoc prefix audit only; unbalanced policy denominators; missing supervisor terminal; no population/production claim.",
+  "prefix_corruption_rejections": 12,
+  "source_mutation_rejected": true,
+  "construction_cases_excluded": 24
+}

@@ -1,0 +1,206 @@
+{
+  "allocation_id": "issue3555-xres-guard-formal-02",
+  "audit": "PASS_INDEPENDENT_RAW_RECONSTRUCTION",
+  "cleanup": {
+    "bridge_closed": true,
+    "p1": {
+      "exit_code": 0,
+      "exit_observed": true
+    },
+    "p2": {
+      "exit_code": 0,
+      "exit_observed": true
+    }
+  },
+  "container_image_id": "sha256:e47cbddc70722a816758a4a1c27cf2a38071c889670be98bf3eacdc9fff17916",
+  "corruption_controls": [
+    {
+      "detected": true,
+      "mutated_disposition": "HOLD_OR_STOP_UNCLASSIFIED",
+      "name": "xid-mismatch"
+    },
+    {
+      "detected": true,
+      "mutated_disposition": "HOLD_OR_STOP_UNCLASSIFIED",
+      "name": "same-pid"
+    },
+    {
+      "detected": true,
+      "mutated_disposition": "HOLD_OR_STOP_UNCLASSIFIED",
+      "name": "emission-not-zero"
+    },
+    {
+      "detected": true,
+      "mutated_disposition": "HOLD_OR_STOP_UNCLASSIFIED",
+      "name": "effect-present"
+    },
+    {
+      "detected": true,
+      "mutated_disposition": "HOLD_OR_STOP_UNCLASSIFIED",
+      "name": "missing-fresh-control"
+    },
+    {
+      "detected": true,
+      "mutated_disposition": "HOLD_OR_STOP_UNCLASSIFIED",
+      "name": "unverified-release"
+    },
+    {
+      "detected": true,
+      "mutated_disposition": "HOLD_OR_STOP_UNCLASSIFIED",
+      "name": "held-button-release"
+    },
+    {
+      "detected": true,
+      "mutated_disposition": "FAIL_GENERATION_GUARD_DID_NOT_REJECT_STALE_ALIAS",
+      "name": "false-pass-on-failure"
+    }
+  ],
+  "disposition": "PASS_GENERATION_GUARD_REJECTED_STALE_ALIAS",
+  "fresh_control": {
+    "effect": [
+      1,
+      212,
+      118
+    ],
+    "emission_delta": 3,
+    "permitted": true,
+    "releases": [
+      {
+        "buttons_down": [],
+        "keys_down": [],
+        "monotonic_ns": 52084872355209,
+        "verified": true
+      }
+    ],
+    "status": "completed"
+  },
+  "independent_audit_sha256_before_finalization": "0a357fff35820b5f09ffd826f440df47a75f402c0c154d5690708b94d3cd3f44",
+  "independent_auditor_sha256": "94178c3457b21a4640eecabefdbef99dc2e05b9c8bce5c1f39af1740c9ef53f1",
+  "local_superseding_freeze_sha256_not_used_to_rewrite_raw": "fd5ad6695afb6d5f8ab68965426970f306a955bffa30925f1ad140a6b3a1a873",
+  "local_superseding_source_manifest_sha256_not_used_to_rewrite_raw": "df284091c112cb8b42ea51e39a2900eeacb83bb4ba2e815429b0e2aa473e9dbf",
+  "pngs": [
+    {
+      "bytes": 2009,
+      "manifest_matches": true,
+      "path": "bridge/images/288e4cb4b241443e81124ff80490cb9b.png",
+      "sha256": "189a9e34def3227c5526cffb84c5ae4b854da868ad36a68b67a07891fc256701"
+    },
+    {
+      "bytes": 2009,
+      "manifest_matches": true,
+      "path": "bridge/images/5d507cf0f95e436baebb47c2e00d17a5.png",
+      "sha256": "189a9e34def3227c5526cffb84c5ae4b854da868ad36a68b67a07891fc256701"
+    },
+    {
+      "bytes": 2009,
+      "manifest_matches": true,
+      "path": "bridge/images/c911a80cd14a4bebbc7adbca80466de5.png",
+      "sha256": "189a9e34def3227c5526cffb84c5ae4b854da868ad36a68b67a07891fc256701"
+    },
+    {
+      "bytes": 2009,
+      "manifest_matches": true,
+      "path": "bridge/images/cdcc99eba462415887b25c527f55de9c.png",
+      "sha256": "189a9e34def3227c5526cffb84c5ae4b854da868ad36a68b67a07891fc256701"
+    },
+    {
+      "bytes": 2009,
+      "manifest_matches": true,
+      "path": "bridge/images/d96b79837edc4012b5234944e3e6529d.png",
+      "sha256": "189a9e34def3227c5526cffb84c5ae4b854da868ad36a68b67a07891fc256701"
+    },
+    {
+      "bytes": 2009,
+      "manifest_matches": true,
+      "path": "bridge/images/e10e0c5eb70e4449a123b429b05021d9.png",
+      "sha256": "189a9e34def3227c5526cffb84c5ae4b854da868ad36a68b67a07891fc256701"
+    }
+  ],
+  "preconditions": {
+    "distinct_pid": true,
+    "distinct_start_ticks": true,
+    "p1_exit_observed": true,
+    "p1_xres_matches_fixture": true,
+    "p2_xres_matches_fixture": true,
+    "pixel_identical": true,
+    "same_geometry": true,
+    "same_xid": true
+  },
+  "raw_embedded_freeze_sha256": "4100c858b729e970a701808fcf9964ae1131efe3ccc8bf0c58db5369b546eb74",
+  "raw_embedded_source_manifest_sha256": "7af1514fea3ec5746bcf5d7aae9d72debaf996810a7d8a9ec01451ef2c68e177",
+  "raw_sha256": "39aee2c0614a411aefe602b9d9e7ae910b9aa5cc59796b209ca176909acd101d",
+  "scope": "one research wrapper candidate, pinned linux/arm64 container/private Xvfb, one allocation; not production/default-runtime or remote-X11 claim",
+  "stale_alias_gate": {
+    "bridge_click_invoked": false,
+    "bridge_result": null,
+    "effect_after": [
+      0,
+      0,
+      0
+    ],
+    "effect_before": [
+      0,
+      0,
+      0
+    ],
+    "emissions_after": 0,
+    "emissions_before": 0,
+    "permitted": false,
+    "reason": "PROCESS_INCARNATION_MISMATCH"
+  },
+  "tested_source_commit": "49535d91424c3786330ec62e6d621e4e1eaf1c49",
+  "window_pixel_gate": {
+    "bytes_each": 153600,
+    "identical": true,
+    "p1_sha256": "3b80132900d7ab9ce6a54b7f01b7fa0d345dd50aafb69135b740ae655c3aba0c",
+    "p2_sha256": "3b80132900d7ab9ce6a54b7f01b7fa0d345dd50aafb69135b740ae655c3aba0c"
+  },
+  "xres_identity": {
+    "p1": {
+      "pid": 14,
+      "pid_start_ticks": "5208475",
+      "xid": 2097152,
+      "xres_rows": [
+        {
+          "client_xid": 2097152,
+          "local_pids": [],
+          "mask": 1
+        },
+        {
+          "client_xid": 2097152,
+          "local_pids": [
+            14
+          ],
+          "mask": 2
+        }
+      ],
+      "xres_version": [
+        1,
+        2
+      ]
+    },
+    "p2": {
+      "pid": 17,
+      "pid_start_ticks": "5208479",
+      "xid": 2097152,
+      "xres_rows": [
+        {
+          "client_xid": 2097152,
+          "local_pids": [],
+          "mask": 1
+        },
+        {
+          "client_xid": 2097152,
+          "local_pids": [
+            17
+          ],
+          "mask": 2
+        }
+      ],
+      "xres_version": [
+        1,
+        2
+      ]
+    }
+  }
+}

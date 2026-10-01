@@ -1,0 +1,16 @@
+FROM cactus-needle3-action:v1-frozen
+
+ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PIP_NO_CACHE_DIR=1 \
+    HF_HUB_OFFLINE=1 \
+    NEEDLE_TELEMETRY=0 \
+    DO_NOT_TRACK=1
+
+COPY wheelhouse/ /opt/wheelhouse/
+RUN python -m pip install --no-index --find-links=/opt/wheelhouse "cactus-needle[train,gpu]==3.0.1" \
+    && python -m pip check \
+    && python -c "import flax,jax,numpy,optax,safetensors,sentencepiece; print('training-deps-ok',jax.__version__)" \
+    && rm -rf /opt/wheelhouse
+
+WORKDIR /opt/experiment
+

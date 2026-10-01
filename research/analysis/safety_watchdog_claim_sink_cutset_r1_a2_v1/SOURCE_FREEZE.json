@@ -1,0 +1,48 @@
+{
+  "task": "SAFETY-WATCHDOG-CLAIM-SINK-CUTSET-R1-A2-20260919-001",
+  "issue": 1906,
+  "predecessor": {
+    "issue": 1893,
+    "decision": "STOP_FORMAL_HARNESS_MUTATION_INVALID",
+    "pooled": false
+  },
+  "intake_base": "7f02687f8136ea6a390fc800900937adc227969c",
+  "branch": "research/watchdog-claim-sink-a2-1906",
+  "prefreeze_head": "cca960e15a9e57e77588dc29ce36ce262ec7c99c",
+  "formal_invocations_before_freeze": 0,
+  "x11_live_reruns": 0,
+  "only_repair": "recovered_before_recovery corruption control moves the complete if+body block; scientific source, graph classes and thresholds unchanged",
+  "files": {
+    "PLAN.md": {
+      "git_blob": "bc9df592d71afcdfdbc4edeab2daf67de72e4574",
+      "sha256": "dd3d31e606f414ee329376cd08fc5fb747a12a2558b3154804c131773c157136"
+    },
+    "analyze.py": {
+      "git_blob": "cde605d9575355e22fa20dea56ee3996954290c6",
+      "sha256": "ec1df8fb3e93dc5ff79248bd4c7a34d74ca4c554a8256c59ae5b7c535777ff67"
+    },
+    "audit.py": {
+      "git_blob": "7f90cc4757ab60b5da7716f4018f1da51c2b8c05",
+      "sha256": "06590092a2c4ab9998e210238ee1b174b37a7944ed1410dd962008fb7c700b8b"
+    },
+    "pinned/watchdog.py": {
+      "git_blob": "8bfacbdd2ba46e1433e79c3144e1c754c058ec8c",
+      "sha256": "8c296923db25cd6ec5c948e55ebdad8b82e56fda8123ede4549534172417fe31"
+    },
+    "pinned/run_case.py": {
+      "git_blob": "9a9730ad38bbcc83714a97e66f3597785b646693",
+      "sha256": "5d477ef04719cc81671d4b5d79af23c2896f11e5ac4a5abed64d1016572a5a1c"
+    },
+    "pinned/run_case_a2.py": {
+      "git_blob": "3d4933020a9e2ef68ba5c3bcd85c5d74a19e44c5",
+      "sha256": "7f4df5cd664e0adbf188abde368f7b3783d570d08cd2e49f6f672efa7fc546a4"
+    }
+  },
+  "formal": {
+    "planned_invocations": 1,
+    "reruns": 0,
+    "replacements": 0,
+    "tuning": 0
+  },
+  "scope": "static source analysis only; no X11/live input rerun"
+}

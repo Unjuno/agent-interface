@@ -1,0 +1,28 @@
+{
+  "schema": "github_claim_reclaim_evidence_freeze_v1",
+  "task": "COORD-GITHUB-RECLAIM-EVIDENCE-20260916-008",
+  "publication_base": "b3bc631d2c6dfae8586bb28abdc9eb2002bb624b",
+  "source_head_before_freeze_file": "b05979407b3ef579d2ccde9a1ad17a7093a1cde2",
+  "git_blobs": {
+    "policy.py": "185177d4c83fa9b4df722fd31db36f945be7ffe0",
+    "plan.json": "f187143022044b0c47403d6f31ff9285360b3506",
+    "evidence.json": "bbe40df4c4aa46ea91fbd41a076c3981c4592a8c",
+    "register_elapsed.json": "9210ad706da758839670ca06f39243c1bc79e005",
+    "register_owner.json": "05505872be4a5e97852f14c0eed2c97d9eb0483a",
+    "register_supervisor.json": "1d1115f0a168043c6a63de7781c1dd8307449e16",
+    "register_stale.json": "a28e50ce95c675749f7fb8d00c7b11446efc6456",
+    "register_unbound.json": "9c656abc29b8b5ecd29a09f9755756b5474ce91e",
+    "payload_reclaim_owner.json": "e7c8524f6fc316eb2af793c5756e724a2c94269a",
+    "payload_late_owner.json": "879353124c3ab300b23efd1e698acf8cb79c5375",
+    "payload_reclaim_supervisor.json": "f3d40dfc072f6f8717d1683d10a77248bb409f17",
+    "payload_late_supervisor.json": "e3a4b124938d8003abac1c1bfa214d72117e0dfa"
+  },
+  "measured_order": [
+    "elapsed_only",
+    "owner_relinquish_exact",
+    "supervisor_terminal_exact",
+    "stale_relinquish_generation",
+    "unbound_terminal"
+  ],
+  "no_post_freeze_tuning": true
+}

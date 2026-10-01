@@ -1,0 +1,86 @@
+{
+  "admissible_routes": 0,
+  "authored_p_routes": 5,
+  "decision": "PASS_RETAINED_GUARD_CALIBRATION_NOT_IDENTIFIABLE_SCOPED",
+  "families_inspected": 5,
+  "formal_invocations": 1,
+  "hard_safety_cf_routes": 2,
+  "ledger_sha256": "828a6263d6c670c84e761cb4607c0e0c0a029facbcfe7c7e3d772cabc53d654a",
+  "nonacceptable_field_counts": {
+    "c_f": 5,
+    "c_g": 3,
+    "c_y_fresh": 5,
+    "c_y_stale": 5,
+    "f": 0,
+    "p": 5,
+    "s": 0
+  },
+  "phase": "formal",
+  "replacements": 0,
+  "reruns": 0,
+  "result_digest_basis_sha256": "d773517ecdd5b41bb9da50d796733a8527272717ffc8e18ef302a72299efd7d4",
+  "route_results": [
+    {
+      "admissible": false,
+      "blockers": [
+        "c_f:MISSING",
+        "c_y_fresh:MISSING",
+        "c_y_stale:MISSING",
+        "no_complete_common_cost_dimension",
+        "p:AUTHORED_NOT_ESTIMATED"
+      ],
+      "id": "issue1179_af_unix_guard_cost"
+    },
+    {
+      "admissible": false,
+      "blockers": [
+        "c_f:MISSING",
+        "c_y_fresh:MISSING",
+        "c_y_stale:MISSING",
+        "no_complete_common_cost_dimension",
+        "p:AUTHORED_NOT_ESTIMATED"
+      ],
+      "id": "issue1172_private_x11_roi_guard"
+    },
+    {
+      "admissible": false,
+      "blockers": [
+        "c_f:HARD_SAFETY_OUTSIDE_SELECTOR",
+        "c_g:MISSING",
+        "c_y_fresh:MISSING",
+        "c_y_stale:MISSING",
+        "hard_safety_outside_selector",
+        "no_complete_common_cost_dimension",
+        "p:AUTHORED_NOT_ESTIMATED"
+      ],
+      "id": "issue1163_cached_policy_action_guard"
+    },
+    {
+      "admissible": false,
+      "blockers": [
+        "c_f:HARD_SAFETY_OUTSIDE_SELECTOR",
+        "c_g:WRONG_DIMENSION",
+        "c_y_fresh:MISSING",
+        "c_y_stale:MISSING",
+        "hard_safety_outside_selector",
+        "no_complete_common_cost_dimension",
+        "p:AUTHORED_NOT_ESTIMATED"
+      ],
+      "id": "issues659_663_cached_geometry_hint"
+    },
+    {
+      "admissible": false,
+      "blockers": [
+        "c_f:MISSING",
+        "c_g:MISSING",
+        "c_y_fresh:MISSING",
+        "c_y_stale:PARTIAL_NOT_SELECTOR_COST",
+        "no_complete_common_cost_dimension",
+        "p:AUTHORED_NOT_ESTIMATED"
+      ],
+      "id": "issues575_615_map01_context_reanchor"
+    }
+  ],
+  "task": "GUARD-POLICY-CALIBRATION-IDENTIFIABILITY-R1-20260918-001",
+  "tuning": 0
+}

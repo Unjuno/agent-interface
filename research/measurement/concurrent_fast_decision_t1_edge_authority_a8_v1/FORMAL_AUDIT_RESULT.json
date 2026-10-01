@@ -1,0 +1,39 @@
+{
+  "authority_errors": [],
+  "corruption_controls": {
+    "baseline_progress": true,
+    "cleanup": true,
+    "edge_repeat": true,
+    "hard_effect": true,
+    "integrity_precedence": true,
+    "invocation": true,
+    "resume_after_handback": true,
+    "transition_program": true,
+    "watch_effect": true,
+    "wrong_disposition": true
+  },
+  "decision": "PASS_T1_EDGE_TRIGGERED_LIVE_CONCURRENCY_SCOPED",
+  "errors": [],
+  "integrity_errors": [],
+  "metrics": {
+    "activate_latency_max_ns": 2692318,
+    "activate_latency_ns": [2299448,2692318],
+    "baseline_progress_pixels": 0,
+    "candidate_harm_pixels": 0,
+    "candidate_progress_pixels": 700,
+    "candidate_sends": 7,
+    "hard_effects": 0,
+    "out_vocab": 0,
+    "transient8_resume_cases": 1,
+    "watch_effects": 0,
+    "wrong_dispositions": 0,
+    "yield_latency_max_ns": 1975352,
+    "yield_latency_ns": [1566678,1975352]
+  },
+  "pass": true,
+  "task": "CONCURRENT-FAST-DECISION-T1-X11-EDGE-AUTHORITY-A8-20260918-008",
+  "timing_errors": [],
+  "watch_errors": [],
+  "raw_sha256":"cfb4f4e0f49190b18894aa6a3a09109e77ba25ac1520bab0bf951ce6f530d6b6",
+  "audit_sha256":"df55f8388a06069128de190799d182df12825f146742c8956b4ab81f6c06de7c"
+}

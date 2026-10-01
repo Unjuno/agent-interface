@@ -1,0 +1,48 @@
+{
+  "base_main_sha": "59ffec5d551b0adcf11057eee6da814237a748c8",
+  "preflight": {
+    "kind": "read-only mount/hash smoke; excluded from formal candidate count",
+    "command": "docker run --rm --network none --read-only --tmpfs /tmp:rw,nosuid,nodev,noexec,size=16m --cap-drop ALL --security-opt no-new-privileges --pids-limit 64 --memory 256m --cpus 1 -v C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\unjuno-agent-interface-2\\work\\liveness-domain-quorum-5531-t4-20260930\\research\\analysis\\research_failure_detector_5531_t4\\cases.json:/work/cases.json:ro -w /work --entrypoint python3 python:3.12-slim -B -c \"import hashlib,pathlib; p=pathlib.Path('cases.json').read_bytes(); print(hashlib.sha256(p).hexdigest()); print(len(p))\"",
+    "sha256_read": "03d19c53f2cb9e7c924d2dba4d110628ee3933e5eb19a2d5c93adda651a3cd7a",
+    "bytes_read": 2024,
+    "container_removed": true
+  },
+  "candidate": {
+    "name": "liveness-5531-t4-candidate-20261001",
+    "created_at_utc": "2026-09-30T15:17:46.75497615Z",
+    "command": "docker run --name liveness-5531-t4-candidate-20261001 --network none --read-only --tmpfs /tmp:rw,nosuid,nodev,noexec,size=16m --cap-drop ALL --security-opt no-new-privileges --pids-limit 64 --memory 256m --cpus 1 -v C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\unjuno-agent-interface-2\\work\\liveness-domain-quorum-5531-t4-20260930\\research\\analysis\\research_failure_detector_5531_t4\\cases.json:/work/cases.json:ro -v C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\unjuno-agent-interface-2\\work\\liveness-domain-quorum-5531-t4-20260930\\research\\analysis\\research_failure_detector_5531_t4\\detector.py:/work/detector.py:ro -v C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\unjuno-agent-interface-2\\work\\liveness-domain-quorum-5531-t4-20260930\\research\\analysis\\research_failure_detector_5531_t4\\run_once.py:/work/run_once.py:ro -w /work --entrypoint python3 python:3.12-slim -B run_once.py",
+    "exit_code": 0,
+    "image_id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "network": "none",
+    "read_only_rootfs": true,
+    "memory_bytes": 268435456,
+    "nano_cpus": 1000000000,
+    "cap_drop": ["ALL"],
+    "security_options": ["no-new-privileges"],
+    "oom_killed": false,
+    "read_only_mounts": ["cases.json", "detector.py", "run_once.py"],
+    "stdout_file": "candidate.json"
+  },
+  "auditor": {
+    "name": "liveness-5531-t4-auditor-20261001",
+    "created_at_utc": "2026-09-30T15:18:14.969082437Z",
+    "command": "docker run --name liveness-5531-t4-auditor-20261001 --network none --read-only --tmpfs /tmp:rw,nosuid,nodev,noexec,size=16m --cap-drop ALL --security-opt no-new-privileges --pids-limit 64 --memory 256m --cpus 1 -v C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\unjuno-agent-interface-2\\work\\liveness-domain-quorum-5531-t4-20260930\\research\\analysis\\research_failure_detector_5531_t4\\audit.py:/work/audit.py:ro -v C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\unjuno-agent-interface-2\\work\\liveness-domain-quorum-5531-t4-20260930\\research\\analysis\\research_failure_detector_5531_t4\\candidate.json:/work/candidate.json:ro -w /work --entrypoint python3 python:3.12-slim -B audit.py candidate.json",
+    "exit_code": 0,
+    "image_id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "network": "none",
+    "read_only_rootfs": true,
+    "memory_bytes": 268435456,
+    "nano_cpus": 1000000000,
+    "cap_drop": ["ALL"],
+    "security_options": ["no-new-privileges"],
+    "oom_killed": false,
+    "read_only_mounts": ["audit.py", "candidate.json"],
+    "stdout_file": "audit.json"
+  },
+  "host": {
+    "docker_engine": "28.5.1",
+    "docker_platform": "linux/x86_64",
+    "formal_candidate_runs": 1,
+    "independent_audit_runs": 1
+  }
+}

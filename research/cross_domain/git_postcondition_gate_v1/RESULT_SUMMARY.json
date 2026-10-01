@@ -1,0 +1,46 @@
+{
+  "schema": "git-postcondition-gate-summary-v1",
+  "publication_base": "0dd239b7db10831a4e8ac078d3a32d4be6370e3d",
+  "local_freeze_commit": "b178331f1e3348a6aea538441b6030ed5a256695",
+  "plan_sha256": "8d6777275018361c9004eeea29902e2cf1b4d0d89a2bd29246b3ef3ac588587b",
+  "scored_first_outcomes": 72,
+  "unique_measured_ids": 72,
+  "same_id_reruns": 0,
+  "paired_byte_identical_cases": 36,
+  "policies": {
+    "scope_only": {
+      "cases": 36,
+      "correct": 24,
+      "applied": 18,
+      "refused": 18,
+      "wrong_publications": 12
+    },
+    "scope_and_postcondition": {
+      "cases": 36,
+      "correct": 36,
+      "applied": 6,
+      "refused": 30,
+      "wrong_publications": 0
+    }
+  },
+  "source_sha256": {
+    "audit.py": "a41d0321279c8b205c3a91dd7e7bd651c25c5c468ba6462e8eb00758418b8bb0",
+    "experiment.py": "e58f44d2d041bf1d5ea6457500831bbd6d5edc96ec43429e3ee8660745588cad",
+    "test_contract.py": "2939c6cc3e7f14925eba93040f62bc8d63eef97378b1e16d059d33945b2e8d9c"
+  },
+  "verification": {
+    "tests_before_freeze": 17,
+    "tests_after_extraction": 17,
+    "manifest_files_verified": 2192,
+    "manifest_mismatches": 0,
+    "raw_archive_bytes": 258016,
+    "raw_archive_sha256": "96674054f2042e257e8d88053ab8fed40077a056311e405ca9a0c959a750a990"
+  },
+  "decision": "RETAIN_SCOPED_STAGEABLE_CANDIDATE_POSTCONDITION",
+  "limits": [
+    "local freeze preceded delayed GitHub publication; this is not remote preregistration",
+    "candidate postcondition is authored and known, not automatically discovered",
+    "applies to stageable immutable candidates; irreversible external effects are out of scope",
+    "no speed, production-integration, arbitrary-GUI or model-performance claim"
+  ]
+}

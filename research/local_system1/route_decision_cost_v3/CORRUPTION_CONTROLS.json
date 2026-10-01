@@ -1,0 +1,30 @@
+{
+  "controls": [
+    {
+      "control": "correctness",
+      "rejected": true,
+      "returncode": 1,
+      "stdout": "{\"audit\": \"FAIL\", \"decision\": \"PASS_REAL_TYPED_DECISION_COST_SCOPED\", \"errors\": [\"correctness_RULE\", \"decision\"], \"extraction_fraction\": 0.8553648068669528, \"linear_ratio\": 8.748047210300426, \"result_sha256\": \"fb871b93b4d361e28d27f17e8c3798316d4e6e64081feaf4b4890e669aa64fe7\", \"rule_p95_us\": 6.99, \"tree_ratio\": 9.873769670958506}"
+    },
+    {
+      "control": "decision",
+      "rejected": true,
+      "returncode": 1,
+      "stdout": "{\"audit\": \"FAIL\", \"decision\": \"HOLD_WRAPPER_OVERHEAD_NOT_STABLE\", \"errors\": [\"decision\"], \"extraction_fraction\": 0.8553648068669528, \"linear_ratio\": 8.748047210300426, \"result_sha256\": \"d5362e11b8e576a296b7253999d8d85d29b9369def4f6df497296dadf06bf178\", \"rule_p95_us\": 6.99, \"tree_ratio\": 9.873769670958506}"
+    },
+    {
+      "control": "linear_ratio",
+      "rejected": true,
+      "returncode": 1,
+      "stdout": "{\"audit\": \"FAIL\", \"decision\": \"PASS_REAL_TYPED_DECISION_COST_SCOPED\", \"errors\": [\"linear_ratio\", \"decision\"], \"extraction_fraction\": 0.8553648068669528, \"linear_ratio\": 2.1459227467811157, \"result_sha256\": \"3d659e716194b57a99027c602ac10acbce14190096a1a732d9d7065b88047db1\", \"rule_p95_us\": 6.99, \"tree_ratio\": 9.873769670958506}"
+    },
+    {
+      "control": "side_effect",
+      "rejected": true,
+      "returncode": 1,
+      "stdout": "{\"audit\": \"FAIL\", \"decision\": \"PASS_REAL_TYPED_DECISION_COST_SCOPED\", \"errors\": [\"side_effect\", \"decision\"], \"extraction_fraction\": 0.8553648068669528, \"linear_ratio\": 8.748047210300426, \"result_sha256\": \"db2c85e1e012c43e9eebd0caad92d8990de58d4e5ed0ad725d8c25b2b726aba0\", \"rule_p95_us\": 6.99, \"tree_ratio\": 9.873769670958506}"
+    }
+  ],
+  "rejected": 4,
+  "total": 4
+}

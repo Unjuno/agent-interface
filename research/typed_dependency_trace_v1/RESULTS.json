@@ -1,0 +1,41 @@
+{
+  "base": "7f42fd577dff98d6a27a8eceb79d86bee0358bf9",
+  "environment": {
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.13.5",
+    "git": "2.47.3",
+    "cpu": "Intel Xeon Platinum 8573C",
+    "visible_cpus": 5,
+    "sampled_mhz": 2300.0,
+    "frequency_pinned": false
+  },
+  "simple_branch": {
+    "rows": 6000,
+    "data_only_control_change_stale": "500/500",
+    "full_dynamic_all_cells_correct": "2000/2000",
+    "static_union_inactive_change_false_reject": "500/500"
+  },
+  "alias_git": {
+    "rows": 800,
+    "oid_only_same_oid_alias_remap_wrong_commit": "100/100",
+    "path_plus_oid_alias_remap_reject": "100/100",
+    "path_plus_oid_unrelated_progress": "100/100",
+    "oid_only_stable_median_ms": 4.588036,
+    "path_plus_oid_stable_median_ms": 4.8454925
+  },
+  "phantom_git": {
+    "retained_rows": 240,
+    "excluded_first_attempt": "execution envelope exceeded; partial results not used",
+    "point_only_phantom_stale": "20/20",
+    "namespace_epoch_phantom_reject": "20/20",
+    "namespace_epoch_unrelated_progress": "20/20",
+    "global_epoch_unrelated_false_reject": "20/20"
+  },
+  "epoch_maintenance": {
+    "missing_epoch_update_namespace_stale": "20/20",
+    "non_atomic_writer_window_stale": "20/20",
+    "atomic_writer_reader_reject": "20/20"
+  },
+  "retained_scored_checks": 7120,
+  "decision": "RETAIN_TYPED_TRACE_CANDIDATE_HOLD_AUTOMATIC_DISCOVERY"
+}

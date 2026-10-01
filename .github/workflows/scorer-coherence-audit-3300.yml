@@ -1,0 +1,18 @@
+name: scorer coherence audit 3300
+on:
+  pull_request:
+    paths:
+      - research/doom/scorer_coherence_live_3300_v1/**
+      - .github/workflows/scorer-coherence-audit-3300.yml
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    container: python:3.12-slim-bookworm
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Run fail-closed audit tests
+        run: python -m unittest discover -s research/doom/scorer_coherence_live_3300_v1 -p 'test_*.py' -v

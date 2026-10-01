@@ -1,0 +1,61 @@
+{
+  "allocation": "semantic-pinch-cross-backend-20260917-a2",
+  "browser_cases": [
+    {
+      "id": "n01-cdp-r0",
+      "port": 9511,
+      "route": "cdp_touch"
+    },
+    {
+      "id": "n02-mouse-r0",
+      "port": 9512,
+      "route": "mouse_sequential"
+    },
+    {
+      "id": "n03-mouse-r1",
+      "port": 9513,
+      "route": "mouse_sequential"
+    },
+    {
+      "id": "n04-cdp-r1",
+      "port": 9514,
+      "route": "cdp_touch"
+    },
+    {
+      "id": "n05-cdp-r2",
+      "port": 9515,
+      "route": "cdp_touch"
+    },
+    {
+      "id": "n06-mouse-r2",
+      "port": 9516,
+      "route": "mouse_sequential"
+    },
+    {
+      "id": "n07-cdp-r3",
+      "port": 9517,
+      "route": "cdp_touch"
+    },
+    {
+      "id": "n08-mouse-r3",
+      "port": 9518,
+      "route": "mouse_sequential"
+    }
+  ],
+  "fresh_browser_rerun_budget": 0,
+  "intent_file": "intent.json",
+  "supervision": "one_case_per_outer_invocation",
+  "upstream_xi2_blob": "40b06a7447977d924cf0508d3035459cab9ef779",
+  "upstream_xi2_pointer_rows": [
+    "case-05-pointer_approx-r1",
+    "case-08-pointer_approx-r2",
+    "case-10-pointer_approx-r3",
+    "case-14-pointer_approx-r0"
+  ],
+  "upstream_xi2_positive_rows": [
+    "case-01-pinch_complete-r2",
+    "case-15-pinch_complete-r1",
+    "case-20-pinch_complete-r3",
+    "case-21-pinch_complete-r0"
+  ]
+}

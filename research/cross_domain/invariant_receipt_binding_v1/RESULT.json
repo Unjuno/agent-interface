@@ -1,0 +1,30 @@
+{
+  "decision": "PASS_RECEIPT_BOUND_REQUIREMENTS_SCOPED",
+  "formal_cases": 40,
+  "overall_correct": 30,
+  "posthoc_damage_correct": 0,
+  "receipt_bound_correct": 20,
+  "schema": "invariant-receipt-binding-result-v1",
+  "summary": {
+    "posthoc_authored__clean": {
+      "correct": 10,
+      "n": 10,
+      "results": {"EFFECT_CONTRADICTED_COMPENSATED": 10}
+    },
+    "posthoc_authored__collateral_damaged": {
+      "correct": 0,
+      "n": 10,
+      "results": {"EFFECT_CONTRADICTED_COMPENSATED": 10}
+    },
+    "receipt_bound__clean": {
+      "correct": 10,
+      "n": 10,
+      "results": {"EFFECT_CONTRADICTED_COMPENSATED": 10}
+    },
+    "receipt_bound__collateral_damaged": {
+      "correct": 10,
+      "n": 10,
+      "results": {"EFFECT_CONTRADICTED_COMPENSATION_INCOMPLETE": 10}
+    }
+  }
+}

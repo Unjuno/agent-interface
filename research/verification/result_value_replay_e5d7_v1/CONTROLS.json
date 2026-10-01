@@ -1,0 +1,131 @@
+{
+  "controls": [
+    {
+      "after_sha256": "19b430814445febfc16126665541ce9134c473be5abed3a9a8efb31c1cc46465",
+      "before_sha256": "07aabfd28a4637ad809c8e6383d1ef5ce47da8878f99747c57fcada34e1efb45",
+      "effective": true,
+      "errors": [
+        "STABLE-CURRENT_PROJECTION-0/1:response",
+        "control_discriminator",
+        "aba_discriminator"
+      ],
+      "name": "result_value",
+      "rejected_normally": true
+    },
+    {
+      "after_sha256": "75afa2603162731e7364c6e321b68592d5acd00827c6f3c58277b9ce6a1e0547",
+      "before_sha256": "07aabfd28a4637ad809c8e6383d1ef5ce47da8878f99747c57fcada34e1efb45",
+      "effective": true,
+      "errors": [
+        "STABLE-CURRENT_PROJECTION-0/1:response",
+        "control_discriminator",
+        "aba_discriminator"
+      ],
+      "name": "result_version",
+      "rejected_normally": true
+    },
+    {
+      "after_sha256": "79df2307cd3e13686491e7199a36078f8421424c7839824c5f81d8b44d1a52c0",
+      "before_sha256": "07aabfd28a4637ad809c8e6383d1ef5ce47da8878f99747c57fcada34e1efb45",
+      "effective": true,
+      "errors": [
+        "STABLE-CURRENT_PROJECTION-0/1:response"
+      ],
+      "name": "authority",
+      "rejected_normally": true
+    },
+    {
+      "after_sha256": "8a879bda5a0de96f8de318c8305810f082b380aa846ee9c6ec846a121bd43ca8",
+      "before_sha256": "07aabfd28a4637ad809c8e6383d1ef5ce47da8878f99747c57fcada34e1efb45",
+      "effective": true,
+      "errors": [
+        "STABLE-CURRENT_PROJECTION-0/1:response"
+      ],
+      "name": "task_success",
+      "rejected_normally": true
+    },
+    {
+      "after_sha256": "0f83aa9bb7e603d22bc999bed01a0f05d744712c1439e3dd509e45e2413f87f6",
+      "before_sha256": "07aabfd28a4637ad809c8e6383d1ef5ce47da8878f99747c57fcada34e1efb45",
+      "effective": true,
+      "errors": [
+        "STABLE-CURRENT_PROJECTION-0/1:response"
+      ],
+      "name": "new_effect",
+      "rejected_normally": true
+    },
+    {
+      "after_sha256": "131865f5bf60165ed40b9e4f6c771f0b3fa0c7abde9b2a85aff03c332a364245",
+      "before_sha256": "da4f91b2832c2ba9f17204b146702b9422af668c18c01af75f6f5dadf57bef3d",
+      "effective": true,
+      "errors": [
+        "STABLE-CURRENT_PROJECTION-0/1:request"
+      ],
+      "name": "boolean_delta",
+      "rejected_normally": true
+    },
+    {
+      "after_sha256": "09df6c4c4374d31d36c0ec571d64b1a78e4fc758d9ab3d5d62bb95994f050cf9",
+      "before_sha256": "4fc65f45ea4b88db87ed5c75c1631a56f39935b9d971ebbb3b5dcb5d6881c48a",
+      "effective": true,
+      "errors": [
+        "STABLE-CURRENT_PROJECTION-0/1:exit"
+      ],
+      "name": "wrong_exit",
+      "rejected_normally": true
+    },
+    {
+      "after_sha256": "c403baa014f91bb32ecaf2099c272395846a70b2ad5bd9d2f404be1e705a264f",
+      "before_sha256": "4fc65f45ea4b88db87ed5c75c1631a56f39935b9d971ebbb3b5dcb5d6881c48a",
+      "effective": true,
+      "errors": [
+        "STABLE-CURRENT_PROJECTION-0/1:pid"
+      ],
+      "name": "missing_pid",
+      "rejected_normally": true
+    },
+    {
+      "after_sha256": "1ce31356d927b9ab9dbf931b20441d275fd91cb932faa20abdfc2a604cfc2dbb",
+      "before_sha256": "2de9106943c16fe947f6ca72a20dc8b455c71673572287fa765ad3a66fa33118",
+      "effective": true,
+      "errors": [
+        "STABLE-CURRENT_PROJECTION-0:call_count"
+      ],
+      "name": "drop_call",
+      "rejected_normally": true
+    },
+    {
+      "after_sha256": "9d2685aee1f8d660368cbf947c815f6c71987c7598947ebf9f0895321ef27349",
+      "before_sha256": "0f64a5738095144c6deeeb892bce61a6de0c2d84872690c07f57abfd2e9d024f",
+      "effective": true,
+      "errors": [
+        "STABLE-CURRENT_PROJECTION-0/1:db_reconstruction"
+      ],
+      "name": "database_value",
+      "rejected_normally": true
+    },
+    {
+      "after_sha256": "e112253f661d854aef17e567b60c5fb7304fae6c5bfe54271e43f870f96af60a",
+      "before_sha256": "4bfa61b9e9305de5a66c4b111992d08b1f36d665beccb8869a3a495a06b136ea",
+      "effective": true,
+      "errors": [
+        "ABA-CURRENT_PROJECTION-0/3:response",
+        "control_discriminator",
+        "aba_discriminator"
+      ],
+      "name": "aba_version_laundering",
+      "rejected_normally": true
+    },
+    {
+      "after_sha256": "09ad435f5689bb07d453b37300f97e9da02b5ce41c2218bdf18ac4dd2bc24793",
+      "before_sha256": "84dbbba43cc0118e7c647cee856438c2d1fe0b378078799b80ce736183835dbb",
+      "effective": true,
+      "errors": [
+        "source:receiver.py"
+      ],
+      "name": "source_drift",
+      "rejected_normally": true
+    }
+  ],
+  "passed": true
+}

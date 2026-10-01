@@ -1,0 +1,129 @@
+{
+  "schema": "action-effect-coalescing-workload-v1",
+  "defaults": {
+    "intent_revision": "intent-7",
+    "state_generation": 12,
+    "target_id": "button-save",
+    "target_incarnation": "window-3/widget-8",
+    "operation": "CLICK",
+    "effect_class": "SAVE_DOCUMENT",
+    "effect_opportunity": "dirty-revision-19",
+    "expected_postcondition": "saved-revision-19",
+    "parameters": {"button": 1},
+    "deadline_ms": 1000,
+    "now_ms": 100,
+    "already_satisfied": false,
+    "retry_of": null
+  },
+  "cases": [
+    {
+      "case_id": "same_state_equivalent_cross_producer",
+      "proposals": [
+        {"proposal_id": "a1", "producer_id": "consumer-a", "overrides": {}},
+        {"proposal_id": "b1", "producer_id": "consumer-b", "overrides": {}}
+      ],
+      "expected": {
+        "NO_CROSS_PRODUCER_COALESCING": {"decisions": ["EXECUTE", "EXECUTE"], "effects": 2},
+        "SEMANTIC_EFFECT_COALESCING": {"decisions": ["EXECUTE", "COALESCED"], "effects": 1}
+      }
+    },
+    {
+      "case_id": "same_coordinates_new_target_incarnation",
+      "proposals": [
+        {"proposal_id": "a2", "producer_id": "consumer-a", "overrides": {}},
+        {"proposal_id": "b2", "producer_id": "consumer-b", "overrides": {"target_incarnation": "window-4/widget-8"}}
+      ],
+      "expected": {
+        "NO_CROSS_PRODUCER_COALESCING": {"decisions": ["EXECUTE", "EXECUTE"], "effects": 2},
+        "SEMANTIC_EFFECT_COALESCING": {"decisions": ["EXECUTE", "EXECUTE"], "effects": 2}
+      }
+    },
+    {
+      "case_id": "same_effect_different_expiry",
+      "proposals": [
+        {"proposal_id": "a2-exp", "producer_id": "consumer-a", "overrides": {}},
+        {"proposal_id": "b2-exp", "producer_id": "consumer-b", "overrides": {"deadline_ms": 2000}}
+      ],
+      "expected": {
+        "NO_CROSS_PRODUCER_COALESCING": {"decisions": ["EXECUTE", "EXECUTE"], "effects": 2},
+        "SEMANTIC_EFFECT_COALESCING": {"decisions": ["EXECUTE", "EXECUTE"], "effects": 2}
+      }
+    },
+    {
+      "case_id": "same_target_new_intent_revision",
+      "proposals": [
+        {"proposal_id": "a3", "producer_id": "consumer-a", "overrides": {}},
+        {"proposal_id": "b3", "producer_id": "consumer-b", "overrides": {"intent_revision": "intent-8"}}
+      ],
+      "expected": {
+        "NO_CROSS_PRODUCER_COALESCING": {"decisions": ["EXECUTE", "EXECUTE"], "effects": 2},
+        "SEMANTIC_EFFECT_COALESCING": {"decisions": ["EXECUTE", "EXECUTE"], "effects": 2}
+      }
+    },
+    {
+      "case_id": "verified_state_transition_allows_repeat",
+      "proposals": [
+        {"proposal_id": "a4", "producer_id": "consumer-a", "overrides": {}},
+        {"proposal_id": "b4", "producer_id": "consumer-b", "overrides": {"state_generation": 13, "effect_opportunity": "dirty-revision-20", "expected_postcondition": "saved-revision-20"}}
+      ],
+      "expected": {
+        "NO_CROSS_PRODUCER_COALESCING": {"decisions": ["EXECUTE", "EXECUTE"], "effects": 2},
+        "SEMANTIC_EFFECT_COALESCING": {"decisions": ["EXECUTE", "EXECUTE"], "effects": 2}
+      }
+    },
+    {
+      "case_id": "late_equivalent_already_satisfied",
+      "proposals": [
+        {"proposal_id": "a5", "producer_id": "consumer-a", "overrides": {}},
+        {"proposal_id": "b5", "producer_id": "consumer-b", "overrides": {"already_satisfied": true}}
+      ],
+      "expected": {
+        "NO_CROSS_PRODUCER_COALESCING": {"decisions": ["EXECUTE", "NO_ACTION"], "effects": 1},
+        "SEMANTIC_EFFECT_COALESCING": {"decisions": ["EXECUTE", "NO_ACTION"], "effects": 1}
+      }
+    },
+    {
+      "case_id": "same_producer_retry_delegated_to_issue_24",
+      "proposals": [
+        {"proposal_id": "a6", "producer_id": "consumer-a", "overrides": {}},
+        {"proposal_id": "a6-retry", "producer_id": "consumer-a", "overrides": {"retry_of": "a6"}}
+      ],
+      "expected": {
+        "NO_CROSS_PRODUCER_COALESCING": {"decisions": ["EXECUTE", "DEFER_TO_ISSUE_24"], "effects": 1},
+        "SEMANTIC_EFFECT_COALESCING": {"decisions": ["EXECUTE", "DEFER_TO_ISSUE_24"], "effects": 1}
+      }
+    },
+    {
+      "case_id": "altered_effect_parameters_remain_distinct",
+      "proposals": [
+        {"proposal_id": "a7", "producer_id": "consumer-a", "overrides": {}},
+        {"proposal_id": "b7", "producer_id": "consumer-b", "overrides": {"parameters": {"button": 2}}}
+      ],
+      "expected": {
+        "NO_CROSS_PRODUCER_COALESCING": {"decisions": ["EXECUTE", "EXECUTE"], "effects": 2},
+        "SEMANTIC_EFFECT_COALESCING": {"decisions": ["EXECUTE", "EXECUTE"], "effects": 2}
+      }
+    },
+    {
+      "case_id": "unknown_target_incarnation_yields",
+      "proposals": [
+        {"proposal_id": "a8", "producer_id": "consumer-a", "overrides": {"target_incarnation": null}},
+        {"proposal_id": "b8", "producer_id": "consumer-b", "overrides": {"target_incarnation": null}}
+      ],
+      "expected": {
+        "NO_CROSS_PRODUCER_COALESCING": {"decisions": ["YIELD", "YIELD"], "effects": 0},
+        "SEMANTIC_EFFECT_COALESCING": {"decisions": ["YIELD", "YIELD"], "effects": 0}
+      }
+    },
+    {
+      "case_id": "expired_proposal_yields",
+      "proposals": [
+        {"proposal_id": "a9", "producer_id": "consumer-a", "overrides": {"now_ms": 1000}}
+      ],
+      "expected": {
+        "NO_CROSS_PRODUCER_COALESCING": {"decisions": ["YIELD_EXPIRED"], "effects": 0},
+        "SEMANTIC_EFFECT_COALESCING": {"decisions": ["YIELD_EXPIRED"], "effects": 0}
+      }
+    }
+  ]
+}

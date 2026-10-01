@@ -1,0 +1,44 @@
+{
+  "issue": 4534,
+  "allocation": "temporal-resume-audit-control-map-20260927-01",
+  "revision": 1,
+  "branch": "research/temporal-resume-audit-control-map-20260927-r1",
+  "base_commit": "4c62909c7653c0758c9df9d3d784db3be0ab4983",
+  "input_evidence_commit": "de1064b335a6567c57817209485cf18d25d9e3f2",
+  "input_formal_manifest_sha256": "1584edb3a45202b3e816d2a9735708265dae279fd4e18d8680fded7756cc3855",
+  "input_batch5_sha256": "14e38390c6c18547d6d5e6fcc62e1dc0827a57ca9d196a88f9d6fa32817e699e",
+  "historical_controls_sha256": "51cf03c577982cc06c980574594801c06fc8bcb5d68786ec655521d6a77f4f77",
+  "successor_verifier_commit": "3a5557245fd1f57e9d65e9ddfd732d67abd41b69",
+  "successor_verifier_sha256": "a5fa59f118c46d2c01b555b32dbc3af57d80b2e0df1eea55961ef5ad994faac2",
+  "source_fixture_sha256": "5531e1296e31064da7661138f6ae9036e473b5c953ebd82b3f1ce28a9409fd61",
+  "source_schedule_sha256": "90c2d136dfe7e429bfdc504c12fff51e4ad141030080b897d11249a5f28151cd",
+  "docker": {
+    "engine": "29.8.0",
+    "image": "python:3.13.5-slim-bookworm",
+    "image_id": "sha256:4c2cf9917bd1cbacc5e9b07320025bdb7cdf2df7b0ceaccb55e9dd7e30987419",
+    "platform": "linux/amd64",
+    "pull": "never",
+    "network": "none",
+    "root_filesystem": "read-only",
+    "formal_invocations": 1
+  },
+  "controls": {
+    "original_mutations": 10,
+    "added_comparator_returncode_mutation": 1,
+    "unchanged_positive_control": 1,
+    "case_id_48_batch": 5,
+    "case_id_48_batch_row_index_zero_based": 3,
+    "case_id_48_expected_mutation": "foreign_epoch",
+    "case_id_48_expected_candidate_before": "REFUSE_CHECKPOINT",
+    "case_id_48_mutated_candidate": "OK",
+    "required_effective_mutations": 11,
+    "required_unchanged_positive_acceptance_controls": 1
+  },
+  "source_files": [
+    {"path":".gitattributes","bytes":8,"sha256":"705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da"},
+    {"path":"CONSTRUCTION01.log","bytes":508,"sha256":"e2ec31358c0269b54f849291c316d5828e73d667a4374df5ae20293e6f798989"},
+    {"path":"PLAN.md","bytes":3471,"sha256":"a81ddeab7f716d237a317a3b36ddd42f66e58e1a5be2bcc722bc4b1732a71ced"},
+    {"path":"run_control_map.py","bytes":8849,"sha256":"080233cbaa90156de1da948591e2c2b57b6b8ee9444eddab3229773d4fb15c46"},
+    {"path":"test_control_map.py","bytes":1395,"sha256":"2ff3b94915805f597b3327f57269d2561504d45f1b466a09582092f68d159a85"}
+  ]
+}

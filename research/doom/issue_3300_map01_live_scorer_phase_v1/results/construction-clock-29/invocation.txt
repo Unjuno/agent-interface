@@ -1,0 +1,34 @@
+Construction-only matched test of ASYNC_SPECTATOR vs ASYNC_PLAYER, with no
+advancement calls. It does not alter the formal issue mode/scope.
+
+OrbStack Docker, linux/arm64; ViZDoom 1.3.0 image ID
+sha256:4320dd483b24ea91c1481f12fd5799c903d9daa99a517b994f607037098ea41d;
+network none, container root read-only, 128 MiB /tmp tmpfs, DISPLAY unset.
+Freedoom 0.13.0 package WAD SHA-256
+a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b.
+Six fresh sessions in three alternating matched pairs; every session used
+MAP01, 35 Hz, nine available buttons (unused), explicit new_episode(), 2 s
+observation, exact scorer once, and cleanup. No advance_action, make_action,
+or set_action calls.
+
+Exact probe command (from repository root):
+
+docker run --rm --platform linux/arm64 --network none --read-only --workdir /tmp --tmpfs /tmp:rw,noexec,nosuid,size=128m \
+  -v "$PWD/research/doom/issue_3300_map01_live_scorer_phase_v1/async_mode_construction.py:/probe.py:ro" \
+  -v "$PWD/research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-29:/results" \
+  --entrypoint sh agent-interface-map01-clock-review-fixed:20260920 \
+  -lc 'unset DISPLAY; python -u /probe.py'
+
+Probe source SHA-256: 506a68e3b8c6bd760d4c3a9afba9bda5ee9206f59bf641375e8e8e6ce0abdba4
+Raw SHA-256: 5d3312c4b4628ccc1681446c4a39122c1d0911b2e38cc7034c49b08b9993c88c
+Log SHA-256: daaf1e8ad804d2452b6d4fc18d3303cbc9bad71d50d571c989b562d892c6246e
+Auditor SHA-256: 0a8de676ae9c8e7f884cabb279db24cfb49e0a87af99d512496523b6265e9b61
+Audit SHA-256: b48ec5266772ce2246b1646c4b8236429e76d27ac28f75fcb41528180451a2c2 (host/container byte-identical)
+
+Result: HOLD_BOTH_ASYNC_MODES_PASSIVE_TICS_STATIC, no audit errors. For the
+first matched pair both modes sampled tic 2; the other pairs sampled tic 1.
+Within each session every sample remained at that session's initial tic;
+all three API views agreed and no mode produced positive passive progression.
+The 17-test focused suite passed locally and in isolated arm64 test image
+sha256:08e8b41ebd1476eff067939e0192d49e4014c21bab11a4d793429187e4242704;
+see test-container.log.

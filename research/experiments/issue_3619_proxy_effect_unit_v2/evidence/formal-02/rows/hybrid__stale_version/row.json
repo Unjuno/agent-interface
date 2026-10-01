@@ -1,0 +1,126 @@
+{
+  "after_state": {
+    "counter": 0,
+    "frame_bytes": 153600,
+    "frame_path": "rows/hybrid__stale_version/after.raw",
+    "frame_sha256": "67bf8e8fa96ed60946d72de27a282587899a3c069a80e123ac710e11681253ed",
+    "height": 120,
+    "pid": 166,
+    "start_ticks": "5869202",
+    "status": "ok",
+    "title": "proxy-fixture:0:2",
+    "version": 2,
+    "width": 320,
+    "xid": 4194307
+  },
+  "arm": "hybrid",
+  "case": "stale_version",
+  "current_state": {
+    "counter": 0,
+    "frame_bytes": 153600,
+    "frame_path": "rows/hybrid__stale_version/pre_dispatch.raw",
+    "frame_sha256": "67bf8e8fa96ed60946d72de27a282587899a3c069a80e123ac710e11681253ed",
+    "height": 120,
+    "pid": 166,
+    "start_ticks": "5869202",
+    "status": "ok",
+    "title": "proxy-fixture:0:2",
+    "version": 2,
+    "width": 320,
+    "xid": 4194307
+  },
+  "decision": "REFUSE_STALE_BINDING",
+  "emissions": 0,
+  "error": null,
+  "fixture_events": [
+    {
+      "count": 0,
+      "kind": "ready",
+      "pid": 166,
+      "version": 1
+    },
+    {
+      "count": 0,
+      "kind": "external_version_change",
+      "version": 2
+    }
+  ],
+  "fixture_events_sha256": "51b1592f4069e53cb2f0fa150c8834384023008ba0b57bae4176f11e8856d3f9",
+  "initial_state": {
+    "counter": 0,
+    "frame_bytes": 153600,
+    "frame_path": "rows/hybrid__stale_version/before.raw",
+    "frame_sha256": "10885a778e86b353c21e88ffbf47e87631cbfbc04fc804b5dff5ab5970f4a669",
+    "height": 120,
+    "pid": 166,
+    "start_ticks": "5869202",
+    "status": "ok",
+    "title": "proxy-fixture:0:1",
+    "version": 1,
+    "width": 320,
+    "xid": 4194307
+  },
+  "input_ack": false,
+  "presentation": {
+    "arm": "hybrid",
+    "live_frame_sha256": "10885a778e86b353c21e88ffbf47e87631cbfbc04fc804b5dff5ab5970f4a669",
+    "proxy_image": "rows/hybrid__stale_version/proxy.ppm",
+    "proxy_sha256": "e47c1de1e98a5279596ab7797bd1dc973cae7101cb839198347efc245edc58d3",
+    "structured_state": {
+      "counter": 0,
+      "target": "gtk-counter",
+      "version": 1
+    }
+  },
+  "process_exit_codes": {
+    "fixture_current": -15,
+    "xvfb": 0
+  },
+  "processes": [
+    {
+      "pid": 163,
+      "role": "xvfb",
+      "start_ticks": "5869199"
+    },
+    {
+      "pid": 166,
+      "role": "fixture",
+      "start_ticks": "5869202"
+    }
+  ],
+  "release_verified": false,
+  "reply": {
+    "after_state": {
+      "counter": 0,
+      "frame_bytes": 153600,
+      "frame_path": "rows/hybrid__stale_version/after.raw",
+      "frame_sha256": "67bf8e8fa96ed60946d72de27a282587899a3c069a80e123ac710e11681253ed",
+      "height": 120,
+      "pid": 166,
+      "start_ticks": "5869202",
+      "status": "ok",
+      "title": "proxy-fixture:0:2",
+      "version": 2,
+      "width": 320,
+      "xid": 4194307
+    },
+    "decision": "REFUSE_STALE_BINDING",
+    "emissions": 0,
+    "input_ack": false
+  },
+  "request": {
+    "operation": "increment",
+    "representation_arm": "hybrid",
+    "source_frame_sha256": "10885a778e86b353c21e88ffbf47e87631cbfbc04fc804b5dff5ab5970f4a669",
+    "source_token": {
+      "counter": 0,
+      "pid": 166,
+      "start_ticks": "5869202",
+      "title": "proxy-fixture:0:1",
+      "version": 1,
+      "xid": 4194307
+    }
+  },
+  "row_id": "hybrid__stale_version",
+  "socket_disappeared": true
+}

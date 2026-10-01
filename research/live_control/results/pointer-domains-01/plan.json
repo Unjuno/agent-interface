@@ -1,0 +1,25 @@
+{
+  "scope": "scripted adapter readiness, fixed known replay; no performance comparison",
+  "domains": [
+    "openttd",
+    "mindustry"
+  ],
+  "stress": [
+    "already expired request: reject before input",
+    "cancel active Shift hold: release and cancelled terminal"
+  ],
+  "mindustry_pre_pause_wait_s": 3,
+  "sources": {
+    "live_control/probe_pointer_domains_v1.py": "362e9f67a9767e8b4a459ff3e9c866f101ec29676fef7aa06e8b2a274ed6870c",
+    "live_control/pointer_socket_entry_v1.py": "1b8ebf6b8bdcdbb2756ec4100acf0e9d5a4c4b77b0facdb58094fb0440d9c2d5",
+    "live_control/pointer_exchange_v1.py": "76c5a753a16cf3634d4efd3c992dbdf90a9509da7a165dbad02c9b41eea2e1a5",
+    "live_control/event_socket_v11.py": "e6988e4f586b1554c40a4969fbb428143cc7e10213bf303cf800d679f9e7e96c",
+    "live_control/event_cursor_v5.py": "7db5fba6a2d3b4cf6d3e1d61575d3fbf3b62bd9f40825ff76ced02fab97c33b3",
+    "live_control/command_once_v2.py": "3b4015b91f29da4fae5eeab611aae57b55284a4f60b2ef4304f7e7381cf0c2a0",
+    "live_control/bounded_pipe_writer_v2.py": "5ebf379d41ab4fd51789019d0793fa99625dab990b5dbfc3401908a0f34826c2",
+    "live_control/unix_json_deadline.py": "decb19099c686ee494fe307c3bf411e61c59e05470319ab80159147d2bd73de3",
+    "live_control/receipt_image.py": "6541a6af0a6ecdc188344f38e004e57959b220b460473f095b2c208a17f89cba",
+    "openttd_task/results/guard-self-use-01/events.jsonl": "bbbd72253bad61f8512a17cac1d1be3307e29ed2cc701b9c95dc5f07e9e70c5e",
+    "benchmark_discovery/results/mindustry-build-self-use-01/events.jsonl": "3637e03ba4fca84e3267f46e86fd34b66ad08e3ac0ca14722c4f71e08f52c1ea"
+  }
+}

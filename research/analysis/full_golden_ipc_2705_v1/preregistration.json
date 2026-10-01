@@ -1,0 +1,21 @@
+{
+  "schema": "full-golden-ipc-preregistration-v1",
+  "issue": 2705,
+  "successor_to": [57, 2068, 2558],
+  "allocation": {"count": 1, "retry": false, "task_order": "existing six-task route"},
+  "container_image": "agent-interface-golden-local:20260920@sha256:8ce5d8639cd5580ae3090caa05a9ed7d839eb05048b2ecf03e91083f20f6517d",
+  "model": {"name": "gpt-5.6-luna", "effort": "low", "boundary": "container-host-shared-volume-ipc"},
+  "source_sha256": {
+    "research/live_control/container_host_model_ipc_runner_v1.py": "5ebc9f770de383d32fdff00f3159fe0cc68a3736b357a4eb04a2188151d750f3",
+    "runtime/host_model_ipc_broker_v1.py": "a660dc7e62645e93889ddb42527a976370486c69a905e09c27be1f614c82edff",
+    "research/live_control/run_integrated_efficiency_live_v1.py": "630972a0402d2c6a1cd6a57237165d5b402cf8fc364ceddb36ac998c143a7410",
+    "research/live_control/integrated_efficiency_model_v1.py": "f7f4793ebcb0d35d3d9f25fa101cf841ecd6ae1f25703b69b865119f138f197a",
+    "research/live_control/schema_preflight_v1.py": "24b9e8d1f955567c57a7bea807d22a10e59d44c6382f12b0fc9722c652d3ad9a",
+    "research/live_control/compiled_form_grounding_schema_v1.json": "a1a5901b84656375657538d2dccb975e3b40a5b22272abbab487c54904db1d0f",
+    "research/live_control/plain_form_points_schema_v1.json": "0631ab7b7ba0aaf77a4cbdf758a8dbfba557dfb5120a9d5aa789223c97944291"
+  },
+  "required_accounting": ["preflight", "model_calls", "failed_calls", "ipc_timeouts", "input_tokens", "output_tokens", "reasoning_tokens", "images", "local_observations", "effect_receipts", "release_receipts", "cleanup"],
+  "promotion": {"all_tasks_exact": true, "all_effects_independent": true, "all_releases_verified": true, "persistent_repair_succeeded": true, "unsafe_or_stale_admissions": 0, "ipc_failures": 0},
+  "stop_conditions": ["source_hash_mismatch", "container_unavailable", "preflight_not_fresh", "ipc_timeout", "malformed_model_response", "grounding_rejection", "stale_reuse", "effect_mismatch", "release_failure", "cleanup_failure"],
+  "scope": "One fresh six-task allocation only; no general reliability, broad GUI, human-tempo, or efficiency claim unless independently satisfied by this allocation."
+}

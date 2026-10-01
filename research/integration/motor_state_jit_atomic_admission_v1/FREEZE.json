@@ -1,0 +1,39 @@
+{
+  "allocation": "motor-state-jit-atomic-admission-4266-20260923-01",
+  "audit_command": "python -B audit.py formal/*.jsonl --out AUDIT.json",
+  "controls_command": "python -B test_audit.py",
+  "formal_cases": 16,
+  "formal_commands": [
+    "python -B batch.py --scenario STABLE --out formal/stable.jsonl",
+    "python -B batch.py --scenario TRANSFER_BEFORE_CHECK --out formal/precheck.jsonl",
+    "python -B batch.py --scenario TRANSFER_AFTER_CHECK_BEFORE_INPUT --out formal/race.jsonl",
+    "python -B batch.py --scenario OBSERVER_UNAVAILABLE --out formal/unknown.jsonl"
+  ],
+  "formal_invocations": 0,
+  "issue": 4266,
+  "policies": [
+    "JIT_THEN_SEND",
+    "ORDERED_ADMISSION"
+  ],
+  "post_result_tuning": 0,
+  "repetitions": [
+    0,
+    1
+  ],
+  "scenarios": [
+    "STABLE",
+    "TRANSFER_BEFORE_CHECK",
+    "TRANSFER_AFTER_CHECK_BEFORE_INPUT",
+    "OBSERVER_UNAVAILABLE"
+  ],
+  "schema": "agent-interface/motor-state-jit-admission-freeze-v1",
+  "source_sha256": {
+    "CONSTRUCTION_SUMMARY.json": "b71c7274427e26f71ee76db1142f3b9ea664a4f0ce2bc0da74f9599ea1a76431",
+    "ENVIRONMENT.json": "dcf4c520da5a527947be6056d25916cd2049900cc89b914d071dadc1a05c6512",
+    "PLAN.md": "b323d9c3218da3d5a06e925140c818a2e5960e07a2d408cadf143b5b28303ab3",
+    "audit.py": "0b7efeab04cd0061f3c5e5dec62aa5204b57d955e82ae60bcb097d66a2fa37ee",
+    "batch.py": "2d3987e176c98b6a2275727ba6f73871193aeb57ef9d84f54890a51facdb9cc1",
+    "case_runner.py": "be6e867b97e16c5008553c6edc161b7a4cbd537975db0a4e69847fca9a59bd62",
+    "test_audit.py": "e9be93c125b07d8a87c085f5f2367d6183040deecfc8fb50b3ced74c77a49636"
+  }
+}

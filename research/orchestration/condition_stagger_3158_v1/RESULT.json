@@ -1,0 +1,20 @@
+{
+  "decision": "PASS_STAGGERED_SUBAGENT_ORCHESTRATION_SCOPED",
+  "seed": 3158,
+  "policies": ["IMMEDIATE","FIXED_STAGGER","CONDITION_STAGGER","SERIAL_CRITICAL"],
+  "scenarios": ["independent","exclusive_conflict","stale_during_delay","predecessor_failure","duplicate_start","cancelled","deadline_expiry"],
+  "condition_stagger": {
+    "independent": "started",
+    "all_other_scenarios": "denied"
+  },
+  "controls": {
+    "immediate": "unsafe starts on all six non-independent scenarios",
+    "fixed_stagger": "unsafe starts on all six non-independent scenarios",
+    "serial_critical": "denied all six non-independent scenarios"
+  },
+  "independent_audit": "policy-filtered recomputation matched rows",
+  "model_calls": 0,
+  "network_calls": 0,
+  "image": "agent-interface-2994:20260920",
+  "image_digest": "sha256:167fd6184cac8729ccfea407938943384d64fe2999e7319bed3587638fa94b7c"
+}

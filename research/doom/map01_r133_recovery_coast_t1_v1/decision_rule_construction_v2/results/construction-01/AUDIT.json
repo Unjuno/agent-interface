@@ -1,0 +1,148 @@
+{
+  "candidate_cases": 729,
+  "case_errors": [],
+  "control_errors": [],
+  "control_results": {
+    "bad_exposure_interval": {
+      "comparative_status": "STOP_INTEGRITY",
+      "expected": [
+        "STOP_INTEGRITY",
+        "STOP_INTEGRITY",
+        "exposure_bounds"
+      ],
+      "instrumentation_status": "STOP_INTEGRITY",
+      "reason": "exposure_bounds"
+    },
+    "duplicate_session": {
+      "comparative_status": "STOP_INTEGRITY",
+      "expected": [
+        "STOP_INTEGRITY",
+        "STOP_INTEGRITY",
+        "session_id_duplicate"
+      ],
+      "instrumentation_status": "STOP_INTEGRITY",
+      "reason": "session_id_duplicate"
+    },
+    "fixture_mismatch": {
+      "comparative_status": "STOP_INTEGRITY",
+      "expected": [
+        "STOP_INTEGRITY",
+        "STOP_INTEGRITY",
+        "identity_mismatch:fixture_sha256"
+      ],
+      "instrumentation_status": "STOP_INTEGRITY",
+      "reason": "identity_mismatch:fixture_sha256"
+    },
+    "identity_hash_malformed": {
+      "comparative_status": "STOP_INTEGRITY",
+      "expected": [
+        "STOP_INTEGRITY",
+        "STOP_INTEGRITY",
+        "identity_format:model_contract_sha256"
+      ],
+      "instrumentation_status": "STOP_INTEGRITY",
+      "reason": "identity_format:model_contract_sha256"
+    },
+    "incomplete_audit": {
+      "comparative_status": "STOP_INTEGRITY",
+      "expected": [
+        "STOP_INTEGRITY",
+        "STOP_INTEGRITY",
+        "incomplete_or_audit_errors"
+      ],
+      "instrumentation_status": "STOP_INTEGRITY",
+      "reason": "incomplete_or_audit_errors"
+    },
+    "no_threat": {
+      "comparative_status": "HOLD_NOT_EVALUATED",
+      "expected": [
+        "PASS_INSTRUMENTATION_AND_RELEASE",
+        "HOLD_NOT_EVALUATED",
+        null
+      ],
+      "instrumentation_status": "PASS_INSTRUMENTATION_AND_RELEASE",
+      "reason": null
+    },
+    "no_useful_event": {
+      "comparative_status": "HOLD_NOT_EVALUATED",
+      "expected": [
+        "PASS_INSTRUMENTATION_AND_RELEASE",
+        "HOLD_NOT_EVALUATED",
+        null
+      ],
+      "instrumentation_status": "PASS_INSTRUMENTATION_AND_RELEASE",
+      "reason": null
+    },
+    "pair_start_mismatch": {
+      "comparative_status": "STOP_INTEGRITY",
+      "expected": [
+        "STOP_INTEGRITY",
+        "STOP_INTEGRITY",
+        "pair_start_mismatch"
+      ],
+      "instrumentation_status": "STOP_INTEGRITY",
+      "reason": "pair_start_mismatch"
+    },
+    "source_identity_mismatch": {
+      "comparative_status": "STOP_INTEGRITY",
+      "expected": [
+        "STOP_INTEGRITY",
+        "STOP_INTEGRITY",
+        "identity_mismatch:source_bundle_sha256"
+      ],
+      "instrumentation_status": "STOP_INTEGRITY",
+      "reason": "identity_mismatch:source_bundle_sha256"
+    },
+    "stale_action": {
+      "comparative_status": "STOP_SAFETY",
+      "expected": [
+        "FAIL_SAFETY",
+        "STOP_SAFETY",
+        "stale_action"
+      ],
+      "instrumentation_status": "FAIL_SAFETY",
+      "reason": "stale_action"
+    },
+    "unverified_release": {
+      "comparative_status": "STOP_SAFETY",
+      "expected": [
+        "FAIL_SAFETY",
+        "STOP_SAFETY",
+        "terminal_release"
+      ],
+      "instrumentation_status": "FAIL_SAFETY",
+      "reason": "terminal_release"
+    },
+    "wrong_counterbalance": {
+      "comparative_status": "STOP_INTEGRITY",
+      "expected": [
+        "STOP_INTEGRITY",
+        "STOP_INTEGRITY",
+        "counterbalance_order"
+      ],
+      "instrumentation_status": "STOP_INTEGRITY",
+      "reason": "counterbalance_order"
+    }
+  },
+  "oracle_cases": 729,
+  "oracle_mismatches": 0,
+  "raw_mutations": {
+    "duplicate_case": {
+      "rejected": true
+    },
+    "forged_tie_pass": {
+      "rejected": true
+    },
+    "mutated_control": {
+      "rejected": true
+    },
+    "omitted_case": {
+      "rejected": true
+    }
+  },
+  "raw_sha256": "472ccc001124df14095fa5486b6376b668e61b544a9e69b74befced4c3cc3b5c",
+  "schema": "t1-paired-rule-construction-audit-v2",
+  "scope": "synthetic adjudicator construction only; no live T1 evidence or authorization",
+  "source_errors": [],
+  "status": "PASS_T1_IDENTITY_PRECEDENCE_CONSTRUCTION"
+}

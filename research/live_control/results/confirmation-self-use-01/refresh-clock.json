@@ -1,0 +1,38 @@
+{
+  "status": "boundary",
+  "records": [
+    {
+      "event": "command",
+      "command": {
+        "op": "clock",
+        "transport_request_id": "refresh-after-expiry"
+      },
+      "received_ns": 100772830140,
+      "transport_request_id": "refresh-after-expiry",
+      "runtime_request_sequence": 4,
+      "declared_action_id": null,
+      "command_op": "clock",
+      "correlation_scope": "current runtime input line; action ID is caller-declared",
+      "clock_domain_id": "70c11482495b7c830add2453c75cdee799d6ea1223307243aa292c3630e32909",
+      "emit_started_ns": 100772851201,
+      "delivery_id": "delivery:18"
+    },
+    {
+      "event": "clock",
+      "runtime_ns": 100778554431,
+      "sequence": 9,
+      "clock_domain_id": "70c11482495b7c830add2453c75cdee799d6ea1223307243aa292c3630e32909",
+      "emit_started_ns": 100778560559,
+      "delivery_id": "delivery:19"
+    }
+  ],
+  "cursor": 19,
+  "returned_ns": 100794191554,
+  "authority": "none",
+  "acknowledgement": "not implied",
+  "command_receipt": {
+    "request_id": "refresh-after-expiry",
+    "replayed": false,
+    "state": "stdin_flushed"
+  }
+}

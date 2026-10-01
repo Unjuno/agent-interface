@@ -1,0 +1,6 @@
+{"op": "clock"}
+{"op": "submit", "id": "cancel-drag", "expected_sequence": 1, "valid_until_ns": 45826293750, "steps": [{"op": "pointer_drag", "points": [{"x": 900, "y": 300}, {"x": 1000, "y": 300}], "duration_ms": 5000}, {"op": "pointer_click", "x": 1008, "y": 578, "duration_ms": 80}]}
+{"op": "cancel", "id": "cancel-drag"}
+{"op": "clock"}
+{"op": "submit", "id": "observe-recovery", "expected_sequence": 1, "valid_until_ns": 46134973066, "steps": [{"op": "observe"}]}
+{"op": "finish"}

@@ -1,0 +1,59 @@
+{
+  "schema": "o2-contiguous-canonical-adoption-result-v1",
+  "issue": 4139,
+  "decision": "PASS_O2_CONTIGUOUS_CANONICAL_ADOPTION_SCOPED",
+  "branch": "research/o2-contiguous-adoption-20260922",
+  "tested_head": "952b42344e49e850409a2af33d73acedee952ba6",
+  "workflow_run_id": 35739089132,
+  "workflow_job_id": 106783816287,
+  "workflow_conclusion": "success",
+  "artifact": {
+    "id": 10699576569,
+    "name": "issue4139-o2-contiguous-adoption",
+    "sha256": "e0555ea18633abe4d42f85113063e42e806d87b960e3850f89a35e529cb145f2",
+    "bytes": 1132,
+    "test_exit": 0,
+    "receipt_sha256": "51a0f1999469ae1fd0afbc664def56a4ccd24212d3082ebfd07979fbf377bbf2",
+    "stderr_sha256": "be74eee5edf73f44ef603c71540a6d29fd116f4071d98104e9b31563de4369e8"
+  },
+  "full_checkout_tests": {
+    "canonical_transport": {
+      "passed": 3,
+      "total": 3
+    },
+    "existing_transport_integration_v2": {
+      "passed": 12,
+      "total": 12
+    },
+    "adoption_equivalence": {
+      "passed": 3,
+      "total": 3,
+      "includes_retained_golden_v3_pairs": 8
+    },
+    "total": {
+      "passed": 18,
+      "total": 18
+    }
+  },
+  "local_reconstructed_tests": {
+    "passed": 17,
+    "total": 17
+  },
+  "shared_source_change": "research/observation_tiles/tile_transport.py: tile.tobytes() -> np.ascontiguousarray(tile).tobytes()",
+  "performance_allocations": 0,
+  "inherited_performance_evidence": [
+    "#4092",
+    "#4103",
+    "PR #4110"
+  ],
+  "claims_excluded": [
+    "bandwidth/token reduction",
+    "live capture speedup",
+    "end-to-end task speedup",
+    "model quality",
+    "human tempo",
+    "cross-platform",
+    "product readiness"
+  ],
+  "errors": []
+}

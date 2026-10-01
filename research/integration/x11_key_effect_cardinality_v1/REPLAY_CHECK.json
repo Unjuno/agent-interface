@@ -1,0 +1,42 @@
+{
+  "archive_members": 116,
+  "archive_sha256": "ad0be00c312d5cca1714ab4b0f6d2d54b59e8619b2ea9088dc0a01cf6b8b636e",
+  "byte_identical_audit_replay": true,
+  "live_input_calls": 0,
+  "manifest_entries_verified": 115,
+  "runs": [
+    {
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "/mnt/data/key_repeat_replay/audit.py",
+        "/mnt/data/key_repeat_replay"
+      ],
+      "exit": 0,
+      "name": "raw-audit"
+    },
+    {
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_audit"
+      ],
+      "exit": 0,
+      "name": "unit"
+    },
+    {
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "/mnt/data/key_repeat_replay/test_audit.py",
+        "--formal",
+        "/mnt/data/key_repeat_replay/formal/batch-0/case-01/row.json"
+      ],
+      "exit": 0,
+      "name": "corruption"
+    }
+  ]
+}

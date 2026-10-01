@@ -1,0 +1,41 @@
+{
+  "allocation": "safety-graph-live-x11-3066-20260923-01",
+  "configs": [
+    "bare",
+    "openbox"
+  ],
+  "construction": {
+    "construction_01": "STOP_PREFORMAL_STARTUP_DEADLINE_AND_XAUTH_OBSERVER",
+    "construction_02": "HARNESS_EXCEPTION_AFTER_VALID_ACTION_NO_FORMAL",
+    "construction_02b": "PASS_CONSTRUCTION_ELIGIBLE_EXCLUDED"
+  },
+  "deadline_ms": 150,
+  "formal_cases": 14,
+  "formal_invocations_before_freeze": 0,
+  "formal_reruns_before_freeze": 0,
+  "grace_ms": 50,
+  "schedules": [
+    "normal",
+    "ipc_delay",
+    "display_stall",
+    "owner_death",
+    "target_replacement",
+    "cleanup_failure",
+    "unknown_dependency"
+  ],
+  "source": {
+    "base_main": "030b9f9c7c753674c4f25835f29a6803386e9e15",
+    "executed_source_sha256": {
+      "PLAN.md": "ff5c77ac395749ee233389f2e3b445382e40dd7e7e08911eec69dfe1e12e3c85",
+      "audit.py": "24f27c3baec57626545a40b1e8ff9ae1322f962b75f63885fe1aa9a5c46a95fc",
+      "controls.py": "7ebd7f06cf4b83a54c1520529af42e1f48c03a074a858a56c0eb42a91858fb55",
+      "run_live.py": "08eda838499bab2721882678d3ba93c0c475f560f2fe125c5288ee9521bcec2b"
+    },
+    "execution_note": "run_live.py executes a method-preserving Xlib/XTEST slice of current X11Backend focus/key_state/release_all semantics; it does not import the complete runtime package. Upstream complete source Git blobs are pinned separately.",
+    "upstream_git_blobs": {
+      "runtime/backends/x11_v1/backend.py": "9cae101a219348077668c8fc086acf8e13154afe",
+      "runtime/backends/x11_v1/session.py": "e973b2f3f827951634344a320cd833a80a899d9e",
+      "runtime/core_v1/contract.py": "87154518107e4231a6f8ec06e976d2856b375d1d"
+    }
+  }
+}

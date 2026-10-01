@@ -1,0 +1,38 @@
+{
+  "capability_replay": {
+    "CONVENTION_ONLY": {"accepted": [true, true], "final_state": "PREPARED", "authority_created": false, "effect_claim_created": false},
+    "LINEAR_PROTOCOL": {"accepted": [true, false], "final_state": "LEASED", "authority_created": false, "effect_claim_created": false},
+    "MULTIPARTY_PROTOCOL": {"accepted": [true, true], "final_state": "PREPARED", "authority_created": false, "effect_claim_created": false},
+    "RUNTIME_AUTOMATON": {"accepted": [true, true], "final_state": "PREPARED", "authority_created": false, "effect_claim_created": false}
+  },
+  "expire_before_commit": {
+    "CONVENTION_ONLY": {"accepted": [true, true, true, true], "final_state": "EXPIRED", "illegal_attempts": ["begin_commit"], "authority_created": false, "effect_claim_created": false},
+    "LINEAR_PROTOCOL": {"accepted": [true, true, true, false], "final_state": "EXPIRED", "authority_created": false, "effect_claim_created": false},
+    "MULTIPARTY_PROTOCOL": {"accepted": [true, true, true, false], "final_state": "EXPIRED", "authority_created": false, "effect_claim_created": false},
+    "RUNTIME_AUTOMATON": {"accepted": [true, true, true, false], "final_state": "EXPIRED", "authority_created": false, "effect_claim_created": false}
+  },
+  "release_before_acquire": {
+    "CONVENTION_ONLY": {"accepted": [true], "final_state": "OFFERED", "illegal_attempts": ["release"], "authority_created": false, "effect_claim_created": false},
+    "LINEAR_PROTOCOL": {"accepted": [false], "final_state": "OFFERED", "authority_created": false, "effect_claim_created": false},
+    "MULTIPARTY_PROTOCOL": {"accepted": [false], "final_state": "OFFERED", "authority_created": false, "effect_claim_created": false},
+    "RUNTIME_AUTOMATON": {"accepted": [false], "final_state": "OFFERED", "authority_created": false, "effect_claim_created": false}
+  },
+  "role_mismatch": {
+    "CONVENTION_ONLY": {"accepted": [true, true], "final_state": "PREPARED", "authority_created": false, "effect_claim_created": false},
+    "LINEAR_PROTOCOL": {"accepted": [true, true], "final_state": "PREPARED", "authority_created": false, "effect_claim_created": false},
+    "MULTIPARTY_PROTOCOL": {"accepted": [true, false], "final_state": "LEASED", "authority_created": false, "effect_claim_created": false},
+    "RUNTIME_AUTOMATON": {"accepted": [true, true], "final_state": "PREPARED", "authority_created": false, "effect_claim_created": false}
+  },
+  "unknown_event": {
+    "CONVENTION_ONLY": {"accepted": [false], "final_state": "OFFERED", "authority_created": false, "effect_claim_created": false},
+    "LINEAR_PROTOCOL": {"accepted": [false], "final_state": "OFFERED", "authority_created": false, "effect_claim_created": false},
+    "MULTIPARTY_PROTOCOL": {"accepted": [false], "final_state": "OFFERED", "authority_created": false, "effect_claim_created": false},
+    "RUNTIME_AUTOMATON": {"accepted": [false], "final_state": "OFFERED", "authority_created": false, "effect_claim_created": false}
+  },
+  "unknown_recovery": {
+    "CONVENTION_ONLY": {"accepted": [true, true, true, true, true, true], "final_state": "RELEASED", "authority_created": false, "effect_claim_created": false},
+    "LINEAR_PROTOCOL": {"accepted": [true, true, true, true, true, true], "final_state": "RELEASED", "authority_created": false, "effect_claim_created": false},
+    "MULTIPARTY_PROTOCOL": {"accepted": [true, true, true, true, true, true], "final_state": "RELEASED", "authority_created": false, "effect_claim_created": false},
+    "RUNTIME_AUTOMATON": {"accepted": [true, true, true, true, true, true], "final_state": "RELEASED", "authority_created": false, "effect_claim_created": false}
+  }
+}

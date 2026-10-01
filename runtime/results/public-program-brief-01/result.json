@@ -1,0 +1,66 @@
+{
+  "scope": "retained-dispatch-text engineering projection, canonical JSON bytes only; no new GUI/model calls or token/latency measurement",
+  "rows": [
+    {
+      "source": "results-local/inkscape-numeric-primary-01/host/reply-2.json",
+      "source_sha256": "84a441491133baabdc8f6ee2d7e4aafa5dc73d5a5dd2b339f48843607f9911f6",
+      "full_bytes": 4705,
+      "candidate_bytes": 4783,
+      "returned": "full"
+    },
+    {
+      "source": "results-local/inkscape-numeric-primary-01/host/reply-3.json",
+      "source_sha256": "ab65188fa27a85747b1583c4c7d3dc337fe200ef9081f41eaab5aca1865bd47f",
+      "full_bytes": 4863,
+      "candidate_bytes": 4835,
+      "returned": "brief"
+    },
+    {
+      "source": "results-local/inkscape-numeric-primary-01/host/reply-4.json",
+      "source_sha256": "7a942407018a0578dda855dc5a75b719f4000a9812bd158097438b64febb2144",
+      "full_bytes": 5966,
+      "candidate_bytes": 5845,
+      "returned": "brief"
+    },
+    {
+      "source": "results-local/inkscape-numeric-primary-01/host/reply-5.json",
+      "source_sha256": "24d7b8ee915c7cb09062b45704bcc9ef6b6c25542ba36abd4059266ad0a9f19a",
+      "full_bytes": 4663,
+      "candidate_bytes": 4741,
+      "returned": "full"
+    },
+    {
+      "source": "results-local/inkscape-current-primary-01/host/reply-2.json",
+      "source_sha256": "b1341afff2e7866fddc37bcde19b17dcf10c307b00407909357698f5ddc576c0",
+      "full_bytes": 4705,
+      "candidate_bytes": 4783,
+      "returned": "full"
+    },
+    {
+      "source": "results-local/inkscape-current-primary-01/host/reply-3.json",
+      "source_sha256": "8284c85573bba804a1ee97d8f329687250c793fc87d6a5a7678ddcf8f76ce5cd",
+      "full_bytes": 5397,
+      "candidate_bytes": 5137,
+      "returned": "brief"
+    },
+    {
+      "source": "results-local/inkscape-current-primary-01/host/reply-4.json",
+      "source_sha256": "6eb1b204ee477cd3a497cef9ee5c7807ac0860872bb9a4ce5b2ce6d4b329f020",
+      "full_bytes": 4663,
+      "candidate_bytes": 4741,
+      "returned": "full"
+    }
+  ],
+  "totals": {
+    "inkscape-numeric-primary-01": {
+      "full_bytes": 20197,
+      "candidate_bytes": 20204
+    },
+    "inkscape-current-primary-01": {
+      "full_bytes": 14765,
+      "candidate_bytes": 14661
+    }
+  },
+  "disposition": "HOLD_RUNTIME_ADOPTION",
+  "reason": "Marginal inconsistent aggregate reduction on real short programs; extra retrieval needed for omitted provenance. Numeric task grows by 7 bytes. No default or public API promotion."
+}

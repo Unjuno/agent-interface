@@ -1,0 +1,26 @@
+{
+  "issue": 2849,
+  "seed": 284927,
+  "status": "STOP_AFTER_NESTED_RUNNER_BEFORE_SCHEMA_VALIDATION",
+  "failure_boundary": "outer harness imported the selected backend without adding the repository root to sys.path; backend then could not import runtime.docker_schema_preflight_v1",
+  "facts": {
+    "outer_invocations": 1,
+    "nested_invocations": 1,
+    "nested_runner_returncode": 0,
+    "assistant_agent_message_count": 1,
+    "completed_turn_count": 1,
+    "non_assistant_error_item_count": 1,
+    "raw_response_byte_preserved": true,
+    "selected_backend_nested_call_returncode": 0,
+    "schema_validation_invoked": false,
+    "plain_parser_invoked": false,
+    "host_model_calls": 0,
+    "task_started": false,
+    "task_token_acquired": false,
+    "authority_granted": false,
+    "retry_performed": false
+  },
+  "error": "ModuleNotFoundError: No module named 'runtime'",
+  "interpretation": "The corrected nested runner successfully preserved and counted the saved Codex response. The no-task harness stopped before the selected backend's schema-validation import because its own sys.path omitted the repository root. No model or task was invoked.",
+  "scope": "offline saved-response runner regression only"
+}

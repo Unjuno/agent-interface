@@ -1,0 +1,33 @@
+{
+  "allocation": "OBSTAC_3430_ALLOCATION_03",
+  "issue": 3430,
+  "decision": "HOLD_READINESS_UNVERIFIED_STALE_EFFECT_OBSERVED",
+  "container": {
+    "image": "issue3419-multiwindow:20260920",
+    "id": "sha256:6274b31351429a9cd2385f76c75c2df9f817c3dca6d285f4cd8ccceb88d8d1ad",
+    "network": "none",
+    "exit": 0
+  },
+  "auditor": {
+    "image": "python:3.12-slim",
+    "id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "exit": 0,
+    "sha256": "34278d84d1ca39c99c738d7845e7826c3be0e678a58970c70d88747ee63adf11"
+  },
+  "raw": {
+    "path": "raw.jsonl",
+    "bytes": 1940,
+    "rows": 5,
+    "sha256": "86e619f47618a0e1fe160fdcf93396adc9db3268602aba540556adba225a2a9d"
+  },
+  "runner_sha256": "e95f4563a83559d115bbe528a3cc5bce890d5d6b26bfd293e4dd6caf41da5f66",
+  "audit_gates": {
+    "byte": true,
+    "independent_ready_before_stale": false,
+    "old_xid_reused_by_decoy": true,
+    "stale_effect_observed": true,
+    "decoy_control": true,
+    "p2_control": true,
+    "cleanup": true
+  }
+}

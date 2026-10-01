@@ -1,0 +1,7 @@
+# Historical fixture and timeout retention
+
+Recovered unchanged from [PR #4931](https://github.com/Unjuno/agent-interface/pull/4931), branch `research/issue-2195-modal-pilot-hold-20260928`, commit `44aca7ac8789a109ef6c2c73bc51848997418c12`: all 17 original package files retain their Git blob identities. The old shared integration index is not restored.
+
+This retains a reusable SVG fixture, modal PNG, six-case specification, and the original timeout record. Byte/hash checks match the frozen plan, cases, SVG, PNG and recorded timeout identities; they do not independently establish the original screenshot capture process or demonstrate a UI skill. The capture account and historical integrity-audit result remain author-reported evidence.
+
+The disposition remains **`HOLD_PILOT_INFERENCE_TIMEOUT`**: the historical record reports one request started and timed out after 240 seconds, zero model responses received or retained, five cases not started, zero retries and zero model/task actions. The absence of a received or retained response does not establish whether the backend completed computation or incurred charges. Zero task actions does not mean zero requests: one request was reportedly started. The consumed request is not reopened. No model, API, fixture or original auditor was run during recovery. The same image was specified for all six cases; Issue #2195 acceptance and model-selection efficacy remain untested. Any successor needs a separately scoped and authorized experiment.

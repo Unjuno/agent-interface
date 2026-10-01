@@ -1,0 +1,26 @@
+{
+  "allocation": "needle-intent-distill-3458-pilot-05-near-boundary-shift",
+  "formal_invocations": 1,
+  "formal_container": {
+    "docker_server": "29.8.0",
+    "context": "desktop-linux",
+    "base_image": "python:3.12-slim-bookworm",
+    "base_image_id": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "derived_image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+    "platform": "linux/amd64",
+    "python": "3.12.14",
+    "torch": "2.5.1+cpu",
+    "torch_threads": 1,
+    "deterministic_algorithms": true,
+    "network": "none",
+    "root_filesystem_read_only": true,
+    "source_mount": "read-only",
+    "evidence_mount": "dedicated writable output only",
+    "cpu_limit": 2,
+    "memory_limit": "4g",
+    "pull_base_image": false
+  },
+  "formal_runner_stdout": "allocation=needle-intent-distill-3458-pilot-05-near-boundary-shift; seeds=3464,3465,3466; raw_bytes=3709508; raw_sha256=39577a8750441f6b25c506d8dcc4bf74d6c696cfcd988a2d291dc7be0a95d901",
+  "nonfatal_runtime_warning": "PyTorch attempted optional NumPy initialization; NumPy is not installed. No NumPy APIs are used by the runner or auditor.",
+  "container_execution_claim": "yes; local Docker formal training/evaluation and independent audit, with no network inside either run"
+}

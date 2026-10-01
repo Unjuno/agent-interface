@@ -1,0 +1,22 @@
+{
+  "frozen_source_mismatches": [],
+  "freeze_sha256": "433f412bfc3ad8272fc218cfe86266b516f568fe91f1a26dd3d93a1179a6ebc9",
+  "postformal_verifier": {"pass": true, "errors": [], "recomputed_decision": "HOLD_CONFIRMATION_COST"},
+  "corruption_controls": [
+    {"name":"case_premature_count_mutation","rejected":true,"errors":["9101701:stress:CONSECUTIVE_CONFIRM:premature_exec"]},
+    {"name":"aggregate_candidate_total_mutation","rejected":true,"errors":["aggregate_candidate_stress_premature"]}
+  ],
+  "exact_result_sha256": "691f5f9d7f9b66914ec34ceb8f3d84dd4eb56fe80851b9c0906a9e5488e23ae1",
+  "exact_audit_sha256": "bc5bd8d3ba946fcaeaacf29169e0dac86e418d3e0da9d888a07159785dbd87fb",
+  "full_container_archive": {
+    "bytes": 437816,
+    "sha256": "4532104184d038f9f0cdb7c419a059913868f5945455a8b75ec793966327fd01",
+    "git_retained": false
+  },
+  "case_evidence_npz_sha256": {
+    "9101701": "7498a8719e1250273d7a29c7ed8d66d3c7eb07ba233a661836d5c7ac90e4cd2f",
+    "9101702": "32e2eadee3ff2e63c42ab3fa79e41fed8d980f6429092707acb3606f9b878ab6",
+    "9101703": "2273349d7d39d4964ccedb5b71472c1fcbd58ea369c69d15857d053ccd0e2e9e",
+    "9101704": "741ed9ccb3923c76ea71a2fa64ccf580329190c2f6c571e886721c2447ae187e"
+  }
+}

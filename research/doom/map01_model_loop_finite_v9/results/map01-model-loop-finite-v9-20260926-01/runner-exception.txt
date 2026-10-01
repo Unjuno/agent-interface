@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "<checkout>/research/doom/map01_model_loop_finite_v7/adapter.py", line 124, in <module>
+    main()
+  File "<checkout>/research/doom/map01_model_loop_finite_v7/adapter.py", line 120, in main
+    module.main()
+  File "<checkout>/research/doom/map01_overlap_controller_v39.py", line 1118, in main
+  File "<checkout>/research/doom/map01_overlap_controller_v39.py", line 1074, in refresh_between_segments
+  File "<checkout>/research/doom/map01_model_loop_finite_v7/preflight/effective-controller.py", line 601, in write
+    raise RuntimeError("HOLD_INFRASTRUCTURE: host lease margin below 5s")
+RuntimeError: HOLD_INFRASTRUCTURE: host lease margin below 5s

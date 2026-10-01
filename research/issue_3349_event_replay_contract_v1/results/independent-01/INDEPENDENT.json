@@ -1,0 +1,65 @@
+{
+  "candidate_source_sha256": "4e700b05c60626e73070eb6f5883d9341c8b1374996d45f08e5766fc6cb0f463",
+  "case_count": 7,
+  "errors": [],
+  "formal_result_sha256": "4cb959b20ad6339e0918819c49c38941b3c20157beead9b35352a7d09267adef",
+  "recomputed_cases": [
+    {
+      "candidate": "return",
+      "candidate_matches_declared": true,
+      "case": "matching_retained_terminal",
+      "expected": "return",
+      "policy": "return",
+      "policy_matches_declared": true
+    },
+    {
+      "candidate": "return",
+      "candidate_matches_declared": true,
+      "case": "matching_queued_fallback_response",
+      "expected": "return",
+      "policy": "return",
+      "policy_matches_declared": true
+    },
+    {
+      "candidate": "stale_wrong_identity_returned",
+      "candidate_matches_declared": true,
+      "case": "stale_accepted_prelude",
+      "expected": "wait",
+      "policy": "wait",
+      "policy_matches_declared": true
+    },
+    {
+      "candidate": "stale_wrong_identity_returned",
+      "candidate_matches_declared": true,
+      "case": "stale_rejected_prelude",
+      "expected": "wait",
+      "policy": "wait",
+      "policy_matches_declared": true
+    },
+    {
+      "candidate": "returned_first_ambiguous",
+      "candidate_matches_declared": true,
+      "case": "duplicate_terminal_history",
+      "expected": "ambiguous_duplicate",
+      "policy": "ambiguous_duplicate",
+      "policy_matches_declared": true
+    },
+    {
+      "candidate": "stale_wrong_identity_returned",
+      "candidate_matches_declared": true,
+      "case": "wrong_terminal_identifier",
+      "expected": "wait",
+      "policy": "wait",
+      "policy_matches_declared": true
+    },
+    {
+      "candidate": "return",
+      "candidate_matches_declared": true,
+      "case": "unrelated_retained_then_queued_response",
+      "expected": "return",
+      "policy": "return",
+      "policy_matches_declared": true
+    }
+  ],
+  "status": "PASS_INDEPENDENT_REPLAY_CONTRACT_AUDIT"
+}

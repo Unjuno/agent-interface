@@ -1,0 +1,66 @@
+diff --git a/src/vizdoom/src/viz_main.cpp b/src/vizdoom/src/viz_main.cpp
+index 1f2681b..0000000 100755
+--- a/src/vizdoom/src/viz_main.cpp
++++ b/src/vizdoom/src/viz_main.cpp
+@@ -215,7 +215,60 @@ void VIZ_AsyncStartTic(){
+     }
+ }
+ 
++#include <time.h>
++#include <fcntl.h>
++#include <unistd.h>
++#include <stdint.h>
++
++struct VIZ_TicCounterRecordV1 {
++    uint64_t entry_counter;
++    uint64_t monotonic_ns_after_entry;
++    uint64_t counter_frequency_hz;
++    int32_t gametic;
++    int32_t viz_time;
++};
++static const uint32_t VIZ_TIC_COUNTER_CAPACITY = 8192;
++static VIZ_TicCounterRecordV1 vizTicCounterRecords[VIZ_TIC_COUNTER_CAPACITY] = {};
++static uint32_t vizTicCounterCount = 0;
++static uint64_t vizTicCounterFrequency = 0;
++
++static void __attribute__((constructor)) VIZ_ReadCounterFrequency(){
++    asm volatile("mrs %0, cntfrq_el0" : "=r"(vizTicCounterFrequency));
++}
++
++static void __attribute__((destructor)) VIZ_FlushTicCounterRecords(){
++    if(vizTicCounterCount == 0) return;
++    int fd = open("/tmp/vizdoom-tic-counter-v1.bin", O_WRONLY | O_CREAT | O_TRUNC, 0600);
++    if(fd < 0) return;
++    const char *data = reinterpret_cast<const char *>(vizTicCounterRecords);
++    size_t remaining = vizTicCounterCount * sizeof(VIZ_TicCounterRecordV1);
++    while(remaining > 0){
++        ssize_t written = write(fd, data, remaining);
++        if(written <= 0) break;
++        data += written;
++        remaining -= (size_t)written;
++    }
++    close(fd);
++}
++
++extern "C" void VIZ_TicCounterBody(uint64_t entry_counter);
++__attribute__((naked, noinline, used)) void VIZ_Tic(){
++    asm volatile("mrs x0, cntvct_el0\n\tb VIZ_TicCounterBody\n\t");
++}
++
++extern "C" __attribute__((noinline)) void VIZ_TicCounterBody(uint64_t entry_counter){
++    if(vizTicCounterCount < VIZ_TIC_COUNTER_CAPACITY){
++        struct timespec ts;
++        clock_gettime(CLOCK_MONOTONIC, &ts);
++        vizTicCounterRecords[vizTicCounterCount++] = {
++            entry_counter,
++            (uint64_t)ts.tv_sec * 1000000000ULL + (uint64_t)ts.tv_nsec,
++            vizTicCounterFrequency,
++            (int32_t)gametic,
++            (int32_t)vizTime
++        };
++    }
++
+-void VIZ_Tic(){
+ 
+     VIZ_DebugMsg(2, VIZ_FUNC, "tic: %d, vizTime: %d", gametic, vizTime);
+     VIZ_DebugMsg(4, VIZ_FUNC, "rngseed: %d, use_staticrng: %d, staticrngseed: %d", rngseed, use_staticrng, staticrngseed);

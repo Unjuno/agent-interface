@@ -1,0 +1,29 @@
+{
+  "status": "boundary",
+  "records": [
+    {
+      "event": "command",
+      "command": {
+        "op": "clock",
+        "transport_request_id": "clock-f7c13d3e83e24947b1f4dbb0a0a40985"
+      },
+      "received_ns": 26049406938,
+      "emit_started_ns": 26049410092
+    },
+    {
+      "event": "clock",
+      "runtime_ns": 26060440572,
+      "sequence": 1,
+      "emit_started_ns": 26060445274
+    }
+  ],
+  "cursor": 4,
+  "returned_ns": 26072719651,
+  "authority": "none",
+  "acknowledgement": "not implied",
+  "command_receipt": {
+    "request_id": "clock-f7c13d3e83e24947b1f4dbb0a0a40985",
+    "replayed": false,
+    "state": "stdin_flushed"
+  }
+}

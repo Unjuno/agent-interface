@@ -1,0 +1,78 @@
+{
+  "authority_granted": false,
+  "cleanup_error": null,
+  "lifecycle": [
+    "dispatch"
+  ],
+  "native_status": "completed",
+  "partial_effects": [],
+  "program_completed": true,
+  "raw_dispatch": {
+    "result": {
+      "admission": "accepted",
+      "execution": {
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "emissions": 17,
+        "ended_ns": 10357945354450,
+        "observations": [
+          {
+            "bytes": 288000,
+            "height": 180,
+            "operation_index": 6,
+            "sha256": "941ce8cdcca1c713d18509eb7d16e3958ec4cbd6fb68376072f0f93c9afd6bc9",
+            "width": 400
+          }
+        ],
+        "program_emissions": 17,
+        "releases": [
+          {
+            "buttons_down": [],
+            "keys_down": [],
+            "monotonic_ns": 10357945350503,
+            "verified": true
+          }
+        ],
+        "started_ns": 10357888801988,
+        "waits": [
+          {
+            "completed": true,
+            "ended_ns": 10357943822308,
+            "kind": "fixed_delay",
+            "operation_index": 5,
+            "requested_ms": 50,
+            "started_ns": 10357893712071,
+            "update_observed": null
+          }
+        ]
+      },
+      "recovery_required": false,
+      "required_capabilities": [
+        "capture.frame",
+        "clock.monotonic",
+        "display.geometry",
+        "event.feedback",
+        "input.pointer",
+        "input.release_all",
+        "input.text",
+        "window.focus"
+      ],
+      "status": "completed"
+    },
+    "schema": "agent-interface/runtime-dispatch-result-v1",
+    "status": "returned"
+  },
+  "schema": "golden-v3-result-v2",
+  "status": "partial",
+  "task_success": null,
+  "usage": {},
+  "usage_status": "unavailable"
+}

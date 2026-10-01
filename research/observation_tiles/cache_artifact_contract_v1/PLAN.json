@@ -1,0 +1,53 @@
+{
+  "allocation": "cache-artifact-contract-20260922-01",
+  "batch1_requires_complete_batch0": true,
+  "batches": [
+    {
+      "cases": 24,
+      "id": "batch0",
+      "reps": [
+        0
+      ]
+    },
+    {
+      "cases": 24,
+      "id": "batch1",
+      "reps": [
+        1
+      ]
+    }
+  ],
+  "construction_repetition": 100,
+  "expected_cases": 48,
+  "formal_invocations": 2,
+  "height": 64,
+  "issue": 4029,
+  "logical_allocations": 1,
+  "main": "1f798cbb60b929e738c6bf8a5912470b38b45ff4",
+  "max_cache_bytes": 262144,
+  "mode": "RGB",
+  "no_reruns": true,
+  "orchestration_timeout_seconds": 30,
+  "png_compress_level": 6,
+  "policies": [
+    "ORIGINAL",
+    "BYTE_PIN_REPAIR",
+    "PIXEL_CHECK_REPAIR"
+  ],
+  "repetitions": [
+    0,
+    1
+  ],
+  "scenarios": [
+    "UNCHANGED",
+    "FRAME_CHANGED",
+    "CACHE_MISSING",
+    "CACHE_TRUNCATED",
+    "CACHE_OTHER_PIXELS",
+    "CACHE_OTHER_GEOMETRY",
+    "CACHE_LOSSLESS_REENCODED",
+    "NEXT_NAME_OCCUPIED"
+  ],
+  "trial_timeout_seconds": 3,
+  "width": 96
+}

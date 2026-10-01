@@ -1,0 +1,30 @@
+{
+  "allocation": "r133-domain-coverage-transfer-t0-01",
+  "base_commit": "6968d45197c6a29e717a9281dcd050be1eed90c7",
+  "container_image": "python:3.12.10-slim@sha256:fd95fa221297a88e1cf49c55ec1828edd7c5a428187e67b5d1805692d11588db",
+  "built_image_id": "sha256:5379a10403f9fa44b8f536768cb490ada1a89ea8e0fd337649a2d2cf3da8af6d",
+  "network": "none",
+  "repetitions": 1,
+  "source_manifest": "frozen_sources.py",
+  "source_blobs": {
+    "physical": "0ddf43cbfec7957f1c51e6260dfca572463b3c6f",
+    "occupancy": "64ae125866a8e58f6deb90c8433506577ccd0a95",
+    "feedback": "bfdcd8c299a7dbe759977b346737bf592e3f4772",
+    "calc": "11c4a4c78f9abffe44ca29182bfad38646307500",
+    "calc_provenance_readme": "0b3c78ae0d4ea1ab193f3be965887ef6f7aa0f4c"
+  },
+  "candidate": "run_once.py",
+  "independent_auditor": "audit.py",
+  "candidate_output": "results/t0-01/candidate.json",
+  "run_record": "results/t0-01/run.json",
+  "audit_output": "results/t0-01/audit.json",
+  "decision_gates": [
+    "exact independent reconstruction",
+    "reject duration promotion from release-only evidence",
+    "reject task-effect promotion from state-only evidence",
+    "reject v39 precision gate promotion",
+    "no overall scalar coverage score"
+  ],
+  "output_must_not_exist_before_run": true,
+  "no_retry": true
+}

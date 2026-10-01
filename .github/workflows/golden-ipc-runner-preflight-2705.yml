@@ -1,0 +1,19 @@
+name: Golden IPC runner prerequisite preflight v1
+
+on:
+  pull_request:
+    paths:
+      - 'research/analysis/golden_ipc_runner_preflight_2705/**'
+      - 'container_host_model_ipc_runner_v1.py'
+      - 'host_model_ipc_broker_v1.py'
+
+permissions:
+  contents: read
+
+jobs:
+  runner-preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify required host IPC sources before allocation
+        run: python research/analysis/golden_ipc_runner_preflight_2705/verify_runner.py

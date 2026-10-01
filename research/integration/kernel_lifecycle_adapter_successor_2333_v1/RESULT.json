@@ -1,0 +1,27 @@
+{
+  "status": "PASS_KERNEL_LIFECYCLE_ADAPTER_SCOPED",
+  "issue": 2333,
+  "positive": {
+    "stage": "verified",
+    "effect_verified": true,
+    "release_verified": true,
+    "command_id": "command-1"
+  },
+  "negative_paths": {
+    "stale_binding": "rejected",
+    "expired_lease": "rejected",
+    "nonempty_release": "rejected",
+    "verified_cleanup_stop": "PASS",
+    "unknown_boundary": "rejected"
+  },
+  "source_blobs": 4,
+  "verification": {
+    "workflow": "kernel-lifecycle-adapter-2333",
+    "run_id": 35446190109,
+    "native_audit": "PASS",
+    "python_3_12_slim_container_audit": "PASS",
+    "syntax_json_audit": "PASS"
+  },
+  "claims_excluded": ["GUI", "model", "OS input", "network", "latency", "tokens", "human tempo", "production readiness"],
+  "independent_audit": "PASS_NATIVE_AND_CONTAINER"
+}

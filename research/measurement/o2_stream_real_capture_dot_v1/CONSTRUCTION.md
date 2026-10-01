@@ -1,0 +1,13 @@
+# Excluded construction and corrections
+
+Only 67x65 top-left crops of the retained PNGs were encoded during construction, never the formal 1280x800 corpus. Both construction runs returned exit0 and144 records. These rows are excluded from every formal denominator and benefit claim.
+
+- Initial auditor syntax error (extra closing parenthesis) was retained at audit.syntax-error.py.retained and corrected before construction.
+- construction-01 audit rejected short-call CPU deltas of zero. All observed wall intervals were positive. A separate integer-work diagnostic established CLOCK_PROCESS_CPUTIME_ID does advance for longer work. No inference of zero CPU work is justified. Pre-freeze auditor correction accepts nonnegative CPU deltas and labels timing diagnostic; original audit/report/source remain retained. The original controls were ineffective because baseline already failed, so their reported rejection is not credited.
+- construction-02:144 records, raw audit1776 checks/errors[], all9 evidence controls rejected after an explicitly passing baseline. Derived cropped-input allocation result was HOLD, excluded from formal. Controls are semantic corruptions of copied JSON records, not system faults. The auditor was subsequently extended with explicit formal process/freeze validation; no prior result is overwritten.
+
+No formal launch or outcome exists at this checkpoint. Source upstream and original PNG bytes remain Git-identical. No remote publication, GUI, model, installation, GPU or paid service.
+
+Independent pre-freeze review requested three measurement/provenance controls. The runner now records both pre-call and post-call state, auditor checks resource/thread/command/log receipts, and a coherent positive allocation mutation must leave parity PASS but force allocation HOLD. A third excluded cropped-input run through the explicit supervisor completed144 records, child exit0, no timeout. Final pre-freeze audit1925 checks/errors[] and14/14 controls passed. Earlier versions remain retained. The original codecs and PNG bytes are unchanged.
+
+Final control effectiveness correction: the first coherent-allocation control changed HOLD to HOLD and was not credited as a decision-boundary test. The corrected construction-03.controls-effective.json uses synthetic measurement-only copies of existing records (wire/state/source unchanged): positive peaks100000/100, currents0 give allocation PASS and parity PASS; changing one streaming peak to1GB gives allocation HOLD while parity stays PASS. All14 effective controls pass. These invented measurement fields exist only in an explicitly labelled auditor test, never in the experimental raw data or benefit result. No additional encoding run was needed.

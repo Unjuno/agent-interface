@@ -1,0 +1,34 @@
+{
+  "trace_sha256": "f5a95842c2f59513895e316678625c62ca90151d7b29fadba318bbcbc4eebb5a",
+  "calls": [
+    {
+      "id": 1,
+      "tool": "native_start",
+      "sdk_ms": 3941.682762,
+      "nested_descriptive_phases": {}
+    },
+    {
+      "id": 2,
+      "tool": "native_submit",
+      "sdk_ms": 688.587319,
+      "nested_descriptive_phases": {
+        "execution_ms": 187.614198,
+        "feedback_ms": 113.892922
+      }
+    }
+  ],
+  "span_ms": 13472.309949,
+  "inside_sdk_ms": 4630.270081,
+  "between_calls_ms": 8842.039868,
+  "between_call_gaps_ms": [
+    8842.039868
+  ],
+  "scope": "single sequential same-clock trace, not matched performance comparison",
+  "unmeasured": [
+    "model-visible image arrival",
+    "model reasoning duration",
+    "model tokens/cost",
+    "host transport decomposition",
+    "human baseline"
+  ]
+}

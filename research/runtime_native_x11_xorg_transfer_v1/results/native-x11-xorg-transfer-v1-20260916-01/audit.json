@@ -1,0 +1,27 @@
+{
+  "schema": "agent-interface/native-x11-xorg-transfer-audit-v1",
+  "result_id": "native-x11-xorg-transfer-v1-20260916-01",
+  "source_freeze": "21bbb02f4608a4315d6fdb1665b2a8f236f899c7",
+  "source_match": true,
+  "source": [
+    {"path":"PLAN.md","blob":"ceef5103195e01ea2cdca597359c05e8e512bcba","expected":"ceef5103195e01ea2cdca597359c05e8e512bcba","match":true,"sha256":"4a989566cc47f0c2b7780c498ad8316385eee3c12476d6d2c46a0182edaff57f"},
+    {"path":"README.md","blob":"cfaca6abc192c717d49fd1f90754facf14d9947d","expected":"cfaca6abc192c717d49fd1f90754facf14d9947d","match":true,"sha256":"3b4b2b8134be2e6a7f108da5d32e0c8dea1516836aa3022811384807c7166a9c"},
+    {"path":"aggregate.py","blob":"a4f8b652d5352749403e5d02eda04eee90091171","expected":"a4f8b652d5352749403e5d02eda04eee90091171","match":true,"sha256":"0e57daefae1e8b0cde5e2db2fffc4eb386c6b82006e43e237ed9400731cc90a9"},
+    {"path":"run_arm.py","blob":"58e629e9f9bb87b55c7b3c1bf6c0095e76a1e636","expected":"58e629e9f9bb87b55c7b3c1bf6c0095e76a1e636","match":true,"sha256":"c79472b81ecf9e088dc834e4cfbeb35cfdfad7c37944854264a3eadd8b2b272e"},
+    {"path":"score_workbook.py","blob":"51b8254fb98b8adfc5ee10d06fefb757c065085e","expected":"51b8254fb98b8adfc5ee10d06fefb757c065085e","match":true,"sha256":"12cf80dabe4e24fc9483e1e17a1bd4293b615b58172023dfe4b88681badd363c"},
+    {"path":"seed_workbook.py","blob":"cda5c999c3a031f5b07c1eec520bc43070229934","expected":"cda5c999c3a031f5b07c1eec520bc43070229934","match":true,"sha256":"76344ca0bf875bd9c2d3a276316541c9f4e12f80d4220999072e9eb29d759f10"},
+    {"path":"test_static.py","blob":"3bc778138f7cb249a2f3ca0a66334f8ac7362b42","expected":"3bc778138f7cb249a2f3ca0a66334f8ac7362b42","match":true,"sha256":"f5a314d512a456567f920c1ba9a6f266d9e300672d93a844a608c4598a272bde"},
+    {"path":"xorg-dummy.conf","blob":"b52a42b41828be36ab818fd85391578778e53e4a","expected":"b52a42b41828be36ab818fd85391578778e53e4a","match":true,"sha256":"6af64d3d736a3257ff963275d5249ff56170915b1e3dd521761bffcff93dad93"}
+  ],
+  "controller_sha256": "3a1a5207bc44aa67a5bd695a6307fc586f28ee791dc7544c601a018e65e7e04a",
+  "arms": [
+    {"arm":"01ms","outer_exit":0,"controller_exit":0,"scorer_exit":0,"passed":true,"exact_count":16,"xlsx_sha256":"9212b3e0adfd782bd0f4d20dc17f9d7452a8654db2bbc75cf06b59e8efd3ed3e","xlsx_bytes":6237,"zip_crc_bad":null,"zip_members":11,"stale_error":"STALE_OBSERVATION","stale_injected":0,"task_release":true,"confirm_release":true,"edit_elapsed_ns":207954959,"median_char_start_interval_ns":1176324,"server_vendor":"The X.Org Foundation","server_release":12101016,"xtest":true},
+    {"arm":"12ms","outer_exit":0,"controller_exit":0,"scorer_exit":0,"passed":true,"exact_count":16,"xlsx_sha256":"f74245c524b68d9e9a5c4de2c9e02e178f3bd954ab104394a88f451fcebbfe18","xlsx_bytes":6238,"zip_crc_bad":null,"zip_members":11,"stale_error":"STALE_OBSERVATION","stale_injected":0,"task_release":true,"confirm_release":true,"edit_elapsed_ns":1822327101,"median_char_start_interval_ns":12308731,"server_vendor":"The X.Org Foundation","server_release":12101016,"xtest":true}
+  ],
+  "aggregate": {
+    "schema":"agent-interface/native-x11-xorg-transfer-aggregate-v1","formal_order":[1,12],"complete":true,"controls_passed":true,"exact_both":true,"disposition":"ENVIRONMENT_TRANSFER_PASS_1MS","one_vs_twelve_delta_ns":1614372142,"one_vs_twelve_reduction_pct":88.58849440992866,"formal_pass":true
+  },
+  "formal_reruns": 0,
+  "wrapper_anomaly": "outer container display appended TERM environment variable not set after child completion; internal outer.exitcode files are 0 and no arm was rerun",
+  "passed": true
+}

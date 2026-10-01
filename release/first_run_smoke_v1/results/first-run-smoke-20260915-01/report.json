@@ -1,0 +1,147 @@
+{
+  "schema": "agent_interface_first_run_experiment_v1",
+  "base_commit": "ff2bbb5e200e2bf8ee2295ad97ca9dd0f158a371",
+  "declared_source_commit": "d9e031c665f63b3740abac876b77da5134a065af",
+  "source_materialization": "Exact MCP-fetched file bytes and Git modes, not a full repository clone.",
+  "status": "PASS_SCOPED_LAUNCHER_REPAIR",
+  "environment": {
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "machine": "x86_64",
+    "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+    "logical_cpu_count": 5,
+    "clock_policy": "Uncontrolled; no timing or throughput claim.",
+    "batch": "One serial finite matrix; no model batches."
+  },
+  "scope": "Real POSIX exec/bash; Python, venv, pip and runtime dispatch use a fail-closed test double. No installs, GUI, model, network or performance benchmark.",
+  "source_sha256": {
+    "preflight.py": "9e80e330dd4e7e53c5113db9dfaa741a11a8338a15f6a28136b8bf2ceefe0594",
+    "experiment.py": "80d1a99588d3960e269d7267c97805335072241d4805e52242ccf1ec7f013a1e",
+    "PLAN.md": "f15d4332642668eecd0764dcd5dbcefa9a9aca7d1fe125dd776061bb93a47f1d",
+    "test_launchers.py": "67c10b734c366782f0650563573b82d1e16d736c64deb6fc1b88aeb6c9dcdfd5"
+  },
+  "inputs": [
+    {
+      "path": "runtime/setup-golden-demo-v3.sh",
+      "expected_blob": "58f336f7010652503dad098c533dd42a80044d36",
+      "actual_blob": "58f336f7010652503dad098c533dd42a80044d36",
+      "matched": true
+    },
+    {
+      "path": "runtime/golden-demo-v3.sh",
+      "expected_blob": "ef489bbd68e3f80fac060b179fe90da2cce8d209",
+      "actual_blob": "ef489bbd68e3f80fac060b179fe90da2cce8d209",
+      "matched": true
+    },
+    {
+      "path": "runtime/golden_desktop_demo_v3.py",
+      "expected_blob": "26db03b8400b03fbe5272bd4ae5ad9c3a82d31a2",
+      "actual_blob": "26db03b8400b03fbe5272bd4ae5ad9c3a82d31a2",
+      "matched": true
+    },
+    {
+      "path": "runtime/requirements-golden.txt",
+      "expected_blob": "4e46e2677aada41b5bf7433db18e1059592997f7",
+      "actual_blob": "4e46e2677aada41b5bf7433db18e1059592997f7",
+      "matched": true
+    }
+  ],
+  "cases": [
+    {
+      "arm": "retained_baseline",
+      "path": "runtime/setup-golden-demo-v3.sh",
+      "mode": "0o644",
+      "direct_exec": {
+        "returncode": null,
+        "error": "PermissionError",
+        "errno": 13
+      },
+      "bash_exit_code": 126,
+      "dispatch": [],
+      "expectation_met": true
+    },
+    {
+      "arm": "retained_baseline",
+      "path": "runtime/golden-demo-v3.sh",
+      "mode": "0o644",
+      "direct_exec": {
+        "returncode": null,
+        "error": "PermissionError",
+        "errno": 13
+      },
+      "bash_exit_code": 126,
+      "dispatch": [],
+      "expectation_met": true
+    },
+    {
+      "arm": "metadata_repair",
+      "path": "runtime/setup-golden-demo-v3.sh",
+      "mode": "0o755",
+      "direct_exec": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "bash_exit_code": null,
+      "dispatch": [
+        {
+          "interpreter": "/tmp/ai first run 7h2fhjys/stub bin/python3",
+          "stage": "venv",
+          "argv": [
+            "-m",
+            "venv",
+            "/tmp/ai first run 7h2fhjys/repository with spaces/runtime/.venv"
+          ]
+        },
+        {
+          "interpreter": "/tmp/ai first run 7h2fhjys/repository with spaces/runtime/.venv/bin/python",
+          "stage": "pip",
+          "argv": [
+            "-m",
+            "pip",
+            "install",
+            "--disable-pip-version-check",
+            "-r",
+            "/tmp/ai first run 7h2fhjys/repository with spaces/runtime/requirements-golden.txt"
+          ]
+        },
+        {
+          "interpreter": "/tmp/ai first run 7h2fhjys/repository with spaces/runtime/.venv/bin/python",
+          "stage": "entrypoint",
+          "argv": [
+            "/tmp/ai first run 7h2fhjys/repository with spaces/runtime/golden_desktop_demo_v3.py",
+            "doctor"
+          ]
+        }
+      ],
+      "expectation_met": true
+    },
+    {
+      "arm": "metadata_repair",
+      "path": "runtime/golden-demo-v3.sh",
+      "mode": "0o755",
+      "direct_exec": {
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "bash_exit_code": null,
+      "dispatch": [
+        {
+          "interpreter": "/tmp/ai first run m60gl422/stub bin/python3",
+          "stage": "entrypoint",
+          "argv": [
+            "/tmp/ai first run m60gl422/repository with spaces/runtime/golden_desktop_demo_v3.py",
+            "doctor"
+          ]
+        }
+      ],
+      "expectation_met": true
+    }
+  ],
+  "tests": {
+    "run": 21,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  }
+}

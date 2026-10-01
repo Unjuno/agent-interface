@@ -1,0 +1,86 @@
+{
+  "broker_receipt": {
+    "authority_granted": false,
+    "boundary": "host-local-codex-exe",
+    "error_class": "TimeoutExpired",
+    "exited_ns": 4164908837628,
+    "request_id": "req-timeout",
+    "returncode": null,
+    "started_ns": 4164807117554,
+    "stderr": "Command '['/tmp/broker-contract-tzbmhf9y/fake-codex', 'exec', '--ignore-user-config', '--ignore-rules', '--ephemeral', '--sandbox', 'read-only', '--skip-git-repo-check', '--json', '--model', 'gpt-5.6-luna', '-c', 'model_reasoning_effort=\"low\"', '-c', 'project_doc_max_bytes=0', '--output-schema', '/source/runtime/fake-schema.json', '-C', '/source', '-']' timed out after 0.1 seconds",
+    "stop_reason": "HOST_BROKER_SUBPROCESS_TIMEOUT",
+    "timeout_s": 0.1
+  },
+  "broker_receipt_bytes_hex": "7b22726571756573745f6964223a20227265712d74696d656f7574222c202272657475726e636f6465223a206e756c6c2c20226572726f725f636c617373223a202254696d656f757445787069726564222c202273746f705f726561736f6e223a2022484f53545f42524f4b45525f53554250524f434553535f54494d454f5554222c202274696d656f75745f73223a20302e312c2022737464657272223a2022436f6d6d616e6420275b272f746d702f62726f6b65722d636f6e74726163742d747a626d686639792f66616b652d636f646578272c202765786563272c20272d2d69676e6f72652d757365722d636f6e666967272c20272d2d69676e6f72652d72756c6573272c20272d2d657068656d6572616c272c20272d2d73616e64626f78272c2027726561642d6f6e6c79272c20272d2d736b69702d6769742d7265706f2d636865636b272c20272d2d6a736f6e272c20272d2d6d6f64656c272c20276770742d352e362d6c756e61272c20272d63272c20276d6f64656c5f726561736f6e696e675f6566666f72743d5c226c6f775c22272c20272d63272c202770726f6a6563745f646f635f6d61785f62797465733d30272c20272d2d6f75747075742d736368656d61272c20272f736f757263652f72756e74696d652f66616b652d736368656d612e6a736f6e272c20272d43272c20272f736f75726365272c20272d275d272074696d6564206f757420616674657220302e31207365636f6e6473222c2022626f756e64617279223a2022686f73742d6c6f63616c2d636f6465782d657865222c2022617574686f726974795f6772616e746564223a2066616c73652c2022737461727465645f6e73223a20343136343830373131373535342c20226578697465645f6e73223a20343136343930383833373632387d0a",
+  "broker_stderr_text": "Command '['/tmp/broker-contract-tzbmhf9y/fake-codex', 'exec', '--ignore-user-config', '--ignore-rules', '--ephemeral', '--sandbox', 'read-only', '--skip-git-repo-check', '--json', '--model', 'gpt-5.6-luna', '-c', 'model_reasoning_effort=\"low\"', '-c', 'project_doc_max_bytes=0', '--output-schema', '/source/runtime/fake-schema.json', '-C', '/source', '-']' timed out after 0.1 seconds",
+  "case": "timeout",
+  "child": {
+    "argv": [
+      "exec",
+      "--ignore-user-config",
+      "--ignore-rules",
+      "--ephemeral",
+      "--sandbox",
+      "read-only",
+      "--skip-git-repo-check",
+      "--json",
+      "--model",
+      "gpt-5.6-luna",
+      "-c",
+      "model_reasoning_effort=\"low\"",
+      "-c",
+      "project_doc_max_bytes=0",
+      "--output-schema",
+      "/source/runtime/fake-schema.json",
+      "-C",
+      "/source",
+      "-"
+    ],
+    "configured_exit": 0,
+    "configured_sleep_s": 1.0,
+    "stdin": "deterministic fake-only probe\n"
+  },
+  "child_stdout_bytes_hex": "",
+  "command": [
+    "/usr/local/bin/python",
+    "/source/runtime/host_model_ipc_broker_v1.py",
+    "--ipc",
+    "/tmp/ipc-timeout-8p23wqim",
+    "--repo",
+    "/source",
+    "--once"
+  ],
+  "execution_config": {
+    "broker_timeout_s": 0.1,
+    "executable": "/tmp/broker-contract-tzbmhf9y/fake-codex",
+    "executable_sha256": "f730498c1158b55c0af45036e350090eecad7042d79c4e35be625d87e20e78eb",
+    "fake_exit": 0,
+    "fake_sleep_s": 1.0,
+    "idle_observation_s": null
+  },
+  "fake_source_sha256": "f730498c1158b55c0af45036e350090eecad7042d79c4e35be625d87e20e78eb",
+  "ipc_files": [
+    "01.request.json",
+    "req-timeout.broker.json",
+    "req-timeout.response.jsonl"
+  ],
+  "observed": {
+    "receipt_count": 1,
+    "response_count": 1
+  },
+  "process": {
+    "duration_ns": 294720255,
+    "returncode": 1,
+    "stderr": "",
+    "stdout": ""
+  },
+  "requests": [
+    {
+      "bytes_hex": "7b2270726f6d7074223a202264657465726d696e69737469632066616b652d6f6e6c792070726f6265222c2022726571756573745f6964223a20227265712d74696d656f7574222c2022736368656d61223a20222f7265706f2f72756e74696d652f66616b652d736368656d612e6a736f6e222c2022776f726b696e67223a20222f7265706f227d0a",
+      "filename": "01.request.json",
+      "sha256": "4abe20b9f022a93d26eede023d7560234589ce54e16e3e5c28f955fa162e49e1"
+    }
+  ],
+  "response_bytes_hex": "",
+  "response_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

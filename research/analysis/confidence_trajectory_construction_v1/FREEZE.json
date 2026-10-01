@@ -1,0 +1,29 @@
+{
+  "allocation": "issue-4588-trajectory-20260927-01",
+  "issue": 4588,
+  "base_main": "92596bfb750be63c03d3d2906a05d5a5933651c2",
+  "formal_invocations_before_freeze": 0,
+  "formal_invocations": 1,
+  "reruns": 0,
+  "replacements": 0,
+  "tuning_after_freeze": 0,
+  "container": {
+    "engine": "OrbStack Docker",
+    "image": "python:3.12-slim",
+    "image_id": "sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "platform": "linux/amd64",
+    "observed_machine": "x86_64",
+    "python": "3.12.14",
+    "network": "none",
+    "source_mount": "read-only"
+  },
+  "source_sha256": {
+    "ENVIRONMENT.json": "008232158b9b6f45207ab8ea1c4dc6dc9eff7de9ab6ee3845890b71d2f2ddd04",
+    "PLAN.md": "1682d4775670dd2aaac442dcab71c2463181e5825d8151a0971f6a31690ce66c",
+    "SCHEDULE.json": "6d0973ba2324c5d9490548ae5ceff50473b53e0570e5a5e7952918378f7bc790",
+    "audit.py": "0d98ab28bac60e6f006c8a7199b0c07c1e5ff0ad82accb6f0b3352d9c1e54ac5",
+    "experiment.py": "95afe2743cb2e23aa83ab4470f6c19ae98313050c7e5c801c8438f417a32187c",
+    "test_contract.py": "eb62d61569ab71947e75b21e8aa90ba64f3e1f518707e82137409e7a30d9fd75"
+  },
+  "construction_preflight": "py_compile PASS; 6/6 tests PASS; excluded from formal"
+}

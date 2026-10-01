@@ -1,0 +1,19 @@
+{
+  "task": "OBSERVATION-GATING-TINY-CHANGE-AHASH-STRESS-20260918-001",
+  "formal_invocations": 0,
+  "decision": "PASS_CONSTRUCTION_ELIGIBLE",
+  "raw_sha256": "a661acb00f80e5e82da12dcb64117ca0222dc665a2e69eb3e9bac9a76cd51b7d",
+  "audit_sha256": "0b392f6512764b707f6446cfda82a5a49dfd5bbdab5d85bf18110a75fe4142b6",
+  "directed_pairs_per_family": 3,
+  "families": {
+    "UNCHANGED": {"hash_equal": 3, "ahash_suppressed": 3, "fallback_suppressed": 3},
+    "SINGLE_PIXEL": {"hash_equal": 3, "ahash_false_suppressed": 3, "fallback_false_suppressed": 0},
+    "STATUS_DOT_2X2": {"hash_equal": 3, "ahash_false_suppressed": 3, "fallback_false_suppressed": 0},
+    "CURSOR_1X3": {"hash_equal": 3, "ahash_false_suppressed": 3, "fallback_false_suppressed": 0},
+    "GLYPH_STROKE_1X4": {"hash_equal": 3, "ahash_false_suppressed": 3, "fallback_false_suppressed": 0},
+    "LOCAL_BLOCK_4X4": {"hash_equal": 3, "ahash_false_suppressed": 3, "fallback_false_suppressed": 0},
+    "HASH_FLIP": {"hash_diff": 3, "fallback_forwarded": 3}
+  },
+  "malformed_rejected": 5,
+  "malformed_total": 5
+}

@@ -1,0 +1,48 @@
+{
+  "events": 1000,
+  "experiment": "5275-danger-signal-t1",
+  "rows": [
+    {
+      "abstentions": 140.384,
+      "danger_detected": 140.384,
+      "false_negative": 0,
+      "false_positive": 0.0,
+      "real_danger": 140.384,
+      "unsafe_commits": 0.0
+    },
+    {
+      "abstentions": 135.016,
+      "danger_detected": 126.456,
+      "false_negative": 0.1,
+      "false_positive": 0.01,
+      "real_danger": 140.384,
+      "unsafe_commits": 3.532
+    },
+    {
+      "abstentions": 141.484,
+      "danger_detected": 98.754,
+      "false_negative": 0.3,
+      "false_positive": 0.05,
+      "real_danger": 140.384,
+      "unsafe_commits": 10.366
+    },
+    {
+      "abstentions": 155.828,
+      "danger_detected": 70.394,
+      "false_negative": 0.5,
+      "false_positive": 0.1,
+      "real_danger": 140.384,
+      "unsafe_commits": 17.528
+    },
+    {
+      "abstentions": 199.15,
+      "danger_detected": 28.238,
+      "false_negative": 0.8,
+      "false_positive": 0.2,
+      "real_danger": 140.384,
+      "unsafe_commits": 27.91
+    }
+  ],
+  "scope": "toy noisy danger detector; no calibrated semantic oracle",
+  "trials": 500
+}

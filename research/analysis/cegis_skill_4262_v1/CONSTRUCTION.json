@@ -1,0 +1,9 @@
+{
+  "construction_runner_invocations": 1,
+  "runner_result": {"one_shot_heldout": 5, "cegis_heldout": 16, "counterexamples": [1,17,7,30,51], "cegis_rules": 6, "cegis_unsafe": 0},
+  "initial_auditor": "PASS on unmodified raw; corruption-control harness STOP with KeyError on deliberately dropped row",
+  "repair": "auditor now records cegis_rows_missing instead of indexing absent rows; scientific runner/oracle/synthesizer unchanged",
+  "repaired_audit_errors": [],
+  "repaired_controls_rejected": "12/12",
+  "formal_invocations": 0
+}

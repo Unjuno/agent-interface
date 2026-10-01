@@ -1,0 +1,55 @@
+{
+  "scope": "one actual assistant self-use with unchanged runtime; not matched baseline",
+  "seed": 991075,
+  "programs": 2,
+  "socket_exchanges_before_cleanup": 6,
+  "viewed_sequences": [
+    1,
+    11,
+    19
+  ],
+  "settle_results": [
+    {
+      "event": "settle_result",
+      "id": "settle-enter-991075",
+      "step": 5,
+      "reason": "pixel_quiet",
+      "samples": 5,
+      "sequence": 11,
+      "elapsed_ms": 283.422854,
+      "quiet_ms": 200,
+      "timeout_ms": 1200,
+      "semantic_completion": "unknown",
+      "emit_started_ns": 42785412871,
+      "delivery_id": "delivery:15"
+    },
+    {
+      "event": "settle_result",
+      "id": "settle-save-991075",
+      "step": 1,
+      "reason": "pixel_quiet",
+      "samples": 7,
+      "sequence": 19,
+      "elapsed_ms": 445.363011,
+      "quiet_ms": 200,
+      "timeout_ms": 1200,
+      "semantic_completion": "unknown",
+      "emit_started_ns": 62173290063,
+      "delivery_id": "delivery:25"
+    }
+  ],
+  "independent_success": true,
+  "saved_cells_xml": {
+    "A1": "766",
+    "A2": "761"
+  },
+  "report_to_next_call_ms": 18559.617567,
+  "first_program_start_to_final_report_ms": 20760.472711,
+  "server_exit_code": 0,
+  "limits": [
+    "pixel quiet is not semantic completion",
+    "extra native captures incur cost",
+    "timeout is a polling budget not a hard wall-clock bound",
+    "no model-token or matched speed evidence"
+  ]
+}

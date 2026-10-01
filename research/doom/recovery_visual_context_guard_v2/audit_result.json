@@ -1,0 +1,121 @@
+{
+  "cases": [
+    {
+      "arm": "coast",
+      "baseline": "VALID_CURRENT",
+      "errors": [],
+      "guard": "ADMIT",
+      "id": "g01-coast",
+      "mae": 0.014397032558918,
+      "pair": 1,
+      "pass": true
+    },
+    {
+      "arm": "recovery",
+      "baseline": "VALID_CURRENT",
+      "errors": [],
+      "guard": "REJECT_CONTEXT_CHANGED",
+      "id": "g01-recovery",
+      "mae": 0.02738925628364086,
+      "pair": 1,
+      "pass": true
+    },
+    {
+      "arm": "coast",
+      "baseline": "VALID_CURRENT",
+      "errors": [],
+      "guard": "ADMIT",
+      "id": "g02-coast",
+      "mae": 0.014398002997040749,
+      "pair": 2,
+      "pass": true
+    },
+    {
+      "arm": "recovery",
+      "baseline": "VALID_CURRENT",
+      "errors": [],
+      "guard": "REJECT_CONTEXT_CHANGED",
+      "id": "g02-recovery",
+      "mae": 0.03360089659690857,
+      "pair": 2,
+      "pass": true
+    },
+    {
+      "arm": "coast",
+      "baseline": "VALID_CURRENT",
+      "errors": [],
+      "guard": "ADMIT",
+      "id": "g03-coast",
+      "mae": 0.013354034163057804,
+      "pair": 3,
+      "pass": true
+    },
+    {
+      "arm": "recovery",
+      "baseline": "VALID_CURRENT",
+      "errors": [],
+      "guard": "REJECT_CONTEXT_CHANGED",
+      "id": "g03-recovery",
+      "mae": 0.03838657960295677,
+      "pair": 3,
+      "pass": true
+    },
+    {
+      "arm": "coast",
+      "baseline": "VALID_CURRENT",
+      "errors": [],
+      "guard": "ADMIT",
+      "id": "g04-coast",
+      "mae": 0.014398002997040749,
+      "pair": 4,
+      "pass": true
+    },
+    {
+      "arm": "recovery",
+      "baseline": "VALID_CURRENT",
+      "errors": [],
+      "guard": "REJECT_CONTEXT_CHANGED",
+      "id": "g04-recovery",
+      "mae": 0.038638874888420105,
+      "pair": 4,
+      "pass": true
+    }
+  ],
+  "decision": "PASS_VISUAL_CONTEXT_GUARD_SCOPED",
+  "pairs": [
+    {
+      "both_baseline_valid": true,
+      "coast_admit": true,
+      "coast_mae": 0.014397032558918,
+      "pair": 1,
+      "recovery_mae": 0.02738925628364086,
+      "recovery_reject": true
+    },
+    {
+      "both_baseline_valid": true,
+      "coast_admit": true,
+      "coast_mae": 0.014398002997040749,
+      "pair": 2,
+      "recovery_mae": 0.03360089659690857,
+      "recovery_reject": true
+    },
+    {
+      "both_baseline_valid": true,
+      "coast_admit": true,
+      "coast_mae": 0.013354034163057804,
+      "pair": 3,
+      "recovery_mae": 0.03838657960295677,
+      "recovery_reject": true
+    },
+    {
+      "both_baseline_valid": true,
+      "coast_admit": true,
+      "coast_mae": 0.014398002997040749,
+      "pair": 4,
+      "recovery_mae": 0.038638874888420105,
+      "recovery_reject": true
+    }
+  ],
+  "pass": true,
+  "schema": "recovery-visual-context-guard-audit-v1"
+}

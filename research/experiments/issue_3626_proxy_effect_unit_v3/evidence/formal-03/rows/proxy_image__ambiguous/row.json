@@ -1,0 +1,150 @@
+{
+  "after_state": {
+    "count": 2,
+    "status": "ambiguous",
+    "targets": [
+      {
+        "title": "proxy-fixture:0:1",
+        "xid": 4194307
+      },
+      {
+        "title": "proxy-fixture:0:1",
+        "xid": 6291459
+      }
+    ]
+  },
+  "ambiguous_setup": {
+    "count": 2,
+    "ready_pids": [
+      91,
+      94
+    ],
+    "status": "ambiguous",
+    "targets": [
+      {
+        "title": "proxy-fixture:0:1",
+        "xid": 4194307
+      },
+      {
+        "title": "proxy-fixture:0:1",
+        "xid": 6291459
+      }
+    ]
+  },
+  "arm": "proxy_image",
+  "case": "ambiguous",
+  "current_state": {
+    "count": 2,
+    "status": "ambiguous",
+    "targets": [
+      {
+        "title": "proxy-fixture:0:1",
+        "xid": 4194307
+      },
+      {
+        "title": "proxy-fixture:0:1",
+        "xid": 6291459
+      }
+    ]
+  },
+  "decision": "YIELD_TARGET_AMBIGUOUS",
+  "emissions": 0,
+  "error": null,
+  "fixture_events": [
+    {
+      "count": 0,
+      "kind": "ready",
+      "pid": 91,
+      "version": 1
+    },
+    {
+      "count": 0,
+      "kind": "ready",
+      "pid": 94,
+      "version": 1
+    }
+  ],
+  "fixture_events_sha256": "3c90c5dbbe678d753752d16f45208eaf943dd708929ed65a8b46c124ba8025ef",
+  "initial_state": {
+    "counter": 0,
+    "frame_bytes": 153600,
+    "frame_path": "rows/proxy_image__ambiguous/before.raw",
+    "frame_sha256": "10885a778e86b353c21e88ffbf47e87631cbfbc04fc804b5dff5ab5970f4a669",
+    "height": 120,
+    "pid": 91,
+    "start_ticks": "5930799",
+    "status": "ok",
+    "title": "proxy-fixture:0:1",
+    "version": 1,
+    "width": 320,
+    "xid": 4194307
+  },
+  "input_ack": false,
+  "presentation": {
+    "arm": "proxy_image",
+    "live_frame_sha256": "10885a778e86b353c21e88ffbf47e87631cbfbc04fc804b5dff5ab5970f4a669",
+    "proxy_image": "rows/proxy_image__ambiguous/proxy.ppm",
+    "proxy_sha256": "e47c1de1e98a5279596ab7797bd1dc973cae7101cb839198347efc245edc58d3"
+  },
+  "process_exit_codes": {
+    "duplicate_fixture": -15,
+    "fixture_current": -15,
+    "xvfb": 0
+  },
+  "processes": [
+    {
+      "pid": 88,
+      "role": "xvfb",
+      "start_ticks": "5930796"
+    },
+    {
+      "pid": 91,
+      "role": "fixture",
+      "start_ticks": "5930799"
+    },
+    {
+      "pid": 94,
+      "role": "duplicate_fixture",
+      "start_ticks": "5930811"
+    }
+  ],
+  "release_observation": {
+    "mask": 0,
+    "verified": true
+  },
+  "release_verified": true,
+  "reply": {
+    "after_state": {
+      "count": 2,
+      "status": "ambiguous",
+      "targets": [
+        {
+          "title": "proxy-fixture:0:1",
+          "xid": 4194307
+        },
+        {
+          "title": "proxy-fixture:0:1",
+          "xid": 6291459
+        }
+      ]
+    },
+    "decision": "YIELD_TARGET_AMBIGUOUS",
+    "emissions": 0,
+    "input_ack": false
+  },
+  "request": {
+    "operation": "increment",
+    "representation_arm": "proxy_image",
+    "source_frame_sha256": "10885a778e86b353c21e88ffbf47e87631cbfbc04fc804b5dff5ab5970f4a669",
+    "source_token": {
+      "counter": 0,
+      "pid": 91,
+      "start_ticks": "5930799",
+      "title": "proxy-fixture:0:1",
+      "version": 1,
+      "xid": 4194307
+    }
+  },
+  "row_id": "proxy_image__ambiguous",
+  "socket_disappeared": true
+}

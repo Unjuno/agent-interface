@@ -1,0 +1,22 @@
+{
+  "allocation": "Issue #2918 live MANIPULATE_TO certificate transfer allocation 05",
+  "status": "PASS_LIVE_MANIPULATE_CERTIFICATE_SCOPED",
+  "formal_runner_exit_code": 0,
+  "independent_auditor_exit_code": 0,
+  "formal_cases": 12,
+  "public_observation_api_returns": 11,
+  "ambiguous_case_api_calls": 0,
+  "png_artifacts": 11,
+  "candidate_dispositions": {"FORWARD": 3, "SUPPRESS": 2, "YIELD": 7},
+  "unmasked_transitions": [
+    {"case": "complete_initial->complete_unmasked_change", "mask": ["E", "S"], "changed": ["D", "T"], "candidate": "SUPPRESS", "phase_union": "FORWARD", "global_support": "FORWARD", "terminal_decision_unchanged": true},
+    {"case": "abort_initial->abort_unmasked_change", "mask": ["S"], "changed": ["D", "E", "T"], "candidate": "SUPPRESS", "phase_union": "FORWARD", "global_support": "FORWARD", "terminal_decision_unchanged": true}
+  ],
+  "masked_transition": {"case": "complete_unmasked_change->complete_masked_change", "changed": ["E"], "candidate": "FORWARD", "independent_terminal_decision_changed": true},
+  "fail_open_cases": ["missing_fact", "contradictory_fact", "partial_observation", "stale_observation", "target_replacement", "ambiguous_target", "intent_epoch_mismatch"],
+  "unsafe_suppressions": 0,
+  "lineage": "All 11 API rows reconcile unique observation IDs, raw-image and PNG SHA-256, captured XID and binding, intent epoch, capture interval, decision time and oracle state. The ambiguous case retained two non-overlapping XIDs and made zero API calls.",
+  "authority": {"input_dispatched": false, "side_effect_authority": false},
+  "independent_audit": "independent_audit/independent_audit.json; read-only raw input, separate writable report mount; exit 0",
+  "scope": "private Xvfb color-cell fixture, two logical workflows (complete and abort), public X11 observation API; no real application effect, actual action, model use, observation-cost savings or production claim"
+}

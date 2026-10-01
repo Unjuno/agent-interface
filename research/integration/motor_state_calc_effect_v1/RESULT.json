@@ -1,0 +1,30 @@
+{
+  "allocation": "motor-state-calc-effect-27-20260923-01",
+  "decision": "PASS_MOTOR_STATE_EFFECT_GUARD_SCOPED",
+  "formal_cases": 18,
+  "formal_batches": 3,
+  "formal_reruns": 0,
+  "counts": {
+    "stable_correct_effects": 6,
+    "naive_wrong_surface_effects": 3,
+    "candidate_wrong_surface_effects": 0,
+    "candidate_mismatch_refusals": 3,
+    "candidate_unknown_refusals": 3,
+    "naive_unsupported_actions": 3
+  },
+  "audit_errors": [],
+  "corruption_controls_rejected": 10,
+  "audit_v2_process_receipts": {
+    "calc_exit_255": 18,
+    "xvfb_exit_0": 18,
+    "helper_exit_expected": 6,
+    "helper_exit_none": 12
+  },
+  "limits": [
+    "single Calc/X11 fixture",
+    "UNO scorer-only privileged state",
+    "no model/planner comparison",
+    "no Inkscape transfer",
+    "no latency/token/product claim"
+  ]
+}

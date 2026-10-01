@@ -1,0 +1,42 @@
+{
+  "allocation_id": "issue3574-lifetime-01",
+  "container_image_id": "sha256:76af6aaaab4419b3f799f3121aab191a347130cad07080ac285e3b6d9896cefc",
+  "network": "none",
+  "platform": "linux/arm64",
+  "repetitions": 4,
+  "rows_required": 16,
+  "sha256": {
+    "lifetime_audit.py": "f2e53076aeecf2ac2570afb8aafc6673caaab2bbf62905b11065793c5922a503",
+    "lifetime_runner.py": "391bde40f91483a1bcf5956ba2e8a986ae4666b49331267521173c9e56a538f7",
+    "validator_881_frozen.py": "014b6fc6e47253eaa2a019e425c9bce4dbb7375f1ac653f98c9af10175b042c3"
+  },
+  "source_commit": "61311817969251b814cb00b568a75c91a3591d3e",
+  "source_path": "research/integration/integrated_recovery_epistemic_surface_key_v1/src/validator.py",
+  "validator_git_blob_sha1": "91983ab78a06b93cc7fdd829b6094fd255f18210",
+  "xvfb": {
+    "display": ":149",
+    "geometry": "640x480x24",
+    "tcp": false
+  },
+  "fixture": {
+    "name": "lifetime-902",
+    "class": ["lifetime-902", "Lifetime902"],
+    "geometry": [80, 80, 240, 160],
+    "client_window": [240, 160],
+    "transient_for": "KNOWN_NULL"
+  },
+  "schedule": [
+    "G1 observe same-generation identity",
+    "terminate client and Xvfb; wait and verify X11 socket disappearance",
+    "G2 restart same display; recreate same first Xlib client/window and observe",
+    "classify G1 fresh and G1 stale context against G2 current under both policies"
+  ],
+  "policy_rows_per_pair": [
+    {"comparison": "same_generation", "policy": "CURRENT_TYPED", "expected": "EXACT_MATCH"},
+    {"comparison": "cross_generation_stale", "policy": "CURRENT_TYPED", "expected": "EXACT_MATCH"},
+    {"comparison": "same_generation", "policy": "LIFETIME_BOUND", "expected": "EXACT_MATCH"},
+    {"comparison": "cross_generation_stale", "policy": "LIFETIME_BOUND", "expected": "REJECT"}
+  ],
+  "input_calls": 0,
+  "model_calls": 0
+}

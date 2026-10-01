@@ -1,0 +1,73 @@
+{
+  "scope": "two fresh private Chromium sessions; same page and goal; real expiry before/after Return drives different model decisions and safe completion",
+  "calibration": [
+    {
+      "label": "before-return",
+      "return_before_expiry": false,
+      "steps_completed": 3,
+      "steps_total": 6,
+      "first_effect": "UNKNOWN",
+      "second_effect": "UNKNOWN",
+      "independent_success": false
+    },
+    {
+      "label": "after-return",
+      "return_before_expiry": true,
+      "steps_completed": 4,
+      "steps_total": 6,
+      "first_effect": "UNKNOWN",
+      "second_effect": "VERIFIED",
+      "independent_success": true
+    }
+  ],
+  "live": {
+    "before-return": {
+      "events": 145,
+      "frames": 28,
+      "durable_calls": 17,
+      "expired_steps_completed": 3,
+      "model_decision": "submit_once",
+      "model_runner_s": 8.143403366,
+      "usage": {
+        "input_tokens": 9803,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 123,
+        "reasoning_output_tokens": 38
+      },
+      "new_input_submissions": 1,
+      "post_decision_checkpoint_count": 10,
+      "expired_acceptance_to_terminal_ms": 1320.531954,
+      "initial_unknown_call_end_to_first_post_decision_call_begin_ms": 8876.950402,
+      "expired_acceptance_to_verified_call_end_ms": 15422.595854,
+      "independent_success": true,
+      "exact_frames": true
+    },
+    "after-return": {
+      "events": 97,
+      "frames": 22,
+      "durable_calls": 6,
+      "expired_steps_completed": 4,
+      "model_decision": "wait_and_check",
+      "model_runner_s": 6.12624092,
+      "usage": {
+        "input_tokens": 9803,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 88,
+        "reasoning_output_tokens": 52
+      },
+      "new_input_submissions": 0,
+      "post_decision_checkpoint_count": 1,
+      "expired_acceptance_to_terminal_ms": 1300.782453,
+      "initial_unknown_call_end_to_first_post_decision_call_begin_ms": 6164.599878,
+      "expired_acceptance_to_verified_call_end_ms": 7602.33778,
+      "independent_success": true,
+      "exact_frames": true
+    }
+  },
+  "page_pixels_below_browser_chrome_equal": true,
+  "model_calls": 2,
+  "unsafe_proposals_executed": 0,
+  "all_independent_success": true
+}

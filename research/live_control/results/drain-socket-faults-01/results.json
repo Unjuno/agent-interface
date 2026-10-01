@@ -1,0 +1,825 @@
+[
+  {
+    "case": "ready",
+    "elapsed_ms": 0.480523,
+    "received": [
+      {
+        "after": 22,
+        "events": [
+          "independent_evaluation"
+        ],
+        "timeout": 0,
+        "read_request_id": "program:29fb841d128842da885bbc292048b8e5"
+      }
+    ],
+    "result": {
+      "early": {
+        "cursor": 22,
+        "authority": "none",
+        "task_success": null,
+        "state": "effect_observed",
+        "effect_status": "VERIFIED",
+        "evidence": {
+          "event": "effect_evidence",
+          "final_program": "confirm_excel",
+          "effect": {
+            "event": "effect_evidence",
+            "action_id": "confirm_excel",
+            "status": "VERIFIED",
+            "scope": "saved first worksheet cells at one sample",
+            "attribution": "not_established",
+            "authority": "none",
+            "expected": {
+              "A1": 612,
+              "A2": 129
+            },
+            "observation_closed": true,
+            "started_ns": 61229298403,
+            "sampled_ns": 61229422537,
+            "artifact_sha256": "10eba23ef464e126c426c55558d4c6f3e15598f97b2ac2a1df4aed09019cf609",
+            "actual": {
+              "A1": 612,
+              "A2": 129
+            },
+            "reason": "sample_matches_declared_cells",
+            "finished_ns": 61236770585
+          },
+          "admitted_request": {
+            "transport_request_id": "program:29fb841d128842da885bbc292048b8e5",
+            "runtime_request_sequence": 3,
+            "declared_action_id": "confirm_excel",
+            "command_op": "submit",
+            "correlation_scope": "current runtime input line; action ID is caller-declared"
+          },
+          "emit_started_ns": 61236809236,
+          "delivery_id": "delivery:22"
+        },
+        "continuation": {
+          "after": 22,
+          "events": [
+            "independent_evaluation"
+          ],
+          "timeout": 5,
+          "read_request_id": "program:29fb841d128842da885bbc292048b8e5"
+        }
+      },
+      "attempted": true,
+      "request": {
+        "after": 22,
+        "events": [
+          "independent_evaluation"
+        ],
+        "timeout": 0,
+        "read_request_id": "program:29fb841d128842da885bbc292048b8e5"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "independent_evaluation",
+            "final_program": "confirm_excel",
+            "success": true,
+            "actual": [
+              612,
+              129
+            ],
+            "known_ns": 61248772697,
+            "effect": {
+              "event": "effect_evidence",
+              "action_id": "confirm_excel",
+              "status": "VERIFIED",
+              "scope": "saved first worksheet cells at one sample",
+              "attribution": "not_established",
+              "authority": "none",
+              "expected": {
+                "A1": 612,
+                "A2": 129
+              },
+              "observation_closed": true,
+              "started_ns": 61229298403,
+              "sampled_ns": 61229422537,
+              "artifact_sha256": "10eba23ef464e126c426c55558d4c6f3e15598f97b2ac2a1df4aed09019cf609",
+              "actual": {
+                "A1": 612,
+                "A2": 129
+              },
+              "reason": "sample_matches_declared_cells",
+              "finished_ns": 61236770585
+            },
+            "admitted_request": {
+              "transport_request_id": "program:29fb841d128842da885bbc292048b8e5",
+              "runtime_request_sequence": 3,
+              "declared_action_id": "confirm_excel",
+              "command_op": "submit",
+              "correlation_scope": "current runtime input line; action ID is caller-declared"
+            },
+            "emit_started_ns": 61248862858,
+            "delivery_id": "delivery:23"
+          }
+        ],
+        "cursor": 23,
+        "returned_ns": 61273082483,
+        "authority": "none",
+        "acknowledgement": "not implied"
+      },
+      "outcome": {
+        "cursor": 23,
+        "authority": "none",
+        "task_success": true,
+        "state": "evaluated",
+        "evidence": {
+          "event": "independent_evaluation",
+          "final_program": "confirm_excel",
+          "success": true,
+          "actual": [
+            612,
+            129
+          ],
+          "known_ns": 61248772697,
+          "effect": {
+            "event": "effect_evidence",
+            "action_id": "confirm_excel",
+            "status": "VERIFIED",
+            "scope": "saved first worksheet cells at one sample",
+            "attribution": "not_established",
+            "authority": "none",
+            "expected": {
+              "A1": 612,
+              "A2": 129
+            },
+            "observation_closed": true,
+            "started_ns": 61229298403,
+            "sampled_ns": 61229422537,
+            "artifact_sha256": "10eba23ef464e126c426c55558d4c6f3e15598f97b2ac2a1df4aed09019cf609",
+            "actual": {
+              "A1": 612,
+              "A2": 129
+            },
+            "reason": "sample_matches_declared_cells",
+            "finished_ns": 61236770585
+          },
+          "admitted_request": {
+            "transport_request_id": "program:29fb841d128842da885bbc292048b8e5",
+            "runtime_request_sequence": 3,
+            "declared_action_id": "confirm_excel",
+            "command_op": "submit",
+            "correlation_scope": "current runtime input line; action ID is caller-declared"
+          },
+          "emit_started_ns": 61248862858,
+          "delivery_id": "delivery:23"
+        },
+        "continuation": null
+      }
+    }
+  },
+  {
+    "case": "stall",
+    "elapsed_ms": 250.737706,
+    "received": [
+      {
+        "after": 22,
+        "events": [
+          "independent_evaluation"
+        ],
+        "timeout": 0,
+        "read_request_id": "program:29fb841d128842da885bbc292048b8e5"
+      }
+    ],
+    "result": {
+      "early": {
+        "cursor": 22,
+        "authority": "none",
+        "task_success": null,
+        "state": "effect_observed",
+        "effect_status": "VERIFIED",
+        "evidence": {
+          "event": "effect_evidence",
+          "final_program": "confirm_excel",
+          "effect": {
+            "event": "effect_evidence",
+            "action_id": "confirm_excel",
+            "status": "VERIFIED",
+            "scope": "saved first worksheet cells at one sample",
+            "attribution": "not_established",
+            "authority": "none",
+            "expected": {
+              "A1": 612,
+              "A2": 129
+            },
+            "observation_closed": true,
+            "started_ns": 61229298403,
+            "sampled_ns": 61229422537,
+            "artifact_sha256": "10eba23ef464e126c426c55558d4c6f3e15598f97b2ac2a1df4aed09019cf609",
+            "actual": {
+              "A1": 612,
+              "A2": 129
+            },
+            "reason": "sample_matches_declared_cells",
+            "finished_ns": 61236770585
+          },
+          "admitted_request": {
+            "transport_request_id": "program:29fb841d128842da885bbc292048b8e5",
+            "runtime_request_sequence": 3,
+            "declared_action_id": "confirm_excel",
+            "command_op": "submit",
+            "correlation_scope": "current runtime input line; action ID is caller-declared"
+          },
+          "emit_started_ns": 61236809236,
+          "delivery_id": "delivery:22"
+        },
+        "continuation": {
+          "after": 22,
+          "events": [
+            "independent_evaluation"
+          ],
+          "timeout": 5,
+          "read_request_id": "program:29fb841d128842da885bbc292048b8e5"
+        }
+      },
+      "attempted": true,
+      "request": {
+        "after": 22,
+        "events": [
+          "independent_evaluation"
+        ],
+        "timeout": 0,
+        "read_request_id": "program:29fb841d128842da885bbc292048b8e5"
+      },
+      "outcome": {
+        "cursor": 22,
+        "authority": "none",
+        "task_success": null,
+        "state": "effect_observed",
+        "effect_status": "VERIFIED",
+        "evidence": {
+          "event": "effect_evidence",
+          "final_program": "confirm_excel",
+          "effect": {
+            "event": "effect_evidence",
+            "action_id": "confirm_excel",
+            "status": "VERIFIED",
+            "scope": "saved first worksheet cells at one sample",
+            "attribution": "not_established",
+            "authority": "none",
+            "expected": {
+              "A1": 612,
+              "A2": 129
+            },
+            "observation_closed": true,
+            "started_ns": 61229298403,
+            "sampled_ns": 61229422537,
+            "artifact_sha256": "10eba23ef464e126c426c55558d4c6f3e15598f97b2ac2a1df4aed09019cf609",
+            "actual": {
+              "A1": 612,
+              "A2": 129
+            },
+            "reason": "sample_matches_declared_cells",
+            "finished_ns": 61236770585
+          },
+          "admitted_request": {
+            "transport_request_id": "program:29fb841d128842da885bbc292048b8e5",
+            "runtime_request_sequence": 3,
+            "declared_action_id": "confirm_excel",
+            "command_op": "submit",
+            "correlation_scope": "current runtime input line; action ID is caller-declared"
+          },
+          "emit_started_ns": 61236809236,
+          "delivery_id": "delivery:22"
+        },
+        "continuation": {
+          "after": 22,
+          "events": [
+            "independent_evaluation"
+          ],
+          "timeout": 5,
+          "read_request_id": "program:29fb841d128842da885bbc292048b8e5"
+        }
+      },
+      "drain_state": "transport_or_protocol_error",
+      "error": {
+        "type": "TimeoutError",
+        "message": "timed out"
+      }
+    }
+  },
+  {
+    "case": "trickle",
+    "elapsed_ms": 250.846677,
+    "received": [
+      {
+        "after": 22,
+        "events": [
+          "independent_evaluation"
+        ],
+        "timeout": 0,
+        "read_request_id": "program:29fb841d128842da885bbc292048b8e5"
+      }
+    ],
+    "result": {
+      "early": {
+        "cursor": 22,
+        "authority": "none",
+        "task_success": null,
+        "state": "effect_observed",
+        "effect_status": "VERIFIED",
+        "evidence": {
+          "event": "effect_evidence",
+          "final_program": "confirm_excel",
+          "effect": {
+            "event": "effect_evidence",
+            "action_id": "confirm_excel",
+            "status": "VERIFIED",
+            "scope": "saved first worksheet cells at one sample",
+            "attribution": "not_established",
+            "authority": "none",
+            "expected": {
+              "A1": 612,
+              "A2": 129
+            },
+            "observation_closed": true,
+            "started_ns": 61229298403,
+            "sampled_ns": 61229422537,
+            "artifact_sha256": "10eba23ef464e126c426c55558d4c6f3e15598f97b2ac2a1df4aed09019cf609",
+            "actual": {
+              "A1": 612,
+              "A2": 129
+            },
+            "reason": "sample_matches_declared_cells",
+            "finished_ns": 61236770585
+          },
+          "admitted_request": {
+            "transport_request_id": "program:29fb841d128842da885bbc292048b8e5",
+            "runtime_request_sequence": 3,
+            "declared_action_id": "confirm_excel",
+            "command_op": "submit",
+            "correlation_scope": "current runtime input line; action ID is caller-declared"
+          },
+          "emit_started_ns": 61236809236,
+          "delivery_id": "delivery:22"
+        },
+        "continuation": {
+          "after": 22,
+          "events": [
+            "independent_evaluation"
+          ],
+          "timeout": 5,
+          "read_request_id": "program:29fb841d128842da885bbc292048b8e5"
+        }
+      },
+      "attempted": true,
+      "request": {
+        "after": 22,
+        "events": [
+          "independent_evaluation"
+        ],
+        "timeout": 0,
+        "read_request_id": "program:29fb841d128842da885bbc292048b8e5"
+      },
+      "outcome": {
+        "cursor": 22,
+        "authority": "none",
+        "task_success": null,
+        "state": "effect_observed",
+        "effect_status": "VERIFIED",
+        "evidence": {
+          "event": "effect_evidence",
+          "final_program": "confirm_excel",
+          "effect": {
+            "event": "effect_evidence",
+            "action_id": "confirm_excel",
+            "status": "VERIFIED",
+            "scope": "saved first worksheet cells at one sample",
+            "attribution": "not_established",
+            "authority": "none",
+            "expected": {
+              "A1": 612,
+              "A2": 129
+            },
+            "observation_closed": true,
+            "started_ns": 61229298403,
+            "sampled_ns": 61229422537,
+            "artifact_sha256": "10eba23ef464e126c426c55558d4c6f3e15598f97b2ac2a1df4aed09019cf609",
+            "actual": {
+              "A1": 612,
+              "A2": 129
+            },
+            "reason": "sample_matches_declared_cells",
+            "finished_ns": 61236770585
+          },
+          "admitted_request": {
+            "transport_request_id": "program:29fb841d128842da885bbc292048b8e5",
+            "runtime_request_sequence": 3,
+            "declared_action_id": "confirm_excel",
+            "command_op": "submit",
+            "correlation_scope": "current runtime input line; action ID is caller-declared"
+          },
+          "emit_started_ns": 61236809236,
+          "delivery_id": "delivery:22"
+        },
+        "continuation": {
+          "after": 22,
+          "events": [
+            "independent_evaluation"
+          ],
+          "timeout": 5,
+          "read_request_id": "program:29fb841d128842da885bbc292048b8e5"
+        }
+      },
+      "drain_state": "transport_or_protocol_error",
+      "error": {
+        "type": "TimeoutError",
+        "message": "timed out"
+      }
+    }
+  },
+  {
+    "case": "partial_close",
+    "elapsed_ms": 0.595696,
+    "received": [
+      {
+        "after": 22,
+        "events": [
+          "independent_evaluation"
+        ],
+        "timeout": 0,
+        "read_request_id": "program:29fb841d128842da885bbc292048b8e5"
+      }
+    ],
+    "result": {
+      "early": {
+        "cursor": 22,
+        "authority": "none",
+        "task_success": null,
+        "state": "effect_observed",
+        "effect_status": "VERIFIED",
+        "evidence": {
+          "event": "effect_evidence",
+          "final_program": "confirm_excel",
+          "effect": {
+            "event": "effect_evidence",
+            "action_id": "confirm_excel",
+            "status": "VERIFIED",
+            "scope": "saved first worksheet cells at one sample",
+            "attribution": "not_established",
+            "authority": "none",
+            "expected": {
+              "A1": 612,
+              "A2": 129
+            },
+            "observation_closed": true,
+            "started_ns": 61229298403,
+            "sampled_ns": 61229422537,
+            "artifact_sha256": "10eba23ef464e126c426c55558d4c6f3e15598f97b2ac2a1df4aed09019cf609",
+            "actual": {
+              "A1": 612,
+              "A2": 129
+            },
+            "reason": "sample_matches_declared_cells",
+            "finished_ns": 61236770585
+          },
+          "admitted_request": {
+            "transport_request_id": "program:29fb841d128842da885bbc292048b8e5",
+            "runtime_request_sequence": 3,
+            "declared_action_id": "confirm_excel",
+            "command_op": "submit",
+            "correlation_scope": "current runtime input line; action ID is caller-declared"
+          },
+          "emit_started_ns": 61236809236,
+          "delivery_id": "delivery:22"
+        },
+        "continuation": {
+          "after": 22,
+          "events": [
+            "independent_evaluation"
+          ],
+          "timeout": 5,
+          "read_request_id": "program:29fb841d128842da885bbc292048b8e5"
+        }
+      },
+      "attempted": true,
+      "request": {
+        "after": 22,
+        "events": [
+          "independent_evaluation"
+        ],
+        "timeout": 0,
+        "read_request_id": "program:29fb841d128842da885bbc292048b8e5"
+      },
+      "outcome": {
+        "cursor": 22,
+        "authority": "none",
+        "task_success": null,
+        "state": "effect_observed",
+        "effect_status": "VERIFIED",
+        "evidence": {
+          "event": "effect_evidence",
+          "final_program": "confirm_excel",
+          "effect": {
+            "event": "effect_evidence",
+            "action_id": "confirm_excel",
+            "status": "VERIFIED",
+            "scope": "saved first worksheet cells at one sample",
+            "attribution": "not_established",
+            "authority": "none",
+            "expected": {
+              "A1": 612,
+              "A2": 129
+            },
+            "observation_closed": true,
+            "started_ns": 61229298403,
+            "sampled_ns": 61229422537,
+            "artifact_sha256": "10eba23ef464e126c426c55558d4c6f3e15598f97b2ac2a1df4aed09019cf609",
+            "actual": {
+              "A1": 612,
+              "A2": 129
+            },
+            "reason": "sample_matches_declared_cells",
+            "finished_ns": 61236770585
+          },
+          "admitted_request": {
+            "transport_request_id": "program:29fb841d128842da885bbc292048b8e5",
+            "runtime_request_sequence": 3,
+            "declared_action_id": "confirm_excel",
+            "command_op": "submit",
+            "correlation_scope": "current runtime input line; action ID is caller-declared"
+          },
+          "emit_started_ns": 61236809236,
+          "delivery_id": "delivery:22"
+        },
+        "continuation": {
+          "after": 22,
+          "events": [
+            "independent_evaluation"
+          ],
+          "timeout": 5,
+          "read_request_id": "program:29fb841d128842da885bbc292048b8e5"
+        }
+      },
+      "drain_state": "transport_or_protocol_error",
+      "error": {
+        "type": "EOFError",
+        "message": "connection closed before complete JSON line"
+      }
+    }
+  },
+  {
+    "case": "malformed",
+    "elapsed_ms": 0.577322,
+    "received": [
+      {
+        "after": 22,
+        "events": [
+          "independent_evaluation"
+        ],
+        "timeout": 0,
+        "read_request_id": "program:29fb841d128842da885bbc292048b8e5"
+      }
+    ],
+    "result": {
+      "early": {
+        "cursor": 22,
+        "authority": "none",
+        "task_success": null,
+        "state": "effect_observed",
+        "effect_status": "VERIFIED",
+        "evidence": {
+          "event": "effect_evidence",
+          "final_program": "confirm_excel",
+          "effect": {
+            "event": "effect_evidence",
+            "action_id": "confirm_excel",
+            "status": "VERIFIED",
+            "scope": "saved first worksheet cells at one sample",
+            "attribution": "not_established",
+            "authority": "none",
+            "expected": {
+              "A1": 612,
+              "A2": 129
+            },
+            "observation_closed": true,
+            "started_ns": 61229298403,
+            "sampled_ns": 61229422537,
+            "artifact_sha256": "10eba23ef464e126c426c55558d4c6f3e15598f97b2ac2a1df4aed09019cf609",
+            "actual": {
+              "A1": 612,
+              "A2": 129
+            },
+            "reason": "sample_matches_declared_cells",
+            "finished_ns": 61236770585
+          },
+          "admitted_request": {
+            "transport_request_id": "program:29fb841d128842da885bbc292048b8e5",
+            "runtime_request_sequence": 3,
+            "declared_action_id": "confirm_excel",
+            "command_op": "submit",
+            "correlation_scope": "current runtime input line; action ID is caller-declared"
+          },
+          "emit_started_ns": 61236809236,
+          "delivery_id": "delivery:22"
+        },
+        "continuation": {
+          "after": 22,
+          "events": [
+            "independent_evaluation"
+          ],
+          "timeout": 5,
+          "read_request_id": "program:29fb841d128842da885bbc292048b8e5"
+        }
+      },
+      "attempted": true,
+      "request": {
+        "after": 22,
+        "events": [
+          "independent_evaluation"
+        ],
+        "timeout": 0,
+        "read_request_id": "program:29fb841d128842da885bbc292048b8e5"
+      },
+      "outcome": {
+        "cursor": 22,
+        "authority": "none",
+        "task_success": null,
+        "state": "effect_observed",
+        "effect_status": "VERIFIED",
+        "evidence": {
+          "event": "effect_evidence",
+          "final_program": "confirm_excel",
+          "effect": {
+            "event": "effect_evidence",
+            "action_id": "confirm_excel",
+            "status": "VERIFIED",
+            "scope": "saved first worksheet cells at one sample",
+            "attribution": "not_established",
+            "authority": "none",
+            "expected": {
+              "A1": 612,
+              "A2": 129
+            },
+            "observation_closed": true,
+            "started_ns": 61229298403,
+            "sampled_ns": 61229422537,
+            "artifact_sha256": "10eba23ef464e126c426c55558d4c6f3e15598f97b2ac2a1df4aed09019cf609",
+            "actual": {
+              "A1": 612,
+              "A2": 129
+            },
+            "reason": "sample_matches_declared_cells",
+            "finished_ns": 61236770585
+          },
+          "admitted_request": {
+            "transport_request_id": "program:29fb841d128842da885bbc292048b8e5",
+            "runtime_request_sequence": 3,
+            "declared_action_id": "confirm_excel",
+            "command_op": "submit",
+            "correlation_scope": "current runtime input line; action ID is caller-declared"
+          },
+          "emit_started_ns": 61236809236,
+          "delivery_id": "delivery:22"
+        },
+        "continuation": {
+          "after": 22,
+          "events": [
+            "independent_evaluation"
+          ],
+          "timeout": 5,
+          "read_request_id": "program:29fb841d128842da885bbc292048b8e5"
+        }
+      },
+      "drain_state": "transport_or_protocol_error",
+      "error": {
+        "type": "JSONDecodeError",
+        "message": "Expecting value: line 1 column 1 (char 0)"
+      }
+    }
+  },
+  {
+    "case": "oversized",
+    "elapsed_ms": 0.372049,
+    "received": [
+      {
+        "after": 22,
+        "events": [
+          "independent_evaluation"
+        ],
+        "timeout": 0,
+        "read_request_id": "program:29fb841d128842da885bbc292048b8e5"
+      }
+    ],
+    "result": {
+      "early": {
+        "cursor": 22,
+        "authority": "none",
+        "task_success": null,
+        "state": "effect_observed",
+        "effect_status": "VERIFIED",
+        "evidence": {
+          "event": "effect_evidence",
+          "final_program": "confirm_excel",
+          "effect": {
+            "event": "effect_evidence",
+            "action_id": "confirm_excel",
+            "status": "VERIFIED",
+            "scope": "saved first worksheet cells at one sample",
+            "attribution": "not_established",
+            "authority": "none",
+            "expected": {
+              "A1": 612,
+              "A2": 129
+            },
+            "observation_closed": true,
+            "started_ns": 61229298403,
+            "sampled_ns": 61229422537,
+            "artifact_sha256": "10eba23ef464e126c426c55558d4c6f3e15598f97b2ac2a1df4aed09019cf609",
+            "actual": {
+              "A1": 612,
+              "A2": 129
+            },
+            "reason": "sample_matches_declared_cells",
+            "finished_ns": 61236770585
+          },
+          "admitted_request": {
+            "transport_request_id": "program:29fb841d128842da885bbc292048b8e5",
+            "runtime_request_sequence": 3,
+            "declared_action_id": "confirm_excel",
+            "command_op": "submit",
+            "correlation_scope": "current runtime input line; action ID is caller-declared"
+          },
+          "emit_started_ns": 61236809236,
+          "delivery_id": "delivery:22"
+        },
+        "continuation": {
+          "after": 22,
+          "events": [
+            "independent_evaluation"
+          ],
+          "timeout": 5,
+          "read_request_id": "program:29fb841d128842da885bbc292048b8e5"
+        }
+      },
+      "attempted": true,
+      "request": {
+        "after": 22,
+        "events": [
+          "independent_evaluation"
+        ],
+        "timeout": 0,
+        "read_request_id": "program:29fb841d128842da885bbc292048b8e5"
+      },
+      "outcome": {
+        "cursor": 22,
+        "authority": "none",
+        "task_success": null,
+        "state": "effect_observed",
+        "effect_status": "VERIFIED",
+        "evidence": {
+          "event": "effect_evidence",
+          "final_program": "confirm_excel",
+          "effect": {
+            "event": "effect_evidence",
+            "action_id": "confirm_excel",
+            "status": "VERIFIED",
+            "scope": "saved first worksheet cells at one sample",
+            "attribution": "not_established",
+            "authority": "none",
+            "expected": {
+              "A1": 612,
+              "A2": 129
+            },
+            "observation_closed": true,
+            "started_ns": 61229298403,
+            "sampled_ns": 61229422537,
+            "artifact_sha256": "10eba23ef464e126c426c55558d4c6f3e15598f97b2ac2a1df4aed09019cf609",
+            "actual": {
+              "A1": 612,
+              "A2": 129
+            },
+            "reason": "sample_matches_declared_cells",
+            "finished_ns": 61236770585
+          },
+          "admitted_request": {
+            "transport_request_id": "program:29fb841d128842da885bbc292048b8e5",
+            "runtime_request_sequence": 3,
+            "declared_action_id": "confirm_excel",
+            "command_op": "submit",
+            "correlation_scope": "current runtime input line; action ID is caller-declared"
+          },
+          "emit_started_ns": 61236809236,
+          "delivery_id": "delivery:22"
+        },
+        "continuation": {
+          "after": 22,
+          "events": [
+            "independent_evaluation"
+          ],
+          "timeout": 5,
+          "read_request_id": "program:29fb841d128842da885bbc292048b8e5"
+        }
+      },
+      "drain_state": "transport_or_protocol_error",
+      "error": {
+        "type": "ValueError",
+        "message": "response exceeds byte limit"
+      }
+    }
+  }
+]

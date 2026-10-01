@@ -1,0 +1,50 @@
+{
+  "schema": "map01-direction-source-closed-v2-freeze",
+  "issue": 121,
+  "allocation": "stage1-direction-source-closed-v2",
+  "branch": "research/autoresearch-direction-v2-6dfe55d",
+  "prefreeze_branch_head": "630ed7a102dbdf7b1481a0805feb51dae8ebc502",
+  "publication_base": "6dfe55d5dcd1101e241b33744b339647f14f681a",
+  "runtime_base": "9e6d5ecdbb5440fd5df1883161f2c63b2c3bb245",
+  "runtime_artifact_id": 10398313098,
+  "runtime_artifact_sha256": "522763418610ea10e57e55615fa71e76445200b9f86d208820ea97c77c234f0b",
+  "scientific_measurement_started": false,
+  "formal_cases_executed_at_freeze": 0,
+  "unit_tests_before_freeze": "5/5 PASS",
+  "source_sha256": {
+    "runner.py": "e83e22f30ecc84801c613d2f9435181eb9c8ae99cae72325c1ceae1f5f366399",
+    "test_runner.py": "c2fcb055a03d17aaddf32f62a6235d92027939c2241d0a42c30bba67f8ddef13",
+    "preregistration.json": "96772b0daabd9a7ae6d490aada68d4230a06d1c203e3303c0012e06dcfb6954d",
+    "CONSTRUCTION.json": "5b6074eedf8dac3257178fb2e76f02e93eb74fda62d9eaaf9c83d6c286504fe5"
+  },
+  "source_git_blob_sha1": {
+    "runner.py": "c50f1327199e2b3b837a56a2eab56f3df095ef23",
+    "test_runner.py": "71f28ad528d3d548c355bddcc60023e7c0c71948",
+    "preregistration.json": "8f6ecf40d2dee2dd2efd05604f122e75fe1d23fa",
+    "CONSTRUCTION.json": "ae0cebaa2a848d38c670d74d0cea45c01193ac47"
+  },
+  "fixture": {
+    "name": "map01-threat-contact-v2",
+    "manifest_sha256": "e57e21fd6d85d4b0720b3b3d5a52ad538fde45c50c58651ff754638f93f182e4",
+    "save_sha256": "cc5302aa9cda3960248733caa96da1b53adcc4b6a1a2dcfb80675650c9350401",
+    "source_frame_sha256": "70723e24d671fd656fa3ba40294b4cd28272493a9ffcacf93843cd86f13ab16d",
+    "episode_tic": 1366
+  },
+  "state_procedures": {
+    "original": "load retained original fixture; no setup action",
+    "left": "load retained original fixture; X11 hold a for 300 ms under 1500 ms owner deadline; require completed verified-empty release; then measure",
+    "right": "load retained original fixture; X11 hold d for 300 ms under 1500 ms owner deadline; require completed verified-empty release; then measure"
+  },
+  "measurement": {
+    "pairs": 9,
+    "cases": 18,
+    "pairs_per_condition": 3,
+    "measured_owner_deadline_ms": 3075,
+    "requested_hold_ms": 5000,
+    "policies": {
+      "attack_only": ["space"],
+      "back_left_attack": ["s", "a", "space"]
+    },
+    "retry": false
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "allocation": "gpu-grounding-template-diversity-4546-successor-01-cpu-gate",
+  "measured_at": "2026-09-27",
+  "host": {
+    "platform": "Windows 11 x64",
+    "python": "3.11.9",
+    "pillow": "10.4.0",
+    "torch_installed": "2.5.1+cu121",
+    "gpu_present": "NVIDIA GeForce RTX 3080 Laptop GPU",
+    "gpu_driver": "581.57"
+  },
+  "this_gate": {
+    "device": "CPU",
+    "cuda_invoked": false,
+    "formal_optimizer_steps": 0,
+    "network_used": false,
+    "gui_used": false
+  },
+  "canonical_validator": {
+    "path": "research/live_control/compiled_form_grounding_v1.py",
+    "origin_main_blob_sha1": "24e707f36b59cacd0ca4b40a3bd3109bb409aeb1"
+  },
+  "formal_gpu_boundary": "Issue #4561 has a separately frozen zero-step STOP for nondeterministic adaptive-pooling backward. This CPU-only gate does not retry or modify that allocation."
+}

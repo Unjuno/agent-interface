@@ -1,0 +1,14 @@
+{
+  "deadline_ms": 120,
+  "freshness_ms": 400,
+  "policies": ["PRE_DISPATCH_ONLY", "POSTHOC_EFFECT_CHECK", "APP_COMMIT_DEADLINE"],
+  "repetitions": 3,
+  "schedules": {
+    "EARLY_SHORT": [20, 10, 20],
+    "NEAR_SHORT": [60, 10, 20],
+    "EARLY_LONG": [20, 10, 110],
+    "NEAR_LONG": [60, 10, 80]
+  },
+  "formal_rows": 36,
+  "formal_invocations": 1
+}

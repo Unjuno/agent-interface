@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-S",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "test_contract"
+  ],
+  "returncode": 0,
+  "stdout": "",
+  "stderr": "test_bool_rejected (test_contract.ContractTests.test_bool_rejected) ... ok\ntest_histogram_parity (test_contract.ContractTests.test_histogram_parity) ... ok\ntest_joint_wide (test_contract.ContractTests.test_joint_wide) ... ok\ntest_marginal_counterexample (test_contract.ContractTests.test_marginal_counterexample) ... ok\ntest_negative_radius (test_contract.ContractTests.test_negative_radius) ... ok\ntest_prediction_keys (test_contract.ContractTests.test_prediction_keys) ... ok\ntest_rank (test_contract.ContractTests.test_rank) ... ok\ntest_reference (test_contract.ContractTests.test_reference) ... ok\ntest_shift_counterexample (test_contract.ContractTests.test_shift_counterexample) ... ok\ntest_singleton (test_contract.ContractTests.test_singleton) ... ok\ntest_ties (test_contract.ContractTests.test_ties) ... ok\ntest_zero_residuals (test_contract.ContractTests.test_zero_residuals) ... ok\n\n----------------------------------------------------------------------\nRan 12 tests in 0.001s\n\nOK\n",
+  "tests": 12,
+  "scope": "disjoint policy/auditor helper units; formal seeds/corpus not run",
+  "formal_invocations": 0
+}

@@ -1,0 +1,28 @@
+{
+  "scope": "bounded scripted WSL integration diagnostic",
+  "source_revision_checked_after_run": "cf00a0071842459e1b515e8234fcf7e8fb351b41",
+  "order": [
+    "mounted",
+    "linux"
+  ],
+  "samples_per_condition": 1,
+  "controlled_program": "same log-location-check text, same ops and fixed 50ms wait",
+  "changed_condition": "fixture event log path only: mounted evidence folder versus Linux temporary directory, copied after fixture termination",
+  "observed_images": {
+    "mounted": "blank entry / unsaved",
+    "linux": "log-location-check / saved:log-location-check"
+  },
+  "both_effects_match": true,
+  "both_release_verified": true,
+  "input_replays": 0,
+  "model_calls_in_harness": 0,
+  "limitations": [
+    "fixed order, one sample each",
+    "no callback or model-visible latency timestamps",
+    "environmental drift not controlled",
+    "descendant cleanup not verified",
+    "not formal container evidence or cross-application performance"
+  ],
+  "integration_decision": "Do not increase public wait defaults from the mounted-log fixture result; separate synchronous fixture logging from application responsiveness in future integration checks.",
+  "archive_sha256": "d01dbd79248abdd3557e3b1a0f38d97bdce6c9d4c9c61c2248644252c76ad479"
+}

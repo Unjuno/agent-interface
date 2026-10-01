@@ -1,0 +1,25 @@
+name: Retained r9k4 receipt evidence
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review]
+    paths:
+      - 'research/system1/receipt_observation_delivery_c2a6_v1/**'
+      - '.github/workflows/receipt-observation-r9k4-evidence.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  retained-evidence:
+    runs-on: ubuntu-24.04
+    container: python:3.13-slim
+    timeout-minutes: 5
+    steps:
+      - name: Shallow checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Reconstruct and audit saved bytes only
+        working-directory: research/system1/receipt_observation_delivery_c2a6_v1
+        run: |
+          python -S -B verify.py
+          python -S -B -m unittest -v test_restore

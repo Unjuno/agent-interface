@@ -1,0 +1,140 @@
+{
+  "base": "e4436e16f5a1c5da29d74d706e8a159c17b6a5d1",
+  "branch": "research/mutation-actor-calc-xtest-20260918-001",
+  "construction": {
+    "actors": {
+      "EXTERNAL_PROCESS": 2,
+      "HUMAN": 2,
+      "OS": 2,
+      "THIS_INTENT": 2,
+      "THIS_SESSION_OTHER_INTENT": 2,
+      "UNKNOWN": 8
+    },
+    "authority_promotions": 0,
+    "candidate_oracle_mismatches": 0,
+    "child_cleanup": 16,
+    "environment": {
+      "display": ":194",
+      "injector_python": "/opt/pyvenv/bin/python3",
+      "libreoffice": "/usr/bin/libreoffice",
+      "libreoffice_pid": 1856,
+      "pipe": "ai1257_1851_574297695138",
+      "profile": "/mnt/data/exp1257/construction_out/profile",
+      "scorer_pid": 1914,
+      "supervisor_python": "/usr/bin/python3",
+      "xvfb_pid": 1852
+    },
+    "expected_children": 16,
+    "false_self_credit": 0,
+    "injector_uno_leakage": 0,
+    "input_release_errors": 0,
+    "mode": "construction",
+    "readback_errors": 0,
+    "readback_latency_ms": {
+      "max": 162.741142,
+      "median": 149.334636,
+      "min": 133.038999,
+      "p95": 160.434541
+    },
+    "records": 18,
+    "reps_per_family": 2,
+    "rows_sha256": "c80096c320ca1fcb3b2dba697109e1c540720111371aa0b7c72470085880ba5a",
+    "runner_errors": [],
+    "scorer_exceptions": 0,
+    "states": {
+      "EXTERNAL_CONFIRMED": 8,
+      "NO_MUTATION": 2,
+      "SELF_CONFIRMED": 2,
+      "UNATTRIBUTED": 6
+    },
+    "task": "MUTATION-ACTOR-CALC-XTEST-20260918-001",
+    "task_success_promotions": 0,
+    "temporal_false_self_credit": 14
+  },
+  "construction_audit": {
+    "audit": "PASS",
+    "errors": [],
+    "independent_temporal_false_self": 14
+  },
+  "environment": {
+    "injector_python": "Python 3.13.5",
+    "libreoffice": "LibreOffice 25.2.3.2 520(Build:2)",
+    "os": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "system_python": "Python 3.13.5",
+    "transport": "private Xvfb + XTEST keyboard delivery; UNO supervisor/scorer only",
+    "xvfb_package": "2:21.1.16-1.3+deb13u1"
+  },
+  "families": [
+    "self",
+    "other_intent",
+    "external",
+    "human",
+    "os",
+    "unknown",
+    "conflict",
+    "mismatch",
+    "no_mutation"
+  ],
+  "formal_invocations": 0,
+  "formal_records": 108,
+  "formal_reps_per_family": 12,
+  "frozen_semantics": {
+    "action_clock": "injector child first XTEST input_start_ns",
+    "broker_launch_clock": "retained separately and not used by TEMPORAL_NEAREST",
+    "delta_kind": "CELL_TEXT",
+    "injector_uno_required_absent": true,
+    "mutating_token_grammar": "m + 4 decimal digits, lowercase ASCII",
+    "neutral_token": "NEUTRAL",
+    "target_id": "Sheet1.A1",
+    "temporal_nearest_max_ns": 500000000
+  },
+  "issue": 1257,
+  "parent": {
+    "candidate_sha256": "24fa033d1bce9fc36d3d628bf4dd454cfeab2441a6c7ac281c80ce82b3c94e9f",
+    "issue": 1251,
+    "source_bundle_base64_sha256": "41a63277aef11cff22cb9254b20718c901b6eb450f4813881fa56fc42dce4dde",
+    "source_bundle_gzip_sha256": "34d12d8096b816385cce1a5b78923704550b7a1b4721097de6da16fc5b798d8c"
+  },
+  "reruns": 0,
+  "source_archive": {
+    "archive_base64_sha256": "85f209e8ce30e36421a9bed519faf018ca4759b74c9208fce3b6753d9f36b2c8",
+    "archive_gzip_sha256": "21d1a1f75b6a742428875bfd3ed069cf4b520b1b221de067a808125c6b014435",
+    "archive_tar_sha256": "acae601cbd71c2e23b8e20528cbe13d56c76317a3e51a6f878c07878733bef15",
+    "source_file_count": 8
+  },
+  "source_files": {
+    "PREFORMAL_NOTES.md": {
+      "bytes": 1480,
+      "sha256": "dd9dc363491914986c5bc12bb7ecfbc980f9ab05b69730d032fb2757b8ab7890"
+    },
+    "ROADMAP.md": {
+      "bytes": 2831,
+      "sha256": "78a229b19c7857dd0d0f8f5ff74e0acfc9f456defc25367382f093942ac660d2"
+    },
+    "audit.py": {
+      "bytes": 2087,
+      "sha256": "dc21e8dce628a6b78f0740f5fce2f1336f743d364cfc5e4599bc60d463c3fae3"
+    },
+    "candidate.py": {
+      "bytes": 2839,
+      "sha256": "24fa033d1bce9fc36d3d628bf4dd454cfeab2441a6c7ac281c80ce82b3c94e9f"
+    },
+    "injector_xtest.py": {
+      "bytes": 1299,
+      "sha256": "f6ffa632fb476cbf0467dbe6bcc91958464d2cb0f3287924233ee9b1a6baf14a"
+    },
+    "runner.py": {
+      "bytes": 10911,
+      "sha256": "b9866e8557221be206d05c9e018b5d93f1b3eaf3dea0549a95c69837052adac1"
+    },
+    "scorer_server.py": {
+      "bytes": 1249,
+      "sha256": "ee3772fd83320519d34b9714bd97d3935eb70d780bb1f273d3b8d8f5328b2497"
+    },
+    "xtest_common.py": {
+      "bytes": 2005,
+      "sha256": "d9213e6d28bb50847ac02aad4067020d0db4988c9f181ae0b19aed43c455eb77"
+    }
+  },
+  "task": "MUTATION-ACTOR-CALC-XTEST-20260918-001"
+}

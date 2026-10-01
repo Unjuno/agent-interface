@@ -1,0 +1,99 @@
+{
+  "base": "4e802fa2ec3c0c97545a38520bb18b3b126d8e4e",
+  "branch": "research/github-claim-merge-4e802fa",
+  "cases": [
+    {
+      "candidate": "B",
+      "expected_final": [
+        "A",
+        "B"
+      ],
+      "expected_terminal": "REGISTERED",
+      "name": "independent",
+      "steps": [
+        "A",
+        "B_stale",
+        "B_recovery"
+      ],
+      "success": [
+        true,
+        false,
+        true
+      ]
+    },
+    {
+      "candidate": "D",
+      "expected_final": [
+        "A"
+      ],
+      "expected_terminal": "CONFLICT",
+      "name": "duplicate",
+      "steps": [
+        "A",
+        "B_stale"
+      ],
+      "success": [
+        true,
+        false
+      ]
+    },
+    {
+      "candidate": "B",
+      "expected_final": [
+        "A",
+        "C"
+      ],
+      "expected_terminal": "STOP_CONTENDED",
+      "name": "second_race",
+      "steps": [
+        "A",
+        "B_stale",
+        "C",
+        "B_recovery"
+      ],
+      "success": [
+        true,
+        false,
+        true,
+        false
+      ]
+    }
+  ],
+  "claims": {
+    "A": {
+      "owner": "writer_a",
+      "question_key": "question-a",
+      "scope": "research/synthetic/a/**",
+      "successor": "fixture-root",
+      "task_id": "SYNTHETIC-A"
+    },
+    "B": {
+      "owner": "writer_b",
+      "question_key": "question-b",
+      "scope": "research/synthetic/b/**",
+      "successor": "fixture-root",
+      "task_id": "SYNTHETIC-B"
+    },
+    "C": {
+      "owner": "writer_c",
+      "question_key": "question-c",
+      "scope": "research/synthetic/c/**",
+      "successor": "fixture-root",
+      "task_id": "SYNTHETIC-C"
+    },
+    "D": {
+      "owner": "writer_b",
+      "question_key": "question-a",
+      "scope": "research/synthetic/d/**",
+      "successor": "fixture-root",
+      "task_id": "SYNTHETIC-D"
+    }
+  },
+  "issue": 352,
+  "limits": "Exact scope equality only, not nested/alias overlap. Authored exact semantic keys. No real claim authority, crash recovery, leases, concurrent HTTP, fairness, throughput or production promotion.",
+  "method": "Three ordered MCP interleavings, once each; one recovery update maximum for B. No simultaneous HTTP or latency/rate claim. Successor after 003 local bookkeeping permission stop; no outcome pooling.",
+  "pass": "All exact finals, dispositions, response identities and budgets agree; offline tests and frozen auditor pass.",
+  "scope": "research/coordination/github_claim_merge_v1/allocations/a2/",
+  "stop": "Unexpected transport, source, parse or result discrepancy stops; do not replace or rerun a case. Expected SHA mismatch 409 is an observation, not a harness failure.",
+  "task": "COORD-GITHUB-CLAIM-MERGE-20260916-004"
+}

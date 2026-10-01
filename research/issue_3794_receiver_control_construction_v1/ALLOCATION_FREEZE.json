@@ -1,0 +1,40 @@
+{
+  "allocation": "issue-3794-german-xkb-receiver-release-audit-formal-01",
+  "base_commit": "d685f881cb5050bc42b6b96007978df9f532fe78",
+  "status_at_freeze": "PREREGISTERED_NOT_RUN",
+  "container": {
+    "docker_context": "orbstack",
+    "docker_server": "29.4.0",
+    "image": "agent-interface-2972@sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27",
+    "image_id": "sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27",
+    "platform": "linux/arm64",
+    "network": "none",
+    "root_filesystem": "read-only",
+    "resources": {"cpus": 2, "memory": "1g", "pids_limit": 128, "tmpfs_tmp": "128m"},
+    "python": "3.12.3",
+    "python_xlib": "0.33",
+    "binary_sha256": {
+      "/usr/bin/Xvfb": "5ca4be733f4b4599f684563771f87d4672f1caf9a06b55613ec5dff66fec8bd9",
+      "/usr/bin/xev": "8f88972996b8a477dd0c117fc72b1b73cc64b9a399fad91db853d0d7ea3c27a3",
+      "/usr/bin/setxkbmap": "08eb5014ac72cee8982c3754565000b98a23862328ffae4b75868573c060d5d9",
+      "/usr/bin/xkbcomp": "7c666b5dd7321507deae224a381078a7ea264fd98df9258ffca39571c93f207e"
+    }
+  },
+  "files": {
+    "research/issue_3784_focused_receiver_v1/PREREGISTRATION.md": "8e2568fab938da71903b7b78c969c3e36c29a2820f3191b8164d30efe6b910f9",
+    "research/issue_3784_focused_receiver_v1/source_manifest.json": "b1a202ef928f34dc0f2e79d1f77a9e20b6b3912ce632de9f16851b1f1855e8c9",
+    "research/issue_3784_focused_receiver_v1/run_formal.py": "a6d8bfae4ebad544e8e8e575d008c78a5e1d2abaa3703eef81ef3c4152d85f0f",
+    "research/issue_3784_focused_receiver_v1/audit_formal.py": "16867c85dbfcb72fed000d8b927d2cb4c1e6a608e91dd7959a09eb79650eb498",
+    "research/issue_3784_focused_receiver_v1/audit_corruption.py": "74efcb8d01f964547696179324d13dd6453632f57dab148fe41ea96f8f2d1fda",
+    "research/issue_3784_focused_receiver_v1/FORMAL_COMMAND.txt": "7de4fd750cb7196b9d65c3f7b7046274ee79f9d1b72e40d0914fdc42863989bf",
+    "research/issue_3784_focused_receiver_v1/AUDIT_COMMAND.txt": "f57adb7429746577b04041482de4ca4740e61071af07d6e846179c8bbe7c8363",
+    "research/issue_3784_focused_receiver_v1/CORRUPTION_COMMAND.txt": "0885690e78bdf607487d6af5ce43a24022ef6ff913b0ce1997287e02c8b90f97",
+    "research/issue_3784_focused_receiver_v1/README.md": "53f337b8c7aa9698a2b1130a5c0643828e7b654c9fc05df895d1e7b9a90fb03a"
+  },
+  "runtime_source_sha256": {
+    "runtime/backends/x11_v1/backend.py": "3429a422e61ecb8b1f1f278540d0696842d8197d7967803e01bc8d9453bcb4a8",
+    "runtime/backends/x11_v1/__init__.py": "50a6767fca7c7a81fc1a5e606de60b6660c4e8045ad0b66902d50c4a4493de6b",
+    "runtime/core_v1/contract.py": "e7d2f03e43a77f5e428ebf9f6c7ae70ef5557e3403db9b2e77929cd37057dd67",
+    "runtime/core_v1/__init__.py": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0"
+  }
+}

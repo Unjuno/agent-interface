@@ -1,0 +1,15 @@
+{
+  "schema": "issue-3628/container-command-record-v1",
+  "construction": "docker run --rm --platform linux/arm64 --network none --read-only --tmpfs /tmp:rw,nosuid,nodev,size=256m -v <source>:/source:ro -v <runner>:/runner.py:ro -v <archive>:/artifact/agent-interface-runtime.pyz:ro -v <fresh-evidence>:/evidence:rw issue-3573-portable-mcp-orbstack:20260920 /usr/bin/python3 /runner.py",
+  "formal_runs": [
+    {"path": "evidence/formal-01", "allocation_id": "formal-13404b8c9d4b", "attempts": 1},
+    {"path": "evidence/formal-02", "allocation_id": "formal-c768374eecc6", "attempts": 1},
+    {"path": "evidence/formal-03", "allocation_id": "formal-9eceb344ed5a", "attempts": 1}
+  ],
+  "audit": "docker run --rm --platform linux/arm64 --network none --read-only --tmpfs /tmp:rw,nosuid,nodev,size=32m -v <evidence>:/evidence:ro -v <archive>:/artifact/agent-interface-runtime.pyz:ro -v <frozen-audit-successor>:/audit.py:ro -v <new-parent>:/parent:rw issue-3573-portable-mcp-orbstack:20260920 /usr/bin/python3 /audit.py /evidence /artifact/agent-interface-runtime.pyz /parent/independent-audit-successor-final",
+  "supplemental_test_native_image": {"command": "docker run --rm --platform linux/arm64 --network none --read-only --tmpfs /tmp:rw,nosuid,nodev,size=256m -v <source>:/source:ro issue-3370-native-mcp-orbstack:20260920-r2 /usr/bin/python3 -m unittest runtime.backends.x11_v1.test_integration -v", "outcome": "STOP_BEFORE_TEST", "reason": "Pinned image entrypoint ignores CMD and targets unrelated absent /workspace/research/live_control/native_mcp_v1.py"},
+  "supplemental_test_portable_image_without_display": {"command": "docker run --rm --entrypoint /usr/bin/python3 --platform linux/arm64 --network none --read-only --tmpfs /tmp:rw,nosuid,nodev,size=256m -v <source>:/source:ro -w /source issue-3573-portable-mcp-orbstack:20260920 -m unittest runtime.backends.x11_v1.test_integration -v", "outcome": "9_SKIPPED", "reason": "X11IntegrationTests require DISPLAY; preserved as skipped and not counted as validation"},
+  "supplemental_test_portable_image_with_xvfb": {"command": "docker run --rm --platform linux/arm64 --network none --read-only --tmpfs /tmp:rw,nosuid,nodev,size=256m --entrypoint /bin/bash -v <source>:/source:ro -w /source issue-3573-portable-mcp-orbstack:20260920 -lc 'Xvfb :93 -screen 0 800x600x24 -nolisten tcp &; DISPLAY=:93 /usr/bin/python3 -m unittest runtime.backends.x11_v1.test_integration -v'", "outcome": "PASS_9_OF_9", "details": "evidence/local-x11-integration.json"},
+  "formal_retries": 0,
+  "formal_replacements": 0
+}

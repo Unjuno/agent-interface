@@ -1,0 +1,25 @@
+{
+  "schema": "3311-desktop-transport-context-audit-v1",
+  "allocation": "dockerdesktop-v1-transport-20260927-01",
+  "decision": "HOLD_EXECUTION_CONTEXT_UNVERIFIED",
+  "raw_result_preserved": "STOP_DESKTOP_SHARED_IPC_REQUEST_PERMISSION_DENIED",
+  "original_audit_preserved": "FAIL_AUDIT",
+  "findings": {
+    "freeze_claimed_context": "default",
+    "container_command_receipt_context": "orbstack",
+    "adapter_receipt_for_actual_context": false,
+    "current_windows_default_endpoint": "npipe:////./pipe/docker_engine",
+    "current_windows_docker_desktop_endpoint": "npipe:////./pipe/dockerDesktopLinuxEngine",
+    "explicit_docker_desktop_context": "desktop-linux",
+    "desktop_engine_observed": "28.5.1/linux/amd64",
+    "image_id_recorded_in_freeze": "sha256:f82bbd2c087056f324794ca9b0de64c16f0ecaf9a84f30bb0aba17b5b1833786",
+    "test_default_image_tag": "agent-interface-3311-runtime-v2:20260920",
+    "image_tag_to_image_id_binding_in_freeze": false,
+    "containers_present_at_followup_inspection": true
+  },
+  "interpretation": "The raw failure remains an observed failure in its retained bundle, but the bundle does not establish which Docker endpoint executed the command or that the inspected image corresponds to the test's default tag. Do not generalize the permission failure to Docker Desktop or OrbStack.",
+  "no_rerun": true,
+  "source_revision_of_raw_bundle": "3842e8921bd587af6ce9c13664d087b377366747",
+  "later_main_at_audit": "c6ad3e83db1ee835859ad9724c9e1747cb7fd48d",
+  "audit_method": "Read-only comparison of retained freeze, command and result receipts against Docker Desktop context/endpoint output and current test source; no container invocation."
+}

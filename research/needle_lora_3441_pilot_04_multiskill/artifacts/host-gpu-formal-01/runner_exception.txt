@@ -1,0 +1,27 @@
+Command:
+  $env:PYTHONDONTWRITEBYTECODE='1'
+  $env:CUDA_CACHE_DISABLE='1'
+  py -3.11 -B research/needle_lora_3441_pilot_04_multiskill/runner.py
+
+Exit code: 1. Container: not used (Issue #3701 explicitly permits the Windows host-GPU fallback).
+
+Traceback (exact diagnostic; paths normalized to repository-relative):
+  File "research/needle_lora_3441_pilot_04_multiskill/runner.py", line 314, in <module>
+    main()
+  File "research/needle_lora_3441_pilot_04_multiskill/runner.py", line 161, in main
+    pretrain_ms = train_steps(base, x_pre, y_pre, base_optimizer, 400, SEED + 10, device)
+  File "research/needle_lora_3441_pilot_04_multiskill/runner.py", line 97, in train_steps
+    loss.backward()
+  File ".../torch/_tensor.py", line 581, in backward
+    torch.autograd.backward(
+  File ".../torch/autograd/__init__.py", line 347, in backward
+    _engine_run_backward(...)
+RuntimeError: Deterministic behavior was enabled with torch.use_deterministic_algorithms(True), but this operation uses CuBLAS with CUDA >= 10.2. Set CUBLAS_WORKSPACE_CONFIG=:4096:8 or :16:8 before running the PyTorch application to enable deterministic behavior.
+
+Interpretation:
+- The failure occurred during the first base-pretraining backward pass, before the first optimizer.step().
+- Optimizer updates: 0. Held-out queries/scores: 0. Adapter updates/snapshots/rollback checks: 0.
+- No accuracy or adapter-interference outcome was measured.
+- Classification: STOP_FORMAL_CUBLAS_DETERMINISM_CONFIGURATION.
+- The frozen source, freeze, allocation id and output path are unchanged. This allocation will not be retried or retuned. Any corrected run requires a fresh successor allocation with the required CUBLAS workspace environment frozen before execution.
+- Docker Desktop remains separately STOP: its Linux engine pipe is absent and the service is stopped. No workflow, Docker repair, image pull, or container was used.

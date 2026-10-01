@@ -1,0 +1,63 @@
+{
+  "events": 60,
+  "exact_frames": 12,
+  "append_records": 17,
+  "socket_calls": 10,
+  "history_mode": "all",
+  "model_turns": [
+    {
+      "turn": 1,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 12857,
+        "cached_input_tokens": 1792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 140,
+        "reasoning_output_tokens": 61
+      },
+      "runner_wall_ms": 7395.0033,
+      "supervisor_model_return_to_publish_ms": 12.807,
+      "supervisor_publish_to_applied_ms": 1049.7818,
+      "linux_proposal_to_result_ms": 1011.217927,
+      "source_to_fresh_capture_ms": 7755.440098
+    },
+    {
+      "turn": 2,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 13293,
+        "cached_input_tokens": 1792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 100,
+        "reasoning_output_tokens": 27
+      },
+      "runner_wall_ms": 5648.6034,
+      "supervisor_model_return_to_publish_ms": 14.9408,
+      "supervisor_publish_to_applied_ms": 868.4324,
+      "linux_proposal_to_result_ms": 789.819165,
+      "source_to_fresh_capture_ms": 6082.412629
+    },
+    {
+      "turn": 3,
+      "kind": "verify",
+      "usage": {
+        "input_tokens": 13720,
+        "cached_input_tokens": 9984,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 98,
+        "reasoning_output_tokens": 47
+      },
+      "runner_wall_ms": 8994.3264
+    }
+  ],
+  "save_chords": 1,
+  "saved_cells": [
+    480,
+    192
+  ],
+  "xlsx_sha256": "0b6733294fcfcc336c90a032543d40be8cc3bf8286090f34e74540889aa514d5",
+  "supervisor_start_to_verified_exit_ms": 28331.7372,
+  "linux_initial_capture_to_evaluation_ms": 24640.18615,
+  "scope": "one predeclared matched history-comparison episode; current outcome only, no population/human parity claim",
+  "audit_sha256": "5b1500e7beb8376fdbadd688751cc95d6ded6675d4a29dc5b55da1748efb151e"
+}

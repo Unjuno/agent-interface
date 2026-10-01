@@ -1,0 +1,12 @@
+{
+  "allocation": "issue3924-orbstac-broker-contract-v2-20260926-01",
+  "decision": "STOP_AUDIT_IMPLEMENTATION_MISMATCH",
+  "formal_matrix_rows": 7,
+  "formal_container_exit_code": 0,
+  "fake_invocations": {"exit0": 1, "exit23": 1, "timeout": 1, "unavailable": 0, "malformed": 0, "one-shot-idle": 0, "two-queued": 1},
+  "independent_auditor_stdout": "STOP_AUDIT_PROVENANCE provenance_errors=1 contract_errors=0 files_hashed=50",
+  "raw_root_cause": "The frozen FREEZE.json declares timeout_case.fake_sleep_s=2.0, and the retained invocation-01.json records sleep_s=2.0. The frozen auditor incorrectly hardcodes an expected sleep_s of 0.3, producing the sole provenance error.",
+  "observed_raw_counterexample": "exit0.broker.json records child returncode 0; exit0/process.json records broker process exit 1.",
+  "scientific_decision": "NONE under the frozen D gate because the independent audit did not pass. The observed counterexample is descriptive and not promoted to formal FAIL_ZERO_EXIT_PROPAGATION.",
+  "retry_policy": "Do not rerun this formal allocation or its frozen auditor. Retain all raw and auditor outputs unchanged. A separate successor may independently audit the immutable raw files."
+}

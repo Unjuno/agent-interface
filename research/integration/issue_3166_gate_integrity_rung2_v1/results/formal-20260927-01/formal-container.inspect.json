@@ -1,0 +1,242 @@
+[
+    {
+        "Id": "8e982c37a2cc218697c7575af4a0c4a2dd338506f2008e3d8f6b7a355ac59461",
+        "Created": "2026-09-26T15:54:44.949272082Z",
+        "Path": "/bin/sh",
+        "Args": [
+            "-c",
+            "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/repo /usr/bin/python3 -B research/integration/issue_3166_gate_integrity_rung2_v1/run_formal.py"
+        ],
+        "State": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-09-26T15:54:45.042889232Z",
+            "FinishedAt": "2026-09-26T15:54:52.917359449Z"
+        },
+        "Image": "sha256:167fd6184cac8729ccfea407938943384d64fe2999e7319bed3587638fa94b7c",
+        "ResolvConfPath": "/var/lib/docker/containers/8e982c37a2cc218697c7575af4a0c4a2dd338506f2008e3d8f6b7a355ac59461/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/8e982c37a2cc218697c7575af4a0c4a2dd338506f2008e3d8f6b7a355ac59461/hostname",
+        "HostsPath": "/var/lib/docker/containers/8e982c37a2cc218697c7575af4a0c4a2dd338506f2008e3d8f6b7a355ac59461/hosts",
+        "LogPath": "/var/lib/docker/containers/8e982c37a2cc218697c7575af4a0c4a2dd338506f2008e3d8f6b7a355ac59461/8e982c37a2cc218697c7575af4a0c4a2dd338506f2008e3d8f6b7a355ac59461-json.log",
+        "Name": "/issue3166-rung2-formal-20260927-01",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {
+                    "max-file": "5",
+                    "max-size": "20m"
+                }
+            },
+            "NetworkMode": "none",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": [
+                "ALL"
+            ],
+            "CgroupnsMode": "private",
+            "Dns": null,
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": true,
+            "SecurityOpt": [
+                "no-new-privileges"
+            ],
+            "Tmpfs": {
+                "/tmp": "rw,nosuid,nodev,size=1g"
+            },
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 8409579520,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 2147483648,
+            "NanoCpus": 2000000000,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": [],
+            "BlkioDeviceWriteBps": [],
+            "BlkioDeviceReadIOps": [],
+            "BlkioDeviceWriteIOps": [],
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 4294967296,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": 256,
+            "Ulimits": [],
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "Mounts": [
+                {
+                    "Type": "bind",
+                    "Source": "/tmp/agent-interface-rung2-main-only",
+                    "Target": "/repo",
+                    "ReadOnly": true
+                },
+                {
+                    "Type": "bind",
+                    "Source": "/tmp/issue3166-gate-integrity-rung2-20260927-01",
+                    "Target": "/evidence"
+                }
+            ],
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "/tmp/issue3166-gate-integrity-rung2-20260927-01",
+                "Destination": "/evidence",
+                "Mode": "",
+                "RW": true,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/tmp/agent-interface-rung2-main-only",
+                "Destination": "/repo",
+                "Mode": "",
+                "RW": false,
+                "Propagation": "rprivate"
+            }
+        ],
+        "Config": {
+            "Hostname": "8e982c37a2cc",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "FROZEN_SOURCE_COMMIT=2c5be06f9563deb3e5e739df6e7f154d145a8687",
+                "FROZEN_IMAGE_ID=sha256:167fd6184cac8729ccfea407938943384d64fe2999e7319bed3587638fa94b7c",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "DEBIAN_FRONTEND=noninteractive",
+                "PYTHONUNBUFFERED=1"
+            ],
+            "Cmd": [
+                "-c",
+                "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/repo /usr/bin/python3 -B research/integration/issue_3166_gate_integrity_rung2_v1/run_formal.py"
+            ],
+            "Image": "agent-interface-2994:20260920",
+            "Volumes": null,
+            "WorkingDir": "/repo",
+            "Entrypoint": [
+                "/bin/sh"
+            ],
+            "Labels": {
+                "org.opencontainers.image.version": "24.04"
+            }
+        },
+        "NetworkSettings": {
+            "SandboxID": "",
+            "SandboxKey": "",
+            "Ports": {},
+            "Networks": {
+                "none": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "be4d057ee3ffc26baf9220196f1b89ed6bef1d8bcc10973725f59293e4e88c31",
+                    "EndpointID": "",
+                    "Gateway": "",
+                    "IPAddress": "",
+                    "MacAddress": "",
+                    "IPPrefixLen": 0,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": null
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "digest": "sha256:a8a07a682b798026cf35f84ca7016a22c82eb3706b0ca6340330aec1be04145d",
+            "size": 863,
+            "platform": {
+                "architecture": "arm64",
+                "os": "linux"
+            }
+        }
+    }
+]

@@ -1,0 +1,125 @@
+{
+  "checks": {
+    "binary_hashes": true,
+    "case_count": true,
+    "decision_label_known": true,
+    "detection_and_false_cancel": true,
+    "input_integrity": true,
+    "no_runner_errors": true,
+    "pixel_semantics_and_timing_brackets": true,
+    "prereg_hash": true,
+    "schedule_identity": true,
+    "schema": true,
+    "source_hashes": true
+  },
+  "decision": "PASS_INTEGRATION_SCOPED",
+  "pass": true,
+  "schema": "quiet_watch_native_predicate_integration_v1_audit",
+  "summary": {
+    "arms": {
+      "native_count": {
+        "nuisance_false_cancel": 0,
+        "nuisance_metrics": {
+          "nuisance-o150-r0": {
+            "count_thread_cpu_ms": 0.609843,
+            "count_wall_ms": 0.445607,
+            "max_count_end_to_next_start_gap_ms": 2.141857,
+            "observation_thread_cpu_ms": 9.320831,
+            "observation_wall_ms": 19.923909,
+            "sample_count": 302
+          },
+          "nuisance-o152-r1": {
+            "count_thread_cpu_ms": 0.601652,
+            "count_wall_ms": 0.436476,
+            "max_count_end_to_next_start_gap_ms": 2.39565,
+            "observation_thread_cpu_ms": 9.189374,
+            "observation_wall_ms": 24.363534,
+            "sample_count": 302
+          },
+          "nuisance-o154-r2": {
+            "count_thread_cpu_ms": 0.60981,
+            "count_wall_ms": 0.460962,
+            "max_count_end_to_next_start_gap_ms": 3.59096,
+            "observation_thread_cpu_ms": 10.063822,
+            "observation_wall_ms": 35.983279,
+            "sample_count": 298
+          },
+          "nuisance-o156-r3": {
+            "count_thread_cpu_ms": 0.556388,
+            "count_wall_ms": 0.419342,
+            "max_count_end_to_next_start_gap_ms": 2.177371,
+            "observation_thread_cpu_ms": 9.398545,
+            "observation_wall_ms": 18.990934,
+            "sample_count": 302
+          }
+        },
+        "nuisance_total": 4,
+        "target_detected": 15,
+        "target_total": 15
+      },
+      "python_count": {
+        "nuisance_false_cancel": 0,
+        "nuisance_metrics": {
+          "nuisance-o150-r0": {
+            "count_thread_cpu_ms": 20.248249,
+            "count_wall_ms": 20.089328,
+            "max_count_end_to_next_start_gap_ms": 2.056178,
+            "observation_thread_cpu_ms": 32.074783,
+            "observation_wall_ms": 45.494781,
+            "sample_count": 302
+          },
+          "nuisance-o152-r1": {
+            "count_thread_cpu_ms": 22.578141,
+            "count_wall_ms": 22.414434,
+            "max_count_end_to_next_start_gap_ms": 2.075618,
+            "observation_thread_cpu_ms": 31.830536,
+            "observation_wall_ms": 47.970734,
+            "sample_count": 302
+          },
+          "nuisance-o154-r2": {
+            "count_thread_cpu_ms": 26.90284,
+            "count_wall_ms": 26.713727,
+            "max_count_end_to_next_start_gap_ms": 2.320076,
+            "observation_thread_cpu_ms": 36.742662,
+            "observation_wall_ms": 49.082791,
+            "sample_count": 302
+          },
+          "nuisance-o156-r3": {
+            "count_thread_cpu_ms": 22.001697,
+            "count_wall_ms": 21.846996,
+            "max_count_end_to_next_start_gap_ms": 2.94649,
+            "observation_thread_cpu_ms": 32.248881,
+            "observation_wall_ms": 45.46876,
+            "sample_count": 302
+          }
+        },
+        "nuisance_total": 4,
+        "target_detected": 15,
+        "target_total": 15
+      }
+    },
+    "median_paired_max_gap_ratio": 1.0979277127304499,
+    "median_paired_thread_cpu_ratio": 0.2896468282916882,
+    "median_paired_wall_ratio": 0.4729108142667118,
+    "paired_ratios": {
+      "max_gap": [
+        1.041669057834487,
+        1.1541863676264128,
+        1.5477768831710685,
+        0.7389711147840312
+      ],
+      "thread_cpu": [
+        0.2905968529857241,
+        0.2886968035976523,
+        0.2739001871992835,
+        0.2914378641541082
+      ],
+      "wall": [
+        0.43793834286178884,
+        0.5078832856716348,
+        0.7331139543389047,
+        0.41766993425815874
+      ]
+    }
+  }
+}

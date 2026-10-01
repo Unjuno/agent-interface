@@ -1,0 +1,35 @@
+{
+  "checks": {
+    "new_audit": {
+      "exact_original": true,
+      "exit": 0,
+      "stdout_sha256": "1b79403df9cdc510026c52f1fc7bcdf8fe0436b59a370bb6e44e19b5637392d6"
+    },
+    "new_tests": {
+      "exact_original": null,
+      "exit": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "old_audit": {
+      "exact_original": true,
+      "exit": 0,
+      "stdout_sha256": "d9402006cba4e65468dc3575bfca073ad285e60d72867daae5d9f81ec2ed2bae"
+    },
+    "old_tests": {
+      "exact_original": null,
+      "exit": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "files_exact": 784,
+  "formal_reexecutions": 0,
+  "incident": "First postformal package-validation script compared old audit stdout to OLD_REAUDIT metadata rather than previous/formal-01/AUDIT.json. Assertion failed although audit exited0 and exact audit SHA matched. Corrected expected-file reference only; no frozen source or raw bytes changed.",
+  "package_controls": {
+    "bitflip": true,
+    "existing": true,
+    "expansion": true,
+    "file_count": true,
+    "order": true
+  },
+  "scope": "local fresh restoration, not remote CI/review"
+}

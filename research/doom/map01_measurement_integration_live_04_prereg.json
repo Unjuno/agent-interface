@@ -1,0 +1,44 @@
+{
+  "schema": "map01-measurement-integration-live-prereg-v4",
+  "allocation_id": "map01-measurement-integration-live-04",
+  "construction_parent": "b7c6e9935db8e0618e55dd8df2b609b2b036a15f",
+  "workflow_path": ".github/workflows/map01-measurement-integration-live-04.yml",
+  "seed": 990615,
+  "model_calls": 0,
+  "formal_probe_runs_allowed": 1,
+  "retry_allowed": false,
+  "purpose": "obtain one protocol-valid real MAP01 measurement-integration outcome after live-02/live-03 duplicate-execution failures",
+  "launch_protocol": {
+    "push_branch_allowlist": ["main"],
+    "concurrency_group": "map01-measurement-integration-live-04",
+    "cancel_in_progress": false,
+    "allocation_identity": "versioned workflow path",
+    "canonical_owner_rule": "earliest run_number then run_id among every run of this workflow path, independent of head SHA",
+    "required_owner_branch": "main",
+    "truncated_or_missing_api_view": "fail_closed"
+  },
+  "frozen_blobs": {
+    "research/doom/session_map01_v13.py": "51c644ce424e41bb2cd3d401a52b6c9820f70135",
+    "research/doom/map01_scorer_stdio_adapter_v1.py": "50c8b664413b8ddc45dcb2572429d0fe7d9eb7c7",
+    "research/doom/probe_map01_measurement_integration_v1.py": "a7db337385c4e24e69c73010db782535533992b1",
+    "research/doom/audit_map01_measurement_integration_v1.py": "fc567e41a79416c56bc0f7179dbb7f795ee08713",
+    "research/doom/audit_map01_terminal_score_agreement_v1.py": "8b5c5340dec2f4e89be46891fb9f739b4203ee77",
+    "research/live_control/input_transition_owner_v3.py": "0ea631abcf6272f0538a9ef9198ad8069b47b464",
+    "research/doom/doom_retained_input_backend_v3.py": "65d3f1a7b21af09ab8fe10ef883e3e17a9f6cb27",
+    "research/orchestration/o3-g7/global-owner/formal_allocation_global_owner_v1.py": "f07f928f67a7a6c670d399efb23d67246506c802"
+  },
+  "pass_requires": [
+    "exactly one formal run enters the probe for this workflow allocation",
+    "launch-owner receipt is PASS_CANONICAL_GLOBAL_OWNER on main",
+    "all frozen runtime blob SHAs match",
+    "existing measurement integration audit passes",
+    "one normal two-key hold completes with verified direct release transitions",
+    "direct retained-input analyzer is measurement-ready with no unmatched or invalid releases",
+    "independent scorer has zero missed periods",
+    "exactly one direct final scorer sample",
+    "final scorer sample strictly equals score.json on map_exit, episode_finished, player_dead, death_count, kill_count",
+    "all terminal input release is verified empty"
+  ],
+  "failure_policy": "retain first outcome and never retry this allocation; any duplicate/non-owner formal execution invalidates the allocation",
+  "authority_after_pass": "measurement integration only; recovery-vs-coast efficacy still requires the separately frozen matched recovery allocation"
+}

@@ -1,0 +1,27 @@
+name: generation-bound-evidence-container-successor
+on:
+  pull_request:
+    paths: ["research/analysis/generation_bound_evidence_container_successor_2166_v1/**",".github/workflows/generation-bound-evidence-container-successor.yml"]
+jobs:
+  formal:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - name: One fresh python 3.12 slim container execution
+        run: docker run --rm -v "$PWD/research/analysis/generation_bound_evidence_container_successor_2166_v1:/work" -w /work python:3.12-slim python experiment.py
+      - name: Independent audit
+        run: |
+          python3 - <<'PY'
+          import json
+          p=json.load(open("research/analysis/generation_bound_evidence_container_successor_2166_v1/RESULT.json"))
+          assert p["decision"]=="PASS_CONTAINER_REVALIDATION_SCOPED"
+          assert p["statuses"]==["ENCODED","OBSOLETE","CACHE_HIT","ENCODED"]
+          assert p["stale_control"]==p["reuse_control"]==p["provenance_control"]=="PASS"
+          assert p["model"]==p["x11"]==p["input"]==0
+          print("INDEPENDENT_AUDIT_PASS")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: generation-bound-evidence-container-successor
+          path: research/analysis/generation_bound_evidence_container_successor_2166_v1/RESULT.json

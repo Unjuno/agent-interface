@@ -1,0 +1,42 @@
+{
+  "schema": "cactus-needle3-preformal-freeze-v1",
+  "allocation": "cactus-needle3-base-structured-action-20260926-01",
+  "repository": "Unjuno/agent-interface",
+  "issue": 4204,
+  "base_main": "b749cce89cf3c9459157c26f743420a91e192575",
+  "hypothesis": "The unadapted 20-layer Cactus Needle 3 base maps a fixed bounded intent and visible simulator state into correct structured actions, abstains safely at forbidden/ambiguous/stale/already-satisfied boundaries, and achieves warm p95 <= 2000 ms on this local PC.",
+  "treatment": "One deterministic in-memory settings simulator, five closed tools, seven frozen cases, one guarded-macro baseline, one exact 20-layer unadapted model. No OS/GUI/input, provider, network inference, training, fine-tuning, depth sweep, or retries. The formal container is local CPU-only Docker with network disabled, 2 CPUs, 2 GiB memory, 64 PIDs, no capabilities, and read-only source/artifacts.",
+  "decision": "Use the exact semantic/YIELD/effect/latency gates in CASES.json and RUNBOOK.md. A valid model result is still FAIL_NO_VALUE_OVER_EXPLICIT_BASELINE when the zero-model-call guarded macro matches the useful envelope with fewer decisions and no larger local cost.",
+  "competitors": "Structured grammar may produce valid but semantically wrong calls; the known-case macro may dominate; schema overhead/multi-step inference may erase the small model's benefit; benchmark tool calling may not transfer to GUI semantics.",
+  "uncertainty": "Seven synthetic cases, one tool vocabulary, one model revision/depth/runtime, one PC. No general GUI, production authority, cross-device, population accuracy, task-token benefit, or real-time claim.",
+  "candidate": {
+    "hub_repo": "Cactus-Compute/needle3",
+    "hub_revision": "b274efcb211a9eef48c9a88da4b43bd569696a39",
+    "weights_file": "needle3.cact",
+    "weights_sha256": "c9d915eca282ed42d1a09b143b592adb4cc6744ffe2d294adf5cfc5548170c38",
+    "weights_bytes": 35335380,
+    "python_package": "cactus-needle==3.0.1",
+    "client_wheel_file": "cactus_needle-3.0.1-py3-none-any.whl",
+    "client_wheel_sha256": "d990c623ecc69f7c7692d31678e88a799caced87780d7fed31c55b6961d75c82",
+    "engine_wheel_file": "cactus_needle-3.0.1-py3-none-manylinux2014_x86_64.whl",
+    "engine_wheel_sha256": "05770ef9a85686583968ea15f62f9ad44217e078efdaa99559d3208bb8a369b0",
+    "depth_layers": 20,
+    "adapted": false,
+    "inference_device": "CPU; NVIDIA GeForce RTX 3080 Laptop GPU available but not used"
+  },
+  "docker_image": "python@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+  "docker_version": "29.8.0/29.8.0",
+  "source_sha256": {
+    "audit.py": "545257575a5d6f05f2fa253f1ca7a5b9a232bb5ac070e53d544f71f8a2362144",
+    "CASES.json": "c7ec0028f98eb22ed972049c233e7c059d534eeba4a06b319f812c5b5f7762c7",
+    "CLIENT_WHEELS.sha256": "a53b3e648c568004d416f2efb61f4fac19f6f030e7ecbc541cfcb671429edb72",
+    "construction_probe.py": "c49d1a15e19ca319cee9f2fc8cb465957c321c2ce1f0e72c62007198a49bf19a",
+    "CONSTRUCTION.md": "1a8154856a813b84165aa1db4efd06323b5c9695bca8fc020a4f84fae53505a5",
+    "README.md": "5820959f27651808a7dc952bdc90c83cc10206daee45b40af4ac706286c47bd6",
+    "RUNBOOK.md": "049b9ab787b26fe1b3a55c54e7ac43441b4b1d73f09e7b09f573d6563d9d3688",
+    "formal_host.py": "e090b95e7371f2e193f457b8415a76483e8ba00f95003b242f8ed88c0059c308",
+    "runner.py": "40529696522f0e265e5fc8c22fc4c961988fc85464e0e59534e6824fc2059f8e",
+    "test_audit.py": "8dfa5c751a4f2849b41181afda65023857c89162c5133096b4b8e317d99ac115",
+    "test_contract.py": "946ceb287474b87d82d6d669d03f2dcb9ffcf1f663b3296fb3904a132ee3b676"
+  }
+}

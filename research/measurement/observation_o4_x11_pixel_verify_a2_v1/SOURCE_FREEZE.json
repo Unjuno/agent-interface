@@ -1,0 +1,59 @@
+{
+  "task": "OBSERVATION-GATING-O4-X11-PIXEL-VERIFY-A2-20260919-002",
+  "issue": 1870,
+  "parent_issue": 1847,
+  "base": "e222a429e1c6b796fc7a08949a48a9eb977615c5",
+  "branch": "research/observation-o4-x11-pixel-verify-a2-1870",
+  "formal_logical_allocations_before_freeze": 0,
+  "batch_process_invocations_before_freeze": 0,
+  "canonical_source_bundle": {
+    "parts": [
+      {"path":"SOURCE_BUNDLE.part00.b64","git_blob":"cb00dae42e62e7d59e37f52212b4d6aefb8e717d","sha256":"f18c53d093a957aa1388856a389c7e00594d4cebbe6d4689ae9f3e482885dd2b","bytes":3000},
+      {"path":"SOURCE_BUNDLE.part01.b64","git_blob":"66146683c8c3f2bcb4a28bd113b06a6f59afd50c","sha256":"8509d3c0e9349d260a3add1dbbeacbd31e9874994046af3db6284d7175e8d055","bytes":3000},
+      {"path":"SOURCE_BUNDLE.part02.b64","git_blob":"91de38ccd76730ae64039c0c6a012ea6255a731b","sha256":"d599205847e5461aceb968efff5008fa923bcd98333f41d99c199983a4e7fb84","bytes":3000},
+      {"path":"SOURCE_BUNDLE.part03.b64","git_blob":"6293a405c91de193562160873b142dbe11697419","sha256":"2d91918fa84730c87a2be9e1af6a0f4c3d0f0966835c7d6140bb33fa5919816b","bytes":2696}
+    ],
+    "restore_parts_git_blob": "59c0aefe4bbc5859342352294a20105ec13217ca",
+    "restore_parts_sha256": "0ecd01d17a58b4bcb597ff69a5e8183f0f7f0a07b78e94647d1ba1d5431b593d"
+  },
+  "source_sha256": {
+    "fixture.py": "db674dfd0502b3b61011338d43e3583c98489e808187039d16a9514a0aa208ce",
+    "runner.py": "b785cab730f8daa37191de43fe2a19eeb217efe06932732b153f32f927228b28",
+    "audit.py": "06c2f5c76e1e0d887a565b3126559b3d3dbe2184b70e1e97d447291fe8c59e66",
+    "PLAN.md": "4daeb41eb532ae6ce1ce156d468fd89b9f02665c9e1fdac77a969ffcb883ceeb",
+    "SCHEDULE.json": "0b3a793258bfeccb9c5f6fef1ec4f3565a0ad21ee7938c4b1bfbf5c2f5c5d357",
+    "batch_runner.py": "4dbd09965cfc7cca12b5593252676eedb4bc602b925f4100259e37e575ce303f",
+    "aggregate.py": "5c4f2f215cb67ee0545791ad920167a3439c03b3765e5a8c53dc9c678d3a8fb7",
+    "audit_a2.py": "c07a7c8fd28d9a74dbdeff0fcfc7c23eb3fabcfb8c2b9faa7c0729bcf06d7105",
+    "PLAN_A2.md": "094ddb0284169983c78d6708ef7b7580de0373467c06fb968f2d3257a4123f4b",
+    "BATCH_PLAN.json": "a202d6c3cfeb58f9394a1f89521bd4f6d0698bc65b101bedacaee5f849f2e85b",
+    "PACKAGING_CONSTRUCTION.json": "999fb972463a06d12bf84e2b3b8266e82667f8832e45775203ec3a0688463057"
+  },
+  "parent_science_unchanged": true,
+  "packaging_construction": {
+    "pass": true,
+    "batch_count": 8,
+    "batch_size": 7,
+    "coverage_start": 0,
+    "coverage_end_exclusive": 56,
+    "duplicates": 0
+  },
+  "preformal_transfer_defect": {
+    "formal_consumed": 0,
+    "noncanonical_path": "SOURCE_BUNDLE.tar.gz.b64",
+    "noncanonical_git_blob": "2d41403cc859f4d6d88f9e6a29049c76d03f3ae8",
+    "cause": "wrong shorter parent-equivalent bundle uploaded before readback",
+    "canonical_repair": "part00..part03 exact successor bundle",
+    "scientific_logic_changed": false
+  },
+  "formal": {
+    "logical_allocations": 1,
+    "batch_process_invocations": 8,
+    "batch_size": 7,
+    "rows": 56,
+    "batch_reruns": 0,
+    "replacements": 0,
+    "tuning": 0,
+    "status": "NOT_RUN"
+  }
+}

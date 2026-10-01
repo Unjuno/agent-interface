@@ -1,0 +1,41 @@
+{
+  "actor_timeout_seconds": 3,
+  "allocation": "referenced-image-gc-concurrency-20260922-01",
+  "cases_per_batch": 8,
+  "construction": {
+    "v0_audit_pass": true,
+    "v0_cases": 8,
+    "v0_controls_rejected": 8,
+    "v1_disposition": "STOP_OUTER_WORKER_TIMEOUT",
+    "v2_audit_pass": true,
+    "v2_cases": 8,
+    "v2_controls_rejected": 10
+  },
+  "construction_sha256": {
+    "construction-2/AUDIT.json": "6b75a768168397e6758b05490bb2937f48d4b1663c21bfadd7b4ace33e57ca46",
+    "construction-2/CONTROLS.json": "d65b1078948d293152749a10ade2983422c1aa37262c38730e5171218ce863da",
+    "construction-2/EXECUTION.json": "1cf2e71c80526054165c680e0862e8ae43b6fcf5b56b77efc534ffe818756f72",
+    "construction_history/INCIDENT.md": "745152848de33db16bcf7006e0003fafb581ce4d9aa675d62accce331bd6a6a8",
+    "construction_history/INCIDENT_V1_TIMEOUT.md": "a0af66c23c0c2c87d1439565a9383d49c2dd739294ccd4c30b05dd192e283a01",
+    "construction_history/test_audit_v0.py": "a42d8f3b7e33c07c4faecb6c7067a700a4a644989d119877bc8d715cfdcfb178"
+  },
+  "files_sha256": {
+    "ENVIRONMENT.json": "77e8c22cf23f6392a27bd389a1f22a7c8caceb91be8a5a457bb01349d440be2a",
+    "PLAN.md": "95df72a4e3c7d99d12402dd385ea10237e4e8c3a8bc8c9afa1791bef9e82ed00",
+    "actor.py": "775804e7c148981ed910e985731bac2c16ed87a4a89385f572c4409f10cba2ca",
+    "audit.py": "bb826ae954cd75a461f83468a4a2f44a981d9fb9085068d1295b5caa46f4070c",
+    "runner.py": "95f1a1011a063f29a7ab530cf95dbab06c4270ab5f370939edbbf78ce442ae11",
+    "test_audit.py": "7f549dc10933095880355f058ce69248b1c4d018d19f530854f895830c72de35",
+    "worker.py": "66a7ba9332ca1dc917212e0ff8da5dd797fb48adca1272030e530e781a95e202"
+  },
+  "formal_batches": [
+    1,
+    2,
+    3
+  ],
+  "formal_cases": 24,
+  "formal_started": false,
+  "issue": 4144,
+  "schema": "agent-interface/referenced-image-gc-concurrency-freeze-v1",
+  "worker_timeout_seconds": 12
+}

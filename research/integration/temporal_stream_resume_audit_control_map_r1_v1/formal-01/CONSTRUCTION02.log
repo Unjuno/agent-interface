@@ -1,0 +1,5 @@
+Post-freeze synthetic-only Docker unit test; no #4447/#4511 evidence mounted.
+
+Docker Desktop Engine 29.8.0; python:3.13.5-slim-bookworm, linux/amd64; --pull=never --network none --read-only.
+Command: python -I -S -B /study/test_control_map.py
+Exit code: 0. Three tests passed. No frozen source files changed after the test.

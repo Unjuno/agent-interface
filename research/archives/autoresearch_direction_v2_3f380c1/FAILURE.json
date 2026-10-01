@@ -1,0 +1,24 @@
+{
+  "schema": "map01-direction-v2-failure-v1",
+  "allocation": "stage1-direction-source-closed-v2",
+  "freeze_commit": "ca8f7209bc47ee1eca8536d3517770897b54152a",
+  "decision": "FAIL_MEASUREMENT_INTEGRITY",
+  "formal_cases_completed": 0,
+  "sessions_started": 1,
+  "measured_actions_submitted": 0,
+  "failed_case": "p01-original-a1-attack_only",
+  "failure_phase": "controller clock handshake before measured action submission",
+  "exception": "TimeoutError: session event timeout; rc=None",
+  "root_cause": "runner _next_json used select() on the child stdout file descriptor together with a buffered TextIO readline(); the child emitted the requested clock event, but it could already reside in Python's userspace text buffer while select() waited for new kernel bytes, producing a false timeout",
+  "evidence": {
+    "preflight_sha256": "efbb9e6e738b23fcc65b32df997f6f7ca3262920bdeda0a68c266e47bc0613a0",
+    "controller_stdout_sha256": "b00820fa4cfcd6c9ee4b3b4ff166dc0e18e0163a67c309ae9356c58f79822e77",
+    "session_events_sha256": "2eaf1c1f250dc743ee63586f26bd2fb95615e4b9373e5bc236ab7b0e0be58046",
+    "controller_commands_before_failure": ["clock"],
+    "clock_event_present_in_session_events": true,
+    "accepted_events_before_failure": 0,
+    "terminal_events_before_failure": 0
+  },
+  "posthoc_policy": "Do not patch or rerun v2. A corrected reader requires a distinct v3 allocation and a new premeasurement freeze.",
+  "scientific_inference": "none; no policy action was submitted and no efficacy comparison was measured"
+}

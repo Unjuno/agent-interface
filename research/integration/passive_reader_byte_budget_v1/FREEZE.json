@@ -1,0 +1,62 @@
+{
+  "allocation": "byte-budget-3977-20260922-01",
+  "base": "b2457b746a6df06f6536585dfe2ab937aff639f4",
+  "command": [
+    "python",
+    "-B",
+    "run.py",
+    "--mode",
+    "formal",
+    "--out",
+    "/mnt/data/issue3977/formal-01",
+    "--freeze",
+    "FREEZE.json"
+  ],
+  "construction_cases": 2,
+  "construction_cli_calls": 14,
+  "construction_corruption_controls": 10,
+  "formal_invocations_before_freeze": 0,
+  "issue": 3977,
+  "sources": {
+    "ENVIRONMENT.json": {
+      "bytes": 530,
+      "git_blob": "0773e4aaf40cffc33ea271af132ecd79ea9a16ea",
+      "sha256": "abd7b0dde7cd14f6b059459ceabf5eab21031f65fe43f27b7fb99e0a2c1951d6"
+    },
+    "PLAN.md": {
+      "bytes": 4649,
+      "git_blob": "c7c760662a9cd7313dde04bd5982cf7354315967",
+      "sha256": "3e5319d59e2daca95eb0b336bae0696472d264ce9333f5b5d85e959dd797e834"
+    },
+    "audit.py": {
+      "bytes": 8791,
+      "git_blob": "8c17c3058afea98de32e2e154cbffd2852e72356",
+      "sha256": "271e6300fe38e3e5b44afb97f7fce74c7fbf77d8fa0c3ca4e0d932b89b8f9e79"
+    },
+    "run.py": {
+      "bytes": 7919,
+      "git_blob": "064bdfbd30eb098ab18c38ea42b2533cfc87736e",
+      "sha256": "1ffb9270aec8abf033d3dd89f21af2e227b18317330690bb5c61953178a38c70"
+    },
+    "test_audit.py": {
+      "bytes": 3527,
+      "git_blob": "7b84518765dec98859ae19b80a7b6c4d2519dab3",
+      "sha256": "6ecc4149cd6ad8b97b19660e72e5282d7a8a175ac57ae913e6fa3f91f32a972f"
+    },
+    "upstream/__main__.py": {
+      "bytes": 1753,
+      "git_blob": "1a97a659113666ccaa254ab2bf5dc0306e217015",
+      "sha256": "61486b4a063374f1794f5f4db22715901d64ff151693f22e23fc628faccf7b9b"
+    },
+    "upstream/ledger.py": {
+      "bytes": 2027,
+      "git_blob": "fb50be9d4d821a7836e6a0158c53a983f0f91df5",
+      "sha256": "9aba4584cc23457ccee0554b8dd6a0bd26ebbf9e35098975d7ea99f35e7c28b9"
+    },
+    "upstream/reader.py": {
+      "bytes": 3689,
+      "git_blob": "ea72c166c2cea511ea91031dfbb14563fe4e3245",
+      "sha256": "5917fdbda5b2d3dbef5856ba9cc5c8463a07022ad8a31113ec3fdf9b21034240"
+    }
+  }
+}

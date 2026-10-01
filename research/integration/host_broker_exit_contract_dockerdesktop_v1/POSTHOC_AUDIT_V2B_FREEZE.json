@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "audit_allocation_id": "dockerdesktop-20260926-posthoc-audit-v2-02",
+  "formal_allocation_id": "dockerdesktop-20260926-02",
+  "prior_audit_allocation": {
+    "id": "dockerdesktop-20260926-posthoc-audit-v2-01",
+    "result_path": "formal/dockerdesktop-20260926-02/posthoc_audit_v2",
+    "disposition": "STOP_AUDITOR_UNRECOGNIZED_ARGUMENT",
+    "container_exit_code": 2,
+    "audit_function_entered": false,
+    "preserve_unchanged": true
+  },
+  "delta": "Omit unsupported --evidence /evidence CLI arguments and use a distinct output path and container name. Auditor source, formal evidence, expected outcomes, Docker image, and isolation policy are unchanged.",
+  "container_name": "agent-interface-3926-posthoc-audit03-20260926",
+  "result_path": "formal/dockerdesktop-20260926-02/posthoc_audit_v2b",
+  "image": {
+    "reference": "python:3.12-slim",
+    "id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "platform": "linux/amd64"
+  },
+  "policy": {
+    "network": "none",
+    "read_only_rootfs": true,
+    "study_mount": "readonly",
+    "runtime_mount": "readonly",
+    "raw_evidence_mount": "readonly",
+    "audit_output_mount": "read-write",
+    "cpus": 1,
+    "memory_bytes": 268435456,
+    "pids_limit": 64,
+    "cap_drop": ["ALL"],
+    "security_opt": "no-new-privileges"
+  },
+  "retry_limit": 0,
+  "pinned_sha256": {
+    "FREEZE.json": "43b0bf608a3660c46f0823aa26be3b0d0b6dbb892c3b7de386399197f84be98b",
+    "audit_contract_posthoc_v2.py": "5741d64667d4ac1716faffbadb14801e233ee529b2c12c28a8d63c392f5a63be",
+    "POSTHOC_AUDIT_V2.md": "b4cc137b4aefedc5f7447c065acd66a03e46dd8afbb5a8a3a7ca9daf4d78ac25",
+    "POSTHOC_AUDIT_V2_FREEZE.json": "7fd6584ce367a28879a405f98469e504f97185617a685150305695f45ceb6f62",
+    "POSTHOC_AUDIT_V2B.md": "442749001751b5d115ccfc0b8897310b947f3f50b87b3241e7e4e3ceafffa982",
+    "formal/dockerdesktop-20260926-02/WRAPPER_STOP.md": "abe747f0509f514f26c149ae691a83723732f074c2f4fa52b2cc63e292e14aa3",
+    "formal/dockerdesktop-20260926-02/formal_run.json": "d7ecad51fad3431ac78d8e2e65b0f10699c3576bc2b5e2db6650cbe739dfe653",
+    "formal/dockerdesktop-20260926-02/formal-container-inspect.json": "559c8de6f69d46d6310909b325d7a2230b9f88cb231cc55d3e0250198dbc193e",
+    "formal/dockerdesktop-20260926-02/formal-docker-stdout.txt": "1835432aa39e619e7bd236e197a1ff7e7eddddcd7facdd430ecec8a28e6a8798",
+    "formal/dockerdesktop-20260926-02/raw/raw_inventory.json": "dfb157e5549f74e6089187749d7bd92566e8645ca83be1d5fcd29f8f3dae0415",
+    "formal/dockerdesktop-20260926-02/raw/formal_summary.json": "723dfc60e38c507c63f53ace5b4b9d39197c5542e86ac4c331aa5b1d12e53ee5",
+    "formal/dockerdesktop-20260926-02/audit/audit.json": "64f315e6a361f4a6f8d164447ec92cf75d5735d4542a516c6f33c5f4e0a81389",
+    "formal/dockerdesktop-20260926-02/posthoc_audit_v2/posthoc-audit-run.json": "ec0d05a524654dfd3f0d4cd29557849244df961e29d47fc593ed57276af88314",
+    "formal/dockerdesktop-20260926-02/posthoc_audit_v2/posthoc-audit-container-inspect.json": "091db7e391a7d07bb0d37de62b6a772abeacbe605b62e73c9d9aedc0e2eeffdc",
+    "formal/dockerdesktop-20260926-02/posthoc_audit_v2/posthoc-audit-docker-stdout.txt": "e60f242e62ac4b373830ab0642deff8dec85e389c290c21df2b0c67726b51530",
+    "formal/dockerdesktop-20260926-02/posthoc_audit_v2/STOP.md": "6f1771a1b58037d3c4ccf65c2dc43f798445da54d77a982d3fa83d3fa94fb1d9"
+  }
+}

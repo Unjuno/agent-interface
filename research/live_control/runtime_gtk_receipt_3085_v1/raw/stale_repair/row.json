@@ -1,0 +1,64 @@
+{
+  "adapter_result": {
+    "authority_granted": false,
+    "cleanup_error": null,
+    "diagnostic": "STALE_OBSERVATION",
+    "lifecycle": [
+      "dispatch"
+    ],
+    "native_status": "refused",
+    "partial_effects": [],
+    "program_completed": false,
+    "raw_dispatch": {
+      "result": {
+        "backend_emissions": 0,
+        "error": "STALE_OBSERVATION",
+        "required_capabilities": [
+          "capture.frame",
+          "clock.monotonic",
+          "display.geometry",
+          "event.feedback",
+          "input.keyboard",
+          "input.pointer",
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ],
+        "status": "refused"
+      },
+      "schema": "agent-interface/runtime-dispatch-result-v1",
+      "status": "returned"
+    },
+    "schema": "golden-v3-result-v2",
+    "status": "refused",
+    "task_success": false,
+    "usage": {}
+  },
+  "authority_granted": false,
+  "case": "stale_repair",
+  "cleanup": "repaired",
+  "delivery": "stale",
+  "disposition": "YIELD",
+  "effect": "none",
+  "events_path": "/out/run/stale_repair/events.jsonl",
+  "formal_receipt": {
+    "authority_grants": 0,
+    "binding_revision": 1,
+    "case": "STALE_REPAIR",
+    "cleanup": {
+      "failure_reason": null,
+      "release_verified": false,
+      "status": "repaired"
+    },
+    "delivery": null,
+    "effect_receipt": {},
+    "input_ledger": [],
+    "observation_revision": 1,
+    "replay_allowed": false,
+    "replay_count": 0,
+    "session_id": "gtk-matrix-stale_repair",
+    "window_id": "2097155"
+  },
+  "independent_effect": null,
+  "replay_allowed": false
+}

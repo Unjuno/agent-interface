@@ -1,0 +1,20 @@
+{
+  "schema": "consumed_transition_readback_plan_v1",
+  "task": "COORD-CONSUMED-TRANSITION-READBACK-20260916-019",
+  "base": "8f08418c71a0a8919dd70b0b762cbae99a239bed",
+  "logical_intent": "advance_once_from_g1",
+  "semantic_content_id": "51ea2d31c0b555b2aad8587f3e78201bd28ab1e41c3850a93824dbfe89e95b90",
+  "initial_confirmation_revision": 1,
+  "cases": ["naive_reissue", "exact_readback", "readback_unavailable"],
+  "order": ["naive_reissue", "exact_readback", "readback_unavailable"],
+  "rules": {
+    "first_transition_commits_once": true,
+    "success_response_hidden_from_classifier": true,
+    "exact_readback_max_gets": 1,
+    "unavailable_classifier_gets": 0,
+    "candidate_refresh_writes_after_recovery": 0,
+    "candidate_replay_writes_after_recovery": 0,
+    "fresh_sha_retry": 0
+  },
+  "decision": "PASS_CONTENT_BOUND_CONSUMED_TRANSITION_READBACK_SCOPED"
+}

@@ -1,0 +1,32 @@
+{
+  "command": {
+    "op": "submit",
+    "id": "confirm",
+    "expected_sequence": 11,
+    "valid_until_ns": 99295687235,
+    "decision_evidence": {
+      "delivery_id": "delivery:16",
+      "observation_sequence": 11,
+      "producer": "assistant"
+    },
+    "steps": [
+      {
+        "op": "key",
+        "key": "Return"
+      }
+    ]
+  },
+  "image": {
+    "status": "image",
+    "sequence": 11,
+    "capture_ns": 69250261035,
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/prepared-checkpoint-self-use-01/006.png",
+    "relative_path": "006.png",
+    "sha256": "65da3ae06d78f8ccbbecb96794c5d12b8a56d7ad2067ea93a4c38b26c8615e32",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation"
+  },
+  "source_clock_ns": 69295687235,
+  "lease_ms": 30000,
+  "authority": "none; historical deadline, viewing and runtime admission remain required"
+}

@@ -1,0 +1,65 @@
+{
+  "affinity": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "captured_utc": "2026-09-21T21:20:21.372101+00:00",
+  "docker": null,
+  "executables": {
+    "Xvfb": {
+      "path": "/usr/bin/Xvfb",
+      "sha256": "4efd5850f0d98c587195ef77be92916dd1578fb725ddd1b2d95d232042813c5e"
+    },
+    "python3": {
+      "path": "/opt/pyvenv/bin/python3",
+      "sha256": "17b78e0a93175e86f9ac03141924fd7a7f0c0c52e66b34bfa0de20ffef989df1"
+    },
+    "xauth": {
+      "path": "/usr/bin/xauth",
+      "sha256": "39e89b8530af1402b6b6f845309fc5a578c9ef9105412fa7198927ce92e7199d"
+    }
+  },
+  "packages": {
+    "pillow": "12.3.0"
+  },
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "podman": null,
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "python_modules": {
+    "Xlib.display": {
+      "path": "/opt/pyvenv/lib/python3.13/site-packages/Xlib/display.py",
+      "sha256": "30b6672bd549392978674c318c363bd4a9a2d91974658b514632aaa8c4f1490f"
+    },
+    "Xlib.ext.xtest": {
+      "path": "/opt/pyvenv/lib/python3.13/site-packages/Xlib/ext/xtest.py",
+      "sha256": "5a79fadfca4ebcb828e6c75a02d9f6e1817e78b0a0f6f41b7193bdee92f8df4f"
+    },
+    "tkinter": {
+      "path": "/usr/lib/python3.13/tkinter/__init__.py",
+      "sha256": "ff41974fefe63ecadca4ed69572ded1e6d5a0fbd7cb41e34c1b38934427dc42e"
+    }
+  },
+  "scope": "provided execution container; no Docker/OrbStack image identity; unpinned CPU frequency/load",
+  "shared_libraries": {
+    "libX11.so.6": {
+      "path": "/usr/lib/x86_64-linux-gnu/libX11.so.6.4.0",
+      "sha256": "b03e563b316b8b53c7988f0ee91d6656cc425538e00947a8b14482d179e80099"
+    },
+    "libXtst.so.6": {
+      "path": "/usr/lib/x86_64-linux-gnu/libXtst.so.6.1.0",
+      "sha256": "90289665882c7f141ef6ac4853c17ac473d8644576db5d86961433ed3c586eac"
+    },
+    "libtcl8.6.so": {
+      "path": "/usr/lib/x86_64-linux-gnu/libtcl8.6.so",
+      "sha256": "209f61ff2bca70b84450e7e40f664efeb05f533b12e79b49a55da295e8150af9"
+    },
+    "libtk8.6.so": {
+      "path": "/usr/lib/x86_64-linux-gnu/libtk8.6.so",
+      "sha256": "7a9a2111be27c36e31a7f78c4dd83cac7badf92d3a11a5cbc1de21f0b7ecf798"
+    }
+  },
+  "tcl": "8.6.16"
+}

@@ -1,0 +1,53 @@
+{
+  "passed": true,
+  "decision": "RETAIN_SINGLE_TILE_PLACEMENT",
+  "model_calls": 4,
+  "model_usage_total": {
+    "input_tokens": 34967,
+    "cached_input_tokens": 4864,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 912,
+    "reasoning_output_tokens": 671
+  },
+  "world_point": [
+    368,
+    392
+  ],
+  "world_receipt_frames": 7,
+  "button_down_ids": [
+    "select-conveyor",
+    "place-one-conveyor"
+  ],
+  "exact_frames": 33,
+  "terminal_count": 6,
+  "independent_evaluation": {
+    "status": "VERIFIED",
+    "contract_satisfied": true,
+    "wrong_target": false,
+    "collateral_tiles": [],
+    "source_preserved": true,
+    "core_preserved": true,
+    "copper_delta": -1,
+    "paused_idle_completion": true,
+    "guard_tiles": 112,
+    "scope": "one changed-geometry Mindustry placement; no delivery or route-completion claim"
+  },
+  "controls": {
+    "wrong_rotation": "CONTRADICTED",
+    "collateral": "CONTRADICTED",
+    "wrong_cost": "CONTRADICTED",
+    "pending_plan": "CONTRADICTED",
+    "malformed_target": "UNKNOWN"
+  },
+  "timing_ms": {
+    "world_hover_submit_to_return": 2008.754045,
+    "decision_start_to_world_receipt_ready": 36559.207165,
+    "decision_start_to_semantic_world_target": 46467.482485,
+    "fixed_build_wait": 3000.104274,
+    "decision_start_to_independent_evaluation": 53462.741245
+  },
+  "cleanup": {
+    "all_owned_processes_exited": true,
+    "save_unchanged": true
+  }
+}

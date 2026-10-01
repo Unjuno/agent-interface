@@ -1,0 +1,28 @@
+{
+  "task":"OBSERVATION-GATING-O4-LOCAL-VERIFY-ESCALATION-R0-20260918-001",
+  "issue":1650,
+  "base":"0c7e6da4f84c7e091ad2d807bdf5fcd2ed2db7ec",
+  "branch":"research/observation-o4-local-verify-r0-1650",
+  "formal_invocations_before_exact_readback":0,
+  "remote_git_blobs":{
+    "PLAN.md":"51bb167125f501e6bc1fc895022027acbccdc169",
+    "formal.py":"606f167803058d1e4a8aa65ff6e72ffae804a8d8",
+    "audit.py":"4f67669d080f3928875804e7131e2dce90806362",
+    "CONSTRUCTION.json":"96e27e728c1396de63ee81efda2db4cae54d4a5b"
+  },
+  "local_git_blob_readback":{
+    "formal.py":"606f167803058d1e4a8aa65ff6e72ffae804a8d8",
+    "audit.py":"4f67669d080f3928875804e7131e2dce90806362"
+  },
+  "sha256":{
+    "formal.py":"758688704c55bb2841bc9363dc942ef1fbc98d00604a8c941ede40f6bce9567f",
+    "audit.py":"e7fce86caacf8ab639ccb57b9ca1da43ceb471e9d6c2e4df94ef7ff5c2a1aec8",
+    "RESULT.json":"f1567e7f45c2edee4b3da938e5548568407ec02a8282b8dfbcb6db01c2d75a55",
+    "AUDIT.json":"d9ed04bafe421de6b8a15d66fa0c447b63703d9e8ee4a5c80d2a130cd14ecdfa"
+  },
+  "preformal_integrity_incident":"A first post-freeze local execution used scientifically equivalent but byte-nonidentical local source with comments retained. It was rejected before formal classification, not published as a result, and did not consume the exact-frozen formal allocation. Exact remote Git-blob identity was then proven before formal1.",
+  "formal_invocations":1,
+  "reruns":0,
+  "replacements":0,
+  "tuning":0
+}

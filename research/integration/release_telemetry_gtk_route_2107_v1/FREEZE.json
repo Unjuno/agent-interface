@@ -1,0 +1,29 @@
+{
+  "allocation": "issue2107-gtk-release-decision-formal-01-20260927",
+  "formal_invocations": 1,
+  "base_commit": "92596bfb750be63c03d3d2906a05d5a5933651c2",
+  "preregistration_pr": 4595,
+  "preregistration_publication_commit": "7a41bbea87569971f648129041c3f8d200a8a44e",
+  "branch": "research/issue-2107-gtk-release-gdkpixbuf-20260927",
+  "integration_path": "research/integration/release_telemetry_gtk_route_2107_v1/",
+  "image_id": "sha256:eb3ce9f5bd0cf358664b9d1ff9bce4cf2ce9f82f72ec700222046fb8fe8b96ba",
+  "image_platform": "linux/amd64",
+  "container_policy": "--pull=never --network none --read-only; source ro; evidence rw; bounded tmpfs",
+  "source_sha256": {
+    "research/integration/release_telemetry_gtk_route_2107_v1/README.md": "6d9304ff1856dfa3a10e26c2ff32a8805226c3999fa024a5b006022fc94962d9",
+    "research/integration/release_telemetry_gtk_route_2107_v1/PREREGISTRATION.md": "19c24ac07cbc13fd78724f00d46d44b462ac09713db3a35318a538b4d1dbf917",
+    "research/integration/release_telemetry_gtk_route_2107_v1/CONSTRUCTION.md": "6a4c116ea32a59315085120f5f463ac4e8945c4ce4de7ab54d2c69ec79e9b215",
+    "research/integration/release_telemetry_gtk_route_2107_v1/test_construction.py": "36f5c465b354edc9a3455b0ee5bf9a5f7103fea986e9d844ddbb74dcc0397af9",
+    "research/integration/release_telemetry_gtk_route_2107_v1/schedule.py": "06ee6c8346b5f2dc9d03af1fc5bad786f644ad9efa73fd957e578cdc909926cd",
+    "research/integration/release_telemetry_gtk_route_2107_v1/runner.py": "940600c5053e9cfe499b125f90c8c1c86ea6e83e66aa2496ba6fb165e10db041",
+    "research/integration/release_telemetry_gtk_route_2107_v1/fixture.py": "e6548f242790df854b7ef9425aec7218752d7faae239ac5c117acd2b2d66949f",
+    "research/integration/release_telemetry_gtk_route_2107_v1/policy.py": "35aaa748ce7d406f72f517df3fe8aa55e079eb2d42be926cf17cfd83220eeccb",
+    "research/integration/release_telemetry_gtk_route_2107_v1/xwd_state.py": "cb05edde4920febd0e596f7e866aed8b4774676aeb4b75458b56f9c2cd35dbfa",
+    "research/integration/release_telemetry_gtk_route_2107_v1/audit.py": "d28e1504a55068cf58c1d073623bfbbf587698797bc6e2041f17516962728dc3",
+    "research/live_control/input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "research/live_control/input_owner_v11.py": "4f6b61026117d4d9be8a973c65d491fe8a9b0ebbc90bd98c0738cd0aac09821c",
+    "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "research/live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+  },
+  "formal_docker_command": "docker run --rm --pull=never --network none --read-only --tmpfs /tmp:rw,size=256m -v C:/path/to/frozen/repo:/repo:ro -v C:/path/to/frozen/repo/research/integration/release_telemetry_gtk_route_2107_v1/evidence:/evidence -w /repo --entrypoint /usr/bin/python3 sha256:eb3ce9f5bd0cf358664b9d1ff9bce4cf2ce9f82f72ec700222046fb8fe8b96ba /repo/research/integration/release_telemetry_gtk_route_2107_v1/runner.py --mode formal --out /evidence/formal01 --freeze-commit <freeze-commit>"
+}

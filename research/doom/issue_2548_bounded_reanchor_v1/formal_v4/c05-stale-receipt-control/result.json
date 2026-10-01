@@ -1,0 +1,67 @@
+{
+  "arm": "recovery",
+  "candidate": "stale",
+  "candidate_receipt": {
+    "capture_ns": 2730808965650,
+    "frame_rgb_sha256": "1a456c937a1566b912b55ceb1d3f32dceac735c9dee81c64dd71f46e5f5e6e7d",
+    "image": "/work/out/c05-stale-receipt-control/runtime/021.png",
+    "sequence": 21,
+    "session_id": "4df7865da52d4e919d182f9031bcc45c"
+  },
+  "capture_fresh": true,
+  "captured_fresh_receipt": {
+    "capture_ns": 2730910138423,
+    "frame_rgb_sha256": "a40706177ca0f4d56ceaa0cce75ab4e1334a3de7caf1d7da56c260c4fd716944",
+    "image": "/work/out/c05-stale-receipt-control/runtime/022.png",
+    "sequence": 22,
+    "session_id": "4df7865da52d4e919d182f9031bcc45c"
+  },
+  "event_count": 90,
+  "fresh_observation_count": 1,
+  "guard_only": {
+    "admission": "REJECT_CONTEXT_CHANGED",
+    "mae": 0.044417209923267365
+  },
+  "id": "c05-stale-receipt-control",
+  "old_receipt": {
+    "capture_ns": 2730808965650,
+    "frame_rgb_sha256": "1a456c937a1566b912b55ceb1d3f32dceac735c9dee81c64dd71f46e5f5e6e7d",
+    "image": "/work/out/c05-stale-receipt-control/runtime/021.png",
+    "sequence": 21,
+    "session_id": "4df7865da52d4e919d182f9031bcc45c"
+  },
+  "reanchor": {
+    "admission": "REJECT_PROVENANCE",
+    "fresh_receipt_id": "4df7865da52d4e919d182f9031bcc45c:21",
+    "mae": null,
+    "old_receipt_id": "4df7865da52d4e919d182f9031bcc45c:21",
+    "reason": "STALE_OR_DUPLICATE_RECEIPT"
+  },
+  "release": {
+    "buttons_down": [],
+    "event": "owner_release",
+    "keys_down": [],
+    "reason": "release",
+    "valid_until_ns": 2733769676681,
+    "verified": true,
+    "verified_ns": 2730993891132
+  },
+  "runtime_sources_sha256": "3bb0fe420f21b682c5739d1e6d1e0ae6996847fceaa5818f0f17a3219437c5f8",
+  "schema": "bounded-fresh-reanchor-case-v2",
+  "score": {
+    "death_count": 0,
+    "kill_count": 0,
+    "map_exit": false,
+    "player_dead": false
+  },
+  "seed": 254815,
+  "session_id": "4df7865da52d4e919d182f9031bcc45c",
+  "source_receipt": {
+    "capture_ns": 2728681073588,
+    "frame_rgb_sha256": "660239613e924063fd7fbba6c0c2b90305550c0158e2e08fe5096ddc7a8f53af",
+    "image": "/work/out/c05-stale-receipt-control/runtime/001.png",
+    "sequence": 1,
+    "session_id": "4df7865da52d4e919d182f9031bcc45c"
+  },
+  "terminal_status": "completed"
+}

@@ -1,0 +1,32 @@
+{
+  "allocation": "issue4448-construction-pilot-04",
+  "arm_session_wall_ns": {
+    "ephemeral": 351908202,
+    "resident": 94112162
+  },
+  "classification": "PASS_CONSTRUCTION_MECHANICS_ONLY",
+  "corruption_controls": {
+    "child_identity": true,
+    "effect_sequence": true,
+    "latency": true,
+    "process_exit": true,
+    "release": true
+  },
+  "corruption_rejected": 5,
+  "corruption_total": 5,
+  "effect_to_next_ready_ns": {
+    "ephemeral": {
+      "max": 10532560,
+      "median": 9074900.5,
+      "n": 4
+    },
+    "resident": {
+      "max": 128252,
+      "median": 94126.0,
+      "n": 4
+    }
+  },
+  "errors": [],
+  "result_sha256": "e4e9635e47cab7b05b373787cfd177f14a150d784f400d65c5b95f2847ca7b89",
+  "scope": "single construction pair on linux/arm64; no formal or x86_64 claim"
+}

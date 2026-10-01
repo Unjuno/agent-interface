@@ -1,0 +1,48 @@
+{
+  "audit": "PASS",
+  "rows": 50,
+  "errors": [],
+  "totals": {
+    "central_oracle": {
+      "admitted_tasks": 173,
+      "safe_admitted_value": 2162,
+      "safe_shortfall_value": 1883,
+      "selected_cost": 2361,
+      "unsafe_admissions": 0
+    },
+    "scalar_unconstrained": {
+      "admitted_tasks": 250,
+      "safe_admitted_value": 179,
+      "safe_shortfall_value": 672,
+      "selected_cost": 2687,
+      "unsafe_admissions": 236
+    },
+    "scarcity_first": {
+      "admitted_tasks": 162,
+      "safe_admitted_value": 1794,
+      "safe_shortfall_value": 2251,
+      "selected_cost": 2296,
+      "unsafe_admissions": 0
+    },
+    "value_first": {
+      "admitted_tasks": 153,
+      "safe_admitted_value": 1981,
+      "safe_shortfall_value": 2064,
+      "selected_cost": 1970,
+      "unsafe_admissions": 0
+    }
+  },
+  "checks": {
+    "oracle_is_exact_maximum_safe_value": true,
+    "constrained_policies_have_zero_unsafe_admissions": true,
+    "safe_capacity_not_reused": true,
+    "metrics_reconciled_from_trace": true,
+    "unsafe_role_alias_mutation_rejected": true,
+    "reused_agent_mutation_rejected": true
+  },
+  "preregistered_decision": {
+    "scarcity_reduces_shortfall": false,
+    "scarcity_cost_within_125_percent": true,
+    "disposition": "FAIL_HYPOTHESIS_SCARCITY_FIRST_WORSE_ON_FIXED_MATRIX"
+  }
+}

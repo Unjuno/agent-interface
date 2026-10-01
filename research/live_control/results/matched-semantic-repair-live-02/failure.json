@@ -1,0 +1,61 @@
+{
+  "schema": "matched-semantic-repair-failure-v2",
+  "formal_passed": false,
+  "failure_class": "model_reacquisition_outlived_source_observation_freshness",
+  "diagnosis": "Arm1 completed local repair and independent submission. In arm2, both initial and post-resize Luna-low turns completed and the reacquired Save point equaled [270,243], but the post-resize source observation was already older than its 3000ms freshness limit after 8262.886ms of model wait. The model-derived handle therefore refused STALE before contract derivation or Submit.",
+  "preserved_invariants": [
+    "stale visual evidence granted no target or input authority",
+    "arm2 began no Submit program",
+    "all completed arm2 GUI prefix programs and owner close released empty input",
+    "no incomplete arm was included in comparison metrics"
+  ],
+  "completed_local_arm": {
+    "correct": true,
+    "released": true,
+    "usage": {
+      "input_tokens": 9351,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 173,
+      "reasoning_output_tokens": 58
+    },
+    "metrics_ms": {
+      "recovery_from_resized_capture_ms": 122.670354,
+      "recovery_local_compute_ms": 26.532432,
+      "model_wait_ms": 13518.438095,
+      "admission_to_first_feedback_ms": 145.775304,
+      "admission_to_useful_feedback_ms": 263.129955,
+      "useful_probe_compute_ms": 3.459978,
+      "useful_probe_to_image_ready_ms": 23.404557,
+      "useful_client_to_terminal_ms": 181.04902,
+      "model_calls": 1,
+      "model_visible_images": 1,
+      "input_tokens": 9351,
+      "client_exchanges": 2
+    }
+  },
+  "stopped_model_arm": {
+    "initial_outcome": "COMPLETED",
+    "reacquisition_outcome": "COMPLETED",
+    "reacquired_submit_point": [
+      270,
+      243
+    ],
+    "reacquisition_wait_ms": 8262.885752
+  },
+  "model_accounting": {
+    "successful_calls": 3,
+    "input_tokens": 28053,
+    "visible_images": 3,
+    "call_ids": [
+      "01a0a31c-7ea3-70a3-8e3c-22acb471215c",
+      "01a0a31c-bf5b-7c81-ac53-bfbb9f09969c",
+      "01a0a31c-de54-7d33-a4f4-0afa88a0ef3d"
+    ],
+    "cost": null
+  },
+  "comparison_metrics": null,
+  "repair_boundary": "After a completed reacquisition, take one passive current exact observation and revalidate the model-derived patch on that observation before deriving a contract or admitting input.",
+  "retry_count": 0,
+  "scope": "One frozen seed214 Linux/X11 allocation. Arm1 completed one correct local repair; arm2 stopped after its completed reacquisition because the model-visible frame was stale. Arms3-4 did not start. This is failure and safety-boundary evidence, not a balanced token/recovery comparison, rate, general grounding, portability or human-tempo result."
+}

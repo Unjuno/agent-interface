@@ -1,0 +1,13 @@
+{
+  "allocation_id": "map01-finite-clear-attempt-v1",
+  "issue": 2679,
+  "mode": "ASYNC_SPECTATOR",
+  "target_tics_per_second": 35,
+  "controller_evidence": ["screen", "audio"],
+  "input": "OS keyboard/mouse through existing X11 backend",
+  "prohibited": ["pause", "save_state", "automap", "object_labels", "sector_labels", "hidden_pose", "privileged_game_state"],
+  "result_namespace": "research/doom/map01_finite_clear_attempt_v1/results/",
+  "outcomes": ["PASS_FINITE_CLEAR_SCOPED", "FAIL_FINITE_CLEAR_NO_EXIT", "HOLD_INFRASTRUCTURE"],
+  "required_trace": ["raw_observations", "actions", "releases", "decision_trace", "game_tic", "wall_time", "observation_age", "capture_rate", "render_rate", "independent_terminal_score", "provenance_hashes", "synchronized_video_when_available"],
+  "claims_excluded": ["general_gameplay_competence", "human_speed", "token_efficiency", "broad_gui_generality", "public_demo_readiness"]
+}

@@ -1,0 +1,78 @@
+{
+  "scope": "eight fixed-image calls; same image/common prompt; only evidence differs; no actions execute",
+  "summary": {
+    "A": {
+      "calls": 4,
+      "expected_decisions": 4,
+      "kinds": [
+        "wait_and_check",
+        "wait_and_check",
+        "wait_and_check",
+        "wait_and_check"
+      ],
+      "input_tokens": [
+        9759,
+        9759,
+        9759,
+        9759
+      ],
+      "cached_input_tokens": [
+        0,
+        0,
+        6912,
+        6912
+      ],
+      "output_tokens": [
+        73,
+        68,
+        116,
+        64
+      ],
+      "runner_s": [
+        5.8594518,
+        6.5476351,
+        5.824917,
+        5.9152425
+      ]
+    },
+    "B": {
+      "calls": 4,
+      "expected_decisions": 4,
+      "kinds": [
+        "submit_once",
+        "submit_once",
+        "submit_once",
+        "submit_once"
+      ],
+      "input_tokens": [
+        9485,
+        9485,
+        9485,
+        9485
+      ],
+      "cached_input_tokens": [
+        1792,
+        1792,
+        9216,
+        1792
+      ],
+      "output_tokens": [
+        171,
+        116,
+        133,
+        185
+      ],
+      "runner_s": [
+        7.1311693,
+        5.7138589,
+        6.5553327,
+        9.043079
+      ]
+    }
+  },
+  "all_expected_decisions": true,
+  "verify_on_unknown": 0,
+  "strict_mean_input_tokens": 9759.0,
+  "lossy_mean_input_tokens": 9485.0,
+  "interpretation": "prior execution evidence changed wait-versus-submit decision in this declared fixture; four samples per condition are not a reliability bound"
+}

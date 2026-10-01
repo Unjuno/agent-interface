@@ -1,0 +1,18 @@
+{
+  "provenance": "assistant conversation report, not instrumented model receipts",
+  "controller": "assistant with scripted observe/stale fault setup",
+  "history_and_image_same_response": true,
+  "reviewed_before_move": true,
+  "visible_truncation": false,
+  "bridge_exit_code_observed": 0,
+  "task_outer_calls": 5,
+  "outer_call_phases": [
+    "initial image",
+    "observe plus deliberately stale attempt",
+    "read pending clock plus image",
+    "move-save plus image",
+    "finish and bridge poll"
+  ],
+  "actual_model_tokens": null,
+  "actual_model_cost": null
+}

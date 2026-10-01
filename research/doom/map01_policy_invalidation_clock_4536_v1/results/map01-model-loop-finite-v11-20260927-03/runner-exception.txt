@@ -1,0 +1,17 @@
+Formal allocation invoked once with seed 990639; it stopped and is consumed.
+
+Traceback (most recent call last):
+  File "research/doom/map01_policy_invalidation_clock_4536_v1/adapter.py", line 47, in <module>
+    main()
+  File "research/doom/map01_policy_invalidation_clock_4536_v1/adapter.py", line 43, in main
+    v10.main()
+  File "research/doom/map01_model_loop_finite_v10/adapter.py", line 36, in main
+    module.main()
+  File "research/doom/map01_overlap_controller_v39.py", line 813, in main
+  File "research/doom/map01_policy_invalidation_clock_4536_v1/clock_translation.py", line 20, in translate_invalidation
+    raise ValueError("exact host-domain invalidation receipt required")
+ValueError: exact host-domain invalidation receipt required
+
+The helper rejected a monitor invalidation object carrying metadata beyond
+timestamp_domain, outcome_evaluated_ns, and outcome. The actual object was not
+persisted before rejection. Do not infer its exact outcome/status or timestamp.

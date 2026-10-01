@@ -1,0 +1,33 @@
+{
+  "schema": "gpu-grounding-template-diversity-preformal-v2",
+  "issue": 4567,
+  "allocation": "gpu-grounding-template-diversity-2912-successor-02",
+  "source_commit": "d823943868ff73e81fed278e9a00ca6422fdf50d",
+  "disposition": "PREFORMAL_CONSTRUCTION_PASS_FORMAL_COMPLETE_FAIL_HELDOUT_COORDINATE_QUALITY",
+  "corpus": {
+    "manifest_sha256": "bff0c9edc8f4b1a0d1fcb7d3577faba6d752e38bb8182879a4af0ff3f7ea2d8a",
+    "records": 240,
+    "image_hashes_checked": 240,
+    "unique_images": 240,
+    "lineage": "reused unchanged from issue 4546 synthetic construction; not a new data collection"
+  },
+  "checks": {
+    "py_compile": "PASS",
+    "cpu_tests_passed": 7,
+    "cpu_tests_failed": 0,
+    "path_traversal_rejected": true,
+    "cuda_tests": "1 passed; deterministic repeated CUDA forward/backward; zero optimizer updates",
+    "gpu_idle_snapshot": "2026-09-27 03:16:23 UTC; RTX 3080 0% utilization, 11 MiB / 16384 MiB; no compute app reported GPU memory",
+    "optimizer_updates": 0
+  },
+  "formal_invocations_completed": 1,
+  "formal_audit": "PASS; integrity_errors=0",
+  "formal_disposition": "FAIL_HELDOUT_COORDINATE_QUALITY",
+  "formal_exact_coordinates": {
+    "narrow": "0/240",
+    "broad": "0/240",
+    "broad_family_rates": {"T09": 0.0, "T10": 0.0, "T11": 0.0, "T12": 0.0}
+  },
+  "formal_schema_valid": "480/480",
+  "formal_optimizer_updates": 3000
+}

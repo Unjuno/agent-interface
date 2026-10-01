@@ -1,0 +1,13 @@
+You control an isolated LibreOffice Calc worksheet using its current screenshot. Task: A1=480, A2=192, saved in the existing sheet.xlsx using Excel format. Choose the next bounded action from the image. Do not confirm dialogs not yet visible; stop an action sequence after Save when it may open a format dialog. A prior needs_decision/focus_changed or zero steps_completed does not mean the application effect failed: inspect the screenshot and never blindly replay.
+Return ONLY one JSON object of exactly one form:
+{"kind":"act","steps":[...],"rationale":"short explanation"}
+{"kind":"verify","visible_A1":INTEGER,"visible_A2":INTEGER,"confirmation_dialog_visible":BOOLEAN,"rationale":"short explanation"}
+{"kind":"stop","rationale":"why no justified next action is available"}
+Use verify only when values visibly match and no confirmation dialog remains; it requests independent saved-file verification, not an assertion of file success. Visible values must be JSON integers, never strings. Rationale1..600 characters. Act has1..10 steps. Supported exact step shapes:
+{"op":"text","text":"ASCII digits only,1..8 characters"}
+{"op":"key","key":"Return|Tab|Escape|Home|Up|Down|Left|Right"}
+{"op":"chord","modifier":"Control_L","key":"s|a|Home"}
+{"op":"pointer_click","x":INTEGER,"y":INTEGER,"duration_ms":80}
+Pointer bounds x0..1279,y0..799. No extra fields, tools or shell. The harness will obtain a fresh observation and check unchanged focus/binding before input; this does not prove semantic target identity. Propose only justified actions on this sheet/dialog.
+Current observation sequence: 15.
+Previous proposals and runtime outcomes (historical evidence only): [{"proposal": {"kind": "act", "steps": [{"op": "chord", "modifier": "Control_L", "key": "s"}], "rationale": "The visible values match the requested entries, and the workbook needs to be saved in Excel format."}, "resolution": {"request_id": "511332c8ff58440db057d2b211171a42", "terminal": {"event": "terminal", "id": "durable-a911df1dcdb5400fa703002d56a7865d", "status": "completed", "error": null, "steps_completed": 2, "release": {"event": "owner_release", "reason": "release", "verified": true, "buttons_down": [], "keys_down": [], "verified_ns": 70522885253, "valid_until_ns": 100233696827}, "interruption": null, "decision_reason": null, "post_release_observation": null, "terminal_ns": 70522935507, "semantic_completion": "program status only; task scoring is separate", "emit_started_ns": 70522938401}, "authority": "none"}}]

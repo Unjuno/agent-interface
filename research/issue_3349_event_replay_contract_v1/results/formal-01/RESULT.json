@@ -1,0 +1,71 @@
+{
+  "audit": "PASS_REPRODUCES_DECLARED_CANDIDATE_BEHAVIOR",
+  "candidate_disposition": "FAIL_MERGED_REPLAY_SCOPE_BUG",
+  "candidate_source_sha256": "4e700b05c60626e73070eb6f5883d9341c8b1374996d45f08e5766fc6cb0f463",
+  "cases": [
+    {
+      "candidate_behavior_matches_declared": true,
+      "case": "matching_retained_terminal",
+      "expected": "return",
+      "frozen_candidate": "return",
+      "independent_policy": "return",
+      "policy_pass": true,
+      "returned_id": "A"
+    },
+    {
+      "candidate_behavior_matches_declared": true,
+      "case": "matching_queued_fallback_response",
+      "expected": "return",
+      "frozen_candidate": "return",
+      "independent_policy": "return",
+      "policy_pass": true,
+      "returned_id": "fallback"
+    },
+    {
+      "candidate_behavior_matches_declared": true,
+      "case": "stale_accepted_prelude",
+      "expected": "wait",
+      "frozen_candidate": "stale_wrong_identity_returned",
+      "independent_policy": "wait",
+      "policy_pass": true,
+      "returned_id": "prelude"
+    },
+    {
+      "candidate_behavior_matches_declared": true,
+      "case": "stale_rejected_prelude",
+      "expected": "wait",
+      "frozen_candidate": "stale_wrong_identity_returned",
+      "independent_policy": "wait",
+      "policy_pass": true,
+      "returned_id": "prelude"
+    },
+    {
+      "candidate_behavior_matches_declared": true,
+      "case": "duplicate_terminal_history",
+      "expected": "ambiguous_duplicate",
+      "frozen_candidate": "returned_first_ambiguous",
+      "independent_policy": "ambiguous_duplicate",
+      "policy_pass": true,
+      "returned_id": "A"
+    },
+    {
+      "candidate_behavior_matches_declared": true,
+      "case": "wrong_terminal_identifier",
+      "expected": "wait",
+      "frozen_candidate": "stale_wrong_identity_returned",
+      "independent_policy": "wait",
+      "policy_pass": true,
+      "returned_id": "other"
+    },
+    {
+      "candidate_behavior_matches_declared": true,
+      "case": "unrelated_retained_then_queued_response",
+      "expected": "return",
+      "frozen_candidate": "return",
+      "independent_policy": "return",
+      "policy_pass": true,
+      "returned_id": "fallback"
+    }
+  ],
+  "interpretation": "wrong-ID early return causing false rejection or wait interruption, not unsafe input admission; contract-only, no MAP01/GUI/model/formal allocation"
+}

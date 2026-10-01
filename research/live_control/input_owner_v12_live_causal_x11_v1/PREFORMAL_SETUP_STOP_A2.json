@@ -1,0 +1,28 @@
+{
+  "baseline_exceptions": ["XauthError: ~/.Xauthority: [Errno 2] No such file or directory: '/opt/xvfb/.Xauthority'"],
+  "candidate_exceptions": ["XauthError: ~/.Xauthority: [Errno 2] No such file or directory: '/opt/xvfb/.Xauthority'"],
+  "cleanup": [
+    {"fixture_exit": -15, "socket_exists_after": false, "xvfb_exit": 0},
+    {"fixture_exit": -15, "socket_exists_after": false, "xvfb_exit": 0}
+  ],
+  "construction_sessions_consumed": 2,
+  "construction_sha256": "7174c9210aff91e8d45a6cbd391b51390edef7f168aba0e1c2dc7eefa3a4ae8f",
+  "environment": {"platform": "Linux-6.18.44-x86_64-with-glibc2.41", "python": "3.13.5", "xvfb": "installed"},
+  "failure": "XauthError: ~/.Xauthority missing at /opt/xvfb/.Xauthority before owner/XTEST input",
+  "failure_class": "fixture_xauthority_setup",
+  "formal_invocations": 0,
+  "hold_ms": 150,
+  "input_key": "F8",
+  "issue": 1099,
+  "live_input_calls_completed": 0,
+  "next_legal_step": "fresh harness-only successor; fix only private-display Xauthority plumbing, require new explicit finite lease before any live sessions",
+  "reruns": 0,
+  "scientific_disposition": "NONE",
+  "source_v2_runner_sha256": "514a724858acabcef6554b14535d637dbed9dd16488b16af51d90761f5cb84db",
+  "status": "PREFORMAL_SETUP_STOP_A2",
+  "task": "INPUT-OWNER-V12-LIVE-CAUSAL-X11-20260918-001",
+  "terminal_key_sampled": false,
+  "v10_git_blob": "341b3c01649943ddaad5f28431a792c4889cc36e",
+  "v12_bundle_sha256": "5960543c9d9193b5615da2b545eb7a385a4d2e17bfe12513731bf9e92f948422",
+  "v12_sha256": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508"
+}

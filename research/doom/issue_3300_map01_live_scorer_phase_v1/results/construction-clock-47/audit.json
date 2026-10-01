@@ -1,0 +1,123 @@
+{
+  "decision": "HOLD_ZERO_TIC_ACTION_DID_NOT_REFRESH_SNAPSHOT",
+  "errors": [],
+  "formal_allocation": false,
+  "input": "research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-47/raw.jsonl",
+  "limitations": [
+    "The zero-tic API call is still an intervention.",
+    "Internal source-clock instrumentation is unbounded/perturbative.",
+    "This rejects only the zero-tic refresh hypothesis and does not identify passive scorer phase or authorize formal allocation."
+  ],
+  "reports": [
+    {
+      "api_tic_after_zero": 1,
+      "checks": {
+        "cleanup": true,
+        "engine_trace_contiguous": true,
+        "passive_api_stays_1": true,
+        "pre_scorer_stays_1": true,
+        "setup": true,
+        "zero_call_does_not_refresh_api": true,
+        "zero_call_does_not_refresh_scorer": true,
+        "zero_call_returns": true
+      },
+      "cleanup": {
+        "game_closed": true
+      },
+      "engine_trace_count": 57,
+      "engine_trace_viz_range": [
+        1,
+        57
+      ],
+      "index": 0,
+      "passive_reads": 112,
+      "passive_tics": [
+        1
+      ],
+      "scorer_tics_after": [
+        1,
+        1
+      ],
+      "scorer_tics_before": [
+        1,
+        1
+      ],
+      "zero_duration_ns": 151916,
+      "zero_status": "returned"
+    },
+    {
+      "api_tic_after_zero": 1,
+      "checks": {
+        "cleanup": true,
+        "engine_trace_contiguous": true,
+        "passive_api_stays_1": true,
+        "pre_scorer_stays_1": true,
+        "setup": true,
+        "zero_call_does_not_refresh_api": true,
+        "zero_call_does_not_refresh_scorer": true,
+        "zero_call_returns": true
+      },
+      "cleanup": {
+        "game_closed": true
+      },
+      "engine_trace_count": 57,
+      "engine_trace_viz_range": [
+        1,
+        57
+      ],
+      "index": 1,
+      "passive_reads": 113,
+      "passive_tics": [
+        1
+      ],
+      "scorer_tics_after": [
+        1,
+        1
+      ],
+      "scorer_tics_before": [
+        1,
+        1
+      ],
+      "zero_duration_ns": 385916,
+      "zero_status": "returned"
+    },
+    {
+      "api_tic_after_zero": 1,
+      "checks": {
+        "cleanup": true,
+        "engine_trace_contiguous": true,
+        "passive_api_stays_1": true,
+        "pre_scorer_stays_1": true,
+        "setup": true,
+        "zero_call_does_not_refresh_api": true,
+        "zero_call_does_not_refresh_scorer": true,
+        "zero_call_returns": true
+      },
+      "cleanup": {
+        "game_closed": true
+      },
+      "engine_trace_count": 57,
+      "engine_trace_viz_range": [
+        1,
+        57
+      ],
+      "index": 2,
+      "passive_reads": 118,
+      "passive_tics": [
+        1
+      ],
+      "scorer_tics_after": [
+        1,
+        1
+      ],
+      "scorer_tics_before": [
+        1,
+        1
+      ],
+      "zero_duration_ns": 92916,
+      "zero_status": "returned"
+    }
+  ],
+  "rows": 3,
+  "schema": "issue3453-construction-clock47-independent-audit-v1"
+}

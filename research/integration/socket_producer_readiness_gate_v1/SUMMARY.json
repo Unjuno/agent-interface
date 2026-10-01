@@ -1,0 +1,23 @@
+{
+  "audit_sha256": "981b48dded76c582c3417f3c73f3784dc7b87b1d0dc7dfcb9eaa6de451f064e7",
+  "baseline_timeouts": 6,
+  "candidate_boundaries": 6,
+  "decision": "PASS_SOCKET_FIRST_RECORD_READINESS_SCOPED",
+  "formal_invocations": 1,
+  "formal_reruns": 0,
+  "formal_rows": 12,
+  "freeze_sha256": "9b5bd223fabc064df78ec836f207647615f3f9e7b2f7af063956ecc113a68170",
+  "preflight": "6/6 unit tests; silent/malformed false-ready controls pass",
+  "result_sha256": "d38c151055ad41e94cac9165d7783f160a81000d4b1f5a2091edae3880861f02",
+  "timing": {
+    "endpoint_only": {
+      "endpoint_wait_ms": {"max": 518.505239, "median": 488.673557, "min": 454.149199},
+      "read_ms": {"max": 50.786723, "median": 50.689255, "min": 50.591381}
+    },
+    "first_record_gate": {
+      "append_to_publish_ms": {"max": 0.154418, "median": 0.070494, "min": 0.057772},
+      "endpoint_wait_ms": {"max": 1103.208145, "median": 1071.2179715000002, "min": 1040.287108},
+      "read_ms": {"max": 1.202194, "median": 0.5937705, "min": 0.565353}
+    }
+  }
+}

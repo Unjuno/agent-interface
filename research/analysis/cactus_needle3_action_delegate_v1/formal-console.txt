@@ -1,0 +1,3 @@
+/opt/experiment/runner.py:244: UserWarning: finetuning does not update the confidence head, so scores are uncalibrated for tuned weights; this agent reports confidence as None
+  agent = needle.Needle(tools=TOOLS, weights=str(model_path), auto_date=False)
+{"out": "/out/raw.json", "sha256": "c362c42ec959c9321cfc6179c5d2f8a995b0add7586bdedbe72568bd8a3ce668", "case_count": 7, "all_macro_exact": true, "model_exact_count": 3, "warm_p95_ms": 5501.485}

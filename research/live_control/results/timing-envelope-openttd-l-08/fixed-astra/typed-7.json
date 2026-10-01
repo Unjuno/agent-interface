@@ -1,0 +1,22 @@
+{
+  "kind": "act",
+  "steps": [
+    {
+      "op": "pointer_move",
+      "x": 990,
+      "y": 110
+    },
+    {
+      "op": "dwell_observe",
+      "delay_ms": 1600
+    }
+  ],
+  "rationale": "The first leg remains difficult to distinguish from terrain shadows beneath the floating signs. Move the construction cursor off the land to obtain an unobstructed observation before adding the corner\u2019s second segment.",
+  "intent": "inspect",
+  "expected_effect": "The land is shown without a construction tile highlight, allowing another assessment of the road surface between A and B.",
+  "checkpoint": {
+    "prior_turn": 5,
+    "status": "uncertain",
+    "evidence": "The cost popup has cleared, but a continuous three-tile road between the underlying A and B tiles is not clearly distinguishable from the dark terrain beneath the signs."
+  }
+}

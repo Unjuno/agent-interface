@@ -1,0 +1,61 @@
+{
+  "app": "inkscape",
+  "audit_pass": true,
+  "candidate_observations": 8,
+  "captured_pixels": 8192000,
+  "compare_ns_total": 0,
+  "controller_wall_ms": 274.613953,
+  "exact_repeat_opportunities": 1,
+  "false_suppressions": 0,
+  "goal": {
+    "a": 506,
+    "b": 384,
+    "dx": 36,
+    "setup_readiness_captures": 3,
+    "token": "t001304"
+  },
+  "hash_compute_ns_in_gate": 0,
+  "input_events": 22,
+  "launch_ms": 2340.876761,
+  "logical_ops": 4,
+  "missed_changes": 0,
+  "model_calls": 0,
+  "model_visible_observations": 8,
+  "model_visible_pixels": 8192000,
+  "oracle": {
+    "actual": {
+      "height": "30",
+      "transform": null,
+      "width": "40",
+      "x": "70.338982",
+      "y": "50"
+    },
+    "known_ns": 233753856716,
+    "success": true
+  },
+  "oracle_after_controller_ms": 10.425158,
+  "parameters": {
+    "calc_setup_readiness": "painted worksheet: >20% near-white pixels and >128 colors; setup only",
+    "char_gap_ms": 2.0,
+    "display": "Xvfb 1280x800x24 + Openbox + XTEST",
+    "first_feedback": "fresh image or timestamped unchanged-image reference with public X11 context",
+    "first_feedback_is_semantic_completion": false,
+    "gate": "exact dimensions + mode + immutable pixel bytes; no hash/threshold",
+    "inkscape_selection_barrier": "visible dark selector handles on all four sides of acquired red object",
+    "inkscape_setup_readiness": "visible red document target before task timing",
+    "model_calls": 0,
+    "motion_gap_ms": 4.0,
+    "oracle_timeout_s": 3.0,
+    "poll_ms": 16.0,
+    "press_dwell_ms": 5.0,
+    "public_timeout_s": 4.0,
+    "reset": "fresh X server, WM, application process, HOME, XDG and profile per episode"
+  },
+  "reconstruction_errors": 0,
+  "same_trace_o1_visible": 7,
+  "seed": 1304,
+  "strategy": "O0",
+  "success": true,
+  "suppressed_observations": 0,
+  "task_wall_ms": 285.039111
+}

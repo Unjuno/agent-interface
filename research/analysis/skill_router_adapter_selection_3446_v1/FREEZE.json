@@ -1,0 +1,37 @@
+{
+  "allocation": "skill-router-adapter-selection-3446-20260923-01",
+  "audit_command": "python3 -B audit.py FORMAL_RAW.json CORPUS.json --out AUDIT.json",
+  "base_main": "ec42ffec1c093a14c270fb1758f8bf93f8f25a12",
+  "construction_excluded": true,
+  "controls_command": "python3 -B controls.py",
+  "formal_command": "python3 -B runner.py formal --corpus CORPUS.json --out FORMAL_RAW.json",
+  "formal_invocations_before_freeze": 0,
+  "formal_reruns_before_freeze": 0,
+  "formal_rows": 48,
+  "gates": "PLAN.md / Issue #3446 claim comment 5794736300",
+  "policies": [
+    "CONFIDENCE_ONLY",
+    "EVIDENCE_BOUND"
+  ],
+  "scenarios": [
+    "NOMINAL_BROWSER",
+    "NOMINAL_FILE",
+    "NOMINAL_GUI",
+    "CROSS_DOMAIN_AMBIGUOUS",
+    "ADAPTER_UNAVAILABLE",
+    "STALE_CONTEXT",
+    "SCOPE_MISMATCH",
+    "INTERFERENCE"
+  ],
+  "source_sha256": {
+    "CONSTRUCTION.json": "1d7e5e96e9ed1dd366590fdc3a0b1b71781fe8bf8ca412f837d129403c6d9fb9",
+    "CORPUS.json": "4bfbc2cf65ce533a061ca47af718b67d7ddbb1a604470858a92964fded47bd74",
+    "ENVIRONMENT.json": "155f921be758df9141697c1e99098088d004800c0765c5b0f879068ad2718ee3",
+    "PLAN.md": "1357dfe4f2caf92a2c25b77a420a10ef1b1bea8642af1348dcf63e03ca743381",
+    "audit.py": "59f75ef6c3e483048669acd8ed60850d04f7c908d347bd3108252ccd610a3367",
+    "controls.py": "e4401f4a1bd9157379ba90f42fb2148062c73b7f13f9d05cc03ac33f2eeeb208",
+    "make_corpus.py": "ede37c08e1904fd46816fcf7f2c71a2ce49f9886eb53c46dcf436765418eface",
+    "runner.py": "90f725016fa8affc172a5f0af70a7e32522f2fab00204c2e216e737ed4f00180"
+  },
+  "threshold": 0.75
+}

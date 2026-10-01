@@ -1,0 +1,64 @@
+{
+  "schema": "chromium_procedure_guarded_macro_fixture_v1",
+  "provenance": {
+    "base": "e4b7f2589d807bfc9e3c688bc3906131a70b779c",
+    "source_path": "research/live_control/results/integrated-efficiency-live-01/arms/persistent/task-details.json",
+    "source_blob": "fde6950c45e216956a774e71830c5af7298d0000",
+    "persistent_client_blob": "ace0366f2c5252c9dab3927c664cb58234b5ff03"
+  },
+  "compile_example": {
+    "task_id": "task-1",
+    "token": "t991028-1",
+    "context": {"focus": 6291459, "surface": 6291459, "geometry": [10,10,1050,780]},
+    "grounding": {
+      "field_point": [226,401],
+      "submit_point": [376,401],
+      "method": {
+        "first_action": "enter_exact_token",
+        "continue_when": "field_pixels_changed_and_submit_revalidated",
+        "second_action": "activate_submit",
+        "complete_when": "submission_pixels_changed_then_independent_score"
+      }
+    },
+    "resolved_aliases": {"field": "persistent_a_field", "submit": "persistent_a_submit"},
+    "layout": "A"
+  },
+  "states": [
+    {
+      "state_id": "task2_a", "task_id": "task-2", "layout": "A", "token": "t991028-2",
+      "context": {"focus":6291459,"surface":6291459,"geometry":[10,10,1050,780]},
+      "controller": {"field_handle":"persistent_a_field","field_status":"eligible","submit_handle":"persistent_a_submit","submit_status":"eligible"},
+      "evaluator": {"current_field_point":[226,401],"current_submit_point":[376,401],"current_field_handle":"persistent_a_field","current_submit_handle":"persistent_a_submit","expected_candidate":"ACTION"}
+    },
+    {
+      "state_id": "task3_a", "task_id": "task-3", "layout": "A", "token": "t991028-3",
+      "context": {"focus":6291459,"surface":6291459,"geometry":[10,10,1050,780]},
+      "controller": {"field_handle":"persistent_a_field","field_status":"eligible","submit_handle":"persistent_a_submit","submit_status":"eligible"},
+      "evaluator": {"current_field_point":[226,401],"current_submit_point":[376,401],"current_field_handle":"persistent_a_field","current_submit_handle":"persistent_a_submit","expected_candidate":"ACTION"}
+    },
+    {
+      "state_id": "task4_pre_repair", "task_id": "task-4", "layout": "B", "token": "t991028-4",
+      "context": {"focus":6291459,"surface":6291459,"geometry":[10,10,1050,780]},
+      "controller": {"field_handle":"persistent_a_field","field_status":"missing","submit_handle":"persistent_a_submit","submit_status":"unknown"},
+      "evaluator": {"current_field_point":[650,559],"current_submit_point":[689,634],"current_field_handle":"persistent_b_field","current_submit_handle":"persistent_b_submit","expected_candidate":"YIELD","retained_old_reference_status":"missing","retained_old_target_pointer_admissions":0}
+    },
+    {
+      "state_id": "task4_post_repair", "task_id": "task-4", "layout": "B", "token": "t991028-4",
+      "context": {"focus":6291459,"surface":6291459,"geometry":[10,10,1050,780]},
+      "controller": {"field_handle":"persistent_b_field","field_status":"eligible","submit_handle":"persistent_b_submit","submit_status":"eligible"},
+      "evaluator": {"current_field_point":[650,559],"current_submit_point":[689,634],"current_field_handle":"persistent_b_field","current_submit_handle":"persistent_b_submit","expected_candidate":"ACTION"}
+    },
+    {
+      "state_id": "task5_b", "task_id": "task-5", "layout": "B", "token": "t991028-5",
+      "context": {"focus":6291459,"surface":6291459,"geometry":[10,10,1050,780]},
+      "controller": {"field_handle":"persistent_b_field","field_status":"eligible","submit_handle":"persistent_b_submit","submit_status":"eligible"},
+      "evaluator": {"current_field_point":[650,559],"current_submit_point":[689,634],"current_field_handle":"persistent_b_field","current_submit_handle":"persistent_b_submit","expected_candidate":"ACTION"}
+    },
+    {
+      "state_id": "task6_b", "task_id": "task-6", "layout": "B", "token": "t991028-6",
+      "context": {"focus":6291459,"surface":6291459,"geometry":[10,10,1050,780]},
+      "controller": {"field_handle":"persistent_b_field","field_status":"eligible","submit_handle":"persistent_b_submit","submit_status":"eligible"},
+      "evaluator": {"current_field_point":[650,559],"current_submit_point":[689,634],"current_field_handle":"persistent_b_field","current_submit_handle":"persistent_b_submit","expected_candidate":"ACTION"}
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "map01-live-two-dispatch-v1-prereg",
+  "status": "FROZEN_BEFORE_FIRST_FORMAL_MATCHED_BLOCK",
+  "question": "After a real MAP01 quiet-hold authority ends at an owner deadline and emits one bounded passive post-authority observation, can a second physical input be admitted only after a newer observe-only current observation and ordinary caller revalidation, while reusing the post observation stops with zero second input?",
+  "fixture": "map01-threat-contact-v2",
+  "skill": 1,
+  "model_calls": 0,
+  "first_program": {"steps":[{"op":"hold","keys":["Shift_L"],"duration_ms":2000}],"authority_ms":600},
+  "post_authority": "dual-lifetime executor one passive snapshot after owner-verified expiry",
+  "fresh": "submit one observe-only program from post sequence; require newer current sequence; exact caller v3 ordinary reuse_revalidate/final_revalidate; second Right hold 120 ms under a new submit/Lease; verify_effect deliberately unavailable so no semantic task-success claim",
+  "stale": "reuse post-authority sequence as current; caller must SAFE_STOP stale before second submit",
+  "pairs": 3,
+  "seeds": [994101,994102,994103],
+  "orders": [["FRESH","STALE"],["STALE","FRESH"],["FRESH","STALE"]],
+  "hard_gates": [
+    "all six first terminals status authority_ended",
+    "all six post-authority snapshots have captures=1, sequence_advanced=true, within_lifecycle_deadline=true, no error, no authority regrant or tail resumption",
+    "all six have exactly one owner expired release and it is verified; all owner release records verified",
+    "terminal-score audit passes in all six sessions",
+    "FRESH 3/3 current_sequence > post_sequence, calls reuse_revalidate/final_revalidate/execute/verify_effect, caller outcome TASK_NOT_VERIFIED reason unavailable, exactly one Right input admission, second terminal completed and release verified",
+    "STALE 3/3 current_sequence == post_sequence, caller SAFE_STOP reason stale, calls only reuse_revalidate, zero Right input admissions and no second terminal"
+  ],
+  "PASS": "all hard gates pass",
+  "FAIL": "any hard gate fails",
+  "claim_scope": "real ViZDoom/X11 model-free authority/freshness handoff only; no task-success/gameplay-efficacy/model claim"
+}

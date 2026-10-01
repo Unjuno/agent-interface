@@ -1,0 +1,41 @@
+{
+  "decision": "PASS_T0_DETERMINISTIC_CONCURRENCY_SHADOW_SCOPED",
+  "formal_invocations": 1,
+  "n": 120000,
+  "parent_disposition_if_no_residual": "HOLD_DETERMINISTIC_LANE_SUFFICIENT",
+  "phase": "formal",
+  "reruns": 0,
+  "rows": [],
+  "seed": 137820260918001,
+  "summary": {
+    "cases": 120000,
+    "correct_local_disposition_frontier_open_coverage": 0.8888287772602045,
+    "deadline_miss_improvement_pp": 85.80833333333334,
+    "decision_compute_ns": {
+      "max": 268701,
+      "p50": 132.0,
+      "p95": 169.0,
+      "p99": 214.0
+    },
+    "deterministic_correct_disposition_rate": 1.0,
+    "deterministic_deadline_miss_rate": 0.0,
+    "deterministic_deadline_misses": 0,
+    "envelope_violations": 0,
+    "false_advance_hard": 0,
+    "frontier_correct_disposition_rate": 1.0,
+    "frontier_deadline_miss_rate": 0.8580833333333333,
+    "frontier_deadline_misses": 102970,
+    "frontier_schedule": {
+      "request_ns": 0,
+      "return_ns": 40000000
+    },
+    "schedule_mismatches": 0,
+    "whole_local_cycle_ns": {
+      "max": 2768701,
+      "p50": 2500132.0,
+      "p95": 2500169.0,
+      "p99": 2500214.0
+    }
+  },
+  "task": "CONCURRENT-FAST-DECISION-T0-SHADOW-20260918-001"
+}

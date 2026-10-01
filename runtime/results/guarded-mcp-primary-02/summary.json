@@ -1,0 +1,100 @@
+{
+  "status": "PASS_SCOPED_PRIMARY_USE",
+  "seed": 991329,
+  "runtime_source_revision": "2998586f5497e12940fe89992a398a2098298887",
+  "model": "primary assistant; no helper model",
+  "model_tokens": null,
+  "model_cost": null,
+  "task_result": {
+    "schema": "integrated_efficiency_oracle_v1",
+    "known_ns": 575938759738,
+    "success": true,
+    "record_count": 6,
+    "exact_counts": {
+      "task-1": 1,
+      "task-2": 1,
+      "task-3": 1,
+      "task-4": 1,
+      "task-5": 1,
+      "task-6": 1
+    },
+    "unexpected": [],
+    "duplicates": {},
+    "missing": []
+  },
+  "calls": 32,
+  "input_calls": 23,
+  "completed_input_calls": 22,
+  "refused_input_calls": [
+    17
+  ],
+  "mint_calls": 5,
+  "image_responses": 25,
+  "primary_review_receipts": 20,
+  "host_call_return_ms": {
+    "sum": 8358.285200001672,
+    "median": 310.4891499998048,
+    "scope": "Node send through returned relay receipt, including persistence; not model-visible feedback latency"
+  },
+  "elapsed_first_send_to_final_save_return_ms": 223553.55480000004,
+  "timing_limits": "Host and Linux monotonic clocks are separate. Includes primary reasoning/tool orchestration. No matched baseline or human comparison; no speed claim.",
+  "retention": {
+    "original_reply": 29,
+    "retained_reply": 32,
+    "image_bytes_equal": true,
+    "operation_invoked": false
+  },
+  "close": {
+    "status": "closed",
+    "session_id": "43fec9ff5d6c4cbb9226392dbec70e0c",
+    "authority_granted": false,
+    "restart_allowed": false,
+    "release_attempted": true,
+    "connection_close_attempted": true,
+    "release": {
+      "keys_down": [],
+      "buttons_down": [],
+      "verified": true,
+      "monotonic_ns": 562657600962
+    },
+    "session": {
+      "session_id": "43fec9ff5d6c4cbb9226392dbec70e0c",
+      "mode": "guarded-x11",
+      "state": "closed",
+      "binding_revision": 0,
+      "targets": {
+        "browser": 6291459
+      },
+      "recovery_required": false,
+      "error": null,
+      "authority_granted": false,
+      "restart_allowed": false,
+      "target": "browser",
+      "observation_sequence": 93,
+      "review_required": false
+    },
+    "call_directory": "/var/tmp/agent-interface-integrated-main/results-local/guarded-mcp-primary-02/server/57a7b9cd7d4840728be6163d53da37e9",
+    "call_id": "57a7b9cd7d4840728be6163d53da37e9"
+  },
+  "transport_exit": {
+    "code": 0,
+    "signal": null
+  },
+  "fixture_process_exit": 0,
+  "tracked_child_cleanup": [
+    {
+      "pid": 546,
+      "returncode": 0
+    },
+    {
+      "pid": 550,
+      "returncode": 1
+    },
+    {
+      "pid": 556,
+      "returncode": 0
+    }
+  ],
+  "cleanup_limits": "All tracked children terminal; one child exited 1. No claim that every helper exited zero.",
+  "decision": "Integrate as explicit opt-in shared public MCP mode. Preserve existing modes and waits. General efficiency and token benefits remain unproven."
+}

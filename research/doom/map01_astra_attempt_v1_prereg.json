@@ -1,0 +1,32 @@
+{
+  "status": "frozen_before_first_model_call",
+  "issue": 58,
+  "allocation_id": "map01-astra-live-01",
+  "objective": "separately labelled continuously advancing normal-game MAP01 Astra hero attempt",
+  "model": "gpt-6-astra",
+  "effort": "low",
+  "iterations_max": 56,
+  "session_span": 4,
+  "seed": 990609,
+  "map": "MAP01",
+  "skill": 1,
+  "mode": "ASYNC_SPECTATOR",
+  "ticrate": 35,
+  "episode_timeout_seconds": 600,
+  "observations": "visible X11 frames only; 2x2 temporal sheet, newest three prior decision sources plus current source",
+  "actions": "shared X11 OS keyboard input through semantic command compiler; no action vector",
+  "time_rule": "game continues during model calls; no pause, save state, automap, labels or hidden state for controller",
+  "local_reaction": "command-effect receipt threshold <=0.015 and model-authored no-visible-effect contingency; bundle only at contingency boundaries",
+  "stop_rule": "retain the single allocation at model-declared death/exit-transition, 56 decisions, runtime failure, or independent episode timeout; no rerun",
+  "scoring": "independent post-control MAP01 exit, death count, kill count and one-life exit; controller does not receive scorer state",
+  "interpretation": "clear may be used as hero evidence; any unfinished/death/failure remains retained and does not block Research Preview; no model-identity causality claim",
+  "required_post_record": "full report, usage, source frames, runtime events/environment/score, branch receipts, failures and reconstructable video or frame-timed visual record",
+  "source_sha256": {
+    "research/doom/map01_overlap_controller_v17.py": "032176944d954e9c32370004ffcc06b54cfc01dfd31752a91c568b2fcfbecf49",
+    "research/doom/map01_persistent_model_runner_v2.py": "7f4b55817c30f9fb0e7ac75afdfb4768c3234563c2dd8d52550755f3e7cb49bf",
+    "research/doom/map01_motor_responder_v5.txt": "13e0366a30a82e65b7a329847ee81aa020fe2a8880bdd61fd585ecac522e5eb9",
+    "research/doom/map01_contingency_schema_v1.json": "b59096cd713df8653af2bdcea584bf80a1c2f2b957df6a3ef3eb281e211ac723",
+    "research/doom/session_map01_v6.py": "dc6dffa3cf197cfcbbe043349789aece822cefbe921befe0f82719a032a3490c"
+  },
+  "parent_commit": "8dc7502192be680c36a6ee3c645a496e491daa77"
+}

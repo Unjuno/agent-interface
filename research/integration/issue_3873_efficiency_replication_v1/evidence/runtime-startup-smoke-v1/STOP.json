@@ -1,0 +1,12 @@
+{
+  "attempt": "runtime-startup-smoke-v1",
+  "status": "STOP_CONSTRUCTION_SOURCE_CLOSURE",
+  "network": "none",
+  "image_id": "sha256:436172d89b145c6a9f9a57e655422c9558b3b0235347dd77607e9d61bcfa6393",
+  "exit_code": 1,
+  "error": "ModuleNotFoundError: No module named 'unix_json_deadline'",
+  "cause": "The initial partial checkout omitted a transitive runtime source module. This is a packaging/source-closure STOP before runtime startup and before any host model call.",
+  "formal_allocation_started": false,
+  "host_model_calls": 0,
+  "retry_of_formal": false
+}

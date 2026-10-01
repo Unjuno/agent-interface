@@ -1,0 +1,121 @@
+#0 building with "orbstack" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.control
+#1 transferring dockerfile: 863B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/agent-interface-map01-clock-counter-v1:20260920
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/4] FROM docker.io/library/agent-interface-map01-clock-counter-v1:20260920@sha256:fdf45a138d5b025499f6808ae0b8a04a12d2ad4643e6618f913a85e1cfe64e17
+#4 resolve docker.io/library/agent-interface-map01-clock-counter-v1:20260920@sha256:fdf45a138d5b025499f6808ae0b8a04a12d2ad4643e6618f913a85e1cfe64e17 0.0s done
+#4 DONE 0.1s
+
+#5 [internal] load build context
+#5 transferring context: 3.46kB done
+#5 DONE 0.1s
+
+#4 [1/4] FROM docker.io/library/agent-interface-map01-clock-counter-v1:20260920@sha256:fdf45a138d5b025499f6808ae0b8a04a12d2ad4643e6618f913a85e1cfe64e17
+#4 DONE 0.3s
+
+#6 [2/4] RUN git -C /tmp/vizdoom-src apply -R /tmp/vizdoom-tic-counter-v1.patch     && test -z "$(git -C /tmp/vizdoom-src status --porcelain)"     && test "$(git -C /tmp/vizdoom-src rev-parse HEAD)" =        c8e0a31182d98c6f40a65674283e736b851e8e59     && python -m pip uninstall -y vizdoom     && python -m pip install --no-cache-dir --force-reinstall /tmp/vizdoom-src     && python -c 'import vizdoom; print(vizdoom.__version__, vizdoom.__file__)'
+#6 0.502 Found existing installation: vizdoom 1.3.0
+#6 0.503 Uninstalling vizdoom-1.3.0:
+#6 0.553   Successfully uninstalled vizdoom-1.3.0
+#6 0.558 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#6 0.746 Processing /tmp/vizdoom-src
+#6 0.747   Installing build dependencies: started
+#6 2.375   Installing build dependencies: finished with status 'done'
+#6 2.377   Getting requirements to build wheel: started
+#6 2.543   Getting requirements to build wheel: finished with status 'done'
+#6 2.544   Preparing metadata (pyproject.toml): started
+#6 2.683   Preparing metadata (pyproject.toml): finished with status 'done'
+#6 2.984 Collecting numpy (from vizdoom==1.3.0)
+#6 3.132   Downloading numpy-2.4.6-cp311-cp311-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl.metadata (6.6 kB)
+#6 3.162 Collecting gymnasium>=0.28.0 (from vizdoom==1.3.0)
+#6 3.192   Downloading gymnasium-1.3.0-py3-none-any.whl.metadata (10 kB)
+#6 3.296 Collecting pygame-ce>=2.1.3 (from vizdoom==1.3.0)
+#6 3.320   Downloading pygame_ce-2.5.8-cp311-cp311-manylinux2014_aarch64.manylinux_2_17_aarch64.whl.metadata (11 kB)
+#6 3.389 Collecting cloudpickle>=1.2.0 (from gymnasium>=0.28.0->vizdoom==1.3.0)
+#6 3.412   Downloading cloudpickle-3.1.2-py3-none-any.whl.metadata (7.1 kB)
+#6 3.445 Collecting typing-extensions>=4.3.0 (from gymnasium>=0.28.0->vizdoom==1.3.0)
+#6 3.466   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+#6 3.494 Collecting farama-notifications>=0.0.1 (from gymnasium>=0.28.0->vizdoom==1.3.0)
+#6 3.518   Downloading farama_notifications-0.0.6-py3-none-any.whl.metadata (729 bytes)
+#6 3.545 Downloading gymnasium-1.3.0-py3-none-any.whl (953 kB)
+#6 3.639    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 953.9/953.9 kB 10.7 MB/s eta 0:00:00
+#6 3.667 Downloading numpy-2.4.6-cp311-cp311-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl (16.0 MB)
+#6 4.613    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.0/16.0 MB 15.1 MB/s eta 0:00:00
+#6 4.642 Downloading pygame_ce-2.5.8-cp311-cp311-manylinux2014_aarch64.manylinux_2_17_aarch64.whl (12.1 MB)
+#6 5.655    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.1/12.1 MB 11.6 MB/s eta 0:00:00
+#6 5.682 Downloading cloudpickle-3.1.2-py3-none-any.whl (22 kB)
+#6 5.712 Downloading farama_notifications-0.0.6-py3-none-any.whl (2.9 kB)
+#6 5.737 Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+#6 5.742    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 45.6/45.6 kB 41.3 MB/s eta 0:00:00
+#6 5.789 Building wheels for collected packages: vizdoom
+#6 5.789   Building wheel for vizdoom (pyproject.toml): started
+#6 12.97   Building wheel for vizdoom (pyproject.toml): finished with status 'done'
+#6 12.98   Created wheel for vizdoom: filename=vizdoom-1.3.0-cp311-cp311-linux_aarch64.whl size=25000761 sha256=09f208ea4e4f29657e4aefaa6d3441796558749a32eebcf9476ce763429f5617
+#6 12.98   Stored in directory: /tmp/pip-ephem-wheel-cache-jkzvnd2r/wheels/a9/01/1c/1390c3bd1864c797bf720a436f05c8b5a70734c89bbbce74b4
+#6 12.98 Successfully built vizdoom
+#6 13.04 Installing collected packages: farama-notifications, typing-extensions, pygame-ce, numpy, cloudpickle, gymnasium, vizdoom
+#6 13.04   Attempting uninstall: farama-notifications
+#6 13.05     Found existing installation: Farama-Notifications 0.0.6
+#6 13.05     Uninstalling Farama-Notifications-0.0.6:
+#6 13.05       Successfully uninstalled Farama-Notifications-0.0.6
+#6 13.08   Attempting uninstall: typing-extensions
+#6 13.08     Found existing installation: typing_extensions 4.16.0
+#6 13.08     Uninstalling typing_extensions-4.16.0:
+#6 13.09       Successfully uninstalled typing_extensions-4.16.0
+#6 13.11   Attempting uninstall: pygame-ce
+#6 13.11     Found existing installation: pygame-ce 2.5.8
+#6 13.12     Uninstalling pygame-ce-2.5.8:
+#6 13.18       Successfully uninstalled pygame-ce-2.5.8
+#6 13.61   Attempting uninstall: numpy
+#6 13.61     Found existing installation: numpy 2.4.6
+#6 13.64     Uninstalling numpy-2.4.6:
+#6 13.77       Successfully uninstalled numpy-2.4.6
+#6 14.93   Attempting uninstall: cloudpickle
+#6 14.93     Found existing installation: cloudpickle 3.1.2
+#6 14.93     Uninstalling cloudpickle-3.1.2:
+#6 14.93       Successfully uninstalled cloudpickle-3.1.2
+#6 14.94   Attempting uninstall: gymnasium
+#6 14.95     Found existing installation: gymnasium 1.3.0
+#6 14.95     Uninstalling gymnasium-1.3.0:
+#6 14.98       Successfully uninstalled gymnasium-1.3.0
+#6 15.36 Successfully installed cloudpickle-3.1.2 farama-notifications-0.0.6 gymnasium-1.3.0 numpy-2.4.6 pygame-ce-2.5.8 typing-extensions-4.16.0 vizdoom-1.3.0
+#6 15.36 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#6 15.50 
+#6 15.50 [notice] A new release of pip is available: 24.0 -> 26.2.1
+#6 15.50 [notice] To update, run: pip install --upgrade pip
+#6 15.65 1.3.0 /usr/local/lib/python3.11/site-packages/vizdoom/__init__.py
+#6 DONE 15.8s
+
+#7 [3/4] RUN objdump -d "$(python -c 'import vizdoom,pathlib;print(pathlib.Path(vizdoom.__file__).parent/"vizdoom")')"     > /tmp/control-disassembly.txt     && ! grep -qE '\bmrs[[:space:]]+x0,[[:space:]]*cntvct_el0\b' /tmp/control-disassembly.txt
+#7 0.217   File "<string>", line 1
+#7 0.217     import vizdoom,pathlib;print(pathlib.Path(vizdoom.__file__).parent/\"vizdoom\")
+#7 0.217                                                                         ^
+#7 0.217 SyntaxError: unexpected character after line continuation character
+#7 0.220 objdump: '': No such file
+#7 ERROR: process "/bin/sh -c objdump -d \"$(python -c 'import vizdoom,pathlib;print(pathlib.Path(vizdoom.__file__).parent/\\\"vizdoom\\\")')\"     > /tmp/control-disassembly.txt     && ! grep -qE '\\bmrs[[:space:]]+x0,[[:space:]]*cntvct_el0\\b' /tmp/control-disassembly.txt" did not complete successfully: exit code: 1
+------
+ > [3/4] RUN objdump -d "$(python -c 'import vizdoom,pathlib;print(pathlib.Path(vizdoom.__file__).parent/"vizdoom")')"     > /tmp/control-disassembly.txt     && ! grep -qE '\bmrs[[:space:]]+x0,[[:space:]]*cntvct_el0\b' /tmp/control-disassembly.txt:
+0.217   File "<string>", line 1
+0.217     import vizdoom,pathlib;print(pathlib.Path(vizdoom.__file__).parent/\"vizdoom\")
+0.217                                                                         ^
+0.217 SyntaxError: unexpected character after line continuation character
+0.220 objdump: '': No such file
+------
+Dockerfile.control:9
+--------------------
+   8 |         && python -c 'import vizdoom; print(vizdoom.__version__, vizdoom.__file__)'
+   9 | >>> RUN objdump -d "$(python -c 'import vizdoom,pathlib;print(pathlib.Path(vizdoom.__file__).parent/\"vizdoom\")')" \
+  10 | >>>     > /tmp/control-disassembly.txt \
+  11 | >>>     && ! grep -qE '\bmrs[[:space:]]+x0,[[:space:]]*cntvct_el0\b' /tmp/control-disassembly.txt
+  12 |     COPY probe49.py /probe49.py
+--------------------
+ERROR: failed to build: failed to solve: process "/bin/sh -c objdump -d \"$(python -c 'import vizdoom,pathlib;print(pathlib.Path(vizdoom.__file__).parent/\\\"vizdoom\\\")')\"     > /tmp/control-disassembly.txt     && ! grep -qE '\\bmrs[[:space:]]+x0,[[:space:]]*cntvct_el0\\b' /tmp/control-disassembly.txt" did not complete successfully: exit code: 1

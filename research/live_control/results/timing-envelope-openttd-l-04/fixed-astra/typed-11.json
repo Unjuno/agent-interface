@@ -1,0 +1,22 @@
+{
+  "kind": "act",
+  "steps": [
+    {
+      "op": "pointer_move",
+      "x": 840,
+      "y": 220
+    },
+    {
+      "op": "dwell_observe",
+      "delay_ms": 800
+    }
+  ],
+  "rationale": "Inspect the pending A-to-B segment after the presentation change before adding the B-to-C segment.",
+  "intent": "inspect",
+  "expected_effect": "A fresh unobstructed observation allows checking for continuous pavement between A and B and road clearance around X.",
+  "checkpoint": {
+    "prior_turn": 5,
+    "status": "uncertain",
+    "evidence": "The Road Construction toolbar and A, B, C labels are visible, but continuous pavement from A to B cannot be distinguished in the textured terrain beneath the corner labels."
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "clock_provenance_complete": false,
+  "decision": "BLOCKED_RETAINED_V39_TIMING_ENDPOINTS",
+  "intervals": {
+    "accept_to_input_ack": {
+      "reasons": [
+        "CLOCK_PROVENANCE_MISSING"
+      ],
+      "reportable": false
+    },
+    "input_to_useful": {
+      "reasons": [
+        "first_useful_effect:NOT_RECORDED",
+        "CLOCK_PROVENANCE_MISSING"
+      ],
+      "reportable": false
+    },
+    "observation_to_useful": {
+      "reasons": [
+        "first_useful_effect:NOT_RECORDED",
+        "CLOCK_PROVENANCE_MISSING"
+      ],
+      "reportable": false
+    },
+    "planner_wait": {
+      "reasons": [
+        "planner_request:ROLE_NOT_RETAINED",
+        "CLOCK_PROVENANCE_MISSING"
+      ],
+      "reportable": false
+    },
+    "response_to_accept": {
+      "reasons": [
+        "CLOCK_PROVENANCE_MISSING"
+      ],
+      "reportable": false
+    },
+    "useful_to_terminal": {
+      "reasons": [
+        "first_useful_effect:NOT_RECORDED",
+        "CLOCK_PROVENANCE_MISSING"
+      ],
+      "reportable": false
+    }
+  },
+  "reportable_count": 0,
+  "total_intervals": 6
+}

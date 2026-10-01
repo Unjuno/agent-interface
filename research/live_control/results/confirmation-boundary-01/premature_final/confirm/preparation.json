@@ -1,0 +1,45 @@
+{
+  "command": {
+    "op": "submit",
+    "id": "confirm",
+    "expected_sequence": 16,
+    "valid_until_ns": 37563411778,
+    "decision_evidence": {
+      "delivery_id": "delivery:24",
+      "observation_sequence": 16,
+      "producer": "scripted"
+    },
+    "steps": [
+      {
+        "op": "key",
+        "key": "Tab"
+      },
+      {
+        "op": "key",
+        "key": "space"
+      },
+      {
+        "op": "key",
+        "key": "Tab"
+      },
+      {
+        "op": "key",
+        "key": "Return"
+      }
+    ],
+    "finish_after": true
+  },
+  "image": {
+    "status": "image",
+    "sequence": 16,
+    "capture_ns": 7519170573,
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/confirmation-boundary-01/premature_final/runtime/012.png",
+    "relative_path": "012.png",
+    "sha256": "14256f24d28e829b6716cbcd2fe6c03d24a9030f70adc6380957dc53e741887f",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation"
+  },
+  "source_clock_ns": 7563411778,
+  "lease_ms": 30000,
+  "authority": "none; historical deadline, viewing and runtime admission remain required"
+}

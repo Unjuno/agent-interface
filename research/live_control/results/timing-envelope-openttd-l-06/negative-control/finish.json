@@ -1,0 +1,220 @@
+{
+  "request": {
+    "after": 15,
+    "events": [
+      "independent_evaluation"
+    ],
+    "timeout": 25,
+    "command": {
+      "op": "finish"
+    },
+    "request_id": "finish-once"
+  },
+  "reply": {
+    "status": "boundary",
+    "records": [
+      {
+        "event": "command",
+        "command": {
+          "op": "finish",
+          "transport_request_id": "finish-once"
+        },
+        "emitted_ns": 18811201311904
+      },
+      {
+        "event": "independent_evaluation",
+        "success": false,
+        "checks": {
+          "target_owned_roads": false,
+          "ordered_bidirectional_connections": false,
+          "forbidden_tiles_clear": true,
+          "surrounding_road_owner_unchanged": true
+        },
+        "changed_surrounding_tiles": [],
+        "contract": {
+          "x": 17,
+          "y": 15,
+          "width": 64,
+          "target": [
+            977,
+            978,
+            979,
+            1043,
+            1107
+          ],
+          "forbidden": [
+            1041,
+            1042,
+            1105,
+            1106
+          ],
+          "owner": 0,
+          "guard": [
+            847,
+            848,
+            849,
+            850,
+            851,
+            852,
+            853,
+            911,
+            912,
+            913,
+            914,
+            915,
+            916,
+            917,
+            975,
+            976,
+            977,
+            978,
+            979,
+            980,
+            981,
+            1039,
+            1040,
+            1041,
+            1042,
+            1043,
+            1044,
+            1045,
+            1103,
+            1104,
+            1105,
+            1106,
+            1107,
+            1108,
+            1109,
+            1167,
+            1168,
+            1169,
+            1170,
+            1171,
+            1172,
+            1173,
+            1231,
+            1232,
+            1233,
+            1234,
+            1235,
+            1236,
+            1237
+          ]
+        },
+        "emitted_ns": 18811322275564
+      }
+    ],
+    "cursor": 17,
+    "returned_ns": 18811324571786,
+    "authority": "none",
+    "acknowledgement": "not implied",
+    "command_receipt": {
+      "request_id": "finish-once",
+      "replayed": false,
+      "state": "stdin_flushed"
+    }
+  },
+  "continuation": {
+    "authority": "none",
+    "channel_closed": false,
+    "clocks": {
+      "69608c8d49b841ef89e8b2be9b24662f": {
+        "echo_cursor": 3,
+        "record": {
+          "emitted_ns": 18810722582616,
+          "event": "clock",
+          "runtime_ns": 18810722577952,
+          "sequence": 1
+        },
+        "record_cursor": 4
+      }
+    },
+    "cursor": 17,
+    "format": "received-continuation-v1",
+    "observation": {
+      "capture_ms": 3.089202,
+      "capture_ns": 18810975159860,
+      "context": [
+        [
+          "windows",
+          "0x00a00002  0 HPLaptop OpenTTD 13.4\n"
+        ],
+        [
+          "active_window",
+          10485762
+        ]
+      ],
+      "context_ns": 18810981436502,
+      "emitted_ns": 18811085038758,
+      "event": "observation",
+      "exact": true,
+      "focus_samples_match": true,
+      "id": "durable-6719c156548347618e15566a8202f32d",
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/timing-envelope-openttd-l-06/negative-control/runtime/003.png",
+      "image_prepare_ns": 64146232,
+      "image_ready_ns": 18811081738373,
+      "image_reused": false,
+      "input_focus_after": 10485762,
+      "input_focus_before": 10485762,
+      "pointer_binding": {
+        "focus": 10485762,
+        "geometry": [
+          129,
+          40,
+          1024,
+          720
+        ],
+        "surface": 10485762
+      },
+      "pointer_context_after": {
+        "focus": 10485762,
+        "geometry": [
+          129,
+          40,
+          1024,
+          720
+        ],
+        "surface": 10485762
+      },
+      "pointer_context_before": {
+        "focus": 10485762,
+        "geometry": [
+          129,
+          40,
+          1024,
+          720
+        ],
+        "surface": 10485762
+      },
+      "semantic_completion": "unknown",
+      "sequence": 3,
+      "step": 1,
+      "wire_bytes": 183713
+    },
+    "observation_cursor": 13,
+    "pending_clock": null,
+    "record_hashes": [
+      "80e0bd3fbadbf9b6f7ab65b78d19561a2171b9590938a6918fa9af7a9737f463",
+      "53a914c4dab5b9669801662c080c50212e431fb83635dc0bdfc00712f7ea47ce",
+      "05e25db7c1a10cab9668649e268d6ef6b72b1d7d946945ef4a5537fed0ef0318",
+      "ddca9b9e6983de43de92955cd3188d73e8a715b36b7df8ef7510a95407062971",
+      "53c91607c300cdf5525c6d9d7f13022c8670d9025b2b4d58f42784da86a357cd",
+      "f950800c33a70794b24d3fc44b33171b6155f58a59aecd037de1a357c05816cb",
+      "d4be2f6cbd041c8ef46445f01e240eedba77af8585d3ebe4e539c18508d92c26",
+      "670ade5ad919bd973d2c9ad951b93a6998789339b45abc040c3ad6fbebda34e5",
+      "48bae0b0566569c7c7514de39f1ca59c182af17350661a81cfd7a6458e66dd9a",
+      "8e5d2d3d3a0ab738e278f73f6eccd7ebb77344de902ab209c756a02d039da774",
+      "7e90ae5dac0ad7873d27767d9ec50bbf662a32dbca6b9acb015bce52c26ffb35",
+      "5840aa1b84bcdfd1ce42b91d5db84e04c446ed2238ccab9241c427b3755c5a74",
+      "099f66e4da572704780573ce7463bd381199446704d7f32493162736f51d4930",
+      "09ed7d87ff2ee7d7907adb688c375b0871e74398320674526426aabe3bd38633",
+      "8553e2711d65f4462cb0cb4b43dbdf4ee89f93b5ae3746de6433f3dae8287e97",
+      "67a9bd41fbb650f00f91c5e86f75af488c652b50aac9119506968f61a89829c5",
+      "530fc751b966526744d7855bc0365c428ed32480fdf3f0e0c87e6dded23f7a30"
+    ],
+    "session": "/tmp/agent-interface-events-squ9dzsz/events.sock"
+  },
+  "requested_clock_id": null,
+  "matched_clock": null,
+  "authority": "none; current observation and admission still required"
+}

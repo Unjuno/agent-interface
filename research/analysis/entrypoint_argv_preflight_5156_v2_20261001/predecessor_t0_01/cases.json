@@ -1,0 +1,12 @@
+{
+  "schema": "entrypoint-argv-smoke-v1",
+  "allocation": "ENTRYPOINT_ARGV_CONSTRUCTION_5156_T0_20261001_01",
+  "base_main_sha": "5a22b42f0d851d0d4549d197d37680d550b709df",
+  "image": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+  "platform": "linux/amd64",
+  "entrypoint": ["python3"],
+  "expected_argv": ["/work/candidate.py", "--smoke-only", "--output", "/out/raw.json"],
+  "preflight_module": "json",
+  "formal_runner": false,
+  "gui_or_input_authority": false
+}

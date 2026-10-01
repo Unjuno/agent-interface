@@ -1,0 +1,50 @@
+{
+  "schema": "extent-init-sensitivity-execution-v1",
+  "allocation": "tiny-visual-extent-init-sensitivity-4817-20260928-01",
+  "issue": 4983,
+  "invocation_count": 1,
+  "retries": 0,
+  "formal_fits": 0,
+  "construction_fits": 2,
+  "optimizer_steps": 2000,
+  "docker_exit": 0,
+  "elapsed_seconds": 6.1757514,
+  "started_at_utc": "2026-09-27T18:29:08.7279243Z",
+  "ended_at_utc": "2026-09-27T18:29:14.9036757Z",
+  "image_id": "sha256:831247999fbf7e08f61b3e39f6d77ee434f38f6f07f769d00db451e853878067",
+  "image": "pytorch/pytorch:2.5.1-cuda12.1-cudnn9-runtime",
+  "gpu_before": "NVIDIA GeForce RTX 3080 Laptop GPU; 16384 MiB; 0 MiB; 0%",
+  "gpu_after": "NVIDIA GeForce RTX 3080 Laptop GPU; 0 MiB; 0%",
+  "running_containers_after": [
+    "cranky_panini",
+    "agent-interface-570-r3-ollama"
+  ],
+  "exact_host_command": "docker run --rm --pull=never --network none --gpus all --read-only --cpus=1 --memory=2g --pids-limit=64 --tmpfs /tmp:rw,noexec,nosuid,size=256m --mount source=<source>,target=/src,readonly --mount source=<output>,target=/out --env CUBLAS_WORKSPACE_CONFIG=:4096:8 --entrypoint python sha256:831247999fbf7e08f61b3e39f6d77ee434f38f6f07f769d00db451e853878067 -B /src/run_cuda.py /out",
+  "source_sha256": {
+    "run_cuda.py": "37b6c60f85fedf83d9baea4410385f2c71f28976fe84e0ef84f00df6b3d3fbe0",
+    "audit_cpu.py": "0f56d346289100efefdaa7b59edfc0bb3ac786cad18ed9b7284c63672d90c1e8",
+    "rebuild_inputs.py": "f1f4c98a6373451e89ac3d6feff426e8ab754d5a589dd9993b93cde143d524ec"
+  },
+  "raw_sha256": "27f2b35a6e1f99812c996e8e059b7484700e8dab512e435a80e11ea27f291e6e",
+  "audit_sha256": "2126a38648ecdd82d96aba082816053058adfe8dc5ea4b77d45ce31bf5cec41d",
+  "controls_sha256": "91984f34f535737f956bb2c1f3e261bacd5b79cad4dd37d470e856a898214cbc",
+  "initial_weights_sha256": "d62bdd9216c0b969b7872b1da7c11a517a376b04ff351b46d6629a5ef2cb32f9",
+  "weights_sha256": "e9eeeb533503067c7a9b878d7cb6c1418e44f7ad8d746ef1f8f03968eed386d6",
+  "inputs": {
+    "bytes": 3942316,
+    "sha256": "624e57e64da36a9e4f6ace4187b71d737630523dee90b7b697d97a05e7127fa5",
+    "previous_seed_regeneration_byte_match": true
+  },
+  "host_logs": {
+    "stdout_bytes": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "integrity": {
+    "independent_cpu_direct_loop_errors": [],
+    "mutation_controls_rejected": 8,
+    "total_mutation_controls": 8
+  },
+  "note": "The repository main branch advanced by four unrelated commits after the frozen base; compare 7d1208cf..b7816b25 contains only additive Issue #4485 broker-collision evidence. No overlap with this additive subtree."
+}

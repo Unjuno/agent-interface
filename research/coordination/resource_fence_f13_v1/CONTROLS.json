@@ -1,0 +1,127 @@
+{
+  "controls": [
+    {
+      "changed_sha256": "743ff323c0b6691735df799f95eed3af373b8b55f63f9e54ca059ebd1b21f94d",
+      "effective": true,
+      "errors": [
+        "coverage/order",
+        "72 effect requests"
+      ],
+      "name": "missing_case",
+      "rejected": true
+    },
+    {
+      "changed_sha256": "a5f7c96f8739a37bfbf060b2e5d2526556d64377c6b32c2ca839efd496d7792d",
+      "effective": true,
+      "errors": [
+        "coverage/order"
+      ],
+      "name": "duplicate_case",
+      "rejected": true
+    },
+    {
+      "changed_sha256": "9e06ef79e474aeb122a841de7ac48cf2ece2002e4875dc4b202a72af30a4010b",
+      "effective": true,
+      "errors": [
+        "coverage/order",
+        "formal-STABLE-ISSUER_ONLY-0:boot identity",
+        "formal-STABLE-ISSUER_ONLY-0:boot identity"
+      ],
+      "name": "wrong_policy",
+      "rejected": true
+    },
+    {
+      "changed_sha256": "eedf965407f532df1700b2277c62a3441b6b8f0e54cc4b3b0544ffb951118469",
+      "effective": true,
+      "errors": [
+        "foreign:initial:issuer",
+        "foreign:initial:resource",
+        "foreign:grant",
+        "foreign:grant",
+        "foreign:issued content binding"
+      ],
+      "name": "wrong_scope",
+      "rejected": true
+    },
+    {
+      "changed_sha256": "df0ae454fd86787f1286ea984e9b7173e96a9ff0f2c5459b367920610d9877e1",
+      "effective": true,
+      "errors": [
+        "formal-STABLE-ISSUER_ONLY-0:after state",
+        "formal-STABLE-ISSUER_ONLY-0:directed decision oracle",
+        "formal-STABLE-ISSUER_ONLY-0:final database",
+        "formal-STABLE-ISSUER_ONLY-0:database journal/IPC"
+      ],
+      "name": "false_decision",
+      "rejected": true
+    },
+    {
+      "changed_sha256": "2469c889ace7d66c9c97b0df92bd702892a85e716470895443024fb17e0ecdcf",
+      "effective": true,
+      "errors": [
+        "formal-STABLE-ISSUER_ONLY-0:authority/effect distinction",
+        "formal-STABLE-ISSUER_ONLY-0:database journal/IPC"
+      ],
+      "name": "authority",
+      "rejected": true
+    },
+    {
+      "changed_sha256": "0746ab05351da4c7299da2e7854f2f2f72e5cf2a9c193b49b7915f66f053d418",
+      "effective": true,
+      "errors": [
+        "formal-STABLE-ISSUER_ONLY-0:authority/effect distinction",
+        "formal-STABLE-ISSUER_ONLY-0:database journal/IPC"
+      ],
+      "name": "task_success",
+      "rejected": true
+    },
+    {
+      "changed_sha256": "7e9db4cb9e044265fe8755532860b669b310ccf43f1ac660ac0999e1dd14a617",
+      "effective": true,
+      "errors": [
+        "formal-STABLE-ISSUER_ONLY-0:process exit"
+      ],
+      "name": "exit",
+      "rejected": true
+    },
+    {
+      "changed_sha256": "a5267eda5f98022e081eeef3bc18349974d3ac2dc1555c6b1e7371c4495e8376",
+      "effective": true,
+      "errors": [
+        "formal-STABLE-ISSUER_ONLY-0:distinct pids",
+        "formal-STABLE-ISSUER_ONLY-0:boot identity"
+      ],
+      "name": "duplicate_pid",
+      "rejected": true
+    },
+    {
+      "changed_sha256": "2bc36961a54427939f1c56ce9674ab61c22087b8301ad68513dc574c4168d9c3",
+      "effective": true,
+      "errors": [
+        "formal-STABLE-ISSUER_ONLY-0:IPC ordering"
+      ],
+      "name": "clock_order",
+      "rejected": true
+    },
+    {
+      "changed_sha256": "c98bd913383ef330c9af6793f851ce8a6287fdce04fea174adac7e804b03d232",
+      "effective": true,
+      "errors": [
+        "batch process"
+      ],
+      "name": "batch_exit",
+      "rejected": true
+    },
+    {
+      "changed_sha256": "baf8a64fbd72b68dfae3540d386338d4fe91c95cba27d4b20d1c41f70348e574",
+      "effective": true,
+      "errors": [
+        "formal-STABLE-ISSUER_ONLY-0:final database",
+        "formal-STABLE-ISSUER_ONLY-0:database journal/IPC"
+      ],
+      "name": "database_state",
+      "rejected": true
+    }
+  ],
+  "passed": true
+}

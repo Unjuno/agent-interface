@@ -1,0 +1,176 @@
+{
+  "app": "inkscape",
+  "audit_pass": true,
+  "candidate_observations": 17,
+  "captured_pixels": 17408000,
+  "compare_ns_total": 1405739,
+  "controller_wall_ms": 505.517419,
+  "exact_repeat_opportunities": 1,
+  "false_suppressions": 0,
+  "goal": {
+    "a": 200,
+    "b": 539,
+    "dx": 36,
+    "setup_readiness_captures": 2,
+    "token": "t770103"
+  },
+  "hash_compute_ns_in_gate": 0,
+  "input_events": 22,
+  "launch_ms": 2209.946708,
+  "logical_ops": 4,
+  "missed_changes": 0,
+  "model_calls": 0,
+  "model_visible_observations": 16,
+  "model_visible_pixels": 16384000,
+  "motor_events": [
+    {
+      "ack_ns": 95855714281,
+      "arguments": {
+        "x": 620,
+        "y": 391
+      },
+      "issued_ns": 95855192795,
+      "kind": 6
+    },
+    {
+      "ack_ns": 95856071170,
+      "arguments": {
+        "detail": 1
+      },
+      "issued_ns": 95855723168,
+      "kind": 4
+    },
+    {
+      "ack_ns": 95907605399,
+      "arguments": {
+        "x": 624,
+        "y": 391
+      },
+      "issued_ns": 95907155469,
+      "kind": 6
+    },
+    {
+      "ack_ns": 95927925181,
+      "arguments": {
+        "x": 628,
+        "y": 391
+      },
+      "issued_ns": 95927460058,
+      "kind": 6
+    },
+    {
+      "ack_ns": 95949917851,
+      "arguments": {
+        "x": 632,
+        "y": 391
+      },
+      "issued_ns": 95949499853,
+      "kind": 6
+    },
+    {
+      "ack_ns": 95969599599,
+      "arguments": {
+        "x": 636,
+        "y": 391
+      },
+      "issued_ns": 95969181640,
+      "kind": 6
+    },
+    {
+      "ack_ns": 95988801251,
+      "arguments": {
+        "x": 640,
+        "y": 391
+      },
+      "issued_ns": 95988531017,
+      "kind": 6
+    },
+    {
+      "ack_ns": 96009417437,
+      "arguments": {
+        "x": 644,
+        "y": 391
+      },
+      "issued_ns": 96009093526,
+      "kind": 6
+    },
+    {
+      "ack_ns": 96029194806,
+      "arguments": {
+        "x": 648,
+        "y": 391
+      },
+      "issued_ns": 96028846135,
+      "kind": 6
+    },
+    {
+      "ack_ns": 96050892273,
+      "arguments": {
+        "x": 652,
+        "y": 391
+      },
+      "issued_ns": 96050340055,
+      "kind": 6
+    },
+    {
+      "ack_ns": 96070860157,
+      "arguments": {
+        "x": 656,
+        "y": 391
+      },
+      "issued_ns": 96070562890,
+      "kind": 6
+    },
+    {
+      "ack_ns": 96090543981,
+      "arguments": {
+        "detail": 1
+      },
+      "issued_ns": 96090210829,
+      "kind": 5
+    }
+  ],
+  "oracle": {
+    "actual": {
+      "height": "30",
+      "transform": null,
+      "width": "40",
+      "x": "77.118645",
+      "y": "50"
+    },
+    "known_ns": 96153897750,
+    "success": true
+  },
+  "oracle_after_controller_ms": 10.489605,
+  "parameters": {
+    "calc_setup_readiness": "painted worksheet: >20% near-white pixels and >128 colors; setup only",
+    "char_gap_ms": 2.0,
+    "display": "Xvfb 1280x800x24 + Openbox + XTEST",
+    "first_feedback": "fresh image or timestamped unchanged-image reference with public X11 context",
+    "first_feedback_is_semantic_completion": false,
+    "gate": "exact dimensions + mode + immutable pixel bytes; no hash/threshold",
+    "inkscape_selection_barrier": "visible dark selector handles on all four sides of acquired red object",
+    "inkscape_setup_readiness": "visible red document target before task timing",
+    "model_calls": 0,
+    "motion_gap_ms": 4.0,
+    "oracle_timeout_s": 3.0,
+    "pair_order": "alternate O0/O1 and O1/O0 by seed in development and fresh phases",
+    "poll_ms": 16.0,
+    "press_dwell_ms": 30.0,
+    "public_timeout_s": 4.0,
+    "reset": "fresh X server, WM, application process, HOME, XDG and profile per episode"
+  },
+  "pointer_path_px": 36.0,
+  "reconstruction_errors": 0,
+  "same_trace_o1_visible": 16,
+  "seed": 770103,
+  "strategy": "O2",
+  "success": true,
+  "suppressed_observations": 1,
+  "task_wall_ms": 516.007024,
+  "transport": "O2",
+  "wire_bytes": 174393,
+  "wire_decode_ms": 18.25528,
+  "wire_encode_ms": 115.819212,
+  "wire_reconstruction_errors": 0
+}

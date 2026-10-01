@@ -1,0 +1,42 @@
+{
+  "controls": [
+    {
+      "errors": [
+        "invocation"
+      ],
+      "name": "invocation",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "correctness"
+      ],
+      "name": "gate",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "forbidden"
+      ],
+      "name": "authority",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "delta_summary"
+      ],
+      "name": "delta",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "delta_summary",
+        "ledger_sha"
+      ],
+      "name": "ledger",
+      "rejected": true
+    }
+  ],
+  "rejected": 5,
+  "total": 5
+}

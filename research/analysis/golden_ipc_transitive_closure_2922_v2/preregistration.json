@@ -1,0 +1,14 @@
+{
+  "schema": "golden-ipc-transitive-closure-preregistration-v2",
+  "issue": 2922,
+  "predecessor": "golden_ipc_transitive_closure_2922_v1",
+  "allocation": {"count": 0, "retry": false, "scope": "static closure only"},
+  "authority_granted": false,
+  "runtime_execution": false,
+  "imports": [
+    {"flat": "tile_transport", "shim": "research/live_control/tile_transport.py", "canonical": "research/observation_tiles/tile_transport.py"},
+    {"flat": "gui_suite", "shim": "research/live_control/gui_suite.py", "canonical": "research/observation_gating/gui_suite.py"},
+    {"flat": "image_artifact", "shim": null, "canonical": "research/observation_tiles/image_artifact.py", "resolution": "session adds observation_tiles to sys.path"}
+  ],
+  "next_gate": "no_gui_import_and_ready_event"
+}

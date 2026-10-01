@@ -1,0 +1,30 @@
+{
+  "after": 4,
+  "events": [
+    "input_stopped",
+    "terminal"
+  ],
+  "timeout": 15,
+  "action_id": "select",
+  "request_id": "program-3effc685bf7648ca90ffb2c680a2815b",
+  "command": {
+    "op": "submit",
+    "id": "select",
+    "steps": [
+      {
+        "op": "pointer_click",
+        "x": 619,
+        "y": 391,
+        "button": 1,
+        "duration_ms": 80
+      },
+      {
+        "op": "settle",
+        "quiet_ms": 80,
+        "timeout_ms": 500
+      }
+    ],
+    "expected_sequence": 1,
+    "valid_until_ns": 68765038212
+  }
+}

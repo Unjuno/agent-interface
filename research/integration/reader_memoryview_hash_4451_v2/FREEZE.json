@@ -1,0 +1,58 @@
+{
+  "schema": "reader-memoryview-freeze-v2",
+  "issue": 4608,
+  "base_main_commit": "75b3d1e9cf1518ed7912670ea541fe969b2fb0cd",
+  "main_reader_blob_sha": "3b4ac9af076bdc5dee94e09cbab22b17bc45173a",
+  "branch": "research/reader-memoryview-hash-4608-v1-20260927",
+  "path": "research/integration/reader_memoryview_hash_4451_v2/",
+  "formal_invocation_count": 0,
+  "formal_spec": {
+    "corpus_records": 4096,
+    "record_bytes": 256,
+    "corpus_bytes": 1048576,
+    "cursor_records": [
+      0,
+      2048,
+      4064,
+      4096
+    ],
+    "repetitions_per_arm_cursor": 3,
+    "resource_workers": 24,
+    "contract_workers": 2,
+    "worker_timeout_seconds": 8,
+    "supervisor_timeout_seconds": 300,
+    "no_retry": true
+  },
+  "construction_result": {
+    "predecessor_construction_raw_sha256": "30ab2913204a5777ee8744fdfc1886d2fffc11f2b6d6823f5ff077132134ac1f",
+    "predecessor_audit": "PASS_CONSTRUCTION",
+    "predecessor_audit_checks": 44,
+    "predecessor_corruption_controls_rejected": 10
+  },
+  "container_image_id": "sha256:4c2cf9917bd1cbacc5e9b07320025bdb7cdf2df7b0ceaccb55e9dd7e30987419",
+  "environment_sha256": "11a9e862d359e59a847a17d6f11e5198fbc5cc76c8d8e987d845d309a19b926c",
+  "source_sha256": {
+    "audit.py": "cf95abc359f0ef25f305de83e92609f2a94fbec8c7f4ec08146e20729f0ea46e",
+    "baseline_reader.py": "922e8e933324387e255179a7157d607548d768ae42b83d0cae47352bf774795d",
+    "candidate_reader.py": "125b54ce60a72bbbe82cbd02796a2689374dee6b7caed232f4ab9d7b9859486c",
+    "common.py": "f57b57960b89fea23202aa831d8675fe40319a8610cf9c5d2e540c1aaa2e2371",
+    "contract_worker.py": "6261f8f0bfbf94fb1fe089cc1047aa495d895c6214cabf7a6ab0444bed5ca39b",
+    "controls.py": "2260b291817b5299eaff43ade217d9c692af3b1394e04c3185f3797ac732202b",
+    "run.py": "0f9fee5ceffa3d0ee1a0f32e5c1f87fe999ff4555aab0aa3c920c5e31d1bc6b7",
+    "stop_audit.py": "2f9090e6912331a0432eb0b39cac299bb39e9e2d39a7a2bea387f7c0b7ed6e72",
+    "supervise.py": "4de4a2e201a0abdbcf2310e03320cc92c969a073b21ef5f4123e4e193b1ea3a6",
+    "test_supervisor.py": "a7eeca05a92612b9c78bb3928fd97db4afd6d90743de8523b016dce927e678d8",
+    "worker.py": "3f93534510b657d5f764eb1dc683ce265f3c2a56ff5aa7d34aab58c4be0c5add"
+  },
+  "gates": {
+    "reader_receipt_cursor_exception_parity": true,
+    "candidate_peak_lower_each_repetition_at_2048_and_4064": true,
+    "median_peak_ratio_max": 0.75,
+    "median_wall_ratio_max": 1.2,
+    "median_cpu_ratio_max": 1.2,
+    "independent_audit_errors": 0,
+    "corruption_controls_min_rejected": 10,
+    "no_gpu_training_relevant": true
+  },
+  "formal_corpus_sha256": "cf1f260335c010a36382254c275b6b0776f9b792c202a518302d101e4a9d3f26"
+}

@@ -1,0 +1,19 @@
+# Construction-clock-48 — instruction-entry CNTVCT and getter brackets
+
+## H / T / D / C / U
+
+- **H:** An AArch64 naked `VIZ_Tic` stub whose first machine instruction is `MRS CNTVCT_EL0` can timestamp engine tic entry in hardware-counter units. A tiny CPython C wrapper can bracket each exact scorer getter in the same counter domain, avoiding the cross-clock conversion and userspace entry helper latency of runs41–45.
+- **T:** Build pinned ViZDoom 1.3.0 source in linux/arm64 Docker. Before any game, disassemble the installed engine shared object and require the first instruction of `VIZ_Tic()` to be `mrs x0, cntvct_el0`, immediately followed by the branch to the C body. Record `CNTFRQ_EL0`. If the symbol/disassembly/counter access fails, retain STOP and do not run sessions. If build gate passes, run three fresh hidden MAP01 ASYNC_SPECTATOR sessions, passive read 1.5 s, exact scorer once, passive post-window 250 ms, cleanup; no advancement API calls. Record engine entry counter, monotonic diagnostic, game/viz tic, and getter counter brackets.
+- **D:** Retain exact source patch/build image digest, disassembly bytes, counter frequency, invocation, all raw getter/entry records and errors. Independently reconstruct every scorer getter's phase interval in CNTVCT units using preceding/following entry samples; report interval width in counter ticks and nanoseconds. No phase imputation when a bracket is missing.
+- **C:** Construction-only same-domain counter feasibility. `CNTVCT_EL0` frequency/quantization and clock virtualization are platform-specific. Even a first-instruction sample does not make the counter continuous/accurate across all systems, and the probe changes engine/API code.
+- **U:** Whether this OrbStack VM exposes CNTVCT to userspace, counter frequency/quantization, successful first-instruction disassembly, and whether post-window entries bound all getter phases are unknown before build/run. Formal allocation remains 0/120.
+
+## Observed result (construction only)
+
+The preflight passed before any session: disassembly of the unstripped AArch64 `viz_main.cpp.o` confirms the exact `VIZ_Tic()` symbol begins with `mrs x0, cntvct_el0`, followed immediately by `b VIZ_TicCounterBody` (`R_AARCH64_JUMP26` relocation). The linked ViZDoom engine has the same unique adjacent MRS+branch opcode sequence. User-space counter reads succeeded and `CNTFRQ_EL0` was 24,000,000 Hz (one counter quantum ≈41.67 ns).
+
+Three fresh hidden sessions all initialized, returned the exact scorer once, and closed. Each retained 66 contiguous engine entries through `vizTime=66`; median rates were 34.6195, 35.1020 and 34.9827 Hz. Each had 120 passive API reads, all `episode_tic=1`, while engine trace advanced. The exact scorer's full expected eight-getter sequence was captured in every session. All 24 getter calls (8×3) were bracketed by adjacent VIZ_Tic entry samples in the same counter domain; no phase point estimate was substituted. Per-getter phase interval widths were 0.375–41.333 μs; first-getter widths were up to 41.333 μs. An approximately 1.85 s paired counter/`CLOCK_MONOTONIC` diagnostic estimated effective counter frequency at +3.16 to +3.29 ppm from `CNTFRQ_EL0` (diagnostic only; phase stayed in counter units).
+
+Independent audit: `PASS_CONSTRUCTION_ONLY_CNTVCT_PHASE_INTERVALS`, 3 rows, zero errors. This is a real same-domain phase-interval construction result. It still does **not** authorize formal allocation: a 24 MHz counter cannot distinguish the frozen ±1 ns neighbors, getter-call intervals are much wider than 1 ns, and every engine tic incurs counter+clock+memory instrumentation whose scheduling effect against an uninstrumented build has not been bounded. Formal remains 0/120.
+
+Earlier patch/build/preflight/import/mount failures are kept separately in this directory; none started a scientific session. The corrected build and run are the only rows used by `audit.json`.

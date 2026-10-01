@@ -1,0 +1,41 @@
+{
+  "audit_errors": [],
+  "corruption_controls": {
+    "accepted": [],
+    "attempted": 12,
+    "effective": 12,
+    "errors": [],
+    "rejected": [
+      "planned_pair_count",
+      "pair_order",
+      "arm_name",
+      "row_removed",
+      "effect_bytes",
+      "effect_hash",
+      "keymap",
+      "latency_receipt",
+      "terminal_exit",
+      "child_pid",
+      "resident_pid_restart",
+      "schedule_id"
+    ]
+  },
+  "decision": "CONSTRUCTION_AUDIT_ACCEPT",
+  "derived": {
+    "EPHEMERAL_XTERM": {
+      "n": 12,
+      "p50_ns": 17211712,
+      "p95_ns": 18277293
+    },
+    "RESIDENT_XTERM": {
+      "n": 12,
+      "p50_ns": 1536429,
+      "p95_ns": 2478547
+    },
+    "paired_median_latency_ratio": 0.09327089776112726,
+    "session_pairs": 3,
+    "session_resident_wins": 3
+  },
+  "raw_bytes": 31858,
+  "raw_sha256": "2cd5199a67fa50965ef89c2463b363fa677f2c0b03c5884ffa7f141db4436e3a"
+}

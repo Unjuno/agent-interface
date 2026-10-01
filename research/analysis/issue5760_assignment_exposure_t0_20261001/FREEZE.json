@@ -1,0 +1,145 @@
+{
+  "schema": "route_assignment_exposure_5760_t0_freeze_v1",
+  "issue": 5760,
+  "allocation": "ROUTE-ASSIGNMENT-EXPOSURE-5760-T0-20261001-01",
+  "frozen_main": "2236be71c6bc97a6f52f3f5258484ee80e2c4a2f",
+  "branch": "research/route-assignment-exposure-5760-t0-20261001",
+  "path": "research/analysis/issue5760_assignment_exposure_t0_20261001/",
+  "hypothesis": "Conditioning on actually executed local actions can reverse the assignment-level final-outcome comparison for a fallback-bearing route; a complete assignment/exposure ledger detects the selection and prevents promoting it.",
+  "scope": "Deterministic synthetic/method-only CPU T0. No repo runtime, model, GUI, game, input, external data, GPU or human outcome.",
+  "assignment_unit": "one synthetic task row; each policy is evaluated on the same four named task strata as an explicitly constructed paired table; this is not randomized real-world evidence or a causal estimate",
+  "primary_estimand": "all-assigned task-row mean final success and mean total end-to-end time for the deployable policy, including fallback rows and costs",
+  "secondary_estimand": "descriptive A/local-exposure-only row subset; never causal and never substituted for the primary denominator",
+  "fixtures": [
+    {
+      "case_id": "selection_reversal",
+      "rows": [
+        {
+          "task": "E1",
+          "difficulty": "easy",
+          "A_path": "local",
+          "A_success": 1,
+          "A_total_time": 1,
+          "B_path": "plain",
+          "B_success": 1,
+          "B_total_time": 5
+        },
+        {
+          "task": "E2",
+          "difficulty": "easy",
+          "A_path": "local",
+          "A_success": 1,
+          "A_total_time": 1,
+          "B_path": "plain",
+          "B_success": 1,
+          "B_total_time": 5
+        },
+        {
+          "task": "H1",
+          "difficulty": "hard",
+          "A_path": "fallback",
+          "A_success": 0,
+          "A_total_time": 10,
+          "B_path": "plain",
+          "B_success": 1,
+          "B_total_time": 5
+        },
+        {
+          "task": "H2",
+          "difficulty": "hard",
+          "A_path": "fallback",
+          "A_success": 0,
+          "A_total_time": 10,
+          "B_path": "plain",
+          "B_success": 1,
+          "B_total_time": 5
+        }
+      ],
+      "expected": {
+        "A_assigned_success": "0.5",
+        "B_assigned_success": "1",
+        "A_assigned_mean_total_time": "5.5",
+        "B_assigned_mean_total_time": "5",
+        "A_local_subset_n": 2,
+        "A_local_subset_success": "1",
+        "A_local_subset_mean_total_time": "1"
+      }
+    },
+    {
+      "case_id": "null_balanced_exposure",
+      "rows": [
+        {
+          "task": "E1",
+          "difficulty": "easy",
+          "A_path": "local",
+          "A_success": 1,
+          "A_total_time": 5,
+          "B_path": "plain",
+          "B_success": 1,
+          "B_total_time": 5
+        },
+        {
+          "task": "E2",
+          "difficulty": "easy",
+          "A_path": "fallback",
+          "A_success": 1,
+          "A_total_time": 5,
+          "B_path": "plain",
+          "B_success": 1,
+          "B_total_time": 5
+        },
+        {
+          "task": "H1",
+          "difficulty": "hard",
+          "A_path": "local",
+          "A_success": 1,
+          "A_total_time": 5,
+          "B_path": "plain",
+          "B_success": 1,
+          "B_total_time": 5
+        },
+        {
+          "task": "H2",
+          "difficulty": "hard",
+          "A_path": "fallback",
+          "A_success": 1,
+          "A_total_time": 5,
+          "B_path": "plain",
+          "B_success": 1,
+          "B_total_time": 5
+        }
+      ],
+      "expected": {
+        "A_assigned_success": "1",
+        "B_assigned_success": "1",
+        "A_assigned_mean_total_time": "5",
+        "B_assigned_mean_total_time": "5",
+        "A_local_subset_n": 2,
+        "A_local_subset_success": "1",
+        "A_local_subset_mean_total_time": "5"
+      }
+    }
+  ],
+  "required_mutations": [
+    "drop all A fallback rows",
+    "relabel A fallback rows as local exposure",
+    "set A fallback total time to zero"
+  ],
+  "decision": "PASS_METHOD_SCOPED only if both frozen fixtures produce exact expected aggregates/flow, candidate and independent oracle agree, denominator/path/time mutations are all rejected, and raw-input digest and raw-output audit pass; otherwise FAIL_T0_CONTRACT or HOLD_INTEGRITY.",
+  "causal_boundary": "A PASS demonstrates a selection/denominator failure mode in this authored finite fixture only. It is neither randomization, causal inference, IV/complier identification, nor evidence that an existing repository comparison is biased.",
+  "execution_plan": "Freeze fixture and decision before coding; publish exact candidate/oracle/auditor source hashes before execution; run each exactly once on CPU; preserve stdout/exit receipts; auditor runs once after candidate exit 0. Host-only because this deterministic four-row analytic T0 has no environment dependency and no shared container slot is assigned.",
+  "retries": 0,
+  "artifact_sha256": {
+    "fixtures.json": "adef46cf8aae30388f49df228fec3ab596e6332cd32032a8b78b70db37a765a2",
+    "candidate.py": "bc65cbefeac3b40255982bc694085c9f3805eb63b4e1876ac9268bb959b703d2",
+    "oracle.py": "cec158e9a2876506883d9fed17f01ae159b64ce2c346c1d8ee792edc480c829b",
+    "audit.py": "39fca233d4176e711ea88c46af52390c6f0eb00b086b62a4f3405e44368f7fa7"
+  },
+  "github_blob_sha1": {
+    "fixtures.json": "3e6f19136497acacb8a6f6876c2137900c67ceb6",
+    "candidate.py": "4349e6d177e5471b83b3b7520d56e43939b69ff5",
+    "oracle.py": "8d70a18917140a09dc43f8765fe719276c255f07",
+    "audit.py": "d0b55e580a6bed6f8223628554dfd1f85e0794ac"
+  },
+  "source_freeze_completed_before_execution": true
+}

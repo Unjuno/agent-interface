@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "formal_study_passed": false,
+  "cases": 2,
+  "grounded_handles": "4/4",
+  "eligible_read_checks": "2/2",
+  "compiled_target_actions": 0,
+  "independent_task_success": "0/2",
+  "fresh_model_calls": 2,
+  "fresh_model_usage_totals": {
+    "input_tokens": 18792,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 343,
+    "reasoning_output_tokens": 113
+  },
+  "failure": "runner expected REVALIDATED from read-only check whose contract returns eligible VALID",
+  "decision": "HOLD_V3_AND_FIX_READ_CHECK_STATUS_ONLY",
+  "scope": "independent audit of frozen v3; no GUI/model rerun"
+}

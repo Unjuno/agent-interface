@@ -1,0 +1,71 @@
+{
+  "schema": "issue-experiment-freeze-v1",
+  "allocation_id": "issue-3814-jsonl-framing-formal-01",
+  "issue": 3814,
+  "repository": "Unjuno/agent-interface",
+  "branch": "research/issue-3814-jsonl-framing-v1",
+  "base_commit": "de9eb00fb05dc98d71607742eb0c90a4f2c041a1",
+  "allocation_count": 1,
+  "retries": 0,
+  "H": "Removing the terminal LF from a completed CLI JSON Lines response leaves valid JSON that a parser-only caller can accept as complete; a framing-aware caller can reject the strict prefix and use read-only recovery without dispatch replay.",
+  "T": "Run current-main runtime.cli_v1 once with a deterministic synthetic dispatch facade. Preserve producer stdout, deliver exactly stdout[:-1], compare parser-only and LF-aware handling, then run attempt-status, receipt --raw and review. Include complete-delivery, request-only and pre-existing-directory controls. Independently audit source, raw bytes, manifests, retained files and dispatch count.",
+  "D": {
+    "parser_only_false_success": "FAIL_FALSE_SUCCESS",
+    "recovery_replay_or_mutation": "FAIL_REPLAY_OR_RECOVERY",
+    "source_or_image_mismatch": "STOP_SETUP",
+    "incomplete_or_audit_mismatch": "HOLD_EVIDENCE_INCOMPLETE",
+    "scoped_pass": "PASS_FRAMING_GUARD_SCOPED"
+  },
+  "C": {
+    "runtime": "Docker Desktop Engine 29.8.0",
+    "docker_server": "29.8.0",
+    "platform": "linux/amd64",
+    "image": "python@sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "local_tag": "python:3.12-slim-bookworm",
+    "image_id": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "pull_policy": "never",
+    "network": "none",
+    "source_mount": "read-only",
+    "output_mount": "fresh isolated writable directory",
+    "authority": "synthetic dispatch only; no GUI, native input, provider/model, network or production code modification"
+  },
+  "U": "One synthetic CLI response and simulated downstream terminal-LF truncation. No real pipe/network failure, live task/model behavior, power-loss guarantee, performance claim, broad reliability, or closure of #3711/#3808.",
+  "source_sha256": {
+    "research/issue_3814_jsonl_framing_v1/PREREG.md": "d7cf4ce7edd7cd043045a74a9d44b4a5044f5501e57b5c52a592c1a5e2124080",
+    "research/issue_3814_jsonl_framing_v1/runner.py": "4426fff37443141fdf1c75052acccf380c9a0f60f2d29fa1721c5415ff772375",
+    "research/issue_3814_jsonl_framing_v1/audit.py": "fd1a77c5c1022ad2aad463189c5b2cb6119bafbfa3830272923dbc9b1f1af8f5",
+    "research/issue_3814_jsonl_framing_v1/test_runner.py": "0dff76ee76d18517d131637bd04771e70e6145858728387d4ac1fb7e40dcb56c",
+    "research/issue_3814_jsonl_framing_v1/preflight.py": "781ba5bafd9f267b75a4270477004add69bc4941748eefda6112c9e88080a7f6",
+    "runtime/cli_v1/__main__.py": "fd8447fd45484446e5a8b40c2a242f201f1064a355e23544a61f9425a7a8a715",
+    "runtime/cli_v1/api.py": "486c2e6ce8ed9ccbfef95e1172bbe8a8bee8314223102c0e3cbc48ee184665ad",
+    "runtime/cli_v1/attempt.py": "1a30c92c9b520bbfa7db390f8af82ff455dd91ffa177ce3b288d7374b3150178",
+    "runtime/cli_v1/receipt.py": "ee237b1481f6ffc07dd60cc3c8f074be800bd7fff389f565b7237853a013962b",
+    "runtime/cli_v1/review.py": "0729242fc2168368b54bb7bfbe1227defd140e1f8dd8cd7152e112b7bda6b288",
+    "runtime/cli_v1/receipt_image.py": "045fece398694fb70541518368ffd5891d57c06ee786e1c40a397a17a53af543",
+    "runtime/selector_v1/__init__.py": "3e4f381f3b8ed95c05382e1f8e03c1c3b55225dea1e012fbf12b8a72b01d789d",
+    "runtime/selector_v1/selector.py": "6e9d8d0e33ffe4a8df7bb4200013c498bb0dc80d30aca47b36d78cb494b4da2d",
+    "runtime/cli_v1/test_cli.py": "fdcba9a6b28e6e262b1da49aa35d5e4cb3a21cd0df3f26925161f9f4fd00912f"
+  },
+  "construction": {
+    "construction_tests": "pending latest-main container construction verification before formal allocation",
+    "early_harness_attempts": [
+      {"attempt": 1, "outcome": "STOP_CONSTRUCTION_TEST_DISCOVERY_FOUND_ZERO", "returncode": 5, "formal_allocation": false},
+      {"attempt": 2, "outcome": "STOP_CONSTRUCTION_TEST_MODULE_PATH", "returncode": 1, "formal_allocation": false},
+      {"attempt": 3, "outcome": "STOP_CONSTRUCTION_TEST_IMPORT_PATH", "returncode": 1, "upstream_cli_tests_passed": 15, "formal_allocation": false}
+    ],
+    "corrections": "Only construction harness discovery/import paths changed; no runner formal invocation or model/task call occurred. All early stops remain recorded in CONSTRUCTION.md."
+  },
+  "formal": {
+    "invocations": 0,
+    "maximum": 1,
+    "run_command": "docker run --rm --pull=never --platform linux/amd64 --network none --read-only --tmpfs /tmp:rw,nosuid,nodev,size=64m -e PYTHONDONTWRITEBYTECODE=1 -e ISSUE3814_IMAGE_REF=python@sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e -e ISSUE3814_IMAGE_ID=sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e -e ISSUE3814_PLATFORM=linux/amd64 -e ISSUE3814_DOCKER_SERVER=29.8.0 --mount type=bind,source=<checkout>,target=/src,readonly --mount type=bind,source=<fresh-output>,target=/out --workdir /src python@sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e python -B /src/research/issue_3814_jsonl_framing_v1/preflight.py /src --image-ref python@sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e --image-id sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e --platform linux/amd64 --run-output /out",
+    "no_retry": true
+  },
+  "independent_audit": {
+    "container": "same frozen digest/platform; separate invocation",
+    "network": "none",
+    "source_mount": "read-only",
+    "formal_evidence_mount": "read-only",
+    "formal_evidence_mutated": false
+  }
+}

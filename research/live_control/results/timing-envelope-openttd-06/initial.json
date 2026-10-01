@@ -1,0 +1,160 @@
+{
+  "request": {
+    "after": 0,
+    "events": [
+      "observation"
+    ],
+    "timeout": 30
+  },
+  "reply": {
+    "status": "boundary",
+    "records": [
+      {
+        "event": "ready",
+        "task": "Build a straight road connecting only the three ground tiles from A to C. Keep the adjacent row marked X free of roads and preserve surrounding roads/ownership. Use visual GUI controls.",
+        "emitted_ns": 7727689090886
+      },
+      {
+        "event": "observation",
+        "id": "initial",
+        "step": 0,
+        "sequence": 1,
+        "capture_ns": 7727704868043,
+        "context_ns": 7727712568884,
+        "context": [
+          [
+            "windows",
+            "0x00a00002  0 HPLaptop OpenTTD 13.4\n"
+          ],
+          [
+            "active_window",
+            10485762
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/timing-envelope-openttd-06/runtime/001.png",
+        "image_reused": false,
+        "image_prepare_ns": 65611845,
+        "image_ready_ns": 7727803436038,
+        "input_focus_before": 10485762,
+        "input_focus_after": 10485762,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 10485762,
+          "surface": 10485762,
+          "geometry": [
+            129,
+            40,
+            1024,
+            720
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 10485762,
+          "surface": 10485762,
+          "geometry": [
+            129,
+            40,
+            1024,
+            720
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 10485762,
+          "surface": 10485762,
+          "geometry": [
+            129,
+            40,
+            1024,
+            720
+          ]
+        },
+        "capture_ms": 11.189238,
+        "wire_bytes": 365112,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "emitted_ns": 7727808852283
+      }
+    ],
+    "cursor": 2,
+    "returned_ns": 7727812921580,
+    "authority": "none",
+    "acknowledgement": "not implied"
+  },
+  "continuation": {
+    "format": "received-continuation-v1",
+    "session": "/tmp/agent-interface-events-q9oqfpe4/events.sock",
+    "cursor": 2,
+    "record_hashes": [
+      "744e1e98c31d7a924890f759b97aa54fa9bc805b7cf7534fde8b066531ebfaa7",
+      "3704166bbb02cbeef8e85f89315372dae98c6d4f85bf269905d7f1eab9465784"
+    ],
+    "observation": {
+      "event": "observation",
+      "id": "initial",
+      "step": 0,
+      "sequence": 1,
+      "capture_ns": 7727704868043,
+      "context_ns": 7727712568884,
+      "context": [
+        [
+          "windows",
+          "0x00a00002  0 HPLaptop OpenTTD 13.4\n"
+        ],
+        [
+          "active_window",
+          10485762
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/timing-envelope-openttd-06/runtime/001.png",
+      "image_reused": false,
+      "image_prepare_ns": 65611845,
+      "image_ready_ns": 7727803436038,
+      "input_focus_before": 10485762,
+      "input_focus_after": 10485762,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 10485762,
+        "surface": 10485762,
+        "geometry": [
+          129,
+          40,
+          1024,
+          720
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 10485762,
+        "surface": 10485762,
+        "geometry": [
+          129,
+          40,
+          1024,
+          720
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 10485762,
+        "surface": 10485762,
+        "geometry": [
+          129,
+          40,
+          1024,
+          720
+        ]
+      },
+      "capture_ms": 11.189238,
+      "wire_bytes": 365112,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "emitted_ns": 7727808852283
+    },
+    "observation_cursor": 2,
+    "pending_clock": null,
+    "clocks": {},
+    "channel_closed": false,
+    "authority": "none"
+  },
+  "requested_clock_id": null,
+  "matched_clock": null,
+  "authority": "none; current observation and admission still required"
+}

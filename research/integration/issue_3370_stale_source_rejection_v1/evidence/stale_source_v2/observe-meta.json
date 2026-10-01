@@ -1,0 +1,131 @@
+{
+  "allocation": {
+    "app": "inkscape",
+    "authority": "none",
+    "initial_source_stage": 1,
+    "max_stages": 3,
+    "pid": 9,
+    "run_directory": "/evidence/stale_source_v2/allocation/run",
+    "seed": 991123,
+    "status": "ready",
+    "text_gap_ms": 0
+  },
+  "authority": "none",
+  "continuation": {
+    "authority": "none",
+    "scope": "retained source at read time; existing source/admission checks still apply",
+    "source_sequence": 2,
+    "source_sha256": "63d0d86ff589ae96cd78e99436514dc59778e170f72b05a47aae40e374190bea",
+    "stage": 2,
+    "status": "source_available"
+  },
+  "exchange": {
+    "committed_ns": 57122345803144,
+    "reply_seen_ns": 57122423130760,
+    "resumed_read_only": false,
+    "returned_ns": 57122424187876,
+    "review_completed_ns": 57122424081456,
+    "started_ns": 57122343095395,
+    "submission_committed": true
+  },
+  "image_reference": {
+    "authority": "none",
+    "capture_ns": 57122369391533,
+    "freshness": "historical referenced capture; no new observation",
+    "path": "/evidence/stale_source_v2/allocation/run/bridge/images/a3a1b8fe7fbd4786ae7973ff1d72c5d8.png",
+    "relative_path": "bridge/images/a3a1b8fe7fbd4786ae7973ff1d72c5d8.png",
+    "sequence": 2,
+    "sha256": "505c17b695d2c4a71b8ae5b0e52a1c90261d25764ca4d3ae9b19b2933e1abec9",
+    "status": "image"
+  },
+  "image_status": "image",
+  "outcome_summary": {
+    "action_status": null,
+    "cleanup_status": null,
+    "evaluation_success": null,
+    "feedback_status": null,
+    "reported_status": "boundary"
+  },
+  "receipt": {
+    "native_result": {
+      "authority_granted": false,
+      "decision_sha256": "aa4ec8ff202bc820d33f6bd39efaca6bf018f2c77dbcf2fb1d31140e0dfaefb3",
+      "observation": {
+        "binding_revision": 1,
+        "capture_ns": 57122369391533,
+        "native": {
+          "artifact": {
+            "bytes": 55257,
+            "height": 800,
+            "mime_type": "image/png",
+            "path": "/evidence/stale_source_v2/allocation/run/bridge/images/a3a1b8fe7fbd4786ae7973ff1d72c5d8.png",
+            "sha256": "505c17b695d2c4a71b8ae5b0e52a1c90261d25764ca4d3ae9b19b2933e1abec9",
+            "source_raw_sha256": "19289111f91dcebcdd92e32f4c748f0ef0ed34fd953f7ae3fea9d6bcea95bd0a",
+            "width": 1280
+          },
+          "bytes": 4096000,
+          "capture_ended_ns": 57122372933183,
+          "capture_started_ns": 57122369391533,
+          "frame": "screen_physical_px",
+          "height": 800,
+          "native_window_id": 6291463,
+          "region": [
+            0,
+            0,
+            1280,
+            800
+          ],
+          "sha256": "19289111f91dcebcdd92e32f4c748f0ef0ed34fd953f7ae3fea9d6bcea95bd0a",
+          "target": "app",
+          "width": 1280
+        },
+        "pointer_binding": {
+          "focus": 6291464,
+          "geometry": [
+            0,
+            17,
+            1280,
+            783
+          ],
+          "surface": 6291463
+        },
+        "sequence": 2
+      },
+      "observation_only": {
+        "captures": 1,
+        "ended_ns": 57122409754101,
+        "input_dispatched": false,
+        "started_ns": 57122368664885,
+        "window_review": {
+          "authority_granted": false,
+          "binding_revision": 1,
+          "ended_ns": 57122409543969,
+          "input_dispatched": false,
+          "observation": {
+            "observation_ref": "/native_result/observation"
+          },
+          "previous_binding_revision": 0,
+          "previous_scope": "native-x11:e84806be048741db99e453b50803b161",
+          "previous_window_id": 6291463,
+          "requested_window_id": 6291463,
+          "scope": "native-x11:0ffa4e66ca2c4b21bf5bf79656303f28",
+          "started_ns": 57122369247112,
+          "status": "reviewed"
+        }
+      },
+      "stage": 1,
+      "status": "boundary",
+      "task_success": null
+    },
+    "observation_references": [
+      "/native_result/observation_only/window_review/observation"
+    ],
+    "reference_scope": "Only listed JSON-pointer paths refer to the complete native_result.observation in this response. Other reference-shaped values are literal.",
+    "schema": "agent-interface/native-receipt-v1-observation-refs",
+    "source": {
+      "path": "/evidence/stale_source_v2/allocation/run/reply-1.json",
+      "sha256": "00133ed4055ff82528a1e643197704a148be76bb0f39b99dc22aacdd7e987800"
+    }
+  },
+  "schema": "agent-interface/review-v1"
+}

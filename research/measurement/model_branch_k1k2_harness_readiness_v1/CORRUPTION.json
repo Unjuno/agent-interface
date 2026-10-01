@@ -1,0 +1,46 @@
+{
+  "controls": [
+    {
+      "errors": [
+        "prompt_diff",
+        "decision"
+      ],
+      "name": "prompt_diff",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "generation_count",
+        "decision"
+      ],
+      "name": "extra_generation",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "parser",
+        "decision"
+      ],
+      "name": "authority_parser",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "usage_extractor",
+        "decision"
+      ],
+      "name": "usage_missing",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "runtime_flag",
+        "decision"
+      ],
+      "name": "fake_cli_ready",
+      "rejected": true
+    }
+  ],
+  "rejected": 5,
+  "total": 5
+}

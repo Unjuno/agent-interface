@@ -1,0 +1,96 @@
+{
+  "authority_grants": 0,
+  "checks": [
+    {
+      "accepted": true,
+      "case": "owner_reason:cancelled",
+      "expected": true,
+      "result": "accepted"
+    },
+    {
+      "accepted": false,
+      "case": "owner_reason:expired",
+      "expected": true,
+      "result": "autonomous reason missing or unknown"
+    },
+    {
+      "accepted": false,
+      "case": "owner_reason:focus_changed",
+      "expected": true,
+      "result": "autonomous reason missing or unknown"
+    },
+    {
+      "accepted": false,
+      "case": "owner_reason:stop_requested",
+      "expected": true,
+      "result": "autonomous reason missing or unknown"
+    },
+    {
+      "accepted": false,
+      "case": "owner_reason:surface_changed",
+      "expected": true,
+      "result": "autonomous reason missing or unknown"
+    },
+    {
+      "accepted": false,
+      "case": "owner_reason:thread_exit",
+      "expected": true,
+      "result": "autonomous reason missing or unknown"
+    },
+    {
+      "accepted": false,
+      "case": "owner_button_up_integer_identity",
+      "expected": true,
+      "result": "key identity missing"
+    }
+  ],
+  "classification": "CONSTRUCTION_COMPATIBILITY_DIAGNOSTIC_NOT_FORMAL_X11",
+  "decision": "FAIL_RELEASE_RECEIPT_INTEROP",
+  "mismatches": [
+    "owner_reason:expired",
+    "owner_reason:focus_changed",
+    "owner_reason:stop_requested",
+    "owner_reason:surface_changed",
+    "owner_reason:thread_exit",
+    "owner_button_up_integer_identity"
+  ],
+  "owner_autonomous_reasons": [
+    "cancelled",
+    "expired",
+    "focus_changed",
+    "stop_requested",
+    "surface_changed",
+    "thread_exit"
+  ],
+  "owner_source_sha256": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+  "pins": {
+    "main": "53b93cd5dcb0fbbedee1db23ddf550ba1eb289e0",
+    "owner_blob": "341b3c01649943ddaad5f28431a792c4889cc36e",
+    "owner_path": "research/live_control/input_owner_v10.py",
+    "protocol_blob": "55272e127073a84c9eb541bc650fee74f3fc7123",
+    "protocol_path": "research/live_control/owner_keyup_release_semantics_5156_v2/release_protocol_v2.py",
+    "protocol_sha256": "3ae2ad7ca09bdd6572080aa55ce9fae9cb24a566629c95bf9736220098f134cd",
+    "wrapper_blob": "0ea631abcf6272f0538a9ef9198ad8069b47b464",
+    "wrapper_path": "research/live_control/input_transition_owner_v3.py"
+  },
+  "protocol_autonomous_reasons": [
+    "cancelled",
+    "focus_invalid",
+    "lease_expired",
+    "owner_close",
+    "owner_stop"
+  ],
+  "protocol_source_sha256": "3ae2ad7ca09bdd6572080aa55ce9fae9cb24a566629c95bf9736220098f134cd",
+  "runtime": {
+    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "python": "3.12.14"
+  },
+  "schema": "issue-5156-release-protocol-interop-probe-v1",
+  "source_git_blobs": {
+    "owner": "341b3c01649943ddaad5f28431a792c4889cc36e",
+    "protocol": "55272e127073a84c9eb541bc650fee74f3fc7123",
+    "wrapper": "0ea631abcf6272f0538a9ef9198ad8069b47b464"
+  },
+  "wrapper_source_sha256": "5ffdbb3679451fefdc3836917d43d924f0f43c8082d21327207ecefbd87f5be6",
+  "x11_or_input_used": false
+}

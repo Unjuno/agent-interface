@@ -1,0 +1,16 @@
+{
+  "cases": 4,
+  "decision": "FAIL_INDEPENDENT_AUDIT",
+  "errors": [
+    "de-00:press_release_order",
+    "de-01:press_release_order",
+    "de-02:press_release_order",
+    "us-control:press_release_order"
+  ],
+  "source_integrity": {
+    "runtime/backends/x11_v1/__init__.py": true,
+    "runtime/backends/x11_v1/backend.py": true,
+    "runtime/core_v1/__init__.py": true,
+    "runtime/core_v1/contract.py": true
+  }
+}

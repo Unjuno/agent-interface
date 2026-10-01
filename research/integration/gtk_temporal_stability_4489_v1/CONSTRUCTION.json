@@ -1,0 +1,38 @@
+{
+  "scope": "construction only; not formal scientific evidence",
+  "construction_01": {
+    "decision": "HOLD",
+    "reason": "Target and decoy overlapped at (0,0); occlusion changed the entire captured target image.",
+    "changed_pixels": 72000,
+    "target_pixels": 72000
+  },
+  "construction_02": {
+    "decision": "LIMITED_PASS_NOT_FORMAL",
+    "reason": "Decoy was non-overlapping and distinct, but input focus remained the X root; GTK Entry caret context was not exercised."
+  },
+  "construction_03_to_05": {
+    "decision": "ITERATIVE_CONSTRUCTION",
+    "reason": "Added explicit Entry focus and independent candidate/auditor comparison; construction 05 predates final audit hardening and is not treated as final-code validation."
+  },
+  "construction_06": {
+    "decision": "PASS_NO_INPUT_STABILITY_GATE_CALIBRATED",
+    "base_image": "sha256:296d358f5c71e6c3e766c49ebfe13b9b1ec5c2837157da2cfe406ee73bfb2992",
+    "audit_errors": [],
+    "capture_rows": 32,
+    "focus_contexts": {"2097155": 32},
+    "evaluation_rows": 24,
+    "changed_pixels_outside_mask": 0,
+    "target_events": 0,
+    "candidate_decisions_matched": true,
+    "synthetic_changed_region_detected": true,
+    "live_audit": "PASS",
+    "post_cleanup_audit": "PASS"
+  },
+  "infrastructure_stops": [
+    "apt-based Docker image build stalled; cancelled before any formal allocation",
+    "FROM sha256 image syntax was interpreted as a registry reference; cancelled before any formal allocation",
+    "BuildKit local-image metadata resolution returned HTTP 502; cancelled before any formal allocation",
+    "docker cp does not support container-to-container copying; switched to host-mediated copy before formal freeze"
+  ],
+  "formal_allocation_retries": 0
+}

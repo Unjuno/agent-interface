@@ -1,0 +1,37 @@
+{
+  "allocation": "receiver-concurrent-identical-20260916-a1",
+  "completed_cases": 21,
+  "completed_prefix": {
+    "all_equal_receipt": true,
+    "all_one_effect": true,
+    "all_overlap_before_first_commit": true,
+    "all_replay_historical_zero_new": true,
+    "call_enter_skew_us_max": 173.607,
+    "call_enter_skew_us_median": 45.778,
+    "lock_or_process_errors": 0,
+    "owner_a": 11,
+    "owner_b": 10,
+    "transaction_start_skew_ms_max": 2.357478,
+    "transaction_start_skew_ms_median": 1.132727,
+    "worker_call_duration_ms_max": 3.163991,
+    "worker_call_duration_ms_median": 1.6186405
+  },
+  "completed_prefix_audit": "PASS_21_OF_21",
+  "frozen_test_audit_driver": "FAIL_NOOP_MUTATION_ON_A1_FIRST_ROW",
+  "incomplete_case": "c022",
+  "interpretation": "No scientific PASS: formal finite block did not complete. Completed prefix is retained descriptively only.",
+  "next": "new allocation identity; change supervision only and fix mutation-driver no-op while preserving receiver/worker/run/audit experiment semantics",
+  "planned_cases": 30,
+  "posthoc_guaranteed_mutation_controls": "REJECT_7_OF_7",
+  "status": "INCOMPLETE_SUPERVISION_TIMEOUT",
+  "unstarted_cases": [
+    "c023",
+    "c024",
+    "c025",
+    "c026",
+    "c027",
+    "c028",
+    "c029",
+    "c030"
+  ]
+}

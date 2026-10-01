@@ -1,0 +1,16 @@
+{
+  "task": "COORD-EXEC-BOUND-SOCKETCAP-20260917-025",
+  "issue": 608,
+  "publication_base": "8210ddde82f4b01c5d00042afb45fd64e85cd1da",
+  "formal_allocation": "exec-bound-socketcap-20260917-a1",
+  "formal_rerun_budget": 0,
+  "decision": "PASS_EXEC_BOUND_CAPABILITY_SCOPED",
+  "chunks": [
+    [["persistent_cap", "stable", "m01"], ["cloexec_cap", "stable", "m02"]],
+    [["persistent_cap", "B_change", "m03"], ["cloexec_cap", "B_change", "m04"]],
+    [["cloexec_cap", "stable", "m05"], ["persistent_cap", "stable", "m06"]],
+    [["cloexec_cap", "B_change", "m07"], ["persistent_cap", "B_change", "m08"]],
+    [["persistent_cap", "stable", "m09"], ["cloexec_cap", "stable", "m10"]],
+    [["persistent_cap", "B_change", "m11"], ["cloexec_cap", "B_change", "m12"]]
+  ]
+}

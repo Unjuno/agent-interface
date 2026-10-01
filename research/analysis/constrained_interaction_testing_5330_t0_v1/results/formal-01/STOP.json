@@ -1,0 +1,14 @@
+{
+  "allocation": "constrained-interaction-5330-t0-20260930-01",
+  "status": "STOP_RUNNER_IMPORT_ROOT",
+  "exit_code": 1,
+  "command_inside_container": "python -B -m research.analysis.constrained_interaction_testing_5330_t0_v1.run /out/formal-01",
+  "container": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 linux/amd64",
+  "stdout_stderr": "/usr/local/bin/python: Error while finding module specification for 'research.analysis.constrained_interaction_testing_5330_t0_v1.run' (ModuleNotFoundError: No module named 'research')",
+  "cause": "The repository subdirectory itself was mounted at /src and made the working directory; Python therefore had no repository root containing the top-level research package on sys.path. The frozen command was invoked exactly once but runner module initialization never began.",
+  "raw_matrix_written": false,
+  "independent_audit": "not run: the frozen audit gate permits it only after runner exit 0 and raw output exists",
+  "retry": "prohibited; preserve this first allocation outcome unchanged",
+  "construction_tests_before_allocation": "7/7 passed on host Python; these did not verify the container import root",
+  "no_application_or_external_effect": true
+}

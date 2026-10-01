@@ -1,0 +1,27 @@
+{
+  "decision": "PASS_MANIFEST_BINDING_SCOPED",
+  "errors": [],
+  "negative_controls": [
+    {
+      "control": "empty-maps",
+      "reason": "source:path-set",
+      "rejected": true
+    },
+    {
+      "control": "omitted-path",
+      "reason": "source:path-set",
+      "rejected": true
+    },
+    {
+      "control": "changed-digest",
+      "reason": "output:hash:/evidence/runner_result.json",
+      "rejected": true
+    }
+  ],
+  "positive": {
+    "errors": [],
+    "outputs": 4,
+    "sources": 11,
+    "status": "PASS_EXACT_PATH_MANIFEST"
+  }
+}

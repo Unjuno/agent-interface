@@ -1,0 +1,16 @@
+{
+  "task": "TEMPORAL-BUFFER-X11-CAPTURE-20HZ-REPLICATION-20260918-007",
+  "issue": 1093,
+  "archive": "SOURCE.tar.xz",
+  "archive_bytes": 13136,
+  "archive_sha256": "72f75186ea7d08f5a607d3a7e2937a6547adb0f0384803f0dbb73be7a940f270",
+  "freeze_sha256": "eb53715811985c849782a3e2d941e11e2851ba141a9412645a150b49607b61f8",
+  "parts": ["source.part00.b64", "source.part01.b64", "source.part02.b64", "source.part03.b64", "source.part04.b64"],
+  "part_git_blobs": ["c27dc5bd34b3b82f47526da0bc55207e72c05e70", "ccce9d6ecb20254101253e0c0923be8ab7cf9e59", "c86c9b01e28b9ba92646a4cf98f33ee77a82ae40", "f0bdcb4e2be02a8d2b629966c5733bd5afc529b0", "77c2fef1f920779554d72872d78e1924f8414954"],
+  "formal_invocations_at_freeze": 0,
+  "member_count": 18,
+  "decode": "Concatenate base64 parts, base64-decode, verify archive sha256, then extract tar.xz; FREEZE.json covers all executable members.",
+  "measured_region_byte_equal_to_predecessor": true,
+  "construction": "One excluded pair completed; six audit boundary controls passed.",
+  "limitations": "CPU is runner-only. Original end-window/terminal-callback behavior is preserved. Absolute capture stamps before terminal ring are NOT_RECORDED. Raw durations, callback times and terminal-ring payloads are exported only after measured stop. No full per-insertion ring history claim."
+}

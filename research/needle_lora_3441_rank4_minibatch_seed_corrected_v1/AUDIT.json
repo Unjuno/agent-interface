@@ -1,0 +1,49 @@
+Warning: truncated output (original token count: 332)
+Total output lines: 52
+
+{
+  "auditor": "independent PowerShell checks against retained raw payload; bundled audit.py has NameError before verdict",
+  "integrityChecks": {
+    "envelope": true,
+    "seeds": true,
+    "arms": true,
+    "curves": true,
+    "routes": true,
+    "baseImmutable": true,
+    "snapshots": true,
+    "invalidRoutes": true
+  },
+  "seedMetrics": [
+    {
+      "seed": 3451,
+      "legacy": 0.94091796875,
+      "shared": 0.9462890625,
+      "curvesLegacy": 16,
+      "curvesShared": 16
+    },
+    {
+      "seed": 3452,
+      "legacy": 0.923828125,
+      "shared": 0.93359375,
+  …32 tokens truncated…ared": 0.937255859375,
+      "curvesLegacy": 16,
+      "curvesShared": 16
+    },
+    {
+      "seed": 3454,
+      "legacy": 0.96142578125,
+      "shared": 0.957275390625,
+      "curvesLegacy": 16,
+      "curvesShared": 16
+    },
+    {
+      "seed": 3455,
+      "legacy": 0.9482421875,
+      "shared": 0.945068359375,
+      "curvesLegacy": 16,
+      "curvesShared": 16
+    }
+  ],
+  "disposition": "HOLD_LEGACY_COLLAPSE_NOT_REPRODUCED",
+  "limits": "Independent schedule/data/prediction auditor not valid: bundled audit.py fails with NameError ea. No formal audit pass claimed."
+}

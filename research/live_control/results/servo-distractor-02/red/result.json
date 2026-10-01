@@ -1,0 +1,179 @@
+{
+  "distractor_color": "red",
+  "source_box": [
+    593,
+    370,
+    20,
+    18
+  ],
+  "terminal": {
+    "event": "terminal",
+    "id": "servo",
+    "status": "needs_decision",
+    "error": null,
+    "steps_completed": 0,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 15368449799,
+      "valid_until_ns": 22094379018
+    },
+    "terminal_ns": 15368517673,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emitted_ns": 15368521121
+  },
+  "target_dx": -47.999999998,
+  "precision_pass": false,
+  "collateral_preserved": true,
+  "saved": {
+    "target": {
+      "x": "9.3220339",
+      "y": "50",
+      "width": "12",
+      "height": "10",
+      "transform": null
+    },
+    "distractor": {
+      "x": "74",
+      "y": "50",
+      "width": "12",
+      "height": "10",
+      "transform": null
+    }
+  },
+  "controller": [
+    {
+      "event": "servo_feedback",
+      "id": "servo",
+      "step": 0,
+      "observation": 2,
+      "tracking": {
+        "status": "matched",
+        "error": 0.013979665940450255,
+        "margin": 0.03460421205519245,
+        "source_observation": 1,
+        "observation": 2,
+        "frame_id": "{\"focus\": 6291464, \"geometry\": [0, 19, 1280, 781], \"surface\": 6291463}",
+        "patch_sha256": "2e8dc0261cce56013c12a0c2cb375036d98e7780143f6e2757e712b12e60c0dd",
+        "box": [
+          621,
+          370,
+          20,
+          18
+        ],
+        "delta": [
+          28,
+          0
+        ]
+      },
+      "reason": "correct",
+      "command": {
+        "op": "move",
+        "x": 593,
+        "y": 379
+      },
+      "updates_remaining": 2,
+      "emitted_ns": 14460638877
+    },
+    {
+      "event": "servo_feedback",
+      "id": "servo",
+      "step": 0,
+      "observation": 3,
+      "tracking": {
+        "status": "matched",
+        "error": 0.013979665940450255,
+        "margin": 0.028852578068264342,
+        "source_observation": 1,
+        "observation": 3,
+        "frame_id": "{\"focus\": 6291464, \"geometry\": [0, 19, 1280, 781], \"surface\": 6291463}",
+        "patch_sha256": "2e8dc0261cce56013c12a0c2cb375036d98e7780143f6e2757e712b12e60c0dd",
+        "box": [
+          621,
+          370,
+          20,
+          18
+        ],
+        "delta": [
+          28,
+          0
+        ]
+      },
+      "reason": "correct",
+      "command": {
+        "op": "move",
+        "x": 577,
+        "y": 379
+      },
+      "updates_remaining": 1,
+      "emitted_ns": 14700065140
+    },
+    {
+      "event": "servo_feedback",
+      "id": "servo",
+      "step": 0,
+      "observation": 4,
+      "tracking": {
+        "status": "matched",
+        "error": 0.013979665940450255,
+        "margin": 0.028852578068264342,
+        "source_observation": 1,
+        "observation": 4,
+        "frame_id": "{\"focus\": 6291464, \"geometry\": [0, 19, 1280, 781], \"surface\": 6291463}",
+        "patch_sha256": "2e8dc0261cce56013c12a0c2cb375036d98e7780143f6e2757e712b12e60c0dd",
+        "box": [
+          621,
+          370,
+          20,
+          18
+        ],
+        "delta": [
+          28,
+          0
+        ]
+      },
+      "reason": "correct",
+      "command": {
+        "op": "move",
+        "x": 561,
+        "y": 379
+      },
+      "updates_remaining": 0,
+      "emitted_ns": 14970754505
+    },
+    {
+      "event": "servo_feedback",
+      "id": "servo",
+      "step": 0,
+      "observation": 5,
+      "tracking": {
+        "status": "matched",
+        "error": 0.013979665940450255,
+        "margin": 0.10319535221496007,
+        "source_observation": 1,
+        "observation": 5,
+        "frame_id": "{\"focus\": 6291464, \"geometry\": [0, 19, 1280, 781], \"surface\": 6291463}",
+        "patch_sha256": "2e8dc0261cce56013c12a0c2cb375036d98e7780143f6e2757e712b12e60c0dd",
+        "box": [
+          621,
+          370,
+          20,
+          18
+        ],
+        "delta": [
+          28,
+          0
+        ]
+      },
+      "reason": "update_limit",
+      "command": {
+        "op": "finish"
+      },
+      "updates_remaining": 0,
+      "emitted_ns": 15261182882
+    }
+  ]
+}

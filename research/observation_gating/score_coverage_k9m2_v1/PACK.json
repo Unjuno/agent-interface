@@ -1,0 +1,201 @@
+{
+  "columns": 12,
+  "compressed_bytes": 39948,
+  "compressed_sha256": "b1957ead711a8b41460eb9904072f526303d91d988ab57dff29884c2db01aeaa",
+  "encoded_bytes": 107964,
+  "encoded_sha256": "8ccd8e7b202527fcda6bed288a3de02e77efb70f63989e91f09365676c719c63",
+  "encoding": "Every observed u is stored; z is a permutation index; observed s is delta-coded against stored z; observed sets are bitmasks. No RNG/policy reexecution. Transposed byte columns then XZ.",
+  "parts": [
+    {
+      "bytes": 6144,
+      "name": "RAW.columns.part00.b64",
+      "sha256": "3a52fc7bfea28cc3a89dfaffbcf42457b3cddfd64253346bf6169bd808f0f67b"
+    },
+    {
+      "bytes": 6144,
+      "name": "RAW.columns.part01.b64",
+      "sha256": "fb2b30b0f294e2933508d9b96c3197b35ef6d34afb3cafb4826ca4d8b34acab2"
+    },
+    {
+      "bytes": 6144,
+      "name": "RAW.columns.part02.b64",
+      "sha256": "00011525cd6e432f442a0bef5615a549f6ef9cfaad1d34b7cc48fb109519092d"
+    },
+    {
+      "bytes": 6144,
+      "name": "RAW.columns.part03.b64",
+      "sha256": "7c07f4827f854d3b0963c2a94412c7ede6ee77c267797b4fb307896b35a96bb3"
+    },
+    {
+      "bytes": 6144,
+      "name": "RAW.columns.part04.b64",
+      "sha256": "61fdf76c7bdebdd354b3b313a3cddb54d765622c674c6292704bc3d9a4a8a288"
+    },
+    {
+      "bytes": 6144,
+      "name": "RAW.columns.part05.b64",
+      "sha256": "51a9da201dfeac1565f4d7628ee3ea28c8556966af6cd7fd55eeb30198fa6bfd"
+    },
+    {
+      "bytes": 6144,
+      "name": "RAW.columns.part06.b64",
+      "sha256": "07d58aa153a71b04800136aaab4de928076a0d3b3c4382c9f9751cf7d3e80e06"
+    },
+    {
+      "bytes": 6144,
+      "name": "RAW.columns.part07.b64",
+      "sha256": "8eba7552734e9e684e191039d016fd77a5962f441a1bb963d984248327a12e41"
+    },
+    {
+      "bytes": 4112,
+      "name": "RAW.columns.part08.b64",
+      "sha256": "265f4cf309b249b2f17cb7a9c261d7d43cba815650364d8d2f5fc3e6dff34e0f"
+    }
+  ],
+  "raw_bytes": 807398,
+  "raw_sha256": "10a1bb579b354d2f1f39d73255f04e074397776558c91aa3d21996f8b1c8c6db",
+  "row_count": 8997,
+  "schema": "lossless-raw-column-codec-v1",
+  "skeleton": {
+    "allocation": "score-coverage-4356-20260925-01",
+    "authority": false,
+    "blocks": [
+      {
+        "calibration": 999,
+        "profiles": [
+          {
+            "name": "IID",
+            "rows": 1000
+          },
+          {
+            "name": "SHIFTED_AMPLITUDE",
+            "rows": 1000
+          }
+        ],
+        "radii": {
+          "JOINT95": [
+            10,
+            10,
+            10,
+            10
+          ],
+          "MARGINAL95": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "seed": 4356101
+      },
+      {
+        "calibration": 999,
+        "profiles": [
+          {
+            "name": "IID",
+            "rows": 1000
+          },
+          {
+            "name": "SHIFTED_AMPLITUDE",
+            "rows": 1000
+          }
+        ],
+        "radii": {
+          "JOINT95": [
+            10,
+            10,
+            10,
+            10
+          ],
+          "MARGINAL95": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "seed": 4356102
+      },
+      {
+        "calibration": 999,
+        "profiles": [
+          {
+            "name": "IID",
+            "rows": 1000
+          },
+          {
+            "name": "SHIFTED_AMPLITUDE",
+            "rows": 1000
+          }
+        ],
+        "radii": {
+          "JOINT95": [
+            10,
+            10,
+            10,
+            10
+          ],
+          "MARGINAL95": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "seed": 4356103
+      }
+    ],
+    "config": {
+      "allocation": "score-coverage-4356-20260925-01",
+      "calibration_amplitude": 10,
+      "calibration_rows_per_seed": 999,
+      "claims": [
+        "synthetic statistical boundary only",
+        "no GUI detector calibration",
+        "no action authority"
+      ],
+      "coordinate_count": 4,
+      "coverage": [
+        19,
+        20
+      ],
+      "evaluation_rows_per_profile_seed": 1000,
+      "formal_reruns_allowed": false,
+      "issue": 4356,
+      "outlier_probability": [
+        3,
+        100
+      ],
+      "profiles": [
+        [
+          "IID",
+          10
+        ],
+        [
+          "SHIFTED_AMPLITUDE",
+          30
+        ]
+      ],
+      "seeds": [
+        4356101,
+        4356102,
+        4356103
+      ],
+      "stream_rule": "random.Random(seed*10+split), split0 calibration,1 IID,2 SHIFT; shuffle z then four randrange(100)"
+    },
+    "schema": 1,
+    "source": {
+      "CONFIG.json": "e7d7524f901874e901188052b71d2a24a663b7f03cc03a32ffc594941a4f849f",
+      "CONSTRUCTION.json": "1ea77fe6341df460563eb81e5745d9e96316035c0a533af33281e192e96b03a8",
+      "ENVIRONMENT.json": "28a175f2b109112c7d455759048ff6ac66f13133643efe3ca8452d1db22e1b77",
+      "PLAN.md": "ffaf6a16a2d0ca2b04740cbec886d453b73d8fd8ebda1fa44db2e91cceb6baef",
+      "audit.py": "083c6a0a68f064b1c1d2b6d4f49cb66fdd338fd435f16ab20d5767f47f5f669c",
+      "controls.py": "62aa9f15d3fdc794e6763fe1892bf22a3f4b969fdc28028263cfcc57af36d456",
+      "execute.py": "d9021e9003cff5c626bffbf47195683c08015387163c4e223fde5b55905436fb",
+      "policy.py": "7655c80667e5c3f57ee676218825a5192062a7d5ac47fb81f382589bcb8c3a7c",
+      "run.py": "b94afca4f46a6b8c05e136749e5eda217af16e422abdb858b60bb49073342543",
+      "test_contract.py": "5a3ab20d0732c5014cd031623a1e850e49c1497bb0477299419166159abef840"
+    },
+    "task_success": null
+  }
+}

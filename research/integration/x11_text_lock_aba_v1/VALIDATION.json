@@ -1,0 +1,96 @@
+{
+  "audit_byte_identical": true,
+  "audit_checks": 2236,
+  "audit_errors": [],
+  "audit_sha256": "593b9f4a2b30e6dafcfa517ed83d5bc5f96ef913421b1d0084a5e5ab718fd393",
+  "capsule_bytes": 931024,
+  "capsule_members": 209,
+  "capsule_sha256": "464a793f14abceef3804aa5776a1d2ff4fa2412bc4479ea20553e1708857976a",
+  "corruption_controls_rejected": 13,
+  "formal_reruns": 0,
+  "gui_sessions_executed_this_continuation": 0,
+  "initial_helper_incident": {
+    "all13_controls_rejected": true,
+    "audit_byte_identical": true,
+    "controls_byte_identical": false,
+    "controls_semantically_equal_after_only_temp_path_normalization": true,
+    "description": "audit/controls/unit each exited0. Helper then asserted byte identity of CONTROLS.json; exactly two randomized temp-directory names differ. No old source or artifact changed.",
+    "formal_reruns": 0,
+    "helper_exit": 1,
+    "label": "PUBLICATION_COMPARATOR_OVERCONSTRAINT",
+    "observed_by": "container.exec return and traceback; posthoc record",
+    "unit_methods_passed": 15
+  },
+  "limits": [
+    "Local offline verification, not repository-wide CI.",
+    "Separate implementation/process by same author, not external human review.",
+    "Controls exception path strings differ across temp directories; do not assert control-output byte identity.",
+    "Publication is retrospective, not GitHub preregistration."
+  ],
+  "original_manifest_entries_verified": 198,
+  "original_member_bytes": 914394,
+  "original_member_count": 199,
+  "original_members_byte_identical": true,
+  "original_zip_sha256": "2d82c2105b6a394e3603005701c85bce39134154c163c7417e57787a893c384f",
+  "packaging_negative_controls_rejected": 8,
+  "packaging_tests_passed": 9,
+  "process_receipts": [
+    {
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "/mnt/data/aba_delivery/publication/test_unpack.py"
+      ],
+      "cwd": "/mnt/data/aba_delivery/publication",
+      "exit": 0,
+      "name": "package_tests",
+      "stderr_sha256": "e9bdf91dbd440acbb877eec695fc5b863462b2555bb15fb703c0c1405b6ca576",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "audit.py",
+        "formal-01",
+        "--out",
+        "/mnt/data/aba_delivery/final-reaudit.json"
+      ],
+      "cwd": "/mnt/data/aba_delivery/restored/original",
+      "exit": 0,
+      "name": "retained_audit",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "593b9f4a2b30e6dafcfa517ed83d5bc5f96ef913421b1d0084a5e5ab718fd393"
+    },
+    {
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "test_audit.py",
+        "formal-01",
+        "--out",
+        "/mnt/data/aba_delivery/final-controls.json"
+      ],
+      "cwd": "/mnt/data/aba_delivery/restored/original",
+      "exit": 0,
+      "name": "retained_controls",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "1ac3af0e9548c38d6de974ce1a0287db2513c82e380bc2d76156818458000daf"
+    },
+    {
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "test_contract.py"
+      ],
+      "cwd": "/mnt/data/aba_delivery/restored/original",
+      "exit": 0,
+      "name": "retained_units",
+      "stderr_sha256": "1a6d06f52acff82619bf883e153c19a37e1d1ea3476d3017030b899d482e9ddc",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "schema": "aba-retrospective-publication-validation-v1",
+  "unit_methods_passed": 15,
+  "verified_utc": "2026-09-21T22:39:14.848774+00:00"
+}

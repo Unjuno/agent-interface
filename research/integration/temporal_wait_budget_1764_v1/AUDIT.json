@@ -1,0 +1,76 @@
+{
+  "candidate_counts": {
+    "EXPIRED": 6,
+    "SATISFIED": 3,
+    "TIMEOUT_UNRESOLVED": 6,
+    "UNKNOWN_INCOMPLETE_PREFIX": 3
+  },
+  "disposition": "PASS_CALLER_BUDGET_EVENT_TIME_BOUNDARY_SCOPED",
+  "errors": [],
+  "mutation_controls": {
+    "boolean_exit": {
+      "error_count": 1,
+      "rejected": true
+    },
+    "boolean_index": {
+      "error_count": 1,
+      "rejected": true
+    },
+    "changed_source_B_time": {
+      "error_count": 3,
+      "rejected": true
+    },
+    "duplicate_row": {
+      "error_count": 3,
+      "rejected": true
+    },
+    "false_timeout_completion": {
+      "error_count": 2,
+      "rejected": true
+    },
+    "gap_relabelled": {
+      "error_count": 2,
+      "rejected": true
+    },
+    "invented_source_tick": {
+      "error_count": 2,
+      "rejected": true
+    },
+    "late_result_reopened": {
+      "error_count": 1,
+      "rejected": true
+    },
+    "lost_exit": {
+      "error_count": 1,
+      "rejected": true
+    },
+    "missing_live_source": {
+      "error_count": 1,
+      "rejected": true
+    },
+    "missing_row": {
+      "error_count": 3,
+      "rejected": true
+    },
+    "reversed_delivery_clock": {
+      "error_count": 1,
+      "rejected": true
+    }
+  },
+  "naive_false_expired": 6,
+  "naive_unsupported_expired": 3,
+  "rows": 18,
+  "source_truth_counts": {
+    "EXPIRED": 6,
+    "PENDING": 3,
+    "SATISFIED": 9
+  },
+  "timer_lags_ns": [
+    304404,
+    239741,
+    231613,
+    237597,
+    256339,
+    241288
+  ]
+}

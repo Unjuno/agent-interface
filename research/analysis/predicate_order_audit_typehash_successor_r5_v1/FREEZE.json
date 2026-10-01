@@ -1,0 +1,60 @@
+{
+  "schema": "predicate-order-audit-typehash-freeze-v1",
+  "issue": 5018,
+  "allocation": "predicate-order-typehash-20260928-05",
+  "predecessor_allocations": [
+    "01 STOP preserved; not retried",
+    "02 STOP preserved; not retried",
+    "03 STOP preserved; not retried",
+    "04 runner PASS but independent audit STOP due read-only output; preserved; not retried"
+  ],
+  "intake_main": "04564ff4d1df59f01a91de7338c44adab9ae74ab",
+  "branch": "research/predicate-order-audit-typehash-successor-r5-20260928",
+  "path": "research/analysis/predicate_order_audit_typehash_successor_r5_v1/",
+  "hypothesis": "The unchanged raw corpus reconstructs as 336 rows across 21 distributions, all seven preregistered bool/int mutations are accepted by the retained auditor and rejected by the exact-type candidate, the independent audit binds the runner output, and the exact-path digest manifest accepts positive inputs while rejecting all three frozen negative controls.",
+  "environment": {
+    "docker_context": "desktop-linux",
+    "image": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "platform": "linux/amd64",
+    "network": "none",
+    "rootfs": "read-only",
+    "cpus": 0.25,
+    "memory": "512 MiB",
+    "pids_limit": 64,
+    "tmpfs": "/tmp:rw,noexec,nosuid,size=16m"
+  },
+  "inputs": {
+    "legacy_raw_audit_blob": "1a6cc0e46b32d4cd6989aed118d003cce4cfe399",
+    "target_raw_auditor_blob": "b314562f69633f2d4771d531ee747d7a856db2e4",
+    "raw_archive_base64_blob": "c38dd2002f201d49b6fc261caff019550a4bf4bc",
+    "raw_sha256": "5f48e0274f9fd800ac26af3dd70bd52171700b32ce159f3cdbe0f28c7ec35e7d",
+    "raw_bytes": 186739,
+    "audit_sha256": "55b91ba52c5df69adef809dd1ce721dbb9f59d807dc4c64a83b7cecfa9a1a181"
+  },
+  "source_sha256": {
+    "src/allocation_entry.sh": "ac6713638dc3514b2253a4fb6dafe5dba2cf020d558082ed2aa9dae91b3beaf7",
+    "src/audit_entry.sh": "087104abd40291ff575d55ed36f97ca24f97610c1ae239227bb1b7cb66326d16",
+    "src/audit_hardened.py": "4da3d454175eb551de25901cec839a7fe62dfb14cdd86234b9b7caa2b7210178",
+    "src/candidate.py": "9b8a04cc0e5021953f29349e8d980e51a763a488df0c202aa27b1c97a280accd",
+    "src/formal_entry.sh": "cedc95ebaa47a615fe401ea59e5b6c4f66ae2a2e047a40b5b04b10ccde2dbeb1",
+    "src/independent_audit.py": "e52e8698b6999a985689f57bfc717401fd0b6805446ea0835dd4c8e61fa4446c",
+    "src/manifest_entry.sh": "6d0866c8c7a8b8fe1a1571f16fdf7602fa8e58465ca565c0d96041465a7f0c46",
+    "src/manifest_probe.py": "081e0f2c721e27fbe5bd9dc1c25fcfde8e3651513571a77a0664407096e0db69",
+    "src/probe_baseline.py": "3f0e2b2b8bbd830f2beab93e322fb6e85247442e4b01d62be4a7146168dd87bb",
+    "src/runner.py": "70cafe2b8d5d673733a9c04c3332af5cf533afb6a095e5924f5f934ca6f8cf81",
+    "src/test_protocol.py": "7ab6373f11282320058da0611285f732b6bff500c712228a2d4143334ee1d4f9"
+  },
+  "output_paths": [
+    "out/tests.stdout", "out/tests.stderr", "out/tests.exit",
+    "out/python_syntax.stdout", "out/python_syntax.stderr", "out/python_syntax.exit",
+    "out/formal_entry_syntax.exit", "out/audit_entry_syntax.exit", "out/manifest_entry_syntax.exit",
+    "out/construction_probe.stdout", "out/construction_probe.stderr", "out/construction_probe.exit",
+    "out/runner_result.json", "out/runner.stdout", "out/runner.stderr", "out/runner.exit",
+    "out/AUDIT.json", "out/audit.stdout", "out/audit.stderr", "out/audit.exit",
+    "out/manifest.json", "out/manifest_result.json", "out/manifest.stdout", "out/manifest.stderr", "out/manifest.exit",
+    "out/allocation_decision"
+  ],
+  "formal_once": "docker run --rm --pull=never --platform linux/amd64 --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --cpus=0.25 --memory=512m --pids-limit=64 -e PYTHONPATH=/src --mount type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\unjuno-agent-interface\\work\\predicate-order-audit-r5\\src,target=/src,readonly --mount type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\unjuno-agent-interface\\work\\predicate-order-audit-r5\\src,target=/repo/src,readonly --mount type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\unjuno-agent-interface\\work\\predicate-order-audit-r5\\formal-input,target=/input,readonly --mount type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\unjuno-agent-interface\\work\\predicate-order-audit-r5\\formal-input,target=/repo/input,readonly --mount type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\unjuno-agent-interface\\work\\predicate-order-audit-r5\\out,target=/out --mount type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\unjuno-agent-interface\\work\\predicate-order-audit-r5\\out,target=/repo/out --mount type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\unjuno-agent-interface\\work\\predicate-order-audit-r5\\out,target=/evidence --mount type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\unjuno-agent-interface\\work\\predicate-order-audit-r5\\out,target=/audit --workdir /src --entrypoint /bin/sh sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 /src/allocation_entry.sh",
+  "formal_invocations": 0,
+  "retries_allowed": false
+}

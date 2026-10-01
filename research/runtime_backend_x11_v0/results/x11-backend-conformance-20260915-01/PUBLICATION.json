@@ -1,0 +1,33 @@
+{
+  "schema": "agent-interface/retained-publication-v1",
+  "result_id": "x11-backend-conformance-20260915-01",
+  "source_freeze": "cfa5b01e5df8351fdd51672904aabf0e35d8f9a1",
+  "local_original_manifest": "SHA256SUMS",
+  "publication_scope": "selected exact text evidence plus losslessly split fixture ledger",
+  "published_exact_files": [
+    "REPORT.md",
+    "audit.json",
+    "started.json",
+    "unittest.txt",
+    "unittest.exitcode",
+    "runner.exitcode",
+    "live/experiment.exitcode",
+    "live/experiment.stdout",
+    "live/result/report.json"
+  ],
+  "split_original": {
+    "path": "live/fixture-events.jsonl",
+    "reassembly": "fixture-events.reassembly.json",
+    "sha256": "a2b88794176f7927eb3e746a2b109d675144a9ae5076cf701d408959dfa7a008"
+  },
+  "not_published_because_empty_or_redundant": [
+    "live/Xauthority",
+    "live/experiment.stderr",
+    "live/fixture.stderr",
+    "live/xvfb.stderr",
+    "live/xvfb.stdout",
+    "runner.stderr",
+    "runner.stdout"
+  ],
+  "note": "SHA256SUMS is the immutable local first-outcome manifest. Publication intentionally does not pretend omitted files are present; the independently useful raw fixture ledger is reconstructible byte-for-byte from the four published parts."
+}

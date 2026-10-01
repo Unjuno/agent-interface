@@ -1,0 +1,48 @@
+{
+  "schema": "issue-experiment-prereg-v1",
+  "issue": 3691,
+  "allocation_id": "issue3691-orbstack-docker-validation-01",
+  "preregistered_at_utc": "2026-09-20T17:30:00Z",
+  "repository": "Unjuno/agent-interface",
+  "branch": "research/issue-3691-orbstack-docker-validation-v1",
+  "base_main_commit": "200c0530840128e478dd2a0247b5724bc21104de",
+  "candidate_pr": 3697,
+  "candidate_branch": "research/issue-3691-audit-integrity-v1",
+  "candidate_commit": "f823cbc77e87d2f9ff3456ddf49f2f819bbc340a",
+  "candidate_path": "research/issue_3691_audit_integrity_v1",
+  "source_sha256": {
+    "audit.py": "2852a352117c95dcca56dead2830b868ceeabd70cad72ee852f78d02a9cb852e",
+    "test_integrity.py": "df18654ec0ce5fe138fc13aee394057cb745d81a4205e9f80911f705c322109e",
+    "FREEZE.json": "b74f0662da1f0f84477857de2dbddf87371df7568fac6955dbac98c550cc0ea9",
+    "EXPECTED_STUDY.json": "5de1bcec9910046c04041ef87caac393f65eac0114c1108017955ac8a0017681",
+    "evidence/raw.json": "ccb9a75eefb7df73cb13dbc9191d33334fb672c2fd58fcc5fa32be998e182807",
+    "evidence/predecessor_FREEZE.json": "f40494b1be99fb1e68d7b09c498297df35a72c043740b5f09d3faec7e059acfe",
+    "artifacts/native_audit.json": "36e1e9c64c83be35eef3447d76d78d2f62adff257612184beef4162c5e1fb32a"
+  },
+  "study_manifest_sha256": "b74f0662da1f0f84477857de2dbddf87371df7568fac6955dbac98c550cc0ea9",
+  "expected_study_manifest_sha256": "b74f0662da1f0f84477857de2dbddf87371df7568fac6955dbac98c550cc0ea9",
+  "hypothesis": "The exact #3697 strict auditor/test snapshot passes its full regression suite and canonical raw-only CLI inside pinned network-disabled containers, including artifact-binding, strict JSON type, duplicate-key, malformed-root, coordinated manifest-replacement, and direct/CLI controls.",
+  "test": "One fresh container runs python -m unittest -v test_integrity against the exact read-only #3697 source tree. A second fresh container invokes audit.py once through its CLI against the frozen raw, predecessor freeze, study freeze, and external study SHA pin; preserve machine-readable CLI output and stdout.",
+  "decision": {
+    "pass": "PASS_ISSUE3691_CONTAINER_VALIDATION_SCOPED only if source/input pins verify; all eight test methods pass; the second container CLI exits 0 with PASS_OFFLINE_STRUCTURAL_AUDIT, errors=[], and all 12 mutation controls in the exact current auditor are true; no run modifies source or frozen predecessor evidence.",
+    "fail": "FAIL_AUDIT_REGRESSION if any test fails, canonical CLI errors, a corruption control is false, or a frozen input/source differs.",
+    "stop": "STOP_DOCKER_SOURCE_OR_MOUNT if pinned image, engine, source, rootfs, mount, or output fails. No retry or host substitution."
+  },
+  "pre_run_observation": "The retained artifacts/native_audit.json has 11 corruption-control keys while the exact frozen audit.py currently defines 12 (including replacement_study_manifest). Preserve the former byte-for-byte; formally evaluate the current candidate code and report this historical-receipt discrepancy without changing either expected value after execution.",
+  "container": {
+    "engine": "OrbStack Docker Engine 29.4.0",
+    "platform": "linux/arm64",
+    "base_image": "python:3.12.10-slim-bookworm@sha256:fd95fa221297a88e1cf49c55ec1828edd7c5a428187e67b5d1805692d11588db",
+    "base_image_id": "sha256:fd95fa221297a88e1cf49c55ec1828edd7c5a428187e67b5d1805692d11588db",
+    "build_network": "none (no custom image build)",
+    "run_network": "none",
+    "rootfs": "read-only",
+    "source_mount": "read-only",
+    "formal_output": "results/unit-tests.stdout.txt",
+    "cli_output": "results/cli.json",
+    "cli_stdout": "results/cli.stdout.txt"
+  },
+  "formal_test_container_invocations": 1,
+  "fresh_cli_container_invocations": 1,
+  "retry_policy": "One unit-test container invocation and one separate CLI container invocation. Do not retry either formal execution, create a replacement allocation, alter candidate source, or reinterpret Docker STOP as PASS."
+}

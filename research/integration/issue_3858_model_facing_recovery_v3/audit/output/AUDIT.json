@@ -1,0 +1,39 @@
+{
+  "audit_version": "independent-v3",
+  "candidate_answers": [
+    "READY",
+    "READY",
+    "ABSTAIN"
+  ],
+  "checks": {
+    "action_free": true,
+    "allocation": true,
+    "base_commit": true,
+    "bridge_identity": true,
+    "call_budget": true,
+    "candidate_conflict_preabstain": true,
+    "candidate_exact": true,
+    "candidate_more_coverage": true,
+    "corruption_controls": true,
+    "formal_mode": true,
+    "freeze_hash": true,
+    "full_unique_grid": true,
+    "independent_policy_reconstruction": true,
+    "no_stop": true,
+    "obstac_freeze": true,
+    "obstac_image": true,
+    "obstac_source": true,
+    "per_call_model_identity": true,
+    "png_crc_filter_scanlines": true,
+    "prereg_hash": true,
+    "rpc_byte_links": true,
+    "source_checks": true,
+    "source_hashes": true
+  },
+  "gate": "PASS_MODEL_FACING_EPOCH_COMPOSITION_SCOPED",
+  "reject_only_answers": [
+    "READY",
+    "ABSTAIN",
+    "ABSTAIN"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "task": "MAP01-PIXEL-SHIFT-MULTISTART-20260917-004",
+  "schema": "map01-pixel-shift-multistart-plan-a2-v1",
+  "repair_factor": "outer supervision only: fresh IDs + one case per outer invocation",
+  "same_id_reruns": 0,
+  "metric_sha256": "04f8ea8c42f950b5e8df9e45cf5a19cc7cc0ab38558b3f7568aabdcb298f93c9",
+  "shift_stop_px": 34,
+  "yaw_gate_deg": 6.0,
+  "reference_span_gate_deg": 90.0,
+  "cases": [
+    {"id":"a2-01-s0-a-d3","kind":"main","seed":996301,"setup_right_pulses":0,"displacement":3,"missing_reference":false},
+    {"id":"a2-02-s12-a-d3","kind":"main","seed":996301,"setup_right_pulses":12,"displacement":3,"missing_reference":false},
+    {"id":"a2-03-s24-a-d3","kind":"main","seed":996301,"setup_right_pulses":24,"displacement":3,"missing_reference":false},
+    {"id":"a2-04-s0-b-d3","kind":"main","seed":996302,"setup_right_pulses":0,"displacement":3,"missing_reference":false},
+    {"id":"a2-05-s12-b-d3","kind":"main","seed":996302,"setup_right_pulses":12,"displacement":3,"missing_reference":false},
+    {"id":"a2-06-s24-b-d3","kind":"main","seed":996302,"setup_right_pulses":24,"displacement":3,"missing_reference":false},
+    {"id":"a2-07-s24-a-d6","kind":"main","seed":996301,"setup_right_pulses":24,"displacement":6,"missing_reference":false},
+    {"id":"a2-08-s12-a-d6","kind":"main","seed":996301,"setup_right_pulses":12,"displacement":6,"missing_reference":false},
+    {"id":"a2-09-s0-a-d6","kind":"main","seed":996301,"setup_right_pulses":0,"displacement":6,"missing_reference":false},
+    {"id":"a2-10-s24-b-d6","kind":"main","seed":996302,"setup_right_pulses":24,"displacement":6,"missing_reference":false},
+    {"id":"a2-11-s12-b-d6","kind":"main","seed":996302,"setup_right_pulses":12,"displacement":6,"missing_reference":false},
+    {"id":"a2-12-s0-b-d6","kind":"main","seed":996302,"setup_right_pulses":0,"displacement":6,"missing_reference":false},
+    {"id":"a2-13-aligned-s0","kind":"aligned","seed":996303,"setup_right_pulses":0,"displacement":0,"missing_reference":false},
+    {"id":"a2-14-aligned-s12","kind":"aligned","seed":996303,"setup_right_pulses":12,"displacement":0,"missing_reference":false},
+    {"id":"a2-15-aligned-s24","kind":"aligned","seed":996303,"setup_right_pulses":24,"displacement":0,"missing_reference":false},
+    {"id":"a2-16-missing-s12","kind":"missing_reference","seed":996304,"setup_right_pulses":12,"displacement":3,"missing_reference":true}
+  ]
+}

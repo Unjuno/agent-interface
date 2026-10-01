@@ -1,0 +1,45 @@
+{
+  "allocation_id": "GROUNDING-COMMIT-GUARD-20260915-01",
+  "base_commit": "fc38624476aa1f30c381e5932f383224451a7d63",
+  "seeds": [852101, 852102, 852103],
+  "methods": ["current_semantic", "bound_early", "bound_final"],
+  "cases": [
+    {"name":"stable","before":"none","between":"none","after":"none","boundary_negative":false},
+    {"name":"move_before","before":"move","between":"none","after":"none","boundary_negative":false},
+    {"name":"other_scope","before":"other_scope","between":"none","after":"none","boundary_negative":false},
+    {"name":"duplicate_same","before":"duplicate","between":"none","after":"none","boundary_negative":false},
+    {"name":"replace_before","before":"replace","between":"none","after":"none","boundary_negative":false},
+    {"name":"rename_before","before":"rename","between":"none","after":"none","boundary_negative":false},
+    {"name":"disable_before","before":"disable","between":"none","after":"none","boundary_negative":false},
+    {"name":"hide_before","before":"hide","between":"none","after":"none","boundary_negative":false},
+    {"name":"overlay_before","before":"overlay","between":"none","after":"none","boundary_negative":false},
+    {"name":"scope_replace","before":"scope_replace","between":"none","after":"none","boundary_negative":false},
+    {"name":"move_between","before":"none","between":"move","after":"none","boundary_negative":false},
+    {"name":"replace_between","before":"none","between":"replace","after":"none","boundary_negative":false},
+    {"name":"rename_between","before":"none","between":"rename","after":"none","boundary_negative":false},
+    {"name":"overlay_between","before":"none","between":"overlay","after":"none","boundary_negative":false},
+    {"name":"disable_between","before":"none","between":"disable","after":"none","boundary_negative":false},
+    {"name":"replace_after_final","before":"none","between":"none","after":"replace","boundary_negative":true},
+    {"name":"same_node_semantic_swap","before":"semantic_swap","between":"none","after":"none","boundary_negative":true},
+    {"name":"nested_child","before":"child","between":"none","after":"none","boundary_negative":false}
+  ],
+  "source_sha256": {
+    "guard.py": "10638c783ee19562b4e5d559b6b41c1add422b18d4e77ad6754f323b4ec510b0",
+    "backend.py": "7dc88395dc0415b4d3b57fd9fabc533714289828eab939377260ee26f0258573",
+    "fixture.html": "7f40d231abd1354f8cf3e44f7db8d7fe9337fd88454d7f835a114a6b84594f35",
+    "run.py": "85a34b5204295c25446b7338c11ce4cd14b30cbadf3cfe7eb46203b036f9b34e",
+    "test_guard.py": "126ec6c4c753082d150a51761b0bfaae82f59b0c39419a1766b90bc55cbc1e21",
+    "audit.py": "2c6821aa5ae41c650706fe9a98e5aaaeebd1081fdce41f4d7cb1f5f7e19725e0"
+  },
+  "scope": "Finite development matrix, not formal population/model efficacy. 18 conditions x 3 fresh layouts x 3 methods = 162. Stable staged states, source acquisition scripted via known AX name in unique Workspace. Final-check arm alone pays another full observation. Capture after final check adds an explicitly logged non-atomic gap.",
+  "H": "Document/scope/backend-node binding and final read should refuse named changed-identity states and repair moved original targets without claiming business-semantic identity or atomic input.",
+  "D": {
+    "scoped_pass": "All non-boundary bound_final cases have zero wrong/background/no_event; stable,move_before,other_scope,move_between remain target in all seeds; no input on refusals, trusted coordinate-consistent app effects and verified button release for every click; replay/retention passes.",
+    "default_promotion": "HOLD unless zero wrong inputs across ALL cases. Boundary negatives count against default promotion, not excluded from reporting.",
+    "uncertain": "missing records, source drift, absent trust/release evidence"
+  },
+  "T": "One ordered allocation split by three predeclared layout blocks; each block once, no optional stopping except harness error; persist every row plus block archive before next block. Smoke layout 123 is excluded.",
+  "C": ["same observable node may change application meaning", "state may mutate after last observation", "strict hit test may reject child elements", "native channel is richer than pixels"],
+  "U": "scripted target names, staged rather than continuous mutation, same-process scorer separation only, single Linux/Xvfb/Chromium platform, uncontrolled scheduler/CPU clock; no provider tokens/latency or numeric coverage factor inferred",
+  "retry": false
+}

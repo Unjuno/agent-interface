@@ -1,0 +1,42 @@
+name: Runtime Win32 v1
+
+on:
+  push:
+    branches:
+      - integration/runtime-win32-v1-20260917
+    paths:
+      - 'runtime/core_v1/**'
+      - 'runtime/backends/win32_v1/**'
+      - '.github/workflows/runtime-win32-v1.yml'
+  pull_request:
+    paths:
+      - 'runtime/core_v1/**'
+      - 'runtime/backends/win32_v1/**'
+      - '.github/workflows/runtime-win32-v1.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  native-win32:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout frozen core and Win32 candidate
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            runtime/core_v1
+            runtime/backends/win32_v1
+          sparse-checkout-cone-mode: false
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile exact source
+        run: python -m compileall -q runtime/core_v1 runtime/backends/win32_v1
+      - name: Run frozen pure helpers
+        run: python -m unittest -v runtime.backends.win32_v1.test_integration.PureWin32HelperTests
+      - name: Run frozen native Win32 integration
+        run: python -m unittest -v runtime.backends.win32_v1.test_integration.Win32IntegrationTests
