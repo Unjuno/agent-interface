@@ -1,7 +1,8 @@
 {
   "schema": "braess-route-verifier-t0-freeze-v1",
   "allocation": "BRAESS-ROUTE-VERIFIER-5855-T0-20261001-01",
-  "source_main_sha": "7e94ba9fdbfbff8d32d5dde27c086f2eb7582775",
+  "source_main_sha": "7dbe196b8d1fb519139d15240ecb3f377a07b51d",
+  "preparation_source_main_sha": "7e94ba9fdbfbff8d32d5dde27c086f2eb7582775",
   "issue": 5855,
   "branch": "research/issue-5855-braess-route-verifier-t0-20261001",
   "path": "research/analysis/braess_route_verifier_5855_t0_v1/",
@@ -12,9 +13,9 @@
     "execution": "single-process local host CPU; deterministic finite simulator"
   },
   "fixture_sha256": {
-    "candidate.py": "0a07e111f95322a4f0d033cc89ff19199ce279f6c4ab1f2b54f97cf2b611909b",
-    "audit.py": "402dc8d0bcf4e370f50f822af89d24847023d82966849d8fdf572047438a9787",
-    "PREREGISTRATION.md": "1210cbcba91925119847188704714a6b9f4a5ac2a80bf43cb1162a92dc01b3d5"
+    "candidate.py": "f3d613e36dfca695724702dac95c7f74459db85d5d68447eac61bc9d7cf746bb",
+    "audit.py": "587a697c9670c81024097ccd437e5b0b39086b3cf189f2fd97c7bde14fc65775",
+    "PREREGISTRATION.md": "068e08b73e6fecac05ddfda8abc4f76dac3754071979ede419f30857c6fb0ff1"
   },
   "parameters": {
     "offers_per_scenario": 16,
@@ -28,6 +29,7 @@
   "candidate_invocation_limit": 1,
   "auditor_invocation_limit": 1,
   "retry_limit": 0,
-  "container": "not used; deterministic CPU-only host simulation, Docker/OrbStack shared resource state is reserved/unverified",
+  "container": "not used; deterministic CPU-only host simulation, one-thread BelowNormal allocation; no Docker/OrbStack invocation",
+  "source_hash_scope": "Exact local Windows checkout bytes, including CRLF line endings; verified against remote branch content and frozen before candidate",
   "external_effects": "none; no model, network, GPU, GUI, input, shared runtime, or task mutation"
 }
