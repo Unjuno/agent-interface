@@ -1,4 +1,4 @@
-name: Issue 5817 cross-task obligation conservation T0 allocation 01
+name: Issue 5817 cross-task obligation conservation T0 allocations
 on:
   workflow_dispatch:
     inputs:
@@ -10,7 +10,7 @@ jobs:
   finite-t0:
     if: >-
       github.event_name == 'workflow_dispatch' &&
-      github.ref == 'refs/heads/research/obligation-conservation-5817-t0-20261001-a1'
+      github.ref == 'refs/heads/research/obligation-conservation-5817-t0-20261001-a2'
     runs-on: ubuntu-latest
     timeout-minutes: 12
     concurrency:
@@ -38,10 +38,12 @@ jobs:
           test "$GITHUB_REF_NAME" = "$(jq -r .branch "$freeze")"
           test "$GITHUB_SHA" = "$(git rev-parse HEAD)"
           test "$GITHUB_REPOSITORY" = Unjuno/agent-interface
-          test "$GITHUB_RUN_NUMBER" = 1
+          test "$GITHUB_RUN_NUMBER" = "$(jq -r .workflowRunNumber "$freeze")"
           test "$GITHUB_RUN_ATTEMPT" = 1
           test "$(jq -r .schema "$freeze")" = 5817-obligation-conservation-freeze-v1
-          git merge-base --is-ancestor "$(jq -r .publicationBaseMain "$freeze")" HEAD
+          base=$(jq -r .publicationBaseMain "$freeze")
+          comparison=$(curl -fsSL -H "Authorization: Bearer $GITHUB_TOKEN" -H 'Accept: application/vnd.github+json' "https://api.github.com/repos/Unjuno/agent-interface/compare/$base...$GITHUB_SHA")
+          echo "$comparison" | jq -e '.status == "ahead" or .status == "identical"' >/dev/null
           for file in candidate.py fixture.json audit.py test_t0.py; do
             expected=$(jq -r --arg f "$file" '.sourceSha256[$f]' "$freeze")
             test "$(sha256sum "$root/$file" | cut -d' ' -f1)" = "$expected"
