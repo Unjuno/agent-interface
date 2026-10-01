@@ -10,6 +10,10 @@ bounded graph with `session_scope=bridge.scope` and
 `surface=compiled.surface(bridge)`. For each graph action, provide an exact
 binding with `interaction` (`click`, `move`, or `keyboard`), its alias-local
 `offset`, and an explicit `tail` list using the existing bridge contract.
+Native target references must match `[a-z][a-z0-9_]{0,31}`, the same alias
+contract as the handle store. For example, use `sheet_context`. Graph symbol
+labels remain separate and may use the graph's broader naming contract.
+The adapter rejects invalid native aliases before capture or any callback.
 Bindings and graph are copied before any perception callback can change them.
 
 ```python
@@ -110,3 +114,19 @@ to the method/reference minimum. Neither pixel recognition nor a fresh clock
 renews authority. After a model wait, use the ordinary target/dependency review
 and admission; preserve a refusal instead of replaying input with a longer lease.
 A useful visible predicate is separate from independently scored persisted effects.
+
+## Native cleanup receipts before execution
+
+Backend validation may refuse a program before execution and return its verified
+cleanup in the top-level `release` field. The adapter preserves that receipt along
+with any execution releases. Neutrality requires all provided receipts to be
+verified and empty and the session to require no recovery. Reported held input
+is retained; malformed or unverified cleanup cannot become a safe abstention.
+A missing receipt still does not invent neutrality. No-input evidence is not
+inferred from counters or from a release receipt, and a refusal remains incomplete.
+
+Bindings use the backend's actual key names. Linux/X11 keysym names are
+case-sensitive: `Home` is valid, while `HOME` is rejected unless explicitly
+supported as an alias. Backend preflight can refuse such a program before
+execution; read its retained detail and cleanup rather than claiming an action
+completed or blindly retrying it.
