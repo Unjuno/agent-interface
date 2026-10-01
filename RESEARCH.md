@@ -37,6 +37,10 @@ An input-free fixture inventoried Tk root/Entry XIDs and tried selecting KeyPres
 
 One private-Xvfb Shift pair was observed twice by the T3-derived app and twice by server-side X RECORD; a separate observer selected all windows in the recursively enumerated Tk tree but recorded zero. The X RECORD recipient XID (2097170) was outside the selected set (2097169, 2097171). Cleanup release and terminal neutrality were verified. Independent audit retained `HOLD_STREAMS_DIVERGE_OR_INCOMPLETE`; the all-enumerated-window capture hypothesis is not supported. This does not determine why the recipient is absent, transfer to deployed #4135, or establish physical input/recovery/task benefit. Docker Desktop was unavailable; private WSL2 Xvfb fallback. See [T6 report](research/analysis/blackstart_allwindow_trace_5970_t6_20261002/REPORT.md).
 
+### Issue #5970 T7-T11: X target liveness and parent-window diagnostics
+
+T7 found the T4/T6 event recipient XID 2097170 already viewable before input, as the immediate parent of the Tk `winfo_id()` root; it was outside the Tk-root subtree, and a second client could select key events on it (`HOLD_TARGET_PRESENT_MAPPED`). T8's full ancestor enumerator STOPped before input at observer readiness timeout; its auditor also STOPped on a null ready object, both retained. T9/T10 selected the mapped immediate parent and did receive press/release classes, but each observer stream had an extra Release at the press timestamp and RECORD retained five per-delivery events; exact stream gates HOLDed. T11 showed the same extra Release for normal `a`, not only Shift; initial/terminal key neutrality and cleanup passed, but exact three-stream agreement remained HOLD. These are private-Xvfb mechanism diagnostics, not deployed #4135 behavior, physical-input evidence, recovery, or task benefit. Docker Desktop engine remained unavailable; WSL2/Xvfb fallback. See each T7-T11 report and raw/hash manifests.
+
 | Need | Read |
 |---|---|
 | Current governing objective | [docs/CURRENT_GOAL.md](docs/CURRENT_GOAL.md) |
