@@ -1,5 +1,14 @@
 # Worker governing invariant — 2026-09-18
 
+## Current local-container runtime — WSL 3.0 / WSLc (2026-10-02)
+
+For new local single-container research iterations on this Windows host, use Microsoft's native WSL Container CLI (`wslc`) without Docker Desktop or a Docker daemon when the experiment's required features are supported. Native WSL execution remains appropriate for integration tasks that do not require a container. This operational update supersedes the Docker/OrbStack-only wording in the dated directions below; those paragraphs are retained as historical instructions and do not require Docker for new allocations. See [the WSLc local-container guide](../.github/wslc-local-containers.md) and [the WSL-native integration guide](../runtime/WSL_NATIVE.md).
+
+Freeze the WSLc version, image manifest digest and local image identity separately, exact command, mounts, network setting, and raw output before a formal allocation. Prefer a cached pinned image with `--pull never --network none`, read-only source/input mounts, a fresh writable output path, and a separate raw-only auditor when the protocol calls for one. Preserve existing formal Docker/OrbStack evidence byte-for-byte; changing runtimes or images for a consumed experiment requires a new successor allocation and explicit comparability limits. Do not translate Docker-specific flags or Compose/API-dependent workflows mechanically: first check WSLc support, active owners, and required resource gates.
+
+Host smoke on 2026-10-02: `wslc 3.0.1.0` ran cached `python:3.12-slim` with `--pull never --network none --cpus 1 --memory 256M --rm`; Python 3.12.14 returned exit 0 and no container remained. WSLc warned that swap limits/cgroup support were unavailable. This verifies only basic container execution, not hard memory isolation, lower peak memory, faster iteration, GPU readiness, GUI operation, or scientific parity. Keep memory enforcement and performance claims open until measured independently.
+
+
 ## Explicit operating direction — validate Issue ideas by experiment (2026-09-21)
 
 The primary task is to test concrete ideas already posted in repository Issues.
