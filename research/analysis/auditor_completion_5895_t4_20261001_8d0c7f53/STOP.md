@@ -1,7 +1,7 @@
 # T4 terminal STOP — candidate container was not created
 
-Allocation: `AUDIT-COMPLETION-5895-T4-ORBSTACK-20261001-01-8d0c7f53`  
-Owner: Codex thread `01a0b98b-8d0c-7f53-92bc-4c6a28d73c73`  
+Allocation: `AUDIT-COMPLETION-5895-T4-ORBSTACK-20261001-01-8d0c7f53`\
+Owner: Codex thread `01a0b98b-8d0c-7f53-92bc-4c6a28d73c73`\
 Observed: 2026-10-01 10:33:50 UTC (slot 10:30–10:50 UTC)
 
 ## Outcome
