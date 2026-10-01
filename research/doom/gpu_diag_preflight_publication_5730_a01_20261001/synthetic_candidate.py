@@ -8,4 +8,3 @@ payload = {
     "rows": [{"case": "synthetic-publication-control", "value": 7}],
 }
 sys.stdout.write(json.dumps(payload, sort_keys=True, separators=(",", ":")) + "\n")
-

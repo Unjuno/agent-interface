@@ -14,4 +14,3 @@
 2. `python -B run_construction.py --freeze FREEZE.json --output evidence/formal-01` — exit 1; stdout 0 bytes (same empty SHA); stderr 52 bytes (SHA-256 `6f4ee9531f5cec7e4e51ae3117251ce7d9aa70810827357ad5211fe42822ec77`). Candidate did not start.
 
 Retained raw stdout/stderr files are under `evidence/`; their bytes and hashes are unchanged. This STOP is protocol evidence only and must not be represented as a PASS/FAIL for the scientific hypothesis.
-

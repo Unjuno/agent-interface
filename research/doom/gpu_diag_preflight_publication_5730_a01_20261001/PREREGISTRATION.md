@@ -27,4 +27,3 @@ The output path must not exist before the second command. No retry is permitted.
 ## Predeclared interpretation
 
 Any failing assertion, frozen-source mismatch, nonzero candidate, absent/truncated raw, digest mismatch, auditor failure, or output collision is retained as a typed STOP/FAIL with scientific result `NOT_EVALUATED`. A construction PASS closes only this bounded protocol hypothesis and does not authorize any later GPU allocation.
-

@@ -198,4 +198,3 @@ def execute(
     if errors:
         return GateResult("STOP_RAW_AUDIT_FAILED", "NOT_EVALUATED", 1, False, None, errors, receipt)
     return GateResult("PASS_CONSTRUCTION_ONLY", "NOT_EVALUATED", 1, True, published_raw_sha, (), receipt)
-
