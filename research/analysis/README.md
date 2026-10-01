@@ -422,6 +422,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`stop_evidence_4678_audit_v1/`](stop_evidence_4678_audit_v1/)
 - [`stop_evidence_4678_revalidation_v2/`](stop_evidence_4678_revalidation_v2/)
 - [`stpa_feedback_constraint_5327_t0_v1/`](stpa_feedback_constraint_5327_t0_v1/)
+- [`sunk_cost_forward_equivalence_6138_t0_20261002/`](sunk_cost_forward_equivalence_6138_t0_20261002/)
 - [`support_closed_crop_successor_1820_v1/`](support_closed_crop_successor_1820_v1/)
 - [`target_belief_audit_4150_v1/`](target_belief_audit_4150_v1/)
 - [`task_ownership_horizon_4152_reopen_review_v1/`](task_ownership_horizon_4152_reopen_review_v1/)
