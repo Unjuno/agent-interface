@@ -46,6 +46,8 @@ flowchart TD
 | #2476 in-trajectory observability construction archive | [`intrajectory_observability_2476_v1/construction_chain_r3_20260928/RECOVERY_STATUS.md`](intrajectory_observability_2476_v1/construction_chain_r3_20260928/RECOVERY_STATUS.md) (r3 immutable invocation STOP) and [`intrajectory_observability_2476_v1/construction_chain_r4_20260928/RECOVERY_STATUS.md`](intrajectory_observability_2476_v1/construction_chain_r4_20260928/RECOVERY_STATUS.md) (r4 technical construction PASS, allocation HOLD); neither is a formal game/matcher result |
 | Liveness and handback | [`MAP01_V39_COAST_LIVENESS_LIVE_V1.md`](MAP01_V39_COAST_LIVENESS_LIVE_V1.md), [`MAP01_V38_INTEGRATED_LIVE_V1.md`](MAP01_V38_INTEGRATED_LIVE_V1.md) |
 | Timing/effect measurement | [`MAP01_V38_V39_CONTROL_TEMPO_POSTHOC_V1.md`](MAP01_V38_V39_CONTROL_TEMPO_POSTHOC_V1.md), [`MAP01_HELD_INPUT_OCCUPANCY_POSTHOC_V1.md`](MAP01_HELD_INPUT_OCCUPANCY_POSTHOC_V1.md) |
+| Per-key occupancy schema boundary | [Repeated-key pulse T0](map01_repeated_key_pulse_occupancy_59_t0_20261001/RESULT.md) records the key-unique fail-closed boundary; [occurrence-ID successor T0](map01_occurrence_key_occupancy_59_t0_20261001/RESULT.md) passes finite repeated-key/overlap and fail-closed controls. Both are synthetic construction evidence only. |
+| Input-owner occurrence instrumentation | [Issue #59 T2](map01_owner_occurrence_instrumentation_59_t2_20261002/RESULT.md) passes an isolated fake-Xlib construction: two repeat IDs, six full-bitmap witnesses, independent audit 9/9. No physical occupancy or live-control claim. |
 | Recovery-arm useful-effect gate | [Paired-adjudicator synthetic counterexample](map01_r133_recovery_coast_t1_v1/useful_effect_audit_v2/REPORT.md) — scoped PASS with 0/3 recovery kill/exit pairs; survival sufficiency remains a study-design decision |
 | Recovery useful-effect gate sensitivity | [T4 exhaustive abstract-input sweep](map01_r133_recovery_coast_t1_v1/useful_effect_sensitivity_v1/REPORT.md) — 2,916 comparator cases; coast-only events are all HOLD under a recovery-specific gate; synthetic sensitivity only |
 | Recovery guard boundary | [Retained v39 continuation-guard window diagnostic](map01_continuation_guard_window_59_t2_20261001/REPORT.md) — counterfactual health-floor timing only; candidate and auditor reruns are disclosed |
@@ -334,3 +336,19 @@ completed and one aborted after expiry/recovery. All28 frames and delivery audit
 The perceived black recovery image is a normal saved PNG; an older failed PNG
 also matches its published bytes and renders normally at original detail.
 Investigate end-to-end image presentation before more timing claims.
+
+## Repeated-key occupancy boundary (Issue #59)
+
+Four separate synthetic/source-boundary allocations are retained in PR #6105:
+the unchanged per-key ledger fails closed on repeated `W` occurrences; a
+successor occurrence-key ledger represents separate synthetic intervals; and a
+fake-Xlib exercise of the pinned #5630 `InputOwner` records one explicit-up
+cycle without an occurrence ID or per-interval keymap sample (T0). T0's first
+auditor returned `FAIL_AUDIT` because its oracle incorrectly required terminal
+cleanup to retain a key name; its raw/audit records remain immutable. A
+separate two-explicit-up successor then passed the corrected owner-boundary
+audit: both repeated W admissions/releases lacked an occurrence ID, and only
+terminal close sampled an empty keymap. Neither source-boundary test is live
+input evidence. None of these results is a real X11, Docker, physical-key,
+application-effect, or gameplay result. See [`owner occurrence-binding T0`](map01_owner_occurrence_binding_59_t0_20261001/RESULT.md)
+and [`T1`](map01_owner_occurrence_binding_59_t1_20261002/RESULT.md).

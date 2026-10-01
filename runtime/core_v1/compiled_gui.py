@@ -17,6 +17,11 @@ YIELD_REASONS = {
 SCALAR = (str, int, bool)
 
 
+
+class ObservationAssociationChanged(RuntimeError):
+    """Adapter reports a capture whose association changed; no valid frame exists."""
+
+
 def _exact(value, fields, label):
     if type(value) is not dict or set(value) != set(fields):
         raise ValueError(f"exact {label} fields required")
@@ -218,8 +223,13 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
             return finish("SAFE_YIELD", "cancelled")
         if clock() >= deadline:
             return finish("SAFE_YIELD", "budget_exhausted")
-        raw = adapters["observe"]({"state": state,
-                                    "required_predicates": interface["predicates"]})
+        try:
+            raw = adapters["observe"]({"state": state,
+                                        "required_predicates": interface["predicates"]})
+        except ObservationAssociationChanged:
+            # Preserve completed actions and pending effects, without inventing
+            # a sequence, usable image, effect verdict, or permission to replay.
+            return finish("SAFE_YIELD", "association_changed")
         observation, refusal = _observation(raw, interface, previous_sequence)
         if refusal:
             return finish("SAFE_YIELD", refusal)
