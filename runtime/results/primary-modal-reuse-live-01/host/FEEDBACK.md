@@ -126,29 +126,6 @@ application input was released. Retained receipts are historical evidence, not
 current application state or permission to resume input. Proposed stopped-read
 helpers in closed PR #6101 have not been adopted on main; do not assume they exist.
 
-## Delivering an explicitly reviewed image reference
-
-When the existing host option `reuseReviewedImages: true` is enabled, a byte-identical
-PNG can arrive as a structured `agent-interface/reviewed-image-reference-v1` text
-notice after the full base image has been explicitly presented and reviewed. In
-`createPrimaryExchange`, this notice is in the command result's `presented_text`;
-`images` is empty for that reference. Deliver the notice to the primary alongside
-the CURRENT response metadata. A display helper that removes all `presented_text`
-would hide the reference and is unsuitable for this option.
-
-The notice identifies the current reply and reviewed base reply/review/PNG. Use
-it only for those exact reviewed pixels, while reading current outcome, target,
-binding and error metadata separately. It does not confirm task completion,
-renew a lease or authorize input. On uncertainty, explicitly request the existing
-`presentOriginal(attempt)` and inspect the retained full image; this does not
-recapture current state or clear STOP. Changed PNGs are presented in full.
-
-[A personally operated Calc pair](../results/primary-modal-reuse-live-01/README.md)
-retains exact saved effects and neutral release in both conditions, with five
-versus three actual image outputs. Calls and model review boundaries remained
-unchanged; the reuse arm's observed host span was longer. One fixed-order shared-
-context pair does not establish token, cost or speed superiority. Keep this
-option explicit and count current metadata/reference delivery and any fallback.
 ## Evidence and performance limits
 
 [The packaged feedback cases](../results/feedback-primary-presentation-01/README.md)
