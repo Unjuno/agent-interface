@@ -2,7 +2,7 @@
 
 Allocation `MAP01-DELAY-GAIN-TRACE-ELIGIBILITY-6195-T1-20261001-02`  
 Owner: Unjuno / local Windows Codex task `01a0b990-3d17-72f1-a908-9a2072104ce5`  
-Window: 2026-10-01 20:00–20:15 UTC  
+Window: 2026-10-01 19:35–19:50 UTC  
 Frozen main: `14b81dd1f6853623a694266b98538f812847257a`  
 Branch: `research/6195-delay-gain-t1-trace-eligibility-20261001-02`
 
@@ -21,3 +21,4 @@ Branch: `research/6195-delay-gain-t1-trace-eligibility-20261001-02`
 Inputs are pinned in `FREEZE.json` by main SHA, Git blob, byte count and raw SHA-256. Both local copies were verified to match the frozen Git blob before execution. Candidate source SHA-256 is `aa1c0b74f825c3f11405903c3a61a4a4e7573924b54a3b828a117c5cd5b9b699`; auditor is `ec92b8ec117997cb2d6a8ba2720d6119a24569a0417116b443ac74c225b4d32a`.
 
 The prior allocation-01 was a preflight HOLD before any candidate/auditor invocation because its registered GitHub branch did not contain the frozen package. This is a distinct, newly frozen allocation, not a backfill/retry. Host-only execution is appropriate for this pure retained-file inventory. Candidate once; independent audit once only after candidate exit 0; retries=0. Output path is a fresh allocation-specific directory.
+
