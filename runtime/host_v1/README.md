@@ -270,6 +270,10 @@ reduction nor the single pair proves lower model cost, faster semantic judgment
 or human-comparable live tempo.
 ## Optional sequential primary caller
 
+[Main packaging and personal use](../results/primary-helper-main-01/README.md)
+retains the source-pinned distribution failure, corrected checks, original
+six-task candidate evidence, and a fresh exported-helper trial.
+
 The host bundle also exports `createPrimaryCaller` from `primary_caller.mjs`.
 This is an explicit trial policy with positional operation helpers. It latches
 STOP on unexpected refusals, malformed results, incomplete input, nonneutral
