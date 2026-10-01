@@ -56,6 +56,7 @@ flowchart TD
 | Artifact/terminal synchronization | [#3211 allocation-04 artifact audit](map01_terminal_sync_artifact_reaudit_3211_t1_20261002/REPORT.md) |
 | Xvfb keymap witness construction | [`map01_owner_occurrence_xvfb_59_t3_20261002/README.md`](map01_owner_occurrence_xvfb_59_t3_20261002/README.md) — scoped virtual-server construction only; not physical occupancy |
 | Keymap occupancy vs application delivery | [`map01_app_event_xvfb_59_t0_20261002/successor_02/REPORT.md`](map01_app_event_xvfb_59_t0_20261002/successor_02/REPORT.md) — Docker/Xvfb T0 scoped PASS; focus transfer kept the global key bit down while the new focus received no KeyPress; not live threat/MAP01 evidence |
+| Held-key autorepeat after focus transfer | [`map01_x11_held_repeat_59_t1_20261002/REPORT.md`](map01_x11_held_repeat_59_t1_20261002/REPORT.md) — Docker/Xvfb T1 scoped PASS; after immediate T0 window, B received 14 autorepeat KeyPress events during the same still-held W interval; not semantic effect or live MAP01 evidence |
 | Diagnostic trace writer | [#3211 synthetic writer-boundary reproduction](map01_terminal_sync_writer_repro_3211_t2_20261002/REPORT.md) |
 | JSONL writer contract | [#3211 T3 standalone writer contract](map01_terminal_sync_writer_contract_3211_t3_20261002/REPORT.md) |
 | Terminal wait boundary | [#3211 T4 synthetic wait-boundary discrimination](map01_terminal_sync_wait_boundary_3211_t4_20261002/REPORT.md) |
