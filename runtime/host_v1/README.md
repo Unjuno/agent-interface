@@ -406,3 +406,12 @@ available. The returned screen can clarify an application effect that completed
 after a Pending reply, but does not certify durable task success or renew aliases.
 It is not automatic polling, new input authority or recovery of a broken host.
 Transport/evidence failures can still prevent this read-only request.
+
+A stopped caller on either route can explicitly use `resultsAfterStop(callId)`
+to read one retained result from the same server. It accepts exactly one 32-character
+lowercase hexadecimal call ID and fixes `detail: 'full', include_image: false`.
+It never lists calls, captures a frame or dispatches input. STOP stays sticky;
+ordinary calls remain prohibited, and unknown/unavailable receipts or host failures
+are returned/preserved without retry or reconnect. The receipt is historical
+and does not establish current application state, task success or input authority.
+No per-call options can enable a projection, image resend or action through it.
