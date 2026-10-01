@@ -313,6 +313,36 @@ Exact one-use declared refusal controls are optional trial configuration. They
 do not authorize retries, refresh evidence, infer targets, select actions or
 prove semantic completion. This wrapper's tool allowlist excludes activation;
 the generic host exposes the separately documented activation/recovery route.
+
+For several explicit targets from the same reviewed image, `mintMany` uses one
+registration request with the existing public batch tool:
+
+```js
+const registered = await primary.mintMany(sourceSequence, [
+  { alias: 'field', point: fieldPoint, region_size: [24, 38] },
+  { alias: 'save', point: savePoint, region_size: [24, 14] },
+]);
+await primary.acknowledgeText(registered.attempt, {
+  task, phase: 'mint', reason: 'Read the original batch result and each lifetime',
+});
+// Inspect the original response and primary.state() before deciding on input.
+```
+
+The helper validates 1–8 unique aliases, integer points and sizes, and the exact
+reference field names before sending a copied batch. It stops later ordinary
+calls on partial registration or a source/alias inventory mismatch, while
+returning the original result for review and allowing explicit close. The same
+outcome check applies to raw batch calls through this sequential policy. Earlier
+registrations may remain after a server failure; the failed alias is uncertain.
+There is no rollback, automatic remint, action queue or input replay. Each alias
+retains its own expiry, and every later input still needs fresh visual guards
+and ordinary admission. One registration request does not establish token or
+latency savings.
+The [fresh primary batch case](../results/primary-batch-01/README.md) uses the
+built host helper to register two references in one request, then completes one
+exact-once guarded save with explicit hover re-grounding and bounded completion
+observation. Partial-registration stopping is separately covered by contract
+tests; the live case is not a matched efficiency comparison.
 # Optional feedback after public input release
 
 The `persistent-x11` public MCP route accepts `inspect_after: "app"` with
