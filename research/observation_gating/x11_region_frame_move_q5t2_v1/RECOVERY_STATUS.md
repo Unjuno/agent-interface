@@ -20,3 +20,12 @@ No scientific rerun, result rewrite, or missing-part reconstruction was made.
 Disposition for this recovery: `HOLD_CONFLICTING_RECORDS_AND_INCOMPLETE_RAW`.
 Treat the v1 PASS and audit as historical reported claims only until the owner
 supplies the complete archive and resolves the Issue/branch chronology.
+
+## Separate parallel-worker branch snapshot
+
+A second remote ref, `research/x11-region-frame-move-4439-20260927`, contains
+additional construction/self-test records and its own `FORMAL_01_STOP` for the
+same allocation. These 21 files are being preserved separately at
+[`parallel worker branch recovery note`](recovery/parallel_worker_branch_7cbd494_20260927/RECOVERY_STATUS.md).
+They are not substituted for the original v1 report/result, and their STOP
+does not resolve the conflict; the HOLD above remains unchanged.
