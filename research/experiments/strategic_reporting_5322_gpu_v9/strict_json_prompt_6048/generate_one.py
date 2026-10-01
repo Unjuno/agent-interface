@@ -45,7 +45,7 @@ def main():
     if not PREFLIGHT.is_file():
         raise SystemExit("STOP: missing preflight receipt; no model load")
     preflight = json.loads(PREFLIGHT.read_text(encoding="utf-8"))
-    if not preflight.get("load_authorized") or preflight.get("errors"):
+    if not preflight.get("receipt_written") or not preflight.get("load_authorized") or preflight.get("errors"):
         raise SystemExit("STOP: preflight failed; no model load")
     start = datetime.fromisoformat(FREEZE["window_start_utc"].replace("Z", "+00:00"))
     end = datetime.fromisoformat(FREEZE["window_end_utc"].replace("Z", "+00:00"))

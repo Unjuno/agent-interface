@@ -48,7 +48,7 @@ def main():
     end = datetime.fromisoformat(FREEZE["window_end_utc"].replace("Z", "+00:00"))
     if not start <= now <= end:
         errors.append("outside_reserved_window")
-    if OUTDIR.exists():
+    if OUTDIR.exists() or OUTDIR.is_symlink():
         errors.append("output_collision")
     src_ok, actual_sources = source_hashes()
     if not src_ok:
@@ -167,12 +167,14 @@ def main():
         "errors": errors,
         "load_authorized": not errors,
     }
-    OUTDIR.mkdir(parents=True, exist_ok=True)
-    (OUTDIR / "PREFLIGHT.json").write_text(
-        json.dumps(receipt, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    if "output_collision" not in errors:
+        OUTDIR.mkdir(parents=True, exist_ok=False)
+        (OUTDIR / "PREFLIGHT.json").write_text(
+            json.dumps(receipt, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps({"load_authorized": not errors, "errors": errors,
                       "model_sha256": model_digest, "tokenizer_manifest_sha256": tokenizer_digest,
-                      "disk_free_bytes": free_bytes}, sort_keys=True))
+                      "disk_free_bytes": free_bytes,
+                      "receipt_written": "output_collision" not in errors}, sort_keys=True))
     raise SystemExit(0 if not errors else 1)
 
 

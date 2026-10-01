@@ -140,7 +140,7 @@ def main():
     else:
         preflight_bytes = preflight_path.read_bytes()
         preflight = json.loads(preflight_bytes.decode("utf-8"))
-        if not preflight.get("load_authorized") or preflight.get("errors"):
+        if not preflight.get("receipt_written") or not preflight.get("load_authorized") or preflight.get("errors"):
             errors.append("preflight_not_pass")
         if preflight.get("model_sha256") != freeze["model_sha256"]:
             errors.append("preflight_model_hash_mismatch")
