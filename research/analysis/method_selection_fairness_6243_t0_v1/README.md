@@ -14,7 +14,7 @@
 
 ## Intake / stop boundary
 
-Current main at freeze: `fe37b6913f75706fc6bd536ae3afd6ed6a72b674`.
+Current main at branch/PR base: `97afcb82f90616589801a256893f886010ed6d27`. The frozen experiment inputs were prepared against `fe37b6913f75706fc6bd536ae3afd6ed6a72b674`; the intervening main commit touched only compiled GUI predicates and their runtime result package, not this study's inputs or evidence.
 
 The retained public six-task comparison is one agent-vs-agent serial pair and explicitly has no human comparator. #5592 and #6136 are unverified proposals and say the matched human data/cohort are absent. Thus the real-data eligibility rung is **`HOLD_NO_MATCHED_METHOD_DATA`**. Do not synthesize human rows into the historical dataset or rescore its HOLD.
 
