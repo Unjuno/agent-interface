@@ -5,4 +5,3 @@
 3. **Construction attempt 1:** Host stdlib suite had 5/6 tests pass. One test exposed a candidate conflict-classification ordering defect for trusted commutative integer additions. Formal was not invoked. The source was corrected before freeze and the fixed suite passed 6/6.
 
 These are environment/construction events, not scientific formal outcomes. The formal allocation remains one-shot and is governed by `FREEZE.json`.
-
