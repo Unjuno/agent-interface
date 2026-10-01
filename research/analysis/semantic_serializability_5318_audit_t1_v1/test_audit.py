@@ -1,5 +1,9 @@
 import json
+import subprocess
+import sys
+import tempfile
 import unittest
+from pathlib import Path
 
 import audit
 
@@ -16,6 +20,41 @@ def base_row():
 
 
 class IndependentAuditTests(unittest.TestCase):
+    def test_controls_cli_rejects_all_five_raw_mutations(self):
+        row = base_row()
+        row.update(decision="ABORT", final={"x": 0}, committed=[], parallel_count=0)
+        with tempfile.TemporaryDirectory() as temp_dir:
+            raw_path = Path(temp_dir) / "raw.jsonl"
+            raw_path.write_text(json.dumps(row) + "\n", encoding="utf-8")
+            completed = subprocess.run(
+                [sys.executable, str(Path(audit.__file__)), str(raw_path), "--controls"],
+                check=False, capture_output=True, text=True,
+            )
+        result = json.loads(completed.stdout)
+        self.assertIn("controls", result)
+        self.assertEqual(set(result["controls"]), {
+            "omitted_row", "duplicate_row", "changed_final", "changed_committed", "changed_scenario"
+        })
+        self.assertEqual(result["controls"]["omitted_row"]["errors"], ["ROW_COVERAGE"])
+        self.assertEqual(result["controls"]["duplicate_row"]["errors"], ["ROW_COVERAGE"])
+        self.assertTrue(any(e.startswith("ROW_RECONSTRUCTION:") for e in result["controls"]["changed_final"]["errors"]))
+        self.assertTrue(any(e.startswith("ROW_RECONSTRUCTION:") for e in result["controls"]["changed_committed"]["errors"]))
+        self.assertIn("UNKNOWN_SCENARIO_OR_POLICY", result["controls"]["changed_scenario"]["errors"])
+
+    def test_unknown_scenario_label_is_rejected_without_full_coverage_check(self):
+        row = base_row()
+        row.update(decision="ABORT", final={"x": 0}, committed=[], parallel_count=0)
+        row["scenario"] = "corrupted-scenario"
+        errors = audit.audit_rows([row], require_coverage=False)
+        self.assertIn("UNKNOWN_SCENARIO_OR_POLICY", errors)
+
+    def test_unknown_policy_label_is_rejected_without_full_coverage_check(self):
+        row = base_row()
+        row.update(decision="ABORT", final={"x": 0}, committed=[], parallel_count=0)
+        row["policy"] = "corrupted-policy"
+        errors = audit.audit_rows([row], require_coverage=False)
+        self.assertIn("UNKNOWN_SCENARIO_OR_POLICY", errors)
+
     def test_left_zero_guard_reconstructs_legal_serial_outputs(self):
         row = base_row()
         reconstructed = audit.oracle(row, row["policy"])[3]

@@ -2,6 +2,7 @@
 import hashlib
 import json
 import sys
+from copy import deepcopy
 
 POLICIES = ("RAW_COALESCE", "GLOBAL_SERIAL", "SEMANTIC_SERIALIZABILITY",
             "OPTIMISTIC_VALIDATE_COMMIT", "UNKNOWN_AS_CONFLICT")
@@ -84,6 +85,8 @@ def audit_rows(rows, require_coverage=True):
         try:
             if not isinstance(r, dict):
                 raise TypeError("row is not an object")
+            if r.get("scenario") not in SCENARIOS or r.get("policy") not in POLICIES:
+                errors.append("UNKNOWN_SCENARIO_OR_POLICY")
             expected_row = oracle(r, r["policy"])
             actual_row = (r["decision"], r["final"], r["committed"], r["legal_serial_finals"])
             if actual_row != expected_row:
@@ -115,14 +118,46 @@ def audit_bytes(raw, require_coverage=True):
     return errors, hashlib.sha256(raw).hexdigest()
 
 
-def audit(path):
+def mutation_controls(rows):
+    omitted = rows[:-1]
+    duplicated = rows + ([deepcopy(rows[0])] if rows else [])
+
+    changed_final = deepcopy(rows)
+    changed_committed = deepcopy(rows)
+    changed_scenario = deepcopy(rows)
+    if rows:
+        changed_final[0]["final"] = {"mutation": True}
+        changed_committed[0]["committed"] = ["mutation"]
+        changed_scenario[0]["scenario"] = "mutation-scenario"
+
+    variants = {
+        "omitted_row": omitted,
+        "duplicate_row": duplicated,
+        "changed_final": changed_final,
+        "changed_committed": changed_committed,
+        "changed_scenario": changed_scenario,
+    }
+    return {name: {"rejected": bool(errors := audit_rows(variant)), "errors": errors}
+            for name, variant in variants.items()}
+
+
+def audit(path, controls=False):
     with open(path, "rb") as stream:
         raw = stream.read()
     errors, digest = audit_bytes(raw)
-    return {"rows": len(raw.splitlines()), "errors": errors, "raw_sha256": digest}
+    result = {"rows": len(raw.splitlines()), "errors": errors, "raw_sha256": digest}
+    if controls:
+        rows = [json.loads(line) for line in raw.splitlines()]
+        results = mutation_controls(rows)
+        result["controls"] = results
+        result["errors"].extend("MUTATION_CONTROL_SURVIVED:" + name
+                               for name, control in results.items() if not control["rejected"])
+    return result
 
 
 if __name__ == "__main__":
-    result = audit(sys.argv[1])
+    if len(sys.argv) not in (2, 3) or (len(sys.argv) == 3 and sys.argv[2] != "--controls"):
+        raise SystemExit("usage: audit.py RAW.jsonl [--controls]")
+    result = audit(sys.argv[1], controls=len(sys.argv) == 3)
     print(json.dumps(result, sort_keys=True))
     raise SystemExit(0 if not result["errors"] else 1)

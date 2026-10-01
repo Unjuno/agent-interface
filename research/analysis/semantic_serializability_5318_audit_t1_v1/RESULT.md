@@ -11,10 +11,19 @@ Status: `STOP_DOCKER_CLI_UNRESPONSIVE`; no container result is claimed.
 
 ## Construction evidence (host only; not formal container evidence)
 
-The five stdlib unit tests passed. They exercise left-zero serial reconstruction, detecting a corrupted reconstructed row, rejecting duplicate/missing coverage, reporting malformed JSON line numbers, and hashing exact input bytes. The raw-only auditor on the frozen 30-row input returned no errors and the expected SHA-256 above.
+The initial five stdlib unit tests passed. They exercise left-zero serial reconstruction, detecting a corrupted reconstructed row, rejecting duplicate/missing coverage, reporting malformed JSON line numbers, and hashing exact input bytes. The raw-only auditor on the frozen 30-row input returned no errors and the expected SHA-256 above.
 
 ## Formal execution disposition
 
 The Docker `run` request was issued once with the frozen constraints. It produced no output for 25 seconds; the attached CLI was interrupted. Earlier `docker info` and `docker ps` probes were also still pending without output. No Docker container exit code, output, or daemon-side execution state could be confirmed. Therefore this is a STOP, not a pass/fail and not a reason to restart Docker. Do not rerun this allocation or infer that the container did or did not start. Any next attempt requires a fresh allocation after Docker status is observable.
 
 The predecessor raw and its original `STOP_INDEPENDENT_AUDITOR_ORACLE_MISMATCH` record remain unchanged. Host-only results do not supersede that STOP.
+
+## Post-STOP construction revision (not a retry)
+
+After the single Docker request above was interrupted, the branch received a separate construction-only revision. The attempted T1 source was commit `e49853b647e0f266b817908e160cf726af7adf8d`; the later test/code changes were not included in, or rerun through, that Docker request. The T1 Docker disposition remains STOP.
+
+- TDD exposed that `audit_rows(..., require_coverage=False)` accepted unknown scenario/policy labels. The auditor now rejects those labels independently of the full-coverage gate.
+- The audit CLI now has a `--controls` mode for five in-memory corruptions: omitted row, duplicate row, changed final, changed committed IDs, and changed scenario label.
+- Host construction suite: **8/8 passed**. Running `python -B audit.py "<frozen RAW.jsonl>" --controls` against the immutable input reported 30 rows, no baseline errors, and **5/5 mutations rejected**. Input SHA-256 remained `26fa7c694fd0f3a35bc5085b6145af639e88c8dd79666c3284db12f11df9ed90`.
+- This is construction evidence only. It neither establishes Docker execution nor supersedes the T1 STOP. No further Docker call was made; a future container run requires a distinct fresh allocation, exact source freeze, and a responsive engine.
