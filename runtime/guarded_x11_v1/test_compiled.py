@@ -49,6 +49,44 @@ def verify(payload,native,image): return {'status':'succeeded','evidence_ref':pa
 
 class CompiledX11Tests(unittest.TestCase):
 
+    def test_capture_binding_change_returns_retained_prefix_without_fabricating_observation(self):
+        from runtime.guarded_x11_v1 import bridge as native_bridge
+        from runtime.backends.x11_v1.backend import X11BackendError
+        for phase in (0, 1, 2):
+            with self.subTest(phase=phase):
+                b=Bridge(); original=b.observe
+                def observe():
+                    if b.phase == phase:
+                        error_type=getattr(native_bridge, 'CaptureBindingChanged', X11BackendError)
+                        raise error_type('binding changed during native capture')
+                    return original()
+                b.observe=observe
+                try:
+                    r=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+                except X11BackendError as error:
+                    self.fail('capture binding change must return a typed yield: '+str(error))
+                self.assertEqual((r['outcome'],r['reason']),('SAFE_YIELD','association_changed'))
+                self.assertEqual(r['completed_transitions'],phase)
+                self.assertEqual(len(b.inputs),phase)
+                self.assertEqual(len(r['observations']),phase)
+                self.assertEqual(b.sequence,phase)
+                self.assertEqual(len(b.history),phase)
+                if phase:
+                    self.assertEqual(r['pending_effect']['action'],('enter','save')[phase-1])
+                else:
+                    self.assertIsNone(r['pending_effect'])
+                self.assertEqual(len([n for n,v in b.saved if n.endswith('-receipt.json')]),1)
+                self.assertFalse(any(n.endswith('-exception.json') for n,v in b.saved))
+
+    def test_untyped_capture_error_still_propagates_and_retains_exception(self):
+        from runtime.backends.x11_v1.backend import X11BackendError
+        b=Bridge();b.observe=lambda: (_ for _ in ()).throw(X11BackendError('native artifact identity mismatch'))
+        with self.assertRaisesRegex(X11BackendError,'artifact identity mismatch'):
+            run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+        self.assertEqual(b.inputs,[])
+        self.assertTrue(any(n.endswith('-exception.json') for n,v in b.saved))
+        self.assertFalse(any(n.endswith('-receipt.json') for n,v in b.saved))
+
     def test_top_level_native_release_is_retained_on_pre_execution_refusal(self):
         b=Bridge()
         b.click=lambda *a,**k:{'status':'refused','error':'BACKEND_CONSTRAINT',
