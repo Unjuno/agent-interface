@@ -31,3 +31,10 @@ token, cost or human-tempo gain is inferred. The trusted perception/effect
 callbacks, matched assistance and finite cold/warm/invalidation/repair comparison
 in desktop-composition-admission-01 remain unresolved/unallocated. New #6231
 same-schema effect-drift work is synthetic T0, not product adoption evidence.
+
+Final portable artifact pins source commit `06a9a3e44` and passes 15 deterministic
+branch/effect/control cases under isolated `python -I` from /tmp. archive-probe.json
+records outcomes and archive hash. Archive core source bytes equal tested source;
+shared CI log SHA links and tested-source hashes were verified before publication.
+This probe uses the same finite fixture contract as unit tests and is not an
+independent task oracle. Initial host bundle is retained with its initial manifest.
