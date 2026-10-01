@@ -488,3 +488,66 @@ retains personal READY/Save/SAVED operation through this adapter, one independen
 app effect, exact PNG identity, explicit release/cleanup and actual source usage.
 It establishes one functional self-use path; the roughly 87-second host span and
 unmatched usage do not establish general efficiency or human-comparable tempo.
+
+
+## One persistent primary command stream
+
+The optional CLI `node host-bundle/primary_stdio.mjs --config /absolute/config.json`
+starts one explicitly configured relay host and uses the existing primary exchange.
+It starts no application or display, discovers no target and chooses no action.
+For a packaged runtime, an example configuration is:
+
+```json
+{
+  "host": {
+    "command": "/absolute/python",
+    "args": ["/absolute/runtime.pyz", "relay", "--", "--targets", "/absolute/targets.json", "--output-directory", "/absolute/fresh-server", "--session-mode", "guarded-x11", "--display", ":99"],
+    "evidenceDirectory": "/absolute/fresh-host"
+  },
+  "route": "guarded-local",
+  "exchangeDirectory": "/absolute/fresh-exchange"
+}
+```
+
+Use an existing owned display/window and absolute paths. All three directories
+are fresh and their parent directories already exist. Optional `expectations`
+and `primaryOptions` preserve the existing primary policy configuration.
+For `direct-post`, supply explicit `primaryOptions.observationArguments` before
+using observe. This CLI is a line transport, not a new MCP server registration.
+
+Wait for the JSON `ready` line, then send exactly one finite JSON command line:
+
+```json
+{"id":1,"method":"observe","args":[]}
+```
+
+Each stdout line declares schema `agent-interface/primary-stdio-v1`. A `returned`
+line carries the existing exchange result: original text callback values, PNG
+file descriptors and the original returned-value path. It does not include
+image base64. An outer tool/agent must actually view those unchanged images and
+record the original attempt's explicit review. Original data remains in the
+exchange/host files; a successful stdout write is not model comprehension.
+
+Await that result and inspect it before issuing the next command. Additional
+lines while a command is outstanding receive `busy` with operation_invoked=false
+for that rejected line; they are not queued or given a new ID. The existing
+pending input may still execute. Do not pipe a whole future action script at
+once. Malformed JSON receives `refused` without an exchange call. Exchange
+errors receive `command_error`, current state and replay_allowed=false; inspect
+the original files instead of repeating a consumed command. Stream output
+failure stops accepting commands and waits for the same pending promise before
+closing the original transport. It does not prove that input was cancelled.
+
+Explicitly send `call` with `["interface_close",{}]`, inspect its release outcome,
+and then end stdin. EOF waits for the outstanding command and closes only the
+same transport; it never fabricates a public-close request or task completion.
+The final `terminal` line reports transport exit/current primary state, not app
+cleanup or success. Signal termination/crash is not graceful EOF; the outer
+owner remains responsible for application/display lifecycle and reconciliation.
+
+This avoids caller-authored command/reply polling files while preserving the
+existing exchange evidence writes. A host with a persistent terminal handle can
+send a line, parse its result and present the referenced image in one outer tool
+turn. Terminal echo/control sequences are host behavior; parse only complete
+schema-tagged JSON output lines. There is no automatic token/image compression,
+retry, background sensor or model policy, and no generic tempo/cost gain is proved.
