@@ -16,7 +16,7 @@ WORKING_BYTES = NUMEL * 8
 OPS = 20
 ALLOCATOR_FRACTION = 0.05
 EXPECTED_DEVICE = "NVIDIA GeForce RTX 3080 Laptop GPU"
-OUT = Path(os.environ.get("GPU_A08_OUTPUT", "/out"))
+OUT = Path(os.environ.get("GPU_A09_OUTPUT", "/out"))
 
 
 def worker(worker_id: int, barrier, results) -> None:
@@ -79,7 +79,7 @@ def main() -> int:
     barrier = ctx.Barrier(WORKERS)
     results = ctx.Queue()
     children = [
-        ctx.Process(target=worker, args=(worker_id, barrier, results), name=f"gpu-a08-{worker_id}")
+        ctx.Process(target=worker, args=(worker_id, barrier, results), name=f"gpu-a09-{worker_id}")
         for worker_id in range(WORKERS)
     ]
     for process in children:
