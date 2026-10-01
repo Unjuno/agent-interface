@@ -144,3 +144,9 @@ The latest evidence still refers to the last valid frame, not the changed
 capture. Review the actual window and obtain fresh grounding before new input.
 There is no automatic window selection, retry, confirmation or effect success.
 Other capture, callback, artifact and I/O errors still propagate and are retained.
+
+[Primary Calc successor](../results/calc-compiled-pixel-admission-05/README.md)
+exercised the actual capture binding change and returned this typed receipt.
+After explicit primary modal review/new grounding/confirmation, the independently
+read saved workbook matched317/529. The preceding startup failure is retained.
+This qualifies the boundary and one saved task, not a speed or token improvement.
