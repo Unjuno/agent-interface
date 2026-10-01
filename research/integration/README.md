@@ -41,6 +41,10 @@ Child directory names are retained provenance, not a canonical architecture tree
 - [Writer selection scope #4425 / Draft PR #4446](writer_selection_scope_w4m8_v1/ARCHIVAL_QUALIFICATION.md) — seven exact published files retained; complete 401-file raw corpus missing, so this is not an independent reproduction or qualification of the reported PASS.
 - [Router membership #4430 / Draft PR #4452](router_membership_q5m8_v1/ARCHIVAL_QUALIFICATION.md) — three exact STOP metadata files retained; complete 457-file capsule missing and the historical result is not independently reproduced here.
 
+## Freeze-only records with unrecoverable source/raw
+
+- [Text suffix recovery #4040](text_suffix_recovery_v1/ARCHIVAL_QUALIFICATION.md) — exact preformal freeze retained for provenance; Issue-reported 48-case PASS remains HOLD because sources, raw batches, audit receipts, and predecessor corpus are unavailable.
+
 ## Interpretation
 
 - Use [`../../RESEARCH.md`](../../RESEARCH.md) for the evidence ledger and claims taxonomy.
