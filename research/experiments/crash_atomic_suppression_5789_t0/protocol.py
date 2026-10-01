@@ -28,7 +28,7 @@ CASES = (
     {"case": "new_generation_same_fingerprint", "policy": "C", "cut": "new_generation"},
     {"case": "changed_target_same_label", "policy": "C", "cut": "changed_target"},
     {"case": "reactivation", "policy": "C", "cut": "reactivation"},
-    {"case": "expiry_gc", "policy": "C", "cut": "expiry_gc"},
+    {"case": "retirement_tombstone", "policy": "C", "cut": "retirement_tombstone"},
     {"case": "malformed_record", "policy": "C", "cut": "malformed"},
     {"case": "repeated_restart", "policy": "C", "cut": "restart_twice"},
 )

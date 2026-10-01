@@ -1,9 +1,11 @@
-# Issue #5795 — T0 protocol freeze (pre-construction)
+# Issue #5795 — T0 protocol freeze (pre-formal)
 
 Parent idea: GitHub Issue #5789. Allocation request: Issue #5795. Intake main
-before construction: `ff2164a8b16d386571c91ebba19f6604b4776581`. The branch was
-subsequently rebased, before formal execution, onto main
-`8986380d8ec265f9cdc4a282fcd4ed93254acd49`.
+before construction: `ff2164a8b16d386571c91ebba19f6604b4776581`. After host
+construction, the branch was rebased onto current main
+`2a69173110856607c02e5213561679938c5988e3`; this remains before any formal
+candidate. The executable manifest is `FREEZE.json`. Construction code
+remains in this additive package but is not counted as formal evidence.
 
 ## H/T/D/C/U
 
@@ -20,8 +22,9 @@ separate candidate and generation writes; C, one SQLite transaction. A parent
 runner owns the child and sends SIGKILL at frozen observable barriers. Cases
 cover pre-write, after first split write, pre-commit, post-commit/pre-ack,
 acknowledged commit/restart, same fingerprint/new generation, changed target
-under same label, reactivation, expiry/GC, malformed record, and repeated
-restart. One container candidate writes JSONL to its sole output mount. A
+under same label, reactivation, explicit retirement with a retained tombstone,
+malformed record, and repeated restart. Expiry timing and physical/semantic GC
+are not exercised. One container candidate writes JSONL to its sole output mount. A
 separate raw-only auditor process/container reads retained bytes read-only and
 does not import candidate modules. No GUI, model, network, external receiver,
 shared runtime, multi-writer, or power-loss semantics.
@@ -44,7 +47,7 @@ resistance, GUI behavior, or product safety.
 
 ## Allocation gate
 
-This is a protocol/construction freeze, not authorization to start a Docker,
+This is a protocol freeze, not authorization to start a Docker,
 OrbStack, or Obstac-managed guest. Run no formal candidate until Issue #5795 is
 explicitly assigned a non-overlapping isolated guest/daemon slot, endpoint and
 owner by the resource coordinator. Existing repository Obstac launchers use a

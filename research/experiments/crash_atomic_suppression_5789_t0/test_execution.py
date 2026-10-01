@@ -1,0 +1,232 @@
+"""Host-only construction rehearsal; never a formal/container allocation."""
+
+import json
+import hashlib
+import gc
+import os
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+import unittest
+import warnings
+from unittest import mock
+
+import protocol
+import runner
+import container_runner
+
+
+class ProcessMatrixConstructionTests(unittest.TestCase):
+    def test_container_candidate_command_is_isolated_bounded_and_pinned(self):
+        command = container_runner.docker_command(
+            docker="docker",
+            context="assigned-guest",
+            platform="linux/arm64",
+            source=Path("/source"),
+            output=Path("/candidate-out"),
+            runtime={"source_commit": "a" * 40, "image_id": "sha256:" + "b" * 64,
+                     "docker_host": "tcp://isolated-guest:2376"},
+            freeze_digest="c" * 64,
+            mode="formal",
+            include_manifest=True,
+        )
+        for required in (
+            "--network", "none", "--read-only", "--cpus", "1", "--memory", "256m",
+            "--pids-limit", "64", "linux/arm64", "--mount",
+        ):
+            self.assertIn(required, command)
+        self.assertIn(container_runner.IMAGE, command)
+        self.assertIn("readonly", " ".join(command))
+        self.assertIn("--network", command)
+        self.assertEqual(command.count("--network"), 1)
+        self.assertIn("OBSTAC_DOCKER_HOST", " ".join(command))
+        self.assertIn("OBSTAC_AUDIT_SHA256", " ".join(command))
+
+    def test_formal_container_runner_refuses_missing_allocation_before_docker(self):
+        with tempfile.TemporaryDirectory(prefix="construction-5795-launcher-") as temp:
+            root = Path(temp)
+            out = root / "candidate"
+            env = {key: value for key, value in os.environ.items()
+                   if not key.startswith("OBSTAC_")}
+            proc = subprocess.run(
+                [sys.executable, "-B", str(Path(container_runner.__file__)),
+                 "--mode", "formal", "--candidate-out", str(out)],
+                capture_output=True,
+                text=True,
+                timeout=10,
+                env=env,
+            )
+            self.assertNotEqual(proc.returncode, 0)
+            self.assertIn("STOP_NO_FORMAL_ALLOCATION", proc.stderr)
+            self.assertFalse(out.exists())
+
+    def test_construction_container_runner_uses_only_named_construction_endpoint(self):
+        with tempfile.TemporaryDirectory(prefix="construction-5795-construction-launch-") as temp:
+            root = Path(temp)
+            out = root / "out"
+            env = {key: value for key, value in os.environ.items()
+                   if not key.startswith("OBSTAC_")}
+            env.update({
+                "OBSTAC_CONSTRUCTION_CONTEXT": "isolated-construction-context",
+                "OBSTAC_CONSTRUCTION_DOCKER_HOST": "tcp://construction-guest:2376",
+            })
+            previous = {key: os.environ.get(key) for key in (
+                "OBSTAC_CONSTRUCTION_CONTEXT", "OBSTAC_CONSTRUCTION_DOCKER_HOST"
+            )}
+            with mock.patch.object(container_runner.subprocess, "run") as mocked_run:
+                mocked_run.return_value.returncode = 0
+                try:
+                    os.environ.update(env)
+                    with mock.patch.object(sys, "argv", [
+                        str(Path(container_runner.__file__)), "--mode", "construction",
+                        "--candidate-out", str(out),
+                    ]):
+                        self.assertEqual(container_runner.main(), 0)
+                finally:
+                    for key, value in previous.items():
+                        if value is None:
+                            os.environ.pop(key, None)
+                        else:
+                            os.environ[key] = value
+            command = mocked_run.call_args.args[0]
+            self.assertIn("--host", command)
+            self.assertIn("tcp://construction-guest:2376", command)
+            self.assertIn("--construction", command)
+            self.assertIn("--network", command)
+            self.assertFalse(any("orbstack" in item for item in command))
+
+    def test_audit_requires_frozen_mode_and_hash(self):
+        with tempfile.TemporaryDirectory(prefix="construction-5795-audit-gate-") as temp:
+            root = Path(temp)
+            raw = root / "raw.jsonl"
+            raw.write_text("[]\n")
+            out = root / "audit"
+            proc = subprocess.run(
+                [sys.executable, "-B", str(Path(__file__).with_name("audit.py")),
+                 "--raw", str(raw), "--out", str(out)],
+                capture_output=True,
+                text=True,
+                timeout=10,
+            )
+            self.assertNotEqual(proc.returncode, 0)
+            self.assertIn("STOP_AUDIT_RUN_KIND", proc.stderr)
+            self.assertFalse(out.exists())
+
+    def test_formal_gate_rejects_missing_or_mismatched_freeze_before_rows(self):
+        with tempfile.TemporaryDirectory(prefix="construction-5795-gate-") as temp:
+            root = Path(temp)
+            proc = subprocess.run(
+                [sys.executable, "-B", str(Path(__file__).with_name("runner.py")),
+                 "--out", str(root / "out")],
+                capture_output=True,
+                text=True,
+                timeout=10,
+            )
+            self.assertNotEqual(proc.returncode, 0)
+            self.assertIn("STOP_FREEZE_MANIFEST", proc.stderr)
+            output = root / "out"
+            self.assertTrue(output.is_dir())
+            self.assertEqual(list(output.iterdir()), [])
+
+    def test_formal_gate_rejects_source_drift_before_rows(self):
+        with tempfile.TemporaryDirectory(prefix="construction-5795-gate-ok-") as temp:
+            root = Path(temp)
+            manifest = {
+                "source_sha256": {"deliberately_stale": "0" * 64},
+                "schedule_sha256": protocol.schedule_sha256(),
+                "runtime": {
+                    "run_kind": "formal",
+                    "docker_context": "assigned-isolated-context",
+                    "platform": "linux/arm64",
+                    "source_commit": "a" * 40,
+                    "image_id": "sha256:" + "b" * 64,
+                },
+            }
+            env = os.environ.copy()
+            env.update({
+                "OBSTAC_RUN_KIND": "formal",
+                "OBSTAC_DOCKER_CONTEXT": "assigned-isolated-context",
+                "OBSTAC_PLATFORM": "linux/arm64",
+                "OBSTAC_SOURCE_COMMIT": "a" * 40,
+                "OBSTAC_IMAGE_ID": "sha256:" + "b" * 64,
+                "OBSTAC_FREEZE_SHA256": hashlib.sha256(
+                    json.dumps(manifest, sort_keys=True, separators=(",", ":")).encode()
+                ).hexdigest(),
+            })
+            freeze_path = Path(runner.__file__).with_name("FREEZE.json")
+            original = freeze_path.read_bytes() if freeze_path.exists() else None
+            try:
+                freeze_path.write_text(json.dumps(manifest, sort_keys=True) + "\n")
+                proc = subprocess.run(
+                    [sys.executable, "-B", str(Path(__file__).with_name("runner.py")),
+                     "--out", str(root / "out")],
+                    capture_output=True,
+                    text=True,
+                    timeout=10,
+                    env=env,
+                )
+            finally:
+                if original is None:
+                    freeze_path.unlink(missing_ok=True)
+                else:
+                    freeze_path.write_bytes(original)
+            self.assertNotEqual(proc.returncode, 0)
+            self.assertIn("STOP_SOURCE_HASH_MISMATCH", proc.stderr)
+            self.assertEqual(list((root / "out").iterdir()), [])
+
+    def test_sigkill_child_pipes_are_closed_without_resource_warning(self):
+        with tempfile.TemporaryDirectory(prefix="construction-5795-pipes-") as temp:
+            with warnings.catch_warnings(record=True) as caught:
+                warnings.simplefilter("always", ResourceWarning)
+                runner.run_row(protocol.CASES[4], Path(temp))
+                gc.collect()
+            resource_warnings = [w for w in caught if issubclass(w.category, ResourceWarning)]
+            self.assertEqual(resource_warnings, [])
+
+    def test_sigkill_case_is_reaped_before_next_acknowledged_child(self):
+        with tempfile.TemporaryDirectory(prefix="construction-5795-reap-") as temp:
+            root = Path(temp)
+            cut = runner.run_row(protocol.CASES[4], root)
+            self.assertEqual(cut["persist"]["returncode"], -9)
+            ack = runner.run_row(protocol.CASES[6], root)
+            self.assertEqual(ack["persist"]["returncode"], 0)
+            self.assertEqual(ack["ack_state"], "ACKNOWLEDGED")
+
+    def test_full_process_matrix_and_raw_only_audit_cli(self):
+        with tempfile.TemporaryDirectory(prefix="construction-5795-") as temp:
+            root = Path(temp)
+            scratch = root / "scratch"
+            scratch.mkdir()
+            rows = [runner.run_row(spec, scratch) for spec in protocol.CASES]
+            raw = root / "raw.jsonl"
+            raw.write_text("".join(json.dumps(row, sort_keys=True) + "\n" for row in rows))
+            report = root / "audit-out"
+            report.mkdir()
+            import hashlib
+            audit_env = os.environ.copy()
+            audit_env.update({
+                "OBSTAC_RUN_KIND": "formal",
+                "OBSTAC_PLATFORM": "linux/arm64",
+                "OBSTAC_AUDIT_SHA256": hashlib.sha256(
+                    Path(__file__).with_name("audit.py").read_bytes()
+                ).hexdigest(),
+            })
+            audited = subprocess.run(
+                [sys.executable, "-B", str(Path(__file__).with_name("audit.py")),
+                 "--raw", str(raw), "--out", str(report)],
+                capture_output=True,
+                text=True,
+                timeout=15,
+                env=audit_env,
+            )
+            self.assertEqual(audited.returncode, 0, audited.stderr + audited.stdout)
+            result = json.loads((report / "audit.json").read_text())
+            self.assertEqual(result["decision"], "PASS_CRASH_ATOMIC_SUPPRESSION_T0_SCOPED")
+            self.assertEqual(result["rows"], 15)
+            self.assertEqual(result["candidate_rows_matching_frozen_gate"], 10)
+            self.assertTrue(result["baseline_failures_reproduced"])
+
+
+if __name__ == "__main__":
+    unittest.main()
