@@ -32,7 +32,7 @@ The auditor's first assertion failed: `candidate output differs from independent
 
 ## Reproduction and retained evidence
 
-`FREEZE.md`, `fixture.json`, `candidate.py`, `auditor.py`, `test_construction.py`, `construction_raw.txt`, `candidate_raw.json`, `candidate_stderr.txt`, `audit_raw.json`, and `audit_stderr.txt` preserve the frozen inputs and formal outputs. `SHA256SUMS.txt` gives hashes for the retained source and raw artifacts. Do not repair and silently rerun this allocation; any corrected implementation requires a separately identified successor allocation and must preserve this STOP unchanged.
+`FREEZE.md`, `fixture.json`, `candidate.py`, `auditor.py`, `test_construction.py`, `construction_raw.txt`, `candidate_raw.json`, `candidate_stderr.txt`, `audit_raw.json`, and `audit_stderr.txt` preserve the frozen inputs and formal outputs. `SHA256SUMS.txt` gives hashes for the retained source and raw artifacts. The GitHub Contents API added one terminal LF when transporting the candidate JSON and traceback text; after normalizing that transport-only trailing newline, their bytes match the WSL originals, whose SHA-256 values remain in the manifest. The zero-byte `audit_raw.json` is retained as an empty Git blob. Do not repair and silently rerun this allocation; any corrected implementation requires a separately identified successor allocation and must preserve this STOP unchanged.
 
 The WSL working directory was `/home/unjuno/agent-interface-6301-t0`. The evidence is submitted as an additive research record for review; no runtime behavior or `main` change is proposed.
 
