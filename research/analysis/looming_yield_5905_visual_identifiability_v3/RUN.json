@@ -1,0 +1,59 @@
+{
+  "allocation": "VISUAL-EQUIV-5905-S3-20261001-01",
+  "issue": 6030,
+  "source_commit": "6800d2e2a428e98d70cd35fd23dbda5343264dcf",
+  "source_commit_parent": "722c42bf0d6d808cf80575ecb6353401de934b26",
+  "frozen_main_sha": "722c42bf0d6d808cf80575ecb6353401de934b26",
+  "main_at_preflight_sha": "722c42bf0d6d808cf80575ecb6353401de934b26",
+  "intervening_main_paths": [],
+  "preflight": {
+    "issue_open_and_s3_registered": true,
+    "branch_ref_matches_source_commit": true,
+    "source_parent_matches_frozen_main": true,
+    "freeze_base_matches_source_parent": true,
+    "all_frozen_files_read_back_equal": true,
+    "all_source_and_input_sha256_match": true,
+    "formal_output_paths_absent": true,
+    "protected_path_overlap": []
+  },
+  "environment": {
+    "os": "Windows x86_64",
+    "python": "3.12.10",
+    "dependencies": "Python standard library only",
+    "docker_container": false,
+    "docker_reason": "Docker Desktop daemon query was unresponsive; shared Docker slot remained reserved; this bounded host-only run used no container or shared slot.",
+    "model_provider_gui_os_input_network_gpu_game": "not used"
+  },
+  "candidate": {
+    "command": "python candidate.py --input observer_input.jsonl.gz --output candidate.jsonl",
+    "started_utc": "2026-10-01T12:37:31.1391995+00:00",
+    "ended_utc": "2026-10-01T12:37:31.6440574+00:00",
+    "exit_code": 0,
+    "stdout": "candidate.stdout.txt",
+    "stderr": "candidate.stderr.txt",
+    "output": "candidate.jsonl",
+    "output_bytes": 4542,
+    "output_sha256": "FC900DC159087B6A07EABCDF5433E43F0CCBD8DF41EE31C2F8C3E74B81ABF4B0",
+    "stdout_sha256": "ED00B5E5E1FC3C7DAC8788247B5936386BB59DA3118B433CFDC11B907B2B2298",
+    "stderr_sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+  },
+  "independent_auditor": {
+    "command": "python audit.py --input observer_input.jsonl.gz --truth truth.json --output candidate.jsonl --report audit.json",
+    "started_utc": "2026-10-01T12:37:32.5659052+00:00",
+    "ended_utc": "2026-10-01T12:37:33.0247462+00:00",
+    "exit_code": 1,
+    "stdout": "audit.stdout.txt",
+    "stdout_sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "stderr": "audit.stderr.txt",
+    "stderr_bytes": 1633,
+    "stderr_sha256": "B21595625D25883100FCCB3E65C172A736E7D0923CA7B2563788AEEC84417423",
+    "failure": "gzip.BadGzipFile: Not a gzipped file (b'{\\\"') while the frozen auditer's gzip-only load_jsonl read the plain JSONL candidate output.",
+    "report_created": false
+  },
+  "formal_candidate_invocations": 1,
+  "formal_auditor_invocations": 1,
+  "retry_or_replay": false,
+  "disposition": "STOP_AUDIT_INPUT_FORMAT",
+  "scientific_disposition": "NOT_EVALUATED",
+  "scope_limit": "No inference about image-only looming identifiability; candidate output did not pass the preregistered independent raw audit."
+}
