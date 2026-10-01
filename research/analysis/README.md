@@ -344,6 +344,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`safety_watchdog_claim_sink_cutset_r1_a2_v1/`](safety_watchdog_claim_sink_cutset_r1_a2_v1/)
 - [`safety_watchdog_claim_sink_cutset_r1_v1/`](safety_watchdog_claim_sink_cutset_r1_v1/)
 - [`saga_prefix_comparison_16_t4_v1/`](saga_prefix_comparison_16_t4_v1/)
+- [`same_cohort_negative_control_5841_t0_v1/`](same_cohort_negative_control_5841_t0_v1/)
+- [`same_cohort_negative_control_5841_t1_v1/`](same_cohort_negative_control_5841_t1_v1/)
 - [`selection_aware_shadow_audit_5681_t0_v1/`](selection_aware_shadow_audit_5681_t0_v1/)
 - [`selection_aware_shadow_audit_5681_t1_v1/`](selection_aware_shadow_audit_5681_t1_v1/)
 - [`self_stabilizing_restart_5704_t0_20261001/`](self_stabilizing_restart_5704_t0_20261001/)
