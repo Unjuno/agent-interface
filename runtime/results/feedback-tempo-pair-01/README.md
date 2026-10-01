@@ -42,7 +42,8 @@ boundary, not provider semantic-awareness timing. The ~45 ms acknowledgment-to-
 capture result is local app/capture evidence, not a human reaction comparison.
 One pair, fixed order, identical known fixture and unmeasured cache/model/provider
 revision effects cannot establish general latency, cost or token savings. Actual
-usage and billing are unattributed. Do not subtract these wall-clock intervals
+combined usage is now source-projected in [USAGE.md](USAGE.md); billing and
+arm-specific cost are unavailable. Do not subtract these wall-clock intervals
 and call the difference model reasoning improvement.
 
 Decision for integration: keep explicit per-task cue waiting available alongside
