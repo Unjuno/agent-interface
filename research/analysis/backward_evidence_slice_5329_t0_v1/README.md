@@ -5,35 +5,21 @@ Issue #5329 comment #5923874105. It is separate from the earlier four-packet
 task-conditioned bottleneck toy, Blackwell/deadline addendum, and production
 full/summary caller measurement.
 
-Formal allocation: `5329-backward-slice-t0-20261001-01`.
+## Allocations and dispositions
 
-## H / T / D / C / U
+- **Formal01:** `STOP_PROVENANCE_OR_RUNNER`. The runner produced four rows, but
+the frozen auditor exited 1 on the deliberate unresolved `external_cause` edge.
+Its exact raw and traceback remain immutable under `results/formal01/`.
+- **Formal02:** `PASS_METHOD_SCOPED`. A fresh allocation and unique output with
+a corrected dangling-edge sentinel audit produced raw/oracle agreement across
+four authored cases and rejected all four corruption controls. See
+[`formal02/`](formal02/README.md) and its result disposition.
 
-- **H:** On a finite event/dependency graph, a backward slice retaining data,
-  control, freshness/invalidation and explicit unknown-cause dependencies can
-  preserve one declared evidence decision while excluding irrelevant trace
-  noise. Data-only or label-only summaries should miss a stale/control
-  counterexample; incomplete graphs must yield `UNKNOWN`.
-- **T:** Four deterministic cases: clean trace plus 12 irrelevant events, stale
-  generation, skipped verifier/control branch, unresolved external cause.
-  Compare `RAW_TRACE`, `LABEL_ONLY`, `DATA_SLICE`, and `TYPED_SLICE`; independently
-  replay closure and the declared oracle; apply four integrity mutations.
-- **D:** `PASS_METHOD_SCOPED` only if raw and typed slice match the oracle in all
-  rows, clean typed slice is strictly smaller, data-only misses both stale and
-  skipped-verifier controls, unresolved external cause yields `UNKNOWN`, and all
-  four mutations are rejected. Any unverified gate is STOP, not PASS.
-- **C:** The finite graph/truth table is authored; fixed lossless fields may be
-  simpler; slice construction cost may erase its compression gain.
-- **U:** No test of real dependency completeness, GUI causality, empirical token,
-  bandwidth, latency or production benefit.
+Formal02's clean/noise case retained 7 of 19 graph nodes (63.2% fewer nodes,
+not a byte/token/latency measurement). Label-only was wrong on three cases;
+typed slicing matched the declared oracle on all four. The data-only policy
+returned UNKNOWN where required predicates were absent.
 
-## Result
-
-`STOP_PROVENANCE_OR_RUNNER`. The runner completed once and emitted four rows;
-the frozen auditor then exited 1 with `KeyError: 'external_cause'` on the
-deliberately unresolved dependency edge. This is an auditor construction STOP,
-not a scientific PASS/FAIL. Raw and exact traceback are retained. Do not rerun
-or patch this allocation; a corrected attempt requires a separately frozen
-successor and output path.
-
-See `FREEZE.md`, `SOURCE_MANIFEST.json`, and `results/formal01/`.
+These are finite authored-graph results only. They do not validate real GUI
+dependency completeness, exogenous-cause discovery, empirical consumer savings,
+production safety, task effects, or universal sufficiency.
