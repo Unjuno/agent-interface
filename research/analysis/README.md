@@ -122,6 +122,8 @@ The table below summarizes major analytical chains and representative retained o
 | Identifiability / audit | [`temporal_break_even_retained_identifiability_v1/`](temporal_break_even_retained_identifiability_v1/) | Existing retained temporal evidence contains zero admissible fully matched rows for the required empirical break-even estimate. | Run a source-matched allocation retaining `F_m`, `Q_m`, `H_m`, identity, and correctness endpoints. |
 | Identifiability / audit | [`multi_app_transition_retained_audit_r0_v1/`](multi_app_transition_retained_audit_r0_v1/) | Retained evidence covers focus drift, modal, geometry drift, and window replacement across components/apps, but no single session integrates all four under one contract. | Run a finite multi-app integrated allocation preserving one caller/controller identity across the transition families. |
 
+| Route selection / topology | [`route_selector_5911_t0_20261001_02/`](route_selector_5911_t0_20261001_02/) | Five finite synthetic cases and an independent enumerator pass the explicit minimum-cost route/tie contract; scope is method-only. | Test selector semantics on real source traces before making any live routing or causal claim. |
+
 </details>
 
 ## Historical source and construction archives
@@ -348,6 +350,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`robust_recourse_5862_t0_v1/`](robust_recourse_5862_t0_v1/)
 - [`role_bound_ledger_lifetime_v1/`](role_bound_ledger_lifetime_v1/)
 - [`route_assignment_exposure_5760_t0_v1/`](route_assignment_exposure_5760_t0_v1/)
+- [`route_selector_5911_t0_20261001_02/`](route_selector_5911_t0_20261001_02/)
 - [`safe_probe_cost_optimal_tree_r1_v1/`](safe_probe_cost_optimal_tree_r1_v1/)
 - [`safe_probe_identification_successor_1716_v1/`](safe_probe_identification_successor_1716_v1/)
 - [`safe_probe_minimax_r0_v1/`](safe_probe_minimax_r0_v1/)
