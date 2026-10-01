@@ -8,6 +8,8 @@ Allocation `CROSS-VERDICT-REPEATABILITY-6222-T0-HOST-20261002-01`; owner Unjuno 
 
 The immutable freeze, H/T/D/C/U preregistration, runner, construction log and six source artifacts are retained alongside this report. The formal runner's output-collision and source-hash checks passed. Construction test passed 1/1. Preparation failures and correction are preserved in `CONSTRUCTION_LOG.md`; they were not formal runs.
 
+Publication note: the first contents upload of the large candidate file was truncated by the transfer output cap. A pre-PR length/hash readback caught it. The original full local raw file was not rerun or changed; its exact bytes have now replaced the short branch copy, and the first transport commit remains in history. See [`PUBLICATION_CORRECTION.md`](PUBLICATION_CORRECTION.md).
+
 ## Observations
 
 The fixture crossed 24 synthetic artifacts over two evaluators, two setups and three repeats (288 observations), plus 24 fixed-reference observations.
