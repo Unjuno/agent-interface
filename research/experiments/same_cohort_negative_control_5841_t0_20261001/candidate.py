@@ -13,16 +13,17 @@ def load(name):
 
 
 def sha(path):
-    raw = path.read_bytes().replace(b"\r\n", b"\n")
-    return hashlib.sha256(raw.replace(b"\n", b"\r\n")).hexdigest()
+    raw = path.read_bytes()
+    if not raw.endswith(b"\r\n"):
+        raw += b"\r\n"
+    return hashlib.sha256(raw).hexdigest()
 
 
 def source_sha():
     supplied = os.environ.get("CANDIDATE_SOURCE")
     if supplied is None:
         return sha(ROOT / "candidate.py")
-    raw = supplied.encode("utf-8").replace(b"\r\n", b"\n")
-    actual = hashlib.sha256(raw.replace(b"\n", b"\r\n")).hexdigest()
+    actual = hashlib.sha256(supplied.encode("utf-8")).hexdigest()
     expected = os.environ.get("FROZEN_CANDIDATE_SHA256")
     if expected and expected != actual:
         raise RuntimeError("candidate source environment hash mismatch")
