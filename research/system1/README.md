@@ -98,3 +98,19 @@ Read each child experiment for its allowed decision vocabulary, authority bounda
 ## Local Needle training invocation guard
 
 - [`needle_single_invocation_guard_4678_v1/README.md`](needle_single_invocation_guard_4678_v1/README.md) — Issue #4678 preflight STOP: the exact #4205 GPU image is cached and matches, but its pinned safetensors checkpoint is absent; no training-image container or optimizer step ran. Two offline CPU-only audit containers validated the retained STOP record.
+
+## Online role-router LoRA archive
+
+- [`needle_role_router_online_lora_replay_v1/ARCHIVAL_QUALIFICATION.md`](needle_role_router_online_lora_replay_v1/ARCHIVAL_QUALIFICATION.md) — Issue #4899 / source PR #4906; exact original source and formal/construction-r4 archives. Registered `HOLD_AUDIT_INTEGRITY` and the missed +0.10 A-retention gain remain unchanged; earlier construction r1–r3 full raw/report sets remain outside this committed archive. Preservation only, with no rerun, promotion, or closure of #4899.
+
+## Role-skill construction STOP archive
+
+- [`needle_role_skill_joint_retention_v2/ARCHIVAL_QUALIFICATION.md`](needle_role_skill_joint_retention_v2/ARCHIVAL_QUALIFICATION.md): Issue #4908 / source PR #4911; exact historical published blobs preserving `STOP_CONSTRUCTION_OUTPUT_NOT_EMPTY`. Source, freeze, receipt and log bindings do not match the retained identity claims. The historical 7/7 tests and `PASS_STOP_EVIDENCE_AUDIT` are retained claims, not independently reproduced here. No rerun, result promotion, seed authorization, or issue closure.
+
+## Publication-overlap construction archive
+
+- [#5082 / source PR #5163 archival qualification](needle_cross_process_publication_5066_v4_20260928/ARCHIVAL_QUALIFICATION.md) — preserves eleven exact source/freeze/input files and the reported 17/17 host and pinned-Docker construction checks. The 4,096-publication formal run and independent formal raw audit remain STOP / NOT STARTED; #5082 remains OPEN and the source PR stays Draft. Preservation only, with no execution, allocation, or runtime promotion.
+
+## Role-skill construction-boundary HOLD archive
+
+- [`needle_role_skill_joint_retention_v3_20260928/ARCHIVAL_QUALIFICATION.md`](needle_role_skill_joint_retention_v3_20260928/ARCHIVAL_QUALIFICATION.md) — Issue #4929 / source PR #4940; all 13 original blobs preserve `HOLD_SOURCE_FREEZE_MISMATCH`. The reported 9/12 boundary tests and zero fits are historical summary claims, without original stdout/stderr or a retained independent raw-only audit. Three FREEZE blob IDs and two mounted-file hashes disagree with the published inventory; the malformed intake identity and CPU-description difference also remain. No valid-binding PASS, rerun, formal authorization, promotion, or issue closure.

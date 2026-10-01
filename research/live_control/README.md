@@ -623,3 +623,8 @@ submission succeeds after two local transitions, while the changed page issues n
 Submit and retains `unknown_state / completed_actions=1 / confirmed_partial`.
 The pair advances to matched efficiency comparison; it makes no rate, speed, token
 or human-tempo claim.
+
+## Owner key-release construction archive
+
+- [Issue #5156 / source PR #5298 archival qualification](owner_keyup_owner_integration_5156_v1/ARCHIVAL_QUALIFICATION.md) — preserves four exact Allocation-03 owner-v11 files and the historical 14-test fake-Xlib construction record. The original baseline auditor is retained with its empty/omitted-inventory fail-open limitation; [#5415](https://github.com/Unjuno/agent-interface/pull/5415) is a separate synthetic successor. No real X11, physical key-up, MAP01, formal-gate completion, or runtime promotion is established; the source PR remains Draft and #5156 remains open.
+
