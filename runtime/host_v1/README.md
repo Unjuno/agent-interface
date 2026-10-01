@@ -313,3 +313,36 @@ Exact one-use declared refusal controls are optional trial configuration. They
 do not authorize retries, refresh evidence, infer targets, select actions or
 prove semantic completion. This wrapper's tool allowlist excludes activation;
 the generic host exposes the separately documented activation/recovery route.
+# Optional feedback after public input release
+
+The `persistent-x11` public MCP route accepts `inspect_after: "app"` with
+`inspect_after_region: [0, 0, 1280, 800]`. It captures that explicit physical
+screen region after completed input and verified neutral release, and rechecks
+focused-target metadata. The default adds no capture. Inspection never selects
+a target, advances binding or grants input authority.
+
+A program can omit its inline `observe` when this later image is the intended
+feedback. If both exist, both are retained; an eligible later capture is selected
+for delivery. Its reference names `post_dispatch_observation_id` and
+`capture_phase: "after_dispatch_release"`. Capture failure or changed target
+retains the original execution result and any inline image. Never replay input
+to recover a receipt or image.
+
+`inspect_after_wait_ms` optionally requests a 0–1000ms sleep after verified
+release and before capture. It requires a region and records `capture_wait`
+with `update_observed: null`. This is a fixed delay, not redraw detection or
+semantic completion. Retained-result lookup neither sleeps nor recaptures.
+
+For an eligible no-inline-observe post-release result, request `compact: true`,
+`report_refs: true`, `detail: "summary"`. The server uses its pre-invocation
+program copy to validate completed-operation and wait counts. The summary
+labels this separate invocation provenance; the report digest identifies the
+raw report. Full lookup retains `retained_call.arguments.program`. Unknown,
+failed or inconsistent shapes retain full feedback. CLI summaries do not have
+this server invocation context.
+
+The [current-main real Calc trial](../results/calc-main-entry-01/README.md)
+demonstrates why completed input and a later metadata sample do not establish
+that the captured image contains the completion cue. Read the actual image and
+request another observation when needed. Optional availability is not evidence
+of general speed, human tempo, token savings or a completed six-task integration.
