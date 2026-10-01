@@ -82,5 +82,36 @@
     "retries": 0,
     "mutation_controls": 4,
     "subsets": 16
+  },
+  "formal_run": {
+    "result": "PASS_METHOD_SCOPED",
+    "candidate_invocations": 1,
+    "auditor_invocations": 1,
+    "retries": 0,
+    "candidate": {
+      "started_utc": "2026-10-01T18:44:12.9970925Z",
+      "ended_utc": "2026-10-01T18:44:13.2596434Z",
+      "exit_code": 0,
+      "sha256": "c1e3e485b34947b39957bc18320afa5b652e150a0ec5631eb01d189041115d78"
+    },
+    "auditor": {
+      "started_utc": "2026-10-01T18:44:22.7532503Z",
+      "ended_utc": "2026-10-01T18:44:22.9835237Z",
+      "exit_code": 0,
+      "sha256": "95cffbdbf430a148d0fb7acf58cbfbb6fb4441df0bd1c977721d320f04590b54"
+    },
+    "audit_errors": 0,
+    "subsets": 16,
+    "unique_minimum": {
+      "channels": [
+        "app_status",
+        "os_focus_input"
+      ],
+      "cost": 7
+    },
+    "full_bundle_cost": 11,
+    "greedy_cost": 8,
+    "mutation_controls_rejected": 4,
+    "evidence_path": "research/analysis/passive_sensor_cover_6181_t0_20261002_01/results/"
   }
 }
