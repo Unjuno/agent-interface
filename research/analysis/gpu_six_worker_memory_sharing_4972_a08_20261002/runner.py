@@ -72,7 +72,9 @@ def worker(worker_id: int, barrier, results) -> None:
 
 
 def main() -> int:
-    OUT.mkdir(parents=True, exist_ok=False)
+    OUT.mkdir(parents=True, exist_ok=True)
+    if any(OUT.iterdir()):
+        raise SystemExit("output directory must be empty")
     ctx = mp.get_context("spawn")
     barrier = ctx.Barrier(WORKERS)
     results = ctx.Queue()
