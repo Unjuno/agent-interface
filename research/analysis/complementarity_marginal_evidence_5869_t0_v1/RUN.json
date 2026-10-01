@@ -1,0 +1,90 @@
+{
+  "freeze_id": "COMPLEMENTARITY-5869-T0-20261001-01",
+  "observed_at_utc": "2026-10-01T07:40:37Z (latest bounded run-time observation; exact process start timestamps unavailable)",
+  "candidate": {
+    "invocations": 1,
+    "command": "Get-Content -Raw -LiteralPath fixture.json | python -B candidate.py",
+    "exit_code": 0,
+    "stdout_sha256": "a71d9ae26e250f124cad1c440ef537faaa746d03c6fd69523f268120a8354d2a",
+    "github_blob": "2af3efea720a88d49ad4d62c50bddbfd7081a379"
+  },
+  "preflight": {
+    "command": "python -B candidate.py < fixture.json (PowerShell)",
+    "result": "PowerShell parser rejected redirection syntax before a Python child process was created; this was not a candidate invocation and produced no candidate output."
+  },
+  "auditor": {
+    "invocations": 1,
+    "command": "python -B audit.py",
+    "exit_code": 0,
+    "status": "PASS_METHOD_SCOPED",
+    "errors": 0,
+    "case_count": 9,
+    "policy_comparisons": 36,
+    "exhaustive_tree_checks": 9,
+    "stdout_sha256": "bf35e806160625f9a669c88c419e201ef28e1d54f30127696c14fa371da27863",
+    "github_blob": "06c2a44305fa22a5cf737e290ba22599330dc423",
+    "input_capture_note": "AUDITOR_INPUT.json is a canonical structured reconstruction from the frozen fixture and retained candidate result, not a byte-for-byte capture of the original PowerShell serialization passed to the auditor."
+  },
+  "construction_tests": {
+    "passed": 11,
+    "total": 11,
+    "failed_pre_freeze_attempts": "The first rooted suite run passed 8/10; audit terminal action/loss tuple ordering and one stale test output key were corrected before freeze. Both failures are retained in CONSTRUCTION_NOTES.md; updated 11/11 suite ran against exact GitHub-readback sources before freeze."
+  },
+  "environment": {
+    "execution_mode": "Windows host-only, stdlib Python 3.11.9, no formal-run disk output",
+    "gpu": "RTX 3080 Laptop GPU present; not used because the deterministic finite decision enumeration is model-free and CUDA would not accelerate or strengthen the measurement.",
+    "container": "Not used; no available/appropriate isolated container lane and C: free space was reported as 0 bytes during run preparation."
+  },
+  "results": {
+    "xor": {
+      "myopic_total_loss": 1,
+      "bellman2_total_loss": 0.2,
+      "pair_gate_total_loss": 0.2,
+      "pair_selected": [
+        "a",
+        "b"
+      ],
+      "pair_net_value_vs_baseline": 0.8
+    },
+    "redundant": {
+      "myopic_total_loss": 0.1,
+      "bellman2_total_loss": 0.1,
+      "pair_gate_total_loss": 0.5
+    },
+    "diminishing_returns": {
+      "myopic_total_loss": 0.46,
+      "bellman2_total_loss": 0.46,
+      "pair_gate_total_loss": 0.5,
+      "fixed_total_loss": 0.54
+    },
+    "high_cost_xor": {
+      "myopic_total_loss": 1,
+      "bellman2_total_loss": 1,
+      "pair_gate_total_loss": 1,
+      "fixed_total_loss": 1.2
+    },
+    "pair_infeasible_cases": [
+      "pair-too-late",
+      "epoch-mismatch",
+      "shared-source",
+      "mandatory-gate-failed"
+    ],
+    "low_decision_value": {
+      "bits_per_check": 1,
+      "expected_loss_reduction": 0.05,
+      "cost_per_check": 0.06,
+      "myopic_total_loss": 0.05,
+      "bellman2_total_loss": 0.05,
+      "pair_gate_total_loss": 0.05,
+      "fixed_total_loss": 0.12
+    }
+  },
+  "disposition": "PASS_METHOD_SCOPED",
+  "limitations": [
+    "Synthetic authored worlds only; no live GUI/verifier receipt, model, application, task-effect oracle, latency measurement, or authority.",
+    "Finite horizon two only.",
+    "Costs/losses are stipulated.",
+    "Declared source and epoch checks test gate mechanics, not empirical dependence discovery."
+  ],
+  "source_hashes": "See FREEZE.json; source dependency closure against main is empty."
+}
