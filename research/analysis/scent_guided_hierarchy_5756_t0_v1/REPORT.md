@@ -14,6 +14,8 @@ The frozen matrix completed 25/25 fixture-policy rows. The independent raw-only 
 
 The direct-search fixture is a useful counterexample: hierarchical cue/strongest-cue exploration was costlier than the visible direct shortcut. On the deliberately ambiguous positive fixture, all four safe search policies had the same call count. These are hand-authored deterministic cases, not a sampled GUI benchmark; they neither establish a general cost advantage nor meet the adequacy bar for `H_FAIL_SCOPED`. Do not promote this method PASS to live GUI, model, task-effect, GPU, or product evidence.
 
+**Post-run baseline qualification:** source review shows the frozen `tree_search` implementation selects the oldest queued edge attached to the *currently observed node*; it is not a global breadth-first frontier and is not an Agent Alpha/MCTS reproduction. The 25-row method/safety audit remains valid, but the tree arm is not sufficient for a fair superiority claim. T1 must implement and independently validate a compute/observation-matched safety-filtered tree-search baseline, or return `HOLD_UNFAIR_SEARCH_BASELINE`; the direct-search result already argues against assuming a hierarchical advantage.
+
 ## Reproduction
 
 - Frozen source/spec: see `FREEZE.json`; base main `82a494a6666bdab92a399cf54ad31e1d42ab204d`.
