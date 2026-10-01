@@ -1,0 +1,90 @@
+name: Issue 5686 T0 surrogate-gate Docker experiment
+
+on:
+  push:
+    branches:
+      - research/surrogate-endpoint-gate-5686-t0-20261001
+    paths:
+      - research/analysis/surrogate_endpoint_gate_5686_t0_20261001/FREEZE.json
+      - research/analysis/surrogate_endpoint_gate_5686_t0_20261001/README.md
+      - research/analysis/surrogate_endpoint_gate_5686_t0_20261001/PREREGISTRATION.md
+      - research/analysis/surrogate_endpoint_gate_5686_t0_20261001/LOCAL_CI.md
+      - research/analysis/surrogate_endpoint_gate_5686_t0_20261001/candidate.py
+      - research/analysis/surrogate_endpoint_gate_5686_t0_20261001/audit.py
+      - research/analysis/surrogate_endpoint_gate_5686_t0_20261001/fixtures.json
+      - research/analysis/surrogate_endpoint_gate_5686_t0_20261001/test_gate.py
+      - research/analysis/surrogate_endpoint_gate_5686_t0_20261001/workflow_gate.py
+      - research/analysis/surrogate_endpoint_gate_5686_t0_20261001/workflow_runner.py
+      - .github/workflows/issue-5686-surrogate-gate-t0.yml
+
+permissions:
+  contents: read
+
+jobs:
+  candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Freeze, current-main, and one-shot start gate
+        run: >-
+          python3 research/analysis/surrogate_endpoint_gate_5686_t0_20261001/workflow_gate.py
+          --role candidate --output "$RUNNER_TEMP/candidate-start-gate.json"
+
+      - name: Run the frozen candidate once in a pinned Docker container
+        run: >-
+          python3 research/analysis/surrogate_endpoint_gate_5686_t0_20261001/workflow_runner.py
+          candidate --output-dir "$RUNNER_TEMP/candidate-evidence"
+
+      - name: Preserve candidate raw output, environment, and exit evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue-5686-t0-candidate-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/candidate-start-gate.json
+            ${{ runner.temp }}/candidate-evidence/**
+          if-no-files-found: warn
+          retention-days: 30
+
+  independent-audit:
+    needs: candidate
+    if: needs.candidate.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Download candidate raw artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: issue-5686-t0-candidate-${{ github.run_id }}
+          path: ${{ runner.temp }}/candidate-input
+
+      - name: Recheck frozen source and current main before audit
+        run: >-
+          python3 research/analysis/surrogate_endpoint_gate_5686_t0_20261001/workflow_gate.py
+          --role audit --output "$RUNNER_TEMP/audit-start-gate.json"
+
+      - name: Audit raw candidate output once in a separate pinned Docker container
+        run: >-
+          python3 research/analysis/surrogate_endpoint_gate_5686_t0_20261001/workflow_runner.py
+          audit --input-dir "$RUNNER_TEMP/candidate-input/candidate-evidence" --output-dir "$RUNNER_TEMP/audit-evidence"
+
+      - name: Preserve independent audit and environment evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue-5686-t0-audit-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/audit-start-gate.json
+            ${{ runner.temp }}/audit-evidence/**
+          if-no-files-found: warn
+          retention-days: 30
