@@ -46,7 +46,7 @@ rows, including the baseline failures; it is historical construction evidence,
 not an Issue #5846 result. Earlier setup/test errors and their corrections are
 retained in the predecessor Issue #5795 record rather than rewritten here.
 
-Successor local check command (rerun after the final freeze commit):
+Successor local check command (on source commit `552f4852e9a341a75a7281d908ef8712b022005d`):
 
 ```sh
 python3 -B -m unittest discover -s research/experiments/crash_atomic_suppression_5789_t0_successor_5846 -p 'test_*.py' -v
@@ -55,9 +55,15 @@ git diff --check
 python3 research/analysis/check_index.py
 ```
 
-The exact tests/commands/results for the final successor revision must be
-appended before the formal start gate. Do not represent prior host results as
-fresh success or as formal denominator rows.
+Result: 19/19 unit tests passed, `py_compile` passed, `git diff --check`
+passed, and `research/analysis/check_index.py` passed with 291 retained
+result/failure directories indexed. During construction, an early invocation
+test initially failed because its mock did not model guest `/study` path
+translation; after correcting the fixture, the full suite passed. One earlier
+analysis-index check detected an unrelated pre-existing ordering-only
+difference; the final checker passed on the rebased current main. Neither
+construction event invoked a formal candidate or auditor. Do not represent
+host rehearsal results as fresh formal evidence or denominator rows.
 
 ## Successor allocation gate
 
