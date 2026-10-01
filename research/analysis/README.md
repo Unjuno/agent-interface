@@ -262,6 +262,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`layered_lifetime_admission_r0_v1/`](layered_lifetime_admission_r0_v1/)
 - [`live_two_tier_applicability_v1/`](live_two_tier_applicability_v1/)
 - [`local_relevance_gating_preflight_2188_v1/`](local_relevance_gating_preflight_2188_v1/)
+- [`looming_yield_5905_t0_20261001_01/`](looming_yield_5905_t0_20261001_01/)
 - [`map01_matched_causal_task_effect_r4_v1/`](map01_matched_causal_task_effect_r4_v1/)
 - [`map01_matched_recovery_entry_gate_1866_r5/`](map01_matched_recovery_entry_gate_1866_r5/)
 - [`map01_task_effect_cross_record_ledger_a2_v1/`](map01_task_effect_cross_record_ledger_a2_v1/)
