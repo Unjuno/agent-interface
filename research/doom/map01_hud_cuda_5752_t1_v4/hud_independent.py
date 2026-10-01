@@ -145,4 +145,3 @@ class IndependentHudReader:
 
     def read(self, png: Path, binding: dict) -> dict:
         return {name:self.read_signal(png,binding,name) for name in ("health","ammo")}
-
