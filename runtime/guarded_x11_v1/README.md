@@ -119,6 +119,17 @@ a polling budget, not a deadline on blocking X11 transport. Managed-client/EWMH
 support is required; within-target editing focus and already-held input remain
 outside this operation. See [main-specific integration evidence](../results/guarded-activation-main-01/README.md).
 
+Public MCP optionally accepts `review_after_activation=true`. This explicitly
+composes activation with the existing window review in the same worker call,
+only after activation completes with verified neutral input release. The default
+is false. The response retains the activation result separately from review,
+returns the exact review image, and publishes the new binding revision. A failed
+or uncertain activation never triggers review. A review exception preserves the
+activation receipt and blocks editing; it never claims that no effect occurred.
+The caller must inspect the returned image before fresh grounding and editing.
+This removes a separate review request from this chosen flow; it does not prove
+lower semantic latency, human tempo or token cost and performs no automatic input.
+
 ### Deadline enforcement
 
 The existing five-second guarded lease includes admission captures, pointer

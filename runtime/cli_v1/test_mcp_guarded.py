@@ -54,6 +54,90 @@ def metadata(response):
 
 
 class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
+    async def test_requested_activation_review_returns_exact_image_without_edit(self):
+        opened=[]
+        def fixture(*args):
+            bridge=FakeBridge(*args)
+            bridge.activate_window=Mock(return_value={'status':'completed','execution':{'releases':[{'verified':True,'keys_down':[],'buttons_down':[]}]}})
+            def reviewed(window_id):
+                bridge.binding_revision+=1
+                return {'status':'reviewed','observation':bridge.capture()}
+            bridge.review_window.side_effect=reviewed
+            opened.append(bridge);return bridge
+        with tempfile.TemporaryDirectory() as td, patch('runtime.cli_v1.mcp_guarded.open_bridge',side_effect=fixture):
+            server=create_server({'app':123},td,session_mode='guarded-x11')
+            reply=await server.call_tool('interface_guarded_activate_window',dict(window_id=123,source_sequence=1,current_binding_revision=0,expires_at_ns=5000,timeout_ms=300,review_after_activation=True))
+            row=metadata(reply)
+            self.assertEqual(row['status'],'reviewed')
+            self.assertEqual(row['result']['status'],'completed')
+            self.assertEqual(row['source'],row['review']['observation'])
+            self.assertEqual(row['session']['binding_revision'],1)
+            self.assertEqual(len(reply.content),2)
+            lookup=await server.call_tool('interface_results',{'call_id':row['call_id']})
+            self.assertEqual(reply.content[1].data,lookup.content[1].data)
+            opened[0].activate_window.assert_called_once_with(window_id=123,source_sequence=1,current_binding_revision=0,expires_at_ns=5000,timeout_ms=300)
+            opened[0].review_window.assert_called_once_with(123)
+            opened[0].click.assert_not_called();opened[0].mint.assert_not_called()
+            self.assertIsNone(row['task_success']);self.assertFalse(row['replay_allowed'])
+            await server.call_tool('interface_close',{})
+
+    async def test_requested_review_never_follows_failed_or_uncertain_activation(self):
+        for result in [
+            {'status':'refused','input_dispatched':False},
+            {'status':'execution_failed'},
+            {'status':'completed','execution':{'releases':[]}},
+            {'status':'completed','execution':{'releases':[{'verified':False,'keys_down':[],'buttons_down':[]}]}},
+            {'status':'completed','execution':{'releases':[{'verified':True,'keys_down':['a'],'buttons_down':[]}]}},
+        ]:
+            with self.subTest(result=result), tempfile.TemporaryDirectory() as td:
+                opened=[]
+                def fixture(*args):
+                    bridge=FakeBridge(*args);bridge.activate_window=Mock(return_value=result)
+                    opened.append(bridge);return bridge
+                with patch('runtime.cli_v1.mcp_guarded.open_bridge',side_effect=fixture):
+                    server=create_server({'app':123},td,session_mode='guarded-x11')
+                    reply=await server.call_tool('interface_guarded_activate_window',dict(window_id=123,source_sequence=1,current_binding_revision=0,expires_at_ns=5000,timeout_ms=300,review_after_activation=True))
+                    row=metadata(reply)
+                    self.assertEqual(row['feedback_status'],'review_not_attempted')
+                    self.assertEqual(row['result'],result)
+                    opened[0].review_window.assert_not_called();opened[0].observe.assert_not_called()
+                    await server.call_tool('interface_close',{})
+
+    async def test_failed_requested_review_preserves_completed_activation(self):
+        opened=[]
+        def fixture(*args):
+            bridge=FakeBridge(*args)
+            bridge.activate_window=Mock(return_value={'status':'completed','execution':{'releases':[{'verified':True,'keys_down':[],'buttons_down':[]}]}})
+            bridge.review_window.return_value={'status':'needs_review','error':'focus changed'}
+            opened.append(bridge);return bridge
+        with tempfile.TemporaryDirectory() as td, patch('runtime.cli_v1.mcp_guarded.open_bridge',side_effect=fixture):
+            server=create_server({'app':123},td,session_mode='guarded-x11')
+            row=metadata(await server.call_tool('interface_guarded_activate_window',dict(window_id=123,source_sequence=1,current_binding_revision=0,expires_at_ns=5000,timeout_ms=300,review_after_activation=True)))
+            self.assertEqual(row['status'],'needs_review')
+            self.assertEqual(row['result']['status'],'completed')
+            self.assertNotIn('input_dispatched',row)
+            self.assertNotIn('source',row)
+            opened[0].activate_window.assert_called_once();opened[0].review_window.assert_called_once()
+            await server.call_tool('interface_close',{})
+
+    async def test_review_exception_retains_activation_without_retry_or_no_effect_claim(self):
+        opened=[]
+        def fixture(*args):
+            bridge=FakeBridge(*args)
+            bridge.activate_window=Mock(return_value={'status':'completed','execution':{'releases':[{'verified':True,'keys_down':[],'buttons_down':[]}]}})
+            bridge.review_window.side_effect=RuntimeError('review persistence failed')
+            opened.append(bridge);return bridge
+        with tempfile.TemporaryDirectory() as td, patch('runtime.cli_v1.mcp_guarded.open_bridge',side_effect=fixture):
+            server=create_server({'app':123},td,session_mode='guarded-x11')
+            row=metadata(await server.call_tool('interface_guarded_activate_window',dict(window_id=123,source_sequence=1,current_binding_revision=0,expires_at_ns=5000,timeout_ms=300,review_after_activation=True)))
+            self.assertEqual(row['status'],'needs_review')
+            self.assertEqual(row['result']['status'],'completed')
+            self.assertNotIn('input_dispatched',row)
+            self.assertIn('review persistence failed',row['review_error'])
+            opened[0].activate_window.assert_called_once();opened[0].review_window.assert_called_once()
+            self.assertTrue(opened[0].review_required)
+            await server.call_tool('interface_close',{})
+
     async def test_explicit_activation_uses_retained_worker_without_edit_or_review(self):
         opened=[]
         def fixture(*args):
