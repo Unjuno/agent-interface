@@ -39,6 +39,6 @@ not fewer model resumptions in a live product, speed, token savings or human
 performance. The previous primary six-task comparison remains efficiency HOLD.
 
 Validation uses `runtime.core_v1.test_compiled_gui` and
-`runtime.core_v1.test_compiled_archive` in the shared local/CI native runner.
+`runtime.distribution_v2.test_compiled_archive` in the shared local/CI native runner.
 The isolated archive test uses an explicit working-source snapshot without Git;
 release builds continue to pin committed HEAD through the normal builder.

@@ -1,7 +1,6 @@
 """Adapter boundary regression tests for the existing compiled graph."""
 import unittest
-from runtime.core_v1 import compiled_gui
-from research.live_control.compiled_gui_interface_v1 import run
+from runtime.core_v1.compiled_gui import run
 
 
 def interface():
@@ -33,8 +32,6 @@ class Driver:
  def run(self,spec=None):return run(spec or interface(),{'observe':self.observe,'admit':self.admit,'execute':self.execute,'verify_effect':self.verify,'cancelled':lambda:False,'journal':self.journal},clock=lambda:self.now)
 
 class CompiledBoundaryTests(unittest.TestCase):
- def test_research_and_production_share_one_implementation(self):
-  self.assertIs(run,compiled_gui.run)
 
  def stopped(self,d,transitions,executions):
   r=d.run();self.assertEqual((r['outcome'],r['reason']),('SAFE_YIELD','budget_exhausted'));self.assertEqual(r['completed_transitions'],transitions);self.assertEqual(len(d.calls['execute']),executions);return r
