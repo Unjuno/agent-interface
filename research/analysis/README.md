@@ -437,6 +437,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`typed_readout_corpus_eol_audit_4871_v1/`](typed_readout_corpus_eol_audit_4871_v1/)
 - [`typed_resolve_dependency_v1/`](typed_resolve_dependency_v1/)
 - [`typed_resumption_packet_5404_t0_v1/`](typed_resumption_packet_5404_t0_v1/)
+- [`unicode_target_binding_5993_t0_v1/`](unicode_target_binding_5993_t0_v1/)
 - [`verifier_exposure_5941_t0_20261001/`](verifier_exposure_5941_t0_20261001/)
 - [`verifier_exposure_5941_t0_v2_20261001/`](verifier_exposure_5941_t0_v2_20261001/)
 - [`verifier_metastability_5375_t0_20261001_a1/`](verifier_metastability_5375_t0_20261001_a1/)
@@ -493,3 +494,7 @@ python research/analysis/check_index.py --write  # refresh generated directory l
 ```
 
 The checker compares the generated block against every child directory with a retained `REPORT.md` or `FORMAL_FAILURE.md`. PLAN-only/in-progress directories do not enter the generated index until a retained result/failure artifact exists. The curated table above may remain selective because completeness is enforced by the generated block.
+
+## Retained construction archives
+
+- [Issue #5346 / PR #5365 T0 chronology STOP](stigmergic_coordination_5346_t0_v1/ARCHIVAL_QUALIFICATION.md) — 11 exact original files (86,873 bytes), including the host raw; pre-formal model/audit STOP and stale plan-hash field preserved, container invocations zero, no rerun or scientific promotion.
