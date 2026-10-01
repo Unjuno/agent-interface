@@ -236,6 +236,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`exogenous_opportunity_5694_t0_20261001/`](exogenous_opportunity_5694_t0_20261001/)
 - [`explanation_dependence_5916_t0_v1/`](explanation_dependence_5916_t0_v1/)
 - [`focused_observation_request_successor_1935_v1/`](focused_observation_request_successor_1935_v1/)
+- [`full_golden_ipc_2813_v1/`](full_golden_ipc_2813_v1/)
 - [`full_golden_ipc_2813_v4/`](full_golden_ipc_2813_v4/)
 - [`full_golden_ipc_2813_v5/`](full_golden_ipc_2813_v5/)
 - [`generation_bound_container_revalidation_2166_v1/`](generation_bound_container_revalidation_2166_v1/)
@@ -274,6 +275,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`layered_lifetime_admission_r0_v1/`](layered_lifetime_admission_r0_v1/)
 - [`live_two_tier_applicability_v1/`](live_two_tier_applicability_v1/)
 - [`local_relevance_gating_preflight_2188_v1/`](local_relevance_gating_preflight_2188_v1/)
+- [`local_relevance_x11_gate_4802_v1/`](local_relevance_x11_gate_4802_v1/)
+- [`local_relevance_x11_gate_4807_v1/`](local_relevance_x11_gate_4807_v1/)
 - [`locale_semantic_invariance_5919_audit_review_20261001_01/`](locale_semantic_invariance_5919_audit_review_20261001_01/)
 - [`locale_semantic_invariance_5919_t0_20261001/`](locale_semantic_invariance_5919_t0_20261001/)
 - [`looming_yield_5905_audit_recovery_s4/`](looming_yield_5905_audit_recovery_s4/)
@@ -319,6 +322,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`optimistic_concurrent_readwrite_commit_r0_v1/`](optimistic_concurrent_readwrite_commit_r0_v1/)
 - [`optimistic_readwrite_x11_retained_audit_a3_v1/`](optimistic_readwrite_x11_retained_audit_a3_v1/)
 - [`oracle_bracket_5766_t0_v1/`](oracle_bracket_5766_t0_v1/)
+- [`oracle_check_standards_5766_t0_20261001/`](oracle_check_standards_5766_t0_20261001/)
+- [`oracle_check_standards_5766_t0_v2_20261001/`](oracle_check_standards_5766_t0_v2_20261001/)
 - [`owner_keyup_invocation_race_5156_t1_20261001/`](owner_keyup_invocation_race_5156_t1_20261001/)
 - [`owner_keyup_invocation_race_5156_t2_20261001/`](owner_keyup_invocation_race_5156_t2_20261001/)
 - [`owner_keyup_serializer_5156_t0_20261001_v1/`](owner_keyup_serializer_5156_t0_20261001_v1/)
@@ -335,6 +340,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`predicate_dependency_completeness_4217_v1/`](predicate_dependency_completeness_4217_v1/)
 - [`predicate_order_audit_typehash_successor_r4_v1/`](predicate_order_audit_typehash_successor_r4_v1/)
 - [`predicate_order_audit_typehash_successor_r5_v1/`](predicate_order_audit_typehash_successor_r5_v1/)
+- [`predicate_order_drift_4258_v1/`](predicate_order_drift_4258_v1/)
 - [`predicate_order_drift_audit_integrity_4733_successor_v1/`](predicate_order_drift_audit_integrity_4733_successor_v1/)
 - [`predicate_order_drift_audit_integrity_4733_v1/`](predicate_order_drift_audit_integrity_4733_v1/)
 - [`predicate_readset_audit_revalidation_4766_v1/`](predicate_readset_audit_revalidation_4766_v1/)
@@ -377,6 +383,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`robust_recourse_5862_t0_v1/`](robust_recourse_5862_t0_v1/)
 - [`role_bound_ledger_lifetime_v1/`](role_bound_ledger_lifetime_v1/)
 - [`route_assignment_exposure_5760_t0_v1/`](route_assignment_exposure_5760_t0_v1/)
+- [`route_efficiency_multiverse_5827_t0_v1/`](route_efficiency_multiverse_5827_t0_v1/)
 - [`route_selector_5911_t0_20261001_02/`](route_selector_5911_t0_20261001_02/)
 - [`route_switching_costs_6009_t0_20261001/`](route_switching_costs_6009_t0_20261001/)
 - [`safe_probe_cost_optimal_tree_r1_v1/`](safe_probe_cost_optimal_tree_r1_v1/)
@@ -449,6 +456,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`typed_resolve_dependency_v1/`](typed_resolve_dependency_v1/)
 - [`typed_resumption_packet_5404_t0_v1/`](typed_resumption_packet_5404_t0_v1/)
 - [`unicode_target_binding_5993_t0_v1/`](unicode_target_binding_5993_t0_v1/)
+- [`unseen_failure_mode_yield_5665_t1_v2/`](unseen_failure_mode_yield_5665_t1_v2/)
 - [`verifier_exposure_5941_t0_20261001/`](verifier_exposure_5941_t0_20261001/)
 - [`verifier_exposure_5941_t0_v2_20261001/`](verifier_exposure_5941_t0_v2_20261001/)
 - [`verifier_metastability_5375_t0_20261001_a1/`](verifier_metastability_5375_t0_20261001_a1/)
@@ -456,8 +464,10 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`visual_cue_coordinate_map_successor_2043_v1/`](visual_cue_coordinate_map_successor_2043_v1/)
 - [`visual_edge_aux_570_r8_v1/`](visual_edge_aux_570_r8_v1/)
 - [`visual_encoding_570_gpu_local_successor_v1/`](visual_encoding_570_gpu_local_successor_v1/)
+- [`visual_encoding_570_ruler_pilot_v1/`](visual_encoding_570_ruler_pilot_v1/)
 - [`voi_exact_boundary_5411_dot_v1/`](voi_exact_boundary_5411_dot_v1/)
 - [`voi_option_5306_t1/`](voi_option_5306_t1/)
+- [`workflow_conformance_5716_t0_v1/`](workflow_conformance_5716_t0_v1/)
 - [`x11_adaptation_multiseed_2459_v1/`](x11_adaptation_multiseed_2459_v1/)
 - [`x11_augmentation_fail_2394_v1/`](x11_augmentation_fail_2394_v1/)
 - [`x11_composed_ood_gate_2419_v1/`](x11_composed_ood_gate_2419_v1/)
@@ -476,11 +486,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`x11_shift_gate_hold_2388_v1/`](x11_shift_gate_hold_2388_v1/)
 - [`xterm_resource_footprint_transfer_v1/`](xterm_resource_footprint_transfer_v1/)
 - [`xterm_resource_footprint_transfer_v2/`](xterm_resource_footprint_transfer_v2/)
-- [`xterm_resource_footprint_transfer_v3/`](xterm_resource_footprint_transfer_v3/)
-
-</details>
-
-<!-- END GENERATED ANALYSIS RESULT INDEX -->
+- [`xterm_resource_footprint_transfer_v3/`](xterm_resource_footprint_transfer_v3/)<!-- END GENERATED ANALYSIS RESULT INDEX -->
 
 ## Interpretation
 

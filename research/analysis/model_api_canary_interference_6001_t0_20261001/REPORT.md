@@ -22,6 +22,8 @@ docker run --rm --pull=missing --network=none \
 
 Actual run used Docker Engine 29.4.0, OrbStack, ARM64 host; candidate, auditor and tests ran as separate processes inside fresh `python:3.12-slim` container invocations with networking disabled. The first construction audit invocation found an expectation bug (`expected 3200 unique rows, got 3840`); no PASS was claimed from that invocation. Only the audit denominator was corrected to the frozen 4×4×240 design, then the complete raw file was re-audited. A second full candidate run was byte-identical (`raw.jsonl` and `raw-repeat.jsonl`, SHA-256 `b2e97431f2e11f21fbbb8a827556405e6f489648890b9e63e73423280a9c3356`).
 
+The local reconstruction of the generated analysis-index gate against this PR's Git tree found ten pre-existing retained result directories on preparation `main` that were absent from its generated list. Their index links are added alongside this result so the block matches the retained REPORT/FORMAL_FAILURE directory set; no existing artifact or scientific status was changed.
+
 ## Frozen identities
 
 - Candidate source SHA-256: `f00a75328090412d9557f81c1e5fe34696cbf66a4e8ba910faa44862320f7bec`
