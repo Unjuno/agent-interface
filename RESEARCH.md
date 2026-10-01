@@ -2,6 +2,10 @@
 
 A bounded two-worker, four-right escrow state machine was exhaustively enumerated through depth 6: 9,988 reachable states and 27,748 transitions. The independent auditor reproduced both state and transition digests (`PASS_METHOD_SCOPED`); pre-freeze Docker construction tests passed 13/13. Balanced synthetic demand completed 4/4 optional units with two setup round-trips versus four central per-use checks; skew/crash completed 2/4 with two rights stranded. Heartbeat-only reclaim permitted a planted fifth consume against B=4; old generations, duplicate/delayed ACKs, mandatory verifier bypass, and role-label laundering were rejected. This is a finite protocol-method result, not measured latency, arbitrary distributed implementation, live GUI, or product evidence. See [the report and raw candidate/audit](research/analysis/escrow_optional_budget_6156_t0_20261002/REPORT.md).
 
+### Issue #6262: WSL Podman CUDA successor reproduction (2026-10-02)
+
+The unchanged #6262 synthetic CUDA candidate ran once in a pinned, network-disabled WSL Podman container with NVIDIA CDI passthrough. It enumerated 4,096/4,096 evidence subsets on the local RTX 3080; the independent CPU auditor exactly reconstructed every semantic row, refused 1,987 naive joint false promotions and the wide claim, retained the exact qualified `t01` narrow claim, and rejected all four frozen mutations. `PASS_CONTAINER_REPRODUCTION_SCOPED`; no retries. This is an environment-reproduction result only—not a real skill, GUI, safety, GPU-speed, or Docker-parity claim. The immutable predecessor result and its original non-container execution remain untouched. See [the freeze, raw evidence, manifest, and report](research/analysis/skill_applicability_6262_wslc_t0b_v1/REPORT.md) and [PR #6289](https://github.com/Unjuno/agent-interface/pull/6289).
+
 # Research index
 
 Agent Interface is being developed by analysis and experiment rather than by locking an API early. This file is the evidence ledger for the public repository.
