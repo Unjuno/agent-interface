@@ -32,6 +32,7 @@ This is a navigation view, not a mandatory runtime pipeline. Individual studies 
 | Last-effect receipt | [`map01_last_effect_receipt_v1/`](map01_last_effect_receipt_v1/) |
 | Last-effect representation | [`map01_last_effect_representation_v1/`](map01_last_effect_representation_v1/), [`map01_last_effect_representation_v31_r2/`](map01_last_effect_representation_v31_r2/) |
 | Intent-preserving Needle distillation | [intent_distillation_3458_pilot_01/](intent_distillation_3458_pilot_01/) |
+| Intent-generation fencing | [intent_generation_fencing_3442_t0_v2/REPORT.md](intent_generation_fencing_3442_t0_v2/REPORT.md) — allocation-02 method-scoped synthetic PASS (33 rows; independent audit 4/4 mutations rejected); predecessor auditor/capture STOP preserved, no live-runtime claim. |
 | Online role-adapter update | [needle_lora_3441_online_stream_v1/](../needle_lora_3441_online_stream_v1/) — host-CPU online run; both online and batch misses the 0.90 gate; not container or runtime evidence. |
 | Online update generation fence | [`needle_adaptive_generation_fence_4840_v1/`](needle_adaptive_generation_fence_4840_v1/) — scoped 64-row envelope/oracle pass; no model training or runtime authority. |
 | Role-skill publication boundary | [needle_role_skill_publication_stage1_4986_20260928/](needle_role_skill_publication_stage1_4986_20260928/) — four-reader atomic-publication construction; no model training or skill-quality claim. |
