@@ -1,0 +1,36 @@
+{
+  "request": {
+    "op": "review",
+    "attempt": 5,
+    "phase": "later-saved",
+    "reason": "Original fresh source7 image shows SAVED for t1001071. Historical retrieved source6 remained PENDING; observation never resumed input and STOP remains. Independent events still unread; close before oracle inspection."
+  },
+  "started_ns": "31669606592692",
+  "ended_ns": "31669609517559",
+  "attempt": null,
+  "isError": null,
+  "metadata": {
+    "schema": "agent-interface/primary-review-receipt-v1",
+    "source_sequence": 7,
+    "observation_id": "1a81132d32eb47e2a39f129eb94f502d",
+    "task": "t1001071",
+    "phase": "later-saved",
+    "reason": "Original fresh source7 image shows SAVED for t1001071. Historical retrieved source6 remained PENDING; observation never resumed input and STOP remains. Independent events still unread; close before oracle inspection.",
+    "recorded_at": "2026-10-01T14:18:27.233Z",
+    "relay_id": 5,
+    "tool": "interface_guarded_observe",
+    "call_id": "03161fb69e75434d89f60f897d713d6a",
+    "reply_sha256": "d8c021ad63de50bd33e685fc81c6f5d4f943a2938c6c7a3bd0ba3b02f4bddcbb",
+    "images": [
+      {
+        "mime_type": "image/png",
+        "sha256": "228d2662ea56dd7546c9689c3b4f0e0df58e6daad47e1838038129077013539b"
+      }
+    ],
+    "evidence_scope": "caller-declared review; attribution only; not semantic success or measured model latency"
+  },
+  "image_path": null,
+  "caller_state": {
+    "stopped": "unexpected MCP refusal"
+  }
+}
