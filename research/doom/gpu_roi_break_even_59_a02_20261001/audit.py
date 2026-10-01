@@ -8,7 +8,7 @@ from pathlib import Path
 import numpy as np
 
 
-EXPECTED_SOURCE_SHA256 = "PENDING_RUNNER_SHA"
+EXPECTED_SOURCE_SHA256 = "59a977905af3c20cef5bde96ec4cd54f0084d6e98e497f88d6b5430839b46433"
 EXPECTED = {
     "allocation": "MAP01-ROI-BREAK-EVEN-59-GPU-20261001-02",
     "dimensions_wh": [(95, 50), (320, 200), (640, 400), (1280, 800)],
