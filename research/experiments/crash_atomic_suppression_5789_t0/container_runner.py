@@ -21,13 +21,24 @@ def sha256(path: Path) -> str:
 def invocation_argv(args: argparse.Namespace) -> list[str]:
     """Return the exact outer command recorded for this assigned allocation."""
     return [
-        "python3", "-B", str(Path(__file__).resolve()),
+        "python3", "-B", "/study/container_runner.py",
         "--mode", args.mode,
-        "--candidate-out", str(args.candidate_out.resolve()),
-        "--audit-out", str(args.audit_out.resolve()),
-        "--audit-raw", str(args.audit_raw.resolve()),
+        "--candidate-out", str(args.candidate_out),
+        "--audit-out", str(args.audit_out),
+        "--audit-raw", str(args.audit_raw),
         "--docker", args.docker,
     ]
+
+
+def guest_path(path: Path) -> Path:
+    """Translate this guest's mounted repo path to its host-side alias."""
+    resolved = path.resolve()
+    study = Path("/study")
+    try:
+        relative = resolved.relative_to(study)
+    except ValueError as exc:
+        raise SystemExit("STOP_PATH_OUTSIDE_ASSIGNED_GUEST_MOUNT") from exc
+    return Path(__file__).resolve().parent / relative
 
 
 def load_freeze() -> tuple[dict[str, object], str]:
@@ -120,7 +131,14 @@ def main() -> int:
     mode = args.mode
     if mode == "formal":
         frozen, _ = load_freeze()
-        if frozen.get("formal_argv") != invocation_argv(args):
+        host_args = argparse.Namespace(
+            mode=mode,
+            candidate_out=guest_path(args.candidate_out),
+            audit_out=guest_path(args.audit_out) if args.audit_out is not None else None,
+            audit_raw=guest_path(args.audit_raw) if args.audit_raw is not None else None,
+            docker=args.docker,
+        )
+        if frozen.get("formal_argv") != invocation_argv(host_args):
             raise SystemExit("STOP_FORMAL_ARGV_MISMATCH")
     if mode == "construction":
         context = os.environ.get("OBSTAC_CONSTRUCTION_CONTEXT", "")

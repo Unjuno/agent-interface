@@ -54,7 +54,8 @@ class ProcessMatrixConstructionTests(unittest.TestCase):
         self.assertEqual(argv[argv.index("--mode") + 1], "formal")
         self.assertEqual(argv[argv.index("--docker") + 1], "docker")
         self.assertEqual(argv[argv.index("--audit-out") + 1],
-                         str(args.audit_out.resolve()))
+                         "results/formal-01/audit")
+        self.assertEqual(argv[2], "/study/container_runner.py")
         self.assertEqual(container_runner.sha256(Path(container_runner.__file__)),
                          hashlib.sha256(Path(container_runner.__file__).read_bytes()).hexdigest())
 
@@ -81,10 +82,10 @@ class ProcessMatrixConstructionTests(unittest.TestCase):
                 digest = "c" * 64
                 manifest["launcher_sha256"] = container_runner.sha256(Path(container_runner.__file__))
                 manifest["formal_argv"] = [
-                    "python3", "-B", str(Path(container_runner.__file__).resolve()),
-                    "--mode", "formal", "--candidate-out", str(candidate.resolve()),
-                    "--audit-out", str(audit.resolve()), "--audit-raw",
-                    str((candidate / "raw.jsonl").resolve()), "--docker", "docker",
+                    "python3", "-B", "/study/container_runner.py",
+                    "--mode", "formal", "--candidate-out", str(candidate),
+                    "--audit-out", str(audit), "--audit-raw",
+                    str(candidate / "raw.jsonl"), "--docker", "docker",
                 ]
                 mocked_freeze.return_value = (manifest, digest)
                 env = {
@@ -100,7 +101,8 @@ class ProcessMatrixConstructionTests(unittest.TestCase):
                 def create_raw(*args, **kwargs):
                     (candidate / "raw.jsonl").write_text("{}\n")
                     return 0
-                with mock.patch.object(container_runner, "run_candidate", side_effect=create_raw), \
+                with mock.patch.object(container_runner, "guest_path", side_effect=lambda path: path), \
+                     mock.patch.object(container_runner, "run_candidate", side_effect=create_raw), \
                      mock.patch.dict(os.environ, env, clear=False), \
                      mock.patch.object(sys, "argv", [
                          "container_runner.py", "--mode", "formal",
