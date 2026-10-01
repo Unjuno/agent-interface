@@ -1,15 +1,49 @@
 /** Persistent host adapter to the existing sequential relay. No action selection or replay. */
 import { spawn } from 'node:child_process';
 import { createInterface } from 'node:readline';
-import { mkdir, writeFile, appendFile } from 'node:fs/promises';
-import { join } from 'node:path';
+import { mkdir, writeFile, appendFile, statfs } from 'node:fs/promises';
+import { join, dirname } from 'node:path';
 
-export async function createRelayClient({ command, args, evidenceDirectory }) {
+export async function createRelayClient({ command, args, evidenceDirectory,
+    minimumEvidenceFreeBytes = 32 * 1024 * 1024 }) {
   if (typeof command !== 'string' || !command || !Array.isArray(args) ||
       args.some(arg => typeof arg !== 'string') || typeof evidenceDirectory !== 'string') {
     throw new TypeError('explicit command, argument array and fresh evidence directory required');
   }
+  if (!Number.isSafeInteger(minimumEvidenceFreeBytes) || minimumEvidenceFreeBytes <= 0) {
+    throw new TypeError('minimumEvidenceFreeBytes must be a positive safe integer');
+  }
+  async function capacity(path) {
+    let fs;
+    try { fs = await statfs(path, { bigint: true }); }
+    catch (cause) {
+      throw Object.assign(new Error('cannot inspect evidence capacity before relay startup', { cause }),
+        { code: 'EVIDENCE_CAPACITY_UNKNOWN', observedPath: path });
+    }
+    if (fs.bsize <= 0n || fs.bavail < 0n) {
+      throw Object.assign(new Error('invalid evidence capacity before relay startup'),
+        { code: 'EVIDENCE_CAPACITY_UNKNOWN', observedPath: path });
+    }
+    const available = fs.bsize * fs.bavail;
+    if (available < BigInt(minimumEvidenceFreeBytes)) {
+      throw Object.assign(new Error(`insufficient evidence capacity before relay startup: ${available} bytes available, ${minimumEvidenceFreeBytes} required`),
+        { code: 'EVIDENCE_CAPACITY', observedPath: path, availableBytes: available.toString(),
+          minimumEvidenceFreeBytes });
+    }
+    return available;
+  }
+  // Check the existing parent before allocating on a known-full filesystem.
+  await capacity(dirname(evidenceDirectory));
   await mkdir(evidenceDirectory); // Never overwrite an earlier session.
+  // Inspect the actual new directory and retain a write before spawning a child.
+  const available = await capacity(evidenceDirectory);
+  await writeFile(join(evidenceDirectory, 'storage-preflight.json'), JSON.stringify({
+    schema: 'agent-interface/evidence-storage-preflight-v1', observed_path: evidenceDirectory,
+    observed_at: new Date().toISOString(), available_bytes: available.toString(),
+    minimum_free_bytes: minimumEvidenceFreeBytes, child_started: false,
+    capacity_reserved: false, future_writes_guaranteed: false,
+    scope: 'Filesystem-reported availability at startup only; not physical backing capacity, quota, reservation, crash durability or subsequent-write proof.',
+  }, null, 2) + '\n', { flag: 'wx' });
   let nextId = 1, current = null, blocked = null, terminal = null, closing = false;
   let journal = Promise.resolve();
   const record = (name, value) => writeFile(join(evidenceDirectory, name),
