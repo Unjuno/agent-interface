@@ -9,4 +9,4 @@ Formal candidate/auditor runs: **0**. This records pre-formal test construction 
 
 The correction changed only the assertion/reporting distinction between `cover_count=4` and `minimum_tie_count=1`. The formal H/T/D/C/U and cost threshold were not changed. Attempt 01 is retained, not relabeled as a scientific failure or silently erased.
 
-Source and fixture identities are in [FREEZE.json](FREEZE.json). The one-shot formal window is 2026-10-01T18:45:00Z–2026-10-01T19:00:00Z; no formal work occurs outside a fresh start-gate check.
+Source and fixture identities are in [FREEZE.json](FREEZE.json). The one-shot formal window is 2026-10-01T18:37:00Z–2026-10-01T18:52:00Z; no formal work occurs outside a fresh start-gate check.
