@@ -42,4 +42,3 @@ summary={}
 for r in raw['rows']:
     summary.setdefault(r['case_id'],{})[r['policy']]={'overshoot':r['overshoot'],'final_error':r['final_error'],'duplicates':r['duplicate_effects'],'unknown':r['unknown'],'old_generation_cancelled':r['cancelled_old_generation'],'cancel_latency':r['cancel_latency']}
 print(json.dumps({'audit':'PASS_EVENT_ORACLE_SCOPED','rows':len(seen),'errors':0,'summary':summary},sort_keys=True,separators=(',',':')))
-
