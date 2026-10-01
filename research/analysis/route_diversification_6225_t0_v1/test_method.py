@@ -79,7 +79,7 @@ class RouteDiversificationMethodTests(unittest.TestCase):
         raw = {"allocation": self.fixture["allocation"], "fixture_sha256": hashlib.sha256((HERE / "fixture.json").read_bytes()).hexdigest(), "rows": rows}
         expected = [audit.oracle(case, policy) for case in self.fixture["cases"] for policy in audit.POLICIES]
         controls = audit.corruptions(raw, expected, self.fixture)
-        self.assertEqual(9, len(controls))
+        self.assertEqual(10, len(controls))
         self.assertTrue(all(controls.values()), controls)
 
 

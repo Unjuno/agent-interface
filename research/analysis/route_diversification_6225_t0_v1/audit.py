@@ -81,6 +81,10 @@ def corruptions(raw: dict, expected: list[dict], fixture: dict) -> dict:
     tests["silent_queue_reset_rejected"] = reset_carryover["rows"] != expected
     denom = json.loads(json.dumps(raw)); denom["rows"][0]["offered_tasks"] -= 1
     tests["offered_denominator_loss_rejected"] = denom["rows"] != expected
+    drop_obligation = json.loads(json.dumps(raw))
+    hidden_baseline = next(row for row in drop_obligation["rows"] if row["case"] == "hidden_a_specific_shock" and row["policy"] == "best_mean_reactive")
+    hidden_baseline["unresolved_obligations"] = 0
+    tests["unresolved_a_obligation_drop_rejected"] = drop_obligation["rows"] != expected
     wrong_fixture = json.loads(json.dumps(raw)); wrong_fixture["fixture_sha256"] = "0" * 64
     tests["fixture_hash_mutation_rejected"] = wrong_fixture["fixture_sha256"] != hashlib.sha256(json.dumps(fixture, sort_keys=True, indent=2).encode()).hexdigest()
     return tests
