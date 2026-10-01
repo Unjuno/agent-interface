@@ -37,3 +37,21 @@ See [PLAN.md](PLAN.md), [candidate.py](candidate.py),
 [audit](audit.json). The six-case result is construction evidence only; its
 protocol was documented after the first candidate invocation and is explicitly
 not preregistered.
+
+## Frozen container reproduction T1
+
+A distinct owner-bound CPU OrbStack run used the previously hash-frozen
+candidate once and the independent auditor once in separate containers. Both
+exited 0; the six candidate rows and `PASS_METHOD_SCOPED` audit were byte-for-
+byte equal to the T0 host artifacts. Container inspect records confirm the
+pinned Linux/arm64 image, no network, read-only root/source, one writable output
+mount, and the frozen CPU/memory/process limits. Current main had advanced at
+start, but the exact v39 controller, report, and retention-manifest hashes
+still matched the frozen identities. Full command, timestamps, CIDs, inspect
+records, and output hashes are in [T1 run record](results/container-t1/RUN.md)
+and [T1 SHA manifest](results/container-t1/SHA256SUMS).
+
+T1 establishes reproducibility of these six deterministic contract cases in
+one isolated container environment. It does not upgrade T0's protocol status,
+and it does not establish live threat-policy suitability or any MAP01/runtime
+outcome.

@@ -51,6 +51,8 @@ python3 auditor.py
 python3 -m py_compile candidate.py auditor.py
 ```
 
-No container, model, network, GUI, game, or OS input was used. A formal
-container/live follow-up requires its own exact owner-bound grant and a new
-frozen allocation; this T0 result cannot be upgraded retroactively.
+No container, model, network, GUI, game, or OS input was used for T0. The
+separate frozen T1 container reproduction is recorded under
+`results/container-t1/`; it reproduces this finite result but does not make T0
+preregistered or upgrade it into live evidence. Any live follow-up requires a
+separate exact owner-bound allocation.
