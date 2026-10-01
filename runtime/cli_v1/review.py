@@ -194,6 +194,34 @@ def _review(data, view, run_directory, *, compact=False, report_refs=False, incl
                 # Preserve the list index; no synthetic exchange sequence.
                 native = observations[-1]
                 native_reference = {'execution_observation_index': len(observations) - 1}
+        if schema == 'agent-interface/runtime-dispatch-result-v1':
+            # Input result is unchanged. Select an explicitly requested later
+            # capture only after successful released input and target recheck.
+            post = report.get('post_dispatch_inspection', {})
+            later = post.get('observation_report', {}) if isinstance(post, dict) else {}
+            later_native = later.get('observation') if isinstance(later, dict) else None
+            releases = execution.get('releases', [])
+            ready = (dispatch.get('status') == 'completed'
+                     and dispatch.get('recovery_required') is False
+                     and bool(releases) and all(isinstance(r, dict)
+                         and r.get('verified') is True and r.get('keys_down') == []
+                         and r.get('buttons_down') == [] and 'error' not in r
+                         for r in releases)
+                     and post.get('status') == 'needs_review' and post.get('error') is None
+                     and post.get('input_dispatched') is False
+                     and post.get('authority_granted') is False
+                     and post.get('review_request', {}).get('tool') == 'interface_review_target'
+                     and later.get('status') == 'returned' and later.get('error') is None
+                     and later.get('input_dispatched') is False
+                     and later.get('side_effect_authority') is False)
+            if ready and isinstance(later_native, dict):
+                stamps = [execution.get('ended_ns')] + [r.get('monotonic_ns') for r in releases]
+                captured = later_native.get('capture_started_ns')
+                if (type(captured) is int and all(type(t) is int for t in stamps)
+                        and captured >= max(stamps)):
+                    native = later_native
+                    native_reference = {'post_dispatch_observation_id': later.get('observation_id'),
+                                        'capture_phase': 'after_dispatch_release'}
         if schema in ('agent-interface/runtime-observation-v1', 'agent-interface/runtime-dispatch-result-v1'):
             if native is None:
                 result['image_status'] = 'no_observation'

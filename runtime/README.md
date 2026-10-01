@@ -98,3 +98,10 @@ same packaged public entry, with verified input release and explicit changed-lay
 recovery. The final direct image still lacked its completion cue despite independent
 success. This supports scoped correctness, not overall acceptance, causal speed/token
 benefit or human-tempo operation; earlier interrupted/caller-failed trials are retained.
+
+[Production-candidate post-release comparison](results/production-spine-main-01/README.md)
+records a new primary-operated six-task pair with exact-once effects on both routes,
+changed-state refusals and explicit recovery. The direct route returned all six saved
+cues through optional post-release capture. Extra observations, preview failures and
+the prior input-free STOP remain recorded. Provider model/settings, useful feedback,
+semantic latency, tokens/cost and human-tempo benefit remain unverified.
