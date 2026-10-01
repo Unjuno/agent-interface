@@ -1,0 +1,722 @@
+{
+  "schema": "5862-belief-robust-recourse-v1",
+  "horizon": 3,
+  "cases": [
+    {
+      "id": "no_match_target_elsewhere",
+      "belief": [
+        "elsewhere"
+      ],
+      "selected_policy": "reacquire_then_act",
+      "policies": {
+        "generic_retry": {
+          "action": "retry",
+          "branches": {}
+        },
+        "reacquire_then_act": {
+          "action": "reacquire_map",
+          "branches": {
+            "target_found": {
+              "action": "act_target",
+              "branches": {
+                "effect_verified": {
+                  "terminal": "TASK_SUCCESS"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "target_genuinely_absent",
+      "belief": [
+        "absent"
+      ],
+      "selected_policy": "none",
+      "policies": {
+        "generic_retry": {
+          "action": "retry",
+          "branches": {}
+        },
+        "generic_reobserve": {
+          "action": "reobserve",
+          "branches": {}
+        }
+      }
+    },
+    {
+      "id": "stale_evidence_reacquirable",
+      "belief": [
+        "stale"
+      ],
+      "selected_policy": "refresh_then_act",
+      "policies": {
+        "diagnosis_only": {
+          "action": "reobserve",
+          "branches": {
+            "fresh": {
+              "action": "act_target",
+              "branches": {
+                "effect_verified": {
+                  "terminal": "TASK_SUCCESS"
+                }
+              }
+            }
+          }
+        },
+        "refresh_then_act": {
+          "action": "reacquire_schema",
+          "branches": {
+            "schema_fresh": {
+              "action": "act_target",
+              "branches": {
+                "effect_verified": {
+                  "terminal": "TASK_SUCCESS"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "revoked_authority",
+      "belief": [
+        "revoked"
+      ],
+      "selected_policy": "request_authority_or_handoff",
+      "new_authority_required": true,
+      "policies": {
+        "request_authority_or_handoff": {
+          "action": "request_human_authority",
+          "branches": {
+            "approved": {
+              "action": "act_after_approval",
+              "branches": {
+                "effect_verified": {
+                  "terminal": "TASK_SUCCESS"
+                }
+              }
+            },
+            "denied": {
+              "terminal": "SAFE_HANDOFF"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "uncertain_delivery_same_blocked_receipt",
+      "belief": [
+        "delivery_uncommitted",
+        "delivery_committed"
+      ],
+      "selected_policy": "inspect_then_branch",
+      "policies": {
+        "generic_retry": {
+          "action": "retry",
+          "branches": {
+            "effect_verified": {
+              "terminal": "TASK_SUCCESS"
+            }
+          }
+        },
+        "diagnosis_only": {
+          "action": "retry_if_uncommitted",
+          "branches": {
+            "effect_verified": {
+              "terminal": "TASK_SUCCESS"
+            }
+          }
+        },
+        "inspect_then_branch": {
+          "action": "inspect_delivery_receipt",
+          "branches": {
+            "not_committed": {
+              "action": "retry",
+              "branches": {
+                "effect_verified": {
+                  "terminal": "TASK_SUCCESS"
+                }
+              }
+            },
+            "already_committed": {
+              "action": "reconcile_receipt",
+              "branches": {
+                "receipt_reconciled": {
+                  "terminal": "TASK_SUCCESS"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "irreversible_partial_effect",
+      "belief": [
+        "partial_uncommitted",
+        "partial_committed"
+      ],
+      "selected_policy": "inspect_then_reconcile",
+      "policies": {
+        "generic_retry": {
+          "action": "retry_partial_effect",
+          "branches": {
+            "effect_verified": {
+              "terminal": "TASK_SUCCESS"
+            }
+          }
+        },
+        "inspect_then_reconcile": {
+          "action": "inspect_effect_ledger",
+          "branches": {
+            "not_committed": {
+              "action": "apply_remaining_effect",
+              "branches": {
+                "effect_verified": {
+                  "terminal": "TASK_SUCCESS"
+                }
+              }
+            },
+            "committed": {
+              "action": "reconcile_partial",
+              "branches": {
+                "prefix_reconciled": {
+                  "terminal": "TASK_SUCCESS"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "viable_manual_takeover",
+      "belief": [
+        "takeover_available"
+      ],
+      "selected_policy": "handoff_to_human",
+      "conditional_actor": true,
+      "policies": {
+        "handoff_to_human": {
+          "action": "offer_manual_takeover",
+          "branches": {
+            "accepted": {
+              "terminal": "SAFE_HANDOFF"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "states": {
+    "elsewhere": {
+      "authority_generation": 4,
+      "budget": 3,
+      "committed_effects": [],
+      "authorized_actors": [
+        "local"
+      ],
+      "actions": {
+        "reacquire_map": {
+          "actor": "local",
+          "generation": 4,
+          "cost": 1,
+          "preconditions": true,
+          "safe": true,
+          "replays": [],
+          "outcomes": [
+            {
+              "observation": "target_found",
+              "next": "elsewhere_found"
+            }
+          ]
+        }
+      }
+    },
+    "elsewhere_found": {
+      "authority_generation": 4,
+      "budget": 2,
+      "committed_effects": [],
+      "authorized_actors": [
+        "local"
+      ],
+      "actions": {
+        "act_target": {
+          "actor": "local",
+          "generation": 4,
+          "cost": 1,
+          "preconditions": true,
+          "safe": true,
+          "replays": [],
+          "outcomes": [
+            {
+              "observation": "effect_verified",
+              "next": "TASK_SUCCESS"
+            }
+          ]
+        }
+      }
+    },
+    "absent": {
+      "authority_generation": 4,
+      "budget": 3,
+      "committed_effects": [],
+      "authorized_actors": [
+        "local"
+      ],
+      "actions": {}
+    },
+    "stale": {
+      "authority_generation": 9,
+      "budget": 3,
+      "committed_effects": [],
+      "authorized_actors": [
+        "local"
+      ],
+      "actions": {
+        "reacquire_schema": {
+          "actor": "local",
+          "generation": 9,
+          "cost": 1,
+          "preconditions": true,
+          "safe": true,
+          "replays": [],
+          "outcomes": [
+            {
+              "observation": "schema_fresh",
+              "next": "stale_fresh"
+            }
+          ]
+        },
+        "reobserve": {
+          "actor": "local",
+          "generation": 9,
+          "cost": 1,
+          "preconditions": true,
+          "safe": true,
+          "replays": [],
+          "outcomes": [
+            {
+              "observation": "still_stale",
+              "next": "stale"
+            }
+          ]
+        }
+      }
+    },
+    "stale_fresh": {
+      "authority_generation": 9,
+      "budget": 2,
+      "committed_effects": [],
+      "authorized_actors": [
+        "local"
+      ],
+      "actions": {
+        "act_target": {
+          "actor": "local",
+          "generation": 9,
+          "cost": 1,
+          "preconditions": true,
+          "safe": true,
+          "replays": [],
+          "outcomes": [
+            {
+              "observation": "effect_verified",
+              "next": "TASK_SUCCESS"
+            }
+          ]
+        }
+      }
+    },
+    "revoked": {
+      "authority_generation": 10,
+      "budget": 3,
+      "committed_effects": [],
+      "authorized_actors": [
+        "human"
+      ],
+      "actions": {
+        "request_human_authority": {
+          "actor": "human",
+          "generation": 10,
+          "cost": 1,
+          "preconditions": true,
+          "safe": true,
+          "replays": [],
+          "outcomes": [
+            {
+              "observation": "approved",
+              "next": "approved"
+            },
+            {
+              "observation": "denied",
+              "next": "SAFE_HANDOFF"
+            }
+          ]
+        }
+      }
+    },
+    "approved": {
+      "authority_generation": 11,
+      "budget": 2,
+      "committed_effects": [],
+      "authorized_actors": [
+        "human"
+      ],
+      "actions": {
+        "act_after_approval": {
+          "actor": "human",
+          "generation": 11,
+          "cost": 1,
+          "preconditions": true,
+          "safe": true,
+          "replays": [],
+          "outcomes": [
+            {
+              "observation": "effect_verified",
+              "next": "TASK_SUCCESS"
+            }
+          ]
+        }
+      }
+    },
+    "delivery_uncommitted": {
+      "authority_generation": 12,
+      "budget": 3,
+      "committed_effects": [],
+      "authorized_actors": [
+        "local"
+      ],
+      "actions": {
+        "retry": {
+          "actor": "local",
+          "generation": 12,
+          "cost": 1,
+          "preconditions": true,
+          "safe": true,
+          "replays": [],
+          "outcomes": [
+            {
+              "observation": "effect_verified",
+              "next": "TASK_SUCCESS"
+            }
+          ]
+        },
+        "retry_if_uncommitted": {
+          "actor": "local",
+          "generation": 12,
+          "cost": 1,
+          "preconditions": false,
+          "safe": false,
+          "replays": [],
+          "outcomes": [
+            {
+              "observation": "effect_verified",
+              "next": "TASK_SUCCESS"
+            }
+          ]
+        },
+        "inspect_delivery_receipt": {
+          "actor": "local",
+          "generation": 12,
+          "cost": 1,
+          "preconditions": true,
+          "safe": true,
+          "replays": [],
+          "outcomes": [
+            {
+              "observation": "not_committed",
+              "next": "delivery_uncommitted_confirmed"
+            }
+          ]
+        }
+      },
+      "stop_receipt": {
+        "status": "BLOCKED",
+        "taskId": "task-41",
+        "completedPrefix": "prefix-17",
+        "authorityGeneration": 12
+      }
+    },
+    "delivery_committed": {
+      "authority_generation": 12,
+      "budget": 3,
+      "committed_effects": [
+        "irreversible:submit-17"
+      ],
+      "authorized_actors": [
+        "local"
+      ],
+      "actions": {
+        "retry": {
+          "actor": "local",
+          "generation": 12,
+          "cost": 1,
+          "preconditions": true,
+          "safe": false,
+          "replays": [
+            "irreversible:submit-17"
+          ],
+          "outcomes": [
+            {
+              "observation": "duplicate",
+              "next": "UNSAFE"
+            }
+          ]
+        },
+        "retry_if_uncommitted": {
+          "actor": "local",
+          "generation": 12,
+          "cost": 1,
+          "preconditions": true,
+          "safe": false,
+          "replays": [
+            "irreversible:submit-17"
+          ],
+          "outcomes": [
+            {
+              "observation": "duplicate",
+              "next": "UNSAFE"
+            }
+          ]
+        },
+        "inspect_delivery_receipt": {
+          "actor": "local",
+          "generation": 12,
+          "cost": 1,
+          "preconditions": true,
+          "safe": true,
+          "replays": [],
+          "outcomes": [
+            {
+              "observation": "already_committed",
+              "next": "delivery_committed_confirmed"
+            }
+          ]
+        }
+      },
+      "stop_receipt": {
+        "status": "BLOCKED",
+        "taskId": "task-41",
+        "completedPrefix": "prefix-17",
+        "authorityGeneration": 12
+      }
+    },
+    "delivery_uncommitted_confirmed": {
+      "authority_generation": 12,
+      "budget": 2,
+      "committed_effects": [],
+      "authorized_actors": [
+        "local"
+      ],
+      "actions": {
+        "retry": {
+          "actor": "local",
+          "generation": 12,
+          "cost": 1,
+          "preconditions": true,
+          "safe": true,
+          "replays": [],
+          "outcomes": [
+            {
+              "observation": "effect_verified",
+              "next": "TASK_SUCCESS"
+            }
+          ]
+        }
+      }
+    },
+    "delivery_committed_confirmed": {
+      "authority_generation": 12,
+      "budget": 2,
+      "committed_effects": [
+        "irreversible:submit-17"
+      ],
+      "authorized_actors": [
+        "local"
+      ],
+      "actions": {
+        "reconcile_receipt": {
+          "actor": "local",
+          "generation": 12,
+          "cost": 1,
+          "preconditions": true,
+          "safe": true,
+          "replays": [],
+          "outcomes": [
+            {
+              "observation": "receipt_reconciled",
+              "next": "TASK_SUCCESS"
+            }
+          ]
+        }
+      }
+    },
+    "partial_uncommitted": {
+      "authority_generation": 13,
+      "budget": 3,
+      "committed_effects": [
+        "prefix:prepare-21"
+      ],
+      "authorized_actors": [
+        "local"
+      ],
+      "actions": {
+        "retry_partial_effect": {
+          "actor": "local",
+          "generation": 13,
+          "cost": 1,
+          "preconditions": true,
+          "safe": true,
+          "replays": [
+            "prefix:prepare-21"
+          ],
+          "outcomes": [
+            {
+              "observation": "effect_verified",
+              "next": "UNSAFE"
+            }
+          ]
+        },
+        "inspect_effect_ledger": {
+          "actor": "local",
+          "generation": 13,
+          "cost": 1,
+          "preconditions": true,
+          "safe": true,
+          "replays": [],
+          "outcomes": [
+            {
+              "observation": "not_committed",
+              "next": "partial_uncommitted_confirmed"
+            }
+          ]
+        }
+      }
+    },
+    "partial_committed": {
+      "authority_generation": 13,
+      "budget": 3,
+      "committed_effects": [
+        "prefix:prepare-21",
+        "irreversible:commit-21"
+      ],
+      "authorized_actors": [
+        "local"
+      ],
+      "actions": {
+        "retry_partial_effect": {
+          "actor": "local",
+          "generation": 13,
+          "cost": 1,
+          "preconditions": true,
+          "safe": false,
+          "replays": [
+            "irreversible:commit-21"
+          ],
+          "outcomes": [
+            {
+              "observation": "duplicate",
+              "next": "UNSAFE"
+            }
+          ]
+        },
+        "inspect_effect_ledger": {
+          "actor": "local",
+          "generation": 13,
+          "cost": 1,
+          "preconditions": true,
+          "safe": true,
+          "replays": [],
+          "outcomes": [
+            {
+              "observation": "committed",
+              "next": "partial_committed_confirmed"
+            }
+          ]
+        }
+      }
+    },
+    "partial_uncommitted_confirmed": {
+      "authority_generation": 13,
+      "budget": 2,
+      "committed_effects": [
+        "prefix:prepare-21"
+      ],
+      "authorized_actors": [
+        "local"
+      ],
+      "actions": {
+        "apply_remaining_effect": {
+          "actor": "local",
+          "generation": 13,
+          "cost": 1,
+          "preconditions": true,
+          "safe": true,
+          "replays": [],
+          "outcomes": [
+            {
+              "observation": "effect_verified",
+              "next": "TASK_SUCCESS"
+            }
+          ]
+        }
+      }
+    },
+    "partial_committed_confirmed": {
+      "authority_generation": 13,
+      "budget": 2,
+      "committed_effects": [
+        "prefix:prepare-21",
+        "irreversible:commit-21"
+      ],
+      "authorized_actors": [
+        "local"
+      ],
+      "actions": {
+        "reconcile_partial": {
+          "actor": "local",
+          "generation": 13,
+          "cost": 1,
+          "preconditions": true,
+          "safe": true,
+          "replays": [],
+          "outcomes": [
+            {
+              "observation": "prefix_reconciled",
+              "next": "TASK_SUCCESS"
+            }
+          ]
+        }
+      }
+    },
+    "takeover_available": {
+      "authority_generation": 14,
+      "budget": 2,
+      "committed_effects": [],
+      "authorized_actors": [
+        "human"
+      ],
+      "actions": {
+        "offer_manual_takeover": {
+          "actor": "human",
+          "generation": 14,
+          "cost": 1,
+          "preconditions": true,
+          "safe": true,
+          "replays": [],
+          "outcomes": [
+            {
+              "observation": "accepted",
+              "next": "SAFE_HANDOFF"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "transition_enumeration_complete": true
+}
