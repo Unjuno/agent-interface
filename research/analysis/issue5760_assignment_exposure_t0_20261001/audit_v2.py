@@ -93,6 +93,9 @@ def main():
     for name, wanted in freeze["input_sha256"].items():
         if sha(root / name) != wanted:
             errors.append(name + "_sha256_mismatch")
+    for name, wanted in freeze["source_sha256"].items():
+        if sha(root / name) != wanted:
+            errors.append(name + "_source_sha256_mismatch")
     if freeze.get("candidate_oracle_invocations_v2") != 0:
         errors.append("v2_candidate_oracle_rerun_declared")
     if audit_v1.get("decision") != "FAIL_T0_CONTRACT" or audit_v1.get("errors") != [
@@ -160,3 +163,4 @@ def main():
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
