@@ -25,4 +25,3 @@ Status: frozen before formal execution.
 - Formal: one container invocation, `python -B simulator.py`; retain stdout exactly.
 - Audit: only after formal exit 0, one separate invocation, `python -B audit.py <raw-file>`.
 - No retry, tuning, image pull, GPU, runtime integration, or external side effect.
-
