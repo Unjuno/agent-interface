@@ -1,7 +1,7 @@
 # Issue #5895 — strict runner-completion semantics T0
 
 Allocation: `AUDIT-COMPLETION-5895-T0-ISOLATED-ORB-20261001-01`
-Frozen main at preparation: `cdfebdb125e0566d2cbe741c4925b94eb17b439b`
+Frozen main at formal start: `4b7fe7837e4ee8c0d035ebfbf52baf014f042295`
 Frozen target: open PR #5630 head `288d0498d11cf16657e523a04616bf4f49cd94f4`; frozen copies were independently hash-checked against the preparation in PR #5899.
 Execution: one isolated OrbStack Ubuntu amd64 guest; Docker Engine inside guest; one fresh candidate and (only on candidate exit 0) one independent audit container; both network disabled.
 
