@@ -1,0 +1,43 @@
+{
+  "current_generation": 7,
+  "independence_depth": 1,
+  "required_domains": 2,
+  "cases": [
+    {
+      "case_id": "same_rack_same_site_distinct_hosts",
+      "witnesses": [
+        {"observer": "worker-a", "domain_path": ["site-a", "rack-7", "host-a"], "generation": 7, "kind": "independent_crash_witness"},
+        {"observer": "worker-b", "domain_path": ["site-a", "rack-7", "host-b"], "generation": 7, "kind": "independent_crash_witness"}
+      ]
+    },
+    {
+      "case_id": "different_racks_same_site",
+      "witnesses": [
+        {"observer": "worker-a", "domain_path": ["site-a", "rack-7", "host-a"], "generation": 7, "kind": "independent_crash_witness"},
+        {"observer": "worker-c", "domain_path": ["site-a", "rack-8", "host-c"], "generation": 7, "kind": "independent_crash_witness"}
+      ]
+    },
+    {
+      "case_id": "different_sites",
+      "witnesses": [
+        {"observer": "worker-a", "domain_path": ["site-a", "rack-7", "host-a"], "generation": 7, "kind": "independent_crash_witness"},
+        {"observer": "worker-c", "domain_path": ["site-b", "rack-8", "host-c"], "generation": 7, "kind": "independent_crash_witness"}
+      ]
+    },
+    {
+      "case_id": "stale_generation_second_site",
+      "witnesses": [
+        {"observer": "worker-a", "domain_path": ["site-a", "rack-7", "host-a"], "generation": 7, "kind": "independent_crash_witness"},
+        {"observer": "worker-c", "domain_path": ["site-b", "rack-8", "host-c"], "generation": 6, "kind": "independent_crash_witness"}
+      ]
+    },
+    {
+      "case_id": "one_observer_two_site_claims",
+      "witnesses": [
+        {"observer": "worker-a", "domain_path": ["site-a", "rack-7", "host-a"], "generation": 7, "kind": "independent_crash_witness"},
+        {"observer": "worker-a", "domain_path": ["site-b", "rack-8", "host-a"], "generation": 7, "kind": "independent_crash_witness"},
+        {"observer": "worker-c", "domain_path": ["site-a", "rack-9", "host-c"], "generation": 7, "kind": "independent_crash_witness"}
+      ]
+    }
+  ]
+}

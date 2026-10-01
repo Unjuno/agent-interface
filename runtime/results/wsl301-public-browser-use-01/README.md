@@ -1,0 +1,13 @@
+# Fresh primary browser use on WSL 3.0.1
+
+One fresh primary self-use task, seed 1001026, current committed source a2469a821f4d27d2ec9a1d5d63ed8b81e57f81c3. Windows Node host -> WSL packaged relay -> public MCP persistent-x11. The plan explicitly requested task index 0 only. The fixture's six-task aggregate remains false because tasks 2..6 were not requested; its original evaluation is preserved.
+
+The primary viewed all four returned images: about:blank, task/1 with an empty Value field, exact t1001026-1, then AI INTEGRATED SAVED at /submit/1. Independent submission history records exactly one correct task-1 save. Three dispatches completed with neutral verified releases. No automatic input replay, recovery or extra observation occurred. Explicit interface_close succeeded, transport exited 0, and the original fixture process exited 0. Child exits were [0,1,1], recorded as such rather than uniformly successful cleanup.
+
+Host send to image callback: navigation 517.665ms, input 314.343ms, save 215.321ms. These include explicit fixed waits 400/200/100ms. Callback-to-primary-review annotations were 11.761/15.627/17.349 seconds, including primary/tool work; they are not isolated inference or proof of exact perception time. Initial observe 1658.918ms includes cold host startup. No before/after WSL comparison, matched baseline, actual model token/cost measurement, broad reliability or human-tempo claim.
+
+The result changes the next integration priority: public tool response is already subsecond on these three actions; the much longer primary decision/caller intervals require attention before claiming human-tempo interaction. No default delay change, sensor, local substitute model or autonomous queue is justified by this single task. Existing explicit batching, cropped observations and compact receipts should be evaluated with matched actual-primary costs. The trace is self-use evidence, not a formal replay of earlier six-task allocations.
+
+Integration intake readback in this turn: #4321 lacks exact result delivery; #4148 and #4348 retain publication/source STOPs; #4083 lacks the complete capsule; #2769 has incomplete raw/control coverage; #5236 has an active successor owner. No missing bytes were synthesized and no frozen allocations were rerun. No production adoption follows from summary-only PASS comments.
+
+Use metrics.json for exact row-level measurements. measure.py reconstructs accounting from retained requests, replies, host events, reports, submission history and process receipts. This is data accounting, not a new GUI execution or independent visual judgement.

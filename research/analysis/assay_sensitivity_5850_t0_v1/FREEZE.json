@@ -1,0 +1,25 @@
+{
+  "schema": "5850-assay-sensitivity-t0-v1",
+  "issue": 5850,
+  "allocation": "5850-ASSAY-SENSITIVITY-T0-20261001-01",
+  "branch": "research/assay-sensitivity-5850-t0-20261001",
+  "publicationBaseMain": "023d511997b6f59ea2ff2fbf29bde51e74956c92",
+  "sourcePath": "research/analysis/assay_sensitivity_5850_t0_v1",
+  "formalCandidateContainerInvocations": 1,
+  "formalAuditorContainerInvocations": 1,
+  "image": "python:3.12.14-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "platform": "linux/amd64",
+  "network": "none",
+  "readOnlyRoot": true,
+  "pidsLimit": 32,
+  "memoryMiB": 128,
+  "cpus": 1,
+  "expectedCases": 8,
+  "mutationControls": 8,
+  "sourceSha256": {
+    "candidate.py": "df415b659f20f071168c3b73a778b597282b5fd1aee93914fc933688c1036d5e",
+    "fixture.json": "88c5366bcb83349c2d7ecedf91bdade9fc91a6a8fe8a8129761f6bd811e0c735",
+    "audit.py": "0ea12df0c0e43da98e0d8e01c90ef43e5ce696f8d3fc07f5938743baafe059eb",
+    "test_t0.py": "c9dd9c6a4d477e31a742f17fda2e3436e8c508120fd3ac742f780938d8c2615f"
+  }
+}

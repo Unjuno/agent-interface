@@ -43,6 +43,7 @@ New work should normally use a category directory. Existing direct-root paths re
 - [`gtk_fresh_post_effect_2673/`](gtk_fresh_post_effect_2673/)
 - [`results/`](results/) — retained native-handle result bundles; each bundle's report defines its scope and status.
 - [`audits/`](audits/) — retained independent audit/review bundles; use the referenced source snapshot and allocation to interpret each result.
+- [`recovery/`](recovery/) — preserved source/evidence recovery capsules for interrupted or parallel research allocations; each status file records provenance and disposition without replacing the original result.
 
 - [`x11/`](x11/)
 
@@ -196,6 +197,7 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 - [`cli_fault_residue_3711_revalidation_v1/`](cli_fault_residue_3711_revalidation_v1/) — retained Issue #3711 CLI fault-residue revalidation; consult its report for exact scope and disposition.
 - [`cli_retention_3711_short_write_v1/`](cli_retention_3711_short_write_v1/) — retained Issue #3711 short-write protocol; Ubuntu's required CLI workflow failed on selector mock imports, so no three-OS construction PASS is claimed.
 - [`issue_3733_german_xkb_text_orbstack_v3/`](issue_3733_german_xkb_text_orbstack_v3/) — retained Issue #3733 German XKB formula-delivery experiment and immutable formal/audit evidence; consult its preregistration and result disposition before making claims.
+- [`x11_midprogram_keymap_5236/`](x11_midprogram_keymap_5236/) — Issue #5236 Formal01 startup STOP bundle; preserve the failed run and do not infer a mid-program keymap result.
 - [`x11_text_german_layout_3668_v1/`](x11_text_german_layout_3668_v1/) — original Issue #3733 setup STOP and frozen protocol; de-01 stopped before the hypothesis test, with a freeze/result-state discrepancy documented in the artifacts.
 - [`needle_lora_3441_pilot_04c_multiskill_audit_complete/`](needle_lora_3441_pilot_04c_multiskill_audit_complete/) — Issue #3895 one-seed multi-skill audit; HOLD_PROTOCOL_DEVIATION because the run used 120 rather than the specified 400 base updates.
 - [`needle_lora_3441_pilot_04d_multiskill_400base/`](needle_lora_3441_pilot_04d_multiskill_400base/) — retained direct-root Needle multi-skill pilot evidence; use its own report for exact scientific disposition and scope.
@@ -248,6 +250,14 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 
 - [`kernel_receipt_time_5215_20260928/`](kernel_receipt_time_5215_20260928/) — Issue #5215 kernel receipt timestamp construction probe; consult PLAN and REPORT for its contract-only scope and limitations.
 
+### Issue #5236 X11 keymap successor evidence
+
+- [`x11_midprogram_keymap_5236_formal02_20260930/`](x11_midprogram_keymap_5236_formal02_20260930/) — Formal02 import-path STOP; see immutable STOP record.
+- [`x11_midprogram_keymap_5236_formal03_20260930/`](x11_midprogram_keymap_5236_formal03_20260930/) — Formal03 missing-Tk-runtime STOP; no fixture row completed.
+- [`x11_midprogram_keymap_5236_formal04_20260930/`](x11_midprogram_keymap_5236_formal04_20260930/) — Formal04 focused-root delivery/effect STOP; independent audit and corruption controls retained.
+- [`x11_midprogram_keymap_5236_formal05_20260930/`](x11_midprogram_keymap_5236_formal05_20260930/) — Formal05 STOP_PROVENANCE_OR_RUNNER; dispatch completed but independent saved effects were missing.
+- [`x11_midprogram_keymap_docker_diagnostic_20260930/`](x11_midprogram_keymap_docker_diagnostic_20260930/) — Nonformal local Docker focus-versus-Entry-click diagnostic; not formal hypothesis evidence.
+
 
 ### Issue #5236 X11 keymap STOP evidence
 
@@ -258,3 +268,12 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 - [`x11_midprogram_keymap_docker_diagnostic_20260930/`](x11_midprogram_keymap_docker_diagnostic_20260930/) — nonformal local Docker focus-versus-click diagnostic.
 
 - [`aoi_43_t0/`](aoi_43_t0/) — executed Age-of-Information critical-event retention T0 for #43 (exploratory; not runtime validation).
+
+- [`x11_midprogram_keymap_5236_formal05_save_diagnostic_20261001/`](x11_midprogram_keymap_5236_formal05_save_diagnostic_20261001/) — Local Docker diagnostics: post-save waits do not change the US control; mid-program XKB remaps produce wrong saved text in Debian Docker (not Arch formal evidence).
+- [`x11_midprogram_keymap_5236_formal06_20261001/`](x11_midprogram_keymap_5236_formal06_20261001/) — Issue #5236 Formal06 `STOP_PROTOCOL_DEVIATION`: preserved raw predates freeze; auditor mismatch is diagnostic only. See `RESULT_DISPOSITION.md`.
+- [`x11_midprogram_keymap_5236_formal07_20261001/`](x11_midprogram_keymap_5236_formal07_20261001/) — Issue #5236 Formal07 `STOP_PROVENANCE_OR_RUNNER`: the `missing_post_save_wait` corruption was a no-op and escaped; see the result disposition.
+
+
+### Security evidence
+
+- [`security/`](security/) — retained X11 UI-redress evidence, including Issue #5692 formal-01 `STOP`; see [its result record](security/ui_redress_5692_x11_a02_20261001/FORMAL-01-STOP.md).

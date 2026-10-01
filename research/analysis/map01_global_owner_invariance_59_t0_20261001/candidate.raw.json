@@ -1,0 +1,180 @@
+{
+  "api_query_params": {
+    "event": [
+      "$GITHUB_EVENT_NAME"
+    ],
+    "per_page": [
+      "100"
+    ]
+  },
+  "api_workflow_file": "map01-measurement-integration-live-04.yml",
+  "event_filter_applied": true,
+  "first_run_control": {
+    "case_id": "first_run_no_prior_owner",
+    "complete_may_enter": true,
+    "complete_result": "PASS_CANONICAL_GLOBAL_OWNER",
+    "complete_run_ids": [
+      2008
+    ],
+    "current_event": "push",
+    "event_scoped_visible_ids": [
+      2008
+    ],
+    "prior_event": null,
+    "prior_head": null,
+    "scoped_may_enter": true,
+    "scoped_result": "PASS_CANONICAL_GLOBAL_OWNER"
+  },
+  "helper_blob_oid": "f07f928f67a7a6c670d399efb23d67246506c802",
+  "helper_sha256": "0b1056c6cbd95288d2c1934a471d2a04b9c000cd1114da7a49310afc850b87fd",
+  "matrix": [
+    {
+      "case_id": "push_prev_push_same_sha",
+      "complete_may_enter": false,
+      "complete_result": "FAIL_ALLOCATION_ALREADY_OWNED",
+      "complete_run_ids": [
+        1000,
+        2000
+      ],
+      "current_event": "push",
+      "event_scoped_visible_ids": [
+        1000,
+        2000
+      ],
+      "prior_event": "push",
+      "prior_head": "same",
+      "scoped_may_enter": false,
+      "scoped_result": "FAIL_ALLOCATION_ALREADY_OWNED"
+    },
+    {
+      "case_id": "push_prev_push_different_sha",
+      "complete_may_enter": false,
+      "complete_result": "FAIL_ALLOCATION_ALREADY_OWNED",
+      "complete_run_ids": [
+        1001,
+        2001
+      ],
+      "current_event": "push",
+      "event_scoped_visible_ids": [
+        1001,
+        2001
+      ],
+      "prior_event": "push",
+      "prior_head": "different",
+      "scoped_may_enter": false,
+      "scoped_result": "FAIL_ALLOCATION_ALREADY_OWNED"
+    },
+    {
+      "case_id": "push_prev_dispatch_same_sha",
+      "complete_may_enter": false,
+      "complete_result": "FAIL_ALLOCATION_ALREADY_OWNED",
+      "complete_run_ids": [
+        1002,
+        2002
+      ],
+      "current_event": "push",
+      "event_scoped_visible_ids": [
+        2002
+      ],
+      "prior_event": "workflow_dispatch",
+      "prior_head": "same",
+      "scoped_may_enter": true,
+      "scoped_result": "PASS_CANONICAL_GLOBAL_OWNER"
+    },
+    {
+      "case_id": "push_prev_dispatch_different_sha",
+      "complete_may_enter": false,
+      "complete_result": "FAIL_ALLOCATION_ALREADY_OWNED",
+      "complete_run_ids": [
+        1003,
+        2003
+      ],
+      "current_event": "push",
+      "event_scoped_visible_ids": [
+        2003
+      ],
+      "prior_event": "workflow_dispatch",
+      "prior_head": "different",
+      "scoped_may_enter": true,
+      "scoped_result": "PASS_CANONICAL_GLOBAL_OWNER"
+    },
+    {
+      "case_id": "dispatch_prev_dispatch_same_sha",
+      "complete_may_enter": false,
+      "complete_result": "FAIL_ALLOCATION_ALREADY_OWNED",
+      "complete_run_ids": [
+        1004,
+        2004
+      ],
+      "current_event": "workflow_dispatch",
+      "event_scoped_visible_ids": [
+        1004,
+        2004
+      ],
+      "prior_event": "workflow_dispatch",
+      "prior_head": "same",
+      "scoped_may_enter": false,
+      "scoped_result": "FAIL_ALLOCATION_ALREADY_OWNED"
+    },
+    {
+      "case_id": "dispatch_prev_dispatch_different_sha",
+      "complete_may_enter": false,
+      "complete_result": "FAIL_ALLOCATION_ALREADY_OWNED",
+      "complete_run_ids": [
+        1005,
+        2005
+      ],
+      "current_event": "workflow_dispatch",
+      "event_scoped_visible_ids": [
+        1005,
+        2005
+      ],
+      "prior_event": "workflow_dispatch",
+      "prior_head": "different",
+      "scoped_may_enter": false,
+      "scoped_result": "FAIL_ALLOCATION_ALREADY_OWNED"
+    },
+    {
+      "case_id": "dispatch_prev_push_same_sha",
+      "complete_may_enter": false,
+      "complete_result": "FAIL_ALLOCATION_ALREADY_OWNED",
+      "complete_run_ids": [
+        1006,
+        2006
+      ],
+      "current_event": "workflow_dispatch",
+      "event_scoped_visible_ids": [
+        2006
+      ],
+      "prior_event": "push",
+      "prior_head": "same",
+      "scoped_may_enter": true,
+      "scoped_result": "PASS_CANONICAL_GLOBAL_OWNER"
+    },
+    {
+      "case_id": "dispatch_prev_push_different_sha",
+      "complete_may_enter": false,
+      "complete_result": "FAIL_ALLOCATION_ALREADY_OWNED",
+      "complete_run_ids": [
+        1007,
+        2007
+      ],
+      "current_event": "workflow_dispatch",
+      "event_scoped_visible_ids": [
+        2007
+      ],
+      "prior_event": "push",
+      "prior_head": "different",
+      "scoped_may_enter": true,
+      "scoped_result": "PASS_CANONICAL_GLOBAL_OWNER"
+    }
+  ],
+  "schema": "map01-global-owner-event-head-candidate-v1",
+  "source_commit": "ad123c3875d81ebdc8bdfbdb59340005d705a60d",
+  "truncated_control": {
+    "may_enter": false,
+    "result_class": "UNCERTAIN_TRUNCATED_API_VIEW"
+  },
+  "workflow_blob_oid": "45279028918eff71332e627b1f783dfb11d27e49",
+  "workflow_sha256": "2bd3735425378ab18a9b5e464fe38fe8ee9afc3d15ada45ce9bab1bc12970881"
+}

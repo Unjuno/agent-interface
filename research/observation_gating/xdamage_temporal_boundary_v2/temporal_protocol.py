@@ -47,9 +47,12 @@ def schedule() -> list[tuple[int, Case]]:
     return rows
 
 
-def classify(row: Observation) -> str:
+def classify(row: Observation, *, identity_valid: bool = True,
+             coverage_complete: bool = True, source_fresh: bool = True) -> str:
     """Classify only scoped XDamage evidence; never grant action authority."""
     row.validate()
+    if not identity_valid or not coverage_complete or not source_fresh:
+        return "UNKNOWN"
     if row.damage_count:
         return "DAMAGE_OBSERVED"
     if row.case is Case.QUIET and row.baseline_rgb == row.endpoint_rgb:

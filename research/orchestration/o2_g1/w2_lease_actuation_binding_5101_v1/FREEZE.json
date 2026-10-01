@@ -1,0 +1,28 @@
+{
+  "schema": "w2-lease-actuation-binding-construction-freeze-v1",
+  "issue": 5116,
+  "base_main": "b41a99600ed95af142f3131147f586ddb5c0235a",
+  "source_blobs": {
+    "measurement_contract": "21d750311c643643823b0f7ea129050738a21791",
+    "event_schema": "ebc424d2df631aa74c6d9aee4699c595a27ed589",
+    "trace_fixture": "0a49a00567c25766495cd332be50f6c2946781f7",
+    "frozen_verifier": "d8f4221811b160e5714d2d6e4154c82af94d633e",
+    "frozen_auditor": "1942546e60ad7e6cb56b9a383830033db14d0397"
+  },
+  "fixture_sha256": "6a693f06b1b4be15a8da35ec3aaf806d7fb3601091c8ef638c516069d1b4e95f",
+  "candidate_sha256": "a3590b3a1637fb2ed2d3c74019d06535e919e5f52c5491f22cdc3de0845b40e3",
+  "independent_oracle_sha256": "94421e50cf3d90e5c8b13858563357a7b954cb39820441fe30a7394e21ee9160",
+  "test_sha256": "c0dedb69dbe239c4e5e72eb24120ba9159074117c30da13ee97ad2736638a32a",
+  "protocol": {
+    "original_fixture_mutated": false,
+    "legacy_input_cases_missing_open_actuation": [
+      "release-before-terminal:A4",
+      "overlapping-key-holds:A5",
+      "missing-and-out-of-order-edge:A6",
+      "held-input-no-effect:A8"
+    ],
+    "versioned_controls_per_case": ["matched", "foreign-actuation", "missing-actuation"],
+    "extra_controls": ["reused-lease-id", "edge-without-lease-open"],
+    "container_or_formal_invocation": false
+  }
+}

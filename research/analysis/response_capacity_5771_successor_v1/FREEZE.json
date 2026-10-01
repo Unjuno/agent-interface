@@ -1,0 +1,20 @@
+{
+  "issue": 5771,
+  "successor_scope": "comment 5925573968: state-conditioned available adaptive capacity; not a replay of the already-completed base T1",
+  "allocation": "RESPONSE-CAPACITY-5771-T1-20261001-01",
+  "base_main": "219439dbf803398a7283dc6c0244c598758be043",
+  "branch": "research/response-capacity-5771-successor-20261001",
+  "path": "research/analysis/response_capacity_5771_successor_v1/",
+  "runtime": "CPython 3.12.10; standard library only",
+  "container": "not used: Docker Desktop desktop-linux info did not respond; no image/container identity",
+  "candidate_sha256_worktree": "993ee3d142596a2674f178ebcc095d1f6cc9065b49b8fd89529311c2692054fc",
+  "auditor_sha256_worktree": "0e9c319aac92bfb65b7db236252353bfd8e2d0bf9e107c64a88dc8ac00159954",
+  "tests_sha256_worktree": "8f3ec6db8942ed248c3a0e29cb010d9b6f931c835740f1487e94803c20c2d618",
+  "H": "A nominal response-repertoire matrix falsely marks simultaneous disturbance coverage when shared capacity, a valid lease, or accepted handoff is absent; a state-conditioned capacity matrix detects the gap, while a genuinely available spare-capacity control remains covered. An independently reserved release lane may preserve safety without restoring task attainability.",
+  "T": "Four fixed scenarios (spare capacity, shared saturation, expired authority lease, offered-but-unaccepted handoff) crossed with nominal-repertoire, capacity-aware, and reserved-safety-lane arms: 12 rows. Integer millisecond facts. Candidate and independent raw-only audit each invoked once; no model, GUI, network, or user data.",
+  "D": "PASS_METHOD_SCOPED only if every frozen row is present once, facts/outcomes match an independent oracle, nominal shared-saturation appears covered while capacity-aware does not, spare-capacity remains covered, handoff-offered-but-unaccepted is unavailable, and no authority effect is applied.",
+  "C": "Hand-authored finite state machine and oracle; deterministic availability facts; a safety release lane is modeled as independent only in its named arm. Pre-freeze local construction suite passed 4/4 and py_compile passed.",
+  "U": "No live resource contention, runtime queue, GUI, model, production recovery, Ashby theorem, task success, or broad safety claim. The fixture does not establish real-world response availability; all response and deadline facts are stipulations.",
+  "commands": ["python candidate.py", "python audit.py"],
+  "decision": "One candidate CLI invocation and one separate raw-only audit. Preserve any failed/infrastructure outcome. No retry, reallocation, or post-result source tuning."
+}

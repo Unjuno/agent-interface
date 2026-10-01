@@ -1,0 +1,127 @@
+{
+  "candidate_invocations": 1,
+  "cases": [
+    {
+      "case": "within_bound",
+      "child_exit_code": 0,
+      "child_reaped": true,
+      "disposition": "MATCHED_TERMINAL",
+      "events": [
+        {
+          "child_emit_monotonic_ns": 76460968000000,
+          "event": "ready"
+        },
+        {
+          "child_emit_monotonic_ns": 76460984000000,
+          "event": "terminal",
+          "id": "fallback-within"
+        }
+      ],
+      "expected_id": "fallback-within",
+      "reader_joined": true,
+      "trace_byte_count": 154,
+      "trace_file": "within_bound/session-events.jsonl",
+      "trace_sha256": "788894bf98abbce291f05596c4216aaf80f3117128862a2489a251a1327c25fa",
+      "wait_deadline_ns": 76462468000000,
+      "wait_end_ns": 76460984000000,
+      "wait_error": null,
+      "wait_return": {
+        "child_emit_monotonic_ns": 76460984000000,
+        "event": "terminal",
+        "id": "fallback-within"
+      },
+      "wait_start_ns": 76460968000000
+    },
+    {
+      "case": "wrong_id",
+      "child_exit_code": 1,
+      "child_reaped": true,
+      "disposition": "TIMEOUT",
+      "events": [
+        {
+          "child_emit_monotonic_ns": 76461171000000,
+          "event": "ready"
+        },
+        {
+          "child_emit_monotonic_ns": 76461187000000,
+          "event": "terminal",
+          "id": "other-terminal"
+        }
+      ],
+      "expected_id": "fallback-expected",
+      "reader_joined": true,
+      "trace_byte_count": 153,
+      "trace_file": "wrong_id/session-events.jsonl",
+      "trace_sha256": "f43c8b095e36eb45736b0a19f4dc111cc3c2777fdd08b779fb862bbc4541eaf2",
+      "wait_deadline_ns": 76461771000000,
+      "wait_end_ns": 76461781000000,
+      "wait_error": {
+        "message": "session event timeout",
+        "type": "TimeoutError"
+      },
+      "wait_return": null,
+      "wait_start_ns": 76461171000000
+    },
+    {
+      "case": "absent",
+      "child_exit_code": 1,
+      "child_reaped": true,
+      "disposition": "TIMEOUT",
+      "events": [
+        {
+          "child_emit_monotonic_ns": 76461921000000,
+          "event": "ready"
+        }
+      ],
+      "expected_id": "fallback-absent",
+      "reader_joined": true,
+      "trace_byte_count": 63,
+      "trace_file": "absent/session-events.jsonl",
+      "trace_sha256": "8e515bc7a87dd008fb9b69f84108139265b23d43f6b77ca5aa0e0be499604431",
+      "wait_deadline_ns": 76462057000000,
+      "wait_end_ns": 76462062000000,
+      "wait_error": {
+        "message": "session event timeout",
+        "type": "TimeoutError"
+      },
+      "wait_return": null,
+      "wait_start_ns": 76461937000000
+    },
+    {
+      "case": "late_exact",
+      "child_exit_code": 0,
+      "child_reaped": true,
+      "disposition": "TIMEOUT",
+      "events": [
+        {
+          "child_emit_monotonic_ns": 76462218000000,
+          "event": "ready"
+        },
+        {
+          "child_emit_monotonic_ns": 76462468000000,
+          "event": "terminal",
+          "id": "fallback-late"
+        }
+      ],
+      "expected_id": "fallback-late",
+      "reader_joined": true,
+      "trace_byte_count": 152,
+      "trace_file": "late_exact/session-events.jsonl",
+      "trace_sha256": "1d08d7633810a5ecf689769139dc9523899296e633b6a2501a03bfb5c81fa221",
+      "wait_deadline_ns": 76462268000000,
+      "wait_end_ns": 76462281000000,
+      "wait_error": {
+        "message": "session event timeout",
+        "type": "TimeoutError"
+      },
+      "wait_return": null,
+      "wait_start_ns": 76462218000000
+    }
+  ],
+  "freeze_sha256": "7ba366d6a48627df095250f9e96bc244871bc5fdf96c5f691273828ea93c2e08",
+  "main_sha": "bd77907946b7164e7513c3f5893f99348639e48a",
+  "retries": 0,
+  "runner_git_blob": "f5caf71a743a563b7de046b82d44db7ebe49e829",
+  "schema": "map01-terminal-wait-boundary-candidate-v1",
+  "synthetic_child_cases": 4
+}

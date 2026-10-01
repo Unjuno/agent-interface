@@ -1,0 +1,58 @@
+{
+  "schema": "pending-route-t002-visible-v1",
+  "as_of": 1,
+  "deadline": 3,
+  "switch_cost": {"reobserve": 2, "handback": 3, "release": 1, "revalidate": 4},
+  "cases": [
+    {"id":"delay_inversion", "attribution":"independent", "censor_assumption":"none", "attempts":[
+      {"id":"A1","route":"A","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"PENDING"}]},
+      {"id":"A2","route":"A","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"VERIFIED_SUCCESS"}]},
+      {"id":"A3","route":"A","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"PENDING"}]},
+      {"id":"A4","route":"A","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"VERIFIED_FAILURE"}]},
+      {"id":"B1","route":"B","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"VERIFIED_SUCCESS"}]},
+      {"id":"B2","route":"B","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"VERIFIED_SUCCESS"}]},
+      {"id":"B3","route":"B","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"VERIFIED_FAILURE"}]},
+      {"id":"B4","route":"B","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"VERIFIED_FAILURE"}]}
+    ]},
+    {"id":"equal_delay_null", "attribution":"independent", "censor_assumption":"none", "attempts":[
+      {"id":"C1","route":"C","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"VERIFIED_SUCCESS"}]},
+      {"id":"C2","route":"C","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"VERIFIED_FAILURE"}]},
+      {"id":"D1","route":"D","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"VERIFIED_SUCCESS"}]},
+      {"id":"D2","route":"D","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"VERIFIED_FAILURE"}]}
+    ]},
+    {"id":"known_noninformative_admin_loss", "attribution":"independent", "censor_assumption":"declared_independent_known", "attempts":[
+      {"id":"E1","route":"E","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"VERIFIED_SUCCESS"}]},
+      {"id":"E2","route":"E","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"VERIFIED_FAILURE"}]},
+      {"id":"E3","route":"E","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"VERIFIED_FAILURE"}]},
+      {"id":"E4","route":"E","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"ADMIN_LOST_FOLLOWUP"}]},
+      {"id":"F1","route":"F","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"VERIFIED_SUCCESS"}]},
+      {"id":"F2","route":"F","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"VERIFIED_SUCCESS"}]},
+      {"id":"F3","route":"F","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"VERIFIED_SUCCESS"}]},
+      {"id":"F4","route":"F","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"ADMIN_LOST_FOLLOWUP"}]}
+    ]},
+    {"id":"typed_safe_stop_vs_wrong_effect", "attribution":"independent", "censor_assumption":"none", "attempts":[
+      {"id":"S1","route":"SAFE","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"POLICY_TERMINAL_SAFE_STOP"}]},
+      {"id":"S2","route":"SAFE","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"VERIFIED_SUCCESS"}]},
+      {"id":"W1","route":"WRONG","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"VERIFIED_WRONG_EFFECT"}]},
+      {"id":"W2","route":"WRONG","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"VERIFIED_SUCCESS"}]}
+    ]},
+    {"id":"yield_then_recovered_success", "attribution":"independent", "censor_assumption":"none", "attempts":[
+      {"id":"Y1","route":"RECOVER","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"YIELD"}]},
+      {"id":"Y2","route":"RECOVER","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"PENDING"}]}
+    ]},
+    {"id":"unknown_outcome_dependent_loss", "attribution":"independent", "censor_assumption":"unknown_or_outcome_dependent", "attempts":[
+      {"id":"U1","route":"U","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"VERIFIED_SUCCESS"}]},
+      {"id":"U2","route":"U","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"ADMIN_LOST_FOLLOWUP"}]},
+      {"id":"V1","route":"V","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"VERIFIED_FAILURE"}]},
+      {"id":"V2","route":"V","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"ADMIN_LOST_FOLLOWUP"}]}
+    ]},
+    {"id":"state_coupled_cross_task", "attribution":"state_coupled", "censor_assumption":"none", "attempts":[
+      {"id":"Q1","route":"MUTATOR","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"VERIFIED_SUCCESS"}]},
+      {"id":"Q2","route":"FOLLOWUP","events":[{"t":0,"type":"DISPATCH"},{"t":1,"type":"PENDING"}]}
+    ]}
+  ],
+  "policy_paths": {
+    "fixed_baseline": {"routes":["A","A","A"],"base_work_units":12},
+    "switching_policy": {"routes":["A","B","A"],"base_work_units":12}
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "schema": "attenuated-object-capability-t0-freeze-v1",
+  "issue": 5325,
+  "allocation": "attcap-chain-5325-t0-20260930-01",
+  "intake_main": "bdd093f24c626c7ffadaa7ba2a6c8e408814675c",
+  "additive_path": "research/analysis/attenuated_capability_5325_t0_v1/",
+  "host_construction_only": true,
+  "formal_status": "PENDING_EXACT_SHARED_CPU_LANE_ASSIGNMENT_AND_START_GATE",
+  "formal_runner_invocations": 0,
+  "formal_auditor_invocations": 0,
+  "source_sha256": {
+    "scenarios.json": "4B67B4E261BC2F2BF58C858061D66B299B8D84096A8AA1C3F58E21EDA825FEC8",
+    "simulate.py": "0F6F1C5CEA8CE6F3097867E0275C32915903FE6E1865C1EF8365593B1C7F2759",
+    "independent_audit.py": "A3CD0D5F1C296CB12217FFCAB1998ACB7575241E49A675CF159AD0843A495940"
+  },
+  "container": {
+    "runtime": "Docker Desktop desktop-linux",
+    "image": "python@sha256:4c2cf9917bd1cbacc5e9b07320025bdb7cdf2df7b0ceaccb55e9dd7e30987419",
+    "image_id": "sha256:4c2cf9917bd1cbacc5e9b07320025bdb7cdf2df7b0ceaccb55e9dd7e30987419",
+    "platform_readback": "linux/amd64",
+    "python_runtime_readback": null,
+    "network": "none",
+    "runner_source_mount": "read-only",
+    "output_mount": "separate writable empty directory",
+    "resource_limits": {"cpus": "1", "memory": "512m", "pids": 32},
+    "capabilities": "drop all; no-new-privileges",
+    "invocations": 0
+  },
+  "design": {
+    "scenarios": 11,
+    "policies": ["CONTEXT_POLICY", "LEASE_ONLY", "ATTENUATED_CHAIN", "CONFINED_CHANNEL", "REVOCATION_STRESS"],
+    "expected_rows": 55,
+    "primary_scoped_gate": "zero unauthorized admissions by REVOCATION_STRESS; safe minimum-rights scenario receives ENFORCED; non-enforcing backend returns UNKNOWN_ENFORCEMENT and no dispatch; all 4 auditor mutation controls rejected",
+    "scope": "synthetic proposal-admission traces only; no keys, model, GUI, external tool call, effect, or production security claim"
+  },
+  "failure_or_hold_classes": ["FAIL_UNAUTHORIZED_ADMISSION", "FAIL_FALSE_SAFE_REJECTION", "HOLD_UNKNOWN_ENFORCEMENT_ACCEPTED", "STOP_SHARED_RESOURCE_OR_SOURCE_INTEGRITY"],
+  "retry_policy": "Formal runner once; only after exit 0, independent auditor once. No retry/replacement or silent source/gate changes."
+}

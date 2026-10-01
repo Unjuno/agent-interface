@@ -1,0 +1,44 @@
+{
+  "schema": "action-class-error-budget-selective-labels-run-v1",
+  "allocation": "error-budget-selective-labels-5424-t3-20261001-01",
+  "branch": "research/5424-selective-labels-t3-20261001",
+  "base_sha": "49db21e330768800e8b3486203b70306f4e402f6",
+  "completed_at_utc": "2026-10-01T06:08:21Z",
+  "environment": {
+    "python": "CPython 3.14.5",
+    "platform": "macOS 26.6.2 arm64",
+    "mode": "host-only deterministic standard-library simulation",
+    "docker": false,
+    "network": false,
+    "gpu_model_gui_runtime_input": false
+  },
+  "preflight": {
+    "frozen_source_files_git_blob_match": "6/6",
+    "python_ast": "3/3 PASS",
+    "candidate_invocations_before_freeze": 0,
+    "auditor_invocations_before_freeze": 0,
+    "raw_result_absent_before_candidate": true,
+    "auditor_result_absent_before_candidate": true
+  },
+  "candidate": {
+    "invocations": 1,
+    "command": "python3 -B candidate.py",
+    "exit_code": 0,
+    "stdout": "{\"gates\": {\"all_offered_rows_retained\": true, \"censored_never_success\": true, \"common_cause_fallback_severe_retained\": true, \"probe_absent_or_stale_stays_censored\": true, \"probe_policy_no_unsupported_unfreeze\": true, \"probe_positive_unfreezes_repaired_case\": true, \"quiet_window_counterexample\": true}, \"rows\": 160, \"status\": \"CANDIDATE_COMPLETE\"}",
+    "raw_sha256": "35a604ab5433ce92862ea946301e00451f366501923cf4505dedcc5ea87497d7"
+  },
+  "auditor": {
+    "invocations": 1,
+    "command": "python3 -B audit.py",
+    "exit_code": 0,
+    "stdout": "{\"mismatches\": [], \"mutation_rejections\": 4, \"status\": \"PASS_METHOD_SCOPED\"}",
+    "raw_audit_sha256": "a51da2891e42ba06cb0b4c61091c5d1c7bed75aef9763d21b7816a3f5911e926",
+    "independent_row_mismatches": 0,
+    "mutation_controls_rejected": "4/4"
+  },
+  "retries": 0,
+  "tuning": 0,
+  "replacements": 0,
+  "disposition": "PASS_METHOD_SCOPED",
+  "scope": "finite synthetic method evidence only; no deployed safety, SLO, probability, causal-effect, task-efficacy, or product claim"
+}

@@ -1,0 +1,21 @@
+{
+  "allocation": "issue-5370-t5-bound-urgency-claim-20261001-01",
+  "base_main_sha": "2188d11aedac87d3e1e92ca25a7d1b5d4f593e90",
+  "candidate_sha256": "18d1cc5f17c3bc990869d6245b619844c87720d6708369012d0092fb66fdbe3e",
+  "auditor_sha256": "77ce7d7806fa870c0c8c0a17350f85c2f8445d27cfeb481ca31f76c7d302e9a3",
+  "image": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "case_space": {
+    "authenticated": [false, true],
+    "request_matches": [false, true],
+    "target_matches": [false, true],
+    "unexpired": [false, true],
+    "blocking_edge_exists": [false, true],
+    "claimed_priority": [1, 2, 3, 4],
+    "priority_cap": [2, 3],
+    "base_priority": 1,
+    "total_cases": 256
+  },
+  "decision_gate": "PASS only if 256 unique rows independently match, inheritance occurs only when all five bind predicates are true, unauthorized_or_unbound_inheritance=0, and the priority cap is never exceeded; otherwise retain exact FAIL/STOP/UNCERTAIN without retry."
+}

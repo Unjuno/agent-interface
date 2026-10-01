@@ -1,0 +1,29 @@
+{
+  "allocation": "x11-server-grab-liveness-4297-20260924-01",
+  "conditions": [
+    "NO_GRAB",
+    "HEALTHY_1MS",
+    "HEALTHY_20MS",
+    "KILL_OWNER_20MS",
+    "HUNG_OWNER_100MS_WATCHDOG"
+  ],
+  "construction": [
+    "construction-01 STOP_OUTER_TOOL_TIMEOUT",
+    "construction-02 STOP_XAUTHORITY",
+    "construction-03 PASS_EXCLUDED_HEALTHY20_OLD_HELPER",
+    "construction-04 STOP_OWNER_SYNTAX",
+    "construction-05 PASS_EXCLUDED_HEALTHY20_FINAL_SOURCE"
+  ],
+  "formal_invocations_before_freeze": 0,
+  "formal_rows": 15,
+  "reps": 3,
+  "reruns_before_freeze": 0,
+  "source_sha256": {
+    "PLAN.md": "ca17a9001b60fa8e9084b3bea49753d4fdaa98cee410e75a0d339504ff427398",
+    "audit.py": "ee00827d78aa6d4138f437a6676c313fa62e65f89313873efc10a7d424778a7e",
+    "controls.py": "ed1c9999017ec098913a4c52f241cb097a8576150aaac58bf3bfc2aca2bb56ec",
+    "observer.py": "dc5b035975fa3166072e5ad49e720250f5d6649275b3986c3eeead03cd8fa37f",
+    "owner.py": "8268b7b60c5e065a9d70dc77e80aa90106fbb92eb2bb4bb55dc8c59f67131027",
+    "runner.py": "00f872bba5e2eb27c6338367c00dbefed69744f9985419d93f9a50a249000d3e"
+  }
+}

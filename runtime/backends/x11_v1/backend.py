@@ -224,20 +224,38 @@ class X11Backend:
         for key in reversed(keys):
             self.key_state(key, False)
 
-    def _refresh_keyboard_mapping(self) -> None:
+    def _refresh_keyboard_mapping(self) -> bool:
         # This connection does not subscribe to window event streams. Consume
-        # its queued mapping notifications after a server barrier, before
-        # resolving keysyms for the next program.
+        # queued mapping notifications after a server barrier. The caller must
+        # not continue a preflighted keyboard suffix after a keyboard/modifier
+        # change; refreshing caches alone does not revalidate that suffix.
+        # A notification can repeat an unchanged map, so callers compare snapshots.
         self.d.sync()
+        notified = False
         for _ in range(self.d.pending_events()):
             event = self.d.next_event()
             if event.type == X.MappingNotify:
                 self.d.refresh_keyboard_mapping(event)
+                if event.request in {X.MappingKeyboard, X.MappingModifier}:
+                    notified = True
+        return notified
 
-    def preflight(self, program: dict[str, Any]) -> None:
-        """Validate X11-specific constraints before the first physical emission."""
+    def _keyboard_mapping_snapshot(self):
+        """Read the core keysyms/modifier bindings used by this narrow backend."""
+        info = self.d.display.info
+        return (
+            info.min_keycode, info.max_keycode,
+            tuple(tuple(row) for row in self.d.get_keyboard_mapping(
+                info.min_keycode, info.max_keycode - info.min_keycode + 1)),
+            tuple(tuple(row) for row in self.d.get_modifier_mapping()),
+        )
+
+    def preflight(self, program: dict[str, Any]):
+        """Validate before input; return the core keyboard map used for preflight."""
+        keyboard_mapping = None
         if any(op["op"] in {"text", "key_chord", "key_state"} for op in program["ops"]):
             self._refresh_keyboard_mapping()
+            keyboard_mapping = self._keyboard_mapping_snapshot()
         focused = False
         for op in program["ops"]:
             kind = op["op"]
@@ -257,6 +275,7 @@ class X11Backend:
                     self._keycode(key)
             elif kind == "key_state":
                 self._keycode(op["key"])
+        return keyboard_mapping
 
     def _text_plan(self, value: str) -> list[list[str]]:
         plan = []
@@ -386,7 +405,7 @@ class X11Backend:
         time.sleep(timeout_ms / 1000.0)
 
     def execute(self, program: dict[str, Any]) -> dict[str, Any]:
-        self.preflight(program)
+        keyboard_mapping = self.preflight(program)
         current_target: str | None = None
         observations: list[dict[str, Any]] = []
         releases: list[dict[str, Any]] = []
@@ -408,9 +427,16 @@ class X11Backend:
                 "completed_ops": completed_ops,
             }
 
+        keyboard_mapping_changed = False
         try:
             for index, op in enumerate(program["ops"]):
                 kind = op["op"]
+                if kind in {"text", "key_chord", "key_state"}:
+                    if self._refresh_keyboard_mapping():
+                        keyboard_mapping_changed |= self._keyboard_mapping_snapshot() != keyboard_mapping
+                    releasing_key = kind == "key_state" and op["down"] is False
+                    if keyboard_mapping_changed and not releasing_key:
+                        raise X11BackendError("keyboard mapping changed after program preflight")
                 if kind == "focus":
                     current_target = op["target"]
                     self.focus(current_target)

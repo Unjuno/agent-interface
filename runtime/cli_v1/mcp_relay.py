@@ -11,10 +11,10 @@ from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 
 
-PUBLIC_TOOLS = ('list_tools', 'interface_validate', 'interface_observe', 'interface_dispatch',
+PUBLIC_TOOLS = ('list_tools', 'interface_clock', 'interface_validate', 'interface_observe', 'interface_dispatch',
                 'interface_results', 'interface_inspect_target', 'interface_review_target',
                 'interface_close', 'interface_recover_input', 'interface_guarded_observe', 'interface_guarded_mint',
-                'interface_guarded_input', 'interface_guarded_review_window', 'interface_guarded_mint_many')
+                'interface_guarded_input', 'interface_guarded_review_window', 'interface_guarded_mint_many', 'interface_guarded_activate_window')
 
 
 class Relay:

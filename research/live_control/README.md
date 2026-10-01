@@ -15,6 +15,7 @@
 | X-server reincarnation identity boundary (Issue #3574; scoped, no promotion) | [lifetime replication report](../integration/typed_recovery_xserver_lifetime_v1/issue_3574_lifetime_01/evidence/REPORT.md) |
 | Implemented live-control surface | [What is implemented](#what-is-implemented) |
 | Reproduction notes | [Reproduce](#reproduce) |
+| Issue #2221 cross-domain retained-evidence transfer T1 | [Result and scope](cross_domain_handback_transfer_2221_t1_20261002/RESULT.md) |
 
 ## Track map
 
@@ -623,3 +624,16 @@ submission succeeds after two local transitions, while the changed page issues n
 Submit and retains `unknown_state / completed_actions=1 / confirmed_partial`.
 The pair advances to matched efficiency comparison; it makes no rate, speed, token
 or human-tempo claim.
+
+## Owner key-release construction archive
+
+- [Issue #5156 / source PR #5298 archival qualification](owner_keyup_owner_integration_5156_v1/ARCHIVAL_QUALIFICATION.md) — preserves four exact Allocation-03 owner-v11 files and the historical 14-test fake-Xlib construction record. The original baseline auditor is retained with its empty/omitted-inventory fail-open limitation; [#5415](https://github.com/Unjuno/agent-interface/pull/5415) is a separate synthetic successor. No real X11, physical key-up, MAP01, formal-gate completion, or runtime promotion is established; the source PR remains Draft and #5156 remains open.
+
+
+- [#2802 allocation 04 source-only qualification](app_event_obligation_keying_2802_v1/ARCHIVAL_QUALIFICATION.md): ten exact preformal source/freeze files; formal 0/18. The reported macOS/CPython 3.14.5 host policy check (4/4) is supplemental only; the frozen Linux/CPython 3.13.5 gate remains open. Original freeze and branch retained; no execution or runtime promotion.
+
+- [#2802 allocation 07 sequence-wrap recovery/recheck](app_sequence_wrap_2802_v1/CONSTRUCTION_RECHECK_20261001.md): preserves the exact source freeze and adds Linux/CPython 3.13.5 construction evidence (6/6; audit 8/8). Formal remains 0/18 and NOT STARTED; no runtime promotion.
+
+- [#2466 dwell-censor allocations 01/02 recovery status](dwell_censor_reason_2466_v2/RECOVERY_STATUS.md): preserves both exact allocations and the allocation-01 STOP without pooling rows. Allocation-02 remains frozen at 0/48; host contract tests do not replace its Linux/Python 3.13.5/Xvfb gate. No formal execution or policy promotion is claimed.
+
+- [#5415 completeness-v2 qualification](owner_keyup_audit_completeness_5156_v2_20260930/ARCHIVAL_QUALIFICATION.md) and [#5467 synthetic-join qualification](owner_keyup_audit_interop_5156_v1/ARCHIVAL_QUALIFICATION.md): complete exact-byte archives (11 + 16 original files). Retains the omission-control/join construction records, earlier interoperability STOP, and logical-key raw-audit fail-open; no independent caller-nesting, live X11, physical key-up, MAP01 or runtime promotion follows. Original refs and the separate #5156/#5630/#5895 owner gates remain unchanged.

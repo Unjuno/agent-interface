@@ -1,0 +1,94 @@
+{
+  "schema": "map01-roi-gpu-break-even-freeze-v2",
+  "allocation": "MAP01-ROI-BREAK-EVEN-59-GPU-20261001-02",
+  "source_main_sha": "45395880f873f1592bc188a37471d8380535e1ec",
+  "branch": "research/doom-gpu-roi-break-even-59-a02-r2-20261001",
+  "additive_path": "research/doom/gpu_roi_break_even_59_a02_r2_20261001/",
+  "window_utc": "2026-10-01T06:11:00Z/2026-10-01T06:20:00Z",
+  "owner": "Unjuno",
+  "codex_task": "01a0b98f-d6dd-79a0-9f0e-74c29b91a1d4",
+  "authority_record": "Issue #5085 comment #5925778576",
+  "host": {
+    "python": "3.11.9",
+    "numpy": "2.4.6",
+    "torch": "2.5.1+cu121",
+    "torch_cuda": "12.1",
+    "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU"
+  },
+  "config": {
+    "dimensions_wh": [
+      [
+        95,
+        50
+      ],
+      [
+        320,
+        200
+      ],
+      [
+        640,
+        400
+      ],
+      [
+        1280,
+        800
+      ]
+    ],
+    "batches": [
+      1,
+      4,
+      16
+    ],
+    "warmups": 3,
+    "repeats": 21,
+    "seed": 59020261002,
+    "delta_channel_max_exclusive": 32,
+    "minimum_changed_pixels_inclusive": 100
+  },
+  "files": {
+    "PREREGISTRATION.md": {
+      "git_blob_sha": "7887a866d06bb4a874526652c62d76b2d9ec507d",
+      "sha256": "5b69de0a608079456942c915b2a94060004f6ac38c9df4c5430c67c62c5c744a"
+    },
+    "benchmark.py": {
+      "git_blob_sha": "f13d38892ea621474b2de14c1ddbae98b359b474",
+      "sha256": "59a977905af3c20cef5bde96ec4cd54f0084d6e98e497f88d6b5430839b46433"
+    },
+    "audit.py": {
+      "git_blob_sha": "fbcd5fbec5b230d4401322128f386ef2be3f81cb",
+      "sha256": "ae5936de4bf7347cea667fc681ead762c29f60e8408ec9f309d385594e536524"
+    },
+    "run_capture.py": {
+      "git_blob_sha": "3586509103c3a136a85e9a94b9228f1fabbb27bc",
+      "sha256": "33cdf58961fee4a3b3cafe8dc76e72a6260e6bfeddf42044fd36b45ac7f072ce"
+    },
+    "test_capture.py": {
+      "git_blob_sha": "df3c262e580db8fda21b5d98f73adba87ff026f6",
+      "sha256": "4e64fa4f2cede2a486f2409e80e6c66f0a70cf23a0cdfbe980a78fcf17202f3a"
+    },
+    "gate_correction/gpu_preflight_gate.ps1": {
+      "git_blob_sha": "4d7fcff86b6be2e1e8f751d8c8065826a937b96d",
+      "sha256": "293663ee55099e1c56640453e291c8bb88307a688c84f0db2361be84957ce79a"
+    },
+    "gate_correction/test_gpu_preflight_gate.ps1": {
+      "git_blob_sha": "4f5ce288bd6f285c1857b8351053b9f5cbb363f8",
+      "sha256": "7398327151d154cec9ffbe3708594c4e4f82dd99a37200d63afc971615d0b3cb"
+    },
+    "launch.ps1": {
+      "git_blob_sha": "aa81ebbc74ee65720d82e2c27cb9fac6ab6275d8",
+      "sha256": "c8f32918e2697ae36b5f0b198f7faa8d8c61e15ea56c6125a5f6cce3e733d9cc"
+    }
+  },
+  "commands": {
+    "candidate": "pwsh -NoLogo -NoProfile -File .\\launch.ps1",
+    "auditor": "py -3.11 -B audit.py .\\raw\\candidate.json"
+  },
+  "limits": {
+    "candidate_invocations": 1,
+    "auditor_invocations": 1,
+    "retries": 0,
+    "no_docker": true,
+    "no_model": true,
+    "no_gui_input": true
+  }
+}

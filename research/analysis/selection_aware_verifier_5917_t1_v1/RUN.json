@@ -1,0 +1,224 @@
+{
+  "allocation_id": "VERIFIER-SELECTION-5917-T1-LOCALCPU-20261001-01",
+  "issue": 5917,
+  "base_main": "4b7fe7837e4ee8c0d035ebfbf52baf014f042295",
+  "branch": "research/selection-aware-verifier-5917-t1-20261001",
+  "started_utc": "2026-10-01T09:09:41.457444+00:00",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "execution": {
+    "candidate_processes": 1,
+    "auditor_processes": 1,
+    "reruns": 0,
+    "candidate_exit": 0,
+    "auditor_exit": 0,
+    "candidate_elapsed_seconds": 0.074598,
+    "auditor_elapsed_seconds": 0.120443,
+    "runner": "Windows Python 3.11.9 executed GitHub-fetched runner.py in memory; runner spawned separate python -c candidate.py and audit.py processes. Fixture bytes and audit bundle crossed anonymous stdin pipes; no disk writes.",
+    "docker": "not invoked; Docker CLI inventory is unresponsive and this pure-stdlib method fixture has no container dependency.",
+    "resources": "host CPU only; no GPU/CUDA/model/provider/GUI/task input/network; no container; no retry."
+  },
+  "source_identities": {
+    "fixture_git_blob": "2aafc08eaf09feaff072f4619ad3321b5808785a",
+    "candidate_git_blob": "a0f3c2d5ca6498f25335a94cdf5c864eb85482c5",
+    "auditor_git_blob": "9110442c4617efaf2389631cce12eb63b16eb933",
+    "runner_git_blob": "b342bac1a5add2472afbfc3a68f10b593b8b33b9",
+    "candidate_sha256": "641ccbe90315d69a3b27baf0922e4cc71a8cb004b0fa2171ea4f0d6af817c6dd",
+    "auditor_sha256": "69b9effbf33cb9aa6df703b7b042d1139f143503043eddf928a4df594053dcfc",
+    "fixture_input_sha256": "8cc76fcb8531b9c9dc5b1261209f0dfd53cd882f6b6f8c0bda6bd0536d70fb2d",
+    "candidate_raw_stdout_sha256": "f71c285e482329417f75aa9150bebae0f56c423d52045b12ccef4e030cc6ab26",
+    "auditor_raw_stdout_sha256": "bc63bd74af731092840653128651828b3c922bb75bac0a9c5e0e6fc19f4814d7"
+  },
+  "raw_artifacts": {
+    "candidate_stdout_zlib_base64": "CANDIDATE_STDOUT.zlib.base64",
+    "audit_stdout": "AUDIT.json",
+    "candidate_stdout_codec": "zlib-compressed exact candidate stdout, then Base64 text"
+  },
+  "audit": {
+    "calibration": {
+      "canvas/easy": {
+        "abs_error": 0,
+        "expected_A": 0.9,
+        "logged_A": 0.9
+      },
+      "canvas/hard": {
+        "abs_error": 0,
+        "expected_A": 0.1,
+        "logged_A": 0.1
+      },
+      "document/easy": {
+        "abs_error": 0,
+        "expected_A": 0.9,
+        "logged_A": 0.9
+      },
+      "document/hard": {
+        "abs_error": 0,
+        "expected_A": 0.1,
+        "logged_A": 0.1
+      }
+    },
+    "candidate_matches_independent_enumeration": true,
+    "draw_count": 256,
+    "errors": [],
+    "estimand_summaries": {
+      "A": {
+        "dr_badp_trueq": {
+          "bias": 0,
+          "defined_mass": 1,
+          "max": 0.5,
+          "mean": 0.5,
+          "median": 0.5,
+          "min": 0.5,
+          "mse": 0,
+          "q025": 0.5,
+          "q975": 0.5,
+          "undefined_mass": 0,
+          "variance": 0
+        },
+        "dr_both_wrong": {
+          "bias": 0.4,
+          "defined_mass": 1,
+          "max": 1,
+          "mean": 0.9,
+          "median": 0.9375,
+          "min": 0,
+          "mse": 0.1740625,
+          "q025": 0.625,
+          "q975": 1,
+          "undefined_mass": 0,
+          "variance": 0.0140625
+        },
+        "dr_truep_badq": {
+          "bias": 0,
+          "defined_mass": 1,
+          "max": 0.666666666667,
+          "mean": 0.5,
+          "median": 0.5625,
+          "min": -1,
+          "mse": 0.0390625,
+          "q025": 0.041666666667,
+          "q975": 0.666666666667,
+          "undefined_mass": 0,
+          "variance": 0.0390625
+        },
+        "ess": {
+          "mean": 3.061240573022,
+          "min_positive": 1
+        },
+        "ht": {
+          "bias": 0,
+          "defined_mass": 1,
+          "max": 0.555555555556,
+          "mean": 0.5,
+          "median": 0.555555555556,
+          "min": 0,
+          "mse": 0.006944444444,
+          "q025": 0.277777777778,
+          "q975": 0.555555555556,
+          "undefined_mass": 0,
+          "variance": 0.006944444444
+        },
+        "selected_only": {
+          "bias": 0.415889915109,
+          "defined_mass": 0.99993439,
+          "max": 1,
+          "mean": 0.915889915109,
+          "median": 1,
+          "min": 0,
+          "mse": 0.188003527503,
+          "q025": 0.666666666667,
+          "q975": 1,
+          "undefined_mass": 0.00006561,
+          "variance": 0.015039106014
+        }
+      },
+      "B": {
+        "dr_badp_trueq": {
+          "bias": 0,
+          "defined_mass": 1,
+          "max": 0.5,
+          "mean": 0.5,
+          "median": 0.5,
+          "min": 0.5,
+          "mse": 0,
+          "q025": 0.5,
+          "q975": 0.5,
+          "undefined_mass": 0,
+          "variance": 0
+        },
+        "dr_both_wrong": {
+          "bias": 0.4,
+          "defined_mass": 1,
+          "max": 1,
+          "mean": 0.9,
+          "median": 0.9375,
+          "min": 0,
+          "mse": 0.1740625,
+          "q025": 0.625,
+          "q975": 1,
+          "undefined_mass": 0,
+          "variance": 0.0140625
+        },
+        "dr_truep_badq": {
+          "bias": 0,
+          "defined_mass": 1,
+          "max": 0.666666666667,
+          "mean": 0.5,
+          "median": 0.5625,
+          "min": -1,
+          "mse": 0.0390625,
+          "q025": 0.041666666667,
+          "q975": 0.666666666667,
+          "undefined_mass": 0,
+          "variance": 0.0390625
+        },
+        "ess": {
+          "mean": 3.061240573022,
+          "min_positive": 1
+        },
+        "ht": {
+          "bias": 0,
+          "defined_mass": 1,
+          "max": 0.555555555556,
+          "mean": 0.5,
+          "median": 0.555555555556,
+          "min": 0,
+          "mse": 0.006944444444,
+          "q025": 0.277777777778,
+          "q975": 0.555555555556,
+          "undefined_mass": 0,
+          "variance": 0.006944444444
+        },
+        "selected_only": {
+          "bias": 0.415889915109,
+          "defined_mass": 0.99993439,
+          "max": 1,
+          "mean": 0.915889915109,
+          "median": 1,
+          "min": 0,
+          "mse": 0.188003527503,
+          "q025": 0.666666666667,
+          "q975": 1,
+          "undefined_mass": 0.00006561,
+          "variance": 0.015039106014
+        }
+      }
+    },
+    "mutation_controls_rejected": [
+      true,
+      true,
+      true
+    ],
+    "mutation_rejections": 3,
+    "predeclared_conditions": true,
+    "probability_mass": 1,
+    "status": "PASS_METHOD_SCOPED",
+    "zero_support": {
+      "feasible_draws": 16,
+      "log_worlds_identical": true,
+      "status_B": "NONIDENTIFIABLE_FROM_LOGS",
+      "true_B_mean_world1": 0.5,
+      "true_B_mean_world2": 0
+    }
+  }
+}

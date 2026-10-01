@@ -2,6 +2,15 @@
 
 Status: first formal allocation completed with frozen disposition RETAIN.
 
+Prospective decision-scope clarification (2026-10-01): keep the historical
+finite-allocation RETAIN unchanged, and report broader generalization scope
+separately. The ambiguous “single allocation is insufficient for the rule”
+wording is clarified prospectively by
+[decision scope v2](INTEGRATED_EFFICIENCY_DECISION_SCOPE_V2.md), after the
+source-pinned synthetic method check in
+[research/analysis/integrated_decision_scope_57_t0_v1/REPORT.md](../analysis/integrated_decision_scope_57_t0_v1/REPORT.md).
+This does not amend the historical preregistration.
+
 Implementation checkpoint: `integrated_efficiency_fixture_v1.py` now provides
 the frozen A/A/A/B/B/B task shape, visibly distinct layouts and an append-only
 exact-token oracle.  `integrated_efficiency_runtime_v1.py` and the interactive/

@@ -28,3 +28,12 @@ The raw also shows an internal summary pattern requiring diagnosis in a new allo
 This was a synthetic local CPU simulation only: no Docker/OrbStack (the active #5085 lease is assigned to another allocation), no LM Studio/model inference, no GPU computation, no network call by the experiment, no GUI, and no effectful action. LM Studio was stopped and GPU utilization returned to idle before formal execution. The outcomes, even if later explained, would remain conditional on the frozen synthetic delay and witness assumptions; they cannot establish real failure-detector behavior.
 
 Any correction belongs in a **new successor allocation** with a diagnosis of the raw/auditor discrepancy and new frozen sources. Preserve this STOP and all source/result hashes.
+
+
+## Post-merge correction and static audit triage (2026-10-01)
+
+Correction: the original report's sentence describing a threshold-2 crash-summary inconsistency was a reading error. A direct structured read of the retained `RAW-01.json` confirms that typed crash outcomes are 8,961 `FAILED` and 1,039 `SUSPECTED_UNAVAILABLE` at thresholds 2, 4, and 8; `crash_failed_by_8` is 8,961 at all three thresholds. This correction does not change or replace the raw artifact.
+
+A source-only comparison suggests a likely explanation for the auditor's `replay_mismatch`: in the `restarted` baseline scenario, timeout-as-failure can enter FAILED before tick 10, recover at the explicit restart, then re-enter FAILED at tick 10 before its delayed response. The runner's aggregate `terminal_failures` records only whether `failed_tick` is non-null (0/1 per episode), while the independent auditor increments a transition counter for each FAILED entry (potentially 0/1/2). Their baseline `false_terminal_failures` and hash-chain rows therefore encode different metrics. The auditor emitted only the generic mismatch, so this is a static diagnosis of a concrete contract inconsistency, not a post-hoc passing audit or a proven sole cause.
+
+The one-shot allocation remains `STOP_AUDIT_REPLAY_MISMATCH`; no runner or auditor was rerun, no raw was changed, and no result gate is accepted. A new allocation would need a pre-frozen, semantically matched terminal-transition metric and a new independent audit.

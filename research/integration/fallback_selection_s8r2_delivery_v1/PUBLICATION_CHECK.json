@@ -1,0 +1,45 @@
+{
+  "all_original_bytes_equal": true,
+  "audit_byte_identical": true,
+  "commands": [
+    {
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "verify.py"
+      ],
+      "returncode": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "7108c0799995855d958cd96fdcce94addcb1d720d3d0b24e8725446383197819"
+    },
+    {
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_unpack"
+      ],
+      "returncode": 0,
+      "stderr_sha256": "dc79726a0f9d206b41037bf7679b64c6573e821541ada77d8837b54b9cad1159",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "controls_byte_identical": true,
+  "formal_or_gui_reruns": 0,
+  "frozen_audit_checks": 3302,
+  "frozen_evidence_mutations_rejected": 12,
+  "issue": 4386,
+  "kind": "read_only_publication_validation",
+  "limitations": "Same-author offline checks; not an external reviewer, repository-wide test or CI result. Requires a private quiescent output directory. Publication helpers are postformal and do not alter original artifacts.",
+  "original_policy_unit_tests": 17,
+  "publication_helper_sha256": {
+    "test_unpack.py": "30564b236ecec21d20f02e9dd4b309852ca584af1f0fd02821675d7f25782f92",
+    "unpack.py": "604ed040093b187d77129007d08793de3a1f85b4cc4cc8a7bb8577d9ebc993af",
+    "verify.py": "0ff05ca29523fe8533bea726442c77ef00fc3565a8a332f7720ddffaf5cfdba3"
+  },
+  "publication_tests": 11,
+  "restored_files": 633,
+  "verified_original_manifest_entries": 632
+}

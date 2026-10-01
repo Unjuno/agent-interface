@@ -1,0 +1,94 @@
+{
+  "schema": "agent-interface/real-x11-grab-recovery-engineering-v1",
+  "base": "1543fb4ee6b8773bcf39230c03094f37bc691e59",
+  "ordinary_cases": 20,
+  "ordinary_unverified": [],
+  "grab_result": {
+    "status": "execution_failed",
+    "admission": "accepted",
+    "error": "BACKEND_EXECUTION_FAILED",
+    "required_capabilities": [
+      "capture.frame",
+      "clock.monotonic",
+      "display.geometry",
+      "event.feedback",
+      "input.keyboard",
+      "input.pointer",
+      "input.release_all",
+      "input.text",
+      "window.focus"
+    ],
+    "execution": {
+      "started_ns": 8938284263904,
+      "ended_ns": 8938286637476,
+      "emissions": 3,
+      "program_emissions": 3,
+      "observations": [],
+      "releases": [
+        {
+          "keys_down": [],
+          "buttons_down": [
+            "left"
+          ],
+          "verified": false,
+          "monotonic_ns": 8938286634076
+        }
+      ],
+      "waits": [],
+      "activations": [],
+      "completed_ops": [
+        0,
+        1
+      ],
+      "error": "RuntimeError('injected failure after native press')",
+      "failed_op": 2,
+      "failed_op_effect": "unknown; may have emitted partial input"
+    },
+    "recovery_required": true
+  },
+  "grab_mask_samples": [
+    256,
+    256,
+    256,
+    256
+  ],
+  "grab_sample_elapsed_ms": [
+    0.359547,
+    2.465958,
+    10.525734,
+    50.643698
+  ],
+  "after_allow_mask": 0,
+  "allow_input_emissions": 0,
+  "recovery_required_after_allow": true,
+  "blocked": {
+    "status": "refused",
+    "error": "INPUT_RECOVERY_REQUIRED",
+    "recovery_required": true,
+    "input_dispatched": false,
+    "required_capabilities": [],
+    "backend_emissions": 3
+  },
+  "explicit_recovery": {
+    "status": "input_recovered",
+    "release_attempted": true,
+    "release": {
+      "keys_down": [],
+      "buttons_down": [],
+      "verified": true,
+      "monotonic_ns": 8938348656487
+    },
+    "recovery_required": false,
+    "task_success": null,
+    "replay_allowed": false
+  },
+  "live_tests": {
+    "label": "live-regression-01",
+    "tests": 55,
+    "failures": 0,
+    "errors": 0,
+    "passed": true,
+    "display": ":153"
+  },
+  "scope": "Real X11 discriminator/regression, not cause proof for previous spontaneous failure; no automatic recovery or performance claim"
+}

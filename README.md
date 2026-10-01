@@ -44,18 +44,22 @@ flowchart LR
 
 ## Start here
 
-| Need | Canonical place |
+Read the current direction first; check ownership before starting work. Read the relevant sections and linked evidence rather than loading every historical record.
+
+For the short worker workflow, see [Worker Quickstart](docs/WORKER_QUICKSTART.md). It covers intake, parallel ownership checks, evidence handling, publication, and safe branch disposition.
+
+| Need | Start with |
 |---|---|
-| Current research direction | [Current goal](docs/CURRENT_GOAL.md) |
-| What has been measured and what remains open | [Progress from baseline](docs/PROGRESS_FROM_BASELINE.md) |
-| Current architecture | [Architecture](docs/architecture.md) |
-| Detailed evidence ledger | [Research index](RESEARCH.md) |
-| Analysis vs experiment workflow | [Research method](docs/RESEARCH_METHOD.md) |
-| Relationship between evidence, runtime, and release | [Evidence map](docs/EVIDENCE_MAP.md) |
-| Use the current action/image interface | [Current interface guide](runtime/USING_CURRENT_INTERFACE.md) |
-| Historical public transport integration snapshot (2026-09-20) | [Public transport handoff](docs/PUBLIC_TRANSPORT_HANDOFF_2026-09-20.md) |
-| Runnable construction preview | [Runtime](runtime/README.md) |
-| User-facing release boundary | [Release contract](release/README.md) |
+| Current goal | [Current direction](docs/CURRENT_GOAL.md) and [remaining roadmap gates](ROADMAP.md) |
+| Evidence and remaining gaps | [Progress](docs/PROGRESS_FROM_BASELINE.md) → [evidence map](docs/EVIDENCE_MAP.md) → the selected [ledger entry](RESEARCH.md), report, raw evidence and audit |
+| Ideas and validation gaps | The relevant [Issues](https://github.com/Unjuno/agent-interface/issues), including closed predecessors and their latest updates |
+| Ownership and overlap | [Current handoff](docs/LOCAL_RESEARCH_HANDOFF.md), the selected Issue’s explicit owner/allocation, and related open/closed [PRs](https://github.com/Unjuno/agent-interface/pulls); follow [parallel coordination rules](docs/ISSUE_FAILURE_CLASSIFICATION.md#parallel-coordination-and-evidence-preservation) |
+| Branch cleanup | Check the [branch inventory snapshot](docs/BRANCH_INVENTORY_20261001.md), then refresh PR/Issue links and commit ancestry before any deletion |
+| Archives and provenance | [Retained research namespaces](research/README.md#historical-archival-namespaces) and [document roles](docs/README.md#document-authority-map) |
+
+An open Issue, PR or branch does not mean work is unclaimed. An archival merge does not change a result’s scope or authorize a new allocation.
+
+For architecture, methods and releases, use the [documentation map](docs/README.md). For the current action/image interface, use the [interface guide](runtime/USING_CURRENT_INTERFACE.md).
 
 ## Research method
 
