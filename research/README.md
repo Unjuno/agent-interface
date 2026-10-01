@@ -80,6 +80,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 - [`live_control/`](live_control/) — shared/live GUI-control mechanisms and integration studies.
 - [`doom/`](doom/) — real-time/continuous-control studies and MAP01 evidence.
 - [`integration/`](integration/) — integration-focused experiments.
+- [Tk validation-lifecycle #4367 / Draft PR #4375 metadata archive](integration/tk_validation_lifecycle_v9m3_v1/ARCHIVAL_QUALIFICATION.md) — three exact published metadata files; pre-allocation publication STOP/HOLD remains, source/raw absent, no construction or formal result independently established.
 - [`public_mcp_stale_effect_2907_allocation04_v1/`](integration/public_mcp_stale_effect_2907_allocation04_v1/REPORT.md) — Issue #2907 source-frozen local Docker stale-refusal/effect result and corrected read-only audit; remains a scoped component result, not the full multi-app integration gate.
 - [`public_mcp_controller_lineage_2907_construction01_v1/`](integration/public_mcp_controller_lineage_2907_construction01_v1/REPORT.md) — local Docker construction boundary: same caller-owned X11 runtime session across three apps; stale observation refused and neutral input released; not MCP-session fusion or the full #2907 integration gate.
 - [`public_mcp_binding_review_2907_construction01_v1/`](integration/public_mcp_binding_review_2907_construction01_v1/REPORT.md) — local Docker public-MCP Calc modal review/rebind; old binding refused with zero emissions, new binding neutral Escape/release; scoped construction only, not observation freshness or full #2907 integration.
@@ -136,6 +137,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 
 ### Evaluation and research governance
 
+- [Status-cache snapshot #4403 / Draft PR #4406 metadata archive](verification/status_data_version_v3h8_v1/ARCHIVAL_QUALIFICATION.md) — three exact published metadata files; pre-allocation publication STOP/HOLD remains, source/raw absent, no construction or formal result independently established.
 - [`verification/postcondition_evidence_ablation_v1/ARCHIVAL_QUALIFICATION.md`](verification/postcondition_evidence_ablation_v1/ARCHIVAL_QUALIFICATION.md) — Issue #3951 / Draft PR #3960: exact three-file provenance/STOP archive; original source/raw remain incomplete, allocation consumed, no independent reproduction or runtime promotion.
 - [`benchmark_discovery/`](benchmark_discovery/) — benchmark/coverage discovery.
 - [`verification/ontology_gap_5275_t1_v1/REPORT.md`](verification/ontology_gap_5275_t1_v1/REPORT.md) — Issue #5275 T1 lexical novelty boundary probe; scoped synthetic result with training/evaluation overlap disclosed, no semantic-generalization claim.
