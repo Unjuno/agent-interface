@@ -1,0 +1,593 @@
+{
+  "clock_domain": "simulated_monotonic_ms-v1",
+  "scenarios": {
+    "expiry_control": {
+      "busy_intervals": [],
+      "controller": "expiry_control",
+      "declared_cycle_latency_ms": 35,
+      "opportunities": [
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 0,
+          "effect_end_ms": 35,
+          "expiry_ms": 30,
+          "onset_ms": 0,
+          "opportunity_id": "expired",
+          "outcome": "miss_expired"
+        }
+      ],
+      "summary": {
+        "completed_cycle_p95_ms": null,
+        "handled_opportunity_fraction": 0.0,
+        "miss_expired_count": 1,
+        "opportunity_count": 1,
+        "safe_stop_count": 0,
+        "unknown_clock_count": 0,
+        "useful_effect_count": 0,
+        "useful_opportunity_coverage": 0.0
+      }
+    },
+    "no_stall_fast": {
+      "busy_intervals": [],
+      "controller": "no_stall_fast",
+      "declared_cycle_latency_ms": 20,
+      "opportunities": [
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 0,
+          "effect_end_ms": 20,
+          "expiry_ms": 90,
+          "onset_ms": 0,
+          "opportunity_id": "opp-00",
+          "outcome": "useful_effect"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 100,
+          "effect_end_ms": 120,
+          "expiry_ms": 190,
+          "onset_ms": 100,
+          "opportunity_id": "opp-01",
+          "outcome": "useful_effect"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 200,
+          "effect_end_ms": 220,
+          "expiry_ms": 290,
+          "onset_ms": 200,
+          "opportunity_id": "opp-02",
+          "outcome": "useful_effect"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 300,
+          "effect_end_ms": 320,
+          "expiry_ms": 390,
+          "onset_ms": 300,
+          "opportunity_id": "opp-03",
+          "outcome": "useful_effect"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 400,
+          "effect_end_ms": 420,
+          "expiry_ms": 490,
+          "onset_ms": 400,
+          "opportunity_id": "opp-04",
+          "outcome": "useful_effect"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 500,
+          "effect_end_ms": 520,
+          "expiry_ms": 590,
+          "onset_ms": 500,
+          "opportunity_id": "opp-05",
+          "outcome": "useful_effect"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 600,
+          "effect_end_ms": 620,
+          "expiry_ms": 690,
+          "onset_ms": 600,
+          "opportunity_id": "opp-06",
+          "outcome": "useful_effect"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 700,
+          "effect_end_ms": 720,
+          "expiry_ms": 790,
+          "onset_ms": 700,
+          "opportunity_id": "opp-07",
+          "outcome": "useful_effect"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 800,
+          "effect_end_ms": 820,
+          "expiry_ms": 890,
+          "onset_ms": 800,
+          "opportunity_id": "opp-08",
+          "outcome": "useful_effect"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 900,
+          "effect_end_ms": 920,
+          "expiry_ms": 990,
+          "onset_ms": 900,
+          "opportunity_id": "opp-09",
+          "outcome": "useful_effect"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 1000,
+          "effect_end_ms": 1020,
+          "expiry_ms": 1090,
+          "onset_ms": 1000,
+          "opportunity_id": "opp-10",
+          "outcome": "useful_effect"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 1100,
+          "effect_end_ms": 1120,
+          "expiry_ms": 1190,
+          "onset_ms": 1100,
+          "opportunity_id": "opp-11",
+          "outcome": "useful_effect"
+        }
+      ],
+      "summary": {
+        "completed_cycle_p95_ms": 20,
+        "handled_opportunity_fraction": 1.0,
+        "miss_expired_count": 0,
+        "opportunity_count": 12,
+        "safe_stop_count": 0,
+        "unknown_clock_count": 0,
+        "useful_effect_count": 12,
+        "useful_opportunity_coverage": 1.0
+      }
+    },
+    "overlap_control": {
+      "busy_intervals": [],
+      "controller": "overlap_control",
+      "declared_cycle_latency_ms": 20,
+      "opportunities": [
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 0,
+          "effect_end_ms": 20,
+          "expiry_ms": 100,
+          "onset_ms": 0,
+          "opportunity_id": "overlap-a",
+          "outcome": "useful_effect"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 50,
+          "effect_end_ms": 70,
+          "expiry_ms": 140,
+          "onset_ms": 50,
+          "opportunity_id": "overlap-b",
+          "outcome": "useful_effect"
+        }
+      ],
+      "summary": {
+        "completed_cycle_p95_ms": 20,
+        "handled_opportunity_fraction": 1.0,
+        "miss_expired_count": 0,
+        "opportunity_count": 2,
+        "safe_stop_count": 0,
+        "unknown_clock_count": 0,
+        "useful_effect_count": 2,
+        "useful_opportunity_coverage": 1.0
+      }
+    },
+    "safe_stop_control": {
+      "busy_intervals": [],
+      "controller": "safe_stop_control",
+      "declared_cycle_latency_ms": 20,
+      "opportunities": [
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 0,
+          "effect_end_ms": 20,
+          "expiry_ms": 90,
+          "onset_ms": 0,
+          "opportunity_id": "opp-00",
+          "outcome": "useful_effect"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 100,
+          "effect_end_ms": 120,
+          "expiry_ms": 190,
+          "onset_ms": 100,
+          "opportunity_id": "opp-01",
+          "outcome": "safe_stop"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 200,
+          "effect_end_ms": 220,
+          "expiry_ms": 290,
+          "onset_ms": 200,
+          "opportunity_id": "opp-02",
+          "outcome": "useful_effect"
+        }
+      ],
+      "summary": {
+        "completed_cycle_p95_ms": 20,
+        "handled_opportunity_fraction": 1.0,
+        "miss_expired_count": 0,
+        "opportunity_count": 3,
+        "safe_stop_count": 1,
+        "unknown_clock_count": 0,
+        "useful_effect_count": 2,
+        "useful_opportunity_coverage": 0.6666666666666666
+      }
+    },
+    "sparse_fast_with_busy_periods": {
+      "busy_intervals": [
+        [
+          100,
+          500
+        ],
+        [
+          700,
+          1000
+        ]
+      ],
+      "controller": "sparse_fast_with_busy_periods",
+      "declared_cycle_latency_ms": 10,
+      "opportunities": [
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 0,
+          "effect_end_ms": 10,
+          "expiry_ms": 90,
+          "onset_ms": 0,
+          "opportunity_id": "opp-00",
+          "outcome": "useful_effect"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": null,
+          "effect_end_ms": null,
+          "expiry_ms": 190,
+          "onset_ms": 100,
+          "opportunity_id": "opp-01",
+          "outcome": "miss_expired"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": null,
+          "effect_end_ms": null,
+          "expiry_ms": 290,
+          "onset_ms": 200,
+          "opportunity_id": "opp-02",
+          "outcome": "miss_expired"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": null,
+          "effect_end_ms": null,
+          "expiry_ms": 390,
+          "onset_ms": 300,
+          "opportunity_id": "opp-03",
+          "outcome": "miss_expired"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": null,
+          "effect_end_ms": null,
+          "expiry_ms": 490,
+          "onset_ms": 400,
+          "opportunity_id": "opp-04",
+          "outcome": "miss_expired"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 500,
+          "effect_end_ms": 510,
+          "expiry_ms": 590,
+          "onset_ms": 500,
+          "opportunity_id": "opp-05",
+          "outcome": "useful_effect"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 600,
+          "effect_end_ms": 610,
+          "expiry_ms": 690,
+          "onset_ms": 600,
+          "opportunity_id": "opp-06",
+          "outcome": "useful_effect"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": null,
+          "effect_end_ms": null,
+          "expiry_ms": 790,
+          "onset_ms": 700,
+          "opportunity_id": "opp-07",
+          "outcome": "miss_expired"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": null,
+          "effect_end_ms": null,
+          "expiry_ms": 890,
+          "onset_ms": 800,
+          "opportunity_id": "opp-08",
+          "outcome": "miss_expired"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": null,
+          "effect_end_ms": null,
+          "expiry_ms": 990,
+          "onset_ms": 900,
+          "opportunity_id": "opp-09",
+          "outcome": "miss_expired"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 1000,
+          "effect_end_ms": 1010,
+          "expiry_ms": 1090,
+          "onset_ms": 1000,
+          "opportunity_id": "opp-10",
+          "outcome": "useful_effect"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 1100,
+          "effect_end_ms": 1110,
+          "expiry_ms": 1190,
+          "onset_ms": 1100,
+          "opportunity_id": "opp-11",
+          "outcome": "useful_effect"
+        }
+      ],
+      "summary": {
+        "completed_cycle_p95_ms": 10,
+        "handled_opportunity_fraction": 0.4166666666666667,
+        "miss_expired_count": 7,
+        "opportunity_count": 12,
+        "safe_stop_count": 0,
+        "unknown_clock_count": 0,
+        "useful_effect_count": 5,
+        "useful_opportunity_coverage": 0.4166666666666667
+      }
+    },
+    "true_useful_fast": {
+      "busy_intervals": [],
+      "controller": "true_useful_fast",
+      "declared_cycle_latency_ms": 35,
+      "opportunities": [
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 0,
+          "effect_end_ms": 35,
+          "expiry_ms": 90,
+          "onset_ms": 0,
+          "opportunity_id": "opp-00",
+          "outcome": "useful_effect"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 100,
+          "effect_end_ms": 135,
+          "expiry_ms": 190,
+          "onset_ms": 100,
+          "opportunity_id": "opp-01",
+          "outcome": "useful_effect"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 200,
+          "effect_end_ms": 235,
+          "expiry_ms": 290,
+          "onset_ms": 200,
+          "opportunity_id": "opp-02",
+          "outcome": "useful_effect"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 300,
+          "effect_end_ms": 335,
+          "expiry_ms": 390,
+          "onset_ms": 300,
+          "opportunity_id": "opp-03",
+          "outcome": "useful_effect"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 400,
+          "effect_end_ms": 435,
+          "expiry_ms": 490,
+          "onset_ms": 400,
+          "opportunity_id": "opp-04",
+          "outcome": "useful_effect"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 500,
+          "effect_end_ms": 535,
+          "expiry_ms": 590,
+          "onset_ms": 500,
+          "opportunity_id": "opp-05",
+          "outcome": "useful_effect"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 600,
+          "effect_end_ms": 635,
+          "expiry_ms": 690,
+          "onset_ms": 600,
+          "opportunity_id": "opp-06",
+          "outcome": "useful_effect"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 700,
+          "effect_end_ms": 735,
+          "expiry_ms": 790,
+          "onset_ms": 700,
+          "opportunity_id": "opp-07",
+          "outcome": "useful_effect"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 800,
+          "effect_end_ms": 835,
+          "expiry_ms": 890,
+          "onset_ms": 800,
+          "opportunity_id": "opp-08",
+          "outcome": "useful_effect"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 900,
+          "effect_end_ms": 935,
+          "expiry_ms": 990,
+          "onset_ms": 900,
+          "opportunity_id": "opp-09",
+          "outcome": "useful_effect"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 1000,
+          "effect_end_ms": 1035,
+          "expiry_ms": 1090,
+          "onset_ms": 1000,
+          "opportunity_id": "opp-10",
+          "outcome": "useful_effect"
+        },
+        {
+          "clock_aligned": true,
+          "decision_start_ms": 1100,
+          "effect_end_ms": 1135,
+          "expiry_ms": 1190,
+          "onset_ms": 1100,
+          "opportunity_id": "opp-11",
+          "outcome": "useful_effect"
+        }
+      ],
+      "summary": {
+        "completed_cycle_p95_ms": 35,
+        "handled_opportunity_fraction": 1.0,
+        "miss_expired_count": 0,
+        "opportunity_count": 12,
+        "safe_stop_count": 0,
+        "unknown_clock_count": 0,
+        "useful_effect_count": 12,
+        "useful_opportunity_coverage": 1.0
+      }
+    },
+    "unsynchronized_clock_control": {
+      "busy_intervals": [],
+      "controller": "unsynchronized_clock_control",
+      "declared_cycle_latency_ms": 10,
+      "opportunities": [
+        {
+          "clock_aligned": false,
+          "decision_start_ms": null,
+          "effect_end_ms": null,
+          "expiry_ms": 90,
+          "onset_ms": 0,
+          "opportunity_id": "opp-00",
+          "outcome": "unknown_clock"
+        },
+        {
+          "clock_aligned": false,
+          "decision_start_ms": null,
+          "effect_end_ms": null,
+          "expiry_ms": 190,
+          "onset_ms": 100,
+          "opportunity_id": "opp-01",
+          "outcome": "unknown_clock"
+        }
+      ],
+      "summary": {
+        "completed_cycle_p95_ms": null,
+        "handled_opportunity_fraction": 0.0,
+        "miss_expired_count": 0,
+        "opportunity_count": 2,
+        "safe_stop_count": 0,
+        "unknown_clock_count": 2,
+        "useful_effect_count": 0,
+        "useful_opportunity_coverage": 0.0
+      }
+    }
+  },
+  "schedule": [
+    {
+      "expiry_ms": 90,
+      "onset_ms": 0,
+      "opportunity_id": "opp-00"
+    },
+    {
+      "expiry_ms": 190,
+      "onset_ms": 100,
+      "opportunity_id": "opp-01"
+    },
+    {
+      "expiry_ms": 290,
+      "onset_ms": 200,
+      "opportunity_id": "opp-02"
+    },
+    {
+      "expiry_ms": 390,
+      "onset_ms": 300,
+      "opportunity_id": "opp-03"
+    },
+    {
+      "expiry_ms": 490,
+      "onset_ms": 400,
+      "opportunity_id": "opp-04"
+    },
+    {
+      "expiry_ms": 590,
+      "onset_ms": 500,
+      "opportunity_id": "opp-05"
+    },
+    {
+      "expiry_ms": 690,
+      "onset_ms": 600,
+      "opportunity_id": "opp-06"
+    },
+    {
+      "expiry_ms": 790,
+      "onset_ms": 700,
+      "opportunity_id": "opp-07"
+    },
+    {
+      "expiry_ms": 890,
+      "onset_ms": 800,
+      "opportunity_id": "opp-08"
+    },
+    {
+      "expiry_ms": 990,
+      "onset_ms": 900,
+      "opportunity_id": "opp-09"
+    },
+    {
+      "expiry_ms": 1090,
+      "onset_ms": 1000,
+      "opportunity_id": "opp-10"
+    },
+    {
+      "expiry_ms": 1190,
+      "onset_ms": 1100,
+      "opportunity_id": "opp-11"
+    }
+  ],
+  "schema": "issue5694-opportunity-clock-raw-v1"
+}
+
