@@ -1,0 +1,17 @@
+{
+  "allocation": "x11-region-frame-move-4439-localdocker-v1-20260927",
+  "attempt": "formal-invocation-01",
+  "status": "STOP_BEFORE_CASE_0_OUTPUT_DIRECTORY_ALREADY_EXISTS",
+  "formal_invocations": 1,
+  "formal_rows": 0,
+  "construction_rows": 9,
+  "runner_sha256": "6c7d86c6ffc3c3bbcce45086fe52572d36267b5cc5b0647711a3db43c3f2d17c",
+  "auditor_sha256": "a3cdb1ea959deccca87b9a7f2387f754cedd624426caf358cdf5726b13743c97",
+  "docker_image_id": "sha256:1c334ebd65f4b1bfe81cc84c90780ea01e6f70c0f7b18cd89c09e03406460238",
+  "command_shape": "docker run --rm --pull=never --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=128m --cpus=1 --memory=512m --pids-limit=64 --security-opt=no-new-privileges --user 0:0 -v <source>:/study:ro -v <existing-host-output-directory>:/out agent-interface-string8-4638:candidate-v1 python /study/runner.py --mode formal --out /out",
+  "exit_code": 1,
+  "diagnostic": "runner.py called Path('/out').mkdir(parents=True, exist_ok=False), but Docker had already created /out as the bind-mount target. FileExistsError occurred before the first scheduled case and before raw.jsonl creation.",
+  "raw_file_created": false,
+  "x11_sessions_started": 0,
+  "disposition": "STOP; no retry or replacement within this frozen allocation. The runner, auditor, image and hypothesis were unchanged. A new successor allocation may correct the host/container output-directory mount contract; it must retain this STOP record unchanged and use a distinct additive path."
+}
