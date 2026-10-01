@@ -1,6 +1,7 @@
 """One-shot candidate for the finite same-cohort negative-control T0."""
 import hashlib
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -12,7 +13,20 @@ def load(name):
 
 
 def sha(path):
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    raw = path.read_bytes().replace(b"\r\n", b"\n")
+    return hashlib.sha256(raw.replace(b"\n", b"\r\n")).hexdigest()
+
+
+def source_sha():
+    supplied = os.environ.get("CANDIDATE_SOURCE")
+    if supplied is None:
+        return sha(ROOT / "candidate.py")
+    raw = supplied.encode("utf-8").replace(b"\r\n", b"\n")
+    actual = hashlib.sha256(raw.replace(b"\n", b"\r\n")).hexdigest()
+    expected = os.environ.get("FROZEN_CANDIDATE_SHA256")
+    if expected and expected != actual:
+        raise RuntimeError("candidate source environment hash mismatch")
+    return actual
 
 
 def mean(values):
@@ -59,7 +73,7 @@ def main():
     rows = load("reported_rows.json")
     refs = load("reference_deck.json")
     freeze = load("FREEZE.json")
-    print(json.dumps({"kind": "run", "freeze_id": freeze["freeze_id"], "candidate_sha256": sha(ROOT / "candidate.py"), "reported_rows_sha256": sha(ROOT / "reported_rows.json"), "reference_deck_sha256": sha(ROOT / "reference_deck.json")}, sort_keys=True))
+    print(json.dumps({"kind": "run", "freeze_id": freeze["freeze_id"], "candidate_sha256": source_sha(), "reported_rows_sha256": sha(ROOT / "reported_rows.json"), "reference_deck_sha256": sha(ROOT / "reference_deck.json")}, sort_keys=True))
     for row in rows:
         print(json.dumps(row, sort_keys=True))
     for ref in refs:
