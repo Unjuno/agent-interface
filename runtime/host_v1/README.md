@@ -399,3 +399,18 @@ the existing guarded input's read-only app cue composition. `policy` requires
 latches STOP while returning original evidence, even if input says completed.
 Pending/rejected/unstable responses also stop ordinary calls; close remains
 available. Matched titles are app conventions, not task completion or authority.
+
+
+`presentOriginal(attempt)` explicitly presents one already delivered, retained
+response through the configured primary sinks. It always requests the original
+full image from the existing host, even when reviewed-image reuse is enabled.
+It sends no tool request, captures no new frame and never retries input. The host
+checks the retained reply digest; changed bytes or an unknown attempt fail closed.
+Primary STOP stays sticky, while the host's own evidence/busy/closed state can
+still prevent presentation. This local review aid cannot establish freshness,
+task success or authority. Sink callbacks are snapshotted before the host call.
+The method returns the host presentation completion, not a new response/attempt.
+Original response and review records are preserved; presentation events record
+the same source identity. It does not overwrite a prior mistaken review, record
+a correction automatically, or permit a second ordinary `review` at the same
+exclusive receipt path. No automatic reread policy or efficiency claim is added.

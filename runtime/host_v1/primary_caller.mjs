@@ -198,6 +198,21 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
         throw error;
       }
     },
+    async presentOriginal(...values) {
+      const [attempt] = values;
+      let callbacks;
+      try { callbacks = { text: sinks?.text, image: sinks?.image }; }
+      catch (error) { stop('original presentation sink snapshot failure'); throw error; }
+      if (values.length !== 1 || !Number.isSafeInteger(attempt) || attempt < 1 ||
+          typeof callbacks.text !== 'function' || typeof callbacks.image !== 'function') {
+        stop('invalid original presentation arguments or sinks');
+        throw TypeError('invalid original presentation arguments or sinks');
+      }
+      // Local original evidence only, never a new observation or tool request.
+      // The host checks the retained reply's identity and enforces its own STOP.
+      try { return await host.present(attempt, callbacks, { forceImage: true }); }
+      catch (error) { stop('original presentation failure'); throw error; }
+    },
     async acknowledgeText(attempt, attribution) {
       if (!Number.isSafeInteger(attempt) || attempt < 1 ||
           !['task', 'phase', 'reason'].every(k => typeof attribution?.[k] === 'string' && attribution[k].trim())) {

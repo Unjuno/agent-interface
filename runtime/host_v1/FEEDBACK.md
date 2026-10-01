@@ -76,6 +76,22 @@ If the perceived image seems blank or contradicts the metadata, retain the
 original file and inspect the same bytes again before attributing the problem
 to capture. Do not silently replace the image or replay the operation.
 
+To explicitly deliver that same retained response again through the primary
+sinks, use:
+
+```js
+await primary.presentOriginal(response.attempt);
+```
+
+This is local presentation of the original source, not a fresh observation.
+It sends no tool request and preserves both the original reply and prior review.
+It can be requested while primary STOP remains sticky; a blocked or closed host
+can still refuse it. It neither clears STOP nor updates source time or authority.
+Presentation is not a corrected review record: retain the first interpretation
+and any later correction separately. Repeating `primary.review` for an attempt
+whose exclusive receipt already exists fails; do not use it to overwrite history.
+No repeated-read voting or automatic model critique is implied.
+
 ## Keep execution, cue, and task effect separate
 
 Inspect `response.result.isError`, the original execution/release evidence,
