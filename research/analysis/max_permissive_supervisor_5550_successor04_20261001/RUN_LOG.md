@@ -56,4 +56,7 @@ docker --context orbstack run --rm --platform linux/arm64 --network none \
 - Host time after both containers: `2026-10-01T00:51:57Z`.
 - `docker --context orbstack ps --quiet`: empty.
 - Targeted local tests: model 7/7; prelaunch guard 14/14.
+- Analysis-index CI initially failed because this new retained result directory
+  was absent from `research/analysis/README.md`; generated index refreshed
+  locally to 254 entries and `python research/analysis/check_index.py` passed.
 - No retry; no other container started by this allocation. Formal lane released.
