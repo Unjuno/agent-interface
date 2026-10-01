@@ -80,3 +80,7 @@ The large number of child directories is intentional retained evidence. Reposito
 ## K2M6 clock/lease boundary — remote raw publication HOLD
 
 - [#3880 / Draft PR #4440 archival qualification](clock_ipc_asymmetry_k2m6_v1/ARCHIVAL_QUALIFICATION.md): six exact original report/proof/verification/publication blobs, 29,842 bytes. The local allocation's reported clock-asymmetry result and `HOLD_REMOTE_RAW_INCOMPLETE` are retained separately; the 321-file canonical ZIP/patch are missing, so this archive does not independently reproduce the raw audit. This does not satisfy #3880's distinct OrbStack gate; keep its original Draft/branch and Issue open.
+
+## Retained preformal temporal design — formal not started
+
+- [X11 history depth #2542](x11_reversal_history_depth_2542_v1/ARCHIVAL_QUALIFICATION.md) — exact preformal ancestry, environment, freeze, plan and excluded construction summary retained; formal_started=false/reruns=0. Missing source and construction audit bytes remain explicit; no formal outcome is claimed.
