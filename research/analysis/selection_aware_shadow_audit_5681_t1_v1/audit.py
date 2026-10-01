@@ -127,8 +127,10 @@ def _core(raw):
     null = cases.get("label_independent_null", {})
     if event.get("full_prevalence") == event.get("delivered_prevalence"):
         errors.append("event_dependent: delivered-only bias was not demonstrated")
-    if null.get("units") and len({row.get("inclusion_probability") for row in null["units"]}) != 1:
-        errors.append("label_independent_null: audit probability depends on label")
+    null_units = null.get("units")
+    if isinstance(null_units, list) and all(isinstance(row, dict) for row in null_units):
+        if null_units and len({row.get("inclusion_probability") for row in null_units}) != 1:
+            errors.append("label_independent_null: audit probability depends on label")
 
     transient = cases.get("uncaptured_transient")
     if not isinstance(transient, dict):
