@@ -45,7 +45,7 @@ def main():
         print("STOP_OUTPUT_NOT_EMPTY", file=sys.stderr)
         return 2
     out.mkdir(parents=True, exist_ok=True)
-    result = {"allocation": "SURROGATE-ENDPOINT-GATE-5686-T0-GHA-20261001-03",
+    result = {"allocation": "SURROGATE-ENDPOINT-GATE-5686-T0-GHA-20261001-04",
               "role": args.role, "image_ref": IMAGE, "expected_platform": "linux/amd64",
               "host_python": sys.version, "host_platform": platform.platform(),
               "workflow_run_id": os.environ.get("GITHUB_RUN_ID"),
@@ -91,9 +91,11 @@ def main():
             command += ["-c", container_code]
         docker = ["docker", "run", "--pull=never", "--rm", "--name", name,
                   "--cidfile", str(out / "container.cid"), "--platform", "linux/amd64",
+                  "--user", f"{os.getuid()}:{os.getgid()}",
                   "--network", "none", "--read-only", "--cpus", "1", "--memory", "536870912",
                   "--pids-limit", "64", "--cap-drop", "ALL", "--security-opt", "no-new-privileges",
-                  "--tmpfs", "/tmp:rw,nosuid,nodev,noexec,size=16777216", "-e", "PYTHONDONTWRITEBYTECODE=1"]
+                  "--tmpfs", f"/tmp:rw,nosuid,nodev,noexec,size=16777216,uid={os.getuid()},gid={os.getgid()}",
+                  "-e", "PYTHONDONTWRITEBYTECODE=1"]
         for source, target in source_mounts:
             docker += ["--mount", f"type=bind,source={source},target={target},readonly" if target != "/out" else f"type=bind,source={source},target={target}"]
         docker += [IMAGE, *command]
