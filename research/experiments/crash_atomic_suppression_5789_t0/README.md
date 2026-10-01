@@ -2,8 +2,10 @@
 
 This package tests only a finite single-process `SIGKILL`/restart fixture. It
 does not test power loss, multi-writer serialization, an application runtime,
-expiry timing/garbage collection, GUI effects, or product safety. The schedule
-tests explicit retirement with a retained tombstone, not GC. The host matrix is construction evidence only;
+physical database-file compaction, GUI effects, or product safety. The schedule
+uses a deterministic TTL boundary, pre/expired-pre-GC/post-GC probes, a
+pre-expiry GC no-op, and transactional logical GC that retains a denying
+tombstone; it makes no physical compaction claim. The host matrix is construction evidence only;
 formal candidate and auditor counts remain 0/0 until an explicit isolated
 Obstac allocation is recorded on Issue #5795.
 

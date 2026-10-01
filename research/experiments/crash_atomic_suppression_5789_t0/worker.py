@@ -33,8 +33,14 @@ def connect(db_path: Path) -> sqlite3.Connection:
     db.execute(
         "CREATE TABLE IF NOT EXISTS suppression ("
         "identity TEXT PRIMARY KEY, fingerprint TEXT NOT NULL, target TEXT NOT NULL, "
-        "label TEXT NOT NULL, generation INTEGER NOT NULL, disposition TEXT NOT NULL)"
+        "label TEXT NOT NULL, generation INTEGER NOT NULL, disposition TEXT NOT NULL, "
+        "expires_at INTEGER NOT NULL DEFAULT 0, retired_at INTEGER)"
     )
+    columns = {row[1] for row in db.execute("PRAGMA table_info(suppression)")}
+    if "expires_at" not in columns:
+        db.execute("ALTER TABLE suppression ADD COLUMN expires_at INTEGER NOT NULL DEFAULT 0")
+    if "retired_at" not in columns:
+        db.execute("ALTER TABLE suppression ADD COLUMN retired_at INTEGER")
     db.commit()
     return db
 
@@ -78,11 +84,11 @@ def persist(args: argparse.Namespace) -> None:
     db = connect(root / "state.sqlite3")
     db.execute("BEGIN IMMEDIATE")
     db.execute(
-        "INSERT INTO suppression VALUES (?, ?, ?, ?, ?, ?) "
+        "INSERT INTO suppression VALUES (?, ?, ?, ?, ?, ?, ?, NULL) "
         "ON CONFLICT(identity) DO UPDATE SET fingerprint=excluded.fingerprint, "
         "target=excluded.target, label=excluded.label, generation=excluded.generation, "
-        "disposition=excluded.disposition",
-        row,
+        "disposition=excluded.disposition, expires_at=excluded.expires_at, retired_at=NULL",
+        (*row, args.now + args.ttl),
     )
     barrier("PRE_COMMIT", policy="C")
     db.commit()
@@ -99,13 +105,19 @@ def mutate(args: argparse.Namespace) -> None:
         disposition, generation = "RETIRED", args.generation
     else:
         raise SystemExit("STOP_UNKNOWN_MUTATION")
-    changed = db.execute(
-        "UPDATE suppression SET disposition=?, generation=? WHERE identity=?",
-        (disposition, generation, args.identity),
-    ).rowcount
+    if args.action == "reactivate":
+        changed = db.execute(
+            "UPDATE suppression SET disposition=?, generation=?, expires_at=?, retired_at=NULL WHERE identity=?",
+            (disposition, generation, args.now + args.ttl, args.identity),
+        ).rowcount
+    else:
+        changed = db.execute(
+            "UPDATE suppression SET disposition=?, generation=?, retired_at=? WHERE identity=?",
+            (disposition, generation, args.now, args.identity),
+        ).rowcount
     db.commit()
     db.close()
-    event("MUTATION_ACKNOWLEDGED", action=args.action, changed=changed)
+    event("MUTATION_ACKNOWLEDGED", action=args.action, changed=changed, now=args.now)
 
 
 def probe(args: argparse.Namespace) -> None:
@@ -135,7 +147,7 @@ def probe(args: argparse.Namespace) -> None:
     try:
         db = sqlite3.connect(f"file:{root / 'state.sqlite3'}?mode=ro", uri=True, timeout=1)
         found = db.execute(
-            "SELECT fingerprint, target, label, generation, disposition "
+            "SELECT fingerprint, target, label, generation, disposition, expires_at, retired_at "
             "FROM suppression WHERE identity=?",
             (args.identity,),
         ).fetchone()
@@ -150,11 +162,15 @@ def probe(args: argparse.Namespace) -> None:
         else:
             event("PROBE", disposition="UNKNOWN", reason="no_record_without_fresh_evidence")
         return
-    fingerprint, target, label, generation, disposition = found
+    fingerprint, target, label, generation, disposition, expires_at, retired_at = found
     if (fingerprint, target, label) != (args.fingerprint, args.target, args.label):
         event("PROBE", disposition="UNKNOWN", reason="identity_payload_mismatch")
-    elif disposition == "RETIRED" and generation == args.evidence_generation:
+    elif disposition == "RETIRED" and retired_at is not None:
         event("PROBE", disposition="DENY_RETIRED", reason="retirement_tombstone")
+    elif disposition == "SUPPRESSED" and args.now < expires_at and generation == args.evidence_generation:
+        event("PROBE", disposition="DENY_SUPPRESSED", reason="unexpired_generation_match", now=args.now, expires_at=expires_at)
+    elif disposition == "SUPPRESSED" and args.now >= expires_at:
+        event("PROBE", disposition="UNKNOWN", reason="expired_pending_gc", now=args.now, expires_at=expires_at)
     elif disposition == "SUPPRESSED" and generation == args.evidence_generation:
         event("PROBE", disposition="DENY_SUPPRESSED", reason="generation_match")
     elif disposition == "ACTIVE" and generation == args.evidence_generation and args.fresh_evidence:
@@ -165,10 +181,40 @@ def probe(args: argparse.Namespace) -> None:
         event("PROBE", disposition="UNKNOWN", reason="generation_or_disposition_unresolved")
 
 
+def garbage_collect(args: argparse.Namespace) -> None:
+    db = connect(Path(args.root) / "state.sqlite3")
+    db.execute("BEGIN IMMEDIATE")
+    changed = db.execute(
+        "UPDATE suppression SET disposition='RETIRED', retired_at=? "
+        "WHERE identity=? AND disposition='SUPPRESSED' AND expires_at<=?",
+        (args.now, args.identity, args.now),
+    ).rowcount
+    retained = db.execute(
+        "SELECT disposition, retired_at FROM suppression WHERE identity=?", (args.identity,)
+    ).fetchone()
+    db.commit()
+    db.close()
+    event("GC_ACKNOWLEDGED", changed=changed, now=args.now,
+          retained=retained is not None, disposition=retained[0] if retained else None,
+          retired_at=retained[1] if retained else None)
+
+
+def tombstone_state(args: argparse.Namespace) -> None:
+    db = connect(Path(args.root) / "state.sqlite3")
+    row = db.execute(
+        "SELECT disposition, expires_at, retired_at FROM suppression WHERE identity=?",
+        (args.identity,),
+    ).fetchone()
+    db.close()
+    event("TOMBSTONE_STATE", retained=row is not None,
+          disposition=row[0] if row else None, expires_at=row[1] if row else None,
+          retired_at=row[2] if row else None)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="command", required=True)
-    for command in ("persist", "probe", "mutate"):
+    for command in ("persist", "probe", "mutate", "gc", "inspect"):
         item = sub.add_parser(command)
         item.add_argument("--policy", choices=("A", "B", "C"), default="C")
         if command == "mutate":
@@ -181,8 +227,11 @@ def main() -> None:
         item.add_argument("--generation", type=int, default=1)
         item.add_argument("--evidence-generation", type=int, default=1)
         item.add_argument("--fresh-evidence", action="store_true")
+        item.add_argument("--now", type=int, default=100)
+        item.add_argument("--ttl", type=int, default=50)
     args = parser.parse_args()
-    {"persist": persist, "probe": probe, "mutate": mutate}[args.command](args)
+    {"persist": persist, "probe": probe, "mutate": mutate, "gc": garbage_collect,
+     "inspect": tombstone_state}[args.command](args)
 
 
 if __name__ == "__main__":

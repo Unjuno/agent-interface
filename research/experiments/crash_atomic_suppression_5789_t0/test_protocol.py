@@ -24,7 +24,7 @@ class ProtocolConstructionTests(unittest.TestCase):
                 "new_generation_same_fingerprint",
                 "changed_target_same_label",
                 "reactivation",
-                "retirement_tombstone",
+                "expiry_gc_tombstone",
                 "malformed_record",
                 "repeated_restart",
             },

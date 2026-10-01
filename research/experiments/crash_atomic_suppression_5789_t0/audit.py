@@ -26,7 +26,7 @@ SCHEDULE = (
     ("new_generation_same_fingerprint", "C", None, "ALLOW_FRESH", "ACKNOWLEDGED"),
     ("changed_target_same_label", "C", None, "UNKNOWN", "ACKNOWLEDGED"),
     ("reactivation", "C", None, "ALLOW_FRESH", "ACKNOWLEDGED"),
-    ("retirement_tombstone", "C", None, "DENY_RETIRED", "ACKNOWLEDGED"),
+    ("expiry_gc_tombstone", "C", None, "EXPIRY_GC_SEQUENCE", "ACKNOWLEDGED"),
     ("malformed_record", "C", None, "UNKNOWN", "NOT_ACKNOWLEDGED"),
     ("repeated_restart", "C", None, "DENY_SUPPRESSED", "ACKNOWLEDGED"),
 )
@@ -93,7 +93,8 @@ def audit_rows(rows: list[dict[str, object]]) -> dict[str, object]:
         if row.get("ack_state") != expected_ack:
             errors.append(f"{label}:ack_state")
         probes = row.get("probes")
-        expected_list = [expected, expected] if case == "repeated_restart" else [expected]
+        expected_list = (["DENY_SUPPRESSED", "UNKNOWN", "DENY_RETIRED"] if case == "expiry_gc_tombstone"
+                         else [expected, expected] if case == "repeated_restart" else [expected])
         if not isinstance(probes, list) or len(probes) != len(expected_list):
             errors.append(f"{label}:probe_count")
             observed: list[object] = []
@@ -111,10 +112,29 @@ def audit_rows(rows: list[dict[str, object]]) -> dict[str, object]:
             mutation = row.get("mutation")
             if not isinstance(mutation, dict) or mutation.get("event") != "MUTATION_ACKNOWLEDGED" or mutation.get("changed") != 1:
                 errors.append(f"{label}:reactivation_receipt")
-        if case == "retirement_tombstone":
-            mutation = row.get("mutation")
-            if not isinstance(mutation, dict) or mutation.get("event") != "MUTATION_ACKNOWLEDGED" or mutation.get("changed") != 1:
-                errors.append(f"{label}:retirement_receipt")
+        if case == "expiry_gc_tombstone":
+            ttl = row.get("ttl")
+            gc = row.get("gc")
+            pre_gc = row.get("pre_expiry_gc")
+            pre_state = row.get("pre_expiry_state")
+            pre = row.get("pre_expiry_probe")
+            post = row.get("post_expiry_probe")
+            if ttl != {"issued_at": 100, "duration": 50, "expires_at": 150,
+                       "pre_probe_at": 149, "gc_at": 150, "post_probe_at": 150}:
+                errors.append(f"{label}:frozen_ttl_clock")
+            if not isinstance(pre, dict) or pre.get("disposition") != "DENY_SUPPRESSED" or pre.get("reason") != "unexpired_generation_match":
+                errors.append(f"{label}:pre_expiry_probe")
+            expired_probe = row.get("expired_pre_gc_probe")
+            if not isinstance(expired_probe, dict) or expired_probe.get("disposition") != "UNKNOWN" or expired_probe.get("reason") != "expired_pending_gc":
+                errors.append(f"{label}:expired_pre_gc_probe")
+            if not isinstance(pre_gc, dict) or pre_gc.get("event") != "GC_ACKNOWLEDGED" or pre_gc.get("changed") != 0 or pre_gc.get("retained") is not True or pre_gc.get("disposition") != "SUPPRESSED":
+                errors.append(f"{label}:pre_expiry_gc_control")
+            if not isinstance(pre_state, dict) or pre_state.get("event") != "TOMBSTONE_STATE" or pre_state.get("retained") is not True or pre_state.get("disposition") != "SUPPRESSED" or pre_state.get("expires_at") != 150 or pre_state.get("retired_at") is not None:
+                errors.append(f"{label}:pre_expiry_state")
+            if not isinstance(gc, dict) or gc.get("event") != "GC_ACKNOWLEDGED" or gc.get("changed") != 1 or gc.get("retained") is not True or gc.get("disposition") != "RETIRED" or gc.get("retired_at") != 150:
+                errors.append(f"{label}:gc_tombstone_retention")
+            if not isinstance(post, dict) or post.get("disposition") != "DENY_RETIRED" or post.get("reason") != "retirement_tombstone":
+                errors.append(f"{label}:post_gc_probe")
 
         pass_row = observed == expected_list and row.get("ack_state") == expected_ack
         if policy == "C":

@@ -139,6 +139,7 @@ def probe(
     fields: dict[str, str] | None = None,
     generation: int = 1,
     fresh: bool = False,
+    now: int = 100,
 ) -> dict[str, object]:
     kwargs = dict(fields or IDENTITY_FIELDS)
     command = child_command(
@@ -149,6 +150,7 @@ def probe(
         **kwargs,
         evidence_generation=generation,
         fresh_evidence=fresh,
+        now=now,
     )
     proc = subprocess.run(command, capture_output=True, text=True, timeout=TIMEOUT_SECONDS)
     if proc.returncode != 0:
@@ -159,16 +161,40 @@ def probe(
     return result
 
 
-def mutate(root: Path, ident: str, action: str, generation: int) -> dict[str, object]:
+def mutate(root: Path, ident: str, action: str, generation: int, *, now: int = 100, ttl: int = 50) -> dict[str, object]:
     proc = subprocess.run(
         child_command(action="mutate", policy="C", root=root, ident=ident, mutation=action,
-                      generation=generation, **IDENTITY_FIELDS),
+                      generation=generation, now=now, ttl=ttl, **IDENTITY_FIELDS),
         capture_output=True,
         text=True,
         timeout=TIMEOUT_SECONDS,
     )
     if proc.returncode:
         raise RuntimeError(f"STOP_MUTATION_EXIT:{proc.returncode}:{proc.stderr}")
+    return json.loads(proc.stdout)
+
+
+def garbage_collect(root: Path, ident: str, *, now: int) -> dict[str, object]:
+    proc = subprocess.run(
+        child_command("gc", "C", root, ident, now=now, **IDENTITY_FIELDS),
+        capture_output=True,
+        text=True,
+        timeout=TIMEOUT_SECONDS,
+    )
+    if proc.returncode:
+        raise RuntimeError(f"STOP_GC_EXIT:{proc.returncode}:{proc.stderr}")
+    return json.loads(proc.stdout)
+
+
+def inspect_state(root: Path, ident: str) -> dict[str, object]:
+    proc = subprocess.run(
+        child_command("inspect", "C", root, ident, **IDENTITY_FIELDS),
+        capture_output=True,
+        text=True,
+        timeout=TIMEOUT_SECONDS,
+    )
+    if proc.returncode:
+        raise RuntimeError(f"STOP_INSPECT_EXIT:{proc.returncode}:{proc.stderr}")
     return json.loads(proc.stdout)
 
 
@@ -217,9 +243,18 @@ def run_row(spec: dict[str, str], scratch: Path) -> dict[str, object]:
     elif case == "reactivation":
         row["mutation"] = mutate(root, ident, "reactivate", 2)
         row["probes"] = [probe(policy, root, ident, generation=2, fresh=True)]
-    elif case == "retirement_tombstone":
-        row["mutation"] = mutate(root, ident, "retire", 1)
-        row["probes"] = [probe(policy, root, ident, generation=1, fresh=False)]
+    elif case == "expiry_gc_tombstone":
+        issued_at, ttl, before_expiry, at_expiry = 100, 50, 149, 150
+        row["ttl"] = {"issued_at": issued_at, "duration": ttl,
+                      "expires_at": issued_at + ttl, "pre_probe_at": before_expiry,
+                      "gc_at": at_expiry, "post_probe_at": at_expiry}
+        row["pre_expiry_probe"] = probe(policy, root, ident, generation=1, fresh=False, now=before_expiry)
+        row["expired_pre_gc_probe"] = probe(policy, root, ident, generation=1, fresh=False, now=at_expiry)
+        row["pre_expiry_gc"] = garbage_collect(root, ident, now=before_expiry)
+        row["pre_expiry_state"] = inspect_state(root, ident)
+        row["gc"] = garbage_collect(root, ident, now=at_expiry)
+        row["post_expiry_probe"] = probe(policy, root, ident, generation=1, fresh=False, now=at_expiry)
+        row["probes"] = [row["pre_expiry_probe"], row["expired_pre_gc_probe"], row["post_expiry_probe"]]
     elif case == "repeated_restart":
         row["probes"] = [probe(policy, root, ident), probe(policy, root, ident)]
     else:

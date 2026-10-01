@@ -20,13 +20,13 @@ result for H. Formal candidate and formal auditor counts remain 0/0.
 
 ## Scope correction retained before formal execution
 
-An independent read-only review noted that the originally named `expiry_gc`
-case only performed explicit retirement and checked that the tombstone denied
-admission; it did not execute expiry or garbage collection. Before any formal
-row, the frozen case was narrowed to `retirement_tombstone`, and FREEZE/README
-now explicitly state that expiry timing and GC remain untested. The host matrix
-rerun below uses the corrected schedule hash. No earlier formal result exists
-to alter.
+An independent review caught a scope mismatch: the initial `expiry_gc` case
+only retired a row without advancing time or collecting expired state. Before
+any formal row, the deterministic expiry/GC path was implemented: TTL
+100→150, probes before expiry, after expiry/before GC, and after GC; pre-expiry
+GC no-op; transactional logical GC at 150; and retained-tombstone inspection.
+Physical database-file compaction remains out of scope. The host matrix rerun
+below verifies the corrected schedule; no formal result exists to alter.
 
 ## Local checks
 
@@ -57,6 +57,16 @@ formal Obstac candidate, and excluded from every formal denominator. Raw bytes
 were held in an ephemeral temp directory and are not represented as a retained
 formal result. Do not cite the host pass as evidence that the formal hypothesis
 passed.
+
+The corrected `expiry_gc_tombstone` row was independently inspected in the
+host rehearsal: at fixture time 149, the suppression denied and pre-expiry GC
+changed 0 rows while retaining the live row; at exact expiry 150, the
+pre-GC probe returned UNKNOWN; GC changed 1 row to RETIRED with `retired_at=150`
+and retained it; the post-GC probe returned DENY_RETIRED. The raw-only audit
+matched all 15 rows, including 10/10 policy-C rows, with no errors. A negative
+control that falsified `gc.retained` was rejected by the separate audit CLI.
+This remains host-only construction evidence and was not added to any formal
+denominator.
 
 ## Preserved construction-command errors
 
@@ -95,6 +105,10 @@ passed.
   in-process `main()` correctly reads the current environment. The test now
   applies/restores those two fake values around the call; its Docker subprocess
   remains mocked and all endpoint assertions pass.
+- The first host matrix after adding expiry columns stopped when the child SQL
+  INSERT still supplied six values for the expanded row. The one row INSERT was
+  corrected before further work; the complete matrix then passed. That STOP
+  was host construction only, not a formal allocation outcome.
 
 ## Formal allocation status
 
