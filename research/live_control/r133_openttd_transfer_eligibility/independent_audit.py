@@ -57,6 +57,8 @@ def check(events_file: Path, observer_file: Path, posthoc_file: Path,
             and r.get("operation") == "button_down"]
     up = [r for r in rows if r.get("event") == "pointer_admission"
           and r.get("operation") == "button_up"]
+    if len(down) != 7 or len(up) != 0:
+        raise ValueError("independent button-down/up coverage mismatch")
     end_by_id = {r.get("id"): r for r in rows if r.get("event") == "terminal"}
     intervals = []
     for start in down:
