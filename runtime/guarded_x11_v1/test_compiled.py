@@ -48,6 +48,85 @@ def perceive(native,image): return {'phase':image.getpixel((0,0))[0],'present':T
 def verify(payload,native,image): return {'status':'succeeded','evidence_ref':payload['observation']['evidence_ref']}
 
 class CompiledX11Tests(unittest.TestCase):
+
+    def test_top_level_native_release_is_retained_on_pre_execution_refusal(self):
+        b=Bridge()
+        b.click=lambda *a,**k:{'status':'refused','error':'BACKEND_CONSTRAINT',
+          'program_execution_started':False,'program_emissions':0,'backend_emissions':0,
+          'release':{'verified':True,'keys_down':[],'buttons_down':[]},'recovery_required':False}
+        r=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+        self.assertEqual((r['outcome'],r['reason']),('SAFE_YIELD','execution_failed'))
+        terminal=next(row for name,row in b.saved if name.endswith('-terminal.json'))
+        self.assertEqual(terminal['release'],{'verified':True,'keys_down':[],'buttons_down':[]})
+        self.assertNotIn('input_dispatched',terminal)
+        self.assertEqual(r['completed_transitions'],0)
+    def test_no_input_flag_cannot_hide_top_level_unverified_or_held_release(self):
+        for release in ({'verified':False,'keys_down':[],'buttons_down':[]},
+                        {'verified':False,'keys_down':['CTRL'],'buttons_down':[]},
+                        {'verified':True,'keys_down':[],'buttons_down':['left']}):
+            with self.subTest(release=release):
+                b=Bridge();b.click=lambda *a,**k:{'status':'refused','input_dispatched':False,'release':release}
+                r=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+                self.assertEqual(r['outcome'],'RUNTIME_FAILED')
+                terminal=next(row for name,row in b.saved if name.endswith('-terminal.json'))
+                self.assertNotIn('input_dispatched',terminal)
+                self.assertEqual(terminal['release']['keys_down'],release['keys_down'])
+                self.assertEqual(terminal['release']['buttons_down'],release['buttons_down'])
+    def test_conflicting_native_release_receipts_do_not_certify_neutrality(self):
+        b=Bridge()
+        b.click=lambda *a,**k:{'status':'completed',
+          'execution':{'releases':[{'verified':True,'keys_down':[],'buttons_down':[]}]},
+          'release':{'verified':False,'keys_down':['CTRL'],'buttons_down':[]}}
+        r=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+        self.assertEqual(r['outcome'],'RUNTIME_FAILED')
+        terminal=next(row for name,row in b.saved if name.endswith('-terminal.json'))
+        self.assertEqual(terminal['release']['keys_down'],['CTRL'])
+    def test_session_recovery_prevents_success_despite_top_level_neutral_release(self):
+        b=Bridge()
+        def recovery(*a,**k):
+            b.session.recovery_required=True
+            return {'status':'completed','release':{'verified':True,'keys_down':[],'buttons_down':[]}}
+        b.click=recovery;r=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+        self.assertEqual(r['outcome'],'RUNTIME_FAILED')
+    def test_malformed_top_level_release_does_not_certify_abstention(self):
+        for release in (None,{}, {'verified':True,'keys_down':None,'buttons_down':[]}):
+            with self.subTest(release=release):
+                b=Bridge();b.click=lambda *a,**k:{'status':'refused','input_dispatched':False,'release':release}
+                r=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+                self.assertEqual(r['outcome'],'RUNTIME_FAILED')
+
+    def test_invalid_native_alias_fails_before_capture_or_callback(self):
+        for alias in ('sheet-context','Sheet','a'*33,'x y'):
+            with self.subTest(alias=alias):
+                b=Bridge();s=spec();s['symbols']['field']['target_reference']=alias
+                perception=Mock(side_effect=perceive);verifier=Mock(side_effect=verify)
+                with self.assertRaisesRegex(ValueError,'target alias'):
+                    run(b,s,bindings(),perceive=perception,verify_effect=verifier)
+                self.assertEqual(b.sequence,0);self.assertEqual(b.inputs,[])
+                perception.assert_not_called();verifier.assert_not_called()
+    def test_valid_native_aliases_preserve_symbolic_name_flexibility(self):
+        for alias in ('sheet_context','a'*32):
+            with self.subTest(alias=alias):
+                b=Bridge();s=spec();symbol=s['symbols'].pop('field')
+                symbol['target_reference']=alias
+                s['symbols']['symbol-with-hyphen']=symbol
+                for action in s['actions'].values():action['target_symbol']='symbol-with-hyphen'
+                r=run(b,s,bindings(),perceive=perceive,verify_effect=verify)
+                self.assertEqual(r['outcome'],'TASK_SUCCEEDED')
+    def test_boolean_phase_cannot_verify_integer_effect_or_dispatch_next_action(self):
+        b=Bridge()
+        def typed(native,image):
+            values=perceive(native,image)
+            if values['phase']==1:values['phase']=True
+            return values
+        verifier=Mock(side_effect=verify)
+        r=run(b,spec(),bindings(),perceive=typed,verify_effect=verifier)
+        self.assertEqual((r['outcome'],r['reason']),('SAFE_YIELD','effect_failed'))
+        self.assertEqual(r['completed_transitions'],1);self.assertEqual(r['pending_effect']['action'],'enter')
+        self.assertEqual(len(b.inputs),1);verifier.assert_not_called()
+        effects=[row for name,row in b.saved if name.endswith('-event.json') and row.get('event')=='effect_checked']
+        self.assertEqual(effects[-1]['status'],'failed')
+
     def test_live_adapter_selects_second_action_from_new_pixels_and_clamps_deadline(self):
         b=Bridge(); before=time.monotonic_ns()
         r=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
@@ -121,4 +200,52 @@ class CompiledX11Tests(unittest.TestCase):
         run(b,spec(),bindings_value,perceive=mutate,verify_effect=verify)
         self.assertEqual(b.inputs[0][2]['tail'],[])
 
+    def test_changed_binding_after_admission_is_no_input_safe_yield(self):
+        from unittest.mock import patch
+        b=Bridge(); original=_Adapter.admit
+        def changed(adapter,request):
+            result=original(adapter,request); b.binding_revision+=1; return result
+        with patch.object(_Adapter,'admit',changed):
+            r=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+        self.assertEqual((r['outcome'],r['reason']),('SAFE_YIELD','execution_refused'))
+        self.assertEqual(b.inputs,[]);self.assertEqual(r['completed_transitions'],0)
+        terminals=[row for name,row in b.saved if name.endswith('-terminal.json')]
+        self.assertIs(terminals[0]['input_dispatched'],False)
+        self.assertIs(terminals[0]['release']['verified'],False)
+    def test_changed_binding_before_second_input_preserves_verified_prefix(self):
+        from unittest.mock import patch
+        b=Bridge();original=_Adapter.admit
+        def changed(adapter,request):
+            result=original(adapter,request)
+            if b.phase==1:b.binding_revision+=1
+            return result
+        with patch.object(_Adapter,'admit',changed):
+            r=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+        self.assertEqual((r['outcome'],r['reason']),('SAFE_YIELD','execution_refused'))
+        self.assertEqual(len(b.inputs),1);self.assertEqual(r['completed_transitions'],1)
+        self.assertEqual(r['transitions'][0]['action'],'enter')
+    def test_native_guard_refusal_without_input_is_not_release_failure(self):
+        b=Bridge();b.click=lambda *a,**k:{'status':'refused','input_dispatched':False,'error':'STALE'}
+        r=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+        self.assertEqual(r['reason'],'execution_refused');self.assertEqual(b.inputs,[])
+    def test_no_input_attestation_does_not_hide_native_release_failure(self):
+        b=Bridge()
+        b.click=lambda *a,**k:{'status':'refused','input_dispatched':False,
+          'execution':{'releases':[{'verified':False,'keys_down':['CTRL'],'buttons_down':[]}]}}
+        r=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+        self.assertEqual(r['outcome'],'RUNTIME_FAILED');self.assertEqual(b.inputs,[])
+    def test_no_input_refusal_does_not_hide_recovery_required(self):
+        b=Bridge()
+        def refused(*a,**k):
+            b.session.recovery_required=True
+            return {'status':'refused','input_dispatched':False,'recovery_required':True}
+        b.click=refused
+        r=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+        self.assertEqual(r['outcome'],'RUNTIME_FAILED');self.assertEqual(b.inputs,[])
+    def test_no_input_attestation_does_not_hide_execution_without_release(self):
+        b=Bridge()
+        b.click=lambda *a,**k:{'status':'refused','input_dispatched':False,
+          'execution':{'program_emissions':1,'releases':[]}}
+        r=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+        self.assertEqual(r['outcome'],'RUNTIME_FAILED');self.assertEqual(b.inputs,[])
 if __name__=='__main__': unittest.main()
