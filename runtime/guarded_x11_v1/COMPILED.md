@@ -10,6 +10,10 @@ bounded graph with `session_scope=bridge.scope` and
 `surface=compiled.surface(bridge)`. For each graph action, provide an exact
 binding with `interaction` (`click`, `move`, or `keyboard`), its alias-local
 `offset`, and an explicit `tail` list using the existing bridge contract.
+Native target references must match `[a-z][a-z0-9_]{0,31}`, the same alias
+contract as the handle store. For example, use `sheet_context`. Graph symbol
+labels remain separate and may use the graph's broader naming contract.
+The adapter rejects invalid native aliases before capture or any callback.
 Bindings and graph are copied before any perception callback can change them.
 
 ```python
