@@ -33,9 +33,13 @@ Hand-authored finite frame, independent Bernoulli design, exact labels; no tempo
 - Additive evidence path: `research/analysis/selection_aware_shadow_audit_5681_t1_v1/`
 - Original allocation request `SELECTION-AWARE-SHADOW-AUDIT-5681-T1-ORB-20261001-01` for 04:20–04:35 UTC was withdrawn before start and remains unconsumed; candidate=0, auditor=0.
 
-## Execution-route amendment — isolated local daemon allocation #02
+## Execution-route amendment — isolated local daemon allocation #02 (withdrawn)
 
-H/T/D/C/U and the finite construction above are unchanged. The successor allocation is `SELECTION-AWARE-SHADOW-AUDIT-5681-T1-ISOLATED-ORB-20261001-02`, assigned for 2026-10-01 04:20–05:20 UTC; request/mode: #5085 comment #5924222877, issue amendment: #5681 comment #5924224968, coordinator disposition: #5085 comment #5924304367. It is not execution permission until the fresh exact start gate passes.
+H/T/D/C/U and the finite construction above are unchanged. Allocation `SELECTION-AWARE-SHADOW-AUDIT-5681-T1-ISOLATED-ORB-20261001-02` was assigned for 04:20–05:20 UTC by #5085 comment #5924304367, then withdrawn before start after a Windows-host task incorrectly attributed its context to this allocation (#5085 comment #5924475005). Preserve that history; do not reuse #02.
+
+## Execution-route amendment — isolated local daemon allocation #03
+
+The exact owner is Codex thread `01a0b988-6457-7b11-bc58-f721eea051cf` on host `local` (macOS OrbStack), disambiguated in #5085 comment #5924529665. New allocation `SELECTION-AWARE-SHADOW-AUDIT-5681-T1-ISOLATED-ORB-20261001-03` is assigned for 2026-10-01 04:20–05:20 UTC by that queue comment; Issue record: #5681 comment #5924546434. H/T/D/C/U and finite construction are unchanged. Assignment is not execution permission until the fresh exact start gate passes.
 
 - Use a newly created OrbStack isolated Ubuntu 24.04 machine named `obs-audit-t1-5681-20261001`, capped at 1 CPU, 2 GiB memory, and 16 GiB disk; no host filesystem mount or SSH-agent forwarding. Install a distinct Docker daemon inside the guest; never use or inspect the shared macOS `orbstack` Docker endpoint for this allocation.
 - This reduces engine-state and host-integration collisions but is not a separate kernel boundary: OrbStack Linux machines and containers share the OrbStack Linux VM/kernel. The workload is benign, finite synthetic arithmetic.
