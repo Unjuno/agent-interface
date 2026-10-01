@@ -31,4 +31,3 @@ Thus receipt awareness beats unrestricted retry/accumulation on the ambiguous-de
 Allocation 01 remains at `../effect_path_antiwindup_5791_t0_v1/` as `FAIL_CONSTRUCTION_METRIC_CONTRACT_MISMATCH`: its candidate exited 0 and independent auditor exited 1 after counting feedback-separated effects as duplicates and conflating stale-generation cancellation counts. No rerun or relabeling was made; v2 is separately frozen.
 
 No live T1 was attempted: this T0 does not establish that any current #59/#57 path contains an explicit accumulated correction state. The Issue remains open for source-bound eligibility evidence or a genuinely different successor hypothesis.
-
