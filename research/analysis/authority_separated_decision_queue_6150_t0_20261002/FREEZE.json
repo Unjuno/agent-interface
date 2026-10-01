@@ -1,0 +1,21 @@
+{
+  "study": "#6150 T0 authority-separated human decision queues",
+  "allocation_id": "6150-t0-method-20261002-01",
+  "owner": "Codex current task (local host CPU only)",
+  "source_main_sha": "981ba1ee20259ff36465d25aceef62fd3554a7e9",
+  "branch": "research/authority-queue-6150-t0-20261002",
+  "source_commit_before_manifest": "f31b00783a4a169a0aaceeeadeb4cc98c1014744",
+  "formal_commands_invoked": 0,
+  "construction": {"command": "python -m unittest -v test_protocol.py", "tests": 4, "passed": 4, "formal_evidence": false},
+  "files": {
+    "PLAN.md": {"sha256": "54efc115b8b3034e14b6077d0c9324043b07135d423f767f5c5b7e1a4fa8bc9b", "git_blob": "5a65b1c85fd7da3f7281502a9fc82307c5ed3d76"},
+    "fixture.json": {"sha256": "ebf5b4584f3d540e6bc1cf5006bf9afc7be57e364ec8bb0a5f44ba6a4e3df0d2", "git_blob": "aa86fe80a9d923c9920a6372a1d3a527222b3b34"},
+    "candidate.py": {"sha256": "46a99500b68564f7160f7c078a6e8e097e187a60959a177885dd8b8922f96e73", "git_blob": "e05759a800ebe05480db05e29aa95f3ab93a0e9a"},
+    "auditor.py": {"sha256": "1d57e66afe5fcfac369e55d2c943c4171edca2b4b6ff13a98bd8f43854140219", "git_blob": "7c6c9cedfd916487729876f21fd64fc24ab17b2d"},
+    "test_protocol.py": {"sha256": "486b78ff17228d09af0a5022d043eedf807b3ac1d7fa723f93823841b175946c", "git_blob": "eb2559c6ee45f389575e998d0d34f9ec5e9352eb"}
+  },
+  "runtime": {"python": "3.11.9", "dependencies": "stdlib only", "gpu_cuda_docker_wsl_network": "not used"},
+  "formal_output_paths": ["formal/6150_t0_raw.json", "formal/6150_t0_audit.json"],
+  "retries_or_seed_substitution": 0
+}
+
