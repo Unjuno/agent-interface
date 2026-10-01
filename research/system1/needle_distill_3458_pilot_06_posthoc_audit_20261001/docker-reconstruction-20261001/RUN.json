@@ -1,0 +1,111 @@
+{
+  "schema": "needle-pilot06-docker-reconstruction-v1",
+  "allocation": "needle-pilot06-docker-reconstruction-20261001-01",
+  "start_main": "1cb035f81a17a8122231c55f4a9eb804fdca40c9",
+  "engine": {
+    "context": "desktop-linux",
+    "server": "29.8.0",
+    "platform": "linux/amd64"
+  },
+  "image": {
+    "reference": "python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "image_id": "sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f"
+  },
+  "limits": {
+    "network": "none",
+    "read_only_root": true,
+    "readonly_inputs": true,
+    "cpus": 1,
+    "memory_mib": 256,
+    "pids": 32,
+    "tmpfs_mib": 16,
+    "tmpfs_noexec_nosuid": true
+  },
+  "source_sha256": "075d15f7ef86180774909b76d6b4db3ea50deac49f62805b7cc7fb3c2e42ec9c",
+  "input_sha256": {
+    "formal_raw": "0878c39a68fe2abea218132b307ceff77df1e9a52291ba14186f2c8c423e37a7",
+    "corrected_audit": "8a922fce11fcbc0daa67683ddf84e21cd99344cef4598546f56dbb49c3fc458f"
+  },
+  "exit_code": 0,
+  "rows": 3072,
+  "strata": [
+    {
+      "seed": 3467,
+      "band": "0.071-<0.090",
+      "n": 266,
+      "correct": 0,
+      "yield": 43,
+      "wrong": 223
+    },
+    {
+      "seed": 3467,
+      "band": "0.090-<0.120",
+      "n": 407,
+      "correct": 8,
+      "yield": 67,
+      "wrong": 332
+    },
+    {
+      "seed": 3467,
+      "band": "0.120-<0.149",
+      "n": 351,
+      "correct": 149,
+      "yield": 73,
+      "wrong": 129
+    },
+    {
+      "seed": 3468,
+      "band": "0.071-<0.090",
+      "n": 241,
+      "correct": 0,
+      "yield": 56,
+      "wrong": 185
+    },
+    {
+      "seed": 3468,
+      "band": "0.090-<0.120",
+      "n": 395,
+      "correct": 0,
+      "yield": 72,
+      "wrong": 323
+    },
+    {
+      "seed": 3468,
+      "band": "0.120-<0.149",
+      "n": 388,
+      "correct": 21,
+      "yield": 82,
+      "wrong": 285
+    },
+    {
+      "seed": 3469,
+      "band": "0.071-<0.090",
+      "n": 221,
+      "correct": 0,
+      "yield": 37,
+      "wrong": 184
+    },
+    {
+      "seed": 3469,
+      "band": "0.090-<0.120",
+      "n": 420,
+      "correct": 21,
+      "yield": 85,
+      "wrong": 314
+    },
+    {
+      "seed": 3469,
+      "band": "0.120-<0.149",
+      "n": 383,
+      "correct": 227,
+      "yield": 77,
+      "wrong": 79
+    }
+  ],
+  "formal_allocation_reexecuted": false,
+  "model_calls": 0,
+  "training_runs": 0,
+  "retries": 0,
+  "container_postflight_running": 0,
+  "disposition": "PASS_RECONSTRUCTION_REPRODUCIBLE"
+}
