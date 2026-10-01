@@ -1,0 +1,27 @@
+{
+  "allocation": "EXCEPTION-ENVELOPE-6021-T0-20261002-01",
+  "issue": 6021,
+  "main_sha": "d6229435f9d651b5309a01dca30c2edd7de2f54a",
+  "branch": "research/cumulative-exception-envelope-6021-t0-20261002",
+  "domain_rows": 256,
+  "cases": 6,
+  "formal_invocations": {
+    "candidate": 1,
+    "independent_audit": 1
+  },
+  "output_paths_absent_at_freeze": [
+    "results/formal-01/candidate.stdout",
+    "results/formal-01/audit.stdout"
+  ],
+  "pre_freeze_tests": "test_construction.py: 7/7 pass",
+  "docker": "not used: Docker Engine unavailable; host CPython only",
+  "no_human_or_live_policy_effect": true,
+  "sources_sha256": {
+    "PLAN.md": "9f5ad3cb5a8716774fb95c5584d9946dce5456f830c56fcb8d8b82065014537f",
+    "public.json": "6c16ff33ab32b8c018fe60bad9a9f19f1a1ce4c0ec94d1b2d12fd844e0d9d2a1",
+    "truth.json": "0b9842ea2ecb48f91ba82862c546972ade9d320a308d2a3e7e87a7270d636f7b",
+    "candidate.py": "24da5cd9daa3d9005d7dbe8da00d57355e985a22b290631228e979b325f9936c",
+    "audit.py": "b08614c49c0d8d19ea096045e9b9732d6d8ef47655cf5b3f6a81ff4bc945fe19",
+    "test_construction.py": "fbf9a7d2f137655eadc4c71c92165bdd770eeb30437a1ec5905427683f01c163"
+  }
+}\n
