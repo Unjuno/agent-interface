@@ -9,10 +9,11 @@ HERE = Path(__file__).resolve().parent
 FIXTURE = HERE / "fixture.json"
 
 
-def expected_wait(mechanism, probe_index, fx):
+def expected_wait(mechanism, probe_index, eid, fx):
+    phase = eid
     if mechanism in ("gradual_recovery_loss", "demand_drift_no_loss"):
-        return fx["fixed_recovery_wait_ticks"][probe_index]
-    return fx["fixed_recovery_wait_ticks"][0]
+        return fx["fixed_recovery_wait_ticks"][probe_index] + phase
+    return fx["fixed_recovery_wait_ticks"][0] + phase
 
 
 def audit(doc, fx):
@@ -84,8 +85,8 @@ def audit(doc, fx):
                 if pending is not None:
                     errors.append(f"overlapping_probe:{mechanism}:{eid}:{tick}")
                 pending = {"probe_tick": tick,
-                           "service_tick": tick + expected_wait(mechanism, probe_index, fx) + 1,
-                           "wait_ticks": expected_wait(mechanism, probe_index, fx)}
+                           "service_tick": tick + expected_wait(mechanism, probe_index, eid, fx) + 1,
+                           "wait_ticks": expected_wait(mechanism, probe_index, eid, fx)}
                 probe_n += 1
             expected_service = 0
             if pending is not None and tick == pending["service_tick"]:

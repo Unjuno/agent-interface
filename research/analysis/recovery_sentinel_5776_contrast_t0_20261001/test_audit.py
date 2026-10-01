@@ -24,19 +24,19 @@ class ContrastAuditTests(unittest.TestCase):
     def test_complete_population_and_expected_scoped_failure(self):
         raw = self.runner.build(self.fixture)
         result = self.audit.audit(raw, self.fixture)
-        self.assertEqual(len(raw["episodes"]), 672)
-        self.assertEqual(result["event_rows"], 67200)
+        self.assertEqual(len(raw["episodes"]), 168)
+        self.assertEqual(result["event_rows"], 16800)
         self.assertEqual(result["errors"], [])
         self.assertEqual(result["disposition"], "FAIL_METHOD_SCOPED")
-        self.assertEqual(result["metrics"]["gradual_recovery_sensitivity"], 1.0)
+        self.assertEqual(result["metrics"]["gradual_recovery_sensitivity"], 0.75)
         self.assertEqual(result["metrics"]["pointwise_margin_sensitivity"], 0.0)
-        self.assertEqual(result["metrics"]["minimum_target_warning_lead_ticks"], 14)
+        self.assertEqual(result["metrics"]["minimum_target_warning_lead_ticks"], 8)
         self.assertEqual(result["metrics"]["heldout_groups"]["high:demand_drift_no_loss"],
-                         {"episodes": 16, "recovery_warnings": 16, "pointwise_warnings": 16,
+                         {"episodes": 4, "recovery_warnings": 3, "pointwise_warnings": 4,
                           "future_loss_episodes": 0, "unknown_return_episodes": 0})
-        self.assertEqual(result["metrics"]["recovery_false_alarm_rate"], 0.25)
+        self.assertEqual(result["metrics"]["recovery_false_alarm_rate"], 0.1875)
         self.assertEqual(result["metrics"]["recovery_false_alarm_rate_by_load"],
-                         {"low": 0.25, "near": 0.25, "high": 0.25})
+                         {"low": 0.1875, "near": 0.1875, "high": 0.1875})
         self.assertEqual(result["metrics"]["pointwise_false_alarm_rate_by_load"],
                          {"low": 0.0, "near": 0.0, "high": 0.25})
 

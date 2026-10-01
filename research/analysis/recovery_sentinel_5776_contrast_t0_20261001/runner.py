@@ -11,6 +11,7 @@ FIXTURE = Path(__file__).with_name("fixture.json")
 def episode(fx, load, mechanism, eid):
     probes = fx["probe_ticks"]
     waits = list(fx["fixed_recovery_wait_ticks"])
+    phase = eid
     backlog = 0
     rows = []
     returns = []
@@ -22,11 +23,11 @@ def episode(fx, load, mechanism, eid):
         if mechanism == "variable_disturbance" and tick in probes:
             shock = 1 if probes.index(tick) % 2 else 3
         if mechanism == "reset_hysteresis" and tick in probes:
-            wait = waits[0]
+            wait = waits[0] + phase
         elif mechanism in ("gradual_recovery_loss", "demand_drift_no_loss") and tick in probes:
-            wait = waits[probes.index(tick)]
+            wait = waits[probes.index(tick)] + phase
         else:
-            wait = waits[0]
+            wait = waits[0] + phase
 
         # Service is a fully recorded exogenous transfer, not hidden runner state.
         before = backlog
