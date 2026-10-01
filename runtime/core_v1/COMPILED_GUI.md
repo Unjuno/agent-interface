@@ -32,6 +32,8 @@ real-time control. No automatic replay, repair, grounding or local model exists.
 application effect certificate. A form's changed pixels do not verify its text.
 Independent task/collateral scoring and primary image review remain required
 for acceptance. Historical frozen live results keep their original sources.
+New live source manifests must pin this shared module as well as any research
+compatibility wrapper used by the caller.
 Packaging and boundary tests establish availability and stopping behavior,
 not fewer model resumptions in a live product, speed, token savings or human
 performance. The previous primary six-task comparison remains efficiency HOLD.
