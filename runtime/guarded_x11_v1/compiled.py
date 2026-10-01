@@ -134,18 +134,29 @@ class _Adapter:
             raw = getattr(self.bridge,binding['interaction'])(authorization['target_reference'],binding['offset'],
                 tail=copy.deepcopy(binding['tail']), expires_at_ns=request['valid_until_ns'])
         effect_ref = self.retain('execution', {'request':request,'action_id':action_id,'result':raw})
-        releases = raw.get('execution',{}).get('releases',[])
+        releases = list(raw.get('execution',{}).get('releases',[]))
+        # Pre-execution backend constraints return the actual cleanup receipt
+        # at top level. Preserve it as well as execution release receipts.
+        if 'release' in raw:
+            releases.append(raw['release'])
         neutral = (bool(releases) and not raw.get('recovery_required',False) and
-                   all(r.get('verified') is True and r.get('keys_down') == [] and
-                       r.get('buttons_down') == [] for r in releases))
-        # A refusal with no actual release receipt does not invent neutrality.
+                   not self.bridge.session.recovery_required and
+                   all(type(r) is dict and r.get('verified') is True and
+                       r.get('keys_down') == [] and r.get('buttons_down') == []
+                       for r in releases))
+        latest_release = releases[-1] if releases and type(releases[-1]) is dict else {}
+        # Missing receipt means unknown neutrality; malformed or reported held
+        # state must not be flattened into empty inputs.
         terminal = {'status':raw['status'],'action_id':action_id,'effect_ref':effect_ref,
-                    'release':{'verified':neutral,'keys_down':[],'buttons_down':[]}}
+                    'release':{'verified':neutral,
+                               'keys_down':copy.deepcopy(latest_release.get('keys_down')) if releases else [],
+                               'buttons_down':copy.deepcopy(latest_release.get('buttons_down')) if releases else []}}
         if 'input_dispatched' in raw:
             # No new input is not a claim that earlier input is neutral. Keep
             # release/recovery uncertainty on the existing stricter path.
             unresolved = (raw.get('recovery_required', False) or
-                          self.bridge.session.recovery_required or bool(raw.get('execution')))
+                          self.bridge.session.recovery_required or bool(raw.get('execution')) or
+                          ('release' in raw and not neutral))
             if not (raw['input_dispatched'] is False and unresolved):
                 terminal['input_dispatched'] = raw['input_dispatched']
         self.retain('terminal',terminal)
