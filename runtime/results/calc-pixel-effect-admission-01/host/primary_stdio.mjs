@@ -47,10 +47,6 @@ export async function servePrimaryLines({exchange,input,output}) {
     try {result=await exchange.execute(request);}
     catch(error){
       await emit(output,{schema,status:'command_error',error:String(error),
-        // Correlation only: next_id may be unchanged for envelope rejection or
-        // advanced for a consumed command. Neither field authorizes replay.
-        command_id:Number.isSafeInteger(request?.id)?request.id:null,
-        command_method:typeof request?.method==='string'&&request.method.length<=64?request.method:null,
         replay_allowed:false,state:exchange.state()});return;
     }
     await emit(output,{schema,status:'returned',result});
