@@ -114,3 +114,13 @@ to the method/reference minimum. Neither pixel recognition nor a fresh clock
 renews authority. After a model wait, use the ordinary target/dependency review
 and admission; preserve a refusal instead of replaying input with a longer lease.
 A useful visible predicate is separate from independently scored persisted effects.
+
+## Native cleanup receipts before execution
+
+Backend validation may refuse a program before execution and return its verified
+cleanup in the top-level `release` field. The adapter preserves that receipt along
+with any execution releases. Neutrality requires all provided receipts to be
+verified and empty and the session to require no recovery. Reported held input
+is retained; malformed or unverified cleanup cannot become a safe abstention.
+A missing receipt still does not invent neutrality. No-input evidence is not
+inferred from counters or from a release receipt, and a refusal remains incomplete.

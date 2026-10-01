@@ -49,6 +49,52 @@ def verify(payload,native,image): return {'status':'succeeded','evidence_ref':pa
 
 class CompiledX11Tests(unittest.TestCase):
 
+    def test_top_level_native_release_is_retained_on_pre_execution_refusal(self):
+        b=Bridge()
+        b.click=lambda *a,**k:{'status':'refused','error':'BACKEND_CONSTRAINT',
+          'program_execution_started':False,'program_emissions':0,'backend_emissions':0,
+          'release':{'verified':True,'keys_down':[],'buttons_down':[]},'recovery_required':False}
+        r=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+        self.assertEqual((r['outcome'],r['reason']),('SAFE_YIELD','execution_failed'))
+        terminal=next(row for name,row in b.saved if name.endswith('-terminal.json'))
+        self.assertEqual(terminal['release'],{'verified':True,'keys_down':[],'buttons_down':[]})
+        self.assertNotIn('input_dispatched',terminal)
+        self.assertEqual(r['completed_transitions'],0)
+    def test_no_input_flag_cannot_hide_top_level_unverified_or_held_release(self):
+        for release in ({'verified':False,'keys_down':[],'buttons_down':[]},
+                        {'verified':False,'keys_down':['CTRL'],'buttons_down':[]},
+                        {'verified':True,'keys_down':[],'buttons_down':['left']}):
+            with self.subTest(release=release):
+                b=Bridge();b.click=lambda *a,**k:{'status':'refused','input_dispatched':False,'release':release}
+                r=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+                self.assertEqual(r['outcome'],'RUNTIME_FAILED')
+                terminal=next(row for name,row in b.saved if name.endswith('-terminal.json'))
+                self.assertNotIn('input_dispatched',terminal)
+                self.assertEqual(terminal['release']['keys_down'],release['keys_down'])
+                self.assertEqual(terminal['release']['buttons_down'],release['buttons_down'])
+    def test_conflicting_native_release_receipts_do_not_certify_neutrality(self):
+        b=Bridge()
+        b.click=lambda *a,**k:{'status':'completed',
+          'execution':{'releases':[{'verified':True,'keys_down':[],'buttons_down':[]}]},
+          'release':{'verified':False,'keys_down':['CTRL'],'buttons_down':[]}}
+        r=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+        self.assertEqual(r['outcome'],'RUNTIME_FAILED')
+        terminal=next(row for name,row in b.saved if name.endswith('-terminal.json'))
+        self.assertEqual(terminal['release']['keys_down'],['CTRL'])
+    def test_session_recovery_prevents_success_despite_top_level_neutral_release(self):
+        b=Bridge()
+        def recovery(*a,**k):
+            b.session.recovery_required=True
+            return {'status':'completed','release':{'verified':True,'keys_down':[],'buttons_down':[]}}
+        b.click=recovery;r=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+        self.assertEqual(r['outcome'],'RUNTIME_FAILED')
+    def test_malformed_top_level_release_does_not_certify_abstention(self):
+        for release in (None,{}, {'verified':True,'keys_down':None,'buttons_down':[]}):
+            with self.subTest(release=release):
+                b=Bridge();b.click=lambda *a,**k:{'status':'refused','input_dispatched':False,'release':release}
+                r=run(b,spec(),bindings(),perceive=perceive,verify_effect=verify)
+                self.assertEqual(r['outcome'],'RUNTIME_FAILED')
+
     def test_invalid_native_alias_fails_before_capture_or_callback(self):
         for alias in ('sheet-context','Sheet','a'*33,'x y'):
             with self.subTest(alias=alias):
