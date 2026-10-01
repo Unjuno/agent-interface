@@ -20,6 +20,7 @@ For claims and scientific disposition, start with the top-level [research index]
 | Issue #5970 prospective X11 event-provenance T2 | [analysis/blackstart_prospective_trace_5970_t2_20261001/REPORT.md](analysis/blackstart_prospective_trace_5970_t2_20261001/REPORT.md) |
 | Issue #5970 source-bound prospective provenance T3 | [analysis/blackstart_source_bound_5970_t3_20261001/REPORT.md](analysis/blackstart_source_bound_5970_t3_20261001/REPORT.md) |
 | Issue #5970 X RECORD delivery-boundary successor T4 | [analysis/blackstart_xrecord_5970_t4_20261001/REPORT.md](analysis/blackstart_xrecord_5970_t4_20261001/REPORT.md) |
+| Issue #6086 hazard-shaped discretionary capture T0 | [analysis/hazard_discretionary_capture_6086_t0_20261002/REPORT.md](analysis/hazard_discretionary_capture_6086_t0_20261002/REPORT.md) |
 | Issue #5970 X window-tree target diagnostic T5 | [analysis/blackstart_xevent_target_5970_t5_20261002/REPORT.md](analysis/blackstart_xevent_target_5970_t5_20261002/REPORT.md) |
 | Issue #5970 all-window observer successor T6 | [analysis/blackstart_allwindow_trace_5970_t6_20261002/REPORT.md](analysis/blackstart_allwindow_trace_5970_t6_20261002/REPORT.md) |
 | Issue #5970 pre-input target liveness T7 | [analysis/blackstart_record_target_liveness_5970_t7_20261002/REPORT.md](analysis/blackstart_record_target_liveness_5970_t7_20261002/REPORT.md) |
