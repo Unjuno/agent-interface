@@ -1,9 +1,9 @@
 # Issue #5550 T0 OrbStack successor 04
 
-**State: queue request only; no lease, source freeze, image inspection, or
-container invocation.** The 2026-09-30 18:30–18:45 UTC proposal expired without
-assignment and was withdrawn. This successor will preserve the expired T0
-allocation and all raw/audit files unchanged.
+**State: self-assigned bounded CPU-only OrbStack window; source/image freeze
+pending the exact start gate.** The 2026-09-30 18:30–18:45 and 19:45–20:00 UTC
+proposals expired without assignment and were not run. This successor preserves
+the expired T0 allocation and all raw/audit files unchanged.
 
 ## H / T / D / C / U
 
@@ -31,22 +31,28 @@ allocation and all raw/audit files unchanged.
 
 ## Queue state (not a source freeze)
 
-- Allocation proposal: `MAXPERM-SUPERVISOR-5550-T0-ORBSTACK-SUCCESSOR-20261001-04`.
-- Latest main observed after prelaunch-guard PR #5622: `ac61a92b51139476fad181e0c14dfbdd5af5b026`.
+- Allocation: `MAXPERM-SUPERVISOR-5550-T0-ORBSTACK-SUCCESSOR-20261001-04B`.
+- Named owner: Unjuno. Self-assignment comment: #5085 comment
+  `5922184340`; direct user instruction to continue experiments is in this task.
+- Window: 2026-10-01 00:50:00–01:05:00 UTC (half-open). This starts five
+  minutes after the #5156 sentinel's recorded 00:30–00:45 window. At start,
+  refresh the coordination issue and STOP if any conflicting allocation or
+  unreleased active owner remains.
+- Latest main observed during preparation: `a43d274803c1689c3f948641aef5a57102a04f34`.
+  This is planning context only; refreeze at the start boundary.
 - Candidate/auditor/tests currently match the predecessor hashes recorded in
   its `FREEZE.json`; they must be re-hashed against a fresh main at assignment.
 - Proposed cached image only: `sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9`,
   `linux/arm64`. No image has been inspected or approved for this allocation.
-- The 19:45–20:00 UTC interval is a request only. No container/image calls are
-  allowed unless the coordinator records an exact owner, window, main SHA,
-  image digest/platform, and exclusive lane assignment.
+- Cached image remains a proposal until the exact start gate verifies local
+  image digest/platform; no pull/build is allowed.
 
 ## Launch gates
 
-1. Reconcile #5085, #5156, #5360, #5413, #5081, #5513, PRs, branches, and
-   current main; require an explicit non-overlapping allocation.
-2. At assignment, commit a new freeze receipt with exact coordinator comment
-   ID, owner, window, source hashes, image digest/platform and commands.
+1. Reconcile #5085 and the most recent competing requests at the start; require
+   the exact self-assigned allocation above to remain non-overlapping.
+2. Commit a new freeze receipt with assignment comment, owner, window, current
+   main, source hashes, image digest/platform and commands.
 3. At the start boundary, read back current main, verify the cached image and
    platform, confirm no active containers, and invoke the merged prelaunch
    guard using the actual system UTC clock.
