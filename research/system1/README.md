@@ -122,3 +122,7 @@ Read each child experiment for its allowed decision vocabulary, authority bounda
 ## Multimodal grounding corpus/protocol archive
 
 - [#5263 / source PR #5300 archival qualification](multimodal_grounding_5263_t0_20260930/ARCHIVAL_QUALIFICATION.md) — 27 exact historical files, including 14 synthetic PNGs, separate oracle, typed contract, and comparator preparation. Zero inference; reported host tests and Docker preflight are construction only, with the shared-Docker coordination deviation retained. No grounding/latency/Astra-free result, runtime promotion, rerun, or issue closure; #5263 remains open.
+
+## Concurrent online-LoRA latency HOLD archive
+
+- [#4658 / source PR #4674 archival qualification](needle_concurrent_online_lora_4658_v3/ARCHIVAL_QUALIFICATION.md) — 17 exact published files preserving `HOLD_LATENCY_BUDGET`; missing raw evidence, freeze/audit identity mismatches, timestamp-gate audit gap, and unused broken formal wrapper remain unresolved. No reproduced result, rerun, promotion, or issue closure; source PR stays Draft and #4658 stays open.
