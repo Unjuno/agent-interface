@@ -56,7 +56,7 @@ python3 research/analysis/check_index.py
 ```
 
 Result: 19/19 unit tests passed, `py_compile` passed, `git diff --check`
-passed, and `research/analysis/check_index.py` passed with 291 retained
+passed, and `research/analysis/check_index.py` passed with 298 retained
 result/failure directories indexed. During construction, an early invocation
 test initially failed because its mock did not model guest `/study` path
 translation; after correcting the fixture, the full suite passed. One earlier
@@ -80,3 +80,18 @@ this allocation with 0/0 candidate/auditor counts. If all gates pass, invoke
 the candidate once and only invoke the independent auditor after candidate
 exit 0. Stop the guest within the reserved slot. Preserve exact raw output,
 logs, hashes, audit, and any STOP/FAIL; update Issue #5846 and its own PR.
+
+## Allocation-01 terminal start-gate STOP
+
+The reserved allocation `crash-atomic-suppression-5846-t0-20261001-01` ended
+at the 07:35 UTC start gate with
+`STOP_MAIN_ADVANCED_AT_FORMAL_START_GATE`: frozen preparation main was
+`56ef267db50a8937f04d940a425b2b1819f714fb`, while immediate reads at
+07:34:43 and 07:35:16 UTC returned
+`fc1f06474149d81989099e5220c7aa197c142c6a`. The allocation reservation
+explicitly required STOP on any main drift. Candidate=0, auditor=0, Docker
+containers=0, guest-created=0, retries=0; the OrbStack running list was empty.
+No source, guest, shared daemon, or predecessor record was changed. The exact
+immutable receipt is `results/5846-01/PREFLIGHT_STOP.md`; this is not a
+scientific result. A future distinct allocation must have its own fresh
+current-main freeze and non-overlapping authorization.

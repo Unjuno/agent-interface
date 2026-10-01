@@ -13,8 +13,13 @@ Issue #5846 is the successor intake. The dedicated branch is
 point the successor is construction-only; formal candidate and auditor counts
 are 0/0. Its reserved, user-authorized Obstac slot is
 `crash-atomic-suppression-5846-t0-20261001-01`, 07:35–08:05 UTC, coordinated in
-Issue #5085. The new guest/context, main SHA, hashes, path mapping, and output
-gates must all be rechecked at the start gate.
+Issue #5085. At the 07:35 UTC start gate, frozen main
+`56ef267db50a8937f04d940a425b2b1819f714fb` had advanced to
+`fc1f06474149d81989099e5220c7aa197c142c6a`; the allocation stopped before
+guest creation with candidate/auditor/container/guest counts 0/0/0/0. The
+immutable receipt is `results/5846-01/PREFLIGHT_STOP.md`. This is not a
+scientific result, and the consumed allocation is not retried. Any later
+attempt requires a distinct allocation and a fresh start gate.
 
 ## Files
 
