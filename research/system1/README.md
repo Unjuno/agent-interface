@@ -106,3 +106,7 @@ Read each child experiment for its allowed decision vocabulary, authority bounda
 ## Role-skill construction STOP archive
 
 - [`needle_role_skill_joint_retention_v2/ARCHIVAL_QUALIFICATION.md`](needle_role_skill_joint_retention_v2/ARCHIVAL_QUALIFICATION.md): Issue #4908 / source PR #4911; exact historical published blobs preserving `STOP_CONSTRUCTION_OUTPUT_NOT_EMPTY`. Source, freeze, receipt and log bindings do not match the retained identity claims. The historical 7/7 tests and `PASS_STOP_EVIDENCE_AUDIT` are retained claims, not independently reproduced here. No rerun, result promotion, seed authorization, or issue closure.
+
+## Publication-overlap construction archive
+
+- [#5082 / source PR #5163 archival qualification](needle_cross_process_publication_5066_v4_20260928/ARCHIVAL_QUALIFICATION.md) — preserves eleven exact source/freeze/input files and the reported 17/17 host and pinned-Docker construction checks. The 4,096-publication formal run and independent formal raw audit remain STOP / NOT STARTED; #5082 remains OPEN and the source PR stays Draft. Preservation only, with no execution, allocation, or runtime promotion.
