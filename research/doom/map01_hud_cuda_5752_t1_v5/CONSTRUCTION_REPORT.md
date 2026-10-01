@@ -15,6 +15,7 @@ Status: preparation only; no candidate, CUDA kernel, or independent formal audit
 - `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\gate_correction\test_gpu_preflight_gate.ps1`: 8/8 passed, zero failures.
 - Before copying into this task-local additive scratch path, local source SHA-256 values matched the existing allocation-04 freeze for `gpu_hud_runner.py`, `audit.py`, `hud_independent.py`, and `dataset.json`. The exact retained input inventory was 23 PNGs (4,555,208 bytes) and a local Freedoom WAD of 28,787,748 bytes, SHA-256 `a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b`.
 - Windows CPython 3.11.9, PyTorch 2.5.1+cu121 and one CUDA device are available. Readiness is not a scientific result. No CUDA computation was run during construction.
+- Pre-formal review found the inherited preparation runner began its `gpu_cold_setup_ms` interval after CUDA template creation. Before any candidate, allocation-05 was corrected so the interval begins before first CUDA synchronization/template creation and includes the first decoded/scored frame; the preregistration now states exactly what it includes/excludes. No previous allocation result is changed.
 
 ## Formal boundary
 
