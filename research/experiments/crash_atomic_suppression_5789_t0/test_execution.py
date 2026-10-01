@@ -43,6 +43,21 @@ class ProcessMatrixConstructionTests(unittest.TestCase):
         self.assertIn("OBSTAC_DOCKER_HOST", " ".join(command))
         self.assertIn("OBSTAC_AUDIT_SHA256", " ".join(command))
 
+    def test_formal_launcher_freeze_covers_launcher_bytes_and_exact_argv(self):
+        import argparse
+        args = argparse.Namespace(
+            mode="formal", candidate_out=Path("results/formal-01/candidate"),
+            audit_out=Path("results/formal-01/audit"),
+            audit_raw=Path("results/formal-01/candidate/raw.jsonl"), docker="docker",
+        )
+        argv = container_runner.invocation_argv(args)
+        self.assertEqual(argv[argv.index("--mode") + 1], "formal")
+        self.assertEqual(argv[argv.index("--docker") + 1], "docker")
+        self.assertEqual(argv[argv.index("--audit-out") + 1],
+                         str(args.audit_out.resolve()))
+        self.assertEqual(container_runner.sha256(Path(container_runner.__file__)),
+                         hashlib.sha256(Path(container_runner.__file__).read_bytes()).hexdigest())
+
     def test_auditor_mounts_a_report_directory_not_a_file_as_directory(self):
         with tempfile.TemporaryDirectory(prefix="construction-5795-audit-command-") as temp:
             root = Path(temp)
@@ -64,6 +79,13 @@ class ProcessMatrixConstructionTests(unittest.TestCase):
                     },
                 }
                 digest = "c" * 64
+                manifest["launcher_sha256"] = container_runner.sha256(Path(container_runner.__file__))
+                manifest["formal_argv"] = [
+                    "python3", "-B", str(Path(container_runner.__file__).resolve()),
+                    "--mode", "formal", "--candidate-out", str(candidate.resolve()),
+                    "--audit-out", str(audit.resolve()), "--audit-raw",
+                    str((candidate / "raw.jsonl").resolve()), "--docker", "docker",
+                ]
                 mocked_freeze.return_value = (manifest, digest)
                 env = {
                     "OBSTAC_RUN_KIND": "formal",
