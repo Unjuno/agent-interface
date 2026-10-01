@@ -133,6 +133,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 <summary><strong>Expand all retained result/failure directories</strong></summary>
 
 - [`action_class_error_budget_5424_t2_v1/`](action_class_error_budget_5424_t2_v1/)
+- [`action_class_error_budget_5424_t3_v1/`](action_class_error_budget_5424_t3_v1/)
 - [`action_conditioned_routing_repair_successor_2059_r2_v1/`](action_conditioned_routing_repair_successor_2059_r2_v1/)
 - [`action_conditioned_routing_repair_successor_2059_v1/`](action_conditioned_routing_repair_successor_2059_v1/)
 - [`action_conditioned_routing_successor_1934_r2/`](action_conditioned_routing_successor_1934_r2/)
@@ -193,8 +194,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`desktop_lifecycle_rebind_3190_host_preflight_v1/`](desktop_lifecycle_rebind_3190_host_preflight_v1/)
 - [`deterministic_replay_boundary_r0_v1/`](deterministic_replay_boundary_r0_v1/)
 - [`disturbance_response_5771_t1_v3/`](disturbance_response_5771_t1_v3/)
-- [`effect_path_antiwindup_5791_t0_v1/`](effect_path_antiwindup_5791_t0_v1/)
 - [`effect_path_antiwindup_5791_eligibility_v1/`](effect_path_antiwindup_5791_eligibility_v1/)
+- [`effect_path_antiwindup_5791_t0_v1/`](effect_path_antiwindup_5791_t0_v1/)
 - [`effect_path_antiwindup_5791_t0_v2/`](effect_path_antiwindup_5791_t0_v2/)
 - [`effect_time_contract_authorization_successor_532_v1/`](effect_time_contract_authorization_successor_532_v1/)
 - [`endogenous_demand_rebound_5702_t0_v1/`](endogenous_demand_rebound_5702_t0_v1/)
