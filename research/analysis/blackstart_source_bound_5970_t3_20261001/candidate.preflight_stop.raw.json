@@ -1,0 +1,13 @@
+{
+  "schema": "blackstart-source-bound-t3-candidate-preflight-stop-v1",
+  "attempt": "candidate-v1",
+  "candidate_source_sha256": "aaef08792028389272482b117c10da42eafbab93698f468414d8b0420e90d748",
+  "freeze_sha256": "cf0732bb31cffb95ee2c13c8097fc3d697b2cd06c6380be2e899f4360b04bbeb",
+  "status": "STOP_WSL_PATH_CONVERSION",
+  "detail": "The candidate verified the frozen archive, source hashes, transform and derived-source digests, then invoked wsl.exe wslpath with a Windows path. Windows native argument parsing stripped path backslashes, so wslpath received C:Users... and returned exit 1.",
+  "candidate_runner_started": false,
+  "xvfb_started": false,
+  "xtest_dispatch_count": 0,
+  "run_output_created": false,
+  "formal_4135_allocation_rerun": false
+}
