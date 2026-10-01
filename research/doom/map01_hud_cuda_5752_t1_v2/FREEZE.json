@@ -1,0 +1,37 @@
+{
+  "schema": "map01-hud-cuda-freeze-v1",
+  "allocation": "GPU-HUD-CUDA-5752-20261001-02",
+  "base_main_sha": "8827fad422b225bddd9b1c6d34bfa68ca19265c5",
+  "base_main_observed_utc": "2026-10-01T04:01:37Z",
+  "branch": "research/gpu-hud-cuda-5752-20261001-02",
+  "path": "research/doom/map01_hud_cuda_5752_t1_v2/",
+  "runner_sha256": "e870a2a7df1c309bb6b4897497b8d77025f3ef559416a098a18fdf5979a6fc97",
+  "audit_sha256": "3ea3c0843ab1d953a1fbf67fb185e95b34d9a3c64c742a5b6be7fae06ae34b81",
+  "hud_independent_sha256": "59f271038f481f81580c3b67367ba633a09797983fc81cfbe50b9f0ef865ffb6",
+  "dataset_sha256": "4546d17f230608952e4bf26f2eb7d596c1c7a976090eefc1a4677187b3088e1c",
+  "preflight_sha256": "293663ee55099e1c56640453e291c8bb88307a688c84f0db2361be84957ce79a",
+  "preflight_tests_sha256": "7398327151d154cec9ffbe3708594c4e4f82dd99a37200d63afc971615d0b3cb",
+  "source_inputs": {
+    "map01-v38-integrated-threat-live-01/report.json": "7fa222f9b273ee10ad1ed3e24b8f7f234f46cc137265a90d70c6073981602f58",
+    "map01-v38-integrated-threat-live-01/runtime/events.jsonl": "80b964c9ab7d86fbd0b2bc56957157e018e9dbb90457f286995a2e6036192bc3",
+    "map01-v39-coast-liveness-live-01/report.json": "719db21040b843c5c91c5ff1f3d9fb2051ae1f1e008971547f39f015b4337687",
+    "map01-v39-coast-liveness-live-01/runtime/events.jsonl": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381"
+  },
+  "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+  "wad_archive_sha256": "3f9b264f3e3ce503b4fb7f6bdcb1f419d93c7b546f4df3e874dd878db9688f59",
+  "dataset": {
+    "unique_images": 23,
+    "in_envelope_observations": 19,
+    "baselines": 4,
+    "timed_repeats": 30
+  },
+  "environment_precheck": {
+    "python": "CPython 3.11.9",
+    "torch": "2.5.1+cu121",
+    "cuda": "12.1",
+    "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU",
+    "driver": "581.57"
+  },
+  "candidate_invocations_allowed": 1,
+  "auditor_invocations_allowed": 1
+}
