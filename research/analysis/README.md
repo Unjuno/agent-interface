@@ -175,6 +175,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`belief_repair_decision_lattice_r4_v1/`](belief_repair_decision_lattice_r4_v1/)
 - [`blackstart_causal_cut_5970_t0_20261001/`](blackstart_causal_cut_5970_t0_20261001/)
 - [`blackstart_causal_cut_5970_t1_20261001/`](blackstart_causal_cut_5970_t1_20261001/)
+- [`blackstart_prospective_trace_5970_t2_20261001/`](blackstart_prospective_trace_5970_t2_20261001/)
 - [`boundary_margin_5707_policy_pair_v1/`](boundary_margin_5707_policy_pair_v1/)
 - [`boundary_margin_5707_t0_v1/`](boundary_margin_5707_t0_v1/)
 - [`boundary_margin_5707_typed_v1/`](boundary_margin_5707_typed_v1/)
