@@ -14,6 +14,8 @@ Transport-integrity repair: `part-05.b64` in the historical source branch did no
 
 The exact pre-repair `CAPSULE.json` is preserved separately as [`CAPSULE_PRE_REPAIR.json`](CAPSULE_PRE_REPAIR.json); its blob identity and the 15 original part-digest mismatches are documented in [`DELIVERY_REPAIR.md`](DELIVERY_REPAIR.md). It is archival failure evidence and is not used by `restore.py`.
 
+The exact original branch restorer is also preserved separately as [`restore_PRE_REPAIR.py`](restore_PRE_REPAIR.py); see [`DELIVERY_REPAIR.md`](DELIVERY_REPAIR.md) for its source blob identity and why it stops on the original transport mismatch. It is archival failure evidence and is not the active restoration path.
+
 Reconstruct:
 
 ```sh
