@@ -1,6 +1,3 @@
-Warning: truncated output (original token count: 26423)
-Total output lines: 4123
-
 {
   "protocol": "issue5756-t0-v1",
   "result_count": 25,
@@ -1504,7 +1501,1043 @@ Total output lines: 4123
             "edges": [
               {
                 "id": "settings",
-                "label": "Setti…6423 tokens truncated…            ],
+                "label": "Settings",
+                "nearby": "preferences",
+                "reversible": true,
+                "saliency": 20
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        }
+      ]
+    },
+    {
+      "budget_remaining": 7,
+      "claim": {
+        "found": false,
+        "screen_id": "root"
+      },
+      "cost": {
+        "api_calls": 5,
+        "backtracks": 1,
+        "forbidden_effects": 0,
+        "navigation": 1,
+        "observations": 3
+      },
+      "eligibility": "NO_TARGET_CASE",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "settings",
+                "label": "Settings",
+                "nearby": "preferences",
+                "reversible": true,
+                "saliency": 20
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "settings",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "settings_screen"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Preferences",
+            "screen_id": "settings_screen"
+          }
+        },
+        {
+          "epoch": 0,
+          "from_screen": "settings_screen",
+          "kind": "BACKTRACK",
+          "to_screen": "root",
+          "via_edge_id": "settings"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "settings",
+                "label": "Settings",
+                "nearby": "preferences",
+                "reversible": true,
+                "saliency": 20
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        }
+      ],
+      "final_screen": "root",
+      "fixture_id": "no_target",
+      "policy": "tree_search",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "settings",
+                "label": "Settings",
+                "nearby": "preferences",
+                "reversible": true,
+                "saliency": 20
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "settings",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "settings_screen"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Preferences",
+            "screen_id": "settings_screen"
+          }
+        },
+        {
+          "epoch": 0,
+          "from_screen": "settings_screen",
+          "kind": "BACKTRACK",
+          "to_screen": "root",
+          "via_edge_id": "settings"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "settings",
+                "label": "Settings",
+                "nearby": "preferences",
+                "reversible": true,
+                "saliency": 20
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        }
+      ]
+    },
+    {
+      "budget_remaining": 10,
+      "claim": {
+        "found": false,
+        "screen_id": "root"
+      },
+      "cost": {
+        "api_calls": 2,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 0,
+        "observations": 1
+      },
+      "eligibility": "NO_SAFE_PATH",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "danger",
+                "label": "Export report",
+                "nearby": "irreversible submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "danger",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        }
+      ],
+      "final_screen": "root",
+      "fixture_id": "no_safe_path",
+      "policy": "scent_backtrack",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "danger",
+                "label": "Export report",
+                "nearby": "irreversible submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "danger",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        }
+      ]
+    },
+    {
+      "budget_remaining": 10,
+      "claim": {
+        "found": false,
+        "screen_id": "root"
+      },
+      "cost": {
+        "api_calls": 2,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 0,
+        "observations": 1
+      },
+      "eligibility": "NO_SAFE_PATH",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "danger",
+                "label": "Export report",
+                "nearby": "irreversible submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "danger",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        }
+      ],
+      "final_screen": "root",
+      "fixture_id": "no_safe_path",
+      "policy": "exhaustive",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "danger",
+                "label": "Export report",
+                "nearby": "irreversible submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "danger",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        }
+      ]
+    },
+    {
+      "budget_remaining": 10,
+      "claim": {
+        "found": false,
+        "screen_id": "root"
+      },
+      "cost": {
+        "api_calls": 2,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 0,
+        "observations": 1
+      },
+      "eligibility": "NO_SAFE_PATH",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "danger",
+                "label": "Export report",
+                "nearby": "irreversible submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "danger",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        }
+      ],
+      "final_screen": "root",
+      "fixture_id": "no_safe_path",
+      "policy": "strongest_cue",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "danger",
+                "label": "Export report",
+                "nearby": "irreversible submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "danger",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        }
+      ]
+    },
+    {
+      "budget_remaining": 10,
+      "claim": {
+        "found": false,
+        "screen_id": "root"
+      },
+      "cost": {
+        "api_calls": 2,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 0,
+        "observations": 1
+      },
+      "eligibility": "NO_SAFE_PATH",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "danger",
+                "label": "Export report",
+                "nearby": "irreversible submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "danger",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        }
+      ],
+      "final_screen": "root",
+      "fixture_id": "no_safe_path",
+      "policy": "direct_search",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "danger",
+                "label": "Export report",
+                "nearby": "irreversible submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "danger",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        }
+      ]
+    },
+    {
+      "budget_remaining": 10,
+      "claim": {
+        "found": false,
+        "screen_id": "root"
+      },
+      "cost": {
+        "api_calls": 2,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 0,
+        "observations": 1
+      },
+      "eligibility": "NO_SAFE_PATH",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "danger",
+                "label": "Export report",
+                "nearby": "irreversible submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "danger",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        }
+      ],
+      "final_screen": "root",
+      "fixture_id": "no_safe_path",
+      "policy": "tree_search",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "danger",
+                "label": "Export report",
+                "nearby": "irreversible submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "danger",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        }
+      ]
+    },
+    {
+      "budget_remaining": 0,
+      "claim": {
+        "found": false,
+        "screen_id": "deep_target"
+      },
+      "cost": {
+        "api_calls": 12,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 6,
+        "observations": 6
+      },
+      "eligibility": "ELIGIBLE",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "a",
+                "label": "Archive",
+                "nearby": "old files",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "a",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "n1"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "b",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Archive",
+            "screen_id": "n1"
+          }
+        },
+        {
+          "edge_id": "b",
+          "kind": "NAVIGATE",
+          "screen_id": "n1",
+          "to_screen": "n2"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "c",
+                "label": "Other",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "More",
+            "screen_id": "n2"
+          }
+        },
+        {
+          "edge_id": "c",
+          "kind": "NAVIGATE",
+          "screen_id": "n2",
+          "to_screen": "n3"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "d",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Other",
+            "screen_id": "n3"
+          }
+        },
+        {
+          "edge_id": "d",
+          "kind": "NAVIGATE",
+          "screen_id": "n3",
+          "to_screen": "n4"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "e",
+                "label": "Other",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "More",
+            "screen_id": "n4"
+          }
+        },
+        {
+          "edge_id": "e",
+          "kind": "NAVIGATE",
+          "screen_id": "n4",
+          "to_screen": "n5"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "f",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Other",
+            "screen_id": "n5"
+          }
+        },
+        {
+          "edge_id": "f",
+          "kind": "NAVIGATE",
+          "screen_id": "n5",
+          "to_screen": "deep_target"
+        }
+      ],
+      "final_screen": "deep_target",
+      "fixture_id": "budget_exhaustion",
+      "policy": "scent_backtrack",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "a",
+                "label": "Archive",
+                "nearby": "old files",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "a",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "n1"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "b",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Archive",
+            "screen_id": "n1"
+          }
+        },
+        {
+          "edge_id": "b",
+          "kind": "NAVIGATE",
+          "screen_id": "n1",
+          "to_screen": "n2"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "c",
+                "label": "Other",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "More",
+            "screen_id": "n2"
+          }
+        },
+        {
+          "edge_id": "c",
+          "kind": "NAVIGATE",
+          "screen_id": "n2",
+          "to_screen": "n3"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "d",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Other",
+            "screen_id": "n3"
+          }
+        },
+        {
+          "edge_id": "d",
+          "kind": "NAVIGATE",
+          "screen_id": "n3",
+          "to_screen": "n4"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "e",
+                "label": "Other",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "More",
+            "screen_id": "n4"
+          }
+        },
+        {
+          "edge_id": "e",
+          "kind": "NAVIGATE",
+          "screen_id": "n4",
+          "to_screen": "n5"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "f",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Other",
+            "screen_id": "n5"
+          }
+        },
+        {
+          "edge_id": "f",
+          "kind": "NAVIGATE",
+          "screen_id": "n5",
+          "to_screen": "deep_target"
+        }
+      ]
+    },
+    {
+      "budget_remaining": 0,
+      "claim": {
+        "found": false,
+        "screen_id": "deep_target"
+      },
+      "cost": {
+        "api_calls": 12,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 6,
+        "observations": 6
+      },
+      "eligibility": "ELIGIBLE",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "a",
+                "label": "Archive",
+                "nearby": "old files",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "a",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "n1"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "b",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Archive",
+            "screen_id": "n1"
+          }
+        },
+        {
+          "edge_id": "b",
+          "kind": "NAVIGATE",
+          "screen_id": "n1",
+          "to_screen": "n2"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "c",
+                "label": "Other",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "More",
+            "screen_id": "n2"
+          }
+        },
+        {
+          "edge_id": "c",
+          "kind": "NAVIGATE",
+          "screen_id": "n2",
+          "to_screen": "n3"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "d",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Other",
+            "screen_id": "n3"
+          }
+        },
+        {
+          "edge_id": "d",
+          "kind": "NAVIGATE",
+          "screen_id": "n3",
+          "to_screen": "n4"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "e",
+                "label": "Other",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "More",
+            "screen_id": "n4"
+          }
+        },
+        {
+          "edge_id": "e",
+          "kind": "NAVIGATE",
+          "screen_id": "n4",
+          "to_screen": "n5"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "f",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Other",
+            "screen_id": "n5"
+          }
+        },
+        {
+          "edge_id": "f",
+          "kind": "NAVIGATE",
+          "screen_id": "n5",
+          "to_screen": "deep_target"
+        }
+      ],
+      "final_screen": "deep_target",
+      "fixture_id": "budget_exhaustion",
+      "policy": "exhaustive",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "a",
+                "label": "Archive",
+                "nearby": "old files",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "a",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "n1"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "b",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Archive",
+            "screen_id": "n1"
+          }
+        },
+        {
+          "edge_id": "b",
+          "kind": "NAVIGATE",
+          "screen_id": "n1",
+          "to_screen": "n2"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "c",
+                "label": "Other",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "More",
+            "screen_id": "n2"
+          }
+        },
+        {
+          "edge_id": "c",
+          "kind": "NAVIGATE",
+          "screen_id": "n2",
+          "to_screen": "n3"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "d",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Other",
+            "screen_id": "n3"
+          }
+        },
+        {
+          "edge_id": "d",
+          "kind": "NAVIGATE",
+          "screen_id": "n3",
+          "to_screen": "n4"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "e",
+                "label": "Other",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
             "epoch": 0,
             "label": "More",
             "screen_id": "n4"
@@ -3087,4 +4120,3 @@ Total output lines: 4123
   },
   "spec_sha256": "8368888dd6d9caac2f56ea8dd08cd57c7a786f19fa0ccbf324465f5ef4d30fab"
 }
-
