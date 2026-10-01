@@ -39,7 +39,13 @@ class PassiveCoverConstructionTests(unittest.TestCase):
         self.assertTrue(all(v["status"]=="NO_SUFFICIENT_PASSIVE_COVER" for v in drop.values()))
 
     def test_four_mutation_controls_rejected_by_raw_oracle(self):
-        expected=candidate.solve(self.fixture)
+        expected={
+            "schema":"passive-sensor-cover-candidate-v1",
+            "main_sha":candidate.MAIN_SHA,
+            "fixture_sha256":"construction-test",
+            "producer_by_channel":{c["id"]:c["producer"] for c in self.fixture["channels"]},
+            "analysis":candidate.solve(self.fixture)
+        }
         controls=audit.mutation_controls(self.fixture,expected)
         self.assertEqual(set(controls),{"crop_relabel_as_independent","missing_observation",
           "stale_generation","dispatch_substituted_for_effect"})
