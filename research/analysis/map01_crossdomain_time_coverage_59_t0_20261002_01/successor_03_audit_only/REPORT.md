@@ -6,10 +6,13 @@ This is one audit-only replay of the immutable T0-02 candidate result against
 the six pinned historical inputs. The pre-run gate matched all five package
 hashes, all six input hashes, and the predecessor freeze, candidate result,
 run receipt, and failed-audit hashes. Five construction tests passed before
-the audit. The first attempted test command from the parent directory failed
-at Python import discovery before running tests; the documented invocation
-from this allocation directory passed all five tests. It did not invoke the
-candidate or change predecessor artifacts.
+the audit. Pre-audit setup had three command-context errors: the first
+test-loader invocation ran from the parent directory and failed Python import
+discovery before any test; two hash-gate shell invocations resolved the input
+path relative to the wrong directory and stopped at file-not-found. The
+documented test invocation and hash gate with explicit parent-relative paths
+then passed. These setup errors invoked neither candidate nor auditor and did
+not change predecessor artifacts.
 
 The sole formal auditor command was `python3 -B run_audit_only.py` (exit 0,
 auditor invocations 1, retries 0). It independently reconstructed the sparse
@@ -26,6 +29,6 @@ human-tempo suitability, task completion, or MAP01 exit. No candidate, raw
 experiment, app, model, GUI, OS input, Docker, WSL, GPU, or network experiment
 was run in this allocation.
 
-The initial parent-directory test-loader failure is retained in this report
-for provenance. It was a command-context error only, not a test or audit
-failure, and did not consume a formal audit invocation.
+All three initial command-context failures are retained here for provenance;
+they were not candidate/test/audit failures and did not consume a formal audit
+invocation.
