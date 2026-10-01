@@ -1,8 +1,9 @@
-# Issue #6243 T0 successor-02 — frozen, not launched
+# Issue #6243 T0 successor-02 — formal result
 
-This is a **frozen source package**, not a formal result. It is kept
-separate from predecessor allocation 20261002-01, whose one-shot Docker result
-is FAIL_AUDIT_GATE because the equal-method-null fixture was not null.
+This additive successor is separate from predecessor allocation
+20261002-01, whose one-shot Docker result is FAIL_AUDIT_GATE because its
+equal-method-null fixture was not null. That predecessor and its evidence
+remain unchanged.
 
 The construction fixture has 12 blinded pairs / 24 attempt rows. Its corrected
 equal-method null is exactly 18,000 ms per arm per pair. In the separate
@@ -18,14 +19,19 @@ Host construction checks: Python compilation, JSON parsing, 15 assertions and
 preserved in FAILURE_CONSTRUCTION_01.txt. The candidate/audit files prefixed
 CONSTRUCTION are not formal outputs.
 
-Formal candidate and auditor invocations: **0/0**. No container was started.
-The exact CPU OrbStack slot is pending explicit release/grant on coordination
-issue #5085. The latest inventory showed unrelated Docker container
-unjuno-native-ci-6092 and OrbStack VM obs-audit-t1-5681-20261001 running; a
-short-lived container seen earlier had exited. Neither active workload was
-inspected or changed. Cached python:3.12-alpine digest was inspected, but that
-is not an allocation. OrbStack's orb CLI is available; no formal container was
-launched without the slot grant.
+Formal candidate and auditor invocations: **1/1**, retries **0**. Both exited
+0 inside the pinned, network-disabled, CPU/memory/PID-limited OrbStack Docker
+container. The independent raw-only auditor returned METHOD_PASS_SCOPED,
+reconstructed 24 attempts across four scenarios with no errors, and rejected
+all four frozen mutation controls. The exact command, container configuration,
+raw outputs and source hashes are in formal-01/.
+
+This is a synthetic accounting-method validation only. Fixture times, shortcut
+selection, acquisition charge, failures and unfinished penalties are designed
+values, not human or agent observations. The result does not establish coder
+reliability with people, human/agent tempo, GUI performance, causal effects,
+population effects, product performance or external validity. See PLAN.md for
+H/T/D/C/U and the preregistered gates.
 
 Read PLAN.md for H/T/D/C/U, gates and limitations. No human, GUI, causal,
 population, or product claim is supported.

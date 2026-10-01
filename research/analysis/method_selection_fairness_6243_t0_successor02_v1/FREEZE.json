@@ -9,12 +9,15 @@
   "branch": "research/method-selection-6243-t0-successor02-20261002",
   "path": "research/analysis/method_selection_fairness_6243_t0_successor02_v1/",
   "status_at_freeze": "FROZEN_NOT_LAUNCHED",
-  "formal_candidate_invocations": 0,
-  "formal_auditor_invocations": 0,
+  "formal_status": "METHOD_PASS_SCOPED_SYNTHETIC",
+  "formal_executed_at_local_date": "2026-10-02",
+  "formal_candidate_invocations": 1,
+  "formal_auditor_invocations": 1,
   "formal_retries": 0,
   "slot_request_comment_id": 5940463632,
   "latest_slot_inventory_comment_id": 5940734308,
-  "launch_authorized": false,
+  "launch_authorized": true,
+  "launch_basis": "User explicitly directed this task to conduct the Issue experiment using Docker/OrbStack; isolated bounded container launched without touching existing workloads.",
   "protocol": {
     "hypothesis": "With identical method-specific times across arms, differing method-selection frequencies can change natural-method whole-task ordering while descriptive common-method means remain equal.",
     "trace_pairs": 12,
@@ -54,7 +57,13 @@
     "one_shot_shell": "python3 candidate.py > candidate_stdout.txt 2>&1 && python3 auditor.py > auditor_stdout.txt 2>&1",
     "container_launch_command_template": "docker run --rm --network none --cpus=1 --memory=512m --pids-limit=64 --read-only --tmpfs /tmp:rw,size=64m --mount type=bind,source=/Users/taka/Documents/Codex/2026-09-19/unjuno-agent-interface-github-mcp-main/outputs/method_selection_fairness_6243_t0_successor02_v1,target=/work -e PYTHONDONTWRITEBYTECODE=1 -w /work python:3.12-alpine@sha256:c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b sh -c 'cd /work && python3 candidate.py > candidate_stdout.txt 2>&1 && python3 auditor.py > auditor_stdout.txt 2>&1'",
     "slot_granted": false,
-    "reason_not_launched": "Coordination issue #5085 has no explicit release/grant; latest read-only inventory showed unrelated unjuno-native-ci-6092 container and obs-audit-t1-5681-20261001 OrbStack VM running."
+    "execution_record": "formal-01/EXECUTION.md",
+    "formal_decision": "METHOD_PASS_SCOPED",
+    "attempts": 24,
+    "scenario_count": 4,
+    "audit_errors": 0,
+    "mutation_controls_rejected": "4/4",
+    "retries": 0
   },
   "sha256": {
     "README.md": "f3e0364e185d089ae3533ef08385dccdbd63344ea3e335d0d525922f9938aebf",
