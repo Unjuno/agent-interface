@@ -100,6 +100,8 @@ def main() -> int:
                     "fixture_sha256": fixture_sha,
                     "cpu_counts": cpu_rows[0],
                     "cuda_counts": cuda_rows[0],
+                    "cpu_rows": cpu_rows,
+                    "cuda_rows": cuda_rows,
                     "cpu_rows_all_match": all(row == cpu_rows[0] for row in cpu_rows),
                     "cuda_rows_all_match": all(row == cuda_rows[0] for row in cuda_rows),
                     "cpu_times_ms": cpu_times,
