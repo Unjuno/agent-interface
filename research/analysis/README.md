@@ -371,6 +371,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`resident_reactive_rung0_successor_2025_r3_v1/`](resident_reactive_rung0_successor_2025_r3_v1/)
 - [`resident_reactive_rung0_successor_2025_v1/`](resident_reactive_rung0_successor_2025_v1/)
 - [`resident_reactive_rung0_successor_2110_r1_v1/`](resident_reactive_rung0_successor_2110_r1_v1/)
+- [`residual_dependence_6096_t0_20261001/`](residual_dependence_6096_t0_20261001/)
 - [`response_capacity_5771_successor_v1/`](response_capacity_5771_successor_v1/)
 - [`reusable_receipt_session_binding_v1/`](reusable_receipt_session_binding_v1/)
 - [`reusable_receipt_session_binding_v2/`](reusable_receipt_session_binding_v2/)
