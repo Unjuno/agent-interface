@@ -100,7 +100,37 @@ A fresh [completed primary trial](../results/guarded-mcp-primary-02/README.md)
 subsequently verified six exact saves and explicit recovery through the public
 mode. This supports opt-in integration; efficiency claims remain unproven.
 
-## Guarded tail deadline
+## Explicit activation before a new guarded action
+
+After loss of target focus, Python callers may explicitly request
+`bridge.activate_window(window_id=..., source_sequence=...,
+current_binding_revision=..., expires_at_ns=..., timeout_ms=...)`; MCP callers
+use `interface_guarded_activate_window` with the same required fields. Only the
+currently registered window and latest delivered source/current revision are
+accepted. The caller supplies its expiry on `interface_clock`'s execution-host
+clock. The existing core lease/capability checks still apply.
+
+Activation sends an EWMH request, not text/clicks. Successful or uncertain
+activation blocks guarded editing until explicit window review. Review that
+image, mint a new alias and choose a new action; no old program is replayed.
+Core refusal preserves any earlier review block. No strict caller STOP is
+cleared. The WM may act later after a timeout. `timeout_ms` is 0..2000 and is
+a polling budget, not a deadline on blocking X11 transport. Managed-client/EWMH
+support is required; within-target editing focus and already-held input remain
+outside this operation. See [main-specific integration evidence](../results/guarded-activation-main-01/README.md).
+
+Public MCP optionally accepts `review_after_activation=true`. This explicitly
+composes activation with the existing window review in the same worker call,
+only after activation completes with verified neutral input release. The default
+is false. The response retains the activation result separately from review,
+returns the exact review image, and publishes the new binding revision. A failed
+or uncertain activation never triggers review. A review exception preserves the
+activation receipt and blocks editing; it never claims that no effect occurred.
+The caller must inspect the returned image before fresh grounding and editing.
+This removes a separate review request from this chosen flow; it does not prove
+lower semantic latency, human tempo or token cost and performs no automatic input.
+
+### Deadline enforcement
 
 The existing five-second guarded lease includes admission captures, pointer
 checks, typing and explicit waits. Every new key press now checks that deadline;

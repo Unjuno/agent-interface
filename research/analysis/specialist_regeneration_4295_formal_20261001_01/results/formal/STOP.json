@@ -1,0 +1,20 @@
+{
+  "allocation": "specialist-regeneration-4295-20261001-01",
+  "candidate_invocations": 1,
+  "candidate_exit": 0,
+  "candidate_rows": 128,
+  "candidate_raw_sha256": "8fe7767b456cc5ca70285b426c492675952c3247f55400d71233aa9780412d3e",
+  "frozen_audit_exit": 0,
+  "frozen_audit_decision": "PASS_REGENERATE_TRIVIAL_SPECIALIST_SCOPED",
+  "completeness_audit_exit": 0,
+  "completeness_audit_decision": "PASS_EXACT_FORMAL_DENOMINATOR",
+  "controls_invocations": 1,
+  "controls_exit": 1,
+  "controls_effective_rejections": 0,
+  "controls_total": 12,
+  "disposition": "STOP_PROTOCOL_DEVIATION",
+  "reason": "Frozen controls command passed AUDIT.json as the auditor script path; controls.py requires audit.py. Child Python processes executed the JSON expression and exited 0, so the intended mutations were not audited.",
+  "retry": false,
+  "formal_candidate_rerun": false,
+  "original_outputs_immutable": true
+}

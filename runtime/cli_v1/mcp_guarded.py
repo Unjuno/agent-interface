@@ -80,6 +80,39 @@ class GuardedSessionOwner(MCPSessionOwner):
         # Guarded observations consume the current capture's producer RGB.
         bridge.backend.configure_capture_artifacts(Path(call_root)/'images', retain_rgb=True)
         row = {'operation':operation, 'task_success':None, 'replay_allowed':False}
+        if operation == 'guarded_activate_window':
+            # A failed reply may follow a WM request with a delayed effect.
+            self.dispatch_attempted = True
+            activation_arguments = dict(arguments)
+            review_requested = activation_arguments.pop('review_after_activation', False)
+            result = bridge.activate_window(**activation_arguments)
+            row.update(status=result['status'], result=result)
+            if review_requested:
+                row['feedback_status'] = 'review_not_attempted'
+                releases = result.get('execution', {}).get('releases', [])
+                neutral = bool(releases) and all(
+                    release.get('verified') is True and release.get('keys_down') == []
+                    and release.get('buttons_down') == [] for release in releases)
+                if result['status'] == 'completed' and neutral and not bridge.session.recovery_required:
+                    # Explicit composition only: never ground a coordinate, edit,
+                    # retry activation or certify task success from this image.
+                    try:
+                        review = bridge.review_window(arguments['window_id'])
+                    except Exception as error:
+                        # The WM request already happened. Preserve its receipt
+                        # and block editing even if review persistence failed.
+                        bridge.review_required = True
+                        row.update(status='needs_review', feedback_status='review_failed',
+                                   review_error=repr(error))
+                        return row
+                    self.binding_revision = bridge.binding_revision
+                    self.targets[self.target] = bridge.backend.targets[self.target].id
+                    row.update(status=review['status'], review=review,
+                               feedback_status='review_returned')
+                    if review['status'] == 'reviewed':
+                        self._with_observation(row, review['observation'])
+            return row
+
         if operation == 'guarded_input':
             # From here on a thrown exception may follow emitted input. The
             # transport retains uncertainty; it must not claim no input or retry.
@@ -138,6 +171,37 @@ class GuardedSessionOwner(MCPSessionOwner):
 
 
 def register_guarded_tools(server, submit):
+    @server.tool()
+    async def interface_guarded_activate_window(window_id: StrictInt, source_sequence: StrictInt,
+            current_binding_revision: StrictInt, expires_at_ns: StrictInt,
+            timeout_ms: Annotated[StrictInt, Field(ge=0,le=2000)],
+            review_after_activation: StrictBool=False) -> CallToolResult:
+        """Explicitly activate the registered target through ordinary admission.
+
+        Requires exact target window ID, latest delivered source sequence,
+        current binding revision and caller-supplied expiry on interface_clock's
+        host clock. EWMH activation must be supported by the window manager.
+        Sends no text/click. Success is a momentary focus
+        check, not visual or task confirmation. After admitted or uncertain
+        activation, explicitly review the window with guarded_review_window,
+        review its image, then mint a new alias and choose a new action.
+        Timeout is a polling budget, not a blocking X11 deadline; the WM may
+        apply the request later. No replay or lease renewal. Unverified input
+        cleanup blocks activation. This does not clear a caller's STOP policy.
+        review_after_activation=true explicitly requests window review and its
+        exact image in this same reply, only after completed activation with
+        verified neutral release. Default false retains the separate-review
+        path. Review the returned image before fresh grounding or any editing.
+        Failed activation never triggers review or retry; a failed review keeps
+        the activation receipt and requires a new caller decision.
+        """
+        return await submit('guarded_activate_window',dict(window_id=window_id,
+            source_sequence=source_sequence,current_binding_revision=current_binding_revision,
+            expires_at_ns=expires_at_ns,timeout_ms=timeout_ms,
+            review_after_activation=review_after_activation),False,False)
+
+
+
     @server.tool()
     async def interface_guarded_observe(observation_refs: StrictBool=False) -> CallToolResult:
         """Capture the full screen on the configured X11 connection; send no input.

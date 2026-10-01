@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-integrated-main/runtime/results/activation-review-02/audit.py", line 57, in <module>
+    print(json.dumps(audit(Path(sys.argv[1])),indent=2))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-integrated-main/runtime/results/activation-review-02/audit.py", line 35, in audit
+    require([(e['role'],e['char']) for e in events if e['kind']=='key']==[('A','z')],'independent effects')
+  File "/var/tmp/agent-interface-integrated-main/runtime/results/activation-review-02/audit.py", line 4, in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: independent effects

@@ -1,0 +1,80 @@
+{
+  "coverage_negative_control_misses_release_loss": true,
+  "coverage_only": {
+    "cost": 1,
+    "covers": [
+      "navigation",
+      "readback"
+    ],
+    "kills": {
+      "equivalent_mutant": false,
+      "release_loss": false,
+      "stale_authority": false,
+      "unknown_fault": false,
+      "wrong_target": true
+    },
+    "tasks": [
+      "cheap_a"
+    ]
+  },
+  "detection_aware": {
+    "cost": 6,
+    "eligible_faults": [
+      "wrong_target",
+      "stale_authority",
+      "release_loss"
+    ],
+    "kills": {
+      "equivalent_mutant": false,
+      "release_loss": true,
+      "stale_authority": true,
+      "unknown_fault": false,
+      "wrong_target": true
+    },
+    "tasks": [
+      "cheap_a",
+      "cheap_b",
+      "rare_sentinel"
+    ]
+  },
+  "detection_subset_retains_all_known_detectable": true,
+  "detection_subset_retains_all_mandatory": true,
+  "equivalent_mutant_excluded": true,
+  "full": {
+    "cost": 6,
+    "kills": {
+      "equivalent_mutant": false,
+      "release_loss": true,
+      "stale_authority": true,
+      "unknown_fault": false,
+      "wrong_target": true
+    },
+    "tasks": [
+      "cheap_a",
+      "cheap_b",
+      "rare_sentinel"
+    ]
+  },
+  "mandatory_sentinels": [
+    "release_loss",
+    "stale_authority",
+    "wrong_target"
+  ],
+  "random_same_cost_support": [
+    {
+      "kills_release_loss": false,
+      "tasks": [
+        "cheap_a"
+      ]
+    },
+    {
+      "kills_release_loss": false,
+      "tasks": [
+        "cheap_b"
+      ]
+    }
+  ],
+  "subset_count": 8,
+  "unknown_cell_count": 3,
+  "unknown_preserved": true
+}

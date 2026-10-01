@@ -177,3 +177,50 @@ test('returned local attempt selects retained reply even when relay IDs are reus
   assert.deepEqual((await events(dir)).filter(x=>x.kind==='presentation_started').map(x=>x.attempt),[1,2]);
  } finally {await client.close();}
 });
+
+
+test('sendPresented delivers typed MCP refusal before resolving and never retries',async()=>{
+ const typed=fixture.replace('const report={call_id:',"const report={status:'refused',input_dispatched:false,call_id:").replace('result:{content:','result:{isError:true,content:');
+ const {dir,client}=await setup({args:['-e',typed]});const seen=[];
+ try{
+  const reply=await client.sendPresented('interface_guarded_input',{alias:'old'},{text:v=>seen.push(v),image:v=>seen.push(v.bytes.toString('hex'))});
+  assert.equal(reply.result.isError,true);assert.deepEqual(seen[0],{schema:'agent-interface/mcp-result-status-v1',isError:true});
+  assert.equal(JSON.parse(seen[1]).status,'refused');assert.equal(seen[2],'00010203');assert.equal(client.state().attempts,1);
+  assert.deepEqual((await events(dir)).map(x=>x.kind),['send_requested','reply_available','presentation_started','presentation_callbacks_completed']);
+  assert.deepEqual(JSON.parse(await readFile(join(dir,'reply-1.json'))).result,reply.result);
+ }finally{await client.close();}
+});
+test('sendPresented owns the whole send/display interval and wait returns the original promise',async()=>{
+ const {client,dir}=await setup();let release,entered;const ready=new Promise(r=>entered=r),gate=new Promise(r=>release=r);
+ try{
+  const pending=client.sendPresented('observe',{}, {text:()=>{},image:async()=>{entered();await gate;}});
+  assert.equal(client.wait(),pending);await ready;
+  assert.throws(()=>client.send('input-before-display'),/outstanding/);await assert.rejects(client.close(),/outstanding/);
+  assert.equal((await events(dir)).at(-1).kind,'presentation_started');release();const reply=await pending;
+  assert.equal(reply.attempt,1);assert.equal(await client.wait(),reply);
+  await client.send('explicit-next');assert.equal(client.state().attempts,2);
+ }finally{release?.();await client.close();}
+});
+test('sendPresented checks delivery callbacks before dispatching input',async()=>{
+ const {client,dir}=await setup();
+ try{
+  assert.throws(()=>client.sendPresented('input',{}, {text:()=>{}}),/callbacks/);assert.equal(client.state().attempts,0);
+  assert.equal((await readdir(dir)).filter(x=>x.startsWith('request-')).length,0);
+ }finally{await client.close();}
+});
+test('sendPresented presentation failure preserves the reply and blocks subsequent input',async()=>{
+ const {client,dir}=await setup();
+ try{
+  const pending=client.sendPresented('input',{}, {text:()=>{},image:()=>{throw Error('display failed');}});
+  await assert.rejects(pending,/display failed/);assert.equal(client.wait(),pending);
+  assert.throws(()=>client.send('replay'),/display failed/);assert.equal(client.state().attempts,1);
+  assert.equal(JSON.parse(await readFile(join(dir,'reply-1.json'))).status,'returned');
+  assert.equal((await events(dir)).filter(x=>x.kind==='presentation_callbacks_completed').length,0);
+ }finally{await client.close();}
+});
+
+test('sendPresented snapshots callbacks before its request can wait',async()=>{
+ const {client}=await setup();let images=0;const callbacks={text:()=>{},image:()=>{images++;}};
+ try{const pending=client.sendPresented('observe',{},callbacks);callbacks.image=undefined;await pending;assert.equal(images,1);}
+ finally{await client.close();}
+});

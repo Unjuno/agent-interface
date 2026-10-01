@@ -1,0 +1,22 @@
+{
+  "schema": "map01-recovery-guard-host-stop-v1",
+  "allocation": "HOST-59-RECOVERY-GUARD-C-20261001-04",
+  "observed_at_utc": "2026-10-01 04:58:03 UTC",
+  "experiment_base_main": "686ae6c94dd67e78bab9920457085dc6ad1ced19",
+  "publication_base_main": "ff2164a8b16d386571c91ebba19f6604b4776581",
+  "frozen_protocol_path": "research/doom/map01_recovery_cover_matched_v2_runner_3211_diagnostic_v2.py",
+  "frozen_protocol_git_blob_sha1": "f5caf71a743a563b7de046b82d44db7ebe49e829",
+  "candidate_script_git_blob_sha1": "2ceb202e34b62fc30fe16bfed33e49aaaf6f71ad",
+  "auditor_script_git_blob_sha1": "90c2ea5449b636bb61ac2175246410469493f51b",
+  "source_hash_gate": "PASS",
+  "candidate_process_invocations": 1,
+  "guard_predicate_invocations": 0,
+  "candidate_exit_code": 1,
+  "failure": "NameError: name '__file__' is not defined",
+  "failure_location": "during exec(compile(...)) of frozen protocol module top-level; frozen source initializes HERE from __file__",
+  "candidate_raw_output": "ABSENT",
+  "auditor_invocations": 0,
+  "retries": 0,
+  "scientific_result": "NOT_EVALUATED",
+  "scope": "host-only construction harness STOP; no container, GPU, CUDA, model, game, GUI/X11, or input"
+}
