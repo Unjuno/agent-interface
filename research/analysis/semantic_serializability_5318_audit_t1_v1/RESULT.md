@@ -25,5 +25,5 @@ After the single Docker request above was interrupted, the branch received a sep
 
 - TDD exposed that `audit_rows(..., require_coverage=False)` accepted unknown scenario/policy labels. The auditor now rejects those labels independently of the full-coverage gate.
 - The audit CLI now has a `--controls` mode for five in-memory corruptions: omitted row, duplicate row, changed final, changed committed IDs, and changed scenario label.
-- Host construction suite: **8/8 passed**. Running `python -B audit.py "<frozen RAW.jsonl>" --controls` against the immutable input reported 30 rows, no baseline errors, and **5/5 mutations rejected**. Input SHA-256 remained `26fa7c694fd0f3a35bc5085b6145af639e88c8dd79666c3284db12f11df9ed90`.
+- Host construction suite: **9/9 passed**. Running `python -B audit.py "<frozen RAW.jsonl>" --controls` against the immutable input reported 30 rows, no baseline errors, and **5/5 mutations rejected**. Malformed JSON makes the CLI emit a typed JSON STOP and skip mutation execution instead of crashing. Input SHA-256 remained `26fa7c694fd0f3a35bc5085b6145af639e88c8dd79666c3284db12f11df9ed90`.
 - This is construction evidence only. It neither establishes Docker execution nor supersedes the T1 STOP. No further Docker call was made; a future container run requires a distinct fresh allocation, exact source freeze, and a responsive engine.

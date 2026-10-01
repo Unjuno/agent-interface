@@ -20,6 +20,20 @@ def base_row():
 
 
 class IndependentAuditTests(unittest.TestCase):
+    def test_controls_cli_reports_malformed_input_as_json_stop(self):
+        row = base_row()
+        with tempfile.TemporaryDirectory() as temp_dir:
+            raw_path = Path(temp_dir) / "malformed.jsonl"
+            raw_path.write_text(json.dumps(row) + "\nnot-json\n", encoding="utf-8")
+            completed = subprocess.run(
+                [sys.executable, str(Path(audit.__file__)), str(raw_path), "--controls"],
+                check=False, capture_output=True, text=True,
+            )
+        self.assertTrue(completed.stdout.strip())
+        result = json.loads(completed.stdout)
+        self.assertIn("MALFORMED_JSON:2", result["errors"])
+        self.assertIn("MUTATION_CONTROLS_SKIPPED_INVALID_BASE_INPUT", result["errors"])
+
     def test_controls_cli_rejects_all_five_raw_mutations(self):
         row = base_row()
         row.update(decision="ABORT", final={"x": 0}, committed=[], parallel_count=0)

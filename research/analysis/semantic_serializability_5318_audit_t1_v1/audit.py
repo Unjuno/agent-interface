@@ -147,11 +147,17 @@ def audit(path, controls=False):
     errors, digest = audit_bytes(raw)
     result = {"rows": len(raw.splitlines()), "errors": errors, "raw_sha256": digest}
     if controls:
-        rows = [json.loads(line) for line in raw.splitlines()]
-        results = mutation_controls(rows)
-        result["controls"] = results
-        result["errors"].extend("MUTATION_CONTROL_SURVIVED:" + name
-                               for name, control in results.items() if not control["rejected"])
+        invalid_input = any(error.startswith("MALFORMED_JSON:") or error == "MALFORMED_ROW"
+                            for error in errors)
+        if invalid_input:
+            result["controls"] = {}
+            result["errors"].append("MUTATION_CONTROLS_SKIPPED_INVALID_BASE_INPUT")
+        else:
+            rows = [json.loads(line) for line in raw.splitlines()]
+            results = mutation_controls(rows)
+            result["controls"] = results
+            result["errors"].extend("MUTATION_CONTROL_SURVIVED:" + name
+                                   for name, control in results.items() if not control["rejected"])
     return result
 
 
