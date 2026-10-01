@@ -1,0 +1,73 @@
+{
+  "freeze_id": "ISSUE-5841-T0-HOST-20261001-01",
+  "repository": "Unjuno/agent-interface",
+  "issue": 5841,
+  "branch": "research/5841-same-cohort-negative-control-t0-20261001",
+  "path": "research/experiments/same_cohort_negative_control_5841_t0_20261001/",
+  "main_sha": "0f141ee798325290f0eb46506169fe325d208d69",
+  "allocation": "one host-CPU candidate invocation followed by one separate raw-only audit; no retries",
+  "environment": {
+    "os": "Windows host",
+    "python": "CPython 3.11.9",
+    "container": "NOT_USED: python:3.12.14-slim was not cached; C: free space fell from 316096512 bytes during preparation to 0 before formal launch; no shared Docker/OrbStack CPU allocation was granted to this experiment",
+    "gpu": "NOT_USED: deterministic finite method test has no GPU-dependent computation",
+    "network": "candidate and auditor make no network calls",
+    "external_effects": "none"
+  },
+  "H": "In a finite matched-route evaluation with planted route-correlated outcome loss or task-ID misjoin but no true route benefit, a predeclared same-cohort negative-control endpoint flags the spurious contrast before promotion; a null pipeline does not trigger. Its ability to detect real benchmark bias remains unknown.",
+  "T": {
+    "design": "Deterministic authored no-model assignment deck; compare primary-only analysis, a pre/post reference-standard deck, and same-cohort negative controls. An independent raw-only auditor replays every row and adjudicates against a separate truth file.",
+    "cases": [
+      "clean_null",
+      "true_primary_benefit",
+      "route_missingness",
+      "task_id_swap",
+      "joint_export_error",
+      "real_sentinel_collateral"
+    ],
+    "population": "6 cases x 4 assigned task IDs x 2 routes = 48 episode rows; 6 x 2 routes x 2 phases = 24 pre/post reference rows",
+    "faults": "route-specific missing hard outcomes; swapped observed task IDs; task-window joint primary/sentinel export error while pre/post reference samples remain correct; actual guarded-route sentinel mutation",
+    "controls": "clean null and true primary benefit with null sentinel",
+    "candidate_runs": 1,
+    "auditor_runs": 1,
+    "retry_policy": "none"
+  },
+  "D": {
+    "PASS_METHOD_SCOPED": "same-cohort control warns exactly on the four preregistered missingness/join/export/collateral deviations; clean-null and true-primary-benefit cases remain CLEAR; the independent oracle classifies the true sentinel mutation as COLLATERAL_FAIL rather than measurement bias; all six raw corruption controls are rejected.",
+    "FAIL_METHOD": "a required planted measurement/join/missingness deviation is missed, clean-null or true-primary-benefit is quarantined, a real sentinel mutation is classified as mere measurement bias, raw reconstruction differs, or any corruption control is accepted.",
+    "UNCERTAIN": "the authored independent truth/oracle or the declared route-null relation cannot distinguish export error from real collateral, or source/input identity cannot be established."
+  },
+  "C": "Ordinary all-attempt reconciliation, independent scoring, or a check-standard deck may catch the same errors more simply; a negative control can be weakly linked to the relevant bias path and create false reassurance.",
+  "U": "Synthetic data do not establish that a real route cannot affect a sentinel, that the sentinel shares a live bias path, or that the method detects endpoint-specific primary-only errors. The small deterministic deck gives no sensitivity, prevalence, causal, integrated #57, GUI, model, safety, or product estimate. The audit oracle is authored fixture truth, not an empirical independent assessor.",
+  "decision_gates": {
+    "same_cohort_warning_cases": [
+      "joint_export_error",
+      "real_sentinel_collateral",
+      "route_missingness",
+      "task_id_swap"
+    ],
+    "must_remain_clear": [
+      "clean_null",
+      "true_primary_benefit"
+    ],
+    "must_not_overinterpret": "a control warning means NEEDS_INDEPENDENT_AUDIT; the control alone does not label bias or prove the primary contrast invalid",
+    "reference_deck": "pre/post deck is measured as its own comparator; task-window-only injected export error intentionally leaves fixed bracketing checks green",
+    "threshold": "exact nonzero finite contrast for binary outcomes; no statistical significance test or empirical-rate inference"
+  },
+  "frozen_sha256": {
+    "candidate.py": "6136d02ff6d5bda0aae0e5a734edd5518f7d75399787b7ef11aec2b61ec03ae",
+    "audit.py": "60419c6c3c6d4d9f6d2c27abaf73ae9f6c35180912fc649df02f965b607e26d7",
+    "build_fixtures.py": "0dc33c629efe9f8811f7d708677a36170c2e605fb05d04184395c883af574a7b",
+    "reported_rows.json": "1a8ff080b4b58c7fdd8c6197e5fed2cda270a2741e6554c18ba7414266d3f369",
+    "oracle.json": "ccabcca490b07926db105352f2b4b51f6249e92a9505304e289e1f3558cc7ed9",
+    "reference_deck.json": "64fccd532319ec3ae94e0d733259081b673d509a927966f9d91b6bc231680770"
+  },
+  "case_order": [
+    "clean_null",
+    "true_primary_benefit",
+    "route_missingness",
+    "task_id_swap",
+    "joint_export_error",
+    "real_sentinel_collateral"
+  ]
+}
