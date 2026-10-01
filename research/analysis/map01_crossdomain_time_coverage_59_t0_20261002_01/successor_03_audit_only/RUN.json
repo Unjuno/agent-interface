@@ -22,7 +22,10 @@
     "result": "PASS",
     "passed": 5,
     "failed": 0,
-    "initial_wrong_directory_attempt": "ImportError before test execution; corrected by running from allocation directory"
+    "pre_audit_command_context_errors": [
+      "Test-loader command from parent directory: ImportError before test execution; corrected from allocation directory.",
+      "Two pre-run hash-gate shell commands used incorrect relative input paths and stopped at file-not-found; corrected with explicit parent-relative paths."
+    ]
   },
   "resource_scope": "Host standard-library raw-only audit; no candidate, raw experiment, Docker, WSL, model, GUI, OS input, game, or GPU."
 }
