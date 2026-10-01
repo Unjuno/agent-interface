@@ -2,7 +2,7 @@
   "schema": "authority-queue-fixture-v1",
   "service_proxy_only": true,
   "batch_wait": 2,
-  "urgent_release": {"id": "R0", "at": 2, "duration": 1, "must_bypass": true},
+  "urgent_release": {"id": "R0", "at": 0, "duration": 1, "must_bypass": true},
   "events": [
     {"type": "arrive", "id": "A", "version": 1, "at": 0, "deadline": 8, "duration": 2, "principal": "pA", "target": "doc-A", "effect": "save", "decision": "accept"},
     {"type": "arrive", "id": "B", "version": 1, "at": 0, "deadline": 12, "duration": 3, "principal": "pB", "target": "doc-B", "effect": "delete", "decision": "deny"},
