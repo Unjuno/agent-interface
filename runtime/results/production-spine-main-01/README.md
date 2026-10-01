@@ -61,3 +61,9 @@ python3 -O runtime/results/production-spine-main-01/verify.py
 
 Both modes pass. Post-hoc negative controls reject an incorrect saved token and a
 changed frozen caller. The read-only auditor never starts a GUI or sends input.
+
+After rebasing onto main `0283bcc90f2d33cbbe74358fa3bcb5bb80ee95a0`, the runtime
+implementation bytes remained unchanged from the frozen source. At rebased head
+`14847eda8a2faa411ed951e1733beef5ea7fe8b7`, local native checks passed all 345
+protocol and 156 harness tests. Full logs and the compatibility receipt are in
+`rebased-checks/`; these contract checks do not remove the model-boundary HOLD.
