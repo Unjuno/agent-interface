@@ -50,8 +50,10 @@ Prefer the narrowest existing namespace. The diagram is a placement guide; retai
 
 ## Analytical studies
 
+- [`analysis/adaptive_screen_5739_t0_v1/REPORT.md`](analysis/adaptive_screen_5739_t0_v1/REPORT.md) — Issue #5739 claim-boundary successor: read-only audit-v2 PASS after preserving the audit-v1 report-serialization STOP; synthetic-only.
+
 - [`analysis/`](analysis/) — proofs, exact derivations, exhaustive state-space checks, break-even/identifiability analysis, and the empirical residuals they expose.
-- [`analysis/backward_evidence_slice_5329_t0_v1/README.md`](analysis/backward_evidence_slice_5329_t0_v1/README.md) — Issue #5329 backward-slice T0 retained as `STOP_PROVENANCE_OR_RUNNER`; the frozen independent auditor stopped on an unresolved external-cause edge.
+- [`analysis/backward_evidence_slice_5329_t0_v1/README.md`](analysis/backward_evidence_slice_5329_t0_v1/README.md) — Issue #5329 Formal01 auditor STOP preserved unchanged; distinct Formal02 passes the finite backward-slice method gate with explicit scope limits.
 - [`security/`](security/) — Issue #5692 X11 UI-redress evidence and other security research; formal-01 STOP is recorded in [the result file](security/ui_redress_5692_x11_a02_20261001/FORMAL-01-STOP.md).
 
 Use analytical work to eliminate questions that are already decidable from explicit assumptions; do not treat it as measurement of a real backend/model unless the retained evidence actually contains those endpoints.
