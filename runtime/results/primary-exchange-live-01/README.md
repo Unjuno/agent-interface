@@ -70,3 +70,9 @@ tests or live allocation; exact existing files were materialized. A later inline
 summary command failed shell parsing without changing files or the ended case.
 Those original tool outputs remain in the primary session log; neither is a
 runtime failure or concealed replacement experiment.
+
+Final integration validation: the new test is explicitly wired into Native MCP
+CI. Local Node selection including research relay tests passed 171 tests; the
+shared native.py runner passed protocol and harness suites. Exact logs/result
+are retained in final-ci. Hosted Windows/macOS execution is not claimed; the
+local runtime was WSL Python 3.12.3 / Node 24.13.1, while hosted Node selects 22.
