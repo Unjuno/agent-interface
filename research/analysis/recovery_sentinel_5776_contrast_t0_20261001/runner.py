@@ -17,7 +17,7 @@ def episode(fx, load, mechanism, eid):
     pending_return = None
     for tick in range(fx["horizon_ticks"]):
         shock = fx["probe_units"] if tick in probes else 0
-        demand = 1 if mechanism == "demand_drift_no_loss" and 54 <= tick < 70 else 0
+        demand = 1 if mechanism == "demand_drift_no_loss" and 54 <= tick <= 70 else 0
         loss = fx["loss_units"] if mechanism in ("gradual_recovery_loss", "abrupt_breaker_loss", "spontaneous_failure") and tick == fx["loss_tick"] else 0
         if mechanism == "variable_disturbance" and tick in probes:
             shock = 1 if probes.index(tick) % 2 else 3

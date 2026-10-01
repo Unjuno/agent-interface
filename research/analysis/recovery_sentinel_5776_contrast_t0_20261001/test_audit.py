@@ -31,9 +31,14 @@ class ContrastAuditTests(unittest.TestCase):
         self.assertEqual(result["metrics"]["gradual_recovery_sensitivity"], 1.0)
         self.assertEqual(result["metrics"]["pointwise_margin_sensitivity"], 0.0)
         self.assertEqual(result["metrics"]["minimum_target_warning_lead_ticks"], 14)
+        self.assertEqual(result["metrics"]["heldout_groups"]["high:demand_drift_no_loss"],
+                         {"episodes": 16, "recovery_warnings": 16, "pointwise_warnings": 16,
+                          "future_loss_episodes": 0, "unknown_return_episodes": 0})
         self.assertEqual(result["metrics"]["recovery_false_alarm_rate"], 0.25)
         self.assertEqual(result["metrics"]["recovery_false_alarm_rate_by_load"],
                          {"low": 0.25, "near": 0.25, "high": 0.25})
+        self.assertEqual(result["metrics"]["pointwise_false_alarm_rate_by_load"],
+                         {"low": 0.0, "near": 0.0, "high": 0.25})
 
     def test_fixture_identity_and_event_corruptions_rejected(self):
         raw = self.runner.build(self.fixture)

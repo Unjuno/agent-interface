@@ -70,7 +70,7 @@ def audit(doc, fx):
                 expected_shock = 1 if fx["probe_ticks"].index(tick) % 2 else 3
             if shock != expected_shock:
                 errors.append(f"probe_size:{mechanism}:{eid}:{tick}")
-            expected_demand = 1 if mechanism == "demand_drift_no_loss" and 54 <= tick < 70 else 0
+            expected_demand = 1 if mechanism == "demand_drift_no_loss" and 54 <= tick <= 70 else 0
             if demand != expected_demand:
                 errors.append(f"demand:{mechanism}:{eid}:{tick}")
             expected_loss = fx["loss_units"] if mechanism in (
@@ -152,10 +152,29 @@ def audit(doc, fx):
                / sum(e.get("load") == load for e in negatives))
         for load in fx["loads"]
     }
+    pointwise_false_alarm_by_load = {
+        load: (sum(e["pointwise_warning"] for e in negatives if e.get("load") == load)
+               / sum(e.get("load") == load for e in negatives))
+        for load in fx["loads"]
+    }
+    group_summary = {}
+    for load in fx["loads"]:
+        for mechanism in fx["mechanisms"]:
+            group = [e for e in heldout if e.get("load") == load and e.get("mechanism") == mechanism]
+            group_summary[f"{load}:{mechanism}"] = {
+                "episodes": len(group),
+                "recovery_warnings": sum(e["recovery_warning"] for e in group),
+                "pointwise_warnings": sum(e["pointwise_warning"] for e in group),
+                "future_loss_episodes": sum(e["future_loss"] for e in group),
+                "unknown_return_episodes": sum(e["unknown_return"] for e in group),
+            }
     pass_gate = bool(target and recovery_sens >= 0.75 and recovery_sens - margin_sens >= 0.25
                      and minimum_target_lead is not None
                      and minimum_target_lead >= fx["minimum_warning_lead_ticks"]
-                     and recovery_fpr is not None and recovery_fpr <= 0.10 and not errors)
+                     and recovery_fpr is not None and recovery_fpr <= 0.10
+                     and all(v <= 0.10 for v in false_alarm_by_load.values())
+                     and all(v <= 0.10 for v in pointwise_false_alarm_by_load.values())
+                     and not errors)
     metrics = {"heldout_episodes": len(heldout), "target_gradual_loss_episodes": len(target),
                "gradual_recovery_sensitivity": recovery_sens,
                "pointwise_margin_sensitivity": margin_sens,
@@ -163,6 +182,8 @@ def audit(doc, fx):
                "minimum_target_warning_lead_ticks": minimum_target_lead,
                "negative_episodes": len(negatives), "recovery_false_alarm_rate": recovery_fpr,
                "recovery_false_alarm_rate_by_load": false_alarm_by_load,
+               "pointwise_false_alarm_rate_by_load": pointwise_false_alarm_by_load,
+               "heldout_groups": group_summary,
                "gradual_recovery_warnings": sum(e["recovery_warning"] for e in target),
                "pointwise_warnings_on_gradual": sum(e["pointwise_warning"] for e in target),
                "recovery_warnings_on_negatives": sum(e["recovery_warning"] for e in negatives)}
