@@ -6,3 +6,7 @@ The unsafe_admission control is a frozen no-op for this retained fixture: it ass
 
 Observed medians (ns) are retained in candidate_result.json but remain descriptive only because integrity did not pass. They show no apparent transfer-inclusive CUDA crossover on this device/workload; this is not a valid scoped PASS under the preregistered gate.
 
+## GitHub raw-byte preservation
+
+The GitHub contents transport truncated the 348,665-byte candidate JSON when sent as one string. The exact original candidate and auditor result bytes are base64-sharded and indexed in raw_evidence.manifest.json. Reassemble by concatenating candidate_result.raw.b64.part-01 through part-08 in order, base64-decoding, and verifying the manifest SHA-256. The audit_result.json and candidate_result.json branch entries are pointers, not the raw payloads. No experiment was rerun.
+
