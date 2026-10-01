@@ -346,3 +346,13 @@ demonstrates why completed input and a later metadata sample do not establish
 that the captured image contains the completion cue. Read the actual image and
 request another observation when needed. Optional availability is not evidence
 of general speed, human tempo, token savings or a completed six-task integration.
+
+The [delayed completion case](../results/completion-feedback-01/README.md)
+exercises this continuation through the built public runtime: Save returned a
+pending image after verified release; one explicit `primary.observe()` on the
+same live connection returned the task-bound completion cue. Save was issued
+once. Review the pending image as incomplete, then review the new image before
+claiming visible completion. Choose an observation budget and stopping rule for
+the task; if its cue is still absent, retain an unresolved outcome rather than
+repeating input or observing indefinitely. This authored single case establishes
+the continuation mechanics, not a general semantic detector or a wait default.
