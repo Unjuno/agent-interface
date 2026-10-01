@@ -136,6 +136,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 
 ### Evaluation and research governance
 
+- [`verification/postcondition_evidence_ablation_v1/ARCHIVAL_QUALIFICATION.md`](verification/postcondition_evidence_ablation_v1/ARCHIVAL_QUALIFICATION.md) — Issue #3951 / Draft PR #3960: exact three-file provenance/STOP archive; original source/raw remain incomplete, allocation consumed, no independent reproduction or runtime promotion.
 - [`benchmark_discovery/`](benchmark_discovery/) — benchmark/coverage discovery.
 - [`verification/ontology_gap_5275_t1_v1/REPORT.md`](verification/ontology_gap_5275_t1_v1/REPORT.md) — Issue #5275 T1 lexical novelty boundary probe; scoped synthetic result with training/evaluation overlap disclosed, no semantic-generalization claim.
 - [`verification/ontology_gap_5275_t2_v1/REPORT.md`](verification/ontology_gap_5275_t2_v1/REPORT.md) — Issue #5275 T2 held-out surface successor: FAIL, lexical-only abstains on all supported held-out cases and known-vocabulary dilution hides two semantic OOD cases.
