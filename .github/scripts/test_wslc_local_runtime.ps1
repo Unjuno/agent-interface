@@ -4,6 +4,21 @@ $wslc = Get-Command wslc.exe -ErrorAction SilentlyContinue
 if (-not $wslc) {
     throw 'wslc.exe is required. Update WSL to 2.9.3 or later, then reopen PowerShell.'
 }
+$wsl = Get-Command wsl.exe -ErrorAction SilentlyContinue
+if (-not $wsl) {
+    throw 'wsl.exe is required to record the WSL runtime version.'
+}
+
+Write-Output 'WSL version:'
+& $wsl.Source --version
+if ($LASTEXITCODE -ne 0) {
+    throw "Could not read WSL version (exit code $LASTEXITCODE)."
+}
+Write-Output 'WSLc version:'
+& $wslc.Source version
+if ($LASTEXITCODE -ne 0) {
+    throw "Could not read WSLc version (exit code $LASTEXITCODE)."
+}
 
 $image = 'python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f'
 $tempRoot = [System.IO.Path]::GetFullPath([System.IO.Path]::GetTempPath())
