@@ -55,7 +55,7 @@ jobs:
             docker version
             docker info --format 'Server={{.ServerVersion}} OS={{.OperatingSystem}} Arch={{.Architecture}}'
           } > "$out/$POLICY.host-environment.txt" 2>&1
-          python3 - "$GITHUB_WORKSPACE/research/experiments/issue_5521_anergy_t3/results/gha-01/FREEZE.json" "$GITHUB_WORKSPACE/research/experiments/issue_5521_anergy_t3" <<'PY'
+          python3 - "$GITHUB_WORKSPACE/research/experiments/issue_5521_anergy_t3/results/gha-03/FREEZE.json" "$GITHUB_WORKSPACE/research/experiments/issue_5521_anergy_t3" <<'PY'
           import hashlib, json, pathlib, sys
           freeze = json.loads(pathlib.Path(sys.argv[1]).read_text())
           root = pathlib.Path(sys.argv[2])
