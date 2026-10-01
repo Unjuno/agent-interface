@@ -50,6 +50,23 @@ independent auditor are separate programs; the latter must not import the
 candidate. Five corruption tests cover row loss, fabricated button-up, broken
 identity, unverified release, and non-neutral release.
 
+## Frozen analysis sources — before execution
+
+The prospective source snapshot is commit
+551dd86ef7e3455b1c310b62a41a9ac50226735a on the additive branch. Exact Git
+blobs:
+
+| Role | Path | Git blob |
+| --- | --- | --- |
+| Candidate | research/live_control/r133_openttd_transfer_eligibility/audit.py | 32be8e1c56b0efc62cc42084f8dec2cae64aad99 |
+| Independent auditor | research/live_control/r133_openttd_transfer_eligibility/independent_audit.py | 85e43dea1d882949dcef42908613b61696fe9e51 |
+| Five corruption controls | research/live_control/r133_openttd_transfer_eligibility/test_audit.py | f93885a90a98dc0b8b93faf959fede7775500b8c |
+
+The local Windows working copies were byte-for-byte text-compared with these
+three branch files before this freeze note was added. These code blobs are
+immutable for the candidate and raw-only audit; any correction would be a new
+successor and would not replace this result.
+
 ## Execution plan
 
 1. Verify the three input hashes and run the five construction/corruption tests.
