@@ -1,0 +1,23 @@
+{
+  "disposition": "STOP_COMPLETE_RAW_PUBLICATION_UNAVAILABLE",
+  "scientific_result": "PASS_WRITER_CELL_SELECTION_SCOPE_SCOPED",
+  "issue": 4425,
+  "formal_cases": 24,
+  "formal_retries": 0,
+  "local_original_zip": {
+    "bytes": 3611177,
+    "sha256": "506a375bc714b1cf12cf84028869f7c6938d92690589e1a516c3295db56ccd3a",
+    "files": 401
+  },
+  "local_lossless_tar_xz": {
+    "bytes": 265324,
+    "sha256": "c6256b37883c25f097f9cf0a04cf368324a0dacd50a39e87ff2999ca487ea051",
+    "expanded_files": 401,
+    "expanded_bytes": 183804905,
+    "restore_reaudit": "byte-identical retained AUDIT.json"
+  },
+  "remote_complete_raw": false,
+  "reason": "Connected GitHub write tools accept inline text/blob content but expose no direct handoff from the retained local/container file bytes. Do not claim complete source/raw delivery or merge this Draft as qualified evidence.",
+  "rerun_permitted": false,
+  "broad_acceptance": false
+}

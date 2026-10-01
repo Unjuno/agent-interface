@@ -36,6 +36,11 @@ Integration work should make the composed boundary explicit: runtime + caller, a
 
 Child directory names are retained provenance, not a canonical architecture tree. Use each experiment's report for the exact composition and decision rule.
 
+## Preserved older Draft publications
+
+- [Writer selection scope #4425 / Draft PR #4446](writer_selection_scope_w4m8_v1/ARCHIVAL_QUALIFICATION.md) — seven exact published files retained; complete 401-file raw corpus missing, so this is not an independent reproduction or qualification of the reported PASS.
+- [Router membership #4430 / Draft PR #4452](router_membership_q5m8_v1/ARCHIVAL_QUALIFICATION.md) — three exact STOP metadata files retained; complete 457-file capsule missing and the historical result is not independently reproduced here.
+
 ## Interpretation
 
 - Use [`../../RESEARCH.md`](../../RESEARCH.md) for the evidence ledger and claims taxonomy.
