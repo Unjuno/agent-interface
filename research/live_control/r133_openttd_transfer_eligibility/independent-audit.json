@@ -1,5 +1,22 @@
-Get-Content: 
-Line |
-   2 |  Get-Content -Raw -LiteralPath '$env:TEMP\r133-openttd-audit-20261001\ …
-     |              ~~~~
-     | A parameter cannot be found that matches parameter name 'Raw'.
+{
+  "reconstructed": {
+    "ack_to_neutral_confirmation_ns_max": 1411871874,
+    "ack_to_neutral_confirmation_ns_min": 319502382,
+    "button_down_admissions": 7,
+    "button_up_admissions": 0,
+    "down_to_neutral_receipts": 7,
+    "event_rows": 311,
+    "first_A_to_B_record_zero_based": 91,
+    "observer_records": 263,
+    "shared_clock_or_identity_fields": [],
+    "unique_observer_states": 2
+  },
+  "scope": "raw reconstruction only; the HOLD is supported, not converted into an occupancy/effect latency estimate",
+  "source_sha256": {
+    "events_sha256": "b9e707b006a918b232f6d8915adc6a95e4d7e4ee789fec7ef4e1fba7e2df61ae",
+    "observer_sha256": "4bcfb5b2632e9b2dc76f5e3f67a73f30cbd6b142578b495f0b204a2ec9696ca4",
+    "posthoc_sha256": "8377e663d6f3b88eb41b73d85212f903f21b4879010835f9e2d1f100de4bee5c"
+  },
+  "status": "PASS_RAW_AUDIT_OF_HOLD_CLASSIFICATION"
+}
+
