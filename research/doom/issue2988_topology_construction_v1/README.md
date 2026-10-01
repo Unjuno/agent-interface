@@ -33,3 +33,7 @@ and trace inventory. No container was used: the shared X11/container lane is
 explicitly occupied by another allocation, so this isolated pure-Python method
 test is host-only and makes no claim about a container gate.
 
+Exact allocation/base/source/result identities are recorded in `FREEZE.json`;
+`SHA256SUMS` binds the retained source and outputs. The two earlier fixture
+failures are preserved in `FAILED_ATTEMPT.md` and are not pooled with the final
+PASS.
