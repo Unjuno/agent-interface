@@ -13,3 +13,8 @@ Fresh successor to #5882 allocation-06, which terminally stopped before candidat
 - Proposed interval: 2026-10-02 00:45–01:00 UTC; request only until queue/owner release checks pass
 
 The CUDA route times host-list extraction, tensor construction, H2D, compute, synchronization, D2H, and CPU-owned final admission. No candidate or auditor has run for allocation-08.
+
+
+## Terminal disposition update — 2026-10-01 UTC
+
+Allocation-08 stopped before candidate launch with `STOP_PRE_CANDIDATE_NO_GRANTED_NONOVERLAPPING_GPU_WINDOW`. Candidate/CUDA/fit/auditor/retry counts are 0/0/0/0/0. See [STOP_REPORT.md](STOP_REPORT.md). The original 00:45–01:00 UTC interval was request-only and overlapped another same-device request. No scientific result is claimed.
