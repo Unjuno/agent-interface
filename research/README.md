@@ -152,6 +152,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 
 ### Evaluation and research governance
 
+- [Verifier registry #5273 / Draft PR #5436 host-construction archive](verification/verifier_registry_5273_t0_v6/ARCHIVAL_QUALIFICATION.md) — twelve exact published files; reported 21 host tests/eight synthetic cases, README test-count discrepancy and post-freeze reruns preserved; formal STOP, zero container invocations, no runtime promotion.
 - [Status-cache snapshot #4403 / Draft PR #4406 metadata archive](verification/status_data_version_v3h8_v1/ARCHIVAL_QUALIFICATION.md) — three exact published metadata files; pre-allocation publication STOP/HOLD remains, source/raw absent, no construction or formal result independently established.
 - [`verification/postcondition_evidence_ablation_v1/ARCHIVAL_QUALIFICATION.md`](verification/postcondition_evidence_ablation_v1/ARCHIVAL_QUALIFICATION.md) — Issue #3951 / Draft PR #3960: exact three-file provenance/STOP archive; original source/raw remain incomplete, allocation consumed, no independent reproduction or runtime promotion.
 - [`benchmark_discovery/`](benchmark_discovery/) — benchmark/coverage discovery.
