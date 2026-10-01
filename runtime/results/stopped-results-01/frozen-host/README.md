@@ -278,8 +278,7 @@ The host bundle also exports `createPrimaryCaller` from `primary_caller.mjs`.
 This is an explicit trial policy with positional operation helpers. It latches
 STOP on unexpected refusals, malformed results, incomplete input, nonneutral
 release, transport/presentation failures, or invalid helper arguments. Once
-stopped, ordinary calls permit only `interface_close`; the explicit read-only
-helpers described below do not clear STOP. Review/acknowledgment still bind
+stopped, only `interface_close` may be sent; review/acknowledgment still bind
 original retained responses. Choose this policy explicitly for a bounded trial.
 The generic instrumented host remains available for caller-decided recovery.
 
