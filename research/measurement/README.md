@@ -63,3 +63,7 @@ The large number of child directories is intentional retained evidence. Reposito
 ## Retained real-input transport accounting
 
 - [Public-summary cost successor to #4395](retained_public_summary_cost_4395_dot_v1/REPORT.md): `STOP_CLOCK_GRANULARITY` after 225 calls; 42 of 54 CPU aggregates failed the frozen guard. Original output identities and fallback facts are retained, but no cost-characterization PASS or formal post-baseline control result is claimed. [Lossless raw restoration](retained_public_summary_cost_4395_dot_v1/PACKAGING.md).
+
+## Retained exact-crop cache construction
+
+- [#5254 / source PR #5257 archival qualification](exact_crop_cache_memory_bound_4083_v1/ARCHIVAL_QUALIFICATION.md): 15 exact historical construction/preparation files; source-to-receipt reconstruction HOLD. Retained 12/12 score equality and 28,800-byte RGB-payload values are historical claims, not repository-reproducible execution; mismatched hashes, original failure, and bespoke-predicate control limits remain explicit. Formal workload unrun; source PR stays Draft and #5254 stays open.
