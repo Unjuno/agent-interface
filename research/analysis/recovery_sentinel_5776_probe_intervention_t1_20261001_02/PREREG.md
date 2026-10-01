@@ -1,6 +1,6 @@
 # Preregistration — Issue #5776 probe-intervention T1
 
-Allocation `recovery-sentinel-5776-probe-intervention-t1-20261001-01`. This is a new paired intervention question; it does not repeat or pool the earlier detector-contrast allocation or repair any historical bundle.
+Allocation `recovery-sentinel-5776-probe-intervention-t1-20261001-02`. This is a fresh paired intervention allocation after allocation-01 stopped before candidate at the main-advance gate; no candidate/auditor or raw row was produced there. It tests a new paired intervention question and does not repeat or pool the earlier detector-contrast allocation or repair any historical bundle.
 
 ## H / T / D / C / U
 
@@ -12,4 +12,4 @@ Allocation `recovery-sentinel-5776-probe-intervention-t1-20261001-01`. This is a
 
 ## Frozen design
 
-Base main at preparation: `0f141ee798325290f0eb46506169fe325d208d69`. Fixture and source hashes plus the exact image/platform/guest identity are captured in `FREEZE.json` before formal candidate execution. Output path is unique under this package. Formal invocation limit: candidate 1; independent auditor 1 only if candidate exits 0; retries 0. Guest must be stopped by 07:00 UTC; expiry or any failed final gate is a pre-candidate STOP (or post-candidate incomplete audit, never a rerun).
+Base main at preparation: `f2e37e798892de1f8f305334c24533791007200c`. Fixture and source hashes plus the exact image/platform/guest identity are captured in `FREEZE.json` before formal candidate execution. Output path is unique under this package. Formal invocation limit: candidate 1; independent auditor 1 only if candidate exits 0; retries 0. Exclusive proposed window: 2026-10-01 10:20–10:50 UTC; guest must be stopped by 10:50 UTC. At start, refetch `main`, inspect queue and active inventory, and verify hashes/image/empty output. Expiry, main movement after the launch freeze, or any failed final gate is a pre-candidate STOP (or post-candidate incomplete audit, never a rerun).
