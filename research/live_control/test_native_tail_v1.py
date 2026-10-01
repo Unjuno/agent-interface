@@ -78,10 +78,10 @@ class NativeTailTests(unittest.TestCase):
         bridge.check = Mock()
         bridge.session = SimpleNamespace(recovery_required=False, dispatch=Mock())
         for gap in (True, -1, 1001, '2', None):
-            for activate in (True, False):
-                with self.subTest(gap=gap, activate=activate), self.assertRaises(ValueError):
-                    bridge._run_guarded('alias', [0, 0], tail=[
-                        {'op': 'text', 'text': 'ab', 'gap_ms': gap}], activate=activate)
+            for interaction in ('click', 'keyboard'):
+                with self.subTest(gap=gap, interaction=interaction), self.assertRaises(ValueError):
+                    getattr(bridge, interaction)('alias', [0, 0], tail=[
+                        {'op': 'text', 'text': 'ab', 'gap_ms': gap}])
         bridge.check.assert_not_called()
         bridge.session.dispatch.assert_not_called()
 
@@ -90,10 +90,10 @@ class NativeTailTests(unittest.TestCase):
         bridge.active = None
         bridge.check = Mock()
         bridge.session = SimpleNamespace(recovery_required=False, dispatch=Mock())
-        for activate in (True, False):
-            with self.subTest(activate=activate), self.assertRaises(ValueError):
-                bridge._run_guarded('alias', [0, 0], tail=[
-                    {'op': 'key_chord', 'keys': ['Right'], 'repeat': 127}], activate=activate)
+        for interaction in ('click', 'keyboard'):
+            with self.subTest(interaction=interaction), self.assertRaises(ValueError):
+                getattr(bridge, interaction)('alias', [0, 0], tail=[
+                    {'op': 'key_chord', 'keys': ['Right'], 'repeat': 127}])
         bridge.check.assert_not_called()
         bridge.session.dispatch.assert_not_called()
         self.assertIsNone(bridge.active)

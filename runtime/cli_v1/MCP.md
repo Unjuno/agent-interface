@@ -525,3 +525,16 @@ The relay host can retain its exact request/reply. It does not prove freshness,
 application readiness, task success, suspend continuity or hard-real-time timing.
 A clock reply remains metadata even after an input session has closed; it cannot
 reopen that session or clear a recovery block.
+# Guarded hover and reference lifetime
+
+In guarded-X11 mode, `interface_guarded_input` also accepts
+`interaction="move"`. It moves without pressing; its tail accepts only
+`wait_update` and `observe`. Hover can change pixels, so inspect the returned
+image and explicitly mint a new alias before a later click. An old reference
+may correctly refuse after hover; do not replay or automatically refresh it.
+
+Single and batch mint replies include each reference's `lifetime` with
+`clock`, `minted_ns`, `expires_ns`, `capture_freshness_ms`, and
+`authority_granted=false`. These are execution-host monotonic times. Retained
+lookup does not renew them. Expiry metadata is not visual freshness or input
+authority. See the [main integration record](../results/hover-lifetime-main-01/README.md).
