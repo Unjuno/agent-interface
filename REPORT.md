@@ -1,45 +1,22 @@
-# Conditional end-to-end deadline certificate — T0 method result
-
-Allocation `ROUTE-DEADLINE-6059-T0-20261001-01`; Issue [#6059](https://github.com/Unjuno/agent-interface/issues/6059).
-
-**Disposition: `PASS_METHOD_SCOPED`.** Nine frozen scenarios passed an independent exhaustive finite-trace audit with zero errors. This is synthetic method evidence only: no Agent Interface runtime, GUI, model, user task, latency guarantee, safety claim, or production feasibility was tested.
+# Issue #4850 CUDA extent-readout construction result
 
 ## H / T / D / C / U
 
-- **H:** Conditional path bounds can certify some bounded typed-terminal routes. An upper bound larger than the deadline is inconclusive; impossibility requires an independent, sound strict lower bound. Unsupported, unbounded, or assumption-invalid routes remain UNKNOWN.
-- **T:** Candidate and independent exact simulator ran once each against nine frozen scenarios. The two-queue FIFO burst case enumerates 81 service assignments; target B completes at `A1 + max(B1, A2) + B2`. All nine scenario-specific trace sets were exhaustively checked (120 traces total). The candidate and auditor are separate modules; `audit.py` does not import `candidate.py`.
-- **D:** `PASS_METHOD_SCOPED`: labels agree on all nine cases; both MET cases are on time on all 16 enumerated traces; the IMPOSSIBLE case misses on all four traces and carries an independent lower bound of 6 > deadline 5; the burst case spans 3–9 against deadline 8 and is UNKNOWN; absent/empirical guarantees, an unbounded stage, invalid assumptions, and shared-resource interference remain UNKNOWN. Audit errors: 0.
-- **C:** This tiny queue model may omit real route branching, retries, hidden contention, scheduler behavior, clock effects, and semantic endpoint costs. The sufficient bound can be pessimistic.
-- **U:** No real service envelope has been established. A timely typed terminal disposition does not imply useful task completion. T1/T2 applicability remains untested.
+**H.** The #4837 tiny shared CNN's max+mean global pooling may recover construction competence on fixed synthetic data; max-only is the matched control.
 
-## Formal results
+**T.** One construction invocation on RTX 3080 Laptop GPU using pinned `pytorch/pytorch:2.5.1-cuda12.1-cudnn9-runtime`, image ID `sha256:831247999fbf7e08f61b3e39f6d77ee434f38f6f07f769d00db451e853878067`, linux/amd64. Container: network none, read-only root/source, one CPU, 2 GiB, 64 PIDs; `CUBLAS_WORKSPACE_CONFIG=:4096:8` set inside container; deterministic algorithms enabled, cuDNN deterministic, TF32 disabled. The prefit 49-parameter finite-difference check passed (max symmetric relative error 4.588699537529518e-7). Two arms ran exactly 1,000 SGD updates each at LR 0.2, seed 89100471 / init 89100472. Formal fits: 0.
 
-| Scenario | Certificate | Exact completion range | Traces |
-|---|---|---:|---:|
-| bounded serial | `CERTIFIED_DEADLINE_MET` | 2–4 / deadline 5 | 4 |
-| local checks pass, FIFO burst path | `UNKNOWN_UPPER_BOUND_EXCEEDS_DEADLINE` | 3–9 / deadline 8 | 81 |
-| independent lower bound proves miss | `CERTIFIED_DEADLINE_IMPOSSIBLE` | 6–8 / deadline 5 | 4 |
-| shared resource interference | `UNKNOWN_SHARED_RESOURCE_CONTENTION` | 7–9 / deadline 4 | 4 |
-| finite timeout + bounded cancellation | `CERTIFIED_DEADLINE_MET` | 2–6 / deadline 6 | 12 |
-| unbounded stage, no enforced terminal bound | `UNKNOWN_UNBOUNDED_STAGE` | 1–20 / deadline 10 | 3 |
-| empirical-only service claim | `UNKNOWN_NO_SERVICE_GUARANTEE` | 1–2 / deadline 10 | 2 |
-| invalid assumption | `UNKNOWN_ASSUMPTION_VIOLATED` | 1–2 / deadline 10 | 2 |
-| empirical lower bound | `UNKNOWN_NO_SERVICE_GUARANTEE` | 1–8 / deadline 5 | 8 |
+**D - decision.** The original frozen CPU direct-loop audit reconstructed all 20 arm/split logits with `errors=[]`. Scientific result: `STOP_NO_CONSTRUCTION_COMPETENCE`: max+mean train/base accuracy 0.50/0.50, mean held-out positive ACCEPT 0.00, held-out negative false ACCEPT 0.00; max-only held positive ACCEPT 0.00. The original 8 mutation controls rejected 5/8; this original outcome remains retained unchanged.
 
-The construction phase first exposed an unsound naive stage-sum on the burst case (it would label a path MET at 6 ≤ 8 even though the exact worst completion is 9). That pre-freeze failure was preserved in `FREEZE.json`; the candidate was corrected before formal freeze and the construction suite then passed 4/4. No formal output was used to change the source.
+A separately versioned, CPU-only posthoc v2 audit regenerated `INPUTS.npz` under NumPy 2.1.2 and reproduced its 3,942,316 bytes and SHA-256 `624e57e64da36a9e4f6ace4187b71d737630523dee90b7b697d97a05e7127fa5` byte-for-byte against the retained input; it also reproduced the original audit JSON. Its eight distinct mutation cases rejected 8/8. See `out/result/AUDIT_V2.json`, `CONTROL_RESULTS_V2.json`, and `REGENERATION_RECEIPT.json`. V2 is CPU-only and separate: it does not change the negative scientific result or replace the original 5/8 record. The v2 audit and control scripts, runner, raw bytes, initial/final weights, and their hashes are listed in `src/POSTHOC_MANIFEST.json`.
 
-## Provenance and reproduction
+**C.** This is a device/framework-image placement change from #4837's NumPy/OpenBLAS CPU implementation. CUDA arithmetic may differ. No causal GPU-vs-CPU quality or speed claim. No predecessor result was modified. One synthetic seed and one local device.
 
-- Frozen base and source commit parent: `9371fda8617bdf49e7fbeebb04fa64a633712aaa`.
-- Source freeze commit: `a505e29559aaba445f139853f29dc838d621158f`, with the exact base as its only parent.
-- At publication preflight main had advanced to `152c1b499c16af0bd5a385eb0cd829cdcadaae7c`; comparison found eight changed paths, all under the unrelated `research/integration/navigation_readiness_2858_r0_k7p3_v1/` allocation. No overlap with this additive study path or `research/analysis/README.md`.
-- Python 3.12.10, Windows NT 10.0.26200.0; standard library only.
-- Candidate invocation: exit 0, 129.140 ms, `candidate complete: 9 certificates`.
-- Auditor invocation: exit 0, 113.046 ms, `audit PASS_METHOD_SCOPED: 9 cases; 0 errors`.
-- Candidate output SHA-256: `449F8A364F1144D075AE61D6DF667D5DB1182F15A4D67BD9D03313F0FC67C375`.
-- Auditor report SHA-256: `58A1C13E7D428BC354B5E4020B9C6A4C644B78AF4FB1D460D41ABAD04DDB0355`.
-- Frozen input SHA-256: `EB4230E752669E9F3B680B5E684F25F481B5832D3629D4F790BE98445F07B567`.
-- Candidate stdout SHA-256: `D356EF35C404DE89A2178D562D96553CDD6CB112560A605D8D1CF10AE7FCE13B`; auditor stdout SHA-256: `0EDBDF8FE7241741386651AAA250BD8B6F263491B6C0156BA720F58725360E38`. Both stderr streams were empty (SHA-256 `E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855`).
-- Docker Desktop and its backend processes were present, but the bounded `docker info` probe did not return; the shared container slot was reserved by another allocation. No container invocation is claimed; this was host-only.
+**U.** No efficacy/generalization or real-app claim. This PR provides a validated regeneration receipt instead of committing the 3.94 MB generated input. `rebuild_inputs.py` reproduces the compressed bytes in the pinned NumPy 2.1.2 container; `audit_cpu_v2.py` directly audits against the regenerated temporary input and verifies any retained copy byte-for-byte. The exact input hash, regenerator and v2 checks are public and reproducible. Full pre-run GPU XML remains local; SHA-256 `7fa754f9a2d29b4c1a81e961df3d99cb98868605fde7258a0a78420d7cea46c0`.
 
-Reproduce construction checks with `python -B -m unittest -v test_method.py`, then (only for a fresh reproduction, not the consumed formal allocation) run `python -B candidate.py --input scenarios.json --output candidate.json` and `python -B audit.py --input scenarios.json --certificates candidate.json --output audit.json`.
+## Environment and resource receipts
+
+- Python `3.11.10`, PyTorch `2.5.1+cu121`, CUDA `12.1`, NumPy `2.1.2`.
+- Peak CUDA allocated: 82,928,128 bytes.
+- Fit times (descriptive only): max-only 1.204 s, max+mean 1.175 s.
+
