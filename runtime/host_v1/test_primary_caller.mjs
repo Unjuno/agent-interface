@@ -126,3 +126,26 @@ test('real host text-only declared refusal is presented and acknowledged without
     assert.equal(host.state().attempts,1);
   } finally {await host.close();}
 });
+
+for (const cue of ['matched','pending','rejected','needs_review'])
+  test('explicit input feedback '+cue+' retains evidence and enforces STOP',async()=>{
+    const meta={status:cue==='matched'?'completed':'needs_review',
+      image_status:'image',task_success:null,replay_allowed:false,
+      feedback:{status:cue},result:{status:'completed',execution:{releases:[
+        {verified:true,keys_down:[],buttons_down:[]}]}}};
+    const reply={result:{isError:cue!=='matched',content:[
+      {type:'text',text:JSON.stringify(meta)},{type:'image',data:'original-cue'}]}};
+    const calls=[];const caller=createPrimaryCaller({sendPresented:async(tool,args)=>{
+      calls.push({tool,args});return reply;}},'guarded-local',{});
+    const args={alias:'save',offset:[12,12],tail:[],feedback:{expected_title:'saved',timeout_ms:1000}};
+    assert.equal(await caller.call('interface_guarded_input',args),reply);
+    assert.deepEqual(calls[0].args,args);
+    if(cue==='matched')assert.equal(caller.state().stopped,null);
+    else {
+      assert.ok(caller.state().stopped);
+      await assert.rejects(caller.observe(),/stopped/);
+      assert.equal(calls.length,1);
+      assert.equal(await caller.call('interface_close',{}),reply);
+      assert.equal(calls.length,2);
+    }
+  });

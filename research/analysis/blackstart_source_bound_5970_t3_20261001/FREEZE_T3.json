@@ -1,0 +1,38 @@
+{
+  "schema": "blackstart-source-bound-t3-execution-freeze-v1",
+  "issue": 5970,
+  "source_commit": "7625a3fc99f1da2099dc6e20e67383ee88c7f337",
+  "archive_sha256": "5f153824d677503275f268e2aef9c9971d5f0a3f369c573feaa1a5d10604ad8d",
+  "expanded_file_count": 324,
+  "formal_case_count": 24,
+  "candidate_invocations": 1,
+  "independent_auditor_invocations": 1,
+  "formal_4135_allocation_rerun": false,
+  "locked_input": {"display": "fresh xvfb-run -a private display", "key": "Shift_L", "events": ["KeyPress", "KeyRelease"], "release_in_finally": true, "terminal_neutrality_required": true, "max_in_flight": 1},
+  "docker_gate": {"desktop_backend_processes": true, "service": "com.docker.service Stopped/Manual", "service_start": "denied: Cannot open service", "engine_cli": "no server response within 30s", "disposition": "HOST_ISOLATED_WSL2_XVFB_FALLBACK"},
+  "construction": {"tests": 8, "passed": 8, "python_compile": "passed", "wsl_xvfb_run": "/usr/bin/xvfb-run", "wsl_python": "3.12.3", "tk": "8.6", "python_xlib_xtest": "import passed"},
+  "source_hashes": {
+    "app.py": "a186f8e89a897e97ca08f7a31f3fe726629c13a28274c1458a51b502251b5204",
+    "observer.py": "73d64839373c7af29354e7c38601304b90a0a9eadde5546afa7623e0c7aa9162"
+  },
+  "derived_hashes": {
+    "app.py": "fe24b580beaf048921352cc49ec380ba6f3122240c9197a1b62fc766d72afa63",
+    "observer.py": "a3e46223019f67bf98bb2a202aa24196628d2c975255bec034bd7855bf812d4d",
+    "app.py.diff": "9a71951015f92fc6f4d6f8f4960756e9c6a6cb57c8aa1598c84b34378c6cc59f",
+    "observer.py.diff": "91fa54f7fe6ef1bc206c5a13c2e25fb7964d84342664eb382b1aa234de8e6f1f"
+  },
+  "analysis_sources_sha256": {
+    "FREEZE.json": "808a25785f9d0998e91f69bdcb84d1f168ae4610d136fbc71aa10f7c4637e584",
+    "PLAN.md": "93111c2b6828a0d54e8f388f4486337f78746a18b56b96bef1f8ab16e5a121a5",
+    "transform.py": "97036f2aab3ec8528f38f3582b3933186a25d2e821ef7416f8294f7fb9a118dc",
+    "candidate.py": "aaef08792028389272482b117c10da42eafbab93698f468414d8b0420e90d748",
+    "runner.py": "1c69f6efe290fab689dec8aa3ff639cbdfefda073f37a57ffc8215111a5893ff",
+    "audit.py": "930bb22c05b86cf8bd966a83b8c69677343aba0178a2da4ff1f4490fa97ad0ba",
+    "test_construction.py": "aa149414a4f271146a3fc8f1d4bbd72e7de451d065c102d5066cee93f99838d9",
+    "README.md": "259bc3725e02967839faf08521ccc3fcd8a2612bad7b024670f365f5de869a04",
+    "derived/app.py": "fe24b580beaf048921352cc49ec380ba6f3122240c9197a1b62fc766d72afa63",
+    "derived/observer.py": "a3e46223019f67bf98bb2a202aa24196628d2c975255bec034bd7855bf812d4d",
+    "derived/app.py.diff": "9a71951015f92fc6f4d6f8f4960756e9c6a6cb57c8aa1598c84b34378c6cc59f",
+    "derived/observer.py.diff": "91fa54f7fe6ef1bc206c5a13c2e25fb7964d84342664eb382b1aa234de8e6f1f"
+  }
+}
