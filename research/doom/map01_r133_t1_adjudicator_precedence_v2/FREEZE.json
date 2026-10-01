@@ -1,0 +1,25 @@
+{
+  "allocation": "issue-5658-identity-precedence-v2-20261002-01",
+  "status": "FROZEN_BEFORE_FORMAL",
+  "issue": 5658,
+  "current_main_sha": "a44541541546290c4d2d5e6e6913ef07bc1f01f8",
+  "branch": "research/map01-r133-t1-adjudicator-precedence-v2-20261002",
+  "path": "research/doom/map01_r133_t1_adjudicator_precedence_v2/",
+  "hypothesis_contract": "PLAN.md",
+  "source_sha256": {
+    "PLAN.md": "d153be1e600e03d5d16b1123827ad147132645a8890a87ceef04dbe1a13af119",
+    "decision.py": "0c703807da1c46f970dd7672332d7c8a38d660c18bd8fe9cf589b619df7abe0a",
+    "formal_candidate.py": "1468285edfca87fc43e0b2c05a4b84705202e2369d93b3bde5d5e48fde564f59",
+    "audit.py": "37381fcd3bb33f5be06a9efe898d17eed75cf24b20d468ea354c81d28d4a2654",
+    "test_construction.py": "db501c63c64c60248f2d110213288e2d39feae3c08c775218c3a53babb1aef37"
+  },
+  "construction_gate": "4 unittest cases passed; exhaustive 729-vector candidate/oracle comparison and identity-order controls; no formal output created",
+  "runtime": {
+    "python": "CPython 3.14.5",
+    "platform": "Darwin arm64",
+    "dependencies": "Python standard library only",
+    "container": "not used; this isolated deterministic host-logic experiment needs no shared desktop/container resource"
+  },
+  "formal_protocol": "One invocation of formal_candidate.py; only on exit 0, one independent audit.py RAW.json AUDIT.json invocation; no retries",
+  "scope": "Synthetic adjudicator contract only; not MAP01 live evidence, not T1 approval, not game performance or population inference"
+}
