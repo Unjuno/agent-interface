@@ -21,4 +21,4 @@ Before the one invocation, recheck the allocation window, owner/task overlap, an
 python -B benchmark.py
 ```
 
-The single stdout JSON is the raw record. The independent auditor will parse that retained raw once, recompute each CPU oracle count from the raw's base64 fixtures, verify source/config hashes and cardinality, and compare stored timing rows. No retrials, threshold changes, warmed data edits, or performance tuning are allowed after invocation.
+The single stdout JSON is the raw record. The independent auditor will parse that retained raw once, regenerate deterministic fixtures from the pinned seed/config, verify every fixture digest and all 21 CPU/CUDA per-frame count vectors against an independent NumPy oracle, then recompute timing summaries and check cardinality. No retrials, threshold changes, warmed data edits, or performance tuning are allowed after invocation.
