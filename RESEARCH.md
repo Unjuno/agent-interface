@@ -5,6 +5,11 @@ A bounded two-worker, four-right escrow state machine was exhaustively enumerate
 # Research index
 
 Agent Interface is being developed by analysis and experiment rather than by locking an API early. This file is the evidence ledger for the public repository.
+
+### Issue #6045: opportunity-conditioned age of actuated information T0 (2026-10-02)
+
+The 18-row synthetic method fixture ran once in a pinned `linux/arm64` CPU container; a separate network-disabled raw-only auditor independently reconstructed all rows and returned `PASS_METHOD_SCOPED`, errors `[]`. Planted witnesses showed a route with lower delivery age can miss the declared opportunity while the older-observation route is timely, and identical onset→effect latency can hide different source ages/validity. Unattributed multi-observation use, uncertain clock order, interval/deadline overlap, and irrelevant activity fail closed. This is a first-row measurement-method result only: no live model/GUI/task, causal-use, safety, or efficacy evidence. The run had no separate #5085 slot grant; this coordination caveat is retained explicitly and no existing container/VM was inspected or modified. See [the immutable report and raw run](research/analysis/opportunity_conditioned_actuated_info_6045_t0_20261002/REPORT.md) and [Issue #6045](https://github.com/Unjuno/agent-interface/issues/6045). Issue #6045 remains open.
+
 ## How to read this ledger
 
 This file is intentionally comprehensive. For public navigation, use the shorter status documents first and come here for the retained evidence history.
