@@ -11,4 +11,3 @@
 ## Freeze/run policy
 
 Source/fixture hashes are recorded in `FREEZE.json` before Docker execution. Candidate and independent auditor run once each in separate `python:3.12-slim` containers pinned by digest, network none, 1 CPU, 256 MiB, pids 64. Preserve first outcomes; no retry.
-
