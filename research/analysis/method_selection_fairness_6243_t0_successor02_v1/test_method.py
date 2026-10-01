@@ -61,4 +61,4 @@ try:
 except ValueError:
     pass
 
-print("PASS construction assertions=16 mutation_controls=4; formal invocations=0/0")
+print("PASS construction assertions=15 mutation_controls=4; formal invocations=0/0")

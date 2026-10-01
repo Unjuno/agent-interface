@@ -13,7 +13,7 @@ shortcut-mixture fixture, method-specific times are identical across arms:
 repeat, 123,000/136,000 ms at four, and 255,000/340,000 ms at ten. These are
 designed values, not observations.
 
-Host construction checks: Python compilation, JSON parsing, 16 assertions and
+Host construction checks: Python compilation, JSON parsing, 15 assertions and
 4/4 corruption controls passed. Two construction defects and their repairs are
 preserved in FAILURE_CONSTRUCTION_01.txt. The candidate/audit files prefixed
 CONSTRUCTION are not formal outputs.
@@ -22,7 +22,8 @@ Formal candidate and auditor invocations: **0/0**. No container was started.
 The exact CPU OrbStack slot is pending explicit release/grant on coordination
 issue #5085; two unrelated containers were running at the last read-only
 inventory. Cached python:3.12-alpine digest was inspected, but that is not an
-allocation. Obstac was not present in the CLI/tool inventory.
+allocation. OrbStack's orb CLI is available; the image was read-only inspected,
+but no formal container was launched without the slot grant.
 
 Read PLAN.md for H/T/D/C/U, gates and limitations. No human, GUI, causal,
 population, or product claim is supported.
