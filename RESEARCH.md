@@ -41,6 +41,8 @@ One private-Xvfb Shift pair was observed twice by the T3-derived app and twice b
 
 T7 found the T4/T6 event recipient XID 2097170 already viewable before input, as the immediate parent of the Tk `winfo_id()` root; it was outside the Tk-root subtree, and a second client could select key events on it (`HOLD_TARGET_PRESENT_MAPPED`). T8's full ancestor enumerator STOPped before input at observer readiness timeout; its auditor also STOPped on a null ready object, both retained. T9/T10 selected the mapped immediate parent and did receive press/release classes, but each observer stream had an extra Release at the press timestamp and RECORD retained five per-delivery events; exact stream gates HOLDed. T11 showed the same extra Release for normal `a`, not only Shift; initial/terminal key neutrality and cleanup passed, but exact three-stream agreement remained HOLD. These are private-Xvfb mechanism diagnostics, not deployed #4135 behavior, physical-input evidence, recovery, or task benefit. Docker Desktop engine remained unavailable; WSL2/Xvfb fallback. See each T7-T11 report and raw/hash manifests.
 
+T12 ran a 500 ms no-input baseline with the exact app, parent-only observer, and X RECORD armed. Both key-event streams remained empty and both `a`/Shift keymaps neutral; independent disposition `PASS_EMPTY_NO_INPUT_BASELINE`. This rules out spontaneous startup key events only and does not explain the input-time extra Release. See [T12 report](research/analysis/blackstart_x11_noinput_baseline_5970_t12_20261002/REPORT.md).
+
 | Need | Read |
 |---|---|
 | Current governing objective | [docs/CURRENT_GOAL.md](docs/CURRENT_GOAL.md) |
