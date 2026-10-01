@@ -406,6 +406,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 
 </details>
 
+
+- [`recovery_sentinel_5776_t0_integrity_audit_v1/`](recovery_sentinel_5776_t0_integrity_audit_v1/)
 <!-- END GENERATED ANALYSIS RESULT INDEX -->
 
 
