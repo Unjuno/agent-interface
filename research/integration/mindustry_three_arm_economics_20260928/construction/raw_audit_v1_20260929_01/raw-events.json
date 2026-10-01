@@ -1,0 +1,1933 @@
+{
+  "allocation_id": "mindustry-three-arm-economics-construction-raw-01",
+  "arms": {
+    "ephemeral": [
+      {
+        "durable_call_ids": [
+          "ephemeral-A1-tool-0",
+          "ephemeral-A1-tool-1",
+          "ephemeral-A1-tool-2",
+          "ephemeral-A1-tool-3",
+          "ephemeral-A1-tool-4"
+        ],
+        "ended_ns": 7000020000,
+        "input_events": [
+          {
+            "admission_ns": 7000001000,
+            "attempt_id": "ephemeral-A1-palette",
+            "old_reference": false,
+            "status": "ADMITTED"
+          },
+          {
+            "admission_ns": 7000001500,
+            "attempt_id": "ephemeral-A1-world",
+            "old_reference": false,
+            "status": "ADMITTED"
+          }
+        ],
+        "input_feedback_events": [
+          {
+            "attempt_id": "ephemeral-A1-palette",
+            "observed_ns": 7000001100
+          },
+          {
+            "attempt_id": "ephemeral-A1-world",
+            "observed_ns": 7000001600
+          }
+        ],
+        "layout": "A",
+        "model_call_events": [
+          {
+            "call_id": "ephemeral-A1-call-1",
+            "image_sha256": "5482f652d3eb57c9753aceb438930b0c8587c6222562586b351e4606357a6379",
+            "requested_effort": "low",
+            "requested_model": "gpt-5.6-luna",
+            "source_sequence": 1,
+            "stage": "grounding",
+            "usage": {
+              "cache_write_input_tokens": 0,
+              "cached_input_tokens": 0,
+              "input_tokens": 9000,
+              "output_tokens": 100,
+              "reasoning_output_tokens": 0
+            }
+          }
+        ],
+        "observation_events": [
+          {
+            "capture_ns": 7000000100,
+            "image_sha256": "5482f652d3eb57c9753aceb438930b0c8587c6222562586b351e4606357a6379",
+            "model_visible": true,
+            "sequence": 1
+          },
+          {
+            "capture_ns": 7000000200,
+            "image_sha256": "da09914f6303139dff5c6cfe5a2152a61d9b561858b396cf2854a8c92bd0c63f",
+            "model_visible": false,
+            "sequence": 2
+          }
+        ],
+        "release_events": [
+          {
+            "attempt_id": "ephemeral-A1-palette",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-ephemeral-A1-palette",
+            "released_ns": 7000001200
+          },
+          {
+            "attempt_id": "ephemeral-A1-world",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-ephemeral-A1-world",
+            "released_ns": 7000001700
+          }
+        ],
+        "repair_events": [],
+        "route": "cold",
+        "score_event": {
+          "checked_ns": 7000004000,
+          "collateral_tiles": [],
+          "contract_satisfied": true,
+          "copper_delta": -1,
+          "core_preserved": true,
+          "guard_tiles": 112,
+          "paused_idle_completion": true,
+          "scope": "one changed-geometry Mindustry placement; no delivery or route-completion claim",
+          "source_preserved": true,
+          "status": "VERIFIED",
+          "wrong_target": false
+        },
+        "started_ns": 7000000000,
+        "submission_events": [
+          {
+            "at_ns": 7000003000,
+            "exact_effect": true,
+            "submission_id": "score-ephemeral-A1"
+          }
+        ],
+        "task_id": "A1"
+      },
+      {
+        "durable_call_ids": [
+          "ephemeral-A2-tool-0",
+          "ephemeral-A2-tool-1",
+          "ephemeral-A2-tool-2",
+          "ephemeral-A2-tool-3",
+          "ephemeral-A2-tool-4"
+        ],
+        "ended_ns": 8000020000,
+        "input_events": [
+          {
+            "admission_ns": 8000001000,
+            "attempt_id": "ephemeral-A2-palette",
+            "old_reference": false,
+            "status": "ADMITTED"
+          },
+          {
+            "admission_ns": 8000001500,
+            "attempt_id": "ephemeral-A2-world",
+            "old_reference": false,
+            "status": "ADMITTED"
+          }
+        ],
+        "input_feedback_events": [
+          {
+            "attempt_id": "ephemeral-A2-palette",
+            "observed_ns": 8000001100
+          },
+          {
+            "attempt_id": "ephemeral-A2-world",
+            "observed_ns": 8000001600
+          }
+        ],
+        "layout": "A",
+        "model_call_events": [
+          {
+            "call_id": "ephemeral-A2-call-1",
+            "image_sha256": "fe1ada0275ad556eff7a06b1fedd1ec16cd930feabb64f00051363fc5e4c5f1c",
+            "requested_effort": "low",
+            "requested_model": "gpt-5.6-luna",
+            "source_sequence": 4,
+            "stage": "grounding",
+            "usage": {
+              "cache_write_input_tokens": 0,
+              "cached_input_tokens": 0,
+              "input_tokens": 9000,
+              "output_tokens": 100,
+              "reasoning_output_tokens": 0
+            }
+          }
+        ],
+        "observation_events": [
+          {
+            "capture_ns": 8000000100,
+            "image_sha256": "fe1ada0275ad556eff7a06b1fedd1ec16cd930feabb64f00051363fc5e4c5f1c",
+            "model_visible": true,
+            "sequence": 4
+          },
+          {
+            "capture_ns": 8000000200,
+            "image_sha256": "4c62f25ee1b56b7b520dd9f116efed2d0d010b64878e52b7845dd2a65a6e75b8",
+            "model_visible": false,
+            "sequence": 5
+          }
+        ],
+        "release_events": [
+          {
+            "attempt_id": "ephemeral-A2-palette",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-ephemeral-A2-palette",
+            "released_ns": 8000001200
+          },
+          {
+            "attempt_id": "ephemeral-A2-world",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-ephemeral-A2-world",
+            "released_ns": 8000001700
+          }
+        ],
+        "repair_events": [],
+        "route": "cold",
+        "score_event": {
+          "checked_ns": 8000004000,
+          "collateral_tiles": [],
+          "contract_satisfied": true,
+          "copper_delta": -1,
+          "core_preserved": true,
+          "guard_tiles": 112,
+          "paused_idle_completion": true,
+          "scope": "one changed-geometry Mindustry placement; no delivery or route-completion claim",
+          "source_preserved": true,
+          "status": "VERIFIED",
+          "wrong_target": false
+        },
+        "started_ns": 8000000000,
+        "submission_events": [
+          {
+            "at_ns": 8000003000,
+            "exact_effect": true,
+            "submission_id": "score-ephemeral-A2"
+          }
+        ],
+        "task_id": "A2"
+      },
+      {
+        "durable_call_ids": [
+          "ephemeral-A3-tool-0",
+          "ephemeral-A3-tool-1",
+          "ephemeral-A3-tool-2",
+          "ephemeral-A3-tool-3",
+          "ephemeral-A3-tool-4"
+        ],
+        "ended_ns": 9000020000,
+        "input_events": [
+          {
+            "admission_ns": 9000001000,
+            "attempt_id": "ephemeral-A3-palette",
+            "old_reference": false,
+            "status": "ADMITTED"
+          },
+          {
+            "admission_ns": 9000001500,
+            "attempt_id": "ephemeral-A3-world",
+            "old_reference": false,
+            "status": "ADMITTED"
+          }
+        ],
+        "input_feedback_events": [
+          {
+            "attempt_id": "ephemeral-A3-palette",
+            "observed_ns": 9000001100
+          },
+          {
+            "attempt_id": "ephemeral-A3-world",
+            "observed_ns": 9000001600
+          }
+        ],
+        "layout": "A",
+        "model_call_events": [
+          {
+            "call_id": "ephemeral-A3-call-1",
+            "image_sha256": "0957f30e40a654e30486cf94d45bd31be5a2ba38d5f2010d9e24c17c1d7cb217",
+            "requested_effort": "low",
+            "requested_model": "gpt-5.6-luna",
+            "source_sequence": 7,
+            "stage": "grounding",
+            "usage": {
+              "cache_write_input_tokens": 0,
+              "cached_input_tokens": 0,
+              "input_tokens": 9000,
+              "output_tokens": 100,
+              "reasoning_output_tokens": 0
+            }
+          }
+        ],
+        "observation_events": [
+          {
+            "capture_ns": 9000000100,
+            "image_sha256": "0957f30e40a654e30486cf94d45bd31be5a2ba38d5f2010d9e24c17c1d7cb217",
+            "model_visible": true,
+            "sequence": 7
+          },
+          {
+            "capture_ns": 9000000200,
+            "image_sha256": "08f84bf464872080a17e737b0c41a7ebdfcc253a977e5a5a09006dc729e3b87d",
+            "model_visible": false,
+            "sequence": 8
+          }
+        ],
+        "release_events": [
+          {
+            "attempt_id": "ephemeral-A3-palette",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-ephemeral-A3-palette",
+            "released_ns": 9000001200
+          },
+          {
+            "attempt_id": "ephemeral-A3-world",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-ephemeral-A3-world",
+            "released_ns": 9000001700
+          }
+        ],
+        "repair_events": [],
+        "route": "cold",
+        "score_event": {
+          "checked_ns": 9000004000,
+          "collateral_tiles": [],
+          "contract_satisfied": true,
+          "copper_delta": -1,
+          "core_preserved": true,
+          "guard_tiles": 112,
+          "paused_idle_completion": true,
+          "scope": "one changed-geometry Mindustry placement; no delivery or route-completion claim",
+          "source_preserved": true,
+          "status": "VERIFIED",
+          "wrong_target": false
+        },
+        "started_ns": 9000000000,
+        "submission_events": [
+          {
+            "at_ns": 9000003000,
+            "exact_effect": true,
+            "submission_id": "score-ephemeral-A3"
+          }
+        ],
+        "task_id": "A3"
+      },
+      {
+        "durable_call_ids": [
+          "ephemeral-B1-tool-0",
+          "ephemeral-B1-tool-1",
+          "ephemeral-B1-tool-2",
+          "ephemeral-B1-tool-3",
+          "ephemeral-B1-tool-4"
+        ],
+        "ended_ns": 10000020000,
+        "input_events": [
+          {
+            "admission_ns": 10000001000,
+            "attempt_id": "ephemeral-B1-palette",
+            "old_reference": false,
+            "status": "ADMITTED"
+          },
+          {
+            "admission_ns": 10000001500,
+            "attempt_id": "ephemeral-B1-world",
+            "old_reference": false,
+            "status": "ADMITTED"
+          }
+        ],
+        "input_feedback_events": [
+          {
+            "attempt_id": "ephemeral-B1-palette",
+            "observed_ns": 10000001100
+          },
+          {
+            "attempt_id": "ephemeral-B1-world",
+            "observed_ns": 10000001600
+          }
+        ],
+        "layout": "B",
+        "model_call_events": [
+          {
+            "call_id": "ephemeral-B1-call-1",
+            "image_sha256": "56ab8be9532589ed6b07c9389af81ac4324678e33bcb1562767e52908ef26534",
+            "requested_effort": "low",
+            "requested_model": "gpt-5.6-luna",
+            "source_sequence": 10,
+            "stage": "grounding",
+            "usage": {
+              "cache_write_input_tokens": 0,
+              "cached_input_tokens": 0,
+              "input_tokens": 9000,
+              "output_tokens": 100,
+              "reasoning_output_tokens": 0
+            }
+          }
+        ],
+        "observation_events": [
+          {
+            "capture_ns": 10000000100,
+            "image_sha256": "56ab8be9532589ed6b07c9389af81ac4324678e33bcb1562767e52908ef26534",
+            "model_visible": true,
+            "sequence": 10
+          },
+          {
+            "capture_ns": 10000000200,
+            "image_sha256": "8245b15f80877efa4c21a63a4d116a01d44a8222a65a78e53f56d46184ca7b51",
+            "model_visible": false,
+            "sequence": 11
+          }
+        ],
+        "release_events": [
+          {
+            "attempt_id": "ephemeral-B1-palette",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-ephemeral-B1-palette",
+            "released_ns": 10000001200
+          },
+          {
+            "attempt_id": "ephemeral-B1-world",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-ephemeral-B1-world",
+            "released_ns": 10000001700
+          }
+        ],
+        "repair_events": [],
+        "route": "cold",
+        "score_event": {
+          "checked_ns": 10000004000,
+          "collateral_tiles": [],
+          "contract_satisfied": true,
+          "copper_delta": -1,
+          "core_preserved": true,
+          "guard_tiles": 112,
+          "paused_idle_completion": true,
+          "scope": "one changed-geometry Mindustry placement; no delivery or route-completion claim",
+          "source_preserved": true,
+          "status": "VERIFIED",
+          "wrong_target": false
+        },
+        "started_ns": 10000000000,
+        "submission_events": [
+          {
+            "at_ns": 10000003000,
+            "exact_effect": true,
+            "submission_id": "score-ephemeral-B1"
+          }
+        ],
+        "task_id": "B1"
+      },
+      {
+        "durable_call_ids": [
+          "ephemeral-B2-tool-0",
+          "ephemeral-B2-tool-1",
+          "ephemeral-B2-tool-2",
+          "ephemeral-B2-tool-3",
+          "ephemeral-B2-tool-4"
+        ],
+        "ended_ns": 11000020000,
+        "input_events": [
+          {
+            "admission_ns": 11000001000,
+            "attempt_id": "ephemeral-B2-palette",
+            "old_reference": false,
+            "status": "ADMITTED"
+          },
+          {
+            "admission_ns": 11000001500,
+            "attempt_id": "ephemeral-B2-world",
+            "old_reference": false,
+            "status": "ADMITTED"
+          }
+        ],
+        "input_feedback_events": [
+          {
+            "attempt_id": "ephemeral-B2-palette",
+            "observed_ns": 11000001100
+          },
+          {
+            "attempt_id": "ephemeral-B2-world",
+            "observed_ns": 11000001600
+          }
+        ],
+        "layout": "B",
+        "model_call_events": [
+          {
+            "call_id": "ephemeral-B2-call-1",
+            "image_sha256": "061f08368942ebfca135b5ae3e56628bd55d714d6f50b3c82b74c12ea17fc277",
+            "requested_effort": "low",
+            "requested_model": "gpt-5.6-luna",
+            "source_sequence": 13,
+            "stage": "grounding",
+            "usage": {
+              "cache_write_input_tokens": 0,
+              "cached_input_tokens": 0,
+              "input_tokens": 9000,
+              "output_tokens": 100,
+              "reasoning_output_tokens": 0
+            }
+          }
+        ],
+        "observation_events": [
+          {
+            "capture_ns": 11000000100,
+            "image_sha256": "061f08368942ebfca135b5ae3e56628bd55d714d6f50b3c82b74c12ea17fc277",
+            "model_visible": true,
+            "sequence": 13
+          },
+          {
+            "capture_ns": 11000000200,
+            "image_sha256": "90082fc42d2a20c45388bfe18959513ada79806ac0d1f1fda2131ee93756e084",
+            "model_visible": false,
+            "sequence": 14
+          }
+        ],
+        "release_events": [
+          {
+            "attempt_id": "ephemeral-B2-palette",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-ephemeral-B2-palette",
+            "released_ns": 11000001200
+          },
+          {
+            "attempt_id": "ephemeral-B2-world",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-ephemeral-B2-world",
+            "released_ns": 11000001700
+          }
+        ],
+        "repair_events": [],
+        "route": "cold",
+        "score_event": {
+          "checked_ns": 11000004000,
+          "collateral_tiles": [],
+          "contract_satisfied": true,
+          "copper_delta": -1,
+          "core_preserved": true,
+          "guard_tiles": 112,
+          "paused_idle_completion": true,
+          "scope": "one changed-geometry Mindustry placement; no delivery or route-completion claim",
+          "source_preserved": true,
+          "status": "VERIFIED",
+          "wrong_target": false
+        },
+        "started_ns": 11000000000,
+        "submission_events": [
+          {
+            "at_ns": 11000003000,
+            "exact_effect": true,
+            "submission_id": "score-ephemeral-B2"
+          }
+        ],
+        "task_id": "B2"
+      },
+      {
+        "durable_call_ids": [
+          "ephemeral-B3-tool-0",
+          "ephemeral-B3-tool-1",
+          "ephemeral-B3-tool-2",
+          "ephemeral-B3-tool-3",
+          "ephemeral-B3-tool-4"
+        ],
+        "ended_ns": 12000020000,
+        "input_events": [
+          {
+            "admission_ns": 12000001000,
+            "attempt_id": "ephemeral-B3-palette",
+            "old_reference": false,
+            "status": "ADMITTED"
+          },
+          {
+            "admission_ns": 12000001500,
+            "attempt_id": "ephemeral-B3-world",
+            "old_reference": false,
+            "status": "ADMITTED"
+          }
+        ],
+        "input_feedback_events": [
+          {
+            "attempt_id": "ephemeral-B3-palette",
+            "observed_ns": 12000001100
+          },
+          {
+            "attempt_id": "ephemeral-B3-world",
+            "observed_ns": 12000001600
+          }
+        ],
+        "layout": "B",
+        "model_call_events": [
+          {
+            "call_id": "ephemeral-B3-call-1",
+            "image_sha256": "6df52b243a52ce617a8aa58cde3ad046a26456a9d5c92ecd1caa7086035acd56",
+            "requested_effort": "low",
+            "requested_model": "gpt-5.6-luna",
+            "source_sequence": 16,
+            "stage": "grounding",
+            "usage": {
+              "cache_write_input_tokens": 0,
+              "cached_input_tokens": 0,
+              "input_tokens": 9000,
+              "output_tokens": 100,
+              "reasoning_output_tokens": 0
+            }
+          }
+        ],
+        "observation_events": [
+          {
+            "capture_ns": 12000000100,
+            "image_sha256": "6df52b243a52ce617a8aa58cde3ad046a26456a9d5c92ecd1caa7086035acd56",
+            "model_visible": true,
+            "sequence": 16
+          },
+          {
+            "capture_ns": 12000000200,
+            "image_sha256": "9d29cf8647af2bfef942f080e2e0185882087efa95ba8d0cfc084b709df2bf2e",
+            "model_visible": false,
+            "sequence": 17
+          }
+        ],
+        "release_events": [
+          {
+            "attempt_id": "ephemeral-B3-palette",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-ephemeral-B3-palette",
+            "released_ns": 12000001200
+          },
+          {
+            "attempt_id": "ephemeral-B3-world",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-ephemeral-B3-world",
+            "released_ns": 12000001700
+          }
+        ],
+        "repair_events": [],
+        "route": "cold",
+        "score_event": {
+          "checked_ns": 12000004000,
+          "collateral_tiles": [],
+          "contract_satisfied": true,
+          "copper_delta": -1,
+          "core_preserved": true,
+          "guard_tiles": 112,
+          "paused_idle_completion": true,
+          "scope": "one changed-geometry Mindustry placement; no delivery or route-completion claim",
+          "source_preserved": true,
+          "status": "VERIFIED",
+          "wrong_target": false
+        },
+        "started_ns": 12000000000,
+        "submission_events": [
+          {
+            "at_ns": 12000003000,
+            "exact_effect": true,
+            "submission_id": "score-ephemeral-B3"
+          }
+        ],
+        "task_id": "B3"
+      }
+    ],
+    "persistent": [
+      {
+        "durable_call_ids": [
+          "persistent-A1-tool-0",
+          "persistent-A1-tool-1",
+          "persistent-A1-tool-2",
+          "persistent-A1-tool-3",
+          "persistent-A1-tool-4"
+        ],
+        "ended_ns": 13000020000,
+        "input_events": [
+          {
+            "admission_ns": 13000001000,
+            "attempt_id": "persistent-A1-palette",
+            "old_reference": false,
+            "status": "ADMITTED"
+          },
+          {
+            "admission_ns": 13000001500,
+            "attempt_id": "persistent-A1-world",
+            "old_reference": false,
+            "status": "ADMITTED"
+          }
+        ],
+        "input_feedback_events": [
+          {
+            "attempt_id": "persistent-A1-palette",
+            "observed_ns": 13000001100
+          },
+          {
+            "attempt_id": "persistent-A1-world",
+            "observed_ns": 13000001600
+          }
+        ],
+        "layout": "A",
+        "model_call_events": [
+          {
+            "call_id": "persistent-A1-call-1",
+            "image_sha256": "5a6105cfdc3a6c5900f33be2271ac11189d730e215de2b7a56ae05db6b2e4a30",
+            "requested_effort": "low",
+            "requested_model": "gpt-5.6-luna",
+            "source_sequence": 1,
+            "stage": "grounding",
+            "usage": {
+              "cache_write_input_tokens": 0,
+              "cached_input_tokens": 0,
+              "input_tokens": 9000,
+              "output_tokens": 100,
+              "reasoning_output_tokens": 0
+            }
+          }
+        ],
+        "observation_events": [
+          {
+            "capture_ns": 13000000100,
+            "image_sha256": "5a6105cfdc3a6c5900f33be2271ac11189d730e215de2b7a56ae05db6b2e4a30",
+            "model_visible": true,
+            "sequence": 1
+          },
+          {
+            "capture_ns": 13000000200,
+            "image_sha256": "004a6bb1f7966017b9862a4490cbd772f334e4b48ce4b520d0e2efa76e595027",
+            "model_visible": false,
+            "sequence": 2
+          }
+        ],
+        "release_events": [
+          {
+            "attempt_id": "persistent-A1-palette",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-persistent-A1-palette",
+            "released_ns": 13000001200
+          },
+          {
+            "attempt_id": "persistent-A1-world",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-persistent-A1-world",
+            "released_ns": 13000001700
+          }
+        ],
+        "repair_events": [],
+        "route": "cold",
+        "score_event": {
+          "checked_ns": 13000004000,
+          "collateral_tiles": [],
+          "contract_satisfied": true,
+          "copper_delta": -1,
+          "core_preserved": true,
+          "guard_tiles": 112,
+          "paused_idle_completion": true,
+          "scope": "one changed-geometry Mindustry placement; no delivery or route-completion claim",
+          "source_preserved": true,
+          "status": "VERIFIED",
+          "wrong_target": false
+        },
+        "started_ns": 13000000000,
+        "submission_events": [
+          {
+            "at_ns": 13000003000,
+            "exact_effect": true,
+            "submission_id": "score-persistent-A1"
+          }
+        ],
+        "task_id": "A1"
+      },
+      {
+        "durable_call_ids": [
+          "persistent-A2-tool-0",
+          "persistent-A2-tool-1",
+          "persistent-A2-tool-2",
+          "persistent-A2-tool-3",
+          "persistent-A2-tool-4"
+        ],
+        "ended_ns": 14000020000,
+        "input_events": [
+          {
+            "admission_ns": 14000001000,
+            "attempt_id": "persistent-A2-palette",
+            "old_reference": false,
+            "status": "ADMITTED"
+          },
+          {
+            "admission_ns": 14000001500,
+            "attempt_id": "persistent-A2-world",
+            "old_reference": false,
+            "status": "ADMITTED"
+          }
+        ],
+        "input_feedback_events": [
+          {
+            "attempt_id": "persistent-A2-palette",
+            "observed_ns": 14000001100
+          },
+          {
+            "attempt_id": "persistent-A2-world",
+            "observed_ns": 14000001600
+          }
+        ],
+        "layout": "A",
+        "model_call_events": [],
+        "observation_events": [
+          {
+            "capture_ns": 14000000100,
+            "image_sha256": "4b59e1366fd8e02e85432e4a375249a8255543820d09e423b3cf7e3463f0b808",
+            "model_visible": false,
+            "sequence": 4
+          },
+          {
+            "capture_ns": 14000000200,
+            "image_sha256": "ba3d5928034336a628122f50661b7101e1b8d1cd43e677e72412be050ec692d9",
+            "model_visible": false,
+            "sequence": 5
+          }
+        ],
+        "release_events": [
+          {
+            "attempt_id": "persistent-A2-palette",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-persistent-A2-palette",
+            "released_ns": 14000001200
+          },
+          {
+            "attempt_id": "persistent-A2-world",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-persistent-A2-world",
+            "released_ns": 14000001700
+          }
+        ],
+        "repair_events": [],
+        "route": "reuse",
+        "score_event": {
+          "checked_ns": 14000004000,
+          "collateral_tiles": [],
+          "contract_satisfied": true,
+          "copper_delta": -1,
+          "core_preserved": true,
+          "guard_tiles": 112,
+          "paused_idle_completion": true,
+          "scope": "one changed-geometry Mindustry placement; no delivery or route-completion claim",
+          "source_preserved": true,
+          "status": "VERIFIED",
+          "wrong_target": false
+        },
+        "started_ns": 14000000000,
+        "submission_events": [
+          {
+            "at_ns": 14000003000,
+            "exact_effect": true,
+            "submission_id": "score-persistent-A2"
+          }
+        ],
+        "task_id": "A2"
+      },
+      {
+        "durable_call_ids": [
+          "persistent-A3-tool-0",
+          "persistent-A3-tool-1",
+          "persistent-A3-tool-2",
+          "persistent-A3-tool-3",
+          "persistent-A3-tool-4"
+        ],
+        "ended_ns": 15000020000,
+        "input_events": [
+          {
+            "admission_ns": 15000001000,
+            "attempt_id": "persistent-A3-palette",
+            "old_reference": false,
+            "status": "ADMITTED"
+          },
+          {
+            "admission_ns": 15000001500,
+            "attempt_id": "persistent-A3-world",
+            "old_reference": false,
+            "status": "ADMITTED"
+          }
+        ],
+        "input_feedback_events": [
+          {
+            "attempt_id": "persistent-A3-palette",
+            "observed_ns": 15000001100
+          },
+          {
+            "attempt_id": "persistent-A3-world",
+            "observed_ns": 15000001600
+          }
+        ],
+        "layout": "A",
+        "model_call_events": [],
+        "observation_events": [
+          {
+            "capture_ns": 15000000100,
+            "image_sha256": "e5b6657b65a2057c46825ddd478c0a466ecb44b813d3777c6c0b70d958fa2af4",
+            "model_visible": false,
+            "sequence": 7
+          },
+          {
+            "capture_ns": 15000000200,
+            "image_sha256": "c412414c773acca106bc1e4fae272d93be481d648ecd09a5c6f63ed302c03c69",
+            "model_visible": false,
+            "sequence": 8
+          }
+        ],
+        "release_events": [
+          {
+            "attempt_id": "persistent-A3-palette",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-persistent-A3-palette",
+            "released_ns": 15000001200
+          },
+          {
+            "attempt_id": "persistent-A3-world",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-persistent-A3-world",
+            "released_ns": 15000001700
+          }
+        ],
+        "repair_events": [],
+        "route": "reuse",
+        "score_event": {
+          "checked_ns": 15000004000,
+          "collateral_tiles": [],
+          "contract_satisfied": true,
+          "copper_delta": -1,
+          "core_preserved": true,
+          "guard_tiles": 112,
+          "paused_idle_completion": true,
+          "scope": "one changed-geometry Mindustry placement; no delivery or route-completion claim",
+          "source_preserved": true,
+          "status": "VERIFIED",
+          "wrong_target": false
+        },
+        "started_ns": 15000000000,
+        "submission_events": [
+          {
+            "at_ns": 15000003000,
+            "exact_effect": true,
+            "submission_id": "score-persistent-A3"
+          }
+        ],
+        "task_id": "A3"
+      },
+      {
+        "durable_call_ids": [
+          "persistent-B1-tool-0",
+          "persistent-B1-tool-1",
+          "persistent-B1-tool-2",
+          "persistent-B1-tool-3",
+          "persistent-B1-tool-4"
+        ],
+        "ended_ns": 16000020000,
+        "input_events": [
+          {
+            "admission_ns": null,
+            "attempt_id": "B1-old",
+            "old_reference": true,
+            "status": "REFUSED"
+          },
+          {
+            "admission_ns": 16000001000,
+            "attempt_id": "persistent-B1-palette",
+            "old_reference": false,
+            "status": "ADMITTED"
+          },
+          {
+            "admission_ns": 16000001500,
+            "attempt_id": "persistent-B1-world",
+            "old_reference": false,
+            "status": "ADMITTED"
+          }
+        ],
+        "input_feedback_events": [
+          {
+            "attempt_id": "persistent-B1-palette",
+            "observed_ns": 16000001100
+          },
+          {
+            "attempt_id": "persistent-B1-world",
+            "observed_ns": 16000001600
+          }
+        ],
+        "layout": "B",
+        "model_call_events": [
+          {
+            "call_id": "persistent-B1-call-1",
+            "image_sha256": "7a7f2ab64adce256cc89791d542a3f649868e41244139caf6a59504b88121738",
+            "requested_effort": "low",
+            "requested_model": "gpt-5.6-luna",
+            "source_sequence": 10,
+            "stage": "repair",
+            "usage": {
+              "cache_write_input_tokens": 0,
+              "cached_input_tokens": 0,
+              "input_tokens": 9000,
+              "output_tokens": 100,
+              "reasoning_output_tokens": 0
+            }
+          }
+        ],
+        "observation_events": [
+          {
+            "capture_ns": 16000000100,
+            "image_sha256": "7a7f2ab64adce256cc89791d542a3f649868e41244139caf6a59504b88121738",
+            "model_visible": true,
+            "sequence": 10
+          },
+          {
+            "capture_ns": 16000000200,
+            "image_sha256": "b946c3277740f5d92a8f05247faee46cf6b385b51f0d04fed7c35a67da0f0693",
+            "model_visible": false,
+            "sequence": 11
+          }
+        ],
+        "release_events": [
+          {
+            "attempt_id": "persistent-B1-palette",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-persistent-B1-palette",
+            "released_ns": 16000001200
+          },
+          {
+            "attempt_id": "persistent-B1-world",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-persistent-B1-world",
+            "released_ns": 16000001700
+          }
+        ],
+        "repair_events": [
+          {
+            "fresh_call_id": "persistent-B1-call-1",
+            "fresh_source_sequence": 10,
+            "observed_sequence": 10,
+            "old_reference_pointer_admitted": false,
+            "old_reference_sequence": 7,
+            "old_reference_status": "association_changed"
+          }
+        ],
+        "route": "repair",
+        "score_event": {
+          "checked_ns": 16000004000,
+          "collateral_tiles": [],
+          "contract_satisfied": true,
+          "copper_delta": -1,
+          "core_preserved": true,
+          "guard_tiles": 112,
+          "paused_idle_completion": true,
+          "scope": "one changed-geometry Mindustry placement; no delivery or route-completion claim",
+          "source_preserved": true,
+          "status": "VERIFIED",
+          "wrong_target": false
+        },
+        "started_ns": 16000000000,
+        "submission_events": [
+          {
+            "at_ns": 16000003000,
+            "exact_effect": true,
+            "submission_id": "score-persistent-B1"
+          }
+        ],
+        "task_id": "B1"
+      },
+      {
+        "durable_call_ids": [
+          "persistent-B2-tool-0",
+          "persistent-B2-tool-1",
+          "persistent-B2-tool-2",
+          "persistent-B2-tool-3",
+          "persistent-B2-tool-4"
+        ],
+        "ended_ns": 17000020000,
+        "input_events": [
+          {
+            "admission_ns": 17000001000,
+            "attempt_id": "persistent-B2-palette",
+            "old_reference": false,
+            "status": "ADMITTED"
+          },
+          {
+            "admission_ns": 17000001500,
+            "attempt_id": "persistent-B2-world",
+            "old_reference": false,
+            "status": "ADMITTED"
+          }
+        ],
+        "input_feedback_events": [
+          {
+            "attempt_id": "persistent-B2-palette",
+            "observed_ns": 17000001100
+          },
+          {
+            "attempt_id": "persistent-B2-world",
+            "observed_ns": 17000001600
+          }
+        ],
+        "layout": "B",
+        "model_call_events": [],
+        "observation_events": [
+          {
+            "capture_ns": 17000000100,
+            "image_sha256": "3ff8b79a28745b8bd6b8eff22896938e7353c08b7211078737a8ba821907be77",
+            "model_visible": false,
+            "sequence": 13
+          },
+          {
+            "capture_ns": 17000000200,
+            "image_sha256": "04173f9b67db42e1ebd17dcda0b4323ddc28faf1d098a4f5bdb1230b95c86493",
+            "model_visible": false,
+            "sequence": 14
+          }
+        ],
+        "release_events": [
+          {
+            "attempt_id": "persistent-B2-palette",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-persistent-B2-palette",
+            "released_ns": 17000001200
+          },
+          {
+            "attempt_id": "persistent-B2-world",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-persistent-B2-world",
+            "released_ns": 17000001700
+          }
+        ],
+        "repair_events": [],
+        "route": "reuse",
+        "score_event": {
+          "checked_ns": 17000004000,
+          "collateral_tiles": [],
+          "contract_satisfied": true,
+          "copper_delta": -1,
+          "core_preserved": true,
+          "guard_tiles": 112,
+          "paused_idle_completion": true,
+          "scope": "one changed-geometry Mindustry placement; no delivery or route-completion claim",
+          "source_preserved": true,
+          "status": "VERIFIED",
+          "wrong_target": false
+        },
+        "started_ns": 17000000000,
+        "submission_events": [
+          {
+            "at_ns": 17000003000,
+            "exact_effect": true,
+            "submission_id": "score-persistent-B2"
+          }
+        ],
+        "task_id": "B2"
+      },
+      {
+        "durable_call_ids": [
+          "persistent-B3-tool-0",
+          "persistent-B3-tool-1",
+          "persistent-B3-tool-2",
+          "persistent-B3-tool-3",
+          "persistent-B3-tool-4"
+        ],
+        "ended_ns": 18000020000,
+        "input_events": [
+          {
+            "admission_ns": 18000001000,
+            "attempt_id": "persistent-B3-palette",
+            "old_reference": false,
+            "status": "ADMITTED"
+          },
+          {
+            "admission_ns": 18000001500,
+            "attempt_id": "persistent-B3-world",
+            "old_reference": false,
+            "status": "ADMITTED"
+          }
+        ],
+        "input_feedback_events": [
+          {
+            "attempt_id": "persistent-B3-palette",
+            "observed_ns": 18000001100
+          },
+          {
+            "attempt_id": "persistent-B3-world",
+            "observed_ns": 18000001600
+          }
+        ],
+        "layout": "B",
+        "model_call_events": [],
+        "observation_events": [
+          {
+            "capture_ns": 18000000100,
+            "image_sha256": "6779862f07e64217052385cd0f214bbc59abd1ab70ad21c5f176f5acdecf7905",
+            "model_visible": false,
+            "sequence": 16
+          },
+          {
+            "capture_ns": 18000000200,
+            "image_sha256": "74fd810d910c742de74b80f69f8c416103a9b6d909af5fd473d5c98bfb0da9a4",
+            "model_visible": false,
+            "sequence": 17
+          }
+        ],
+        "release_events": [
+          {
+            "attempt_id": "persistent-B3-palette",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-persistent-B3-palette",
+            "released_ns": 18000001200
+          },
+          {
+            "attempt_id": "persistent-B3-world",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-persistent-B3-world",
+            "released_ns": 18000001700
+          }
+        ],
+        "repair_events": [],
+        "route": "reuse",
+        "score_event": {
+          "checked_ns": 18000004000,
+          "collateral_tiles": [],
+          "contract_satisfied": true,
+          "copper_delta": -1,
+          "core_preserved": true,
+          "guard_tiles": 112,
+          "paused_idle_completion": true,
+          "scope": "one changed-geometry Mindustry placement; no delivery or route-completion claim",
+          "source_preserved": true,
+          "status": "VERIFIED",
+          "wrong_target": false
+        },
+        "started_ns": 18000000000,
+        "submission_events": [
+          {
+            "at_ns": 18000003000,
+            "exact_effect": true,
+            "submission_id": "score-persistent-B3"
+          }
+        ],
+        "task_id": "B3"
+      }
+    ],
+    "plain": [
+      {
+        "durable_call_ids": [
+          "plain-A1-tool-0",
+          "plain-A1-tool-1",
+          "plain-A1-tool-2",
+          "plain-A1-tool-3",
+          "plain-A1-tool-4"
+        ],
+        "ended_ns": 1000020000,
+        "input_events": [
+          {
+            "admission_ns": 1000001000,
+            "attempt_id": "plain-A1-palette",
+            "old_reference": false,
+            "status": "ADMITTED"
+          },
+          {
+            "admission_ns": 1000001500,
+            "attempt_id": "plain-A1-world",
+            "old_reference": false,
+            "status": "ADMITTED"
+          }
+        ],
+        "input_feedback_events": [
+          {
+            "attempt_id": "plain-A1-palette",
+            "observed_ns": 1000001100
+          },
+          {
+            "attempt_id": "plain-A1-world",
+            "observed_ns": 1000001600
+          }
+        ],
+        "layout": "A",
+        "model_call_events": [
+          {
+            "call_id": "plain-A1-call-1",
+            "image_sha256": "991d4a19e46ee47f5607a13c3f3c63d8d0baa583b5dcec9566d940f299e92f52",
+            "requested_effort": "low",
+            "requested_model": "gpt-5.6-luna",
+            "source_sequence": 1,
+            "stage": "grounding",
+            "usage": {
+              "cache_write_input_tokens": 0,
+              "cached_input_tokens": 0,
+              "input_tokens": 9000,
+              "output_tokens": 100,
+              "reasoning_output_tokens": 0
+            }
+          }
+        ],
+        "observation_events": [
+          {
+            "capture_ns": 1000000100,
+            "image_sha256": "991d4a19e46ee47f5607a13c3f3c63d8d0baa583b5dcec9566d940f299e92f52",
+            "model_visible": true,
+            "sequence": 1
+          },
+          {
+            "capture_ns": 1000000200,
+            "image_sha256": "54e8571c120ddd979613cac1cc78ccebf0896c11c03ac84a4bf7632f093ce404",
+            "model_visible": false,
+            "sequence": 2
+          }
+        ],
+        "release_events": [
+          {
+            "attempt_id": "plain-A1-palette",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-plain-A1-palette",
+            "released_ns": 1000001200
+          },
+          {
+            "attempt_id": "plain-A1-world",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-plain-A1-world",
+            "released_ns": 1000001700
+          }
+        ],
+        "repair_events": [],
+        "route": "cold",
+        "score_event": {
+          "checked_ns": 1000004000,
+          "collateral_tiles": [],
+          "contract_satisfied": true,
+          "copper_delta": -1,
+          "core_preserved": true,
+          "guard_tiles": 112,
+          "paused_idle_completion": true,
+          "scope": "one changed-geometry Mindustry placement; no delivery or route-completion claim",
+          "source_preserved": true,
+          "status": "VERIFIED",
+          "wrong_target": false
+        },
+        "started_ns": 1000000000,
+        "submission_events": [
+          {
+            "at_ns": 1000003000,
+            "exact_effect": true,
+            "submission_id": "score-plain-A1"
+          }
+        ],
+        "task_id": "A1"
+      },
+      {
+        "durable_call_ids": [
+          "plain-A2-tool-0",
+          "plain-A2-tool-1",
+          "plain-A2-tool-2",
+          "plain-A2-tool-3",
+          "plain-A2-tool-4"
+        ],
+        "ended_ns": 2000020000,
+        "input_events": [
+          {
+            "admission_ns": 2000001000,
+            "attempt_id": "plain-A2-palette",
+            "old_reference": false,
+            "status": "ADMITTED"
+          },
+          {
+            "admission_ns": 2000001500,
+            "attempt_id": "plain-A2-world",
+            "old_reference": false,
+            "status": "ADMITTED"
+          }
+        ],
+        "input_feedback_events": [
+          {
+            "attempt_id": "plain-A2-palette",
+            "observed_ns": 2000001100
+          },
+          {
+            "attempt_id": "plain-A2-world",
+            "observed_ns": 2000001600
+          }
+        ],
+        "layout": "A",
+        "model_call_events": [
+          {
+            "call_id": "plain-A2-call-1",
+            "image_sha256": "777608ff468d5315454716a7aed24eaaa7d2cb78d1d848523b91be9c71ecd476",
+            "requested_effort": "low",
+            "requested_model": "gpt-5.6-luna",
+            "source_sequence": 4,
+            "stage": "grounding",
+            "usage": {
+              "cache_write_input_tokens": 0,
+              "cached_input_tokens": 0,
+              "input_tokens": 9000,
+              "output_tokens": 100,
+              "reasoning_output_tokens": 0
+            }
+          }
+        ],
+        "observation_events": [
+          {
+            "capture_ns": 2000000100,
+            "image_sha256": "777608ff468d5315454716a7aed24eaaa7d2cb78d1d848523b91be9c71ecd476",
+            "model_visible": true,
+            "sequence": 4
+          },
+          {
+            "capture_ns": 2000000200,
+            "image_sha256": "a9d996376cf707c0077ce89ff501cdc36351d495d3cf3df574239757fb615366",
+            "model_visible": false,
+            "sequence": 5
+          }
+        ],
+        "release_events": [
+          {
+            "attempt_id": "plain-A2-palette",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-plain-A2-palette",
+            "released_ns": 2000001200
+          },
+          {
+            "attempt_id": "plain-A2-world",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-plain-A2-world",
+            "released_ns": 2000001700
+          }
+        ],
+        "repair_events": [],
+        "route": "cold",
+        "score_event": {
+          "checked_ns": 2000004000,
+          "collateral_tiles": [],
+          "contract_satisfied": true,
+          "copper_delta": -1,
+          "core_preserved": true,
+          "guard_tiles": 112,
+          "paused_idle_completion": true,
+          "scope": "one changed-geometry Mindustry placement; no delivery or route-completion claim",
+          "source_preserved": true,
+          "status": "VERIFIED",
+          "wrong_target": false
+        },
+        "started_ns": 2000000000,
+        "submission_events": [
+          {
+            "at_ns": 2000003000,
+            "exact_effect": true,
+            "submission_id": "score-plain-A2"
+          }
+        ],
+        "task_id": "A2"
+      },
+      {
+        "durable_call_ids": [
+          "plain-A3-tool-0",
+          "plain-A3-tool-1",
+          "plain-A3-tool-2",
+          "plain-A3-tool-3",
+          "plain-A3-tool-4"
+        ],
+        "ended_ns": 3000020000,
+        "input_events": [
+          {
+            "admission_ns": 3000001000,
+            "attempt_id": "plain-A3-palette",
+            "old_reference": false,
+            "status": "ADMITTED"
+          },
+          {
+            "admission_ns": 3000001500,
+            "attempt_id": "plain-A3-world",
+            "old_reference": false,
+            "status": "ADMITTED"
+          }
+        ],
+        "input_feedback_events": [
+          {
+            "attempt_id": "plain-A3-palette",
+            "observed_ns": 3000001100
+          },
+          {
+            "attempt_id": "plain-A3-world",
+            "observed_ns": 3000001600
+          }
+        ],
+        "layout": "A",
+        "model_call_events": [
+          {
+            "call_id": "plain-A3-call-1",
+            "image_sha256": "0627e181d9322a9e6f879360367a734b18cc4427c8745cb06f2254981773d7ac",
+            "requested_effort": "low",
+            "requested_model": "gpt-5.6-luna",
+            "source_sequence": 7,
+            "stage": "grounding",
+            "usage": {
+              "cache_write_input_tokens": 0,
+              "cached_input_tokens": 0,
+              "input_tokens": 9000,
+              "output_tokens": 100,
+              "reasoning_output_tokens": 0
+            }
+          }
+        ],
+        "observation_events": [
+          {
+            "capture_ns": 3000000100,
+            "image_sha256": "0627e181d9322a9e6f879360367a734b18cc4427c8745cb06f2254981773d7ac",
+            "model_visible": true,
+            "sequence": 7
+          },
+          {
+            "capture_ns": 3000000200,
+            "image_sha256": "42a7982b30c173cee9bf89093b82e69eaec5d2350f13c8123cdd694b7724588c",
+            "model_visible": false,
+            "sequence": 8
+          }
+        ],
+        "release_events": [
+          {
+            "attempt_id": "plain-A3-palette",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-plain-A3-palette",
+            "released_ns": 3000001200
+          },
+          {
+            "attempt_id": "plain-A3-world",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-plain-A3-world",
+            "released_ns": 3000001700
+          }
+        ],
+        "repair_events": [],
+        "route": "cold",
+        "score_event": {
+          "checked_ns": 3000004000,
+          "collateral_tiles": [],
+          "contract_satisfied": true,
+          "copper_delta": -1,
+          "core_preserved": true,
+          "guard_tiles": 112,
+          "paused_idle_completion": true,
+          "scope": "one changed-geometry Mindustry placement; no delivery or route-completion claim",
+          "source_preserved": true,
+          "status": "VERIFIED",
+          "wrong_target": false
+        },
+        "started_ns": 3000000000,
+        "submission_events": [
+          {
+            "at_ns": 3000003000,
+            "exact_effect": true,
+            "submission_id": "score-plain-A3"
+          }
+        ],
+        "task_id": "A3"
+      },
+      {
+        "durable_call_ids": [
+          "plain-B1-tool-0",
+          "plain-B1-tool-1",
+          "plain-B1-tool-2",
+          "plain-B1-tool-3",
+          "plain-B1-tool-4"
+        ],
+        "ended_ns": 4000020000,
+        "input_events": [
+          {
+            "admission_ns": 4000001000,
+            "attempt_id": "plain-B1-palette",
+            "old_reference": false,
+            "status": "ADMITTED"
+          },
+          {
+            "admission_ns": 4000001500,
+            "attempt_id": "plain-B1-world",
+            "old_reference": false,
+            "status": "ADMITTED"
+          }
+        ],
+        "input_feedback_events": [
+          {
+            "attempt_id": "plain-B1-palette",
+            "observed_ns": 4000001100
+          },
+          {
+            "attempt_id": "plain-B1-world",
+            "observed_ns": 4000001600
+          }
+        ],
+        "layout": "B",
+        "model_call_events": [
+          {
+            "call_id": "plain-B1-call-1",
+            "image_sha256": "6ef05041d8ffac19dbcceeed03a37e7e5cb956e1ab2d110a62fde27e25d68c7a",
+            "requested_effort": "low",
+            "requested_model": "gpt-5.6-luna",
+            "source_sequence": 10,
+            "stage": "grounding",
+            "usage": {
+              "cache_write_input_tokens": 0,
+              "cached_input_tokens": 0,
+              "input_tokens": 9000,
+              "output_tokens": 100,
+              "reasoning_output_tokens": 0
+            }
+          }
+        ],
+        "observation_events": [
+          {
+            "capture_ns": 4000000100,
+            "image_sha256": "6ef05041d8ffac19dbcceeed03a37e7e5cb956e1ab2d110a62fde27e25d68c7a",
+            "model_visible": true,
+            "sequence": 10
+          },
+          {
+            "capture_ns": 4000000200,
+            "image_sha256": "3cafe7f82a3c6ba0fc3a5e1c5b58f9409fcfd5ca2d5841f6c6a47ac5605a6411",
+            "model_visible": false,
+            "sequence": 11
+          }
+        ],
+        "release_events": [
+          {
+            "attempt_id": "plain-B1-palette",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-plain-B1-palette",
+            "released_ns": 4000001200
+          },
+          {
+            "attempt_id": "plain-B1-world",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-plain-B1-world",
+            "released_ns": 4000001700
+          }
+        ],
+        "repair_events": [],
+        "route": "cold",
+        "score_event": {
+          "checked_ns": 4000004000,
+          "collateral_tiles": [],
+          "contract_satisfied": true,
+          "copper_delta": -1,
+          "core_preserved": true,
+          "guard_tiles": 112,
+          "paused_idle_completion": true,
+          "scope": "one changed-geometry Mindustry placement; no delivery or route-completion claim",
+          "source_preserved": true,
+          "status": "VERIFIED",
+          "wrong_target": false
+        },
+        "started_ns": 4000000000,
+        "submission_events": [
+          {
+            "at_ns": 4000003000,
+            "exact_effect": true,
+            "submission_id": "score-plain-B1"
+          }
+        ],
+        "task_id": "B1"
+      },
+      {
+        "durable_call_ids": [
+          "plain-B2-tool-0",
+          "plain-B2-tool-1",
+          "plain-B2-tool-2",
+          "plain-B2-tool-3",
+          "plain-B2-tool-4"
+        ],
+        "ended_ns": 5000020000,
+        "input_events": [
+          {
+            "admission_ns": 5000001000,
+            "attempt_id": "plain-B2-palette",
+            "old_reference": false,
+            "status": "ADMITTED"
+          },
+          {
+            "admission_ns": 5000001500,
+            "attempt_id": "plain-B2-world",
+            "old_reference": false,
+            "status": "ADMITTED"
+          }
+        ],
+        "input_feedback_events": [
+          {
+            "attempt_id": "plain-B2-palette",
+            "observed_ns": 5000001100
+          },
+          {
+            "attempt_id": "plain-B2-world",
+            "observed_ns": 5000001600
+          }
+        ],
+        "layout": "B",
+        "model_call_events": [
+          {
+            "call_id": "plain-B2-call-1",
+            "image_sha256": "096ecc4ed8584139f260891a6b3a0e33a7758ba79f471e73ff5fe480b393ba50",
+            "requested_effort": "low",
+            "requested_model": "gpt-5.6-luna",
+            "source_sequence": 13,
+            "stage": "grounding",
+            "usage": {
+              "cache_write_input_tokens": 0,
+              "cached_input_tokens": 0,
+              "input_tokens": 9000,
+              "output_tokens": 100,
+              "reasoning_output_tokens": 0
+            }
+          }
+        ],
+        "observation_events": [
+          {
+            "capture_ns": 5000000100,
+            "image_sha256": "096ecc4ed8584139f260891a6b3a0e33a7758ba79f471e73ff5fe480b393ba50",
+            "model_visible": true,
+            "sequence": 13
+          },
+          {
+            "capture_ns": 5000000200,
+            "image_sha256": "373d1b1bf2fa03ed85daaa86c3d53d142661a612b5e1a3177a21ad4b842acc8a",
+            "model_visible": false,
+            "sequence": 14
+          }
+        ],
+        "release_events": [
+          {
+            "attempt_id": "plain-B2-palette",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-plain-B2-palette",
+            "released_ns": 5000001200
+          },
+          {
+            "attempt_id": "plain-B2-world",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-plain-B2-world",
+            "released_ns": 5000001700
+          }
+        ],
+        "repair_events": [],
+        "route": "cold",
+        "score_event": {
+          "checked_ns": 5000004000,
+          "collateral_tiles": [],
+          "contract_satisfied": true,
+          "copper_delta": -1,
+          "core_preserved": true,
+          "guard_tiles": 112,
+          "paused_idle_completion": true,
+          "scope": "one changed-geometry Mindustry placement; no delivery or route-completion claim",
+          "source_preserved": true,
+          "status": "VERIFIED",
+          "wrong_target": false
+        },
+        "started_ns": 5000000000,
+        "submission_events": [
+          {
+            "at_ns": 5000003000,
+            "exact_effect": true,
+            "submission_id": "score-plain-B2"
+          }
+        ],
+        "task_id": "B2"
+      },
+      {
+        "durable_call_ids": [
+          "plain-B3-tool-0",
+          "plain-B3-tool-1",
+          "plain-B3-tool-2",
+          "plain-B3-tool-3",
+          "plain-B3-tool-4"
+        ],
+        "ended_ns": 6000020000,
+        "input_events": [
+          {
+            "admission_ns": 6000001000,
+            "attempt_id": "plain-B3-palette",
+            "old_reference": false,
+            "status": "ADMITTED"
+          },
+          {
+            "admission_ns": 6000001500,
+            "attempt_id": "plain-B3-world",
+            "old_reference": false,
+            "status": "ADMITTED"
+          }
+        ],
+        "input_feedback_events": [
+          {
+            "attempt_id": "plain-B3-palette",
+            "observed_ns": 6000001100
+          },
+          {
+            "attempt_id": "plain-B3-world",
+            "observed_ns": 6000001600
+          }
+        ],
+        "layout": "B",
+        "model_call_events": [
+          {
+            "call_id": "plain-B3-call-1",
+            "image_sha256": "aa496c4b27791bdac034fbbd78811ed74e6894216f47229d0d1893027161fade",
+            "requested_effort": "low",
+            "requested_model": "gpt-5.6-luna",
+            "source_sequence": 16,
+            "stage": "grounding",
+            "usage": {
+              "cache_write_input_tokens": 0,
+              "cached_input_tokens": 0,
+              "input_tokens": 9000,
+              "output_tokens": 100,
+              "reasoning_output_tokens": 0
+            }
+          }
+        ],
+        "observation_events": [
+          {
+            "capture_ns": 6000000100,
+            "image_sha256": "aa496c4b27791bdac034fbbd78811ed74e6894216f47229d0d1893027161fade",
+            "model_visible": true,
+            "sequence": 16
+          },
+          {
+            "capture_ns": 6000000200,
+            "image_sha256": "79f4039db1b4bd76fa423f2e0de1df09a39bdc1f7a744f1ad258135a883d8930",
+            "model_visible": false,
+            "sequence": 17
+          }
+        ],
+        "release_events": [
+          {
+            "attempt_id": "plain-B3-palette",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-plain-B3-palette",
+            "released_ns": 6000001200
+          },
+          {
+            "attempt_id": "plain-B3-world",
+            "button_up": true,
+            "keys_empty": true,
+            "receipt_id": "release-plain-B3-world",
+            "released_ns": 6000001700
+          }
+        ],
+        "repair_events": [],
+        "route": "cold",
+        "score_event": {
+          "checked_ns": 6000004000,
+          "collateral_tiles": [],
+          "contract_satisfied": true,
+          "copper_delta": -1,
+          "core_preserved": true,
+          "guard_tiles": 112,
+          "paused_idle_completion": true,
+          "scope": "one changed-geometry Mindustry placement; no delivery or route-completion claim",
+          "source_preserved": true,
+          "status": "VERIFIED",
+          "wrong_target": false
+        },
+        "started_ns": 6000000000,
+        "submission_events": [
+          {
+            "at_ns": 6000003000,
+            "exact_effect": true,
+            "submission_id": "score-plain-B3"
+          }
+        ],
+        "task_id": "B3"
+      }
+    ]
+  },
+  "model_identity": {
+    "requested_effort": "low",
+    "requested_model": "gpt-5.6-luna"
+  },
+  "preflight_events": [
+    {
+      "arm": "plain",
+      "call_id": "preflight-plain",
+      "image_count": 0,
+      "requested_effort": "low",
+      "requested_model": "gpt-5.6-luna",
+      "stage": "schema_preflight",
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 8000,
+        "output_tokens": 0,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "arm": "ephemeral",
+      "call_id": "preflight-ephemeral",
+      "image_count": 0,
+      "requested_effort": "low",
+      "requested_model": "gpt-5.6-luna",
+      "stage": "schema_preflight",
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 8000,
+        "output_tokens": 0,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "arm": "persistent",
+      "call_id": "preflight-persistent",
+      "image_count": 0,
+      "requested_effort": "low",
+      "requested_model": "gpt-5.6-luna",
+      "stage": "schema_preflight",
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 8000,
+        "output_tokens": 0,
+        "reasoning_output_tokens": 0
+      }
+    }
+  ],
+  "schema": "mindustry_three_arm_raw_events_v1",
+  "source_identity": {
+    "commit": "0000000000000000000000000000000000000000",
+    "container_image_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "decision_evaluator_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "jar_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "mod_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "preregistration_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "raw_auditor_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "runner_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "save_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  }
+}
