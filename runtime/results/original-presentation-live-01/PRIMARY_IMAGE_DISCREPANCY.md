@@ -21,3 +21,22 @@ corruption claim, successful visual correction policy or population result.
 The re-presentation primitive preserved historical pixels but did not, in its
 first primary view here, resolve the visual ambiguity. A separate fresh source 7
 was viewed as SAVED and only then attributed as visible completion.
+
+
+## Exact tool-image handoff retained
+
+actual-source-records.jsonl retains only the 39 original tool-input/tool-output/
+usage rows used by this case projection, with original source line numbers and
+raw line bytes. No reasoning or other conversation records are included.
+verify_retained_source.py replays their original hashes, usage counters and input
+boundaries offline, without the full private session log. Normal and -O runs
+pass and reject missing, duplicated and byte-modified source records.
+
+The five encoded image blocks in those exact tool outputs match the saved native
+PNG bytes: READY for views 1, 2, 3 and 5, SAVED for view 4. Their emitted detail
+values were high, high, high, original, original. Earlier view_image requests
+specified original, but the outer image emission omitted forwarding that detail;
+the later emissions forwarded it explicitly. The first high-detail view already
+showed READY correctly, so this sequence does not establish a causal detail fix.
+Provider preprocessing and model perception are not independently observed.
+The initial black-image reviews remain unchanged, and no live case was rerun.

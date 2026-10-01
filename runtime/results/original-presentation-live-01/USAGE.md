@@ -31,3 +31,8 @@ first read the end output record as call input (KeyError); its failure note is
 retained and the corrected checker uses first/last call records. These bookkeeping
 repairs did not rerun the live allocation or input. Source replay and selection
 validity are separate obligations.
+
+The exact 39 selected source rows are now retained in actual-source-records.jsonl.
+Offline replay is available via verify_retained_source.py; it also compares all
+five actual tool-output image blocks to the original PNG files. This adds no
+responses to the original usage window and changes none of its counters.
