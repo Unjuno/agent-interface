@@ -599,6 +599,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - A closed-form threshold is meaningful only under its declared variables, assumptions, and cost/utility model.
 - Real latency, tokens, model behavior, application behavior, and cross-domain transfer stay empirical unless explicitly included in the model.
 
+- [Issue #5957 / PR #5967 T1 STOP and post-STOP controls](semantic_serializability_5318_audit_t1_v1/ARCHIVAL_QUALIFICATION.md) — three exact published head files plus distinct attempted-source ancestor history; T1 Docker STOP and later host-only controls remain separate.
+
 ## Placement rule
 
 Use `research/analysis/<name>/` for reusable, primarily analytical studies whose main result is a proof, exact derivation, exhaustive state-space result, or identifiability result.
