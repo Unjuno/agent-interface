@@ -1,0 +1,15 @@
+{
+  "audit": "PASS_BOUNDED_CONTRACT",
+  "check_count": 7,
+  "checks": [
+    "empty_inventory_is_idle_and_source_gated",
+    "fail_closed_stop_inventory_output_missing",
+    "fail_closed_stop_inventory_command_failed",
+    "fail_closed_stop_inventory_schema_invalid",
+    "existing_output_is_not_overwritten",
+    "publication_denial_is_typed_stop",
+    "postpublication_mismatch_has_no_artifact"
+  ],
+  "auditor": "audit.py",
+  "scope": "independent black-box CPU filesystem contract; no scientific or live runtime inference"
+}
