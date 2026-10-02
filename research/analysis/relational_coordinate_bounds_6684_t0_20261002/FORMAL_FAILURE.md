@@ -26,5 +26,3 @@ Therefore image digest/platform, container identity, runtime invocation, raw for
 ## Scoped disposition
 
 The construction indicates only a finite authored-method contrast. Formal status remains `STOP_INFRA_SESSION_CREATE`; the hypothesis is neither formally passed nor scientifically failed. No GUI safety, application effect, runtime benefit, or product claim follows.
-
-
