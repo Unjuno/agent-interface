@@ -1,0 +1,83 @@
+{
+  "format": "compiled-gui-interface-v1",
+  "interface_id": "test",
+  "session_scope": "private",
+  "surface": "form",
+  "predicates": [
+    "phase"
+  ],
+  "symbols": {
+    "field": {
+      "kind": "target_reference",
+      "target_reference": "field",
+      "identity_predicate": "phase",
+      "dependencies": [
+        "phase"
+      ]
+    }
+  },
+  "actions": {
+    "enter": {
+      "target_symbol": "field",
+      "operation": "enter",
+      "expected_effect": {
+        "phase": 1
+      }
+    },
+    "save": {
+      "target_symbol": "field",
+      "operation": "save",
+      "expected_effect": {
+        "phase": 2
+      }
+    }
+  },
+  "method": {
+    "name": "two-steps",
+    "version": "1",
+    "initial_state": "empty",
+    "max_transitions": 2,
+    "max_runtime_ms": 10,
+    "states": {
+      "empty": {
+        "branches": [
+          {
+            "when": {
+              "phase": 0
+            },
+            "outcome": "action",
+            "action": "enter",
+            "next_state": "filled",
+            "reason": null
+          }
+        ]
+      },
+      "filled": {
+        "branches": [
+          {
+            "when": {
+              "phase": 1
+            },
+            "outcome": "action",
+            "action": "save",
+            "next_state": "done",
+            "reason": null
+          }
+        ]
+      },
+      "done": {
+        "branches": [
+          {
+            "when": {
+              "phase": 2
+            },
+            "outcome": "complete",
+            "action": null,
+            "next_state": null,
+            "reason": null
+          }
+        ]
+      }
+    }
+  }
+}

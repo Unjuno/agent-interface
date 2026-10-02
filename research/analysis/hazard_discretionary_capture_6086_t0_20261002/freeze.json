@@ -1,0 +1,10 @@
+{
+  "schema":"issue-6086-t0-freeze-v1",
+  "horizon":[0,12],"onset_step":"1/2","cue_widths":["1/2","1"],"capture_exposure":"1/2","discretionary_count":3,"mandatory_sentinels":[0,6,12],
+  "schedules":{"uniform":[1,5,9],"phase_diversified":[2,6,10],"hazard":[4,5,6],"oracle":"best three eligible starts on half-step grid; score-only"},
+  "distributions":{"flat":"weight 1","peaked":"max(1,12-2*abs(onset-5))","inverted":"1+2*abs(onset-5)"},
+  "detection":"capture bracket [s,s+1/2] intersects half-open cue [onset,onset+width)",
+  "pass_gate":"For each width, peaked hazard weighted detection exceeds both fixed baselines by >=1/10; flat/inverted not an advertised win; equal budget/sentinels; exact independent oracle agreement.",
+  "no_cue":"NO_CUE; a miss is never ABSENT or SAFE",
+  "frozen_before_evaluation":true
+}

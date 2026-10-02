@@ -15,6 +15,7 @@
 | X-server reincarnation identity boundary (Issue #3574; scoped, no promotion) | [lifetime replication report](../integration/typed_recovery_xserver_lifetime_v1/issue_3574_lifetime_01/evidence/REPORT.md) |
 | Implemented live-control surface | [What is implemented](#what-is-implemented) |
 | Reproduction notes | [Reproduce](#reproduce) |
+| Issue #2221 cross-domain retained-evidence transfer T1 | [Result and scope](cross_domain_handback_transfer_2221_t1_20261002/RESULT.md) |
 
 ## Track map
 
@@ -47,6 +48,7 @@ flowchart TD
 | Adaptive caller / local repair | [`ADAPTIVE_ACQUISITION_CALLER_V3.md`](ADAPTIVE_ACQUISITION_CALLER_V3.md), [`ADAPTIVE_SEMANTIC_REPAIR_LIVE_V2.md`](ADAPTIVE_SEMANTIC_REPAIR_LIVE_V2.md) |
 | Compiled / persistent interface | [`COMPILED_GUI_INTERFACE_LIVE_V5.md`](COMPILED_GUI_INTERFACE_LIVE_V5.md), [`INTEGRATED_EFFICIENCY_LIVE_V1.md`](INTEGRATED_EFFICIENCY_LIVE_V1.md) |
 | Cross-domain transfer | OpenTTD reports under `OPENTTD_*`, plus retained Calc/Inkscape/browser/Mindustry studies in this directory |
+| Issue #3311 allocation-01 pre-test STOP (historical source and disposition) | [Recovery record](issue3311_termination_report_v1/RECOVERY_STATUS.md) |
 
 This is a navigation map, not a dependency graph or promotion hierarchy. Individual reports remain authoritative for scope and disposition.
 
@@ -631,4 +633,12 @@ or human-tempo claim.
 
 - [#2802 allocation 04 source-only qualification](app_event_obligation_keying_2802_v1/ARCHIVAL_QUALIFICATION.md): ten exact preformal source/freeze files; formal 0/18. The reported macOS/CPython 3.14.5 host policy check (4/4) is supplemental only; the frozen Linux/CPython 3.13.5 gate remains open. Original freeze and branch retained; no execution or runtime promotion.
 
+- [#2802 allocation 07 sequence-wrap recovery/recheck](app_sequence_wrap_2802_v1/CONSTRUCTION_RECHECK_20261001.md): preserves the exact source freeze and adds Linux/CPython 3.13.5 construction evidence (6/6; audit 8/8). Formal remains 0/18 and NOT STARTED; no runtime promotion.
+
 - [#2466 dwell-censor allocations 01/02 recovery status](dwell_censor_reason_2466_v2/RECOVERY_STATUS.md): preserves both exact allocations and the allocation-01 STOP without pooling rows. Allocation-02 remains frozen at 0/48; host contract tests do not replace its Linux/Python 3.13.5/Xvfb gate. No formal execution or policy promotion is claimed.
+
+- [#5415 completeness-v2 qualification](owner_keyup_audit_completeness_5156_v2_20260930/ARCHIVAL_QUALIFICATION.md) and [#5467 synthetic-join qualification](owner_keyup_audit_interop_5156_v1/ARCHIVAL_QUALIFICATION.md): complete exact-byte archives (11 + 16 original files). Retains the omission-control/join construction records, earlier interoperability STOP, and logical-key raw-audit fail-open; no independent caller-nesting, live X11, physical key-up, MAP01 or runtime promotion follows. Original refs and the separate #5156/#5630/#5895 owner gates remain unchanged.
+
+- [#5502 release-inventory archive](owner_keyup_release_inventory_audit_5156_v1/ARCHIVAL_QUALIFICATION.md): 24 exact originals; exploratory/exact-byte chronology, stale document freeze hashes, original request-parity audit fail-open and narrow v2 correction retained. Host fake-Xlib only; no live gate or runtime promotion.
+- [#5553 logical-key audit archive](owner_keyup_audit_key_identity_5156_v3_20260930/ARCHIVAL_QUALIFICATION.md): 15 exact originals; three-row synthetic correction and same-candidate replay audit limits retained. #5415/#5467 original failures remain unchanged; no live or producer-authenticity claim.
+- [#5604 invocation-boundary T0 STOP archive](invocation_boundary_5156_t0_20261001_01/ARCHIVAL_QUALIFICATION.md): 11 exact originals; no-op mutation, 5/6 controls and unbound historical count preserved. Separate merged T1 does not overwrite T0 STOP or authorize a rerun.

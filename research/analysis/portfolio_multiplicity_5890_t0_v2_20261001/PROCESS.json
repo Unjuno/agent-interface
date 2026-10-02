@@ -1,0 +1,23 @@
+{
+  "schema": "portfolio-multiplicity-5890-process-v1",
+  "allocation_id": "PORTFOLIO-MULTIPLICITY-5890-T0-20261001-02",
+  "candidate_command": "python -B scratch/portfolio_multiplicity_5890_t0_v2_20261001/runner.py --out scratch/portfolio_multiplicity_5890_t0_v2_20261001/raw-candidate.json",
+  "candidate_exit": 0,
+  "candidate_invocations": 1,
+  "candidate_rows": 416,
+  "auditor_command": "python -B scratch/portfolio_multiplicity_5890_t0_v2_20261001/audit.py --raw scratch/portfolio_multiplicity_5890_t0_v2_20261001/raw-candidate.json --out scratch/portfolio_multiplicity_5890_t0_v2_20261001/audit-result.json",
+  "auditor_exit": 0,
+  "auditor_invocations": 1,
+  "auditor_errors": [],
+  "construction_test_command": "python -B -m unittest discover -s scratch/portfolio_multiplicity_5890_t0_v2_20261001 -p 'test_*.py' -v",
+  "corruption_controls_rejected": 7,
+  "tests_before_freeze": "5/5 PASS",
+  "py_compile_command": "python -B -m py_compile scratch/portfolio_multiplicity_5890_t0_v2_20261001/runner.py scratch/portfolio_multiplicity_5890_t0_v2_20261001/audit.py scratch/portfolio_multiplicity_5890_t0_v2_20261001/test_multiplicity.py",
+  "py_compile_before_freeze": "PASS",
+  "candidate_sha256": "f75cce06cc2403346f9918246865f55d529ea9a8cd44c84642ad2b06d6a4482b",
+  "audit_result_sha256": "61edf99f87f928c16621566435958691aa917ad3087affdfad3a173cd7394082",
+  "docker_container": false,
+  "model_gui_game_input_network": false,
+  "retry": false
+}
+

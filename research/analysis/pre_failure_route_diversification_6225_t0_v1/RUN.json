@@ -1,0 +1,66 @@
+{
+  "allocation_id": "PREFailure-ROUTE-DIVERSIFICATION-6225-T0-HOST-20261002-01",
+  "base_commit": "14b81dd1f6853623a694266b98538f812847257a",
+  "integration_main_commit": "673763554192ae26636e07d5a48f03b3cd7fb044",
+  "freeze_commit": "d51556de103bb780eacbe50862c30971820c466d",
+  "environment": "Windows host CPU; CPython 3.12.10; no container, model, GUI, network, user data, or live action",
+  "commands": [
+    {"command": "python -B candidate.py", "started_utc": "2026-10-01T20:01:17Z", "exit_code": 0, "stdout": "WROTE candidate.json: 2970 complete session-policy records", "formal_candidate_invocations": 1},
+    {"command": "python -B auditor.py", "started_utc": "2026-10-01T20:01:27Z", "exit_code": 0, "stdout": "METHOD_PASS_SCOPED", "formal_auditor_invocations": 1}
+  ],
+  "retries_replacements_tuning": 0,
+  "construction": {"command": "python -B -m unittest -v test_method.py", "tests_passed": 5, "initial_import_failure_retained": true},
+  "formal_source_git_blobs": {
+    "FREEZE.json": "8fc7b3c0dfc87e33aa9c68a4392984b1bb6b5915",
+    "input.json": "12892fb73569fcf912a5b03e16699e333d76a8da",
+    "candidate.py": "d88a2ea248235a4d3037943e10acb87336479c57",
+    "auditor.py": "6bfe294e4206fd51ca9c18db19d1b1d57adfc0fa",
+    "test_method.py": "c9b1d56b07e34f42d17b749eca4c389b38d7cf0a",
+    "CONSTRUCTION.json": "8978fa0146a60a7722b8f3fe158d28586c1ceab2"
+  },
+  "sha256": {
+    "FREEZE.json": "5c3595b159eb2fab972f0eb5d86e4ee5a0ae7571af225192ec955ac342bde459",
+    "input.json": "c96f8f5146ad30137871b9779b01e4deb042aee854110257e19deb86ef6a1c20",
+    "candidate.py": "9bb9bdd88d3629ec1fcc85d494e9168d643d6bf40ee71c9593d15179319fc87d",
+    "auditor.py": "b6df5225e2a5568d451c5d15554089baee0cb54a2dcd36dec33b159349f9612f",
+    "test_method.py": "818e2a1a1d6ce5e227c82e645107faa3985cefcc26dc867fc7d15f818cbf6050",
+    "CONSTRUCTION.json": "7cbea6bb17994adfd96de9cf7a7b03586f0a2e65f2419409d62b9d3e487bb7d1",
+    "candidate.json": "67fa665d775a3bb66c290d6958c4197e4f02c4dc2ef98c9df4566ef733983fc7",
+    "audit.json": "b1805b61886dd33278866d34d25bb1353295f4c7ec42f2aed9dcea075e39d7ff"
+  },
+  "result_git_blobs": {
+    "candidate.json": "4143c591e87c49ba84b82eefa2c8551653d014ee",
+    "audit.json": "3347dcff5bc5d6e25fc36bd64546db60ae65f32d"
+  },
+  "disposition": "METHOD_PASS_SCOPED",
+  "counts": {"independent_reconstruction": "2970/2970", "frozen_gates": "16/16", "mutations_rejected": "4/4"},
+  "repository_integration_verification": {
+    "analysis_index": "PASS; python -B research/analysis/check_index.py; 350 retained result/failure directories indexed",
+    "analysis_index_regression_tests": {
+      "endogenous_demand_rebound_5702_t0_v1": "PASS; 8 tests",
+      "selection_aware_shadow_audit_5681_t1_v1": "PASS; 12 tests"
+    },
+    "formal_candidate_or_auditor_rerun": false
+  },
+  "metrics": {
+    "hidden_best_reactive_tail_fraction": 1.0,
+    "hidden_mixture_tail_fraction": 0.8571428571428571,
+    "hidden_best_reactive_mean_unresolved": 3.0,
+    "hidden_mixture_mean_unresolved": 3.232142857142857,
+    "hidden_mixture_mean_verified_tasks_per_8": 4.767857142857143,
+    "best_reactive_mean_verified_tasks_per_8": 5.0,
+    "hidden_mixture_mean_direct_cost_per_task": 1.3616071428571428,
+    "mean_direct_cost_budget_per_task": 1.75,
+    "observable_context_tail_fraction": 0.0,
+    "observable_mixture_tail_fraction": 0.8571428571428571,
+    "shared_failure_best_reactive_mean_unresolved": 5.5,
+    "shared_failure_mixture_mean_unresolved": 5.5
+  },
+  "scope_limits": [
+    "Synthetic deterministic policy method evidence only; route outcomes and scenario frequencies are authored.",
+    "Mixture lowers the declared >=3 unresolved tail fraction but worsens mean unresolved count; no policy recommendation follows.",
+    "The three-consecutive-unresolved detector resets on a successful B task, a frozen mechanism that can delay fallback.",
+    "No GUI routes were qualified; no empirical recovery-choice, safety, or session-reliability effect was tested.",
+    "Docker Engine was unresponsive in read-only probes and was not started or otherwise modified."
+  ]
+}

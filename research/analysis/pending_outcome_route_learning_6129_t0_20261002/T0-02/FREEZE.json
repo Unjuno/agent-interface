@@ -1,0 +1,27 @@
+{
+  "schema":"unjuno-experiment-freeze-v1",
+  "issue":6129,
+  "allocation":"T0-02",
+  "source_main_commit":"981ba1ee20259ff36465d25aceef62fd3554a7e9",
+  "checkpoint":1,
+  "deadline":3,
+  "cases":7,
+  "candidate_inputs":["visible.json","candidate.py"],
+  "audit_inputs":["visible.json","truth.json","candidate.json","audit.py"],
+  "candidate_invocations":1,
+  "auditor_invocations":1,
+  "retries":0,
+  "image":"python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "platform":"linux/arm64",
+  "network":"none",
+  "root_filesystem":"read-only",
+  "limits":{"cpus":"0.5","memory":"256m","pids":32},
+  "sha256":{
+    "visible.json":"6a2cebe127b24518b41c31d8a87e8d2a3624ca138c57fa93c72c9ba696ef42e6",
+    "truth.json":"9ba53a6a483f80d9fc124479cb256050c00097424636ae00cb1824226a3e05e5",
+    "candidate.py":"1c62ff1fca16773fcc624b6f612a977c07bb8ce4a2ae85a836e14d5a2091a60f",
+    "audit.py":"3f5c2bc1645ab28381ac6c8dd6c82f43ed2bf76ef08ab073bfea42366a35ba6d",
+    "PROTOCOL.md":"71f125411e7e98dbb1529b914604019d42166563792f9ac3ee593bc95c1b2cc3",
+    "test_t0_02.py":"c3cc372067e5bbf53c57501a70b731e429b2ffdbbeda20e6b2d702f881e30895"
+  }
+}

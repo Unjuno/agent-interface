@@ -1,0 +1,152 @@
+{
+  "format": "compiled-gui-runtime-receipt-v1",
+  "interface_id": "inkscape-conditional",
+  "method": "draw-check-save",
+  "method_version": "1",
+  "session_scope": "0e6f663deb4344dda3c0a6e554dbf922",
+  "outcome": "TASK_SUCCEEDED",
+  "reason": "method_complete",
+  "completed_transitions": 2,
+  "frontier_model_resumptions": 0,
+  "observations": [
+    {
+      "sequence": 2,
+      "captured_ns": 23146089602624,
+      "evidence_ref": "method-observation-1",
+      "evidence_digest": "b34444dd9697fe6dd104ef13f5f9fe9c372ad8e44d1781f9056bbbf1f271cb50",
+      "predicates": {
+        "target_present": true,
+        "rectangles": false,
+        "clean_title": true
+      }
+    },
+    {
+      "sequence": 3,
+      "captured_ns": 23146337612503,
+      "evidence_ref": "method-observation-2",
+      "evidence_digest": "17ec039e29da66db893d05983fc2692ca4726790d5dce5a941dbb1a92de61784",
+      "predicates": {
+        "target_present": true,
+        "rectangles": true,
+        "clean_title": false
+      }
+    },
+    {
+      "sequence": 4,
+      "captured_ns": 23146496926564,
+      "evidence_ref": "method-observation-3",
+      "evidence_digest": "8229bbc24d92eadeea18cc744cc72633a0cb820845fb7807e1d0b2c8052af2ca",
+      "predicates": {
+        "target_present": true,
+        "rectangles": true,
+        "clean_title": true
+      }
+    }
+  ],
+  "transitions": [
+    {
+      "from_state": "blank",
+      "to_state": "drawn",
+      "action": "draw",
+      "matched_conditions": {
+        "target_present": true,
+        "rectangles": false,
+        "clean_title": true
+      },
+      "observation_sequence": 2,
+      "evidence_ref": "method-observation-1",
+      "action_id": "draw-1",
+      "effect_ref": "method-dispatch-1",
+      "release_verified": true
+    },
+    {
+      "from_state": "drawn",
+      "to_state": "done",
+      "action": "save",
+      "matched_conditions": {
+        "target_present": true,
+        "rectangles": true
+      },
+      "observation_sequence": 3,
+      "evidence_ref": "method-observation-2",
+      "action_id": "save-2",
+      "effect_ref": "method-dispatch-2",
+      "release_verified": true
+    }
+  ],
+  "critical_events": [
+    {
+      "event": "branch_selected",
+      "state": "blank",
+      "outcome": "action",
+      "action": "draw",
+      "matched_conditions": {
+        "target_present": true,
+        "rectangles": false,
+        "clean_title": true
+      },
+      "evidence_ref": "method-observation-1"
+    },
+    {
+      "event": "action_terminal",
+      "action": "draw",
+      "status": "completed",
+      "action_id": "draw-1",
+      "release_verified": true
+    },
+    {
+      "event": "effect_checked",
+      "action": "draw",
+      "status": "succeeded",
+      "evidence_ref": "method-observation-2"
+    },
+    {
+      "event": "branch_selected",
+      "state": "drawn",
+      "outcome": "action",
+      "action": "save",
+      "matched_conditions": {
+        "target_present": true,
+        "rectangles": true
+      },
+      "evidence_ref": "method-observation-2"
+    },
+    {
+      "event": "action_terminal",
+      "action": "save",
+      "status": "completed",
+      "action_id": "save-2",
+      "release_verified": true
+    },
+    {
+      "event": "effect_checked",
+      "action": "save",
+      "status": "succeeded",
+      "evidence_ref": "method-observation-3"
+    },
+    {
+      "event": "branch_selected",
+      "state": "done",
+      "outcome": "complete",
+      "action": null,
+      "matched_conditions": {
+        "rectangles": true,
+        "clean_title": true
+      },
+      "evidence_ref": "method-observation-3"
+    },
+    {
+      "event": "runtime_finished",
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "method_complete",
+      "completed_transitions": 2
+    }
+  ],
+  "latest_evidence_ref": "method-observation-3",
+  "pending_effect": null,
+  "started_ns": 23146084521898,
+  "ended_ns": 23146531030728,
+  "elapsed_ns": 446508830,
+  "input_authority": "admission_per_action_only",
+  "raw_evidence_retention": "adapter_responsibility_unverified"
+}

@@ -1,0 +1,17 @@
+{
+  "schema": "issue59-x11-app-delivery-stop-v1",
+  "allocation_id": "ISSUE59-X11-APP-DELIVERY-T0-20261002-01",
+  "candidate_invocations": 1,
+  "independent_auditor_invocations": 0,
+  "retries": 0,
+  "disposition": "STOP_CANDIDATE_IMAGE_IDENTITY_PREFLIGHT",
+  "scientific_experiment_started": false,
+  "container_exit_code": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"/exp/candidate.py\", line 285, in <module>\n    main()\n  File \"/exp/candidate.py\", line 123, in main\n    raise RuntimeError(\"container image digest is absent or differs from freeze\")\nRuntimeError: container image digest is absent or differs from freeze\n",
+  "frozen_image": "map01-attack-onset-phase-a2:20260927-r2",
+  "frozen_image_digest": "sha256:fc3022d265f465748e0a39491e28f8447d0066266e00d2a8a9144e866bf148ed6",
+  "host_docker_image_inspect_id": "sha256:fc3022d265f465748e0a39491e28f8447d0066266e00d2a8a9144e866bf148ed6",
+  "environment_diagnostic": "A separate non-candidate container command confirmed IMAGE_DIGEST is passed verbatim. The formal candidate stopped at its pre-Xvfb image check; no X server or test window was started. The frozen allocation is not retried.",
+  "scope": "runner/preflight defect only; no scientific PASS or FAIL"
+}

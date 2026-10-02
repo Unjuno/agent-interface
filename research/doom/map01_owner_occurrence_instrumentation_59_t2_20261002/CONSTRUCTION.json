@@ -1,0 +1,46 @@
+{
+  "allocation_id": "MAP01-OWNER-OCCURRENCE-INSTRUMENTATION-59-T2-20261002-01",
+  "classification": "exploratory TDD construction; not formal candidate/auditor allocation",
+  "runtime": "WSL Ubuntu, Python 3.12.3; fake Xlib transport",
+  "invocations": [
+    {
+      "stage": "RED-interval-id",
+      "source": "unchanged pinned upstream owner",
+      "outcome": "EXPECTED_ASSERTION_FAILURE",
+      "failure": "each down admission must return an interval_id"
+    },
+    {
+      "stage": "GREEN-interval-id",
+      "source": "isolated owner copy with ID generation/binding",
+      "outcome": "PASS",
+      "tests": "1/1"
+    },
+    {
+      "stage": "RED-keymap-witness",
+      "source": "isolated owner copy before witness instrumentation",
+      "outcome": "EXPECTED_ASSERTION_FAILURE",
+      "failure": "expected 6 per-occurrence witness rows, observed 0"
+    },
+    {
+      "stage": "GREEN-attempt-1",
+      "source": "first isolated witness patch",
+      "outcome": "ASSERTION_FAILURE_DETECTED_ID_MISMATCH",
+      "failure": "pre-down witness UUID differed from admission/release UUID"
+    },
+    {
+      "stage": "RED-evidence-not-authority",
+      "source": "instrumented owner before non-authority metadata",
+      "outcome": "EXPECTED_ASSERTION_FAILURE",
+      "failure": "keymap witnesses lacked explicit false authority/physical-up claims"
+    },
+    {
+      "stage": "GREEN-final",
+      "source": "isolated owner copy with one ID per interval, three witnesses, and explicit non-authority flags",
+      "outcome": "PASS",
+      "tests": "2/2"
+    }
+  ],
+  "network_calls": 0,
+  "docker_or_x_server": false,
+  "game_or_physical_input": false
+}
