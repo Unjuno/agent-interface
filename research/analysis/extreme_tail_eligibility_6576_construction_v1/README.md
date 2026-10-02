@@ -1,6 +1,6 @@
-# Issue #6576 — eligibility-gate construction experiment (host-only)
+# Issue #6576 — eligibility-gate construction and tail-comparator experiments
 
-This is a bounded construction/boundary experiment, not the proposed containerized T0 and not release-delay evidence. It asks whether a typed eligibility gate can distinguish a fully observed reference from explicitly represented missing-mode, insufficient per-mode tail support, drift, dependence, and censoring conditions. It does not generate timing distributions or evaluate EVT/TailID. No observed-release samples are used.
+The initial bounded construction/boundary experiment is distinct from the later CRAN/R comparator studies and from the proposed formal containerized T0. It asks whether a typed eligibility gate can distinguish a fully observed reference from explicitly represented missing-mode, insufficient per-mode tail support, drift, dependence, and censoring conditions. No observed-release samples are used.
 
 ## H / T / D / C / U
 
@@ -43,7 +43,14 @@ This is still preparation, not formal evidence: the frozen six-case candidate
 and auditor have not been invoked; no formal timing rows, output hash, or
 method disposition exists. Formal candidate once, then auditor once only if
 candidate exits 0, require the exact exclusive OrbStack grant under #5085.
-The TailID port remains without numeric comparison to CRAN/R.
+The Python TailID port has now been compared against the pinned CRAN/R code in
+three additive one-shot successors. A03 stopped before R evaluation due to a
+candidate harness input-shape error; A04 candidates completed but its auditor
+crashed and its supplemental per-step trace was non-cumulative; A05 completed
+the raw-only audit and failed numerical MLE/CI parity on one of six fresh
+synthetic fixtures while candidate/sensitive index and threshold checks
+passed. The Python port is not established as numerically equivalent to
+CRAN/ismev. Full results and immutable raw outputs are linked below.
 
 ### Attempt record
 
@@ -66,19 +73,23 @@ The TailID port remains without numeric comparison to CRAN/R.
 
 - Construction censor-cap probe A01: one distinct host-only case (seed 65761101, 2,000 train/2,000 holdout) candidate exit 0 and independent auditor exit 0, `PASS_METHOD_SCOPED PASS_RAW_ONLY`, retries 0. Train/holdout censor counts 21/20; gate `NOT_ESTIMABLE_CENSORED_ENDPOINT`; all three holdout score records `NOT_ESTIMABLE_CENSORED_HOLDOUT`. Raw and run provenance are retained under `construction_censor_cap_probe_a01/`. This is code-path construction evidence only, not formal T0 or calibration/safety evidence.
 
-### One-shot comparator runner preparation (not executed)
+### CRAN/R parity successors (executed; separate from formal T0)
 
-The outstanding #6576 T0 comparator is the original R implementation, not the
-provisional Python port. A future exclusively assigned formal container run should
-mount read-only copies of TailID 1.0.0 at commit
-`f99b10ff27f37ac62ba1d44ce79b4fc886f72997` and ismev at commit
-`25223b17285d45bf3911efd79ac75f363e7ae495`, plus a write-only output mount;
-disable network and pull, and freeze package/library hashes before invoking
-the candidate. The source-backed Python port must be compared on identical
-fixtures for threshold, candidate count, GPD fit, selected sensitive tail and
-typed refusal. Candidate, then raw-only audit, each run at most once. This
-paragraph is a protocol note only: no R image was pulled, no container was
-started, and no comparator parity result exists.
+- [A03](orbstack_cran_parity_a03_20261002/RUN_RECORD.md): R candidate harness
+  stopped before sample evaluation (`R=1`, Python arm `0`); no parity result,
+  no retry.
+- [A04](orbstack_cran_parity_a04_20261002/RUN_RECORD.md): both candidate arms
+  ran, but its one-shot auditor crashed formatting a mismatch; the post-hoc raw
+  review is explicitly not a formal audit.
+- [A05](orbstack_cran_parity_a05_20261002/RUN_RECORD.md): six fresh fixtures;
+  candidate order, sensitive-index sets, thresholds and R convergence passed,
+  but one base MLE/CI exceeded frozen numeric tolerances. Overall
+  `FAIL_PARITY_NUMERICAL_MLE`.
+
+These are method-comparator studies on dedicated isolated OrbStack Docker
+containers, not allocation #6576 T0. Their failures and scope boundaries remain
+separate; all raw inputs, outputs, source, image identities and hashes are
+retained.
 
 ### Execution status and local CI / provenance checks
 
@@ -100,8 +111,9 @@ FAIL, reporting broad pre-existing stale generated entries across unrelated
 analysis directories. Its suggested `--write` was deliberately not run because
 it would modify unrelated shared research history. The formal six-case
 candidate/auditor remain uninvoked (0/0), and the #5085 formal allocation still
-has no exact assignment/release recorded. The dedicated A02 Engine did not use
-the shared `unjuno-native-ci-6092` container.
+has no exact assignment/release recorded. A02 and the parity experiments used
+dedicated OrbStack Docker Engines; none used the shared
+`unjuno-native-ci-6092` container.
 
 The formal T0 remains pending. At its assigned start, recheck and freeze the
 exact current main and all input/source/image hashes before candidate
