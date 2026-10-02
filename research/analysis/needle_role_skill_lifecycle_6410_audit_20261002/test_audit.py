@@ -5,14 +5,15 @@ import hashlib
 import json
 from pathlib import Path
 
-from audit import f32, reconstruct
+from audit import f32, reconstruct, valid_base_commit
 
 
 class ReconstructionTests(unittest.TestCase):
-    def test_full_git_sha_format(self) -> None:
-        current_main = "6473562399159d8913839c0b6fa2da3df68c0bc3"
-        self.assertEqual(len(current_main), 40)
-        self.assertTrue(all(char in "0123456789abcdef" for char in current_main))
+    def test_freeze_base_commit_validator(self) -> None:
+        self.assertTrue(valid_base_commit("a" * 40))
+        for invalid in (None, 123, "a" * 39, "a" * 41, "g" * 40, "A" * 40):
+            with self.subTest(invalid=invalid):
+                self.assertFalse(valid_base_commit(invalid))
 
     def test_float32_round_trip_is_explicit(self) -> None:
         self.assertEqual(f32(1.0 / 3.0), 0.3333333432674408)

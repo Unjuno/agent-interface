@@ -32,6 +32,11 @@ def sha(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
+def valid_base_commit(value: object) -> bool:
+    return (isinstance(value, str) and len(value) == 40
+            and all(char in "0123456789abcdef" for char in value))
+
+
 def f32(value: float) -> float:
     return struct.unpack("!f", struct.pack("!f", value))[0]
 
@@ -226,9 +231,7 @@ def adjudicate(args: argparse.Namespace) -> dict:
     identity_errors = []
     if freeze.get("allocation") != ALLOCATION or freeze.get("issue") != 6410:
         identity_errors.append("audit_freeze_identity")
-    base_commit = freeze.get("base_commit")
-    if not isinstance(base_commit, str) or len(base_commit) != 40 or any(
-            char not in "0123456789abcdef" for char in base_commit):
+    if not valid_base_commit(freeze.get("base_commit")):
         identity_errors.append("audit_base_commit")
     if sha(raw_bytes) != RAW_SHA:
         identity_errors.append("raw_sha256")
