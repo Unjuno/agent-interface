@@ -102,6 +102,38 @@
     "audit_errors": 0,
     "candidate_raw_sha256": "ce3aca68b37eb6110f39f43dfe96fa57c310518d80d169132eb185667b9ce43a",
     "audit_sha256": "7cea5469b2adac9a15998fb4f94ee173057fc8a11d985baf8bc1e32993508e63",
-    "outcome": "PASS_PREREGISTERED_ROUTE_SUBTEST"
+    "outcome": "PASS_PREREGISTERED_ROUTE_SUBTEST",
+    "candidate_label_isolation": "The read-only A02 source mount also contained labels.json, although candidate.py only opened fixtures.json. This was not filesystem-enforced; see REPORT.md."
+  },
+  "A03": {
+    "status": "FROZEN_NOT_RUN",
+    "preregistration": "PREREGISTRATION_A03.md",
+    "source_freeze_commit": "675d9a94ea61b496a3d67a5320eb36ea85795460",
+    "source_sha256": {
+      "PREREGISTRATION_A03.md": "3b7e9236efc9c1421085d3e0fa341ac1d8f51320d986369e70376260672e607a",
+      "fixtures_a03.json": "25c3e9d05b321bd774d0562a4570e969bfff660a8821ce40b2e101196e89d516",
+      "labels_a03.json": "84d249053d2641685a30c5c9ec30e9b5166c05f0116a179fabb29d79e0b41039",
+      "candidate_a03.py": "1a4e83bb7368955e95dd238425d829987c73f7392a8f918e5c6ece1f658df61b",
+      "audit_a03.py": "091968ac7e16241cfff8ffa971a51967c9925a2f3a2d616b001a0ceca45bee32",
+      "CONSTRUCTION_A03.md": "37c58f7bfb864246ca54c309f905b81c415c5c3b0a95bf5569fba2ee16f25d20"
+    },
+    "candidate_input_path": "/home/taka/inputs/topology-6183-a03-candidate",
+    "auditor_input_path": "/home/taka/inputs/topology-6183-a03-auditor",
+    "output_path": "/home/taka/outputs/topology-6183-a03",
+    "candidate_transfer_commands": [
+      "orbctl push -m research-6183-t0-20261003 /Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/analysis/threshold_persistent_topology_6183_t0_20261003/candidate_a03.py /home/taka/inputs/topology-6183-a03-candidate/",
+      "orbctl push -m research-6183-t0-20261003 /Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/analysis/threshold_persistent_topology_6183_t0_20261003/fixtures_a03.json /home/taka/inputs/topology-6183-a03-candidate/"
+    ],
+    "auditor_transfer_commands": [
+      "orbctl push -m research-6183-t0-20261003 /Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/analysis/threshold_persistent_topology_6183_t0_20261003/audit_a03.py /home/taka/inputs/topology-6183-a03-auditor/",
+      "orbctl push -m research-6183-t0-20261003 /Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/analysis/threshold_persistent_topology_6183_t0_20261003/fixtures_a03.json /home/taka/inputs/topology-6183-a03-auditor/",
+      "orbctl push -m research-6183-t0-20261003 /Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/analysis/threshold_persistent_topology_6183_t0_20261003/labels_a03.json /home/taka/inputs/topology-6183-a03-auditor/"
+    ],
+    "candidate_command": "docker run --name topology-6183-candidate-a03 --network none --cpus 1 --memory 512m --read-only --user 501:501 --cap-drop ALL --security-opt no-new-privileges --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,src=/home/taka/inputs/topology-6183-a03-candidate,dst=/src,readonly --mount type=bind,src=/home/taka/outputs/topology-6183-a03,dst=/out -e OUT_DIR=/out -e PYTHONDONTWRITEBYTECODE=1 -w /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 sh -c 'cat /sys/fs/cgroup/memory.max > /out/candidate.memory.max; cat /sys/fs/cgroup/cpu.max > /out/candidate.cpu.max; python /src/candidate_a03.py > /out/candidate.stdout.log 2>&1'",
+    "auditor_command": "docker run --name topology-6183-auditor-a03 --network none --cpus 1 --memory 512m --read-only --user 501:501 --cap-drop ALL --security-opt no-new-privileges --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,src=/home/taka/inputs/topology-6183-a03-auditor,dst=/src,readonly --mount type=bind,src=/home/taka/outputs/topology-6183-a03,dst=/out -e OUT_DIR=/out -e PYTHONDONTWRITEBYTECODE=1 -w /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 sh -c 'cat /sys/fs/cgroup/memory.max > /out/auditor.memory.max; cat /sys/fs/cgroup/cpu.max > /out/auditor.cpu.max; python /src/audit_a03.py > /out/auditor.stdout.log 2>&1'",
+    "candidate_invocations": 0,
+    "auditor_invocations": 0,
+    "retries": 0,
+    "outcome": null
   }
 }
