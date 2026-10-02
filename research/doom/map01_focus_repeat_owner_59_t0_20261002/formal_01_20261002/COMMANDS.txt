@@ -1,0 +1,15 @@
+# Frozen formal commands — allocation ISSUE59-FOCUS-REPEAT-OWNER-T0-20261002-01
+
+PowerShell variables:
+$sourcePath = (Resolve-Path .).Path
+$evidencePath = (Resolve-Path research/doom/map01_focus_repeat_owner_59_t0_20261002/formal_01_20261002).Path
+
+Candidate (one invocation only; candidate output directory must not exist):
+wslc run --rm --pull never --network none --cpus 1 --memory 512M --volume "${sourcePath}:/input:ro" --volume "${evidencePath}:/evidence" --workdir /input focus-repeat-59-t0:20261002 python /input/research/doom/map01_focus_repeat_owner_59_t0_20261002/probe.py --out /evidence/candidate
+
+Capture WSLc stdout and stderr to candidate.stdout.txt and candidate.stderr.txt in the evidence directory. Record the exact exit code in candidate.exit.txt. Invoke no candidate retry.
+
+Auditor (only if candidate exits 0 and raw.json exists; one invocation):
+wslc run --rm --pull never --network none --cpus 1 --memory 512M --volume "${sourcePath}:/input:ro" --volume "${evidencePath}:/evidence" --workdir /input focus-repeat-59-t0:20261002 python /input/research/doom/map01_focus_repeat_owner_59_t0_20261002/audit.py --raw /evidence/candidate/raw.json --out /evidence/auditor/classification.json
+
+Capture auditor stdout and stderr separately and record its exact exit code. Never overwrite raw.json or classification.json.
