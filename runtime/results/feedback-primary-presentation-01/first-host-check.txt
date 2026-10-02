@@ -1,0 +1,66 @@
+✔ malformed delivered envelope prevents a second effectful host call (5.781939ms)
+✔ ordinary free-text MCP error returns original evidence and stops later input (0.282216ms)
+✔ missing text stops before the primary can send another call (0.304973ms)
+✔ non-JSON text stops before the primary can send another call (0.205144ms)
+✔ null JSON stops before the primary can send another call (0.144627ms)
+✔ array JSON stops before the primary can send another call (0.201429ms)
+✔ extraction preserves the original exception and latches before propagation (0.332124ms)
+✔ transport rejection preserves its exception and blocks later dispatch (3.771087ms)
+✔ fresh guarded observation uses the same no-target call as initial observation (1.293396ms)
+✔ fresh observation rejects accidental per-call arguments before host dispatch (0.498696ms)
+✔ direct observation preserves the explicit snapshotted observation configuration (0.508029ms)
+✔ a completed neutral direct result returns unchanged and permits the next call (0.364523ms)
+✔ an exception during neutral-release validation blocks later input (0.456902ms)
+✔ real host text-only declared refusal is presented and acknowledged without stopping (56.708442ms)
+✖ explicit input feedback matched retains evidence and enforces STOP (1.016613ms)
+✔ explicit input feedback pending retains evidence and enforces STOP (0.190227ms)
+✔ explicit input feedback rejected retains evidence and enforces STOP (0.121099ms)
+✔ explicit input feedback needs_review retains evidence and enforces STOP (0.068951ms)
+✔ explicit positional input preserves offset, tail, and original response (5.140548ms)
+✔ missing offset fails before dispatch and prevents corrected replay (0.869297ms)
+✔ object instead of positional arguments fails before dispatch and prevents corrected replay (0.47743ms)
+✔ fractional offset fails before dispatch and prevents corrected replay (0.191356ms)
+✔ missing tail fails before dispatch and prevents corrected replay (0.337766ms)
+✔ invalid interaction fails before dispatch and prevents corrected replay (0.244897ms)
+✔ extra argument fails before dispatch and prevents corrected replay (0.206713ms)
+✔ direct caller cannot dispatch guarded positional input (3.79961ms)
+✔ uncloneable tail stops before dispatch and cannot be retried (0.674574ms)
+✔ explicit inputWithFeedback snapshots the policy and retains original reply (0.780229ms)
+✔ invalid explicit feedback null stops before host dispatch (0.313923ms)
+✔ invalid explicit feedback {} stops before host dispatch (1.852236ms)
+✔ invalid explicit feedback {"expected_title":""} stops before host dispatch (0.152172ms)
+✔ invalid explicit feedback {"expected_title":"saved","timeout_ms":10001} stops before host dispatch (0.084739ms)
+✔ invalid explicit feedback {"expected_title":"saved","timeout_ms":1.5} stops before host dispatch (0.070283ms)
+✔ invalid explicit feedback {"expected_title":"saved","rejected_titles":["saved"]} stops before host dispatch (0.133005ms)
+✔ invalid explicit feedback {"expected_title":"saved","rejected_titles":[null]} stops before host dispatch (0.122407ms)
+✔ invalid explicit feedback {"expected_title":"saved","extra":true} stops before host dispatch (0.113864ms)
+✔ missing requested cue cannot pass through a completed input reply (0.231978ms)
+ℹ tests 37
+ℹ suites 0
+ℹ pass 36
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 150.459427
+
+✖ failing tests:
+
+test at runtime/host_v1/test_primary_caller.mjs:131:3
+✖ explicit input feedback matched retains evidence and enforces STOP (1.016613ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'missing or inconsistent requested feedback'
+  - null
+  
+      at TestContext.<anonymous> (file:///var/tmp/agent-interface-evidence-storage-main/runtime/host_v1/test_primary_caller.mjs:143:31)
+      at async Test.run (node:internal/test_runner/test:1110:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:785:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'missing or inconsistent requested feedback',
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/results/primary-helper-main-01/audit.py", line 44, in <module>
+    if __name__=='__main__':print(json.dumps(audit(Path(sys.argv[1])),indent=2))
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/results/primary-helper-main-01/audit.py", line 35, in audit
+    require(effect['events']==events and effect['save_count']==len(saves)==1 and saves[0]['count']==1 and saves[0]['monotonic_ns']>rows[2]['result']['execution']['ended_ns'],'independent save count')
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/results/primary-helper-main-01/audit.py", line 4, in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: independent save count

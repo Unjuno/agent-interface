@@ -1,7 +1,8 @@
 # Native integration checks: one local/CI entry point
 
-Run these development checks in Linux, WSL, or an already provisioned Docker
-container. GitHub availability and model-host tool discovery are not prerequisites.
+The default local route is Linux or Ubuntu on WSL, with one reused Python
+environment. Docker Desktop is not required. See [WSL-native development](../WSL_NATIVE.md)
+for the Windows migration and optional WSLc isolation route. GitHub availability and model-host tool discovery are not prerequisites.
 This entry point exercises the existing protocol and inert harness contracts;
 it does not start a GUI, call a model or certify application performance.
 
@@ -37,7 +38,7 @@ round trips. Reference-shaped literal data, unknown fields, booleans versus
 numbers, and malformed reference chains remain covered. Two interpreters are optional;
 CI uses a single installed environment. No sensor development is included.
 
-## Docker environment matching the native CI checks
+## Optional legacy Docker environment matching the native CI checks
 
 Build once from the repository root (dependency installation requires network):
 
@@ -80,12 +81,6 @@ and reports host send/reply/presentation/review boundaries separately. This need
 only Python's standard library. See [the timing contract](../../research/live_control/RELAY_HOST_TIMELINE.md#read-only-timing-summary)
 and [retrospective primary-use evidence](../results/host-timing-summary-01/README.md).
 It cannot measure model ingestion, independent semantic completion or model tokens.
-
-Text-only acknowledgment events are also bound to the original reply hash,
-tool, relay ID, text block count, error flag and completed presentation. They
-remain separate from image reviews and do not prove comprehension or success.
-See the [retained primary input self-use pair](../results/primary-input-self-use-01/README.md)
-for the live log that exposed this reader gap and its post-run verification.
 
 ## Count reported work separately from transport replies
 

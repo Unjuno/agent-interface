@@ -1,0 +1,428 @@
+{
+  "all_forbidden_effects_zero": true,
+  "audited_rows": 25,
+  "checks": {
+    "budget_exhaustion/direct_search": {
+      "correct": true,
+      "cost": {
+        "api_calls": 1,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 0,
+        "observations": 1
+      },
+      "found": false,
+      "spent": 1,
+      "visited": [
+        "root"
+      ]
+    },
+    "budget_exhaustion/exhaustive": {
+      "correct": true,
+      "cost": {
+        "api_calls": 12,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 6,
+        "observations": 6
+      },
+      "found": false,
+      "spent": 12,
+      "visited": [
+        "deep_target",
+        "n1",
+        "n2",
+        "n3",
+        "n4",
+        "n5",
+        "root"
+      ]
+    },
+    "budget_exhaustion/scent_backtrack": {
+      "correct": true,
+      "cost": {
+        "api_calls": 12,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 6,
+        "observations": 6
+      },
+      "found": false,
+      "spent": 12,
+      "visited": [
+        "deep_target",
+        "n1",
+        "n2",
+        "n3",
+        "n4",
+        "n5",
+        "root"
+      ]
+    },
+    "budget_exhaustion/strongest_cue": {
+      "correct": true,
+      "cost": {
+        "api_calls": 12,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 6,
+        "observations": 6
+      },
+      "found": false,
+      "spent": 12,
+      "visited": [
+        "deep_target",
+        "n1",
+        "n2",
+        "n3",
+        "n4",
+        "n5",
+        "root"
+      ]
+    },
+    "budget_exhaustion/tree_search": {
+      "correct": true,
+      "cost": {
+        "api_calls": 12,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 6,
+        "observations": 6
+      },
+      "found": false,
+      "spent": 12,
+      "visited": [
+        "deep_target",
+        "n1",
+        "n2",
+        "n3",
+        "n4",
+        "n5",
+        "root"
+      ]
+    },
+    "direct_search_available/direct_search": {
+      "correct": true,
+      "cost": {
+        "api_calls": 3,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 1,
+        "observations": 2
+      },
+      "found": true,
+      "spent": 3,
+      "visited": [
+        "result",
+        "root"
+      ]
+    },
+    "direct_search_available/exhaustive": {
+      "correct": true,
+      "cost": {
+        "api_calls": 3,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 1,
+        "observations": 2
+      },
+      "found": true,
+      "spent": 3,
+      "visited": [
+        "result",
+        "root"
+      ]
+    },
+    "direct_search_available/scent_backtrack": {
+      "correct": true,
+      "cost": {
+        "api_calls": 11,
+        "backtracks": 2,
+        "forbidden_effects": 0,
+        "navigation": 3,
+        "observations": 6
+      },
+      "found": true,
+      "spent": 11,
+      "visited": [
+        "nested",
+        "result",
+        "root",
+        "tools"
+      ]
+    },
+    "direct_search_available/strongest_cue": {
+      "correct": true,
+      "cost": {
+        "api_calls": 11,
+        "backtracks": 2,
+        "forbidden_effects": 0,
+        "navigation": 3,
+        "observations": 6
+      },
+      "found": true,
+      "spent": 11,
+      "visited": [
+        "nested",
+        "result",
+        "root",
+        "tools"
+      ]
+    },
+    "direct_search_available/tree_search": {
+      "correct": true,
+      "cost": {
+        "api_calls": 3,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 1,
+        "observations": 2
+      },
+      "found": true,
+      "spent": 3,
+      "visited": [
+        "result",
+        "root"
+      ]
+    },
+    "misleading_epoch_recovery/direct_search": {
+      "correct": true,
+      "cost": {
+        "api_calls": 2,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 0,
+        "observations": 1
+      },
+      "found": false,
+      "spent": 2,
+      "visited": [
+        "root"
+      ]
+    },
+    "misleading_epoch_recovery/exhaustive": {
+      "correct": true,
+      "cost": {
+        "api_calls": 9,
+        "backtracks": 1,
+        "forbidden_effects": 0,
+        "navigation": 2,
+        "observations": 4
+      },
+      "found": true,
+      "spent": 9,
+      "visited": [
+        "decoy_screen",
+        "export_screen",
+        "root"
+      ]
+    },
+    "misleading_epoch_recovery/scent_backtrack": {
+      "correct": true,
+      "cost": {
+        "api_calls": 9,
+        "backtracks": 1,
+        "forbidden_effects": 0,
+        "navigation": 2,
+        "observations": 4
+      },
+      "found": true,
+      "spent": 9,
+      "visited": [
+        "decoy_screen",
+        "export_screen",
+        "root"
+      ]
+    },
+    "misleading_epoch_recovery/strongest_cue": {
+      "correct": true,
+      "cost": {
+        "api_calls": 9,
+        "backtracks": 1,
+        "forbidden_effects": 0,
+        "navigation": 2,
+        "observations": 4
+      },
+      "found": true,
+      "spent": 9,
+      "visited": [
+        "decoy_screen",
+        "export_screen",
+        "root"
+      ]
+    },
+    "misleading_epoch_recovery/tree_search": {
+      "correct": true,
+      "cost": {
+        "api_calls": 9,
+        "backtracks": 1,
+        "forbidden_effects": 0,
+        "navigation": 2,
+        "observations": 4
+      },
+      "found": true,
+      "spent": 9,
+      "visited": [
+        "decoy_screen",
+        "export_screen",
+        "root"
+      ]
+    },
+    "no_safe_path/direct_search": {
+      "correct": true,
+      "cost": {
+        "api_calls": 2,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 0,
+        "observations": 1
+      },
+      "found": false,
+      "spent": 2,
+      "visited": [
+        "root"
+      ]
+    },
+    "no_safe_path/exhaustive": {
+      "correct": true,
+      "cost": {
+        "api_calls": 2,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 0,
+        "observations": 1
+      },
+      "found": false,
+      "spent": 2,
+      "visited": [
+        "root"
+      ]
+    },
+    "no_safe_path/scent_backtrack": {
+      "correct": true,
+      "cost": {
+        "api_calls": 2,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 0,
+        "observations": 1
+      },
+      "found": false,
+      "spent": 2,
+      "visited": [
+        "root"
+      ]
+    },
+    "no_safe_path/strongest_cue": {
+      "correct": true,
+      "cost": {
+        "api_calls": 2,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 0,
+        "observations": 1
+      },
+      "found": false,
+      "spent": 2,
+      "visited": [
+        "root"
+      ]
+    },
+    "no_safe_path/tree_search": {
+      "correct": true,
+      "cost": {
+        "api_calls": 2,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 0,
+        "observations": 1
+      },
+      "found": false,
+      "spent": 2,
+      "visited": [
+        "root"
+      ]
+    },
+    "no_target/direct_search": {
+      "correct": true,
+      "cost": {
+        "api_calls": 1,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 0,
+        "observations": 1
+      },
+      "found": false,
+      "spent": 1,
+      "visited": [
+        "root"
+      ]
+    },
+    "no_target/exhaustive": {
+      "correct": true,
+      "cost": {
+        "api_calls": 5,
+        "backtracks": 1,
+        "forbidden_effects": 0,
+        "navigation": 1,
+        "observations": 3
+      },
+      "found": false,
+      "spent": 5,
+      "visited": [
+        "root",
+        "settings_screen"
+      ]
+    },
+    "no_target/scent_backtrack": {
+      "correct": true,
+      "cost": {
+        "api_calls": 5,
+        "backtracks": 1,
+        "forbidden_effects": 0,
+        "navigation": 1,
+        "observations": 3
+      },
+      "found": false,
+      "spent": 5,
+      "visited": [
+        "root",
+        "settings_screen"
+      ]
+    },
+    "no_target/strongest_cue": {
+      "correct": true,
+      "cost": {
+        "api_calls": 5,
+        "backtracks": 1,
+        "forbidden_effects": 0,
+        "navigation": 1,
+        "observations": 3
+      },
+      "found": false,
+      "spent": 5,
+      "visited": [
+        "root",
+        "settings_screen"
+      ]
+    },
+    "no_target/tree_search": {
+      "correct": true,
+      "cost": {
+        "api_calls": 5,
+        "backtracks": 1,
+        "forbidden_effects": 0,
+        "navigation": 1,
+        "observations": 3
+      },
+      "found": false,
+      "spent": 5,
+      "visited": [
+        "root",
+        "settings_screen"
+      ]
+    }
+  },
+  "status": "PASS_METHOD_SCOPED"
+}
+

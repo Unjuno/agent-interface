@@ -621,3 +621,34 @@ slot; never overwrite it or treat an error as permission to repeat an action.
 See [host publication](../host_v1/README.md) for its Linux-only scope.
 
 [Retained primary six-task use and publication failure/fix](../results/atomic-host-publication-01/README.md) records the incomplete direct comparison and the no-GUI publication checks. The whole integration spine remains unvalidated.
+
+
+### Explicit post-input application cue
+
+`interface_guarded_input` accepts optional `feedback` with `expected_title`,
+`rejected_titles` (default empty), and `timeout_ms` (0..10000, default 2000).
+It requires `observe_after=true`. After completed input and verified empty
+key/button release, the existing native bridge waits read-only for this title
+convention and returns its exact final capture. The original `result` remains
+unchanged; `feedback` retains the title samples and cue verdict. A matched cue
+is neither durable task completion nor input authority and may predate input.
+Pending, rejected or unstable feedback returns `needs_review`; no action,
+replay, remint or lease renewal follows. Failed/uncertain input never starts
+cue waiting. Feedback persistence failure retains the input receipt and blocks
+editing until explicit review. Default calls still capture once immediately.
+Unknown extended receipt shapes retain the full presentation even if brief is
+requested. An ordinary primary caller can use `call` with this explicit option;
+its existing STOP policy keeps failed/pending evidence and permits only close.
+
+
+With `observation_refs=true`, a known matched input feedback response may use
+`agent-interface/guarded-feedback-observation-refs-v1`: the exact duplicate at
+`feedback.observation` references complete `source`, and
+`observation_report.observation` references `source.native`. Only the two paths
+listed in `observation_references` are references. Other similarly shaped values
+remain literal. `expand_guarded_observation` restores exact original metadata.
+Input receipt, cue samples/verdicts and PNG are unchanged. Critical, unmatched,
+unverified-release or near-duplicate reports remain full. This lossless layer
+is separate from lossy guard summaries; unsupported brief shapes still retain
+all guard detail. Full retained retrieval never repeats input. Byte reduction
+does not by itself establish model token, billing or task-speed reduction.

@@ -1,0 +1,41 @@
+name: procedural-ops-facility-v0
+
+on:
+  push:
+    paths:
+      - "research/procedural_ops_facility_v0/**"
+      - ".github/workflows/procedural-ops-facility-v0.yml"
+  pull_request:
+    paths:
+      - "research/procedural_ops_facility_v0/**"
+      - ".github/workflows/procedural-ops-facility-v0.yml"
+
+jobs:
+  native-construction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install native dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential libx11-dev xvfb xauth python3
+      - name: Run fixed-seed native tests
+        working-directory: research/procedural_ops_facility_v0
+        run: ./run_tests.sh
+
+  container-construction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build benchmark image
+        run: |
+          docker build \
+            -t procedural-ops-facility-v0:${{ github.sha }} \
+            research/procedural_ops_facility_v0
+      - name: Run fixed-seed suite inside image
+        run: |
+          docker run --rm \
+            --entrypoint /facility/run_tests_container.sh \
+            procedural-ops-facility-v0:${{ github.sha }}

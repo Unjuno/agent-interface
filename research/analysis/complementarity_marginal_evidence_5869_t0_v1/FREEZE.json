@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "freeze_id": "COMPLEMENTARITY-5869-T0-20261001-01",
+  "stage": "FROZEN_BEFORE_FORMAL_RUN",
+  "issue": 5869,
+  "branch": "research/issue-5869-complementarity-t0-20261001",
+  "branch_base_main_sha": "da7770df8bd896738a8a7e0ccc8ea45e10b3e645",
+  "formal_intake_main_sha": "3d039564a86e1f18cfdc8c2980a580d5fa18a035",
+  "frozen_at_utc": "2026-10-01 07:36:56 UTC",
+  "experiment_path": "research/analysis/complementarity_marginal_evidence_5869_t0_v1/",
+  "main_source_dependencies": [],
+  "main_source_dependency_note": "Candidate and auditor are self-contained standard-library programs; no repository runtime source or external package is imported. The exact observed current-main SHA is retained for provenance. Additive experiment path only.",
+  "hypothesis": "A bounded two-check complementarity gate can recover decision value missed by myopic positive-marginal stopping in the preregistered finite XOR class, while refusing specified nonvaluable or invalid pairs.",
+  "design": {
+    "case_count": 9,
+    "total_world_rows": 36,
+    "horizon_checks": 2,
+    "policies": [
+      "fixed checklist",
+      "one-step marginal VOI",
+      "exact two-step adaptive Bellman",
+      "bounded pair gate"
+    ],
+    "candidate_invocations": 0,
+    "auditor_invocations": 0,
+    "construction_tests": "11/11 passed"
+  },
+  "environment": {
+    "os": "Windows 11",
+    "cpu": "12th Gen Intel Core i7-12700H (14 cores, 20 logical processors)",
+    "python": "3.11.9",
+    "gpu": "RTX 3080 Laptop GPU present; not used for this model-free finite decision enumeration",
+    "docker": "not used; no container lane available for this run",
+    "c_drive_free_bytes": 0,
+    "execution_mode": "host-only, no disk output during formal subprocesses"
+  },
+  "files": {
+    "PLAN.md": {
+      "sha256": "59dd54e2ab17a0af245fddabbf41ca9ab66fd1008e83ddde0fe4f7ab2440f49e",
+      "blob": "712916b5c9179a11084c0bb0b0b7c18c264839bd"
+    },
+    "candidate.py": {
+      "sha256": "3e9d859a803f7d1952e1c842bea371ae912969abdf7db2ff9156308c8c5c32f0",
+      "blob": "28c9de05b1152977d591f2ed67cdf2cb70f7050a"
+    },
+    "audit.py": {
+      "sha256": "b6dfda156db51f33319342f4ecead81397e99a07514e3e50b2d9e5872fa50d32",
+      "blob": "f0563a33ce1733a32a05281779ee318318e185c4"
+    },
+    "fixture.json": {
+      "sha256": "f7549d3803bb357bc3650f43faaca755e39f0f4d0e5762de811a34fd00c999b7",
+      "blob": "d67ecba79211f2e433c47c66fa7f4a07fed03051"
+    },
+    "test_construction.py": {
+      "sha256": "6cabdd330b09c61300c1c19a2c1a9741c2a26fbcbace45c9cb9da1a11432d0a1",
+      "blob": "5179e1ee5ed176dd142914d9a7d4c05e2bdb589a"
+    },
+    "CONSTRUCTION_NOTES.md": {
+      "sha256": "0531cd47ea2e868956d9061761ff9bb98ee5a13ff3621d1e4fa01de5896636cb",
+      "blob": "0673d742ef930c22325376b28be066fc6a4cd99e"
+    },
+    "CONSTRUCTION_TESTS.txt": {
+      "sha256": "dc0a31043db56d6c5acb8d29c9edf20755c52ee21ec04aedc76274bbb1cb3a2c",
+      "blob": "d2daf35f85830f941398abf0b20e68c91dfb1e14"
+    }
+  }
+}

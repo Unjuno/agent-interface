@@ -1,0 +1,72 @@
+{
+  "schema": "issue5407-market-t2b-result-v1",
+  "allocation": "issue5407-market-t2b-capacity-reallocation-20261001-02",
+  "disposition": "FAIL_HYPOTHESIS_SCARCITY_FIRST_WORSE_ON_FIXED_MATRIX",
+  "audit": "PASS",
+  "audit_errors": [],
+  "seed_count": 50,
+  "tasks_per_seed": 8,
+  "agents_per_seed": 10,
+  "totals": {
+    "scalar_unconstrained": {
+      "admitted_tasks": 250,
+      "unsafe_admissions": 236,
+      "safe_admitted_value": 179,
+      "safe_shortfall_value": 672,
+      "selected_cost": 2687
+    },
+    "value_first": {
+      "admitted_tasks": 153,
+      "unsafe_admissions": 0,
+      "safe_admitted_value": 1981,
+      "safe_shortfall_value": 2064,
+      "selected_cost": 1970
+    },
+    "scarcity_first": {
+      "admitted_tasks": 162,
+      "unsafe_admissions": 0,
+      "safe_admitted_value": 1794,
+      "safe_shortfall_value": 2251,
+      "selected_cost": 2296
+    },
+    "central_oracle": {
+      "admitted_tasks": 173,
+      "unsafe_admissions": 0,
+      "safe_admitted_value": 2162,
+      "safe_shortfall_value": 1883,
+      "selected_cost": 2361
+    }
+  },
+  "preregistered_criteria": {
+    "no_unsafe_admissions_constrained": true,
+    "scarcity_shortfall_strictly_below_value_first": false,
+    "scarcity_cost_at_most_125_percent_value_first": true,
+    "oracle_value_not_below_greedy": true,
+    "independent_audit_zero_errors": true,
+    "unsafe_role_alias_mutation_rejected": true,
+    "reused_agent_capacity_mutation_rejected": true
+  },
+  "raw": {
+    "path": "research/experiments/issue_5407_market_t2b/results/host-construction-01/raw.jsonl",
+    "sha256": "402f53e118c3bf0dd92187eed5d4eb35476519dad4c4a622e26c77894a78e5fd",
+    "bytes": 391635,
+    "rows": 50,
+    "first_seed": 0,
+    "last_seed": 49
+  },
+  "environment": {
+    "python": "3.11.9",
+    "platform": "Windows host CPU",
+    "container": false,
+    "gpu": false,
+    "model": false,
+    "network": false,
+    "gui": false,
+    "input": false
+  },
+  "limits": [
+    "synthetic deterministic workload only",
+    "does not establish truthful bidding, deadlines, DAG behavior, real-world fairness, runtime integration, GUI safety, or product benefit",
+    "network-disabled CPU-container reproduction remains unrun pending exclusive allocation"
+  ]
+}

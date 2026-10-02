@@ -32,7 +32,10 @@ This is a navigation view, not a mandatory runtime pipeline. Individual studies 
 | Last-effect receipt | [`map01_last_effect_receipt_v1/`](map01_last_effect_receipt_v1/) |
 | Last-effect representation | [`map01_last_effect_representation_v1/`](map01_last_effect_representation_v1/), [`map01_last_effect_representation_v31_r2/`](map01_last_effect_representation_v31_r2/) |
 | Intent-preserving Needle distillation | [intent_distillation_3458_pilot_01/](intent_distillation_3458_pilot_01/) |
+| Intent-generation fencing | [intent_generation_fencing_3442_t0_v2/REPORT.md](intent_generation_fencing_3442_t0_v2/REPORT.md) — allocation-02 method-scoped synthetic PASS (33 rows; independent audit 4/4 mutations rejected); predecessor auditor/capture STOP preserved, no live-runtime claim. |
 | Online role-adapter update | [needle_lora_3441_online_stream_v1/](../needle_lora_3441_online_stream_v1/) — host-CPU online run; both online and batch misses the 0.90 gate; not container or runtime evidence. |
+| Online Needle correction preflight | [`needle_online_correction_4824_preflight_6321_t0_20261002/RESULT.md`](needle_online_correction_4824_preflight_6321_t0_20261002/RESULT.md) — three-seed dataset/label construction; original runner STOP retained, independent OrbStack audit successor passes 984 rows/7 mutations; GPU training remains unrun pending exclusive WSLc allocation. |
+| Online Needle correction construction archive | [`needle_online_correction_4824_batched_v1/RECOVERY_STATUS.md`](needle_online_correction_4824_batched_v1/RECOVERY_STATUS.md) — recovered #4824's orphaned 40-file construction package without changing its historical files; raw transport hash reconstructs, but runner/audit provenance mismatches and the audit is incomplete. Archive-only; no scientific PASS and no rerun. |
 | Online update generation fence | [`needle_adaptive_generation_fence_4840_v1/`](needle_adaptive_generation_fence_4840_v1/) — scoped 64-row envelope/oracle pass; no model training or runtime authority. |
 | Role-skill publication boundary | [needle_role_skill_publication_stage1_4986_20260928/](needle_role_skill_publication_stage1_4986_20260928/) — four-reader atomic-publication construction; no model training or skill-quality claim. |
 | OrbStack publication boundary | [needle_cross_process_publication_orbstack_bind_5066_v3_20260928/](needle_cross_process_publication_orbstack_bind_5066_v3_20260928/RESULT.md) — formal allocation -03 scoped PASS on OrbStack (28 atomic, 28 post, 28 unsafe rows; independent raw audit and 11 corruption controls); the separate predecessor pilot STOP remains at [needle_orbstack_publication_boundary_5134_20260930_01/](needle_orbstack_publication_boundary_5134_20260930_01/REPORT.md). |
@@ -99,6 +102,10 @@ Read each child experiment for its allowed decision vocabulary, authority bounda
 
 - [`needle_single_invocation_guard_4678_v1/README.md`](needle_single_invocation_guard_4678_v1/README.md) — Issue #4678 preflight STOP: the exact #4205 GPU image is cached and matches, but its pinned safetensors checkpoint is absent; no training-image container or optimizer step ran. Two offline CPU-only audit containers validated the retained STOP record.
 
+## Mitra inference-mode diagnostic STOP archive
+
+- [`mitra_inference_mode_4821_v1/RECOVERY_STATUS.md`](mitra_inference_mode_4821_v1/RECOVERY_STATUS.md) — Issue #4935; exact recovery of all 20 source files from the original remote branch. The sole formal invocation stopped before model load (`HFValidationError`), with zero inference calls and optimizer steps; independent STOP audit reports zero errors. Preservation only; no rerun or scientific conclusion.
+
 ## Online role-router LoRA archive
 
 - [`needle_role_router_online_lora_replay_v1/ARCHIVAL_QUALIFICATION.md`](needle_role_router_online_lora_replay_v1/ARCHIVAL_QUALIFICATION.md) — Issue #4899 / source PR #4906; exact original source and formal/construction-r4 archives. Registered `HOLD_AUDIT_INTEGRITY` and the missed +0.10 A-retention gain remain unchanged; earlier construction r1–r3 full raw/report sets remain outside this committed archive. Preservation only, with no rerun, promotion, or closure of #4899.
@@ -114,3 +121,19 @@ Read each child experiment for its allowed decision vocabulary, authority bounda
 ## Role-skill construction-boundary HOLD archive
 
 - [`needle_role_skill_joint_retention_v3_20260928/ARCHIVAL_QUALIFICATION.md`](needle_role_skill_joint_retention_v3_20260928/ARCHIVAL_QUALIFICATION.md) — Issue #4929 / source PR #4940; all 13 original blobs preserve `HOLD_SOURCE_FREEZE_MISMATCH`. The reported 9/12 boundary tests and zero fits are historical summary claims, without original stdout/stderr or a retained independent raw-only audit. Three FREEZE blob IDs and two mounted-file hashes disagree with the published inventory; the malformed intake identity and CPU-description difference also remain. No valid-binding PASS, rerun, formal authorization, promotion, or issue closure.
+
+## Role-skill v6 contract and thread-instrumentation archive
+
+- [#5081 / source PR #5226 archival qualification](needle_role_skill_joint_retention_v6_20260928/ARCHIVAL_QUALIFICATION.md) — preserves 29 exact historical files, the 27-fixture construction record, and thread-only placeholder-overlap instrumentation. The Windows Docker observation lacked the required coordinator release and is not authorized Stage-0. Formal role-retention remains UNRUN / STOP_RESOURCE_GATE; the source PR stays Draft and #5081 stays open. No rerun or runtime promotion.
+
+## Multimodal grounding corpus/protocol archive
+
+- [#5263 / source PR #5300 archival qualification](multimodal_grounding_5263_t0_20260930/ARCHIVAL_QUALIFICATION.md) — 27 exact historical files, including 14 synthetic PNGs, separate oracle, typed contract, and comparator preparation. Zero inference; reported host tests and Docker preflight are construction only, with the shared-Docker coordination deviation retained. No grounding/latency/Astra-free result, runtime promotion, rerun, or issue closure; #5263 remains open.
+
+## Concurrent online-LoRA latency HOLD archive
+
+- [#4658 / source PR #4674 archival qualification](needle_concurrent_online_lora_4658_v3/ARCHIVAL_QUALIFICATION.md) — 17 exact published files preserving `HOLD_LATENCY_BUDGET`; missing raw evidence, freeze/audit identity mismatches, timestamp-gate audit gap, and unused broken formal wrapper remain unresolved. No reproduced result, rerun, promotion, or issue closure; source PR stays Draft and #4658 stays open.
+
+## Needle intent-capacity audit-only STOP archive
+
+- [`needle_intent_capacity_4679_v2/audit_only_recheck_20260928/RECOVERY_STATUS.md`](needle_intent_capacity_4679_v2/audit_only_recheck_20260928/RECOVERY_STATUS.md) — Issue #4778; exact recovery of the five audit-only protocol/source files. The sole invocation stopped before the auditor ran; no audit output JSON was produced and the Issue prohibits retry. The original `STOP_AUDIT_INTEGRITY` remains unchanged; no result promotion or retraining.

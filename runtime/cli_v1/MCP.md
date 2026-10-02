@@ -536,3 +536,46 @@ The relay host can retain its exact request/reply. It does not prove freshness,
 application readiness, task success, suspend continuity or hard-real-time timing.
 A clock reply remains metadata even after an input session has closed; it cannot
 reopen that session or clear a recovery block.
+
+## Explicit post-dispatch target context and capture region
+
+In `persistent-x11` mode, `interface_dispatch` accepts the existing optional
+`inspect_after`, `inspect_after_region` and `inspect_after_wait_ms` arguments.
+`inspect_after` names an actual configured target. Without a region, the
+inspection returns target-review metadata only. With a region, it captures once
+in `screen_physical_px` after completed input and verified neutral releases,
+then rechecks the target evidence. The original input outcome is retained even
+if this later inspection fails; do not replay the input to recover an image.
+Unsupported modes/targets and malformed options are rejected before dispatch.
+
+These are an option fragment to add to a complete authored dispatch request,
+not a standalone input program or portable coordinates:
+
+```json
+{"inspect_after":"configured-name","inspect_after_region":[0,165,290,116],"inspect_after_wait_ms":100}
+```
+
+Choose bounds from the actual layout and the cues needed for the next decision.
+The wait is an optional integer0..1000ms, defaults to no added wait, and occurs
+only after verified release. It does not extend the input lease or acknowledge
+redraw. `capture_wait.update_observed` remains unknown. Metadata sampled after
+input and captured pixels are not an atomic application-state guarantee.
+
+For a successful selected later capture, `image_reference` identifies
+`post_dispatch_observation_id`, the region and `capture_phase=after_dispatch_release`.
+Forward the selected original image block with its outcome/reference metadata.
+A screen ROI local point[u,v] maps to screen[region.x+u,region.y+v] at original
+pixel dimensions. Cropping does not rebind the target or issue action authority.
+Use the explicit one-use `interface_review_target` request only after reviewing
+its evidence; expiry/identity/revision are checked again. Retained lookup does
+not renew it. If needed cues are outside a crop, explicitly request a wider
+read-only observation; do not infer task completion from the cropped cells.
+
+[Fresh primary region use](../results/explicit-region-admission-01/README.md)
+used the public Python counterparts with small cell feedback, a larger format
+modal view and full-frame final feedback. It saved149/857 correctly but still
+needed one explicit final observation because the first final frame was stale.
+[Direct-block failure](../results/direct-selected-image-01/README.md) preserves a
+separate initial partial-presentation STOP. These cases do not qualify generic
+render reliability, wait defaults, speed or token savings, and do not certify
+provider MCP conversion of the Python route.

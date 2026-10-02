@@ -4,7 +4,7 @@ import unittest
 from unittest.mock import Mock, patch
 
 from runtime.backends.x11_v1.backend import X11Backend, X11BackendError, X11ExecutionError
-from runtime.guarded_x11_v1.bridge import _GuardedBackend
+from runtime.guarded_x11_v1.bridge import _GuardedBackend, NativeHandleBridge
 
 
 class DeadlineTests(unittest.TestCase):
@@ -115,6 +115,82 @@ class DeadlineTests(unittest.TestCase):
             self.backend.execute({'ops':[{'op':'wait_update','timeout_ms':0}]})
         self.assertFalse(caught.exception.execution['releases'][0]['verified'])
         self.assertIn('release failed', caught.exception.execution['releases'][0]['error'])
+
+
+class CallerDeadlineTests(unittest.TestCase):
+    def setUp(self):
+        self.now = 1_000_000
+        self.bridge = object.__new__(NativeHandleBridge)
+        self.bridge.active = None
+        self.bridge.session = SimpleNamespace(recovery_required=False)
+        self.bridge.review_required = False
+        self.bridge.sequence = 7
+        self.bridge.binding_revision = 2
+        self.bridge.scope = 'deadline:test'
+        self.bridge.target = 'app'
+        self.bridge._save = Mock()
+        self.bridge.check = Mock(return_value={'point': [20, 30]})
+        clock = patch('time.monotonic_ns', side_effect=lambda:self.now)
+        clock.start(); self.addCleanup(clock.stop)
+        dispatcher = patch('runtime.guarded_x11_v1.bridge.dispatch_in_session')
+        self.dispatch = dispatcher.start(); self.addCleanup(dispatcher.stop)
+        self.dispatch.return_value = {'status': 'returned', 'result': {'status': 'completed'}}
+
+    def invoke(self, interaction, expires):
+        tail = [{'op':'text', 'text':'a'}] if interaction == 'keyboard' else []
+        return getattr(self.bridge, interaction)('field', [0,0], tail=tail, expires_at_ns=expires)
+
+    def test_shorter_caller_deadline_reaches_program_and_backend_guard(self):
+        for interaction in ('click', 'move', 'keyboard'):
+            with self.subTest(interaction=interaction):
+                self.bridge.check.side_effect = lambda stage: (
+                    self.assertEqual(self.bridge.deadline, 11_000_000) or {'point':[20,30]})
+                self.invoke(interaction, 11_000_000)
+                program = self.dispatch.call_args.args[1]
+                self.assertEqual(program['authority']['expires_at_ns'], 11_000_000)
+                self.assertIsNone(self.bridge.active)
+                self.assertIsNone(self.bridge.deadline)
+
+    def test_caller_cannot_extend_existing_five_second_cap(self):
+        self.invoke('click', 10_000_000_000)
+        self.assertEqual(self.dispatch.call_args.args[1]['authority']['expires_at_ns'],
+                         self.now + 5_000_000_000)
+
+    def test_expired_caller_deadline_refuses_before_capture_or_dispatch(self):
+        for expires in (self.now - 1, self.now):
+            with self.subTest(expires=expires):
+                row = self.invoke('click', expires)
+                self.assertEqual(row['status'], 'refused')
+                self.assertEqual(row['error'], 'CALLER_DEADLINE_EXPIRED')
+                self.assertFalse(row['input_dispatched'])
+        self.bridge.check.assert_not_called()
+        self.dispatch.assert_not_called()
+        self.assertIsNone(self.bridge.active)
+
+    def test_invalid_deadline_does_not_activate_guard(self):
+        for expires in (True, 0, -1, 1.5, '10000000'):
+            with self.subTest(expires=expires), self.assertRaises(ValueError):
+                self.invoke('click', expires)
+        self.bridge.check.assert_not_called()
+        self.dispatch.assert_not_called()
+        self.assertIsNone(self.bridge.active)
+
+    def test_no_deadline_preserves_existing_five_second_cap(self):
+        self.bridge.click('field', [0,0])
+        self.assertEqual(self.dispatch.call_args.args[1]['authority']['expires_at_ns'],
+                         self.now + 5_000_000_000)
+
+    def test_capture_cost_cannot_leave_dispatch_with_expired_authority(self):
+        def capture(stage):
+            self.now = 11_000_000
+            return {'point':[20,30]}
+        self.bridge.check.side_effect = capture
+        row = self.invoke('click', 11_000_000)
+        self.assertEqual(row['status'], 'refused')
+        self.assertFalse(row['input_dispatched'])
+        self.dispatch.assert_not_called()
+        self.assertIsNone(self.bridge.active)
+        self.assertIsNone(self.bridge.deadline)
 
 
 if __name__ == '__main__': unittest.main()

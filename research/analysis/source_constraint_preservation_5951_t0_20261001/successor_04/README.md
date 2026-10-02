@@ -1,0 +1,5 @@
+# Successor 04 — preserve ambiguous clauses as UNKNOWN in the strong baseline
+
+Successor 03's output is retained: its strong static baseline correctly checks atom coverage but incorrectly rejects a genuinely ambiguous source even when the derived contract explicitly leaves it UNKNOWN. This successor changes only that rule: a linked ambiguous source marked UNKNOWN is not forced into atom-level tests. All determinate clauses still require full atom coverage, and authenticated turn precedence remains absent, so the baseline still rejects the valid supersession case by retaining both the old prohibition and the later revision as simultaneous test obligations.
+
+The frozen input is the unchanged eight-case corpus plus successor 03's unchanged baseline output for provenance. This is a baseline-only corrected construction; candidate outputs are not rerun or changed. Decision requires exact expected baseline outcomes: PASS for exact, paraphrase, and UNKNOWN; FAIL for omission, weakening, unsupported addition, supersession, and bad source span.

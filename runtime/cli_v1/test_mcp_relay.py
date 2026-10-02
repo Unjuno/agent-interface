@@ -36,8 +36,7 @@ class PublicRelayTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_legacy_public_protocol_parity_without_changing_research(self):
         from research.live_control.native_mcp_relay_v1 import Relay as Legacy,PUBLIC_TOOLS as LEGACY_TOOLS
-        self.assertEqual(tuple(t for t in PUBLIC_TOOLS if t not in
-                               {'interface_clock', 'interface_guarded_activate_window'}),LEGACY_TOOLS)
+        self.assertEqual(tuple(t for t in PUBLIC_TOOLS if t not in {'interface_clock', 'interface_guarded_activate_window'}),LEGACY_TOOLS)
         result=CallToolResult(content=[TextContent(type='text',text='{"status":"pending"}')])
         a,b=AsyncMock(),AsyncMock();a.call_tool.return_value=b.call_tool.return_value=result
         public,legacy=Relay(a),Legacy(b,tools=LEGACY_TOOLS)

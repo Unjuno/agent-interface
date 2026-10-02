@@ -1,0 +1,278 @@
+{
+  "schema": "agent-interface/host-timing-summary-v1",
+  "scope": "single retained host lifetime; boundaries, not model latency or semantic truth",
+  "timeline_status": "complete",
+  "transport_closed": true,
+  "call_count": 7,
+  "returned_count": 7,
+  "send_to_reply_total_ms": 1031.5749100000157,
+  "first_send_to_last_reply_ms": 114683.176734,
+  "unmeasured": [
+    "first useful model-visible feedback",
+    "semantic completion",
+    "isolated model wait/thinking",
+    "actual model tokens and cost",
+    "matched speedup and human tempo"
+  ],
+  "time_partition": {
+    "span": "first_send_to_last_reply",
+    "total_ms": 114683.176734,
+    "request_outstanding_ms": 1031.5749100000157,
+    "presentation_callbacks_ms": 5.197834000013245,
+    "other_host_intervals_ms": 113646.40398999996,
+    "scope": "Disjoint host-clock intervals only. Other includes orchestration, logging and caller gaps; not isolated model reasoning or wait."
+  },
+  "calls": [
+    {
+      "attempt": 1,
+      "tool": "interface_observe",
+      "send_ms": 15414.565434,
+      "reply_ms": 15550.374477,
+      "presentations": [
+        {
+          "start_ms": 15552.332961,
+          "completed_ms": 15553.883554,
+          "image_delivery": {
+            "mode": "full"
+          }
+        }
+      ],
+      "reviews": [
+        {
+          "recorded_ms": 27061.250693,
+          "task": "calc-reuse-1001081",
+          "phase": "initial",
+          "image_delivery": {
+            "mode": "full"
+          },
+          "after_presentation": true,
+          "send_to_declared_review_ms": 11646.685259000002
+        }
+      ],
+      "text_acknowledgments": [],
+      "reply_sha256": "7b498f5c0be088b8c0de32968814f7f80474f678cdca53ba8ade6d3cd8ee15fc",
+      "send_to_reply_ms": 135.8090429999993,
+      "send_to_first_callbacks_completed_ms": 139.3181199999999,
+      "reply_to_next_send_ms": 12626.882408
+    },
+    {
+      "attempt": 2,
+      "tool": "interface_clock",
+      "send_ms": 28177.256885,
+      "reply_ms": 28184.42543,
+      "presentations": [
+        {
+          "start_ms": 28185.296648,
+          "completed_ms": 28185.5883,
+          "image_delivery": {
+            "mode": "full"
+          }
+        }
+      ],
+      "reviews": [],
+      "text_acknowledgments": [
+        {
+          "recorded_ms": 48737.917864,
+          "task": "calc-reuse-1001081",
+          "phase": "clock"
+        }
+      ],
+      "reply_sha256": "58a41cb37c998008c8c74da665c3bf2687806a0e83af4128a14168af79cad50f",
+      "send_to_reply_ms": 7.168545000000449,
+      "send_to_first_callbacks_completed_ms": 8.331415000000561,
+      "reply_to_next_send_ms": 21683.433289000004
+    },
+    {
+      "attempt": 3,
+      "tool": "interface_dispatch",
+      "send_ms": 49867.858719,
+      "reply_ms": 50334.522038,
+      "presentations": [
+        {
+          "start_ms": 50335.58568,
+          "completed_ms": 50336.182461,
+          "image_delivery": {
+            "mode": "full"
+          }
+        }
+      ],
+      "reviews": [
+        {
+          "recorded_ms": 69526.932498,
+          "task": "calc-reuse-1001081",
+          "phase": "format-modal",
+          "image_delivery": {
+            "mode": "full"
+          },
+          "after_presentation": true,
+          "send_to_declared_review_ms": 19659.07377899999
+        }
+      ],
+      "text_acknowledgments": [],
+      "reply_sha256": "664f2e14889d8edacc644b0b3dfed4492addfaf9a7f4bc81a5abbf0132055107",
+      "send_to_reply_ms": 466.6633189999993,
+      "send_to_first_callbacks_completed_ms": 468.3237419999932,
+      "reply_to_next_send_ms": 20310.33039899999
+    },
+    {
+      "attempt": 4,
+      "tool": "interface_inspect_target",
+      "send_ms": 70644.852437,
+      "reply_ms": 70714.788012,
+      "presentations": [
+        {
+          "start_ms": 70716.191511,
+          "completed_ms": 70717.53186,
+          "image_delivery": {
+            "mode": "reviewed-image-reference",
+            "base_attempt": 3,
+            "base_reply_sha256": "664f2e14889d8edacc644b0b3dfed4492addfaf9a7f4bc81a5abbf0132055107",
+            "base_review_sha256": "959a21a965121ffcedf0d6cfc8dd3cae3289ff495dc8a2c43516964d97e06ea5",
+            "image_sha256": "8d62bb7a56b88c3d8595339ad14cb95b946492e19534903b56c01522e3866e46",
+            "mime_type": "image/png"
+          }
+        }
+      ],
+      "reviews": [
+        {
+          "recorded_ms": 88264.186745,
+          "task": "calc-reuse-1001081",
+          "phase": "inspect-modal",
+          "image_delivery": {
+            "mode": "reviewed-image-reference",
+            "base_attempt": 3,
+            "base_reply_sha256": "664f2e14889d8edacc644b0b3dfed4492addfaf9a7f4bc81a5abbf0132055107",
+            "base_review_sha256": "959a21a965121ffcedf0d6cfc8dd3cae3289ff495dc8a2c43516964d97e06ea5",
+            "image_sha256": "8d62bb7a56b88c3d8595339ad14cb95b946492e19534903b56c01522e3866e46",
+            "mime_type": "image/png"
+          },
+          "after_presentation": true,
+          "send_to_declared_review_ms": 17619.334308000005
+        }
+      ],
+      "text_acknowledgments": [],
+      "reply_sha256": "ce1a64bf0bc9262abc495f6f713269ae8f0eb514691cff17cb2f95c55506c0fd",
+      "send_to_reply_ms": 69.93557500001043,
+      "send_to_first_callbacks_completed_ms": 72.67942300000868,
+      "reply_to_next_send_ms": 18660.918456999992
+    },
+    {
+      "attempt": 5,
+      "tool": "interface_review_target",
+      "send_ms": 89375.706469,
+      "reply_ms": 89439.23754,
+      "presentations": [
+        {
+          "start_ms": 89440.19012,
+          "completed_ms": 89440.598268,
+          "image_delivery": {
+            "mode": "reviewed-image-reference",
+            "base_attempt": 3,
+            "base_reply_sha256": "664f2e14889d8edacc644b0b3dfed4492addfaf9a7f4bc81a5abbf0132055107",
+            "base_review_sha256": "959a21a965121ffcedf0d6cfc8dd3cae3289ff495dc8a2c43516964d97e06ea5",
+            "image_sha256": "8d62bb7a56b88c3d8595339ad14cb95b946492e19534903b56c01522e3866e46",
+            "mime_type": "image/png"
+          }
+        }
+      ],
+      "reviews": [
+        {
+          "recorded_ms": 111426.220998,
+          "task": "calc-reuse-1001081",
+          "phase": "selected-modal",
+          "image_delivery": {
+            "mode": "reviewed-image-reference",
+            "base_attempt": 3,
+            "base_reply_sha256": "664f2e14889d8edacc644b0b3dfed4492addfaf9a7f4bc81a5abbf0132055107",
+            "base_review_sha256": "959a21a965121ffcedf0d6cfc8dd3cae3289ff495dc8a2c43516964d97e06ea5",
+            "image_sha256": "8d62bb7a56b88c3d8595339ad14cb95b946492e19534903b56c01522e3866e46",
+            "mime_type": "image/png"
+          },
+          "after_presentation": true,
+          "send_to_declared_review_ms": 22050.514529000007
+        }
+      ],
+      "text_acknowledgments": [],
+      "reply_sha256": "945bf767945a08a4b5133af56cc66a7fab84b32ff1c82367fec9f46f7ab58b7c",
+      "send_to_reply_ms": 63.531071000004886,
+      "send_to_first_callbacks_completed_ms": 64.89179900000454,
+      "reply_to_next_send_ms": 23090.875344999993
+    },
+    {
+      "attempt": 6,
+      "tool": "interface_dispatch",
+      "send_ms": 112530.112885,
+      "reply_ms": 112713.895254,
+      "presentations": [
+        {
+          "start_ms": 112714.937607,
+          "completed_ms": 112715.947918,
+          "image_delivery": {
+            "mode": "full"
+          }
+        }
+      ],
+      "reviews": [
+        {
+          "recorded_ms": 128873.041182,
+          "task": "calc-reuse-1001081",
+          "phase": "final-visible",
+          "image_delivery": {
+            "mode": "full"
+          },
+          "after_presentation": true,
+          "send_to_declared_review_ms": 16342.928297000006
+        }
+      ],
+      "text_acknowledgments": [],
+      "reply_sha256": "cbd46e14613e118dc09360bb690176a80f90a56583cf0cde98cb93e8e509adc8",
+      "send_to_reply_ms": 183.78236900000775,
+      "send_to_first_callbacks_completed_ms": 185.8350330000103,
+      "reply_to_next_send_ms": 17279.161926
+    },
+    {
+      "attempt": 7,
+      "tool": "interface_close",
+      "send_ms": 129993.05718,
+      "reply_ms": 130097.742168,
+      "presentations": [
+        {
+          "start_ms": 130098.364553,
+          "completed_ms": 130098.824877,
+          "image_delivery": {
+            "mode": "full"
+          }
+        }
+      ],
+      "reviews": [],
+      "text_acknowledgments": [],
+      "reply_sha256": "0caf9d558fa4d657395ef2b67c9646fb51bf672953e394b09b8e7f572161fd90",
+      "send_to_reply_ms": 104.68498799999361,
+      "send_to_first_callbacks_completed_ms": 105.76769700000295,
+      "reply_to_next_send_ms": null
+    }
+  ],
+  "input_sha256": {
+    "host-events.jsonl": "c3a48b329836e3261c96c646fa1c91fe5f7bb4e45d72970663e7fb0682aeee31",
+    "request-1.json": "2404ed80c27eccde2febec0c574368ae88782d319a13ba5ab1ff661b4bdf7953",
+    "reply-1.json": "7b498f5c0be088b8c0de32968814f7f80474f678cdca53ba8ade6d3cd8ee15fc",
+    "review-1.json": "b2802c1e85679624e09ba3b990d156b4d06dbcf450b34d06ed2b30dbfd32eec1",
+    "request-2.json": "481895d1d8400147f0d1aecad3c125f9be98bc6cf4e25839dfacbd2a8b9c258c",
+    "reply-2.json": "58a41cb37c998008c8c74da665c3bf2687806a0e83af4128a14168af79cad50f",
+    "text-acknowledgment-2.json": "be38eeddafbd3ba919fd4b5e1ae05f400bf35295b4f40a7a163bdb70b27b2203",
+    "request-3.json": "2ce517f94c942049c1d73e173c6e034623bdac6040913d09969f64de0d61eba4",
+    "reply-3.json": "664f2e14889d8edacc644b0b3dfed4492addfaf9a7f4bc81a5abbf0132055107",
+    "review-3.json": "959a21a965121ffcedf0d6cfc8dd3cae3289ff495dc8a2c43516964d97e06ea5",
+    "request-4.json": "9a8caaf4cd6eacb005f2e942b85e06c9d7d2e6749cc4ab8136d6249eb3f7dc46",
+    "reply-4.json": "ce1a64bf0bc9262abc495f6f713269ae8f0eb514691cff17cb2f95c55506c0fd",
+    "review-4.json": "a095c2df8224d6fddaab5cd4c3ba7ad8d39c3967f7b8c0427b860564b71c0f6d",
+    "request-5.json": "9e9d669caf17d2eb102aafb4f0ef0e28918ea103380b474857e1dc898d698d60",
+    "reply-5.json": "945bf767945a08a4b5133af56cc66a7fab84b32ff1c82367fec9f46f7ab58b7c",
+    "review-5.json": "fbfba0d5ec09d7c2b7e67cc9a22c45212d0a31a723f7026e7c45628095593800",
+    "request-6.json": "612590134ec7dcfbd492b5e2d5a6ea97b0175970147d70e319253b30464ba0e5",
+    "reply-6.json": "cbd46e14613e118dc09360bb690176a80f90a56583cf0cde98cb93e8e509adc8",
+    "review-6.json": "f0a210b4401b087b92a5edce5da0389544da65c2819d90395f33aac16f86cda6",
+    "request-7.json": "31b10fee7db7c4d4d36b4e9e9b42aa3f4d80e290ff847dad176ccc6b08b3c63a",
+    "reply-7.json": "0caf9d558fa4d657395ef2b67c9646fb51bf672953e394b09b8e7f572161fd90"
+  }
+}

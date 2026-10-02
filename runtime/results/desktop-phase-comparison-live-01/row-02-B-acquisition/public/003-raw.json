@@ -1,0 +1,73 @@
+{
+  "status": "target_reviewed",
+  "target": "app",
+  "previous_window_id": 8389124,
+  "window_id": 8390723,
+  "binding_revision": 2,
+  "evidence": {
+    "window_id": 8390723,
+    "focus_path": [
+      8390723
+    ],
+    "transient_chain": [
+      8390723,
+      8389124
+    ],
+    "family_root": 8389124,
+    "title": "Confirm File Format",
+    "wm_class": [
+      "libreoffice",
+      "libreoffice-calc"
+    ],
+    "geometry": [
+      386,
+      322,
+      507,
+      174
+    ]
+  },
+  "input_dispatched": false,
+  "authority_granted": false,
+  "note": "Selection committed; review image delivery and capture_consistency before input. On unavailable/changed evidence, inspect again; do not replay this review. Matching metadata is not a redraw acknowledgement or semantic completion. No lease issued.",
+  "observation_report": {
+    "schema": "agent-interface/runtime-observation-v1",
+    "observation_id": "36ec749edb314160a5662320f710acea",
+    "side_effect_authority": false,
+    "input_dispatched": false,
+    "status": "returned",
+    "observation": {
+      "bytes": 4096000,
+      "sha256": "830c46bd6d549b5afb7543c5fc69879ab4b584bf23931e514d7f91e8373b1f4c",
+      "width": 1280,
+      "height": 800,
+      "target": "app",
+      "native_window_id": 8390723,
+      "frame": "screen_physical_px",
+      "region": [
+        0,
+        0,
+        1280,
+        800
+      ],
+      "capture_started_ns": 11621531204186,
+      "capture_ended_ns": 11621549912208,
+      "artifact": {
+        "mime_type": "image/png",
+        "path": "/var/tmp/agent-interface-evidence-storage-main/runtime/results/desktop-phase-comparison-live-01/row-02-B-acquisition/public/images/670f9a3ab6a345718fc6a486e94ae2e5.png",
+        "sha256": "a20523989e52407712155aa2644a13957fbff9a1e6143787766a0cfc59b19c1d",
+        "bytes": 77544,
+        "width": 1280,
+        "height": 800,
+        "source_raw_sha256": "830c46bd6d549b5afb7543c5fc69879ab4b584bf23931e514d7f91e8373b1f4c",
+        "timing_ns": {
+          "started": 11621554765667,
+          "converted": 11621563904168,
+          "encoded": 11621630356473,
+          "written": 11621630706450,
+          "hashed": 11621634324269
+        }
+      }
+    }
+  },
+  "capture_consistency": "matched"
+}

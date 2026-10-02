@@ -1,0 +1,36 @@
+{
+  "distinct_candidate_separation_ms": 150.0,
+  "errors": [],
+  "fixture": {
+    "declared_duration_ms": 350,
+    "keys": [
+      "d"
+    ],
+    "program_id": "cover-1",
+    "run": "map01-v39-coast-liveness-live-01",
+    "step": 0
+  },
+  "hypothesis": "two distinct compliant hypothetical key-up timestamps fit the selected explicit telemetry",
+  "hypothetical_keyup_times_not_observed": [
+    {
+      "ns": 55512261802240,
+      "occupancy_after_ack_ms": 350.0,
+      "outer_completion_after_keyup_ms": 215.474663
+    },
+    {
+      "ns": 55512411802240,
+      "occupancy_after_ack_ms": 500.0,
+      "outer_completion_after_keyup_ms": 65.474663
+    }
+  ],
+  "observed": {
+    "ack_to_outer_completion_ms": 565.474663,
+    "keys_held_input_ack_ns": 55511911802240,
+    "step_completed_ns": 55512477276903
+  },
+  "schema": "map01-v38-v39-release-observability-v1",
+  "scope": "explicit event-timestamp construction only; does not prove counterfactual pixel/game-trace invariance or actual physical key-up time",
+  "status": "NON_IDENTIFIABLE_FROM_RETAINED_RELEASE_TELEMETRY",
+  "v38_event_count": 340,
+  "v39_event_count": 634
+}

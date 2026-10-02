@@ -3,6 +3,9 @@
 This package builds one deterministic `agent-interface-runtime.pyz` containing the execution modules and explicitly scoped Python APIs:
 
 - `runtime/core_v1`;
+- opt-in [bounded compiled GUI Python API](../core_v1/COMPILED_GUI.md)
+  (`runtime.core_v1.compiled_gui`), with caller-provided observation, admission,
+  execution and effect adapters;
 - `runtime/selector_v1`;
 - `runtime/cli_v1`;
 - opt-in [scoped X11 Python API](../guarded_x11_v1/README.md) (`runtime/guarded_x11_v1`);
@@ -137,7 +140,7 @@ python -m runtime.distribution_v2.build \
   --host-directory results-local/my-bundle/host
 ```
 
-The builder exports `relay_client.mjs`, `relay_host.mjs`, `primary_caller.mjs`, their usage README,
+The builder exports `relay_client.mjs`, `relay_host.mjs`, their usage README,
 `HOST_MANIFEST.json` and host-local `SHA256SUMS`. Both distributions read from
 the same committed revision pinned at build start. Uncommitted host edits are
 excluded. The Python archive bytes are unchanged by this option; Node files

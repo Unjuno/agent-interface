@@ -173,6 +173,7 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 - [`gtk/`](gtk/) — retained GTK/X11 fixture and adapter research paths; consult each child report for scope and disposition.
 
 ### Recent additive namespaces
+- [`gpu/`](gpu/) — archived local-GPU candidate triage snapshot and recovery status; not a current resource schedule or authorization.
 - [`archive/`](archive/) — Legacy research archive; consult included manifests and reports for scope.
 - [`archives/`](archives/) — Archived research bundles and their retained evidence indexes.
 - [`container_control/`](container_control/) — Container-control research artifacts.
@@ -248,6 +249,8 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 - [`procedural_control_arena_v0/`](procedural_control_arena_v0/) - Procedural control arena; consult its README and VALIDATION for scope and current evidence.
 - [`procedural_control_arena_v1/`](procedural_control_arena_v1/) - Procedural control arena v1 construction environment; see README and VALIDATION for scope and open promotion gates.
 
+- [`procedural_ops_facility_v0/`](procedural_ops_facility_v0/) — recovered Procedural Operations Facility v0 construction benchmark; see README, VALIDATION, and RECOVERY_STATUS for reproducibility and explicit non-efficacy limits.
+
 - [`kernel_receipt_time_5215_20260928/`](kernel_receipt_time_5215_20260928/) — Issue #5215 kernel receipt timestamp construction probe; consult PLAN and REPORT for its contract-only scope and limitations.
 
 ### Issue #5236 X11 keymap successor evidence
@@ -271,3 +274,9 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 
 - [`x11_midprogram_keymap_5236_formal05_save_diagnostic_20261001/`](x11_midprogram_keymap_5236_formal05_save_diagnostic_20261001/) — Local Docker diagnostics: post-save waits do not change the US control; mid-program XKB remaps produce wrong saved text in Debian Docker (not Arch formal evidence).
 - [`x11_midprogram_keymap_5236_formal06_20261001/`](x11_midprogram_keymap_5236_formal06_20261001/) — Issue #5236 Formal06 `STOP_PROTOCOL_DEVIATION`: preserved raw predates freeze; auditor mismatch is diagnostic only. See `RESULT_DISPOSITION.md`.
+- [`x11_midprogram_keymap_5236_formal07_20261001/`](x11_midprogram_keymap_5236_formal07_20261001/) — Issue #5236 Formal07 `STOP_PROVENANCE_OR_RUNNER`: the `missing_post_save_wait` corruption was a no-op and escaped; see the result disposition.
+
+
+### Security evidence
+
+- [`security/`](security/) — retained X11 UI-redress evidence, including Issue #5692 formal-01 `STOP`; see [its result record](security/ui_redress_5692_x11_a02_20261001/FORMAL-01-STOP.md).
