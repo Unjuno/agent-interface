@@ -6,6 +6,7 @@
   "retry_count": 0,
   "expected_command": "python -B -c <print /sys/fs/cgroup/memory.max and Python version> && python -B -m unittest -v test_protocol",
   "actual_command": "python -B -c \"import sys; print(sys.version); print(open('/sys/fs/cgroup/memory.max').read().strip())\"",
+  "actual_wslc_arguments": "wslc.exe run --pull never --network none --cpus 1 --memory 1G --user 65534:65534 --name claim-ladder-6509-construction --mount type=bind,source=<frozen source>,target=/src,readonly --mount type=bind,source=<construction output>,target=/out --workdir /src python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B -c \"import sys; print(sys.version); print(open('/sys/fs/cgroup/memory.max').read().strip())\"",
   "expected_test_suite_ran": false,
   "exit_code": 0,
   "container_id": "d6031c661294",
