@@ -43,7 +43,10 @@ preregistered formal start. Any failed gate is a preserved STOP, not a retry.
 
 - `scenarios.json`: assigned synthetic segments, session evidence, generations,
   overlaps, cluster guesses, and policy-baseline inputs.
-- `oracle.json`: independent segment-principal truth and expected gate outcomes.
+- `oracle.json`: independent segment-principal truth and expected gate outcomes;
+  scenario input is bound by canonical-JSON SHA-256 so CRLF/LF checkout rules
+  do not alter the semantic input identity. `SHA256SUMS` binds exact LF Git-tree
+  bytes for the complete package.
 - `candidate.py`: evaluates four fixed attribution policies without oracle
   access.
 - `auditor.py`: reconstructs outputs from raw scenarios and oracle without

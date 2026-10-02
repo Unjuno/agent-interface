@@ -10,6 +10,11 @@ def read(path):
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
 
+def canonical_sha(value):
+    canonical = json.dumps(value, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(canonical).hexdigest()
+
+
 def bind(policy, scenario, segment):
     if policy == "transcript_order":
         principal = scenario.get("transcript_order_principal", "UNKNOWN")
@@ -85,7 +90,7 @@ def main():
     result = {
         "schema": "principal-binding-candidate-v1",
         "assigned_count": len(source["scenarios"]) * len(policies),
-        "input_sha256": {"scenarios.json": hashlib.sha256(Path(args.scenarios).read_bytes()).hexdigest()},
+        "input_sha256": {"scenarios.json": canonical_sha(source)},
         "rows": rows,
     }
     Path(args.output).write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")

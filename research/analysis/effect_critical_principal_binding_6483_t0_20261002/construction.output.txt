@@ -4,6 +4,9 @@ wslc container run --rm --pull never --network none --cpus 1 --memory 512M --mou
 Run 1, before main rebase: exit 0, 7/7 passed in 0.289s.
 Run 2, after rebase to main 95431dc7537e55782dd3997fe04b55a729b91fe6 and before the final denominator mutation check: exit 0, 7/7 passed in 0.337s.
 Run 3, final source after denominator mutation check: exit 0, 7/7 passed in 0.423s.
+Run 4, after rebase to a393b64bff77b66e9c4d132fee23455430f7922a but before canonical-JSON input identity: exit 1; six tests passed and `test_cli_roundtrip_is_construction_only` failed because the auditor refused the stale raw-byte scenario hash. The observed CRLF worktree hash was `9896efb2befa808f923be7cdf19c03f5960d6bfb925b9099cffdf55ea07da7a0`, while the prior LF hash was `fd8cb43c6ecc16cab27f0799b4682730462b5f24bd3f5a9d31f2291f0c9a67d0`. No formal candidate or auditor allocation ran.
+An auxiliary no-model WSLc command recomputed the canonical JSON hash after EOL normalization: `9d4247b017517a8339841add1fa88cbfd789dd1910112e97a783fa49a08c8ebb`.
+Run 5, final construction after switching oracle/candidate/auditor to canonical JSON identity: exit 0, 7/7 passed in 1.446s.
 
 Final run stdout:
 wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
@@ -14,5 +17,5 @@ test_gate_preserves_clean_and_explicit_joint_requests ... ok
 test_independent_oracle_and_all_four_mutations ... ok
 test_naive_baselines_expose_wrong_or_unauthenticated_proposals ... ok
 test_quote_is_not_actionable ... ok
-Ran 7 tests in 0.423s
+Ran 7 tests in 1.446s
 OK

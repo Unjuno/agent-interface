@@ -12,6 +12,11 @@ def load(path):
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
 
+def canonical_sha(value):
+    payload = json.dumps(value, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+
 def independent_binding(policy, scenario, segment):
     if policy == "transcript_order":
         return {"principal": scenario.get("transcript_order_principal", "UNKNOWN"), "basis": "transcript_order", "authenticated": False}
@@ -171,8 +176,8 @@ def main():
     parser.add_argument("--output", required=True)
     args = parser.parse_args()
     scenarios, oracle, candidate = load(args.scenarios), load(args.oracle), load(args.candidate)
-    expected_hash = hashlib.sha256(Path(args.scenarios).read_bytes()).hexdigest()
-    if candidate.get("input_sha256", {}).get("scenarios.json") != expected_hash or oracle.get("scenarios_sha256") != expected_hash:
+    expected_hash = canonical_sha(scenarios)
+    if candidate.get("input_sha256", {}).get("scenarios.json") != expected_hash or oracle.get("scenarios_canonical_sha256") != expected_hash:
         result = {"decision":"METHOD_FAIL","baseline":{"errors":["frozen_scenario_hash_mismatch"],"summary":{}},"corruption_controls":{}}
     else:
         result = audit_bundle(scenarios, oracle, candidate)

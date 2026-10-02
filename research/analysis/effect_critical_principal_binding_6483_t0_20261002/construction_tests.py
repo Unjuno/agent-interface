@@ -24,7 +24,7 @@ class PrincipalBindingConstructionTests(unittest.TestCase):
         cls.rows = [candidate.evaluate(policy, scenario) for scenario in cls.scenarios["scenarios"] for policy in cls.scenarios["policies"]]
         cls.raw = {
             "assigned_count": len(cls.rows),
-            "input_sha256": {"scenarios.json": hashlib.sha256((ROOT / "scenarios.json").read_bytes()).hexdigest()},
+            "input_sha256": {"scenarios.json": candidate.canonical_sha(cls.scenarios)},
             "rows": cls.rows,
         }
         cls.audit = auditor.audit_bundle(cls.scenarios, cls.oracle, cls.raw)
