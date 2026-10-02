@@ -886,3 +886,44 @@ cleanup. [Joint primary usage](results/calc-owner-transfer-live-01/usage-02/usag
 includes preparation, failures, live cases and audits; it is not a route-specific
 matched cost comparison. The earlier usage-01 window overlaps it and must not
 be added. No speed, token-cost, generic-readiness or human-tempo claim follows.
+
+### Explicit additional dependency check before keyboard input
+
+The public Python owner provides a serialized, opt-in `input_guard` context for
+one frozen keyboard program. Use it around an explicit invocation on an already
+open and reviewed owner:
+
+```python
+with owner.input_guard(save_alias, save_offset, tail=save_tail,
+                       verify=dependency_check):
+    result = owner.run_compiled(interface, bindings, call_root=fresh_directory,
+                                perceive=perceive, verify_effect=verify_effect)
+```
+
+`dependency_check(stage, source, rgb)` receives copies of the current verified
+native source and RGB image. It must return exactly `True`; false, unavailable
+results and exceptions refuse further protected input. The existing target
+resolver runs first and is rechecked against the same image after the callback.
+Scope, binding, active input, review/recovery state, freshness and lease cannot
+change during the callback. Same-alias changes to offset, keyboard tail or
+interaction refuse before input. Other aliases retain their existing guards.
+
+Additional checks run at admission, focus and before every new protected key
+press, including the key following a modifier. Releases bypass the callback so
+cleanup remains possible after refusal. The guarded input result retains
+`additional_input_checks` separately from its existing guard and execution
+records. Read completed prefix and verified releases; a callback refusal is not
+proof that earlier keys had no effect and never authorizes replay.
+
+The caller must serialize use of the owner and bound callback I/O. This is trusted
+synchronous Python code, not an interruptible deadline, hostile-code sandbox,
+sensor, scheduler or an MCP endpoint. Registration does not capture, mint a
+reference or grant input authority. Without registration, no additional callback
+or capture is introduced. The callback may refuse an input; it cannot replace
+existing checks or renew a lease. Capture-to-emission remains non-atomic.
+
+The [fixed primary Calc successor](results/calc-public-input-guard-live-01/FINAL_REPORT.md)
+uses this context instead of replacing bridge/backend methods. One normal case
+persists731/864 after explicit modal handling; one wrong-entry case stops before
+Save and persists empty cells. These are scoped integration controls, not
+qualification of generic visual dependencies, reliability or speed/token gains.
