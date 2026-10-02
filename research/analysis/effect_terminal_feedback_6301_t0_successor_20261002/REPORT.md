@@ -1,6 +1,6 @@
 # Issue #6301 T0 successor — preparation record
 
-Status: `PREPARED_WAITING_FOR_EXPLICIT_WSLc_SLOT`; no formal candidate or auditor has run.
+Historical preparation snapshot for the expired requested WSLc allocation 02; that allocation remains unconsumed. Current formal result for fresh OrbStack allocation 03 and audit-only allocation 04 is recorded in [`ALLOCATION_03_04_RESULT.md`](ALLOCATION_03_04_RESULT.md). This file retains its original preparation facts for provenance; it is not the current status.
 
 ## Question and scope
 
