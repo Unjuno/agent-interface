@@ -28,6 +28,20 @@ Candidate and raw-only audit each ran once, exit 0, no retry. See the full
 [A01 run record](research/analysis/extreme_tail_eligibility_6576_construction_v1/timer_quantization_a01_20261002/RUN_RECORD.md)
 and [frozen hypothesis/protocol](research/analysis/extreme_tail_eligibility_6576_construction_v1/timer_quantization_a01_20261002/PREREGISTRATION.md).
 
+Fresh-seed follow-up A02 tested a 20-distinct-q90-exceedance support rule on
+30 fixtures per resolution. It held all 30/30 baseline-eligible q=1.0 samples,
+added 0/21 holds to continuous controls, and held 7/24 intermediate q=0.25
+samples; independent audit passed the frozen `PASS_SUPPORT_RULE_SCOPED`
+criteria. This tests only these synthetic generator/quantum arms and does not
+validate 20 as a production threshold. See the [A02 run record](research/analysis/extreme_tail_eligibility_6576_construction_v1/timer_quantization_a02_20261002/RUN_RECORD.md).
+
+Fresh-seed cutoff sweep A03 (50 samples per q=0/0.25/0.5/1.0 arm) found cutoff
+8 the smallest tested threshold meeting the preregistered synthetic criteria:
+48/50 eligible q=1.0 cases held, with 0/31 continuous and 0/36 q=0.25 cases
+additionally held. Cutoff 20 held 14/36 q=0.25 fixtures; q=0.5 had only 2/50
+baseline-eligible cases. This is a generator-specific finite tradeoff, not a
+production cutoff. See the [A03 run record](research/analysis/extreme_tail_eligibility_6576_construction_v1/timer_quantization_a03_20261002/RUN_RECORD.md).
+
 A dedicated OrbStack Ubuntu machine ran its own pinned-image Docker Engine; no shared Engine was used. One preregistered stationary synthetic case (4,000 train + 4,000 holdout) produced `ELIGIBLE_REFERENCE`; the candidate and independent raw-only audit each ran once and exited 0, with `PASS_METHOD_SCOPED PASS_RAW_ONLY`. The eligible-gated p99 holdout was 42/4,000 (exact 95% CI 0.00758–0.01417); the TailID-equivalent p99 was 45/4,000 (0.00822–0.01502); both include nominal 1%. This one-case pilot establishes neither superiority nor TailID parity, and makes no physical input-release, safety, or worst-case claim. The formal six-case T0 remains unrun. See the [frozen run, raw output and hashes](research/analysis/extreme_tail_eligibility_6576_construction_v1/orbstack_pilot_a02_20261002/RUN_RECORD.md), [H/T/D/C/U and frozen input](research/analysis/extreme_tail_eligibility_6576_construction_v1/orbstack_pilot_a02_20261002/PREREGISTRATION.md), and [Issue #6576](https://github.com/Unjuno/agent-interface/issues/6576).
 
 Successor CRAN/R parity studies then compared pinned TailID 1.0.0/ismev 1.43
@@ -2142,3 +2156,6 @@ The single frozen host-CPU candidate process exited 1 after writing an 11,020-by
 The frozen candidate ran once over 40 authored worlds / 2,592 interleavings and emitted 4,707 prefixes. The independent raw-only auditor ran once and exited 2 (`FAIL_AUDIT`): row-level classifications and all four mutation controls agreed/rejected as intended, but the candidate header mixed `EARLY_STABLE_*` metrics into `classification_counts`, which the auditor correctly rejected. No method pass is accepted; no post-freeze repair or rerun occurred. Raw output, audit and stop reason are retained in [the STOP packet](research/analysis/prefix_stability_6689_t0_20261002/STOP.md), [frozen inputs](research/analysis/prefix_stability_6689_t0_20261002/FREEZE.json), and [Issue #6689](https://github.com/Unjuno/agent-interface/issues/6689). A corrected aggregate contract requires a separately frozen successor. This finite authored model makes no runtime, freshness, GUI, authority, product-effect, or performance claim.
 
 A distinct allocation (`PREFIX-STABILITY-6689-T0-20261002-01`, base main `b711b778`) enumerated 768 reachable prefix states plus one unknown-contract row. Its candidate and raw-only auditor each ran once (both exit 0; retries 0); the auditor emitted `PASS_METHOD_SCOPED`. Posthoc adjudication against the preregistered obligation-preservation gate found 192 stable-negative rows suppressing the incomplete mandatory-check-vector obligation, so the accepted disposition is `FAIL_METHOD`, not PASS. The immutable raw/audit hashes and separate packet are retained in [allocation 01](research/analysis/prefix_stability_6689_local_allocation01_20261002/REPORT.md). This result is distinct from, and must not overwrite or be conflated with, the `FAIL_AUDIT` run above; no rerun or successor was performed.
+# Issue #5370 T7 successor #6723: composed bounded priority inheritance (2026-10-02)
+
+OrbStack candidate and separate raw-only auditor each ran once; all 36 finite rows reconstructed with zero audit errors. On the authored inversion subset, composed bounded inheritance reduced deadline misses from 7 to 6 versus deadline-only; an intentionally unsafe unbounded comparator had 1. This modest one-case synthetic difference does not establish real scheduler behavior, runtime performance, GUI integration, safety, or user-visible latency. Historical #5370 T6 `STOP_PROTOCOL_DEVIATION` remains unchanged. See [the formal report and preserved raw/audit evidence](research/analysis/priority_inheritance_5370_t7_composition_20261002_01/REPORT.md) and [successor Issue #6723](https://github.com/Unjuno/agent-interface/issues/6723).

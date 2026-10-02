@@ -1,0 +1,27 @@
+{
+  "status": "STOP_PARALLEL_RESEARCH_COLLISION_BEFORE_CANDIDATE",
+  "freeze_id": "ISSUE-5841-T0-HOST-20261001-01",
+  "issue": 5841,
+  "observed_at_utc": "2026-10-01T07:01:35Z",
+  "candidate_invocations": 0,
+  "auditor_invocations": 0,
+  "raw_artifact": null,
+  "scientific_disposition": "NOT_EVALUATED",
+  "reason": "At the final collision gate, an already-open PR #5858 was found with an executed, independently audited six-case/48-row T0 for the same Issue #5841 hypothesis and materially overlapping missingness, join, shared-export, true-benefit, and collateral cases. This task's candidate had not run. Executing its near-identical frozen deck would duplicate the active result, so it was stopped.",
+  "parallel_evidence": {
+    "pr": 5858,
+    "pr_head": "research/issue-5841-same-cohort-negative-controls-t0-20261001",
+    "competing_candidate_invocations": 1,
+    "competing_auditor_invocations": 1,
+    "competing_result": "PASS_METHOD_SCOPED (synthetic method scope only)",
+    "competing_known_gap": "The PR and prior Issue comment #5925853020 identify primary-only export misclassification with unchanged sentinel as OUT_OF_SCOPE_UNDETECTED."
+  },
+  "environment": {
+    "docker_engine": "Docker Desktop 29.8.0 responds",
+    "pinned_python_image": "not cached",
+    "c_drive_free_bytes_at_last_check": 0,
+    "docker_orb_stack": "not used",
+    "gpu": "not used"
+  },
+  "next_distinct_question": "If continuing #5841, test the already-disclosed primary-only export-error blind spot against a source-bound independent primary oracle / all-attempt reconciliation and report any incremental role for the negative-control sentinel. This must use a distinct freeze, allocation, source path, and collision check; it is not a retry of this STOP."
+}
