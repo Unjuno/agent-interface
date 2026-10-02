@@ -35,6 +35,13 @@ samples; independent audit passed the frozen `PASS_SUPPORT_RULE_SCOPED`
 criteria. This tests only these synthetic generator/quantum arms and does not
 validate 20 as a production threshold. See the [A02 run record](research/analysis/extreme_tail_eligibility_6576_construction_v1/timer_quantization_a02_20261002/RUN_RECORD.md).
 
+Fresh-seed cutoff sweep A03 (50 samples per q=0/0.25/0.5/1.0 arm) found cutoff
+8 the smallest tested threshold meeting the preregistered synthetic criteria:
+48/50 eligible q=1.0 cases held, with 0/31 continuous and 0/36 q=0.25 cases
+additionally held. Cutoff 20 held 14/36 q=0.25 fixtures; q=0.5 had only 2/50
+baseline-eligible cases. This is a generator-specific finite tradeoff, not a
+production cutoff. See the [A03 run record](research/analysis/extreme_tail_eligibility_6576_construction_v1/timer_quantization_a03_20261002/RUN_RECORD.md).
+
 A dedicated OrbStack Ubuntu machine ran its own pinned-image Docker Engine; no shared Engine was used. One preregistered stationary synthetic case (4,000 train + 4,000 holdout) produced `ELIGIBLE_REFERENCE`; the candidate and independent raw-only audit each ran once and exited 0, with `PASS_METHOD_SCOPED PASS_RAW_ONLY`. The eligible-gated p99 holdout was 42/4,000 (exact 95% CI 0.00758–0.01417); the TailID-equivalent p99 was 45/4,000 (0.00822–0.01502); both include nominal 1%. This one-case pilot establishes neither superiority nor TailID parity, and makes no physical input-release, safety, or worst-case claim. The formal six-case T0 remains unrun. See the [frozen run, raw output and hashes](research/analysis/extreme_tail_eligibility_6576_construction_v1/orbstack_pilot_a02_20261002/RUN_RECORD.md), [H/T/D/C/U and frozen input](research/analysis/extreme_tail_eligibility_6576_construction_v1/orbstack_pilot_a02_20261002/PREREGISTRATION.md), and [Issue #6576](https://github.com/Unjuno/agent-interface/issues/6576).
 
 Successor CRAN/R parity studies then compared pinned TailID 1.0.0/ismev 1.43
