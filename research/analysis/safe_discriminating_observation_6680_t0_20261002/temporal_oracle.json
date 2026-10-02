@@ -1,0 +1,12 @@
+{
+  "schema": "safe-discriminating-observation-6680-temporal-oracle-v1",
+  "identifiable_case_ids": ["c01", "c02"],
+  "required_release_before_probe": true,
+  "worlds": {
+    "c01": {"world": "observation_path", "correct_recovery": "reobserve", "effects": {"reobserve": {"useful": true, "post_recovery_residual": 0}, "reset": {"useful": false, "post_recovery_residual": 2}, "yield": {"useful": false, "post_recovery_residual": null}}},
+    "c02": {"world": "dynamics", "correct_recovery": "reset", "effects": {"reobserve": {"useful": false, "post_recovery_residual": 2}, "reset": {"useful": true, "post_recovery_residual": 0}, "yield": {"useful": false, "post_recovery_residual": null}}},
+    "c03": {"world": "mixed_unknown", "correct_recovery": null, "effects": {"reobserve": {"useful": false, "post_recovery_residual": 2}, "reset": {"useful": false, "post_recovery_residual": 2}, "yield": {"useful": false, "post_recovery_residual": null}}},
+    "c04": {"world": "observation_path", "correct_recovery": "reobserve", "effects": {"reobserve": {"useful": true, "post_recovery_residual": 0}, "reset": {"useful": false, "post_recovery_residual": 2}, "yield": {"useful": false, "post_recovery_residual": null}}},
+    "c05": {"world": "unknown", "correct_recovery": null, "effects": {"reobserve": {"useful": false, "post_recovery_residual": 2}, "reset": {"useful": false, "post_recovery_residual": 2}, "yield": {"useful": false, "post_recovery_residual": null}}}
+  }
+}

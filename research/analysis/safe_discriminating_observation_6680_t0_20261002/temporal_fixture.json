@@ -1,0 +1,24 @@
+{
+  "schema": "safe-discriminating-observation-6680-temporal-fixture-v1",
+  "target_trajectory": [
+    {"tick": 0, "position": 0}, {"tick": 1, "position": 1},
+    {"tick": 2, "position": 2}, {"tick": 3, "position": 3},
+    {"tick": 4, "position": 4}
+  ],
+  "predictor": {"intercept": 0, "velocity": 1},
+  "alarm_threshold": 1,
+  "max_probe_observations": 1,
+  "probe": {"tick": 4, "admissible": true, "effectful": false, "extends_lease": false},
+  "signature_recoveries": [
+    {"source_age": 1, "residual": 1, "recovery": "reobserve"},
+    {"source_age": 0, "residual": 1, "recovery": "reset"}
+  ],
+  "policies": ["always_reobserve", "always_reset", "immediate_yield", "bounded_diagnose"],
+  "cases": [
+    {"id": "c01", "pre_probe_observation": {"source_tick": 2, "received_tick": 3, "position": 2}, "probe_observation": {"source_tick": 3, "received_tick": 4, "position": 3, "admissible": true}, "lease": {"id": "l01", "acquired_tick": 0, "held_input": "right", "release_requested_tick": 3, "release_receipt": {"lease_id": "l01", "tick": 3}}},
+    {"id": "c02", "pre_probe_observation": {"source_tick": 3, "received_tick": 3, "position": 2}, "probe_observation": {"source_tick": 4, "received_tick": 4, "position": 3, "admissible": true}, "lease": {"id": "l02", "acquired_tick": 0, "held_input": "right", "release_requested_tick": 3, "release_receipt": {"lease_id": "l02", "tick": 3}}},
+    {"id": "c03", "pre_probe_observation": {"source_tick": 2, "received_tick": 3, "position": 1}, "probe_observation": {"source_tick": 3, "received_tick": 4, "position": 2, "admissible": true}, "lease": {"id": "l03", "acquired_tick": 0, "held_input": "right", "release_requested_tick": 3, "release_receipt": {"lease_id": "l03", "tick": 3}}},
+    {"id": "c04", "pre_probe_observation": {"source_tick": 2, "received_tick": 3, "position": 2}, "probe_observation": {"source_tick": 3, "received_tick": 4, "position": 3, "admissible": false}, "lease": {"id": "l04", "acquired_tick": 0, "held_input": "right", "release_requested_tick": 3, "release_receipt": {"lease_id": "l04", "tick": 3}}},
+    {"id": "c05", "pre_probe_observation": {"source_tick": 3, "received_tick": 3, "position": 2}, "probe_observation": {"source_tick": 4, "received_tick": 4, "position": 3, "admissible": true, "supported": false}, "lease": {"id": "l05", "acquired_tick": 0, "held_input": "right", "release_requested_tick": 3, "release_receipt": {"lease_id": "l05", "tick": 3}}}
+  ]
+}
