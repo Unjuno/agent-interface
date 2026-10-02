@@ -1,22 +1,32 @@
-# Issue #4850 CUDA extent-readout construction result
+# #5694 A03 — first-failed-boundary attribution controls
+
+**Raw audit:** `PASS_METHOD_SCOPED` (9/9 rows replayed, zero errors, 5/5 corruption controls rejected).  
+**Post-run hypothesis adjudication:** `HOLD_PHASE_CONTRAST_NOT_MATCHED`; the phase pair did not hold capture schedule and observation horizon constant as required by H.
 
 ## H / T / D / C / U
 
-**H.** The #4837 tiny shared CNN's max+mean global pooling may recover construction competence on fixed synthetic data; max-only is the matched control.
+- **H:** A phase-shifted cue missed by an unchanged capture schedule should localize to `not_acquired`, while a planner stall after fixed capture and delivery should localize to `delivered_no_decision`.
+- **T:** One deterministic Windows CPython 3.11.9 standard-library run, with nine exogenous opportunity rows plus one no-clock `NOT_APPLICABLE` ledger row. No model, GUI, input, real clock sleep, network, WSLc, Docker/OrbStack, GPU or CUDA.
+- **D:** Candidate exit 0; independent raw-only auditor exit 0; all nine rows independently replayed; all five frozen corruptions rejected. The classification mechanics pass their scoped replay gate. A post-run H audit found the phase pair changed both capture schedule and horizon, so the phase result is not a matched test of H; overall hypothesis disposition is HOLD, not PASS.
+- **C:** Authored event identities and synthetic oracle may make the boundary joins easier than in an operational trace. Capture-phase effects could not be separated from the changed schedule in this fixture.
+- **U:** Synthetic finite method fixture only. No evidence about live coordinated omission, actual capture/planner systems, safety, #59/DOOM control, human operating tempo, or product benefit.
 
-**T.** One construction invocation on RTX 3080 Laptop GPU using pinned `pytorch/pytorch:2.5.1-cuda12.1-cudnn9-runtime`, image ID `sha256:831247999fbf7e08f61b3e39f6d77ee434f38f6f07f769d00db451e853878067`, linux/amd64. Container: network none, read-only root/source, one CPU, 2 GiB, 64 PIDs; `CUBLAS_WORKSPACE_CONFIG=:4096:8` set inside container; deterministic algorithms enabled, cuDNN deterministic, TF32 disabled. The prefit 49-parameter finite-difference check passed (max symmetric relative error 4.588699537529518e-7). Two arms ran exactly 1,000 SGD updates each at LR 0.2, seed 89100471 / init 89100472. Formal fits: 0.
+## Frozen run and raw outcomes
 
-**D - decision.** The original frozen CPU direct-loop audit reconstructed all 20 arm/split logits with `errors=[]`. Scientific result: `STOP_NO_CONSTRUCTION_COMPETENCE`: max+mean train/base accuracy 0.50/0.50, mean held-out positive ACCEPT 0.00, held-out negative false ACCEPT 0.00; max-only held positive ACCEPT 0.00. The original 8 mutation controls rejected 5/8; this original outcome remains retained unchanged.
+Allocation `EXOGENOUS-OPPORTUNITY-BOUNDARY-5694-A03-20261002-01`, based on main `a11b1d811aea94d65a7c7a66073f1c9a7d024624`. Candidate and independent auditor were each invoked once, both exited 0, retries 0. The run took place on native Windows CPU from 19:40:39.1226745Z to 19:40:39.4021400Z. No container/runtime or GPU was touched.
 
-A separately versioned, CPU-only posthoc v2 audit regenerated `INPUTS.npz` under NumPy 2.1.2 and reproduced its 3,942,316 bytes and SHA-256 `624e57e64da36a9e4f6ace4187b71d737630523dee90b7b697d97a05e7127fa5` byte-for-byte against the retained input; it also reproduced the original audit JSON. Its eight distinct mutation cases rejected 8/8. See `out/result/AUDIT_V2.json`, `CONTROL_RESULTS_V2.json`, and `REGENERATION_RECEIPT.json`. V2 is CPU-only and separate: it does not change the negative scientific result or replace the original 5/8 record. The v2 audit and control scripts, runner, raw bytes, initial/final weights, and their hashes are listed in `src/POSTHOC_MANIFEST.json`.
+| Case | Frozen ledger classification |
+|---|---|
+| phase_hit | eligible_effect |
+| phase_miss | not_acquired |
+| delivery_after_expiry | acquired_not_delivered |
+| planner_stall | delivered_no_decision |
+| decision_no_effect | decision_no_eligible_effect / no_verified_effect |
+| safe_stop | decision_no_eligible_effect / safe_stop |
+| clock_unknown | UNKNOWN / clock_unsynced |
+| right_censored | UNKNOWN / right_censored |
+| no_exogenous_opportunity | NOT_APPLICABLE |
 
-**C.** This is a device/framework-image placement change from #4837's NumPy/OpenBLAS CPU implementation. CUDA arithmetic may differ. No causal GPU-vs-CPU quality or speed claim. No predecessor result was modified. One synthetic seed and one local device.
+Candidate raw SHA-256: `c76474a97505411cfd88b8808c2caa616017c6952bdba75614c941d629f03f39`. Auditor JSON SHA-256: `6a43bd87297aef6c08eb394a26b86362253aa753de4017135d2279366e8771de`. Exact commands, exit captures, source/input hashes and all stdout/stderr are retained in `FREEZE.json`, `RUN_RECORD.json`, and `SHA256SUMS`.
 
-**U.** No efficacy/generalization or real-app claim. This PR provides a validated regeneration receipt instead of committing the 3.94 MB generated input. `rebuild_inputs.py` reproduces the compressed bytes in the pinned NumPy 2.1.2 container; `audit_cpu_v2.py` directly audits against the regenerated temporary input and verifies any retained copy byte-for-byte. The exact input hash, regenerator and v2 checks are public and reproducible. Full pre-run GPU XML remains local; SHA-256 `7fa754f9a2d29b4c1a81e961df3d99cb98868605fde7258a0a78420d7cea46c0`.
-
-## Environment and resource receipts
-
-- Python `3.11.10`, PyTorch `2.5.1+cu121`, CUDA `12.1`, NumPy `2.1.2`.
-- Peak CUDA allocated: 82,928,128 bytes.
-- Fit times (descriptive only): max-only 1.204 s, max+mean 1.175 s.
-
+The audit PASS proves only replay of these authored rows and corruption controls. It does not overcome the unmatched phase fixture; see `ADJUDICATION.md`. Previous #5694 A01/A02 results remain untouched and unpooled.
