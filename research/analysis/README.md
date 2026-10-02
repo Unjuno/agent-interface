@@ -730,6 +730,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`version_defined_intervention_6691_a02_20261003/`](version_defined_intervention_6691_a02_20261003/)
 - [`version_defined_intervention_6691_t0_20261002/`](version_defined_intervention_6691_t0_20261002/)
 - [`versioned_predicate_specialist_switch_4284_reconciled_4603_v1/`](versioned_predicate_specialist_switch_4284_reconciled_4603_v1/)
+- [`view_updateability_5368_t0/`](view_updateability_5368_t0/)
 - [`visual_cue_coordinate_map_successor_2043_v1/`](visual_cue_coordinate_map_successor_2043_v1/)
 - [`visual_edge_aux_570_r8_v1/`](visual_edge_aux_570_r8_v1/)
 - [`visual_encoding_570_gpu_diagnostic_v3/`](visual_encoding_570_gpu_diagnostic_v3/)
