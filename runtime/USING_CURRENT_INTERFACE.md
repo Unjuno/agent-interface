@@ -812,7 +812,11 @@ comparison and evolving context/cache do not prove token or speed gains. Keep
 production defaults and the efficiency HOLD.
 
 
-### Run a bounded graph through the public Python owner
+### Candidate: bounded graph through the public Python owner (live HOLD)
+
+This draft candidate has no successful normal live qualification yet. Both
+allocated cases stopped at unresolved selection, before movement or Save.
+See the [retained failure and accounting report](results/public-owner-compiled-primary-01/PUBLICATION.md).
 
 After explicitly opening `GuardedSessionOwner` and grounding its references,
 call `owner.run_compiled(interface, bindings, call_root=fresh_directory,
