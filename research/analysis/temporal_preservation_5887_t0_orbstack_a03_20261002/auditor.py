@@ -51,7 +51,7 @@ def oracle_properties(samples: list[dict[str, Any]], deadline_ms: int) -> dict[s
 
 def audit(fixture: dict[str, Any], raw: dict[str, Any]) -> dict[str, Any]:
     errors: list[str] = []
-    if raw.get("schema") != "temporal-preservation-5887-a02-raw-v1":
+    if raw.get("schema") != "temporal-preservation-5887-a03-raw-v1":
         errors.append("schema")
     if raw.get("input") != fixture:
         errors.append("input_binding")

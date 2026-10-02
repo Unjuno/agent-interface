@@ -1,8 +1,8 @@
-# Issue #5887 T0 successor A02 — timed and edge-sensitive trace preservation
+# Issue #5887 T0 successor A03 — timed and edge-sensitive trace preservation
 
-Allocation: `TEMPORAL-PRESERVATION-5887-T0-ORB-A02-20261002-01`.
-Base main: `b68c0337f7d8e9103b60f7b4a23c952cb6c365e5`.
-This is a distinct prospective allocation. The predecessor's pre-candidate STOP and its source branch are immutable. A read-only contract audit identified that predecessor code did not implement event-count or populated-timestamp deadline checks; this allocation explicitly includes both.
+Allocation: `TEMPORAL-PRESERVATION-5887-T0-ORB-A03-20261002-01`.
+Base main: `4d3c8d3612e3c57f354f5e1be553ae4f5a7801e0`.
+This is a distinct prospective allocation, superseding A02's pre-run STOP without modifying it. The earlier #5887 source-contract audit identified missing event-count and populated-timestamp deadline checks; this candidate explicitly includes both.
 
 ## H / T / D / C / U
 

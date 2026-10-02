@@ -78,7 +78,7 @@ def build(fixture: dict[str, Any]) -> dict[str, Any]:
                 "projected_rows": projected,
                 "predicates": verdicts,
             })
-    return {"schema": "temporal-preservation-5887-a02-raw-v1", "input": fixture, "rows": out_rows}
+    return {"schema": "temporal-preservation-5887-a03-raw-v1", "input": fixture, "rows": out_rows}
 
 
 def main(argv: list[str]) -> int:
