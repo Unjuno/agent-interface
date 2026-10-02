@@ -1,0 +1,5 @@
+# Issue #6222 T0 publication-integrity qualification (2026-10-02)
+
+Preservation status: **HOLD_ARTIFACT_HASH_MISMATCH**. The original PR #6237 T0 package is retained byte-for-byte as a historical synthetic-method record; its report's `PASS_METHOD_SCOPED` is not an integrity-verified result and must not be promoted as a scientific PASS. An independent Git-blob audit found 4 of the 7 files listed in `formal-output-01/SHA256SUMS` mismatched: `audit.json`, `auditor.stdout.txt`, `candidate.stdout.txt`, and `RUN.json`. Original contemporaneous bytes/receipts were not found in the inspected Git history; no replacement was generated and candidate/auditor were not rerun. The remaining three listed files match. See Issue #6222 and the original `REPORT.md`, `PUBLICATION_CORRECTION.md`, and manifest for the unchanged history.
+
+This T0 is a CPU-only synthetic fixture and does not establish live scorer reliability or benchmark validity. It is separate from the T1 inventory, which remains `HOLD_T1_NO_CROSSABLE_PANEL` for its bounded retained corpus. Neither HOLD resolves the open repeatability question in #6222.
