@@ -2,7 +2,7 @@
 
 ## Disposition
 
-Formal candidate and auditor have not run. Latest main `5d02cdb388caa2ba9464bc84486bb533854878d9` was merged before allocation start; all frozen source hashes are unchanged. The full local Analysis Index suite then passed 19 commands / 114 tests; A02 construction 5/5 and index 555 passed. No scientific disposition is implied by these checks.
+Formal candidate and auditor have not run. Latest main `c2dc6e4fe2f5114418468cafbdd57deec0e4096e` was merged before allocation start (unrelated archived evidence only); all frozen source hashes are unchanged. The full local Analysis Index suite then passed 19 commands / 114 tests; T0b construction 5/5 and index 556 passed. No scientific disposition is implied by these checks.
 
 ## H / T / D / C / U
 
