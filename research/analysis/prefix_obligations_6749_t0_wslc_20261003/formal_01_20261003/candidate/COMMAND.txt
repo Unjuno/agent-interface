@@ -1,0 +1,7 @@
+WSLc 3.0.1.0; image issue-6749-prefix-candidate:20261003-a01 (sha256:aba87d5b36c5d403d96883d583f2562e9aa5b6b03597f22c92b16d15576280b0); --pull never --network none --cpus 1 --memory 512m --user 65532:65532; source mount :ro; output mount :rw; python -B candidate.py /out/raw.json
+
+Exit: 0
+Stdout: {"output": "/out/raw.json", "rows": 8640}
+Stderr: WSLc warning: kernel does not support swap limit capabilities or cgroup is not mounted; requested memory enforcement unverified.
+Candidate raw SHA-256: 12aa81b815bf7d92bca7d8b6b315c50c1377385c002ce609ccbb0abd8a111a6ba
+Formal candidate invocations: 1 (consumed; do not rerun).
