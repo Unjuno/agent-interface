@@ -560,6 +560,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`response_capacity_5771_successor_v1/`](response_capacity_5771_successor_v1/)
 - [`reusable_receipt_session_binding_v1/`](reusable_receipt_session_binding_v1/)
 - [`reusable_receipt_session_binding_v2/`](reusable_receipt_session_binding_v2/)
+- [`reversibility_horizon_6695_t0_20261002/`](reversibility_horizon_6695_t0_20261002/)
 - [`revision_timed_cutover_6617_t0_v1/`](revision_timed_cutover_6617_t0_v1/)
 - [`robust_reachable_tube_6089_t0_20261001/`](robust_reachable_tube_6089_t0_20261001/)
 - [`robust_recourse_5862_t0_v1/`](robust_recourse_5862_t0_v1/)
