@@ -105,6 +105,32 @@ separate; all raw inputs, outputs, source, image identities and hashes are
 retained. None establishes a real release-delay tail, physical key-up, safety,
 or worst-case guarantee.
 
+### Timer-quantization eligibility counterexample A01
+
+[A01](timer_quantization_a01_20261002/RUN_RECORD.md) is a separate fresh-seed
+OrbStack Docker construction experiment. The current gate accepted the q=1.0
+rounded synthetic arm as `ELIGIBLE_REFERENCE` with only six distinct values
+among 333 q90 exceedances; independent raw-only audit passed. The continuous
+control was rejected by the existing block-median ratio diagnostic, while the
+q=0.25 arm was accepted with 21 distinct exceedance values. This identifies a
+quantization/tie-support omission in this finite synthetic gate contract only;
+no EVT fit, p99 calibration, real timer, input release, safety, or worst-case
+claim was tested. A01 does not invoke or consume the formal six-case T0.
+
+[A02](timer_quantization_a02_20261002/RUN_RECORD.md) evaluated a proposed
+20-distinct-exceedance support rule on 30 fresh seeds per resolution. The rule
+held 30/30 baseline-eligible q=1.0 fixtures, added 0/21 holds to continuous
+controls, and held 7/24 intermediate q=0.25 fixtures; its preregistered
+synthetic criterion passed. This cutoff remains unvalidated beyond these
+generator/quantum conditions and is not a production recommendation.
+
+[A03](timer_quantization_a03_20261002/RUN_RECORD.md) swept support cutoffs
+8/12/16/20/24 on 50 fresh seeds each at q=0, 0.25, 0.5 and 1.0. Cutoff 8 was
+the smallest tested value meeting the synthetic criteria (q=1.0 hold 48/50;
+continuous 0/31 and q=0.25 0/36 additional holds). Cutoff 20 held 14/36 q=0.25
+fixtures; q=0.5 had only 2/50 baseline-eligible fixtures. This narrows the
+synthetic tradeoff only and does not validate a deployed threshold.
+
 ### Execution status and local CI / provenance checks
 
 The earlier host-only boundary package and censor-cap probe remain preserved.

@@ -1,0 +1,71 @@
+{
+  "schema": "service-fairness-6613-edf-successor-freeze-v1",
+  "issue": 6613,
+  "allocation_id": "SERVICE-FAIRNESS-6613-EDF-A01-20261003",
+  "owner": {
+    "task": "01a0b990-3d17-72f1-a908-9a2072104ce5",
+    "name": "Unjuno research thread"
+  },
+  "execution_window_utc": {
+    "start": "2026-10-02T16:42:00Z",
+    "end": "2026-10-02T16:57:00Z",
+    "resource_scope": "one local WSL2 CPU-only process; no shared container or GPU slot claimed"
+  },
+  "base_main_sha": "6fdfa6b2e2bbb13a58a235dae5499676d7dd417f",
+  "branch": "research/service-fairness-6613-edf-a01-20261003",
+  "evidence_path": "research/analysis/service_fairness_6613_edf_a01_20261003/",
+  "prior_result": {
+    "issue_allocation": "#6613 service-debt/deadline A01",
+    "disposition": "FAIL_HYPOTHESIS",
+    "policy_result": "debt mean per-trace maximum wait 33.28125; FIFO 31.875; shortest-service-first 32.28125",
+    "handling": "preserved unchanged; no retry, tuning, data or seed reuse"
+  },
+  "hypothesis_scope": "new EDF deadline-completion successor, not the original conditional T1; finite synthetic method-only study",
+  "input_sha256": {
+    "PROTOCOL.md": "09ea98975712223eadf16baf9e9d27ddbb1d18c7985130f0eb1737c15c5be1ad",
+    "prepare.py": "ecb4e7752cef0f430c62c9e29633b388e483432cc2d1c697b676bc9f9d9734a4",
+    "fixture.json": "7d39e68311cfb58eb9e7a7f26b36f3981f78f94bbe627e505ae4efb7a4bad7bf",
+    "candidate.py": "55f2185c3338b94cbf93338958f7b27ad10fed08fd7ee0753523921077240e0e",
+    "auditor.py": "26ac2cf29a6b9e3f641546d5b7bb997d7ad4d493d324a36865a5477cfbd5adb1",
+    "test_construction.py": "8dbb1b3fd51a0ce93364ec85759bf9bc1e425b57a649f89af2f47378daa4ed6b"
+  },
+  "frozen_design": {
+    "seeds": [20000, 20039],
+    "strata": ["asymmetric_deadlines", "burst_recovery", "revocation_mandatory"],
+    "policies": ["fifo", "shortest_service", "edf"],
+    "trace_count": 120,
+    "policy_trace_rows": 360,
+    "candidate_invocations_max": 1,
+    "auditor_invocations_max": 1,
+    "retries": 0,
+    "gpu_cuda_model_gui_network_container_invocations": 0,
+    "formal_outputs_absent_at_freeze": ["candidate_raw.json", "audit.json"],
+    "construction_checks_passed": 5,
+    "decision": "PASS_METHOD_SCOPED only on exact raw-only replay, 5/5 corruption rejections, hard eligibility and mandatory gates, and every preregistered on-time threshold; otherwise FAIL_METHOD or FAIL_HYPOTHESIS as defined in PROTOCOL.md"
+  },
+  "runtime": {
+    "os": "Windows host, existing WSL2 distro archlinux",
+    "wsl_version": "3.0.1.0",
+    "python": "3.14.7",
+    "standard_library_only": true,
+    "formal_invocations": [
+      "wsl.exe -d archlinux --exec /usr/bin/python3 /mnt/c/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-4/work_6613_t1_edf/research/analysis/service_fairness_6613_edf_a01_20261003/candidate.py",
+      "only if candidate exits 0: wsl.exe -d archlinux --exec /usr/bin/python3 /mnt/c/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-4/work_6613_t1_edf/research/analysis/service_fairness_6613_edf_a01_20261003/auditor.py"
+    ],
+    "container_engine": "not invoked; WSLc attribution anomaly remains unrelated and unresolved",
+    "gpu": "not needed or invoked; pre-run observation RTX 3080 Laptop GPU 16384 MiB, 11 MiB used, 0% utilization; observation is not a lease"
+  },
+  "local_capacity_snapshot": {
+    "free_ram_kib_approx": 11098192,
+    "free_c_drive_bytes": 60840009728,
+    "observed_at_utc": "2026-10-02T16:34Z"
+  },
+  "decision_gates": {
+    "performance": "asymmetric EDF mean on-time optional completions at least 0.5 per trace above both FIFO and shortest-service; each other stratum no worse than FIFO by more than 0.5 per trace",
+    "integrity": "independent exact replay of all 360 rows and rejection of all 5 planted raw corruptions",
+    "safety": "never dispatch a task that cannot finish inside its hard eligibility horizon; every mandatory system event is selected at the first available dispatch boundary",
+    "fail_method": "any raw mismatch, unauthorized/expired dispatch, missed mandatory item, or failed mutation control",
+    "fail_hypothesis": "integrity and safety gates pass but any preregistered performance threshold fails",
+    "scope_limit": "No human fairness, real workload, live GUI, authorization, safety, or product claim"
+  }
+}

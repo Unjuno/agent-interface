@@ -1,0 +1,18 @@
+{
+  "allocation_id": "INTENT-SLOT-6081-T0-20261001-01",
+  "base_main_sha": "6cd70ad4bfad74e11658057bf024918bffb24add",
+  "branch": "research/input-slot-error-carry-6081-t0-20261001",
+  "additive_path": "research/analysis/input_slot_error_carry_6081_t0_20261001/",
+  "scope": "exact synthetic constant-displacement method fixture; Python stdlib; host-only; no live input",
+  "formal_invocations": {"candidate": 1, "independent_auditor": 1, "reruns": 0},
+  "pre_freeze_construction": {"command": "python -B -m unittest -v test_construction.py", "result": "PASS; 6 tests; Python 3.12.10", "first_attempt_fixes": ["auditor action-vector tuple unpack corrected before freeze", "auditor safety-envelope refusal control now distinguishes offline diagnostic metrics from exposed compiled commands", "segment convex-hull containment checks both coordinates"]},
+  "source_sha256": {
+    "audit.py": "5344F636B8DE78DD519892543C0DDBC3E00E5CE247318C909371F83E22646AA4",
+    "candidate.py": "582B5FDF7C26E19FA028A1237B6A6FFE3B023BBE09B0F6EA335E8B5FCE28E27F",
+    "cases.json": "4CFD6B2CFADDE56191EE53E26B07E11282B78A8598C9314FC32953597F11C806",
+    "PROTOCOL.md": "EA37950A81D3B9F929D1546B676FC19D232C0C33BF953877C1D7671C75B51E8E",
+    "test_construction.py": "65EF448A286AB3F608DED0A397AB145F912B6EBB781E6DC0BEFCDDD442540FAC"
+  },
+  "case_inventory": {"cases": 17, "exact_horizon_controls": 9, "relaxation_only_controls": 2, "preflight_refusal_controls": 6, "safety_envelope_refusal": 1},
+  "limits": ["No display/game/physical keyboard/OS input/API/model is used.", "Action displacement vectors and per-slot durations are declared synthetic calibration inputs.", "Docker Desktop is present but its engine probe is unresponsive; no shared CPU/container slot is allocated to this run.", "Synthetic error reduction does not demonstrate live safety, target progress, or game performance."]
+}

@@ -1,0 +1,13 @@
+FROM python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+WORKDIR /
+COPY src/ /src/
+COPY candidate_fixture.json oracle_fixture.json /inputs/
+COPY inputs/manifest.json /inputs/
+RUN mkdir -p /inputs/panels
+COPY inputs/panels/heldout-02-positive-low.png /inputs/panels/
+COPY inputs/panels/heldout-03-positive-mid.png /inputs/panels/
+COPY inputs/panels/heldout-04-positive-max.png /inputs/panels/
+COPY inputs/panels/heldout-05-absent.png /inputs/panels/
+RUN chmod -R a-w /src /inputs && mkdir -p /tmp && chmod 1777 /tmp
+USER 65532:65532

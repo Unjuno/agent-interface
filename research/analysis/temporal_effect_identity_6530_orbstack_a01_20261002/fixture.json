@@ -1,0 +1,47 @@
+{
+  "schema": "temporal-effect-fixture-v1",
+  "zone": "America/New_York",
+  "tzdb_release": "2026c",
+  "cases": [
+    {
+      "id": "ordinary",
+      "intent": {"kind": "ONE_INSTANT", "local": "2026-03-07T09:00:00", "zone": "America/New_York"},
+      "observed": {"local_display": "2026-03-07 09:00", "zone": "America/New_York", "utc": "2026-03-07T14:00:00Z", "event_id": "evt-ordinary", "count": 1}
+    },
+    {
+      "id": "fold-first",
+      "intent": {"kind": "ONE_INSTANT", "local": "2026-11-01T01:30:00", "zone": "America/New_York", "fold": 0},
+      "observed": {"local_display": "2026-11-01 01:30", "zone": "America/New_York", "utc": "2026-11-01T05:30:00Z", "event_id": "evt-fold-first", "count": 1}
+    },
+    {
+      "id": "fold-second",
+      "intent": {"kind": "ONE_INSTANT", "local": "2026-11-01T01:30:00", "zone": "America/New_York", "fold": 1},
+      "observed": {"local_display": "2026-11-01 01:30", "zone": "America/New_York", "utc": "2026-11-01T06:30:00Z", "event_id": "evt-fold-second", "count": 1}
+    },
+    {
+      "id": "fold-unresolved",
+      "intent": {"kind": "ONE_INSTANT", "local": "2026-11-01T01:30:00", "zone": "America/New_York", "fold": null},
+      "observed": {"local_display": "2026-11-01 01:30", "zone": "America/New_York", "utc": "2026-11-01T05:30:00Z", "event_id": "evt-fold-unknown", "count": 1}
+    },
+    {
+      "id": "spring-gap",
+      "intent": {"kind": "ONE_INSTANT", "local": "2026-03-08T02:30:00", "zone": "America/New_York"},
+      "observed": {"local_display": "2026-03-08 02:30", "zone": "America/New_York", "utc": "2026-03-08T07:30:00Z", "event_id": "evt-gap", "count": 1}
+    },
+    {
+      "id": "local-recurrence",
+      "intent": {"kind": "RECURRENCE_IN_ZONE", "local_time": "09:00", "dates": ["2026-03-07", "2026-03-08", "2026-03-09"], "zone": "America/New_York"},
+      "observed": {"local_displays": ["2026-03-07 09:00", "2026-03-08 09:00", "2026-03-09 09:00"], "zone": "America/New_York", "utc_occurrences": ["2026-03-07T14:00:00Z", "2026-03-08T14:00:00Z", "2026-03-09T14:00:00Z"], "event_id": "evt-recur", "count": 1}
+    },
+    {
+      "id": "no-save",
+      "intent": {"kind": "ONE_INSTANT", "local": "2026-03-07T09:00:00", "zone": "America/New_York"},
+      "observed": {"local_display": "2026-03-07 09:00", "zone": "America/New_York", "utc": null, "event_id": null, "count": 0}
+    },
+    {
+      "id": "duplicate",
+      "intent": {"kind": "ONE_INSTANT", "local": "2026-03-07T09:00:00", "zone": "America/New_York"},
+      "observed": {"local_display": "2026-03-07 09:00", "zone": "America/New_York", "utc": "2026-03-07T14:00:00Z", "event_id": "evt-duplicate", "count": 2}
+    }
+  ]
+}

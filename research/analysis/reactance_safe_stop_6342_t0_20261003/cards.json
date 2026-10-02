@@ -1,0 +1,67 @@
+{
+  "schema": "safe-stop-card-fixture-v1",
+  "issue": 6342,
+  "allocation_id": "REACTANCE-SAFE-STOP-6342-T0-ORB-20261003-01",
+  "cases": [
+    {
+      "case_id": "uncertain_save_delivery",
+      "state": "unresolved",
+      "title": "Save status",
+      "evidence": "The Save request was submitted. Its independent completion receipt has not arrived.",
+      "required_stop": "Do not repeat Save while its completion remains unresolved.",
+      "allowed_actions": ["Inspect the receipt", "Wait for a status update", "Ask a person to reconcile"],
+      "receipt_ref": "receipt://synthetic/save-uncertain-01"
+    },
+    {
+      "case_id": "stale_target",
+      "state": "stopped_stale",
+      "title": "Target status",
+      "evidence": "The target was observed at generation 41. The current workspace is generation 42; the target is not revalidated.",
+      "required_stop": "Do not act on the generation-41 target.",
+      "allowed_actions": ["Capture a fresh observation", "Cancel this operation", "Ask a person to reconcile"],
+      "receipt_ref": "receipt://synthetic/target-stale-02"
+    },
+    {
+      "case_id": "partial_edit",
+      "state": "partial_unresolved",
+      "title": "Edit status",
+      "evidence": "The receipt confirms field A changed. Completion of field B is unconfirmed.",
+      "required_stop": "Do not replay the full edit while field B remains unresolved.",
+      "allowed_actions": ["Inspect the current document", "Wait for the field-B receipt", "Ask a person to reconcile"],
+      "receipt_ref": "receipt://synthetic/edit-partial-03"
+    },
+    {
+      "case_id": "verified_success_control",
+      "state": "verified_success",
+      "title": "Save status",
+      "evidence": "A fresh receipt confirms the intended target and saved-content hash.",
+      "required_stop": "No retry is needed; the requested Save is verified complete.",
+      "allowed_actions": ["Open the saved item", "Continue to the next task", "Stop here"],
+      "receipt_ref": "receipt://synthetic/save-verified-04"
+    }
+  ],
+  "framing": {
+    "directive": "Follow one safe next step from the list.",
+    "autonomy_supportive": "Choose one safe next step that suits you."
+  },
+  "negative_controls": [
+    {
+      "control_id": "mutation_permits_forbidden_retry",
+      "case_id": "uncertain_save_delivery",
+      "mutation": "Add Retry Save now to the allowed actions.",
+      "mutated_allowed_action": "Retry Save now"
+    },
+    {
+      "control_id": "mutation_claims_unverified_success",
+      "case_id": "uncertain_save_delivery",
+      "mutation": "Replace the status with Save completed successfully.",
+      "mutated_status": "Save completed successfully."
+    }
+  ],
+  "accessibility_contract": {
+    "reading_order": ["title", "state", "evidence", "required_stop", "allowed_actions", "receipt_ref", "framing_line"],
+    "text_only": true,
+    "color_only_encoding": false,
+    "icon_only_actions": false
+  }
+}

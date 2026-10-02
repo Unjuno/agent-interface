@@ -1,0 +1,29 @@
+{
+  "allocation_id": "R133-CROSSDOMAIN-TIME-COVERAGE-59-T0-20261002-02",
+  "source_main_sha": "f9633921c93530054b0d7320b1665df114050d52",
+  "predecessor_allocation": "R133-CROSSDOMAIN-TIME-COVERAGE-59-T0-20261002-01",
+  "candidate": {
+    "command": "python3 -B run_candidate_v2.py",
+    "invocations": 1,
+    "exit_code": 0,
+    "status": "HOLD_CROSSDOMAIN_TIME_COVERAGE_UNIDENTIFIED",
+    "retries": 0,
+    "sha256": "feafa5bed5968966bf7ee715430d6c2426d44aab96cd779b444bf960963ff427"
+  },
+  "auditor": {
+    "command": "python3 -B run_audit_v2.py",
+    "invocations": 1,
+    "exit_code": 1,
+    "status": "FAIL_AUDIT",
+    "error": "Sparse v38 event-count map omits input_released; expected-zero comparison treats absence as None.",
+    "retries": 0,
+    "sha256": "a579b58cae9333429f649ca0e84872d80d132b0c85b3f2f23e437781b1cc57ce"
+  },
+  "construction_tests": {
+    "command": "python3 -B -m unittest -v test_candidate_v2 test_audit_v2",
+    "result": "PASS",
+    "passed": 6,
+    "failed": 0
+  },
+  "resource_scope": "Host standard-library replay only; no Docker, WSL, model, GUI, OS input, game, or GPU."
+}

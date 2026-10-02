@@ -1,0 +1,39 @@
+{
+  "allocation_id": "6003-container-repro-a01-20261003",
+  "issue": 6740,
+  "started_utc": "2026-10-02T15:12:54Z",
+  "candidate_invocations": 1,
+  "candidate_exit_code": 1,
+  "candidate_output_created": false,
+  "output_absence_basis": "The traceback occurs at platform.platform() before select.py reaches OUT.write_text(); the post-exit docker cp failure is not used as evidence because /tmp was ephemeral.",
+  "method_auditor_invocations": 0,
+  "method_auditor_reason": "No candidate_result.json was emitted; the predeclared mathematical auditor requires that file and was not run against fabricated/substitute input.",
+  "container": {
+    "name": "issue6740-candidate-a01",
+    "id": "e2159b42ed4e6165a360319f0b25e59768faa79a359b7281b8caa1e6d2eb489c",
+    "status": "exited",
+    "image_ref": "python@sha256:c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b",
+    "image_id": "sha256:c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b",
+    "engine": "OrbStack Docker Engine 29.4.0",
+    "platform": "linux/arm64",
+    "network_mode": "none",
+    "read_only_rootfs": true,
+    "memory_bytes": 268435456,
+    "nano_cpus": 1000000000,
+    "pids_limit": 64,
+    "cap_drop": ["ALL"],
+    "security_options": ["no-new-privileges"],
+    "user": "1000:1000",
+    "tmpfs": {"/tmp": "rw,noexec,nosuid,size=16m"},
+    "mounts": [
+      {
+        "source": "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6003-container-repro-a01-20261003/research/analysis/decision_reversal_6003_container_repro_a01_20261003",
+        "destination": "/input",
+        "read_write": false
+      }
+    ]
+  },
+  "candidate_stdout_sha256": "ef8181e6dc1f006e27ea5bb59f10ba451832d16386363c5176c57398161e8679",
+  "trace": "The selector script at /tmp/run/select.py calls platform.platform(); platform probes subprocess; subprocess imports selectors; selectors resolves the local module named select from /tmp/run and fails because that module has no select.select attribute.",
+  "interpretation": "FAIL_RUNNER_IMPORT_COLLISION_NO_METHOD_RESULT; the selector decision was not evaluated."
+}

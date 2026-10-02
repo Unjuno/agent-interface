@@ -1,0 +1,49 @@
+{
+  "schema": "prefix-stability-successor-6749-freeze-v1",
+  "issue": 6749,
+  "allocation": "PREFIX-STABILITY-6689-SUCCESSOR-6749-ORB-20261003-01",
+  "branch": "research/prefix-stability-6689-successor-6749-orbstack-20261003",
+  "path": "research/analysis/prefix_stability_6689_successor_6749_orbstack_20261003",
+  "base_commit": "43f7cd88d91af05036fae2100ec4e155c59e105c",
+  "predecessors": {
+    "pr_6704": "FAIL_AUDIT / STOP_CLASSIFICATION_COUNT_CONTRACT",
+    "pr_6706": "FAIL_METHOD / stable negative suppressed incomplete mandatory obligation"
+  },
+  "hypothesis": "A corrected prefix-stability classifier and independent raw-only oracle preserve pending mandatory obligations under decisive stable FAIL and keep disposition counts disjoint from early-finalization metrics.",
+  "decision_gate": {
+    "expected_worlds": 32,
+    "expected_traces": 2112,
+    "expected_unique_prefixes": 4064,
+    "mutations": ["drop_pending_mandatory", "mix_derived_metric", "forge_complete", "stale_as_current", "timeout_as_complete"],
+    "pass": "all prefix rows/continuations independently agree; stable FAIL retains unseen mandatory obligation; PASS awaits full mandatory/generation/frontier evidence; all five mutations rejected; authority=0 and effects=0",
+    "fail": "false finality, lost obligation, aggregate discrepancy, missed mutation, or any authority/effect",
+    "scope": "finite authored method only"
+  },
+  "container": {
+    "engine": "OrbStack Docker Engine 29.4.0",
+    "platform": "linux/arm64",
+    "image": "python@sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "image_id": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "pull": "never",
+    "network": "none",
+    "read_only_rootfs": true,
+    "cpus": 1,
+    "memory_bytes": 268435456,
+    "pids_limit": 64,
+    "cap_drop": ["ALL"],
+    "security_options": ["no-new-privileges"],
+    "user": "1000:1000"
+  },
+  "formal_invocation_ceiling": {"candidate": 1, "auditor": 1, "retry": 0},
+  "construction_only_host_runs": {"unit_tests": 5, "candidate_cli_smoke": 1, "formal_outputs_at_freeze": 0},
+  "source_sha256": {
+    "fixture.json": "5b2595262434608146be08278ee62d14f6f4230046e257674c39d1a21a138012",
+    "candidate.py": "290b09b823abf25a80cc0e945a634d6e1bbdc36247690cdd96273b60c668f226",
+    "auditor.py": "9dc521655b6a55c6463176c1ce5263fa9fcc88e0917848d39392d582539b8710",
+    "test_t0.py": "cd1c4edd4dd645d14a1d934f9f82497fc2b080daa49ba54b4467744899d2fb3a"
+  },
+  "outputs_absent_before_formal_start": [
+    "results/formal_01/candidate/raw.json",
+    "results/formal_01/auditor/audit.json"
+  ]
+}

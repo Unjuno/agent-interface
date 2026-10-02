@@ -1,0 +1,42 @@
+{
+  "allocation": "issue1839-source-bound-a01-20261003-01",
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "retries": 0,
+  "replacements": 0,
+  "tuning": 0,
+  "intake_main": "6fdfa6b2e2bbb13a58a235dae5499676d7dd417f",
+  "raw_source": {
+    "path": "research/doom/map01_v12_attack_task_effect_live_v1/RAW_USED.json.xz",
+    "bytes": 7392,
+    "sha256": "0d55f782f0e129738b422e52d8066f7fb69a02ebcf2c1691ee711e74a369a740"
+  },
+  "frozen_package_sha256": {
+    "candidate.py": "f91db605202563bff194534f64dc2a047e469fcf17d3cecbd79dc42e3a238870",
+    "auditor.py": "454e6cd71170c9e00c16f1adfdcc1c5b92bccb96bd2a6954649f1cfa15dff187",
+    "test_contract.py": "3c4aeaffd5b6268284d6b397445996812693d86b4b0bfed4c369080ac766af05",
+    "PLAN.md": "626c868d5ba5b1fe8cca3144b4177adc4cd84eb4491a41ebf2afde597ab55b29"
+  },
+  "runtime": {
+    "engine": "OrbStack Docker Engine 29.4.0",
+    "platform": "linux/arm64",
+    "image": "python@sha256:c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b",
+    "network": "none",
+    "cpus_requested": 1,
+    "memory_requested": "512m",
+    "pids_limit": 64,
+    "rootfs": "read-only",
+    "source_mount": "read-only"
+  },
+  "outputs": {
+    "candidate": "results/formal-01/candidate.json",
+    "candidate_stdout": "results/formal-01/candidate.stdout.txt",
+    "candidate_stderr": "results/formal-01/candidate.stderr.txt",
+    "candidate_receipt": "results/formal-01/candidate.container.json",
+    "audit_stdout": "results/formal-01/auditor.stdout.txt",
+    "audit_stderr": "results/formal-01/auditor.stderr.txt",
+    "audit_receipt": "results/formal-01/auditor.container.json",
+    "audit_summary": "results/formal-01/audit.json"
+  },
+  "stop_rule": "Any nonzero exit, source/hash/schema mismatch, candidate/auditor disagreement, unsafe mutation acceptance, or unexpected evidence class => preserve first artifacts and stop; do not retry."
+}

@@ -1,0 +1,48 @@
+{
+  "schema": "issue5694-event-time-freeze-v1",
+  "allocation": "EXOGENOUS-OPPORTUNITY-5694-A02-EVENT-TIME-20261003-01",
+  "intake_main": "b100d9acee4ec99490b2e97066ec6af5312f1ed9",
+  "pre_formal_main_head": "f8e71fc777100281c67a51233b222334fada2863",
+  "main_advance_note": "Ten commits advanced after intake base; GitHub compare shows changes only in RESEARCH.md, research/analysis/README.md, and unrelated Issue #6613 evidence. No frozen source path changed.",
+  "source_branch": "research/5694-event-time-coverage-a02-wslc-20261003",
+  "frozen_source_commit": "f08801613fb500dea0f507af303c02f60d65bc7c",
+  "paths": {
+    "PREREGISTRATION.md": {
+      "git_blob": "61e281f70507cf85bc3d03791be6adcfb6c10c7d",
+      "sha256": "0f3e2ba44c84b2cd02d3001fbb050c34ce0589c45402db5924d63e2dc6aa6721"
+    },
+    "candidate.py": {
+      "git_blob": "48bcd9731c22c9eca020f36ddc89b5f12e5c43a2",
+      "sha256": "fb7477ac71a68f77d4f31ac48892d12d59bfe925d3930f4932b5c7d91080f26c"
+    },
+    "audit.py": {
+      "git_blob": "13039c663964a65665938b133cf5cf37ab79d486",
+      "sha256": "6453d05388d67c031950cedc457588a56b4d3154f887ee92b16ec9f9c55d55e0"
+    },
+    "test_contract.py": {
+      "git_blob": "d51c023243c559a33c156029a7747364ddc876a5",
+      "sha256": "52dc7dba5f1245f20598f47fae01c3203627c938398d7d67673305ccbc208e65"
+    }
+  },
+  "runtime": {
+    "engine": "Microsoft WSL Containers (wslc.exe) 3.0.1.0",
+    "platform": "linux/amd64",
+    "image_ref": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "local_image_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "pull": "never",
+    "network": "none",
+    "cpus_requested": 1,
+    "memory_requested": "256m",
+    "source_mount": "read-only",
+    "separate_output_mounts": true,
+    "gpu": false
+  },
+  "limits": {
+    "candidate_max": 1,
+    "auditor_max": 1,
+    "retries": 0,
+    "package_installs": 0,
+    "external_calls": 0
+  },
+  "verification_note": "PREREGISTRATION.md SHA-256 corrected before formal execution: GitHub MCP fetch_file and fetch_blob return identical UTF-8 content (3457 bytes, LF line endings); Arch WSL GitHub API blob download decodes to those same bytes. Original 7b73... value was inconsistent with the frozen Git blob/content. No source file changed."
+}
