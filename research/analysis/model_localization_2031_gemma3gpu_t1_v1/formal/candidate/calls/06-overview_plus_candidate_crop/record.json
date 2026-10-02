@@ -1,0 +1,107 @@
+{
+  "answer": {
+    "abstain": false,
+    "label": "Open",
+    "x": 256,
+    "y": 160
+  },
+  "arm": "OVERVIEW_PLUS_CANDIDATE_CROP",
+  "call_id": "06-overview_plus_candidate_crop",
+  "case_id": "ambiguous-duplicate-target",
+  "eval_count": 23,
+  "eval_duration_ns": 342251000,
+  "http_status": 200,
+  "images": [
+    {
+      "bytes": 20792,
+      "encoded_size": [
+        512,
+        320
+      ],
+      "role": "overview",
+      "sha256": "0673cd53a7892a819f148a9d44116de2ef59e2d90c833767fa5feeb78b464ae8",
+      "source_box": [
+        0,
+        0,
+        512,
+        320
+      ]
+    },
+    {
+      "bytes": 10013,
+      "encoded_size": [
+        512,
+        320
+      ],
+      "role": "candidate_crop",
+      "sha256": "e3762483fd1a07bea1ce705fea8e2318fcad7fab5cca8f44a56921e9c6cb4028",
+      "source_box": [
+        0,
+        0,
+        512,
+        320
+      ]
+    }
+  ],
+  "load_duration_ns": 2310312,
+  "prompt_eval_count": 715,
+  "prompt_eval_duration_ns": 2300693000,
+  "proposal": {
+    "all_scores": [
+      {
+        "box": [
+          0,
+          0,
+          512,
+          320
+        ],
+        "edge_mean": 4.098893063442334,
+        "tile": 0
+      },
+      {
+        "box": [
+          512,
+          0,
+          1024,
+          320
+        ],
+        "edge_mean": 2.713209198159389,
+        "tile": 1
+      },
+      {
+        "box": [
+          0,
+          320,
+          512,
+          640
+        ],
+        "edge_mean": 3.2619352114744466,
+        "tile": 2
+      },
+      {
+        "box": [
+          512,
+          320,
+          1024,
+          640
+        ],
+        "edge_mean": 3.224602873506951,
+        "tile": 3
+      }
+    ],
+    "box": [
+      0,
+      0,
+      512,
+      320
+    ],
+    "edge_mean": 4.098893063442334,
+    "tile": 0
+  },
+  "request_bytes": 41776,
+  "request_sha256": "720eddffdfb08766c6752d79f4273f3744e192c11d5668eb61d02b372206c095",
+  "response_bytes": 383,
+  "response_sha256": "7ec61ec7d01d36f9d4a8071008243df18320a614027978c6771ae926ef149b66",
+  "total_duration_ns": 2753398110,
+  "wall_elapsed_ns": 2754728307
+}
