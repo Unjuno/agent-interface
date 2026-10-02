@@ -1,0 +1,22 @@
+{
+  "schema": "issue-6556-t0-fixture-v1",
+  "policies": [
+    "CUE_ONLY",
+    "UNSUBSCRIBE_ONLY",
+    "CURRENT_GENERATION_AT_DELIVERY",
+    "DURABLE_INSTANCE_EVENT_ID",
+    "ORIGIN_GENERATION_RETIREMENT_FENCE"
+  ],
+  "cases": [
+    {"id":"old_event_original_instance","current":{"intent":"B","generation":2,"instance":"wait-B","cue":"same-cue","active":true},"event":{"id":"evt-A-1","cue":"same-cue","origin":{"intent":"A","generation":1,"instance":"wait-A"},"target_instance":"wait-A","delivery_listener":"wait-B"},"retired_instances":["wait-A"],"seen_event_ids":[],"obligation":"EFFECT_UNKNOWN"},
+    {"id":"old_event_rebound_missing_origin","current":{"intent":"B","generation":2,"instance":"wait-B","cue":"same-cue","active":true},"event":{"id":"evt-A-2","cue":"same-cue","origin":null,"target_instance":"wait-B","delivery_listener":"wait-B"},"retired_instances":["wait-A"],"seen_event_ids":[],"obligation":"RELEASE_PENDING"},
+    {"id":"fresh_reused_cue_generation_B","current":{"intent":"B","generation":2,"instance":"wait-B","cue":"same-cue","active":true},"event":{"id":"evt-B-1","cue":"same-cue","origin":{"intent":"B","generation":2,"instance":"wait-B"},"target_instance":"wait-B","delivery_listener":"wait-B"},"retired_instances":["wait-A"],"seen_event_ids":[],"obligation":"NONE"},
+    {"id":"legitimate_A_before_retirement","current":{"intent":"A","generation":1,"instance":"wait-A","cue":"same-cue","active":true},"event":{"id":"evt-A-live","cue":"same-cue","origin":{"intent":"A","generation":1,"instance":"wait-A"},"target_instance":"wait-A","delivery_listener":"wait-A"},"retired_instances":[],"seen_event_ids":[],"obligation":"EFFECT_UNKNOWN"},
+    {"id":"duplicate_event_in_B","current":{"intent":"B","generation":2,"instance":"wait-B","cue":"same-cue","active":true},"event":{"id":"evt-B-seen","cue":"same-cue","origin":{"intent":"B","generation":2,"instance":"wait-B"},"target_instance":"wait-B","delivery_listener":"wait-B"},"retired_instances":["wait-A"],"seen_event_ids":["evt-B-seen"],"obligation":"RELEASE_PENDING"},
+    {"id":"cancelled_no_active_intent","current":{"intent":null,"generation":null,"instance":null,"cue":"same-cue","active":false},"event":{"id":"evt-A-cancelled","cue":"same-cue","origin":{"intent":"A","generation":1,"instance":"wait-A"},"target_instance":"wait-A","delivery_listener":null},"retired_instances":["wait-A"],"seen_event_ids":[],"obligation":"EFFECT_UNKNOWN"},
+    {"id":"accepted_handoff_old_event","current":{"intent":"B","generation":2,"instance":"wait-B","cue":"same-cue","active":true},"event":{"id":"evt-A-handoff","cue":"same-cue","origin":{"intent":"A","generation":1,"instance":"wait-A"},"target_instance":"wait-A","delivery_listener":"wait-B"},"retired_instances":["wait-A"],"seen_event_ids":[],"obligation":"RELEASE_PENDING"},
+    {"id":"unaccepted_handoff_A_still_active","current":{"intent":"A","generation":1,"instance":"wait-A","cue":"same-cue","active":true},"event":{"id":"evt-A-handoff-live","cue":"same-cue","origin":{"intent":"A","generation":1,"instance":"wait-A"},"target_instance":"wait-A","delivery_listener":"wait-A"},"retired_instances":[],"seen_event_ids":[],"obligation":"EFFECT_UNKNOWN"},
+    {"id":"restart_retirement_receipt_present","current":{"intent":"B","generation":2,"instance":"wait-B","cue":"same-cue","active":true},"event":{"id":"evt-A-replay","cue":"same-cue","origin":{"intent":"A","generation":1,"instance":"wait-A"},"target_instance":"wait-A","delivery_listener":"wait-B"},"retired_instances":["wait-A"],"seen_event_ids":[],"obligation":"EFFECT_UNKNOWN"},
+    {"id":"restart_origin_and_receipt_missing","current":{"intent":"B","generation":2,"instance":"wait-B","cue":"same-cue","active":true},"event":{"id":"evt-ambiguous-replay","cue":"same-cue","origin":null,"target_instance":"wait-B","delivery_listener":"wait-B"},"retired_instances":[],"seen_event_ids":[],"obligation":"RELEASE_PENDING"}
+  ]
+}
