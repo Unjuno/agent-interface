@@ -14,8 +14,8 @@ The second prelaunch (`training-parity-20261002-02`) STOPped on `KeyError: docke
 - **C:** Identical deterministic data, image, seed, NumPy and single-thread OpenBLAS within one pinned runtime. Candidate/auditor implementations remain separate modules. W1-update mutation is the explicit negative control.
 - **U:** A construction PASS establishes only implementation parity for one synthetic fit recipe, not model competence, spatial generalization, effect, safety, GUI robustness or product utility. The v1 10-fit allocation is consumed and never rerun.
 
-After this construction gate passes, any formal spatial-block successor still requires its own reviewed freeze, source/image hashes, fresh seed allocation and one-shot candidate/audit. No such formal allocation is authorized by this construction test.
+The combined freeze authorized one subsequent fresh-seed formal allocation only after construction PASS. That allocation completed as **`H_FAIL_SCOPED`**; see [`REPORT.md`](REPORT.md) and `results/formal-03/`. The retained predecessor v1 result and both v2 prelaunch STOP records remain unchanged.
 
 ## Reproduction
 
-The container image, frozen input, run command, output, stdout/stderr and auditor receipt are recorded in `FREEZE.json` and `results/` after execution. The container is network-disabled, CPU-only, source-read-only and resource-bounded. The test module can also be run locally with `python3 -B -m unittest discover -s research/analysis/spatial_block_position_6590_t1_orbstack_v2 -p 'test_*.py' -v`.
+The container image, frozen input, run command, output, stdout/stderr and auditor receipt are recorded in `FREEZE.json` and `results/`. Both construction and formal containers are network-disabled, CPU-only, source-read-only and resource-bounded. The test module can also be run locally with `python3 -B -m unittest discover -s research/analysis/spatial_block_position_6590_t1_orbstack_v2 -p 'test_*.py' -v`.
