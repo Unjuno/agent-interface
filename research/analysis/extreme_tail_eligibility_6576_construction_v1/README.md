@@ -62,6 +62,10 @@ The TailID port remains without numeric comparison to CRAN/R.
 
 - The preregistration lane start gate was then clarified to allow either an explicitly released/assigned shared Engine or an explicitly assigned dedicated isolated OrbStack daemon. Its current SHA-256 is `da3488dc8dfa9fbec514781a2bd405e8fd9ebbf3648afb694c8eecbc44463f96`; this supersedes the earlier `T0_PREREGISTRATION.md` hash above. Other prepared-source hashes above are unchanged.
 
+- Construction censor-cap probe A01: one distinct host-only case (seed 65761101, 2,000 train/2,000 holdout) candidate exit 0 and independent auditor exit 0, `PASS_METHOD_SCOPED PASS_RAW_ONLY`, retries 0. Train/holdout censor counts 21/20; gate `NOT_ESTIMABLE_CENSORED_ENDPOINT`; all three holdout score records `NOT_ESTIMABLE_CENSORED_HOLDOUT`. Raw and run provenance are retained under `construction_censor_cap_probe_a01/`. This is code-path construction evidence only, not formal T0 or calibration/safety evidence.
+
+- Construction censor-cap probe A01: one distinct host-only case (seed 65761101, 2,000 train/2,000 holdout) candidate exit 0 and independent auditor exit 0, `PASS_METHOD_SCOPED PASS_RAW_ONLY`, retries 0. Train/holdout censor counts 21/20; gate `NOT_ESTIMABLE_CENSORED_ENDPOINT`; all three holdout score records `NOT_ESTIMABLE_CENSORED_HOLDOUT`. Raw and run provenance are retained under `construction_censor_cap_probe_a01/`. This is code-path construction evidence only, not formal T0 or calibration/safety evidence.
+
 ### One-shot comparator runner preparation (not executed)
 
 The outstanding #6576 T0 comparator is the original R implementation, not the
