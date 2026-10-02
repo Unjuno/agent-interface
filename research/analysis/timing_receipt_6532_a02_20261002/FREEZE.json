@@ -1,0 +1,33 @@
+{
+  "allocation_id": "TIMING-RECEIPT-6532-A02-20261002-01",
+  "issue": "Unjuno/agent-interface#6532",
+  "status": "FROZEN_PENDING_EXCLUSIVE_RESOURCE_ASSIGNMENT",
+  "base_main_sha": "2a01df459a488f1e09d20c57afc09ddc683420fd",
+  "container": {
+    "engine": "OrbStack Docker",
+    "image": "python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "platform": "linux/arm64",
+    "network": "none",
+    "cpus": 1,
+    "requested_memory_mib": 512,
+    "pids_limit": 64,
+    "rootfs": "read-only",
+    "source_mount": "read-only",
+    "output_mount": "distinct writable",
+    "user": "65534:65534"
+  },
+  "formal_invocations": {"candidate": 0, "auditor": 0, "retries": 0, "containers": 0},
+  "source_sha256": {
+    "fixture.json": "fabda1b8a0d9f9290f0cb2d1611d33803c6cdbe71b87621d13fd1943b7f82d94",
+    "candidate.py": "d294ace39f3f53527a87f63999bab33c6f207a4bbe889f04c751e08b887b7306",
+    "auditor.py": "6fdaee921c381d5063a28b4326503771dccd5b21c8532ee955eea4c46113db05",
+    "test_timing_receipt.py": "01fe67dcb6a42926c776ba5f4c2e1a0ed9cd38a28dac95c046eff96e1ab442bd",
+    "README.md": "040dab04170e4e0745db2b654a7f3cad1f0da67536ac5990a0f526f8e36175c3",
+    "RUN_PROTOCOL.md": "115ca7b8f7d49641c38b8d5b0e58ec04738087e864cf91ebab25f32943c42ce8",
+    ".github/workflows/analysis-index.yml": "752ea83d93616b83663a6ec02211b7526a7624efb6763dae6ef458b8638c9f03"
+  },
+  "allocation_authority": "none; explicit resource-owner release and coordinator assignment required",
+  "construction_tests": {"passed": 6, "failed": 0, "command": "python -B -m unittest discover -s research/analysis/timing_receipt_6532_a02_20261002 -p 'test_*.py' -v"},
+  "decision_rule": "See Issue #6532 H/T/D/C/U and RUN_PROTOCOL.md; both valid in-window positive controls may be eligible only for timing gate, never scientific result.",
+  "scope": "synthetic timing receipt classification only; no historical #6274 time recovery or clock-truth claim"
+}

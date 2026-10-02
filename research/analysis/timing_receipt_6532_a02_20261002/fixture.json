@@ -1,0 +1,18 @@
+{
+  "schema": "6532-timing-receipt-fixture-a02-v1",
+  "interval_semantics": "closed-open UTC interval [start,end)",
+  "allocation": {"start": "2026-10-02T06:00:00Z", "end": "2026-10-02T06:10:00Z", "clock_id": "host-monotonic-map-v1"},
+  "cases": [
+    {"id":"valid_inside","candidate":{"start":"2026-10-02T06:01:00Z","end":"2026-10-02T06:02:00Z","clock_id":"host-monotonic-map-v1"},"auditor":{"start":"2026-10-02T06:03:00Z","end":"2026-10-02T06:04:00Z","clock_id":"host-monotonic-map-v1"},"reported_at":"2026-10-02T06:05:00Z"},
+    {"id":"candidate_before_start","candidate":{"start":"2026-10-02T05:59:59Z","end":"2026-10-02T06:01:00Z","clock_id":"host-monotonic-map-v1"},"auditor":{"start":"2026-10-02T06:03:00Z","end":"2026-10-02T06:04:00Z","clock_id":"host-monotonic-map-v1"},"reported_at":"2026-10-02T06:05:00Z"},
+    {"id":"auditor_after_end","candidate":{"start":"2026-10-02T06:01:00Z","end":"2026-10-02T06:02:00Z","clock_id":"host-monotonic-map-v1"},"auditor":{"start":"2026-10-02T06:09:59Z","end":"2026-10-02T06:10:00Z","clock_id":"host-monotonic-map-v1"},"reported_at":"2026-10-02T06:10:01Z"},
+    {"id":"report_precedes_candidate","candidate":{"start":"2026-10-02T06:01:00Z","end":"2026-10-02T06:02:00Z","clock_id":"host-monotonic-map-v1"},"auditor":{"start":"2026-10-02T06:03:00Z","end":"2026-10-02T06:04:00Z","clock_id":"host-monotonic-map-v1"},"reported_at":"2026-10-02T05:58:00Z"},
+    {"id":"naive_timestamp_missing_offset","candidate":{"start":"2026-10-02T06:01:00","end":"2026-10-02T06:02:00Z","clock_id":"host-monotonic-map-v1"},"auditor":{"start":"2026-10-02T06:03:00Z","end":"2026-10-02T06:04:00Z","clock_id":"host-monotonic-map-v1"},"reported_at":"2026-10-02T06:05:00Z"},
+    {"id":"reversed_interval","candidate":{"start":"2026-10-02T06:02:00Z","end":"2026-10-02T06:01:00Z","clock_id":"host-monotonic-map-v1"},"auditor":{"start":"2026-10-02T06:03:00Z","end":"2026-10-02T06:04:00Z","clock_id":"host-monotonic-map-v1"},"reported_at":"2026-10-02T06:05:00Z"},
+    {"id":"clock_source_disagreement","candidate":{"start":"2026-10-02T06:01:00Z","end":"2026-10-02T06:02:00Z","clock_id":"container-clock-unmapped"},"auditor":{"start":"2026-10-02T06:03:00Z","end":"2026-10-02T06:04:00Z","clock_id":"host-monotonic-map-v1"},"reported_at":"2026-10-02T06:05:00Z"},
+    {"id":"receipt_hash_mismatch","candidate":{"start":"2026-10-02T06:01:00Z","end":"2026-10-02T06:02:00Z","clock_id":"host-monotonic-map-v1"},"auditor":{"start":"2026-10-02T06:03:00Z","end":"2026-10-02T06:04:00Z","clock_id":"host-monotonic-map-v1"},"reported_at":"2026-10-02T06:05:00Z","receipt_sha256":"0000000000000000000000000000000000000000000000000000000000000000"},
+    {"id":"touches_exclusive_end","candidate":{"start":"2026-10-02T06:09:00Z","end":"2026-10-02T06:10:00Z","clock_id":"host-monotonic-map-v1"},"auditor":{"start":"2026-10-02T06:03:00Z","end":"2026-10-02T06:04:00Z","clock_id":"host-monotonic-map-v1"},"reported_at":"2026-10-02T06:10:01Z"},
+    {"id":"touches_inclusive_start","candidate":{"start":"2026-10-02T06:00:00Z","end":"2026-10-02T06:01:00Z","clock_id":"host-monotonic-map-v1"},"auditor":{"start":"2026-10-02T06:03:00Z","end":"2026-10-02T06:04:00Z","clock_id":"host-monotonic-map-v1"},"reported_at":"2026-10-02T06:05:00Z"}
+  ],
+  "corruptions": ["status_flip", "id_swap", "missing_row", "receipt_change"]
+}

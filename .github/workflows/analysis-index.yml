@@ -43,6 +43,8 @@ jobs:
         run: python -B -m unittest discover -s research/analysis/selection_aware_shadow_audit_5681_t1_v1 -p 'test_*.py' -v
       - name: Test human return-to-own-work T0 construction contract
         run: python -B -m unittest discover -s research/analysis/human_return_resumption_6492_t0_20261002 -p 'test_t0.py' -v
+      - name: Test allocation timing-receipt T0 construction
+        run: python -B -m unittest discover -s research/analysis/timing_receipt_6532_a02_20261002 -p 'test_*.py' -v
       - name: Test independent auditor corruption controls
         working-directory: research/analysis/human_return_resumption_6492_t0_20261002
         run: python -B -m unittest discover -s results/allocation-02 -p 'test_*.py' -v
