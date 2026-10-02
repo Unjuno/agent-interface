@@ -1,0 +1,5 @@
+First independent audit failed: ValueError: retained unreadable black first frame.
+The audit incorrectly elevated the primary initial black-frame description to a pixel property.
+PIL extrema were ((0,255),(0,255),(0,255)); original re-view shows READY.
+Removed the false all-black requirement, retained immutable first review and frames.
+No live rerun or input replay. Later audit treats this as a primary frame-review error.
