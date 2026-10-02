@@ -141,6 +141,19 @@ Allocation 01 is retained as `STOP_AUDITOR_FREEZE_KEY` before fixture/raw input.
 
 # Research index
 
+### Issue #6613 successor: EDF deadline scheduling A01 (2026-10-03)
+
+The fresh 40-seed × 3-stratum × 3-policy WSL CPU experiment returned
+`FAIL_HYPOTHESIS`: EDF completed 1.80 optional requests on time per asymmetric
+trace on average, below FIFO (2.65) and shortest-service-first (4.95). The
+independent raw-only auditor replayed all 360 rows and rejected all five frozen
+mutations; mandatory events completed and no hard-eligibility mismatch was
+found. This synthetic finite fixture is not a people, GUI, operational-fairness,
+safety or product result. Both this successor and the prior service-debt
+hypothesis remain failed; neither is to be tuned or rerun. See [the full report
+and checksummed raw evidence](research/analysis/service_fairness_6613_edf_a01_20261003/REPORT.md)
+and [Issue #6613](https://github.com/Unjuno/agent-interface/issues/6613).
+
 ### Issue #6533: frame-qualified collateral checks T0 (2026-10-02)
 
 One frozen OrbStack CPU fixture emitted 44 rows (11 traces × 4 policies); a separate raw-state auditor reconstructed all 44 with zero errors. The qualified-frame policy matched the full-state oracle on all 11 traces, including full fallback for alias, hidden/incomplete writer coverage, stale generation, and non-durable state. On three disjoint-size cases, checker-accounted bytes were 79.1% lower in aggregate (14,491 → 3,023), while the 8-cell case regressed 2.13× (473 → 1,007); wall-time figures are descriptive in-process measurements only. Disposition: `PASS_METHOD_SCOPED` for this synthetic method fixture. No real GUI/app writer completeness, race, safety, or end-to-end performance claim; UNKNOWN/FULL_CHECK remains the default beyond qualified evidence. See [the report and raw allocation](research/analysis/frame_qualified_collateral_6533_t0_20261002/REPORT.md) and [Issue #6533](https://github.com/Unjuno/agent-interface/issues/6533), which remains open.
