@@ -1,0 +1,12 @@
+{"allocation":"LEASE-CANCEL-ACK-CONTRACT-HOST-T0-20261002-01","docker":false,"event":"fixture","external_effects":false,"scope":"host-real-Lease-synthetic-clock"}
+{"case":"cancel_before_deadline","deadline_ns":1000,"event":"case_start","now_ns":100}
+{"case":"cancel_before_deadline","event":"cancel_set","now_ns":100}
+{"cancel_ack":true,"case":"cancel_before_deadline","event":"wait_return","now_ns":100}
+{"case":"cancel_before_deadline","event":"worker_terminal","now_ns":100,"status":"cancelled"}
+{"case":"deadline_without_cancel","deadline_ns":1000,"event":"case_start","now_ns":100}
+{"cancel_ack":false,"case":"deadline_without_cancel","event":"wait_return","now_ns":100}
+{"case":"deadline_without_cancel","event":"worker_terminal","now_ns":100,"status":"continued"}
+{"case":"cancel_at_deadline","deadline_ns":1000,"event":"case_start","now_ns":100}
+{"case":"cancel_at_deadline","event":"cancel_set","now_ns":1000}
+{"case":"cancel_at_deadline","event":"wait_expired","now_ns":1000}
+{"case":"cancel_at_deadline","event":"worker_terminal","now_ns":1000,"status":"expired"}

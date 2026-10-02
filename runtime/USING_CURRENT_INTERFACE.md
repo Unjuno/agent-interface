@@ -783,3 +783,30 @@ other task decisions and overlap those totals. Evolving context/cache prevents
 a causal token-saving comparison. Keep current defaults and the efficiency HOLD.
 The [selection-cue development preflight](results/inkscape-selection-gate-preflight-01/README.md)
 uses historical labeled frames; it is not held-out visual qualification.
+
+
+### Compose batch registration with the owned capture directory
+
+The public Python `GuardedSessionOwner.invoke_guarded('guarded_mint_many', ...)`
+can register multiple explicitly grounded references from one inspected source.
+Use each returned offset and inspect complete registration before input. Partial
+registration is not atomic: retain the registered prefix and stop uncertain input.
+
+This public owner configures capture artifacts under the supplied call directory.
+A custom continuation using its bridge must keep the next capture directory and
+the directory passed to `present_result` aligned. Do not relax image confinement
+or treat an internal successful method receipt as delivered visual feedback.
+The [first composition](results/inkscape-public-batch-mint-01/README.md) saved the
+correct file but failed final presentation because the adapter used the previous
+bridge directory. Its allocated failure and three unallocated cases are retained.
+
+A [separately frozen successor](results/inkscape-public-batch-mint-02/README.md)
+explicitly used a method-call capture/presentation directory. Both ordinary and
+guarded graph routes saved the correct normal task, and both undertravel controls
+withheld Save; the primary reviewed all eight original images. Each case used
+four caller commands instead of the historical five with separate registrations.
+The method, inputs, effect gates and confinement rules stayed unchanged. This is
+a public Python owner composition, not a compiled MCP tool or MCP transport test.
+Actual primary usage includes construction, failure and repair; the historical
+comparison and evolving context/cache do not prove token or speed gains. Keep
+production defaults and the efficiency HOLD.
