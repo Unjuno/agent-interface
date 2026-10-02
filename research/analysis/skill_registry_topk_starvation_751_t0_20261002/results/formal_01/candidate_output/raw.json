@@ -1,0 +1,219 @@
+{
+  "candidate_sha256": "4d49ae02b9528fd75b14dc2b014fadb618f96a7c52f94d265608a63930d56400",
+  "cases": [
+    {
+      "case_id": "valid_rank_1",
+      "methods": {
+        "BOUNDED_WIDENING": {
+          "cards_returned": 1,
+          "metadata_checks": 6,
+          "selected": [
+            "s1"
+          ],
+          "status": "SELECTED"
+        },
+        "FILTER_THEN_RANK": {
+          "cards_returned": 1,
+          "metadata_checks": 7,
+          "selected": [
+            "s1"
+          ],
+          "status": "SELECTED"
+        },
+        "SEMANTIC_TOP_K_THEN_FILTER": {
+          "cards_returned": 1,
+          "metadata_checks": 2,
+          "selected": [
+            "s1"
+          ],
+          "status": "SELECTED"
+        }
+      }
+    },
+    {
+      "case_id": "valid_rank_k_2",
+      "methods": {
+        "BOUNDED_WIDENING": {
+          "cards_returned": 1,
+          "metadata_checks": 6,
+          "selected": [
+            "s2"
+          ],
+          "status": "SELECTED"
+        },
+        "FILTER_THEN_RANK": {
+          "cards_returned": 1,
+          "metadata_checks": 7,
+          "selected": [
+            "s2"
+          ],
+          "status": "SELECTED"
+        },
+        "SEMANTIC_TOP_K_THEN_FILTER": {
+          "cards_returned": 1,
+          "metadata_checks": 2,
+          "selected": [
+            "s2"
+          ],
+          "status": "SELECTED"
+        }
+      }
+    },
+    {
+      "case_id": "valid_rank_k_plus_1",
+      "methods": {
+        "BOUNDED_WIDENING": {
+          "cards_returned": 1,
+          "metadata_checks": 6,
+          "selected": [
+            "s3"
+          ],
+          "status": "SELECTED"
+        },
+        "FILTER_THEN_RANK": {
+          "cards_returned": 1,
+          "metadata_checks": 7,
+          "selected": [
+            "s3"
+          ],
+          "status": "SELECTED"
+        },
+        "SEMANTIC_TOP_K_THEN_FILTER": {
+          "cards_returned": 0,
+          "metadata_checks": 2,
+          "selected": [],
+          "status": "UNKNOWN_NOT_FOUND_WITHIN_BUDGET"
+        }
+      }
+    },
+    {
+      "case_id": "valid_rank_budget_edge_6",
+      "methods": {
+        "BOUNDED_WIDENING": {
+          "cards_returned": 1,
+          "metadata_checks": 6,
+          "selected": [
+            "s6"
+          ],
+          "status": "SELECTED"
+        },
+        "FILTER_THEN_RANK": {
+          "cards_returned": 1,
+          "metadata_checks": 7,
+          "selected": [
+            "s6"
+          ],
+          "status": "SELECTED"
+        },
+        "SEMANTIC_TOP_K_THEN_FILTER": {
+          "cards_returned": 0,
+          "metadata_checks": 2,
+          "selected": [],
+          "status": "UNKNOWN_NOT_FOUND_WITHIN_BUDGET"
+        }
+      }
+    },
+    {
+      "case_id": "valid_beyond_budget_7",
+      "methods": {
+        "BOUNDED_WIDENING": {
+          "cards_returned": 0,
+          "metadata_checks": 6,
+          "selected": [],
+          "status": "UNKNOWN_NOT_FOUND_WITHIN_BUDGET"
+        },
+        "FILTER_THEN_RANK": {
+          "cards_returned": 1,
+          "metadata_checks": 7,
+          "selected": [
+            "s7"
+          ],
+          "status": "SELECTED"
+        },
+        "SEMANTIC_TOP_K_THEN_FILTER": {
+          "cards_returned": 0,
+          "metadata_checks": 2,
+          "selected": [],
+          "status": "UNKNOWN_NOT_FOUND_WITHIN_BUDGET"
+        }
+      }
+    },
+    {
+      "case_id": "no_eligible_skill",
+      "methods": {
+        "BOUNDED_WIDENING": {
+          "cards_returned": 0,
+          "metadata_checks": 6,
+          "selected": [],
+          "status": "UNKNOWN_NOT_FOUND_WITHIN_BUDGET"
+        },
+        "FILTER_THEN_RANK": {
+          "cards_returned": 0,
+          "metadata_checks": 7,
+          "selected": [],
+          "status": "NONE_PROVEN_APPLICABLE"
+        },
+        "SEMANTIC_TOP_K_THEN_FILTER": {
+          "cards_returned": 0,
+          "metadata_checks": 2,
+          "selected": [],
+          "status": "UNKNOWN_NOT_FOUND_WITHIN_BUDGET"
+        }
+      }
+    },
+    {
+      "case_id": "unknown_before_valid_rank_3",
+      "methods": {
+        "BOUNDED_WIDENING": {
+          "cards_returned": 1,
+          "metadata_checks": 6,
+          "selected": [
+            "s3"
+          ],
+          "status": "SELECTED"
+        },
+        "FILTER_THEN_RANK": {
+          "cards_returned": 1,
+          "metadata_checks": 7,
+          "selected": [
+            "s3"
+          ],
+          "status": "SELECTED"
+        },
+        "SEMANTIC_TOP_K_THEN_FILTER": {
+          "cards_returned": 0,
+          "metadata_checks": 2,
+          "selected": [],
+          "status": "UNKNOWN_APPLICABILITY_UNRESOLVED"
+        }
+      }
+    },
+    {
+      "case_id": "unknown_only",
+      "methods": {
+        "BOUNDED_WIDENING": {
+          "cards_returned": 0,
+          "metadata_checks": 6,
+          "selected": [],
+          "status": "UNKNOWN_APPLICABILITY_UNRESOLVED"
+        },
+        "FILTER_THEN_RANK": {
+          "cards_returned": 0,
+          "metadata_checks": 7,
+          "selected": [],
+          "status": "UNKNOWN_APPLICABILITY_UNRESOLVED"
+        },
+        "SEMANTIC_TOP_K_THEN_FILTER": {
+          "cards_returned": 0,
+          "metadata_checks": 2,
+          "selected": [],
+          "status": "UNKNOWN_APPLICABILITY_UNRESOLVED"
+        }
+      }
+    }
+  ],
+  "fixture_id": "SKILL-REGISTRY-TOPK-STARVATION-751-T0-20261002-01",
+  "fixture_sha256": "643131f43e45c2bcf90ee99d40602a8fb6956e2eec1fdecd084d3b71cf0e7322",
+  "retrieval_k": 2,
+  "scan_budget": 6
+}
