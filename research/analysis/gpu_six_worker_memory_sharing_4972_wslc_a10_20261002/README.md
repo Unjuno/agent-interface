@@ -1,0 +1,5 @@
+# Issue #6329 WSLc allocation-10
+
+Fresh WSLc-native allocation to resume the bounded six-worker RTX 3080 memory-coexistence question. Allocation-09's Podman/crun pre-candidate STOP remains unchanged. See `PREREGISTRATION.md` and `FREEZE.json` before execution.
+
+Current state: one separate CPU-only WSLc construction preflight passed; its raw receipt and independent recheck are in `construction-preflight-20261002-01/`. This does not satisfy the future in-window formal construction gate. No candidate, CUDA fit/workload, or formal auditor invocation has occurred. On 2026-10-02 01:53 UTC, this preparation was refreshed on a separate branch based on main `4da4257ad481e9a4ea79133bdaf93c962e686fe7`; existing source hashes were rechecked unchanged. The #6354 requested 01:15–01:45 UTC window elapsed without a coordinator grant, so the GPU need remains deferred/unassigned. Formal candidate results must be retained under `formal-attempt-01/` only after a fresh exact assignment and current-main refreeze.
