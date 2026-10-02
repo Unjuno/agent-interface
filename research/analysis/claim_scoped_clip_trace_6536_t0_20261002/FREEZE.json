@@ -1,0 +1,37 @@
+{
+  "allocation": "CLIP-TRACE-6536-T0-20261002-01",
+  "base_main": "b68c0337f7d8e9103b60f7b4a23c952cb6c365e5",
+  "branch": "research/clip-to-trace-6536-t0-20261002",
+  "runtime": "Darwin 25.6.0 arm64; CPython 3.14.5; standard library only; native host CPU",
+  "container_disposition": "WSLc is unavailable on this macOS host. Issue #6536 calls WSLc optional; the finite stdlib T0 does not require Engine API, Compose, special isolation, or GUI. No Docker/OrbStack experiment was needed or run.",
+  "formal_budget": {"candidate_runs": 1, "auditor_runs": 1, "retries": 0, "model_calls": 0, "gui_or_game_calls": 0, "user_assets_read": 0},
+  "decision": {
+    "cases": 9,
+    "oracle_supported": 2,
+    "oracle_unsupported": 7,
+    "required_candidate_condition": "D accepts exactly the 2 scoped-positive claims and rejects all 7 unsupported claims",
+    "required_audit_condition": "all 9 rows and four evidence arms reconstruct without D false acceptance",
+    "required_corruption_controls": ["forged_master_digest", "unmapped_interval", "shifted_clock_receipt", "missing_release_record", "false_clear_receipt"],
+    "pass": "PASS_METHOD_SCOPED only if audit errors are empty, scoped-positive accepts=2, D false accepts=0, and all five corruption controls are rejected",
+    "fail": "FAIL_METHOD if candidate/auditor decision disagreement, any D false acceptance, missing/extra row, or any corruption control survives",
+    "stop": "STOP if source/input identity differs, output exists before launch, or either one-shot command fails before producing a complete receipt"
+  },
+  "commands": [
+    "python3 research/analysis/claim_scoped_clip_trace_6536_t0_20261002/candidate.py",
+    "python3 research/analysis/claim_scoped_clip_trace_6536_t0_20261002/audit.py"
+  ],
+  "sha256": {
+    "candidate.py": "c49e6c3f4a9e504452ec78618bd6af26572ddac153c4d92e7a34549bc1e784ca",
+    "audit.py": "d0a29014a73941e7967af51634145dcb2fa21a187f0ee4ea54d92c5e0c25b562",
+    "fixtures.json": "070133cad5ebe31db82962bfe0ea3da1993262ca12e63bcb750fbb324e6500c3",
+    "oracle.json": "0516cd625906a32893f72b624802d6934437124986a278725501090e1a071d04",
+    "test_t0.py": "09c6b2e5f7282fa208d53287bb8cd69fd194c0edced0402bc6c68d36423fdb08",
+    "analysis-index.yml": "0d40e7b2e50055da73eef87318ab4efac3cd3e7e18686d648f00abf045606b71"
+  },
+  "local_ci_infrastructure_correction": {
+    "initial_temporary_registration_sha256": "0d40e7b2e50055da73eef87318ab4efac3cd3e7e18686d648f00abf045606b71",
+    "pinned_workflow_sha256_used_for_local_ci": "b19000e027e7379ef6c0122e3f8cfd0b2faacb4c54d985ab87d27c1be914f7c2",
+    "checked_out_main_workflow_sha256_after_restore": "a75cbdad91961b56fc2ded2ef56e335c6a2b07b2c48a28bb82a33d3283ea679a",
+    "disposition": "Temporary test registration was removed after it invalidated repository-pinned workflow hash tests. Analysis Index workflow remains unchanged; see LOCAL_CI_CORRECTION.md. Candidate, auditor, input, and first outputs were not changed."
+  }
+}
