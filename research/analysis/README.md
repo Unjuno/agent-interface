@@ -291,6 +291,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`hazard_discretionary_capture_6086_t0_v1/`](hazard_discretionary_capture_6086_t0_v1/)
 - [`hedged_evidence_start_4277_v1/`](hedged_evidence_start_4277_v1/)
 - [`hidden_cause_sensitivity_5440_t2/`](hidden_cause_sensitivity_5440_t2/)
+- [`human_autonomy_envelope_6383_t0_20261002/`](human_autonomy_envelope_6383_t0_20261002/)
 - [`iconfluence_5547_t0_v1/`](iconfluence_5547_t0_v1/)
 - [`incremental_focus_fold_z7r2_v1/`](incremental_focus_fold_z7r2_v1/)
 - [`independent_effect_evidence_successor_1295_v1/`](independent_effect_evidence_successor_1295_v1/)
