@@ -23,6 +23,9 @@ python3 runtime/integration_checks/native.py \
   --output results-local/native-check-01
 ```
 
+From Windows, the [WSL launcher](wsl-native.ps1) calls this same runner without
+Docker or dependency installation; see [the direct invocation](../WSL_NATIVE.md#repeat-checks-from-windows-without-reinstalling-dependencies).
+
 Use a fresh output path each time. The runner sets its own repository import
 paths, runs both fixed suites, retains full stdout/stderr with hashes, and writes
 result.json. It exits nonzero if either suite fails or its interpreter cannot
