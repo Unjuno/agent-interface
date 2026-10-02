@@ -1,0 +1,26 @@
+{
+  "allocation": "OBSERVABLE-QUIESCENCE-CERTIFICATE-6664-T0-20261002-01",
+  "base_commit": "9a573b00dc595e64d09387e567c85e10b61a46c1",
+  "case_count": 1191,
+  "construction_tests": {
+    "command": "python3 -m unittest -v",
+    "status": "PASS",
+    "tests_passed": 12,
+    "tests_failed": 0,
+    "completed_before_freeze": true
+  },
+  "fixture_sha256": "d7492fdec5887aa6219faa5660881b9ec37889f2d9bfc8b57a449bb7fa44d2b3",
+  "host_runtime": "CPython 3.14.5; standard library only; macOS host-local; no container or backend",
+  "source_sha256": {
+    "README.md": "0a27b956b12ffdc40bb736347f2b618fe0163a85bcb13f5cec05f7da916ab325",
+    "preregistration.md": "07c932a3dcb745732eed6549d4124b6279eaebfdeed1352092f11131d401269f",
+    "scenarios.py": "e214528dd0f8b58b7e824f8a028c9966936bf6699709d4ddb3844f236a6076bd",
+    "candidate.py": "fc2d7b7ee06a554711adff2d03be812b25b2afec45eec6058a22861105484e55",
+    "auditor.py": "cb72020335d26b47f9d00cb94b7e729e33fc46835c4a5307f4ec377f5c6321ba",
+    "test_scenarios.py": "e09182ba7b48fc101ffbf70b6ece0a684ab2f0475a68322f48a719b320b2216f",
+    "test_auditor_controls.py": "6d3236e0b2dfec9c0bfd617e8c8980627f84eb1c8ccf459f1402f9951bd96496",
+    "formal_run.py": "747c7fc460cca7b9c316e8f632972e29aa6f99a9057f637264e578e37c4b3acd"
+  },
+  "protocol": "source and fixture hashes are checked before one candidate invocation and one independent auditor invocation; formal output path must not exist",
+  "schema": "observable-quiescence-freeze-v1"
+}

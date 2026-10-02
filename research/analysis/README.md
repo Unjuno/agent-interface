@@ -1,5 +1,6 @@
 # Analytical research
 
+- [`observable_quiescence_6664_t0_v1/REPORT.md`](observable_quiescence_6664_t0_v1/REPORT.md) — Issue #6664 finite handoff protocol T0: 1,191 schedules independently audited; accounted quiescence had 0 false certificates (128 horizon certificates, all other cases UNKNOWN); epoch-only and fixed-delay comparators had 3,445 and 2,254 false certificates. No GUI/backend safety claim.
 - [`path_width_continuous_gui_6581_t0b_v1/REPORT.md`](path_width_continuous_gui_6581_t0b_v1/REPORT.md) — Issue #6581 synthetic path-width GUI fixture; six scenarios independently audited `PASS_METHOD_SCOPED`; no ordinary-GUI or human/agent transfer claim.
 - [`spatial_block_position_6590_t1_geometry_design_v2/REPORT.md`](spatial_block_position_6590_t1_geometry_design_v2/REPORT.md) — #6590 preformal geometry screen: 80×60 remains below the four-block floor; 112×84 provides 19/16/20/16 eligible unique centers and passes an independent finite audit. No image/model/container run; formal T1 still held on OrbStack API readiness.
 
@@ -15,6 +16,9 @@
 - [`retired_intention_cue_6556_t0_v1/`](retired_intention_cue_6556_t0_v1/) — Issue #6556: finite post-retirement cue lineage challenge; compare ordinary durable event-instance routing against generation/retirement fencing, preserve unresolved obligations, and return UNKNOWN when lineage is absent. Synthetic only.
 - [`observation_injection_transform_6575_t0_v1/`](observation_injection_transform_6575_t0_v1/) — Issue #6575 allocation 01 retained STOP: six sham-crop provenance mismatches between frozen candidate and auditor oracle; no scientific disposition or susceptibility/model claim.
 - [`extreme_tail_eligibility_6576_construction_v1/orbstack_pilot_a02_20261002/RUN_RECORD.md`](extreme_tail_eligibility_6576_construction_v1/orbstack_pilot_a02_20261002/RUN_RECORD.md) — Issue #6576 dedicated OrbStack Docker single-case pilot: candidate and independent raw-only audit passed 4,000/4,000 stationary synthetic rows, with nominal 1% inside exact held-out intervals. Formal six-case T0 and all real release/safety claims remain unestablished.
+- [`extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a03_20261002/RUN_RECORD.md`](extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a03_20261002/RUN_RECORD.md) — #6576 TailID/R parity A03: one-shot R harness stopped before data evaluation; Python-only six-row artifact retained; no parity result or retry.
+- [`extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a04_20261002/RUN_RECORD.md`](extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a04_20261002/RUN_RECORD.md) — #6576 A04: both candidate arms completed, but the one-shot auditor crashed; descriptive post-hoc data retained separately from formal audit evidence.
+- [`extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a05_20261002/RUN_RECORD.md`](extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a05_20261002/RUN_RECORD.md) — #6576 A05: isolated OrbStack CRAN/R versus Python TailID comparison; indices and threshold matched on six synthetic cases, but one base GPD fit exceeded frozen MLE/CI tolerances (`FAIL_PARITY_NUMERICAL_MLE`). No formal T0, physical release or safety claim.
 - [`model_ambiguity_lifetime_6580_t0_v1/formal_01_20261002/REPORT.md`](model_ambiguity_lifetime_6580_t0_v1/formal_01_20261002/REPORT.md) — Issue #6580 allocation 01 passed independent audit for finite FULL/ZERO/EVENT history sets and move-order information labels (12 rows, 56 histories); no continuation-policy or real-interface model-lifetime claim.
 - [`model_ambiguity_lifetime_6580_t0b_v1/REPORT.md`](model_ambiguity_lifetime_6580_t0b_v1/REPORT.md) — Issue #6580 decision-level T0b passed its 48-row finite table with explicit safe-continuation witnesses; public nature-first theta branches are not exhaustive, and T1 remains HOLD.
 - [`model_ambiguity_lifetime_6580_t0c_v1/formal_01_20261002/REPORT.md`](model_ambiguity_lifetime_6580_t0c_v1/formal_01_20261002/REPORT.md) — T0c passed an exhaustive 66-branch finite audit (48 scenario keys; WSLc CPU container); T1 remains HOLD and no real-interface claim is made.
@@ -51,6 +55,8 @@ flowchart TD
 ```
 
 ## Analysis families
+
+Issue #6315 retains both the original finite-trace T0 audit-v1 HOLD and the distinct WSLc portability successor; see each report for its exact scope and lineage.
 
 - [Issue #6081 error-carry T0](error_carry_6081_t0_20261001/REPORT.md) — `STOP_METHOD_INVALID_BASELINE`; 672 rows reconstructed, but the 8-way dot-product baseline is not Euclidean-nearest. Frozen outputs are preserved; no PASS or application-transfer claim.
 
@@ -258,6 +264,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`capability_snapshot_currentness_fallback_r0_v1/`](capability_snapshot_currentness_fallback_r0_v1/)
 - [`causal_attribution_5323_t0_v1/`](causal_attribution_5323_t0_v1/)
 - [`causal_critical_path_elasticity_5851_t0_v1/`](causal_critical_path_elasticity_5851_t0_v1/)
+- [`causal_cut_5348_t1/`](causal_cut_5348_t1/)
 - [`causal_temporal_attention_successor_1941_v1/`](causal_temporal_attention_successor_1941_v1/)
 - [`causal_temporal_history_2026_v1/`](causal_temporal_history_2026_v1/)
 - [`cegis_grammar_gap_4294_v1/`](cegis_grammar_gap_4294_v1/)
@@ -456,6 +463,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`obligation_capacity_6121_t0_successor02_20261002/`](obligation_capacity_6121_t0_successor02_20261002/)
 - [`obligation_conservation_5817_t0_v1/`](obligation_conservation_5817_t0_v1/)
 - [`observable_predictive_tests_6258_t0_host_20261002/`](observable_predictive_tests_6258_t0_host_20261002/)
+- [`observable_quiescence_6664_t0_v1/`](observable_quiescence_6664_t0_v1/)
 - [`observation_bisimulation_branch_readiness_5516_t12/`](observation_bisimulation_branch_readiness_5516_t12/)
 - [`observation_loss_robust_tube_6089_t0b_20261002/`](observation_loss_robust_tube_6089_t0b_20261002/)
 - [`observation_manipulate_dynamic_certificate_v1/`](observation_manipulate_dynamic_certificate_v1/)
@@ -613,6 +621,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`target_belief_audit_4150_v1/`](target_belief_audit_4150_v1/)
 - [`task_ownership_horizon_4152_reopen_review_v1/`](task_ownership_horizon_4152_reopen_review_v1/)
 - [`temporal_break_even_retained_identifiability_v1/`](temporal_break_even_retained_identifiability_v1/)
+- [`temporal_coalescing_6315_t0_v1/`](temporal_coalescing_6315_t0_v1/)
 - [`temporal_coalescing_6315_wslc_successor_20261002/`](temporal_coalescing_6315_wslc_successor_20261002/)
 - [`temporal_contract_monitor_compilation_a2_v1/`](temporal_contract_monitor_compilation_a2_v1/)
 - [`temporal_contract_monitor_compilation_a3_v1/`](temporal_contract_monitor_compilation_a3_v1/)

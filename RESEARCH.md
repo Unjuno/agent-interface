@@ -17,6 +17,17 @@ Successor isolated OrbStack Docker allocation 02 returned `PASS_METHOD_SCOPED`: 
 
 A dedicated OrbStack Ubuntu machine ran its own pinned-image Docker Engine; no shared Engine was used. One preregistered stationary synthetic case (4,000 train + 4,000 holdout) produced `ELIGIBLE_REFERENCE`; the candidate and independent raw-only audit each ran once and exited 0, with `PASS_METHOD_SCOPED PASS_RAW_ONLY`. The eligible-gated p99 holdout was 42/4,000 (exact 95% CI 0.00758–0.01417); the TailID-equivalent p99 was 45/4,000 (0.00822–0.01502); both include nominal 1%. This one-case pilot establishes neither superiority nor TailID parity, and makes no physical input-release, safety, or worst-case claim. The formal six-case T0 remains unrun. See the [frozen run, raw output and hashes](research/analysis/extreme_tail_eligibility_6576_construction_v1/orbstack_pilot_a02_20261002/RUN_RECORD.md), [H/T/D/C/U and frozen input](research/analysis/extreme_tail_eligibility_6576_construction_v1/orbstack_pilot_a02_20261002/PREREGISTRATION.md), and [Issue #6576](https://github.com/Unjuno/agent-interface/issues/6576).
 
+Successor CRAN/R parity studies then compared pinned TailID 1.0.0/ismev 1.43
+with the Python port in isolated OrbStack Docker containers. A03 stopped on an
+R harness error; A04 retained candidate outputs but its auditor crashed; A05
+completed the independent audit and failed numerical parity on one of six
+fresh synthetic fixtures (relative scale delta 0.001965, shape delta 0.002028,
+CI endpoint delta 0.003308), while all six candidate/sensitive-index and
+threshold checks passed. The Python port is not verified numerically
+equivalent at the preregistered tolerances. This remains synthetic method
+evidence only; the formal six-case T0 and physical release/safety evidence are
+still unestablished. See the additive [A03](research/analysis/extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a03_20261002/RUN_RECORD.md), [A04](research/analysis/extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a04_20261002/RUN_RECORD.md), and [A05](research/analysis/extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a05_20261002/RUN_RECORD.md) run records.
+
 # Issue #6501 T0-01 / T0b-01: scope-typed singleflight (2026-10-02)
 
 T0-01 is preserved as `STOP_OUTPUT_SERIALIZATION` / `NOT_EVALUATED`: the candidate ran once, the independent auditor ran once, retries were zero, and the wrapper's literal backslash-n caused JSON parsing to fail. No raw auditor result exists. The original STOP and receipts are immutable in [the predecessor package](research/analysis/scope_typed_singleflight_6501_t0_20261002/REPORT.md).
@@ -102,6 +113,10 @@ One candidate invocation in a pinned OrbStack `linux/arm64` Python 3.12.14 conta
 ### Issue #6038: label/control ambiguity T0
 
 Successor allocation S2 ran the ten-case synthetic finite fixture once in two separate pinned OrbStack containers; an independent audit reconstructed all decisions/final field states and rejected four corruption mutations (`PASS_METHOD_SCOPED`). The relation/abstention policy had exact effects in 7/7 unique cases and abstained on all 3 ambiguous/stale cases; nearest and same-scope-nearest baselines produced 7 and 5 wrong-field effects respectively on this authored fixture. The predecessor candidate launcher omitted its Docker image operand and stopped with exit 126 before Python execution; that STOP is retained unchanged and was not counted as a method result. No pixels or perception algorithm, live GUI/model/task, real accessibility relation, privacy/safety benefit, or product claim was tested. See [the immutable report and both allocation records](research/analysis/label_control_ambiguity_6038_t0_v1/REPORT.md) and [Issue #6038](https://github.com/Unjuno/agent-interface/issues/6038).
+
+### Issue #6315: original temporal-coalescing finite-trace T0
+
+The original OrbStack/Docker candidate ran once and emitted the retained raw output; auditor-v1 also ran once, but a post-run review found a decision-logic defect, so its apparent PASS is preserved as HOLD_AUDIT_IMPLEMENTATION. A separately run audit-only correction reconstructed 14/14 case-mode rows and rejected 4/4 mutations without rerunning the candidate. The later WSLc portability successor reproduced the same candidate bytes and independently audited this finite fixture; it does not erase the predecessor's auditor defect. No live GUI, deployed runtime, memory-enforcement, speed, or product benefit is established. See [the original report](research/analysis/temporal_coalescing_6315_t0_v1/REPORT.md), [the WSLc successor](research/analysis/temporal_coalescing_6315_wslc_successor_20261002/REPORT.md), and [Issue #6315](https://github.com/Unjuno/agent-interface/issues/6315).
 
 ## How to read this ledger
 
