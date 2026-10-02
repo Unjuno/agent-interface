@@ -733,3 +733,18 @@ adapter on Inkscape. Same inputs/captures/primary roundtrips and single-case tim
 do not establish a graph advantage. Keep the ordinary route/default and existing
 efficiency HOLD. Use explicit source/lease/deadline/release checks and independently
 score persistence; neither the pixel cue nor graph task verdict certifies saving.
+
+
+### Program emission accounting
+
+For a dispatch review, `outcome_summary.program_emissions` now exposes the
+explicit current-program count from `result.execution.program_emissions`, or the
+existing top-level refusal count. Valid duplicate copies must agree; malformed
+or conflicting copies return null. Missing counters remain absent. This field
+is recorded evidence, not a claim of no input, verified release or task success.
+On the X11 backend, `execution.emissions` is cumulative for the backend connection
+while `execution.program_emissions` is the current execute-call delta, including
+cleanup emissions during that call. Sum program deltas, not cumulative totals.
+Counts outside a program, such as a later owner close, require their own receipt.
+The retained Inkscape sequence reports cumulative10→14 but program10+4=14, not24.
+Raw reports and their hashes remain unchanged; lookup/review does not execute input.
