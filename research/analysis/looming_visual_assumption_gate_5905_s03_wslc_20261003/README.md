@@ -1,5 +1,7 @@
 # #5905 S03 — WSLc image-only looming assumption gate
 
+**Terminal disposition: STOP before any invocation.** Main advanced after freeze and before the first WSLc stage. Construction/candidate/auditor/container/retry counts are all zero. See `execution/formal-s03/STOP.json`. Do not rebase or reuse S03.
+
 Fresh allocation `LOOMING-VISUAL-ASSUMPTION-GATE-5905-S03-20261003-01` for Issue #6808, after S02's preserved `STOP_SESSION_ISOLATION_UNAVAILABLE`. S02 is not rerun. This package has a distinct branch, output root, and current-main freeze.
 
 ## H / T / D / C / U

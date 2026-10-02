@@ -17,4 +17,8 @@
 
 ## Scope
 
+## Terminal S03 pre-invocation STOP — 2026-10-02 21:04:26 UTC
+
+After this source/input freeze and before the first WSLc invocation, GitHub main advanced from frozen `16cc4b523992bbd5131ee495d52a5bd16329e3d5` to `b894ebd8812cb190a9a31eab63f6312d9189abbe` (also reported as the PR's live base SHA). The explicit Issue #6808 rule requires terminal STOP rather than refreeze. Construction=0, candidate=0, auditor=0, containers=0, retries=0; no output created. Preserve this STOP; do not run or rebase S03.
+
 Synthetic image-method fixture only. It establishes no live camera/game/controller/safety/benefit result. Frozen H/T/D/C/U and all raw gates are in README and FREEZE.
