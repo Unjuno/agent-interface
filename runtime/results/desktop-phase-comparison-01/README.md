@@ -109,3 +109,30 @@ uncached78418,output29456,reasoning8691 subset,total5819490. Exact source digest
 response deduplication and original image blocks verified. Billing unavailable.
 This is shared preparation/failed-attempt accounting, not isolated per-arm cost;
 the successor lies outside this window and its accounting is still pending.
+
+Ordinary counterparts frozen together (fa59117ed) and run sequentially:
+plain1002204 then compact1002205. Both old-context methods SAFE_YIELD with
+reason dependency_changed and no input. Each fresh repair capture exactly matches
+the immediately reviewed changed PNG; identity basis retained before input.
+Each one repair performs genuine public Enter/readback→Save without a model
+resumption between Enter and Save, then primary reviews the original actual
+modal, explicitly reviews target and authors a separate confirmation. Both
+owners exit0/all3 children terminal; independent saved XLSX contains exactly
+A1=317/A2=529, no extra cells. Original C1002202 failure remains unchanged.
+
+Both routes:7 commands,3 input programs,26 incremental emissions,6 selected
+primary PNG artifacts,8 native capture artifacts; four OCR crops are not captures.
+Black repeated image rendering persists; plain final screenshot retains the
+stale greyed modal and compact final has incomplete redraw. Neither is a save
+completion acknowledgement. Ordinary already has local conditional continuation;
+no reduced roundtrip count from compact presentation is demonstrated here.
+Local method durations are retained in summary but exclude primary waits/setup
+and are not meaningful model-feedback/semantic completion times or a comparison.
+Provider usage/cost extraction remains pending, not zero; no gain is claimed.
+
+A branch checkout initially omitted sparse source files, so hash collection and
+owner invocation failed before any GUI allocation. Exact HEAD-owned files were
+materialized, first setup failure retained; scientific controls were not retried.
+No code changed during either frozen allocation. Shared A/B/C changed/repair
+mechanics are now scoped-qualified. Next is the actual finite phase comparison,
+with fixed accounting/timing and all failures retained, not another admission loop.
