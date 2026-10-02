@@ -8,6 +8,7 @@ For claims and scientific disposition, start with the top-level [research index]
 
 - Issue #6403 control-opportunity attribution T0: [`analysis/control_opportunity_attribution_6403_t0_v1/REPORT.md`](analysis/control_opportunity_attribution_6403_t0_v1/REPORT.md) — synthetic method pass; human responsibility attribution remains untested.
 - Issue #6133 T1c worker-aging measurement-gate successor: [`analysis/worker_aging_6133_t1c_20261002/REPORT.md`](analysis/worker_aging_6133_t1c_20261002/REPORT.md) — WSLc synthetic method pass, 600 rows independently reconstructed; no real worker-aging or restart-safety claim.
+- Issue #6501 scope-typed singleflight: [T0b WSLc method-scoped report](analysis/scope_typed_singleflight_6501_t0b_20261002/REPORT.md) and immutable [predecessor T0 STOP](analysis/scope_typed_singleflight_6501_t0_20261002/REPORT.md); no runtime or Docker-migration claim.
 
 | Need | Entry point |
 |---|---|
