@@ -1,0 +1,47 @@
+{
+  "schema": "issue-5590-missing-outcome-bounds-freeze-v1",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/5590",
+  "allocation": "MANSKI-SHARP-MISSING-OUTCOME-5590-T0-20261001-01",
+  "source_main_sha": "e32ace71fa1158ca8d5eec13fe620a1a51c1ff00",
+  "branch": "research/issue-5590-manski-sharp-bounds-t0-20261001",
+  "python_construction_environment": "CPython 3.14.5 macOS arm64",
+  "candidate_container_image": {
+    "reference": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "platform": "linux/amd64",
+    "status": "PROPOSED_NOT_YET_VERIFIED_AT_ASSIGNED_START"
+  },
+  "resource_policy": {
+    "network": "none",
+    "read_only_rootfs": true,
+    "cpus": 1,
+    "memory_mib": 256,
+    "pids_limit": 64,
+    "capabilities": "drop-all",
+    "no_new_privileges": true,
+    "candidate_invocations": 1,
+    "auditor_invocations": 1,
+    "retry": false
+  },
+  "expected_exact_result": {
+    "N": 10,
+    "S": 6,
+    "F": 1,
+    "M": 3,
+    "observed_only": "6/7; PROMOTE",
+    "missing_as_failure": "6/10; DO_NOT_PROMOTE",
+    "sharp_interval": ["3/5", "9/10"],
+    "threshold": "3/4",
+    "interval_decision": "PROMOTION_UNIDENTIFIED",
+    "compatible_completions": 8
+  },
+  "source_sha256": {
+    "PLAN.md": "eb6cbf9993f6bac453aac4651988ba2be8598bd0bf28af5a3b62e53ab572709b",
+    "ledger.json": "acce7bfcc35ba033dcbe403ed41581a077b33b8f67784f4d3eb0b94fc54e7d7f",
+    "candidate.py": "c393a5d2f7df250d8b8513d2d97eec393105a5d2fb547e87a04fe1dc1fc473cf",
+    "audit.py": "9cf398c1915195bb782d2854f171b37ee344d9bab5af85ac969e221889844777",
+    "test_bounds.py": "03f8005a8f8170ff47a6945099b53dab46b3e754204c3bd9590ec2d60fd10875",
+    "results/host-boundary-01/raw.json": "0f428c7d3da7b29cb982d1d7502536c3f562e569d6e16d18e4e7d37f5e1ed4ec",
+    "results/host-boundary-01/candidate.stdout.json": "d9d71397f7212f61941cba33cbe3ea7bd31d0cb19b799deb645f87e3a15bed04",
+    "results/host-boundary-01/audit.stdout.json": "00cd1f13ba775126aecbab7cc90ac8adf8f1dd062c8a11c7bcf44277095e5e6c"
+  }
+}

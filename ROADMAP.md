@@ -4,7 +4,7 @@ This roadmap is ordered by research uncertainty, not by feature count.
 
 For active task priority, use the explicit precedence in [CURRENT_GOAL](docs/CURRENT_GOAL.md):
 its experiment-first direction governs the current autonomous research task;
-the integration and human-tempo objectives remain. Its latest r133 direction
+the integration and human-tempo objectives remain. Its current direction
 and [Issue #59](https://github.com/Unjuno/agent-interface/issues/59) keep unresolved
 real-time control ahead of packaging work after the existing bounded allocation.
 Neither this roadmap nor an unchecked item grants a new allocation or changes

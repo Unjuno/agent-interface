@@ -1,0 +1,30 @@
+{
+  "allocation": "gluing-numeric-tolerance-5537-t11-20261001-01",
+  "freeze_time_utc": "2026-09-30T16:59:10Z",
+  "base_commit": "014069dc712d6c3f2f9805e64d16dbe943f9d09b",
+  "environment": {
+    "python": "3.14.5",
+    "platform": "Darwin arm64",
+    "container": false,
+    "container_disposition": "No exact Docker/OrbStack lease assigned to this research branch; shared allocation is not borrowed. This finite CPU-only model has no GUI, model, network, input, or external effect."
+  },
+  "path": "research/analysis/gluing_numeric_tolerance_5537_t11_v1",
+  "construction": {
+    "command": "python3 -m unittest -v test_candidate.py && python3 -m py_compile candidate.py run_experiment.py audit_raw.py test_candidate.py && git diff --check",
+    "result": "PASS: 4 tests; full 144-row matrix matches independent Fraction oracle; 6/6 non-identity mutations rejected; py_compile and diff check passed.",
+    "completed_before_freeze": true
+  },
+  "formal_commands": [
+    "python3 -B run_experiment.py",
+    "python3 -B audit_raw.py"
+  ],
+  "formal_protocol": "Run candidate once. Only if exit 0, run independent auditor once. No retry and no post-freeze source edits; any mismatch is retained as STOP.",
+  "source_sha256": {
+    "PLAN.md": "1a794228dec5b4a29caf0eebdf3c57fb2c2158e91ef3ab165e124f498a44796c",
+    "candidate.py": "ebe1c057481136525974cbc083a36588f97bd126a5bcb88f0a6fc386baf4dc88",
+    "run_experiment.py": "052a2b15a30c17b3ac7a84af7a7d6b51ca0328ec47b521ce40527f85e329fc5b",
+    "audit_raw.py": "bd05f0728bf28b2d5ef929e7c22f76654f93f7f0f76263143dd6b8071ccccb85",
+    "test_candidate.py": "a94717d14d5f2a9510ab036089bf092bd35577643a8d42c94914fb9c28e2933a"
+  },
+  "scope": "Finite graph synthetic evidence only; no sensor/UI calibration, uncertainty distribution, general sheaf solver, freshness/provenance, authority precedence, GUI/model/task-effect, runtime safety, or product claim."
+}

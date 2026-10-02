@@ -1,0 +1,48 @@
+{
+  "checks_passed": 14,
+  "checks_total": 14,
+  "corruption_controls": [
+    {
+      "control": "drop_pair",
+      "rejected": true
+    },
+    {
+      "control": "admit_impossible",
+      "rejected": true
+    },
+    {
+      "control": "flip_fault",
+      "rejected": true
+    },
+    {
+      "control": "alter_denominator",
+      "rejected": true
+    }
+  ],
+  "field_checks": {
+    "controls": true,
+    "counts": true,
+    "coverage": true,
+    "exhaustive_legal_traces": true,
+    "fault_detection": true,
+    "raw_word_count": true,
+    "suites": true
+  },
+  "freeze_identity_valid": true,
+  "independent_counts": {
+    "feasible_adjacent_pairs": 33,
+    "feasible_relative_pairs": 35,
+    "feasible_relative_triples": 178,
+    "legal_exhaustive": 863,
+    "ordered_pair_suite": 33,
+    "ordered_triple_suite": 135,
+    "random_matched_budget": 33,
+    "raw_words": 1555,
+    "static_presence": 48
+  },
+  "independent_enumeration": true,
+  "registered_decision_gates_pass": true,
+  "runtime_receipt_valid": true,
+  "scope": "finite synthetic event-order method only; no real runtime, GUI, task effect, safety, or reliability claim",
+  "status": "PASS_METHOD_SCOPED"
+}

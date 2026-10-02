@@ -1,0 +1,41 @@
+{
+  "allocation_id": "DELAY-GAIN-STABILITY-6195-T0-HOST-20261001-01",
+  "owner": {
+    "task_id": "01a0b990-3d17-72f1-a908-9a2072104ce5",
+    "name": "Unjuno / current local Windows Codex task"
+  },
+  "window_utc": {
+    "start": "2026-10-01T19:05:00Z",
+    "end": "2026-10-01T19:20:00Z"
+  },
+  "repository": "Unjuno/agent-interface",
+  "issue": 6195,
+  "source_main_sha": "3d33fe482ad55e99943f2c7b40e92c685c3bf92a",
+  "branch": "research/6195-delay-gain-stability-t0-host-20261001",
+  "path": "research/analysis/delay_gain_stability_6195_t0_host_20261001_01/",
+  "execution_deviation": "Host-only CPython 3.11.9 instead of the Issue's preferred isolated container. Docker shared queue/engine is unavailable and has unresolved unrelated-container ownership; this deterministic standard-library fixture uses no network, model, GUI, app, physical input, CUDA, or shared container. No container is touched.",
+  "candidate": {
+    "file": "candidate.py",
+    "sha256": "5a0d9b55e288ea46ae89ae41273b57c23016d72463bc58c45fa25bfae6cf0e2c",
+    "invocations": 1
+  },
+  "independent_auditor": {
+    "file": "auditor.py",
+    "sha256": "941bd4a36557dd7413a9b329ee10edfc21000063cda74974c4f8cac16b800d90",
+    "invocations": 1,
+    "condition": "Only if the one candidate invocation exits 0"
+  },
+  "frozen_parameters": {
+    "plant": "x[t+1] = x[t] + u[t]",
+    "controller_gain": "6/5",
+    "initial_state": "1",
+    "horizon_steps": 8,
+    "saturation_cap": "1/2",
+    "forbidden_abs_state": "3/2",
+    "source_cases": ["fresh", "one-step delayed naive", "one-step delayed plus known actuation-history estimate", "stale-input capped hold/YIELD", "one-step delayed bounded actuator"]
+  },
+  "decision": "PASS_METHOD_SCOPED only if exact fresh/delayed algebra and all five fail-closed mutation controls are independently reproduced; otherwise preserve FAIL/HOLD without retry.",
+  "outputs": "outputs/DELAY-GAIN-STABILITY-6195-T0-HOST-20261001-01/",
+  "retry_policy": "No retries, no alternate gain/seed, and no second allocation under this ID."
+}
+

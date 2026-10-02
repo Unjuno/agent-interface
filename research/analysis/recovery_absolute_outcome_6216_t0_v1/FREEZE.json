@@ -1,0 +1,28 @@
+{
+  "allocation_id": "RECOVERY-ABSOLUTE-OUTCOME-6216-T0-HOST-20261002-01",
+  "issue": 6216,
+  "base_commit": "14b81dd1f6853623a694266b98538f812847257a",
+  "branch": "research/absolute-outcome-6216-t0-20261002",
+  "path": "research/analysis/recovery_absolute_outcome_6216_t0_v1/",
+  "primary_source": "https://arxiv.org/abs/2609.34215",
+  "hypothesis": "Exact winner-set agreement can be identical in high- and low-success Bernoulli recovery regimes while all-zero mass and absolute success differ; checkpoint-action binding and typed safety/missingness gates prevent false recovery-quality promotion.",
+  "test": {
+    "kind": "T0 finite synthetic method test; exact arithmetic only",
+    "regimes": {"high": [9, 8], "low": [2, 1], "probability_denominator": 10},
+    "samples_per_candidate": [1, 2, 3, 5, 10, 20, 50],
+    "independence": "Two candidate outcomes are independent Bernoulli samples at each checkpoint; ties produce the set {A,B}; held-out action selection breaks ties uniformly and is evaluated only in expectation under the frozen known probabilities.",
+    "checkpoint_binding": "Two checkpoint-specific gold actions; swap checkpoint outcome rows while preserving each action's marginal success count, then score against the unchanged checkpoint/action binding.",
+    "controls": ["stable high-success", "correct YIELD with no safe action", "positive but forbidden-effect candidate refused", "executed-only labels with a no-assumption partial-identification bound", "five independent result mutation probes"],
+    "authority": "No model, GUI, network, live action, user data, or runtime authority. Host CPU is used because Docker Desktop Engine is not responsive; the T0 Issue requires a disposable finite simulator but does not mandate a container."
+  },
+  "construction_preflight": "One host-only unittest suite and syntax compilation may run before the frozen local commit. These are construction-only checks: they are excluded from the single formal candidate and single formal auditor invocations and cannot be reported as the T0 result.",
+  "decision": {
+    "pass": "METHOD_PASS_SCOPED only if independent exact calculations reproduce identical winner-set distributions at every frozen n, while all-zero mass and expected held-out/pooled success differ; checkpoint permutation preserves marginal counts but changes checkpoint-bound outcome; stable, YIELD, forbidden-effect and selective-label controls retain their types; and all mutations are rejected.",
+    "fail": "Any equality/discrimination, checkpoint-binding, safety, YIELD, missing-label, denominator, or mutation gate is contrary to the frozen method claim.",
+    "limits": "Synthetic exact-method evidence only; no real recovery policy, GUI, agent, human, deployment, or historical benchmark result is validated."
+  },
+  "competing_explanations": ["A current/future benchmark may already report absolute outcomes and not use ordinal agreement as a quality criterion.", "Checkpoint difficulty, choice-set composition, and selective labels can explain empirical mismatches outside this synthetic fixture."],
+  "unknowns": ["Finite empirical samples cannot certify exact population ties.", "GUI candidates are heterogeneous and stateful; safe rejected candidate outcomes are missing rather than counterfactually imputed.", "This fixture does not assess live checkpoint/choice-set provenance."],
+  "frozen_inputs": ["input.json", "candidate.py", "auditor.py", "test_method.py", "CONSTRUCTION.json"],
+  "formal_invocations": {"candidate": 1, "auditor": 1, "retry": 0}
+}

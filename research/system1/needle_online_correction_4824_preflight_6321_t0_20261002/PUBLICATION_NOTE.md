@@ -1,0 +1,5 @@
+# Publication path and branch clarification
+
+At experiment freeze, the local worktree was on branch `research/needle-online-correction-4824-wslc-gpu-20261002-01` at main `093b39fdab8d8cd04c422f8d9956deef1b40a692`, and the package lived at `research/system1/needle_online_correction_4824_wslc_gpu_20261002_01/`. Those identities remain in the immutable `FREEZE.json`; the exact container invocation records the local mount path used.
+
+Before push, GitHub branch search and `git ls-remote` showed that the same branch name existed remotely at the frozen main SHA. No PR was associated with it. To avoid updating a potentially parallel-owned ref, the work was published from a separate branch, `research/needle-4824-cpu-label-preflight-20261002`, with the evidence under `research/system1/needle_online_correction_4824_preflight_6321_t0_20261002/`. The move changes repository paths only; source/input/run bytes are unchanged. The exact historical command is preserved; when replaying from the published checkout, substitute the published package path for the original host-side package path.

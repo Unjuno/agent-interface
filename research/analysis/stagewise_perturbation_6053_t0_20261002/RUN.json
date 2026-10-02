@@ -1,0 +1,16 @@
+{
+  "schema":"agent-interface.research-run.v1",
+  "issue":6053,
+  "disposition":"PASS_METHOD_SCOPED",
+  "scope":"six authored exact affine fixtures only",
+  "source_base":"3adec9cdc2cff5ef68f19acd55c5823fcaad26df",
+  "formal_invocations":[
+    {"program":"candidate.py","arguments":["public.json"],"count":1,"exit_code":0,"raw_output":"candidate.raw.json","sha256":"ceb144617024ca0364d5b32a088e800da61dc078081a8ee53853565030592820"},
+    {"program":"audit.py","arguments":["public.json"],"count":1,"exit_code":0,"raw_output":"audit.raw.json","sha256":"1c6ecb1910411a8cba0185798d67dc1a3e35dbafd379032e7035be844e73f127"}
+  ],
+  "formal_reconciliation":"PASS; candidate, exact-rational independent enumerator, and truth assertions agree for all 6 cases and all stage prefixes",
+  "source_integrity_note":"The freeze names exact source paths/base commit but omitted pre-run file SHA values. SHA256SUMS was captured after the one-shot run; candidate.py, audit.py and public.json were not edited after FREEZE.json. This evidence gap is retained, not backdated.",
+  "pre_freeze_construction":"PASS; prefix, duplicate checkpoint, zero-denominator, branch-boundary controls; initial construction defects corrected before freeze",
+  "docker":{"engine_available":false,"container_used":false,"shared_backend_restarted":false,"limitation":"host-only; no isolation claim"},
+  "limitations":["stipulated affine models and safety bounds","no empirical agent/app trajectory","no matched resource-cost or policy-benefit result","not a GUI safety proof"]
+}

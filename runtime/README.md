@@ -5,6 +5,8 @@ This directory is reserved for the user-facing Agent Interface runtime.
 The project is still research-first, so experimental benchmark code remains under `research/`. Code moves here only when it represents the current promoted semantics rather than a one-off experiment.
 Start with [Using the current interface](USING_CURRENT_INTERFACE.md) for public action/image output, native continuation and local verification.
 
+For local Linux-container research on Windows, use the scoped [WSL Containers (WSLc) migration guide](../.github/wslc-local-containers.md) before starting Docker Desktop. WSLc is the preferred pilot for eligible single-container iterations; it is not a blanket replacement for Docker/OrbStack. In particular, this host has **not** demonstrated effective memory/swap enforcement, so do not treat `--memory` as a hard safety ceiling. Keep Docker-specific, Compose/API-dependent, frozen-runtime, and hosted-CI workflows on their declared runtimes until separately validated.
+
 ## Directory map
 
 | Path | Role |

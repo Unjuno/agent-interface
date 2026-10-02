@@ -1,0 +1,66 @@
+[
+  {
+    "event": "predicate_known",
+    "known_ns": 23228203094055,
+    "capture_sha256": "b34444dd9697fe6dd104ef13f5f9fe9c372ad8e44d1781f9056bbbf1f271cb50",
+    "predicates": {
+      "target_present": true,
+      "rectangles": false,
+      "clean_title": true
+    },
+    "sampled_title": "two-rectangles.svg - Inkscape",
+    "title_atomic_with_image": false
+  },
+  {
+    "event": "admission",
+    "request": {
+      "action": "draw",
+      "observation": {
+        "sequence": 2,
+        "captured_ns": 23228169705679,
+        "surface": "x11-window-6291463",
+        "predicates": {
+          "target_present": true,
+          "rectangles": false,
+          "clean_title": true
+        },
+        "evidence_ref": "method-observation-1",
+        "evidence_digest": "b34444dd9697fe6dd104ef13f5f9fe9c372ad8e44d1781f9056bbbf1f271cb50"
+      }
+    },
+    "result": {
+      "eligible": true,
+      "status": "revalidated",
+      "authorization": "b00c49c97d7347f2a32b47b45c259120",
+      "expected_sequence": 2,
+      "valid_until_ns": 23230120389808
+    },
+    "known_ns": 23228203140927
+  },
+  {
+    "event": "input_returned",
+    "known_ns": 23228410455929,
+    "terminal": {
+      "status": "completed",
+      "action_id": "draw-1",
+      "effect_ref": "method-dispatch-1",
+      "release": {
+        "verified": true,
+        "keys_down": [],
+        "buttons_down": []
+      }
+    }
+  },
+  {
+    "event": "predicate_known",
+    "known_ns": 23228457602467,
+    "capture_sha256": "17ec039e29da66db893d05983fc2692ca4726790d5dce5a941dbb1a92de61784",
+    "predicates": {
+      "target_present": true,
+      "rectangles": "unknown",
+      "clean_title": false
+    },
+    "sampled_title": "*two-rectangles.svg - Inkscape",
+    "title_atomic_with_image": false
+  }
+]

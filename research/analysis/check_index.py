@@ -23,8 +23,28 @@ def retained_result_dirs() -> list[str]:
         for path in ROOT.iterdir()
         if path.is_dir()
         and not path.name.startswith(".")
-        and ((path / "REPORT.md").is_file() or (path / "FORMAL_FAILURE.md").is_file())
+        and (
+            (path / "REPORT.md").is_file()
+            or (path / "FORMAL_FAILURE.md").is_file()
+            or (path / "STOP.md").is_file()
+        )
     )
+
+
+def checkout_is_sparse() -> bool:
+    """True when Git's sparse-checkout metadata is available and enabled."""
+    checkout = ROOT.parents[2]
+    git_file = checkout / ".git"
+    if git_file.is_file():
+        content = git_file.read_text(encoding="utf-8").strip()
+        if not content.startswith("gitdir:"):
+            return False
+        git_dir = (checkout / content.split(":", 1)[1].strip()).resolve()
+    elif git_file.is_dir():
+        git_dir = git_file
+    else:
+        return False
+    return (git_dir / "info" / "sparse-checkout").is_file()
 
 
 def render_block(names: list[str]) -> str:
@@ -32,7 +52,7 @@ def render_block(names: list[str]) -> str:
         HEADING,
         "",
         "This compact list is generated from child directories that contain `REPORT.md` or "
-        "`FORMAL_FAILURE.md`. It is the completeness surface used by the index checker.",
+        "`FORMAL_FAILURE.md`, or `STOP.md`. It is the completeness surface used by the index checker.",
         "",
         BEGIN,
         "",
@@ -73,11 +93,12 @@ def main() -> int:
     parser.add_argument(
         "--write",
         action="store_true",
-        help="rewrite the generated retained-result directory block in README.md",
+        help="rewrite the generated retained-result/failure/STOP directory block in README.md",
     )
     args = parser.parse_args()
 
     names = retained_result_dirs()
+    sparse = checkout_is_sparse()
     current = README.read_text(encoding="utf-8")
     expected = with_generated_block(current, render_block(names))
 
@@ -97,21 +118,25 @@ def main() -> int:
         stale = sorted(indexed - retained)
         dangling = sorted(indexed - existing)
 
-        print("Generated analytical result index is stale.")
+        print("Generated analytical result/failure/STOP index is stale.")
         if missing:
             print("Missing retained result/failure directories:")
             for name in missing:
                 print(f"  - {name}")
-        if stale:
-            print("Generated entries no longer qualify as retained results/failures:")
+        if stale and not sparse:
+            print("Generated entries no longer qualify as retained results/failures/STOPs:")
             for name in stale:
                 print(f"  - {name}")
-        if dangling:
+        if dangling and not sparse:
             print("Generated entries point to missing directories:")
             for name in dangling:
                 print(f"  - {name}")
-        print("Run: python research/analysis/check_index.py --write")
-        return 1
+        if missing or (stale or dangling) and not sparse:
+            print("Run: python research/analysis/check_index.py --write")
+            return 1
+        if stale or dangling:
+            print("Sparse checkout: absent sibling directories were not treated as removals.")
+        return 0
 
     print(f"analysis index OK: {len(names)} retained result/failure directories indexed")
     return 0

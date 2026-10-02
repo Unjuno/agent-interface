@@ -1,0 +1,40 @@
+{
+  "schema": "issue-5722-finite-world-v1",
+  "development_variants": ["v0", "v1", "v2", "v3"],
+  "sealed_variants": ["s0", "s1", "s2", "s3"],
+  "setup_units_per_arm": 3,
+  "arms": {
+    "baseline": {
+      "easy": [1, 1, 0, 1],
+      "hard": [1, 0, 0, 0],
+      "forbidden": {"easy": [], "hard": []}
+    },
+    "slow_recover": {
+      "easy": [0, 0, 1, 1],
+      "hard": [1, 1, 1, 1],
+      "forbidden": {"easy": [], "hard": []}
+    },
+    "weak": {
+      "easy": [0, 0, 0, 0],
+      "hard": [0, 0, 0, 0],
+      "forbidden": {"easy": [], "hard": []}
+    },
+    "unsafe_easy_first": {
+      "easy": [1, 1, 1, 1],
+      "hard": [1, 0, 0, 0],
+      "forbidden": {"easy": [], "hard": ["v0"]}
+    }
+  },
+  "confirmation": {
+    "baseline": {
+      "easy": [1, 1, 1, 0],
+      "hard": [1, 1, 0, 0],
+      "forbidden": {"easy": [], "hard": []}
+    },
+    "slow_recover": {
+      "easy": [1, 1, 1, 0],
+      "hard": [1, 1, 1, 0],
+      "forbidden": {"easy": [], "hard": []}
+    }
+  }
+}

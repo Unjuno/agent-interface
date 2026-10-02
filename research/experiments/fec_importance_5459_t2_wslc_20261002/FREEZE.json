@@ -1,0 +1,52 @@
+{
+  "allocation": "FEC-IMPORTANCE-5459-T2-WSLC-20261002-01",
+  "base_main": "7262504003236cff3d78fc85756d3e5aa9559ce7",
+  "runtime": {
+    "name": "Microsoft WSL Containers (WSLc)",
+    "wslc": "3.0.1.0",
+    "kernel": "6.18.40.1-1",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "image_id": "sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4",
+    "platform": "linux/amd64",
+    "python": "3.12.14",
+    "limits": {
+      "network": "none",
+      "cpus": 1,
+      "memory": "1G",
+      "user": "65534:65534",
+      "gpu": false
+    },
+    "verbatim_warning": "wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap."
+  },
+  "source_sha256": {
+    ".gitattributes": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da",
+    "PREREGISTRATION.md": "924ed19ba93b81cfbda9b7b3a79706d4c51915135a96fcb2693bd69fd9a76f23",
+    "CONSTRUCTION.md": "81959a5b6cc36de0cfe32aae425508015a80816a2d095a02c2635e4a5c18387e",
+    "README.md": "8fa3271e50e239c259a59261af7ca3f2f976988c781bfcb7488569bea1397c51",
+    "candidate.py": "01a883164ed09109025c82edc14cf91c3de43076bdea94ffa3b3420d124e9dd1",
+    "auditor.py": "9ffc0c105cf79173a620dd0cebb1f254d205a981de51e7e67b87b781521137e7",
+    "test_t2.py": "bfc57eef7f6391b7b05ef5536b1454467a77113dd102490261a4e5247ea90cf3",
+    "build_check.py": "8d68d4299330161582ee41ae207197a8dda3ecfd19ec974030685fff834e4e18"
+  },
+  "formal_invocation_limit": {
+    "construction": 1,
+    "candidate": 1,
+    "independent_audit": 1,
+    "retries": 0
+  },
+  "container_ids": {
+    "construction": "e5239952225c77fe5e4ca19a1393ed6055df5e1dbbe330d0f445c97dc6ffcad3",
+    "candidate": "73af17a9f549fbd84e356a31192d84a8e953fa88fdc159518b54b751f55f13",
+    "independent_audit": "74383a142a10ff1684bd2e97e759708abfdf0f4487d9a59013665a764448d247"
+  },
+  "result": {
+    "status": "FAIL_METHOD",
+    "candidate_exit_code": 0,
+    "audit_exit_code": 1,
+    "trace_rows": 4096,
+    "fault_rows": 28,
+    "raw_sha256": "2e46fa28a4b0b0a134bb8be330f1e236881622bcb6d45a5c43fe0693c83d8894",
+    "audit_sha256": "63f31f4f76c4bbedff8c7e0fb6c731a73da94ec936cfd4f2fc874f9600c2f083",
+    "audit_errors": 8224
+  }
+}

@@ -1,0 +1,9 @@
+# Scope deviation discovered after the frozen run
+
+On rereading the live Issue #6586 immediately before publication, its 2026-10-02 prefix-class and planar-embedding correction was present. This allocation did not implement that corrected T0 contract.
+
+Specifically, the fixture is an abstract adjacency graph with candidate-visible route tokens supplied directly by the fixture. It does not define a planar embedded free-space region or obstacle boundaries; test a shared prefix whose completions belong to multiple classes; reject a unique class label on such a prefix; include a misleading apparent branch that remains in the same class; or establish a source-visible, safe alternate obstacle-side corridor. The tokens therefore act as privileged labels, not as class evidence inferred from a frozen embedding and admissible history.
+
+The observed 11-versus-23 counted-event difference is only a property of this authored abstract-graph fixture. It does **not** test the corrected Issue hypothesis and is not scientific evidence of obstacle-side path-class recovery. In addition, the frozen independent audit failed all goal rows because the runner omitted an explicit goal-terminal action event. Both limitations are retained; neither the raw output nor the frozen sources are changed or rerun.
+
+Disposition for Issue #6586: this allocation is a protocol-mismatched exploratory attempt with a harness/audit failure, not METHOD_PASS, METHOD_FAIL, H_PASS, or H_FAIL under the live Issue gates. A useful follow-on must first construct and independently verify the planar embedding and controller-visible branch evidence, include the specified ambiguity/same-class/dynamic controls, and test terminal-event completeness in construction before freezing a separate allocation. Preserve this attempt and its hashes as predecessor evidence.

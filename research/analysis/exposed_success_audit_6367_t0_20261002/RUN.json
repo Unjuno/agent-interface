@@ -1,0 +1,31 @@
+{
+  "allocation_id": "EXPOSED-SUCCESS-AUDIT-6367-T0-20261002-01",
+  "base_main": "c6e4c7ad413bcc9605ab5bf00df0eaa4ac7ba560",
+  "freeze_commit": "3b00b142dde0b408c585552b2649fab4bb7fadc7",
+  "recorded_at_utc": "2026-10-02 01:03:27 UTC",
+  "environment": {
+    "os": "Ubuntu 24.04.4 LTS",
+    "python": "3.12.3",
+    "kernel": "6.18.40.1-microsoft-standard-WSL2",
+    "runtime": "native WSL2; no WSLc container, Docker Desktop, or Docker Engine"
+  },
+  "candidate": {
+    "command": "python3 -B candidate.py fixtures results",
+    "invocations": 1,
+    "retries": 0,
+    "exit_code": 0,
+    "stdout": "[{\"decision\": \"FAIL_SAFETY\", \"denominators\": {\"adaptive\": 8, \"fixed\": 8}, \"fixture_id\": \"6367-primary-controls-v1\"}, {\"decision\": \"NULL_ALL_OFFER_EFFECT\", \"denominators\": {\"adaptive\": 4, \"fixed\": 4}, \"fixture_id\": \"6367-post-policy-selection-trap-v1\"}]",
+    "outputs": ["results/primary.result.json", "results/selection_trap.result.json"]
+  },
+  "independent_audit": {
+    "command": "python3 -B auditor.py fixtures results results/audit.json",
+    "invocations": 1,
+    "retries": 0,
+    "exit_code": 0,
+    "stdout": "{\"errors\": 0, \"fixtures\": 2, \"status\": \"PASS_METHOD_ONLY\"}",
+    "output": "results/audit.json",
+    "formal_auditor_imported_candidate": false
+  },
+  "model_gui_user_input_gpu_network": "not used",
+  "memory_peak_or_speed_comparison": "not measured"
+}

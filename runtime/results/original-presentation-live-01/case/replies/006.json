@@ -1,0 +1,37 @@
+{
+  "request": {
+    "op": "review",
+    "attempt": 3,
+    "phase": "immediate-input-ambiguity",
+    "reason": "Input receipt says completed with neutral release, source 6. First tool image view appeared all black, while original PNG/native hashes match the initial READY frame. Retain this presentation/perception discrepancy; do not claim native pixels black or Save effect complete. No input replay."
+  },
+  "started_ns": "37885205970229",
+  "ended_ns": "37885207565286",
+  "attempt": null,
+  "isError": null,
+  "metadata": {
+    "schema": "agent-interface/primary-review-receipt-v1",
+    "source_sequence": 6,
+    "observation_id": "c826370ecee44e05a2dd05166591a869",
+    "task": "t1001073",
+    "phase": "immediate-input-ambiguity",
+    "reason": "Input receipt says completed with neutral release, source 6. First tool image view appeared all black, while original PNG/native hashes match the initial READY frame. Retain this presentation/perception discrepancy; do not claim native pixels black or Save effect complete. No input replay.",
+    "recorded_at": "2026-10-01T16:02:02.832Z",
+    "relay_id": 3,
+    "tool": "interface_guarded_input",
+    "call_id": "8dbd548458784dd097a218cbb7f7401b",
+    "reply_sha256": "765d77c09377a57f75f5332d9a44045c56795a5365d311f7fc757c4f52155b47",
+    "images": [
+      {
+        "mime_type": "image/png",
+        "sha256": "3f3535bb712285e350d6df1952c8ff48197ea160aa8d7acc84309b0aa47c1986"
+      }
+    ],
+    "evidence_scope": "caller-declared review; attribution only; not semantic success or measured model latency"
+  },
+  "image_path": null,
+  "caller_state": {
+    "stopped": null
+  },
+  "presented_text": []
+}

@@ -1,0 +1,32 @@
+name: Issue 6138 sunk-cost artifact-value T0b
+
+on:
+  pull_request:
+    paths:
+      - 'research/analysis/sunk_cost_artifact_value_6138_t0b_20261002/**'
+      - '.github/workflows/issue-6138-sunk-cost-artifact-t0b.yml'
+  push:
+    paths:
+      - 'research/analysis/sunk_cost_artifact_value_6138_t0b_20261002/**'
+      - '.github/workflows/issue-6138-sunk-cost-artifact-t0b.yml'
+
+jobs:
+  method-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Construction regression suite
+        working-directory: research/analysis/sunk_cost_artifact_value_6138_t0b_20261002
+        run: python -B -m unittest -v test_t0b.py
+      - name: Recompute finite candidate and independent audit
+        working-directory: research/analysis/sunk_cost_artifact_value_6138_t0b_20261002
+        run: |
+          python -B candidate.py fixture.json /tmp/candidate.json
+          python -B audit.py fixture.json /tmp/candidate.json /tmp/audit.json
+          python -B -m py_compile candidate.py audit.py test_t0b.py
+      - name: Verify retained artifact hashes
+        working-directory: research/analysis/sunk_cost_artifact_value_6138_t0b_20261002
+        run: sha256sum -c SHA256SUMS
