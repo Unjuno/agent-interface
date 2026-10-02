@@ -75,6 +75,10 @@ The frozen synthetic fixture had 12 feasible cells, 23 two-way projections, a pl
 
 One digest-pinned, network-disabled WSLc construction reconstructed 600 synthetic rows across 15 lifecycle-policy cells. The detector found the planted joint RSS/latency leak in 3/3 policies and rejected cache-only, thermal-only, no-aging and hidden-state false-aging controls. Per-job measurements use one pre-transition age; pending obligations defer restarts; stale-generation receipt rejection is required only after actual modeled generation changes. The independent raw-only audit returned `PASS_METHOD_SCOPED`, zero errors; the 4-test construction suite passed. T1b's `METHOD_FAIL_AUDIT` remains intact. The synthetic method result does not establish actual process aging or safe runtime restart; T0's `HOLD_RESTART_PATH_NOT_QUALIFIED` remains. See [report, freeze, raw evidence and run record](research/analysis/worker_aging_6133_t1c_20261002/REPORT.md) and [Issue #6133](https://github.com/Unjuno/agent-interface/issues/6133).
 
+### Issue #6262: WSL Podman CUDA successor reproduction (2026-10-02)
+
+The unchanged #6262 synthetic CUDA candidate ran once in a pinned, network-disabled WSL Podman container with NVIDIA CDI passthrough. It enumerated 4,096/4,096 evidence subsets on the local RTX 3080; the independent CPU auditor exactly reconstructed every semantic row, refused 1,987 naive joint false promotions and the wide claim, retained the exact qualified `t01` narrow claim, and rejected all four frozen mutations. `PASS_CONTAINER_REPRODUCTION_SCOPED`; no retries. This is an environment-reproduction result only—not a real skill, GUI, safety, GPU-speed, or Docker-parity claim. The immutable predecessor result and its original non-container execution remain untouched. See [the freeze, raw evidence, manifest, and report](research/analysis/skill_applicability_6262_wslc_t0b_v1/REPORT.md) and [PR #6289](https://github.com/Unjuno/agent-interface/pull/6289).
+
 # Research index
 
 ### Issue #6533: frame-qualified collateral checks T0 (2026-10-02)
@@ -98,6 +102,10 @@ Successor allocation S2 ran the ten-case synthetic finite fixture once in two se
 ## How to read this ledger
 
 This file is intentionally comprehensive. For public navigation, use the shorter status documents first and come here for the retained evidence history.
+
+### Issue #5156 T4: host-only caller/owner release-bracket construction (2026-10-02)
+
+One frozen current-main `InputOwner v10` worker-thread key-up call and `InputOwner v11` wrapper call were exercised with fake Xlib on Windows/CPython 3.12.10. The independent auditor joined six raw rows with zero errors: the caller interval enclosed the fake worker-thread KeyRelease request and sync return, the fake key transitioned down→up, and the worker terminated. Eight construction/audit tests passed. Disposition: `PASS_SYNTHETIC_OWNER_BRACKET_JOIN_SCOPED`. This is not Docker/X11 evidence and establishes no physical key occupancy, application consumption, useful feedback, recovery efficacy, MAP01 result, or human tempo; the separate #5156 X11 slot remains unassigned. See [the frozen package and first raw outcome](research/live_control/owner_keyup_bracket_host_t4_5156_v1/README.md).
 
 ### Issue #6061: prediction-error-triggered motor chunks T0 (2026-10-01)
 

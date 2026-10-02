@@ -3,6 +3,7 @@
 - Allocation: `PATH-WIDTH-CONTINUOUS-GUI-6581-T0B-20261002-01`
 - Base main: `60e2e7bb8a69cb7270fc2082e0affc5bf2789876`
 - Freeze SHA-256: `addd830a46b938298a92e5709a9467e205515fc4347b4a42b20847f7a29dd2e6`
+- The frozen root workflow source hash binds the exact workflow file in candidate branch commit `7d8cfa95fe8738f77bee876738b671dad828365d` at allocation time. Main advanced after the formal run; the PR integration carries newer unrelated index/workflow additions without rewriting this historical source identity.
 - Platform: dedicated OrbStack Ubuntu 24.04 Noble ARM64 VM `research-path-width-6581-t0b-20261002`, own Docker Engine; formal candidate and auditor containers had network disabled and read-only root/source/dependency mounts.
 - Candidate image: `mcr.microsoft.com/playwright@sha256:a51a0edc496f3e0cb386de2438eb1c2578de64cc7af60bfcbc7abfd410567fcd`; Playwright 1.55.1, Node 22.19.0, Chromium 140.0.7339.186.
 - Auditor image: `docker.io/library/python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f`.
