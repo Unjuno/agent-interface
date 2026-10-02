@@ -592,10 +592,14 @@ This compact list is generated from child directories that contain `REPORT.md` o
 
 ## Interpretation
 
+- [Issue #5318 / PR #5952 original T0 auditor STOP](semantic_serializability_5318_t0_v1/ARCHIVAL_QUALIFICATION.md) — nine exact original files; parent auditor mismatch remains STOP, no scientific comparison accepted.
+
 - A mathematical or exhaustive PASS is not a live-backend PASS.
 - A proof of non-identifiability prevents unmatched evidence from being turned into a causal estimate.
 - A closed-form threshold is meaningful only under its declared variables, assumptions, and cost/utility model.
 - Real latency, tokens, model behavior, application behavior, and cross-domain transfer stay empirical unless explicitly included in the model.
+
+- [Issue #5957 / PR #5967 T1 STOP and post-STOP controls](semantic_serializability_5318_audit_t1_v1/ARCHIVAL_QUALIFICATION.md) — three exact published head files plus distinct attempted-source ancestor history; T1 Docker STOP and later host-only controls remain separate.
 
 ## Placement rule
 

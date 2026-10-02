@@ -216,6 +216,11 @@ verify byte-identical images/outcomes and exact full retrieval. Text bytes are
 measured separately from image payload; no model-token, cost or speed benefit is
 inferred from the offline comparison.
 
+[A four-case primary Inkscape comparison](results/inkscape-live-summary-01/README.md)
+completed both representations correctly with identical saved results per pair.
+It did not meet the predeclared joint token/declaration-time improvement gate;
+full remains the default and summary remains an explicit option.
+
 ## Batch actions between decisions
 
 Use one public `dispatch` program for a finite sequence whose actions can all be
