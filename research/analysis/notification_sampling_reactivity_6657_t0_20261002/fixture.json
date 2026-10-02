@@ -1,0 +1,33 @@
+{
+  "schema": "notification-sampling-reactivity-6657-fixture-v1",
+  "allocation": "NOTIFICATION-SAMPLING-REACTIVITY-6657-T0-20261002-01",
+  "horizon_ticks": 60,
+  "useful_progress_ticks": [0, 4, 30, 33, 60],
+  "stale_after_ticks": 2,
+  "base_check_ticks": [8, 20, 31, 45, 57],
+  "reaction_latency_ticks": 1,
+  "random_epoch_seed": 66572026,
+  "random_epoch_draw_count": 12,
+  "notification_arms": [
+    {
+      "id": "silent",
+      "notification_ticks": [],
+      "react_to_notifications": false
+    },
+    {
+      "id": "milestone_reactive",
+      "notification_ticks": [4, 30, 33],
+      "react_to_notifications": true
+    },
+    {
+      "id": "noisy_status_reactive",
+      "notification_ticks": [8, 14, 21, 38, 52, 58],
+      "react_to_notifications": true
+    },
+    {
+      "id": "milestone_visible_nonreactive_control",
+      "notification_ticks": [4, 30, 33],
+      "react_to_notifications": false
+    }
+  ]
+}
