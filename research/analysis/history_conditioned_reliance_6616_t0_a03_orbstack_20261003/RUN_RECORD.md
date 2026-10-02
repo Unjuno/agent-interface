@@ -3,7 +3,8 @@
 ## Frozen pre-run state
 
 - Allocation: `history-conditioned-reliance-6616-t0-a03-20261003`
-- Base main: `c17490cae4cb1e9600b816484f5103e3613700af`
+- Base main after current-main refreeze: `2d5e42c2d8b9076e3b1b5f9c26cffd722f7e52aa`
+- Superseded pre-run freeze: SHA-256 `20cb66a89a539469fa18761c86e33b83241569c64481bcea6d7d05d13a342498` on branch head `a74367079cfdcca20e318f139205d2608d47ca22`; main had advanced before any invocation. The refreeze is prospective; no prior candidate, auditor, container or retry count changed.
 - Candidate invocations: 0; auditor invocations: 0; formal container invocations: 0; retries: 0.
 - Candidate output and auditor output paths on the dedicated OrbStack VM: absent at preregistration.
 - Construction contract tests: 5/5 passed locally before formal freeze. This is fixture-development evidence only.
