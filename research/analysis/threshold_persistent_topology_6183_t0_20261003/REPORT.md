@@ -1,11 +1,12 @@
 # Result — Issue #6183 threshold-persistent topology T0
 
-**Disposition: A02 passed its preregistered fixed-route subtest; Issue #6183
-remains `HOLD_INCOMPLETE_SCOPE`.** This is not an Issue-level
-`METHOD_PASS_SCOPED`. A01 is preserved as `STOP_INFRA_PRE_CANDIDATE`; its
-candidate process never started. A02 was a separately frozen allocation after
-a runner-only correction. No A01 outcome was overwritten, and no
-candidate/auditor retry occurred within either allocation.
+**Disposition: A03 passed the preregistered synthetic visual-method subgate;
+application-effect transfer remains `HOLD`.** A01 is preserved as
+`STOP_INFRA_PRE_CANDIDATE`; A02 passed only its fixed-route subtest; A03 added
+scale, outline/hole, and auditor mutation controls. The issue does not establish
+application effects because no eligible live/document effect oracle was tested.
+No earlier outcome was overwritten; each allocation keeps its own identity and
+outputs.
 
 ## What was tested
 
@@ -55,26 +56,54 @@ controls and its proposed experiment includes scale sensitivity and both route
 and outline predicates. This A02 contains no auditor corruption/mutation
 challenge, no scaled fixture variant, and no outline/hole predicate. These are
 not retroactively added to the frozen run and no post-hoc test is being passed
-off as preregistered. The Issue remains open/HOLD pending an additive,
-prospectively frozen follow-up or an explicit scope decision.
+off as preregistered. A03 prospectively tested those missing synthetic
+dimensions in a distinct allocation.
+
+## A03 scale/outline/mutation follow-up
+
+A03 tested 20 image-only rows: ten authored route/outline rasters at 1x and
+exact nearest-neighbor 2x. Candidate and auditor used physically separate
+read-only source mounts; candidate mount contained only candidate code and
+pixel fixtures. Candidate/auditor each ran once in separate pinned-image
+containers, exit 0, OOM=false. Independent replay errors were zero.
+
+| Method | Correct / coverage on 14 determinate rows | False confident outputs |
+|---|---:|---:|
+| Pixel-distance template | 8/14; 12/14 covered | 10 |
+| Single threshold | 14/14; 14/14 covered | 6 |
+| Threshold persistence | 14/14; 14/14 covered | 0 |
+
+All ten 1x/2x pairs retained identical visual outputs. The four auditor
+corruptions (omitted row, duplicate id, flipped decision, fabricated effect)
+were each rejected for the intended error. Near-touch and gray outline closure
+returned `UNKNOWN`; clear route and closed outline were `PRESENT`; gaps and
+disconnected crossing were `ABSENT`. All 20 application-effect fields remained
+`UNKNOWN`, including visually identical twins with differing hidden-graph
+labels. Thus A03 passes its prospective synthetic method gate, not an app-effect
+gate.
+
+The clarified Issue boundary still requires a separate application/document
+oracle before semantic transfer. No real GUI, saved document, game, model, or
+user task was tested here. Therefore the method result is useful but
+application-effect transfer and issue closure remain on HOLD.
 
 ## Interpretation and limits
 
-This supports only the narrow, hand-authored synthetic visual-predicate
-comparison. It does not show that persistent topology is better than simple
-connectivity on clean, determinate cases: both achieved 6/6 coverage/correctness
-there. Its observed advantage is abstention on the two ambiguity fixtures.
-The benefit over a single threshold depends on the authored gray-level
-perturbations and the preregistered thresholds. No real GUI, route/document
-graph, app, game, model, animation, theme, zoom, or user task was exercised.
-No application effect was detected or verified. A typed application oracle
-remains necessary before any transfer claim.
+This supports only hand-authored synthetic visual-predicate discrimination.
+Simple single-threshold topology matched persistence on all determinate A02
+and A03 cases; observed gains came from abstaining on authored ambiguous
+fixtures and the pixel baseline's template mismatch. Exact 2x nearest-neighbor
+rescaling is not GUI scaling/antialiasing. Results depend on thresholds and
+synthetic labels. No real GUI, route/document graph, app, game, model, temporal
+effect, or user task was exercised. No application effect was detected or
+verified. A typed application oracle is required before transfer.
 
 ## Reproduction and evidence
 
-See `PREREGISTRATION.md`, `RUN.json`, `A01_STOP.md`, and
-`formal_a02_orbstack_20261003/topology-6183-a02/` for exact freeze, commands,
-first STOP, raw candidate, independent audit, cgroup observations, and container
-identities. The frozen implementation commit is
-`8cf37e9d7ce174cb04f9b98a722f438cc310069d`; later commits add only execution
-provenance and result reporting. Verify package files with `SHA256SUMS`.
+See `PREREGISTRATION.md`, `PREREGISTRATION_A03.md`, `RUN.json`, `A01_STOP.md`,
+`CONSTRUCTION_A03.md`, and both `formal_a0{2,3}_orbstack_20261003/` folders for
+freezes, commands, construction failure, first STOP, raw candidates,
+independent audits, cgroup observations, and container identities. A02 source
+freeze: `8cf37e9d7ce174cb04f9b98a722f438cc310069d`; A03 source freeze:
+`675d9a94ea61b496a3d67a5320eb36ea85795460`. Verify package files with
+`SHA256SUMS`.

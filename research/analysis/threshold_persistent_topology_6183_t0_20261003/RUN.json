@@ -7,7 +7,9 @@
     "https://github.com/Unjuno/agent-interface/issues/6183#issuecomment-5962761927",
     "https://github.com/Unjuno/agent-interface/issues/6183#issuecomment-5962796910",
     "https://github.com/Unjuno/agent-interface/issues/6183#issuecomment-5962799605",
-    "https://github.com/Unjuno/agent-interface/issues/6183#issuecomment-5962837294"
+    "https://github.com/Unjuno/agent-interface/issues/6183#issuecomment-5962837294",
+    "https://github.com/Unjuno/agent-interface/issues/6183#issuecomment-5963020048",
+    "https://github.com/Unjuno/agent-interface/issues/6183#issuecomment-5963052313"
   ],
   "source_base": "fa791fe937fb24245e785d9e22928b3f4a6a42ae",
   "frozen_source_commit": "8cf37e9d7ce174cb04f9b98a722f438cc310069d",
@@ -51,9 +53,9 @@
   "auditor_invocations": 1,
   "retries": 0,
   "issue_level_gate": {
-    "status": "HOLD_INCOMPLETE_SCOPE",
-    "reason": "A02 passed its narrower preregistered fixed-9x9 route subtest, but the Issue's clarified method gate also calls for mutation controls; the proposed T also names scale sensitivity and route/outline predicates. No auditor corruption/mutation challenge, scale variant, or outline/hole predicate was run. Do not promote this subtest to METHOD_PASS_SCOPED or close #6183.",
-    "observed_followup_needed": ["independent auditor mutation/corruption controls", "frozen scale variants and sensitivity measure", "outline/hole visual predicate or explicit scope decision", "later application-level oracle before effect-transfer claim"]
+    "status": "PASS_SYNTHETIC_METHOD_SUBGATE; HOLD_APPLICATION_TRANSFER",
+    "reason": "A03 completed the missing synthetic scale, outline/hole, and auditor mutation controls under its prospective freeze. However, no real application/document graph oracle or task-specific source-bound GUI experiment was available; per Issue #6183 clarification, do not transfer visual results to application effect or close the later semantic-transfer gate.",
+    "observed_followup_needed": ["identify an eligible resettable GUI/document task and independent app-effect oracle before any transfer allocation", "keep app effect UNKNOWN until that separate oracle is tested"]
   },
   "local_ci": {
     "python": "3.14.5 on macOS arm64",
@@ -106,7 +108,7 @@
     "candidate_label_isolation": "The read-only A02 source mount also contained labels.json, although candidate.py only opened fixtures.json. This was not filesystem-enforced; see REPORT.md."
   },
   "A03": {
-    "status": "FROZEN_NOT_RUN",
+    "status": "PASS_SYNTHETIC_METHOD_SUBGATE",
     "preregistration": "PREREGISTRATION_A03.md",
     "source_freeze_commit": "675d9a94ea61b496a3d67a5320eb36ea85795460",
     "source_sha256": {
@@ -134,6 +136,26 @@
     "candidate_invocations": 0,
     "auditor_invocations": 0,
     "retries": 0,
-    "outcome": null
+    "container_ids": {
+      "candidate": "6e9632d52fe685e756cfd9568bd1f3afb36608892179319c6c318ff192ba7987",
+      "auditor": "beb45f2c1ab3024b63ba02afb8ed66c77ac479caa9aa7a541eefdeac3d5deb65"
+    },
+    "candidate_state": {"exit_code": 0, "oom_killed": false, "started_at_utc": "2026-10-02T23:22:43.181215951Z", "finished_at_utc": "2026-10-02T23:22:43.351913904Z", "user": "501:501", "network": "none", "nano_cpus": 1000000000, "memory_bytes": 536870912, "readonly_rootfs": true, "dropped_capabilities": ["ALL"], "source_mount_readonly": true, "source_mount_contains_only": ["candidate_a03.py", "fixtures_a03.json"]},
+    "auditor_state": {"exit_code": 0, "oom_killed": false, "started_at_utc": "2026-10-02T23:22:59.480736273Z", "finished_at_utc": "2026-10-02T23:22:59.701077236Z", "user": "501:501", "network": "none", "nano_cpus": 1000000000, "memory_bytes": 536870912, "readonly_rootfs": true, "dropped_capabilities": ["ALL"], "source_mount_readonly": true},
+    "observed_container_cgroups": {"candidate": {"memory.max": "536870912", "cpu.max": "100000 100000"}, "auditor": {"memory.max": "536870912", "cpu.max": "100000 100000"}},
+    "artifacts": {
+      "candidate_raw": "formal_a03_orbstack_20261003/topology-6183-a03/candidate.raw.json",
+      "audit": "formal_a03_orbstack_20261003/topology-6183-a03/audit.json",
+      "candidate_log": "formal_a03_orbstack_20261003/topology-6183-a03/candidate.stdout.log",
+      "auditor_log": "formal_a03_orbstack_20261003/topology-6183-a03/auditor.stdout.log"
+    },
+    "metrics": {"rows": 20, "audit_errors": 0, "determinate_cases": 14, "persistent_correct": 14, "persistent_coverage": "14/14", "persistent_false_confident": 0, "pixel_baseline_correct": 8, "pixel_baseline_coverage": "12/14", "pixel_baseline_false_confident": 10, "single_threshold_correct": 14, "single_threshold_coverage": "14/14", "single_threshold_false_confident": 6, "scale_pairs_invariant": "10/10", "mutation_controls_rejected": "4/4", "application_effect_unknown_rows": 20},
+    "candidate_invocations": 1,
+    "auditor_invocations": 1,
+    "retries": 0,
+    "audit_errors": 0,
+    "candidate_raw_sha256": "efdafe13101ec6bc87b399648fa04e23723965b723c004952aae128466ab9c44",
+    "audit_sha256": "83ad63ad260f6dd2507ae3ccf73a55a17ee2b4a70a4c426123d339be2e63b1f3",
+    "outcome": "PASS_SYNTHETIC_METHOD_SUBGATE"
   }
 }
