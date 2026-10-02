@@ -1,0 +1,60 @@
+{
+  "schema": "soft-event-context-strict-auditor-t2-result-v1",
+  "allocation_id": "SOFT-EVENT-AUDITOR-STRICT-T2-20261002-01",
+  "main_sha_at_freeze": "ce89f11fcff33b83de4a9b9ded7b89bf764b5f09",
+  "status": "PASS_T2_STRICT_AUDITOR_SCOPED",
+  "t1_target_auditor_accepted_corruptions": 4,
+  "t1_packet_contract_fields_omitted": [
+    "may_only_preserve_or_reduce_existing_authority",
+    "semantic_change_identified"
+  ],
+  "control_accepted": true,
+  "mutations_rejected": 5,
+  "mutations_total": 5,
+  "runs": [
+    {
+      "case_id": "CONTROL_CONTRACT_COMPLETE",
+      "classification": "ACCEPT",
+      "errors": []
+    },
+    {
+      "case_id": "MUTATION_REBOUND_CASE_AND_EVENT_BINDING",
+      "classification": "REJECT",
+      "errors": [
+        "ONE_SOFT:external_binding_mismatch",
+        "ONE_SOFT:event_0:external_binding_mismatch"
+      ]
+    },
+    {
+      "case_id": "MUTATION_GRANTS_INPUT_AUTHORITY_TRUE",
+      "classification": "REJECT",
+      "errors": [
+        "ONE_SOFT:event_0:grants_input_authority_value"
+      ]
+    },
+    {
+      "case_id": "MUTATION_REQUIRES_NEW_DECISION_TRUE",
+      "classification": "REJECT",
+      "errors": [
+        "ONE_SOFT:event_0:requires_new_decision_value"
+      ]
+    },
+    {
+      "case_id": "MUTATION_KEEP_EXISTING_POLICY_FALSE",
+      "classification": "REJECT",
+      "errors": [
+        "ONE_SOFT:event_0:keep_existing_policy_value"
+      ]
+    },
+    {
+      "case_id": "MUTATION_OMIT_REQUIRED_GUARD_FIELDS",
+      "classification": "REJECT",
+      "errors": [
+        "ONE_SOFT:event_0:may_only_preserve_or_reduce_existing_authority_type",
+        "ONE_SOFT:event_0:semantic_change_identified_type"
+      ]
+    }
+  ],
+  "scope": "synthetic soft-event packet/auditor boundary only"
+}
+
