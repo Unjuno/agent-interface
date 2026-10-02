@@ -1,7 +1,7 @@
 # Prospective one-shot protocol — Issue #6358
 
 Allocation: `ADOPTION-CONDITIONED-RECOURSE-6358-T0-MAC-HOST-20261003-01`
-Frozen main: `b894ebd8812cb190a9a31eab63f6312d9189abbe`
+Frozen main after preformal refresh: `fc1c09294458d3b2744fa05432d4cf8a19583f18`
 Prior allocation: `ADOPTION-CONDITIONED-RECOURSE-6358-T0-HOST-20261002-01` (preserved `STOP_RUNNER_REDIRECTION_DIRECTORY_MISSING`; candidate program invocations 0; no retry)
 
 ## H / T / D / C / U
