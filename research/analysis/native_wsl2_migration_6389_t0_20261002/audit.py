@@ -21,10 +21,12 @@ def audit(raw, freeze):
     schedule = freeze.get("expected_schedule")
     source = freeze.get("source_sha256")
     image = freeze.get("wslc_image")
+    expected_python_version = freeze.get("expected_python_version")
     expected_ids = freeze.get("expected_test_ids")
     threshold = freeze.get("min_improvement_fraction")
     if (not isinstance(runs, list) or not isinstance(schedule, list) or len(runs) != len(schedule)
             or not isinstance(source, dict) or not source or not isinstance(image, str)
+            or not isinstance(expected_python_version, str) or not expected_python_version
             or not isinstance(expected_ids, list) or not expected_ids
             or not isinstance(threshold, (int, float)) or isinstance(threshold, bool)
             or not 0 < threshold < 1):
@@ -49,6 +51,8 @@ def audit(raw, freeze):
                 or not isinstance(run.get("wall_ns"), int) or run["wall_ns"] <= 0
                 or not isinstance(run.get("max_tree_rss_kib"), int) or run["max_tree_rss_kib"] <= 0):
             return _result("FAIL_CANDIDATE_EXIT" if run.get("exit_code") != 0 else "HOLD_RAW_RECORD_INVALID", runs)
+        if run["python_version"] != expected_python_version:
+            return _result("STOP_RUNTIME_VERSION_MISMATCH", runs)
         tests = run.get("tests")
         if (not isinstance(tests, list) or [x.get("id") for x in tests if isinstance(x, dict)] != expected_ids
                 or any(not isinstance(x, dict) or x.get("status") != "passed" for x in tests)):

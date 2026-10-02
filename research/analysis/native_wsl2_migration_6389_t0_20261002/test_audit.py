@@ -17,6 +17,7 @@ def fixture():
         "expected_test_ids": [row["id"] for row in TESTS],
         "source_sha256": SOURCE,
         "wslc_image": "python@sha256:" + "c" * 64,
+        "expected_python_version": "3.12.14",
         "native_runtime_identity": "Ubuntu-24.04/WSL2",
         "min_improvement_fraction": 0.10,
     }
@@ -27,7 +28,7 @@ def fixture():
             "index": index,
             "arm": arm,
             "runtime_identity": freeze["wslc_image"] if wslc else "Ubuntu-24.04/WSL2",
-            "python_version": "3.12.3",
+            "python_version": "3.12.14",
             "source_sha256": copy.deepcopy(SOURCE),
             "exit_code": 0,
             "wall_ns": 1_000_000_000 if wslc else 800_000_000,
@@ -86,7 +87,13 @@ class MigrationAuditTests(unittest.TestCase):
 
     def test_python_patch_version_mismatch_stops_before_comparison(self):
         freeze, raw = fixture()
-        raw["runs"][0]["python_version"] = "3.12.14"
+        raw["runs"][0]["python_version"] = "3.12.3"
+        self.assertEqual(audit(raw, freeze)["status"], "STOP_RUNTIME_VERSION_MISMATCH")
+
+    def test_all_runs_consistently_using_wrong_python_version_stop(self):
+        freeze, raw = fixture()
+        for run in raw["runs"]:
+            run["python_version"] = "3.12.3"
         self.assertEqual(audit(raw, freeze)["status"], "STOP_RUNTIME_VERSION_MISMATCH")
 
     def test_material_native_regression_is_not_migration_pass(self):

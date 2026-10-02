@@ -26,6 +26,10 @@ Read-only environment evidence at this snapshot:
 
 The test-first contract auditor in `audit.py` refuses version, source, image, schedule, semantic-output, and PSI-gate violations; it accepts a synthetic success fixture only to test the classifier. Those synthetic fixtures are not measured observations.
 
+### PR review hardening — expected Python identity
+
+The freeze now names CPython `3.12.14` as the expected version, and the raw-only auditor requires every run to report that exact version rather than merely agreeing with the other rows. A regression control sets **all** rows to the same wrong `3.12.3` value and requires `STOP_RUNTIME_VERSION_MISMATCH`; a one-row mismatch control remains. The historical `10/10` construction runs predate this review hardening and do not validate the changed files. This added construction test has **not** been run because the shared-host resource-collision HOLD remains active. Candidate/auditor formal invocation counts remain zero.
+
 `SHA256SUMS` covers the freeze, STOP, protocol, auditor, tests and retained construction stdout (the manifest does not hash itself).
 
 ## Resume condition
