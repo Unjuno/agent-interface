@@ -1,0 +1,687 @@
+{
+  "schema": "issue-5722-t0-raw-v1",
+  "world_sha256": "6f74bb9d2d767d3ba6fc066e88b0d22fcf796443c35e9e2a8381d135bdc7466b",
+  "runner_sha256": "c05d361e01c47dafc36e4205cf465aaed21f6bf47a44617b2670e9185f4cbcf3",
+  "runtime": "3.12.10",
+  "equal_full": {
+    "attempts": [
+      {
+        "cohort": "development",
+        "arm": "baseline",
+        "stratum": "easy",
+        "variant": "v0",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "baseline",
+        "stratum": "hard",
+        "variant": "v0",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "baseline",
+        "stratum": "easy",
+        "variant": "v1",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "baseline",
+        "stratum": "hard",
+        "variant": "v1",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "baseline",
+        "stratum": "easy",
+        "variant": "v2",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "baseline",
+        "stratum": "hard",
+        "variant": "v2",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "baseline",
+        "stratum": "easy",
+        "variant": "v3",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "baseline",
+        "stratum": "hard",
+        "variant": "v3",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "slow_recover",
+        "stratum": "easy",
+        "variant": "v0",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "slow_recover",
+        "stratum": "hard",
+        "variant": "v0",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "slow_recover",
+        "stratum": "easy",
+        "variant": "v1",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "slow_recover",
+        "stratum": "hard",
+        "variant": "v1",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "slow_recover",
+        "stratum": "easy",
+        "variant": "v2",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "slow_recover",
+        "stratum": "hard",
+        "variant": "v2",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "slow_recover",
+        "stratum": "easy",
+        "variant": "v3",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "slow_recover",
+        "stratum": "hard",
+        "variant": "v3",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "weak",
+        "stratum": "easy",
+        "variant": "v0",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "weak",
+        "stratum": "hard",
+        "variant": "v0",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "weak",
+        "stratum": "easy",
+        "variant": "v1",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "weak",
+        "stratum": "hard",
+        "variant": "v1",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "weak",
+        "stratum": "easy",
+        "variant": "v2",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "weak",
+        "stratum": "hard",
+        "variant": "v2",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "weak",
+        "stratum": "easy",
+        "variant": "v3",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "weak",
+        "stratum": "hard",
+        "variant": "v3",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "unsafe_easy_first",
+        "stratum": "easy",
+        "variant": "v0",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "unsafe_easy_first",
+        "stratum": "hard",
+        "variant": "v0",
+        "success": 1,
+        "forbidden": true
+      }
+    ],
+    "stopped": {
+      "unsafe_easy_first": "HARD_SAFETY_STOP"
+    },
+    "attempt_count": 26
+  },
+  "naive_easy_first": {
+    "attempts": [
+      {
+        "cohort": "development",
+        "arm": "baseline",
+        "stratum": "easy",
+        "variant": "v0",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "baseline",
+        "stratum": "easy",
+        "variant": "v1",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "slow_recover",
+        "stratum": "easy",
+        "variant": "v0",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "slow_recover",
+        "stratum": "easy",
+        "variant": "v1",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "weak",
+        "stratum": "easy",
+        "variant": "v0",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "weak",
+        "stratum": "easy",
+        "variant": "v1",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "unsafe_easy_first",
+        "stratum": "easy",
+        "variant": "v0",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "unsafe_easy_first",
+        "stratum": "easy",
+        "variant": "v1",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "baseline",
+        "stratum": "hard",
+        "variant": "v0",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "unsafe_easy_first",
+        "stratum": "hard",
+        "variant": "v0",
+        "success": 1,
+        "forbidden": true
+      }
+    ],
+    "early_easy_scores": {
+      "baseline": 2,
+      "slow_recover": 0,
+      "weak": 0,
+      "unsafe_easy_first": 2
+    },
+    "retained": [
+      "baseline",
+      "unsafe_easy_first"
+    ],
+    "eliminated": [
+      "slow_recover",
+      "weak"
+    ],
+    "stopped": {
+      "unsafe_easy_first": "HARD_SAFETY_STOP"
+    },
+    "false_eliminated_delayed_candidate": true
+  },
+  "adaptive": {
+    "attempts": [
+      {
+        "cohort": "development",
+        "arm": "baseline",
+        "stratum": "easy",
+        "variant": "v0",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "baseline",
+        "stratum": "hard",
+        "variant": "v0",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "slow_recover",
+        "stratum": "easy",
+        "variant": "v0",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "slow_recover",
+        "stratum": "hard",
+        "variant": "v0",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "weak",
+        "stratum": "easy",
+        "variant": "v0",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "weak",
+        "stratum": "hard",
+        "variant": "v0",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "unsafe_easy_first",
+        "stratum": "easy",
+        "variant": "v0",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "unsafe_easy_first",
+        "stratum": "hard",
+        "variant": "v0",
+        "success": 1,
+        "forbidden": true
+      },
+      {
+        "cohort": "development",
+        "arm": "baseline",
+        "stratum": "easy",
+        "variant": "v1",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "baseline",
+        "stratum": "hard",
+        "variant": "v1",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "baseline",
+        "stratum": "easy",
+        "variant": "v2",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "baseline",
+        "stratum": "hard",
+        "variant": "v2",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "baseline",
+        "stratum": "easy",
+        "variant": "v3",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "baseline",
+        "stratum": "hard",
+        "variant": "v3",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "slow_recover",
+        "stratum": "easy",
+        "variant": "v1",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "slow_recover",
+        "stratum": "hard",
+        "variant": "v1",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "slow_recover",
+        "stratum": "easy",
+        "variant": "v2",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "slow_recover",
+        "stratum": "hard",
+        "variant": "v2",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "slow_recover",
+        "stratum": "easy",
+        "variant": "v3",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "development",
+        "arm": "slow_recover",
+        "stratum": "hard",
+        "variant": "v3",
+        "success": 1,
+        "forbidden": false
+      }
+    ],
+    "pilot": {
+      "baseline": {
+        "easy": 1,
+        "hard": 1
+      },
+      "slow_recover": {
+        "easy": 0,
+        "hard": 1
+      },
+      "weak": {
+        "easy": 0,
+        "hard": 0
+      },
+      "unsafe_easy_first": {
+        "easy": 1,
+        "hard": 1
+      }
+    },
+    "stopped": {
+      "unsafe_easy_first": "HARD_SAFETY_STOP"
+    },
+    "eliminated_by_screen": [
+      "weak"
+    ],
+    "elimination_disposition": {
+      "weak": "ELIMINATED_BY_SCREEN_NOT_PROVEN_INFERIOR"
+    },
+    "survivors": [
+      "baseline",
+      "slow_recover"
+    ],
+    "development_success_counts": {
+      "baseline": {
+        "easy": 3,
+        "hard": 1
+      },
+      "slow_recover": {
+        "easy": 2,
+        "hard": 4
+      }
+    },
+    "selected": "slow_recover",
+    "development_attempt_count": 20,
+    "confirmation_attempts": [
+      {
+        "cohort": "sealed_confirmation",
+        "arm": "baseline",
+        "stratum": "easy",
+        "variant": "s0",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "sealed_confirmation",
+        "arm": "baseline",
+        "stratum": "hard",
+        "variant": "s0",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "sealed_confirmation",
+        "arm": "baseline",
+        "stratum": "easy",
+        "variant": "s1",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "sealed_confirmation",
+        "arm": "baseline",
+        "stratum": "hard",
+        "variant": "s1",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "sealed_confirmation",
+        "arm": "baseline",
+        "stratum": "easy",
+        "variant": "s2",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "sealed_confirmation",
+        "arm": "baseline",
+        "stratum": "hard",
+        "variant": "s2",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "sealed_confirmation",
+        "arm": "baseline",
+        "stratum": "easy",
+        "variant": "s3",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "sealed_confirmation",
+        "arm": "baseline",
+        "stratum": "hard",
+        "variant": "s3",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "sealed_confirmation",
+        "arm": "slow_recover",
+        "stratum": "easy",
+        "variant": "s0",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "sealed_confirmation",
+        "arm": "slow_recover",
+        "stratum": "hard",
+        "variant": "s0",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "sealed_confirmation",
+        "arm": "slow_recover",
+        "stratum": "easy",
+        "variant": "s1",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "sealed_confirmation",
+        "arm": "slow_recover",
+        "stratum": "hard",
+        "variant": "s1",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "sealed_confirmation",
+        "arm": "slow_recover",
+        "stratum": "easy",
+        "variant": "s2",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "sealed_confirmation",
+        "arm": "slow_recover",
+        "stratum": "hard",
+        "variant": "s2",
+        "success": 1,
+        "forbidden": false
+      },
+      {
+        "cohort": "sealed_confirmation",
+        "arm": "slow_recover",
+        "stratum": "easy",
+        "variant": "s3",
+        "success": 0,
+        "forbidden": false
+      },
+      {
+        "cohort": "sealed_confirmation",
+        "arm": "slow_recover",
+        "stratum": "hard",
+        "variant": "s3",
+        "success": 0,
+        "forbidden": false
+      }
+    ],
+    "confirmation_counts": {
+      "baseline": {
+        "easy": 3,
+        "hard": 2
+      },
+      "slow_recover": {
+        "easy": 3,
+        "hard": 3
+      }
+    },
+    "confirmation_gate": true
+  },
+  "development_comparison": {
+    "equal_full_attempts": 26,
+    "adaptive_attempts": 20,
+    "attempts_saved": 6,
+    "equal_full_setup_units": 12,
+    "adaptive_setup_units": 12,
+    "equal_full_total_units": 38,
+    "adaptive_total_units": 32,
+    "sealed_confirmation_attempts_excluded_from_development": 16
+  },
+  "contention_control": {
+    "contention_present": false,
+    "decision": "ELIGIBLE_FOR_METHOD_RESULT"
+  },
+  "scope": "authored finite deterministic table only; no empirical Agent Interface evidence"
+}
