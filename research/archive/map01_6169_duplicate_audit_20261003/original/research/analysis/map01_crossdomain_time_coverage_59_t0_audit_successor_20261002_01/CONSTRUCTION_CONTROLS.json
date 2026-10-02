@@ -1,0 +1,14 @@
+{
+  "allocation_id": "R133-6164-RAW-AUDIT-SUCCESSOR-20261002-01",
+  "status": "PASS",
+  "executed_before_formal_raw_audit": true,
+  "controls": {
+    "baseline_counts_and_observer_cardinality": "PASS",
+    "wrong_v38_score_count_rejected": "PASS",
+    "candidate_raw_event_count_mismatch_rejected": "PASS",
+    "observer_transition_index_mutation_rejected": "PASS",
+    "observer_total_cardinality_mutation_rejected": "PASS",
+    "freeze_hash_mutation_rejected": "PASS"
+  },
+  "note": "Synthetic/adversarial controls were exercised in-memory in the same one-shot Python process before its single formal raw-audit call; no candidate or predecessor auditor invocation."
+}
