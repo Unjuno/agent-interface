@@ -39,7 +39,7 @@ module.exports = function audit(runs) {
     }
     const reportKeys = new Set();
     keysOf(report, reportKeys);
-    const candidateScheduleMarkers = matchesOf(events) + matchesOf(protocol);
+    const candidateScheduleMarkers = matchesOf(events) + matchesOf(protocol) + matchesOf(report);
     const admissions = eventCounts.input_admission || 0;
     const heldReceipts = eventCounts.keys_held || 0;
     const verifiedReleaseReceipts = releaseReceipts(events) + releaseReceipts(report);
@@ -56,7 +56,7 @@ module.exports = function audit(runs) {
     });
   }
   return {
-    schema: "map01-trace-eligibility-prescreen-v2",
+    schema: "map01-trace-eligibility-prescreen-v3",
     verdict: output.every((item) => item.verdict === "HOLD_NO_ELIGIBLE_TRACE") ? "HOLD_NO_ELIGIBLE_TRACE" : "REVIEW_REQUIRED_NOT_ELIGIBLE",
     results: output
   };
