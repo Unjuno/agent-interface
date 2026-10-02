@@ -1,8 +1,10 @@
 # A02 formal run and adjudication
 
-Allocation: `HISTORY-RECEIPT-PROVENANCE-6616-A02-20261003`  
-Base: `9a327d0511f02c7b8ebd175e20f96a43028578ca`  
-Frozen commit: `be501da33`  
+Allocation: `HISTORY-RECEIPT-PROVENANCE-6616-A02-20261003`
+
+Base: `9a327d0511f02c7b8ebd175e20f96a43028578ca`
+
+Frozen commit at allocation time: `be501da33`
 Runtime: OrbStack private Docker Engine in VM `agent-interface-6576-tailid-parity-a03-20261002`; pinned `python:3.12-slim@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016` (`linux/arm64`), network none, read-only root and source, 1 CPU, 256 MiB requested, 64 PIDs, all capabilities dropped, no-new-privileges. Both containers exited 0 and `OOMKilled=false`; effective memory enforcement is not claimed.
 
 ## Formal counts and outcome
