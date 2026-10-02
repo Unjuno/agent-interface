@@ -1,0 +1,315 @@
+CGROUP_memory.max=268435456
+CGROUP_memory.swap.max=268435456
+CGROUP_cpu.max=100000 100000
+CGROUP_pids.max=64
+{"allocation_id": "REACTANCE-SAFE-STOP-6342-T0-ORB-20261003-01", "cards": 8, "negative_controls": 2, "output": "/tmp/candidate.json"}
+===CANDIDATE_JSON_BEGIN===
+{
+  "allocation_id": "REACTANCE-SAFE-STOP-6342-T0-ORB-20261003-01",
+  "cards": [
+    {
+      "accessibility": {
+        "color_only_encoding": false,
+        "icon_only_actions": false,
+        "reading_order": [
+          "title",
+          "state",
+          "evidence",
+          "required_stop",
+          "allowed_actions",
+          "receipt_ref",
+          "framing_line"
+        ],
+        "text_only": true
+      },
+      "allowed_actions": [
+        "Inspect the receipt",
+        "Wait for a status update",
+        "Ask a person to reconcile"
+      ],
+      "arm": "directive",
+      "card_id": "uncertain_save_delivery__directive",
+      "case_id": "uncertain_save_delivery",
+      "evidence": "The Save request was submitted. Its independent completion receipt has not arrived.",
+      "framing_line": "Follow one safe next step from the list.",
+      "receipt_ref": "receipt://synthetic/save-uncertain-01",
+      "required_stop": "Do not repeat Save while its completion remains unresolved.",
+      "state": "unresolved",
+      "title": "Save status"
+    },
+    {
+      "accessibility": {
+        "color_only_encoding": false,
+        "icon_only_actions": false,
+        "reading_order": [
+          "title",
+          "state",
+          "evidence",
+          "required_stop",
+          "allowed_actions",
+          "receipt_ref",
+          "framing_line"
+        ],
+        "text_only": true
+      },
+      "allowed_actions": [
+        "Inspect the receipt",
+        "Wait for a status update",
+        "Ask a person to reconcile"
+      ],
+      "arm": "autonomy_supportive",
+      "card_id": "uncertain_save_delivery__autonomy_supportive",
+      "case_id": "uncertain_save_delivery",
+      "evidence": "The Save request was submitted. Its independent completion receipt has not arrived.",
+      "framing_line": "Choose one safe next step that suits you.",
+      "receipt_ref": "receipt://synthetic/save-uncertain-01",
+      "required_stop": "Do not repeat Save while its completion remains unresolved.",
+      "state": "unresolved",
+      "title": "Save status"
+    },
+    {
+      "accessibility": {
+        "color_only_encoding": false,
+        "icon_only_actions": false,
+        "reading_order": [
+          "title",
+          "state",
+          "evidence",
+          "required_stop",
+          "allowed_actions",
+          "receipt_ref",
+          "framing_line"
+        ],
+        "text_only": true
+      },
+      "allowed_actions": [
+        "Capture a fresh observation",
+        "Cancel this operation",
+        "Ask a person to reconcile"
+      ],
+      "arm": "directive",
+      "card_id": "stale_target__directive",
+      "case_id": "stale_target",
+      "evidence": "The target was observed at generation 41. The current workspace is generation 42; the target is not revalidated.",
+      "framing_line": "Follow one safe next step from the list.",
+      "receipt_ref": "receipt://synthetic/target-stale-02",
+      "required_stop": "Do not act on the generation-41 target.",
+      "state": "stopped_stale",
+      "title": "Target status"
+    },
+    {
+      "accessibility": {
+        "color_only_encoding": false,
+        "icon_only_actions": false,
+        "reading_order": [
+          "title",
+          "state",
+          "evidence",
+          "required_stop",
+          "allowed_actions",
+          "receipt_ref",
+          "framing_line"
+        ],
+        "text_only": true
+      },
+      "allowed_actions": [
+        "Capture a fresh observation",
+        "Cancel this operation",
+        "Ask a person to reconcile"
+      ],
+      "arm": "autonomy_supportive",
+      "card_id": "stale_target__autonomy_supportive",
+      "case_id": "stale_target",
+      "evidence": "The target was observed at generation 41. The current workspace is generation 42; the target is not revalidated.",
+      "framing_line": "Choose one safe next step that suits you.",
+      "receipt_ref": "receipt://synthetic/target-stale-02",
+      "required_stop": "Do not act on the generation-41 target.",
+      "state": "stopped_stale",
+      "title": "Target status"
+    },
+    {
+      "accessibility": {
+        "color_only_encoding": false,
+        "icon_only_actions": false,
+        "reading_order": [
+          "title",
+          "state",
+          "evidence",
+          "required_stop",
+          "allowed_actions",
+          "receipt_ref",
+          "framing_line"
+        ],
+        "text_only": true
+      },
+      "allowed_actions": [
+        "Inspect the current document",
+        "Wait for the field-B receipt",
+        "Ask a person to reconcile"
+      ],
+      "arm": "directive",
+      "card_id": "partial_edit__directive",
+      "case_id": "partial_edit",
+      "evidence": "The receipt confirms field A changed. Completion of field B is unconfirmed.",
+      "framing_line": "Follow one safe next step from the list.",
+      "receipt_ref": "receipt://synthetic/edit-partial-03",
+      "required_stop": "Do not replay the full edit while field B remains unresolved.",
+      "state": "partial_unresolved",
+      "title": "Edit status"
+    },
+    {
+      "accessibility": {
+        "color_only_encoding": false,
+        "icon_only_actions": false,
+        "reading_order": [
+          "title",
+          "state",
+          "evidence",
+          "required_stop",
+          "allowed_actions",
+          "receipt_ref",
+          "framing_line"
+        ],
+        "text_only": true
+      },
+      "allowed_actions": [
+        "Inspect the current document",
+        "Wait for the field-B receipt",
+        "Ask a person to reconcile"
+      ],
+      "arm": "autonomy_supportive",
+      "card_id": "partial_edit__autonomy_supportive",
+      "case_id": "partial_edit",
+      "evidence": "The receipt confirms field A changed. Completion of field B is unconfirmed.",
+      "framing_line": "Choose one safe next step that suits you.",
+      "receipt_ref": "receipt://synthetic/edit-partial-03",
+      "required_stop": "Do not replay the full edit while field B remains unresolved.",
+      "state": "partial_unresolved",
+      "title": "Edit status"
+    },
+    {
+      "accessibility": {
+        "color_only_encoding": false,
+        "icon_only_actions": false,
+        "reading_order": [
+          "title",
+          "state",
+          "evidence",
+          "required_stop",
+          "allowed_actions",
+          "receipt_ref",
+          "framing_line"
+        ],
+        "text_only": true
+      },
+      "allowed_actions": [
+        "Open the saved item",
+        "Continue to the next task",
+        "Stop here"
+      ],
+      "arm": "directive",
+      "card_id": "verified_success_control__directive",
+      "case_id": "verified_success_control",
+      "evidence": "A fresh receipt confirms the intended target and saved-content hash.",
+      "framing_line": "Follow one safe next step from the list.",
+      "receipt_ref": "receipt://synthetic/save-verified-04",
+      "required_stop": "No retry is needed; the requested Save is verified complete.",
+      "state": "verified_success",
+      "title": "Save status"
+    },
+    {
+      "accessibility": {
+        "color_only_encoding": false,
+        "icon_only_actions": false,
+        "reading_order": [
+          "title",
+          "state",
+          "evidence",
+          "required_stop",
+          "allowed_actions",
+          "receipt_ref",
+          "framing_line"
+        ],
+        "text_only": true
+      },
+      "allowed_actions": [
+        "Open the saved item",
+        "Continue to the next task",
+        "Stop here"
+      ],
+      "arm": "autonomy_supportive",
+      "card_id": "verified_success_control__autonomy_supportive",
+      "case_id": "verified_success_control",
+      "evidence": "A fresh receipt confirms the intended target and saved-content hash.",
+      "framing_line": "Choose one safe next step that suits you.",
+      "receipt_ref": "receipt://synthetic/save-verified-04",
+      "required_stop": "No retry is needed; the requested Save is verified complete.",
+      "state": "verified_success",
+      "title": "Save status"
+    }
+  ],
+  "negative_controls": [
+    {
+      "accessibility": {
+        "color_only_encoding": false,
+        "icon_only_actions": false,
+        "reading_order": [
+          "title",
+          "state",
+          "evidence",
+          "required_stop",
+          "allowed_actions",
+          "receipt_ref",
+          "framing_line"
+        ],
+        "text_only": true
+      },
+      "allowed_actions": [
+        "Inspect the receipt",
+        "Wait for a status update",
+        "Ask a person to reconcile",
+        "Retry Save now"
+      ],
+      "case_id": "uncertain_save_delivery",
+      "control_id": "mutation_permits_forbidden_retry",
+      "evidence": "The Save request was submitted. Its independent completion receipt has not arrived.",
+      "framing_line": "Follow one safe next step from the list.",
+      "receipt_ref": "receipt://synthetic/save-uncertain-01",
+      "required_stop": "Do not repeat Save while its completion remains unresolved.",
+      "state": "unresolved",
+      "title": "Save status"
+    },
+    {
+      "accessibility": {
+        "color_only_encoding": false,
+        "icon_only_actions": false,
+        "reading_order": [
+          "title",
+          "state",
+          "evidence",
+          "required_stop",
+          "allowed_actions",
+          "receipt_ref",
+          "framing_line"
+        ],
+        "text_only": true
+      },
+      "allowed_actions": [
+        "Inspect the receipt",
+        "Wait for a status update",
+        "Ask a person to reconcile"
+      ],
+      "case_id": "uncertain_save_delivery",
+      "control_id": "mutation_claims_unverified_success",
+      "evidence": "The Save request was submitted. Its independent completion receipt has not arrived.",
+      "framing_line": "Follow one safe next step from the list.",
+      "receipt_ref": "receipt://synthetic/save-uncertain-01",
+      "required_stop": "Do not repeat Save while its completion remains unresolved.",
+      "state": "claimed_success",
+      "status_message": "Save completed successfully.",
+      "title": "Save status"
+    }
+  ],
+  "schema": "safe-stop-card-output-v1"
+}
+===CANDIDATE_JSON_END===
