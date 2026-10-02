@@ -1,0 +1,38 @@
+{
+  "experiment_id": "AI-6262-T0-GPU-20261002-01",
+  "frozen_main": "389b109629ca0c8baf7a9daf725eded76c358162",
+  "freeze_commit": "701c0522f09358bb3afee09228e96a3abc5bf398",
+  "branch": "research/6262-coverage-certificate-gpu-t0-20261002",
+  "construction": {
+    "unittest_command": "python -m unittest research_6262_gpu_t0_v1.test_construction -v",
+    "tests_passed": 5,
+    "tests_failed": 0,
+    "py_compile": "PASS"
+  },
+  "formal": {
+    "candidate_command": "python research_6262_gpu_t0_v1/candidate.py research_6262_gpu_t0_v1/CANDIDATE_RAW.json",
+    "candidate_invocations": 1,
+    "candidate_exit_code": 0,
+    "auditor_command": "python research_6262_gpu_t0_v1/auditor.py research_6262_gpu_t0_v1/CANDIDATE_RAW.json",
+    "auditor_invocations": 1,
+    "auditor_exit_code": 0,
+    "retries": 0,
+    "candidate_disposition": "METHOD_PASS_SCOPED",
+    "audit_disposition": "PASS_METHOD_SCOPED",
+    "candidate_summary": "CUDA enumerated 4096 evidence subsets, 12 feasible cells, 23 feasible pair projections; effective outcomes: 10 PASS, 1 FAIL, 1 UNKNOWN.",
+    "audit_summary": "Exact reconstruction across 4096/4096 subsets; 1987 naive joint false promotions refused; 4/4 mutations rejected; exact t01 narrow claim retained; full wide claim refused."
+  },
+  "runtime": {
+    "os": "Windows host",
+    "python": "3.11.9",
+    "pytorch": "2.5.1+cu121",
+    "cuda_runtime": "12.1",
+    "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU",
+    "container": "not used: Docker service stopped and WSL Docker integration unavailable; no alternate runtime found",
+    "external_effects": "none"
+  },
+  "terminal_output": {
+    "candidate_stdout": "{\"candidate_disposition\": \"METHOD_PASS_SCOPED\", \"cuda_runtime\": \"12.1\", \"device\": \"NVIDIA GeForce RTX 3080 Laptop GPU\", \"effective_trial_outcomes\": {\"t01\": \"PASS\", \"t02\": \"PASS\", \"t03\": \"PASS\", \"t04\": \"PASS\", \"t05\": \"FAIL\", \"t06\": \"PASS\", \"t07\": \"PASS\", \"t08\": \"PASS\", \"t09\": \"PASS\", \"t10\": \"PASS\", \"t11\": \"UNKNOWN\", \"t12\": \"PASS\"}, \"enumerated_evidence_subsets\": 4096, \"experiment_id\": \"AI-6262-T0-GPU-20261002-01\", \"feasible_cell_count\": 12, \"feasible_pair_projection_count\": 23, \"fixture_sha256\": \"adc342e1416ed13d1cd38a9e881cf1b5163548a8ce83f02670ffef3f91964715\", \"gpu_readback_ms_not_a_performance_claim\": 10.8968, \"python\": \"3.11.9\", \"torch_version\": \"2.5.1+cu121\", \"trial_count\": 12}",
+    "auditor_stdout": "{\"all_trials_flat_pass_fraction\": 0.8333333333333334, \"audit_disposition\": \"PASS_METHOD_SCOPED\", \"candidate_exact_match\": true, \"experiment_id\": \"AI-6262-T0-GPU-20261002-01\", \"limitations\": [\"Constructed synthetic truth fixture only; no real reusable skill or GUI was tested.\", \"The chosen infeasibility constraint is stipulated by the fixture and not empirically validated.\", \"Two-way coverage does not establish higher-order or history-sensitive applicability.\", \"The result does not establish the value, cost, or performance of GPU computation.\"], \"mutations\": [{\"name\": \"fabricated_infeasible_edge\", \"rejected\": true}, {\"name\": \"hidden_offered_trial\", \"rejected\": true}, {\"name\": \"grant_as_capability\", \"rejected\": true}, {\"name\": \"unsupported_narrow_promotion\", \"rejected\": true}], \"naive_joint_false_promotions\": 1987, \"narrow_claim_t01_is_qualified_pass\": true, \"subsets_independently_reconstructed\": 4096, \"wide_claim_full_ledger_passes\": false}"
+  }
+}

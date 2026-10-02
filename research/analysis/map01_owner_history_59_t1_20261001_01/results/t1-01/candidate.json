@@ -1,0 +1,71 @@
+{
+  "event_filter_present": false,
+  "first_page_url": "https://api.github.com/repos/Unjuno/agent-interface/actions/workflows/map01-measurement-integration-live-04.yml/runs?per_page=100&page=1",
+  "history": {
+    "pages_read": 2,
+    "total_count": 4,
+    "workflow_runs": [
+      {
+        "event": "push",
+        "head_branch": "main",
+        "head_sha": "1111111111111111111111111111111111111111",
+        "id": 91001,
+        "path": ".github/workflows/map01-measurement-integration-live-04.yml",
+        "run_number": 41,
+        "status": "completed"
+      },
+      {
+        "event": "workflow_dispatch",
+        "head_branch": "main",
+        "head_sha": "8888888888888888888888888888888888888888",
+        "id": 80001,
+        "path": ".github/workflows/unrelated.yml",
+        "run_number": 9,
+        "status": "completed"
+      },
+      {
+        "event": "workflow_dispatch",
+        "head_branch": "main",
+        "head_sha": "2222222222222222222222222222222222222222",
+        "id": 91002,
+        "path": ".github/workflows/map01-measurement-integration-live-04.yml",
+        "run_number": 42,
+        "status": "queued"
+      },
+      {
+        "event": "workflow_dispatch",
+        "head_branch": "main",
+        "head_sha": "3333333333333333333333333333333333333333",
+        "id": 91003,
+        "path": ".github/workflows/map01-measurement-integration-live-04.yml",
+        "run_number": 43,
+        "status": "queued"
+      }
+    ]
+  },
+  "owner": {
+    "allocation_id": "synthetic-live04-history-fixture",
+    "claim_scope": "launch ownership only; workflow path is the allocation identity",
+    "cross_branch_count": 1,
+    "cross_head_sha_count": 3,
+    "current_head_branch": "main",
+    "current_head_sha": "2222222222222222222222222222222222222222",
+    "current_run_id": 91002,
+    "matching_run_count": 3,
+    "matching_run_ids": [
+      91001,
+      91002,
+      91003
+    ],
+    "may_enter_formal_step": false,
+    "owner_head_branch": "main",
+    "owner_head_sha": "1111111111111111111111111111111111111111",
+    "owner_run_id": 91001,
+    "owner_run_number": 41,
+    "required_branch": "main",
+    "result_class": "FAIL_ALLOCATION_ALREADY_OWNED",
+    "schema": "formal-allocation-global-owner-v1",
+    "workflow_path": ".github/workflows/map01-measurement-integration-live-04.yml"
+  },
+  "schema": "map01-owner-history-candidate-v1"
+}

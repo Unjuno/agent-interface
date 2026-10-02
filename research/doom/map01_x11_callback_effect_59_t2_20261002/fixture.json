@@ -1,0 +1,14 @@
+{
+  "schema": "issue59-x11-callback-effect-fixture-v1",
+  "allocation_id": "ISSUE59-X11-CALLBACK-EFFECT-T2-20261002-01",
+  "issue": 59,
+  "main_sha": "8d9b496dd23b72bf73ca06756e23c329f5489735",
+  "image": "map01-attack-onset-phase-a2:20260927-r2",
+  "image_digest": "sha256:fc3022d265f465748e0a39491e28f8447d0066266e00d2a8a9144e866bf148ed6",
+  "xvfb_args": ["-displayfd", "1", "-screen", "0", "640x480x24", "-nolisten", "tcp", "-ac"],
+  "hold_seconds": 1.2,
+  "minimum_positive_callback_effects": 2,
+  "window_a_name": "issue59-callback-effect-A",
+  "window_b_name": "issue59-callback-effect-B",
+  "effect_name": "movement_tick_counter"
+}

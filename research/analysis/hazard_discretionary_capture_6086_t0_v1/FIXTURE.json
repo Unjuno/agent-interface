@@ -1,0 +1,27 @@
+{
+  "schema":"hazard-discretionary-capture-t0-v1",
+  "phase":{"first_onset":0,"last_onset":11,"capture_horizon_end":12},
+  "cue_widths":[1,2],
+  "exposure_half_width":[1,4],
+  "mandatory_sentinels":[0,5,12],
+  "discretionary_budget":3,
+  "schedules":{
+    "A_UNIFORM":{"times":[2,6,10],"source":"fixed-period-baseline"},
+    "B_PHASE_DIVERSIFIED":{"times":[1,6,9],"source":"predeclared-phase-offset-baseline"},
+    "C_HAZARD_SHAPED":{"times":[2,3,8],"source":"frozen-peaked-distribution; 2 focused + 1 exploration capture"}
+  },
+  "selection_distribution":"peaked",
+  "scoring_distributions":{
+    "peaked":{"weights":[1,1,1,8,1,1,1,1,1,1,1,1]},
+    "flat":{"weights":[1,1,1,1,1,1,1,1,1,1,1,1]},
+    "inverted":{"weights":[1,1,1,1,1,1,1,1,1,8,1,1]}
+  },
+  "controls":{
+    "no_cue_false_positive_count":0,
+    "zero_or_unknown_hazard":"HOLD_HAZARD_UNIDENTIFIED",
+    "all_budget_mandatory":"NOT_APPLICABLE",
+    "same_run_scored_label_schedule":"REJECTED_SCORING_LABEL_LEAKAGE"
+  },
+  "pass_threshold":{"primary_width":1,"mean_over_widths_absolute_improvement_vs_each_baseline":[1,10]},
+  "oracle":{"candidate_centers":[1,2,3,4,6,7,8,9,10,11],"count":3,"objective":"mean weighted detection over both widths under peaked; scoring-only"}
+}

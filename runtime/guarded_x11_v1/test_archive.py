@@ -16,9 +16,11 @@ class GuardedArchiveTests(unittest.TestCase):
             code = """
 import sys
 sys.path.insert(0, sys.argv[1])
-from runtime.guarded_x11_v1 import bridge, handles, form
+from runtime.guarded_x11_v1 import bridge, handles, form, compiled
 from PIL import Image
 assert bridge.__file__.startswith(sys.argv[1] + '/')
+assert compiled.__file__.startswith(sys.argv[1] + '/')
+assert callable(compiled.run)
 assert not any(name.startswith('native_') or name.startswith('scoped_target_') for name in sys.modules)
 image = Image.new('RGB', (100, 100), 'white')
 for i in range(10):

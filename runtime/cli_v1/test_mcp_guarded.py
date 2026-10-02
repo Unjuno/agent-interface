@@ -61,6 +61,95 @@ def metadata(response):
 
 
 class GuardedMCPTests(unittest.IsolatedAsyncioTestCase):
+    async def test_input_feedback_preserves_receipt_and_delivers_exact_cue_capture(self):
+        for verdict in ('matched', 'pending', 'rejected', 'needs_review'):
+            with self.subTest(verdict=verdict), tempfile.TemporaryDirectory() as td:
+                opened=[]
+                def fixture(*args):
+                    bridge=FakeBridge(*args)
+                    bridge.feedback=Mock(side_effect=lambda **kw: {
+                        'status':verdict,'task_success':None,'authority_granted':False,
+                        'input_dispatched':False,'samples':[{'title':'saved'}],
+                        'observation':bridge.capture()})
+                    opened.append(bridge); return bridge
+                with patch('runtime.cli_v1.mcp_guarded.open_bridge',side_effect=fixture):
+                    server=create_server({'app':123},td,session_mode='guarded-x11')
+                    reply=await server.call_tool('interface_guarded_input',dict(
+                        alias='save',offset=[12,7],tail=[],feedback={
+                            'expected_title':'saved','rejected_titles':['failed'],'timeout_ms':500}))
+                    self.assertEqual(reply.isError,verdict!='matched')
+                    row=metadata(reply); bridge=opened[0]
+                    self.assertEqual(row['result']['status'],'completed')
+                    self.assertEqual(row['status'],'completed' if verdict=='matched' else 'needs_review')
+                    self.assertEqual(row['feedback']['status'],verdict)
+                    self.assertEqual(row['source'],row['feedback']['observation'])
+                    self.assertIsNone(row['task_success']); self.assertFalse(row['replay_allowed'])
+                    bridge.click.assert_called_once(); bridge.observe.assert_not_called()
+                    bridge.feedback.assert_called_once_with(expected_title='saved',rejected_titles=['failed'],timeout_ms=500)
+                    bridge.mint.assert_not_called()
+                    retained=await server.call_tool('interface_results',{'call_id':row['call_id']})
+                    self.assertEqual(metadata(retained)['result'],row['result'])
+                    self.assertEqual(retained.content[1].data,reply.content[1].data)
+                    bridge.feedback.assert_called_once(); bridge.click.assert_called_once()
+                    await server.call_tool('interface_close',{})
+
+    async def test_input_feedback_never_waits_after_uncertain_input_or_release(self):
+        cases=[{'status':'refused','input_dispatched':False},
+            {'status':'execution_failed'},
+            {'status':'completed','execution':{'releases':[]}},
+            {'status':'completed','recovery_required':True,'execution':{'releases':[{'verified':True,'keys_down':[],'buttons_down':[]}]}},
+            {'status':'completed','execution':{'releases':[{'verified':False,'keys_down':[],'buttons_down':[]}]}},
+            {'status':'completed','execution':{'releases':[{'verified':True,'keys_down':['a'],'buttons_down':[]}]}}]
+        for receipt in cases:
+            with self.subTest(receipt=receipt), tempfile.TemporaryDirectory() as td:
+                opened=[]
+                def fixture(*args):
+                    bridge=FakeBridge(*args); bridge.click=Mock(return_value=receipt)
+                    bridge.feedback=Mock(); opened.append(bridge); return bridge
+                with patch('runtime.cli_v1.mcp_guarded.open_bridge',side_effect=fixture):
+                    server=create_server({'app':123},td,session_mode='guarded-x11')
+                    row=metadata(await server.call_tool('interface_guarded_input',dict(alias='save',offset=[12,7],tail=[],feedback={'expected_title':'saved'})))
+                    self.assertEqual(row['result'],receipt)
+                    self.assertEqual(row['feedback_status'],'cue_not_attempted')
+                    self.assertEqual(row['status'],receipt['status'])
+                    opened[0].feedback.assert_not_called(); opened[0].click.assert_called_once()
+                    await server.call_tool('interface_close',{})
+
+    async def test_feedback_exception_keeps_input_and_requires_review_without_replay(self):
+        opened=[]
+        def fixture(*args):
+            bridge=FakeBridge(*args); bridge.feedback=Mock(side_effect=RuntimeError('cue persistence failed'))
+            opened.append(bridge); return bridge
+        with tempfile.TemporaryDirectory() as td, patch('runtime.cli_v1.mcp_guarded.open_bridge',side_effect=fixture):
+            server=create_server({'app':123},td,session_mode='guarded-x11')
+            row=metadata(await server.call_tool('interface_guarded_input',dict(alias='save',offset=[12,7],tail=[],feedback={'expected_title':'saved'})))
+            self.assertEqual(row['result']['status'],'completed')
+            self.assertEqual(row['status'],'needs_review')
+            self.assertEqual(row['feedback_status'],'cue_failed')
+            self.assertIn('cue persistence failed',row['feedback_error'])
+            self.assertTrue(opened[0].review_required)
+            opened[0].click.assert_called_once(); opened[0].observe.assert_not_called()
+            await server.call_tool('interface_close',{})
+
+    async def test_feedback_without_capture_refuses_before_open(self):
+        from mcp.server.fastmcp.exceptions import ToolError
+        with tempfile.TemporaryDirectory() as td, patch('runtime.cli_v1.mcp_guarded.open_bridge') as opened:
+            server=create_server({'app':123},td,session_mode='guarded-x11')
+            with self.assertRaises(ToolError):
+                await server.call_tool('interface_guarded_input',dict(alias='save',offset=[12,7],tail=[],observe_after=False,feedback={'expected_title':'saved'}))
+            opened.assert_not_called()
+
+    async def test_invalid_feedback_refuses_before_open_or_input(self):
+        from mcp.server.fastmcp.exceptions import ToolError
+        for cue in ({'expected_title':''},{'expected_title':'saved','timeout_ms':10001},
+                    {'expected_title':'saved','rejected_titles':['saved']},
+                    {'expected_title':'saved','unknown':1}):
+            with self.subTest(cue=cue), tempfile.TemporaryDirectory() as td, patch('runtime.cli_v1.mcp_guarded.open_bridge') as opened:
+                server=create_server({'app':123},td,session_mode='guarded-x11')
+                with self.assertRaises(ToolError):
+                    await server.call_tool('interface_guarded_input',dict(alias='save',offset=[12,7],tail=[],feedback=cue))
+                opened.assert_not_called()
+
     async def test_requested_activation_review_returns_exact_image_without_edit(self):
         opened=[]
         def fixture(*args):

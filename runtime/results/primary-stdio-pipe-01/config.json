@@ -1,0 +1,29 @@
+{
+  "host": {
+    "command": "/tmp/agent-interface-mcp-venv/bin/python",
+    "args": [
+      "/var/tmp/agent-interface-evidence-storage-main/results-local/primary-stdio-pipe-01/runtime.pyz",
+      "relay",
+      "--",
+      "--targets",
+      "/var/tmp/agent-interface-evidence-storage-main/results-local/primary-stdio-pipe-01/targets.json",
+      "--output-directory",
+      "/var/tmp/agent-interface-evidence-storage-main/results-local/primary-stdio-pipe-01/server"
+    ],
+    "evidenceDirectory": "/var/tmp/agent-interface-evidence-storage-main/results-local/primary-stdio-pipe-01/transport"
+  },
+  "route": "direct-post",
+  "exchangeDirectory": "/var/tmp/agent-interface-evidence-storage-main/results-local/primary-stdio-pipe-01/exchange",
+  "primaryOptions": {
+    "observationArguments": {
+      "target": "smoke",
+      "frame": "screen_physical_px",
+      "region": [
+        0,
+        0,
+        10,
+        10
+      ]
+    }
+  }
+}

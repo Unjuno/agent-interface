@@ -1,0 +1,80 @@
+{
+  "id": 3,
+  "tool": "interface_dispatch",
+  "arguments": {
+    "program": {
+      "schema": "agent-interface/program-v1",
+      "program_id": "calc-1001081-enter-save",
+      "source": {
+        "observation_seq": 1,
+        "binding_revision": 1
+      },
+      "authority": {
+        "lease_id": "calc-1001081-explicit",
+        "expires_at_ns": 51435441869776
+      },
+      "terminal": {
+        "release_all_required": true
+      },
+      "ops": [
+        {
+          "op": "focus",
+          "target": "app"
+        },
+        {
+          "op": "text",
+          "text": "317",
+          "gap_ms": 20
+        },
+        {
+          "op": "key_chord",
+          "keys": [
+            "ENTER"
+          ]
+        },
+        {
+          "op": "wait_update",
+          "timeout_ms": 100
+        },
+        {
+          "op": "text",
+          "text": "529",
+          "gap_ms": 20
+        },
+        {
+          "op": "key_chord",
+          "keys": [
+            "ENTER"
+          ]
+        },
+        {
+          "op": "wait_update",
+          "timeout_ms": 100
+        },
+        {
+          "op": "key_chord",
+          "keys": [
+            "CTRL",
+            "s"
+          ]
+        },
+        {
+          "op": "release_all"
+        }
+      ]
+    },
+    "current_observation_seq": 1,
+    "current_binding_revision": 1,
+    "compact": true,
+    "report_refs": true,
+    "detail": "summary",
+    "inspect_after": "app",
+    "inspect_after_region": [
+      0,
+      0,
+      1280,
+      800
+    ],
+    "inspect_after_wait_ms": 100
+  }
+}

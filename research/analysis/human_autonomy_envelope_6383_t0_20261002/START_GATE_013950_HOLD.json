@@ -1,0 +1,22 @@
+{
+  "allocation": "HUMAN-AUTONOMY-ENVELOPE-6383-T0-20261002-02",
+  "observed_at_utc": "2026-10-02T01:39:50Z",
+  "frozen_base_main_sha": "1326813275f1b73349acafc7c7cbc221e687dbd1",
+  "live_main_sha": "d0e2a0f7b10bd3eecf4741f045e90d15ee43e3ad",
+  "live_main_paths_since_frozen_base": 91,
+  "conflicting_paths": [],
+  "issue_6383_state": "open",
+  "wslc_running_processes": 0,
+  "wslc_all_container_inventory": [
+    {"id_prefix": "a74833d86ac3", "owner_task": "#5756 task / goal-unjuno-agent-interface-github-mcp-2", "purpose": "raw-only audit", "state": "exited", "exit_code": 0},
+    {"id_prefix": "22d1bd3b32f5", "owner_task": "#5756 task / goal-unjuno-agent-interface-github-mcp-2", "purpose": "candidate", "state": "exited", "exit_code": 0},
+    {"id_prefix": "457b537acfbf", "owner_task": "#5756 task / goal-unjuno-agent-interface-github-mcp-2", "purpose": "python version check", "state": "exited", "exit_code": 0}
+  ],
+  "inventory_disposition": "No container was started, stopped, or modified by this task. Owner is publishing the #5756 evidence; status clarification requested before this task uses WSLc.",
+  "gpu": {"name": "NVIDIA GeForce RTX 3080 Laptop GPU", "utilization_percent": 0, "memory_used_mib": 0},
+  "output_path_absent": true,
+  "candidate_invocations": 0,
+  "auditor_invocations": 0,
+  "retries": 0,
+  "start_gate": "HOLD_WAITING_FOR_SHARED_WSL_OWNER_CONFIRMATION"
+}

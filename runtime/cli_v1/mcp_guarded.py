@@ -2,7 +2,7 @@
 from copy import deepcopy
 from pathlib import Path
 from mcp.types import CallToolResult
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, model_validator
 from typing import Annotated, Literal
 from .mcp_session import MCPSessionOwner
 
@@ -14,6 +14,20 @@ class GroundedReference(BaseModel):
     point: Annotated[list[StrictInt], Field(min_length=2, max_length=2)]
     region_size: Annotated[list[Annotated[StrictInt, Field(ge=4, le=96)]],
                            Field(min_length=2, max_length=2)]
+
+
+class InputFeedback(BaseModel):
+    """Caller-selected read-only title cue; never input authority or a task score."""
+    model_config = ConfigDict(extra='forbid')
+    expected_title: Annotated[StrictStr, Field(min_length=1)]
+    rejected_titles: list[Annotated[StrictStr, Field(min_length=1)]] = Field(default_factory=list)
+    timeout_ms: Annotated[StrictInt, Field(ge=0, le=10000)] = 2000
+
+    @model_validator(mode='after')
+    def distinct_expected_title(self):
+        if self.expected_title in self.rejected_titles:
+            raise ValueError('expected title cannot also be rejected')
+        return self
 
 
 def open_bridge(display_name, targets, target, directory):
@@ -67,6 +81,11 @@ class GuardedSessionOwner(MCPSessionOwner):
         return row
 
     def invoke_guarded(self, operation, arguments, call_root):
+        cue = None
+        if operation == 'guarded_input' and arguments.get('feedback') is not None:
+            cue = InputFeedback.model_validate(arguments['feedback'])
+            if not arguments['observe_after']:
+                raise ValueError('feedback requires observe_after=true')
         if operation == 'guarded_mint_many':
             # Validate the complete batch before opening a connection or minting.
             references = [GroundedReference.model_validate(ref) for ref in arguments['references']]
@@ -120,10 +139,36 @@ class GuardedSessionOwner(MCPSessionOwner):
                       'move': bridge.move}[arguments['interaction']]
             result = method(arguments['alias'], arguments['offset'], tail=arguments['tail'])
             row.update(status=result['status'], result=result)
+            if cue is not None:
+                row['feedback_status'] = 'cue_not_attempted'
+                releases = result.get('execution', {}).get('releases', [])
+                neutral = bool(releases) and all(
+                    release.get('verified') is True and release.get('keys_down') == []
+                    and release.get('buttons_down') == [] for release in releases)
+                if (result['status'] == 'completed' and neutral
+                    and result.get('recovery_required') is not True
+                    and not bridge.session.recovery_required and not bridge.review_required):
+                    try:
+                        feedback = bridge.feedback(**cue.model_dump())
+                        row.update(feedback=feedback, feedback_status='cue_returned')
+                        if 'observation' in feedback:
+                            self._with_observation(row, feedback['observation'])
+                        if feedback['status'] != 'matched':
+                            row['status'] = 'needs_review'
+                        if feedback['status'] == 'needs_review':
+                            bridge.review_required = True
+                    except Exception as error:
+                        # Input already happened. Retain its original receipt;
+                        # never substitute a no-input claim or replay it.
+                        bridge.review_required = True
+                        row.update(status='needs_review', feedback_status='cue_failed',
+                                   feedback_error=repr(error))
+                    return row
             if arguments['observe_after']:
                 try:
                     self._with_observation(row, bridge.observe())
-                    row['feedback_status'] = 'captured'
+                    if cue is None:
+                        row['feedback_status'] = 'captured'
                 except Exception as error:
                     row.update(feedback_status='observation_failed', observation_error=repr(error))
             else:
@@ -250,7 +295,8 @@ def register_guarded_tools(server, submit):
                                      interaction: Literal['click','keyboard','move']='click',
                                      observe_after: StrictBool=True,
                                      detail: Literal["full","brief"]="full",
-                                     observation_refs: StrictBool=False) -> CallToolResult:
+                                     observation_refs: StrictBool=False,
+                                     feedback: InputFeedback | None=None) -> CallToolResult:
         """Use a scoped alias once through fresh pixel guards and ordinary input admission.
 
         tail uses text, key_chord, wait_update or observe operations, within the
@@ -264,6 +310,13 @@ def register_guarded_tools(server, submit):
         Blocking X11 calls are not preempted; no hard real-time bound is promised.
         observe_after captures once immediately after the result; it adds no
         redraw wait. Capture failure retains the input result without replay.
+        feedback explicitly waits for expected_title or a rejected title after
+        completed input with verified neutral release. Its timeout_ms is 0..10000;
+        observe_after must be true. The returned image is the cue capture, without
+        an extra immediate capture. Pending/rejected/unstable cues return
+        needs_review while retaining the original result. Title matching grants
+        no authority and is not durable task completion; a title may predate input.
+        No replay, new alias, lease renewal or automatic next action follows.
         Inspect result/release separately from feedback and semantic completion.
         detail=brief summarizes known normal exact-match guard details only.
         Failures/unknown shapes remain full; full retrieval never replays input.
@@ -271,8 +324,13 @@ def register_guarded_tools(server, submit):
         with a local source.native reference. The reference layer is lossless;
         brief guard summaries remain lossy. Defaults keep the existing full shape.
         """
-        return await submit('guarded_input',dict(alias=alias,offset=offset,tail=tail,
-                            interaction=interaction,observe_after=observe_after),False,False,detail,observation_refs)
+        if feedback is not None and not observe_after:
+            raise ValueError('feedback requires observe_after=true')
+        arguments=dict(alias=alias,offset=offset,tail=tail,
+                       interaction=interaction,observe_after=observe_after)
+        if feedback is not None:
+            arguments['feedback']=feedback.model_dump()
+        return await submit('guarded_input',arguments,False,False,detail,observation_refs)
 
     @server.tool()
     async def interface_guarded_review_window(window_id: StrictInt) -> CallToolResult:
