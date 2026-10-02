@@ -220,6 +220,7 @@ A directory existing here does **not** mean its mechanism is promoted. Negative 
 
 ### Recent direct-root evidence
 - [`kernel_receipt_time_5215_20260928/`](kernel_receipt_time_5215_20260928/) — Issue #5215 frozen construction probe and independent audit for lease-expiry and causal timestamp receipt boundaries; scoped contract evidence only.
+- [`route_occupancy_5674_construction_v1/`](route_occupancy_5674_construction_v1/) — Issue #5674 finite synthetic Markov construction; empirical route/task hypothesis remains untested.
 - [`trace_reduction_5666_construction_v1/`](trace_reduction_5666_construction_v1/) — Issue #5666 host-only synthetic construction check; no independent replay, model, GUI, or authority result.
 
 - [`cli_fault_residue_3711_revalidation_v1/`](cli_fault_residue_3711_revalidation_v1/) — Issue #3711 report-temp fault revalidation protocol; see its linked PR/evidence for current matrix status.
