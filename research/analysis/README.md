@@ -599,6 +599,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`route_switching_costs_6009_t0_20261001/`](route_switching_costs_6009_t0_20261001/)
 - [`safe_probe_cost_optimal_tree_r1_v1/`](safe_probe_cost_optimal_tree_r1_v1/)
 - [`safe_probe_identifiability_6147_t0_20261002_a02/`](safe_probe_identifiability_6147_t0_20261002_a02/)
+- [`safe_probe_identifiability_6147_t0_20261003_a03/`](safe_probe_identifiability_6147_t0_20261003_a03/)
 - [`safe_probe_identification_successor_1716_v1/`](safe_probe_identification_successor_1716_v1/)
 - [`safe_probe_minimax_r0_v1/`](safe_probe_minimax_r0_v1/)
 - [`safety_backpressure_5372_t1_successor_20261001/`](safety_backpressure_5372_t1_successor_20261001/)
