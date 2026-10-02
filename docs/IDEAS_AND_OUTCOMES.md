@@ -67,4 +67,20 @@ Closure does not erase evidence. [#6353](https://github.com/Unjuno/agent-interfa
 - [RESEARCH.md](../RESEARCH.md) — evidence ledger and detailed results.
 - [CURRENT_GOAL.md](CURRENT_GOAL.md) and [ROADMAP.md](../ROADMAP.md) — current direction and roadmap, not result ledgers.
 
-This is an initial high-level index, not an exhaustive retrospective of every issue. Add or revise concise idea/outcome entries as they become relevant; keep full raw logs and detailed claims in the linked Issues, PRs, and reports.
+## Latest additions and result changes (2026-10-02)
+
+- [#6367](https://github.com/Unjuno/agent-interface/issues/6367): new unverified idea to test whether protective local adaptation preserves independently scored progress under matched external change. No result is claimed; it does not reinterpret existing MAP01 traces.
+- [#6358](https://github.com/Unjuno/agent-interface/issues/6358): shared recovery advice may become invalid when adoption changes load; explicitly unverified transfer hypothesis, not a current harmful-advice or overload finding.
+- [#6354](https://github.com/Unjuno/agent-interface/issues/6354): explicit role context as a possible missing variable in online Needle LoRA; successor after prior STOPs, no new GPU outcome yet.
+- [#6351](https://github.com/Unjuno/agent-interface/issues/6351): test whether roles interpret the same evidence differently; unverified, no current defect asserted.
+- [#6347](https://github.com/Unjuno/agent-interface/issues/6347): test infrastructure-speed advantage among near-simultaneous conflicting intents; unverified analogy, no live scheduler finding.
+- [#6265](https://github.com/Unjuno/agent-interface/issues/6265): human-versus-agent perceptual parity before consequential effects; unverified transfer idea, no participant study or attack claim.
+- [#5352](https://github.com/Unjuno/agent-interface/issues/5352): successor to #716 proposes safety-preserving hysteresis for repeated planner/local-control switching. It does not change #716's scoped representational result.
+- **Changed result for [#5366](https://github.com/Unjuno/agent-interface/issues/5366):** main commit [89f27ca](https://github.com/Unjuno/agent-interface/commit/89f27caf1e9fcf3bc2c2c3db7d62ee6d19e4ae) records synthetic T3 freshness result PASS_METHOD_SCOPED (12/12 rows, candidate and independent raw-only audit each once). This is finite method evidence only; no live resource-timing or runtime/product claim. The Issue remains open for broader transfer.
+- [#6363](https://github.com/Unjuno/agent-interface/pull/6363) is an open rescue PR preserving the exact T11 predecessor blobs and keeping T12 as canonical strict-scope/schema record; no T11 rerun or retroactive upgrade.
+
+## Full research-labeled inventory
+
+The point-in-time complete inventory of all research-labeled Issues in both states (including successors, audit/coordination records, and explicit STOP/HOLD/FAIL histories) is in [RESEARCH_ISSUE_INDEX.md](RESEARCH_ISSUE_INDEX.md). Reconciliation on 2026-10-02 found 408 such Issues (253 open, 155 closed) among 2,525 non-PR Issues returned by GitHub. The inventory is broader than ideas alone and excludes Issues without the `research` label; closure is not a result. Each row links to the Issue for its authoritative disposition.
+
+This curated page is not exhaustive of all repository Issues. Keep its thematic summaries current, and use the full inventory to discover open/closed research threads; preserve full raw logs and detailed claims in linked Issues, PRs, and reports.
