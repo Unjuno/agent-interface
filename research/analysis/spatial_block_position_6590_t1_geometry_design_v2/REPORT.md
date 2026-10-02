@@ -34,7 +34,7 @@ The complete coordinate tables and scan metadata are in [`results/preformal/CAND
 - Model fits: 0. Images generated: 0. Container invocations: 0. Docker API readiness probes only: 2; no candidate/auditor containers.
 - Candidate SHA-256: `f2c33436747db3edd3c6278c81395fa6fede20debc4ab695c8ec8eb57c279936`.
 - Audit SHA-256: `43784e74e71ca568b44e63e8af11606a1d7a973653814002764b7404351d9428`.
-- Four construction/auditor tests pass; latest local Analysis Index workflow-equivalent run passes at 481 retained result directories and 68 tests, using an analysis-only copy plus the frozen historical workflow source.
+- Five construction/auditor tests pass; latest-main local Analysis Index workflow-equivalent run passes at 485 retained result directories and 80 tests, using an analysis-only copy plus the frozen historical workflow source (verified 2026-10-02 09:24 UTC).
 
 ## Next gate
 
