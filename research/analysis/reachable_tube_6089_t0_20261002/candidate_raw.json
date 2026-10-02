@@ -1,0 +1,370 @@
+[
+  {
+    "case_id": "narrow_corridor",
+    "fixed_one_safe": true,
+    "horizon_table": [
+      {
+        "first_unsafe_step": null,
+        "horizon": 0,
+        "safe": true,
+        "worst_position": 0
+      },
+      {
+        "first_unsafe_step": null,
+        "horizon": 1,
+        "safe": true,
+        "worst_position": 4
+      },
+      {
+        "first_unsafe_step": null,
+        "horizon": 2,
+        "safe": true,
+        "worst_position": 6
+      },
+      {
+        "first_unsafe_step": null,
+        "horizon": 3,
+        "safe": true,
+        "worst_position": 8
+      },
+      {
+        "first_unsafe_step": null,
+        "horizon": 4,
+        "safe": true,
+        "worst_position": 10
+      },
+      {
+        "first_unsafe_step": 6,
+        "horizon": 5,
+        "safe": false,
+        "worst_position": 12
+      }
+    ],
+    "nominal_max_horizon": 5,
+    "outcome": "ROBUST_HORIZON",
+    "robust_max_horizon": 4,
+    "selected_horizon": 4,
+    "stress": null
+  },
+  {
+    "case_id": "wide_initial_uncertainty",
+    "fixed_one_safe": true,
+    "horizon_table": [
+      {
+        "first_unsafe_step": null,
+        "horizon": 0,
+        "safe": true,
+        "worst_position": 2
+      },
+      {
+        "first_unsafe_step": null,
+        "horizon": 1,
+        "safe": true,
+        "worst_position": 6
+      },
+      {
+        "first_unsafe_step": null,
+        "horizon": 2,
+        "safe": true,
+        "worst_position": 8
+      },
+      {
+        "first_unsafe_step": 4,
+        "horizon": 3,
+        "safe": false,
+        "worst_position": 10
+      },
+      {
+        "first_unsafe_step": 4,
+        "horizon": 4,
+        "safe": false,
+        "worst_position": 10
+      },
+      {
+        "first_unsafe_step": 4,
+        "horizon": 5,
+        "safe": false,
+        "worst_position": 10
+      }
+    ],
+    "nominal_max_horizon": 5,
+    "outcome": "ROBUST_HORIZON",
+    "robust_max_horizon": 2,
+    "selected_horizon": 2,
+    "stress": null
+  },
+  {
+    "case_id": "safe_long_corridor",
+    "fixed_one_safe": true,
+    "horizon_table": [
+      {
+        "first_unsafe_step": null,
+        "horizon": 0,
+        "safe": true,
+        "worst_position": 1
+      },
+      {
+        "first_unsafe_step": null,
+        "horizon": 1,
+        "safe": true,
+        "worst_position": 5
+      },
+      {
+        "first_unsafe_step": null,
+        "horizon": 2,
+        "safe": true,
+        "worst_position": 7
+      },
+      {
+        "first_unsafe_step": null,
+        "horizon": 3,
+        "safe": true,
+        "worst_position": 9
+      },
+      {
+        "first_unsafe_step": null,
+        "horizon": 4,
+        "safe": true,
+        "worst_position": 11
+      },
+      {
+        "first_unsafe_step": null,
+        "horizon": 5,
+        "safe": true,
+        "worst_position": 13
+      }
+    ],
+    "nominal_max_horizon": 5,
+    "outcome": "ROBUST_HORIZON",
+    "robust_max_horizon": 5,
+    "selected_horizon": 5,
+    "stress": null
+  },
+  {
+    "case_id": "near_boundary",
+    "fixed_one_safe": false,
+    "horizon_table": [
+      {
+        "first_unsafe_step": null,
+        "horizon": 0,
+        "safe": true,
+        "worst_position": 6
+      },
+      {
+        "first_unsafe_step": 2,
+        "horizon": 1,
+        "safe": false,
+        "worst_position": 10
+      },
+      {
+        "first_unsafe_step": 2,
+        "horizon": 2,
+        "safe": false,
+        "worst_position": 10
+      },
+      {
+        "first_unsafe_step": 2,
+        "horizon": 3,
+        "safe": false,
+        "worst_position": 10
+      },
+      {
+        "first_unsafe_step": 2,
+        "horizon": 4,
+        "safe": false,
+        "worst_position": 10
+      },
+      {
+        "first_unsafe_step": 2,
+        "horizon": 5,
+        "safe": false,
+        "worst_position": 10
+      }
+    ],
+    "nominal_max_horizon": 1,
+    "outcome": "ROBUST_HORIZON",
+    "robust_max_horizon": 0,
+    "selected_horizon": 0,
+    "stress": null
+  },
+  {
+    "case_id": "moving_forbidden_boundary",
+    "fixed_one_safe": true,
+    "horizon_table": [
+      {
+        "first_unsafe_step": null,
+        "horizon": 0,
+        "safe": true,
+        "worst_position": 0
+      },
+      {
+        "first_unsafe_step": null,
+        "horizon": 1,
+        "safe": true,
+        "worst_position": 4
+      },
+      {
+        "first_unsafe_step": null,
+        "horizon": 2,
+        "safe": true,
+        "worst_position": 6
+      },
+      {
+        "first_unsafe_step": 4,
+        "horizon": 3,
+        "safe": false,
+        "worst_position": 8
+      },
+      {
+        "first_unsafe_step": 4,
+        "horizon": 4,
+        "safe": false,
+        "worst_position": 8
+      },
+      {
+        "first_unsafe_step": 4,
+        "horizon": 5,
+        "safe": false,
+        "worst_position": 8
+      }
+    ],
+    "nominal_max_horizon": 5,
+    "outcome": "ROBUST_HORIZON",
+    "robust_max_horizon": 2,
+    "selected_horizon": 2,
+    "stress": null
+  },
+  {
+    "case_id": "invalidated_target",
+    "fixed_one_safe": true,
+    "horizon_table": [
+      {
+        "first_unsafe_step": null,
+        "horizon": 0,
+        "safe": true,
+        "worst_position": 0
+      },
+      {
+        "first_unsafe_step": null,
+        "horizon": 1,
+        "safe": true,
+        "worst_position": 4
+      },
+      {
+        "first_unsafe_step": null,
+        "horizon": 2,
+        "safe": true,
+        "worst_position": 6
+      },
+      {
+        "first_unsafe_step": null,
+        "horizon": 3,
+        "safe": true,
+        "worst_position": 8
+      },
+      {
+        "first_unsafe_step": null,
+        "horizon": 4,
+        "safe": true,
+        "worst_position": 10
+      },
+      {
+        "first_unsafe_step": null,
+        "horizon": 5,
+        "safe": true,
+        "worst_position": 12
+      }
+    ],
+    "nominal_max_horizon": 0,
+    "outcome": "YIELD_INVALIDATED_SOURCE",
+    "robust_max_horizon": 5,
+    "selected_horizon": 0,
+    "stress": null
+  },
+  {
+    "case_id": "zero_slack_release",
+    "fixed_one_safe": false,
+    "horizon_table": [
+      {
+        "first_unsafe_step": null,
+        "horizon": 0,
+        "safe": true,
+        "worst_position": 0
+      },
+      {
+        "first_unsafe_step": 3,
+        "horizon": 1,
+        "safe": false,
+        "worst_position": 3
+      },
+      {
+        "first_unsafe_step": 3,
+        "horizon": 2,
+        "safe": false,
+        "worst_position": 3
+      }
+    ],
+    "nominal_max_horizon": 0,
+    "outcome": "ROBUST_HORIZON",
+    "robust_max_horizon": 0,
+    "selected_horizon": 0,
+    "stress": null
+  },
+  {
+    "case_id": "disturbance_bound_violation_stress",
+    "fixed_one_safe": true,
+    "horizon_table": [
+      {
+        "first_unsafe_step": null,
+        "horizon": 0,
+        "safe": true,
+        "worst_position": 0
+      },
+      {
+        "first_unsafe_step": null,
+        "horizon": 1,
+        "safe": true,
+        "worst_position": 4
+      },
+      {
+        "first_unsafe_step": null,
+        "horizon": 2,
+        "safe": true,
+        "worst_position": 6
+      },
+      {
+        "first_unsafe_step": 4,
+        "horizon": 3,
+        "safe": false,
+        "worst_position": 8
+      },
+      {
+        "first_unsafe_step": 4,
+        "horizon": 4,
+        "safe": false,
+        "worst_position": 8
+      },
+      {
+        "first_unsafe_step": 4,
+        "horizon": 5,
+        "safe": false,
+        "worst_position": 8
+      }
+    ],
+    "nominal_max_horizon": 5,
+    "outcome": "ROBUST_HORIZON",
+    "robust_max_horizon": 2,
+    "selected_horizon": 2,
+    "stress": {
+      "disposition": "OUT_OF_ENVELOPE_NOT_CERTIFIED",
+      "path": [
+        0,
+        3,
+        6,
+        9
+      ],
+      "safe": false,
+      "within_declared_bound": false
+    }
+  }
+]
