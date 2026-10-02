@@ -1,0 +1,44 @@
+{
+  "schema": "map01-recovery-v6-window-integrity-freeze-v1",
+  "issue": 6220,
+  "allocation_id": "MAP01-RECOVERY-V6-WINDOW-INTEGRITY-1632-T1-20261002-01",
+  "status": "FROZEN_BEFORE_CANDIDATE_AND_RAW_AUDIT",
+  "frozen_main": "14b81dd1f6853623a694266b98538f812847257a",
+  "lineage": {
+    "parent_issue": 59,
+    "closed_audit_predecessor": 1632,
+    "preserve_all_predecessor_results": true
+  },
+  "source": {
+    "path": "research/doom/audit_map01_recovery_cover_mechanism_v6.py",
+    "git_blob": "e3c34caad26a5a7e17d2464c945b74f747b75d4b",
+    "sha256": "e5a9a9717e887da8b2167f86e0785349ca886d53bc5168ecde88a090da449833"
+  },
+  "local_sources": {
+    "candidate.py_git_blob": "912c63fa5c3aa6437a7e1cac1d1d273dd737b61d",
+    "audit_raw.py_git_blob": "1e7a02aedfcd3adc4c7b9ab2292bde0df30cb0f0",
+    "test_audit_raw.py_git_blob": "d4eb7d2d9595e2f86fb66c482780d80eac5959c1"
+  },
+  "H": "The current v6 audit accepts positive integer duration_ns values inconsistent with retained end_ns-start_ns; an additive raw-only check will retain a clean synthetic decision and reject each independently corrupted arm.",
+  "T": {
+    "arms": 6,
+    "pair_indices": [1, 2, 3],
+    "arm_names": ["coast_control", "bounded_recovery"],
+    "clean_window": {
+      "start_ns": 1000000000,
+      "end_ns": 1600000000,
+      "duration_ns": 600000000,
+      "end_boundary_phase": "immediately_after_delay_before_fallback_cleanup"
+    },
+    "clean_v6_base_result": "PASS_MECHANISM_ONLY over synthetic v4 stub only",
+    "candidate_invocations": 1,
+    "independent_raw_audit_invocations": 1,
+    "mutations": "For each of six arms, duration_ns += 1 while endpoints stay fixed; each must yield only that arm's duration mismatch.",
+    "long_window_probe": "A self-consistent 3600000000 ns window is explicitly reported outside this arithmetic-only claim; no maximum-duration threshold is tested.",
+    "container": "Not used: deterministic standard-library synthetic audit only; local Docker service is stopped and engine inventory is unavailable.",
+    "forbidden": ["MAP01", "ViZDoom", "X11", "GUI", "model", "GPU", "network", "user input"]
+  },
+  "D": "PASS_WINDOW_ARITHMETIC_AUDIT_SCOPED iff the unchanged v6 wrapper preserves the clean base decision, the independent verifier identifies exactly each of six isolated +1 ns corruptions, and a self-consistent 3.6 s probe is explicitly labeled outside claim. Any clean decision drift or missed/extra mutation is FAIL.",
+  "C": "This checks summary arithmetic and a phase string only. It does not authenticate endpoint provenance, prove runtime execution order, or reject a self-consistent cleanup-contaminated long window.",
+  "U": "Synthetic audit-integrity only. No formal allocation, input occupancy, useful feedback, recovery efficacy, task effect, safety, survival, MAP01 exit, model efficacy, or product performance."
+}

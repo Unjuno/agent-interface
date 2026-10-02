@@ -1,0 +1,14 @@
+{
+  "schema":"agent-interface.freeze.v1",
+  "issue":6071,
+  "source_base":"3adec9cdc2cff5ef68f19acd55c5823fcaad26df",
+  "candidate":"candidate.py",
+  "independent_auditor":"audit.py",
+  "input":"public.json",
+  "truth":"truth.json",
+  "construction":"PASS; schedule invariants and four corruption controls",
+  "formal_invocation_budget":{"candidate":1,"auditor":1,"retries":0},
+  "expected":"A/B/C matched means; B/C identical delay mass; zero vs 1-bit type-delay mutual information; balanced arm/task order; identical content/effect; safety invariants",
+  "output_gate":["candidate.raw.json","audit.raw.json"],
+  "scope":"No participants, human behavior, live route, or container claim"
+}

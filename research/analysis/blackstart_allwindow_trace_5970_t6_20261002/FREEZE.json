@@ -1,0 +1,15 @@
+{
+  "schema": "blackstart-allwindow-trace-t6-freeze-v1",
+  "issue": 5970,
+  "t3_derived_app_sha256": "fe24b580beaf048921352cc49ec380ba6f3122240c9197a1b62fc766d72afa63",
+  "candidate_sha256": "0ef64a6d6cb77f5443ff6bbbb9724e5fce6d9202bfb2d68c1e9701ac7f5e60f8",
+  "runner_sha256": "b4944e68298ce2bc9f8480d3eeb5e51a2a78bec975f1133681978defd76e68bd",
+  "observer_sha256": "7a88ea16afcb00f3376ea28485ae998ef31458ef41456bf94c490b31b4dff1b7",
+  "input": {"key": "Shift_L", "keycode_expected": 50, "pairs": 1, "release_in_finally": true, "terminal_neutrality_required": true},
+  "observer": {"windows": "recursive mapped descendants of Tk root before input", "masks": ["KeyPressMask", "KeyReleaseMask"]},
+  "record": {"clients": "AllClients", "delivered_events": ["KeyPress", "KeyRelease"]},
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "docker": "Docker Desktop Linux engine unavailable at T5; WSL2 private Xvfb fallback",
+  "input_to_user_desktop": false
+}

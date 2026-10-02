@@ -33,6 +33,44 @@ class Driver:
 
 class CompiledBoundaryTests(unittest.TestCase):
 
+ def test_cross_type_predicate_cannot_select_action_or_complete(self):
+  for expected, observed in ((0,False),(False,0),(1,True),(True,1)):
+   for outcome in ('action','complete'):
+    with self.subTest(expected=expected,observed=observed,outcome=outcome):
+     d=Driver();s=interface();b=s['method']['states']['empty']['branches'][0]
+     b['when']['phase']=expected
+     if outcome=='complete':b.update(outcome='complete',action=None,next_state=None)
+     base=d.observe
+     def observe(p):
+      r=base(p);r['predicates']['phase']=observed;return r
+     d.observe=observe;r=d.run(s)
+     self.assertEqual((r['outcome'],r['reason']),('SAFE_YIELD','unknown_state'))
+     self.assertEqual(r['completed_transitions'],0);self.assertEqual(d.calls['admit'],[])
+     self.assertEqual(d.calls['execute'],[])
+ def test_cross_type_effect_retains_prefix_and_never_calls_verifier_or_next_action(self):
+  for expected,observed in ((0,False),(False,0),(1,True),(True,1)):
+   with self.subTest(expected=expected,observed=observed):
+    d=Driver();s=interface();s['actions']['enter']['expected_effect']['phase']=expected
+    base=d.observe
+    def observe(p):
+     r=base(p)
+     if len(d.calls['observe'])==2:r['predicates']['phase']=observed
+     return r
+    d.observe=observe;r=d.run(s)
+    self.assertEqual((r['outcome'],r['reason']),('SAFE_YIELD','effect_failed'))
+    self.assertEqual(r['completed_transitions'],1);self.assertEqual(r['pending_effect']['action'],'enter')
+    self.assertEqual(len(d.calls['execute']),1);self.assertEqual(d.calls['verify_effect'],[])
+ def test_same_type_scalar_completion_remains_supported(self):
+  for value in (0,False,1,True,2,-1,'ready'):
+   with self.subTest(value=value):
+    d=Driver();s=interface();b=s['method']['states']['empty']['branches'][0]
+    b.update(when={'phase':value},outcome='complete',action=None,next_state=None)
+    base=d.observe
+    def observe(p):
+     r=base(p);r['predicates']['phase']=value;return r
+    d.observe=observe;r=d.run(s)
+    self.assertEqual(r['outcome'],'TASK_SUCCEEDED');self.assertEqual(d.calls['execute'],[])
+
  def stopped(self,d,transitions,executions):
   r=d.run();self.assertEqual((r['outcome'],r['reason']),('SAFE_YIELD','budget_exhausted'));self.assertEqual(r['completed_transitions'],transitions);self.assertEqual(len(d.calls['execute']),executions);return r
  def test_late_initial_observation_never_admits(self):
@@ -86,4 +124,43 @@ class CompiledBoundaryTests(unittest.TestCase):
  def test_unavailable_effect_blocks_second_input(self):
   d=Driver();d.verify=lambda p:dict(status='unavailable',evidence_ref=p['observation']['evidence_ref']);r=d.run();self.assertEqual(r['reason'],'effect_unavailable');self.assertEqual(len(d.calls['execute']),1)
 
+ def test_explicit_no_input_refusal_yields_without_inventing_release(self):
+  d=Driver(terminal='refused',released=False);base=d.execute
+  d.execute=lambda p:dict(base(p),input_dispatched=False)
+  r=d.run();self.assertEqual((r['outcome'],r['reason']),('SAFE_YIELD','execution_refused'))
+  self.assertEqual(r['completed_transitions'],0);self.assertEqual(len(d.calls['execute']),1)
+  self.assertEqual(len(d.calls['observe']),1);self.assertEqual(d.calls['verify_effect'],[])
+  terminal=next(e for e in r['critical_events'] if e['event']=='action_terminal')
+  self.assertIs(terminal['input_dispatched'],False);self.assertIs(terminal['release_verified'],False)
+ def test_no_input_refusal_after_verified_prefix_keeps_completed_action(self):
+  d=Driver();base=d.execute
+  def execute(p):
+   result=base(p)
+   if len(d.calls['execute'])==2:result.update(status='refused',input_dispatched=False,release={'verified':False,'keys_down':[],'buttons_down':[]})
+   return result
+  d.execute=execute;r=d.run();self.assertEqual(r['reason'],'execution_refused')
+  self.assertEqual(r['completed_transitions'],1);self.assertEqual(r['transitions'][0]['action'],'enter')
+  self.assertEqual(len(d.calls['execute']),2);self.assertEqual(len(d.calls['observe']),2)
+ def test_unattested_refusal_still_requires_actual_neutral_release(self):
+  d=Driver(terminal='refused',released=False);r=d.run()
+  self.assertEqual((r['outcome'],r['reason']),('RUNTIME_FAILED','execution_failed'))
+ def test_no_input_flag_cannot_downgrade_other_execution_statuses(self):
+  for status in ('completed','delivery_uncertain'):
+   with self.subTest(status=status):
+    d=Driver(terminal=status,released=False);base=d.execute
+    d.execute=lambda p:dict(base(p),input_dispatched=False)
+    with self.assertRaises(ValueError):d.run()
+ def test_input_dispatched_requires_strict_boolean(self):
+  for value in (0,1,None,'false'):
+   with self.subTest(value=value):
+    d=Driver(terminal='refused',released=False);base=d.execute
+    d.execute=lambda p:dict(base(p),input_dispatched=value)
+    with self.assertRaises(ValueError):d.run()
+ def test_dispatch_or_held_input_cannot_be_downgraded_to_abstention(self):
+  for flag,keys in ((True,[]),(False,['CTRL'])):
+   with self.subTest(flag=flag,keys=keys):
+    d=Driver(terminal='refused',released=False);base=d.execute
+    def execute(p):
+     r=base(p);r['input_dispatched']=flag;r['release']['keys_down']=keys;return r
+    d.execute=execute;r=d.run();self.assertEqual(r['outcome'],'RUNTIME_FAILED')
 if __name__=='__main__':unittest.main()

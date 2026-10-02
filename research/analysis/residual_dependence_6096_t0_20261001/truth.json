@@ -1,0 +1,26 @@
+{
+  "schema": "agent-interface.residual-dependence-6096.truth.v1",
+  "danger_wrong_continuation_after_sample": {
+    "heldout-phase-lag-danger": 6
+  },
+  "safe_through_sample": {
+    "heldout-valid-periodic": 8,
+    "heldout-camera-jitter": 8,
+    "heldout-independent-noise": 8,
+    "mean-shift-positive": 8
+  },
+  "expected_source_invalidation_sample": {
+    "target-identity-swap": 4
+  },
+  "expected_missing_invalidation_sample": {
+    "missing-observation": 4
+  },
+  "false_yield_zero_limit_cases": ["heldout-valid-periodic", "heldout-camera-jitter", "heldout-independent-noise"],
+  "mean_shift_positive_control": "mean-shift-positive",
+  "critical_observability_witness": {
+    "case_ids": ["heldout-phase-lag-danger", "heldout-valid-periodic", "heldout-camera-jitter"],
+    "identical_residual_prefix_samples": 6,
+    "different_harm_label": "danger case's next continuation is wrong; both matched controls remain harmless through horizon"
+  },
+  "scope": "Labels are frozen synthetic truth and do not represent real GUI harm or safety."
+}

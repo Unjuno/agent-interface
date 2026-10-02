@@ -1,0 +1,44 @@
+{
+  "study_id": "issue-6624-representation-contrast-t0-v1",
+  "disposition": "METHOD_PASS_SCOPED",
+  "candidate": {
+    "invocations": 1,
+    "exit_code": 0,
+    "stdout": {"case_count": 6, "schema": "representation-contrast-raw-v1"},
+    "raw_path": "results/raw.json",
+    "sha256": "6c23e0aaf048bb4e50345c0a7528f8d5999974431040fcefe7114a20f345a723",
+    "bytes": 3832
+  },
+  "independent_auditor": {
+    "invocations": 1,
+    "exit_code": 0,
+    "audit_path": "results/audit.json",
+    "sha256": "c2a66ce6ff920ae864c0d9a307609f27656432900171a63ae77b6c6a3b3e4a3a",
+    "case_count": 6,
+    "errors": [],
+    "mutation_controls_rejected": 7,
+    "mutation_controls_total": 7,
+    "weighted_cost_units": {
+      "spreadsheet": {"flat": 4.8, "structured": 4.2},
+      "drawing": {"flat": 4.4, "structured": 4.2}
+    }
+  },
+  "runtime": {
+    "name": "Microsoft WSL Containers (wslc.exe)",
+    "version": "3.0.1.0",
+    "kernel": "6.18.40.1-1",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "image_id": "sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4",
+    "platform": "linux/amd64",
+    "python": "3.12.14",
+    "network": "none",
+    "pull": "never",
+    "source_read_only": true,
+    "candidate_and_audit_separate_containers": true,
+    "requested_cpus": 0.25,
+    "requested_memory": "256m",
+    "warning": "Kernel lacks swap-limit capabilities or cgroup is not mounted; memory limited without swap. Effective memory enforcement is unverified."
+  },
+  "allocation": {"formal_candidate": 1, "formal_auditor": 1, "retries": 0, "gui_model_gpu_network": 0},
+  "construction": {"final_host_tests": "6/6 PASS", "pre_freeze_failures_retained": 5}
+}

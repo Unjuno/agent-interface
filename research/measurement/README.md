@@ -73,6 +73,10 @@ The large number of child directories is intentional retained evidence. Reposito
 - [#4083 source recovery](exact_crop_partial_recompute_1663_v1/RECOVERY_STATUS.md): preserves the exact 25-file branch package and six passing construction/unit tests, while the formal raw capsule and audit-v2 delivery remain incomplete. The Issue-reported 9-case contract/cost PASS is historical and was not re-audited by this recovery; original branch retained.
 - [#5254 / source PR #5257 archival qualification](exact_crop_cache_memory_bound_4083_v1/ARCHIVAL_QUALIFICATION.md): 15 exact historical construction/preparation files; source-to-receipt reconstruction HOLD. Retained 12/12 score equality and 28,800-byte RGB-payload values are historical claims, not repository-reproducible execution; mismatched hashes, original failure, and bespoke-predicate control limits remain explicit. Formal workload unrun; source PR stays Draft and #5254 stays open.
 
+## Verifier lifecycle T0 — formal raw-delivery HOLD
+
+- [#5279 source recovery](verifier_lifecycle_5279_v1/RECOVERY_STATUS.md): exact source capsule restores 10 files / 43,307 bytes and six source tests pass in a network-disabled Linux/arm64 container. The Issue reports a scoped PASS, but the branch omits formal raw batches, final audit receipt, and corruption controls, so the result remains unverified here; no formal rerun or result promotion.
+
 ## Same-connection focus/key-state acquisition — raw-publication HOLD
 
 - [#4389 / Draft PR #4410 archival qualification](key_state_piggyback_q4s8_v1/ARCHIVAL_QUALIFICATION.md): 18 exact source/freeze/audit blobs. The Issue-reported 612-acquisition contract PASS and full-cost HOLD are preserved as historical outcomes; the complete 261-file capsule and raw receipts remain absent, so no repository-only raw re-audit or full-cost benefit is claimed. Ten pure contract tests were run locally for this preservation; no allocation rerun. Keep the original Draft and branch for exact-byte recovery.
@@ -88,3 +92,7 @@ The large number of child directories is intentional retained evidence. Reposito
 ## Retained preformal temporal design — formal not started
 
 - [X11 history depth #2542](x11_reversal_history_depth_2542_v1/ARCHIVAL_QUALIFICATION.md) — exact preformal ancestry, environment, freeze, plan and excluded construction summary retained; formal_started=false/reruns=0. Missing source and construction audit bytes remain explicit; no formal outcome is claimed.
+
+## AoI critical-retention successor — runner-output STOP
+
+- [#5494 / source PR #5497 qualification](aoi_backpressure_43_v2/ARCHIVAL_QUALIFICATION.md): five exact source/freeze/STOP blobs (21,407 bytes) already preserved by [#6334](https://github.com/Unjuno/agent-interface/pull/6334). One wrapper invocation returned exit 1 without stdout/stderr; runner execution and independent-audit completion remain unknown. Preserve `STOP_RUNNER_OUTPUT_UNAVAILABLE` and the separate transport sentinel STOP; no queue-policy benefit, scientific PASS/FAIL or rerun is claimed. Source PR #5497 is administratively closed and its historical branch ref is unavailable; #5494/#43 remain open.

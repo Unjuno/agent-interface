@@ -1,0 +1,55 @@
+{
+  "checks_passed": 12,
+  "checks_total": 12,
+  "details": {
+    "v38": {
+      "aggregate_match": true,
+      "candidate_interrupted_match": true,
+      "candidate_rows_match": true,
+      "completed_rows": 11,
+      "expected_counts_match": true,
+      "interrupted_rows": 0,
+      "limitations_match": true,
+      "raw_reconstructed_summary": {
+        "completed_hold_count": 11,
+        "interrupted_verified_count": 0,
+        "median_overshoot_lower_ms": 48.09872200000001,
+        "median_overshoot_upper_ms": 59.15110299999998,
+        "overshoot_fraction_lower": 0.17606911055555555,
+        "overshoot_fraction_upper": 0.21598985638888887,
+        "overshoot_total_lower_ms": 633.848798,
+        "overshoot_total_upper_ms": 777.5634829999999,
+        "owner_commanded_hold_total_lower_ms": 4233.848798,
+        "owner_commanded_hold_total_upper_ms": 4377.563483,
+        "requested_total_ms": 3600
+      },
+      "three_auditor_mutations_rejected": true
+    },
+    "v39": {
+      "aggregate_match": true,
+      "candidate_interrupted_match": true,
+      "candidate_rows_match": true,
+      "completed_rows": 27,
+      "expected_counts_match": true,
+      "interrupted_rows": 1,
+      "limitations_match": true,
+      "raw_reconstructed_summary": {
+        "completed_hold_count": 27,
+        "interrupted_verified_count": 1,
+        "median_overshoot_lower_ms": 55.350517000000025,
+        "median_overshoot_upper_ms": 69.86486500000001,
+        "overshoot_fraction_lower": 0.18074299820828668,
+        "overshoot_fraction_upper": 0.21761593628219478,
+        "overshoot_total_lower_ms": 1614.0349740000001,
+        "overshoot_total_upper_ms": 1943.3103109999993,
+        "owner_commanded_hold_total_lower_ms": 10544.034974,
+        "owner_commanded_hold_total_upper_ms": 10873.310311,
+        "requested_total_ms": 8930
+      },
+      "three_auditor_mutations_rejected": true
+    }
+  },
+  "independent_raw_only_reconstruction": true,
+  "scope": "historical owner-commanded X11 input interval bounds only; physical keymap occupancy, task-useful feedback, causality, live safety and product benefit are not identified",
+  "status": "PASS_RAW_RECEIPT_REPRODUCED"
+}

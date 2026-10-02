@@ -1,0 +1,38 @@
+{
+  "schema": "approval-sequence-discrimination-freeze-v1",
+  "issue": 6405,
+  "allocation": "APPROVAL-SEQUENCE-DISCRIMINATION-6405-T0-20261002-01",
+  "branch": "research/approval-sequence-discrimination-6405-t0-20261002",
+  "path": "research/analysis/approval_sequence_discrimination_6405_t0_v1/",
+  "base_main": "d7e8a932da27e7f271920de409b079fedc75dee1",
+  "image": {
+    "reference": "map01-attack-start-gate-4223-t8:20261001",
+    "image_id": "sha256:d8c51b45569cc4fdf0f5d82ae285c3fbb20fae8525d6fab0cebadca171b3bebe",
+    "platform": "linux/amd64",
+    "host": "OrbStack 2.2.3 on macOS arm64; linux/amd64 emulation",
+    "network": "none",
+    "pull": "never"
+  },
+  "protocol": {
+    "candidate_invocations_max": 1,
+    "independent_auditor_invocations_max": 1,
+    "auditor_only_if_candidate_exit_zero": true,
+    "retries": 0,
+    "candidate_rows": 27,
+    "arms": ["A-static", "B-source-bound-changed-field", "C-bounded-nonconsequential-batch"],
+    "mutation_controls": ["omitted_field", "swapped_recipient", "stale_highlight", "overbroad_batch", "prior_receipt_reuse"],
+    "no_humans_models_gui_broker_network_or_effects": true,
+    "logical_expiry_only_no_wall_clock_claim": true
+  },
+  "sha256": {
+    "fixture.json": "ceb0c1be45971d22a57ec685b0130774a4b32a1f943bcedbce080dd051a644a8",
+    "candidate.py": "5ccaaf19ba447bb518a63fdfd5cbeacfc6efde9669d0f55f251e3a55aa2a2cd8",
+    "auditor.py": "f5c90ee41ab449ab576f365ae2e76c9cc887be8e1af0ebafc4afbcd5a8a20501",
+    "test_t0.py": "e117cfce540d58f31cfc0df10fec8b160bc00c73258b7259f20f9e0de6518517",
+    "README.md": "d38a8f2a1772e89961f6c640677b327afe804dfe8cb3ea4916ccfb21165c5ab3"
+  },
+  "result_files": [
+    "results/t0-01/raw.json",
+    "results/t0-01/audit.json"
+  ]
+}

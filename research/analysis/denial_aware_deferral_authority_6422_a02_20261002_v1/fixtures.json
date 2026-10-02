@@ -1,0 +1,15 @@
+{
+  "schema": "denial-deferral-authority-a02-v1",
+  "required_principals": ["file-owner", "security-owner"],
+  "condition": {"predicate": "diff-reviewed", "evidence_requirement": "signed-review-receipt"},
+  "cases": [
+    {"id":"authorized-valid","source_principal":"file-owner","source_stated":true,"condition_evidence":{"predicate":"diff-reviewed","evidence_requirement":"signed-review-receipt","verified_by":"independent-receipt-checker","receipt":"review-9","valid":true}},
+    {"id":"observer-valid","source_principal":"observer","source_stated":true,"condition_evidence":{"predicate":"diff-reviewed","evidence_requirement":"signed-review-receipt","verified_by":"independent-receipt-checker","receipt":"review-10","valid":true}},
+    {"id":"unknown-valid","source_principal":"unmapped-user","source_stated":true,"condition_evidence":{"predicate":"diff-reviewed","evidence_requirement":"signed-review-receipt","verified_by":"independent-receipt-checker","receipt":"review-11","valid":true}},
+    {"id":"missing-authority","source_stated":true,"required_principals":null,"condition_evidence":{"predicate":"diff-reviewed","evidence_requirement":"signed-review-receipt","verified_by":"independent-receipt-checker","receipt":"review-12","valid":true}},
+    {"id":"wrong-predicate","source_principal":"file-owner","source_stated":true,"condition_evidence":{"predicate":"tests-passed","evidence_requirement":"signed-review-receipt","verified_by":"independent-receipt-checker","receipt":"review-13","valid":true}},
+    {"id":"agent-asserted","source_principal":"file-owner","source_stated":true,"condition_evidence":{"predicate":"diff-reviewed","verified_by":"agent-assertion","receipt":"self-claim","valid":true}},
+    {"id":"wrong-evidence-kind","source_principal":"file-owner","source_stated":true,"condition_evidence":{"predicate":"diff-reviewed","evidence_requirement":"unsigned-note","verified_by":"independent-receipt-checker","receipt":"note-14","valid":true}},
+    {"id":"condition-not-source-stated","source_principal":"file-owner","source_stated":false,"condition_evidence":{"predicate":"diff-reviewed","evidence_requirement":"signed-review-receipt","verified_by":"independent-receipt-checker","receipt":"review-15","valid":true}}
+  ]
+}

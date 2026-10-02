@@ -1,0 +1,47 @@
+{
+  "allocation": "MAP01-HELD-INPUT-RAW-RECEIPT-59-T1-20261002-01",
+  "issue": 6198,
+  "branch": "research/6175-held-input-raw-receipt-t1-20261002",
+  "main_sha": "3d33fe482ad55e99943f2c7b40e92c685c3bf92a",
+  "historical_source_ref": "69a1bf509eb432e5e3c0c294d05ad7671d86adb6",
+  "source_and_inputs": {
+    "analyzer": {
+      "path": "research/orchestration/o3-g1/measurement/analyze_held_input_telemetry_v1.py",
+      "git_blob": "092d622f0a3a617428ff990d275fbcad4b76da8e"
+    },
+    "v38": {
+      "path": "research/doom/results/map01-v38-integrated-threat-live-01/runtime/events.jsonl",
+      "git_blob": "02d65d49b61feadbdec2e051bd23d1ca845d5df1",
+      "bytes": 308873
+    },
+    "v39": {
+      "path": "research/doom/results/map01-v39-coast-liveness-live-01/runtime/events.jsonl",
+      "git_blob": "cbaeed9c7ba27b53cef9d10730ae33313371ad9a",
+      "bytes": 565849
+    }
+  },
+  "execution_contract": {
+    "candidate_invocations": 2,
+    "auditor_invocations": 1,
+    "retries": 0,
+    "substitutions": 0,
+    "host_cpu_only": true,
+    "network": "not used by experiment code; no model/provider calls",
+    "container": "not used; historical log replay has no container-dependent semantics",
+    "gui_game_input_or_task_effect": false
+  },
+  "commands": [
+    "python3 research/orchestration/o3-g1/measurement/analyze_held_input_telemetry_v1.py research/doom/results/map01-v38-integrated-threat-live-01/runtime/events.jsonl --out research/doom/map01_held_input_raw_receipt_59_t1_20261002/candidate_v38.json",
+    "python3 research/orchestration/o3-g1/measurement/analyze_held_input_telemetry_v1.py research/doom/results/map01-v39-coast-liveness-live-01/runtime/events.jsonl --out research/doom/map01_held_input_raw_receipt_59_t1_20261002/candidate_v39.json",
+    "python3 research/doom/map01_held_input_raw_receipt_59_t1_20261002/audit_raw.py"
+  ],
+  "base_and_readback": {
+    "branch_head_at_run": "3d33fe482ad55e99943f2c7b40e92c685c3bf92a",
+    "origin_main_at_run": "3d33fe482ad55e99943f2c7b40e92c685c3bf92a",
+    "analyzer_git_blob_readback": "092d622f0a3a617428ff990d275fbcad4b76da8e",
+    "v38_git_blob_readback": "02d65d49b61feadbdec2e051bd23d1ca845d5df1",
+    "v39_git_blob_readback": "cbaeed9c7ba27b53cef9d10730ae33313371ad9a"
+  },
+  "decision": "PASS_RAW_RECEIPT_REPRODUCED",
+  "scope_warning": "Historical owner-commanded X11 interval bounds only; physical keymap occupancy, task-useful feedback, causality, live safety and product benefit are not established."
+}
