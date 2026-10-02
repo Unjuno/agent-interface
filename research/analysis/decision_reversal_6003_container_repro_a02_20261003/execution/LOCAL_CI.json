@@ -1,0 +1,43 @@
+{
+  "workflow": ".github/workflows/analysis-index.yml",
+  "workflow_git_blob_sha": "fada9571dfc37b8adeefaa14e31368ccb9513dd7",
+  "workflow_sha256_in_checkout": "a75cbdad91961b56fc2ded2ef56e335c6a2b07b2c48a28bb82a33d3283ea679a",
+  "frozen_workflow_source_commit": "e2e434dd07e1034c5c4303982a0b1ec33ea35cfd",
+  "frozen_workflow_sha256_gate": "b19000e027e7379ef6c0122e3f8cfd0b2faacb4c54d985ab87d27c1be914f7c2",
+  "python_version": "3.12.13",
+  "outcome": "PASS_LOCAL_ANALYSIS_INDEX_CI",
+  "workflow_steps_passed": 20,
+  "unit_tests_passed": 114,
+  "full_suite_passes": 2,
+  "latest_validation_main_sha": "162963a9aed79e7a9ca233e9218c02c1608b0ab7",
+  "initial_sparse_checkout_issue": {
+    "step": "#6590 T1 geometry feasibility preflight",
+    "errors": 2,
+    "cause": "This task worktree initially omitted .github/workflows/analysis-index.yml from sparse checkout; tests that bind the frozen workflow could not find it.",
+    "resolution": "Materialized .github/workflows, ran the workflow's frozen-source restore/check (expected SHA-256 verified), reran the failed gate, then reran the complete local workflow command set."
+  },
+  "test_counts": {
+    "analysis_index": 0,
+    "issue_6740_construction": 5,
+    "issue_6744_construction": 5,
+    "issue_6469": 5,
+    "issue_6422": 2,
+    "issue_6405": 7,
+    "issue_6590_mutation": 1,
+    "issue_6590_feasibility": 10,
+    "issue_6590_design": 5,
+    "issue_5702": 8,
+    "issue_5681": 12,
+    "issue_6492_construction": 4,
+    "issue_6492_allocation02": 1,
+    "issue_6492_allocation04": 2,
+    "issue_5442": 6,
+    "issue_6617": 7,
+    "issue_6604": 11,
+    "issue_6581": 9,
+    "issue_6650": 4,
+    "issue_5370": 10
+  },
+  "hosted_actions": "Not run locally; standard PR workflow remains enabled.",
+  "working_tree_after_test": "After the final 20-step pass on the current main base, the temporary frozen workflow file was restored to the branch's committed version."
+}

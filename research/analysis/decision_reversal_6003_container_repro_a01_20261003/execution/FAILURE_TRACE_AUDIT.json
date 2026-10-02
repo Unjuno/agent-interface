@@ -1,0 +1,28 @@
+{
+  "allocation_id": "6003-container-repro-a01-20261003",
+  "audit_kind": "POSTHOC_FAILURE_TRACE_CLASSIFICATION",
+  "status": "PASS_FAILURE_TRACE_CLASSIFICATION",
+  "exit_code": 0,
+  "invocations": 1,
+  "candidate_rerun": false,
+  "candidate_trace_sha256": "ef8181e6dc1f006e27ea5bb59f10ba451832d16386363c5176c57398161e8679",
+  "audit_stdout_sha256": "ab36a3369de932e374e99d4b39aa933d730cca43006acc896c3c68cb3bc60dc7",
+  "auditor_source_sha256": "7b8c88019731c0a1d4bb134a5999673814293488d0462f98c9a81913cadedf12",
+  "container": {
+    "name": "issue6740-failure-audit-a01",
+    "id": "5e1655d4ee9ec56a00de865d614e0950640f963fe039d40fc5f39f70688f2fcc",
+    "exit_code": 0,
+    "image_id": "sha256:c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b",
+    "engine": "OrbStack Docker Engine 29.4.0 linux/arm64",
+    "network_mode": "none",
+    "read_only_rootfs": true,
+    "memory_bytes": 268435456,
+    "nano_cpus": 1000000000,
+    "pids_limit": 64,
+    "cap_drop": ["ALL"],
+    "user": "1000:1000"
+  },
+  "errors": [],
+  "method_result": "NOT_EVALUATED",
+  "limitation": "The audit report file was written to ephemeral /tmp tmpfs and vanished at container exit. Exact JSON stdout was retained and hash-matched to docker logs. A post-exit docker cp failed; no audit rerun was made."
+}
