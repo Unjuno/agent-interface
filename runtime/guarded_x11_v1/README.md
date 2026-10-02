@@ -100,7 +100,46 @@ A fresh [completed primary trial](../results/guarded-mcp-primary-02/README.md)
 subsequently verified six exact saves and explicit recovery through the public
 mode. This supports opt-in integration; efficiency claims remain unproven.
 
-## Guarded tail deadline
+## Explicit activation before a new guarded action
+
+After loss of target focus, Python callers may explicitly request
+`bridge.activate_window(window_id=..., source_sequence=...,
+current_binding_revision=..., expires_at_ns=..., timeout_ms=...)`; MCP callers
+use `interface_guarded_activate_window` with the same required fields. Only the
+currently registered window and latest delivered source/current revision are
+accepted. The caller supplies its expiry on `interface_clock`'s execution-host
+clock. The existing core lease/capability checks still apply.
+
+Activation sends an EWMH request, not text/clicks. Successful or uncertain
+activation blocks guarded editing until explicit window review. Review that
+image, mint a new alias and choose a new action; no old program is replayed.
+Core refusal preserves any earlier review block. No strict caller STOP is
+cleared. The WM may act later after a timeout. `timeout_ms` is 0..2000 and is
+a polling budget, not a deadline on blocking X11 transport. Managed-client/EWMH
+support is required; within-target editing focus and already-held input remain
+outside this operation. See [main-specific integration evidence](../results/guarded-activation-main-01/README.md).
+
+Public MCP optionally accepts `review_after_activation=true`. This explicitly
+composes activation with the existing window review in the same worker call,
+only after activation completes with verified neutral input release. The default
+is false. The response retains the activation result separately from review,
+returns the exact review image, and publishes the new binding revision. A failed
+or uncertain activation never triggers review. A review exception preserves the
+activation receipt and blocks editing; it never claims that no effect occurred.
+The caller must inspect the returned image before fresh grounding and editing.
+This removes a separate review request from this chosen flow; it does not prove
+lower semantic latency, human tempo or token cost and performs no automatic input.
+
+### Deadline enforcement
+
+Python `click`, `move` and `keyboard` accept optional `expires_at_ns` from the
+same execution-host monotonic clock. The effective deadline is the earlier of
+that absolute deadline and the existing five-second cap. An expired caller
+deadline refuses before capture or dispatch; admission cost never renews it.
+For a compiled continuation, pass the executor's `valid_until_ns` unchanged
+as this argument. This does not expose a new MCP parameter or automatically
+construct a compiled adapter. Omitting it preserves the existing cap.
+
 
 The existing five-second guarded lease includes admission captures, pointer
 checks, typing and explicit waits. Every new key press now checks that deadline;
@@ -119,3 +158,29 @@ backend's fixed-delay behavior and admission-only lease check are unchanged.
 A completed fixed delay still does not acknowledge application redraw.
 
 Guarded observations use the RGB pixels from the current PNG producer after verifying that saved PNG and its raw-capture link. The private handoff is consumed once; fresh capture and every guard check remain. [Primary use and retained checks](../results/capture-rgb-handoff-01/README.md) documents the removed decode round trip, corruption refusals and timing limits.
+
+## Explicit hover and finite reference deadlines
+
+`NativeHandleBridge.move(alias, offset, tail=...)` and the public
+`interface_guarded_input(interaction="move")` move the pointer without pressing.
+The tail permits only waits and observations. Hover may change pixels: review
+the resulting image and explicitly ground a new alias before clicking. This
+does not weaken pixel guards, choose an action, or automatically retry input.
+
+Public mint replies now include `lifetime`: the execution host's monotonic
+mint time, actual alias expiry, and capture freshness limit. Compare only with
+that same host's clock. Reading retained results does not renew the deadline;
+an unexpired alias still requires fresh pixels, focus and ordinary admission.
+Python `mint` retains its offset-only return; `mint_reference` includes metadata.
+
+[Main integration and personal use](../results/hover-lifetime-main-01/README.md)
+retains pointer-only motion, old-reference refusal, fresh grounding and one Save.
+
+## Bounded evidence-dependent continuation
+
+The opt-in [compiled Python adapter](COMPILED.md) connects the existing shared
+state graph to this bridge. It captures intermediate pixels, evaluates explicit
+caller-owned predicates, revalidates each alias and forwards the shorter method
+budget into ordinary guarded input. The [primary live trial](../results/compiled-x11-live-01/README.md)
+retains one correct Save and a changed-control stop with no Save. This does not
+promote a generic text verifier or establish efficiency gains.

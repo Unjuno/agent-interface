@@ -1,0 +1,44 @@
+{
+  "allocation": "motor-state-freshness-toctou-20260923-01",
+  "audit_command": "python -B audit.py formal-r0-stable formal-r0-change_within_250ms formal-r0-change_after_250ms formal-r1-stable formal-r1-change_within_250ms formal-r1-change_after_250ms",
+  "construction_corruption_controls": "12/12 rejected after preformal test-only no-op control correction",
+  "construction_scientific_audit": "PASS_MOTOR_STATE_FRESHNESS_TOCTOU_SCOPED on excluded 18-case construction",
+  "controls_command": "python -B test_audit.py formal-r0-stable formal-r0-change_within_250ms formal-r0-change_after_250ms formal-r1-stable formal-r1-change_within_250ms formal-r1-change_after_250ms",
+  "formal_cases": 18,
+  "formal_commands": [
+    "python -B runner.py --rep 0 --scenario stable --out formal-r0-stable --display-base 510",
+    "python -B runner.py --rep 0 --scenario change_within_250ms --out formal-r0-change_within_250ms --display-base 513",
+    "python -B runner.py --rep 0 --scenario change_after_250ms --out formal-r0-change_after_250ms --display-base 516",
+    "python -B runner.py --rep 1 --scenario stable --out formal-r1-stable --display-base 520",
+    "python -B runner.py --rep 1 --scenario change_within_250ms --out formal-r1-change_within_250ms --display-base 523",
+    "python -B runner.py --rep 1 --scenario change_after_250ms --out formal-r1-change_after_250ms --display-base 526"
+  ],
+  "formal_invocations": 0,
+  "formal_repetitions": [
+    0,
+    1
+  ],
+  "issue": 4237,
+  "max_age_ns": 250000000,
+  "policies": [
+    "snapshot_only",
+    "age_guard",
+    "jit_reobserve"
+  ],
+  "reruns": 0,
+  "reserved_main": "030b9f9c7c753674c4f25835f29a6803386e9e15",
+  "scenarios": [
+    "stable",
+    "change_within_250ms",
+    "change_after_250ms"
+  ],
+  "schema": "agent-interface/motor-state-freshness-freeze-v1",
+  "source_sha256": {
+    "ENVIRONMENT.json": "3f6cfce9b29ed5ba4aa2293f7599420e093fd1333cddffca08bdff622bf7269a",
+    "PLAN.md": "ae08871e5f0e2f9591b0e52106b034a6fc0c1258df0e339d6d26d91a573c8719",
+    "audit.py": "0a769a6014c62fc1d2fd861761f5fa1ad66f22826ced12bccd215c5feffe808a",
+    "runner.py": "9848da2e9e65a2d24b290b8ec9290ecf32b458ee74d6483953005f59c5e9a434",
+    "test_audit.py": "b6fc4666973beffefce3b6d6f8a7c9a2c8da12486f7090642bc33186d8112da0",
+    "uno_read.py": "c2ec9624f1a12e5ad4c122142ce0348e723855edb0b70c456f3d7808a2f91f99"
+  }
+}

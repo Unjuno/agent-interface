@@ -1,0 +1,36 @@
+{
+  "allocation": "observer-ipc-freshness-20260926-r3",
+  "failed_frozen_control": [
+    "boolean_block"
+  ],
+  "formal_batch_count": 10,
+  "formal_case_count": 40,
+  "formal_retries": 0,
+  "frozen_audit_checks": 10241,
+  "frozen_audit_errors": [],
+  "frozen_audit_sha256": "dfb955a947e14343287152537ab7fd9f0439022506b258f2152033c5580c063b",
+  "frozen_controls_rejected": 10,
+  "frozen_controls_sha256": "bb1982320a2f9bf891970e2b8495a68ca17fc59fa28d3cf849ce86e6a6878d50",
+  "frozen_controls_total": 11,
+  "interpretation": "All 40 saved cases satisfy the frozen scientific count thresholds and frozen raw audit reports no row errors, but one preregistered evidence-corruption control was ineffective because bool compared equal to int. Overall formal acceptance remains HOLD; posthoc audit is diagnostic only and does not replace the frozen gate.",
+  "overall_disposition": "HOLD_FROZEN_AUDITOR_CONTROL_GAP",
+  "posthoc_audit_decision": "PASS_CAPTURE_AND_DELIVERY_SCOPED",
+  "posthoc_audit_errors": [],
+  "posthoc_audit_sha256": "575232cac847cf1319ba156385892120e6af1e1aeb32fdbc036c072ac37fdc25",
+  "posthoc_controls_rejected": 11,
+  "posthoc_controls_sha256": "a420b97cc3abc93a11ca7ecc4029aa4a42326f1b091a737ee1d1e514f792a3d5",
+  "posthoc_controls_total": 11,
+  "raw_sha256": "9e77997924f0073553acb9becdf2ee2c7e0d85f1b6c95eeffadd8f94e4dd8f03",
+  "scientific_counts": {
+    "INLINE_THREAD_capture_cases": 5,
+    "PROCESS_THREAD_age_qualified_cases": 10,
+    "PROCESS_THREAD_capture_cases": 10,
+    "by_arm": {
+      "INLINE_IDLE": {"age_qualified_cases": 10,"capture_cases": 10},
+      "INLINE_THREAD": {"age_qualified_cases": 0,"capture_cases": 5},
+      "PROCESS_IDLE": {"age_qualified_cases": 10,"capture_cases": 10},
+      "PROCESS_THREAD": {"age_qualified_cases": 10,"capture_cases": 10}
+    }
+  },
+  "scientific_frozen_audit_decision": "PASS_CAPTURE_AND_DELIVERY_SCOPED"
+}

@@ -23,9 +23,11 @@ SOURCE_FILES = (
     "runtime/guarded_x11_v1/bridge.py",
     "runtime/guarded_x11_v1/history.py",
     "runtime/guarded_x11_v1/form.py",
+    "runtime/guarded_x11_v1/compiled.py",
     "runtime/core_v1/__init__.py",
     "runtime/core_v1/backend.py",
     "runtime/core_v1/contract.py",
+    "runtime/core_v1/compiled_gui.py",
     "runtime/core_v1/sequence.py",
     "runtime/core_v1/doctor.py",
     "runtime/core_v1/platform_probe.py",
@@ -136,7 +138,7 @@ def _info(name: str) -> zipfile.ZipInfo:
     return info
 
 
-HOST_SOURCE_FILES = ("runtime/host_v1/relay_client.mjs", "runtime/host_v1/relay_host.mjs", "runtime/host_v1/README.md")
+HOST_SOURCE_FILES = ("runtime/host_v1/relay_client.mjs", "runtime/host_v1/relay_host.mjs", "runtime/host_v1/primary_caller.mjs", "runtime/host_v1/primary_exchange.mjs", "runtime/host_v1/primary_stdio.mjs", "runtime/host_v1/README.md", "runtime/host_v1/FEEDBACK.md")
 
 
 def build(root: Path, out: Path, manifest_out: Path, sums_out: Path, *, host_directory: Path | None = None) -> dict:

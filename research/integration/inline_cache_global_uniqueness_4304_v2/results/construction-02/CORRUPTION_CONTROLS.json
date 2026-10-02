@@ -1,0 +1,159 @@
+{
+  "baseline_status": "PASS",
+  "controls": [
+    {
+      "changed": true,
+      "error_count": 1,
+      "errors": [
+        "denominator/schedule"
+      ],
+      "name": "missing_case",
+      "rejected": true
+    },
+    {
+      "changed": true,
+      "error_count": 2,
+      "errors": [
+        "denominator/schedule",
+        "unique cases"
+      ],
+      "name": "duplicate_case",
+      "rejected": true
+    },
+    {
+      "changed": true,
+      "error_count": 2,
+      "errors": [
+        "construction-0-00:policy semantics",
+        "construction-0-00:policy exact wire"
+      ],
+      "name": "wrong_point",
+      "rejected": true
+    },
+    {
+      "changed": true,
+      "error_count": 2,
+      "errors": [
+        "construction-0-00:binding equality",
+        "construction-0-00:policy exact wire"
+      ],
+      "name": "stale_binding",
+      "rejected": true
+    },
+    {
+      "changed": true,
+      "error_count": 2,
+      "errors": [
+        "construction-0-00:authority",
+        "construction-0-00:policy exact wire"
+      ],
+      "name": "authority_grant",
+      "rejected": true
+    },
+    {
+      "changed": true,
+      "error_count": 2,
+      "errors": [
+        "construction-0-00:input cardinality",
+        "construction-0-00:press release order"
+      ],
+      "name": "missing_release",
+      "rejected": true
+    },
+    {
+      "changed": true,
+      "error_count": 1,
+      "errors": [
+        "construction-0-00:neutral post_neutral"
+      ],
+      "name": "held_button",
+      "rejected": true
+    },
+    {
+      "changed": true,
+      "error_count": 4,
+      "errors": [
+        "construction-0-00:observed events/effects",
+        "construction-0-00:snapshot equals independent journal",
+        "construction-0-00:closed effect boundary",
+        "construction-0-00:malformed evidence IndexError: list index out of range"
+      ],
+      "name": "missing_effect",
+      "rejected": true
+    },
+    {
+      "changed": true,
+      "error_count": 3,
+      "errors": [
+        "construction-0-01:construction source identity",
+        "construction-0-02:construction source identity",
+        "construction-0-03:construction source identity"
+      ],
+      "name": "source_identity",
+      "rejected": true
+    },
+    {
+      "changed": true,
+      "error_count": 3,
+      "errors": [
+        "construction-0-02:quiescent bytes",
+        "construction-0-02:complete warm pixels",
+        "construction-0-02:candidate current full bytes"
+      ],
+      "name": "scorer_pixel_rehashed",
+      "rejected": true
+    },
+    {
+      "changed": true,
+      "error_count": 3,
+      "errors": [
+        "construction-0-02:full acquisition request",
+        "construction-0-02:warm output accounting",
+        "construction-0-02:policy exact wire"
+      ],
+      "name": "full_evidence_omitted",
+      "rejected": true
+    },
+    {
+      "changed": true,
+      "error_count": 2,
+      "errors": [
+        "construction-0-02:image provenance candidate_full",
+        "construction-0-02:policy exact wire"
+      ],
+      "name": "scorer_role_laundered",
+      "rejected": true
+    },
+    {
+      "changed": true,
+      "error_count": 2,
+      "errors": [
+        "construction-0-00:image digest candidate_cold",
+        "construction-0-00:policy exact wire"
+      ],
+      "name": "boolean_byte_count",
+      "rejected": true
+    },
+    {
+      "changed": true,
+      "error_count": 1,
+      "errors": [
+        "construction-0-00:malformed evidence KeyError: 'exit'"
+      ],
+      "name": "actor_exit_missing",
+      "rejected": true
+    },
+    {
+      "changed": true,
+      "error_count": 1,
+      "errors": [
+        "construction-0-00:known Xvfb xkbcomp warning only"
+      ],
+      "name": "unexpected_xvfb_stderr",
+      "rejected": true
+    }
+  ],
+  "count": 15,
+  "rejected": 15,
+  "status": "PASS"
+}

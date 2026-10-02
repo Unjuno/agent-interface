@@ -1,0 +1,25 @@
+{
+  "allocation": "GPU-SUPERVISOR-4972-20261001-01",
+  "audit_sha256": "82f85bfa7205cb85ef7778f2f19f5ca9ba9616e0dcaa39f1636ded3f32a99544",
+  "auditor_command": "python audit.py",
+  "auditor_invocations_allowed": 1,
+  "base_main_observed_utc": "2026-10-01T05:12:32Z",
+  "base_main_sha": "1a43d91e1799752b1f1e58e275b8f4088cc24c1e",
+  "branch": "research/gpu-supervisor-cuda-4972-20261001-01",
+  "candidate_command": "python runner.py",
+  "candidate_invocations_allowed": 1,
+  "dataset_rows": 256,
+  "dataset_sha256": "5d1bfa0da1a9f0fe596bbfcacf5e11db161518e7e047fd288cec5cd082cba49c",
+  "host": "Windows RTX 3080 Laptop GPU, CPython 3.11.9, PyTorch 2.5.1+cu121, CUDA 12.1",
+  "path": "research/analysis/gpu_supervisor_compose_4972_cuda_v1/",
+  "requested_window_utc": "2026-10-01T05:15:00Z/2026-10-01T05:45:00Z",
+  "runner_sha256": "835879bf1f767003c973138773ebd048efa438e040b12c8a7bcf77bc2fc7e5cd",
+  "schema": "gpu-supervisor-cuda-4972-freeze-v1",
+  "source_files": [
+    "runner.py",
+    "audit.py",
+    "dataset.json"
+  ],
+  "timing_gate": "none; diagnostic only"
+}
+

@@ -6,7 +6,7 @@ The primary task is to test concrete ideas already posted in repository Issues.
 Do not substitute branch/PR cleanup, roadmap restatement, documentation-only
 work, or merging for an experiment. For each selected idea, state H/T/D/C/U,
 freeze the source and decision gates, and run the smallest meaningful first
-experimental rung in a local Docker/OrbStack container whenever feasible. Keep
+experimental rung in WSLc for eligible local single-container CPU work. Use Docker/OrbStack only when a frozen protocol requires Engine API, Compose, unsupported isolation/resource controls, or GUI-specific behavior. Keep GitHub-hosted Actions unchanged, record host cgroup/swap warnings, and do not infer resource enforcement from configuration alone. Keep
 construction checks distinct from formal allocations; preserve raw PASS, FAIL,
 HOLD, STOP, and infrastructure evidence without retries or silent relabeling.
 If the exact experiment has already been performed, do not duplicate it: pick a
@@ -18,15 +18,17 @@ inspect and independently revalidate it. The PR/merge is the evidence-delivery
 mechanism, not the research objective. A component or readiness PASS must not
 be promoted to integrated runtime, model, task-effect, or product success.
 
+**Resource-contention override (2026-10-02):** The cadence below does not require filler experiments while a needed resource or authority is unavailable. Keep at most one pending need per scientific question in [#5085](https://github.com/Unjuno/agent-interface/issues/5085), updating only meaningful readiness, ownership, assignment/release or outcome changes; do not roll GPU bookings or create new Issues merely for window, runtime, launcher or auditor repairs. Resource HOLD is valid while useful, nonconflicting work proceeds within existing authorization. Genuinely new hypotheses or integration decisions remain valid under [failure-classification rules](ISSUE_FAILURE_CLASSIFICATION.md). Preserve explicitly assigned/running finite allocations, their original safe stopping boundaries and all original outcomes; no grant or consumed-allocation retry is implied. Microsoft WSLc (`wslc.exe`) shares the host's physical GPU and does not prove memory-limit enforcement.
+
 ### Required work cadence for autonomous agents
 
 The unit of progress is an executed experiment against one concrete Issue
 hypothesis—not a branch, PR, issue comment, plan, or document update. In each
 work segment, proceed from intake and H/T/D/C/U to a frozen, smallest useful
-Docker/OrbStack experiment and actually run it. A proposed command or a green
+eligible WSLc experiment for local CPU/single-container work (or a required Docker/OrbStack experiment) and actually run it. A proposed command or a green
 test remembered from an earlier run is not a current result. If a formal/live
 allocation is separately gated or already consumed, do not spend it again;
-run a distinct construction or boundary experiment that advances the same
+for recurring workflows, compare the same frozen workload under its established runtime and WSLc before changing the default. Run a distinct construction or boundary experiment that advances the same
 Issue question, or select another unresolved Issue hypothesis.
 
 Before calling a segment complete, retain the executed command, source/image

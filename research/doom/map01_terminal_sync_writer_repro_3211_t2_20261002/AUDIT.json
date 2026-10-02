@@ -1,0 +1,17 @@
+{
+  "schema": "map01-terminal-sync-writer-reproduction-audit-v1",
+  "source_git_blob": "f5caf71a743a563b7de046b82d44db7ebe49e829",
+  "child_exit_code": 0,
+  "memory_event_count": 2,
+  "reconstructed_object_count": 2,
+  "physical_line_count": 1,
+  "raw_byte_count": 110,
+  "raw_sha256": "db04370fa45f76c84e9cc9c3ff562bc81bfae99af60fe39149572d0c5d4eae9d",
+  "ordinary_jsonl_error": "expected 2 physical JSONL lines, got 1",
+  "decoded_events": [
+    {"event": "probe", "index": 1, "text": "embedded\nvalue"},
+    {"event": "terminal", "id": "synthetic-terminal"}
+  ],
+  "decision": "CONFIRMED_JSONL_TRACE_FORMAT_DEFECT",
+  "scope_limit": "Synthetic JsonSession writer boundary only; no MAP01 recovery-arm event or timeout cause inferred."
+}

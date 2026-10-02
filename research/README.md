@@ -13,7 +13,26 @@ For claims and scientific disposition, start with the top-level [research index]
 | Latest detailed handoff | [../docs/LOCAL_RESEARCH_HANDOFF.md](../docs/LOCAL_RESEARCH_HANDOFF.md) |
 | Progress and remaining gates | [../docs/PROGRESS_FROM_BASELINE.md](../docs/PROGRESS_FROM_BASELINE.md) |
 | Current Linux research caller | [live_control/CURRENT_CLIENT.md](live_control/CURRENT_CLIENT.md) |
+| Historical local-GPU triage snapshot (not current resource authorization) | [gpu/RECOVERY_STATUS.md](gpu/RECOVERY_STATUS.md) |
 | Research convergence/freeze criteria | [evolution/freeze_criteria.md](evolution/freeze_criteria.md) |
+| Issue #59 global-owner event/head invariance T0 | [analysis/map01_global_owner_invariance_59_t0_20261001/REPORT.md](analysis/map01_global_owner_invariance_59_t0_20261001/REPORT.md) |
+| Issue #5970 × #5348 causal-cut recovery reachability T0 | [analysis/blackstart_causal_cut_5970_t0_20261001/REPORT.md](analysis/blackstart_causal_cut_5970_t0_20261001/REPORT.md) |
+| Issue #5970 retained reconnect-trace applicability T1 | [analysis/blackstart_causal_cut_5970_t1_20261001/REPORT.md](analysis/blackstart_causal_cut_5970_t1_20261001/REPORT.md) |
+| Issue #5970 prospective X11 event-provenance T2 | [analysis/blackstart_prospective_trace_5970_t2_20261001/REPORT.md](analysis/blackstart_prospective_trace_5970_t2_20261001/REPORT.md) |
+| Issue #5970 source-bound prospective provenance T3 | [analysis/blackstart_source_bound_5970_t3_20261001/REPORT.md](analysis/blackstart_source_bound_5970_t3_20261001/REPORT.md) |
+| Issue #5970 X RECORD delivery-boundary successor T4 | [analysis/blackstart_xrecord_5970_t4_20261001/REPORT.md](analysis/blackstart_xrecord_5970_t4_20261001/REPORT.md) |
+| Issue #6086 hazard-shaped discretionary capture T0 | [analysis/hazard_discretionary_capture_6086_t0_20261002/REPORT.md](analysis/hazard_discretionary_capture_6086_t0_20261002/REPORT.md) |
+| Issue #5970 X window-tree target diagnostic T5 | [analysis/blackstart_xevent_target_5970_t5_20261002/REPORT.md](analysis/blackstart_xevent_target_5970_t5_20261002/REPORT.md) |
+| Issue #5970 all-window observer successor T6 | [analysis/blackstart_allwindow_trace_5970_t6_20261002/REPORT.md](analysis/blackstart_allwindow_trace_5970_t6_20261002/REPORT.md) |
+| Issue #5970 pre-input target liveness T7 | [analysis/blackstart_record_target_liveness_5970_t7_20261002/REPORT.md](analysis/blackstart_record_target_liveness_5970_t7_20261002/REPORT.md) |
+| Issue #5970 ancestor observer startup STOP T8 | [analysis/blackstart_record_target_ancestor_5970_t8_20261002/REPORT.md](analysis/blackstart_record_target_ancestor_5970_t8_20261002/REPORT.md) |
+| Issue #5970 immediate-parent observer T9 | [analysis/blackstart_tk_parent_window_5970_t9_20261002/REPORT.md](analysis/blackstart_tk_parent_window_5970_t9_20261002/REPORT.md) |
+| Issue #5970 parent-only stream diagnostic T10 | [analysis/blackstart_tk_parent_only_5970_t10_20261002/REPORT.md](analysis/blackstart_tk_parent_only_5970_t10_20261002/REPORT.md) |
+| Issue #5970 non-modifier control T11 | [analysis/blackstart_nonmodifier_trace_5970_t11_20261002/REPORT.md](analysis/blackstart_nonmodifier_trace_5970_t11_20261002/REPORT.md) |
+| Issue #5970 no-input X event baseline T12 | [analysis/blackstart_x11_noinput_baseline_5970_t12_20261002/REPORT.md](analysis/blackstart_x11_noinput_baseline_5970_t12_20261002/REPORT.md) |
+| Issue #6074 interval-robustness finite-method T0 | [analysis/interval_robustness_6074_t0_20261002/REPORT.md](analysis/interval_robustness_6074_t0_20261002/REPORT.md) |
+| Issue #6045 opportunity-conditioned age T0 container method result | [analysis/opportunity_conditioned_actuated_info_6045_t0_20261002/REPORT.md](analysis/opportunity_conditioned_actuated_info_6045_t0_20261002/REPORT.md) |
+| Issue #6351 cross-role meaning drift synthetic T0 | [analysis/cross_role_meaning_drift_6351_t0_v1/REPORT.md](analysis/cross_role_meaning_drift_6351_t0_v1/REPORT.md) |
 | Revisit history | [REVISIT_LEDGER.md](REVISIT_LEDGER.md) |
 | Analysis vs experiment decision flow | [../docs/RESEARCH_METHOD.md](../docs/RESEARCH_METHOD.md) |
 | Public evidence/document relationship map | [../docs/EVIDENCE_MAP.md](../docs/EVIDENCE_MAP.md) |
@@ -50,7 +69,20 @@ Prefer the narrowest existing namespace. The diagram is a placement guide; retai
 
 ## Analytical studies
 
+- [Cyclic grounding #4431 / Draft PR #4443 published-byte archive](analysis/cyclic_justification_grounding_delivery_t6g2_v1/ARCHIVAL_QUALIFICATION.md) — nine exact published files (25,174 bytes); reported `PASS_LOCAL_CYCLIC_GROUNDING_CONTRACT` remains separate from `HOLD_REMOTE_RAW_DELIVERY`; full raw/audit/control/process bundle absent, no independent reproduction or runtime promotion.
+
+- [`analysis/preference_uncertainty_5749_t0_v1/REPORT.md`](analysis/preference_uncertainty_5749_t0_v1/REPORT.md) — Issue #5749 T0 method-only PASS: safe preference-query boundary, choice-version binding, neutral construction, framing-sensitivity hold; no human or runtime claim.
+
+- [`analysis/route_assignment_exposure_5760_t0_v1/REPORT.md`](analysis/route_assignment_exposure_5760_t0_v1/REPORT.md) — Issue #5760 T0 method-scoped PASS: constructed selection reversal detected, null control matched, six mutations rejected; not empirical or causal evidence.
+
+- [`analysis/adaptive_screen_5739_t0_v1/REPORT.md`](analysis/adaptive_screen_5739_t0_v1/REPORT.md) — Issue #5739 claim-boundary successor: read-only audit-v2 PASS after preserving the audit-v1 report-serialization STOP; synthetic-only.
+
+- [`analysis/obligation_conservation_5817_t0_v1/REPORT.md`](analysis/obligation_conservation_5817_t0_v1/REPORT.md) — Issue #5817 cross-task obligation conservation T0: finite synthetic Docker PASS with independent prefix audit; allocation-01 gate STOP preserved, no live effect/durability claim.
+- [`analysis/source_constraint_preservation_5951_t0_20261001/RESULT.md`](analysis/source_constraint_preservation_5951_t0_20261001/RESULT.md) — Issue #5951 finite host-only source-clause METHOD construction; auditor-v1 FAIL and UNKNOWN-baseline review failure retained, corrected independent audit and stronger baseline successor pass; no natural-language, live, container, or runtime claim.
+
 - [`analysis/`](analysis/) — proofs, exact derivations, exhaustive state-space checks, break-even/identifiability analysis, and the empirical residuals they expose.
+- [`analysis/backward_evidence_slice_5329_t0_v1/README.md`](analysis/backward_evidence_slice_5329_t0_v1/README.md) — Issue #5329 Formal01 auditor STOP preserved unchanged; distinct Formal02 passes the finite backward-slice method gate with explicit scope limits.
+- [`security/`](security/) — Issue #5692 X11 UI-redress evidence and other security research; formal-01 STOP is recorded in [the result file](security/ui_redress_5692_x11_a02_20261001/FORMAL-01-STOP.md).
 
 Use analytical work to eliminate questions that are already decidable from explicit assumptions; do not treat it as measurement of a real backend/model unless the retained evidence actually contains those endpoints.
 
@@ -70,11 +102,17 @@ For new work, prefer the narrowest existing category below rather than adding an
 - [`live_control/`](live_control/) — shared/live GUI-control mechanisms and integration studies.
 - [`doom/`](doom/) — real-time/continuous-control studies and MAP01 evidence.
 - [`integration/`](integration/) — integration-focused experiments.
+- [Tk validation-lifecycle #4367 / Draft PR #4375 metadata archive](integration/tk_validation_lifecycle_v9m3_v1/ARCHIVAL_QUALIFICATION.md) — three exact published metadata files; pre-allocation publication STOP/HOLD remains, source/raw absent, no construction or formal result independently established.
+- [X11 transition coalescing #4422 / Draft PR #4438 metadata archive](integration/x11_transition_coalescing_c4d7_v1/ARCHIVAL_QUALIFICATION.md) — three exact STOP metadata files; formal remains 0/12 cases and 0/38 captures, and no blocked source payload or construction result is independently recovered.
+- [Writer selection scope #4425 / Draft PR #4446 archival qualification](integration/writer_selection_scope_w4m8_v1/ARCHIVAL_QUALIFICATION.md) — seven exact published metadata/report files; the complete 401-file raw corpus remains unavailable, so the owner-reported scoped PASS is not independently reproduced.
+- [Router membership #4430 / Draft PR #4452 archival qualification](integration/router_membership_q5m8_v1/ARCHIVAL_QUALIFICATION.md) — three exact published STOP metadata files; the complete 457-file source/raw/audit capsule remains uncommitted, with no scientific rerun or independent reproduction.
 - [`public_mcp_stale_effect_2907_allocation04_v1/`](integration/public_mcp_stale_effect_2907_allocation04_v1/REPORT.md) — Issue #2907 source-frozen local Docker stale-refusal/effect result and corrected read-only audit; remains a scoped component result, not the full multi-app integration gate.
 - [`public_mcp_controller_lineage_2907_construction01_v1/`](integration/public_mcp_controller_lineage_2907_construction01_v1/REPORT.md) — local Docker construction boundary: same caller-owned X11 runtime session across three apps; stale observation refused and neutral input released; not MCP-session fusion or the full #2907 integration gate.
 - [`public_mcp_binding_review_2907_construction01_v1/`](integration/public_mcp_binding_review_2907_construction01_v1/REPORT.md) — local Docker public-MCP Calc modal review/rebind; old binding refused with zero emissions, new binding neutral Escape/release; scoped construction only, not observation freshness or full #2907 integration.
 - [`public_mcp_replacement_review_2907_construction01_v1/`](integration/public_mcp_replacement_review_2907_construction01_v1/REPORT.md) — public MCP Chromium root replacement boundary: a new process/window was refused by the original transient-family review, with target/revision preserved; HOLD retained because old launcher liveness was not recorded.
 - [`measurement/`](measurement/) — scoped measurement and composition studies.
+- [#4389 / Draft PR #4410 archival qualification](measurement/key_state_piggyback_q4s8_v1/ARCHIVAL_QUALIFICATION.md) — 18 exact source/freeze/audit blobs; historical same-connection contract PASS and full-cost HOLD are preserved, but the 261-file raw capsule is missing and the reported allocation is not independently re-audited here.
+- [#3880 / Draft PR #4440 K2M6 archival qualification](measurement/clock_ipc_asymmetry_k2m6_v1/ARCHIVAL_QUALIFICATION.md) — six exact historical report/proof/verification/publication blobs; the owner-reported local PASS and raw-publication HOLD remain, with the 321-file ZIP absent and #3880's separate OrbStack gate still unresolved.
 - [`cross_domain/`](cross_domain/) — cross-domain transfer work.
 
 ### Fast local decision / System-1 research
@@ -126,6 +164,9 @@ For new work, prefer the narrowest existing category below rather than adding an
 
 ### Evaluation and research governance
 
+- [Verifier registry #5273 / Draft PR #5436 host-construction archive](verification/verifier_registry_5273_t0_v6/ARCHIVAL_QUALIFICATION.md) — twelve exact published files; reported 21 host tests/eight synthetic cases, README test-count discrepancy and post-freeze reruns preserved; formal STOP, zero container invocations, no runtime promotion.
+- [Status-cache snapshot #4403 / Draft PR #4406 metadata archive](verification/status_data_version_v3h8_v1/ARCHIVAL_QUALIFICATION.md) — three exact published metadata files; pre-allocation publication STOP/HOLD remains, source/raw absent, no construction or formal result independently established.
+- [`verification/postcondition_evidence_ablation_v1/ARCHIVAL_QUALIFICATION.md`](verification/postcondition_evidence_ablation_v1/ARCHIVAL_QUALIFICATION.md) — Issue #3951 / Draft PR #3960: exact three-file provenance/STOP archive; original source/raw remain incomplete, allocation consumed, no independent reproduction or runtime promotion.
 - [`benchmark_discovery/`](benchmark_discovery/) — benchmark/coverage discovery.
 - [`verification/ontology_gap_5275_t1_v1/REPORT.md`](verification/ontology_gap_5275_t1_v1/REPORT.md) — Issue #5275 T1 lexical novelty boundary probe; scoped synthetic result with training/evaluation overlap disclosed, no semantic-generalization claim.
 - [`verification/ontology_gap_5275_t2_v1/REPORT.md`](verification/ontology_gap_5275_t2_v1/REPORT.md) — Issue #5275 T2 held-out surface successor: FAIL, lexical-only abstains on all supported held-out cases and known-vocabulary dilution hides two semantic OOD cases.
@@ -142,6 +183,8 @@ For new work, prefer the narrowest existing category below rather than adding an
 
 - [`launch/`](launch/) — public-evidence/launch presentation experiments.
 - [`experiments/`](experiments/) — small scoped experiments without a narrower established category.
+- [#4988 original Qwen abstention-balance STOP package](experiments/qwen05b_abstention_balance_4780_v1/RECOVERY_STATUS.md) — original branch package preserved without overwriting the merged STOP/capture corrections; formal fit count 0.
+- [#5014 Qwen abstention-balance v2 resource HOLD](experiments/qwen05b_abstention_balance_4780_v2/RECOVERY_STATUS.md) — exact frozen package and `HOLD_RESOURCE_OWNERSHIP` preserved; formal fit count 0 and current-main refreeze/explicit arbitration required.
 
 ### Historical archival namespaces
 
@@ -193,6 +236,9 @@ A directory existing here does **not** mean its mechanism is promoted. Negative 
 - [`x11_midprogram_keymap_5236_formal04_20260930/`](x11_midprogram_keymap_5236_formal04_20260930/) — Formal04 STOP: focused root did not receive fixture key input/effects.
 - [`x11_midprogram_keymap_5236_formal05_20260930/`](x11_midprogram_keymap_5236_formal05_20260930/) — Formal05 STOP: click/input reached fixture but completed effects were missing; see immutable STOP record.
 - [`x11_midprogram_keymap_5236_formal06_20261001/`](x11_midprogram_keymap_5236_formal06_20261001/) — Formal06 `STOP_PROTOCOL_DEVIATION`: raw predates freeze; auditor mismatch is diagnostic only. See `RESULT_DISPOSITION.md`.
+- [`x11_midprogram_keymap_5236_formal07_20261001/`](x11_midprogram_keymap_5236_formal07_20261001/) — Formal07 `STOP_PROVENANCE_OR_RUNNER`: one corruption control was a no-op and escaped; raw/audit retained, auditor scientific PASS is not promoted.
 - [`x11_midprogram_keymap_docker_diagnostic_20260930/`](x11_midprogram_keymap_docker_diagnostic_20260930/) — Nonformal Docker focus-versus-click diagnostic; not evidence for the formal hypothesis.
 
 - [`aoi_43_t0/`](aoi_43_t0/) — #43 retained toy construction; [accounting-defect/HOLD correction](aoi_43_t0/README.md): identical queue policies and incomparable drop counters; no demonstrated critical-retention benefit.
+
+- [`doom/map01_cuda_hud_5752_preflight_stop_20261001/REPORT.md`](doom/map01_cuda_hud_5752_preflight_stop_20261001/REPORT.md) — Issue #5752 allocation-01 pre-candidate record; its authoritative STOP reason and timestamp are reconciled in [CORRECTION.md](doom/map01_cuda_hud_5752_preflight_stop_20261001/CORRECTION.md). CUDA hypothesis remains untested.- [Issue #6156 escrowed optional-resource budget T0](analysis/escrow_optional_budget_6156_t0_20261002/REPORT.md) — Docker PASS_METHOD_SCOPED over 9,988 reachable states / 27,748 transitions; balanced coordination benefit and skew/crash stranded-right cost retained; no runtime claim.

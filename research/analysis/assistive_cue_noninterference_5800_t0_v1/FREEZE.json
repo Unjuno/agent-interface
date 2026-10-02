@@ -1,0 +1,27 @@
+{
+  "issue": 5800,
+  "allocation": "synthetic T0 method construction; no GUI or human allocation",
+  "base_main": "8bbf3211cb10e0606c4ca13d6fb15b55f3895ad5",
+  "branch": "research/assistive-cue-noninterference-5800-t0-8bbf3211-20261001",
+  "path": "research/analysis/assistive_cue_noninterference_5800_t0_v1/",
+  "runtime": "Python 3.12.10; standard library only",
+  "container": "not used; Docker Desktop daemon/WSL backend did not answer diagnostic window; no image ID",
+  "candidate_sha256": "b7daa634fcc7694cfe4a5d181ed67ab2621e762b4d60ba679e5bfb4979c3eed2",
+  "independent_auditor_sha256": "32550f3f6a56fad22abeb86eba70d3b9b0f2c9f1da88d07ae79855fd274f71bb",
+  "tests_sha256": "66df1bad389bc8bfd300b6023fd5cf0314eb7117a113762a1aa285da27da8b9f",
+  "source_boundary": "WCAG 2.2 criteria and WAI-ARIA APG inform web interaction invariants only. WCAG Understanding documents are informative guidance; no native-desktop conformance claim is made.",
+  "source_urls": [
+    "https://www.w3.org/TR/WCAG22/",
+    "https://www.w3.org/WAI/WCAG22/Understanding/focus-order.html",
+    "https://www.w3.org/WAI/WCAG22/Understanding/no-keyboard-trap.html",
+    "https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum.html",
+    "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/"
+  ],
+  "H": "A private model-only cue or genuinely passive shared cue can preserve the fixture's declared human/AT interaction signals; an intrusive shared cue is detected as a non-interference failure; missing AT observability yields HOLD.",
+  "T": "Four finite conditions (no cue, model-only private composite, shared passive, shared intrusive negative control) plus AT-backend-unavailable HOLD. Exhaustively inject all 2^9 combinations of nine invariant violations and audit 512 resulting profiles.",
+  "D": "METHOD_PASS_SCOPED only if the three declared non-intrusive conditions pass, the intrusive control fails, AT-unavailable returns HOLD, all 511 nonempty invariant-fault profiles fail, clean profile passes, and independent audit agrees.",
+  "C": "The fixture stipulates screen/focus/AT observations and cue effects; it contains no real accessibility API, screen reader, keyboard device, GUI app, user or actual task. Signals are deterministic by construction.",
+  "U": "No inference about lived accessibility, WCAG conformance, native overlays, browser/OS interoperability, cognitive load, contrast, or production non-interference. Only nine synthetic binary invariants and one synthetic task-effect surrogate are covered.",
+  "commands": ["python candidate.py", "python audit.py", "pytest -q"],
+  "decision": "Run frozen candidate once, independent raw-only audit once, and local tests. No tuning/retry after candidate; any deviation is retained as FAIL/HOLD. No T1 or product promotion follows automatically."
+}

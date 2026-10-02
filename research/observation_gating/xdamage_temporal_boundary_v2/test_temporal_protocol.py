@@ -35,6 +35,14 @@ class ProtocolTests(unittest.TestCase):
         self.assertEqual(classify(quiet), "NO_DAMAGE_OBSERVED_SCOPED")
         self.assertEqual(classify(aba), "UNKNOWN")
 
+    def test_stale_identity_source_and_incomplete_coverage_yield_unknown(self):
+        repaint = Observation(Case.REPAINT_A, frame(0), frame(0), frame(0), 1)
+        self.assertEqual(classify(repaint, identity_valid=False), "UNKNOWN")
+        self.assertEqual(classify(repaint, coverage_complete=False), "UNKNOWN")
+        self.assertEqual(classify(repaint, source_fresh=False), "UNKNOWN")
+        for row in (repaint,):
+            self.assertFalse(gate(row)["action_authority"])
+
     def test_byte_and_identity_validation(self):
         with self.assertRaises(ValueError):
             Observation(Case.QUIET, b"x", b"x", b"x", 0).validate()

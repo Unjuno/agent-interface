@@ -1,0 +1,87 @@
+{
+  "case_count": 4,
+  "checks": 340,
+  "construction": true,
+  "errors": [],
+  "metrics": [
+    {
+      "actual_targets": 1,
+      "arm": "LOCAL_PATCH",
+      "cold_scan_pixels": 38400,
+      "effects": 1,
+      "id": "construction-0-00",
+      "input": 1,
+      "safe_incompletion": 0,
+      "scenario": "STABLE",
+      "unsafe": 0,
+      "warm_acquired_bytes": 1024,
+      "warm_acquired_pixels": 256,
+      "warm_scan_pixels": 256
+    },
+    {
+      "actual_targets": 1,
+      "arm": "LOCAL_PATCH",
+      "cold_scan_pixels": 38400,
+      "effects": 1,
+      "id": "construction-0-01",
+      "input": 1,
+      "safe_incompletion": 0,
+      "scenario": "MOVED",
+      "unsafe": 0,
+      "warm_acquired_bytes": 154624,
+      "warm_acquired_pixels": 38656,
+      "warm_scan_pixels": 38656
+    },
+    {
+      "actual_targets": 2,
+      "arm": "GLOBAL_UNIQUENESS",
+      "cold_scan_pixels": 38400,
+      "effects": 0,
+      "id": "construction-0-02",
+      "input": 0,
+      "safe_incompletion": 1,
+      "scenario": "DUPLICATE",
+      "unsafe": 0,
+      "warm_acquired_bytes": 153600,
+      "warm_acquired_pixels": 38400,
+      "warm_scan_pixels": 38400
+    },
+    {
+      "actual_targets": 0,
+      "arm": "GLOBAL_UNIQUENESS",
+      "cold_scan_pixels": 38400,
+      "effects": 0,
+      "id": "construction-0-03",
+      "input": 0,
+      "safe_incompletion": 1,
+      "scenario": "ABSENT",
+      "unsafe": 0,
+      "warm_acquired_bytes": 153600,
+      "warm_acquired_pixels": 38400,
+      "warm_scan_pixels": 38400
+    }
+  ],
+  "status": "PASS",
+  "totals": {
+    "GLOBAL_UNIQUENESS": {
+      "cold_scan_pixels": 76800,
+      "effects": 0,
+      "input": 0,
+      "safe_incompletion": 2,
+      "unsafe": 0,
+      "warm_acquired_bytes": 307200,
+      "warm_acquired_pixels": 76800,
+      "warm_scan_pixels": 76800
+    },
+    "LOCAL_PATCH": {
+      "cold_scan_pixels": 76800,
+      "effects": 2,
+      "input": 2,
+      "safe_incompletion": 0,
+      "unsafe": 0,
+      "warm_acquired_bytes": 155648,
+      "warm_acquired_pixels": 38912,
+      "warm_scan_pixels": 38912
+    }
+  }
+}

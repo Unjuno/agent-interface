@@ -1,7 +1,8 @@
 # Native integration checks: one local/CI entry point
 
-Run these development checks in Linux, WSL, or an already provisioned Docker
-container. GitHub availability and model-host tool discovery are not prerequisites.
+The default local route is Linux or Ubuntu on WSL, with one reused Python
+environment. Docker Desktop is not required. See [WSL-native development](../WSL_NATIVE.md)
+for the Windows migration and optional WSLc isolation route. GitHub availability and model-host tool discovery are not prerequisites.
 This entry point exercises the existing protocol and inert harness contracts;
 it does not start a GUI, call a model or certify application performance.
 
@@ -37,7 +38,7 @@ round trips. Reference-shaped literal data, unknown fields, booleans versus
 numbers, and malformed reference chains remain covered. Two interpreters are optional;
 CI uses a single installed environment. No sensor development is included.
 
-## Docker environment matching the native CI checks
+## Optional legacy Docker environment matching the native CI checks
 
 Build once from the repository root (dependency installation requires network):
 
@@ -86,3 +87,26 @@ It cannot measure model ingestion, independent semantic completion or model toke
 Run `python3 -m runtime.integration_checks.workload /absolute/host-directory` after a retained host lifetime. It validates the host timeline, hashes the same replies, and counts explicit public dispatch completion/refusal/failure separately from relay refusal and unknown results. Other tool calls remain counted by name. Unsupported receipt forms stay unclassified. No input is dispatched.
 
 This is receipt accounting, not task scoring: a completed input can have the wrong visible effect, a refused action does not prove all earlier input had no effect, and a repair requires independent attribution. Per-call release verification, inspection results and presentation/review counts remain visible. Partial timelines are not repaired or silently excluded. See [four retained inventories](../results/retained-workload-01/README.md).
+
+## Native MCP CI source checkout
+
+The Native MCP workflow uses non-cone sparse patterns for the runtime packages
+and files directly under `research/live_control`. The same47 Node host checks and
+fixed Python protocol/harness suites run; top-level research modules, requirements
+and source-gate inputs remain available. Nested historical research bundles are
+not materialized in this contract-test job. The bundles remain committed in Git.
+
+The [matched source-scope record](../results/native-ci-source-scope-01/README.md)
+checks the exact same commit with the old and candidate selections:35,718 files /
+2,864,509,379 bytes versus2,089 files /10,115,800 bytes, all candidate bytes matching
+the baseline. Both selections passed47 Node,324 protocol and141 harness tests.
+This local worktree pair shares Git objects and excludes network transfer; its
+size comparison is not a remote checkout-speed or GUI-performance claim. Local
+Node24 differs from CI's Node22, so remote tests are still required.
+
+A future test needing a nested source or fixture directory must include that
+specific dependency in the workflow patterns. Missing dependencies must fail the
+existing tests; reducing the checked-out source scope does not authorize skipping
+tests or changing frozen study inputs. The5-minute job timeout and suite commands
+are unchanged. Non-cone patterns are supported by
+[actions/checkout v4](https://github.com/actions/checkout/blob/v4/README.md#fetch-only-a-single-file).

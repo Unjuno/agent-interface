@@ -1,0 +1,28 @@
+{
+  "schema": "effect-path-antiwindup-resume-boundary-freeze-v1",
+  "allocation": "MAP01-ANTIWINDUP-RESUME-BOUNDARY-5791-20261001-01",
+  "source_main_sha": "bd9c4c5ceca68f4dc09bb39d27b140a987b68656",
+  "source_runner_path": "research/doom/map01_persistent_model_runner_v2.py",
+  "source_runner_git_blob_sha": "a6f51c7e92f06213c97978889bb029ac1b581dfc",
+  "runtime": {
+    "os": "Windows 10.0.26200",
+    "python": "CPython 3.11.9",
+    "python_executable_sha256": "5f7b89a612c9b8af1d6456cdfcd1dbe5ca630849e79aebced9bee9a6694952ec",
+    "network": "not used; fake CLI only"
+  },
+  "fixture_sha256": {
+    "runner_v2.py": "f1493ab13beca83b6a111c7ca8fc10ef10ff2b41f0aadd433751ee26f32d50c0",
+    "fake_cli.py": "440225e672f353ab60ce863e110fff232544a508280a2e4dab6f604176095c02",
+    "candidate.py": "56373a832a43137c1977dedbd06d82d8f6a39edd98d0628ab1a8b1c4468fda4e",
+    "audit.py": "8529092513dda248dd968b00bc059408a87912d90b40df4da3c1595f216c4e75",
+    "PREREGISTRATION.md": "8ae471a3ebe165204d5d057c59bd8a97799057a59890b62370a900dd802858df"
+  },
+  "commands": {
+    "candidate": "python -B candidate.py",
+    "audit": "python -B audit.py"
+  },
+  "candidate_invocation_limit": 1,
+  "audit_invocation_limit": 1,
+  "retry_limit": 0,
+  "scope": "stubbed runner argv/stdin plumbing only; real CLI/provider transcript semantics untested"
+}

@@ -1,0 +1,40 @@
+{
+  "allocation": "MAXPERM-SUPERVISOR-5550-T0-ORBSTACK-SUCCESSOR-20261001-04B",
+  "issue": 5550,
+  "frozen_main": "7f78c6131a23c0a1a9f6c388ab26a567e5f7dfdf",
+  "experiment": "one-shot replay of the Issue #5550 fully observed finite-DFA model with independent exhaustive audit",
+  "queue_issue": 5085,
+  "assignment_comment_id": 5922184340,
+  "preregistration_comment_id": 5922258479,
+  "owner": "Unjuno",
+  "context": "orbstack",
+  "image": "python@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+  "image_platform": "linux/arm64",
+  "engine": "Docker Engine 29.4.0 linux/aarch64",
+  "network": "none",
+  "limits": {"cpus": 1, "candidate_memory_bytes": 536870912, "audit_memory_bytes": 268435456, "pids": 64, "rootfs": "read-only", "capabilities": "all dropped", "no_new_privileges": true},
+  "source_sha256": {
+    "model.py": "93ebe16ff1117c3c05a300f4e032a4391d3e9356adfa5b628b6560005ecd2e64",
+    "audit.py": "7f4b974153b3ab2556f660fd9c4e7d361145f19ab3dc8cd20d7f575d2b305673",
+    "test_model.py": "996f765adc354858449fd644be56fbc2c32fecabe7bf611ebc4b43d50a84f8bd"
+  },
+  "execution_lease": {
+    "assigned": true,
+    "coordinator_comment_id": "5922184340",
+    "owner": "Unjuno",
+    "start_utc": "2026-10-01T00:50:00Z",
+    "end_utc": "2026-10-01T01:05:00Z",
+    "image_digest": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "platform": "linux/arm64"
+  },
+  "formal_protocol": {
+    "candidate_invocations": 1,
+    "audit_invocations_if_candidate_exit_zero": 1,
+    "audit_container_separate": true,
+    "retry": false,
+    "candidate_command": "docker --context orbstack run --rm --platform linux/arm64 --network none --read-only --cap-drop ALL --security-opt no-new-privileges --cpus 1 --memory 536870912 --pids-limit 64 -v <experiment-path>:/work:ro --entrypoint python3 python@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 -B /work/model.py",
+    "audit_command": "docker --context orbstack run --rm --platform linux/arm64 --network none --read-only --cap-drop ALL --security-opt no-new-privileges --cpus 1 --memory 268435456 --pids-limit 64 -v <experiment-path>:/work:ro --entrypoint python3 python@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 -B /work/audit.py /work/raw/formal-01.json"
+  },
+  "expected_decision": "PASS_T0_SYNTHETIC_SCOPE_REPRODUCED only if all gates, row/hash checks, and independent audit pass; synthetic scope only",
+  "no_retry": true
+}

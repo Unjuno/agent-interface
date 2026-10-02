@@ -1,0 +1,82 @@
+{
+  "mismatches": [],
+  "rows": [
+    {
+      "baseline": {
+        "errors": [],
+        "outcome": "PASS"
+      },
+      "case_id": "exact_copy",
+      "expected": "PASS"
+    },
+    {
+      "baseline": {
+        "errors": [],
+        "outcome": "PASS"
+      },
+      "case_id": "paraphrase",
+      "expected": "PASS"
+    },
+    {
+      "baseline": {
+        "errors": [
+          "SOURCE_CLAUSE_NOT_TESTED"
+        ],
+        "outcome": "FAIL"
+      },
+      "case_id": "omitted_prohibition",
+      "expected": "FAIL"
+    },
+    {
+      "baseline": {
+        "errors": [
+          "SOURCE_CLAUSE_NOT_TESTED"
+        ],
+        "outcome": "FAIL"
+      },
+      "case_id": "weakened_conditional",
+      "expected": "FAIL"
+    },
+    {
+      "baseline": {
+        "errors": [
+          "SOURCE_CLAUSE_NOT_TESTED",
+          "UNSUPPORTED_DERIVATION"
+        ],
+        "outcome": "FAIL"
+      },
+      "case_id": "invented_permission",
+      "expected": "FAIL"
+    },
+    {
+      "baseline": {
+        "errors": [
+          "SOURCE_CLAUSE_NOT_TESTED"
+        ],
+        "outcome": "FAIL"
+      },
+      "case_id": "authenticated_supersession",
+      "expected": "FAIL"
+    },
+    {
+      "baseline": {
+        "errors": [],
+        "outcome": "PASS"
+      },
+      "case_id": "genuine_ambiguity",
+      "expected": "PASS"
+    },
+    {
+      "baseline": {
+        "errors": [
+          "SOURCE_CLAUSE_NOT_TESTED",
+          "SOURCE_SPAN_MISMATCH"
+        ],
+        "outcome": "FAIL"
+      },
+      "case_id": "source_span_mismatch",
+      "expected": "FAIL"
+    }
+  ],
+  "status": "PASS_BASELINE_CONSTRUCTION"
+}

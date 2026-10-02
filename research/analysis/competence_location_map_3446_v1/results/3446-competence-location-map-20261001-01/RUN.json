@@ -1,0 +1,43 @@
+{
+  "schema": "competence-location-map-3446-run-v1",
+  "allocation": "competence-location-map-3446-20261001-01",
+  "freeze_commit": "c5a905f8743375a6e2a0f89bc0c435494335280a",
+  "main_at_freeze": "07c5a1bbff1ba82e0ffdcd0f521fe2102a59ad51",
+  "main_rechecked": "7e94ba9fdbfbff8d32d5dde27c086f2eb7582775",
+  "main_recheck_compare": "24 commits ahead of frozen base; no file changes under this experiment path or its runtime dependencies",
+  "integration_branch_base": "7e94ba9fdbfbff8d32d5dde27c086f2eb7582775",
+  "docker": {
+    "context": "desktop-linux",
+    "engine": "29.8.0",
+    "image": "python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "image_id": "sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "platform": "linux/amd64",
+    "network": "none",
+    "root_filesystem": "read-only",
+    "cpu_limit": 1,
+    "memory_mib": 256,
+    "pids_limit": 32,
+    "tmpfs": "/tmp:rw,noexec,nosuid,size=16m"
+  },
+  "commands": {
+    "construction": "docker run --rm --pull=never --network none --read-only --cpus=1 --memory=256m --pids-limit=32 --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,source=<package>,target=/src,readonly --workdir /src <pinned-image> python -B -m unittest -v test_construction.py",
+    "candidate": "docker run --rm --pull=never --network none --read-only --cpus=1 --memory=256m --pids-limit=32 --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,source=<package>,target=/src,readonly --mount type=bind,source=<allocation-results>,target=/out --workdir /src <pinned-image> python -B runner.py /out/FORMAL_RAW.json",
+    "independent_audit": "docker run --rm --pull=never --network none --read-only --cpus=1 --memory=256m --pids-limit=32 --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,source=<package>,target=/src,readonly --mount type=bind,source=<FORMAL_RAW.json>,target=/raw/FORMAL_RAW.json,readonly --mount type=bind,source=<allocation-results>,target=/out --workdir /src <pinned-image> python -B audit.py /raw/FORMAL_RAW.json /out/AUDIT.json"
+  },
+  "exit_codes": {
+    "construction": 0,
+    "candidate": 0,
+    "independent_audit": 0
+  },
+  "candidate_invocations": 1,
+  "candidate_retries": 0,
+  "post_result_tuning": 0,
+  "audit_disposition": "PASS_COMPETENCE_LOCATION_MAP_CONSTRUCTION_SCOPED",
+  "audit_errors": [],
+  "audited_rows": 168,
+  "mutation_controls_rejected": 4,
+  "gpu_observation": "NVIDIA GeForce RTX 3080 Laptop GPU; 0% utilization, 0 MiB",
+  "gpu_rationale": "CPU-only deterministic policy routing; no learned model or training",
+  "interruption": "A prior storage-capacity STOP occurred before candidate execution. Docker stayed up. No cache/image/container/data cleanup was performed. After free space returned, this frozen allocation resumed exactly once."
+}
+

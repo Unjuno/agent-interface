@@ -42,6 +42,60 @@ class HostTimingTests(unittest.TestCase):
             encoding='utf-8')
         return summarize(self.root)
 
+    def text_ack_fixture(self):
+        self.reply['result'] = {'content': [{'type': 'text', 'text': 'closed'}], 'isError': False}
+        self.write('reply-1.json', self.reply)
+        sha = hashlib.sha256((self.root / 'reply-1.json').read_bytes()).hexdigest()
+        for event in self.events[:-1]:
+            event['reply_sha256'] = sha
+        self.events[4] = dict(self.events[4], kind='text_acknowledgment_recorded')
+        self.ack = dict(schema='agent-interface/text-acknowledgment-v1', attempt=1,
+                        relay_id=1, tool='observe', reply_sha256=sha, task='t1',
+                        phase='entered', reason='Read original text', text_blocks=1, isError=False)
+        self.write('text-acknowledgment-1.json', self.ack)
+
+    def test_text_acknowledgment_is_bound_without_image_or_semantic_review(self):
+        self.text_ack_fixture()
+        report = self.report()
+        self.assertEqual(report['timeline_status'], 'complete')
+        self.assertEqual(report['calls'][0]['reviews'], [])
+        self.assertEqual(report['calls'][0]['text_acknowledgments'][0]['recorded_ms'], 30)
+        self.assertEqual(report['send_to_reply_total_ms'], 4)
+        self.assertIn('semantic completion', report['unmeasured'])
+
+    def test_text_acknowledgment_rejects_corrupt_receipt_or_unpresented_reply(self):
+        self.text_ack_fixture()
+        for field, value in [('relay_id', 2), ('tool', 'dispatch'), ('text_blocks', 2),
+                             ('isError', True), ('reply_sha256', 'wrong'), ('task', 'other')]:
+            with self.subTest(field=field):
+                self.write('text-acknowledgment-1.json', dict(self.ack, **{field: value}))
+                with self.assertRaises(ValueError):
+                    self.report()
+        self.write('text-acknowledgment-1.json', self.ack)
+        events = [e for e in self.events if e['kind'] not in
+                  ('presentation_started', 'presentation_callbacks_completed')]
+        for i, event in enumerate(events, 1):
+            event['sequence'] = i
+        with self.assertRaises(ValueError):
+            self.report(events)
+
+    def test_text_acknowledgment_rejects_duplicate_and_image_content(self):
+        self.text_ack_fixture()
+        events = copy.deepcopy(self.events)
+        events.insert(5, dict(events[4], host_monotonic_ms=31))
+        for i, event in enumerate(events, 1):
+            event['sequence'] = i
+        with self.assertRaises(ValueError):
+            self.report(events)
+        self.reply['result']['content'].append({'type': 'image', 'mimeType': 'image/png', 'data': 'AA=='})
+        self.write('reply-1.json', self.reply)
+        sha = hashlib.sha256((self.root / 'reply-1.json').read_bytes()).hexdigest()
+        for event in self.events[:-1]:
+            event['reply_sha256'] = sha
+        self.write('text-acknowledgment-1.json', dict(self.ack, reply_sha256=sha, text_blocks=2))
+        with self.assertRaises(ValueError):
+            self.report()
+
     def test_boundaries_are_distinct_and_input_files_unchanged(self):
         report = self.report()
         before = {p.name: p.read_bytes() for p in self.root.iterdir()}

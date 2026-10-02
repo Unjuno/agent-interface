@@ -5,6 +5,8 @@ This directory is reserved for the user-facing Agent Interface runtime.
 The project is still research-first, so experimental benchmark code remains under `research/`. Code moves here only when it represents the current promoted semantics rather than a one-off experiment.
 Start with [Using the current interface](USING_CURRENT_INTERFACE.md) for public action/image output, native continuation and local verification.
 
+For local Linux-container research on Windows, use the scoped [WSL Containers (WSLc) migration guide](../.github/wslc-local-containers.md) before starting Docker Desktop. WSLc is the preferred pilot for eligible single-container iterations; it is not a blanket replacement for Docker/OrbStack. In particular, this host has **not** demonstrated effective memory/swap enforcement, so do not treat `--memory` as a hard safety ceiling. Keep Docker-specific, Compose/API-dependent, frozen-runtime, and hosted-CI workflows on their declared runtimes until separately validated.
+
 ## Directory map
 
 | Path | Role |
@@ -98,3 +100,10 @@ same packaged public entry, with verified input release and explicit changed-lay
 recovery. The final direct image still lacked its completion cue despite independent
 success. This supports scoped correctness, not overall acceptance, causal speed/token
 benefit or human-tempo operation; earlier interrupted/caller-failed trials are retained.
+
+[Production-candidate post-release comparison](results/production-spine-main-01/README.md)
+records a new primary-operated six-task pair with exact-once effects on both routes,
+changed-state refusals and explicit recovery. The direct route returned all six saved
+cues through optional post-release capture. Extra observations, preview failures and
+the prior input-free STOP remain recorded. Provider model/settings, useful feedback,
+semantic latency, tokens/cost and human-tempo benefit remain unverified.

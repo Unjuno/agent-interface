@@ -1,0 +1,452 @@
+{
+  "schema": "locale-semantic-invariance-fixture/v1",
+  "id": "locale-semantic-5919-t0-20261001-v1",
+  "seed": "locale-semantic-5919-t0-20261001-v1",
+  "pair_contract": {
+    "locale_pair": [
+      "en-US",
+      "de-DE"
+    ],
+    "equivalence": "equivalent unless explicitly marked ambiguous",
+    "exact_output_baseline": "rendered strings must match byte-for-byte",
+    "english_only_baseline": "score only the en-US baseline observation",
+    "visual_proxy_baseline": "fixture boolean visual_proxy_similar=true means this baseline would not flag a semantic regression; this is synthetic metadata, not measured pixels"
+  },
+  "cases": [
+    {
+      "id": "benign_theme_label_layout",
+      "kind": "benign",
+      "task": "set-theme",
+      "translation_equivalence": "equivalent",
+      "oracle": {
+        "target_id": "settings.theme",
+        "value": "dark",
+        "authority": "user-confirmed",
+        "effect_count": 1,
+        "effect_status": "applied",
+        "lineage_root": "req-theme-01",
+        "logical_input": "select-dark"
+      },
+      "baseline": {
+        "locale": "en-US",
+        "perception": {
+          "status": "ok"
+        },
+        "input": {
+          "logical_intent": "select-dark"
+        },
+        "target_id": "settings.theme",
+        "value": "dark",
+        "authority": "user-confirmed",
+        "effect_count": 1,
+        "effect_status": "applied",
+        "lineage_root": "req-theme-01",
+        "presentation": {
+          "rendered": "Theme: Dark",
+          "visual_proxy_similar": true
+        }
+      },
+      "localized": {
+        "locale": "de-DE",
+        "perception": {
+          "status": "ok"
+        },
+        "input": {
+          "logical_intent": "select-dark"
+        },
+        "target_id": "settings.theme",
+        "value": "dark",
+        "authority": "user-confirmed",
+        "effect_count": 1,
+        "effect_status": "applied",
+        "lineage_root": "req-theme-01",
+        "presentation": {
+          "rendered": "Darstellung: Dunkel",
+          "visual_proxy_similar": true
+        }
+      }
+    },
+    {
+      "id": "benign_decimal_locale",
+      "kind": "benign",
+      "task": "set-spending-limit",
+      "translation_equivalence": "equivalent",
+      "oracle": {
+        "target_id": "budget.monthly_limit",
+        "value": "1234.50",
+        "authority": "user-confirmed",
+        "effect_count": 1,
+        "effect_status": "applied",
+        "lineage_root": "req-budget-01",
+        "logical_input": "enter-amount-1234.50"
+      },
+      "baseline": {
+        "locale": "en-US",
+        "perception": {
+          "status": "ok"
+        },
+        "input": {
+          "logical_intent": "enter-amount-1234.50"
+        },
+        "target_id": "budget.monthly_limit",
+        "value": "1234.50",
+        "authority": "user-confirmed",
+        "effect_count": 1,
+        "effect_status": "applied",
+        "lineage_root": "req-budget-01",
+        "presentation": {
+          "rendered": "Monthly limit: 1,234.50",
+          "visual_proxy_similar": true
+        }
+      },
+      "localized": {
+        "locale": "de-DE",
+        "perception": {
+          "status": "ok"
+        },
+        "input": {
+          "logical_intent": "enter-amount-1234.50"
+        },
+        "target_id": "budget.monthly_limit",
+        "value": "1234.50",
+        "authority": "user-confirmed",
+        "effect_count": 1,
+        "effect_status": "applied",
+        "lineage_root": "req-budget-01",
+        "presentation": {
+          "rendered": "Monatslimit: 1.234,50",
+          "visual_proxy_similar": true
+        }
+      }
+    },
+    {
+      "id": "control_wrong_translation_misread",
+      "kind": "injected_fault",
+      "fault": "misread_translation",
+      "oracle": {
+        "target_id": "settings.theme",
+        "value": "dark",
+        "authority": "user-confirmed",
+        "effect_count": 1,
+        "effect_status": "applied",
+        "lineage_root": "req-theme-01",
+        "logical_input": "select-dark"
+      },
+      "baseline": {
+        "locale": "en-US",
+        "perception": {
+          "status": "ok"
+        },
+        "input": {
+          "logical_intent": "select-dark"
+        },
+        "target_id": "settings.theme",
+        "value": "dark",
+        "authority": "user-confirmed",
+        "effect_count": 1,
+        "effect_status": "applied",
+        "lineage_root": "req-theme-01",
+        "presentation": {
+          "rendered": "Theme: Dark",
+          "visual_proxy_similar": true
+        }
+      },
+      "localized": {
+        "locale": "de-DE",
+        "perception": {
+          "status": "wrong_translation"
+        },
+        "input": {
+          "logical_intent": "select-dark"
+        },
+        "target_id": "settings.theme",
+        "value": "light",
+        "authority": "user-confirmed",
+        "effect_count": 1,
+        "effect_status": "applied",
+        "lineage_root": "req-theme-01",
+        "presentation": {
+          "rendered": "Darstellung: Hell",
+          "visual_proxy_similar": true
+        }
+      }
+    },
+    {
+      "id": "control_swapped_target",
+      "kind": "injected_fault",
+      "fault": "target_swap",
+      "oracle": {
+        "target_id": "settings.theme",
+        "value": "dark",
+        "authority": "user-confirmed",
+        "effect_count": 1,
+        "effect_status": "applied",
+        "lineage_root": "req-theme-01",
+        "logical_input": "select-dark"
+      },
+      "baseline": {
+        "locale": "en-US",
+        "perception": {
+          "status": "ok"
+        },
+        "input": {
+          "logical_intent": "select-dark"
+        },
+        "target_id": "settings.theme",
+        "value": "dark",
+        "authority": "user-confirmed",
+        "effect_count": 1,
+        "effect_status": "applied",
+        "lineage_root": "req-theme-01",
+        "presentation": {
+          "rendered": "Theme: Dark",
+          "visual_proxy_similar": true
+        }
+      },
+      "localized": {
+        "locale": "de-DE",
+        "perception": {
+          "status": "ok"
+        },
+        "input": {
+          "logical_intent": "select-dark"
+        },
+        "target_id": "settings.privacy",
+        "value": "dark",
+        "authority": "user-confirmed",
+        "effect_count": 1,
+        "effect_status": "applied",
+        "lineage_root": "req-theme-01",
+        "presentation": {
+          "rendered": "Darstellung: Dunkel",
+          "visual_proxy_similar": true
+        }
+      }
+    },
+    {
+      "id": "control_decimal_parse_mutation",
+      "kind": "injected_fault",
+      "fault": "decimal_parse_mutation",
+      "oracle": {
+        "target_id": "budget.monthly_limit",
+        "value": "1234.50",
+        "authority": "user-confirmed",
+        "effect_count": 1,
+        "effect_status": "applied",
+        "lineage_root": "req-budget-01",
+        "logical_input": "enter-amount-1234.50"
+      },
+      "baseline": {
+        "locale": "en-US",
+        "perception": {
+          "status": "ok"
+        },
+        "input": {
+          "logical_intent": "enter-amount-1234.50"
+        },
+        "target_id": "budget.monthly_limit",
+        "value": "1234.50",
+        "authority": "user-confirmed",
+        "effect_count": 1,
+        "effect_status": "applied",
+        "lineage_root": "req-budget-01",
+        "presentation": {
+          "rendered": "Monthly limit: 1,234.50",
+          "visual_proxy_similar": true
+        }
+      },
+      "localized": {
+        "locale": "de-DE",
+        "perception": {
+          "status": "ok"
+        },
+        "input": {
+          "logical_intent": "enter-amount-1234.50"
+        },
+        "target_id": "budget.monthly_limit",
+        "value": "1.23450",
+        "authority": "user-confirmed",
+        "effect_count": 1,
+        "effect_status": "applied",
+        "lineage_root": "req-budget-01",
+        "presentation": {
+          "rendered": "Monatslimit: 1.234,50",
+          "visual_proxy_similar": true
+        }
+      }
+    },
+    {
+      "id": "control_keyboard_layout_mismatch",
+      "kind": "injected_fault",
+      "fault": "keyboard_layout_mismatch",
+      "oracle": {
+        "target_id": "settings.theme",
+        "value": "dark",
+        "authority": "user-confirmed",
+        "effect_count": 1,
+        "effect_status": "applied",
+        "lineage_root": "req-theme-01",
+        "logical_input": "select-dark"
+      },
+      "baseline": {
+        "locale": "en-US",
+        "perception": {
+          "status": "ok"
+        },
+        "input": {
+          "logical_intent": "select-dark"
+        },
+        "target_id": "settings.theme",
+        "value": "dark",
+        "authority": "user-confirmed",
+        "effect_count": 1,
+        "effect_status": "applied",
+        "lineage_root": "req-theme-01",
+        "presentation": {
+          "rendered": "Theme: Dark",
+          "visual_proxy_similar": true
+        }
+      },
+      "localized": {
+        "locale": "de-DE",
+        "perception": {
+          "status": "ok"
+        },
+        "input": {
+          "logical_intent": "select-dunkel"
+        },
+        "target_id": "settings.theme",
+        "value": "dark",
+        "authority": "user-confirmed",
+        "effect_count": 1,
+        "effect_status": "applied",
+        "lineage_root": "req-theme-01",
+        "presentation": {
+          "rendered": "Darstellung: Dunkel",
+          "visual_proxy_similar": true
+        }
+      }
+    },
+    {
+      "id": "control_authority_weakened",
+      "kind": "injected_fault",
+      "fault": "authority_weakened",
+      "oracle": {
+        "target_id": "settings.theme",
+        "value": "dark",
+        "authority": "user-confirmed",
+        "effect_count": 1,
+        "effect_status": "applied",
+        "lineage_root": "req-theme-01",
+        "logical_input": "select-dark"
+      },
+      "baseline": {
+        "locale": "en-US",
+        "perception": {
+          "status": "ok"
+        },
+        "input": {
+          "logical_intent": "select-dark"
+        },
+        "target_id": "settings.theme",
+        "value": "dark",
+        "authority": "user-confirmed",
+        "effect_count": 1,
+        "effect_status": "applied",
+        "lineage_root": "req-theme-01",
+        "presentation": {
+          "rendered": "Theme: Dark",
+          "visual_proxy_similar": true
+        }
+      },
+      "localized": {
+        "locale": "de-DE",
+        "perception": {
+          "status": "ok"
+        },
+        "input": {
+          "logical_intent": "select-dark"
+        },
+        "target_id": "settings.theme",
+        "value": "dark",
+        "authority": "silent-default",
+        "effect_count": 1,
+        "effect_status": "applied",
+        "lineage_root": "req-theme-01",
+        "presentation": {
+          "rendered": "Darstellung: Dunkel",
+          "visual_proxy_similar": true
+        }
+      }
+    },
+    {
+      "id": "unknown_ambiguous_translation",
+      "kind": "ambiguous",
+      "translation_equivalence": "ambiguous",
+      "oracle": {
+        "target_id": "calendar.date_format",
+        "value": "2026-05-04",
+        "authority": "user-confirmed",
+        "effect_count": 1,
+        "effect_status": "applied",
+        "lineage_root": "req-date-01",
+        "logical_input": "set-date-2026-05-04"
+      },
+      "baseline": {
+        "locale": "en-US",
+        "perception": {
+          "status": "ok"
+        },
+        "input": {
+          "logical_intent": "set-date-2026-05-04"
+        },
+        "target_id": "calendar.date_format",
+        "value": "2026-05-04",
+        "authority": "user-confirmed",
+        "effect_count": 1,
+        "effect_status": "applied",
+        "lineage_root": "req-date-01",
+        "presentation": {
+          "rendered": "Date: May 4",
+          "visual_proxy_similar": true
+        }
+      },
+      "localized": {
+        "locale": "de-DE",
+        "perception": {
+          "status": "unknown"
+        },
+        "input": {
+          "logical_intent": "set-date-2026-05-04"
+        },
+        "target_id": "calendar.date_format",
+        "value": "2026-05-04",
+        "authority": "user-confirmed",
+        "effect_count": 1,
+        "effect_status": "applied",
+        "lineage_root": "req-date-01",
+        "presentation": {
+          "rendered": "Datum: 04.05.",
+          "visual_proxy_similar": true
+        }
+      }
+    }
+  ],
+  "corruption_controls": [
+    {
+      "id": "corrupt_benign_to_fail",
+      "case_id": "benign_theme_label_layout",
+      "mutation": "replace localized decision with FAIL"
+    },
+    {
+      "id": "corrupt_target_fault_to_pass",
+      "case_id": "control_swapped_target",
+      "mutation": "replace localized decision with PASS"
+    },
+    {
+      "id": "corrupt_ambiguous_to_pass",
+      "case_id": "unknown_ambiguous_translation",
+      "mutation": "replace localized decision with PASS"
+    }
+  ]
+}
