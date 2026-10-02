@@ -70,9 +70,10 @@ def run(args) -> int:
         main_changes = subprocess.check_output(["git", "diff", "--name-only",
                                                 live_main, head],
                                                cwd=source, text=True).splitlines()
-        package_prefix = freeze["package_path"].rstrip("/") + "/"
-        collisions = [path for path in main_changes if not path.startswith(package_prefix)
-                      and path != ".github/workflows/spatial-block-6590-t1.yml"]
+        additive_paths = freeze["additive_paths"]
+        collisions = [path for path in main_changes
+                      if not any(path == prefix or path.startswith(prefix.rstrip("/") + "/")
+                                 for prefix in additive_paths)]
         if collisions:
             raise ValueError(f"STOP_SOURCE_NOT_ADDITIVE:{collisions}")
         stage = "docker_runtime_identity"
