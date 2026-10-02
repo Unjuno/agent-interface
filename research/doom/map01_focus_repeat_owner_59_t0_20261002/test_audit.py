@@ -18,7 +18,7 @@ def valid_raw():
     return {
         "schema": "issue59-focus-repeat-owner-raw-v1",
         "allocation_id": "ISSUE59-FOCUS-REPEAT-OWNER-T0-20261002-01",
-        "base_main_sha": "1326813275f1b73349acafc7c7cbc221e687dbd1",
+        "base_main_sha": "a25f7c5da72e8d16094efe491424b6e8d63d1a8b",
         "candidate_invocations": 1,
         "retries": 0,
         "xvfb_exit_code": 0,

@@ -7,7 +7,6 @@ The script refuses an output directory that already exists and never retries.
 import argparse
 import hashlib
 import json
-import importlib.util
 import os
 from pathlib import Path
 import re
@@ -310,11 +309,6 @@ def run(out):
         raw["xvfb_socket_removed"] = not socket_path.exists()
         raw["xvfb_lock_removed"] = not lock_path.exists()
         (out / "raw.json").write_text(json.dumps(raw, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-        spec = importlib.util.spec_from_file_location("focus_repeat_audit", Path(__file__).with_name("audit.py"))
-        audit = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(audit)
-        (out / "classification.json").write_text(
-            json.dumps(audit.classify(raw), indent=2, sort_keys=True) + "\n", encoding="utf-8")
         if error_text:
             (out / "error.txt").write_text(error_text, encoding="utf-8")
     return 1 if error_text else 0

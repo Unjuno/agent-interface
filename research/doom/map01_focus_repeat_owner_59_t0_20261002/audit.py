@@ -1,10 +1,14 @@
-"""Independent raw-record classifier for the Issue #59 scoped Xvfb probe."""
+"""Independent raw-record classifier and separate-process CLI for Issue #59."""
 
+import argparse
 from collections.abc import Mapping
+import json
+from pathlib import Path
+import sys
 
 
 SCHEMA = "issue59-focus-repeat-owner-raw-v1"
-FROZEN_BASE_MAIN = "1326813275f1b73349acafc7c7cbc221e687dbd1"
+FROZEN_BASE_MAIN = "a25f7c5da72e8d16094efe491424b6e8d63d1a8b"
 EXPECTED_SOURCE_SHA256 = {
     "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
     "executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
@@ -121,3 +125,25 @@ def classify(raw):
     status = ("COUNTEREXAMPLE_REPEAT_BEFORE_VERIFIED_RELEASE" if count
               else "PASS_OWNER_FOCUS_RELEASE_SCOPED")
     return {"status": status, "new_focus_keypresses_before_release": count}
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--raw", type=Path, required=True, help="candidate raw.json input")
+    parser.add_argument("--out", type=Path, required=True, help="new classification JSON path")
+    args = parser.parse_args(argv)
+    if args.out.exists():
+        parser.error(f"refusing to overwrite auditor output: {args.out}")
+    try:
+        raw = json.loads(args.raw.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        parser.error(f"cannot read candidate raw JSON: {exc}")
+    result = classify(raw)
+    args.out.parent.mkdir(parents=True, exist_ok=True)
+    args.out.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    print(json.dumps(result, sort_keys=True))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

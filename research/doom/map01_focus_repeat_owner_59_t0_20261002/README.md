@@ -45,6 +45,11 @@ particular, the classifier is not yet validated against a collected Xvfb result.
   are instrumented through a delegating display proxy; owner source bytes stay
   unchanged, but the proxy adds a small timing perturbation.
   It does not use a candidate-supplied status field.
+- The candidate process writes `raw.json` only. It does not import or invoke
+  `audit.py`, and it does not produce a classification. After a successful
+  candidate exit and raw-file preservation, invoke `audit.py` in a separate
+  process/container against only that immutable raw file. Retain distinct exit,
+  stdout and stderr records for both processes.
 
 ## Commands
 
@@ -66,17 +71,29 @@ the frozen image. A separate owner-authorized, pinned WSLc image containing
 those dependencies is required; its digest, package manifest and no-network
 runtime command must be preregistered before the one candidate invocation.
 The candidate also requires explicit shared CPU/Xvfb lane assignment. Once both
-gates are satisfied, run it once into a new output path and retain `raw.json`,
-`classification.json`, `xvfb.stderr`, and `error.txt` if present. A clean stop
-or hold is evidence too, but does not demonstrate that the safety behavior passed.
+gates are satisfied, run exactly one candidate process into a new output path.
+It must exit zero and emit exactly one immutable `raw.json` before the independent
+auditor is launched. Then run one separate auditor process/container:
+
+```text
+python probe.py --out /evidence/candidate
+python audit.py --raw /evidence/candidate/raw.json --out /evidence/auditor/classification.json
+```
+
+Do not run the auditor if the candidate exits nonzero or its raw output is
+missing/ambiguous. Retain each process's command, exit code, stdout and stderr,
+plus `raw.json`, `classification.json`, `xvfb.stderr`, and `error.txt` if present.
+A clean stop or hold is evidence too, but does not demonstrate that the safety
+behavior passed.
 
 ## H/T/D/C/U
 
 - **H:** with confirmed autorepeat and one owner-admitted held key, observed
   focus loss causes verified owner key release before B receives another
   matching `KeyPress`.
-- **T:** one invocation; positive control has at least two presses; one A-to-B
-  transfer; bounded event-pump interval; no retries or inferred repetitions.
+- **T:** one candidate process and one separate raw-only auditor process; positive
+  control has at least two presses; one A-to-B transfer; bounded event-pump
+  interval; no retries or inferred repetitions.
 - **D:** the returned classification is reconstructed from `raw.json` by
   `audit.py`; report event receipt times and owner/keymap release records.
 - **C:** private Xvfb + Python Xlib + `xset` in a pinned WSLc image; actual current

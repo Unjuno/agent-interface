@@ -3,9 +3,10 @@
   "allocation_id": "ISSUE59-FOCUS-REPEAT-OWNER-T0-20261002-01",
   "issue": 59,
   "base_main_at_branch_creation": "89f27caf1e9fcf3bc2c2c3c2db7d62ee6d19e4ae",
-  "base_main_at_previous_refreeze": "645bc89c71f28a88d8ff37f995d56057cb4cf734",
-  "base_main_at_previous_refreeze": "a4caf65a773d37db516774b797e1244dc9e956e5",
-  "base_main_at_refreeze": "1326813275f1b73349acafc7c7cbc221e687dbd1",
+  "base_main_at_prior_review_refreeze": "645bc89c71f28a88d8ff37f995d56057cb4cf734",
+  "base_main_at_prior_main_sync": "a4caf65a773d37db516774b797e1244dc9e956e5",
+  "base_main_at_previous_refreeze": "1326813275f1b73349acafc7c7cbc221e687dbd1",
+  "base_main_at_refreeze": "a25f7c5da72e8d16094efe491424b6e8d63d1a8b",
   "status": "PREPARATION_ONLY_IMAGE_AND_CPU_LANE_UNASSIGNED",
   "question": "Does the byte-identical current InputOwner v10 verify release of an admitted held key after an observed A-to-B X11 focus transfer, before B receives another matching KeyPress?",
   "hypothesis": "With autorepeat established independently, the owner detects the focus change on its bounded queue wait, emits KeyRelease, and verifies the key is absent from the X server keymap before B receives an additional matching KeyPress.",
@@ -26,13 +27,13 @@
     "lease.py": "b9dac6bb4063928354733d79bf371909a288a3d1"
   },
   "design": {
-    "invocations": 1,
+    "invocations": {"candidate": 1, "independent_auditor": 1, "retries": 0},
     "retries": 0,
     "arms": 1,
     "control": "Set and read back autorepeat on private Xvfb with xset r rate 100 20; XTEST key-down on A held 240ms, collect matching KeyPress events, send KeyRelease, verify query_keymap reports key up",
     "trial": "Owner admits one key-down on A; external client requests focus B and reads it back; delegating proxy timestamps the byte-identical owner's own get_input_focus calls; owner records focus_changed release and empty keymap; B event pump starts before the request and continues through verified release plus 100ms",
     "positive_control_minimum_repeat_keypresses": 2,
-    "output": "raw.json plus independent classification.json, error.txt and xvfb.stderr when applicable",
+    "output": "candidate process writes raw.json only; a separate auditor process reads only that raw file and writes classification.json; retain both processes' exits/stdout/stderr",
     "forbidden": ["rerun", "shared display", "kill or alter another process", "real desktop input", "application", "game", "model", "claim MAP01 result"]
   },
   "primary_decision": {
