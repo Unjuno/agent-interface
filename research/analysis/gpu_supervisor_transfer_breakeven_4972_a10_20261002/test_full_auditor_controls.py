@@ -83,6 +83,12 @@ def run():
         (audit.ROOT / "dataset.json").write_text(
             json.dumps(doc), encoding="utf-8"
         )
+        (audit.ROOT / "runner.py").write_text("frozen runner\n", encoding="utf-8")
+        (audit.ROOT / "prepare.py").write_text("frozen prepare\n", encoding="utf-8")
+        freeze["runner_sha256"] = audit.sha(audit.ROOT / "runner.py")
+        freeze["prepare_sha256"] = audit.sha(audit.ROOT / "prepare.py")
+        result["source_sha256"]["runner"] = freeze["runner_sha256"]
+        result["source_sha256"]["prepare"] = freeze["prepare_sha256"]
         result["dataset_sha256"] = audit.sha(audit.ROOT / "dataset.json")
         assert audit.audit(result, doc, freeze) == []
 
@@ -110,8 +116,17 @@ def run():
             mutate(corrupted)
             rejected[name] = bool(audit.audit(corrupted, doc, freeze))
         assert all(rejected.values()), rejected
+        for name in ("runner.py", "prepare.py"):
+            source = audit.ROOT / name
+            original = source.read_bytes()
+            try:
+                source.write_bytes(original + b"tampered\n")
+                assert any(error.endswith("_file_sha256")
+                           for error in audit.audit(result, doc, freeze)), name
+            finally:
+                source.write_bytes(original)
         print(
-            "PASS synthetic raw-auditor baseline; all 6/6 corruption controls rejected: "
+            "PASS synthetic raw-auditor baseline; all 6/6 result and 2/2 source controls rejected: "
             + json.dumps(rejected, sort_keys=True)
         )
 
