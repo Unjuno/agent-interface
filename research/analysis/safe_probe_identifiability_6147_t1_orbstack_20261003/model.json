@@ -1,0 +1,36 @@
+{
+  "protocol": "AI-6147-T1-ORB-X11-20261003-01",
+  "display": {"width": 640, "height": 360, "status_sample": [30, 60]},
+  "signals": {
+    "READY": "#E8C840",
+    "LEFT": "#30D070",
+    "RIGHT": "#4070E8",
+    "BOTH": "#20C0B0",
+    "UNKNOWN": "#808080",
+    "EXPIRED_LEFT": "#E05050",
+    "EXPIRED_RIGHT": "#B03030",
+    "EFFECT_OK": "#FFFFFF",
+    "EFFECT_WRONG": "#FF8000",
+    "UNSAFE": "#C000C0"
+  },
+  "buttons": {
+    "P": [100, 250],
+    "Q": [210, 250],
+    "ACT_LEFT": [340, 250],
+    "ACT_RIGHT": [430, 250],
+    "ACT_COMMON": [520, 250],
+    "U": [610, 250],
+    "RESET_KEYSYM": "F12"
+  },
+  "families": {
+    "separable": {"belief_states": ["A", "B"], "initial_output": "READY"},
+    "action_equivalent": {"belief_states": ["C", "D"], "initial_output": "READY"},
+    "impossible": {"belief_states": ["E", "F"], "initial_output": "READY"},
+    "stale": {"belief_states": ["G", "H"], "initial_output": "READY"},
+    "convergent": {"belief_states": ["I", "J"], "initial_output": "READY", "terminal_class": "Z"}
+  },
+  "arms": ["adaptive", "no_probe", "one_step"],
+  "repeats_per_state": 1,
+  "safe_probe_alphabet": ["P", "Q"],
+  "unsafe_probe_alphabet": ["U"]
+}
