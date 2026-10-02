@@ -4,7 +4,7 @@ from collections.abc import Mapping
 
 
 SCHEMA = "issue59-focus-repeat-owner-raw-v1"
-FROZEN_BASE_MAIN = "a4caf65a773d37db516774b797e1244dc9e956e5"
+FROZEN_BASE_MAIN = "1326813275f1b73349acafc7c7cbc221e687dbd1"
 EXPECTED_SOURCE_SHA256 = {
     "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
     "executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
