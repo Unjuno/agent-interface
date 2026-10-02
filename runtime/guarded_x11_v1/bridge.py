@@ -18,8 +18,13 @@ from .history import ObservationHistory
 from runtime.backends.x11_v1.backend import X11Backend, X11BackendError
 from runtime.backends.x11_v1.session import X11RuntimeSession
 from runtime.core_v1.contract import SCHEMA_PROGRAM
+from runtime.core_v1.compiled_gui import ObservationAssociationChanged
 from runtime.cli_v1.api import dispatch_in_session
 from runtime.cli_v1.observe import observe_in_session
+
+
+class CaptureBindingChanged(X11BackendError, ObservationAssociationChanged):
+    """Exact before/after binding mismatch; retains the existing X11 error type."""
 
 
 def read_window_title(connection, window):
@@ -153,7 +158,13 @@ class NativeHandleBridge:
         native = report["observation"]
         after = self._binding()
         if before != after:
-            raise X11BackendError("binding changed during native capture")
+            self.review_required = True
+            self._save("capture-binding-changed-" + report["observation_id"] + ".json", {
+                "reason": "association_changed", "before": before, "after": after,
+                "public_report": "public-observation-" + report["observation_id"] + ".json",
+                "last_valid_sequence": self.sequence, "authority_granted": False,
+                "replay_allowed": False})
+            raise CaptureBindingChanged("binding changed during native capture")
         binding_checked_ns = time.monotonic_ns()
         artifact = native["artifact"]
         data = Path(artifact["path"]).read_bytes()
