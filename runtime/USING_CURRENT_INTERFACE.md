@@ -138,6 +138,84 @@ validates the retained image. It does not establish token or latency savings.
 See [MCP result retrieval](cli_v1/MCP.md#recover-a-retained-result-without-resending-input)
 for the complete lifecycle and failure contract.
 
+## Python calls on one owned X11 connection
+
+For a serialized Python caller, `MCPSessionOwner.dispatch` shares the persistent
+MCP route's dispatch bookkeeping. After establishing the actual target mapping,
+selected display and current source, use the same complete public program:
+
+```python
+from runtime.cli_v1.mcp_session import MCPSessionOwner
+
+owner = MCPSessionOwner(targets, display_name=selected_display)
+try:
+    report = owner.dispatch(
+        program,
+        current_observation_seq=reviewed_sequence,
+        current_binding_revision=owner.binding_revision,
+        capture_directory=run_images,
+    )
+finally:
+    cleanup = owner.close()
+```
+
+The variables above are caller-supplied; this is not a complete allocation or
+source-grounding example. The method records the cleanup obligation before
+calling the public API, so callers do not need to assign `dispatch_attempted`
+manually. It returns the API report unchanged. A mismatched binding revision
+refuses dispatch; even that call may initialize the connection. Initialization
+failure is consumed once, and a closed owner cannot reopen.
+
+Source values and leases remain explicit. The method adds no inspection,
+replay, renewal, task-success inference or implicit input recovery. Review the
+input report and cleanup independently; an exception can follow input emission.
+`close()` attempts release on that same connection and reports failures. It does
+not prove the task succeeded. Use explicit `inspect_after_dispatch` when fresh
+post-release target context is wanted. This wrapper applies to its own ordinary
+public session; a compiled graph using a separate connection retains its own
+input owner and cleanup duty. Calls must be serialized by the caller.
+
+[Fresh primary Inkscape use](results/inkscape-owned-public-01/README.md) used this
+entry point for two pointer drags in one program, followed by a visually chosen
+save program. The independently inspected SVG met the two-rectangle predicate.
+This is scoped transfer evidence; it does not establish a comparative speed or
+token benefit.
+
+## Explicit Python summaries of retained dispatch reports
+
+A Python caller can opt into the same success-only summary as CLI/MCP while
+keeping an arbitrary original report filename. Review the exact retained bytes,
+then supply their path and the directory used to resolve image artifacts:
+
+```python
+from pathlib import Path
+from runtime.cli_v1.review import review_bytes
+from runtime.cli_v1.public_summary import summarize_retained_dispatch
+
+report_path = Path(saved_report_path)
+full = review_bytes(report_path.read_bytes(), run_images,
+                    compact=True, report_refs=True)
+shown = summarize_retained_dispatch(full, report_path, run_images)
+```
+
+The caller already retained the report; this reads it and does not write, capture
+or dispatch input. The method checks the exact byte length and SHA-256 before
+using the existing completed-and-released summary gate. It preserves the original
+image, reference, outcome, capture and release evidence. Only supported repeated
+program/expansion/wait details are omitted. The partial summary explicitly names
+the exact full report and its hash for read-only CLI retrieval without an image.
+
+Missing, changed, unsupported or failed reports keep the full view. The ordinary
+file `review()` can return v1 when compaction is not smaller; this helper then
+keeps it full. The example uses `review_bytes` to match the existing received-report
+presentation shape. It does not make a retained image fresh or acknowledge task
+success. Default dispatch and full presentation remain unchanged.
+
+[Two retained Inkscape projections](results/retained-python-summary-01/README.md)
+verify byte-identical images/outcomes and exact full retrieval. Text bytes are
+measured separately from image payload; no model-token, cost or speed benefit is
+inferred from the offline comparison.
+
 ## Batch actions between decisions
 
 Use one public `dispatch` program for a finite sequence whose actions can all be
@@ -604,3 +682,34 @@ a completed Return plus a 100ms wait still captured the dialog; a fresh read-onl
 inspection confirmed it had closed. Do not repeat uncertain input merely because
 the result image has not yet changed. This is scoped usability evidence, not a
 matched speed, token/cost or generic readiness result.
+
+## Select feedback context explicitly
+
+Use the existing capture region to keep the evidence needed for the next decision
+readable. A small cell view may suffice to check entered numbers; a format dialog
+needs its header and choice buttons; final save confirmation may need a wider
+view. Preserve the returned frame, origin, dimensions and original image hash.
+For `screen_physical_px`, translate local image coordinates by the returned origin.
+`window_client` uses a different frame. A region view does not grant target or
+input authority, and completion cues outside it remain unknown.
+
+Persistent public MCP can request read-only post-release target inspection and
+an explicit region in the same dispatch using
+[`inspect_after` options](cli_v1/MCP.md#explicit-post-dispatch-target-context-and-capture-region).
+The public Python API uses `MCPSessionOwner.inspect_after_dispatch` with
+`screen_region` and an optional `wait_ms`, then `present_result` returns its
+selected original ImageContent and reference. CLI text alone does not present
+pixels: assistant hosts must forward the image block as an image and keep the
+outcome metadata. Direct original forwarding is useful plumbing, but does not
+by itself prove the primary saw every pixel.
+
+[Current primary region admission](results/explicit-region-admission-01/README.md)
+completed a fresh Calc save with seven commands, three input programs and one
+extra full-frame observation. Initial cells and the format modal were readable;
+a repeated modal image was used only after exact equality to the immediately
+reviewed original from that same owner. Final100ms feedback still showed the
+old dialog, so the primary withheld completion and observed separately.
+[The prior direct-forwarding STOP](results/direct-selected-image-01/README.md)
+remains retained. These are bounded integration results, not a general image
+compression, token-cost, latency or human-speed claim. Region selection remains
+explicit and defaults remain unchanged.

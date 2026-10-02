@@ -1,3 +1,17 @@
+# Issue #6468: artifact-viability cut sets T0b (2026-10-02)
+
+A one-shot synthetic candidate plus an independent raw auditor covered two seven-check contracts and six paired cases (12 routes). One equal-partial document pair (8/8) had opposite viability due to citation binding; the spreadsheet formula pair scored 8 vs 7 after both formula and range failures. Cosmetic failure remained viable, missing export failed, rendered UNKNOWN remained UNKNOWN, and the no-inversion control passed. The auditor reconstructed both minimal-cut-set collections, matched strict TaskContract decisions on all 12 routes, and rejected all five frozen mutations. Result: `SUBSUMED_BY_12`—cut sets add diagnosis but no incremental viability decisions in this fixture. Method-only synthetic scope; no live artifacts, human judgement, GUI/model route, efficiency, or product result. See [report and raw evidence](research/analysis/artifact_viability_cutsets_6468_t0b_20261002/REPORT.md) and [Issue #6468](https://github.com/Unjuno/agent-interface/issues/6468). The predecessor pre-candidate STOP remains in [PR #6487](https://github.com/Unjuno/agent-interface/pull/6487).
+
+# Issue #6373: context-preserving delegation T0 (2026-10-02)
+
+# Issue #5260 successor A01: Tk first-character construction gate (2026-10-02)
+
+Three construction-only private-Xvfb probes were recorded in `research/integration/tk_firstchar_5260_a01_20261002/`. Smoke-01 and smoke-02 preserve candidate exit 0 / independent audit FAIL; smoke-03 passed the scoped one-row raw audit (exact local save 1/1, first Tk KeyPress on the target Entry, first-visual XWD hash verified). OCR did not resolve the visible `h`; baseline XWD integrity was unstable and is excluded from the gate. **No formal 96-trial allocation ran:** the linked #5260/#5296 issue text does not authorize a fresh allocation, so status is `HOLD_NOT_AUTHORIZED`, not a scientific result. Construction PASS says nothing about a first-character failure rate, readiness guarantee, production UI, or product acceptance. See [preregistration, construction chronology, runner and auditor](research/integration/tk_firstchar_5260_a01_20261002/PREREG.md) and [#5296](https://github.com/Unjuno/agent-interface/issues/5296).
+
+# Issue #6373: context-preserving delegation T0 (2026-10-02)
+
+Eight synthetic task-chain fixtures compared NO_RESTORE, SUMMARY_ONLY, RESTORE_ONLY, and RESTORE_PLUS_DIFF. The one-shot candidate plus audit-only successor reconstructed 32/32 rows: RESTORE_PLUS_DIFF achieved 5/8 zero-mismatch next-task fixtures versus SUMMARY_ONLY 3/8 (4 vs 9 modeled context mismatches), preserving all stipulated task effects, external changes, required artifacts, and unresolved state. Blind RESTORE_ONLY reached 6/8 but erased an intended cell effect, overwrote an external viewport, deleted required download evidence, and falsely cleared unresolved modal/held input in four fixtures. `PASS_METHOD_SCOPED` only for this stipulated finite model; no GUI, callback, human, or latency claim. See [full report](research/analysis/context_preserving_delegation_6373_t0_v1/REPORT.md) and [Issue #6373](https://github.com/Unjuno/agent-interface/issues/6373).
+
 # Issue #6351: cross-role meaning drift T0 (2026-10-02)
 
 An OrbStack CPU-only synthetic test used eight non-handoff histories and machine roles (planner, verifier, effect/obligation owner). A flattened “COMPLETED” status incorrectly erased an unresolved child obligation and contradictory receipts in 2/8 cases. Typed receipt queries and role projections matched all 56 audited role fields; the projection added no demonstrated correctness over typed queries, so the Issue's rule yields `CONSOLIDATE_NO_INCREMENTAL_VALUE`. The first two audits were invalid and retained; an independent audit-only successor validated the candidate bytes without rerunning them. No runtime, external-effect, model, or human claim. See [full report and all allocations](research/analysis/cross_role_meaning_drift_6351_t0_v1/REPORT.md) and [Issue #6351](https://github.com/Unjuno/agent-interface/issues/6351).
@@ -18,6 +32,14 @@ One OrbStack candidate run produced 80 exact-rational rows over 10 cases, 4-way/
 
 A bounded two-worker, four-right escrow state machine was exhaustively enumerated through depth 6: 9,988 reachable states and 27,748 transitions. The independent auditor reproduced both state and transition digests (`PASS_METHOD_SCOPED`); pre-freeze Docker construction tests passed 13/13. Balanced synthetic demand completed 4/4 optional units with two setup round-trips versus four central per-use checks; skew/crash completed 2/4 with two rights stranded. Heartbeat-only reclaim permitted a planted fifth consume against B=4; old generations, duplicate/delayed ACKs, mandatory verifier bypass, and role-label laundering were rejected. This is a finite protocol-method result, not measured latency, arbitrary distributed implementation, live GUI, or product evidence. See [the report and raw candidate/audit](research/analysis/escrow_optional_budget_6156_t0_20261002/REPORT.md).
 
+### Issue #6262: GPU-assisted applicability certificate T0 (2026-10-02)
+
+The frozen synthetic fixture had 12 feasible cells, 23 two-way projections, a planted predecessor failure and one unqualified route. The CUDA candidate exhaustively enumerated 4,096 evidence subsets. An independent pure-Python auditor matched every gate and rejected all four mutations (`PASS_METHOD_SCOPED`). A flat 83.33% success count and factorwise coverage would admit the wide fixture claim; the certificate refused it while retaining the exact qualified `t01` narrow claim. This is method evidence only: no real reusable skill, GUI, applicability, safety, or GPU performance claim. See [the report and raw evidence](research/analysis/skill_applicability_6262_gpu_t0_v1/REPORT.md).
+
+### Issue #6133 T1c: worker-aging measurement-gate successor (2026-10-02)
+
+One digest-pinned, network-disabled WSLc construction reconstructed 600 synthetic rows across 15 lifecycle-policy cells. The detector found the planted joint RSS/latency leak in 3/3 policies and rejected cache-only, thermal-only, no-aging and hidden-state false-aging controls. Per-job measurements use one pre-transition age; pending obligations defer restarts; stale-generation receipt rejection is required only after actual modeled generation changes. The independent raw-only audit returned `PASS_METHOD_SCOPED`, zero errors; the 4-test construction suite passed. T1b's `METHOD_FAIL_AUDIT` remains intact. The synthetic method result does not establish actual process aging or safe runtime restart; T0's `HOLD_RESTART_PATH_NOT_QUALIFIED` remains. See [report, freeze, raw evidence and run record](research/analysis/worker_aging_6133_t1c_20261002/REPORT.md) and [Issue #6133](https://github.com/Unjuno/agent-interface/issues/6133).
+
 # Research index
 
 Agent Interface is being developed by analysis and experiment rather than by locking an API early. This file is the evidence ledger for the public repository.
@@ -29,6 +51,10 @@ The 18-row synthetic method fixture ran once in a pinned `linux/arm64` CPU conta
 ### Issue #5927: task-relative feedback necessity T0 container successor (2026-10-02)
 
 One candidate invocation in a pinned OrbStack `linux/arm64` Python 3.12.14 container reported a minimum of one fresh `persistence_receipt` exchange for the authored save/modal positive case and zero exchanges for the shared-safe-action null control. A separate network-disabled container ran the independent v2 raw auditor; it reconstructed both cases and returned `PASS_RAW_AUDIT`, errors `[]`. The construction suite passed 8/8; candidate/auditor retries: 0. Disposition: `PASS_METHOD_SCOPED` for the finite task/channel fixture only—not a universal GUI or model-call lower bound, truthful live receipt, latency/cost, live effect, or safety result. Predecessor host allocations remain unchanged. Current-main readback found four predecessor raw-output SHA256SUMS entries that do not match their committed bytes; these historical raw files were not inputs here and the discrepancy is retained, not repaired. See [allocation-03 report, freeze and raw output](research/analysis/feedback_necessity_5927_orbstack_t0_v1/REPORT.md), [full H/T/D/C/U and integrity notes](research/analysis/feedback_necessity_5927_orbstack_t0_v1/README.md), and [Issue #5927](https://github.com/Unjuno/agent-interface/issues/5927).
+
+### Issue #6038: label/control ambiguity T0
+
+Successor allocation S2 ran the ten-case synthetic finite fixture once in two separate pinned OrbStack containers; an independent audit reconstructed all decisions/final field states and rejected four corruption mutations (`PASS_METHOD_SCOPED`). The relation/abstention policy had exact effects in 7/7 unique cases and abstained on all 3 ambiguous/stale cases; nearest and same-scope-nearest baselines produced 7 and 5 wrong-field effects respectively on this authored fixture. The predecessor candidate launcher omitted its Docker image operand and stopped with exit 126 before Python execution; that STOP is retained unchanged and was not counted as a method result. No pixels or perception algorithm, live GUI/model/task, real accessibility relation, privacy/safety benefit, or product claim was tested. See [the immutable report and both allocation records](research/analysis/label_control_ambiguity_6038_t0_v1/REPORT.md) and [Issue #6038](https://github.com/Unjuno/agent-interface/issues/6038).
 
 ## How to read this ledger
 
@@ -130,6 +156,20 @@ flowchart LR
 ```
 
 Exact contract/state-machine questions should be reduced analytically first; timing, model behavior, OS/application behavior, and integrated capability remain empirical where their outcome depends on the real environment.
+
+## Issue #6403 — control-opportunity responsibility attribution T0
+
+The preregistered six-trace synthetic T0 passed independent evidence
+reconstruction (`PASS_METHOD`): effect-before-notification, sent-but-undelivered,
+accepted/sufficient-window, ambiguous delivery, stale-UI, and verified-correction
+cases matched their frozen classifications and timelines. A six-case mutation
+gate rejected delivery substitution, effect-time changes, hidden override facts,
+oracle leakage, and both promotion/display of misleading bidirectional negative
+controls. Factual reconstruction—not blame—was the primary endpoint. No human,
+live delivery/attention, GUI, model, causal responsibility, or product claim was
+tested; Issue #6403 remains open. The runner did not capture ephemeral container
+IDs, a retained evidence limitation. See the [full report](research/analysis/control_opportunity_attribution_6403_t0_v1/REPORT.md)
+and [Issue #6403](https://github.com/Unjuno/agent-interface/issues/6403).
 
 ## Research question
 
@@ -1709,6 +1749,12 @@ independent first useful outcome and explicit bounded recovery coverage under
 a matched condition, with cross-domain transfer before general promotion.
 See `research/doom/MAP01_V38_V39_CONTROL_TEMPO_POSTHOC_V1.md`.
 
+## Latest follow-up — full-trace held-input occupancy is bounded, not directly timed (2026-10-02)
+
+Candidate v4 and independent raw JSONL auditor v5 pass against retained v38/v39 traces. V38 contains 11 completed holds with planner-wait overlap bounded3.049–4.040s; v39 contains29, bounded6.301–8.453s. One v39 Down-only admission raced cancel/ack and is conservatively bounded [0,13.209ms] through verified empty release. Earlier v1–v3 STOPs, the v4 auditor schema STOP, and v5 audit freeze remain preserved; the candidate was not rerun to repair an auditor-only defect. This is posthoc occupancy-envelope evidence across different trajectories, not exact ordinary key-up duration, causal comparison, independent useful feedback, bounded-recovery efficacy, real-time threat control, or MAP01 completion. No exclusive Docker lane was available, so this deterministic parser/audit ran on macOS and is not a container validation. See [full H/T/D/C/U report and retained artifacts](research/doom/results/map01-held-input-occupancy-fulltrace-v4/README.md), [audit output](research/doom/results/map01-held-input-occupancy-fulltrace-v4/audit-v5.json), and [canonical current direction](docs/CURRENT_GOAL.md). Issue #59 remains open.
+
+This is a conservative extension to the already-published full-trace reconstruction and receipt replay (#6175/#6198), not a second claim for their 27 completed + 1 interrupted v39 rows. V4 explicitly adds the raw-trace `cover-4` step-10 partial/in-flight admission omitted from that 28-row account; its `[0,13.209ms]` bound and the 29-row audit are separately retained. The historical reports and dispositions are unchanged.
+
 ## Previous follow-up — v39 coast liveness and active revocation exposed (2026-09-15)
 
 V38's interrupted-tail loop came from an unauthored, empty-coast fallback
@@ -1900,6 +1946,10 @@ See [formal report, audit, freeze, and ordered raw parts](research/system1/needl
 
 The CPU-only OrbStack construction allocation generated frozen A-support, B-arrival, and held-out datasets for three formal seeds (984 rows total), but its wrapper raised `KeyError: 'image_id'` after writing output and remains `STOP_RUN_RECEIPT_POSTPROCESS_KEYERROR`; it is not promoted to PASS. A distinct audit-only successor read the exact immutable dataset once in network-disabled, resource-bounded OrbStack and independently returned `PASS_DATA_AUDIT_SUCCESSOR_SCOPED`: all target labels, split/role/ID/feature/disjointness/balance gates passed and 7/7 corruption controls were rejected. No model, optimizer, CUDA/GPU, or WSLc action occurred. The data generation regression is boundedly checked; A-retention/B-acquisition and the required exclusive RTX 3080 WSLc formal allocation remain untested. See [preflight result and STOP](research/system1/needle_online_correction_4824_preflight_6321_t0_20261002/RESULT.md), [Issue #6321](https://github.com/Unjuno/agent-interface/issues/6321), and [preflight/audit successor package](research/system1/needle_online_correction_4824_preflight_6321_t0_20261002/).
 
+### Recovered batched online Needle correction construction archive — Issue #4824
+
+The orphaned 40-file package from `research/needle-online-correction-4824-batched-20260927` is preserved at [the recovery archive](research/system1/needle_online_correction_4824_batched_v1/RECOVERY_STATUS.md). Its encoded raw payload reconstructs to the recorded byte count and SHA-256, but the branch-tip runner and auditor do not match the frozen source digests; the described batch-2 treatment also does not match the retained batch-8 runner, and the audit lacks model-logit regeneration and optimizer replay. Disposition is **STOP_PROVENANCE_TREATMENT_MISMATCH / STOP_AUDIT_INCOMPLETE**. This is an archive-only recovery, not a validated construction result or scientific PASS; no experiment was rerun. The source branch tip is preserved by its archive tag. This does not alter Issue #4824's earlier STOP/HOLD, Issue #4829's distinct result, or the separate #6321 preflight.
+
 ### Post-update Needle generation fence — Issue #4840
 
 A frozen offline CPU Docker validation-envelope fixture passed its scoped gate: independent audit matched all 64 rows, rejected all 56 directed stale/invalid cases, admitted all 8 known-good proposals as proposal-only, and rejected 15/15 malformed/stale controls. A confidence-only comparator admitted 56/56 negative rows. No model training, GUI, task effect, or authority was involved; this is protocol evidence, not runtime integration. See [the report, frozen sources, audit, and ordered raw parts](research/system1/needle_adaptive_generation_fence_4840_v1/), [Issue #4840](https://github.com/Unjuno/agent-interface/issues/4840), and [PR #4843](https://github.com/Unjuno/agent-interface/pull/4843).
@@ -1968,3 +2018,9 @@ A frozen, CPU-only finite simulator compared fixed checklist, myopic one-step ma
 The frozen horizon-blind cumulative-premium threshold was evaluated across six abstract cost configurations and every prefix 1–30. Candidate ran once; an independent raw-only auditor ran once, reconstructed all 180 use rows with zero errors, and rejected all four corruption controls. Result: `FAIL_ONLINE_VALUE_PURE_CASE`: in each of four qualified positive-saving configurations rent-then-compile lowered worst-prefix regret versus direct-always, but it failed to improve strictly over compile-immediately (rent regret equalled setup cost and was worse by the per-use saving). The unqualified and non-saving cases remained direct-only. This is an exact finite host-only cost simulation, not measured compilation/GUI cost, an empirical route benefit, or a general result about online policies. Docker Desktop Engine was unavailable, so no container was used.
 
 See the [frozen allocation and result package](research/analysis/rent_compile_5870_t0_v1/REPORT.md), [raw candidate ledger](research/analysis/rent_compile_5870_t0_v1/raw.jsonl), [independent audit](research/analysis/rent_compile_5870_t0_v1/audit.json), [run receipt](research/analysis/rent_compile_5870_t0_v1/RUN.json), and [Issue #5870](https://github.com/Unjuno/agent-interface/issues/5870). Issue #5870 remains open for invalidation-aware or alternative-regret follow-up.
+# Successor Issue #6437: typed constraint-response normalization T0 (2026-10-02)
+
+An OrbStack CPU-only synthetic test evaluated eight vignettes × four response policies. The independent raw-only audit reconstructed all 32 rows, preserving source clauses, scoped append-only provenance, eligibility/revision/privacy boundaries, and no dispatch authority; seven planted corruptions were rejected. Disposition: `PASS_METHOD_SCOPED` for deterministic normalization over these stipulated records only. This neither compares elicitation-policy utility nor establishes human recall, safety, consent, task benefit, or production suitability. The failed #6380 allocation remains unchanged. See [full report](research/analysis/constraint_response_normalization_6437_t0_v1/REPORT.md) and [successor Issue #6437](https://github.com/Unjuno/agent-interface/issues/6437).
+# Issue #6435: deadline/slack measurement-method T0 (2026-10-02)
+
+One OrbStack Linux/arm64 candidate and one independent raw-only auditor evaluated a no-model finite method: six route-choice pairs, eight event archetypes across no-deadline/5/7/20 cutoffs (32 offered ledger rows), and two route panels (16 trials). Audit exactly reconstructed all rows and denominators, classified two slack-equivalent pairs, rejected verification-crossing, lease-mismatch and changed-intent comparisons, yielded when short-deadline verification could not fit, and detected both a seeded route-rank reversal and a no-interaction null. Four construction corruptions were rejected. `METHOD_PASS_SCOPED` validates only this measurement method on stipulated cards; it does not test a model, human, real deadline, GUI, causal effect, or human-tempo behavior. See [the frozen package and raw audit](research/analysis/deadline_slack_equivalence_6435_t0_v1/REPORT.md) and [Issue #6435](https://github.com/Unjuno/agent-interface/issues/6435).

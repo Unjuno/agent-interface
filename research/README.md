@@ -6,6 +6,9 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #6403 control-opportunity attribution T0: [`analysis/control_opportunity_attribution_6403_t0_v1/REPORT.md`](analysis/control_opportunity_attribution_6403_t0_v1/REPORT.md) — synthetic method pass; human responsibility attribution remains untested.
+- Issue #6133 T1c worker-aging measurement-gate successor: [`analysis/worker_aging_6133_t1c_20261002/REPORT.md`](analysis/worker_aging_6133_t1c_20261002/REPORT.md) — WSLc synthetic method pass, 600 rows independently reconstructed; no real worker-aging or restart-safety claim.
+
 | Need | Entry point |
 |---|---|
 | Evidence ledger and claims taxonomy | [../RESEARCH.md](../RESEARCH.md) |
@@ -15,6 +18,8 @@ For claims and scientific disposition, start with the top-level [research index]
 | Current Linux research caller | [live_control/CURRENT_CLIENT.md](live_control/CURRENT_CLIENT.md) |
 | Historical local-GPU triage snapshot (not current resource authorization) | [gpu/RECOVERY_STATUS.md](gpu/RECOVERY_STATUS.md) |
 | Research convergence/freeze criteria | [evolution/freeze_criteria.md](evolution/freeze_criteria.md) |
+| Issue #6422 denial-aware approval-request A01 | [Preservation qualification](analysis/denial_aware_request_6422_t0_20261002_v1/PRESERVATION_QUALIFICATION.md) — partial 14-case synthetic method evidence; missing deferral-authority and one-use/budget coverage, not full T0 or a T1 basis. |
+| Issue #6380 counterexample-driven contract elicitation T0 | [analysis/constraint_elicitation_6380_t0_v1/REPORT.md](analysis/constraint_elicitation_6380_t0_v1/REPORT.md) — retained method-construction failure; no human or runtime claim. |
 | Issue #59 global-owner event/head invariance T0 | [analysis/map01_global_owner_invariance_59_t0_20261001/REPORT.md](analysis/map01_global_owner_invariance_59_t0_20261001/REPORT.md) |
 | Issue #5970 × #5348 causal-cut recovery reachability T0 | [analysis/blackstart_causal_cut_5970_t0_20261001/REPORT.md](analysis/blackstart_causal_cut_5970_t0_20261001/REPORT.md) |
 | Issue #5970 retained reconnect-trace applicability T1 | [analysis/blackstart_causal_cut_5970_t1_20261001/REPORT.md](analysis/blackstart_causal_cut_5970_t1_20261001/REPORT.md) |
@@ -33,6 +38,10 @@ For claims and scientific disposition, start with the top-level [research index]
 | Issue #6074 interval-robustness finite-method T0 | [analysis/interval_robustness_6074_t0_20261002/REPORT.md](analysis/interval_robustness_6074_t0_20261002/REPORT.md) |
 | Issue #6045 opportunity-conditioned age T0 container method result | [analysis/opportunity_conditioned_actuated_info_6045_t0_20261002/REPORT.md](analysis/opportunity_conditioned_actuated_info_6045_t0_20261002/REPORT.md) |
 | Issue #6351 cross-role meaning drift synthetic T0 | [analysis/cross_role_meaning_drift_6351_t0_v1/REPORT.md](analysis/cross_role_meaning_drift_6351_t0_v1/REPORT.md) |
+| Issue #6373 context-preserving delegation synthetic T0 | [analysis/context_preserving_delegation_6373_t0_v1/REPORT.md](analysis/context_preserving_delegation_6373_t0_v1/REPORT.md) |
+| Issue #6435 deadline/slack measurement-method T0 | [analysis/deadline_slack_equivalence_6435_t0_v1/REPORT.md](analysis/deadline_slack_equivalence_6435_t0_v1/REPORT.md) |
+| Issue #6437 constraint-response normalization successor T0 | [analysis/constraint_response_normalization_6437_t0_v1/REPORT.md](analysis/constraint_response_normalization_6437_t0_v1/REPORT.md) |
+| Issue #6038 label/control ambiguity T0 (synthetic method only; formal-01 STOP retained) | [analysis/label_control_ambiguity_6038_t0_v1/REPORT.md](analysis/label_control_ambiguity_6038_t0_v1/REPORT.md) |
 | Revisit history | [REVISIT_LEDGER.md](REVISIT_LEDGER.md) |
 | Analysis vs experiment decision flow | [../docs/RESEARCH_METHOD.md](../docs/RESEARCH_METHOD.md) |
 | Public evidence/document relationship map | [../docs/EVIDENCE_MAP.md](../docs/EVIDENCE_MAP.md) |
@@ -102,6 +111,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 - [`live_control/`](live_control/) — shared/live GUI-control mechanisms and integration studies.
 - [`doom/`](doom/) — real-time/continuous-control studies and MAP01 evidence.
 - [`integration/`](integration/) — integration-focused experiments.
+- [Tk first-character #5260 construction record](integration/tk_firstchar_5260_a01_20261002/PREREG.md) — construction-only Docker/Xvfb runner/auditor checks; proposed 96-trial allocation remains HOLD_NOT_AUTHORIZED.
 - [Tk validation-lifecycle #4367 / Draft PR #4375 metadata archive](integration/tk_validation_lifecycle_v9m3_v1/ARCHIVAL_QUALIFICATION.md) — three exact published metadata files; pre-allocation publication STOP/HOLD remains, source/raw absent, no construction or formal result independently established.
 - [X11 transition coalescing #4422 / Draft PR #4438 metadata archive](integration/x11_transition_coalescing_c4d7_v1/ARCHIVAL_QUALIFICATION.md) — three exact STOP metadata files; formal remains 0/12 cases and 0/38 captures, and no blocked source payload or construction result is independently recovered.
 - [Writer selection scope #4425 / Draft PR #4446 archival qualification](integration/writer_selection_scope_w4m8_v1/ARCHIVAL_QUALIFICATION.md) — seven exact published metadata/report files; the complete 401-file raw corpus remains unavailable, so the owner-reported scoped PASS is not independently reproduced.
@@ -219,6 +229,8 @@ A directory existing here does **not** mean its mechanism is promoted. Negative 
 
 ### Recent direct-root evidence
 - [`kernel_receipt_time_5215_20260928/`](kernel_receipt_time_5215_20260928/) — Issue #5215 frozen construction probe and independent audit for lease-expiry and causal timestamp receipt boundaries; scoped contract evidence only.
+- [`route_occupancy_5674_construction_v1/`](route_occupancy_5674_construction_v1/) — Issue #5674 finite synthetic Markov construction; empirical route/task hypothesis remains untested.
+- [`trace_reduction_5666_construction_v1/`](trace_reduction_5666_construction_v1/) — Issue #5666 host-only synthetic construction check; no independent replay, model, GUI, or authority result.
 
 - [`cli_fault_residue_3711_revalidation_v1/`](cli_fault_residue_3711_revalidation_v1/) — Issue #3711 report-temp fault revalidation protocol; see its linked PR/evidence for current matrix status.
 - [`needle_lora_3441_online_stream_v1/`](needle_lora_3441_online_stream_v1/) — Issue #3769 streamed online LoRA successor; scoped host-CPU metrics and limits are in its report.
