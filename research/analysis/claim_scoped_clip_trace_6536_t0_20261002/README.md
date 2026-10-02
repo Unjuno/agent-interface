@@ -5,7 +5,7 @@ This additive package tests a synthetic, finite provenance contract. It does not
 ## H / T / D / C / U
 
 - **H:** A claim-scoped map plus independent raw-only audit rejects planted clip-as-whole-run, clock, source-identity, outcome, and control-attribution errors while accepting honest excerpt claims.
-- **T:** Run the frozen eight-case synthetic fixture through evidence arms A (clip + caption), B (clip + master link), C (hashed EDL only), and D (claim-scoped map + independent auditor). Candidate and auditor are separately implemented; the auditor consumes only fixture and raw candidate output. Run mutation controls after the first raw audit.
+- **T:** Run the frozen nine-case synthetic fixture through evidence arms A (clip + caption), B (clip + master link), C (hashed EDL only), and D (claim-scoped map + independent auditor). Candidate and auditor are separately implemented; the auditor consumes only fixture and raw candidate output. Run mutation controls after the first raw audit.
 - **D:** `METHOD_PASS_SCOPED` requires D to accept both honest excerpt claims, reject all six unsupported broad/forged claims, reconstruct every arm decision, and reject every frozen mutation. Any false D acceptance/rejection or baseline/raw mismatch is `FAIL_METHOD`; missing identities or incomplete output is `STOP`.
 - **C:** Human reviewers may already infer scope correctly from a full master and trace; the synthetic model may underrepresent real media/transcoding and clock complexity. A hash/signature establishes byte identity, not truthful capture or task success.
 - **U:** Synthetic timestamps, frames, and scorer receipts only. No real video, C2PA signing/validation, GUI/game/model, controller, task outcome, human review, public claim, or product/safety conclusion.
