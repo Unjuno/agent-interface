@@ -105,6 +105,18 @@ separate; all raw inputs, outputs, source, image identities and hashes are
 retained. None establishes a real release-delay tail, physical key-up, safety,
 or worst-case guarantee.
 
+### Timer-quantization eligibility counterexample A01
+
+[A01](timer_quantization_a01_20261002/RUN_RECORD.md) is a separate fresh-seed
+OrbStack Docker construction experiment. The current gate accepted the q=1.0
+rounded synthetic arm as `ELIGIBLE_REFERENCE` with only six distinct values
+among 333 q90 exceedances; independent raw-only audit passed. The continuous
+control was rejected by the existing block-median ratio diagnostic, while the
+q=0.25 arm was accepted with 21 distinct exceedance values. This identifies a
+quantization/tie-support omission in this finite synthetic gate contract only;
+no EVT fit, p99 calibration, real timer, input release, safety, or worst-case
+claim was tested. A01 does not invoke or consume the formal six-case T0.
+
 ### Execution status and local CI / provenance checks
 
 The earlier host-only boundary package and censor-cap probe remain preserved.
