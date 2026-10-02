@@ -33,7 +33,7 @@ def retained_result_dirs() -> list[str]:
 
 def checkout_is_sparse() -> bool:
     """True when Git's sparse-checkout metadata is available and enabled."""
-    checkout = ROOT.parents[2]
+    checkout = ROOT.parents[1]
     git_file = checkout / ".git"
     if git_file.is_file():
         content = git_file.read_text(encoding="utf-8").strip()
