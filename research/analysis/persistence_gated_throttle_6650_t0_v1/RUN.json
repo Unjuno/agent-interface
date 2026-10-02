@@ -1,0 +1,20 @@
+{
+  "allocation": "PERSISTENCE-GATED-OPTIONAL-THROTTLE-6650-T0-20261002-01",
+  "candidate_command": "python3 research/analysis/persistence_gated_throttle_6650_t0_v1/candidate.py research/analysis/persistence_gated_throttle_6650_t0_v1/fixture.json research/analysis/persistence_gated_throttle_6650_t0_v1/RAW.json",
+  "candidate_exit": 0,
+  "candidate_formal_runs": 1,
+  "raw_sha256": "8022a834d4e5e32e9af01438dbc3ea57312addb06ed714126e28eee77e3faca6",
+  "independent_audit_command": "python3 -c 'load fixture and RAW.json; call auditor.audit(fixture, raw); write AUDIT.json'",
+  "independent_audit_exit": 0,
+  "independent_audit_runs": 1,
+  "audit_errors": 0,
+  "audit_sha256": "da602239e384691e4a206ba460985d1461151d45e886984cdf7453f0acad1172",
+  "host": "macOS CPython 3.14.5 (stdlib only); no container",
+  "limits": "Research method experiment only. OrbStack/WSLc unavailable; no container started. No production, GUI, model, user, latency, correctness, benefit, or safety claim.",
+  "result": "FAIL_HYPOTHESIS; controls/accounting passed. On sustained_overload, fixed stale optional deliveries=13, queue_length=3, persistence=6.",
+  "retries": 0,
+  "formal_executed_at_utc": "2026-10-02",
+  "formal_trace_count": 9,
+  "offered_id_count": 63,
+  "construction_tests": "8 passed"
+}
