@@ -21,6 +21,7 @@ def fixture():
             {"source_age": 1, "residual": 1, "recovery": "reobserve"},
             {"source_age": 0, "residual": 1, "recovery": "reset"},
         ],
+        "diagnostic_alarm_signatures": [{"source_age": 1, "residual": 1}],
         "policies": ["always_reobserve", "always_reset", "immediate_yield", "bounded_diagnose"],
         "cases": [
             {
@@ -31,7 +32,7 @@ def fixture():
             },
             {
                 "id": "c02",
-                "pre_probe_observation": {"source_tick": 3, "received_tick": 3, "position": 2},
+                "pre_probe_observation": {"source_tick": 2, "received_tick": 3, "position": 2},
                 "probe_observation": {"source_tick": 4, "received_tick": 4, "position": 3, "admissible": True},
                 "lease": {"id": "l02", "acquired_tick": 0, "held_input": "right", "release_requested_tick": 3, "release_receipt": {"lease_id": "l02", "tick": 3}},
             },
@@ -49,7 +50,7 @@ def fixture():
             },
             {
                 "id": "c05",
-                "pre_probe_observation": {"source_tick": 3, "received_tick": 3, "position": 2},
+                "pre_probe_observation": {"source_tick": 2, "received_tick": 3, "position": 2},
                 "probe_observation": {"source_tick": 4, "received_tick": 4, "position": 3, "admissible": True, "supported": False},
                 "lease": {"id": "l05", "acquired_tick": 0, "held_input": "right", "release_requested_tick": 3, "release_receipt": {"lease_id": "l05", "tick": 3}},
             },
@@ -93,6 +94,13 @@ class TemporalProtocolTests(unittest.TestCase):
         self.assertEqual(decisions[("c01", "bounded_diagnose")], "reobserve")
         self.assertEqual(decisions[("c02", "bounded_diagnose")], "reset")
         self.assertEqual(decisions[("c03", "bounded_diagnose")], "yield")
+        counts = {(row["case_id"], row["policy"]): row["diagnostic_observations"] for row in rows}
+        self.assertEqual(counts[("c03", "bounded_diagnose")], 0)
+
+    def test_identifiable_cases_share_preprobe_evidence(self):
+        data = fixture()
+        observations = [next(c["pre_probe_observation"] for c in data["cases"] if c["id"] == cid) for cid in ("c01", "c02")]
+        self.assertEqual(observations[0], observations[1])
 
     def test_no_policy_probes_or_recovers_before_matching_release_receipt(self):
         data = fixture()
@@ -111,6 +119,15 @@ class TemporalProtocolTests(unittest.TestCase):
         data["max_probe_observations"] = 0
         rows = temporal_candidate.run(data)["rows"]
         self.assertTrue(all(row["action"] != "reobserve" and row["diagnostic_observations"] == 0 for row in rows))
+
+    def test_fixed_reobserve_arm_respects_ineligible_and_unsupported_probe(self):
+        rows = temporal_candidate.run(fixture())["rows"]
+        for case_id in ("c04", "c05"):
+            row = next(r for r in rows if r["case_id"] == case_id and r["policy"] == "always_reobserve")
+            self.assertEqual(row["action"], "yield")
+            self.assertEqual(row["diagnostic_observations"], 0)
+        audit = temporal_auditor.audit(temporal_candidate.run(fixture()), fixture(), oracle())
+        self.assertEqual(audit["status"], "PASS_METHOD_SCOPED")
 
     def test_pre_alarm_source_time_after_receive_fails_closed(self):
         data = fixture()

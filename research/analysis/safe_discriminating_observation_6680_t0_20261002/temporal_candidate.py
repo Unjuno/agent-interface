@@ -41,6 +41,22 @@ def recovery_for_probe(fixture, observation):
     return compatible[0] if len(compatible) == 1 else None
 
 
+def probe_is_admissible(fixture, case):
+    probe = fixture["probe"]
+    observation = case["probe_observation"]
+    receipt = case["lease"].get("release_receipt")
+    return bool(
+        fixture["max_probe_observations"] >= 1
+        and probe["admissible"] and not probe["effectful"] and not probe["extends_lease"]
+        and observation["admissible"] and observation.get("supported", True)
+        and observation["received_tick"] == probe["tick"]
+        and observation["source_tick"] <= observation["received_tick"]
+        and receipt and receipt.get("lease_id") == case["lease"]["id"]
+        and receipt.get("tick") == case["lease"]["release_requested_tick"]
+        and receipt["tick"] <= observation["received_tick"]
+    )
+
+
 def choose(fixture, case, policy):
     lease = case["lease"]
     released = release_confirmed(case)
@@ -50,8 +66,11 @@ def choose(fixture, case, policy):
     alarm_time_valid = alarm["source_tick"] <= alarm["received_tick"] <= fixture["probe"]["tick"]
     if not predictor_matches_frozen_trajectory(fixture) or not released or not alarm_active or not alarm_time_valid:
         return "yield", 0, alarm_residual, None, None
+    alarm_signature = {"source_age": alarm["received_tick"] - alarm["source_tick"], "residual": alarm_residual}
+    if policy == "bounded_diagnose" and alarm_signature not in fixture["diagnostic_alarm_signatures"]:
+        return "yield", 0, alarm_residual, None, None
     if policy == "always_reobserve":
-        if fixture["max_probe_observations"] >= 1:
+        if probe_is_admissible(fixture, case):
             return "reobserve", 1, alarm_residual, None, None
         return "yield", 0, alarm_residual, None, None
     if policy == "always_reset":
@@ -60,18 +79,8 @@ def choose(fixture, case, policy):
         return "yield", 0, alarm_residual, None, None
     if policy != "bounded_diagnose":
         raise ValueError(f"unknown policy: {policy}")
-    probe = fixture["probe"]
     observation = case["probe_observation"]
-    admissible = (
-        fixture["max_probe_observations"] >= 1
-        and probe["admissible"] and not probe["effectful"] and not probe["extends_lease"]
-        and observation["admissible"]
-        and observation.get("supported", True)
-        and observation["received_tick"] == probe["tick"]
-        and observation["source_tick"] <= observation["received_tick"]
-        and lease["release_receipt"]["tick"] <= observation["received_tick"]
-    )
-    if not admissible:
+    if not probe_is_admissible(fixture, case):
         return "yield", 0, alarm_residual, None, None
     age = observation["received_tick"] - observation["source_tick"]
     residual = abs(observation["position"] - predict_position(fixture, observation["received_tick"]))

@@ -14,6 +14,22 @@ def _predictor_matches_trajectory(fixture):
     return all(point["position"] == _predict(fixture, point["tick"]) for point in fixture["target_trajectory"])
 
 
+def _probe_is_admissible(fixture, case):
+    probe = fixture["probe"]
+    observation = case["probe_observation"]
+    receipt = case["lease"].get("release_receipt")
+    return bool(
+        fixture["max_probe_observations"] >= 1
+        and probe["admissible"] and not probe["effectful"] and not probe["extends_lease"]
+        and observation["admissible"] and observation.get("supported", True)
+        and observation["received_tick"] == probe["tick"]
+        and observation["source_tick"] <= observation["received_tick"]
+        and receipt and receipt.get("lease_id") == case["lease"]["id"]
+        and receipt.get("tick") == case["lease"]["release_requested_tick"]
+        and receipt["tick"] <= observation["received_tick"]
+    )
+
+
 def _expected_decision(fixture, case, policy):
     lease = case["lease"]
     receipt = lease.get("release_receipt")
@@ -27,25 +43,19 @@ def _expected_decision(fixture, case, policy):
     alarm_time_valid = pre["source_tick"] <= pre["received_tick"] <= fixture["probe"]["tick"]
     if not _predictor_matches_trajectory(fixture) or not release_ok or alarm_residual < fixture["alarm_threshold"] or not alarm_time_valid:
         return "yield", 0, alarm_residual, None, None
+    alarm_signature = {"source_age": pre["received_tick"] - pre["source_tick"], "residual": alarm_residual}
+    if policy == "bounded_diagnose" and alarm_signature not in fixture["diagnostic_alarm_signatures"]:
+        return "yield", 0, alarm_residual, None, None
     if policy == "always_reobserve":
-        if fixture["max_probe_observations"] >= 1:
+        if _probe_is_admissible(fixture, case):
             return "reobserve", 1, alarm_residual, None, None
         return "yield", 0, alarm_residual, None, None
     if policy == "always_reset":
         return "reset", 0, alarm_residual, None, None
     if policy == "immediate_yield":
         return "yield", 0, alarm_residual, None, None
-    probe = fixture["probe"]
     observation = case["probe_observation"]
-    probe_ok = (
-        fixture["max_probe_observations"] >= 1
-        and probe["admissible"] and not probe["effectful"] and not probe["extends_lease"]
-        and observation["admissible"] and observation.get("supported", True)
-        and observation["received_tick"] == probe["tick"]
-        and observation["source_tick"] <= observation["received_tick"]
-        and (lease["held_input"] is None or receipt["tick"] <= observation["received_tick"])
-    )
-    if not probe_ok:
+    if not _probe_is_admissible(fixture, case):
         return "yield", 0, alarm_residual, None, None
     age = observation["received_tick"] - observation["source_tick"]
     residual = abs(observation["position"] - _predict(fixture, observation["received_tick"]))
