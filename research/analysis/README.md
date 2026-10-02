@@ -1,5 +1,6 @@
 # Analytical research
 
+- [`revision_timed_cutover_6617_t0_v1/REPORT.md`](revision_timed_cutover_6617_t0_v1/REPORT.md) — Issue #6617 WSLc synthetic T0: 30 event traces independently audited; one stable scripted case saved 3 logical ticks; no speech, GUI, human, or real-latency result.
 - [`frame_qualified_collateral_6533_t0_20261002/REPORT.md`](frame_qualified_collateral_6533_t0_20261002/REPORT.md) — Issue #6533 T0: 44/44 synthetic rows independently reconstructed; qualified-frame matched the full-state oracle, with a 79.1% aggregate accounted-byte reduction but a 2.13× regression at the smallest size. Method-scoped only; no GUI/product safety or performance claim.
 
 - [`claim_scoped_partial_verdict_6509_t0_20261002/REPORT.md`](claim_scoped_partial_verdict_6509_t0_20261002/REPORT.md) — Issue #6509: 45-row OrbStack candidate and independent audit passed the finite claim-ladder method gate; unsafe scalar comparator had 11 partial ALLOWs; logical early-reject advantage is simulation-only.
@@ -503,6 +504,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`response_capacity_5771_successor_v1/`](response_capacity_5771_successor_v1/)
 - [`reusable_receipt_session_binding_v1/`](reusable_receipt_session_binding_v1/)
 - [`reusable_receipt_session_binding_v2/`](reusable_receipt_session_binding_v2/)
+- [`revision_timed_cutover_6617_t0_v1/`](revision_timed_cutover_6617_t0_v1/)
 - [`robust_reachable_tube_6089_t0_20261001/`](robust_reachable_tube_6089_t0_20261001/)
 - [`robust_recourse_5862_t0_v1/`](robust_recourse_5862_t0_v1/)
 - [`role_bound_ledger_lifetime_v1/`](role_bound_ledger_lifetime_v1/)
@@ -600,6 +602,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`verifier_exposure_5941_t0_20261001/`](verifier_exposure_5941_t0_20261001/)
 - [`verifier_exposure_5941_t0_v2_20261001/`](verifier_exposure_5941_t0_v2_20261001/)
 - [`verifier_metastability_5375_t0_20261001_a1/`](verifier_metastability_5375_t0_20261001_a1/)
+- [`version_crossing_artifact_survival_6611_t0_v1/`](version_crossing_artifact_survival_6611_t0_v1/)
 - [`versioned_predicate_specialist_switch_4284_reconciled_4603_v1/`](versioned_predicate_specialist_switch_4284_reconciled_4603_v1/)
 - [`visual_cue_coordinate_map_successor_2043_v1/`](visual_cue_coordinate_map_successor_2043_v1/)
 - [`visual_edge_aux_570_r8_v1/`](visual_edge_aux_570_r8_v1/)
