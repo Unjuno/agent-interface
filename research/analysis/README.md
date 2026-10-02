@@ -497,6 +497,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`multi_principal_effect_auth_5805_t0_v1/`](multi_principal_effect_auth_5805_t0_v1/)
 - [`multicursor_parking_reposition_r0_v1/`](multicursor_parking_reposition_r0_v1/)
 - [`multicursor_target_handle_regrounding_r0_v1/`](multicursor_target_handle_regrounding_r0_v1/)
+- [`multifidelity_control_variate_6155_t0f_integrity_stop_20261003/`](multifidelity_control_variate_6155_t0f_integrity_stop_20261003/)
 - [`multifidelity_route_contrast_6155_t0_v1/`](multifidelity_route_contrast_6155_t0_v1/)
 - [`multistate_stop_recovery_5593_t0_20261002_01/`](multistate_stop_recovery_5593_t0_20261002_01/)
 - [`multistate_stop_recovery_5593_t1_20261002_02/`](multistate_stop_recovery_5593_t1_20261002_02/)
