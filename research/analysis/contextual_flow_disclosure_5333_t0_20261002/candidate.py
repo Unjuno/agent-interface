@@ -11,6 +11,8 @@ def decide(case, policy):
         and case["integrity"] != policy["minimum_integrity"]
     ):
         return "BLOCKED_FLOW", []
+    if case["source_label"] not in policy["known_source_labels"]:
+        return "UNKNOWN_FLOW", []
     if case["source_label"] == policy["sensitive_label"]:
         if case["recipient"] is None or case["purpose"] is None:
             return "UNKNOWN_FLOW", []

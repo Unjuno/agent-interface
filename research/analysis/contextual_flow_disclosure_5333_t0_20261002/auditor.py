@@ -14,6 +14,8 @@ def independently_derive(case, mode, policy):
         return "BLOCKED_FLOW", []
     if case["recipient"] in policy["protected_sinks"] and case["integrity"] != policy["minimum_integrity"]:
         return "BLOCKED_FLOW", []
+    if case["source_label"] not in policy["known_source_labels"]:
+        return "UNKNOWN_FLOW", []
     if case["source_label"] != policy["sensitive_label"]:
         return "ALLOWED", case["requested_fields"]
     if case["recipient"] is None or case["purpose"] is None:
