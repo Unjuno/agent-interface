@@ -13,4 +13,3 @@ This supports only the frozen method-level discriminator: post-filter top-k can 
 WSLc warned on both formal invocations that the kernel lacks swap-limit capabilities or the cgroup is not mounted. One CPU was requested; the 512 MiB memory ceiling is not claimed as enforced. No GPU, network, pull, model, GUI, or external side effect was used.
 
 See `PREREGISTRATION.md`, `FREEZE.json`, `RUN.json`, `CONSTRUCTION.md`, and `SHA256SUMS.txt` for protocol and provenance.
-
