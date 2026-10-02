@@ -1,0 +1,35 @@
+{
+  "allocation_id": "LABEL-CONTROL-AMBIGUITY-6038-T0-S2-20261002-01",
+  "successor_to": "LABEL-CONTROL-AMBIGUITY-6038-T0-20261002-01",
+  "issue": 6038,
+  "base_commit": "d7e20a0d25e0c361d1e7cf56fd103f61fb927a2d",
+  "candidate_source_sha256": "7d0a7fb4af45baa05dccd5c12ac7bb33f069506af4461a5aeed9d024bd09301f",
+  "auditor_source_sha256": "6b3787b8989ae0f27e4a1c3aad91cb57c4376a6e15a7082314b90e1480c3a31d",
+  "fixture_sha256": "e5711345d7fe28b14df661006d1d99183d4458719afcaa5735064bff4016fa5f",
+  "oracle_sha256": "e747a71b49c925ce5a8969f93c5f44986cc1fe4d56f46d0ab87d812d153ba50b",
+  "candidate_program_invocations": 1,
+  "auditor_program_invocations": 1,
+  "retries": 0,
+  "candidate_argv": ["python", "/src/candidate.py", "/input/fixture.json"],
+  "auditor_argv": ["python", "/src/audit.py", "/input/fixture.json", "/input/oracle.json", "/input/candidate.raw.json"],
+  "image": {
+    "alias": "python:3.12-alpine",
+    "image_id": "sha256:c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b",
+    "platform": "linux/arm64",
+    "pull": "never"
+  },
+  "isolation": {
+    "network": "none",
+    "cpus": 1,
+    "memory": "256m",
+    "pids_limit": 64,
+    "rootfs": "read-only",
+    "capabilities": "all dropped",
+    "no_new_privileges": true,
+    "source_and_inputs": "read-only bind mounts",
+    "candidate_mounts_oracle": false,
+    "auditor_mounts_candidate_source": false
+  },
+  "decision_gate": "PASS_METHOD_SCOPED only if the independent auditor reconstructs all 10 rows, relation_abstention gives exact effects on seven unique cases, abstains on three ambiguous/stale cases, and rejects all four frozen mutations; otherwise preserve FAIL/HOLD.",
+  "scope_limit": "synthetic method evidence only; no real GUI, model, task, safety, privacy, or production claim"
+}

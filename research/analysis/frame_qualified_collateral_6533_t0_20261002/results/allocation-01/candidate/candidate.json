@@ -1,0 +1,1016 @@
+{
+  "rows": [
+    {
+      "case_id": "isolated_target_write",
+      "changed_keys_observed": [],
+      "metrics": {
+        "accounted_bytes": 20,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 20,
+        "state_read_calls": 2,
+        "state_records_examined": 1
+      },
+      "policy": "TARGET_ONLY",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 2000
+    },
+    {
+      "case_id": "isolated_target_write",
+      "changed_keys_observed": [
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 11137,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 11137,
+        "state_read_calls": 524,
+        "state_records_examined": 262
+      },
+      "policy": "FULL_STATE",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 399962
+    },
+    {
+      "case_id": "isolated_target_write",
+      "changed_keys_observed": [
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 20,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 20,
+        "state_read_calls": 2,
+        "state_records_examined": 1
+      },
+      "policy": "STATIC_DIRECT",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 2541
+    },
+    {
+      "case_id": "isolated_target_write",
+      "changed_keys_observed": [
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 1001,
+        "certificate_bytes_examined": 981,
+        "fallback": null,
+        "metadata_read_calls": 10,
+        "metadata_records_examined": 10,
+        "qualification_gates": {
+          "action_identity_bound": true,
+          "alias_inventory_complete": true,
+          "callback_inventory_complete": true,
+          "certificate_version_supported": true,
+          "collateral_predicates_bound": true,
+          "dependency_inventory_complete": true,
+          "dependency_provenance_complete": true,
+          "durable_snapshot": true,
+          "event_manifest_bound": true,
+          "external_writer_inventory_complete": true,
+          "generation_current": true,
+          "no_external_writers": true,
+          "writer_inventory_complete": true
+        },
+        "qualified_footprint": [
+          "target:value"
+        ],
+        "state_bytes_examined": 20,
+        "state_read_calls": 2,
+        "state_records_examined": 1
+      },
+      "policy": "QUALIFIED_FRAME",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 18084
+    },
+    {
+      "case_id": "transitive_formula_collateral",
+      "changed_keys_observed": [],
+      "metrics": {
+        "accounted_bytes": 20,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 20,
+        "state_read_calls": 2,
+        "state_records_examined": 1
+      },
+      "policy": "TARGET_ONLY",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 2000
+    },
+    {
+      "case_id": "transitive_formula_collateral",
+      "changed_keys_observed": [
+        "formula:derived",
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 11137,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 11137,
+        "state_read_calls": 524,
+        "state_records_examined": 262
+      },
+      "policy": "FULL_STATE",
+      "verdict": "COLLATERAL_CHANGED",
+      "wall_time_median_ns_31": 418337
+    },
+    {
+      "case_id": "transitive_formula_collateral",
+      "changed_keys_observed": [
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 20,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 20,
+        "state_read_calls": 2,
+        "state_records_examined": 1
+      },
+      "policy": "STATIC_DIRECT",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 2500
+    },
+    {
+      "case_id": "transitive_formula_collateral",
+      "changed_keys_observed": [
+        "formula:derived",
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 1190,
+        "certificate_bytes_examined": 1147,
+        "fallback": null,
+        "metadata_read_calls": 12,
+        "metadata_records_examined": 12,
+        "qualification_gates": {
+          "action_identity_bound": true,
+          "alias_inventory_complete": true,
+          "callback_inventory_complete": true,
+          "certificate_version_supported": true,
+          "collateral_predicates_bound": true,
+          "dependency_inventory_complete": true,
+          "dependency_provenance_complete": true,
+          "durable_snapshot": true,
+          "event_manifest_bound": true,
+          "external_writer_inventory_complete": true,
+          "generation_current": true,
+          "no_external_writers": true,
+          "writer_inventory_complete": true
+        },
+        "qualified_footprint": [
+          "formula:derived",
+          "target:value"
+        ],
+        "state_bytes_examined": 43,
+        "state_read_calls": 4,
+        "state_records_examined": 2
+      },
+      "policy": "QUALIFIED_FRAME",
+      "verdict": "COLLATERAL_CHANGED",
+      "wall_time_median_ns_31": 21959
+    },
+    {
+      "case_id": "alias_write",
+      "changed_keys_observed": [],
+      "metrics": {
+        "accounted_bytes": 20,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 20,
+        "state_read_calls": 2,
+        "state_records_examined": 1
+      },
+      "policy": "TARGET_ONLY",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 2000
+    },
+    {
+      "case_id": "alias_write",
+      "changed_keys_observed": [
+        "alias:peer",
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 11137,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 11137,
+        "state_read_calls": 524,
+        "state_records_examined": 262
+      },
+      "policy": "FULL_STATE",
+      "verdict": "COLLATERAL_CHANGED",
+      "wall_time_median_ns_31": 400420
+    },
+    {
+      "case_id": "alias_write",
+      "changed_keys_observed": [
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 20,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 20,
+        "state_read_calls": 2,
+        "state_records_examined": 1
+      },
+      "policy": "STATIC_DIRECT",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 2541
+    },
+    {
+      "case_id": "alias_write",
+      "changed_keys_observed": [
+        "alias:peer",
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 12213,
+        "certificate_bytes_examined": 1076,
+        "fallback": "FULL_STATE",
+        "metadata_read_calls": 12,
+        "metadata_records_examined": 12,
+        "qualification_gates": {
+          "action_identity_bound": true,
+          "alias_inventory_complete": false,
+          "callback_inventory_complete": true,
+          "certificate_version_supported": true,
+          "collateral_predicates_bound": true,
+          "dependency_inventory_complete": true,
+          "dependency_provenance_complete": true,
+          "durable_snapshot": true,
+          "event_manifest_bound": true,
+          "external_writer_inventory_complete": true,
+          "generation_current": true,
+          "no_external_writers": true,
+          "writer_inventory_complete": true
+        },
+        "qualified_footprint": [],
+        "state_bytes_examined": 11137,
+        "state_read_calls": 524,
+        "state_records_examined": 262
+      },
+      "policy": "QUALIFIED_FRAME",
+      "verdict": "COLLATERAL_CHANGED",
+      "wall_time_median_ns_31": 487046
+    },
+    {
+      "case_id": "hidden_callback_write",
+      "changed_keys_observed": [],
+      "metrics": {
+        "accounted_bytes": 20,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 20,
+        "state_read_calls": 2,
+        "state_records_examined": 1
+      },
+      "policy": "TARGET_ONLY",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 1959
+    },
+    {
+      "case_id": "hidden_callback_write",
+      "changed_keys_observed": [
+        "callback:result",
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 11137,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 11137,
+        "state_read_calls": 524,
+        "state_records_examined": 262
+      },
+      "policy": "FULL_STATE",
+      "verdict": "COLLATERAL_CHANGED",
+      "wall_time_median_ns_31": 399254
+    },
+    {
+      "case_id": "hidden_callback_write",
+      "changed_keys_observed": [
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 20,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 20,
+        "state_read_calls": 2,
+        "state_records_examined": 1
+      },
+      "policy": "STATIC_DIRECT",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 2500
+    },
+    {
+      "case_id": "hidden_callback_write",
+      "changed_keys_observed": [
+        "callback:result",
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 12236,
+        "certificate_bytes_examined": 1099,
+        "fallback": "FULL_STATE",
+        "metadata_read_calls": 11,
+        "metadata_records_examined": 11,
+        "qualification_gates": {
+          "action_identity_bound": true,
+          "alias_inventory_complete": true,
+          "callback_inventory_complete": false,
+          "certificate_version_supported": true,
+          "collateral_predicates_bound": true,
+          "dependency_inventory_complete": true,
+          "dependency_provenance_complete": true,
+          "durable_snapshot": true,
+          "event_manifest_bound": true,
+          "external_writer_inventory_complete": true,
+          "generation_current": true,
+          "no_external_writers": true,
+          "writer_inventory_complete": true
+        },
+        "qualified_footprint": [],
+        "state_bytes_examined": 11137,
+        "state_read_calls": 524,
+        "state_records_examined": 262
+      },
+      "policy": "QUALIFIED_FRAME",
+      "verdict": "COLLATERAL_CHANGED",
+      "wall_time_median_ns_31": 417087
+    },
+    {
+      "case_id": "external_writer_change",
+      "changed_keys_observed": [],
+      "metrics": {
+        "accounted_bytes": 20,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 20,
+        "state_read_calls": 2,
+        "state_records_examined": 1
+      },
+      "policy": "TARGET_ONLY",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 1958
+    },
+    {
+      "case_id": "external_writer_change",
+      "changed_keys_observed": [
+        "external:value",
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 11137,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 11137,
+        "state_read_calls": 524,
+        "state_records_examined": 262
+      },
+      "policy": "FULL_STATE",
+      "verdict": "COLLATERAL_CHANGED",
+      "wall_time_median_ns_31": 401671
+    },
+    {
+      "case_id": "external_writer_change",
+      "changed_keys_observed": [
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 20,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 20,
+        "state_read_calls": 2,
+        "state_records_examined": 1
+      },
+      "policy": "STATIC_DIRECT",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 2542
+    },
+    {
+      "case_id": "external_writer_change",
+      "changed_keys_observed": [
+        "external:value",
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 12236,
+        "certificate_bytes_examined": 1099,
+        "fallback": "FULL_STATE",
+        "metadata_read_calls": 11,
+        "metadata_records_examined": 11,
+        "qualification_gates": {
+          "action_identity_bound": true,
+          "alias_inventory_complete": true,
+          "callback_inventory_complete": true,
+          "certificate_version_supported": true,
+          "collateral_predicates_bound": true,
+          "dependency_inventory_complete": true,
+          "dependency_provenance_complete": true,
+          "durable_snapshot": true,
+          "event_manifest_bound": true,
+          "external_writer_inventory_complete": false,
+          "generation_current": true,
+          "no_external_writers": false,
+          "writer_inventory_complete": true
+        },
+        "qualified_footprint": [],
+        "state_bytes_examined": 11137,
+        "state_read_calls": 524,
+        "state_records_examined": 262
+      },
+      "policy": "QUALIFIED_FRAME",
+      "verdict": "COLLATERAL_CHANGED",
+      "wall_time_median_ns_31": 491630
+    },
+    {
+      "case_id": "stale_generation",
+      "changed_keys_observed": [],
+      "metrics": {
+        "accounted_bytes": 20,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 20,
+        "state_read_calls": 2,
+        "state_records_examined": 1
+      },
+      "policy": "TARGET_ONLY",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 2000
+    },
+    {
+      "case_id": "stale_generation",
+      "changed_keys_observed": [
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 11137,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 11137,
+        "state_read_calls": 524,
+        "state_records_examined": 262
+      },
+      "policy": "FULL_STATE",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 404379
+    },
+    {
+      "case_id": "stale_generation",
+      "changed_keys_observed": [
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 20,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 20,
+        "state_read_calls": 2,
+        "state_records_examined": 1
+      },
+      "policy": "STATIC_DIRECT",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 2500
+    },
+    {
+      "case_id": "stale_generation",
+      "changed_keys_observed": [
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 12108,
+        "certificate_bytes_examined": 971,
+        "fallback": "FULL_STATE",
+        "metadata_read_calls": 10,
+        "metadata_records_examined": 10,
+        "qualification_gates": {
+          "action_identity_bound": true,
+          "alias_inventory_complete": true,
+          "callback_inventory_complete": true,
+          "certificate_version_supported": true,
+          "collateral_predicates_bound": true,
+          "dependency_inventory_complete": true,
+          "dependency_provenance_complete": true,
+          "durable_snapshot": true,
+          "event_manifest_bound": true,
+          "external_writer_inventory_complete": true,
+          "generation_current": false,
+          "no_external_writers": true,
+          "writer_inventory_complete": true
+        },
+        "qualified_footprint": [],
+        "state_bytes_examined": 11137,
+        "state_read_calls": 524,
+        "state_records_examined": 262
+      },
+      "policy": "QUALIFIED_FRAME",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 463296
+    },
+    {
+      "case_id": "delayed_durable_save",
+      "changed_keys_observed": [],
+      "metrics": {
+        "accounted_bytes": 20,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 20,
+        "state_read_calls": 2,
+        "state_records_examined": 1
+      },
+      "policy": "TARGET_ONLY",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 2000
+    },
+    {
+      "case_id": "delayed_durable_save",
+      "changed_keys_observed": [
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 11137,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 11137,
+        "state_read_calls": 524,
+        "state_records_examined": 262
+      },
+      "policy": "FULL_STATE",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 414379
+    },
+    {
+      "case_id": "delayed_durable_save",
+      "changed_keys_observed": [
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 20,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 20,
+        "state_read_calls": 2,
+        "state_records_examined": 1
+      },
+      "policy": "STATIC_DIRECT",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 2500
+    },
+    {
+      "case_id": "delayed_durable_save",
+      "changed_keys_observed": [
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 12290,
+        "certificate_bytes_examined": 1153,
+        "fallback": "FULL_STATE",
+        "metadata_read_calls": 12,
+        "metadata_records_examined": 12,
+        "qualification_gates": {
+          "action_identity_bound": true,
+          "alias_inventory_complete": true,
+          "callback_inventory_complete": true,
+          "certificate_version_supported": true,
+          "collateral_predicates_bound": true,
+          "dependency_inventory_complete": true,
+          "dependency_provenance_complete": true,
+          "durable_snapshot": false,
+          "event_manifest_bound": true,
+          "external_writer_inventory_complete": true,
+          "generation_current": true,
+          "no_external_writers": true,
+          "writer_inventory_complete": true
+        },
+        "qualified_footprint": [],
+        "state_bytes_examined": 11137,
+        "state_read_calls": 524,
+        "state_records_examined": 262
+      },
+      "policy": "QUALIFIED_FRAME",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 459671
+    },
+    {
+      "case_id": "missing_dependency_edge",
+      "changed_keys_observed": [],
+      "metrics": {
+        "accounted_bytes": 20,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 20,
+        "state_read_calls": 2,
+        "state_records_examined": 1
+      },
+      "policy": "TARGET_ONLY",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 1959
+    },
+    {
+      "case_id": "missing_dependency_edge",
+      "changed_keys_observed": [
+        "formula:derived",
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 11137,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 11137,
+        "state_read_calls": 524,
+        "state_records_examined": 262
+      },
+      "policy": "FULL_STATE",
+      "verdict": "COLLATERAL_CHANGED",
+      "wall_time_median_ns_31": 409254
+    },
+    {
+      "case_id": "missing_dependency_edge",
+      "changed_keys_observed": [
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 20,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 20,
+        "state_read_calls": 2,
+        "state_records_examined": 1
+      },
+      "policy": "STATIC_DIRECT",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 2500
+    },
+    {
+      "case_id": "missing_dependency_edge",
+      "changed_keys_observed": [
+        "formula:derived",
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 12213,
+        "certificate_bytes_examined": 1076,
+        "fallback": "FULL_STATE",
+        "metadata_read_calls": 11,
+        "metadata_records_examined": 11,
+        "qualification_gates": {
+          "action_identity_bound": true,
+          "alias_inventory_complete": true,
+          "callback_inventory_complete": true,
+          "certificate_version_supported": true,
+          "collateral_predicates_bound": true,
+          "dependency_inventory_complete": false,
+          "dependency_provenance_complete": true,
+          "durable_snapshot": true,
+          "event_manifest_bound": true,
+          "external_writer_inventory_complete": true,
+          "generation_current": true,
+          "no_external_writers": true,
+          "writer_inventory_complete": true
+        },
+        "qualified_footprint": [],
+        "state_bytes_examined": 11137,
+        "state_read_calls": 524,
+        "state_records_examined": 262
+      },
+      "policy": "QUALIFIED_FRAME",
+      "verdict": "COLLATERAL_CHANGED",
+      "wall_time_median_ns_31": 484338
+    },
+    {
+      "case_id": "genuinely_disjoint_small",
+      "changed_keys_observed": [],
+      "metrics": {
+        "accounted_bytes": 20,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 20,
+        "state_read_calls": 2,
+        "state_records_examined": 1
+      },
+      "policy": "TARGET_ONLY",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 2000
+    },
+    {
+      "case_id": "genuinely_disjoint_small",
+      "changed_keys_observed": [
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 473,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 473,
+        "state_read_calls": 28,
+        "state_records_examined": 14
+      },
+      "policy": "FULL_STATE",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 22208
+    },
+    {
+      "case_id": "genuinely_disjoint_small",
+      "changed_keys_observed": [
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 20,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 20,
+        "state_read_calls": 2,
+        "state_records_examined": 1
+      },
+      "policy": "STATIC_DIRECT",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 2500
+    },
+    {
+      "case_id": "genuinely_disjoint_small",
+      "changed_keys_observed": [
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 1007,
+        "certificate_bytes_examined": 987,
+        "fallback": null,
+        "metadata_read_calls": 10,
+        "metadata_records_examined": 10,
+        "qualification_gates": {
+          "action_identity_bound": true,
+          "alias_inventory_complete": true,
+          "callback_inventory_complete": true,
+          "certificate_version_supported": true,
+          "collateral_predicates_bound": true,
+          "dependency_inventory_complete": true,
+          "dependency_provenance_complete": true,
+          "durable_snapshot": true,
+          "event_manifest_bound": true,
+          "external_writer_inventory_complete": true,
+          "generation_current": true,
+          "no_external_writers": true,
+          "writer_inventory_complete": true
+        },
+        "qualified_footprint": [
+          "target:value"
+        ],
+        "state_bytes_examined": 20,
+        "state_read_calls": 2,
+        "state_records_examined": 1
+      },
+      "policy": "QUALIFIED_FRAME",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 17500
+    },
+    {
+      "case_id": "genuinely_disjoint_medium",
+      "changed_keys_observed": [],
+      "metrics": {
+        "accounted_bytes": 20,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 20,
+        "state_read_calls": 2,
+        "state_records_examined": 1
+      },
+      "policy": "TARGET_ONLY",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 1959
+    },
+    {
+      "case_id": "genuinely_disjoint_medium",
+      "changed_keys_observed": [
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 2881,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 2881,
+        "state_read_calls": 140,
+        "state_records_examined": 70
+      },
+      "policy": "FULL_STATE",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 106584
+    },
+    {
+      "case_id": "genuinely_disjoint_medium",
+      "changed_keys_observed": [
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 20,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 20,
+        "state_read_calls": 2,
+        "state_records_examined": 1
+      },
+      "policy": "STATIC_DIRECT",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 2500
+    },
+    {
+      "case_id": "genuinely_disjoint_medium",
+      "changed_keys_observed": [
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 1009,
+        "certificate_bytes_examined": 989,
+        "fallback": null,
+        "metadata_read_calls": 10,
+        "metadata_records_examined": 10,
+        "qualification_gates": {
+          "action_identity_bound": true,
+          "alias_inventory_complete": true,
+          "callback_inventory_complete": true,
+          "certificate_version_supported": true,
+          "collateral_predicates_bound": true,
+          "dependency_inventory_complete": true,
+          "dependency_provenance_complete": true,
+          "durable_snapshot": true,
+          "event_manifest_bound": true,
+          "external_writer_inventory_complete": true,
+          "generation_current": true,
+          "no_external_writers": true,
+          "writer_inventory_complete": true
+        },
+        "qualified_footprint": [
+          "target:value"
+        ],
+        "state_bytes_examined": 20,
+        "state_read_calls": 2,
+        "state_records_examined": 1
+      },
+      "policy": "QUALIFIED_FRAME",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 17833
+    },
+    {
+      "case_id": "genuinely_disjoint_large",
+      "changed_keys_observed": [],
+      "metrics": {
+        "accounted_bytes": 20,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 20,
+        "state_read_calls": 2,
+        "state_records_examined": 1
+      },
+      "policy": "TARGET_ONLY",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 1959
+    },
+    {
+      "case_id": "genuinely_disjoint_large",
+      "changed_keys_observed": [
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 11137,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 11137,
+        "state_read_calls": 524,
+        "state_records_examined": 262
+      },
+      "policy": "FULL_STATE",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 416254
+    },
+    {
+      "case_id": "genuinely_disjoint_large",
+      "changed_keys_observed": [
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 20,
+        "certificate_bytes_examined": 0,
+        "fallback": null,
+        "metadata_read_calls": 0,
+        "metadata_records_examined": 0,
+        "state_bytes_examined": 20,
+        "state_read_calls": 2,
+        "state_records_examined": 1
+      },
+      "policy": "STATIC_DIRECT",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 2500
+    },
+    {
+      "case_id": "genuinely_disjoint_large",
+      "changed_keys_observed": [
+        "target:value"
+      ],
+      "metrics": {
+        "accounted_bytes": 1007,
+        "certificate_bytes_examined": 987,
+        "fallback": null,
+        "metadata_read_calls": 10,
+        "metadata_records_examined": 10,
+        "qualification_gates": {
+          "action_identity_bound": true,
+          "alias_inventory_complete": true,
+          "callback_inventory_complete": true,
+          "certificate_version_supported": true,
+          "collateral_predicates_bound": true,
+          "dependency_inventory_complete": true,
+          "dependency_provenance_complete": true,
+          "durable_snapshot": true,
+          "event_manifest_bound": true,
+          "external_writer_inventory_complete": true,
+          "generation_current": true,
+          "no_external_writers": true,
+          "writer_inventory_complete": true
+        },
+        "qualified_footprint": [
+          "target:value"
+        ],
+        "state_bytes_examined": 20,
+        "state_read_calls": 2,
+        "state_records_examined": 1
+      },
+      "policy": "QUALIFIED_FRAME",
+      "verdict": "CLEAN",
+      "wall_time_median_ns_31": 17458
+    }
+  ],
+  "schema": "issue6533-candidate-v1"
+}

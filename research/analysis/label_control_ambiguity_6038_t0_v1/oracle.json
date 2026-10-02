@@ -1,0 +1,15 @@
+{
+  "schema": "independent-field-effect-oracle-v1",
+  "cases": {
+    "simple_unique": {"target":"c-email","initial":{"c-email":"","c-name":""},"value":"v-simple"},
+    "two_column_nearest_conflict": {"target":"c-email","initial":{"c-email":"","c-phone":""},"value":"v-email"},
+    "staggered_alignment": {"target":"c-email","initial":{"c-email":"","c-name":""},"value":"v-email"},
+    "repeated_text_scoped": {"target":"c-shipping-name","initial":{"c-billing-name":"","c-shipping-name":""},"value":"v-shipping"},
+    "tooltip_decoy": {"target":"c-email","initial":{"c-email":"","c-account":""},"value":"v-email"},
+    "trusted_relation_beats_proximity": {"target":"c-email","initial":{"c-email":"","c-name":""},"value":"v-email"},
+    "two_plausible_controls": {"target":"ABSTAIN","initial":{"c-account-a":"","c-account-b":""},"value":"v-account"},
+    "stale_frame": {"target":"ABSTAIN","initial":{"c-email":""},"value":"v-email"},
+    "stale_relation_ambiguous_visual": {"target":"ABSTAIN","initial":{"c-email":"","c-name":""},"value":"v-email"},
+    "unique_visual_edge": {"target":"c-postal","initial":{"c-postal":"","c-country":""},"value":"v-postal"}
+  }
+}

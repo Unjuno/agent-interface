@@ -52,7 +52,7 @@ For the short worker workflow, see [Worker Quickstart](docs/WORKER_QUICKSTART.md
 |---|---|
 | Current goal | [Current direction](docs/CURRENT_GOAL.md) and [remaining roadmap gates](ROADMAP.md) |
 | Evidence and remaining gaps | [Progress](docs/PROGRESS_FROM_BASELINE.md) → [evidence map](docs/EVIDENCE_MAP.md) → the selected [ledger entry](RESEARCH.md), report, raw evidence and audit |
-| Ideas and validation gaps | The relevant [Issues](https://github.com/Unjuno/agent-interface/issues), including closed predecessors and their latest updates |
+| Ideas and outcomes | [Issue-centered index](docs/IDEAS_AND_OUTCOMES.md) for concise idea/disposition history; [Issues](https://github.com/Unjuno/agent-interface/issues) remain the intake and discussion source |
 | Ownership and overlap | [Current handoff](docs/LOCAL_RESEARCH_HANDOFF.md), the selected Issue’s explicit owner/allocation, and related open/closed [PRs](https://github.com/Unjuno/agent-interface/pulls); follow [parallel coordination rules](docs/ISSUE_FAILURE_CLASSIFICATION.md#parallel-coordination-and-evidence-preservation) |
 | Branch cleanup | Check the [branch inventory snapshot](docs/BRANCH_INVENTORY_20261001.md), then refresh PR/Issue links and commit ancestry before any deletion |
 | Archives and provenance | [Retained research namespaces](research/README.md#historical-archival-namespaces) and [document roles](docs/README.md#document-authority-map) |

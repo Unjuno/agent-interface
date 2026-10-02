@@ -1,0 +1,109 @@
+{
+  "schema": "adoption-conditioned-recourse-cases-v2",
+  "analysis_unit": "one isolated offered-stop cohort assigned exactly one policy; all offered IDs retained",
+  "policies": ["generic_retry", "witness_only", "public_warning_stagger", "recipient_specific_routing", "wording_placebo", "no_advice", "abandon_eligible_control"],
+  "cases": [
+    {
+      "id": "shared-high-adoption",
+      "topology": "shared_with_declared_alternatives",
+      "deadline": 5,
+      "advice_expires": 5,
+      "stagger_ticks": [0, 1, 0, 1],
+      "resources": {"shared": {"capacity": 1, "step_duration": 1}, "disjoint": {"capacity": 1, "step_duration": 1}},
+      "offers": [
+        {"id": "h0", "class": "flexible", "allowed_resources": ["shared", "disjoint"], "adopted": true, "adoption_tick": 0, "effect_state": "NOT_APPLIED_VERIFIED", "idempotent": true, "placebo_wording": "A"},
+        {"id": "h1", "class": "shared_only", "allowed_resources": ["shared"], "adopted": true, "adoption_tick": 0, "effect_state": "NOT_APPLIED_VERIFIED", "idempotent": true, "placebo_wording": "B"},
+        {"id": "h2", "class": "flexible", "allowed_resources": ["shared", "disjoint"], "adopted": true, "adoption_tick": 0, "effect_state": "NOT_APPLIED_VERIFIED", "idempotent": true, "placebo_wording": "A"},
+        {"id": "h3", "class": "shared_only", "allowed_resources": ["shared"], "adopted": true, "adoption_tick": 0, "effect_state": "NOT_APPLIED_VERIFIED", "idempotent": true, "placebo_wording": "B"}
+      ]
+    },
+    {
+      "id": "shared-low-adoption",
+      "topology": "shared_with_declared_alternatives",
+      "deadline": 5,
+      "advice_expires": 5,
+      "stagger_ticks": [0, 1, 0, 1],
+      "resources": {"shared": {"capacity": 1, "step_duration": 1}, "disjoint": {"capacity": 1, "step_duration": 1}},
+      "offers": [
+        {"id": "l0", "class": "flexible", "allowed_resources": ["shared", "disjoint"], "adopted": true, "adoption_tick": 0, "effect_state": "NOT_APPLIED_VERIFIED", "idempotent": true, "placebo_wording": "A"},
+        {"id": "l1", "class": "shared_only", "allowed_resources": ["shared"], "adopted": false, "adoption_tick": 2, "effect_state": "NOT_APPLIED_VERIFIED", "idempotent": true, "placebo_wording": "B"},
+        {"id": "l2", "class": "flexible", "allowed_resources": ["shared", "disjoint"], "adopted": true, "adoption_tick": 0, "effect_state": "NOT_APPLIED_VERIFIED", "idempotent": true, "placebo_wording": "A"},
+        {"id": "l3", "class": "shared_only", "allowed_resources": ["shared"], "adopted": false, "adoption_tick": 2, "effect_state": "NOT_APPLIED_VERIFIED", "idempotent": true, "placebo_wording": "B"}
+      ]
+    },
+    {
+      "id": "disjoint-resource-null",
+      "topology": "disjoint_by_offer",
+      "deadline": 5,
+      "advice_expires": 5,
+      "stagger_ticks": [0, 0, 0, 0],
+      "resources": {"r0": {"capacity": 1, "step_duration": 1}, "r1": {"capacity": 1, "step_duration": 1}, "r2": {"capacity": 1, "step_duration": 1}, "r3": {"capacity": 1, "step_duration": 1}},
+      "offers": [
+        {"id": "d0", "class": "c0", "resource": "r0", "allowed_resources": ["r0"], "adopted": true, "adoption_tick": 0, "effect_state": "NOT_APPLIED_VERIFIED", "idempotent": true, "placebo_wording": "A"},
+        {"id": "d1", "class": "c1", "resource": "r1", "allowed_resources": ["r1"], "adopted": true, "adoption_tick": 0, "effect_state": "NOT_APPLIED_VERIFIED", "idempotent": true, "placebo_wording": "B"},
+        {"id": "d2", "class": "c2", "resource": "r2", "allowed_resources": ["r2"], "adopted": true, "adoption_tick": 0, "effect_state": "NOT_APPLIED_VERIFIED", "idempotent": true, "placebo_wording": "A"},
+        {"id": "d3", "class": "c3", "resource": "r3", "allowed_resources": ["r3"], "adopted": true, "adoption_tick": 0, "effect_state": "NOT_APPLIED_VERIFIED", "idempotent": true, "placebo_wording": "B"}
+      ]
+    },
+    {
+      "id": "no-feasible-fallback",
+      "topology": "shared_only",
+      "deadline": 3,
+      "advice_expires": 3,
+      "stagger_ticks": [0, 0, 0, 0],
+      "resources": {"shared": {"capacity": 1, "step_duration": 1}},
+      "offers": [
+        {"id": "n0", "class": "shared_only", "allowed_resources": ["shared"], "adopted": true, "adoption_tick": 0, "effect_state": "NOT_APPLIED_VERIFIED", "idempotent": true, "placebo_wording": "A"},
+        {"id": "n1", "class": "shared_only", "allowed_resources": ["shared"], "adopted": true, "adoption_tick": 0, "effect_state": "NOT_APPLIED_VERIFIED", "idempotent": true, "placebo_wording": "B"},
+        {"id": "n2", "class": "shared_only", "allowed_resources": ["shared"], "adopted": true, "adoption_tick": 0, "effect_state": "NOT_APPLIED_VERIFIED", "idempotent": true, "placebo_wording": "A"},
+        {"id": "n3", "class": "shared_only", "allowed_resources": ["shared"], "adopted": true, "adoption_tick": 0, "effect_state": "NOT_APPLIED_VERIFIED", "idempotent": true, "placebo_wording": "B"}
+      ]
+    },
+    {
+      "id": "forbidden-alternative",
+      "topology": "shared_with_declared_alternatives",
+      "deadline": 5,
+      "advice_expires": 5,
+      "stagger_ticks": [0, 0, 0, 0],
+      "resources": {"shared": {"capacity": 1, "step_duration": 1}, "disjoint": {"capacity": 1, "step_duration": 1}},
+      "offers": [
+        {"id": "f0", "class": "authorized_flexible", "allowed_resources": ["shared", "disjoint"], "adopted": true, "adoption_tick": 0, "effect_state": "NOT_APPLIED_VERIFIED", "idempotent": true, "placebo_wording": "A"},
+        {"id": "f1", "class": "shared_only", "allowed_resources": ["shared"], "adopted": true, "adoption_tick": 0, "effect_state": "NOT_APPLIED_VERIFIED", "idempotent": true, "placebo_wording": "B"},
+        {"id": "f2", "class": "shared_only", "allowed_resources": ["shared"], "adopted": true, "adoption_tick": 0, "effect_state": "NOT_APPLIED_VERIFIED", "idempotent": true, "placebo_wording": "A"},
+        {"id": "f3", "class": "shared_only", "allowed_resources": ["shared"], "adopted": true, "adoption_tick": 0, "effect_state": "NOT_APPLIED_VERIFIED", "idempotent": true, "placebo_wording": "B"}
+      ]
+    },
+    {
+      "id": "slow-alternative",
+      "topology": "shared_with_declared_alternatives",
+      "deadline": 5,
+      "advice_expires": 5,
+      "stagger_ticks": [0, 0, 0, 0],
+      "resources": {"shared": {"capacity": 1, "step_duration": 1}, "slow": {"capacity": 1, "step_duration": 3}},
+      "offers": [
+        {"id": "s0", "class": "slow_alternative_available", "allowed_resources": ["shared", "slow"], "adopted": true, "adoption_tick": 0, "effect_state": "NOT_APPLIED_VERIFIED", "idempotent": true, "placebo_wording": "A"},
+        {"id": "s1", "class": "shared_only", "allowed_resources": ["shared"], "adopted": true, "adoption_tick": 0, "effect_state": "NOT_APPLIED_VERIFIED", "idempotent": true, "placebo_wording": "B"},
+        {"id": "s2", "class": "shared_only", "allowed_resources": ["shared"], "adopted": true, "adoption_tick": 0, "effect_state": "NOT_APPLIED_VERIFIED", "idempotent": true, "placebo_wording": "A"},
+        {"id": "s3", "class": "shared_only", "allowed_resources": ["shared"], "adopted": true, "adoption_tick": 0, "effect_state": "NOT_APPLIED_VERIFIED", "idempotent": true, "placebo_wording": "B"}
+      ]
+    },
+    {
+      "id": "expired-advice",
+      "topology": "shared_only",
+      "deadline": 5,
+      "advice_expires": 1,
+      "stagger_ticks": [0],
+      "resources": {"shared": {"capacity": 1, "step_duration": 1}},
+      "offers": [{"id": "e0", "class": "shared_only", "allowed_resources": ["shared"], "adopted": true, "adoption_tick": 2, "effect_state": "NOT_APPLIED_VERIFIED", "idempotent": true, "placebo_wording": "A"}]
+    },
+    {
+      "id": "uncertain-delivery",
+      "topology": "shared_only",
+      "deadline": 5,
+      "advice_expires": 5,
+      "stagger_ticks": [0],
+      "resources": {"shared": {"capacity": 1, "step_duration": 1}},
+      "offers": [{"id": "u0", "class": "shared_only", "allowed_resources": ["shared"], "adopted": true, "adoption_tick": 0, "effect_state": "UNKNOWN", "idempotent": false, "placebo_wording": "A"}]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "allocation": "RESIDUAL-DEPENDENCE-6096-T0-20261001-01",
+  "source_commit": "26f1da8f0a68cb256ea1b3623ef93b2cec4a0ef0",
+  "frozen_before_candidate": true,
+  "candidate_invocations_max": 1,
+  "auditor_invocations_max": 1,
+  "retries": 0,
+  "environment_plan": "Docker preferred; Windows host CPython if Docker Engine remains unavailable; no GUI/model/network/physical input.",
+  "sha256": {
+    "PLAN.md": "109A64A4AFFC0855785EC83E5E1830781D2336AF00BD5DCAF71ACB3193656E50",
+    "public.json": "69A2B501723CC7306384E47D8B230529A09FC4B45F6173A75AB0AD2B719CF6C5",
+    "truth.json": "EC31252D60251FBA4DBE60E7FA6E97A99F16E10A864850D9B678D7B1075A200B",
+    "candidate.py": "CB0A1CA91461329A0BF6EC76618904B14C382866EE15D53CD0D71E13A22AE8D8",
+    "audit.py": "72902CDE7A0A11775A98F2585EF5F9F95C3CBB1044252EB13AD800B690AF42ED",
+    "test_t0.py": "52E24FD318281C785AD218AAAFD9DB67A937D289CDA78EF6160351A2B2DD703F"
+  },
+  "construction": "6/6 tests passed before freeze; both scripts compile.",
+  "formal_visibility": "candidate.py accepts only public.json; truth.json is used by audit.py only after raw output exists."
+}

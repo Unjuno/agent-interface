@@ -1,0 +1,46 @@
+{
+  "schema": "issue-6509-t0-freeze-v1",
+  "issue": 6509,
+  "allocation": "CLAIM-SCOPED-PARTIAL-VERDICT-6509-T0-20261002-01",
+  "frozen_at_utc": "2026-10-02T04:12:50Z",
+  "base_main_sha": "b95e919d5844b8136f046868f89a28d73f4f5345",
+  "branch": "research/claim-scoped-partial-verdict-6509-t0-wslc-20261002",
+  "source_path": "research/analysis/claim_scoped_partial_verdict_6509_t0_20261002/",
+  "source_files": {
+    "README.md": "0103cefc820110a358b4e278eec44036c6230e970a60239e2bd3f369c7bc6308",
+    "PREREGISTRATION.md": "53abf54ac7bf92683d74574068913218cf154fc7c92840cbde62eae62ca9345f",
+    "RUN_PROTOCOL.md": "b413d064b9a1f59681fcadff9fbded08bb14193cb20594806bd7e3f144a1002e",
+    "fixture.json": "ab16203b16fa16202f8c577c47b277052c3418ad55488bb902c31563ea65fa1b",
+    "candidate.py": "e437b304fdab52caff724a9df41ad07297f8c1def478d1083cfca1ba74adfc27",
+    "auditor.py": "02fbb6f8cccc47416c105cf5afe0ac503441ef197e0b75d1118b51fc5315ee06",
+    "test_protocol.py": "5a5ae04b9875ff6b0a7a83165ff2ccdce8e653672ebceb8b1e88ffe2f8806f86"
+  },
+  "runtime": {
+    "name": "Microsoft WSL Containers",
+    "cli": "wslc.exe",
+    "version": "3.0.1.0",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "image_id": "sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4",
+    "platform": "linux/amd64",
+    "python": "3.12.14",
+    "pull": "never",
+    "network": "none",
+    "cpus": "1",
+    "memory": "1G",
+    "user": "65534:65534",
+    "remove_after_run": false
+  },
+  "commands": {
+    "construction": "python -B -c <print /sys/fs/cgroup/memory.max and Python version> && python -B -m unittest -v test_protocol",
+    "candidate": "python -B /src/candidate.py /src/fixture.json /out/candidate.raw.json",
+    "auditor": "python -B /src/auditor.py /in/candidate.raw.json /out/audit.json"
+  },
+  "budget": {
+    "construction_runs_max": 1,
+    "candidate_runs_max": 1,
+    "auditor_runs_max": 1,
+    "retries": 0
+  },
+  "decision": "METHOD_PASS_SCOPED only under PREREGISTRATION.md gates; no claim of real GUI safety, authority, or latency benefit",
+  "post_freeze_main_advance": "Unrelated main advances do not invalidate this standalone synthetic study; same-path, source, fixture, or runtime identity changes stop the next rung."
+}

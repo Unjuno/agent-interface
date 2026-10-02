@@ -1,0 +1,16 @@
+{
+  "schema": "issue-6556-t0-independent-oracle-v1",
+  "truth": {
+    "old_event_original_instance": {"origin":{"intent":"A","generation":1,"instance":"wait-A"},"eligible":false,"reason":"retired_origin_even_if_routed_to_old_instance"},
+    "old_event_rebound_missing_origin": {"origin":{"intent":"A","generation":1,"instance":"wait-A"},"eligible":false,"reason":"old_lineage_rebound_to_B_listener"},
+    "fresh_reused_cue_generation_B": {"origin":{"intent":"B","generation":2,"instance":"wait-B"},"eligible":true,"reason":"fresh_authorized_generation"},
+    "legitimate_A_before_retirement": {"origin":{"intent":"A","generation":1,"instance":"wait-A"},"eligible":true,"reason":"A_active_at_delivery"},
+    "duplicate_event_in_B": {"origin":{"intent":"B","generation":2,"instance":"wait-B"},"eligible":false,"reason":"duplicate_event_id"},
+    "cancelled_no_active_intent": {"origin":{"intent":"A","generation":1,"instance":"wait-A"},"eligible":false,"reason":"no_active_intent_after_cancel"},
+    "accepted_handoff_old_event": {"origin":{"intent":"A","generation":1,"instance":"wait-A"},"eligible":false,"reason":"A_retired_by_accepted_handoff"},
+    "unaccepted_handoff_A_still_active": {"origin":{"intent":"A","generation":1,"instance":"wait-A"},"eligible":true,"reason":"handoff_not_accepted_A_remains_active"},
+    "restart_retirement_receipt_present": {"origin":{"intent":"A","generation":1,"instance":"wait-A"},"eligible":false,"reason":"durable_retirement_survives_restart"},
+    "restart_origin_and_receipt_missing": {"origin":{"intent":"A","generation":1,"instance":"wait-A"},"eligible":false,"reason":"unknown_lineage_must_fail_closed"}
+  },
+  "obligations_are_not_effect_or_release_receipts": true
+}

@@ -1,0 +1,159 @@
+{
+  "allocation_id": "CROSS-TASK-SUCCESS-HISTORY-CALIBRATION-6241-T0-20261002-01",
+  "frozen_main_sha": "d7e8a932da27e7f271920de409b079fedc75dee1",
+  "rows": [
+    {
+      "case_id": "shared_regime_strong_success",
+      "current_b": {
+        "authority": "read-only",
+        "capability_id": "sidebar.inspect.v1",
+        "generation": 4,
+        "intent": "inspect the current sidebar route",
+        "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "route_precondition_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "task_id": "task-B-901"
+      },
+      "decision": "PROPOSE_ROUTE",
+      "effect_state": "none",
+      "included_history_artifact_ids": [
+        "task-A-112:2"
+      ],
+      "open_obligations": [],
+      "transfer_eligible": true,
+      "transferred_success_probability": 0.75
+    },
+    {
+      "case_id": "independent_regime_same_streak",
+      "current_b": {
+        "authority": "read-only",
+        "capability_id": "sidebar.inspect.v1",
+        "generation": 4,
+        "intent": "inspect the current sidebar route",
+        "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "route_precondition_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "task_id": "task-B-901"
+      },
+      "decision": "VERIFY_CURRENT_B",
+      "effect_state": "none",
+      "included_history_artifact_ids": [],
+      "open_obligations": [],
+      "transfer_eligible": false,
+      "transferred_success_probability": 0.5
+    },
+    {
+      "case_id": "shared_regime_precondition_changed",
+      "current_b": {
+        "authority": "read-only",
+        "capability_id": "sidebar.inspect.v1",
+        "generation": 4,
+        "intent": "inspect the current sidebar route",
+        "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "route_precondition_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "task_id": "task-B-901"
+      },
+      "decision": "VERIFY_CURRENT_B",
+      "effect_state": "none",
+      "included_history_artifact_ids": [],
+      "open_obligations": [],
+      "transfer_eligible": false,
+      "transferred_success_probability": 0.5
+    },
+    {
+      "case_id": "shared_regime_weak_success",
+      "current_b": {
+        "authority": "read-only",
+        "capability_id": "sidebar.inspect.v1",
+        "generation": 4,
+        "intent": "inspect the current sidebar route",
+        "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "route_precondition_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "task_id": "task-B-901"
+      },
+      "decision": "VERIFY_CURRENT_B",
+      "effect_state": "none",
+      "included_history_artifact_ids": [
+        "task-A-113:1"
+      ],
+      "open_obligations": [],
+      "transfer_eligible": true,
+      "transferred_success_probability": 0.25
+    },
+    {
+      "case_id": "ambiguous_effect_keeps_obligation",
+      "current_b": {
+        "authority": "read-only",
+        "capability_id": "sidebar.inspect.v1",
+        "generation": 4,
+        "intent": "inspect the current sidebar route",
+        "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "route_precondition_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "task_id": "task-B-901"
+      },
+      "decision": "HOLD_AMBIGUOUS_EFFECT",
+      "effect_state": "ambiguous",
+      "included_history_artifact_ids": [
+        "task-A-112:2"
+      ],
+      "open_obligations": [
+        "obligation-A-effect-77"
+      ],
+      "transfer_eligible": true,
+      "transferred_success_probability": 0.75
+    },
+    {
+      "case_id": "unknown_dependency_fails_closed",
+      "current_b": {
+        "authority": "read-only",
+        "capability_id": "sidebar.inspect.v1",
+        "generation": 4,
+        "intent": "inspect the current sidebar route",
+        "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "route_precondition_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "task_id": "task-B-901"
+      },
+      "decision": "HOLD_UNKNOWN_DEPENDENCY",
+      "effect_state": "none",
+      "included_history_artifact_ids": [],
+      "open_obligations": [],
+      "transfer_eligible": false,
+      "transferred_success_probability": 0.5
+    },
+    {
+      "case_id": "private_history_is_omitted",
+      "current_b": {
+        "authority": "read-only",
+        "capability_id": "sidebar.inspect.v1",
+        "generation": 4,
+        "intent": "inspect the current sidebar route",
+        "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "route_precondition_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "task_id": "task-B-901"
+      },
+      "decision": "VERIFY_CURRENT_B",
+      "effect_state": "none",
+      "included_history_artifact_ids": [],
+      "open_obligations": [],
+      "transfer_eligible": false,
+      "transferred_success_probability": 0.5
+    },
+    {
+      "case_id": "capability_mismatch_does_not_transfer",
+      "current_b": {
+        "authority": "read-only",
+        "capability_id": "sidebar.inspect.v1",
+        "generation": 4,
+        "intent": "inspect the current sidebar route",
+        "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "route_precondition_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "task_id": "task-B-901"
+      },
+      "decision": "VERIFY_CURRENT_B",
+      "effect_state": "none",
+      "included_history_artifact_ids": [],
+      "open_obligations": [],
+      "transfer_eligible": false,
+      "transferred_success_probability": 0.5
+    }
+  ],
+  "schema": "context-success-history-candidate-v1"
+}

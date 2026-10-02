@@ -1,0 +1,101 @@
+{
+  "cells": {
+    "fixed_conservative_guard_off": {
+      "all_launched_weight": "1",
+      "expected_proposals_per_launch": "1",
+      "expected_refusals_per_launch": "0",
+      "expected_retries_per_launch": "0",
+      "guard_false_positive_fraction": "0",
+      "guard_true_positive_fraction": "0",
+      "per_admitted_action_harm_fraction": "3/16",
+      "proposal_refusal_fraction": "0",
+      "proposal_work_units_per_launch": "1",
+      "risky_proposal_fraction": "1/4",
+      "risky_rejection_rate": "0",
+      "task_harm_fraction": "3/16",
+      "unfinished_fraction": "0"
+    },
+    "fixed_conservative_guard_on": {
+      "all_launched_weight": "1",
+      "expected_proposals_per_launch": "43/32",
+      "expected_refusals_per_launch": "119/256",
+      "expected_retries_per_launch": "11/32",
+      "guard_false_positive_fraction": "1/4",
+      "guard_true_positive_fraction": "3/4",
+      "per_admitted_action_harm_fraction": "11/150",
+      "proposal_refusal_fraction": "119/344",
+      "proposal_work_units_per_launch": "43/32",
+      "risky_proposal_fraction": "1/4",
+      "risky_rejection_rate": "3/4",
+      "task_harm_fraction": "33/512",
+      "unfinished_fraction": "31/256"
+    },
+    "guard_induced_aggressive_guard_off": {
+      "all_launched_weight": "1",
+      "expected_proposals_per_launch": "1",
+      "expected_refusals_per_launch": "0",
+      "expected_retries_per_launch": "0",
+      "guard_false_positive_fraction": "0",
+      "guard_true_positive_fraction": "0",
+      "per_admitted_action_harm_fraction": "9/16",
+      "proposal_refusal_fraction": "0",
+      "proposal_work_units_per_launch": "1",
+      "risky_proposal_fraction": "3/4",
+      "risky_rejection_rate": "0",
+      "task_harm_fraction": "9/16",
+      "unfinished_fraction": "0"
+    },
+    "guard_induced_aggressive_guard_on": {
+      "all_launched_weight": "1",
+      "expected_proposals_per_launch": "49/32",
+      "expected_refusals_per_launch": "215/256",
+      "expected_retries_per_launch": "17/32",
+      "guard_false_positive_fraction": "1/4",
+      "guard_true_positive_fraction": "3/4",
+      "per_admitted_action_harm_fraction": "39/118",
+      "proposal_refusal_fraction": "215/392",
+      "proposal_work_units_per_launch": "49/32",
+      "risky_proposal_fraction": "3/4",
+      "risky_rejection_rate": "3/4",
+      "task_harm_fraction": "117/512",
+      "unfinished_fraction": "79/256"
+    }
+  },
+  "controls": {
+    "compensation_detected": true,
+    "harm_materiality_margin": "1/10",
+    "null": {
+      "all_launched_weight": "1",
+      "compensation_detected": false,
+      "expected_proposals_per_launch": "43/32",
+      "expected_refusals_per_launch": "119/256",
+      "expected_retries_per_launch": "11/32",
+      "guard_false_positive_fraction": "1/4",
+      "guard_true_positive_fraction": "3/4",
+      "per_admitted_action_harm_fraction": "11/150",
+      "proposal_refusal_fraction": "119/344",
+      "proposal_work_units_per_launch": "43/32",
+      "risky_proposal_fraction": "1/4",
+      "risky_rejection_rate": "3/4",
+      "task_harm_fraction": "33/512",
+      "unfinished_fraction": "31/256"
+    },
+    "protective": {
+      "all_launched_weight": "1",
+      "compensation_detected": false,
+      "expected_proposals_per_launch": "5/4",
+      "expected_refusals_per_launch": "5/16",
+      "expected_retries_per_launch": "1/4",
+      "guard_false_positive_fraction": "1/4",
+      "guard_true_positive_fraction": "0",
+      "per_admitted_action_harm_fraction": "0",
+      "proposal_refusal_fraction": "1/4",
+      "proposal_work_units_per_launch": "5/4",
+      "risky_proposal_fraction": "0",
+      "risky_rejection_rate": "0",
+      "task_harm_fraction": "0",
+      "unfinished_fraction": "1/16"
+    }
+  },
+  "schema": "guard-proposal-risk-t0-v1"
+}

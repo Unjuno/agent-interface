@@ -1,0 +1,15 @@
+{
+  "schema": "approval-sequence-fixture-v1",
+  "required_fields": ["principal", "recipient", "target", "effect", "scope", "expiry"],
+  "requests": [
+    {"request_id":"R01","principal":"owner-a","recipient":"reviewer-a","target":"draft-17","effect":"append_note","scope":"one_note_only","expiry":1000,"consequential":false,"response":"approve","supersedes":null},
+    {"request_id":"R02","principal":"owner-a","recipient":"reviewer-a","target":"draft-17","effect":"append_note","scope":"one_note_only","expiry":1000,"consequential":false,"response":"approve","supersedes":null},
+    {"request_id":"R03","principal":"owner-a","recipient":"reviewer-a","target":"draft-17","effect":"append_note","scope":"one_note_only","expiry":1000,"consequential":false,"response":"approve","supersedes":null},
+    {"request_id":"R04","principal":"owner-a","recipient":"reviewer-a","target":"draft-17","effect":"append_note","scope":"one_note_only","expiry":1000,"consequential":false,"response":"approve","supersedes":null},
+    {"request_id":"R05","principal":"owner-a","recipient":"reviewer-a","target":"draft-17","effect":"append_note","scope":"one_note_only","expiry":1000,"consequential":false,"response":"approve","supersedes":null},
+    {"request_id":"R06","principal":"owner-a","recipient":"reviewer-b","target":"draft-18","effect":"send_external","scope":"one_message","expiry":1000,"consequential":true,"response":"approve","supersedes":null},
+    {"request_id":"R07","principal":"owner-a","recipient":"reviewer-a","target":"draft-18","effect":"view_preview","scope":"read_only_preview","expiry":1020,"consequential":false,"response":"approve","supersedes":null},
+    {"request_id":"R08","principal":"owner-a","recipient":"reviewer-a","target":"draft-19","effect":"export_copy","scope":"one_local_copy","expiry":1030,"consequential":true,"response":"deny","supersedes":null},
+    {"request_id":"R09","principal":"owner-a","recipient":"reviewer-a","target":"draft-17","effect":"append_note_and_share","scope":"one_note_plus_external_share","expiry":1040,"consequential":true,"response":"approve","supersedes":"R01"}
+  ]
+}
