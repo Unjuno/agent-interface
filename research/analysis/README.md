@@ -379,6 +379,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`endogenous_demand_rebound_5702_t0_v1/`](endogenous_demand_rebound_5702_t0_v1/)
 - [`entrypoint_argv_preflight_5156_v2_20261001/`](entrypoint_argv_preflight_5156_v2_20261001/)
 - [`epistemic_commit_5441_t4/`](epistemic_commit_5441_t4/)
+- [`error_carry_6081_s04_20261003/`](error_carry_6081_s04_20261003/)
 - [`error_carry_6081_successor_orbstack_20261002/`](error_carry_6081_successor_orbstack_20261002/)
 - [`error_carry_6081_t0_20261001/`](error_carry_6081_t0_20261001/)
 - [`escrow_optional_budget_6156_t0_20261002/`](escrow_optional_budget_6156_t0_20261002/)
