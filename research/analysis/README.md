@@ -1,5 +1,9 @@
 # Analytical research
 
+- [`conditional_parallax_6079_layer_identity_a01_20261003/FORMAL_FAILURE.md`](conditional_parallax_6079_layer_identity_a01_20261003/FORMAL_FAILURE.md) — #6838 A01: eight candidate rows retained, original auditor stopped with recursion failure; supplemental A03 raw-only audit later reconciled, without erasing this execution HOLD.
+- [`conditional_parallax_6079_layer_identity_a02_audit_20261003/FORMAL_FAILURE.md`](conditional_parallax_6079_layer_identity_a02_audit_20261003/FORMAL_FAILURE.md) — #6841 A02 audit-only attempt: HOLD at the mutation-control gate because one layer relabel was a no-op; no output or retry.
+- [`conditional_parallax_6079_layer_identity_a03_controls_20261003/REPORT.md`](conditional_parallax_6079_layer_identity_a03_controls_20261003/REPORT.md) — #6843 A03 supplemental raw-only audit: 8/8 rows and truth labels reconciled; five actual mutations rejected; finite synthetic 2-D scope only.
+
 - [`adoption_conditioned_recourse_6358_host_a02_20261003/REPORT.md`](adoption_conditioned_recourse_6358_host_a02_20261003/REPORT.md) — #6358 Mac-host T0 A02: shared/high-adoption recipient-specific routing resolved 4/4 versus 2/4 for generic, witness, public-stagger, and wording-placebo arms; independent audit passed 56/56 synthetic ledgers. No human, GUI, production, or causal claim; both earlier pre-candidate STOPs remain preserved.
 
 - [`model_api_canary_wslc_replay_6001_t0_20261003/REPORT.md`](model_api_canary_wslc_replay_6001_t0_20261003/REPORT.md) — #6001 exact PR #6104 frozen source rerun in WSLc; raw byte-identical, auditor PASS_METHOD_SCOPED, tests 9/9; runtime reproducibility only, earlier STOPs unchanged.
@@ -324,6 +328,9 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`conditional_deadline_certificate_6059_t0_20261001/`](conditional_deadline_certificate_6059_t0_20261001/)
 - [`conditional_parallax_6079_foreground_control_a01_20261003/`](conditional_parallax_6079_foreground_control_a01_20261003/)
 - [`conditional_parallax_6079_integrity_adjudication_a01_20261003/`](conditional_parallax_6079_integrity_adjudication_a01_20261003/)
+- [`conditional_parallax_6079_layer_identity_a01_20261003/`](conditional_parallax_6079_layer_identity_a01_20261003/)
+- [`conditional_parallax_6079_layer_identity_a02_audit_20261003/`](conditional_parallax_6079_layer_identity_a02_audit_20261003/)
+- [`conditional_parallax_6079_layer_identity_a03_controls_20261003/`](conditional_parallax_6079_layer_identity_a03_controls_20261003/)
 - [`conditional_parallax_6079_t0_v1_20261003/`](conditional_parallax_6079_t0_v1_20261003/)
 - [`conditional_route_rescue_5598_t0_20261001/`](conditional_route_rescue_5598_t0_20261001/)
 - [`conflict_aware_evidence_ledger_5305_t0/`](conflict_aware_evidence_ledger_5305_t0/)
