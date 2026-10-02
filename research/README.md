@@ -13,6 +13,7 @@ For claims and scientific disposition, start with the top-level [research index]
 | Latest detailed handoff | [../docs/LOCAL_RESEARCH_HANDOFF.md](../docs/LOCAL_RESEARCH_HANDOFF.md) |
 | Progress and remaining gates | [../docs/PROGRESS_FROM_BASELINE.md](../docs/PROGRESS_FROM_BASELINE.md) |
 | Current Linux research caller | [live_control/CURRENT_CLIENT.md](live_control/CURRENT_CLIENT.md) |
+| Historical local-GPU triage snapshot (not current resource authorization) | [gpu/RECOVERY_STATUS.md](gpu/RECOVERY_STATUS.md) |
 | Research convergence/freeze criteria | [evolution/freeze_criteria.md](evolution/freeze_criteria.md) |
 | Issue #59 global-owner event/head invariance T0 | [analysis/map01_global_owner_invariance_59_t0_20261001/REPORT.md](analysis/map01_global_owner_invariance_59_t0_20261001/REPORT.md) |
 | Issue #5970 × #5348 causal-cut recovery reachability T0 | [analysis/blackstart_causal_cut_5970_t0_20261001/REPORT.md](analysis/blackstart_causal_cut_5970_t0_20261001/REPORT.md) |
@@ -228,4 +229,3 @@ A directory existing here does **not** mean its mechanism is promoted. Negative 
 - [`aoi_43_t0/`](aoi_43_t0/) — #43 retained toy construction; [accounting-defect/HOLD correction](aoi_43_t0/README.md): identical queue policies and incomparable drop counters; no demonstrated critical-retention benefit.
 
 - [`doom/map01_cuda_hud_5752_preflight_stop_20261001/REPORT.md`](doom/map01_cuda_hud_5752_preflight_stop_20261001/REPORT.md) — Issue #5752 allocation-01 pre-candidate record; its authoritative STOP reason and timestamp are reconciled in [CORRECTION.md](doom/map01_cuda_hud_5752_preflight_stop_20261001/CORRECTION.md). CUDA hypothesis remains untested.- [Issue #6156 escrowed optional-resource budget T0](analysis/escrow_optional_budget_6156_t0_20261002/REPORT.md) — Docker PASS_METHOD_SCOPED over 9,988 reachable states / 27,748 transitions; balanced coordination benefit and skew/crash stranded-right cost retained; no runtime claim.
-
