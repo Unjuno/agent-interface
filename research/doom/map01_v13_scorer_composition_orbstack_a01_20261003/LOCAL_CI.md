@@ -11,3 +11,11 @@ python3 research/doom/test_audit_map01_terminal_score_agreement_v1.py           
 ```
 
 This is repeatable CI construction/guard verification, not another candidate or auditor allocation. The frozen candidate/auditor counts remain 1/1, retries 0. The workflow's GitHub allocation-owner gate and live MAP01 one-shot were not invoked. `git diff --check`, JSON parsing of the retained manifests, and Python compilation of `audit.py` also passed locally.
+
+The PR's two additional checks were also replayed locally while GitHub runners were queued:
+
+```text
+python3 .github/check_public_navigation.py                                      PASS (26 documents, 1,622 links)
+python3 -B -m unittest discover -s research -p 'test_*workspace*.py' -v       21/21 PASS
+python3 research/check_workspace_index.py --git-tree                           PASS (156 top-level directories)
+```
