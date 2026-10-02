@@ -73,6 +73,8 @@ Historical and superseded integration paths remain in place when their exact nam
 
 ## Retained runtime failure boundaries
 
+- [WSLc memory-cap receipt audit — #3352/#6309](wslc_memory_enforcement_3352_t1_audit_20261002/REPORT.md) — independent WSLc audit confirms the exact local record of both 512M/128M trials retaining 384 MiB and exiting 0 (`PASS_INDEPENDENT_AUDIT_SCOPED`); PR #6309's published files differ from that original packet. Receipt evidence only: no effective cap, peak RSS, representative workload or migration-benefit proof; #3352 remains open.
+
 - [Public MCP pre-worker executor rejection](mcp_executor_rejection_5375_dot_v1/REPORT.md), Issue #5539: `FAIL_PREWORKER_CAPACITY_RELEASE` in one deliberately injected lifecycle fault. A healthy executor and fresh server recover while the affected server remains busy with no invoked operation. Exact original source/receipts and warning are retained; no native/GUI action or production repair is included. [Lossless module-map restoration](mcp_executor_rejection_5375_dot_v1/PACKAGING.md).
 
 ## Retained construction and precheck archives
