@@ -51,7 +51,11 @@ def run(args) -> int:
             raise ValueError(f"STOP_SOURCE_COMMIT_MISMATCH:{head}:parent={parent}")
         changed = subprocess.check_output(["git", "diff-tree", "--no-commit-id", "--name-only", "-r", "HEAD"],
                                           cwd=source, text=True).splitlines()
-        if sorted(changed) != ["FREEZE.json", "FREEZE.sha256"]:
+        repo_root = Path(subprocess.check_output(["git", "rev-parse", "--show-toplevel"],
+                                                  cwd=source, text=True).strip())
+        expected_freeze_paths = sorted([str(freeze_file.relative_to(repo_root)),
+                                        str(sidecar.relative_to(repo_root))])
+        if sorted(changed) != expected_freeze_paths:
             raise ValueError(f"STOP_FREEZE_COMMIT_SCOPE_MISMATCH:{changed}")
         worktree = subprocess.check_output(["git", "status", "--porcelain"], cwd=source, text=True)
         if worktree.strip():
