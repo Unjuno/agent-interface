@@ -41,6 +41,26 @@ experiment. When blocked, state the exact missing authority/resource or failed
 gate and keep the research goal open. This cadence is experiment-first; it does
 not authorize retries of consumed allocations or broad runtime/product claims.
 
+### Issue-scoped experiment chain — #6576 (2026-10-02)
+
+This user's active direction is to execute the hypotheses inside the Issue,
+retain each first outcome, and use PR/main as the evidence handoff so an
+integration worker can independently revalidate it. Do not treat the merge as
+the research result or substitute issue/branch bookkeeping for a run. The
+timer-quantization chain has now run three distinct, fresh-input OrbStack Docker
+experiments in the dedicated #6576 VM/private Engine (never the shared
+`unjuno-native-ci-6092`): A01 found a q=1.0 finite synthetic eligibility
+counterexample; A02 tested a 20-distinct-tail-value rule on 30 seeds/resolution;
+A03 swept cutoffs 8/12/16/20/24 on 50 fresh seeds/resolution and found 8 was
+the smallest tested cutoff meeting its synthetic detection/false-hold criteria.
+The first two records are merged in PRs #6726/#6728; A03 is being delivered as a
+reviewable successor. These are construction/method results only—not validation
+of an operational resolution cutoff, EVT tail calibration, physical release,
+safety, or worst-case claim. The separately gated formal six-case T0 remains
+uninvoked. See the additive packages under
+`research/analysis/extreme_tail_eligibility_6576_construction_v1/timer_quantization_a0{1,2,3}_20261002/`
+and [Issue #6576](https://github.com/Unjuno/agent-interface/issues/6576).
+
 This user direction takes precedence over the narrower integration-only
 wording immediately below for the current autonomous research task; the
 existing desktop integration and human-tempo objectives remain valid backlog.

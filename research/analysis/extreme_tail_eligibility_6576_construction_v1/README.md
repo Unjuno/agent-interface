@@ -124,6 +124,13 @@ controls, and held 7/24 intermediate q=0.25 fixtures; its preregistered
 synthetic criterion passed. This cutoff remains unvalidated beyond these
 generator/quantum conditions and is not a production recommendation.
 
+[A03](timer_quantization_a03_20261002/RUN_RECORD.md) swept support cutoffs
+8/12/16/20/24 on 50 fresh seeds each at q=0, 0.25, 0.5 and 1.0. Cutoff 8 was
+the smallest tested value meeting the synthetic criteria (q=1.0 hold 48/50;
+continuous 0/31 and q=0.25 0/36 additional holds). Cutoff 20 held 14/36 q=0.25
+fixtures; q=0.5 had only 2/50 baseline-eligible fixtures. This narrows the
+synthetic tradeoff only and does not validate a deployed threshold.
+
 ### Execution status and local CI / provenance checks
 
 The earlier host-only boundary package and censor-cap probe remain preserved.
