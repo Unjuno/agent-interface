@@ -4,6 +4,8 @@
   "status": "PASS_METHOD_SCOPED",
   "source_base_main": "ee3d4bf07eccde83c03d0a12924def2af16f9bec",
   "main_incorporated_pre_formal": "f4fcea6a67f1d8695626447d97ae697fa454a04e",
+  "main_incorporated_post_formal": "30f23e59c9d4637985fac7cae7abf008e2da1f62",
+  "post_formal_main_merge_commit": "30d14e5dc2",
   "frozen_source_commit": "627ba24aa0ef84ad78a301e50b79bd51bc624408",
   "preregistration_comments": {"superseded_main_anchor": 5944983873, "corrected_pre_formal_anchor": 5944993396},
   "formal_attempts": {"candidate": 1, "auditor": 1, "retries": 0},
@@ -50,11 +52,11 @@
     "conservative_stop": {"out_of_scope_proposed": 0, "attempted": 0, "gate_checked": 0, "gate_allowed_simulated": 0, "synthetic_effects": 0, "undisclosed_synthetic_effects": 0, "in_scope_recovery_effects": 0, "false_stops": 1}
   },
   "local_ci": {
-    "initial_path_typo": {"exit_code": 1, "cause": "test discover path had an extra date segment; ImportError before test discovery", "formal_experiment_impact": "none"},
+    "initial_path_typo": {"command": "python -B -m unittest discover -s research/analysis/denial_aware_request_policy_6422_t0_20261002_v1 -p 'test_*.py' -v", "exit_code": 1, "cause": "test discover path had an extra date segment; ImportError before test discovery", "formal_experiment_impact": "none"},
     "corrected_current_workflow_suites": "PASS; benign-error 5, denial-aware 2, approval display 7, endogenous rebound 8, selection audit 12 tests",
     "additional_approval_assay_suite": "PASS; 8 tests",
     "total_local_tests": 42,
-    "analysis_index": "PASS; 412 retained result/failure directories",
+    "analysis_index": "PASS; 418 retained result/failure directories",
     "workflow_yaml": "PASS",
     "git_diff_check": "PASS"
   },
