@@ -1,0 +1,41 @@
+{
+  "schema": "needle-cross-process-stop-v1",
+  "allocation": "needle-cross-process-publication-5045-v1",
+  "issue": 5045,
+  "branch": "research/needle-cross-process-publication-5045-v1-20260928",
+  "observed_at": "2026-09-28",
+  "disposition": "STOP_RESOURCE_OR_OWNERSHIP_UNCLEAR",
+  "stage": "before formal orchestration",
+  "evidence": {
+    "docker_context": "desktop-linux",
+    "engine": "docker-desktop linux x86_64",
+    "running_containers": [
+      {
+        "name": "cranky_panini",
+        "status": "Up 7 hours",
+        "owner": "unconfirmed; not modified"
+      },
+      {
+        "name": "agent-interface-570-r3-ollama",
+        "status": "Up 17 hours",
+        "owner": "unconfirmed; not modified"
+      }
+    ],
+    "gpu": "0 MiB; utilization alone is not ownership release",
+    "explicit_shared_cpu_lane_release": false,
+    "sibling_lanes": "other active research lanes are waiting on/shared CPU or GPU resources; no explicit release observed"
+  },
+  "construction_only": {
+    "command": "python -B -m unittest -v test_protocol.py test_audit.py; AST parse 6 Python files; python -B -m json.tool FREEZE.json",
+    "tests": "7/7 passed",
+    "audit_mutation_controls": "12/12 rejected on synthetic in-memory records",
+    "syntax": "AST_SYNTAX_OK files=6",
+    "freeze_json": "valid"
+  },
+  "formal_runner_invocations": 0,
+  "formal_auditor_invocations": 0,
+  "docker_formal_invocations": 0,
+  "output_created": false,
+  "interpretation": "Operational STOP, not a hypothesis result. No cross-process observations were collected; no scientific PASS/FAIL inference is made.",
+  "retry_policy": "No formal retry from this allocation after resource ownership changes; re-check and re-freeze under a successor allocation if run is rescheduled."
+}

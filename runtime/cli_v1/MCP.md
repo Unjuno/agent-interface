@@ -333,6 +333,17 @@ Public MCP tools reject unknown top-level argument names before invoking the ope
 
 In guarded-x11 mode, interface_guarded_mint_many accepts one source_sequence and 1..8 references, each containing alias, point=[screen_x,screen_y], and region_size=[width,height]. Use the exact delivered source you inspected. Each alias must match [a-z][a-z0-9_]{0,31}; points are integer pairs and region dimensions are 4..96 pixels. Unknown nested fields and duplicate aliases refuse before any registration. This reuses the existing bridge mint operation; it does not capture, click, infer targets, acknowledge UI state, or weaken later input guards.
 
+Successful single mint replies and each successful `minted` entry include
+`lifetime`: `clock="time.monotonic_ns"`, `minted_ns`, `expires_ns`,
+`capture_freshness_ms` and `authority_granted=false`. Compare the deadline only
+with `interface_clock` from the same running execution host. References expire
+300 seconds after minting; each input still independently checks fresh captures,
+focus, exact pixels and the point immediately before pressing. A deadline in the
+future is not evidence of pixel validity or input authority. Retained results
+return the original lifetime and never renew it. After a pause, explicitly
+observe and review the screen, then mint a new unique alias if needed; there is
+no automatic renewal, input retry or extension of the original reference.
+
 Successful entries return alias/offset pairs under minted. Registration is sequential and not atomic. If minting raises, the reply retains earlier successes, identifies failed_index and failed_alias with failed_alias_state="unknown", and lists unattempted_aliases. Registration may have occurred before a persistence failure, so do not replay the batch or reuse the failed alias. Inspect the outcome and explicitly choose fresh references if needed. Full retained results remain available without reminting.
 
 This transport option reduces the number of registration requests for a supplied group by construction. It does not establish lower model latency, token cost, or generic task completion; primary GUI validation and matched measurement are separate requirements.

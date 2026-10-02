@@ -1,0 +1,14 @@
+{
+  "issue": 5776,
+  "allocation": "5776-recovery-rate-t0-20261001-01",
+  "episodes_per_mechanism": 40,
+  "opportunities_per_episode": 8,
+  "calibration_episode_ids": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
+  "heldout_episode_ids": [20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39],
+  "mechanisms": ["gradual_slowing", "abrupt_breaker", "stable_null", "load_drift"],
+  "test_threshold_quantile": 0.75,
+  "test_threshold_comparison": "strictly_greater",
+  "maximum_heldout_false_alarm_rate": 0.10,
+  "minimum_heldout_gradual_sensitivity": 0.75,
+  "formal_invocations": {"candidate": 1, "auditor_if_candidate_exit_0": 1, "retry": 0}
+}

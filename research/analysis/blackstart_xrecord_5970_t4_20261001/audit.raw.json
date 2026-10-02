@@ -1,0 +1,36 @@
+{
+  "counts": {
+    "app": 2,
+    "observer": 0,
+    "record": 2
+  },
+  "errors": [],
+  "record_events": [
+    {
+      "detail": 50,
+      "event": 0,
+      "root": 543,
+      "time": 26863547,
+      "type": 2
+    },
+    {
+      "detail": 50,
+      "event": 0,
+      "root": 543,
+      "time": 26863579,
+      "type": 3
+    }
+  ],
+  "record_thread_errors": [
+    "TypeError(\"object of type 'NoneType' has no len()\")"
+  ],
+  "release_attempted": true,
+  "schema": "blackstart-xrecord-t4-independent-audit-v1",
+  "scope": "server-delivered core X events in private Xvfb only; no physical HID or causal ordering inference",
+  "status": "PASS_RECORD_DISAMBIGUATES_OBSERVER_GAP",
+  "terminal_neutral": true,
+  "verified_t3_sha256": {
+    "app.py": "fe24b580beaf048921352cc49ec380ba6f3122240c9197a1b62fc766d72afa63",
+    "observer.py": "a3e46223019f67bf98bb2a202aa24196628d2c975255bec034bd7855bf812d4d"
+  }
+}

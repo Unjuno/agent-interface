@@ -1,0 +1,59 @@
+{
+  "allocation_id": "INTERMITTENT-IDENTITY-SWITCH-6061-T1-20261002-01",
+  "status": "FROZEN_PRE_FORMAL",
+  "issue": 6061,
+  "related_issue": 59,
+  "main_commit": "c81e3d8ffebc7cbc2af971dfb7fb2d9b1ba1f7fe",
+  "branch": "research/intermittent-control-identity-switch-6061-t1-20261002",
+  "package": "research/doom/map01_intermit_identity_switch_6061_t1_20261002",
+  "source_sha256": {
+    "make_fixture.py": "15422741407aadecef97658a03079162eb2c36f6732acce79f5fcf6b04b4769c",
+    "candidate.py": "db5e6ecb0b78c6f15d62df6ece548c1b9c2b0e4ea129e91bc9e7a9e7dfa4e5a2",
+    "audit.py": "9868d560164915e3fe86ac51305e4d29ff5e833f842a45f4bf1e3c0991d44684",
+    "test_construction.py": "b01d268ff597e9ecfe8e08fbde0a5407fa118b1fb33ef2f6e1cb87baf88bd6fe",
+    "run_formal.py": "7d8e58a508e28d3c532acedfa4f8f1fc12752776fa07c677437b8008420ff4be"
+  },
+  "plan_sha256": "2c5325bdec4e482ee87a69a28238e201a8160767d3c02f6b5264128a12bf7620",
+  "input_sha256": {
+    "input.json": "237bcfb7301a95f2b48bfa2aedee8abdac60d8e1b8b99c71544b4908abad79d2",
+    "truth.json": "ad915910df439bd621f06d3fba3670d5ce0b25f88903194a3e8ec1700e70ba29"
+  },
+  "image": {
+    "reference": "python:3.12-alpine",
+    "image_id": "sha256:c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b",
+    "platform": "linux/arm64",
+    "pull": "never"
+  },
+  "preflight_resources": {
+    "docker_engine": "OrbStack 29.4.0 linux/aarch64",
+    "preexisting_running_container": "unjuno-native-ci-6092",
+    "preexisting_running_orbstack_vm": "obs-audit-t1-5681-20261001",
+    "preexisting_resources_modified": false,
+    "exclusive_shared_slot_claimed": false,
+    "user_instruction": "use OrbStack; only a CPU-limited disposable container will be created"
+  },
+  "preflight_resources": {
+    "docker_engine": "OrbStack 29.4.0 linux/aarch64",
+    "preexisting_running_container": "unjuno-native-ci-6092",
+    "preexisting_running_orbstack_vm": "obs-audit-t1-5681-20261001",
+    "preexisting_resources_modified": false,
+    "exclusive_shared_slot_claimed": false,
+    "user_instruction": "use OrbStack; only a CPU-limited disposable container will be created"
+  },
+  "formal": {
+    "candidate_invocations": 1,
+    "auditor_invocations_if_candidate_exit_zero": 1,
+    "retries": 0,
+    "policies": ["identity_epoch_gate", "identity_only_gate", "kinematic_only", "no_continuation"],
+    "cases": ["same_identity_control", "visible_identity_switch", "epoch_only_switch", "unknown_epoch_switch", "silent_identity_switch"],
+    "rows_expected": 20,
+    "network": "none",
+    "root_filesystem": "read-only",
+    "cpu_limit": 0.25,
+    "memory_limit": "128m",
+    "pids_limit": 32,
+    "authority": {"model": false, "gui": false, "game": false, "physical_input": false, "network": false}
+  },
+  "output": "research/doom/map01_intermit_identity_switch_6061_t1_20261002/results/allocation-01/",
+  "output_path_empty_before_formal": true
+}

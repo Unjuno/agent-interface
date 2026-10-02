@@ -1,0 +1,12 @@
+{
+  "schema": "map01-json-boundary-host-audit-attempt-v2",
+  "command": "python3 -B audit_v2.py",
+  "started_against": "immutable results/construction-01/RAW.json",
+  "candidate_invocations_during_attempt": 0,
+  "exit_code": 1,
+  "status": "STOP_AUDITOR_IMPLEMENTATION_ERROR",
+  "exception": "NameError",
+  "message": "name 'expected' is not defined. Did you mean: 'rejected'?",
+  "raw_sha256": "8d78e5fc8f5df2aea7aa2f7e33caf35002477d0f83ba983909d91c91c8f45c7c",
+  "preservation": "v1 candidate raw, v1 RUN.json, and v1 AUDIT.json unchanged; no retry of audit_v2.py"
+}

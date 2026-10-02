@@ -1,0 +1,285 @@
+{
+  "allocation": "effect-owner-deadline-4195-20260923-02",
+  "audit_sha256": "1c7d45c077e7a308dff91ff90806d89b4c363d2ec2e92192c87908541457c236",
+  "batch_exits": [
+    0,
+    0,
+    0
+  ],
+  "controls_rejected": 12,
+  "controls_sha256": "041e4fe481c51321a5c6710f88611b8e9df53c1eb87451394528eb9e07b63781",
+  "decision": "PASS_EFFECT_OWNER_DEADLINE_SCOPED",
+  "id001": {
+    "allocation": "effect-owner-deadline-4195-20260923-01",
+    "complete_rows": 20,
+    "execution": "STOP_EXTERNAL_EXECUTION_TIMEOUT",
+    "formal_stderr_bytes": 0,
+    "formal_stdout_bytes": 0,
+    "partial_case_dirs": [
+      "formal-1-SINK_PRECOMMIT_DEADLINE-EARLY_LONG"
+    ],
+    "planned_rows": 36,
+    "post_freeze_tuning": 0,
+    "replacements": 0,
+    "residual_owned_processes": 0,
+    "same_id_reruns": 0,
+    "scientific": "HOLD_FORMAL_INCOMPLETE",
+    "source_mismatches": [],
+    "unstarted_rows": 15
+  },
+  "post_freeze_tuning": 0,
+  "replacements": 0,
+  "rows": 36,
+  "same_batch_reruns": 0,
+  "source_unchanged": true,
+  "summary": {
+    "APP_CHECK_ONLY/EARLY_LONG": {
+      "app_check_ms": [
+        30.281,
+        30.304,
+        30.358
+      ],
+      "effect_ms": [
+        140.537,
+        140.593,
+        140.598
+      ],
+      "effects": 3,
+      "n": 3,
+      "posthoc": [],
+      "predispatch_ms": [
+        30.153,
+        30.147,
+        30.222
+      ]
+    },
+    "APP_CHECK_ONLY/EARLY_SHORT": {
+      "app_check_ms": [
+        30.318,
+        30.408,
+        30.283
+      ],
+      "effect_ms": [
+        50.582,
+        50.713,
+        50.468
+      ],
+      "effects": 3,
+      "n": 3,
+      "posthoc": [],
+      "predispatch_ms": [
+        30.149,
+        30.162,
+        30.145
+      ]
+    },
+    "APP_CHECK_ONLY/NEAR_LONG": {
+      "app_check_ms": [
+        70.38,
+        70.349,
+        70.377
+      ],
+      "effect_ms": [
+        150.694,
+        150.689,
+        150.658
+      ],
+      "effects": 3,
+      "n": 3,
+      "posthoc": [],
+      "predispatch_ms": [
+        70.166,
+        70.168,
+        70.159
+      ]
+    },
+    "APP_CHECK_ONLY/NEAR_SHORT": {
+      "app_check_ms": [
+        70.332,
+        70.357,
+        70.358
+      ],
+      "effect_ms": [
+        90.665,
+        90.662,
+        90.758
+      ],
+      "effects": 3,
+      "n": 3,
+      "posthoc": [],
+      "predispatch_ms": [
+        70.151,
+        70.17,
+        70.142
+      ]
+    },
+    "SINK_POSTHOC_CHECK/EARLY_LONG": {
+      "app_check_ms": [
+        30.464,
+        30.311,
+        30.336
+      ],
+      "effect_ms": [
+        140.737,
+        140.584,
+        140.618
+      ],
+      "effects": 3,
+      "n": 3,
+      "posthoc": [
+        "LATE",
+        "LATE",
+        "LATE"
+      ],
+      "predispatch_ms": [
+        30.149,
+        30.149,
+        30.163
+      ]
+    },
+    "SINK_POSTHOC_CHECK/EARLY_SHORT": {
+      "app_check_ms": [
+        30.353,
+        30.337,
+        30.292
+      ],
+      "effect_ms": [
+        50.645,
+        50.647,
+        50.524
+      ],
+      "effects": 3,
+      "n": 3,
+      "posthoc": [
+        "ON_TIME",
+        "ON_TIME",
+        "ON_TIME"
+      ],
+      "predispatch_ms": [
+        30.178,
+        30.16,
+        30.153
+      ]
+    },
+    "SINK_POSTHOC_CHECK/NEAR_LONG": {
+      "app_check_ms": [
+        70.466,
+        70.361,
+        70.401
+      ],
+      "effect_ms": [
+        150.754,
+        150.694,
+        150.722
+      ],
+      "effects": 3,
+      "n": 3,
+      "posthoc": [
+        "LATE",
+        "LATE",
+        "LATE"
+      ],
+      "predispatch_ms": [
+        70.146,
+        70.154,
+        70.171
+      ]
+    },
+    "SINK_POSTHOC_CHECK/NEAR_SHORT": {
+      "app_check_ms": [
+        70.312,
+        70.364,
+        70.421
+      ],
+      "effect_ms": [
+        90.541,
+        90.642,
+        90.749
+      ],
+      "effects": 3,
+      "n": 3,
+      "posthoc": [
+        "ON_TIME",
+        "ON_TIME",
+        "ON_TIME"
+      ],
+      "predispatch_ms": [
+        70.152,
+        70.168,
+        70.159
+      ]
+    },
+    "SINK_PRECOMMIT_DEADLINE/EARLY_LONG": {
+      "app_check_ms": [
+        33.426,
+        30.333,
+        30.32
+      ],
+      "effect_ms": [],
+      "effects": 0,
+      "n": 3,
+      "posthoc": [],
+      "predispatch_ms": [
+        33.229,
+        30.167,
+        30.15
+      ]
+    },
+    "SINK_PRECOMMIT_DEADLINE/EARLY_SHORT": {
+      "app_check_ms": [
+        30.391,
+        30.323,
+        30.343
+      ],
+      "effect_ms": [
+        50.649,
+        50.57,
+        50.597
+      ],
+      "effects": 3,
+      "n": 3,
+      "posthoc": [],
+      "predispatch_ms": [
+        30.164,
+        30.15,
+        30.174
+      ]
+    },
+    "SINK_PRECOMMIT_DEADLINE/NEAR_LONG": {
+      "app_check_ms": [
+        70.462,
+        70.338,
+        70.322
+      ],
+      "effect_ms": [],
+      "effects": 0,
+      "n": 3,
+      "posthoc": [],
+      "predispatch_ms": [
+        70.185,
+        70.143,
+        70.144
+      ]
+    },
+    "SINK_PRECOMMIT_DEADLINE/NEAR_SHORT": {
+      "app_check_ms": [
+        70.52,
+        70.305,
+        70.405
+      ],
+      "effect_ms": [
+        90.973,
+        90.575,
+        90.689
+      ],
+      "effects": 3,
+      "n": 3,
+      "posthoc": [],
+      "predispatch_ms": [
+        70.155,
+        70.132,
+        70.209
+      ]
+    }
+  }
+}

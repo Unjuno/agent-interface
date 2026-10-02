@@ -1,0 +1,58 @@
+{
+  "allocation_id": "ROUTE-DEADLINE-6059-T0-20261001-01",
+  "certificates": [
+    {
+      "bound": {
+        "upper_ticks": 4
+      },
+      "id": "bounded_serial_pass",
+      "label": "CERTIFIED_DEADLINE_MET"
+    },
+    {
+      "bound": {
+        "upper_ticks": 9
+      },
+      "id": "burst_local_pass_path_unknown",
+      "label": "UNKNOWN_UPPER_BOUND_EXCEEDS_DEADLINE"
+    },
+    {
+      "bound": {
+        "lower_ticks": 6
+      },
+      "id": "sound_lower_bound_impossible",
+      "label": "CERTIFIED_DEADLINE_IMPOSSIBLE"
+    },
+    {
+      "bound": null,
+      "id": "shared_resource_invalidates_composition",
+      "label": "UNKNOWN_SHARED_RESOURCE_CONTENTION"
+    },
+    {
+      "bound": {
+        "upper_ticks": 6
+      },
+      "id": "bounded_timeout_and_cancellation",
+      "label": "CERTIFIED_DEADLINE_MET"
+    },
+    {
+      "bound": null,
+      "id": "unbounded_stage_unknown",
+      "label": "UNKNOWN_UNBOUNDED_STAGE"
+    },
+    {
+      "bound": null,
+      "id": "missing_service_guarantee_unknown",
+      "label": "UNKNOWN_NO_SERVICE_GUARANTEE"
+    },
+    {
+      "bound": null,
+      "id": "invalid_assumption_unknown",
+      "label": "UNKNOWN_ASSUMPTION_VIOLATED"
+    },
+    {
+      "bound": null,
+      "id": "empirical_lower_bound_cannot_prove_impossible",
+      "label": "UNKNOWN_NO_SERVICE_GUARANTEE"
+    }
+  ]
+}

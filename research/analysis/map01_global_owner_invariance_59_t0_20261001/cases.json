@@ -1,0 +1,14 @@
+{
+  "schema": "map01-global-owner-event-head-matrix-v1",
+  "matrix": [
+    {"case_id":"push_prev_push_same_sha","current_event":"push","prior_event":"push","prior_head":"same"},
+    {"case_id":"push_prev_push_different_sha","current_event":"push","prior_event":"push","prior_head":"different"},
+    {"case_id":"push_prev_dispatch_same_sha","current_event":"push","prior_event":"workflow_dispatch","prior_head":"same"},
+    {"case_id":"push_prev_dispatch_different_sha","current_event":"push","prior_event":"workflow_dispatch","prior_head":"different"},
+    {"case_id":"dispatch_prev_dispatch_same_sha","current_event":"workflow_dispatch","prior_event":"workflow_dispatch","prior_head":"same"},
+    {"case_id":"dispatch_prev_dispatch_different_sha","current_event":"workflow_dispatch","prior_event":"workflow_dispatch","prior_head":"different"},
+    {"case_id":"dispatch_prev_push_same_sha","current_event":"workflow_dispatch","prior_event":"push","prior_head":"same"},
+    {"case_id":"dispatch_prev_push_different_sha","current_event":"workflow_dispatch","prior_event":"push","prior_head":"different"}
+  ],
+  "controls": ["first_run_no_prior_owner", "truncated_event_scoped_view"]
+}

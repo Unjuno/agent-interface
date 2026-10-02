@@ -11,13 +11,13 @@ def encoded(value):
     return json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()
 
 
-def summarize_public_dispatch(view):
+def summarize_public_dispatch(view, *, source_program=None):
     call_id = view.get('call_id') if isinstance(view, dict) else None
     if not isinstance(call_id, str) or not call_id:
         return deepcopy(view)
     return _summarize_dispatch(view, {"tool": "interface_results", "arguments": {
         "call_id": call_id, "include_image": False, "compact": True,
-        "report_refs": True, "detail": "full"}})
+        "report_refs": True, "detail": "full"}}, source_program=source_program)
 
 
 def summarize_cli_dispatch(view, run_directory):
@@ -40,7 +40,7 @@ def summarize_cli_dispatch(view, run_directory):
         return full
 
 
-def _summarize_dispatch(view, retrieval):
+def _summarize_dispatch(view, retrieval, *, source_program=None):
     """Summarize known completed reports only, without changing images or outcomes."""
     full = deepcopy(view)
     try:
@@ -74,6 +74,7 @@ def _summarize_dispatch(view, retrieval):
                 or raw.get("session", {}).get("recovery_required", False) is not False
                 ):
             return full
+        has_post_image = False
         if "post_dispatch_inspection" in raw or "post_dispatch_inspection" in view:
             inspection = raw["post_dispatch_inspection"]
             if (encoded(inspection) != encoded(view["post_dispatch_inspection"])
@@ -83,6 +84,28 @@ def _summarize_dispatch(view, retrieval):
                     or inspection.get("authority_granted") is not False
                     or inspection.get("review_request", {}).get("tool") != "interface_review_target"):
                 return full
+            later = inspection.get("observation_report", {})
+            native = later.get("observation", {}) if isinstance(later, dict) else {}
+            reference = view.get("image_reference", {})
+            stamps = [execution.get("ended_ns")] + [r.get("monotonic_ns") for r in execution["releases"]]
+            captured = native.get("capture_started_ns") if isinstance(native, dict) else None
+            has_post_image = (later.get("status") == "returned" and later.get("error") is None
+                and later.get("input_dispatched") is False and later.get("side_effect_authority") is False
+                and isinstance(later.get("observation_id"), str)
+                and reference.get("post_dispatch_observation_id") == later["observation_id"]
+                and reference.get("capture_phase") == "after_dispatch_release"
+                and type(captured) is int and bool(stamps) and all(type(t) is int for t in stamps)
+                and captured >= max(stamps))
+            if "capture_wait" in inspection:
+                wait = inspection["capture_wait"]
+                if (not has_post_image
+                    or set(wait) != {"requested_ms", "started_ns", "ended_ns", "completed", "update_observed"}
+                    or any(type(wait[k]) is not int for k in ("requested_ms", "started_ns", "ended_ns"))
+                    or not 0 <= wait["requested_ms"] <= 1000
+                    or wait["completed"] is not True or wait["update_observed"] is not None
+                    or wait["started_ns"] < max(stamps) or wait["ended_ns"] < wait["started_ns"]
+                    or wait["ended_ns"] > captured):
+                    return full
             # The complete inspection, including expiry and extensions, stays in
             # the outer view. Only its duplicate inside raw_report is omitted.
         if any(type(execution[k]) is not int or execution[k] < 0 for k in ("started_ns", "ended_ns", "emissions", "program_emissions")):
@@ -91,13 +114,23 @@ def _summarize_dispatch(view, retrieval):
             return full
         if not execution["releases"] or any(r.get("verified") is not True or r.get("keys_down") != [] or r.get("buttons_down") != [] or "error" in r for r in execution["releases"]):
             return full
-        if not execution["observations"] or any("error" in o or "artifact_error" in o for o in execution["observations"]):
+        if ((not execution["observations"] and not has_post_image)
+                or any("error" in o or "artifact_error" in o for o in execution["observations"])):
             return full
         # Preserve all capture, release and activation records, including extensions.
         # Only bounded source/expansion provenance and exact completed/wait lists are omitted.
         section = raw.get("compilation", raw.get("normalization"))
-        if section is None:
-            return full
+        using_call_program = section is None
+        if using_call_program:
+            # The MCP owner passes its pre-invocation copy, never a client-supplied
+            # lookup argument or a new request. Full lookup retains that exact call.
+            if not has_post_image or not isinstance(source_program, dict):
+                return full
+            from runtime.core_v1.contract import validate_program
+            validate_program(source_program)
+            if any(op.get("op") == "observe" for op in source_program["ops"]):
+                return full
+            section = {"source_program": source_program}
         if "normalization" in raw:
             norm = raw["normalization"]
             if set(norm) != {"kind", "source_program", "source_operation_indices"} or norm["kind"] != "explicit_observation_region":
@@ -154,6 +187,10 @@ def _summarize_dispatch(view, retrieval):
         projected["presentation"] = {"requested": "summary", "returned": "summary",
             "omitted": ["source programs", "expansion map", "individual waits", "completed operation indices", "duplicate session and receipt metadata"],
             "retrieve": deepcopy(retrieval)}
+        if using_call_program:
+            projected["presentation"]["program_provenance"] = (
+                "Pre-invocation server call copy; full retrieval includes retained_call.arguments.program. "
+                "Source report digest identifies the report, not this separate invocation context.")
         return projected if len(encoded(projected)) < len(encoded(view)) else full
     except (KeyError, TypeError, ValueError, AttributeError):
         return full

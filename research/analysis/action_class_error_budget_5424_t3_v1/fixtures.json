@@ -1,0 +1,52 @@
+{
+  "schema": "action-class-error-budget-selective-labels-fixture-v1",
+  "allocation": "error-budget-selective-labels-5424-t3-20261001-01",
+  "active_route": "route-a",
+  "route_generation": 7,
+  "steps": 8,
+  "quiet_window_steps": 3,
+  "fixed_cooldown_steps": 4,
+  "policies": [
+    "QUIET_WINDOW",
+    "FIXED_COOLDOWN",
+    "AUTHENTIC_CURRENT_PROBE",
+    "HOLD_NO_PROBE"
+  ],
+  "scenarios": [
+    {
+      "id": "unrepaired_no_exposure",
+      "primary_potential": ["SEVERE", "SEVERE", "SEVERE", "SEVERE", "SEVERE", "SEVERE", "SEVERE", "SEVERE"],
+      "fallback_potential": ["OK", "OK", "OK", "OK", "OK", "OK", "OK", "OK"],
+      "signals": []
+    },
+    {
+      "id": "repaired_current_signal",
+      "primary_potential": ["SEVERE", "SEVERE", "SEVERE", "SEVERE", "OK", "OK", "OK", "OK"],
+      "fallback_potential": ["OK", "OK", "OK", "OK", "OK", "OK", "OK", "OK"],
+      "signals": [
+        {"step": 5, "kind": "REPAIR_PROBE", "result": "POSITIVE", "authenticated": true, "route": "route-a", "generation": 7, "source_id": "probe-current-7"}
+      ]
+    },
+    {
+      "id": "repaired_missed_signal",
+      "primary_potential": ["SEVERE", "SEVERE", "OK", "OK", "OK", "OK", "OK", "OK"],
+      "fallback_potential": ["OK", "OK", "OK", "OK", "OK", "OK", "OK", "OK"],
+      "signals": []
+    },
+    {
+      "id": "unrepaired_stale_signal",
+      "primary_potential": ["SEVERE", "SEVERE", "SEVERE", "SEVERE", "SEVERE", "SEVERE", "SEVERE", "SEVERE"],
+      "fallback_potential": ["OK", "OK", "OK", "OK", "OK", "OK", "OK", "OK"],
+      "signals": [
+        {"step": 3, "kind": "REPAIR_PROBE", "result": "POSITIVE", "authenticated": true, "route": "route-a", "generation": 6, "source_id": "probe-stale-6"}
+      ]
+    },
+    {
+      "id": "common_cause_primary_fallback",
+      "primary_potential": ["SEVERE", "SEVERE", "SEVERE", "SEVERE", "SEVERE", "SEVERE", "OK", "OK"],
+      "fallback_potential": ["SEVERE", "SEVERE", "SEVERE", "SEVERE", "SEVERE", "SEVERE", "OK", "OK"],
+      "incident_id_by_step": ["shared-outage-1", "shared-outage-1", "shared-outage-1", "shared-outage-1", "shared-outage-1", "shared-outage-1", null, null],
+      "signals": []
+    }
+  ]
+}

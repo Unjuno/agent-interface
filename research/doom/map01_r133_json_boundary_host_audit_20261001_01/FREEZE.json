@@ -1,0 +1,36 @@
+{
+  "schema": "map01-json-boundary-host-freeze-v1",
+  "allocation": "MAP01-R133-JSON-BOUNDARY-HOST-CONSTRUCTION-20261001-01",
+  "status": "HOST_CONSTRUCTION_ONLY_NOT_SHARED_DOCKER_ALLOCATION",
+  "main_sha": "10ed6d4c43f387830765b028a520d2f127827c56",
+  "upstream_adjudicator_path": "research/doom/map01_r133_recovery_coast_t1_v1/decision_rule_construction_v2/adjudicator.py",
+  "pinned_sha256": {
+    "PLAN.md": "60e0c3434bbd7acfb7372ceb334ac9d500255c2c5f21ccb921d084bbb8d9986d",
+    "fixtures.py": "a524098142092a293befc88380e563329ea22691db107b45f2a8d3b2bbfaf1e3",
+    "candidate.py": "3338e745fe898d62162b670128d453b5cfe12148b1d905c8604249d1d9b41b1c",
+    "audit.py": "97423a9566d347f9300da94dd67eed7ca856857ae3d94c273c8a433ef7c524c0",
+    "test_boundary.py": "a7b9756906f4d05f1337e425a0b0c8b3921c5f0b8b0aa4da12a865a854772254",
+    "upstream/adjudicator.py": "c09e2c98cbc99fbdf67b6a4be33cca07a77fd8756951b5bb539ab5dbd575ab52"
+  },
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "docker_or_orbstack_invocations": 0,
+  "construction_tests_before_freeze": "2 passed",
+  "cases": [
+    "pristine",
+    "pair_id_bool",
+    "session_order_bool",
+    "ready_ns_float",
+    "map_exit_int",
+    "kill_count_bool",
+    "audit_error_float",
+    "hash_non_string",
+    "row_count_5"
+  ],
+  "auditor_mutations": [
+    "omitted_case",
+    "duplicate_case",
+    "forged_decision",
+    "altered_bound_identity"
+  ]
+}
