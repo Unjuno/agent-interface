@@ -79,3 +79,5 @@ jobs:
         run: python -B -m unittest discover -s research/analysis/cutoff_local_guard_audit_6451_t0b_orbstack_20261003 -p 'test_*.py' -v
       - name: Test Issue #6645 T1 hidden-family coverage gate
         run: python -B -m unittest discover -s research/analysis/counterexample_guard_coverage_gate_6645_t1_v1 -p 'test_*.py' -v
+      - name: Test Issue #6645 T1b isolated coverage-gate counterfactual
+        run: python -B -m unittest discover -s research/analysis/counterexample_guard_coverage_gate_6645_t1b_v1 -p 'test_*.py' -v
