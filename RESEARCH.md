@@ -4,6 +4,12 @@ A one-shot synthetic candidate plus an independent raw auditor covered two seven
 
 # Issue #6373: context-preserving delegation T0 (2026-10-02)
 
+# Issue #5260 successor A01: Tk first-character construction gate (2026-10-02)
+
+Three construction-only private-Xvfb probes were recorded in `research/integration/tk_firstchar_5260_a01_20261002/`. Smoke-01 and smoke-02 preserve candidate exit 0 / independent audit FAIL; smoke-03 passed the scoped one-row raw audit (exact local save 1/1, first Tk KeyPress on the target Entry, first-visual XWD hash verified). OCR did not resolve the visible `h`; baseline XWD integrity was unstable and is excluded from the gate. **No formal 96-trial allocation ran:** the linked #5260/#5296 issue text does not authorize a fresh allocation, so status is `HOLD_NOT_AUTHORIZED`, not a scientific result. Construction PASS says nothing about a first-character failure rate, readiness guarantee, production UI, or product acceptance. See [preregistration, construction chronology, runner and auditor](research/integration/tk_firstchar_5260_a01_20261002/PREREG.md) and [#5296](https://github.com/Unjuno/agent-interface/issues/5296).
+
+# Issue #6373: context-preserving delegation T0 (2026-10-02)
+
 Eight synthetic task-chain fixtures compared NO_RESTORE, SUMMARY_ONLY, RESTORE_ONLY, and RESTORE_PLUS_DIFF. The one-shot candidate plus audit-only successor reconstructed 32/32 rows: RESTORE_PLUS_DIFF achieved 5/8 zero-mismatch next-task fixtures versus SUMMARY_ONLY 3/8 (4 vs 9 modeled context mismatches), preserving all stipulated task effects, external changes, required artifacts, and unresolved state. Blind RESTORE_ONLY reached 6/8 but erased an intended cell effect, overwrote an external viewport, deleted required download evidence, and falsely cleared unresolved modal/held input in four fixtures. `PASS_METHOD_SCOPED` only for this stipulated finite model; no GUI, callback, human, or latency claim. See [full report](research/analysis/context_preserving_delegation_6373_t0_v1/REPORT.md) and [Issue #6373](https://github.com/Unjuno/agent-interface/issues/6373).
 
 # Issue #6351: cross-role meaning drift T0 (2026-10-02)
