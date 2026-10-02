@@ -8,6 +8,7 @@ Current contents remain at their existing paths for provenance. Use [`../../RESE
 
 ## Historical preparation archives
 
+- [#5841 pre-candidate parallel-collision STOP](same_cohort_negative_control_5841_t0_20261001/RECOVERY_NOTE.md) — preserves the distinct frozen candidate that stopped at candidate/auditor 0/0 when overlapping T0 work was already active; no duplicate run or scientific result is claimed.
 - [Qwen support-balance preparation: #5139 / source PR #5208](qwen05b_abstention_balance_5139_sampler_v1/ARCHIVAL_QUALIFICATION.md) — 74 exact historical sampler/auditor and construction-evidence files, with original STOPs and provenance corrections retained; 29 already-identical files excluded. Preservation only: no fresh execution, scientific PASS, candidate promotion, or formal GPU authorization. #5139 remains open and source PR #5208 remains Draft.
 - [Stratified-support feasibility probe: #5139 / source PR #5169](needle_stratified_support_5139_v1/ARCHIVAL_QUALIFICATION.md) — five exact historical files retaining a host-only synthetic 16-vs-4 marginal-balance feasibility result. Preservation only; the joint template×field imbalance remains, and no model, quality, GPU, Docker, or formal allocation result is claimed.
 - [T2 allocation-01 pre-run STOP: #5407](issue_5407_market_t2/README.md) — exact STOP record for main advancing before invocation; candidate/auditor=0/0, raw absent by design, retry=false. This is not a scientific PASS or FAIL and is distinct from later T2b evidence.
