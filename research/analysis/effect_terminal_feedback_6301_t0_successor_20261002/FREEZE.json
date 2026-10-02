@@ -1,0 +1,49 @@
+{
+  "schema": "effect-terminal-feedback-6301-successor-freeze-v1",
+  "allocation": "EFFECT-TERMINAL-FEEDBACK-6301-T0-SUCCESSOR-20261002-02",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/6350",
+  "predecessor": "https://github.com/Unjuno/agent-interface/issues/6301",
+  "base_main": "c80e98614720c95dc68a6a48e2d057ae6e94b98e",
+  "branch": "research/effect-terminal-feedback-6301-t0-corrected-20261002",
+  "package_path": "research/analysis/effect_terminal_feedback_6301_t0_successor_20261002",
+  "hypothesis_scope": "Synthetic finite truth-table correction only; no model-behavior or product inference.",
+  "counts": {
+    "fixture_top_level_traces": 9,
+    "task_rows": 10,
+    "display_arms_per_task": 3,
+    "display_records": 30,
+    "required_mutation_rejections": 4
+  },
+  "source": {
+    "fixture_origin_commit": "eba652642a7a741d57bbdfe0c1a9929d3b15bd7f",
+    "fixture.json": "35bfa13d5edee93d834ddc54c980bb24a48b8a5bb9a4e9bcc9dcddd11d1b51a9",
+    "candidate.py": "b41036c61ebece89a2f1b990e7ae2f9b896512fc2983b29a9b4dd9e712c9cc88",
+    "auditor.py": "831ad1e7a499b1d28bd5b0b9fbfb10b9f5409eddc47460e4a28209d84055977e",
+    "test_construction.py": "5e206a9109b4c4442c3ba52facd14559c8241b339c8fbf648575da4377a7542a"
+  },
+  "runtime": {
+    "engine": "WSLc",
+    "mode": "CPU-only, network-disabled, one-shot candidate then raw-only independent audit",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "image_id": "sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4",
+    "platform": "linux/amd64",
+    "pull": "never",
+    "rootfs_read_only": false,
+    "rootfs_note": "WSLc CLI has no root-filesystem read-only flag; source/input binds must be read-only and only a fresh output bind writable.",
+    "resource_note": "Record WSLc cgroup/swap-limit warning; do not claim a hard memory+swap bound."
+  },
+  "formal_invocation_counts_at_freeze": {
+    "candidate": 0,
+    "auditor": 0,
+    "retries": 0
+  },
+  "resource_request": {
+    "window_utc": "2026-10-02T00:35:00Z/2026-10-02T00:43:00Z",
+    "status": "REQUEST_ONLY_NOT_A_GRANT",
+    "prerequisites": [
+      "explicit completion/release of the preceding #5927 WSLc CPU window",
+      "explicit coordinator confirmation for this allocation",
+      "fresh main/source/image/output/collision checks immediately before start"
+    ]
+  }
+}
