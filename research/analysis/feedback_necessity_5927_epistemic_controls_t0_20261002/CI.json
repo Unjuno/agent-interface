@@ -1,0 +1,33 @@
+{
+  "schema": "feedback-necessity-epistemic-ci-v1",
+  "recorded_at_utc": "2026-10-02T06:43:08Z",
+  "python": "3.12.13",
+  "successful_local_checks": {
+    "experiment_tests": {"command": "python -B -m unittest discover -s research/analysis/feedback_necessity_5927_epistemic_controls_t0_20261002 -p 'test_method.py' -v", "passed": 7},
+    "analysis_index": {"command": "python research/analysis/check_index.py", "status": "PASS", "indexed_retained_result_directories": 443},
+    "analysis_index_unit_tests": {"command": "python -B -m unittest discover -s research/analysis -p 'test_check_index.py' -v", "passed": 6},
+    "existing_workflow_5702_tests": {"command": "python -B -m unittest discover -s research/analysis/endogenous_demand_rebound_5702_t0_v1 -p 'test_*.py' -v", "passed": 8},
+    "existing_workflow_5681_tests": {"command": "python -B -m unittest discover -s research/analysis/selection_aware_shadow_audit_5681_t1_v1 -p 'test_*.py' -v", "passed": 12},
+    "research_workspace_tests": {"command": "python -B -m unittest discover -s research -p 'test_*workspace*.py' -v", "passed": 21},
+    "research_workspace_index": {"command": "python research/check_workspace_index.py --git-tree", "status": "PASS", "reachable_top_level_directories": 156},
+    "public_navigation": {"command": "python .github/check_public_navigation.py", "status": "PASS", "documents": 26, "repository_relative_links": 1367},
+    "git_diff_check": "PASS",
+    "sha256_manifest": "PASS; all 16 entries match"
+  },
+  "initial_sparse_checkout_attempts": [
+    {
+      "command": "python -B -m unittest discover -s research -p 'test_*workspace*.py' -v",
+      "status": "STOP_TESTS_NOT_PRESENT_IN_SPARSE_CHECKOUT",
+      "exit_code": 5,
+      "output": "NO TESTS RAN",
+      "correction": "Added the repository workspace test files to the sparse checkout; rerun discovered and passed 21 tests."
+    },
+    {
+      "command": "python .github/check_public_navigation.py",
+      "status": "STOP_REQUIRED_PATHS_ABSENT_OR_UNSTAGED",
+      "output": "The limited sparse checkout omitted tracked public documents and the newly added report was not yet staged.",
+      "correction": "Expanded the public-navigation sparse paths and staged intended package/index changes; rerun passed 26 documents and 1367 links."
+    }
+  ],
+  "interpretation": "Repository-local checks only. They do not replace GitHub PR checks or broaden the finite method result."
+}
