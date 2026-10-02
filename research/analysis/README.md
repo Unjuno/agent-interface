@@ -1,5 +1,6 @@
 # Analytical research
 
+- [`denial_aware_request_6422_t0_20261002_v1/`](denial_aware_request_6422_t0_20261002_v1/PRESERVATION_QUALIFICATION.md) — Issue #6422 A01: retained 14-case authored policy result only; missing deferral-principal and single-use/budget coverage means partial T0, not full completion or T1 basis.
 - [`denial_deferral_budget_6422_a03_20261002_v1/`](denial_deferral_budget_6422_a03_20261002_v1/REPORT.md) — Issue #6422 A03: same deferral receipt replay blocked under a new request ID; nine synthetic cases and five corruptions independently audited; method-scoped only.
 - [`control_opportunity_attribution_6403_t0_v1/`](control_opportunity_attribution_6403_t0_v1/REPORT.md) — Issue #6403 six-trace synthetic control-opportunity method passed independent reconstruction and six mutation checks; no human attribution/blame claim.
 - [`deadline_slack_equivalence_6435_t0_v1/`](deadline_slack_equivalence_6435_t0_v1/REPORT.md) — Issue #6435 no-model T0 method passed: 32/32 ledger rows independently reconstructed, six slack/card pairs classified, seeded reversal/null detected; no model-behavior claim.
@@ -256,6 +257,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`deadline_slack_equivalence_6435_t0_v1/`](deadline_slack_equivalence_6435_t0_v1/)
 - [`decision_opportunity_audit_5986_t0_20261002/`](decision_opportunity_audit_5986_t0_20261002/)
 - [`decision_sufficiency_5329_v1/`](decision_sufficiency_5329_v1/)
+- [`denial_aware_request_6422_t0_20261002_v1/`](denial_aware_request_6422_t0_20261002_v1/)
 - [`denial_aware_request_policy_6422_t0_v1/`](denial_aware_request_policy_6422_t0_v1/)
 - [`denial_deferral_budget_6422_a03_20261002_v1/`](denial_deferral_budget_6422_a03_20261002_v1/)
 - [`dependency_aware_verifier_quorum_5314_v1/`](dependency_aware_verifier_quorum_5314_v1/)
