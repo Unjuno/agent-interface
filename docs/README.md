@@ -13,7 +13,7 @@ This directory is the public documentation map for Agent Interface. It organizes
 | What architecture is currently promoted? | [architecture.md](architecture.md) |
 | What has been measured so far? | [PROGRESS_FROM_BASELINE.md](PROGRESS_FROM_BASELINE.md) |
 | What is the detailed evidence ledger? | [RESEARCH.md](../RESEARCH.md) |
-| What are the latest failures, handoffs, and next steps? | [LOCAL_RESEARCH_HANDOFF.md](LOCAL_RESEARCH_HANDOFF.md) |
+| Where are retained failures and research handoffs? | [LOCAL_RESEARCH_HANDOFF.md](LOCAL_RESEARCH_HANDOFF.md); refresh current ownership through [Worker Quickstart](WORKER_QUICKSTART.md) |
 | What remains before a public release? | [ROADMAP.md](../ROADMAP.md) and the [release contract](../release/README.md) |
 | What can currently be run? | [runtime/README.md](../runtime/README.md) |
 | How should a question be split between analysis and experiment? | [RESEARCH_METHOD.md](RESEARCH_METHOD.md) |
@@ -84,7 +84,7 @@ Use current/canonical documents for present project direction and architecture. 
 | [`RESEARCH_METHOD.md`](RESEARCH_METHOD.md) | Analysis-vs-experiment workflow | **Canonical research-method guidance** |
 | [`EVIDENCE_MAP.md`](EVIDENCE_MAP.md) | Navigation among goal/evidence/runtime/release | **Canonical navigation** |
 | [`PROGRESS_FROM_BASELINE.md`](PROGRESS_FROM_BASELINE.md) | Evidence-backed progress and remaining gaps | Current summary; **not a release claim** |
-| [`LOCAL_RESEARCH_HANDOFF.md`](LOCAL_RESEARCH_HANDOFF.md) | Detailed current handoff plus retained chronology | Current coordination source; history retained inside |
+| [`LOCAL_RESEARCH_HANDOFF.md`](LOCAL_RESEARCH_HANDOFF.md) | Retained research handoff and chronology, with a freshness note | Research context; selected Issue updates and the linked coordination logs provide current ownership |
 | [`TERMINOLOGY.md`](TERMINOLOGY.md) | Non-normative index to canonical definitions | Supporting only |
 | [`design-theses.md`](design-theses.md) | Durable idea/thesis ledger | Supporting; does not override current goal/architecture |
 | [`IDEAS_AND_OUTCOMES.md`](IDEAS_AND_OUTCOMES.md) | Issue-centered summary of ideas and dispositions; links to authoritative evidence | Navigation only; not a result/evidence source |
@@ -98,7 +98,7 @@ Use current/canonical documents for present project direction and architecture. 
 
 ### Living history documents
 
-`CURRENT_GOAL.md` and `LOCAL_RESEARCH_HANDOFF.md` are living documents with retained history. Their newest governing/current material stays visible at the top; older direction and legacy document bodies are preserved under expandable sections. Use the visible top sections for current status and expand history only when tracing provenance.
+`CURRENT_GOAL.md` and `LOCAL_RESEARCH_HANDOFF.md` are living documents with retained history. Their newest governing/current material stays visible at the top; older direction and legacy document bodies are preserved under expandable sections. Read the visible freshness notes before using a checkpoint as current status, and expand history only when tracing provenance.
 ### Current status
 
 - [CURRENT_GOAL.md](CURRENT_GOAL.md) — current governing invariant and active research direction.

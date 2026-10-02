@@ -53,8 +53,8 @@ For the short worker workflow, see [Worker Quickstart](docs/WORKER_QUICKSTART.md
 | Current goal | [Current direction](docs/CURRENT_GOAL.md) and [remaining roadmap gates](ROADMAP.md) |
 | Evidence and remaining gaps | [Progress](docs/PROGRESS_FROM_BASELINE.md) → [evidence map](docs/EVIDENCE_MAP.md) → the selected [ledger entry](RESEARCH.md), report, raw evidence and audit |
 | Ideas and outcomes | [Issue-centered index](docs/IDEAS_AND_OUTCOMES.md) for concise idea/disposition history; [Issues](https://github.com/Unjuno/agent-interface/issues) remain the intake and discussion source |
-| Ownership and overlap | [Current handoff](docs/LOCAL_RESEARCH_HANDOFF.md), the selected Issue’s explicit owner/allocation, and related open/closed [PRs](https://github.com/Unjuno/agent-interface/pulls); follow [parallel coordination rules](docs/ISSUE_FAILURE_CLASSIFICATION.md#parallel-coordination-and-evidence-preservation) |
-| Branch cleanup | Check the [branch inventory snapshot](docs/BRANCH_INVENTORY_20261001.md), then refresh PR/Issue links and commit ancestry before any deletion |
+| Ownership and overlap | The selected Issue’s latest explicit owner/allocation, related open/closed [PRs](https://github.com/Unjuno/agent-interface/pulls), and the [resource ownership log #5085](https://github.com/Unjuno/agent-interface/issues/5085); use the [retained research handoff](docs/LOCAL_RESEARCH_HANDOFF.md) for context and follow [parallel coordination rules](docs/ISSUE_FAILURE_CLASSIFICATION.md#parallel-coordination-and-evidence-preservation) |
+| Branch cleanup | Start with [maintenance/custody history #672](https://github.com/Unjuno/agent-interface/issues/672) and the selected Issue’s latest correction; the [branch inventory](docs/BRANCH_INVENTORY_20261001.md) is a dated snapshot. Refresh PR/Issue links and commit ancestry before any deletion |
 | Archives and provenance | [Retained research namespaces](research/README.md#historical-archival-namespaces) and [document roles](docs/README.md#document-authority-map) |
 
 An open Issue, PR or branch does not mean work is unclaimed. An archival merge does not change a result’s scope or authorize a new allocation.
