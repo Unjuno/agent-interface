@@ -73,3 +73,5 @@ jobs:
         run: python -B -m unittest discover -s research/analysis/persistence_gated_throttle_6650_control_replay_20261002_01 -p 'test_*.py' -v
       - name: Test #5370 composed bounded inheritance T7
         run: python -B -m unittest discover -s research/analysis/priority_inheritance_5370_t7_composition_20261002_01 -p 'test_*.py' -v
+      - name: Test Issue #6503 T0b vigilance material/scorer contract
+        run: python -B -m unittest discover -s research/analysis/quiet_supervision_vigilance_6503_t0b_20261002 -p 'test_*.py' -v
