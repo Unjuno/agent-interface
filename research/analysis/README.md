@@ -10,6 +10,8 @@
 
 This directory contains retained analytical studies: proofs, exact finite-state or exhaustive results, break-even derivations, and identifiability analyses.
 
+- [Issue #6461 / successor to #6179 T0b pre-formal STOP](semantic_challenge_lane_6179_t0b_20261002/STOP_BEFORE_FORMAL.md) — WSLc construction tests passed 6/6, but the runtime warned that swap/cgroup memory limits are unavailable and main advanced before formal start; candidate/auditor invocation counts are both zero. Not a scientific FAIL; any continuation requires a fresh successor allocation.
+
 Analytical results remain scoped to their stated assumptions. When a claim depends on a real OS, application, model, scheduler, latency distribution, or workload, that residual still requires empirical measurement.
 
 See [`../../docs/RESEARCH_METHOD.md`](../../docs/RESEARCH_METHOD.md) for the analysis-versus-experiment decision flow.
