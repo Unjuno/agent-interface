@@ -106,4 +106,3 @@ if __name__ == "__main__":
     if len(sys.argv) != 5:
         raise SystemExit("usage: audit.py FIXTURE.json TRUTH.json RAW.json AUDIT.json")
     main(*sys.argv[1:])
-
