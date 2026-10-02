@@ -1,0 +1,45 @@
+{
+  "schema": "safe-discriminating-observation-6680-run-record-v1",
+  "issue": 6680,
+  "allocation": "SAFE-DISCRIMINATING-OBSERVATION-6680-T0-20261002-01",
+  "base_main": "9a573b00dc595e64d09387e567c85e10b61a46c1",
+  "branch": "research/safe-discriminating-observation-6680-t0-20261002",
+  "package_path": "research/analysis/safe_discriminating_observation_6680_t0_20261002/",
+  "status": "HOLD_RESOURCE_BEFORE_FORMAL_START",
+  "observed_at_utc": "2026-10-02T11:20:12Z",
+  "formal_invocations": {
+    "candidate": 0,
+    "independent_auditor": 0,
+    "container": 0,
+    "retry": 0
+  },
+  "host_construction_only": {
+    "unit_suite_runs": 3,
+    "unit_suite_outcomes": ["FAIL_PRE_FREEZE_CONSTRUCTION_DEFECT", "PASS_4_OF_4_AFTER_CORRECTION", "PASS_4_OF_4_ABSOLUTE_PATH"],
+    "test_runner_invocation_failure": "workdir not applied by exec tool; corrected with absolute unittest discovery path; no candidate/auditor invocation",
+    "candidate_cli_runs": 1,
+    "auditor_cli_runs": 1,
+    "smoke_rows": 20,
+    "smoke_audit": "PASS_METHOD_SCOPED",
+    "smoke_output_promoted": false
+  },
+  "runtime_snapshot": {
+    "host": "macOS arm64",
+    "wslc_available": false,
+    "docker_server": "29.4.0 OrbStack aarch64",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "image_platform": "linux/arm64",
+    "shared_engine_running_containers": ["unjuno-native-ci-6092", "cans-of14-n64-dt0.0005"],
+    "other_running_orbstack_machines": [
+      "agent-interface-6576-tailid-parity-a03-20261002",
+      "agent-interface-6604-t0-isolated-20261002",
+      "effect-terminal-feedback-6301-t0-orbstack-20261002",
+      "obs-audit-t1-5681-20261001",
+      "research-path-width-6581-t0b-20261002"
+    ],
+    "exclusive_assignment": false,
+    "foreign_runtime_mutated": false
+  },
+  "formal_result": null,
+  "scope_note": "No container candidate/auditor was started. Host construction tests and CLI smoke are not formal evidence. Await a named exclusive CPU/container assignment; do not reuse another Issue's machine or shared-engine state."
+}

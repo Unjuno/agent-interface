@@ -552,6 +552,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`route_assignment_exposure_5760_t0_v1/`](route_assignment_exposure_5760_t0_v1/)
 - [`route_selector_5911_t0_20261001_02/`](route_selector_5911_t0_20261001_02/)
 - [`route_switching_costs_6009_t0_20261001/`](route_switching_costs_6009_t0_20261001/)
+- [`safe_discriminating_observation_6680_t0_20261002/`](safe_discriminating_observation_6680_t0_20261002/)
 - [`safe_probe_cost_optimal_tree_r1_v1/`](safe_probe_cost_optimal_tree_r1_v1/)
 - [`safe_probe_identifiability_6147_t0_20261002_a02/`](safe_probe_identifiability_6147_t0_20261002_a02/)
 - [`safe_probe_identification_successor_1716_v1/`](safe_probe_identification_successor_1716_v1/)
