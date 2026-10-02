@@ -1,0 +1,166 @@
+{
+  "cases": [
+    {
+      "auditor": {
+        "clock_id": "host-monotonic-map-v1",
+        "end": "2026-10-02T06:04:00Z",
+        "start": "2026-10-02T06:03:00Z"
+      },
+      "candidate": {
+        "clock_id": "host-monotonic-map-v1",
+        "end": "2026-10-02T06:02:00Z",
+        "start": "2026-10-02T06:01:00Z"
+      },
+      "id": "valid_inside",
+      "receipt_sha256": "625bb124ec247151d6a5aeea727efc0594b38079e0f784a5ddeec46ed0bd3cce",
+      "reported_at": "2026-10-02T06:05:00Z",
+      "status": "ELIGIBLE_FOR_TIMING_GATE_ONLY"
+    },
+    {
+      "auditor": {
+        "clock_id": "host-monotonic-map-v1",
+        "end": "2026-10-02T06:04:00Z",
+        "start": "2026-10-02T06:03:00Z"
+      },
+      "candidate": {
+        "clock_id": "host-monotonic-map-v1",
+        "end": "2026-10-02T06:01:00Z",
+        "start": "2026-10-02T05:59:59Z"
+      },
+      "id": "candidate_before_start",
+      "receipt_sha256": "e0a1b9e51a7458df887e87ac992c184824bff5f3957d80ac2e9b3694dafd8fd3",
+      "reported_at": "2026-10-02T06:05:00Z",
+      "status": "STOP_OUTSIDE_ALLOCATION"
+    },
+    {
+      "auditor": {
+        "clock_id": "host-monotonic-map-v1",
+        "end": "2026-10-02T06:10:00Z",
+        "start": "2026-10-02T06:09:59Z"
+      },
+      "candidate": {
+        "clock_id": "host-monotonic-map-v1",
+        "end": "2026-10-02T06:02:00Z",
+        "start": "2026-10-02T06:01:00Z"
+      },
+      "id": "auditor_after_end",
+      "receipt_sha256": "0cd9483841dc7ae6fa3a49c083230595193fbb57f54f8c89c147044e4adf1f5a",
+      "reported_at": "2026-10-02T06:10:01Z",
+      "status": "STOP_OUTSIDE_ALLOCATION"
+    },
+    {
+      "auditor": {
+        "clock_id": "host-monotonic-map-v1",
+        "end": "2026-10-02T06:04:00Z",
+        "start": "2026-10-02T06:03:00Z"
+      },
+      "candidate": {
+        "clock_id": "host-monotonic-map-v1",
+        "end": "2026-10-02T06:02:00Z",
+        "start": "2026-10-02T06:01:00Z"
+      },
+      "id": "report_precedes_candidate",
+      "receipt_sha256": "6a4acf6efd64ac4bbc03cbe65108db62d5341525d42fa8d9e781ab32ee81acd5",
+      "reported_at": "2026-10-02T05:58:00Z",
+      "status": "HOLD_REPORT_PRECEDES_EXECUTION"
+    },
+    {
+      "auditor": {
+        "clock_id": "host-monotonic-map-v1",
+        "end": "2026-10-02T06:04:00Z",
+        "start": "2026-10-02T06:03:00Z"
+      },
+      "candidate": {
+        "clock_id": "host-monotonic-map-v1",
+        "end": "2026-10-02T06:02:00Z",
+        "start": "2026-10-02T06:01:00"
+      },
+      "id": "naive_timestamp_missing_offset",
+      "receipt_sha256": "89e5cd8e201b28582bcc6b690bebd8d9dedab4eada00e1eded18730af822ad55",
+      "reported_at": "2026-10-02T06:05:00Z",
+      "status": "HOLD_INVALID_OR_AMBIGUOUS_TIME"
+    },
+    {
+      "auditor": {
+        "clock_id": "host-monotonic-map-v1",
+        "end": "2026-10-02T06:04:00Z",
+        "start": "2026-10-02T06:03:00Z"
+      },
+      "candidate": {
+        "clock_id": "host-monotonic-map-v1",
+        "end": "2026-10-02T06:01:00Z",
+        "start": "2026-10-02T06:02:00Z"
+      },
+      "id": "reversed_interval",
+      "receipt_sha256": "480451d5b11599acbdb48f34ef2a53351f6e0321636a0d4cb42353aa06049408",
+      "reported_at": "2026-10-02T06:05:00Z",
+      "status": "STOP_INVALID_INTERVAL"
+    },
+    {
+      "auditor": {
+        "clock_id": "host-monotonic-map-v1",
+        "end": "2026-10-02T06:04:00Z",
+        "start": "2026-10-02T06:03:00Z"
+      },
+      "candidate": {
+        "clock_id": "container-clock-unmapped",
+        "end": "2026-10-02T06:02:00Z",
+        "start": "2026-10-02T06:01:00Z"
+      },
+      "id": "clock_source_disagreement",
+      "receipt_sha256": "8296eec347548ddba9a273bee7f0c293735ae36d8d40ea8b41f2ec67b1be5ab4",
+      "reported_at": "2026-10-02T06:05:00Z",
+      "status": "HOLD_CLOCK_UNMAPPED"
+    },
+    {
+      "auditor": {
+        "clock_id": "host-monotonic-map-v1",
+        "end": "2026-10-02T06:04:00Z",
+        "start": "2026-10-02T06:03:00Z"
+      },
+      "candidate": {
+        "clock_id": "host-monotonic-map-v1",
+        "end": "2026-10-02T06:02:00Z",
+        "start": "2026-10-02T06:01:00Z"
+      },
+      "id": "receipt_hash_mismatch",
+      "receipt_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "reported_at": "2026-10-02T06:05:00Z",
+      "status": "HOLD_RECEIPT_INTEGRITY"
+    },
+    {
+      "auditor": {
+        "clock_id": "host-monotonic-map-v1",
+        "end": "2026-10-02T06:04:00Z",
+        "start": "2026-10-02T06:03:00Z"
+      },
+      "candidate": {
+        "clock_id": "host-monotonic-map-v1",
+        "end": "2026-10-02T06:10:00Z",
+        "start": "2026-10-02T06:09:00Z"
+      },
+      "id": "touches_exclusive_end",
+      "receipt_sha256": "43bc850aa64f6746b25afd06081511d8853722254c79b227352a536f9d7a20dd",
+      "reported_at": "2026-10-02T06:10:01Z",
+      "status": "STOP_OUTSIDE_ALLOCATION"
+    },
+    {
+      "auditor": {
+        "clock_id": "host-monotonic-map-v1",
+        "end": "2026-10-02T06:04:00Z",
+        "start": "2026-10-02T06:03:00Z"
+      },
+      "candidate": {
+        "clock_id": "host-monotonic-map-v1",
+        "end": "2026-10-02T06:01:00Z",
+        "start": "2026-10-02T06:00:00Z"
+      },
+      "id": "touches_inclusive_start",
+      "receipt_sha256": "97f54c6f385456c0f60369ae05f25eca863d99c0732c7473340212f0900017b3",
+      "reported_at": "2026-10-02T06:05:00Z",
+      "status": "ELIGIBLE_FOR_TIMING_GATE_ONLY"
+    }
+  ],
+  "schema": "6532-timing-candidate-v1",
+  "scope": "authored finite timestamp contract only; not clock truth or historical-run evidence"
+}
