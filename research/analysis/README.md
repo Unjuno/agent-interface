@@ -1,6 +1,7 @@
 # Analytical research
 
 - [`denial_deferral_budget_6422_a03_20261002_v1/`](denial_deferral_budget_6422_a03_20261002_v1/REPORT.md) — Issue #6422 A03: same deferral receipt replay blocked under a new request ID; nine synthetic cases and five corruptions independently audited; method-scoped only.
+- [`control_opportunity_attribution_6403_t0_v1/`](control_opportunity_attribution_6403_t0_v1/REPORT.md) — Issue #6403 six-trace synthetic control-opportunity method passed independent reconstruction and six mutation checks; no human attribution/blame claim.
 - [`deadline_slack_equivalence_6435_t0_v1/`](deadline_slack_equivalence_6435_t0_v1/REPORT.md) — Issue #6435 no-model T0 method passed: 32/32 ledger rows independently reconstructed, six slack/card pairs classified, seeded reversal/null detected; no model-behavior claim.
 - [`constraint_response_normalization_6437_t0_v1/`](constraint_response_normalization_6437_t0_v1/REPORT.md) — Successor to Issue #6380: typed answer normalization passed 32/32 synthetic rows and rejected seven corruptions; method-scoped only.
 - [`context_preserving_delegation_6373_t0_v1/`](context_preserving_delegation_6373_t0_v1/REPORT.md) — Issue #6373 synthetic 8×4 policy comparison; RESTORE_PLUS_DIFF beat SUMMARY_ONLY on stipulated next-context proxy while preserving effects/external state/artifacts/unknowns; blind restore-only had four destructive controls. Not GUI/human evidence.
@@ -245,6 +246,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`constraint_response_normalization_6437_t0_v1/`](constraint_response_normalization_6437_t0_v1/)
 - [`context_preserving_delegation_6373_t0_v1/`](context_preserving_delegation_6373_t0_v1/)
 - [`context_success_history_calibration_6241_t0_20261002/`](context_success_history_calibration_6241_t0_20261002/)
+- [`control_opportunity_attribution_6403_t0_v1/`](control_opportunity_attribution_6403_t0_v1/)
 - [`cost_predicate_order_4258_v1/`](cost_predicate_order_4258_v1/)
 - [`cross_handoff_pending_correction_6284_t0_20261002/`](cross_handoff_pending_correction_6284_t0_20261002/)
 - [`cross_role_meaning_drift_6351_t0_v1/`](cross_role_meaning_drift_6351_t0_v1/)
@@ -284,6 +286,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`exception_envelope_6021_t0_20261002/`](exception_envelope_6021_t0_20261002/)
 - [`exogenous_opportunity_5694_t0_20261001/`](exogenous_opportunity_5694_t0_20261001/)
 - [`explanation_dependence_5916_t0_v1/`](explanation_dependence_5916_t0_v1/)
+- [`exposed_success_audit_6367_t0_20261002/`](exposed_success_audit_6367_t0_20261002/)
 - [`failure_detector_5531_async_bound_t6_v1/`](failure_detector_5531_async_bound_t6_v1/)
 - [`feasible_attribution_6100_t0_20261001/`](feasible_attribution_6100_t0_20261001/)
 - [`feedback_necessity_5927_orbstack_t0_v1/`](feedback_necessity_5927_orbstack_t0_v1/)
@@ -371,6 +374,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`multi_principal_effect_auth_5805_t0_v1/`](multi_principal_effect_auth_5805_t0_v1/)
 - [`multicursor_parking_reposition_r0_v1/`](multicursor_parking_reposition_r0_v1/)
 - [`multicursor_target_handle_regrounding_r0_v1/`](multicursor_target_handle_regrounding_r0_v1/)
+- [`multifidelity_route_contrast_6155_t0_v1/`](multifidelity_route_contrast_6155_t0_v1/)
 - [`needle_role_skill_lifecycle_4916_first_rung_v2/`](needle_role_skill_lifecycle_4916_first_rung_v2/)
 - [`needle_role_skill_lifecycle_4916_parity_diag_v1/`](needle_role_skill_lifecycle_4916_parity_diag_v1/)
 - [`needle_role_skill_lifecycle_4916_v2/`](needle_role_skill_lifecycle_4916_v2/)
@@ -402,6 +406,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`phase_overlap_resource_footprint_r0_v2/`](phase_overlap_resource_footprint_r0_v2/)
 - [`planner_hysteresis_5352_t10_20261001/`](planner_hysteresis_5352_t10_20261001/)
 - [`portfolio_multiplicity_5890_t0_v2_20261001/`](portfolio_multiplicity_5890_t0_v2_20261001/)
+- [`pre_failure_route_diversification_6225_t0_v1/`](pre_failure_route_diversification_6225_t0_v1/)
 - [`predicate_cache_persist_4217_v1/`](predicate_cache_persist_4217_v1/)
 - [`predicate_dependency_cache_4217_v1/`](predicate_dependency_cache_4217_v1/)
 - [`predicate_dependency_completeness_4217_v1/`](predicate_dependency_completeness_4217_v1/)
@@ -431,6 +436,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`real_option_5428_t1/`](real_option_5428_t1/)
 - [`real_source_adapter_admission_v1/`](real_source_adapter_admission_v1/)
 - [`real_source_role_adapter_registry_v1/`](real_source_role_adapter_registry_v1/)
+- [`recovery_absolute_outcome_6216_t0_v1/`](recovery_absolute_outcome_6216_t0_v1/)
 - [`recovery_sentinel_5776_contrast_t0_20261001/`](recovery_sentinel_5776_contrast_t0_20261001/)
 - [`recovery_sentinel_5776_probe_schedule_20261001_01/`](recovery_sentinel_5776_probe_schedule_20261001_01/)
 - [`recovery_sentinel_5776_t0_integrity_audit_v1/`](recovery_sentinel_5776_t0_integrity_audit_v1/)
@@ -485,6 +491,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`serialized_attention_duplicate_label_successor_1968_v1/`](serialized_attention_duplicate_label_successor_1968_v1/)
 - [`serialized_attention_successor_1968_v1/`](serialized_attention_successor_1968_v1/)
 - [`siphon_5410_t0/`](siphon_5410_t0/)
+- [`skill_applicability_6262_gpu_t0_v1/`](skill_applicability_6262_gpu_t0_v1/)
 - [`skill_router_adapter_selection_3446_v1/`](skill_router_adapter_selection_3446_v1/)
 - [`source_bound_gui_frame_preflight_2193_v1/`](source_bound_gui_frame_preflight_2193_v1/)
 - [`source_window_type_boundary_4782_v1/`](source_window_type_boundary_4782_v1/)

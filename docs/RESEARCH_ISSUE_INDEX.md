@@ -1,10 +1,10 @@
 # Research and idea Issue index
 
-Current full GitHub MCP listing, reconciled 2026-10-02 (Asia/Tokyo): 2,545 distinct non-PR Issue records (1,374 open, 1,171 closed). This selected index has 1,693 rows (1,150 open, 543 closed) after adding #6471 and changing #6337 to closed. #6337 closed after merged PR #6352; its scoped portability result is recorded below. The connector's normalized full-list output omits labels, so the prior label-qualified selection is carried forward, and #6471 was individually checked. PRs are excluded from Issue counts.
+Current full GitHub MCP listing, reconciled 2026-10-02 (Asia/Tokyo): 2,546 distinct non-PR Issue records (1,375 open, 1,171 closed). This selected index has 1,696 rows (1,153 open, 543 closed) after adding #6477, #6451 and #6389; #6471 is included and #6337 is closed. #6337 closed after merged PR #6352; its scoped portability result is recorded below. The normalized full-list output omits labels, so the prior label-qualified selection is carried forward; #6389 was explicitly added after reviewing its research-workflow migration scope. PRs are excluded from Issue counts.
 
 ## Coverage and limits
 
-This index contains 1,693 rows (1,150 open, 543 closed), selected when either the Issue has the `research` label or its title contains an explicit `research`, `idea`, `successor`, or `experiment` term. The normalized full-list output omits labels; the prior label-qualified selection is carried forward, #6471 is added, and #6337's state change is reconciled. The list is navigational; Issue bodies and linked evidence remain authoritative. It includes direct proposals plus many validation, audit, coordination, and successor records.
+This index contains 1,696 rows (1,153 open, 543 closed), selected by research labels/title terms plus explicit inclusion of reviewed related research ideas such as #6389. The normalized full-list output omits labels; the prior label-qualified selection is carried forward, #6477/#6451/#6389 are added, and #6337's state change is reconciled. The index is a discovery aid; Issue bodies and linked evidence remain authoritative. It includes direct proposals plus many validation, audit, coordination, and successor records.
 
 This is a broad discovery index, not a guarantee that every repository idea has a title or label matching the filter. Other Issues are not assumed to be non-ideas; search them when linked lineage points outside this table and add any missed idea. The curated [ideas and outcomes page](IDEAS_AND_OUTCOMES.md) explains selected idea clusters and verified dispositions. [RESEARCH.md](../RESEARCH.md), Issues, PRs, and reports remain evidence authorities.
 
@@ -14,10 +14,12 @@ Open is workflow state, not “no result”; open Issues may contain scoped resu
 
 | Issue | Title | GitHub state / closed date | Literal outcome markers* | Linked predecessor(s)** |
 |---|---|---|---|---|
+| [#6477](https://github.com/Unjuno/agent-interface/issues/6477) | Successor #6461: execute isolated verifier challenge lane after T0b STOP | open | PASS_METHOD_SCOPED, FAIL_METHOD, STOP | #6461, #6179 |
 | [#6471](https://github.com/Unjuno/agent-interface/issues/6471) | [Research] Preserve effect-critical task clauses across spoken-instruction input | open | PASS, FAIL, HOLD, UNKNOWN | — |
 | [#6469](https://github.com/Unjuno/agent-interface/issues/6469) | [Research] Benign-error-triggered recovery scope drift before action admission | open | PASS, FAIL, STOP, HOLD | — |
 | [#6468](https://github.com/Unjuno/agent-interface/issues/6468) | [Research] Artifact-viability cut sets beyond partial GUI task scores | open | PASS, FAIL, HOLD, UNKNOWN | — |
 | [#6461](https://github.com/Unjuno/agent-interface/issues/6461) | Successor #6179: execute broker-boundary negative controls for isolated verifier challenges | open | PASS_METHOD_SCOPED, FAIL_METHOD, STOP | #6179 |
+| [#6451](https://github.com/Unjuno/agent-interface/issues/6451) | [Research] Cutoff-local causal audit of optional GUI guard thresholds | open | PASS, FAIL, HOLD | — |
 | [#6442](https://github.com/Unjuno/agent-interface/issues/6442) | Successor #5756: test bounded soft revisit bias for incomplete search branches | open | PASS_METHOD_SCOPED, HOLD, FAIL, STOP | #5756 |
 | [#6437](https://github.com/Unjuno/agent-interface/issues/6437) | [Successor #6380] Test typed elicitation-response normalization into scoped contract clauses | open | FAIL_METHOD_CONSTRUCTION_MISMATCH, PASS_METHOD_SCOPED, FAIL_METHOD, HOLD | #6380 |
 | [#6435](https://github.com/Unjuno/agent-interface/issues/6435) | [Research] Deadline-conditioned semantic decision frontier for human–agent tempo | open | HOLD, PASS | — |
@@ -29,6 +31,7 @@ Open is workflow state, not “no result”; open Issues may contain scoped resu
 | [#6410](https://github.com/Unjuno/agent-interface/issues/6410) | Successor #5084: replicate role-skill lifecycle under native WSLc | open | PASS, STOP, FAIL, HOLD, STOP_METHOD_FAILURE | #5084 |
 | [#6405](https://github.com/Unjuno/agent-interface/issues/6405) | [Research] Repeated approval prompts and changed-effect discrimination | open | HOLD | — |
 | [#6403](https://github.com/Unjuno/agent-interface/issues/6403) | [Research] Control-opportunity versus human responsibility attribution after agent effects | open | HOLD, PASS | — |
+| [#6389](https://github.com/Unjuno/agent-interface/issues/6389) | [Migration] Pilot native Ubuntu/WSL2 execution for eligible research workflows | open | HOLD_RESOURCE_CONTENTION, STOP | — |
 | [#6383](https://github.com/Unjuno/agent-interface/issues/6383) | [Research] Human mode awareness of the agent autonomy envelope before effects | open | FAIL_METHOD, HOLD | — |
 | [#6380](https://github.com/Unjuno/agent-interface/issues/6380) | [Research] Counterexample-driven elicitation of unstated task constraints before effect contracts | open | FAIL_METHOD, HOLD | — |
 | [#6373](https://github.com/Unjuno/agent-interface/issues/6373) | [Research Idea] Context-preserving delegation: restore caller-visible state after successful System-1 execution | open | PASS_METHOD_SCOPED, FAIL_METHOD, UNCERTAIN | — |
