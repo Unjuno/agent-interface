@@ -1,0 +1,29 @@
+{
+  "allocation": "6468-T0-ARTIFACT-VIABILITY-20261002-02",
+  "predecessor": "6468-T0-ARTIFACT-VIABILITY-20261002-01",
+  "predecessor_disposition": "STOP_BEFORE_CANDIDATE_MAIN_ADVANCED; preserved in PR #6487; not reused or pooled",
+  "frozen_utc": "2026-10-02T03:30:41Z",
+  "repository": "Unjuno/agent-interface",
+  "main_sha_at_freeze": "518918b71599bf6d7fb662aaf6ae332e14d6132f",
+  "issue_state_at_gate": "open",
+  "successor_branch_collision_at_gate": false,
+  "open_related_prs_at_gate": [6487],
+  "runtime": "Windows CPython 3.12.10",
+  "execution": "one formal candidate run, then one independent auditor run; no retries",
+  "formal_candidate_invocations": 0,
+  "formal_auditor_invocations": 0,
+  "retries": 0,
+  "construction_unit_tests": "12/12 passed before freeze",
+  "candidate_sha256": "c820d916d29915198bebcc25d844416e3f23a9a64ecafb1a5a3e61ed50864639",
+  "auditor_sha256": "3bbfc160caef50cb038102ab02e97a4ea2f9add429d056b2bacd9da2041badb8",
+  "fixture_sha256": "55dc26d2a1fefdd9104e1dc4695ae8bec4c012a01164849559a3b9d19beb0888",
+  "fixture_canonical_sha256": "2dd9b730b6b4643dd9222ad604b9e31e075a3b49d7f9ff7b284ddc74f9f3290a",
+  "test_contract_sha256": "850d8869e349ba92e4958a45d35852f777ef2cc9499c47f4fddb04beb9898493",
+  "test_auditor_sha256": "b9739b815b95136e28a627fc48744ff787d5760e155b90d1ed3dfaaafebe830a",
+  "input_design": {"contracts": 2, "checks_per_contract": 7, "paired_cases": 6, "route_traces": 12, "expected_mutations": 5},
+  "decision_gate": {
+    "method_pass": "both planted partial-score inversions, controls, unknown and every mutation behave as frozen; independent exact reconstruction of 12 routes and both minimal-cut-set collections",
+    "subsumed_by_12": "strict TaskContract and dependency-ledger viability decisions agree for every route; cut-set explanation alone is not incremental decision value",
+    "fail_method": "any candidate/oracle/auditor mismatch, missing attempt, wrong score/status, or accepted mutation"
+  }
+}

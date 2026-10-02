@@ -1,0 +1,43 @@
+{
+  "allocation": "OBSERVABLE-PREDICTIVE-TESTS-6258-T0-HOST-20261002-01",
+  "issue": "Unjuno/agent-interface#6258",
+  "base_commit": "4cf0a3dfde1219671b671bf0a9079a11dcb2e159",
+  "freeze_commit": "99dc7131a589c3ca8427ed49a261eff9045bd5f1",
+  "environment": {
+    "os": "Windows 11 x64 build 26200",
+    "python": "CPython 3.12.10",
+    "dependencies": "Python standard library only",
+    "docker_used": false,
+    "docker_disposition": "ENGINE_TIMEOUT_SERVICE_STOPPED_SHARED_SLOT_UNASSIGNED",
+    "network": false,
+    "model_or_gui": false,
+    "external_effect": false
+  },
+  "construction": {
+    "command": "python -B -m unittest discover -s research/analysis/observable_predictive_tests_6258_t0_host_20261002 -p 'test_*.py' -v",
+    "exit_code": 0,
+    "result": "PASS 16/16"
+  },
+  "candidate": {
+    "command": "python -B research/analysis/observable_predictive_tests_6258_t0_host_20261002/candidate.py --output research/analysis/observable_predictive_tests_6258_t0_host_20261002/candidate.raw.json",
+    "formal_invocations": 1,
+    "retry_count": 0,
+    "exit_code": 0,
+    "stdout": "{\"schema\": \"issue6258-observable-test-t0-v1\", \"output\": \"research\\\\analysis\\\\observable_predictive_tests_6258_t0_host_20261002\\\\candidate.raw.json\"}"
+  },
+  "auditor": {
+    "command": "python -B research/analysis/observable_predictive_tests_6258_t0_host_20261002/audit.py research/analysis/observable_predictive_tests_6258_t0_host_20261002/candidate.raw.json --output research/analysis/observable_predictive_tests_6258_t0_host_20261002/audit.raw.json",
+    "formal_invocations": 1,
+    "retry_count": 0,
+    "exit_code": 0,
+    "disposition": "PASS_METHOD_SCOPED",
+    "oracle_transitions_replayed": 66,
+    "oracle_mismatches": []
+  },
+  "disposition": "PASS_METHOD_SCOPED",
+  "scope_limit": "Fixed synthetic finite test deck, horizon 2, Windows host only; no Docker or live-system claim.",
+  "result_hashes_sha256": {
+    "candidate.raw.json": "AA8C1DF2966BAB84D797030723A2A401FAD5DA2E71140A4958EAE2F7A6CD613E",
+    "audit.raw.json": "DAA18A101BE85EAE7F251CEB2BE6D16B899AC6230A895169135BE63C6D844879"
+  }
+}

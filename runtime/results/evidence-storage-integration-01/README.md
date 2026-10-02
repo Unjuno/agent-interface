@@ -1,0 +1,18 @@
+# Evidence capacity check before public relay startup
+
+Source `265649efd946337659ef1459073c7e2acad4a61d` integrates the directly observed [spine09 disk-full failure](../post-release-spine-09/README.md) into both public relay factories. Previously, the relay child could start with no space for evidence and fail later while saving a request. Construction now checks filesystem-reported availability on the existing parent before allocation, exclusively creates the evidence directory, checks its actual filesystem again, and writes a separate `storage-preflight.json` before child startup.
+
+The default positive floor is32MiB; `minimumEvidenceFreeBytes` allows a caller to choose another positive safe-integer floor for its expected evidence. `EVIDENCE_CAPACITY` rejects a known shortage; `EVIDENCE_CAPACITY_UNKNOWN` rejects an unavailable/invalid measurement. Neither falls back, retries, deletes old evidence or sends input. Write and directory errors before spawn propagate; an allocated failed directory is preserved. Existing post-start evidence-failure STOP, same-handle reconciliation and transport cleanup remain in place.
+
+Retained integration evidence:
+
+- Five regressions failed before implementation and passed afterward. Both factories formerly accepted an impossible capacity floor and completed an inert exchange, proving that the old construction launched a child; the new factories reject before directory allocation. Additional cases cover invalid floors, the default and retained successful preflight.
+- Full Node suite:77/77. Shared Python contract suites:337 protocol and149 harness, all passing. The committed-source run includes fresh host-bundle identity checks.
+- Actual Windows Node check against C: available0: both factories returned `EVIDENCE_CAPACITY`, available0, required33554432, before startup. The consumed module snapshots match committed candidate sources; there was no fallback to WSL.
+- Fresh committed portable host bundle, consumed from `/tmp` outside the checkout: real instrumented host with an **inert child**, two no-target helper observations and public close, three unchanged original text acknowledgments, a32MiB startup receipt, transport exit0. This is packaging/construction evidence, not actual MCP/GUI observation, physical input or release.
+
+The first RED run also exposed a regression-harness cleanup error: an unexpectedly accepted invalid-floor constructor was not closed. Its original runner stayed live; only its identified inert child was terminated, allowing full original failure output to finish. The test cleanup was corrected before the second RED run; both RED results remain in the archive. This was an ordinary maintenance regression, not a replacement research allocation. Frozen spine09 and earlier failures remain unchanged; formal successor #5693 is separate.
+
+**Limits:** the floor is a bounded startup guard, not an evidence-size estimator or reserved budget. The receipt grants no authority and promises no future write. Quotas, concurrent writers and physical backing of a WSL virtual filesystem may invalidate apparent headroom. C: remained full; this change does not reclaim disk space. It does not establish crash durability, complete GUI integration, speedup, token savings or human tempo. No live GUI pair was relaunched in this integration.
+
+`raw-evidence.tar.gz` retains baseline/candidate source, original RED/GREEN logs, initial harness cleanup account, full Node/Python logs, Windows results, portable bundle and inert consumer originals. After extraction, run `python3 verify.py` or `python3 -O verify.py`. Audit PASS means scoped integration retention only. `AUDIT.json` records fresh extraction and semantic mutation rejection; it is not a research acceptance label.
