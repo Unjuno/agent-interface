@@ -74,3 +74,33 @@ the WSLc command contract; the formal package is indexed and present on Draft
 PR #6697. Before launch, refresh main/Issue/PR/parallel-owner state and the
 allocation, re-freeze if any pinned input changed, and require the exact
 non-overlapping WSLc assignment. The existing #6539 request remains unassigned.
+
+## WSLc construction-contract revalidation — 2026-10-03
+
+After refreshing `origin/main` to `3946897b559dc20253b6a5dfcf1e000f10966d60`,
+the unchanged package tests were rerun in Microsoft's native WSL Containers
+(WSLc 3.0.1.0; Linux kernel 6.18.40.1-1) using the already-cached image
+`python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f`
+(local image ID `sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4`,
+linux/amd64, Python 3.12.14). The source directory was bind-mounted read-only;
+network was disabled; requested limits were 0.25 CPU and 512 MiB; no GPU,
+candidate CLI, auditor CLI, or output artifact was invoked.
+
+Exact command (PowerShell):
+
+```powershell
+wslc run --rm --pull never --network none --cpus 0.25 --memory 512m `
+  --mount "type=bind,source=<study-directory>,target=/src,readonly" `
+  -w /src --entrypoint python `
+  python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f `
+  -B -m unittest discover -p 'test_*.py' -v
+```
+
+Outcome: exit 0; 21/21 tests passed in 1.996 seconds. WSLc emitted
+`Your kernel does not support swap limit capabilities or the cgroup is not
+mounted. Memory limited without swap.` Therefore the configured memory value
+is not evidence of effective memory or swap enforcement. This is a fresh
+containerized construction-contract check only; it neither updates the formal
+candidate/auditor counts nor supplies the still-missing coordinator assignment.
+No formal candidate/auditor, training, GPU, or retries occurred (still
+0/0/0/0).
