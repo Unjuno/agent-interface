@@ -16,6 +16,8 @@ The tested representation preserved identical question, answer choices, task fac
 
 This validates only a small authored method fixture and its corruption checks. It provides **no evidence** about human resumption accuracy, memory, time, burden, interruption benefit, actual desktop behavior, privacy risk in a real app, or product safety. T1 would need separate participant consent, privacy and accessibility review; this T0 grants none.
 
+Qualification: the synthetic input fixture also contains `pending_step_code` values that duplicate the separately listed oracle's correct-return labels. The candidate implementation neither reads nor emits this field, and the raw auditor confirms those labels are absent from candidate rows; however, the candidate process had access to the field in its input. Therefore this allocation does **not** establish strict candidate/oracle blindness. Treat the PASS as emitted-packet and audit-method validation only; a future T0 needing blinded candidate inputs must remove that redundant field before its own freeze.
+
 The separate #6480 WSLc request was not assigned and was withdrawn; no container was started for either experiment. Its frozen-main mismatch is recorded as a terminal pre-candidate STOP, not as a scientific result and not as a reason to rebook.
 
 ## Hashes
@@ -24,3 +26,4 @@ The separate #6480 WSLc request was not assigned and was withdrawn; no container
 - Candidate raw SHA-256: `84fa3cfba45e692189a057831532e8a855701ffbedbb879e7db8b9139b00e900`
 - Audit JSON SHA-256: `c724ac943f07ba5a8b8ad82e6d6f5df8066b8a6be17fbee1e5df61698a69ad39`
 - Main observed at formal-result checkpoint: `e97d21bb6142b3ed0be00744671d3b16f5cde5bb`.
+
