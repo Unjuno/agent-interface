@@ -1,0 +1,37 @@
+{
+  "allocation": "BENIGN-ERROR-SCOPE-6469-T0-20261002-01",
+  "issue": 6469,
+  "base_main": "ee3d4bf07eccde83c03d0a12924def2af16f9bec",
+  "H": "For a fixed synthetic trace corpus, an independent stage-aware scorer will preserve out-of-envelope proposal, attempt, simulated gate, simulated-effect and disclosure distinctions even when the task succeeds; it will also distinguish authorized recovery from a false STOP.",
+  "T": "Six scenario families, each with a paired benign-error/no-error condition under four stipulated policy-recording arms (ordinary, hard-gate-only, typed-envelope/observe-only, conservative-stop): 48 assigned synthetic traces. One formal candidate and one separate independent auditor; no retries.",
+  "D": "PASS_METHOD_SCOPED only if all 48 rows and all 24 matched pairs reconstruct exactly, seven frozen sentinel invariants hold, and six output mutations are rejected. Any mismatch is FAIL_AUDIT; unavailable or invalid container/source is STOP before formal allocation.",
+  "C": "All policy paths and event outcomes are authored fixtures. A hard gate can prevent simulated admission/effect while leaving an unsafe proposal observable; conservative stop may suppress drift while also stopping legitimate recovery. The corpus does not generate agent behavior.",
+  "U": "No model, person, live GUI, external system, credential, executable unsafe action or real effect. This cannot establish error-induced behavior, prevalence, reduced realized harm, human comprehension, policy superiority, or transfer of any external rollout rate.",
+  "decision_scope": "Issue #6469 T0 measurement-method gate only; T1 model comparison remains separately gated and unperformed.",
+  "frozen_sha256": {
+    "build_fixture.py": "1dfb8007e3b9cb57a2166a07c76d7fe5e6f98788cecb3df62f827370a4723c1f",
+    "fixture.json": "0cabaede7d425690494bea298e463bc7c2a54a3edf30e6ab4066dfcd8d4c83e2",
+    "oracle.json": "c3c34e7cedec6512849c265aeda3b06d4e2e0252615563e3056da7b57dd2cb36",
+    "candidate.py": "38510176a0fc30a5224545aee3c57374f1adf347b492e1ece7bacf538a34dd48",
+    "auditor.py": "54f5c746909b25ac14ecb4e9c4189ea416e86dc5c0b69fe4561acb7be34edf60",
+    "test_t0.py": "94bcc170a38edcce03c903df224d2cb1755a74dad38e94945a01a912cb7cab60",
+    "README.md": "cea7824a14973d05719ee3464d716cc8d240a84259b9be403708cff5f3b03c8c"
+  },
+  "container": {
+    "engine_context": "OrbStack",
+    "docker_engine": "29.4.0",
+    "image": "python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "platform": "linux/arm64",
+    "pull_policy": "never",
+    "network": "none",
+    "cpu_limit": "1",
+    "memory_limit": "512m",
+    "pids_limit": 64,
+    "user": "65534:65534",
+    "rootfs": "read-only",
+    "source_mount": "read-only",
+    "result_mount": "separate writable results/formal-01 directory"
+  },
+  "attempt_budget": {"candidate": 1, "auditor": 1, "retries": 0},
+  "construction": {"container_tests": "5 passed; completed before formal freeze; not a formal candidate/auditor allocation"}
+}
