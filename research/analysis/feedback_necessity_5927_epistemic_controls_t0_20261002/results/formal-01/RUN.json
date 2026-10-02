@@ -1,0 +1,59 @@
+{
+  "schema": "feedback-necessity-epistemic-run-v1",
+  "allocation": "FEEDBACK-NECESSITY-5927-EPISTEMIC-CONTROLS-T0-20261002-01",
+  "recorded_at_utc": "2026-10-02T06:35:49Z",
+  "base_main": "547cd5e64603de9235a036c0170ecb77016c1383",
+  "branch_head_before_execution": "38a24fcfe42da61ff1ed4a2965bf2284e32a17b3",
+  "source_sha256": {
+    "cases.json": "261789480e21ceeaa501791ebe4f20a41824111beefd498ffe9caf5646008190",
+    "candidate.py": "a5f47c9ec3cb2cd2eed259ea487fe45a7925b36d70b989f70cb6631b9c8cd8c4",
+    "auditor.py": "7b0e1d47b1dcc33bc20bf4cb9675bf14e700096604163a60f71f9c4858292412",
+    "test_method.py": "a85e291381f900f08be1644ba371358d7fa5d870cdb024ad80589a642cb98474"
+  },
+  "environment": {
+    "engine": "OrbStack Docker Engine 29.4.0",
+    "client": "Docker 29.5.2",
+    "platform": "linux/arm64",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "runtime_python": "CPython 3.12.14",
+    "network": "none",
+    "limits_requested": {"cpus": 1, "memory": "128m", "pids": 32},
+    "root_filesystem": "read-only",
+    "input_mount": "read-only",
+    "output_mount": "allocation-specific writable directory",
+    "limits_independently_measured": false,
+    "existing_worker_container": "unjuno-native-ci-6092; left running and untouched"
+  },
+  "construction": {
+    "command": "python -B -m unittest -v test_method.py in a fresh isolated container",
+    "docker_argv": "docker run --pull=never --rm --platform linux/arm64 --network none --cpus=1 --memory=128m --pids-limit=32 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,source=/private/tmp/unjuno-agent-interface-current-main-20261002/research/analysis/feedback_necessity_5927_epistemic_controls_t0_20261002,target=/input,readonly --workdir /input python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B -m unittest -v test_method.py",
+    "exit_code": 0,
+    "tests_passed": 7
+  },
+  "candidate": {
+    "command": "python -B candidate.py --cases /input/cases.json --out /out/candidate.raw.json",
+    "docker_argv": "docker run --pull=never --rm --platform linux/arm64 --network none --cpus=1 --memory=128m --pids-limit=32 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,source=/private/tmp/unjuno-agent-interface-current-main-20261002/research/analysis/feedback_necessity_5927_epistemic_controls_t0_20261002,target=/input,readonly --mount type=bind,source=/private/tmp/unjuno-agent-interface-current-main-20261002/research/analysis/feedback_necessity_5927_epistemic_controls_t0_20261002/results/formal-01,target=/out --workdir /input python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B candidate.py --cases /input/cases.json --out /out/candidate.raw.json",
+    "invocations": 1,
+    "exit_code": 0,
+    "result": "CANDIDATE_COMPLETE; 2 cases",
+    "raw_sha256": "868dfc7aa21de534575d599f928978da4f133b903ca26f6355a377c02b3875c8"
+  },
+  "independent_auditor": {
+    "command": "python -B auditor.py --cases /input/cases.json --candidate /out/candidate.raw.json --out /out/audit.raw.json",
+    "docker_argv": "docker run --pull=never --rm --platform linux/arm64 --network none --cpus=1 --memory=128m --pids-limit=32 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,source=/private/tmp/unjuno-agent-interface-current-main-20261002/research/analysis/feedback_necessity_5927_epistemic_controls_t0_20261002,target=/input,readonly --mount type=bind,source=/private/tmp/unjuno-agent-interface-current-main-20261002/research/analysis/feedback_necessity_5927_epistemic_controls_t0_20261002/results/formal-01,target=/out --workdir /input python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B auditor.py --cases /input/cases.json --candidate /out/candidate.raw.json --out /out/audit.raw.json",
+    "separate_container": true,
+    "invocations": 1,
+    "exit_code": 0,
+    "status": "PASS_RAW_AUDIT",
+    "errors": [],
+    "raw_sha256": "05e469f1eb8b362de6504f70a45ca7223443a9cc741efa3c8c6335ba90f664d9"
+  },
+  "formal_candidate_invocations": 1,
+  "formal_auditor_invocations": 1,
+  "retries": 0,
+  "decision": "PASS_METHOD_SCOPED",
+  "case_results": {
+    "known-save-intent-effect-unknown": {"minimum_additional_exchanges": 1, "minimum_additional_channel_set": ["independent_persistence_receipt"]},
+    "fresh-local-receipt-no-extra-tool": {"minimum_additional_exchanges": 0, "minimum_additional_channel_set": []}
+  }
+}

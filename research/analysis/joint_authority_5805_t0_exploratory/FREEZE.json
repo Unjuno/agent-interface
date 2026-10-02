@@ -1,0 +1,37 @@
+{
+  "schema": "issue-5805-exploratory-finite-method-freeze-v1",
+  "status": "EXPLORATORY_HOST_ONLY_NOT_FORMAL_ALLOCATION",
+  "issue": 5805,
+  "frozen_utc": "2026-10-01T05:20:13Z",
+  "repository_main_observed": "c06ae6153b1ecc589aeeb09824b3ed2f5cb194d5",
+  "allocation": "LOCAL-EXPLORATORY-5805-T0-20261001-01",
+  "workspace_path": "scratch/issue5805-t0/",
+  "hypothesis_contract": "PLAN.md",
+  "source_sha256": {
+    "PLAN.md": "5c48a1ee323cc0f1f70503360a9031e687d92ff612a9e4a906dbf2335de59b1a",
+    "fixtures.py": "b17161dc730c41469fbe8d9091d5438ece1b576818709de5c98e1cd1ff31312d",
+    "candidate.py": "eeeb88a79915d3d1f340e662bf3fa6becb112a78f2facd0ab4b6c4dc18f7269e",
+    "audit.py": "cd9dd28d3ac74f0c55eb20c71592e7f824bbe9398228d7835877475b4e1e970b",
+    "run_candidate.py": "21d8c0251b0fefacd718bc458edebfca5f39de3f48ed5e510b6fb147141c8a53",
+    "test_t0.py": "30f78ca477dabd84428ef34821d0e8c77f573fdbfccf0da39a2766590a027458",
+    "test_audit.py": "2e0bae845f727bc675957f5ce097df9295c90e3a9ca0edb4d7ed650abcb22db5"
+  },
+  "fixture": {
+    "traces": 17,
+    "modes": ["requester_only", "all_owner_conjunction", "scoped_delegation", "deny_all"],
+    "expected_rows": 68
+  },
+  "runtime": {
+    "python": "CPython 3.12.10",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "dependencies": "Python standard library only",
+    "docker_context": "desktop-linux (bounded docker info probe timed out; no daemon state changed)",
+    "container": "not used"
+  },
+  "formal_commands": [
+    "python -B run_candidate.py results/run-01/RAW.jsonl",
+    "python -B audit.py results/run-01/RAW.jsonl results/run-01/AUDIT.json"
+  ],
+  "retry_policy": "one exploratory candidate process and one separate raw-only auditor process; no retries",
+  "scope": "fixture-authored authorization admission only; no real consent, ownership discovery, GUI/resource effect, or product safety claim"
+}

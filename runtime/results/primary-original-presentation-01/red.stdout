@@ -1,0 +1,120 @@
+✔ malformed delivered envelope prevents a second effectful host call (2.253584ms)
+✔ ordinary free-text MCP error returns original evidence and stops later input (0.197141ms)
+✔ missing text stops before the primary can send another call (0.170099ms)
+✔ non-JSON text stops before the primary can send another call (0.179256ms)
+✔ null JSON stops before the primary can send another call (0.11226ms)
+✔ array JSON stops before the primary can send another call (0.145432ms)
+✔ extraction preserves the original exception and latches before propagation (0.207384ms)
+✔ transport rejection preserves its exception and blocks later dispatch (0.247557ms)
+✔ fresh guarded observation uses the same no-target call as initial observation (0.930231ms)
+✔ fresh observation rejects accidental per-call arguments before host dispatch (0.318209ms)
+✔ direct observation preserves the explicit snapshotted observation configuration (0.296951ms)
+✔ a completed neutral direct result returns unchanged and permits the next call (0.193399ms)
+✔ an exception during neutral-release validation blocks later input (0.246355ms)
+✔ real host text-only declared refusal is presented and acknowledged without stopping (43.97344ms)
+✔ explicit input feedback matched retains evidence and enforces STOP (0.28398ms)
+✔ explicit input feedback pending retains evidence and enforces STOP (0.153335ms)
+✔ explicit input feedback rejected retains evidence and enforces STOP (0.125429ms)
+✔ explicit input feedback needs_review retains evidence and enforces STOP (0.062972ms)
+✖ original presentation resends only retained bytes even after primary STOP (31.637575ms)
+✖ original presentation snapshots sinks and preserves the host exception (0.802076ms)
+✖ original presentation rejects invalid arguments before host: [] (0.229456ms)
+✖ original presentation rejects invalid arguments before host: [0] (0.141142ms)
+✖ original presentation rejects invalid arguments before host: [1.5] (0.09095ms)
+✖ original presentation rejects invalid arguments before host: ["1"] (0.060333ms)
+✖ original presentation rejects invalid arguments before host: [1,{"forceImage":false}] (0.076502ms)
+✖ missing original presentation sinks refuse before the host (0.091729ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 18
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 139.166589
+
+✖ failing tests:
+
+test at runtime/host_v1/test_primary_caller.mjs:154:1
+✖ original presentation resends only retained bytes even after primary STOP (31.637575ms)
+  TypeError: caller.presentOriginal is not a function
+      at TestContext.<anonymous> (file:///var/tmp/agent-interface-evidence-storage-main/runtime/host_v1/test_primary_caller.mjs:172:18)
+      at async Test.run (node:internal/test_runner/test:1110:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:785:7)
+
+test at runtime/host_v1/test_primary_caller.mjs:189:1
+✖ original presentation snapshots sinks and preserves the host exception (0.802076ms)
+  TypeError: caller.presentOriginal is not a function
+      at TestContext.<anonymous> (file:///var/tmp/agent-interface-evidence-storage-main/runtime/host_v1/test_primary_caller.mjs:196:24)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1103:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:785:18)
+      at Test.postRun (node:internal/test_runner/test:1232:19)
+      at Test.run (node:internal/test_runner/test:1160:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:785:7)
+
+test at runtime/host_v1/test_primary_caller.mjs:204:3
+✖ original presentation rejects invalid arguments before host: [] (0.229456ms)
+  TypeError: caller.presentOriginal is not a function
+      at TestContext.<anonymous> (file:///var/tmp/agent-interface-evidence-storage-main/runtime/host_v1/test_primary_caller.mjs:207:33)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1103:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:785:18)
+      at Test.postRun (node:internal/test_runner/test:1232:19)
+      at Test.run (node:internal/test_runner/test:1160:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:785:7)
+
+test at runtime/host_v1/test_primary_caller.mjs:204:3
+✖ original presentation rejects invalid arguments before host: [0] (0.141142ms)
+  TypeError: caller.presentOriginal is not a function
+      at TestContext.<anonymous> (file:///var/tmp/agent-interface-evidence-storage-main/runtime/host_v1/test_primary_caller.mjs:207:33)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1103:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:785:18)
+      at Test.postRun (node:internal/test_runner/test:1232:19)
+      at Test.run (node:internal/test_runner/test:1160:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:785:7)
+
+test at runtime/host_v1/test_primary_caller.mjs:204:3
+✖ original presentation rejects invalid arguments before host: [1.5] (0.09095ms)
+  TypeError: caller.presentOriginal is not a function
+      at TestContext.<anonymous> (file:///var/tmp/agent-interface-evidence-storage-main/runtime/host_v1/test_primary_caller.mjs:207:33)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1103:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:785:18)
+      at Test.postRun (node:internal/test_runner/test:1232:19)
+      at Test.run (node:internal/test_runner/test:1160:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:785:7)
+
+test at runtime/host_v1/test_primary_caller.mjs:204:3
+✖ original presentation rejects invalid arguments before host: ["1"] (0.060333ms)
+  TypeError: caller.presentOriginal is not a function
+      at TestContext.<anonymous> (file:///var/tmp/agent-interface-evidence-storage-main/runtime/host_v1/test_primary_caller.mjs:207:33)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1103:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:785:18)
+      at Test.postRun (node:internal/test_runner/test:1232:19)
+      at Test.run (node:internal/test_runner/test:1160:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:785:7)
+
+test at runtime/host_v1/test_primary_caller.mjs:204:3
+✖ original presentation rejects invalid arguments before host: [1,{"forceImage":false}] (0.076502ms)
+  TypeError: caller.presentOriginal is not a function
+      at TestContext.<anonymous> (file:///var/tmp/agent-interface-evidence-storage-main/runtime/host_v1/test_primary_caller.mjs:207:33)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1103:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:785:18)
+      at Test.postRun (node:internal/test_runner/test:1232:19)
+      at Test.run (node:internal/test_runner/test:1160:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:785:7)
+
+test at runtime/host_v1/test_primary_caller.mjs:211:1
+✖ missing original presentation sinks refuse before the host (0.091729ms)
+  TypeError: caller.presentOriginal is not a function
+      at TestContext.<anonymous> (file:///var/tmp/agent-interface-evidence-storage-main/runtime/host_v1/test_primary_caller.mjs:213:31)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1103:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:785:18)
+      at Test.postRun (node:internal/test_runner/test:1232:19)
+      at Test.run (node:internal/test_runner/test:1160:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:785:7)

@@ -1,0 +1,21 @@
+{
+  "allocation_id": "MAP01-OWNER-OCCURRENCE-XVFB-59-T3-20261002-01",
+  "main_sha": "d6229435f9d651b5309a01dca30c2edd7de2f54a",
+  "candidate_command": "wsl.exe -d Ubuntu -- sh -lc 'unshare --user --map-root-user --mount --fork sh -lc \"mount --make-rprivate / && mount -t tmpfs -o size=64m tmpfs /tmp && chmod 1777 /tmp && mkdir -m 1777 /tmp/.X11-unix && cd /mnt/c/Users/junny/Documents/Codex/2026-09-19/unjuno-agent-interface/work/research-r133-integration-20261001 && python3 -B research/doom/map01_owner_occurrence_xvfb_59_t3_20261002/candidate.py\"'",
+  "candidate_invocations": 1,
+  "candidate_exit_code": 0,
+  "auditor_command": "wsl.exe -d Ubuntu --cd /mnt/c/Users/junny/Documents/Codex/2026-09-19/unjuno-agent-interface/work/research-r133-integration-20261001 python3 -B research/doom/map01_owner_occurrence_xvfb_59_t3_20261002/audit.py",
+  "auditor_invocations": 1,
+  "auditor_exit_code": 0,
+  "auditor_status": "PASS_XVFB_KEYMAP_WITNESS_CONSTRUCTION_SCOPED",
+  "retries": 0,
+  "containerized": false,
+  "docker_desktop_engine_available": false,
+  "shared_container_slot_allocated": false,
+  "user_mount_namespace_isolated": true,
+  "x_server": "private Xvfb, TCP disabled, XTEST-generated events",
+  "physical_input": false,
+  "application_effect": false,
+  "game_or_model": false,
+  "network_calls": 0
+}

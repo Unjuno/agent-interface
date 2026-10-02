@@ -1,0 +1,40 @@
+{
+  "format": "compiled-gui-runtime-receipt-v1",
+  "interface_id": "calc-pixel-admission",
+  "method": "enter-read-save-yield",
+  "method_version": "1",
+  "session_scope": "native-x11:b3f6ea39b84e4f7188551f899efe7469",
+  "outcome": "SAFE_YIELD",
+  "reason": "unknown_state",
+  "completed_transitions": 0,
+  "frontier_model_resumptions": 0,
+  "observations": [
+    {
+      "sequence": 2,
+      "captured_ns": 8676962596094,
+      "evidence_ref": "observation-2",
+      "evidence_digest": "54ce5a3ab2f5d3e61990a6afb0deaeed20e48988418a1e1e8c4225318ef889f4",
+      "predicates": {
+        "present": false,
+        "main_focus": true,
+        "handoff": false
+      }
+    }
+  ],
+  "transitions": [],
+  "critical_events": [
+    {
+      "event": "runtime_finished",
+      "outcome": "SAFE_YIELD",
+      "reason": "unknown_state",
+      "completed_transitions": 0
+    }
+  ],
+  "latest_evidence_ref": "observation-2",
+  "pending_effect": null,
+  "started_ns": 8676960793895,
+  "ended_ns": 8677896597313,
+  "elapsed_ns": 935803418,
+  "input_authority": "admission_per_action_only",
+  "raw_evidence_retention": "adapter_responsibility_unverified"
+}

@@ -1,0 +1,16 @@
+{
+  "study_id": "issue-5518-ioco-t0-v1",
+  "disposition": "PASS_CONSTRUCTION_ONLY",
+  "host": "Windows 11 task workspace; CPython 3.12.10",
+  "commands": [
+    "python -m unittest -v research.analysis.ioco_5518_t0_v1.test_audit",
+    "python research/analysis/ioco_5518_t0_v1/candidate.py | python research/analysis/ioco_5518_t0_v1/audit.py"
+  ],
+  "unit_tests": "5/5 passed",
+  "host_candidate_pipe_audit": "exit 0; checks 21; errors []",
+  "candidate_sha256": "4F468AC43FC43428A2FC650CC9877F5D1BC3EF10F49F149EDC8112A9B2B96259",
+  "auditor_sha256": "3146C308FF037DB4612C9C4A7E1EC4ADF922E0B653571E4EFB8A1AD95D889EE6",
+  "tests_sha256": "50BFAA513D7E4150DB8DC0B8E3D1CBF80E3D9FA94AC0DA10DDC8E3ED098608C5",
+  "scope": "Synthetic finite transition contract only. This host construction does not count as the frozen WSLc candidate or the independent formal raw-only container audit."
+}
+

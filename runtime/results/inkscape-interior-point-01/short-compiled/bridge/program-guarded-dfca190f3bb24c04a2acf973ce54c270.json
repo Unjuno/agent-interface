@@ -1,0 +1,58 @@
+{
+  "schema": "agent-interface/program-v1",
+  "program_id": "guarded-dfca190f3bb24c04a2acf973ce54c270",
+  "source": {
+    "observation_seq": 8,
+    "binding_revision": 0
+  },
+  "authority": {
+    "lease_id": "native-x11-c3b0946c58a841959e79498bdaa9401e",
+    "expires_at_ns": 31212838650845
+  },
+  "terminal": {
+    "release_all_required": true
+  },
+  "ops": [
+    {
+      "op": "focus",
+      "target": "app"
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "Right"
+      ]
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "Right"
+      ]
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "Right"
+      ]
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "Right"
+      ]
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "Right"
+      ]
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 100
+    },
+    {
+      "op": "release_all"
+    }
+  ]
+}

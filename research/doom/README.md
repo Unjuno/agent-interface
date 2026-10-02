@@ -37,17 +37,29 @@ flowchart TD
 
 | Theme | Representative entry points |
 |---|---|
+| Finite observation-loss YIELD guard | [`intermittent_observation_yield_59_t0_20261002/REPORT.md`](intermittent_observation_yield_59_t0_20261002/REPORT.md) — synthetic contract PASS only; live T1 remains held |
 | Initial engine/X11 integration | [`MAP01_LIVE_CONTROL_V1.md`](MAP01_LIVE_CONTROL_V1.md), [`SHARED_RUNTIME.md`](SHARED_RUNTIME.md) |
 | Planner overlap and cover | [`MAP01_COVER_POLICY_V1.md`](MAP01_COVER_POLICY_V1.md), [`MAP01_COVER_RENEWAL_V1.md`](MAP01_COVER_RENEWAL_V1.md) |
 | Typed validity/current evidence | [`MAP01_TYPED_COVER_VALIDITY_V29.md`](MAP01_TYPED_COVER_VALIDITY_V29.md), [`MAP01_ACTION_VALIDITY_SIGNALS_V1.md`](MAP01_ACTION_VALIDITY_SIGNALS_V1.md) |
 | Admission and running actions | [`MAP01_FINAL_ADMISSION_V32.md`](MAP01_FINAL_ADMISSION_V32.md), [`MAP01_RUNNING_ACTION_CANCEL_LIVE_V2.md`](MAP01_RUNNING_ACTION_CANCEL_LIVE_V2.md) |
 | Source-only import-boundary audit | [`map01_r4_import_boundary_desktop_v1/README.md`](map01_r4_import_boundary_desktop_v1/README.md) |
 | Local NCC source-only archive | [`local_ncc_consensus_v1/RECOVERY_STATUS.md`](local_ncc_consensus_v1/RECOVERY_STATUS.md): #4163, formal 0/10; exact-environment and FREEZE-provenance HOLD |
+| #2476 in-trajectory observability construction archive | [`intrajectory_observability_2476_v1/construction_chain_r3_20260928/RECOVERY_STATUS.md`](intrajectory_observability_2476_v1/construction_chain_r3_20260928/RECOVERY_STATUS.md) (r3 immutable invocation STOP) and [`intrajectory_observability_2476_v1/construction_chain_r4_20260928/RECOVERY_STATUS.md`](intrajectory_observability_2476_v1/construction_chain_r4_20260928/RECOVERY_STATUS.md) (r4 technical construction PASS, allocation HOLD); neither is a formal game/matcher result |
 | Liveness and handback | [`MAP01_V39_COAST_LIVENESS_LIVE_V1.md`](MAP01_V39_COAST_LIVENESS_LIVE_V1.md), [`MAP01_V38_INTEGRATED_LIVE_V1.md`](MAP01_V38_INTEGRATED_LIVE_V1.md) |
 | Timing/effect measurement | [`MAP01_V38_V39_CONTROL_TEMPO_POSTHOC_V1.md`](MAP01_V38_V39_CONTROL_TEMPO_POSTHOC_V1.md), [`MAP01_HELD_INPUT_OCCUPANCY_POSTHOC_V1.md`](MAP01_HELD_INPUT_OCCUPANCY_POSTHOC_V1.md) |
+| Full-trace held-input occupancy audit | [`v4/v5 H/T/D/C/U report and retained STOP history`](results/map01-held-input-occupancy-fulltrace-v4/README.md) — candidate v4 and independent raw-trace audit v5 pass; posthoc bounds only, including a censored cancel/ack race |
+| Per-key occupancy schema boundary | [Repeated-key pulse T0](map01_repeated_key_pulse_occupancy_59_t0_20261001/RESULT.md) records the key-unique fail-closed boundary; [occurrence-ID successor T0](map01_occurrence_key_occupancy_59_t0_20261001/RESULT.md) passes finite repeated-key/overlap and fail-closed controls. Both are synthetic construction evidence only. |
+| Input-owner occurrence instrumentation | [Issue #59 T2](map01_owner_occurrence_instrumentation_59_t2_20261002/RESULT.md) passes an isolated fake-Xlib construction: two repeat IDs, six full-bitmap witnesses, independent audit 9/9. No physical occupancy or live-control claim. |
 | Recovery-arm useful-effect gate | [Paired-adjudicator synthetic counterexample](map01_r133_recovery_coast_t1_v1/useful_effect_audit_v2/REPORT.md) — scoped PASS with 0/3 recovery kill/exit pairs; survival sufficiency remains a study-design decision |
+| Recovery useful-effect gate sensitivity | [T4 exhaustive abstract-input sweep](map01_r133_recovery_coast_t1_v1/useful_effect_sensitivity_v1/REPORT.md) — 2,916 comparator cases; coast-only events are all HOLD under a recovery-specific gate; synthetic sensitivity only |
 | Recovery guard boundary | [Retained v39 continuation-guard window diagnostic](map01_continuation_guard_window_59_t2_20261001/REPORT.md) — counterfactual health-floor timing only; candidate and auditor reruns are disclosed |
+| Intermittent control transfer | [Issue #6061 T0](intermittent_control_6061_t0_20261001/REPORT.md) — predictive chunks reduce captures vs fixed cadence on an idealized finite fixture, but stale tracking increases cost; not live-control evidence |
+| Intermittent control identity switch | [Issue #6061 T1](map01_intermit_identity_switch_6061_t1_20261002/RESULT.md) — observable ID/epoch discontinuities stop the synthetic gate; silent switch is unidentifiable and held UNKNOWN; not live-control evidence |
 | Artifact/terminal synchronization | [#3211 allocation-04 artifact audit](map01_terminal_sync_artifact_reaudit_3211_t1_20261002/REPORT.md) |
+| Xvfb keymap witness construction | [`map01_owner_occurrence_xvfb_59_t3_20261002/README.md`](map01_owner_occurrence_xvfb_59_t3_20261002/README.md) — scoped virtual-server construction only; not physical occupancy |
+| Keymap occupancy vs application delivery | [`map01_app_event_xvfb_59_t0_20261002/successor_02/REPORT.md`](map01_app_event_xvfb_59_t0_20261002/successor_02/REPORT.md) — Docker/Xvfb T0 scoped PASS; focus transfer kept the global key bit down while the new focus received no KeyPress; not live threat/MAP01 evidence |
+| Held-key autorepeat after focus transfer | [`map01_x11_held_repeat_59_t1_20261002/REPORT.md`](map01_x11_held_repeat_59_t1_20261002/REPORT.md) — Docker/Xvfb T1 scoped PASS; after immediate T0 window, B received 14 autorepeat KeyPress events during the same still-held W interval; not semantic effect or live MAP01 evidence |
+| Client callback effect after focus transfer | [`map01_x11_callback_effect_59_t2_20261002/REPORT.md`](map01_x11_callback_effect_59_t2_20261002/REPORT.md) — Docker/Xvfb T2 scoped PASS; minimal B callback counter advanced 0→15 on linked W KeyPress events; synthetic client state only, not useful task effect or MAP01 evidence |
 | Diagnostic trace writer | [#3211 synthetic writer-boundary reproduction](map01_terminal_sync_writer_repro_3211_t2_20261002/REPORT.md) |
 | JSONL writer contract | [#3211 T3 standalone writer contract](map01_terminal_sync_writer_contract_3211_t3_20261002/REPORT.md) |
 | Terminal wait boundary | [#3211 T4 synthetic wait-boundary discrimination](map01_terminal_sync_wait_boundary_3211_t4_20261002/REPORT.md) |
@@ -330,3 +342,19 @@ completed and one aborted after expiry/recovery. All28 frames and delivery audit
 The perceived black recovery image is a normal saved PNG; an older failed PNG
 also matches its published bytes and renders normally at original detail.
 Investigate end-to-end image presentation before more timing claims.
+
+## Repeated-key occupancy boundary (Issue #59)
+
+Four separate synthetic/source-boundary allocations are retained in PR #6105:
+the unchanged per-key ledger fails closed on repeated `W` occurrences; a
+successor occurrence-key ledger represents separate synthetic intervals; and a
+fake-Xlib exercise of the pinned #5630 `InputOwner` records one explicit-up
+cycle without an occurrence ID or per-interval keymap sample (T0). T0's first
+auditor returned `FAIL_AUDIT` because its oracle incorrectly required terminal
+cleanup to retain a key name; its raw/audit records remain immutable. A
+separate two-explicit-up successor then passed the corrected owner-boundary
+audit: both repeated W admissions/releases lacked an occurrence ID, and only
+terminal close sampled an empty keymap. Neither source-boundary test is live
+input evidence. None of these results is a real X11, Docker, physical-key,
+application-effect, or gameplay result. See [`owner occurrence-binding T0`](map01_owner_occurrence_binding_59_t0_20261001/RESULT.md)
+and [`T1`](map01_owner_occurrence_binding_59_t1_20261002/RESULT.md).

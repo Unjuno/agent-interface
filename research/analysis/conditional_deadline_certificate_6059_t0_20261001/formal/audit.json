@@ -1,0 +1,90 @@
+{
+  "allocation_id": "ROUTE-DEADLINE-6059-T0-20261001-01",
+  "checked_cases": 9,
+  "disposition": "PASS_METHOD_SCOPED",
+  "errors": [],
+  "scope": "synthetic finite method fixture only; no product/agent-interface latency guarantee",
+  "summaries": [
+    {
+      "all_meet": true,
+      "all_miss": false,
+      "completion_max": 4,
+      "completion_min": 2,
+      "id": "bounded_serial_pass",
+      "label": "CERTIFIED_DEADLINE_MET",
+      "trace_count": 4
+    },
+    {
+      "all_meet": false,
+      "all_miss": false,
+      "completion_max": 9,
+      "completion_min": 3,
+      "id": "burst_local_pass_path_unknown",
+      "label": "UNKNOWN_UPPER_BOUND_EXCEEDS_DEADLINE",
+      "trace_count": 81
+    },
+    {
+      "all_meet": false,
+      "all_miss": true,
+      "completion_max": 8,
+      "completion_min": 6,
+      "id": "sound_lower_bound_impossible",
+      "label": "CERTIFIED_DEADLINE_IMPOSSIBLE",
+      "trace_count": 4
+    },
+    {
+      "all_meet": false,
+      "all_miss": true,
+      "completion_max": 9,
+      "completion_min": 7,
+      "id": "shared_resource_invalidates_composition",
+      "label": "UNKNOWN_SHARED_RESOURCE_CONTENTION",
+      "trace_count": 4
+    },
+    {
+      "all_meet": true,
+      "all_miss": false,
+      "completion_max": 6,
+      "completion_min": 2,
+      "id": "bounded_timeout_and_cancellation",
+      "label": "CERTIFIED_DEADLINE_MET",
+      "trace_count": 12
+    },
+    {
+      "all_meet": false,
+      "all_miss": false,
+      "completion_max": 20,
+      "completion_min": 1,
+      "id": "unbounded_stage_unknown",
+      "label": "UNKNOWN_UNBOUNDED_STAGE",
+      "trace_count": 3
+    },
+    {
+      "all_meet": true,
+      "all_miss": false,
+      "completion_max": 2,
+      "completion_min": 1,
+      "id": "missing_service_guarantee_unknown",
+      "label": "UNKNOWN_NO_SERVICE_GUARANTEE",
+      "trace_count": 2
+    },
+    {
+      "all_meet": true,
+      "all_miss": false,
+      "completion_max": 2,
+      "completion_min": 1,
+      "id": "invalid_assumption_unknown",
+      "label": "UNKNOWN_ASSUMPTION_VIOLATED",
+      "trace_count": 2
+    },
+    {
+      "all_meet": false,
+      "all_miss": false,
+      "completion_max": 8,
+      "completion_min": 1,
+      "id": "empirical_lower_bound_cannot_prove_impossible",
+      "label": "UNKNOWN_NO_SERVICE_GUARANTEE",
+      "trace_count": 8
+    }
+  ]
+}

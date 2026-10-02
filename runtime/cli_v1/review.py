@@ -148,9 +148,16 @@ def outcome_summary(report):
             if name in dispatch:
                 value = dispatch[name]
                 summary[name] = value if type(value) is bool else None
-        if 'program_emissions' in dispatch:
-            value = dispatch['program_emissions']
-            summary['program_emissions'] = value if type(value) is int and value >= 0 else None
+        # Executed programs report their delta inside execution; refusals may
+        # report it at dispatch level. Never substitute the backend's cumulative
+        # emissions counter or turn missing evidence into zero. Conflicting or
+        # malformed copies remain unknown, with both originals retained.
+        counts = [row['program_emissions'] for row in (dispatch, execution)
+                  if 'program_emissions' in row]
+        if counts:
+            summary['program_emissions'] = (counts[0] if all(
+                type(value) is int and value >= 0 and value == counts[0]
+                for value in counts) else None)
         if 'compilation' in report:
             summary['failed_source_operation'] = _failure_source(report, failed)
             summary['validation_source_operation'] = _failure_source(

@@ -1,0 +1,246 @@
+{
+  "as_of": 1,
+  "cases": {
+    "delay_inversion": {
+      "complete_case": "SELECT:B",
+      "pending_aware": "NO_RANKING",
+      "routes": {
+        "A": {
+          "bounds": [
+            "0",
+            "3/4"
+          ],
+          "complete_case_rate": "0",
+          "counts": {
+            "ADMIN_LOST_FOLLOWUP": 0,
+            "PENDING": 3,
+            "POLICY_TERMINAL_SAFE_STOP": 0,
+            "VERIFIED_FAILURE": 1,
+            "VERIFIED_SUCCESS": 0,
+            "VERIFIED_WRONG_EFFECT": 0,
+            "YIELD": 0
+          }
+        },
+        "B": {
+          "bounds": [
+            "1/2",
+            "1/2"
+          ],
+          "complete_case_rate": "1/2",
+          "counts": {
+            "ADMIN_LOST_FOLLOWUP": 0,
+            "PENDING": 0,
+            "POLICY_TERMINAL_SAFE_STOP": 0,
+            "VERIFIED_FAILURE": 2,
+            "VERIFIED_SUCCESS": 2,
+            "VERIFIED_WRONG_EFFECT": 0,
+            "YIELD": 0
+          }
+        }
+      }
+    },
+    "equal_delay_null": {
+      "complete_case": "NO_PREFERENCE",
+      "pending_aware": "NO_PREFERENCE",
+      "routes": {
+        "C": {
+          "bounds": [
+            "1/2",
+            "1/2"
+          ],
+          "complete_case_rate": "1/2",
+          "counts": {
+            "ADMIN_LOST_FOLLOWUP": 0,
+            "PENDING": 0,
+            "POLICY_TERMINAL_SAFE_STOP": 0,
+            "VERIFIED_FAILURE": 1,
+            "VERIFIED_SUCCESS": 1,
+            "VERIFIED_WRONG_EFFECT": 0,
+            "YIELD": 0
+          }
+        },
+        "D": {
+          "bounds": [
+            "1/2",
+            "1/2"
+          ],
+          "complete_case_rate": "1/2",
+          "counts": {
+            "ADMIN_LOST_FOLLOWUP": 0,
+            "PENDING": 0,
+            "POLICY_TERMINAL_SAFE_STOP": 0,
+            "VERIFIED_FAILURE": 1,
+            "VERIFIED_SUCCESS": 1,
+            "VERIFIED_WRONG_EFFECT": 0,
+            "YIELD": 0
+          }
+        }
+      }
+    },
+    "known_independent_loss": {
+      "complete_case": "SELECT:F",
+      "pending_aware": "SELECT:F",
+      "routes": {
+        "E": {
+          "bounds": [
+            "1/4",
+            "1/2"
+          ],
+          "complete_case_rate": "1/3",
+          "counts": {
+            "ADMIN_LOST_FOLLOWUP": 1,
+            "PENDING": 0,
+            "POLICY_TERMINAL_SAFE_STOP": 0,
+            "VERIFIED_FAILURE": 2,
+            "VERIFIED_SUCCESS": 1,
+            "VERIFIED_WRONG_EFFECT": 0,
+            "YIELD": 0
+          }
+        },
+        "F": {
+          "bounds": [
+            "3/4",
+            "1"
+          ],
+          "complete_case_rate": "1",
+          "counts": {
+            "ADMIN_LOST_FOLLOWUP": 1,
+            "PENDING": 0,
+            "POLICY_TERMINAL_SAFE_STOP": 0,
+            "VERIFIED_FAILURE": 0,
+            "VERIFIED_SUCCESS": 3,
+            "VERIFIED_WRONG_EFFECT": 0,
+            "YIELD": 0
+          }
+        }
+      }
+    },
+    "state_coupled": {
+      "complete_case": "UNKNOWN",
+      "pending_aware": "MODEL_MISMATCH_UNKNOWN",
+      "routes": {}
+    },
+    "typed_terminals": {
+      "complete_case": "SELECT:SAFE",
+      "pending_aware": "REPORT_TYPED_OUTCOMES_NO_COLLAPSE",
+      "routes": {
+        "SAFE": {
+          "bounds": [
+            "1/2",
+            "1/2"
+          ],
+          "complete_case_rate": "1",
+          "counts": {
+            "ADMIN_LOST_FOLLOWUP": 0,
+            "PENDING": 0,
+            "POLICY_TERMINAL_SAFE_STOP": 1,
+            "VERIFIED_FAILURE": 0,
+            "VERIFIED_SUCCESS": 1,
+            "VERIFIED_WRONG_EFFECT": 0,
+            "YIELD": 0
+          }
+        },
+        "WRONG": {
+          "bounds": [
+            "1/2",
+            "1/2"
+          ],
+          "complete_case_rate": "1/2",
+          "counts": {
+            "ADMIN_LOST_FOLLOWUP": 0,
+            "PENDING": 0,
+            "POLICY_TERMINAL_SAFE_STOP": 0,
+            "VERIFIED_FAILURE": 0,
+            "VERIFIED_SUCCESS": 1,
+            "VERIFIED_WRONG_EFFECT": 1,
+            "YIELD": 0
+          }
+        }
+      }
+    },
+    "unknown_loss": {
+      "complete_case": "SELECT:U",
+      "pending_aware": "NONIDENTIFIABLE",
+      "routes": {
+        "U": {
+          "bounds": [
+            "1/2",
+            "1"
+          ],
+          "complete_case_rate": "1",
+          "counts": {
+            "ADMIN_LOST_FOLLOWUP": 1,
+            "PENDING": 0,
+            "POLICY_TERMINAL_SAFE_STOP": 0,
+            "VERIFIED_FAILURE": 0,
+            "VERIFIED_SUCCESS": 1,
+            "VERIFIED_WRONG_EFFECT": 0,
+            "YIELD": 0
+          }
+        },
+        "V": {
+          "bounds": [
+            "0",
+            "1/2"
+          ],
+          "complete_case_rate": "0",
+          "counts": {
+            "ADMIN_LOST_FOLLOWUP": 1,
+            "PENDING": 0,
+            "POLICY_TERMINAL_SAFE_STOP": 0,
+            "VERIFIED_FAILURE": 1,
+            "VERIFIED_SUCCESS": 0,
+            "VERIFIED_WRONG_EFFECT": 0,
+            "YIELD": 0
+          }
+        }
+      }
+    },
+    "yield_recovery": {
+      "complete_case": "NO_RANKING",
+      "pending_aware": "PENDING_AT_CHECKPOINT",
+      "routes": {
+        "RECOVER": {
+          "bounds": [
+            "0",
+            "1"
+          ],
+          "complete_case_rate": null,
+          "counts": {
+            "ADMIN_LOST_FOLLOWUP": 0,
+            "PENDING": 1,
+            "POLICY_TERMINAL_SAFE_STOP": 0,
+            "VERIFIED_FAILURE": 0,
+            "VERIFIED_SUCCESS": 0,
+            "VERIFIED_WRONG_EFFECT": 0,
+            "YIELD": 1
+          }
+        }
+      }
+    }
+  },
+  "schema": "pending-route-t003-candidate-v1",
+  "switching": {
+    "components": {
+      "handback": 3,
+      "release": 1,
+      "reobserve": 2,
+      "revalidate": 4
+    },
+    "per_change": 10,
+    "policies": {
+      "fixed": {
+        "base_work": 12,
+        "changes": 0,
+        "switch_cost": 0,
+        "total_work": 12
+      },
+      "switching": {
+        "base_work": 12,
+        "changes": 2,
+        "switch_cost": 20,
+        "total_work": 32
+      }
+    }
+  }
+}

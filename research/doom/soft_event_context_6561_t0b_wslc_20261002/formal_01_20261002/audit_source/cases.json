@@ -1,0 +1,281 @@
+{
+  "schema": "soft-event-context-6561-t0b-fixture-v1",
+  "fixture_binding": {
+    "app": "doom-fixture",
+    "generation": 4,
+    "session": "session-6561-01"
+  },
+  "cases": [
+    {
+      "case_id": "NONE",
+      "history_state": "none",
+      "current_sequence": 10,
+      "binding": {
+        "app": "doom-fixture",
+        "generation": 4,
+        "session": "session-6561-01"
+      },
+      "raw_events": [],
+      "invalidation_receipt": null
+    },
+    {
+      "case_id": "ONE_SOFT",
+      "history_state": "observed",
+      "current_sequence": 90,
+      "binding": {
+        "app": "doom-fixture",
+        "generation": 4,
+        "session": "session-6561-01"
+      },
+      "raw_events": [
+        {
+          "sequence": 73,
+          "signal": {
+            "status": "observed",
+            "signal_id": "health",
+            "value": 78,
+            "binding": {
+              "app": "doom-fixture",
+              "generation": 4,
+              "session": "session-6561-01"
+            },
+            "capture_ns": 1073000
+          },
+          "outcome": {
+            "format": "observable-signal-guard-outcome-v1",
+            "guard_id": "map01-4",
+            "signal_id": "health",
+            "status": "SOFT_CHANGED",
+            "reason": "within_validity_envelope",
+            "source_value": 84,
+            "current_value": 78,
+            "hard_minimum": 72,
+            "source_age_ms": 100,
+            "max_source_age_ms": 3000,
+            "keep_existing_policy": true,
+            "requires_new_decision": false,
+            "grants_input_authority": false,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "semantic_change_identified": true,
+            "task_success_verified": false
+          }
+        }
+      ],
+      "invalidation_receipt": null
+    },
+    {
+      "case_id": "MULTI_SOFT",
+      "history_state": "observed",
+      "current_sequence": 150,
+      "binding": {
+        "app": "doom-fixture",
+        "generation": 4,
+        "session": "session-6561-01"
+      },
+      "raw_events": [
+        {
+          "sequence": 73,
+          "signal": {
+            "status": "observed",
+            "signal_id": "health",
+            "value": 78,
+            "binding": {
+              "app": "doom-fixture",
+              "generation": 4,
+              "session": "session-6561-01"
+            },
+            "capture_ns": 1073000
+          },
+          "outcome": {
+            "format": "observable-signal-guard-outcome-v1",
+            "guard_id": "map01-4",
+            "signal_id": "health",
+            "status": "SOFT_CHANGED",
+            "reason": "within_validity_envelope",
+            "source_value": 84,
+            "current_value": 78,
+            "hard_minimum": 72,
+            "source_age_ms": 100,
+            "max_source_age_ms": 3000,
+            "keep_existing_policy": true,
+            "requires_new_decision": false,
+            "grants_input_authority": false,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "semantic_change_identified": true,
+            "task_success_verified": false
+          }
+        },
+        {
+          "sequence": 101,
+          "signal": {
+            "status": "observed",
+            "signal_id": "health",
+            "value": 75,
+            "binding": {
+              "app": "doom-fixture",
+              "generation": 4,
+              "session": "session-6561-01"
+            },
+            "capture_ns": 1101000
+          },
+          "outcome": {
+            "format": "observable-signal-guard-outcome-v1",
+            "guard_id": "map01-4b",
+            "signal_id": "health",
+            "status": "SOFT_CHANGED",
+            "reason": "within_validity_envelope",
+            "source_value": 78,
+            "current_value": 75,
+            "hard_minimum": 72,
+            "source_age_ms": 150,
+            "max_source_age_ms": 3000,
+            "keep_existing_policy": true,
+            "requires_new_decision": false,
+            "grants_input_authority": false,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "semantic_change_identified": true,
+            "task_success_verified": false
+          }
+        },
+        {
+          "sequence": 137,
+          "signal": {
+            "status": "observed",
+            "signal_id": "health",
+            "value": 73,
+            "binding": {
+              "app": "doom-fixture",
+              "generation": 4,
+              "session": "session-6561-01"
+            },
+            "capture_ns": 1137000
+          },
+          "outcome": {
+            "format": "observable-signal-guard-outcome-v1",
+            "guard_id": "map01-5",
+            "signal_id": "health",
+            "status": "SOFT_CHANGED",
+            "reason": "within_validity_envelope",
+            "source_value": 78,
+            "current_value": 73,
+            "hard_minimum": 72,
+            "source_age_ms": 200,
+            "max_source_age_ms": 3000,
+            "keep_existing_policy": true,
+            "requires_new_decision": false,
+            "grants_input_authority": false,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "semantic_change_identified": true,
+            "task_success_verified": false
+          }
+        }
+      ],
+      "invalidation_receipt": null
+    },
+    {
+      "case_id": "HARD",
+      "history_state": "invalidated",
+      "current_sequence": 90,
+      "binding": {
+        "app": "doom-fixture",
+        "generation": 4,
+        "session": "session-6561-01"
+      },
+      "raw_events": [],
+      "invalidation_receipt": {
+        "sequence": 88,
+        "binding": {
+          "app": "doom-fixture",
+          "generation": 4,
+          "session": "session-6561-01"
+        },
+        "guard_id": "map01-hard",
+        "format": "observable-signal-guard-outcome-v1",
+        "signal_id": "health",
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "source_value": 78,
+        "current_value": 70,
+        "hard_minimum": 72,
+        "source_age_ms": 100,
+        "max_source_age_ms": 3000,
+        "keep_existing_policy": false,
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "may_only_preserve_or_reduce_existing_authority": true,
+        "semantic_change_identified": true,
+        "task_success_verified": false
+      }
+    },
+    {
+      "case_id": "UNKNOWN",
+      "history_state": "unknown",
+      "current_sequence": 90,
+      "binding": {
+        "app": "doom-fixture",
+        "generation": 4,
+        "session": "session-6561-01"
+      },
+      "raw_events": [],
+      "invalidation_receipt": {
+        "sequence": 89,
+        "binding": {
+          "app": "doom-fixture",
+          "generation": 4,
+          "session": "session-6561-01"
+        },
+        "guard_id": "map01-unknown",
+        "format": "observable-signal-guard-outcome-v1",
+        "signal_id": "health",
+        "status": "UNKNOWN",
+        "reason": "signal_unavailable",
+        "source_value": 78,
+        "current_value": null,
+        "hard_minimum": 72,
+        "source_age_ms": null,
+        "max_source_age_ms": 3000,
+        "keep_existing_policy": false,
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "may_only_preserve_or_reduce_existing_authority": true,
+        "semantic_change_identified": false,
+        "task_success_verified": false
+      }
+    },
+    {
+      "case_id": "EXPIRED",
+      "history_state": "expired",
+      "current_sequence": 90,
+      "binding": {
+        "app": "doom-fixture",
+        "generation": 4,
+        "session": "session-6561-01"
+      },
+      "raw_events": [],
+      "invalidation_receipt": {
+        "sequence": 89,
+        "binding": {
+          "app": "doom-fixture",
+          "generation": 4,
+          "session": "session-6561-01"
+        },
+        "guard_id": "map01-expired",
+        "format": "observable-signal-guard-outcome-v1",
+        "signal_id": "health",
+        "status": "UNKNOWN",
+        "reason": "source_expired",
+        "source_value": 78,
+        "current_value": 75,
+        "hard_minimum": 72,
+        "source_age_ms": 15001,
+        "max_source_age_ms": 15000,
+        "keep_existing_policy": false,
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "may_only_preserve_or_reduce_existing_authority": true,
+        "semantic_change_identified": false,
+        "task_success_verified": false
+      }
+    }
+  ]
+}

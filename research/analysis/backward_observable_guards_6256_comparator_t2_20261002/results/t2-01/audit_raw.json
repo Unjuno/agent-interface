@@ -1,0 +1,37 @@
+{
+  "capture_kind": "structured transcription of tool-returned stdout, not byte-exact stdout capture",
+  "allocation_id": "BACKWARD-OBSERVABLE-GUARDS-6256-T2-COMPARATOR-20261002-01",
+  "decision": "FAIL_OR_HOLD",
+  "exit_code": 0,
+  "errors": ["proposal_local_failed_to_illustrate_incompleteness", "pixel_alias_not_unknown"],
+  "state_count": 10,
+  "outcome_count": 13,
+  "candidate_preimage_matches": true,
+  "exact_universal_preimage": ["ready_complex", "ready_simple", "unobservable_safe_alias"],
+  "exhaustive_forward_checker": {
+    "coverage_state_count": 10,
+    "admitted_state_ids": ["ready_complex", "ready_simple", "unobservable_safe_alias"],
+    "extensionally_equals_preimage": true
+  },
+  "proposal_local_checker": {
+    "semantics": "read all candidate outcome rows; those rows cover all 10 states",
+    "admitted_state_ids": ["ready_complex", "ready_simple", "unobservable_safe_alias"],
+    "omitted_safe_states": [],
+    "unsafe_admitted_states": []
+  },
+  "observation": {
+    "pixel_only_ready_committed": null,
+    "full_cue_silent_alias_decision": "REFUSE",
+    "minimum_verified_stratum_cue_sets": [["pixels", "generation_fresh", "already_committed_fresh", "release_available", "termination_bounded", "effect_contract_reliable"]],
+    "cost_rows_count": 1,
+    "pareto_frontier_count": 1,
+    "costs": "illustrative ordinal coordinates only; not measured"
+  },
+  "invocations": {"formal_comparator": 1, "candidate_runtime_model_gui_network_action_os_input": 0, "retries": 0},
+  "sha256": {
+    "comparator.py": "cc87d08f5db0d1a50face1e1d918cf07d9c953bf594a80d24c1f7c869be969af",
+    "test_comparator.py": "30f2e7774b6092adb10539f5e31b9aac693877ec1c3427ed70dc552b940e077e",
+    "model": "274c4f7de76f0c68738cdb73d3683e3dc57f570ccecc6f4b67b4adc01060958d",
+    "candidate": "266f6df83f0a824bf437ce1bb16fda0cc28abf046b4c57dd6428f727170078d4"
+  }
+}

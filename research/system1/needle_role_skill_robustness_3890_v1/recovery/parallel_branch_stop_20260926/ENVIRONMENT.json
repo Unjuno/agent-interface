@@ -1,0 +1,21 @@
+{
+  "host": "Windows 11 Home",
+  "cpu": "Intel Core i7-12700H, 14 cores / 20 threads",
+  "gpu": "NVIDIA RTX 3080 Laptop 16 GiB; deliberately unused",
+  "docker_context": "desktop-linux",
+  "docker_engine": "Docker Desktop 29.8.0",
+  "docker_image": "needle-pilot05:local",
+  "docker_image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+  "platform": "linux/amd64",
+  "python": "3.12.14",
+  "torch": "2.5.1+cpu",
+  "device": "CPU",
+  "network": "none",
+  "container_limits": {"cpus": 1, "memory": "2g", "pids": 64, "tmpfs": "64m"},
+  "source_mount": "read-only",
+  "artifact_mounts": "read-only for loaders; dedicated writable outputs",
+  "formal_seed_count": 10,
+  "loader_containers_per_seed": 2,
+  "retries": 0,
+  "free_system_disk_bytes_at_construction": 323025854464
+}

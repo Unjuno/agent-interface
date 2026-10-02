@@ -1,0 +1,38 @@
+{
+  "issue": 6001,
+  "experiment": "hidden-model-behavior-shift-bracketed-canary-t0-v1",
+  "preparation_main": "26f1da8f0a68cb256ea1b3623ef93b2cec4a0ef0",
+  "candidate": {
+    "path": "simulate.py",
+    "sha256": "f71282a98a012499403d01f5310090b1ea4981a608365004eccdb7ad210dc593"
+  },
+  "independent_auditor": {
+    "path": "audit.py",
+    "sha256": "84d97c800928cc3257d50dfa70edbfc98cea33c8ddf94c79d3f4f9d3beb2c537"
+  },
+  "tests": {
+    "path": "test_detection.py",
+    "sha256": "0d8e2f59f8e08f7fea98f4cb212c655a54c1025135697e9069082690ecde1035"
+  },
+  "protocol": {
+    "path": "PROTOCOL.md",
+    "sha256": "4d720ccdb194cf0694a6d4fe74cbb9f0fb3ae95e6e055a68b750139a73c6a1d9"
+  },
+  "container": {
+    "image": "python:3.12-slim",
+    "digest": "sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "network": "none",
+    "platform": "linux/arm64",
+    "docker_engine": "29.4.0"
+  },
+  "design": {
+    "seed": 6001002,
+    "trials_per_group": 200,
+    "scenario_count": 7,
+    "policy_count": 3,
+    "canary_classes": 5,
+    "responses_per_class_trial_phase": 20,
+    "canary_shift_threshold": 0.2
+  },
+  "frozen_at_utc": "2026-10-01T14:23:07Z"
+}
