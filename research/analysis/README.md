@@ -152,6 +152,8 @@ The table below summarizes major analytical chains and representative retained o
 | Audit / provenance | [`locale_semantic_invariance_5919_audit_review_20261001_01/`](locale_semantic_invariance_5919_audit_review_20261001_01/) | Post-merge raw-only audit confirms the eight T0 outcomes and rejects three actual corrupted copies plus duplicate/missing/extra rows; no candidate rerun. Original visual proxy remains fixture metadata. | Obtain independently adjudicated high-fidelity locale traces before extending the method claim. |
 | Route selection / topology | [`route_selector_5911_t0_20261001_02/`](route_selector_5911_t0_20261001_02/) | Five finite synthetic cases and an independent enumerator pass the explicit minimum-cost route/tie contract; scope is method-only. | Test selector semantics on real source traces before making any live routing or causal claim. |
 
+| Audit / provenance | [`native_wsl2_migration_6389_audit_repair_v1_20261002/`](native_wsl2_migration_6389_audit_repair_v1_20261002/) | Seven host-only synthetic tests verify the frozen nested-field contract and reject Boolean-as-integer raw values; not a migration experiment or performance/memory claim. | Obtain shared-lane release before a fresh WSL candidate run and independent formal audit. |
+
 </details>
 
 ## Historical source and construction archives
@@ -414,6 +416,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`multicursor_parking_reposition_r0_v1/`](multicursor_parking_reposition_r0_v1/)
 - [`multicursor_target_handle_regrounding_r0_v1/`](multicursor_target_handle_regrounding_r0_v1/)
 - [`multifidelity_route_contrast_6155_t0_v1/`](multifidelity_route_contrast_6155_t0_v1/)
+- [`native_wsl2_migration_6389_audit_repair_v1_20261002/`](native_wsl2_migration_6389_audit_repair_v1_20261002/)
 - [`needle_role_skill_lifecycle_4916_first_rung_v2/`](needle_role_skill_lifecycle_4916_first_rung_v2/)
 - [`needle_role_skill_lifecycle_4916_parity_diag_v1/`](needle_role_skill_lifecycle_4916_parity_diag_v1/)
 - [`needle_role_skill_lifecycle_4916_v2/`](needle_role_skill_lifecycle_4916_v2/)
