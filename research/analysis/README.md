@@ -546,6 +546,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`recovery_absolute_outcome_6216_t0_v1/`](recovery_absolute_outcome_6216_t0_v1/)
 - [`recovery_presnapshot_5960_t0_20261002_01/`](recovery_presnapshot_5960_t0_20261002_01/)
 - [`recovery_sentinel_5776_contrast_t0_20261001/`](recovery_sentinel_5776_contrast_t0_20261001/)
+- [`recovery_sentinel_5776_probe_intervention_t1_20261001/`](recovery_sentinel_5776_probe_intervention_t1_20261001/)
 - [`recovery_sentinel_5776_probe_schedule_20261001_01/`](recovery_sentinel_5776_probe_schedule_20261001_01/)
 - [`recovery_sentinel_5776_t0_integrity_audit_v1/`](recovery_sentinel_5776_t0_integrity_audit_v1/)
 - [`recovery_sentinel_5776_t0_v1/`](recovery_sentinel_5776_t0_v1/)
