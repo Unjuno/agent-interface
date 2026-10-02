@@ -30,6 +30,10 @@ A bounded two-worker, four-right escrow state machine was exhaustively enumerate
 
 The frozen synthetic fixture had 12 feasible cells, 23 two-way projections, a planted predecessor failure and one unqualified route. The CUDA candidate exhaustively enumerated 4,096 evidence subsets. An independent pure-Python auditor matched every gate and rejected all four mutations (`PASS_METHOD_SCOPED`). A flat 83.33% success count and factorwise coverage would admit the wide fixture claim; the certificate refused it while retaining the exact qualified `t01` narrow claim. This is method evidence only: no real reusable skill, GUI, applicability, safety, or GPU performance claim. See [the report and raw evidence](research/analysis/skill_applicability_6262_gpu_t0_v1/REPORT.md).
 
+### Issue #6133 T1c: worker-aging measurement-gate successor (2026-10-02)
+
+One digest-pinned, network-disabled WSLc construction reconstructed 600 synthetic rows across 15 lifecycle-policy cells. The detector found the planted joint RSS/latency leak in 3/3 policies and rejected cache-only, thermal-only, no-aging and hidden-state false-aging controls. Per-job measurements use one pre-transition age; pending obligations defer restarts; stale-generation receipt rejection is required only after actual modeled generation changes. The independent raw-only audit returned `PASS_METHOD_SCOPED`, zero errors; the 4-test construction suite passed. T1b's `METHOD_FAIL_AUDIT` remains intact. The synthetic method result does not establish actual process aging or safe runtime restart; T0's `HOLD_RESTART_PATH_NOT_QUALIFIED` remains. See [report, freeze, raw evidence and run record](research/analysis/worker_aging_6133_t1c_20261002/REPORT.md) and [Issue #6133](https://github.com/Unjuno/agent-interface/issues/6133).
+
 # Research index
 
 Agent Interface is being developed by analysis and experiment rather than by locking an API early. This file is the evidence ledger for the public repository.
