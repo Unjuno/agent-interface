@@ -88,7 +88,7 @@ def run(source: Path, output: Path) -> int:
     state = json.loads(inspected)[0]["State"]
     subprocess.run(["docker", "rm", container_id], text=True, capture_output=True, timeout=30)
     passed = process.returncode == 0 and "Ran 8 tests" in process.stderr and "OK" in process.stderr
-    record = {"schema": "spatial-block-6590-training-parity-run-v1", "allocation": freeze["allocation"],
+    record = {"schema": "spatial-block-6590-training-parity-run-v1", "allocation": freeze["construction_allocation"],
               "freeze_sha256": freeze_sha, "source_commit": head, "live_main_sha": latest_main,
               "image_id": freeze["image_id"], "docker_context": context, "command_argv": command,
               "container_id": container_id, "container_name": freeze["container_name"],
