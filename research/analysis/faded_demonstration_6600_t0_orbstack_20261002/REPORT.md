@@ -1,0 +1,7 @@
+# Issue #6600 — T0 disposition
+
+Allocation `FADED-DEMONSTRATION-6600-T0-ORBSTACK-20261002-01` is `PASS_METHOD_SCOPED`: nine cases were independently reconstructed with zero errors. Exactly one row (verified, correctly targeted, current-generation, released, reversible, and opted-in) offered an optional practice step. Uncertain, wrong-target, stale-generation, ambiguous-target and false-success claims were not labeled demonstrated. Missing release and irreversible rows preserved the fact of an observed effect where supported but did not mark safe completion or offer teaching. Opt-out remained safe completion without a teaching offer. Skip/stop were always present; no action authority was granted; stale coordinates were never reused.
+
+Candidate and independent auditor each ran once in separate digest-pinned offline OrbStack containers; retries=0. Raw, audit, stdout, input/source hashes, image/container identities and reproduction details are in `formal_01_20261002/`. Construction mutation suite passed 5/5.
+
+This does **not** demonstrate human learning, delayed retention, comprehension, usability, accessibility, acceptable effort, or task benefit. No participant, GUI, application, model or OS input was involved. T1 needs separate participant consent, privacy safeguards, accessibility plan and disposable-app authorization. Keep Issue #6600 open for human-evidence planning; do not promote this T0 to H_PASS.
