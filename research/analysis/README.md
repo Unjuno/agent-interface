@@ -263,6 +263,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`explanation_dependence_5916_t0_v1/`](explanation_dependence_5916_t0_v1/)
 - [`failure_detector_5531_async_bound_t6_v1/`](failure_detector_5531_async_bound_t6_v1/)
 - [`feasible_attribution_6100_t0_20261001/`](feasible_attribution_6100_t0_20261001/)
+- [`feedback_necessity_5927_orbstack_t0_v1/`](feedback_necessity_5927_orbstack_t0_v1/)
 - [`focused_observation_request_successor_1935_v1/`](focused_observation_request_successor_1935_v1/)
 - [`full_golden_ipc_2813_v4/`](full_golden_ipc_2813_v4/)
 - [`full_golden_ipc_2813_v5/`](full_golden_ipc_2813_v5/)
