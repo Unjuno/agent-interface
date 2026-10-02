@@ -109,6 +109,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 - [`live_control/`](live_control/) — shared/live GUI-control mechanisms and integration studies.
 - [`doom/`](doom/) — real-time/continuous-control studies and MAP01 evidence.
 - [`integration/`](integration/) — integration-focused experiments.
+- [Tk first-character #5260 construction record](integration/tk_firstchar_5260_a01_20261002/PREREG.md) — construction-only Docker/Xvfb runner/auditor checks; proposed 96-trial allocation remains HOLD_NOT_AUTHORIZED.
 - [Tk validation-lifecycle #4367 / Draft PR #4375 metadata archive](integration/tk_validation_lifecycle_v9m3_v1/ARCHIVAL_QUALIFICATION.md) — three exact published metadata files; pre-allocation publication STOP/HOLD remains, source/raw absent, no construction or formal result independently established.
 - [X11 transition coalescing #4422 / Draft PR #4438 metadata archive](integration/x11_transition_coalescing_c4d7_v1/ARCHIVAL_QUALIFICATION.md) — three exact STOP metadata files; formal remains 0/12 cases and 0/38 captures, and no blocked source payload or construction result is independently recovered.
 - [Writer selection scope #4425 / Draft PR #4446 archival qualification](integration/writer_selection_scope_w4m8_v1/ARCHIVAL_QUALIFICATION.md) — seven exact published metadata/report files; the complete 401-file raw corpus remains unavailable, so the owner-reported scoped PASS is not independently reproduced.
