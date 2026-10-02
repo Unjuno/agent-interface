@@ -6,6 +6,7 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #6617 revision-timed cutover T0: [`analysis/revision_timed_cutover_6617_t0_v1/REPORT.md`](analysis/revision_timed_cutover_6617_t0_v1/REPORT.md) — WSLc `PASS_METHOD_SCOPED` on 30 logical-time traces; no speech, GUI, human, or measured-latency claim.
 - Issue #6533 frame-qualified collateral T0: [`analysis/frame_qualified_collateral_6533_t0_20261002/REPORT.md`](analysis/frame_qualified_collateral_6533_t0_20261002/REPORT.md) — OrbStack synthetic method pass; 44/44 independently reconstructed, aggregate checker-byte reduction with a small-fixture regression; no real GUI/product claim.
 
 - Issue #6509 claim-scoped partial-verdict T0: [`analysis/claim_scoped_partial_verdict_6509_t0_20261002/REPORT.md`](analysis/claim_scoped_partial_verdict_6509_t0_20261002/REPORT.md) — 45 rows independently audited in OrbStack; method-scoped only, with no real persistence, GUI, safety or performance claim.
