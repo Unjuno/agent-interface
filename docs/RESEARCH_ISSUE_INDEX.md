@@ -1,10 +1,10 @@
 # Research and idea Issue index
 
-Last full pagination reconciliation: 2026-10-02 (Asia/Tokyo); that snapshot contained 2528 unique Issues with no duplicates. Incremental reconciliation on 2026-10-02 inspected the latest 100 open and 100 closed Issues. Ten newer Issues matching the inclusion rule were added (nine open, one closed), for 2538 unique repository Issues; the filtered inventory now has 1688 entries. No newer matching Issue appeared in those refreshed windows.
+Last full pagination reconciliation: 2026-10-02 (Asia/Tokyo); that snapshot contained 2528 unique Issues with no duplicates. Incremental reconciliation on 2026-10-02 inspected the latest 100 open and 100 closed Issues. Eleven newer Issues matching the inclusion rule were added (ten open, one closed), for 2539 unique repository Issues; the filtered inventory now has 1689 entries. No newer matching Issue appeared in those refreshed windows.
 
 ## Coverage and limits
 
-This index contains 1688 Issues (1146 open, 542 closed) selected when either the Issue has the `research` label or its title contains an explicit `research`, `idea`, `successor`, or `experiment` term. It includes direct proposals plus many validation, audit, coordination, and successor records.
+This index contains 1689 Issues (1147 open, 542 closed) selected when either the Issue has the `research` label or its title contains an explicit `research`, `idea`, `successor`, or `experiment` term. It includes direct proposals plus many validation, audit, coordination, and successor records.
 
 This is a broad discovery index, not a guarantee that every repository idea has a title or label matching the filter. Other Issues are not assumed to be non-ideas; search them when linked lineage points outside this table and add any missed idea. The curated [ideas and outcomes page](IDEAS_AND_OUTCOMES.md) explains selected idea clusters and verified dispositions. [RESEARCH.md](../RESEARCH.md), Issues, PRs, and reports remain evidence authorities.
 
