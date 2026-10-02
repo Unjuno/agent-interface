@@ -1,0 +1,48 @@
+{
+  "schema": "issue6655-incidental-state-t0-freeze-v1",
+  "issue": 6655,
+  "allocation_id": "INCIDENTAL-STATE-LEGACY-6655-T0-20261002-01",
+  "base_main_sha": "762bb46b5037a2cd4a09672a2e130760a96ff669",
+  "runtime": {
+    "host": "local Windows host CPU",
+    "python": "CPython 3.11.9",
+    "dependencies": "Python standard library only",
+    "container": false,
+    "gpu": false,
+    "external_effects": false
+  },
+  "inputs": {
+    "fixture.py": "sha256:3c1318af851af3cf4f5b842603baf121d1f93aff0390d945bc972506bda0516c",
+    "seeds": [1, 32],
+    "case_ids": [
+      "helpful_incidental_view",
+      "harmful_stale_filter",
+      "irrelevant_theme",
+      "required_saved_effect",
+      "incomplete_restoration",
+      "shared_external_state",
+      "task_seed_mismatch"
+    ],
+    "paired_rows": 224
+  },
+  "source_sha256": {
+    "candidate.py": "e2cc2e28833bd224231f24897c53a6874c7bca9425347cea2d2e641d134825f5",
+    "audit.py": "e5f71dbeb6efc065741db755493f63c6f8c9fd4572f0042adf7e8655253daa09",
+    "test_t0.py": "1077af2d9d5b9049f84f175498ed6676e00bcab8930d271463873d8ee9786e41",
+    "preregistration.md": "sha256:69ffad42c0d7c70fc1e9956fe81e49bc605d99df9c5afa41d409d2c5858d77b6"
+  },
+  "construction": {
+    "command": "py -3.11 -B -m unittest -v",
+    "test_count": 9,
+    "exit_code": 0,
+    "description": "one pre-freeze suite; includes control, helpful/harmful controls, required-effect retention, missing/relabelled diff, cross-seed, incomplete restore, shared state and assignment-order mutations"
+  },
+  "formal_limits": {
+    "candidate_invocations_max": 1,
+    "auditor_invocations_max": 1,
+    "retries": 0,
+    "candidate_output": "formal_01_20261002/candidate/raw.json",
+    "auditor_output": "formal_01_20261002/auditor/audit.json",
+    "no_overwrite": true
+  }
+}
