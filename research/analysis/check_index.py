@@ -65,15 +65,19 @@ def render_block(names: list[str]) -> str:
     return "\n".join(lines)
 
 
-def generated_dirs(text: str) -> set[str]:
+def generated_entries(text: str) -> list[str]:
     if BEGIN not in text or END not in text:
-        return set()
+        return []
     body = text.split(BEGIN, 1)[1].split(END, 1)[0]
-    return {
+    return [
         target
         for label, target in LINK_RE.findall(body)
         if label.rstrip("/") == target.rstrip("/")
-    }
+    ]
+
+
+def generated_dirs(text: str) -> set[str]:
+    return set(generated_entries(text))
 
 
 def with_generated_block(text: str, block: str) -> str:
@@ -112,11 +116,16 @@ def main() -> int:
 
     if expected != current:
         retained = set(names)
+        entries = generated_entries(current)
         indexed = generated_dirs(current)
         existing = {path.name for path in ROOT.iterdir() if path.is_dir()}
         missing = sorted(retained - indexed)
         stale = sorted(indexed - retained)
         dangling = sorted(indexed - existing)
+
+        if entries != sorted(entries) or len(entries) != len(indexed):
+            print("Generated analytical result/failure/STOP index is duplicated or unsorted.")
+            return 1
 
         print("Generated analytical result/failure/STOP index is stale.")
         if missing:

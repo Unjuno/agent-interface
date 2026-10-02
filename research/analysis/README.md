@@ -16,6 +16,7 @@
 - [`frame_qualified_collateral_6533_t0_20261002/REPORT.md`](frame_qualified_collateral_6533_t0_20261002/REPORT.md) — Issue #6533 T0: 44/44 synthetic rows independently reconstructed; qualified-frame matched the full-state oracle, with a 79.1% aggregate accounted-byte reduction but a 2.13× regression at the smallest size. Method-scoped only; no GUI/product safety or performance claim.
 
 - [`claim_scoped_partial_verdict_6509_t0_20261002/REPORT.md`](claim_scoped_partial_verdict_6509_t0_20261002/REPORT.md) — Issue #6509: 45-row OrbStack candidate and independent audit passed the finite claim-ladder method gate; unsafe scalar comparator had 11 partial ALLOWs; logical early-reject advantage is simulation-only.
+- [`same_cohort_negative_control_5841_t2_v1/REPORT.md`](same_cohort_negative_control_5841_t2_v1/REPORT.md) — #5841 T2 fixture-derived truth-label audit: 56/56 rows reconstructed; all five label-corruption controls rejected; synthetic T1 evidence only.
 - [`affordance_regression_envelope_6519_t0_20261002/formal_02_20261002/REPORT.md`](affordance_regression_envelope_6519_t0_20261002/formal_02_20261002/REPORT.md) — Issue #6519 T0b: native WSLc construction and independent audit passed `METHOD_PASS_SCOPED` on 72 synthetic rows; predecessor allocation 01 launch STOP retained separately; no model/GUI benefit claim.
 - [`retired_intention_cue_6556_t0_v1/`](retired_intention_cue_6556_t0_v1/) — Issue #6556: finite post-retirement cue lineage challenge; compare ordinary durable event-instance routing against generation/retirement fencing, preserve unresolved obligations, and return UNKNOWN when lineage is absent. Synthetic only.
 - [`observation_injection_transform_6575_t0_v1/`](observation_injection_transform_6575_t0_v1/) — Issue #6575 allocation 01 retained STOP: six sham-crop provenance mismatches between frozen candidate and auditor oracle; no scientific disposition or susceptibility/model claim.
@@ -606,6 +607,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`saga_prefix_comparison_16_t4_v1/`](saga_prefix_comparison_16_t4_v1/)
 - [`same_cohort_negative_control_5841_t0_v1/`](same_cohort_negative_control_5841_t0_v1/)
 - [`same_cohort_negative_control_5841_t1_v1/`](same_cohort_negative_control_5841_t1_v1/)
+- [`same_cohort_negative_control_5841_t2_v1/`](same_cohort_negative_control_5841_t2_v1/)
 - [`same_image_reacquisition_6118_t0_20261002/`](same_image_reacquisition_6118_t0_20261002/)
 - [`scent_guided_hierarchy_5756_t0_v1/`](scent_guided_hierarchy_5756_t0_v1/)
 - [`scope_typed_singleflight_6501_t0_20261002/`](scope_typed_singleflight_6501_t0_20261002/)
