@@ -1,12 +1,86 @@
 {
-  "schema": "spatial-block-position-6590-t1-orbstack-freeze-v1",
-  "issue": 6590,
-  "allocation": "spatial-block-position-6590-t1-orbstack-20261002-01",
-  "frozen_at_utc": "2026-10-02T11:35:00Z",
+  "H_T_D_C_U": {
+    "C": "Position_random (nearest support distance 9 <= d < 27) and spatial_block (d >=27) are distinct, prospectively declared interpolation/extrapolation envelopes; their unadjusted difference is not estimator bias. A 144x144 tile and fan-in-scaled initializer are versioned changes from #4752. The 9x9 renderer, class balance, target/distractor amplitude and decision thresholds are retained.",
+    "D": {
+      "HOLD_AUDIT_INTEGRITY": "Any raw, row, source, weight, independent-refit, prediction or denominator reconstruction fails.",
+      "HOLD_MODEL_INCOMPETENT_OR_FALSE_ACCEPT": "Either arm misses base competence or any negative false-ACCEPT limit.",
+      "H_FAIL_SCOPED": "All audit, competence, false-ACCEPT and support gates pass, but the diversified pooled gap is <0.20.",
+      "H_PASS_SCOPED": "Auditor reconstructs all data/weights/predictions; both arms have base positive ACCEPT >=0.80; all negative false-ACCEPT rates across all cohorts/arms <=0.05; every spatial block has >=8 unique centers and >=100 positive rows; diversified pooled position_random minus spatial_block positive-ACCEPT gap >=0.20.",
+      "STOP": "Any prelaunch source/main/image/output/resource/runtime failure; candidate or auditor nonzero; no retry."
+    },
+    "H": "The pooled diversified-arm positive-ACCEPT rate in position_random minus spatial_block is >=0.20 across five paired seeds, using identical frozen model weights within each paired cohort comparison.",
+    "T": "Train a center-only control and five-center diversified MLP per each of five preregistered seeds. Evaluate base, position_random and spatial_block with independent renderer/noise streams, 512 positives plus 512 fixed-distractor negatives per seed/cohort, 64 unique evaluation centers per non-base cohort (16 per quadrant), eight noise/source rows per center. Candidate once; independent raw-only auditor/refitter once; retries zero.",
+    "U": "No evidence for real GUI layouts, production spatial autocorrelation, human/agent performance, calibration transfer, authority, safety, or product benefit. Five seeds and one synthetic renderer do not establish generality."
+  },
+  "allocation": "spatial-block-position-6590-t1-orbstack-20261002-02",
   "branch": "research/spatial-block-6590-t1-orbstack-v1-20261002",
-  "package_path": "research/analysis/spatial_block_position_6590_t1_orbstack_v1/",
-  "main_sha": "a5756d9b31231a4d64268610236622ac44c36f1f",
-  "source_commit": "4e5a43a74c0b17d4e4806129e9a73e11146b583f",
+  "commands": {
+    "auditor": "python -B /experiment/auditor.py --root /experiment --out /audit",
+    "candidate": "python -B /experiment/candidate.py --root /experiment --out /out",
+    "host_runner": "python3 research/analysis/spatial_block_position_6590_t1_orbstack_v1/runner.py --source research/analysis/spatial_block_position_6590_t1_orbstack_v1 --output <new-empty-output>",
+    "local_tests": "python3 -B -m unittest discover -s research/analysis/spatial_block_position_6590_t1_orbstack_v1 -p 'test_*.py' -v"
+  },
+  "design": {
+    "block_distance_band_pixels_euclidean": "[27,infinity)",
+    "centers_per_quadrant_per_cohort": 16,
+    "coordinate_source": "design.json; geometry-only deterministic ranking before image generation/fitting",
+    "grid_origin": [
+      10,
+      10
+    ],
+    "grid_pitch": 9,
+    "minimum_patch_edge_margin_pixels": 5,
+    "negative_distractor_center": [
+      4,
+      4
+    ],
+    "opposite_region_geometry_match": "NE/SW transpose pairs exactly match nearest-support distance, patch-edge margin, and fixed-distractor distance",
+    "patch": [
+      9,
+      9
+    ],
+    "random_distance_band_pixels_euclidean": "[9,27)",
+    "replicates_per_center_per_seed": 8,
+    "tile": [
+      144,
+      144
+    ],
+    "training_support_centers": [
+      [
+        72,
+        72
+      ],
+      [
+        51,
+        51
+      ],
+      [
+        93,
+        51
+      ],
+      [
+        51,
+        93
+      ],
+      [
+        93,
+        93
+      ]
+    ],
+    "unique_centers_position_random": 64,
+    "unique_centers_spatial_block": 64,
+    "within_region_distance_control": "northwest block includes a preselected pair with >=5px nearest-support distance difference"
+  },
+  "formal_output_root": "results/",
+  "frozen_at_utc": "2026-10-02T11:35:00Z",
+  "hypothesis": "For a fresh #4752-style synthetic task with a diversified-position training arm, position-random evaluation on the same frozen fitted weights yields at least 0.20 greater positive ACCEPT than an equal-budget position-block extrapolation cohort.",
+  "invocation_gates": {
+    "candidate": 1,
+    "independent_auditor": 1,
+    "model_fits": 10,
+    "retries": 0
+  },
+  "issue": 6590,
   "main_conflict_paths": [
     "docs/CURRENT_GOAL.md",
     "ROADMAP.md",
@@ -19,6 +93,30 @@
     ".github/workflows/analysis-index.yml",
     ".github/workflows/spatial-block-6590-t1.yml"
   ],
+  "main_sha": "a5756d9b31231a4d64268610236622ac44c36f1f",
+  "model": {
+    "arms": [
+      "control_center_only",
+      "treatment_five_center_diversified"
+    ],
+    "decision_thresholds": {
+      "accept_min": 0.75,
+      "classification": 0.5,
+      "yield_min": 0.25
+    },
+    "hidden_relu_units": 16,
+    "initializer": "paired Gaussian; W1 std=0.04*sqrt(1200/20736), W2 std=0.04; zero biases",
+    "input_dimensions": 20736,
+    "learning_rate_float32": 0.8,
+    "negative_rows": 80,
+    "optimizer": "full_batch_gradient_descent",
+    "outputs": 1,
+    "paired_initialization_per_seed": true,
+    "positive_rows": 80,
+    "steps": 250,
+    "training_rows_per_arm_per_seed": 160
+  },
+  "package_path": "research/analysis/spatial_block_position_6590_t1_orbstack_v1/",
   "prior_evidence_unchanged": [
     "#4752 scoped pooled PASS and A/B breakdown",
     "#4814 negative CNN result",
@@ -29,104 +127,72 @@
     "#6590 allocation-02 REPLICATION_PASS_WITH_GEOMETRY_HOLD",
     "#6590 geometry-design-v2 preformal screen"
   ],
-  "hypothesis": "For a fresh #4752-style synthetic task with a diversified-position training arm, position-random evaluation on the same frozen fitted weights yields at least 0.20 greater positive ACCEPT than an equal-budget position-block extrapolation cohort.",
-  "H_T_D_C_U": {
-    "H": "The pooled diversified-arm positive-ACCEPT rate in position_random minus spatial_block is >=0.20 across five paired seeds, using identical frozen model weights within each paired cohort comparison.",
-    "T": "Train a center-only control and five-center diversified MLP per each of five preregistered seeds. Evaluate base, position_random and spatial_block with independent renderer/noise streams, 512 positives plus 512 fixed-distractor negatives per seed/cohort, 64 unique evaluation centers per non-base cohort (16 per quadrant), eight noise/source rows per center. Candidate once; independent raw-only auditor/refitter once; retries zero.",
-    "D": {
-      "H_PASS_SCOPED": "Auditor reconstructs all data/weights/predictions; both arms have base positive ACCEPT >=0.80; all negative false-ACCEPT rates across all cohorts/arms <=0.05; every spatial block has >=8 unique centers and >=100 positive rows; diversified pooled position_random minus spatial_block positive-ACCEPT gap >=0.20.",
-      "H_FAIL_SCOPED": "All audit, competence, false-ACCEPT and support gates pass, but the diversified pooled gap is <0.20.",
-      "HOLD_MODEL_INCOMPETENT_OR_FALSE_ACCEPT": "Either arm misses base competence or any negative false-ACCEPT limit.",
-      "HOLD_AUDIT_INTEGRITY": "Any raw, row, source, weight, independent-refit, prediction or denominator reconstruction fails.",
-      "STOP": "Any prelaunch source/main/image/output/resource/runtime failure; candidate or auditor nonzero; no retry."
-    },
-    "C": "Position_random (nearest support distance 9 <= d < 27) and spatial_block (d >=27) are distinct, prospectively declared interpolation/extrapolation envelopes; their unadjusted difference is not estimator bias. A 144x144 tile and fan-in-scaled initializer are versioned changes from #4752. The 9x9 renderer, class balance, target/distractor amplitude and decision thresholds are retained.",
-    "U": "No evidence for real GUI layouts, production spatial autocorrelation, human/agent performance, calibration transfer, authority, safety, or product benefit. Five seeds and one synthetic renderer do not establish generality."
-  },
-  "design": {
-    "tile": [144, 144],
-    "patch": [9, 9],
-    "training_support_centers": [[72, 72], [51, 51], [93, 51], [51, 93], [93, 93]],
-    "negative_distractor_center": [4, 4],
-    "grid_origin": [10, 10],
-    "grid_pitch": 9,
-    "minimum_patch_edge_margin_pixels": 5,
-    "random_distance_band_pixels_euclidean": "[9,27)",
-    "block_distance_band_pixels_euclidean": "[27,infinity)",
-    "centers_per_quadrant_per_cohort": 16,
-    "replicates_per_center_per_seed": 8,
-    "unique_centers_position_random": 64,
-    "unique_centers_spatial_block": 64,
-    "opposite_region_geometry_match": "NE/SW transpose pairs exactly match nearest-support distance, patch-edge margin, and fixed-distractor distance",
-    "within_region_distance_control": "northwest block includes a preselected pair with >=5px nearest-support distance difference",
-    "coordinate_source": "design.json; geometry-only deterministic ranking before image generation/fitting"
-  },
-  "model": {
-    "arms": ["control_center_only", "treatment_five_center_diversified"],
-    "training_rows_per_arm_per_seed": 160,
-    "positive_rows": 80,
-    "negative_rows": 80,
-    "input_dimensions": 20736,
-    "hidden_relu_units": 16,
-    "outputs": 1,
-    "optimizer": "full_batch_gradient_descent",
-    "steps": 250,
-    "learning_rate_float32": 0.8,
-    "initializer": "paired Gaussian; W1 std=0.04*sqrt(1200/20736), W2 std=0.04; zero biases",
-    "paired_initialization_per_seed": true,
-    "decision_thresholds": {"accept_min": 0.75, "yield_min": 0.25, "classification": 0.5}
-  },
-  "seeds": [659001, 659002, 659003, 659004, 659005],
-  "runtime": {
-    "engine": "OrbStack Docker Engine 29.4.0",
-    "docker_context": "orbstack",
-    "image_id": "sha256:43035f5f6d7f50c8e52fc3d008a0d58b343d32a97a2cbd66b03db343cbc669c2",
-    "image_repo_digest": "unjuno-6590-spatial-block-t1@sha256:43035f5f6d7f50c8e52fc3d008a0d58b343d32a97a2cbd66b03db343cbc669c2",
-    "base_image_id": "sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
-    "numpy": "1.26.4",
-    "numpy_wheel_sha256": "9fad7dcb1aac3c7f0584a5a8133e3a43eeb2fe127f47e3632d43d677c66c102b",
-    "platform": "linux/arm64",
-    "network": "none",
-    "resource_limits": {"cpus": 1, "memory": "2g", "pids": 64, "rootfs_readonly": true, "gpu": false},
-    "capabilities": "drop_all",
-    "no_new_privileges": true,
-    "tmpfs": "/tmp:rw,noexec,nosuid,size=64m",
-    "candidate_source_mount": "read-only",
-    "candidate_output_mount": "dedicated fresh directory writable",
-    "auditor_source_mount": "read-only",
-    "auditor_candidate_mount": "read-only",
-    "auditor_output_mount": "dedicated fresh audit directory writable",
-    "candidate_container_name": "unjuno-6590-t1-candidate-20261002-01",
-    "auditor_container_name": "unjuno-6590-t1-auditor-20261002-01",
-    "candidate_timeout_seconds": 1800,
-    "auditor_timeout_seconds": 1800
-  },
-  "invocation_gates": {"candidate": 1, "independent_auditor": 1, "model_fits": 10, "retries": 0},
-  "commands": {
-    "local_tests": "python3 -B -m unittest discover -s research/analysis/spatial_block_position_6590_t1_orbstack_v1 -p 'test_*.py' -v",
-    "host_runner": "python3 research/analysis/spatial_block_position_6590_t1_orbstack_v1/runner.py --source research/analysis/spatial_block_position_6590_t1_orbstack_v1 --output <new-empty-output>",
-    "candidate": "python -B /experiment/candidate.py --root /experiment --out /out",
-    "auditor": "python -B /experiment/auditor.py --root /experiment --out /audit"
-  },
-  "source_sha256": {
-    "README.md": "035b940f49f197ec111b80c51ff2483ef81ad05b875b82b9dcc9f673978ca945",
-    "Dockerfile": "4e964cf9ef0cd70ba61087f5a65f890457c36a280873a27477c39d51b1397d6f",
-    "requirements.lock": "6c5c8debbab2ea8ebb2c5b3d41484619aeb1012c189e680510dcfa102cfc0b57",
-    "design.json": "d6c4c3e636bb7832cefcfb2a09758a8138a6e7e483a1e257e6710529409b103c",
-    "protocol.py": "0736cbf443c64dff435e0d5881d47203ca966f776811963fe691ae8c066eb14b",
-    "candidate.py": "8560704bfad3695c7771e903a5a20a0b489267aa510882c804b2b2759b85cbe9",
-    "auditor.py": "c3dc01f286ccf088d0e6ef383a710759f95fa02e552ec8e562df67162977e7fe",
-    "runner.py": "10d2c9253416b6a0ca683cb7504437700c6b10ae36141f34a84f147eaef021c9",
-    "test_protocol.py": "154017195aaf08b607e5e8217b7517fc7fb767ca3b5ba911f91c32f7de55574d",
-    "../../../.github/workflows/analysis-index.yml": "14b33502e7842f67cb2609a9d4f84b24cab4866212ea8a2c941e8c60093a3e3e",
-    "../../../.github/workflows/spatial-block-6590-t1.yml": "9359f17d7c6386b43c4d8c36a95fbca2b7cedcd62630202b2683ec8d80c4e826",
-    "../README.md": "4cbfae47afd368b435ac9eac29193b0960bf05eb052909bb99fe8f1afe21e46b"
-  },
-  "formal_output_root": "results/",
   "prior_preflight": {
     "construction_suite_host": "PASS 7/7; no model fits",
     "construction_suite_pinned_container": "PASS 7/7; network none; source read-only; no model fits",
-    "image_numpy_smoke": "PASS numpy 1.26.4, linux/arm64",
-    "image_build_network": "build-only PyPI access; requirements hash enforced; formal candidate/auditor network none"
+    "image_build_network": "build-only PyPI access; requirements hash enforced; formal candidate/auditor network none",
+    "image_numpy_smoke": "PASS numpy 1.26.4, linux/arm64"
+  },
+  "prior_stop": {
+    "allocation": "spatial-block-position-6590-t1-orbstack-20261002-01",
+    "auditor_invocations": 0,
+    "candidate_invocations": 0,
+    "container_creations": 0,
+    "disposition": "STOP_FREEZE_COMMIT_SCOPE_MISMATCH",
+    "note": "Host runner compared repository-relative changed paths to basenames; exact validation fix is included in successor source; predecessor STOP is preserved unchanged in external run artifact.",
+    "retries": 0
+  },
+  "runtime": {
+    "auditor_candidate_mount": "read-only",
+    "auditor_container_name": "unjuno-6590-t1-auditor-20261002-01",
+    "auditor_output_mount": "dedicated fresh audit directory writable",
+    "auditor_source_mount": "read-only",
+    "auditor_timeout_seconds": 1800,
+    "base_image_id": "sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "candidate_container_name": "unjuno-6590-t1-candidate-20261002-01",
+    "candidate_output_mount": "dedicated fresh directory writable",
+    "candidate_source_mount": "read-only",
+    "candidate_timeout_seconds": 1800,
+    "capabilities": "drop_all",
+    "docker_context": "orbstack",
+    "engine": "OrbStack Docker Engine 29.4.0",
+    "image_id": "sha256:43035f5f6d7f50c8e52fc3d008a0d58b343d32a97a2cbd66b03db343cbc669c2",
+    "image_repo_digest": "unjuno-6590-spatial-block-t1@sha256:43035f5f6d7f50c8e52fc3d008a0d58b343d32a97a2cbd66b03db343cbc669c2",
+    "network": "none",
+    "no_new_privileges": true,
+    "numpy": "1.26.4",
+    "numpy_wheel_sha256": "9fad7dcb1aac3c7f0584a5a8133e3a43eeb2fe127f47e3632d43d677c66c102b",
+    "platform": "linux/arm64",
+    "resource_limits": {
+      "cpus": 1,
+      "gpu": false,
+      "memory": "2g",
+      "pids": 64,
+      "rootfs_readonly": true
+    },
+    "tmpfs": "/tmp:rw,noexec,nosuid,size=64m"
+  },
+  "schema": "spatial-block-position-6590-t1-orbstack-freeze-v1",
+  "seeds": [
+    659001,
+    659002,
+    659003,
+    659004,
+    659005
+  ],
+  "source_commit": "1daaff7a8f1e67630e106966a812dec36f8ccf40",
+  "source_sha256": {
+    "../../../.github/workflows/analysis-index.yml": "14b33502e7842f67cb2609a9d4f84b24cab4866212ea8a2c941e8c60093a3e3e",
+    "../../../.github/workflows/spatial-block-6590-t1.yml": "9359f17d7c6386b43c4d8c36a95fbca2b7cedcd62630202b2683ec8d80c4e826",
+    "../README.md": "4cbfae47afd368b435ac9eac29193b0960bf05eb052909bb99fe8f1afe21e46b",
+    "Dockerfile": "4e964cf9ef0cd70ba61087f5a65f890457c36a280873a27477c39d51b1397d6f",
+    "README.md": "035b940f49f197ec111b80c51ff2483ef81ad05b875b82b9dcc9f673978ca945",
+    "auditor.py": "c3dc01f286ccf088d0e6ef383a710759f95fa02e552ec8e562df67162977e7fe",
+    "candidate.py": "8560704bfad3695c7771e903a5a20a0b489267aa510882c804b2b2759b85cbe9",
+    "design.json": "d6c4c3e636bb7832cefcfb2a09758a8138a6e7e483a1e257e6710529409b103c",
+    "protocol.py": "0736cbf443c64dff435e0d5881d47203ca966f776811963fe691ae8c066eb14b",
+    "requirements.lock": "6c5c8debbab2ea8ebb2c5b3d41484619aeb1012c189e680510dcfa102cfc0b57",
+    "runner.py": "a2c6d7e6771a34ca76929f4b2ea61548096bdc1461367cfe6c1739871f1d368d",
+    "test_protocol.py": "154017195aaf08b607e5e8217b7517fc7fb767ca3b5ba911f91c32f7de55574d"
   }
 }
