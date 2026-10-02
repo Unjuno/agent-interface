@@ -9,6 +9,7 @@ This directory is the public documentation map for Agent Interface. It organizes
 | How should a worker start, avoid overlap, and hand off safely? | [WORKER_QUICKSTART.md](WORKER_QUICKSTART.md) |
 | What is the project trying to do? | [Project README](../README.md) and [principles](principles.md) |
 | What is the current research objective? | [CURRENT_GOAL.md](CURRENT_GOAL.md) |
+| What ideas have been proposed and what happened to them? | [IDEAS_AND_OUTCOMES.md](IDEAS_AND_OUTCOMES.md) |
 | What architecture is currently promoted? | [architecture.md](architecture.md) |
 | What has been measured so far? | [PROGRESS_FROM_BASELINE.md](PROGRESS_FROM_BASELINE.md) |
 | What is the detailed evidence ledger? | [RESEARCH.md](../RESEARCH.md) |
@@ -86,6 +87,7 @@ Use current/canonical documents for present project direction and architecture. 
 | [`LOCAL_RESEARCH_HANDOFF.md`](LOCAL_RESEARCH_HANDOFF.md) | Detailed current handoff plus retained chronology | Current coordination source; history retained inside |
 | [`TERMINOLOGY.md`](TERMINOLOGY.md) | Non-normative index to canonical definitions | Supporting only |
 | [`design-theses.md`](design-theses.md) | Durable idea/thesis ledger | Supporting; does not override current goal/architecture |
+| [`IDEAS_AND_OUTCOMES.md`](IDEAS_AND_OUTCOMES.md) | Issue-centered summary of ideas and dispositions; links to authoritative evidence | Navigation only; not a result/evidence source |
 | [`control-codec.md`](control-codec.md) | Compact-control research/design note | Supporting; **not stable runtime protocol** |
 | [`CANDIDATE_ARCHITECTURE_REVIEW.md`](CANDIDATE_ARCHITECTURE_REVIEW.md) | Review of an earlier candidate report/baseline | Retained review material |
 | [`SEMANTIC_EVIDENCE_STATUS.md`](SEMANTIC_EVIDENCE_STATUS.md) | Provisional 2026-09-13 vocabulary/evaluation intake | Provisional/retained; not frozen ABI |
