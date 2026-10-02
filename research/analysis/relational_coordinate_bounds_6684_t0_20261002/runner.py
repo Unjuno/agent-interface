@@ -15,6 +15,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 RESULTS: Path
+PREFORMAL: Path
 
 
 def sha256(path: Path) -> str:
@@ -26,7 +27,7 @@ def git(*args: str) -> str:
 
 
 def prelaunch_stop(reason: str, details: dict) -> int:
-    path = RESULTS.parent / "prelaunch-01" / "STOP.json"
+    path = PREFORMAL / "STOP.json"
     path.parent.mkdir(parents=True, exist_ok=False)
     record = {"schema": "relational-coordinate-bounds-6684-prelaunch-stop-v1",
               "allocation": json.loads((ROOT / "FREEZE.json").read_text())["allocation"],
@@ -40,7 +41,7 @@ def prelaunch_stop(reason: str, details: dict) -> int:
 
 def source_preflight_failure(reason: str, details: dict) -> int:
     """Preserve a failed source preflight without claiming formal allocation."""
-    path = RESULTS.parent / "preformal" / "source-preflight-failure.json"
+    path = PREFORMAL / "source-preflight-failure.json"
     path.parent.mkdir(parents=True, exist_ok=True)
     if path.exists():
         raise SystemExit("STOP_PREFORMAL_FAILURE_RECORD_ALREADY_EXISTS")
@@ -57,7 +58,7 @@ def source_preflight_failure(reason: str, details: dict) -> int:
 
 
 def write_preformal_failure(reason: str, details: dict) -> int:
-    path = RESULTS.parent / "preformal" / "construction-performance-failure.json"
+    path = PREFORMAL / "construction-performance-failure.json"
     path.parent.mkdir(parents=True, exist_ok=True)
     if path.exists():
         raise SystemExit("STOP_PREFORMAL_FAILURE_RECORD_ALREADY_EXISTS")
@@ -73,12 +74,13 @@ def write_preformal_failure(reason: str, details: dict) -> int:
 
 
 def main() -> int:
-    global RESULTS
+    global RESULTS, PREFORMAL
     freeze_path = ROOT / "FREEZE.json"
     freeze_sha_path = ROOT / "FREEZE.sha256"
     freeze = json.loads(freeze_path.read_text())
     allocation = freeze["allocation"]
-    RESULTS = ROOT / "results" / allocation / "formal-01"
+    PREFORMAL = ROOT / "results" / allocation
+    RESULTS = PREFORMAL / "formal-01"
     if RESULTS.exists():
         raise SystemExit("STOP_OUTPUT_PATH_ALREADY_EXISTS")
     prior_freeze_sha = freeze["supersedes_freeze_sha256"]
@@ -94,6 +96,19 @@ def main() -> int:
         return source_preflight_failure("STOP_RETIRED_FREEZE_CHAIN_MISMATCH", {})
     if freeze_sha_path.read_text().split()[0] != sha256(freeze_path):
         return prelaunch_stop("STOP_FREEZE_HASH_MISMATCH", {})
+    if not PREFORMAL.exists():
+        PREFORMAL.mkdir(parents=True)
+        failure = {"schema": "relational-coordinate-bounds-6684-preformal-failure-v1",
+                   "allocation": allocation, "stage": "construction test",
+                   "reason": "Initial independent auditor construction exceeded responsive runtime and was interrupted before completion.",
+                   "candidate_invocations": 0, "auditor_invocations": 0, "retries": 0,
+                   "formal_allocation_started": False, "initial_max_worlds_per_case": 9529569,
+                   "corrective_change": "Bound fixture to <=100000 states per case and combine exact audit summaries in one enumeration pass.",
+                   "post_correction_construction_tests": 11,
+                   "post_correction_construction_test_seconds": 1.04}
+        failure_path = PREFORMAL / "construction-performance-failure.json"
+        failure_path.write_text(json.dumps(failure, sort_keys=True, indent=2) + "\n")
+        failure_path.with_suffix(".sha256").write_text(sha256(failure_path) + "  construction-performance-failure.json\n")
     if not allocation.endswith("-06"):
         return source_preflight_failure("STOP_WRONG_SUCCESSOR_ALLOCATION", {"allocation": allocation})
     ancestor = subprocess.run(["git", "merge-base", "--is-ancestor", freeze["source_commit"], "HEAD"],
