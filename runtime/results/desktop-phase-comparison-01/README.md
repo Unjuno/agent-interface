@@ -26,3 +26,32 @@ path; build current-main archive, schema/import preflight and full native CI;
 set exact timing/accounting boundaries and retain construction usage. The
 schedule is a proposal, not allocation evidence. Local construction remains
 unpublished until it is concrete enough for the batched integration update.
+
+C is now wired into the same owner through the existing compiled.run graph.
+It presents actual retained public observation reports, or the actual public
+post-Save target inspection, instead of synthesizing an input receipt. Source
+mismatch/missing report withholds the image. A thin bridge subclass shortens the
+existing action deadline to2s and never extends adapter authorization. Repair
+uses a new alias and distinct reader/predicate files. The underlying read_cells
+function is unchanged. Per-key safety still differs and is disclosed.
+
+Two presentation countercontrols pass normal/-O with the new portable archive;
+the initial missing module and incomplete test-native metadata failures remain
+retained. Ordinary method controls also pass normal/-O against this archive.
+Native CI passed 389 protocol and192 harness tests (contract/harness, not live
+comparison). Archive manifest pins construction commit8ba62a270 with main0e817b20
+as ancestor; this does not claim later remote updates are in the archive.
+
+One separately declared read-only construction probe1002201 ran the C owner:
+primary actually viewed the original blank Calc PNG, then closed with no input.
+Host exit0 and all3 children terminal; independent persisted cells remain empty.
+The original scorer therefore records success=false against317/529; that positive
+saved task was not requested, so it is not relabelled as successful task control.
+Probe summary reports only observed feedback/lifecycle wiring. Graph input,
+changed-state refusal and bounded repair are still unqualified. No scored phase
+was consumed. Joint construction usage extraction is pending, not zero/free.
+
+Construction inspection found the copied command helper still pointed at the
+old live02 folder. It was corrected to its own file directory before using it
+for any command; the read-only probe used explicit new paths. Its printable
+output now omits base64 data while original reply bytes remain retained.

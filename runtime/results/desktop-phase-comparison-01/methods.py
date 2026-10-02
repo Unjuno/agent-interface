@@ -29,24 +29,26 @@ def predicates(bridge,refs,native,rgb,rows):
     if all(v is not None for v in values):result['cells_match']=values==['317','529']
     return result
 
-def run(bridge,refs,regions):
+def run(bridge,refs,regions,*,target_alias="sheet_context",reading_directory=None):
     if set(refs)!={'sheet_context'} or set(regions)!={'A1','A2'}:raise ValueError('exact grounded context and two regions')
     for box in regions.values():
         if type(box) is not list or len(box)!=4 or any(type(v) is not int for v in box) or not (0<=box[0]<box[2]<=1280 and 0<=box[1]<box[3]<=800):raise ValueError('bounded exact image regions')
     count=0;initial_scope=bridge.scope
+    reading_root=Path(reading_directory) if reading_directory is not None else bridge.out
     def perceive(native,rgb):
         nonlocal count
         count+=1
-        rows=read_cells(rgb,regions,bridge.out/('calc-reading-'+str(count)))
+        rows=read_cells(rgb,regions,reading_root/('calc-reading-'+str(count)))
         values=predicates(bridge,refs,native,rgb,rows)
-        bridge._save('calc-predicates-'+str(count)+'.json',{'source_sequence':native['sequence'],'source_sha256':native['native']['artifact']['sha256'],'predicates':values,'scope':'visible cells and focus only; no saved effect'})
+        with (reading_root/('calc-predicates-'+str(count)+'.json')).open('x') as log:
+            json.dump({'source_sequence':native['sequence'],'source_sha256':native['native']['artifact']['sha256'],'predicates':values,'scope':'visible cells and focus only; no saved effect'},log,indent=2)
         return values
     def verify(payload,native,rgb):
         # The graph already checked cells_match using the exact same capture.
         # Focus leaving main does not establish a save or identify a new modal.
         return {'status':'succeeded' if payload['action']=='enter' else 'unavailable',
                 'evidence_ref':payload['observation']['evidence_ref']}
-    sym={'kind':'target_reference','target_reference':'sheet_context','identity_predicate':'present','dependencies':['present','main_focus']}
+    sym={'kind':'target_reference','target_reference':target_alias,'identity_predicate':'present','dependencies':['present','main_focus']}
     interface={'format':'compiled-gui-interface-v1','interface_id':'calc-pixel-admission','session_scope':initial_scope,'surface':compiled.surface(bridge),
       'predicates':['present','main_focus','handoff','cells_match'],'symbols':{'sheet':sym},
       'actions':{'enter':{'target_symbol':'sheet','operation':'enter_two_cells','expected_effect':{'cells_match':True}},

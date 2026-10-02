@@ -6,7 +6,7 @@ archive,case=map(lambda p:Path(p).resolve(),sys.argv[1:3])
 seed=int(sys.argv[3]);reuse=False
 phase=sys.argv[5]
 if phase not in ('acquisition','warm1','warm2','changed_dependency','subsequent_reuse'):raise ValueError('explicit allocated phase')
-if sys.argv[4] not in ('plain','compact'):raise ValueError('public owner supports A/B only; C not substituted')
+if sys.argv[4] not in ('plain','compact','compiled'):raise ValueError('explicit A/B/C route')
 method_receipts=[];repair_observed=False
 max_commands=12 if phase=='changed_dependency' else 8
 case.mkdir(exist_ok=False)
@@ -89,6 +89,9 @@ try:
     from methods import read_cells
     capture_state=DeliveredCapture()
     owner=MCPSessionOwner({'app':target},f':{n}')
+    if sys.argv[4]=='compiled':
+        from compiled_caller import ComparisonBridge
+        bridge=ComparisonBridge(f':{n}',{'app':target},'app',case/'bridge')
     save('owner.json',{'pid':os.getpid(),'display':f':{n}','window':target,'children':{name:p.pid for name,p in children},'started_ns':time.monotonic_ns()})
     (case/'commands').mkdir();(case/'replies').mkdir();(case/'public').mkdir()
     compact=sys.argv[4]=='compact';index=1;sequence=0;last_native=None
@@ -103,12 +106,21 @@ try:
         if index>max_commands:raise RuntimeError('allocated command budget exhausted')
         if method_receipts and op=='observe' and phase=='changed_dependency':
             first=method_receipts[0]
-            if first['reason']!='dependency_changed' or first['confirmed_completed_inputs']:raise RuntimeError('repair forbidden after uncertain or executed input')
+            if not (first['reason']=='dependency_changed' or first.get('changed_dependency_refused') is True) or first['confirmed_completed_inputs']:raise RuntimeError('repair forbidden after uncertain or executed input')
             repair_observed=True
         projection=None
         if op=='observe':
-            raw=observe_in_session(owner.get(),target='app',frame='screen_physical_px',region=[0,0,1280,800],capture_directory=str(case/'public/images'))
-            projection=present_result(raw,case/'public',compact=compact,report_refs=compact)
+            if bridge is None:
+                raw=observe_in_session(owner.get(),target='app',frame='screen_physical_px',region=[0,0,1280,800],capture_directory=str(case/'public/images'))
+                projection=present_result(raw,case/'public',compact=compact,report_refs=compact)
+            else:
+                from compiled_caller import present_native
+                if method_receipts:
+                    review=bridge.review_window(target)
+                    if review['status']!='reviewed':raise RuntimeError('explicit repair observation failed')
+                    selected=review['observation']
+                else:selected=bridge.observe()
+                raw,projection,_=present_native(bridge,selected,compact=compact)
             last_native=capture_state.accept(raw,projection)
             if last_native is not None:sequence+=1
         elif op=='dispatch':
@@ -140,23 +152,31 @@ try:
             if type(box) is not list or len(box)!=4 or any(type(v) is not int for v in box) or not (0<=box[0]<box[2]<=1280 and 0<=box[1]<box[3]<=800):raise ValueError('bounded primary context box')
             from public_method import run as run_public_method
             method_out=case/('public-method-'+str(index))
-            raw=run_public_method(owner,{'box':box,'pixels':rgb.crop(box).tobytes()},request['regions'],method_out,read_cells,sequence=sequence,compact=compact)
-            method_receipts.append(raw)
-            sequence=raw['sequence'];last_native=None
-            source_report=None
-            if raw['final_capture'] is not None:
-                for name in ('save-post.json','enter-post.json','initial.json'):
-                    source_path=method_out/name
-                    if source_path.exists():
-                        source_report=json.loads(source_path.read_text());break
-            if source_report is not None:
-                projection=present_result(source_report,method_out,compact=compact,report_refs=compact)
+            if bridge is not None:
+                from compiled_caller import run as run_compiled
+                raw,source_report,projection,native=run_compiled(bridge,owner,{'box':box,'pixels':rgb.crop(box).tobytes()},request['regions'],method_out,repair=bool(method_receipts),compact=compact)
+                method_receipts.append(raw)
                 last_native=capture_state.accept(source_report,projection)
-                if last_native is not None and last_native['artifact']['sha256']!=raw['final_capture']['artifact']['sha256']:
-                    last_native=capture_state.accept({},{});projection={'image':None,'image_status':'needs_review','authority':'none'}
+                if last_native is not None:sequence+=1
             else:
-                capture_state.accept({},{});projection={'image':None,'image_status':'needs_review','authority':'none'}
-            projection['method_receipt']=raw
+                raw=run_public_method(owner,{'box':box,'pixels':rgb.crop(box).tobytes()},request['regions'],method_out,read_cells,sequence=sequence,compact=compact)
+                method_receipts.append(raw)
+                sequence=raw['sequence'];last_native=None
+                source_report=None
+                if raw['final_capture'] is not None:
+                    for name in ('save-post.json','enter-post.json','initial.json'):
+                        source_path=method_out/name
+                        if source_path.exists():
+                            source_report=json.loads(source_path.read_text());break
+                if source_report is not None:
+                    projection=present_result(source_report,method_out,compact=compact,report_refs=compact)
+                    last_native=capture_state.accept(source_report,projection)
+                    if last_native is not None and last_native['artifact']['sha256']!=raw['final_capture']['artifact']['sha256']:
+                        last_native=capture_state.accept({},{});projection={'image':None,'image_status':'needs_review','authority':'none'}
+                else:
+                    capture_state.accept({},{});projection={'image':None,'image_status':'needs_review','authority':'none'}
+                projection['method_receipt']=raw
+
         elif op=='read_cells':
             if last_native is None:raise ValueError('existing delivered image required')
             artifact=last_native['artifact'];payload=Path(artifact['path']).read_bytes()
