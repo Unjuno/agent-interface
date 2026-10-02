@@ -1,0 +1,33 @@
+{
+  "allocation": "ic-prefix-finite-model-5547-20261001-01",
+  "source_main": "59ffec5d551b0adcf11057eee6da814237a748c8",
+  "command_count": 13,
+  "ordered_pair_count": 169,
+  "commands": [
+    {"kind": "ADD_EVIDENCE", "value": "e0"}, {"kind": "ADD_EVIDENCE", "value": "e1"},
+    {"kind": "GRANT_TOKEN", "value": "cap0"}, {"kind": "GRANT_TOKEN", "value": "cap1"},
+    {"kind": "REVOKE_CLAIM", "value": "cap0"}, {"kind": "REVOKE_CLAIM", "value": "cap1"},
+    {"kind": "REFRESH_EPOCH", "value": 1},
+    {"kind": "RESERVE_QUOTA", "value": "r0"}, {"kind": "RESERVE_QUOTA", "value": "r1"},
+    {"kind": "ADMIT_EFFECT", "value": ["a0", 0]}, {"kind": "ADMIT_EFFECT", "value": ["a1", 0]},
+    {"kind": "COMMIT_EFFECT", "value": ["d0", "effect0"]},
+    {"kind": "COMMIT_EFFECT", "value": ["d1", "effect0"]}
+  ],
+  "conflict_families": [
+    ["ADMIT_EFFECT", "REFRESH_EPOCH"],
+    ["COMMIT_EFFECT", "COMMIT_EFFECT"],
+    ["GRANT_TOKEN", "GRANT_TOKEN"],
+    ["RESERVE_QUOTA", "RESERVE_QUOTA"]
+  ],
+  "safe_operation_families": ["ADD_EVIDENCE", "REVOKE_CLAIM"],
+  "coordination_required_families": [
+    "ADMIT_EFFECT", "COMMIT_EFFECT", "GRANT_TOKEN", "REFRESH_EPOCH", "RESERVE_QUOTA", "UNKNOWN_SCHEMA"
+  ],
+  "mutation_controls": [
+    "drop_pair_row",
+    "corrupt_join_epoch",
+    "remove_conflict_family",
+    "misclassify_safe_operation",
+    "flip_serial_baseline_summary"
+  ]
+}

@@ -1,0 +1,218 @@
+{
+  "schema": "agent-interface/runtime-dispatch-result-v1",
+  "status": "returned",
+  "result": {
+    "status": "completed",
+    "admission": "accepted",
+    "required_capabilities": [
+      "capture.frame",
+      "clock.monotonic",
+      "display.geometry",
+      "event.feedback",
+      "input.keyboard",
+      "input.pointer",
+      "input.release_all",
+      "window.focus"
+    ],
+    "execution": {
+      "started_ns": 21251750760434,
+      "ended_ns": 21251984774447,
+      "emissions": 10,
+      "program_emissions": 10,
+      "observations": [
+        {
+          "bytes": 2800000,
+          "sha256": "b1b910fb44a686ce5d4cd268310443a5f921fccda23311efbe49c67cc9465b21",
+          "width": 1000,
+          "height": 700,
+          "target": "app",
+          "native_window_id": 6291463,
+          "frame": "screen_physical_px",
+          "region": [
+            0,
+            0,
+            1000,
+            700
+          ],
+          "capture_started_ns": 21251958015948,
+          "capture_ended_ns": 21251963562719,
+          "artifact": {
+            "mime_type": "image/png",
+            "path": "/var/tmp/agent-interface-evidence-storage-main/runtime/results/inkscape-live-summary-01/pair2-summary/public/images/39aac66adf774c05af91d82b3e5f01ac.png",
+            "sha256": "39b9893cfbf19e6a7da5e9502acb51ef4b7fd30092729d7c06348fc153c473ed",
+            "bytes": 47029,
+            "width": 1000,
+            "height": 700,
+            "source_raw_sha256": "b1b910fb44a686ce5d4cd268310443a5f921fccda23311efbe49c67cc9465b21",
+            "timing_ns": {
+              "started": 21251965203075,
+              "converted": 21251965776310,
+              "encoded": 21251981158745,
+              "written": 21251981755729,
+              "hashed": 21251983462644
+            }
+          },
+          "operation_index": 13
+        }
+      ],
+      "releases": [
+        {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 21251984769264
+        }
+      ],
+      "waits": [
+        {
+          "operation_index": 2,
+          "requested_ms": 50,
+          "started_ns": 21251751796978,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 21251802004645
+        },
+        {
+          "operation_index": 7,
+          "requested_ms": 50,
+          "started_ns": 21251806365826,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 21251856539987
+        },
+        {
+          "operation_index": 12,
+          "requested_ms": 100,
+          "started_ns": 21251857738690,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 21251957999345
+        }
+      ],
+      "activations": [],
+      "completed_ops": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ]
+    },
+    "recovery_required": false
+  },
+  "normalization": {
+    "kind": "explicit_observation_region",
+    "source_program": {
+      "schema": "agent-interface/program-v1",
+      "program_id": "two-rectangles-batch",
+      "source": {
+        "observation_seq": 1,
+        "binding_revision": 1
+      },
+      "authority": {
+        "lease_id": "draw-1",
+        "expires_at_ns": 21253713651454
+      },
+      "terminal": {
+        "release_all_required": true
+      },
+      "ops": [
+        {
+          "op": "focus",
+          "target": "app"
+        },
+        {
+          "op": "key_chord",
+          "keys": [
+            "r"
+          ]
+        },
+        {
+          "op": "wait_update",
+          "timeout_ms": 50
+        },
+        {
+          "op": "pointer_move",
+          "frame": "screen_physical_px",
+          "x": 500,
+          "y": 280
+        },
+        {
+          "op": "pointer_button",
+          "button": "left",
+          "down": true
+        },
+        {
+          "op": "pointer_move",
+          "frame": "screen_physical_px",
+          "x": 630,
+          "y": 340
+        },
+        {
+          "op": "pointer_button",
+          "button": "left",
+          "down": false
+        },
+        {
+          "op": "wait_update",
+          "timeout_ms": 50
+        },
+        {
+          "op": "pointer_move",
+          "frame": "screen_physical_px",
+          "x": 320,
+          "y": 370
+        },
+        {
+          "op": "pointer_button",
+          "button": "left",
+          "down": true
+        },
+        {
+          "op": "pointer_move",
+          "frame": "screen_physical_px",
+          "x": 430,
+          "y": 440
+        },
+        {
+          "op": "pointer_button",
+          "button": "left",
+          "down": false
+        },
+        {
+          "op": "wait_update",
+          "timeout_ms": 100
+        },
+        {
+          "op": "observe",
+          "frame": "screen_physical_px",
+          "region": [
+            0,
+            0,
+            1000,
+            700
+          ]
+        },
+        {
+          "op": "release_all"
+        }
+      ]
+    },
+    "source_operation_indices": [
+      13
+    ]
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "request": {
+    "op": "confirm"
+  },
+  "started_ns": 1879238727081,
+  "ended_ns": 1879317592459,
+  "reply": {
+    "status": "completed",
+    "admission": "accepted",
+    "required_capabilities": [
+      "input.keyboard",
+      "input.release_all",
+      "window.focus"
+    ],
+    "execution": {
+      "started_ns": 1879275723276,
+      "ended_ns": 1879317098014,
+      "emissions": 26,
+      "program_emissions": 2,
+      "observations": [],
+      "releases": [
+        {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 1879317095385
+        }
+      ],
+      "waits": [],
+      "activations": [],
+      "completed_ops": [
+        0,
+        1,
+        2
+      ]
+    },
+    "recovery_required": false,
+    "guard_checks": [
+      {
+        "stage": "before_admission",
+        "observation_sequence": 9,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "format_context",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "format_context",
+        "point": [
+          640,
+          312
+        ],
+        "observed_box": [
+          628,
+          300,
+          24,
+          24
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 9,
+        "valid_until_ns": 1880739273634,
+        "patch_sha256": "db37d70a569118699637a4592a0029f94d9387ca18b8634ca33707505df068eb",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      },
+      {
+        "stage": "before_focus",
+        "observation_sequence": 10,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "format_context",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "format_context",
+        "point": [
+          640,
+          312
+        ],
+        "observed_box": [
+          628,
+          300,
+          24,
+          24
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 10,
+        "valid_until_ns": 1880775954931,
+        "patch_sha256": "db37d70a569118699637a4592a0029f94d9387ca18b8634ca33707505df068eb",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      }
+    ]
+  }
+}
