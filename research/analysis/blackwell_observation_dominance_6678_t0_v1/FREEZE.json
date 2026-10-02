@@ -1,0 +1,38 @@
+{
+  "schema": "blackwell-observation-dominance-freeze-v1",
+  "issue": 6678,
+  "allocation_id": "BLACKWELL-OBSERVATION-DOMINANCE-6678-T0-ORB-20261002-01",
+  "source_main": "f0242a7476d7ac12dedcf932ebfd18b82d583fca",
+  "branch": "research/blackwell-dominance-6678-orbstack-t0-20261002",
+  "package": "research/analysis/blackwell_observation_dominance_6678_t0_v1",
+  "runtime": {
+    "provider": "OrbStack",
+    "docker_context": "orbstack",
+    "endpoint": "unix:///Users/taka/.orbstack/run/docker.sock",
+    "image_ref": "python:3.12-slim-bookworm",
+    "image_id": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "platform": "linux/arm64",
+    "pull": false,
+    "network": "none",
+    "read_only_rootfs": true,
+    "capabilities": "drop-all",
+    "no_new_privileges": true,
+    "uid_gid": "65534:65534",
+    "requested_limits": {"cpus": 0.25, "memory_bytes": 268435456, "pids": 32}
+  },
+  "limits": {"construction_max": 1, "candidate_max": 1, "auditor_max": 1, "retries": 0},
+  "seed": "not_applicable_deterministic_exact_enumeration",
+  "commands": {
+    "construction": "docker run --name blackwell-6678-t0-construction-20261002 --network none --read-only --cap-drop ALL --security-opt no-new-privileges --user 65534:65534 --cpus 0.25 --memory 256m --pids-limit 32 --mount type=bind,src=<package>,dst=/src,readonly <image-id> python -B -m unittest discover -s /src -p 'test_*.py' -v",
+    "candidate": "docker run --name blackwell-6678-t0-candidate-20261002 --network none --read-only --cap-drop ALL --security-opt no-new-privileges --user 65534:65534 --cpus 0.25 --memory 256m --pids-limit 32 --mount type=bind,src=<package>,dst=/src,readonly --mount type=bind,src=<fresh-candidate-out>,dst=/out <image-id> python -B /src/candidate.py /src/fixture.json /out/candidate.json",
+    "auditor": "docker run --name blackwell-6678-t0-audit-20261002 --network none --read-only --cap-drop ALL --security-opt no-new-privileges --user 65534:65534 --cpus 0.25 --memory 256m --pids-limit 32 --mount type=bind,src=<package>,dst=/src,readonly --mount type=bind,src=<fresh-audit-out>,dst=/out --mount type=bind,src=<candidate-out>,dst=/in,readonly <image-id> python -B /src/auditor.py /src/fixture.json /in/candidate.json /out/audit.json"
+  },
+  "sha256": {
+    "fixture.json": "dce3abc7d237eb78ce1a9d2ef7715349cc347f8714f8e544d7b72bd6f844b79d",
+    "candidate.py": "62997317a8ed7de8c2af87866cf845133e7cd52613f1924094dd1451b8183790",
+    "auditor.py": "a6405c1303127d0499e8a050f5c3d2c54ec14a0c8660fd9df83acdf16dfa9be2",
+    "test_method.py": "11e81d7e42ffa225ab6251f95f68e1ba8c8a4c4aa65cf84502fa7ad12379ea05",
+    "fixture_loader.py": "a452d1ff3c76c976e283ecf83c6d1881933086f8a6f123d30fa766204dd70de4",
+    "run_t0.sh": "2640c676a23c856fbafed80345f682d178bb44307ce44bae635ab0e3427070b0"
+  }
+}

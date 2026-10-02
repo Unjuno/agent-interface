@@ -245,6 +245,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`blackstart_x11_noinput_baseline_5970_t12_20261002/`](blackstart_x11_noinput_baseline_5970_t12_20261002/)
 - [`blackstart_xevent_target_5970_t5_20261002/`](blackstart_xevent_target_5970_t5_20261002/)
 - [`blackstart_xrecord_5970_t4_20261001/`](blackstart_xrecord_5970_t4_20261001/)
+- [`blackwell_observation_dominance_6678_t0_v1/`](blackwell_observation_dominance_6678_t0_v1/)
 - [`boundary_margin_5707_policy_pair_v1/`](boundary_margin_5707_policy_pair_v1/)
 - [`boundary_margin_5707_t0_v1/`](boundary_margin_5707_t0_v1/)
 - [`boundary_margin_5707_typed_v1/`](boundary_margin_5707_typed_v1/)
