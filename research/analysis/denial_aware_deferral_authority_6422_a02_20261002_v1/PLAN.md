@@ -19,4 +19,3 @@ The positive case requires exact predicate and evidence-kind match, a source-sta
 ## Execution boundary
 
 Frozen against repository main `eacb1346866f660d9d34eb36cd9691fd8184e5ff`; issue refinement comment `5944099107`; branch `research/denial-aware-deferral-authority-6422-a02-20261002`. Windows host CPU / CPython 3.11.9 only. No model, person, GUI, WSLc, Docker, GPU, CUDA, network-dependent experiment, or effect.
-
