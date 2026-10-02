@@ -1,5 +1,6 @@
 # Analytical research
 
+- [`model_api_canary_wslc_replay_6001_t0_20261003/REPORT.md`](model_api_canary_wslc_replay_6001_t0_20261003/REPORT.md) — #6001 exact PR #6104 frozen source rerun in WSLc; raw byte-identical, auditor PASS_METHOD_SCOPED, tests 9/9; runtime reproducibility only, earlier STOPs unchanged.
 - [`model_interface_crossover_6035_t0_a03_20261002/REPORT.md`](model_interface_crossover_6035_t0_a03_20261002/REPORT.md) — #6035 synthetic model-by-interface T0 A03: 64/64 assignments audited; planted crossover detected, safety/contract gates dominated; method-scoped only.
 - [`issue59_wslc_ollama_store_mount_t0_20261003/REPORT.md`](issue59_wslc_ollama_store_mount_t0_20261003/REPORT.md) - #59 read-only Ollama store mount A01 STOP before launch: no candidate/auditor container (0/0) while #5085 allocation and shared WSLc bridge state remain unreconciled; WSL-host synthetic auditor contract suite 5/5, not container evidence.
 - [`issue59_wsl_cuda_model_route_smoke_20261003/REPORT.md`](issue59_wsl_cuda_model_route_smoke_20261003/REPORT.md) — #59 exploratory local WSL GPU/model-route smoke: CUDA offload to RTX 3080 PASS, exact-response contract FAIL; no formal allocation or game/task-effect claim, and the full temporary log is not retained.
@@ -482,6 +483,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`model_api_canary_6001_t0_a02_20261001/`](model_api_canary_6001_t0_a02_20261001/)
 - [`model_api_canary_detection_6001_t0_20261001/`](model_api_canary_detection_6001_t0_20261001/)
 - [`model_api_canary_interference_6001_t0_20261001/`](model_api_canary_interference_6001_t0_20261001/)
+- [`model_api_canary_wslc_replay_6001_t0_20261003/`](model_api_canary_wslc_replay_6001_t0_20261003/)
 - [`model_interface_crossover_6035_t0_a03_20261002/`](model_interface_crossover_6035_t0_a03_20261002/)
 - [`model_localization_2031_gemma3gpu_t1_v1/`](model_localization_2031_gemma3gpu_t1_v1/)
 - [`multi_actuator_state_domain_independence_r0_v1/`](multi_actuator_state_domain_independence_r0_v1/)
