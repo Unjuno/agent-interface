@@ -1,0 +1,38 @@
+{
+  "schema": "cex-guard-refinement-freeze-v1",
+  "allocation_id": "CEX-GUARD-REFINEMENT-6645-T0-20261002-01",
+  "status": "FORMAL_NOT_STARTED",
+  "base_main_sha": "007503a7b461848539dda5ba5a795cbfdc13b9db",
+  "branch_head_at_freeze": "f7cafe255f753a0f81f26e9da13b4b1faf4059aa",
+  "source_sha256": {
+    "PREREGISTRATION.md": "afe5c88cc95c38112012488db389dacb70be4024fdc8db0c0aecd7ab7475466d",
+    "RUN_COMMANDS.md": "ce0713932a79e4776e4e6ab18a3578d0b74cb8b55985c2cd517a50c78ac248ba",
+    "README.md": "c9dcba78c5d5316d274fc258adf5a7a1d94278528a5f6ad193bfa41bb432b4a0",
+    "candidate.py": "e2b2bac66828e44ca197a7b2a1bebc366997b35a9304aad452c0a5e27e711578",
+    "auditor.py": "0c0094b364bbffee5962bdd11e22615ed54737b4c0db09d7051a5aed9cf78719",
+    "fixture.json": "84692326678ddf3bb3e1e529371a8a0f710797cc9ac02194395dc32a9809faaa",
+    "test_method.py": "d6c9ffd73a561cc366398c718a776af15f234b30c1b14719b1f05c801945733a"
+  },
+  "runtime": {
+    "required": "Microsoft WSLc",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "platform": "linux/amd64",
+    "pull": false,
+    "network": false,
+    "gpu": false,
+    "formal_host_assignment": null,
+    "formal_image_cache_verified_for_assigned_host": false
+  },
+  "one_shot_limits": {
+    "candidate_invocations_max": 1,
+    "auditor_invocations_max_after_candidate_exit_zero": 1,
+    "retries": 0,
+    "replacements": 0,
+    "post_result_tuning": 0
+  },
+  "planned_output_names": {
+    "candidate": "candidate_raw.json",
+    "auditor": "audit.json"
+  },
+  "interpretation_boundary": "This is a pre-allocation source freeze, not assignment, authorization, formal execution, or PASS. Re-freeze if main or any source hash changes before an explicitly assigned run."
+}
