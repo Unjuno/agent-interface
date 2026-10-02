@@ -8,6 +8,8 @@ With `k=2` and widening budget 6, fixed top-k then hard filtering selected eligi
 
 This supports only the frozen method-level discriminator: post-filter top-k can starve an eligible item beyond k; widening recovers items within its scan budget and must retain an uncertainty status beyond that budget. Synthetic authored ranks do not measure embedding recall, real-world applicability truth, latency/tokens, registry economics, or downstream task outcomes. No deployment or runtime-promotion claim follows.
 
+**Short-circuit scope limitation:** every fixture case contains at most one `ALLOW` skill while `k=2`. Therefore no case reaches the “k eligible cards found” early-stop condition. The candidate's `BOUNDED_WIDENING` implementation scans the full six-record prefix in these cases; the frozen outputs accurately show six metadata checks. The rank-3/rank-6 recovery and rank-7 UNKNOWN observations remain valid for this fixture, but adaptive early stopping, work savings when k eligible cards are found, and its behavior with multiple eligible cards were not tested. Treat this arm as fixed-budget prefix filtering for the evidence collected, not evidence of an efficiency benefit.
+
 WSLc warned on both formal invocations that the kernel lacks swap-limit capabilities or the cgroup is not mounted. One CPU was requested; the 512 MiB memory ceiling is not claimed as enforced. No GPU, network, pull, model, GUI, or external side effect was used.
 
 See `PREREGISTRATION.md`, `FREEZE.json`, `RUN.json`, `CONSTRUCTION.md`, and `SHA256SUMS.txt` for protocol and provenance.
