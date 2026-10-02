@@ -7,5 +7,6 @@ Successor to #6461/T0b and #6179. T0b's pre-formal STOP and construction run rem
 - `candidate.py` — finite synthetic challenge lane and actual attack-envelope submissions.
 - `auditor.py` — independent raw-only reconstruction; imports no candidate code.
 - `test_protocol.py` — host construction/mutation tests.
+- `build_check.py` — WSLc construction gate that verifies the exact 1 GiB cgroup ceiling before running the suite.
 
 No production verifier, model, GUI, GPU, user data, or external effects are in scope. No result is claimed until WSLc raw candidate output and independent audit are retained.

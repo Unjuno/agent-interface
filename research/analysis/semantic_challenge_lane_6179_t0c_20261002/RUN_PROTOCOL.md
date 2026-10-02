@@ -13,8 +13,8 @@
 ## Freeze and gates
 
 1. Before freeze, confirm branch is synchronized to the latest GitHub main SHA. Recheck Issue #6477, related #6461/#6179, branches, open/closed PRs, local active worktrees, and owner/resource status. Confirm there is no overlapping allocation.
-2. Run final host test/mutation suite. Freeze exact source SHA-256, issue allocation ID, main SHA, image ID/digest, runtime version, and UTC time in `FREEZE.json`. Do not edit frozen candidate/auditor after this point.
-3. Immediately before WSLc construction, verify frozen hashes and active owner state. Run construction suite once. Require exit 0 and `memory.max=1073741824`.
+2. Run final host test/mutation suite. Freeze exact source SHA-256, issue allocation ID, main SHA, image ID/digest, runtime version, and UTC time in `FREEZE.json`. Do not edit frozen candidate/auditor/build-check after this point.
+3. Immediately before WSLc construction, verify frozen hashes and active owner state. Run `build_check.py` once; it prints and gates on `memory.max=1073741824` before running the test suite. Require exit 0.
 4. Before candidate, repeat frozen hash and owner/resource checks. Run candidate exactly once to fresh raw JSON. Nonzero exit => preserve raw/output and record `FORMAL_FAILURE.md`; never retry.
 5. Before audit, repeat frozen hash and owner/resource checks. Run independent auditor exactly once with raw only. Nonzero exit or non-pass => preserve all evidence and record `FORMAL_FAILURE.md`; never rerun candidate.
 6. Write report with exact commands, UTC start/end, exits, complete warning/stdout/stderr, container IDs, raw/audit SHA-256, row counts, results and scope. Do not promote synthetic results beyond preregistered limits.

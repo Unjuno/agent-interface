@@ -5,10 +5,17 @@ import unittest
 from pathlib import Path
 
 from auditor import audit, main as audit_file
+from build_check import memory_limit_is_enforced
 from candidate import build_raw, main as write_raw
 
 
 class BrokerBoundaryTests(unittest.TestCase):
+    def test_memory_limit_gate_requires_exact_hard_ceiling(self):
+        self.assertTrue(memory_limit_is_enforced("1073741824\n"))
+        self.assertFalse(memory_limit_is_enforced("max"))
+        self.assertFalse(memory_limit_is_enforced("536870912"))
+        self.assertFalse(memory_limit_is_enforced("MISSING"))
+
     def test_full_grid_and_json_roundtrip(self):
         raw = build_raw()
         self.assertEqual(len(raw["runs"]), 18)
