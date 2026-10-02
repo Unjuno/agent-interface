@@ -264,6 +264,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`cegis_skill_4262_v1/`](cegis_skill_4262_v1/)
 - [`censored_useful_effect_integrity_2514_v1/`](censored_useful_effect_integrity_2514_v1/)
 - [`censored_useful_effect_membership_successor_1838_v1/`](censored_useful_effect_membership_successor_1838_v1/)
+- [`cex_qualified_guard_refinement_6645_t0_v1/`](cex_qualified_guard_refinement_6645_t0_v1/)
 - [`change_cue_contrast_1931_v1/`](change_cue_contrast_1931_v1/)
 - [`claim_ladder_6113_t0_20261002/`](claim_ladder_6113_t0_20261002/)
 - [`claim_scoped_partial_verdict_6509_t0_20261002/`](claim_scoped_partial_verdict_6509_t0_20261002/)
