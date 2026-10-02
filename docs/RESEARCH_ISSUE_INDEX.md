@@ -1,6 +1,6 @@
 # Research and idea Issue index
 
-Last full pagination reconciliation: 2026-10-02 (Asia/Tokyo); that snapshot contained 2528 unique Issues with no duplicates. Incremental reconciliation on 2026-10-02 inspected the latest 100 open and 100 closed Issues. Twelve newer Issues matching the inclusion rule were added (eleven open, one closed), for 2540 unique repository Issues; the filtered inventory now has 1690 entries. No newer matching Issue appeared in those refreshed windows. A 2026-10-02 recheck of those same open-100/closed-100 windows after #6442's addition still found 12 newer qualifying Issues (eleven open, one closed); search results were spot-checked against individual Issue pages because PRs can appear in Issue search output.
+Last full pagination reconciliation: 2026-10-02 (Asia/Tokyo); that snapshot contained 2528 unique Issues with no duplicates. Since that baseline, incremental reconciliation on 2026-10-02 identified twelve qualifying Issues in the refreshed latest-100 open and latest-100 closed windows (eleven open, one closed), bringing the repository total to 2540 unique Issues and the filtered inventory to 1690 entries. A recheck after #6442's addition found no further newer qualifying Issue within those same windows. Search results were spot-checked against individual Issue pages because PRs can appear in Issue search output.
 
 ## Coverage and limits
 
