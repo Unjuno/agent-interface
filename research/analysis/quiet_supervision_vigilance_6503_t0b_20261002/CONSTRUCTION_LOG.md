@@ -67,9 +67,25 @@ Command: `python3.12 -B -m unittest discover -s
 research/analysis/quiet_supervision_vigilance_6503_t0b_20261002 -p 'test_*.py'
 -v`.
 
-Result: 13/13 passed. `research/analysis/check_index.py` passed with 530 indexed
-directories; `git diff --check` passed. The independent host reconstruction
+Result: 13/13 passed. The sparse worktree has all 533 retained directory names
+indexed in `research/analysis/README.md`; the local checker's sparse-checkout
+metadata probe does not recognize this linked-worktree layout and prints a
+stale warning while returning 0. This is not a clean local index PASS. In the
+official CI's sparse checkout that probe recognizes absent siblings as sparse
+and permits them. `git diff --check` passed. The independent host reconstruction
 retained 144/144 rows, 36 opportunities, six B and six C checkpoints, one
 mandatory stop in each arm, and the planted scoring controls. All response
 fixtures are marked `synthetic-script`; no human-response row exists. The
 candidate/auditor CLIs, container, and formal T0b experiment remain unrun.
+
+## Attempt 6 — local CI-equivalent regression suite
+
+Ran all 18 test commands currently listed in `.github/workflows/analysis-index.yml`
+under CPython 3.12, for 117 tests total. All passed, including the #6590
+geometry-feasibility suite after locally applying its workflow's pinned-source
+restore step; without that step, two existing provenance-hash tests correctly
+failed because the current workflow source is intentionally different. The
+branch workflow was restored and verified byte-for-byte against `HEAD` after
+that test. `py_compile` and the #6503 13-test suite passed. These are local
+construction/regression checks, not the formal candidate/auditor experiment;
+no candidate/auditor CLI, container, human, or model was invoked.
