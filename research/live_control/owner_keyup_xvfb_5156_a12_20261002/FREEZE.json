@@ -1,0 +1,48 @@
+{
+  "allocation": "MAP01-OWNER-KEYUP-BRACKET-5156-XVFB-20261002-12",
+  "base": "a2aa5b36efbe470ab3f83ca118275fc997dbc533",
+  "branch": "research/5156-owner-bracket-xvfb-successor-a12-20261002",
+  "path": "research/live_control/owner_keyup_xvfb_5156_a12_20261002/",
+  "image": {
+    "reference": "map01-attack-start-gate-4223-t8:20261001",
+    "image_id": "sha256:d8c51b45569cc4fdf0f5d82ae285c3fbb20fae8525d6fab0cebadca171b3bebe",
+    "platform": "linux/amd64",
+    "host": "OrbStack linux/arm64 emulation",
+    "network": "none",
+    "pull": "never"
+  },
+  "source_git_blobs": {
+    "input_owner_v10.py": "341b3c01649943ddaad5f28431a792c4889cc36e",
+    "input_transition_owner_v3.py": "0ea631abcf6272f0538a9ef9198ad8069b47b464",
+    "executor_v3.py": "2b072454fd81c41bf9e025217afc78020c7059de",
+    "lease.py": "b9dac6bb4063928354733d79bf371909a288a3d1",
+    "serialize_release.py": "097125fc1aad8b931e3a3fbe99ee9009add247d4"
+  },
+  "vendored_lf_sha256": {
+    "executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "input_owner_v10.py": "ec4d6969d4c0cae2ee0a2989455a2fe87f930d90aeb3451afd3450c7c85e9718",
+    "input_transition_owner_v3.py": "c549c4181b76e0c874e0e24d42d3b22293dc71696a56891120725d4b35cc1047",
+    "lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+    "serialize_release.py": "8dcf54ce4dfed1493182e7dffe12be63b4b9ef969964e088eebf32f8d22a10ea"
+  },
+  "candidate_source_sha256": "2ed46fc7357b4c583939111d8d3ed22724584b929c0e9cc6d32ccf0f8b28a5b7",
+  "independent_auditor_sha256": "31463a4be803cbcf8907a4377fea71fe8a0869fda62e070f9dcadb927e532008",
+  "invocation_limits": {
+    "candidate": 1,
+    "independent_auditor": 1,
+    "retries": 0
+  },
+  "cases": [
+    "single W down/up",
+    "W+A down; stale different-intent W-up rejected without releasing owned W; sequential owning W-up/A-up",
+    "W admitted; cancellation requested; A admission rejected; owner cleanup to neutral"
+  ],
+  "timestamps_clock": "time.perf_counter_ns shared by owner and caller in the same container process",
+  "instrumentation": "Candidate-only copy timestamps existing KeyRelease requests and XSync returns; no call reorder, extra X11 query, admission/release predicate, or authority change",
+  "pre_candidate_construction": {
+    "candidate_runner_self_test": "PASS in pinned offline Docker construction container",
+    "auditor_positive_and_10_corruption_controls": "PASS in a separate local process and in pinned offline Docker construction container",
+    "private_Xvfb_XTEST_smoke": "previously passed for identical image; not repeated in A12 construction",
+    "formal_candidate": "NOT RUN at freeze"
+  }
+}

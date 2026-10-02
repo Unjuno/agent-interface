@@ -18,6 +18,8 @@ inspect and independently revalidate it. The PR/merge is the evidence-delivery
 mechanism, not the research objective. A component or readiness PASS must not
 be promoted to integrated runtime, model, task-effect, or product success.
 
+**Resource-contention override (2026-10-02):** The cadence below does not require filler experiments while a needed resource or authority is unavailable. Keep at most one pending need per scientific question in [#5085](https://github.com/Unjuno/agent-interface/issues/5085), updating only meaningful readiness, ownership, assignment/release or outcome changes; do not roll GPU bookings or create new Issues merely for window, runtime, launcher or auditor repairs. Resource HOLD is valid while useful, nonconflicting work proceeds within existing authorization. Genuinely new hypotheses or integration decisions remain valid under [failure-classification rules](ISSUE_FAILURE_CLASSIFICATION.md). Preserve explicitly assigned/running finite allocations, their original safe stopping boundaries and all original outcomes; no grant or consumed-allocation retry is implied. Microsoft WSLc (`wslc.exe`) shares the host's physical GPU and does not prove memory-limit enforcement.
+
 ### Required work cadence for autonomous agents
 
 The unit of progress is an executed experiment against one concrete Issue
