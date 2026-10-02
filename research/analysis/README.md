@@ -47,6 +47,8 @@
 
 This directory contains retained analytical studies: proofs, exact finite-state or exhaustive results, break-even derivations, and identifiability analyses.
 
+- [Issue #6461 / successor to #6179 T0b pre-formal STOP](semantic_challenge_lane_6179_t0b_20261002/PRESERVATION_QUALIFICATION.md) — Candidate/auditor 0/0: main advanced before formal start. A later separate diagnostic reported a 1 GiB memory ceiling; it does not reopen this allocation or change #6179’s HOLD.
+
 Analytical results remain scoped to their stated assumptions. When a claim depends on a real OS, application, model, scheduler, latency distribution, or workload, that residual still requires empirical measurement.
 
 See [`../../docs/RESEARCH_METHOD.md`](../../docs/RESEARCH_METHOD.md) for the analysis-versus-experiment decision flow.
