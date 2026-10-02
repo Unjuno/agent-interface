@@ -429,6 +429,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`map01_v12_plan_step_lineage_r0_v1/`](map01_v12_plan_step_lineage_r0_v1/)
 - [`map01_v13_source_provenance_audit_59_t0_20261001/`](map01_v13_source_provenance_audit_59_t0_20261001/)
 - [`map01_v13_source_provenance_audit_59_t1_20261001/`](map01_v13_source_provenance_audit_59_t1_20261001/)
+- [`matched_boundary_spectrum_6640_baseline_audit_6668_20261002/`](matched_boundary_spectrum_6640_baseline_audit_6668_20261002/)
 - [`matched_boundary_spectrum_6640_t1_20261002/`](matched_boundary_spectrum_6640_t1_20261002/)
 - [`max_permissive_supervisor_5550_successor04_20261001/`](max_permissive_supervisor_5550_successor04_20261001/)
 - [`max_permissive_supervisor_5550_t0_20261001/`](max_permissive_supervisor_5550_t0_20261001/)
