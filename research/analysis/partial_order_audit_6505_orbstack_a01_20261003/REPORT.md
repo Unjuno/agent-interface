@@ -2,7 +2,7 @@
 
 ## Disposition
 
-Formal audit has not run. This report will be updated only with the first frozen invocation's result; no outcome is implied by passing construction tests.
+**STOP_OUTPUT_NOT_EMPTY_OR_MISSING.** The sole A01 invocation exited 1 because `container_config.json` was mistakenly placed in the mounted output directory, violating the frozen auditor's required-empty-output precondition. The guard stopped before reading inputs: archive reconstruction did not occur and zero of 11,111 rows were parsed. This is an operator setup STOP, not a scientific FAIL or audit result. A01 will not be retried; any further attempt requires a separately frozen successor allocation.
 
 Pre-formal construction tests: 7/7 pass on macOS arm64 / CPython 3.14.5. These check the fresh model's finite-state count, a selected independent/dependent pair, Git blob hashing, topological-order discriminator, and all eight effective control values. They do not parse/recompute the 11,111 formal rows. The workspace analysis index passes at 550 retained result/failure directories after the latest-main integration.
 
@@ -16,7 +16,7 @@ See `PREREGISTRATION.md`. The scope is an independent audit of #4889's retained 
 
 ## Execution and validation
 
-No formal invocation is recorded yet. See `FREEZE.json`, `RUNBOOK.md`, and `CONSTRUCTION.json` for frozen inputs and pre-formal checks. This package does not rerun the original candidate, original auditor, or reducer.
+The verbatim first stdout, exit code, and invocation record are in `results/formal_01/`. The container exited without OOM. See `FREEZE.json`, `RUNBOOK.md`, and `CONSTRUCTION.json` for frozen inputs and pre-formal checks. This package does not rerun the original candidate, original auditor, or reducer.
 
 ## Limits
 
