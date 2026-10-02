@@ -748,3 +748,6 @@ cleanup emissions during that call. Sum program deltas, not cumulative totals.
 Counts outside a program, such as a later owner close, require their own receipt.
 The retained Inkscape sequence reports cumulative10→14 but program10+4=14, not24.
 Raw reports and their hashes remain unchanged; lookup/review does not execute input.
+
+[Program-emission regression evidence](results/program-emission-review-01/README.md)
+includes the original-counter recheck, portable archive, and native test logs.
