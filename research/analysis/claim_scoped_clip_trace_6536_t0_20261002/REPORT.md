@@ -16,6 +16,7 @@
 - Five controls rejected: forged master digest, unmapped interval digest, shifted-clock decision, missing release lineage, and false-clear decision (5/5).
 - Construction tests: 5/5 passed before freeze and again after the formal run; candidate/auditor compile checks passed.
 - Local CI: restored the repository's exact pinned Analysis Index workflow source (`b19000e0…`) as its provenance step; analysis index verified 532 retained result/failure directories; all 17 existing workflow test suites passed (104 tests), plus this package's five tests (109 total). The two nested suites ran from their declared working directory. `.github/workflows/analysis-index.yml` was restored unchanged afterward.
+- After rebasing the additive evidence commit onto current main `9a327d0511f02c7b8ebd175e20f96a43028578ca`, the generated index was refreshed against all 534 visible retained-result directories and `check_index.py` returned clean.
 - Platform: Darwin 25.6.0 arm64, CPython 3.14.5, stdlib only. WSLc is unavailable on this host; no container was used because the Issue makes WSLc optional and this finite T0 needs neither Engine API nor special isolation. No model, GUI/game, user asset, or real media was accessed.
 
 Raw and audit JSON are retained unchanged at `RAW.json` and `AUDIT.json`. The frozen inputs, allocation gates, source SHA-256 values, and command argv are in `FREEZE.json`; `SHA256SUMS` binds the complete evidence package. Historical Issues #58/#59/#2679 and their media/trace assets were not modified or accessed.
