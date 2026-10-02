@@ -94,6 +94,10 @@ One digest-pinned, network-disabled WSLc construction reconstructed 600 syntheti
 
 The unchanged #6262 synthetic CUDA candidate ran once in a pinned, network-disabled WSL Podman container with NVIDIA CDI passthrough. It enumerated 4,096/4,096 evidence subsets on the local RTX 3080; the independent CPU auditor exactly reconstructed every semantic row, refused 1,987 naive joint false promotions and the wide claim, retained the exact qualified `t01` narrow claim, and rejected all four frozen mutations. `PASS_CONTAINER_REPRODUCTION_SCOPED`; no retries. This is an environment-reproduction result only—not a real skill, GUI, safety, GPU-speed, or Docker-parity claim. The immutable predecessor result and its original non-container execution remain untouched. See [the freeze, raw evidence, manifest, and report](research/analysis/skill_applicability_6262_wslc_t0b_v1/REPORT.md) and [PR #6289](https://github.com/Unjuno/agent-interface/pull/6289).
 
+### Issue #6710 successor to #6650: independent persistence-throttle controller-law replay (2026-10-02)
+
+Allocation 01 is retained as `STOP_AUDITOR_FREEZE_KEY` before fixture/raw input. Its source and stderr are unchanged; it was not retried. Distinct allocation 02 ran one digest-pinned, network-disabled OrbStack auditor (candidate=0, retry=0) and reconstructed all 9×4 policy outputs exactly, with 0 mismatches and 9/9 corruption controls rejected. This is a scoped audit-conformance result only. It does not reverse #6650 T0's `FAIL_HYPOTHESIS` (age-persistence stale deliveries 6 vs queue-length 3 on the frozen sustained-overload trace), establish policy utility, or support a runtime/safety claim. See [report, both freezes, raw audit receipt, and failure record](research/analysis/persistence_gated_throttle_6650_control_replay_20261002_01/REPORT.md) and [successor Issue #6710](https://github.com/Unjuno/agent-interface/issues/6710).
+
 # Research index
 
 ### Issue #6533: frame-qualified collateral checks T0 (2026-10-02)

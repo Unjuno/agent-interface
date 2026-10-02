@@ -492,6 +492,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`path_class_switch_6586_t0_20261002/`](path_class_switch_6586_t0_20261002/)
 - [`path_width_continuous_gui_6581_t0b_v1/`](path_width_continuous_gui_6581_t0b_v1/)
 - [`pending_outcome_route_learning_6129_t0_20261002/`](pending_outcome_route_learning_6129_t0_20261002/)
+- [`persistence_gated_throttle_6650_control_replay_20261002_01/`](persistence_gated_throttle_6650_control_replay_20261002_01/)
 - [`persistence_gated_throttle_6650_t0_v1/`](persistence_gated_throttle_6650_t0_v1/)
 - [`phase_diversified_capture_6067_t0_20261002/`](phase_diversified_capture_6067_t0_20261002/)
 - [`phase_overlap_dynamic_footprint_binding_r1_v1/`](phase_overlap_dynamic_footprint_binding_r1_v1/)
