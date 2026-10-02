@@ -139,6 +139,20 @@ flowchart LR
 
 Exact contract/state-machine questions should be reduced analytically first; timing, model behavior, OS/application behavior, and integrated capability remain empirical where their outcome depends on the real environment.
 
+## Issue #6403 — control-opportunity responsibility attribution T0
+
+The preregistered six-trace synthetic T0 passed independent evidence
+reconstruction (`PASS_METHOD`): effect-before-notification, sent-but-undelivered,
+accepted/sufficient-window, ambiguous delivery, stale-UI, and verified-correction
+cases matched their frozen classifications and timelines. A six-case mutation
+gate rejected delivery substitution, effect-time changes, hidden override facts,
+oracle leakage, and both promotion/display of misleading bidirectional negative
+controls. Factual reconstruction—not blame—was the primary endpoint. No human,
+live delivery/attention, GUI, model, causal responsibility, or product claim was
+tested; Issue #6403 remains open. The runner did not capture ephemeral container
+IDs, a retained evidence limitation. See the [full report](research/analysis/control_opportunity_attribution_6403_t0_v1/REPORT.md)
+and [Issue #6403](https://github.com/Unjuno/agent-interface/issues/6403).
+
 ## Research question
 
 Can a strong planner control arbitrary GUI applications through a local interface that:
