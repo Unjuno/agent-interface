@@ -22,3 +22,5 @@ The original owner methods, plans and schedule remain frozen. Application profil
 Disposition: HOLD_LIVE_PUBLIC_OWNER_QUALIFICATION. Keep this PR in draft; no main adoption or demonstrated token/speed advantage. Further work must address actual live qualification and retrieval/feedback usability without blind replay or weakening guards.
 
 Publication validation on the current review source: related owner/graph 67 tests normal/-O, portable audit seven tests normal/-O, portable primary usage reconstruction normal/-O, full native 409 protocol and 192 harness tests, deterministic scorer replay two tests. Native log hashes verified. Local checks run directly in Ubuntu without Docker. These contract/replay passes do not establish live candidate task success.
+
+Historical HOLD above describes the first failed block at its publication boundary. The [follow-up explicit activation/review report](../public-owner-activation-primary-01/PUBLICATION.md) retains that block and records the subsequent bounded positive/control qualification plus limited API adoption decision. It does not relabel these original failures or establish causal readiness or efficiency.

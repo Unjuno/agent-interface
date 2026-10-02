@@ -812,11 +812,20 @@ comparison and evolving context/cache do not prove token or speed gains. Keep
 production defaults and the efficiency HOLD.
 
 
-### Candidate: bounded graph through the public Python owner (live HOLD)
+### Run a bounded graph through the public Python owner
 
-This draft candidate has no successful normal live qualification yet. Both
-allocated cases stopped at unresolved selection, before movement or Save.
-See the [retained failure and accounting report](results/public-owner-compiled-primary-01/PUBLICATION.md).
+The explicit Python composition is retained after one fixed normal task and one
+short-movement control using the existing activation/review handoff before
+reference grounding. The prior two selection failures remain retained. See the
+[scoped qualification and actual usage](results/public-owner-activation-primary-01/PUBLICATION.md).
+This does not establish generic readiness, reliability or speed/token advantage.
+
+When explicitly activating a window, use `guarded_activate_window` with
+`review_after_activation=true`, verify the activation and neutral release,
+then review its original returned image before grounding in the new scope.
+A failed/unknown activation or review must stop editing; old references cannot
+cross this handoff. This is an explicit caller operation, not hidden behavior
+inside `run_compiled`, and does not prove the cause of an earlier click failure.
 
 After explicitly opening `GuardedSessionOwner` and grounding its references,
 call `owner.run_compiled(interface, bindings, call_root=fresh_directory,
