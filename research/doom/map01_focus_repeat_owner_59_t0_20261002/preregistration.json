@@ -1,0 +1,38 @@
+{
+  "schema": "issue59-focus-repeat-owner-prereg-v1",
+  "allocation_id": "ISSUE59-FOCUS-REPEAT-OWNER-T0-20261002-01",
+  "issue": 59,
+  "base_main_at_start": "89f27caf1e9fcf3bc2c2c3c2db7d62ee6d19e4ae",
+  "status": "NOT_RUN_SHARED_WSL_XVFB_LANE_OCCUPIED",
+  "question": "Does the byte-identical current InputOwner v10 verify release of an admitted held key after an observed A-to-B X11 focus transfer, before B receives another matching KeyPress?",
+  "hypothesis": "With autorepeat established independently, the owner detects the focus change on its bounded queue wait, emits KeyRelease, and verifies the key is absent from the X server keymap before B receives an additional matching KeyPress.",
+  "fixture": "One private Xvfb 800x600x24 server, two bare X windows, Python 3.12 system python-xlib, actual current input_owner_v10.py; no WM, model, app, or game.",
+  "source_paths": [
+    "research/live_control/input_owner_v10.py",
+    "research/live_control/executor_v3.py",
+    "research/live_control/lease.py"
+  ],
+  "design": {
+    "invocations": 1,
+    "retries": 0,
+    "arms": 1,
+    "control": "XTEST key-down on A held 160ms, collect matching KeyPress events, send KeyRelease, verify query_keymap reports key up",
+    "trial": "Owner admits one key-down on A; external client moves and reads focus as B; owner records focus_changed release and empty keymap; B event pump spans observed focus through release sync plus 100ms",
+    "positive_control_minimum_repeat_keypresses": 2,
+    "output": "raw.json plus independent classification.json, error.txt and xvfb.stderr when applicable",
+    "forbidden": ["rerun", "shared display", "kill or alter another process", "real desktop input", "application", "game", "model", "claim MAP01 result"]
+  },
+  "primary_decision": {
+    "scoped_pass": "positive control succeeds; A-to-B focus transfer is read back; owner logs focus_changed release; server keymap is empty; B event-pump coverage is complete; zero matching B KeyPress received between observed B focus and owner release sync return",
+    "counterexample": "one or more matching B KeyPress events are received after observed B focus and before owner release sync return",
+    "hold": "release verification, focus observation, source identity, event order, or event-pump coverage is missing or inconsistent",
+    "stop": "positive repeat control does not show at least two presses and a verified release"
+  },
+  "H": "Observed focus loss leads the current owner to verified release before the new focus receives autorepeat.",
+  "T": "One control and one owner-integrated focus transfer, one invocation, no retries.",
+  "D": "Classify raw.json independently; do not trust a candidate status label.",
+  "C": "Private Linux Xvfb, Python Xlib, current source hashes retained in raw.json.",
+  "U": "Single scheduler-sensitive Xvfb trial on one WSL host; narrow event-delivery mechanism only.",
+  "shared_resource_rule": "Do not execute until WSL shared allocation owner explicitly clears CPU/Xvfb lane; current observations show other live workers and Xvfb sessions.",
+  "claim_boundary": "No gameplay, MAP01, real desktop, product reliability or general autorepeat safety claim."
+}
