@@ -70,6 +70,7 @@ Closure does not erase evidence. [#6353](https://github.com/Unjuno/agent-interfa
 ## Latest additions and result changes (2026-10-02)
 
 - [#6367](https://github.com/Unjuno/agent-interface/issues/6367): new unverified idea to test whether protective local adaptation preserves independently scored progress under matched external change. No result is claimed; it does not reinterpret existing MAP01 traces.
+- [#6383](https://github.com/Unjuno/agent-interface/issues/6383): new, unverified human-factors idea to test whether a person can predict the agent's currently permitted action classes, lease/evidence expiry, and stop/release boundary before effects. Its proposed T0 checks display claims against an independent oracle; T1 is conditional on separate participant approval. No runtime defect or human-study result is claimed.
 - [#6358](https://github.com/Unjuno/agent-interface/issues/6358): shared recovery advice may become invalid when adoption changes load; explicitly unverified transfer hypothesis, not a current harmful-advice or overload finding.
 - [#6354](https://github.com/Unjuno/agent-interface/issues/6354): explicit role context as a possible missing variable in online Needle LoRA; successor after prior STOPs, no new GPU outcome yet.
 - [#6351](https://github.com/Unjuno/agent-interface/issues/6351): test whether roles interpret the same evidence differently; unverified, no current defect asserted.
@@ -79,9 +80,9 @@ Closure does not erase evidence. [#6353](https://github.com/Unjuno/agent-interfa
 - **Changed result for [#5366](https://github.com/Unjuno/agent-interface/issues/5366):** main commit [89f27ca](https://github.com/Unjuno/agent-interface/commit/89f27caf1e9fcf3bc2c2c3db7d62ee6d19e4ae) records synthetic T3 freshness result PASS_METHOD_SCOPED (12/12 rows, candidate and independent raw-only audit each once). This is finite method evidence only; no live resource-timing or runtime/product claim. The Issue remains open for broader transfer.
 - [#6363](https://github.com/Unjuno/agent-interface/pull/6363) is an open rescue PR preserving the exact T11 predecessor blobs and keeping T12 as canonical strict-scope/schema record; no T11 rerun or retroactive upgrade.
 
-## Full research-labeled inventory
+## Filtered research, idea, and successor Issue inventory
 
-The point-in-time filtered discovery inventory of all research-labeled Issues in both states (including successors, audit/coordination records, and explicit STOP/HOLD/FAIL histories) is in [RESEARCH_ISSUE_INDEX.md](RESEARCH_ISSUE_INDEX.md). Reconciliation on 2026-10-02 found 1,677 such Issues (1,136 open, 541 closed) among 2,527 non-PR Issues returned by GitHub. The inventory is broader than ideas alone and includes Issues carrying the `research` label or with titles containing `research`, `idea`, `successor`, or `experiment`; closure is not a result. Each row links to the Issue for its authoritative disposition.
+The point-in-time discovery inventory of research-labeled Issues and Issues whose titles mention research, idea, successor, or experiment (including open/closed state and linked lineage) is in [RESEARCH_ISSUE_INDEX.md](RESEARCH_ISSUE_INDEX.md). Reconciliation on 2026-10-02 found 1,678 such Issues (1,137 open, 541 closed) among 2,528 non-PR Issues returned by GitHub. The inventory is broader than ideas alone and includes Issues carrying the `research` label or with titles containing `research`, `idea`, `successor`, or `experiment`; closure is not a result. Ascending-created-time pagination returned 2,528 unique Issue numbers without duplicates; no prior inventory target changed state in this refresh. Each row links to the Issue for its authoritative disposition.
 
 ## Closed idea dispositions checked (2026-10-02)
 
