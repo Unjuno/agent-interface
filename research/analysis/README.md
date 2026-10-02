@@ -279,6 +279,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`gpu_grounding_template_diversity_2912_v1/`](gpu_grounding_template_diversity_2912_v1/)
 - [`gpu_grounding_template_diversity_2912_v2/`](gpu_grounding_template_diversity_2912_v2/)
 - [`gpu_grounding_template_diversity_4561_cpu_gate_v1/`](gpu_grounding_template_diversity_4561_cpu_gate_v1/)
+- [`gpu_six_worker_memory_sharing_4972_wslc_a10_20261002/`](gpu_six_worker_memory_sharing_4972_wslc_a10_20261002/)
 - [`gpu_supervisor_compose_4972_cuda_v1/`](gpu_supervisor_compose_4972_cuda_v1/)
 - [`guard_induced_proposal_risk_6143_t0_20261002/`](guard_induced_proposal_risk_6143_t0_20261002/)
 - [`guard_policy_break_even_r0_v1/`](guard_policy_break_even_r0_v1/)

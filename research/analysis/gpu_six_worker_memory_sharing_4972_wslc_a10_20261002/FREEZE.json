@@ -1,0 +1,56 @@
+{
+  "schema": "gpu-a10-wslc-memory-sharing-freeze-v1",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/6329",
+  "parent_allocation": "GPU-MEMORY-SHARING-4972-20261002-09",
+  "allocation": "GPU-MEMORY-SHARING-4972-20261002-10",
+  "seed": 49720261010,
+  "base_main": "a2aa5b36efbe470ab3f83ca118275fc997dbc533",
+  "branch": "research/gpu-six-worker-memory-sharing-4972-wslc-a10-20261002",
+  "path": "research/analysis/gpu_six_worker_memory_sharing_4972_wslc_a10_20261002/",
+  "runtime": {
+    "engine": "Microsoft WSL Containers (wslc.exe)",
+    "version": "3.0.1.0",
+    "platform": "linux/amd64",
+    "image": "pytorch/pytorch@sha256:831247999fbf7e08f61b3e39f6d77ee434f38f6f07f769d00db451e853878067",
+    "image_id": "sha256:048a0de5d4322054f9d92a9dfd36f4cab1cd82dfbd1042ce2c51bd94f7e45d32",
+    "pull_policy": "never",
+    "candidate_network": "none",
+    "candidate_gpu": "all",
+    "rootfs_read_only": false,
+    "pid_limit_supported_by_cli": false,
+    "swap_limit_note": "WSLc may warn cgroup/swap limits unavailable; no hard memory+swap isolation claim."
+  },
+  "contract": {
+    "workers": 6,
+    "tensor_elements_per_worker": 25165824,
+    "dtype": "int64",
+    "working_set_bytes_per_worker": 201326592,
+    "operations": 20,
+    "allocator_fraction": 0.05,
+    "minimum_initial_free_bytes": 10737418240,
+    "minimum_global_free_bytes": 4294967296,
+    "maximum_aggregate_allocator_peak_bytes": 8589934592
+  },
+  "source_sha256": {
+    "runner.py": "c220749b194d5aef2f4182e5e4e7197df368406ba25b2f17ece9c5dbd29173f2",
+    "audit.py": "7761a0b531e9b6d2990f6d859a1cc9630e3982c199c49d5c187182f0eebb99cb",
+    "test_audit.py": "a9555ea26f8cbd14b21f43a37719f1c782f83370d2005344c383ca9162622905",
+    "run_formal.ps1": "6e52a68734facb6ac9ad7bf8fcfa6133dac71594a361297b532403f27b5fbae2"
+  },
+  "construction_tests": {
+    "runtime": "local Python 3 standard library; preparation only",
+    "passed": 9,
+    "failed": 0
+  },
+  "invocations_at_freeze": {
+    "candidate_container": 0,
+    "cuda_worker": 0,
+    "auditor_container": 0,
+    "retries": 0
+  },
+  "resource": {
+    "status": "DEFERRED_UNASSIGNED",
+    "pending_gpu_request": "#6354",
+    "coordinator_lease": null
+  }
+}
