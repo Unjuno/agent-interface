@@ -104,6 +104,7 @@ See `PREREGISTRATION.md`, `PREREGISTRATION_A03.md`, `RUN.json`, `A01_STOP.md`,
 `CONSTRUCTION_A03.md`, and both `formal_a0{2,3}_orbstack_20261003/` folders for
 freezes, commands, construction failure, first STOP, raw candidates,
 independent audits, cgroup observations, and container identities. A02 source
-freeze: `8cf37e9d7ce174cb04f9b98a722f438cc310069d`; A03 source freeze:
-`675d9a94ea61b496a3d67a5320eb36ea85795460`. Verify package files with
+freeze: `37ae40af2c1fc4daf70ce12511d9c44f8579f513`; A03 source freeze:
+`757e11d58bb3c5a668aafdc89af628b0ddc03fde` (A03 command freeze:
+`adb1c8887d3f76fe30856b7957a2e24951b5476d`). Verify package files with
 `SHA256SUMS`.
