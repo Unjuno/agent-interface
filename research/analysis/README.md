@@ -501,6 +501,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`source_window_type_boundary_4782_v1/`](source_window_type_boundary_4782_v1/)
 - [`specialist_regeneration_4295_controls_20261001_01/`](specialist_regeneration_4295_controls_20261001_01/)
 - [`specialist_regeneration_4295_formal_20261001_01/`](specialist_regeneration_4295_formal_20261001_01/)
+- [`spoken_instruction_contract_preservation_6471_t0_20261002/`](spoken_instruction_contract_preservation_6471_t0_20261002/)
 - [`sqlite_schema_readset_reprepare_v1/`](sqlite_schema_readset_reprepare_v1/)
 - [`stagewise_perturbation_6053_t0_20261002/`](stagewise_perturbation_6053_t0_20261002/)
 - [`stop_evidence_4678_audit_v1/`](stop_evidence_4678_audit_v1/)
