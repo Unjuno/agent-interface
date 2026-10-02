@@ -307,6 +307,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`exposed_success_audit_6367_t0_20261002/`](exposed_success_audit_6367_t0_20261002/)
 - [`failure_detector_5531_async_bound_t6_v1/`](failure_detector_5531_async_bound_t6_v1/)
 - [`feasible_attribution_6100_t0_20261001/`](feasible_attribution_6100_t0_20261001/)
+- [`feedback_necessity_5927_epistemic_controls_t0_20261002/`](feedback_necessity_5927_epistemic_controls_t0_20261002/)
 - [`feedback_necessity_5927_orbstack_t0_v1/`](feedback_necessity_5927_orbstack_t0_v1/)
 - [`focused_observation_request_successor_1935_v1/`](focused_observation_request_successor_1935_v1/)
 - [`frame_qualified_collateral_6533_t0_20261002/`](frame_qualified_collateral_6533_t0_20261002/)
