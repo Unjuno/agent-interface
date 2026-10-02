@@ -1,0 +1,47 @@
+{
+  "allocation": "CONSTRAINED-ORDER-COVERAGE-6206-T0-20261002-01",
+  "issue": 6206,
+  "branch": "research/6206-constrained-sequence-coverage-t0-20261002",
+  "path": "research/analysis/constrained_sequence_coverage_6206_t0_v1/",
+  "frozen_source_commit": "9b62cc2c33917d58ce49d615f975e9cc3c5c861e",
+  "frozen_main": "3d33fe482ad55e99943f2c7b40e92c685c3bf92a",
+  "main_recheck_after_freeze": "14b81dd1f6853623a694266b98538f812847257a",
+  "main_recheck_diff_scope": [
+    "runtime/host_v1/**",
+    "runtime/results/**"
+  ],
+  "frozen_source_sha256": {
+    "PLAN.md": "fdc5bfcec52e9992cffabd2226852b5f57ab9992096a5b1fc8f77343c2b07d8f",
+    "fixture.json": "f9fb059ed5b2f2bc758d7fab4994f9b71784c92198ed0aaac4dff03bfd49a87f",
+    "candidate.py": "8afbc08430ecefe4fa9acff659a85880e8e810162bce5d588bd79e3f2481b516",
+    "audit.py": "2ddb6e2009c533dd6f77ba2b3d5dda13c84433d5bb799a874e4b5656775b1add",
+    "test_candidate.py": "fbca6fea3316ed8a2c2d7ccd01c0ca267272b131f954b4b3afa1679f2ced10b0"
+  },
+  "construction": {
+    "command": "python3 -m unittest -v test_candidate.py",
+    "tests_passed": 4,
+    "tests_total": 4,
+    "py_compile": "PASS",
+    "git_diff_check": "PASS",
+    "candidate_invocations_at_freeze": 0,
+    "auditor_invocations_at_freeze": 0
+  },
+  "formal_budget": {
+    "candidate_invocations": 1,
+    "auditor_invocations": 1,
+    "retries": 0,
+    "substitutions": 0,
+    "candidate_command": "python3 research/analysis/constrained_sequence_coverage_6206_t0_v1/candidate.py",
+    "auditor_command": "python3 research/analysis/constrained_sequence_coverage_6206_t0_v1/audit.py"
+  },
+  "environment": {
+    "execution": "host standard library only",
+    "python_version_at_construction": "3.14.5",
+    "network_or_model": false,
+    "gui_or_input": false,
+    "container_used": false,
+    "container_reason": "Issue T0 is a deterministic standard-library fixture with no container-dependent semantics; shared Docker inventory showed the unrelated owner-bound container unjuno-native-ci-6092 active and no exclusive slot was granted. It was not inspected beyond read-only inventory, stopped, or modified."
+  },
+  "decision_rule": "As recorded in PLAN.md and Issue #6206 comments before formal candidate execution.",
+  "status_at_freeze": "FROZEN_NOT_RUN"
+}
