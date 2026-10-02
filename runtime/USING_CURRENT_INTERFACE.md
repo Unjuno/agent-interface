@@ -181,6 +181,41 @@ save program. The independently inspected SVG met the two-rectangle predicate.
 This is scoped transfer evidence; it does not establish a comparative speed or
 token benefit.
 
+## Explicit Python summaries of retained dispatch reports
+
+A Python caller can opt into the same success-only summary as CLI/MCP while
+keeping an arbitrary original report filename. Review the exact retained bytes,
+then supply their path and the directory used to resolve image artifacts:
+
+```python
+from pathlib import Path
+from runtime.cli_v1.review import review_bytes
+from runtime.cli_v1.public_summary import summarize_retained_dispatch
+
+report_path = Path(saved_report_path)
+full = review_bytes(report_path.read_bytes(), run_images,
+                    compact=True, report_refs=True)
+shown = summarize_retained_dispatch(full, report_path, run_images)
+```
+
+The caller already retained the report; this reads it and does not write, capture
+or dispatch input. The method checks the exact byte length and SHA-256 before
+using the existing completed-and-released summary gate. It preserves the original
+image, reference, outcome, capture and release evidence. Only supported repeated
+program/expansion/wait details are omitted. The partial summary explicitly names
+the exact full report and its hash for read-only CLI retrieval without an image.
+
+Missing, changed, unsupported or failed reports keep the full view. The ordinary
+file `review()` can return v1 when compaction is not smaller; this helper then
+keeps it full. The example uses `review_bytes` to match the existing received-report
+presentation shape. It does not make a retained image fresh or acknowledge task
+success. Default dispatch and full presentation remain unchanged.
+
+[Two retained Inkscape projections](results/retained-python-summary-01/README.md)
+verify byte-identical images/outcomes and exact full retrieval. Text bytes are
+measured separately from image payload; no model-token, cost or speed benefit is
+inferred from the offline comparison.
+
 ## Batch actions between decisions
 
 Use one public `dispatch` program for a finite sequence whose actions can all be
