@@ -22,7 +22,7 @@ An infrastructure-only OrbStack construction container probe (not candidate/audi
 
 ## Frozen runtime and execution boundary
 
-- Host/runtime: macOS arm64; dedicated isolated OrbStack Linux VM and private Docker Engine for this allocation. The shared OrbStack Engine and all pre-existing containers are out of scope and will not be inspected or modified.
+- Host/runtime: macOS arm64; dedicated isolated OrbStack Linux VM and private Docker Engine for this allocation. A read-only host-engine name/status and image-metadata inventory was performed before allocation to discover the active shared container; no container-internal inspect, exec, lifecycle operation or mutation occurred. This intake disclosure is retained in Issue #6819. Formal candidate/auditor runs use only the private VM Engine; the shared OrbStack Engine and its existing containers are not used or modified.
 - Candidate and auditor use separate containers from cached `python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f` (`linux/arm64`). Formal `docker run` uses `--pull=never --network=none --cpus=1 --memory=512m --user 65534:65534 --read-only --cap-drop=ALL --security-opt=no-new-privileges`.
 - Source and candidate/public inputs are read-only in the candidate; candidate output is in a distinct writable mount. The auditor receives its own source, public fixture, hidden truth and candidate raw output read-only, plus a distinct audit output mount. It does not receive candidate source.
 - VM/engine/image setup and digest verification occur before the formal source freeze. Network is not available inside either experiment container. No model, GUI, external action or GPU is involved.
