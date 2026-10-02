@@ -1,0 +1,23 @@
+{
+  "schema": "relational-coordinate-fixture-v1",
+  "units": "px",
+  "frame_id": "surface-A",
+  "source_epoch": 4,
+  "target": {"id": "target-A", "center": [10, 10], "half_width": 2},
+  "forbidden": {"id": "neighbor-B", "center": [14, 10], "half_width": 1},
+  "shift_values": [-2, -1, 0, 1, 2],
+  "cases": [
+    {"id": "common_safe", "mode": "common", "error_values": [-1, 0, 1]},
+    {"id": "common_boundary", "mode": "common", "error_values": [-2, -1, 0, 1, 2]},
+    {"id": "common_unsafe", "mode": "common", "error_values": [-3, -2, -1, 0, 1, 2, 3]},
+    {"id": "independent_no_gain", "mode": "independent", "error_values": [-1, 0, 1]},
+    {"id": "neighbor_overlap", "mode": "common", "error_values": [-2, -1, 0, 1, 2], "forbidden_center": [12, 10]},
+    {"id": "mutate_sign", "mode": "common", "error_values": [-1, 0, 1], "mutation": "relation_sign"},
+    {"id": "mutate_units", "mode": "common", "error_values": [-1, 0, 1], "action_units": "dip"},
+    {"id": "mutate_frame", "mode": "common", "error_values": [-1, 0, 1], "action_frame_id": "surface-B"},
+    {"id": "mutate_epoch", "mode": "common", "error_values": [-1, 0, 1], "action_epoch": 3},
+    {"id": "mutate_identity", "mode": "common", "error_values": [-1, 0, 1], "action_target_id": "neighbor-B"},
+    {"id": "mutate_contradiction", "mode": "common", "error_values": [-1, 0, 1], "shift_bounds_override": [2, -2]}
+  ]
+}
+
