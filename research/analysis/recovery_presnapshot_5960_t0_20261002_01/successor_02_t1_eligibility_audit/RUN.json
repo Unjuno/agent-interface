@@ -1,0 +1,11 @@
+{
+  "allocation_id": "R133-RECOVERY-PRESNAPSHOT-5960-T1-ELIGIBILITY-AUDIT-20261002-01",
+  "source_main_sha": "69a1bf509eb432e5e3c0c294d05ad7671d86adb6",
+  "source_acquisition": "Read-only GitHub MCP fetch of six pinned main blobs, two open Issue records and one formal-result Issue comment; four default-branch code-search queries; no runtime/network experiment.",
+  "candidate_invocations": 0,
+  "formal_auditor_invocations": 1,
+  "retries": 0,
+  "construction_tests": {"command": "python -m unittest -v test_eligibility.py; root-level command also verified", "passed": 3, "failed": 0, "status": "PASS", "initial_root_attempt": "FAILED before test discovery because audit_eligibility module was not on sys.path; test bootstrap fixed and root-level suite rerun successfully"},
+  "auditor": {"command": "python audit_eligibility.py", "exit_code": 0, "status": "HOLD_NO_ELIGIBLE_RETAINED_COHORT", "candidate_count": 6, "eligible_count": 0},
+  "scope": "Bounded evidence inventory only; not an exhaustive absence proof."
+}

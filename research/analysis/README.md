@@ -556,6 +556,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`typed_failure_mode_diagnosis_4155_v1/`](typed_failure_mode_diagnosis_4155_v1/)
 - [`typed_mode_generalization_4155_v1/`](typed_mode_generalization_4155_v1/)
 - [`typed_negative_outcome_contract_v1/`](typed_negative_outcome_contract_v1/)
+- [`typed_quantity_effect_6524_t0_20261002_v1/`](typed_quantity_effect_6524_t0_20261002_v1/REPORT.md) — Issue #6524 synthetic T0: 11 cases independently reconstructed; typed oracle accepted two equivalent in-tolerance saves and rejected/classified planted wrong unit/dimension/kind/magnitude/effect/no-save/unknowns; bare-number baseline had six false positives. METHOD_PASS / H_PASS_SCOPED only; no real GUI/product claim.
 - [`typed_query_dependency_v1/`](typed_query_dependency_v1/)
 - [`typed_readout_corpus_eol_audit_4871_v1/`](typed_readout_corpus_eol_audit_4871_v1/)
 - [`typed_resolve_dependency_v1/`](typed_resolve_dependency_v1/)
