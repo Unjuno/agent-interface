@@ -1,0 +1,81 @@
+{
+  "rows": [
+    {
+      "id": "ordinary",
+      "offset_only_accept": true,
+      "string_only_accept": true,
+      "typed": {
+        "classification": "MATCH",
+        "expected_utc": "2026-03-07T14:00:00Z"
+      }
+    },
+    {
+      "id": "fold-first",
+      "offset_only_accept": true,
+      "string_only_accept": true,
+      "typed": {
+        "classification": "MATCH",
+        "expected_utc": "2026-11-01T05:30:00Z"
+      }
+    },
+    {
+      "id": "fold-second",
+      "offset_only_accept": true,
+      "string_only_accept": true,
+      "typed": {
+        "classification": "MATCH",
+        "expected_utc": "2026-11-01T06:30:00Z"
+      }
+    },
+    {
+      "id": "fold-unresolved",
+      "offset_only_accept": true,
+      "string_only_accept": true,
+      "typed": {
+        "classification": "AMBIGUOUS_UNRESOLVED",
+        "possible_utc": [
+          "2026-11-01T05:30:00Z",
+          "2026-11-01T06:30:00Z"
+        ]
+      }
+    },
+    {
+      "id": "spring-gap",
+      "offset_only_accept": true,
+      "string_only_accept": true,
+      "typed": {
+        "classification": "NONEXISTENT_LOCAL_TIME"
+      }
+    },
+    {
+      "id": "local-recurrence",
+      "offset_only_accept": true,
+      "string_only_accept": true,
+      "typed": {
+        "classification": "WRONG_RECURRENCE",
+        "expected_utc_occurrences": [
+          "2026-03-07T14:00:00Z",
+          "2026-03-08T13:00:00Z",
+          "2026-03-09T13:00:00Z"
+        ]
+      }
+    },
+    {
+      "id": "no-save",
+      "offset_only_accept": false,
+      "string_only_accept": true,
+      "typed": {
+        "classification": "NO_EFFECT"
+      }
+    },
+    {
+      "id": "duplicate",
+      "offset_only_accept": true,
+      "string_only_accept": true,
+      "typed": {
+        "classification": "DUPLICATE_EFFECT"
+      }
+    }
+  ],
+  "schema": "temporal-effect-candidate-raw-v1"
+}
