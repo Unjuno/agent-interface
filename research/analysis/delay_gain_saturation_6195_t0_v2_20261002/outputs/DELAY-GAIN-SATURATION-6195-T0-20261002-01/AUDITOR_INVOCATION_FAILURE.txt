@@ -1,0 +1,6 @@
+Formal auditor invocation: 1 (no retry)
+Exit code: 1
+Exception: NameError: name 'F' is not defined
+Location: auditor.py, line 64, in valid(), expression `abs(F(v)) > BOUND`
+Effect: process exited before writing audit.json; no independent audit disposition was produced.
+The exact traceback was emitted by the local exec tool during the run and retained in this task transcript. This file is a concise diagnostic record, not a replacement raw stderr capture.

@@ -1,0 +1,47 @@
+{
+  "schema": "research-stop-v1",
+  "allocation": "YIELD-CAPTURE-ENDPOINT-59-T1-20261002-01",
+  "status": "STOP_PRE_CANDIDATE_SOURCE_FREEZE_MISSING",
+  "issue": 6562,
+  "branch_base_main": "fd7ebee2174fc0c1c4fabac898a6999466373c9b",
+  "required_freeze_before_candidate": true,
+  "freeze_file_present_before_candidate": false,
+  "disposition": "Do not promote the internal auditor PASS to a formal research PASS. Preserve the executed construction and raw/audit evidence as-is. No rerun, retry, or retroactive freeze.",
+  "protocol_deviation": "The Issue recorded H/T/D/C/U and the five-case decision gate, but exact candidate, fixture, test, runner, and auditor hashes were not captured in a freeze artifact before the candidate invocation. Their hashes below are post-run provenance only.",
+  "post_run_sha256": {
+    "candidate.py": "c09aa42b46e447b82967615a88d1b9a95b18e72b6b9114836f551356a5eb8c5c",
+    "fixture.json": "e115aef4e33de28ef483ce7fc17cfc01fa097c65512c84ef471bcb2f32c4e303",
+    "test_endpoint.py": "d6e963cf2d1abcf4e1f6468f20b8e635893104096221c5d587d8a729fe74f6d6",
+    "run_candidate.py": "33aeabb1fa18974976b54dd5669c627d738f5e1e75733567343e24d7dd4b7c21",
+    "audit.py": "42612fa00da1b4f2c2796551970ae614b3504c00b8fc403e0216a57e8d5f0251",
+    "results/formal-01/raw.json": "dcd2cc6a4c4345aaee40f1150866feb1bce1e134721b76e14bac8a67e1a596dd",
+    "results/formal-01/audit.json": "4885d8598be81448401d5689b95c9abb5fd918ed29277b2d90399d01177614b9"
+  },
+  "observed_execution": {
+    "runtime": "CPython 3.14.5 on macOS host",
+    "wslc_available": false,
+    "container_used": false,
+    "commands": [
+      "python3 -m unittest discover -s yield_endpoint_successor -p test_endpoint.py",
+      "python3 run_candidate.py",
+      "python3 audit.py",
+      "shasum -a 256 candidate.py fixture.json test_endpoint.py run_candidate.py audit.py results/formal-01/raw.json results/formal-01/audit.json"
+    ],
+    "construction_test": "PASS: 1 unittest; five boundary subcases",
+    "candidate_runner": "CANDIDATE_COMPLETE: 5 rows; 4 YIELD; 1 CONTINUE; one invocation",
+    "raw_only_auditor": "internal PASS_SYNTHETIC_ENDPOINT_CONTRACT_SCOPED; zero errors; four of four mutations rejected; one invocation",
+    "retries": 0,
+    "formal_disposition": "STOP due to missing pre-candidate source-hash freeze"
+  },
+  "predecessor_boundary_evidence": {
+    "source": "#6297 candidate SHA-256 094f55b27489b32ce6409b1a93e63c88eb27129ab7bd9e2d4350930f8622976c",
+    "observed": "At interval end - 1 both predecessor candidate and independent oracle yield; at exact end candidate continues while oracle yields; at end + 1 both continue.",
+    "predecessor_modified_or_replayed": false
+  },
+  "scope_limits": [
+    "Synthetic integer-time predicate only",
+    "Does not establish whether the upstream producer contract intends closed or half-open intervals",
+    "No game, runtime controller, physical input/release, model, GUI, useful feedback, survival, MAP01 completion, or causal benefit",
+    "Does not change Issue #59 live gate or imply CPU/Xvfb authority"
+  ]
+}
