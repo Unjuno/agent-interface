@@ -7,7 +7,7 @@ This is a bounded construction/boundary experiment, not the proposed containeriz
 - **H:** An explicit evidence-eligibility gate can allow a fully observed stationary reference while refusing tail interpretation when declared mode coverage, temporal stability, dependence, or endpoint observation is violated.
 - **T:** Deterministic finite boundary cases feed a pure gate. Compare decisions to an independently stated truth table; include explicit metadata mismatch, mode sample count below the frozen 40-row minimum, drift, dependence, censoring, and missing endpoint.
 - **D:** Construction experiment only. PASS means the implementation obeys this finite contract; the value 40 is a construction fixture, not a validated minimum sample size. This does not validate statistical power, a named EVT estimator, TailID, real release timing, or a safety tail bound.
-- **C:** macOS host Python; no Docker/OrbStack, WSLc, GPU, model, GUI, OS input, or live release instrumentation. Formal container T0 remains unrun pending an exclusive assigned lane.
+- **C:** The bounded construction checks used macOS host Python; no formal OrbStack T0, GPU, model, GUI, OS input, or live release instrumentation. Formal T0 remains unrun pending an exclusive assigned lane.
 - **U:** Distributional validity, rare-event calibration, unseen modes, real-world stationarity, detector operating characteristics, and protection before a real safety deadline remain untested. The added runtime-shift probe below is a deterministic contract check only.
 
 ## Construction experiment
@@ -26,6 +26,25 @@ python3 research/analysis/extreme_tail_eligibility_6576_construction_v1/audit.py
 
 This result must not be represented as #6576 T0. A separate, prospectively frozen container allocation with generated timing data, naive empirical/max and EVT/TailID comparators, held-out coverage, raw-only independent audit, and exact image/source identities is still required.
 
+### Formal T0 runner preparation — not invoked
+
+`T0_PREREGISTRATION.md`, `t0_cases.json`, `t0_candidate.py`, and
+`t0_audit.py` now define the one-shot T0 package. The candidate generates six
+fixed-seed synthetic train/holdout pairs (4,000 rows each), reports pooled
+empirical p95/max and naive GPD p99, runs the source-backed TailID equivalent,
+and only emits a mode-stratified gated EVT p99 when the gate allows it. The
+auditor imports none of the candidate/gate/TailID modules; it independently
+reconstructs every generated row and recomputes typed decisions, empirical
+statistics, held-out exceedance counts, coverage flags, and exact binomial
+intervals. The frozen minimum of 40 is an observed exceedance count; it does
+not itself establish independence, which is handled by a separate diagnostic.
+
+This is still preparation, not formal evidence: the frozen six-case candidate
+and auditor have not been invoked; no formal timing rows, output hash, or
+method disposition exists. Formal candidate once, then auditor once only if
+candidate exits 0, require the exact exclusive OrbStack grant under #5085.
+The TailID port remains without numeric comparison to CRAN/R.
+
 ### Attempt record
 
 - Attempt 01: direct script invocation stopped before candidate computation (`ModuleNotFoundError: No module named 'research'`); candidate rows=0, auditor=0. No scientific disposition.
@@ -34,7 +53,9 @@ This result must not be represented as #6576 T0. A separate, prospectively froze
 - TailID-port construction attempt 01: focused suite 12/13; candidate-count calculation exposed floating-point truncation (19 instead of the frozen 20) before any formal study. Corrected attempt 02 passed 13/13, but only self-tests; numerical equivalence with the pinned TailID/ismev R implementation remains unverified.
 - Both boundary runs used host CPython 3.14.5; neither used a container and neither is the formal T0 allocation.
 - Candidate direct-script invocation was reproduced as STOP (`ModuleNotFoundError: No module named 'research'`, zero candidate/audit rows); module invocation was then run separately and raw-only audit passed 7/7. The preserved boundary A02 output hash is `90901d18023c723c47450f90e85477b26c72a56c8b5dcfdb3265c5604fdcd1ec`.
-- Runtime-shift construction tests: first run 3/4 because positive infinity was accepted; the finite-input guard was fixed, and the combined construction suite passed 17/17. The exact synthetic case confirms that a detected shift can still be inadequate when a safety-deadline miss occurs before alarm. This is not a detector false-alarm/delay estimate.
+- Runtime-shift construction tests: first run 3/4 because positive infinity was accepted; the finite-input guard was fixed. The exact synthetic case confirms that a detected shift can still be inadequate when a safety-deadline miss occurs before alarm. This is not a detector false-alarm/delay estimate.
+- T0 construction attempt 01: 21 focused tests exposed an exact-binomial lower-bound bisection error and a censored case being classified first as nonstationary. Both were corrected; focused suite now passes 21/21. This test run only generated 200-row helper fixtures plus existing construction tests; it did not call the formal six-case candidate on its frozen inputs.
+- Focused preparation suite after wording and raw-oracle review: 21/21 PASS; `py_compile` and `git diff --check`: PASS. These remain construction checks only; the six frozen formal cases were not invoked. Current SHA-256: `T0_PREREGISTRATION.md` `ba178672b6f38ec9c7171e736c2a1d36af288d28f66a18fa71d2dd47bb8bb733`; `t0_cases.json` `05a2f44dd672dae2548bdb0e6f7e15680948dae6bf7e3cbcac3cdc257eef4737`; `t0_candidate.py` `ce52a7685961409a4fb4b833442465c97fe91f8bdb2cf11084428b91d7fc3e6a`; `t0_audit.py` `c15d568fedfd4043f2de39a6e68ad852251014b25b4d63d8787299782e9bff00`; `test_t0_construction.py` `61d581da6ce1a063cc82ac3624ec4dd78d3e595e14e53644b8f87d2d0404a024`; `gate.py` `006380d64f8c5859e950efb19da8623a89a7b722489619ef2c25411e66b20ff4`; `tailid_equivalent.py` `1931b354fedb3db2a5cda9c52cdd4c1e9002bb04dbe952980704c282777a63c4`.
 
 ### One-shot comparator runner preparation (not executed)
 

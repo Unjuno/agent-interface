@@ -41,8 +41,8 @@ def _nll(excesses: list[float], log_scale: float, shape: float) -> float:
     return total
 
 
-def fit_gpd_shape(excesses: list[float], max_iter: int = 3000) -> float:
-    """Two-parameter GPD MLE using a bounded, deterministic Nelder-Mead."""
+def fit_gpd_parameters(excesses: list[float], max_iter: int = 3000) -> tuple[float, float]:
+    """Return (scale, shape) from a deterministic two-parameter GPD MLE."""
     if len(excesses) < 3 or any(v < 0 or not math.isfinite(v) for v in excesses):
         raise ValueError("insufficient or invalid exceedances")
     mean = sum(excesses) / len(excesses)
@@ -98,7 +98,13 @@ def fit_gpd_shape(excesses: list[float], max_iter: int = 3000) -> float:
     best_index = min(range(3), key=lambda i: values[i])
     if values[best_index] >= 1e99:
         raise ValueError("GPD MLE did not find a supported solution")
-    return simplex[best_index][1]
+    log_scale, shape = simplex[best_index]
+    return math.exp(log_scale), shape
+
+
+def fit_gpd_shape(excesses: list[float], max_iter: int = 3000) -> float:
+    """Compatibility wrapper returning only the fitted GPD shape."""
+    return fit_gpd_parameters(excesses, max_iter=max_iter)[1]
 
 
 def shape_interval(shape: float, exceedance_count: int, confidence: float) -> tuple[float, float]:

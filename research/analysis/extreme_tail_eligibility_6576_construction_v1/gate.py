@@ -34,6 +34,12 @@ def decide(evidence: dict) -> str:
         return "NOT_ESTIMABLE_MODE_METADATA"
     if set(manifest) != set(observed):
         return "NOT_ESTIMABLE_MODE_COVERAGE"
+    # Missing/censored endpoints are structural failures and take precedence
+    # over diagnostics inferred from the remaining observed sample.
+    if evidence["censor_count"] != 0:
+        return "NOT_ESTIMABLE_CENSORED_ENDPOINT"
+    if evidence["missing_endpoint_count"] != 0:
+        return "NOT_ESTIMABLE_MISSING_ENDPOINT"
     counts = evidence["tail_events_by_mode"]
     minimum = evidence["min_tail_events_per_mode"]
     if (
@@ -51,8 +57,4 @@ def decide(evidence: dict) -> str:
         return "NOT_ESTIMABLE_NONSTATIONARY"
     if evidence["dependence_checked"] is not True:
         return "NOT_ESTIMABLE_DEPENDENCE"
-    if evidence["censor_count"] != 0:
-        return "NOT_ESTIMABLE_CENSORED_ENDPOINT"
-    if evidence["missing_endpoint_count"] != 0:
-        return "NOT_ESTIMABLE_MISSING_ENDPOINT"
     return "ELIGIBLE_REFERENCE"
