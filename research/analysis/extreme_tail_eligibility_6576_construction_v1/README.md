@@ -117,6 +117,13 @@ quantization/tie-support omission in this finite synthetic gate contract only;
 no EVT fit, p99 calibration, real timer, input release, safety, or worst-case
 claim was tested. A01 does not invoke or consume the formal six-case T0.
 
+[A02](timer_quantization_a02_20261002/RUN_RECORD.md) evaluated a proposed
+20-distinct-exceedance support rule on 30 fresh seeds per resolution. The rule
+held 30/30 baseline-eligible q=1.0 fixtures, added 0/21 holds to continuous
+controls, and held 7/24 intermediate q=0.25 fixtures; its preregistered
+synthetic criterion passed. This cutoff remains unvalidated beyond these
+generator/quantum conditions and is not a production recommendation.
+
 ### Execution status and local CI / provenance checks
 
 The earlier host-only boundary package and censor-cap probe remain preserved.
