@@ -1,0 +1,20 @@
+{
+  "schema": "research-freeze-pre-candidate-v1",
+  "issue": 6225,
+  "allocation": "ROUTE-DIVERSIFICATION-6225-T0-20261002-01",
+  "intake_main": "14b81dd1f6853623a694266b98538f812847257a",
+  "main_rechecked": "2240189b46c5f393bb7b1d5080e8eace748b0251",
+  "main_delta_scope": "The intervening main merge adds OpenTTD transfer eligibility and primary-modal accounting/reuse evidence; no files in this T0 package or its frozen fixture/candidate/auditor/tests changed. A future formal run still requires a fresh allocation and exact-base refreeze.",
+  "branch": "research/6225-route-diversification-t0-20261002-01",
+  "candidate_sha256": "412794e811aaf9c8c64f8cb70537929e0e25726de4f12a288d55bd7fee61f3fb",
+  "auditor_sha256": "5c7831b59a3cc408f066744247276db81e3a1fbcc56021867275e08ae31275ad",
+  "fixture_sha256": "76abd9eda1deca228f1b33406f63bf91aa1d8921eefdd642289de174e09b66b7",
+  "tests_sha256": "bacae145374c6e6461f973fe13cfd22574930a265fd055271bce0efae2fc8b1f",
+  "preregistration_sha256": "5f0bf681ef3417c830919a784568f4259f32a996f54452de7b999165b1fe2e73",
+  "post_stop_preparation_revision": "Added an explicit mutation for dropping A-side unresolved obligations after the resource STOP. Construction tests were re-run; this did not invoke candidate or auditor and does not change the terminal STOP. Any formal follow-up remains a new allocation.",
+  "construction": {"python": "3.14.5", "tests_passed": 9, "tests_total": 9, "mutation_controls": 10, "py_compile_exit": 0, "candidate_invocations": 0, "auditor_invocations": 0},
+  "formal_image": {"reference": "python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f", "platform": "linux/arm64", "locally_present": true},
+  "formal_allocation": {"candidate_invocations": 0, "auditor_invocations": 0, "retries": 0, "status": "STOP_NOT_EVALUATED", "reason": "No exclusive resource grant or explicit owner release; unrelated unjuno-native-ci-6092 was running on the shared OrbStack engine."},
+  "formal_outputs": "not created",
+  "scientific_result": "none"
+}
