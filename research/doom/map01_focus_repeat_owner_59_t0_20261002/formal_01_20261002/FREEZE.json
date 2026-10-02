@@ -1,0 +1,108 @@
+{
+  "schema": "issue59-focus-repeat-owner-freeze-v2",
+  "allocation_id": "ISSUE59-FOCUS-REPEAT-OWNER-T0-20261002-01",
+  "issue": 59,
+  "pr_predecessor": 6387,
+  "main_sha": "a5756d9b31231a4d64268610236622ac44c36f1f",
+  "branch": "research/map01-focus-autorepeat-owner-59-t0-20261002",
+  "path": "research/doom/map01_focus_repeat_owner_59_t0_20261002",
+  "candidate_output": "formal_01_20261002/candidate/raw.json",
+  "auditor_output": "formal_01_20261002/auditor/classification.json",
+  "H": "Observed focus loss leads the current owner to verified release before the new focus receives autorepeat; any ambiguous late event cannot be reported as a pass.",
+  "T": "One bounded CPU/Xvfb candidate, one independent auditor, zero retries; one A-to-B focus transfer; same-connection B event selection before transfer; XSync final queue drain after 100ms settling; any matching press dequeued after release is HOLD.",
+  "D": "Classify raw.json independently; require verified=true exactly, same-reader subscription before transfer, no pump exception, completed XSync fence and final drain; use monotonic receipt order and HOLD on matching presses dequeued after release.",
+  "C": "One WSLc Xvfb 800x600x24 private display; two bare X11 InputOutput windows; exact current owner v10/executor v3/lease source hashes and Git blobs; Python 3.12.15; python-xlib 0.33; Xvfb and xset.",
+  "U": "One scheduler-sensitive Linux/WSL Xvfb trial. Receipt time is a host monotonic dequeue time; if a matching B press is dequeued after release its server arrival side of the boundary is ambiguous and result is HOLD. No real desktop, application, gameplay or GPU claim.",
+  "resource_authorization": {
+    "source": "User direction in this Codex task to run the experiment in a WSL container.",
+    "authorized_scope": "This one bounded CPU/Xvfb allocation.",
+    "inventory_utc": "2026-10-02T10:31:06Z",
+    "wslc_running_containers": 0,
+    "visible_wsl_workers": [
+      "ollama server only"
+    ],
+    "gpu_slot": "not requested or used"
+  },
+  "runtime": {
+    "engine": "Microsoft WSL Containers (wslc.exe) 3.0.1.0",
+    "host_distribution": "Arch Linux, WSL2, kernel 6.18.40.1-microsoft-standard-WSL2",
+    "container_os": "Debian trixie linux/amd64",
+    "base_image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "base_image_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "image": "focus-repeat-59-t0:20261002",
+    "image_id": "sha256:865bfbcc86992769ec9b8311a2344b67c664639d96d7cf0d5c407df9c2c500ed",
+    "python": "3.12.15",
+    "python_xlib": "0.33",
+    "packages": {
+      "xvfb": "2:21.1.16-1.3+deb13u4",
+      "x11-utils": "7.7+7",
+      "x11-xserver-utils": "7.7+11"
+    },
+    "pull": "never",
+    "network": "none for formal processes",
+    "cpus_requested": 1,
+    "memory_requested": "512M",
+    "memory_limit_enforced": false,
+    "gpu": "not used"
+  },
+  "formal_counts_before_run": {
+    "candidate": 0,
+    "auditor": 0,
+    "retries": 0
+  },
+  "formal_limits": {
+    "candidate": 1,
+    "auditor_after_candidate_exit_zero": 1,
+    "retries": 0
+  },
+  "source_sha256": {
+    "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+  },
+  "source_git_blobs": {
+    "input_owner_v10.py": "341b3c01649943ddaad5f28431a792c4889cc36e",
+    "executor_v3.py": "2b072454fd81c41bf9e025217afc78020c7059de",
+    "lease.py": "b9dac6bb4063928354733d79bf371909a288a3d1"
+  },
+  "package_sha256": {
+    "audit.py": "afb0755da625e613be1f2b8bc15714ce6b01a0d7c19d38a8b2c581f3a7bf1ef7",
+    "BUILD.md": "bec13cad64c75fb814bc6158f95ea48ce5cb22489f3ba1cc8f4933a76de74bc6",
+    "construction/exit.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "construction/iteration_notes.md": "e8357ac15e425878ce27b129a8e77a0bd5a9f85b181031ef8bae7f447d2bb15e",
+    "construction/refreeze_18b6e3/exit.txt": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+    "construction/refreeze_18b6e3/wslc.stderr.txt": "c460da689d1d077292722fc82d72aae9d068440cbdc2d7bdfc3458ca9e721f08",
+    "construction/refreeze_18b6e3/wslc.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "construction/refreeze_69ed/wslc.stderr.txt": "7f7987901ef2263aee1b745ec0ddfdfa61d5de01491759de8606b433ceedc035",
+    "construction/refreeze_69ed/wslc.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "construction/refreeze_6be989/exit.txt": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+    "construction/refreeze_6be989/wslc.stderr.txt": "d4668ec05924b57ed6976bcddfe7345c4426331abdb3ab4d5a51ee28c04c9761",
+    "construction/refreeze_6be989/wslc.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "construction/refreeze_7f926a/exit.txt": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+    "construction/refreeze_7f926a/wslc.stderr.txt": "cc9eb2553e45394343ae2a876b80a609f309dea06dd10a18849442be587e3709",
+    "construction/refreeze_7f926a/wslc.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "construction/refreeze_a5756d/exit.txt": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+    "construction/refreeze_a5756d/wslc.stderr.txt": "0508142037138ea3521be48c389d05584f656d99d2927b74cfa3b39dd3a3bd53",
+    "construction/refreeze_a5756d/wslc.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "construction/refreeze_a81614/exit.txt": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+    "construction/refreeze_a81614/wslc.stderr.txt": "b89f99ad3f325cca9aca0818fe40d6426edd0de3d909c9a90a3ae5f4f253e911",
+    "construction/refreeze_a81614/wslc.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "construction/refreeze_b622/exit.txt": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+    "construction/refreeze_b622/wslc.stderr.txt": "8f227935ab6a8da11ce99de4117bccf7d987930ab5df44f1bf73f74d0d457c97",
+    "construction/refreeze_b622/wslc.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "construction/refreeze_e628/exit.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "construction/refreeze_e628/wslc.stderr.txt": "0dfcd6a70c1a9cee8c004f1ae74593039b4e88b654a6ce1bb8eab68e69a33721",
+    "construction/refreeze_e628/wslc.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "construction/wslc.stderr.txt": "4a652f10b1f2491f552e3c46cfad6f8e192af4ff4c878bd8af23bf184728597a",
+    "construction/wslc.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "Dockerfile": "bbd3c254a7036af856b052828dd542771ef8aabe41d2853af78d1768b2f93a50",
+    "formal_01_20261002/COMMANDS.txt": "b4bc82a08c6671225a50630cb5e1ecdf3306fe445e84b3b27178eba840539ae3",
+    "IMAGE_BUILD.log": "2e7b2bb643a913b53905b2a7aa205badbfca750cde5082c5b7cbff1d6eedad13",
+    "preregistration.json": "eac63f1d7ffda72283e0b552c6c3c84f237d660c26eb2ae4908e3a8ade7b6f06",
+    "probe.py": "b8d5db161a44f1a7328a9a1d94a56b93b4ce8a7bfbc96b2d602d43e877682ca1",
+    "README.md": "cfccf237712de8cc19aa2540f0a0b9e37cede167422a6a579522e9c77a60b252",
+    "test_audit.py": "24417be0552d3544a1dadb975e0891aaf8d0f217a90bc377ae4818d71ec06927",
+    "test_process_boundary.py": "ecf5bd0b3d8fa7e81aa0eace5c70d2d75c8a0c39c6c560f72cda720b30ce8937"
+  },
+  "commands_sha256": "b4bc82a08c6671225a50630cb5e1ecdf3306fe445e84b3b27178eba840539ae3"
+}
