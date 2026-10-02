@@ -239,6 +239,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`cross_role_meaning_drift_6351_t0_v1/`](cross_role_meaning_drift_6351_t0_v1/)
 - [`danger_context_triage_5764_t0_v1/`](danger_context_triage_5764_t0_v1/)
 - [`deadline_identity_5265_dot/`](deadline_identity_5265_dot/)
+- [`deadline_slack_equivalence_6417_t0_20261002/`](deadline_slack_equivalence_6417_t0_20261002/)
 - [`decision_opportunity_audit_5986_t0_20261002/`](decision_opportunity_audit_5986_t0_20261002/)
 - [`decision_sufficiency_5329_v1/`](decision_sufficiency_5329_v1/)
 - [`dependency_aware_verifier_quorum_5314_v1/`](dependency_aware_verifier_quorum_5314_v1/)
