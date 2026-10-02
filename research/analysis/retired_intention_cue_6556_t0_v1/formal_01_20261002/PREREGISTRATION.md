@@ -18,4 +18,4 @@ Pinned source tree, fixture, oracle, tests, and runner are hash-recorded in `FRE
 
 ## Source hashes
 
-See `FREEZE.json` for complete SHA-256 hashes including staged candidate/audit sources. At freeze these must match package-root `candidate.py`/`fixture.json` and package-root `auditor.py`/`fixture.json`/`oracle.json`, respectively.
+See `FREEZE.json` for the immutable pre-run source SHA-256 hashes, including staged candidate/audit sources. `SHA256SUMS` separately covers every retained formal output and report artifact; execution receipts and raw result hashes are not substituted for the frozen-source manifest.
