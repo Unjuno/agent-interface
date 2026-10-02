@@ -1,6 +1,6 @@
 # Local CI record
 
-Validated after incorporating current main `b76078c95543c65940da41b8c967fe1183a2b1df` (T8's scientific freeze remains against main `49144844b482026c33fcfbde7e2fd5f7bdc7762c`). All final commands below exited 0.
+Validated after incorporating current main `81e9b615809fd534f1972c553f12d351d04540df` (T8's scientific freeze remains against main `49144844b482026c33fcfbde7e2fd5f7bdc7762c`). All final commands below exited 0.
 
 - Retained-result index: `python research/analysis/check_index.py` — 454 directories indexed.
 - Issue experiment suites: #6469 5/5, #6422 2/2, #6405 7/7, #5702 8/8, #5681 12/12, #6492 T0 4/4, #6492 allocation-02 1/1, #6492 modal baseline 2/2, and this T8 suite 6/6.
