@@ -8,7 +8,7 @@ Test bounded coexistence of six independent CUDA processes on the same RTX 3080,
 
 ## Runtime correction
 
-This new allocation uses native Microsoft WSL Containers (`wslc.exe`), not the Podman/crun runtime frozen by allocation-09. The prior terminal pre-candidate STOP and all its bytes remain unchanged. The package is based on current main `5863696c67338d380820faa4ba1a866e0d25719b`. The exact PyTorch image digest and local image ID were inspected in WSLc's cache; no pull or image mutation occurred. WSLc CLI supports GPU pass-through, network isolation, CPU/memory bounds, unprivileged UID, and bind mounts, but not a read-only rootfs or PID-limit option. WSLc cgroup/swap limitations will be retained as explicit limitations.
+This new allocation uses native Microsoft WSL Containers (`wslc.exe`), not the Podman/crun runtime frozen by allocation-09. The prior terminal pre-candidate STOP and all its bytes remain unchanged. The package is based on current main `89f27caf1e9fcf3bc2c2c3c2db7d62ee6d19e4ae`. The exact PyTorch image digest and local image ID were inspected in WSLc's cache; no pull or image mutation occurred. WSLc CLI supports GPU pass-through, network isolation, CPU/memory bounds, unprivileged UID, and bind mounts, but not a read-only rootfs or PID-limit option. WSLc cgroup/swap limitations will be retained as explicit limitations.
 
 ## Construction evidence
 
