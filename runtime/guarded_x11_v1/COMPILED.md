@@ -174,3 +174,17 @@ qualified compiled transfer. Explicit pointer input needs its own current target
 and authority. Do not silently insert a click into keyboard continuation. A
 fresh matched graph comparison must include the same application interaction
 and independent effect scoring in its strong ordinary baseline.
+
+## Canvas-prepared Inkscape comparison
+
+[The fixed ordinary/guarded comparison](../results/inkscape-canvas-comparison-02/README.md)
+completed one normal saved task per route with identical persisted SVG bytes.
+Both undertravel controls stopped before Save and preserved the original file.
+An explicitly grounded rectangle click and primary selection review are common
+preparation outside the graph. This qualifies the canvas-prepared keyboard
+move/check/Save method, not orchestration of the entire pointer workflow.
+The strong ordinary callback uses the same inputs, captures and caller commands;
+the graph reduced none of those counts. Actual whole-context model usage is
+retained with explicit windows and preparation failure, without causal route
+savings, billing or human-tempo claims. Correctness is scoped; efficiency and
+default-route promotion remain HOLD.
