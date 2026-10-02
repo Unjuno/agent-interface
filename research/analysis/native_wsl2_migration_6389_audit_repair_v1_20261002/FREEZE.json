@@ -1,0 +1,73 @@
+{
+  "schema": "native-wsl2-migration-6389-freeze-v1",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/6389",
+  "created_utc": "2026-10-02T01:53:13Z",
+  "git_base_main": "233f8c54ea9cc05f69613c771609dea93604b5f5",
+  "workload": {
+    "description": "18-case standard-library raw-auditor contract suite from PR #6387; no network, GUI, subprocesses, or external effects",
+    "source_commit": "7463d88b1b4f23b29f5207a14b3ac62be2f21946",
+    "source_sha256": {
+      "audit.py": "fd64bb0cd0ee2b2e0642eb4268834314d92c7839b06bea2f38fc97bc2b48171e",
+      "test_audit.py": "f23f6eb0dc19c35169b0b5b91381ba118a6dbd632cc0bc0910c9366e0c841cbd"
+    },
+    "source_git_blobs": {
+      "audit.py": "b6f577becb00d5759a311891c405af1246e94234",
+      "test_audit.py": "325abfdeccdca3f2751e56f2b1a2cc6697d6f1b2"
+    },
+    "expected_test_ids": [
+      "test_audit.FocusRepeatAuditContractTests.test_event_receipt_after_verified_release_is_not_counterexample",
+      "test_audit.FocusRepeatAuditContractTests.test_event_records_must_be_monotonic",
+      "test_audit.FocusRepeatAuditContractTests.test_failing_release_record_is_hold",
+      "test_audit.FocusRepeatAuditContractTests.test_incomplete_new_focus_event_coverage_is_hold",
+      "test_audit.FocusRepeatAuditContractTests.test_incomplete_release_coverage_is_hold",
+      "test_audit.FocusRepeatAuditContractTests.test_malformed_event_timestamp_is_hold",
+      "test_audit.FocusRepeatAuditContractTests.test_missing_repeat_positive_control_is_stop",
+      "test_audit.FocusRepeatAuditContractTests.test_owner_focus_query_may_beat_external_focus_readback",
+      "test_audit.FocusRepeatAuditContractTests.test_owner_must_observe_focus_change_before_release",
+      "test_audit.FocusRepeatAuditContractTests.test_release_must_follow_focus_transfer_and_admission",
+      "test_audit.FocusRepeatAuditContractTests.test_repeat_during_focus_request_sync_window_is_counterexample",
+      "test_audit.FocusRepeatAuditContractTests.test_repeat_received_before_verified_release_is_counterexample",
+      "test_audit.FocusRepeatAuditContractTests.test_source_identity_hashes_are_required",
+      "test_audit.FocusRepeatAuditContractTests.test_source_identity_must_match_refrozen_main",
+      "test_audit.FocusRepeatAuditContractTests.test_summary_status_cannot_override_counterexample_records",
+      "test_audit.FocusRepeatAuditContractTests.test_unverified_keymap_release_is_hold_not_pass",
+      "test_audit.FocusRepeatAuditContractTests.test_verified_focus_release_before_any_new_focus_repeat_is_scoped_pass",
+      "test_audit.FocusRepeatAuditContractTests.test_wrong_window_and_key_events_do_not_count_as_repeat"
+    ]
+  },
+  "expected_schedule": ["wslc", "native", "native", "wslc", "wslc", "native", "native", "wslc", "native", "wslc", "wslc", "native"],
+  "planned_runs_per_arm": 6,
+  "wslc_image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "expected_python_version": "3.12.14",
+  "native_runtime_identity": "Ubuntu 24.04 / WSL2 kernel 6.18.40.1-microsoft-standard-WSL2",
+  "min_improvement_fraction": 0.10,
+  "regression_tolerance_fraction": 0.10,
+  "pressure_policy": "HOLD if host memory PSI some/full total changes during any measured invocation; report averages and deltas; do not attribute unrelated pressure",
+  "measurement_policy": {
+    "iteration_time": "outer wall time from command invocation through candidate suite completion; report every run and medians by arm",
+    "peak_process_tree_rss": "peak aggregate RSS across candidate process and descendants; freeze sampling method before candidate",
+    "memory_pressure": "host /proc/pressure/memory totals and averages before/after each invocation; cgroup identity/events and MemAvailable snapshots when readable",
+    "cold_warm": "only collect without stopping/shutting down a shared WSL distribution or container; otherwise report unmeasured"
+  },
+  "start_gate_observation": {
+    "observed_utc": "2026-10-02T01:54:34Z",
+    "native_python": "3.12.3",
+    "wslc_python": "3.12.14",
+    "wsl_software": "3.0.1.0",
+    "wslc_software": "3.0.1.0",
+    "decision": "STOP_PYTHON_PATCH_VERSION_MISMATCH_BEFORE_CANDIDATE",
+    "wslc_capability_preflight_exit_code": 0,
+    "wslc_preflight_ru_maxrss_kib": 13580,
+    "candidate_invocations": 0,
+    "coordination_gate": "HOLD_RESOURCE_CONTENTION; seven native_mcp_v1.py workers and one desktop phase/Xvfb/LibreOffice workload were active at 2026-10-02T01:57:12Z",
+    "container_image_acquisitions": 0,
+    "docker_desktop_used": false
+  },
+  "construction_only": {
+    "native_wsl2_auditor_tests": "10/10 passed, Python 3.12.3",
+    "wslc_auditor_tests": "10/10 passed, pinned image above, Python 3.12.14",
+    "wslc_command": "wslc.exe run --rm --pull never --network none --cpus 1 --volume <package>:/study:ro --workdir /study --name ai-native-wsl2-audit-6389-20261002 python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B -m unittest -v test_audit"
+  },
+  "memory_limit_claim": false,
+  "formal_result": "STOP; no performance or memory comparison"
+}

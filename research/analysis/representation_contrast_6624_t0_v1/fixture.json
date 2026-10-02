@@ -1,0 +1,24 @@
+{
+  "schema": "representation-contrast-fixture-v1",
+  "contracts": {
+    "spreadsheet_visible": {"inputs": {"A1": 2, "A2": 3}, "total": 5, "untouched": {"B1": "KEEP"}},
+    "drawing_visible": {"title": "ALPHA", "body": "KEEP", "footer": "KEEP"}
+  },
+  "followups": ["none", "spreadsheet_increment_A2", "drawing_replace_title", "pixel_patch"],
+  "operations": {
+    "spreadsheet_increment_A2": {"cell": "A2", "from": 3, "to": 4},
+    "drawing_replace_title": {"target": "title", "from": "ALPHA", "to": "BETA"},
+    "pixel_patch": {"pixel": [1, 1], "from": "white", "to": "blue"}
+  },
+  "cost_assumptions": {
+    "provenance": "Illustrative abstract operation units authored for this finite sensitivity assay; not measured time, effort, money, or a user frequency estimate.",
+    "initial": {"flat": 1, "structured": 3},
+    "followup": {
+      "none": {"flat": 0, "structured": 0},
+      "spreadsheet_increment_A2": {"flat": 9, "structured": 1},
+      "drawing_replace_title": {"flat": 8, "structured": 1},
+      "pixel_patch": {"flat": 1, "structured": 4}
+    },
+    "mixture": {"none": 0.4, "structural": 0.4, "pixel_patch": 0.2}
+  }
+}

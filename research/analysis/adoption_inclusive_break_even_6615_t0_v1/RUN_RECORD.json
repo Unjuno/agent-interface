@@ -1,0 +1,23 @@
+{
+  "allocation_id": "ADOPTION-CURVE-6615-T0-20261002-01",
+  "record_type": "construction_not_formal_run",
+  "host": "macOS Darwin 25.6.0 arm64",
+  "python": "3.14.5",
+  "formal_candidate_invocations": 0,
+  "formal_auditor_invocations": 0,
+  "retries": 0,
+  "formal_container_invocations": 0,
+  "formal_status": "HOLD_RESOURCE_AND_AUTHORITY",
+  "construction": {
+    "command": "python3 -B -m unittest discover -s . -p 'test_*.py' -v; python3 -B -m py_compile candidate.py auditor.py; git diff --check; python3 -B candidate.py fixture.json <raw.json>; python3 -B auditor.py fixture.json <raw.json> <audit.json>",
+    "unit_mutation_tests": "11/11 PASS",
+    "candidate_rows": 72,
+    "candidate_exit": 0,
+    "auditor_status": "PASS_METHOD_SCOPED",
+    "auditor_exit": 0,
+    "scope": "synthetic accounting only; not a formal WSLc T0, user study, setup measurement, or product result"
+  },
+  "stop_reason": "No wslc.exe or wslc on current macOS host and no explicit WSLc CPU allocation for this experiment. Shared-runtime ownership is unresolved under #5085. No Docker/OrbStack substitute or other task machine was used.",
+  "outputs": "Construction JSON was written under /tmp for this turn and is not presented as a retained formal result. Formal raw/audit outputs do not exist.",
+  "issue_record": "https://github.com/Unjuno/agent-interface/issues/6615#issuecomment-5949909813"
+}
