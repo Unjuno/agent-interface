@@ -2,7 +2,7 @@
 
 ## Disposition
 
-Formal audit has not run. Local Analysis Index CI passed 18 test commands / 109 tests, including A02's 7 construction tests; the index covers 551 retained result/failure directories. No formal outcome is implied by these checks.
+Formal audit has not run. After latest main `6cec6079acfbf0e7ee94154784dddc4916ce7b12` was integrated (unrelated archived evidence only), the local Analysis Index suite passed 18 test commands / 109 tests, A02 construction passed 7/7, and the index covers 551 retained result/failure directories. Frozen auditor/test/workflow hashes remain unchanged. No formal outcome is implied by these checks.
 
 ## H / T / D / C / U
 
