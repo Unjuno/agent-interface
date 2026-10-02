@@ -1,0 +1,51 @@
+{
+  "C": "Hand-authored finite Boolean model; provider profile transcribes docs only; leakage fields are not dynamic information-flow instrumentation.",
+  "D": "PASS_METHOD_SCOPED only for exact independent reconstruction, zero errors, all eight corruptions rejected, modeled broker safety/non-disclosure invariants hold, and unknowns are not overclaimed. FAIL_METHOD on contradictory/unsafe rows. No product or security verdict.",
+  "T": {
+    "auditor_invocations": 1,
+    "candidate_invocations": 1,
+    "cases": 15,
+    "profiles": 5,
+    "provider_executed": false,
+    "retries": 0,
+    "rows": 75,
+    "secret_bytes": false
+  },
+  "U": "No real secret, provider, browser, OS, authentication effect, GUI, human, covert-channel bound, security guarantee, or product-benefit evidence.",
+  "allocation": "PLANNER-BLIND-CREDENTIAL-ENTRY-6515-T0-HOSTCPU-20261003-03",
+  "base_main": "e7f11cdc2cdee42b0f745add6c4a93fc641abe6d",
+  "branch": "research/planner-blind-credential-entry-6515-t0-20261003",
+  "commands": {
+    "auditor": "python3 -B audit.py fixture.json results/formal_03/candidate_raw.json results/formal_03/audit_result.json",
+    "candidate": "python3 -B candidate.py fixture.json results/formal_03/candidate_raw.json",
+    "cwd": "research/analysis/planner_blind_credential_entry_6515_t0_v1/"
+  },
+  "issue": 6515,
+  "outputs_absent": [
+    "results/formal_03/candidate_raw.json",
+    "results/formal_03/audit_result.json"
+  ],
+  "path": "research/analysis/planner_blind_credential_entry_6515_t0_v1/",
+  "predecessor_allocations": [
+    "PLANNER-BLIND-CREDENTIAL-ENTRY-6515-T0-HOSTCPU-20261003-01",
+    "PLANNER-BLIND-CREDENTIAL-ENTRY-6515-T0-HOSTCPU-20261003-02"
+  ],
+  "predecessor_dispositions": [
+    "STOP_BASE_ADVANCED_BEFORE_RUN",
+    "STOP_BASE_ADVANCED_BEFORE_RUN"
+  ],
+  "runtime": {
+    "container": false,
+    "platform": "macOS Darwin 25.6.0 arm64",
+    "python": "CPython 3.14.5 stdlib only",
+    "reason": "WSLc use prohibited under #5085; shared OrbStack/Docker allocation unassigned."
+  },
+  "schema": "planner-blind-credential-entry-freeze-v1",
+  "sources": {
+    "PREREGISTRATION_A03.md": "794ef618d141ad5a98b7660ef04ec5bcc940b6a50a1dc84bd12ae16e3c92e08f",
+    "audit.py": "f9fe8cb26c886033a6f11b0ac98db15a82a8f4df2918e08125668716cb473472",
+    "candidate.py": "d2394f5ed35c4b196b16b6a13d82c53441191bb447865baf9a7ebfbf62c1d7a1",
+    "fixture.json": "4cad8542fa4fc43e54a9a00b8168c32d629d6b3bbbb3f995f8f62eef1db44909",
+    "test_t0.py": "23fa925cd3cb5b11b6a2ae4908f7fbdf29fdb0d67deff7fcc268b4df09ebde11"
+  }
+}

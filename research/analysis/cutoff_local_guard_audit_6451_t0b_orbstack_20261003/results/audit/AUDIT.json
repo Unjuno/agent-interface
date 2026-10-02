@@ -1,0 +1,47 @@
+{
+  "attempted_case_ids": [
+    "valid_sharp_cutoff",
+    "smooth_zero_effect",
+    "sorting_bunching",
+    "coincident_focus_transition",
+    "coarse_timestamp_heaping",
+    "treatment_noncompliance"
+  ],
+  "controls": {
+    "controls": [
+      {
+        "effective": true,
+        "name": "drop_case",
+        "rejected": true
+      },
+      {
+        "effective": true,
+        "name": "alter_raw_row",
+        "rejected": true
+      },
+      {
+        "effective": true,
+        "name": "alter_decision",
+        "rejected": true
+      },
+      {
+        "effective": true,
+        "name": "alter_denominator",
+        "rejected": true
+      },
+      {
+        "effective": true,
+        "name": "alter_bandwidth",
+        "rejected": true
+      }
+    ],
+    "rejected": 5,
+    "status": "PASS_CONTROLS",
+    "total": 5
+  },
+  "errors": [],
+  "reconstructed_cases": 6,
+  "schema": "cutoff-local-rd-audit-v2",
+  "scope": "frozen synthetic method fixture only",
+  "status": "PASS_METHOD_SCOPED"
+}
