@@ -1,0 +1,39 @@
+{
+  "schema": "topology-6183-run-v1",
+  "status": "FROZEN_NOT_RUN",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/6183",
+  "preregistration_comment": "https://github.com/Unjuno/agent-interface/issues/6183#issuecomment-5962761927",
+  "source_base": "fa791fe937fb24245e785d9e22928b3f4a6a42ae",
+  "frozen_source_commit": "8cf37e9d7ce174cb04f9b98a722f438cc310069d",
+  "branch": "research/topology-6183-t0-orbstack-20261003",
+  "path": "research/analysis/threshold_persistent_topology_6183_t0_20261003",
+  "frozen_sha256": {
+    "PREREGISTRATION.md": "771391e2206e08af97487b7eba6f5d74553532fb5f8ba1e2a62f6ee5d4966a7e",
+    "README.md": "f13b6ab19900c449b261c6813864ce81eed37955ca2c19e9f8f17c5e35be3294",
+    "fixtures.json": "092f636214ba12ea54a22693cd41667bf1aa2d452055c9760fc8b76b4ab914a6",
+    "labels.json": "b3f8120061af5373827769c54524727d0fed380072864c56d113a18b5f08af40",
+    "candidate.py": "763fce21762583551ca522c1109cfefb4c0a69494b9dad4ad175181f0155a996",
+    "audit.py": "9853c9b97d5ef4ae72bd3324f0fbcd8fb45d0a07cec8ed8ee350f2e63faf56cf"
+  },
+  "runtime": {
+    "host": "macOS 26.6.2 arm64",
+    "orbstack": "2.2.3 (2020300), commit c83556b0ef8f1ba9a33abbb194622b6b7a1c0307",
+    "vm": "research-6183-t0-20261003",
+    "vm_id": "01M3ZD3J2GK283SQRFW9EW9DBZ",
+    "vm_os_arch": "Ubuntu 24.04 arm64",
+    "vm_configured_limits": {"cpus": 1, "memory_bytes": 2147483648, "disk_gib": 12},
+    "private_docker_engine": {"version": "29.1.3", "driver": "overlayfs", "cgroup_version": 2},
+    "vm_observed_cgroup": {"memory.max": "2147483648", "cpu.max": "100000 100000"},
+    "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "image_id": "sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "platform": "linux/arm64"
+  },
+  "transfer_command": "orbctl push -m research-6183-t0-20261003 <absolute-package-directory>/ /home/taka/inputs/",
+  "candidate_command": "docker run --name topology-6183-candidate-a01 --network none --cpus 1 --memory 512m --read-only --cap-drop ALL --security-opt no-new-privileges --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,src=/home/taka/inputs/threshold_persistent_topology_6183_t0_20261003,dst=/src,readonly --mount type=bind,src=/home/taka/outputs/topology-6183-a01,dst=/out -e OUT_DIR=/out -e PYTHONDONTWRITEBYTECODE=1 -w /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 sh -c 'cat /sys/fs/cgroup/memory.max > /out/candidate.memory.max; cat /sys/fs/cgroup/cpu.max > /out/candidate.cpu.max; python /src/candidate.py > /out/candidate.stdout.log 2>&1'",
+  "auditor_command": "docker run --name topology-6183-auditor-a01 --network none --cpus 1 --memory 512m --read-only --cap-drop ALL --security-opt no-new-privileges --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,src=/home/taka/inputs/threshold_persistent_topology_6183_t0_20261003,dst=/src,readonly --mount type=bind,src=/home/taka/outputs/topology-6183-a01,dst=/out -e OUT_DIR=/out -e PYTHONDONTWRITEBYTECODE=1 -w /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 sh -c 'cat /sys/fs/cgroup/memory.max > /out/auditor.memory.max; cat /sys/fs/cgroup/cpu.max > /out/auditor.cpu.max; python /src/audit.py > /out/auditor.stdout.log 2>&1'",
+  "limits_enforcement_note": "VM cgroup values are observed; container effective limits and cgroup values will be captured during each invocation. No inference from Docker configuration alone.",
+  "candidate_invocations": 0,
+  "auditor_invocations": 0,
+  "retries": 0,
+  "outcome": null
+}
