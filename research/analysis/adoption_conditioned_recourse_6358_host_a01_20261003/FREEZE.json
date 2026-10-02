@@ -1,0 +1,29 @@
+{
+  "schema": "adoption-conditioned-recourse-host-a01-freeze-v1",
+  "issue": 6358,
+  "allocation": "ADOPTION-CONDITIONED-RECOURSE-6358-T0-MAC-HOST-20261003-01",
+  "base_main": "fc1c09294458d3b2744fa05432d4cf8a19583f18",
+  "preformal_main_advance": "From b894ebd8812cb190a9a31eab63f6312d9189abbe to fc1c09294458d3b2744fa05432d4cf8a19583f18, only research/analysis/README.md and unrelated #5694 A04 evidence paths changed; the frozen #6358 source/allocation paths, ROADMAP.md, and docs/CURRENT_GOAL.md were unchanged. Branch rebased onto fc1c092 before formal execution.",
+  "source_allocation": "ADOPTION-CONDITIONED-RECOURSE-6358-T0-HOST-20261002-01",
+  "source_path": "research/analysis/adoption_conditioned_recourse_6358_t0_20261002/",
+  "path": "research/analysis/adoption_conditioned_recourse_6358_host_a01_20261003/",
+  "runtime": "macOS host, CPython 3.14.5, standard library only; no container, model, GPU, GUI, network or production service",
+  "purpose": "First actual candidate/auditor execution of Issue #6358 T0 on the user's Mac after the prior allocation stopped before Python started. Distinct prospective allocation and output path; prior STOP is immutable and is not retried or relabelled.",
+  "H": "Under the frozen deterministic cohort fixtures, individually feasible generic/witness/public-stagger advice can lose verified resolutions under shared finite capacity, while authorized recipient-specific routing can preserve all-offer resolution without relaxing safety gates. The effect should disappear in disjoint-resource and ample-capacity controls.",
+  "T": "Run the copied and allocation-retagged candidate exactly once over the frozen cases.json: eight cases x seven policies, four offered stops per case, then run the separate raw-only auditor exactly once only if the candidate exits 0. Native host CPU execution; no container or external effect.",
+  "D": "PASS_METHOD_SCOPED only if all frozen candidate and auditor gates pass, primary shared-high-adoption counts are generic/witness/public-stagger/placebo 2/4 versus recipient-specific 4/4, the wording placebo matches generic in routes/outcomes, class counts are 2/2 each, and all controls pass. Otherwise retain exact FAIL/HOLD/STOP; never infer human adoption, causal prevalence, deployment value, or runtime/product benefit.",
+  "C": "Fixed offers, resource graph/capacity/service times, adoption schedule, deadlines, authority generation, idempotency and uncertain-effect controls. Source differs from prior allocation only by the new allocation constant; cases are byte-identical. Independent auditor is a separate process and does not import candidate.py. One candidate invocation, one conditional auditor invocation, retries 0.",
+  "U": "One synthetic deterministic fixture per frozen case on one macOS/CPython 3.14.5 host. This is not a causal cohort estimate, human/agent adoption study, GUI or production-service observation, or evidence that any real advice is harmful. Python-version portability is observed only for this execution.",
+  "formal_budget": {"candidate_invocations": 1, "auditor_invocations_if_candidate_exit_0": 1, "retries": 0, "tuning": 0},
+  "candidate_argv": ["python3", "-B", "candidate.py", "--cases", "cases.json", "--out", "results/formal-01/candidate.raw.json"],
+  "auditor_argv_if_candidate_exit_0": ["python3", "-B", "auditor.py", "--cases", "cases.json", "--candidate", "results/formal-01/candidate.raw.json", "--out", "results/formal-01/audit.raw.json"],
+  "output_directory": "results/formal-01/",
+  "predeclared_stop": "Stop and retain STOP on missing provenance, unexpected pre-existing output directory, candidate nonzero/timeout/malformed output, audit nonzero, or local filesystem error. No retry or edits after candidate starts.",
+  "source_sha256": {
+    "candidate.py": "941c89c5db08d898e31544a02707ea38f099ffd7b9889b1be8ee39965457f3b3",
+    "auditor.py": "bc9af6a0c8deec7eb3ff6b4cd8182b00070f12b527659f5c7aced105c588ae9e",
+    "cases.json": "ddd4ce62ada0fefa14c7e3a084347ca01032e2e57fcf1634e90870c2e757c996",
+    "test_candidate.py": "7329fc9fc01745341e5787a6b6503fe6a7ab48e7adc0bd70dd8387422f9485e7",
+    "test_auditor.py": "589916a7c1c7a830ce4d5e4bc87d6cf265168713281d4e31dfcc25a63688d637"
+  }
+}

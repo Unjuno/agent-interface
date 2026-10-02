@@ -1,0 +1,30 @@
+{
+  "schema": "adoption-conditioned-recourse-host-a02-freeze-v1",
+  "issue": 6358,
+  "allocation": "ADOPTION-CONDITIONED-RECOURSE-6358-T0-MAC-HOST-20261003-02",
+  "base_main": "fc1c09294458d3b2744fa05432d4cf8a19583f18",
+  "source_allocation": "ADOPTION-CONDITIONED-RECOURSE-6358-T0-HOST-20261002-01",
+  "prior_local_allocations": [
+    {"id": "ADOPTION-CONDITIONED-RECOURSE-6358-T0-MAC-HOST-20261003-01", "disposition": "STOP_RUNNER_OUTPUT_PARENT_MISSING", "candidate_invocations": 0, "auditor_invocations": 0, "path": "research/analysis/adoption_conditioned_recourse_6358_host_a01_20261003/"}
+  ],
+  "path": "research/analysis/adoption_conditioned_recourse_6358_host_a02_20261003/",
+  "runtime": "macOS host, CPython 3.14.5, standard library only; no container, model, GPU, GUI, network or production service",
+  "purpose": "Fresh one-shot allocation of Issue #6358 T0 after two prior allocations stopped before candidate process start. Changes runner staging only: results/formal-02/ is present in the frozen commit, and the formal command directly invokes Python without directory creation. No prior STOP is retried or relabelled.",
+  "H": "Under the frozen deterministic cohort fixtures, individually feasible generic/witness/public-stagger advice can lose verified resolutions under shared finite capacity, while authorized recipient-specific routing can preserve all-offer resolution without relaxing safety gates. The effect should disappear in disjoint-resource and ample-capacity controls.",
+  "T": "Run the allocation-retagged candidate exactly once over the frozen cases.json: eight cases x seven policies, four offered stops per case, then run the separate raw-only auditor exactly once only if the candidate exits 0. Native host CPU execution. Output directory exists before formal execution; the command has no mkdir or shell redirection.",
+  "D": "PASS_METHOD_SCOPED only if all frozen candidate and auditor gates pass, primary shared-high-adoption counts are generic/witness/public-stagger/placebo 2/4 versus recipient-specific 4/4, the wording placebo matches generic in routes/outcomes, class counts are 2/2 each, and all controls pass. Otherwise retain exact FAIL/HOLD/STOP; never infer human adoption, causal prevalence, deployment value, or runtime/product benefit.",
+  "C": "Fixed offers, resource graph/capacity/service times, adoption schedule, deadlines, authority generation, idempotency and uncertain-effect controls. Candidate/auditor allocation IDs and result path differ from the preceding allocation; cases are byte-identical. Independent auditor is a separate process and does not import candidate.py. One candidate invocation, one conditional auditor invocation, retries 0.",
+  "U": "One synthetic deterministic fixture per frozen case on one macOS/CPython 3.14.5 host. This is not a causal cohort estimate, human/agent adoption study, GUI or production-service observation, or evidence that any real advice is harmful. Python-version portability is observed only for this execution.",
+  "formal_budget": {"candidate_invocations": 1, "auditor_invocations_if_candidate_exit_0": 1, "retries": 0, "tuning": 0},
+  "candidate_argv": ["python3", "-B", "candidate.py", "--cases", "cases.json", "--out", "results/formal-02/candidate.raw.json"],
+  "auditor_argv_if_candidate_exit_0": ["python3", "-B", "auditor.py", "--cases", "cases.json", "--candidate", "results/formal-02/candidate.raw.json", "--out", "results/formal-02/audit.raw.json"],
+  "output_directory": "results/formal-02/",
+  "predeclared_stop": "No formal process unless the target directory exists in the committed package, all output files are absent, all source/input hashes match, and current main equals base_main. Stop on any process/filesystem/provenance/audit error; no retry or edits after candidate starts.",
+  "source_sha256": {
+    "candidate.py": "c368b217e94c8419738c7aaab82afdca50d50d152697e4e0708c6d592b856a91",
+    "auditor.py": "2c675605e7dac7c5e8c7000033df1bf1cf699cb8b0125b596142877b7f14dafc",
+    "cases.json": "ddd4ce62ada0fefa14c7e3a084347ca01032e2e57fcf1634e90870c2e757c996",
+    "test_candidate.py": "7329fc9fc01745341e5787a6b6503fe6a7ab48e7adc0bd70dd8387422f9485e7",
+    "test_auditor.py": "589916a7c1c7a830ce4d5e4bc87d6cf265168713281d4e31dfcc25a63688d637"
+  }
+}

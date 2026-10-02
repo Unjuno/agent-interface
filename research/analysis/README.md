@@ -1,5 +1,7 @@
 # Analytical research
 
+- [`adoption_conditioned_recourse_6358_host_a02_20261003/REPORT.md`](adoption_conditioned_recourse_6358_host_a02_20261003/REPORT.md) — #6358 Mac-host T0 A02: shared/high-adoption recipient-specific routing resolved 4/4 versus 2/4 for generic, witness, public-stagger, and wording-placebo arms; independent audit passed 56/56 synthetic ledgers. No human, GUI, production, or causal claim; both earlier pre-candidate STOPs remain preserved.
+
 - [`model_api_canary_wslc_replay_6001_t0_20261003/REPORT.md`](model_api_canary_wslc_replay_6001_t0_20261003/REPORT.md) — #6001 exact PR #6104 frozen source rerun in WSLc; raw byte-identical, auditor PASS_METHOD_SCOPED, tests 9/9; runtime reproducibility only, earlier STOPs unchanged.
 - [`backpressure_route_expansion_5372_a01_20261003/`](backpressure_route_expansion_5372_a01_20261003/) — Issue #5372 A01 WSLc route-expansion queue fixture: independent audit passed; local-cost improvement reduced horizon completions 5→3, reservation arm restored 5; synthetic method scope only.
 
@@ -228,6 +230,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`adaptive_privacy_filter_5420_t1_v1/`](adaptive_privacy_filter_5420_t1_v1/)
 - [`adaptive_screen_5722_t0_v1/`](adaptive_screen_5722_t0_v1/)
 - [`adaptive_screen_5739_t0_v1/`](adaptive_screen_5739_t0_v1/)
+- [`adoption_conditioned_recourse_6358_host_a02_20261003/`](adoption_conditioned_recourse_6358_host_a02_20261003/)
 - [`adoption_curve_6615_t0_v1/`](adoption_curve_6615_t0_v1/)
 - [`adoption_curve_6615_t0_v2/`](adoption_curve_6615_t0_v2/)
 - [`adoption_curve_6615_t0_v3/`](adoption_curve_6615_t0_v3/)
@@ -471,6 +474,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`local_relevance_gating_preflight_2188_v1/`](local_relevance_gating_preflight_2188_v1/)
 - [`locale_semantic_invariance_5919_audit_review_20261001_01/`](locale_semantic_invariance_5919_audit_review_20261001_01/)
 - [`locale_semantic_invariance_5919_t0_20261001/`](locale_semantic_invariance_5919_t0_20261001/)
+- [`looming_visual_assumption_gate_5905_s04_orbstack_contrast_20261003/`](looming_visual_assumption_gate_5905_s04_orbstack_contrast_20261003/)
+- [`looming_visual_assumption_gate_5905_s06_orbstack_contrast_20261003/`](looming_visual_assumption_gate_5905_s06_orbstack_contrast_20261003/)
 - [`looming_yield_5905_audit_recovery_s4/`](looming_yield_5905_audit_recovery_s4/)
 - [`looming_yield_5905_t0_20261001_01/`](looming_yield_5905_t0_20261001_01/)
 - [`looming_yield_5905_visual_identifiability_v3/`](looming_yield_5905_visual_identifiability_v3/)

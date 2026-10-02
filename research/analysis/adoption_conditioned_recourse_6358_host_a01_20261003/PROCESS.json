@@ -1,0 +1,49 @@
+{
+  "allocation": "ADOPTION-CONDITIONED-RECOURSE-6358-T0-MAC-HOST-20261003-01",
+  "freeze_commit": "a5e710ad59eb3684944769a207ebfd1405f048cc",
+  "freeze_refresh": {
+    "old_main": "b894ebd8812cb190a9a31eab63f6312d9189abbe",
+    "new_main": "fc1c09294458d3b2744fa05432d4cf8a19583f18",
+    "changed_paths": ["research/analysis/README.md", "research/analysis/exogenous_opportunity_5694_matched_phase_a04_20261002/**"],
+    "frozen_source_overlap": false,
+    "roadmap_or_current_goal_changed": false,
+    "branch_rebased_before_candidate": true
+  },
+  "formal_candidate_invocations": 0,
+  "formal_auditor_invocations": 0,
+  "retries": 0,
+  "formal": "STOP_RUNNER_OUTPUT_PARENT_MISSING; no candidate or auditor process started; do not retry this allocation.",
+  "formal_launch_attempt": {
+    "argv": ["mkdir", "results/formal-01", "&&", "python3", "-B", "candidate.py", "--cases", "cases.json", "--out", "results/formal-01/candidate.raw.json"],
+    "cwd": "research/analysis/adoption_conditioned_recourse_6358_host_a01_20261003/",
+    "exit": 1,
+    "stderr": "mkdir: results: No such file or directory",
+    "candidate_started": false,
+    "auditor_started": false,
+    "classification": "STOP_RUNNER_OUTPUT_PARENT_MISSING"
+  },
+  "pre_formal_construction": [
+    {
+      "argv": ["python3", "-m", "unittest", "-v", "test_candidate", "test_auditor"],
+      "cwd": "research/analysis/adoption_conditioned_recourse_6358_host_a01_20261003/",
+      "exit": 0,
+      "result": "PASS",
+      "tests": 16
+    },
+    {
+      "argv": ["python3", "-m", "unittest", "-v", "research.analysis.adoption_conditioned_recourse_6358_host_a01_20261003.test_candidate", "research.analysis.adoption_conditioned_recourse_6358_host_a01_20261003.test_auditor"],
+      "cwd": "repository root",
+      "exit": 1,
+      "result": "STOP_CONSTRUCTION_TEST_INVOCATION_IMPORT_PATH",
+      "detail": "Both test modules failed import because candidate and auditor were not on sys.path from repository-root dotted-module invocation. No candidate/auditor formal CLI was invoked and no formal output was created. This was an invocation-path error, not a test assertion failure."
+    },
+    {
+      "argv": ["python3", "-m", "unittest", "discover", "-s", "research/analysis/adoption_conditioned_recourse_6358_host_a01_20261003", "-p", "test_*.py", "-v"],
+      "cwd": "repository root",
+      "exit": 0,
+      "result": "PASS",
+      "tests": 16
+    }
+  ],
+  "formal_scientific_result": "NOT_EVALUATED"
+}
