@@ -1,0 +1,35 @@
+{
+  "source_commit": "36ad4ad62f020008e87603ee37742143db96852d",
+  "results": [
+    {
+      "command": [
+        "/tmp/agent-interface-mcp-venv/bin/python",
+        "-m",
+        "unittest",
+        "runtime.cli_v1.test_mcp_session",
+        "-v"
+      ],
+      "exit": 0,
+      "started_ns": 15268086093846,
+      "ended_ns": 15270499871282,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "c89697788e11280b3956828b62534789cf961298a1ad594e40b2968d769e7c53"
+    },
+    {
+      "command": [
+        "/tmp/agent-interface-mcp-venv/bin/python",
+        "-O",
+        "-m",
+        "unittest",
+        "runtime.cli_v1.test_mcp_session",
+        "-v"
+      ],
+      "exit": 0,
+      "started_ns": 15270499910797,
+      "ended_ns": 15273361042045,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "d8b9b24ab6e84afc8ac35a12c1983b1bcca88c941cc9fb1050f0b97101d4f42b"
+    }
+  ],
+  "scope": "Existing inert post-dispatch/management/session tests only; no live GUI or model benefit."
+}
