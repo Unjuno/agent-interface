@@ -11,7 +11,7 @@
 ## Frozen lineage and inputs
 
 - Issue: #6505; motivating issue #4889; construction precedent #4914; evidence-preservation PR #5393.
-- Frozen base commit: `b100d9acee4ec99490b2e97066ec6af5312f1ed9`.
+- Frozen base commit: `f8e71fc777100281c67a51233b222334fada2863`.
 - Original raw SHA-256: `a25bc4a9e6cf845fb5b446b1d2d5071bd26909679efcc535372fdf77b58b4eb8` (3,241,590 bytes; 11,111 JSONL rows).
 - Original archive SHA-256: `a127e04d2fcce672f3ce5cc6f20d2af0e1f85b34ac16116e9e5a518e7c358f6b` (104,640 bytes; single member `RAW.jsonl`).
 - Original candidate, reducer, and audit are inputs for identity verification only; none is executed or imported.

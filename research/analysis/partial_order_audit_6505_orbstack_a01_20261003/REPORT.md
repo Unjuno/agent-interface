@@ -4,7 +4,7 @@
 
 Formal audit has not run. This report will be updated only with the first frozen invocation's result; no outcome is implied by passing construction tests.
 
-Pre-formal construction tests: 7/7 pass on macOS arm64 / CPython 3.14.5. These check the fresh model's finite-state count, a selected independent/dependent pair, Git blob hashing, topological-order discriminator, and all eight effective control values. They do not parse/recompute the 11,111 formal rows. The workspace analysis index passes at 549 retained result/failure directories after adding this report path.
+Pre-formal construction tests: 7/7 pass on macOS arm64 / CPython 3.14.5. These check the fresh model's finite-state count, a selected independent/dependent pair, Git blob hashing, topological-order discriminator, and all eight effective control values. They do not parse/recompute the 11,111 formal rows. The workspace analysis index passes at 550 retained result/failure directories after the latest-main integration.
 
 ## H / T / D / C / U
 
@@ -12,7 +12,7 @@ See `PREREGISTRATION.md`. The scope is an independent audit of #4889's retained 
 
 ## Execution and validation
 
-No formal invocation is recorded yet. See `FREEZE.json`, `RUNBOOK.md`, and `results/construction/` for frozen inputs and pre-formal checks. This package does not rerun the original candidate, original auditor, or reducer.
+No formal invocation is recorded yet. See `FREEZE.json`, `RUNBOOK.md`, and `CONSTRUCTION.json` for frozen inputs and pre-formal checks. This package does not rerun the original candidate, original auditor, or reducer.
 
 ## Limits
 
