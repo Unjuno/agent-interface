@@ -1,0 +1,17 @@
+{
+  "schema": "denial-deferral-authority-a02-run-v1",
+  "main_sha": "eacb1346866f660d9d34eb36cd9691fd8184e5ff",
+  "branch": "research/denial-aware-deferral-authority-6422-a02-20261002",
+  "python": "3.11.9",
+  "formal_candidate_command": "python candidate.py --input fixtures.json --output candidate_output.json",
+  "formal_candidate_exit": 0,
+  "formal_auditor_command": "python audit.py --input fixtures.json --raw candidate_output.json --output audit_report.json",
+  "formal_auditor_exit": 0,
+  "formal_retries": 0,
+  "host_construction_tests": "3 passed",
+  "formal_candidate_invocations": 1,
+  "formal_raw_auditor_invocations": 1,
+  "no_effect": true,
+  "resources": "local Windows CPU only; no GPU/CUDA/WSLc/Docker/model/network/person/GUI"
+}
+
