@@ -14,10 +14,12 @@ not installed in the Windows shell. Concurrent native runtime workers and
 another agent's `Xvfb :27000`/LibreOffice session were visible. No packages were
 installed, no shared process was stopped, and this probe was not launched.
 
-The completed work is only construction/contract validation: 14 standard-library
-auditor tests pass, the probe imports under WSL Python, and the CLI help path
-works. This is not candidate or formal experimental evidence. In particular,
-the classifier is not yet validated against a collected Xvfb result.
+The completed work is only construction/contract validation: 18 standard-library
+auditor tests pass on Windows and under WSLc's pinned Python image, the probe
+imports under WSL Ubuntu, and the CLI help path works. WSLc emitted its known
+no-cgroup/swap-limit warning; the accepted memory flag is not evidence of an
+effective cap. This is not candidate or formal experimental evidence. In
+particular, the classifier is not yet validated against a collected Xvfb result.
 
 ## Frozen candidate boundary
 
@@ -26,33 +28,47 @@ the classifier is not yet validated against a collected Xvfb result.
   if either its socket or lock path already exists.
 - A positive repeat control must produce at least two `KeyPress` events and
   verify the released key is absent from the server keymap, or execution stops.
+  It sets and reads back autorepeat on the disposable private Xvfb only
+  (`xset r rate 100 20`, confirmed via `xset q`) and holds for 240ms so the independent control spans
+  the configured 100ms initial delay.
 - The owner trial sends only one `w` down to A, requests focus transfer to B,
   records the actual observed focus, waits for the owner's own `focus_changed`
   release record, then samples a finite B event-pump interval.
-- Raw records retain SHA-256 of `input_owner_v10.py`, `executor_v3.py`, and
-  `lease.py`; Xvfb status and private socket/lock cleanup are required for a
-  passing classification.
-- The classifier counts only B's matching keycode `KeyPress` received after B
-  focus was independently observed and before the owner's release sync returns.
+- Raw records retain the refrozen main SHA, exact expected Git blob IDs and
+  SHA-256 values for `input_owner_v10.py`, `executor_v3.py`, and `lease.py`;
+  mismatched source bytes stop before Xvfb starts. Xvfb status and private
+  socket/lock cleanup are required for a passing classification.
+- The classifier counts only B's matching keycode `KeyPress` received after the
+  focus-change request begins and before the owner's verified release record;
+  this includes events delivered while the requester awaits XSync. The owner
+  connection's own focus-query timestamps
+  are instrumented through a delegating display proxy; owner source bytes stay
+  unchanged, but the proxy adds a small timing perturbation.
   It does not use a candidate-supplied status field.
 
 ## Commands
 
-From the repository root in the WSL Ubuntu distribution:
+From PowerShell at the repository root, run the no-network construction suite in
+the already-cached digest-pinned WSLc image:
 
-```sh
-python3 -B -m unittest -v research.doom.map01_focus_repeat_owner_59_t0_20261002.test_audit
-python3 research/doom/map01_focus_repeat_owner_59_t0_20261002/probe.py \
-  --out results-local/issue59-focus-repeat-owner-t0-20261002-01
+```powershell
+$sourcePath = (Resolve-Path .).Path
+wslc run --rm --pull never --network none --cpus 1 --memory 512M `
+  --volume "${sourcePath}:/src:ro" --workdir /src `
+  python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f `
+  python -B -m unittest -v research.doom.map01_focus_repeat_owner_59_t0_20261002.test_audit
 ```
 
-The second command is deliberately **not** part of routine smoke validation: it
-starts an X server, sends one key press/release sequence, and must only be run
-after the shared WSL allocation owner explicitly releases the lane. It should
-run once; do not rerun into the same output directory. Archive `raw.json`,
-`classification.json`, `xvfb.stderr`, and `error.txt` if present before making
-any decision. A clean stop or hold is evidence too, but does not demonstrate
-that the safety behavior passed.
+The currently cached approved image does not contain Xvfb, `xset`, or Python
+Xlib, so it is not yet a valid container for the formal probe. Do not run that
+probe directly in the shared Ubuntu distribution or silently add packages to
+the frozen image. A separate owner-authorized, pinned WSLc image containing
+those dependencies is required; its digest, package manifest and no-network
+runtime command must be preregistered before the one candidate invocation.
+The candidate also requires explicit shared CPU/Xvfb lane assignment. Once both
+gates are satisfied, run it once into a new output path and retain `raw.json`,
+`classification.json`, `xvfb.stderr`, and `error.txt` if present. A clean stop
+or hold is evidence too, but does not demonstrate that the safety behavior passed.
 
 ## H/T/D/C/U
 
@@ -63,8 +79,8 @@ that the safety behavior passed.
   transfer; bounded event-pump interval; no retries or inferred repetitions.
 - **D:** the returned classification is reconstructed from `raw.json` by
   `audit.py`; report event receipt times and owner/keymap release records.
-- **C:** private Xvfb + Python Xlib; actual current owner v10; exact source hashes
-  in raw data; one key and two windows only.
+- **C:** private Xvfb + Python Xlib + `xset` in a pinned WSLc image; actual current
+  owner v10; exact source hashes in raw data; one key and two windows only.
 - **U:** one Linux/WSL host and one trial; scheduler/timing sensitive; XTEST
   autorepeat stimulus and client event delivery only. No live desktop,
   application, game, gameplay or general reliability claim.

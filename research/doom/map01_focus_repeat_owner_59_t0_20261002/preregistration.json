@@ -2,37 +2,50 @@
   "schema": "issue59-focus-repeat-owner-prereg-v1",
   "allocation_id": "ISSUE59-FOCUS-REPEAT-OWNER-T0-20261002-01",
   "issue": 59,
-  "base_main_at_start": "89f27caf1e9fcf3bc2c2c3c2db7d62ee6d19e4ae",
-  "status": "NOT_RUN_SHARED_WSL_XVFB_LANE_OCCUPIED",
+  "base_main_at_branch_creation": "89f27caf1e9fcf3bc2c2c3c2db7d62ee6d19e4ae",
+  "base_main_at_previous_refreeze": "645bc89c71f28a88d8ff37f995d56057cb4cf734",
+  "base_main_at_refreeze": "a4caf65a773d37db516774b797e1244dc9e956e5",
+  "status": "PREPARATION_ONLY_IMAGE_AND_CPU_LANE_UNASSIGNED",
   "question": "Does the byte-identical current InputOwner v10 verify release of an admitted held key after an observed A-to-B X11 focus transfer, before B receives another matching KeyPress?",
   "hypothesis": "With autorepeat established independently, the owner detects the focus change on its bounded queue wait, emits KeyRelease, and verifies the key is absent from the X server keymap before B receives an additional matching KeyPress.",
-  "fixture": "One private Xvfb 800x600x24 server, two bare X windows, Python 3.12 system python-xlib, actual current input_owner_v10.py; no WM, model, app, or game.",
+  "fixture": "One private Xvfb 800x600x24 server in a pinned WSLc image containing Python 3.12, python-xlib, Xvfb and xset; two bare InputOutput X windows; repeat 100ms/20ms on the private server; actual current input_owner_v10.py; no WM, model, app, or game.",
   "source_paths": [
     "research/live_control/input_owner_v10.py",
     "research/live_control/executor_v3.py",
     "research/live_control/lease.py"
   ],
+  "source_sha256": {
+    "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+  },
+  "source_git_blobs": {
+    "input_owner_v10.py": "341b3c01649943ddaad5f28431a792c4889cc36e",
+    "executor_v3.py": "2b072454fd81c41bf9e025217afc78020c7059de",
+    "lease.py": "b9dac6bb4063928354733d79bf371909a288a3d1"
+  },
   "design": {
     "invocations": 1,
     "retries": 0,
     "arms": 1,
-    "control": "XTEST key-down on A held 160ms, collect matching KeyPress events, send KeyRelease, verify query_keymap reports key up",
-    "trial": "Owner admits one key-down on A; external client moves and reads focus as B; owner records focus_changed release and empty keymap; B event pump spans observed focus through release sync plus 100ms",
+    "control": "Set and read back autorepeat on private Xvfb with xset r rate 100 20; XTEST key-down on A held 240ms, collect matching KeyPress events, send KeyRelease, verify query_keymap reports key up",
+    "trial": "Owner admits one key-down on A; external client requests focus B and reads it back; delegating proxy timestamps the byte-identical owner's own get_input_focus calls; owner records focus_changed release and empty keymap; B event pump starts before the request and continues through verified release plus 100ms",
     "positive_control_minimum_repeat_keypresses": 2,
     "output": "raw.json plus independent classification.json, error.txt and xvfb.stderr when applicable",
     "forbidden": ["rerun", "shared display", "kill or alter another process", "real desktop input", "application", "game", "model", "claim MAP01 result"]
   },
   "primary_decision": {
-    "scoped_pass": "positive control succeeds; A-to-B focus transfer is read back; owner logs focus_changed release; server keymap is empty; B event-pump coverage is complete; zero matching B KeyPress received between observed B focus and owner release sync return",
-    "counterexample": "one or more matching B KeyPress events are received after observed B focus and before owner release sync return",
+    "scoped_pass": "positive control succeeds; A-to-B focus transfer is read back; owner logs focus_changed release; server keymap is empty; B event-pump coverage is complete; zero matching B KeyPress received after the focus-change request begins and before owner release verification",
+    "counterexample": "one or more matching B KeyPress events are received after the focus-change request begins and before owner release verification, including while requester awaits XSync",
     "hold": "release verification, focus observation, source identity, event order, or event-pump coverage is missing or inconsistent",
     "stop": "positive repeat control does not show at least two presses and a verified release"
   },
   "H": "Observed focus loss leads the current owner to verified release before the new focus receives autorepeat.",
   "T": "One control and one owner-integrated focus transfer, one invocation, no retries.",
   "D": "Classify raw.json independently; do not trust a candidate status label.",
-  "C": "Private Linux Xvfb, Python Xlib, current source hashes retained in raw.json.",
-  "U": "Single scheduler-sensitive Xvfb trial on one WSL host; narrow event-delivery mechanism only.",
-  "shared_resource_rule": "Do not execute until WSL shared allocation owner explicitly clears CPU/Xvfb lane; current observations show other live workers and Xvfb sessions.",
+  "C": "Private Linux Xvfb, Python Xlib, current source hashes retained in raw.json; a delegating proxy timestamps owner focus queries and may perturb scheduling.",
+  "U": "Single scheduler-sensitive Xvfb trial in one WSLc container on one Windows/WSL2 host; narrow event-delivery mechanism only.",
+  "shared_resource_rule": "Do not execute until one bounded CPU/Xvfb WSLc interval is explicitly assigned; idle WSLc inventory is not a lease. Do not acquire packages or build/pull images until that resource owner authorizes the preparation boundary.",
+  "image_gate": "The cached approved Python image lacks Xvfb, xset and python-xlib. A separate owner-authorized, pinned WSLc image digest and package manifest must be recorded before the candidate allocation is frozen for execution.",
   "claim_boundary": "No gameplay, MAP01, real desktop, product reliability or general autorepeat safety claim."
 }

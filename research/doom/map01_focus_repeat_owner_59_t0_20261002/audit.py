@@ -4,6 +4,17 @@ from collections.abc import Mapping
 
 
 SCHEMA = "issue59-focus-repeat-owner-raw-v1"
+FROZEN_BASE_MAIN = "a4caf65a773d37db516774b797e1244dc9e956e5"
+EXPECTED_SOURCE_SHA256 = {
+    "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+}
+EXPECTED_SOURCE_GIT_BLOBS = {
+    "input_owner_v10.py": "341b3c01649943ddaad5f28431a792c4889cc36e",
+    "executor_v3.py": "2b072454fd81c41bf9e025217afc78020c7059de",
+    "lease.py": "b9dac6bb4063928354733d79bf371909a288a3d1",
+}
 
 
 def _is_ns(value):
@@ -18,11 +29,15 @@ def classify(raw):
     """Classify raw event records; summary labels are deliberately not inputs."""
     if not isinstance(raw, Mapping) or raw.get("schema") != SCHEMA:
         return _invalid()
-    if (not isinstance(raw.get("allocation_id"), str) or not raw["allocation_id"]
+    hashes = raw.get("source_sha256")
+    if (raw.get("allocation_id") != "ISSUE59-FOCUS-REPEAT-OWNER-T0-20261002-01"
+            or raw.get("base_main_sha") != FROZEN_BASE_MAIN
             or raw.get("candidate_invocations") != 1 or raw.get("retries") != 0
             or raw.get("xvfb_exit_code") != 0
             or raw.get("xvfb_socket_removed") is not True
-            or raw.get("xvfb_lock_removed") is not True):
+            or raw.get("xvfb_lock_removed") is not True
+            or not isinstance(hashes, Mapping) or dict(hashes) != EXPECTED_SOURCE_SHA256
+            or raw.get("source_git_blobs") != EXPECTED_SOURCE_GIT_BLOBS):
         return _invalid()
 
     control, trial = raw.get("positive_control"), raw.get("trial")
@@ -54,15 +69,14 @@ def classify(raw):
     admitted, ack = admission.get("admitted_ns"), admission.get("ack_ns")
     request, focus_done = transfer.get("request_ns"), transfer.get("sync_returned_ns")
     focus_observed = transfer.get("observed_ns")
-    rel_request, rel_sync, verified = (release.get("request_ns"), release.get("sync_returned_ns"),
-                                       release.get("verified_ns"))
+    verified = release.get("verified_ns")
     if (not isinstance(source, str) or not isinstance(target, str) or source == target
             or not isinstance(key, int) or isinstance(key, bool)
             or admission.get("window") != source or key != control_key or control_window != source
             or not all(_is_ns(x) for x in (admitted, ack, request, focus_done, focus_observed,
-                                             rel_request, rel_sync, verified))
+                                             verified))
             or transfer.get("observed_focus") != target
-            or not (admitted <= ack < request <= focus_done <= focus_observed <= rel_request <= rel_sync <= verified)
+            or not (admitted <= ack < request <= focus_done <= focus_observed <= verified)
             or release.get("keycode") != key or release.get("reason") != "focus_changed"):
         return _invalid()
     saw_old = saw_new = False
@@ -77,7 +91,7 @@ def classify(raw):
         previous_end = end
         if focus == source and end <= request:
             saw_old = True
-        if focus == target and start >= focus_observed and end <= rel_request:
+        if focus == target and start >= request and end <= verified:
             saw_new = True
     if not (saw_old and saw_new):
         return _invalid()
@@ -87,7 +101,7 @@ def classify(raw):
 
     if (pump.get("window") != target or pump.get("complete") is not True
             or not _is_ns(pump.get("started_ns")) or not _is_ns(pump.get("stopped_ns"))
-            or pump["started_ns"] > focus_observed or pump["stopped_ns"] < rel_sync):
+            or pump["started_ns"] > request or pump["stopped_ns"] < verified):
         return {"status": "HOLD_EVENT_COVERAGE_INCOMPLETE", "new_focus_keypresses_before_release": 0}
     events = pump.get("events")
     if not isinstance(events, list):
@@ -103,7 +117,7 @@ def classify(raw):
     if events != ordered:
         return _invalid()
     count = sum(1 for e in events if e["type"] == "KeyPress" and e["window"] == target
-                and e["keycode"] == key and focus_observed <= e["time_ns"] < rel_sync)
+                and e["keycode"] == key and request <= e["time_ns"] < verified)
     status = ("COUNTEREXAMPLE_REPEAT_BEFORE_VERIFIED_RELEASE" if count
               else "PASS_OWNER_FOCUS_RELEASE_SCOPED")
     return {"status": status, "new_focus_keypresses_before_release": count}

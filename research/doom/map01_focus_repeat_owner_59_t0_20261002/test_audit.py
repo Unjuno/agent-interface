@@ -18,11 +18,22 @@ def valid_raw():
     return {
         "schema": "issue59-focus-repeat-owner-raw-v1",
         "allocation_id": "ISSUE59-FOCUS-REPEAT-OWNER-T0-20261002-01",
+        "base_main_sha": "a4caf65a773d37db516774b797e1244dc9e956e5",
         "candidate_invocations": 1,
         "retries": 0,
         "xvfb_exit_code": 0,
         "xvfb_socket_removed": True,
         "xvfb_lock_removed": True,
+        "source_sha256": {
+            "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+            "executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+            "lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+        },
+        "source_git_blobs": {
+            "input_owner_v10.py": "341b3c01649943ddaad5f28431a792c4889cc36e",
+            "executor_v3.py": "2b072454fd81c41bf9e025217afc78020c7059de",
+            "lease.py": "b9dac6bb4063928354733d79bf371909a288a3d1",
+        },
         "positive_control": {
             "window": "A",
             "keycode": 25,
@@ -38,7 +49,7 @@ def valid_raw():
                              "observed_focus": "B", "observed_ns": 112},
             "owner_focus_samples": [
                 {"focus": "A", "started_ns": 108, "finished_ns": 109},
-                {"focus": "B", "started_ns": 113, "finished_ns": 114},
+                {"focus": "B", "started_ns": 110, "finished_ns": 111},
             ],
             "owner_release": {
                 "reason": "focus_changed",
@@ -51,7 +62,7 @@ def valid_raw():
             },
             "new_focus_event_pump": {
                 "window": "B",
-                "started_ns": 112,
+                "started_ns": 109,
                 "stopped_ns": 130,
                 "complete": True,
                 "events": [],
@@ -74,6 +85,15 @@ class FocusRepeatAuditContractTests(unittest.TestCase):
         raw = valid_raw()
         raw["trial"]["new_focus_event_pump"]["events"] = [
             {"type": "KeyPress", "window": "B", "keycode": 25, "time_ns": 114},
+        ]
+        result = self.classify(raw)
+        self.assertEqual(result["status"], "COUNTEREXAMPLE_REPEAT_BEFORE_VERIFIED_RELEASE")
+        self.assertEqual(result["new_focus_keypresses_before_release"], 1)
+
+    def test_repeat_during_focus_request_sync_window_is_counterexample(self):
+        raw = valid_raw()
+        raw["trial"]["new_focus_event_pump"]["events"] = [
+            {"type": "KeyPress", "window": "B", "keycode": 25, "time_ns": 110},
         ]
         result = self.classify(raw)
         self.assertEqual(result["status"], "COUNTEREXAMPLE_REPEAT_BEFORE_VERIFIED_RELEASE")
@@ -135,6 +155,12 @@ class FocusRepeatAuditContractTests(unittest.TestCase):
         ]
         self.assertEqual(self.classify(raw)["status"], "HOLD_RAW_RECORD_INVALID")
 
+    def test_owner_focus_query_may_beat_external_focus_readback(self):
+        raw = valid_raw()
+        sample = raw["trial"]["owner_focus_samples"][1]
+        sample.update(started_ns=110, finished_ns=111)
+        self.assertEqual(self.classify(raw)["status"], "PASS_OWNER_FOCUS_RELEASE_SCOPED")
+
     def test_event_records_must_be_monotonic(self):
         raw = valid_raw()
         raw["trial"]["new_focus_event_pump"]["events"] = [
@@ -161,6 +187,16 @@ class FocusRepeatAuditContractTests(unittest.TestCase):
         raw["trial"]["owner_release"]["verified_empty"] = True
         raw["trial"]["owner_release"]["verified"] = False
         self.assertEqual(self.classify(raw)["status"], "HOLD_RELEASE_NOT_VERIFIED")
+
+    def test_source_identity_hashes_are_required(self):
+        raw = valid_raw()
+        del raw["source_sha256"]["input_owner_v10.py"]
+        self.assertEqual(self.classify(raw)["status"], "HOLD_RAW_RECORD_INVALID")
+
+    def test_source_identity_must_match_refrozen_main(self):
+        raw = valid_raw()
+        raw["source_git_blobs"]["input_owner_v10.py"] = "0" * 40
+        self.assertEqual(self.classify(raw)["status"], "HOLD_RAW_RECORD_INVALID")
 
 
 if __name__ == "__main__":

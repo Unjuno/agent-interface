@@ -10,6 +10,7 @@ import json
 import importlib.util
 import os
 from pathlib import Path
+import re
 import subprocess
 import sys
 import threading
@@ -19,12 +20,18 @@ import traceback
 from Xlib import X, XK, display
 from Xlib.ext import xtest
 
-ALLOCATION = "ISSUE59-FOCUS-REPEAT-OWNER-T0-20261002-01"
+PREREGISTRATION = json.loads(Path(__file__).with_name("preregistration.json").read_text(encoding="utf-8"))
+ALLOCATION = PREREGISTRATION["allocation_id"]
+FROZEN_BASE_MAIN = PREREGISTRATION["base_main_at_refreeze"]
+FROZEN_SOURCE_SHA256 = PREREGISTRATION["source_sha256"]
+FROZEN_SOURCE_GIT_BLOBS = PREREGISTRATION["source_git_blobs"]
 OWNER_ROOT = Path(__file__).resolve().parents[2] / "live_control"
 REPO_ROOT = OWNER_ROOT.parents[1]
 sys.path.insert(0, str(OWNER_ROOT))
 sys.path.insert(0, str(REPO_ROOT))
-from research.live_control.input_owner_v10 import InputOwner
+from research.live_control import input_owner_v10 as owner_module
+
+InputOwner = owner_module.InputOwner
 
 
 KEYSYM = "w"
@@ -83,6 +90,7 @@ def run(out):
     raw = {
         "schema": "issue59-focus-repeat-owner-raw-v1",
         "allocation_id": ALLOCATION,
+        "base_main_sha": FROZEN_BASE_MAIN,
         "candidate_invocations": 1,
         "retries": 0,
         "xvfb_exit_code": None,
@@ -93,6 +101,8 @@ def run(out):
             "executor_v3.py": sha256(OWNER_ROOT / "executor_v3.py"),
             "lease.py": sha256(OWNER_ROOT / "lease.py"),
         },
+        "source_git_blobs": FROZEN_SOURCE_GIT_BLOBS,
+        "repeat_schedule": None,
         "positive_control": {"window": "A", "keycode": None, "repeat_events": [], "verified_release": False},
         "trial": {},
         "claim_boundary": "single Xvfb / python-xlib owner integration mechanism only; no gameplay or MAP01 evidence",
@@ -106,6 +116,8 @@ def run(out):
     pump_rows = []
     error_text = None
     try:
+        if raw["source_sha256"] != FROZEN_SOURCE_SHA256:
+            raise RuntimeError("STOP_SOURCE_IDENTITY_MISMATCH: source bytes differ from preregistration")
         xvfb = subprocess.Popen(
             ["Xvfb", display_name, "-screen", "0", "800x600x24", "-nolisten", "tcp", "-ac"],
             stdout=subprocess.DEVNULL,
@@ -125,18 +137,37 @@ def run(out):
         control = display.Display(display_name)
         screen = control.screen()
         root = screen.root
-        win_a = root.create_window(30, 30, 240, 180, 0, screen.root_depth, X.CopyFromParent,
+        keycode = control.keysym_to_keycode(XK.string_to_keysym(KEYSYM))
+        # Use only this private server and set a short, retained repeat schedule.
+        repeat_config = subprocess.run(["xset", "r", "rate", "100", "20"], env=env,
+                                       check=True, capture_output=True, text=True)
+        repeat_query = subprocess.run(["xset", "q"], env=env, check=True, capture_output=True, text=True)
+        if not re.search(r"auto repeat delay:\s*100\s+repeat rate:\s*20", repeat_query.stdout, re.I):
+            raise RuntimeError("STOP_REPEAT_STIMULUS_NOT_ESTABLISHED: private X server repeat schedule mismatch")
+        keyboard = control.get_keyboard_control()
+        repeat_enabled = bool(keyboard.global_auto_repeat == X.AutoRepeatModeOn
+                              and keyboard.auto_repeats[keycode // 8] & (1 << (keycode % 8)))
+        if not repeat_enabled:
+            raise RuntimeError("STOP_REPEAT_STIMULUS_NOT_ESTABLISHED: repeat remains disabled")
+        raw["repeat_schedule"] = {
+            "xset_command": ["xset", "r", "rate", "100", "20"],
+            "xset_stdout": repeat_config.stdout,
+            "xset_stderr": repeat_config.stderr,
+            "xset_query_stdout": repeat_query.stdout,
+            "global_auto_repeat_enabled": keyboard.global_auto_repeat == X.AutoRepeatModeOn,
+            "key_auto_repeat_enabled": bool(keyboard.auto_repeats[keycode // 8] & (1 << (keycode % 8))),
+        }
+        win_a = root.create_window(30, 30, 240, 180, 0, screen.root_depth, X.InputOutput,
                                    X.CopyFromParent, event_mask=X.KeyPressMask | X.KeyReleaseMask)
-        win_b = root.create_window(320, 30, 240, 180, 0, screen.root_depth, X.CopyFromParent,
+        win_b = root.create_window(320, 30, 240, 180, 0, screen.root_depth, X.InputOutput,
                                    X.CopyFromParent, event_mask=X.KeyPressMask | X.KeyReleaseMask)
         win_a.map(); win_b.map(); control.sync()
         win_a.set_input_focus(X.RevertToParent, X.CurrentTime); control.sync()
-        keycode = control.keysym_to_keycode(XK.string_to_keysym(KEYSYM))
         raw["positive_control"]["keycode"] = int(keycode)
         # Establish repeat stimulus without the owner, on the isolated private display.
         positive_started = time.perf_counter_ns()
         xtest.fake_input(control, X.KeyPress, keycode); control.sync()
-        event_deadline = time.perf_counter() + .16
+        event_deadline = time.perf_counter() + .24
         while time.perf_counter() < event_deadline:
             if control.pending_events():
                 event = control.next_event()
@@ -156,16 +187,47 @@ def run(out):
 
         d_b = display.Display(display_name)
         b_id = win_b.id
-        win_b.change_attributes(event_mask=X.KeyPressMask | X.KeyReleaseMask)
         pump_started = time.perf_counter_ns()
         pump_deadline = pump_started + 5_000_000_000
         pump_thread = threading.Thread(target=lambda: pump_rows.extend(
             event_pump(d_b, b_id, pump_started, pump_stop)), daemon=True)
         pump_thread.start()
+        owner_focus_samples = []
+        owner_focus_lock = threading.Lock()
+        real_display_factory = display.Display
+
+        class TracedDisplay:
+            def __init__(self, inner):
+                self._inner = inner
+
+            def __getattr__(self, name):
+                return getattr(self._inner, name)
+
+            def get_input_focus(self):
+                started = time.perf_counter_ns()
+                reply = self._inner.get_input_focus()
+                finished = time.perf_counter_ns()
+                focus = reply.focus
+                focus_id = focus.id if hasattr(focus, "id") else focus
+                row = {"focus_id": int(focus_id), "started_ns": started, "finished_ns": finished}
+                with owner_focus_lock:
+                    owner_focus_samples.append(row)
+                return reply
+
+        def traced_display_factory(*args, **kwargs):
+            inner = real_display_factory(*args, **kwargs)
+            if threading.current_thread().name == "input-owner":
+                return TracedDisplay(inner)
+            return inner
+
+        # Observe only this owner's XGetInputFocus calls; the owner source itself is unchanged.
+        owner_module.display.Display = traced_display_factory
         owner = InputOwner(display_name)
         owner_display = display.Display(display_name)
         current_focus = owner_display.get_input_focus().focus
         expected_a = current_focus.id if hasattr(current_focus, "id") else current_focus
+        if expected_a != win_a.id:
+            raise RuntimeError("STOP_FOCUS_SETUP_INVALID: window A is not the current X11 input focus")
         lease = KeyLease(expected_a, time.perf_counter_ns() + 2_000_000_000)
         key_name = XK.keysym_to_string(control.keycode_to_keysym(keycode, 0))
         admission = owner.call("down", lease, key_name)
@@ -175,7 +237,8 @@ def run(out):
         }
         changer = display.Display(display_name)
         before = time.perf_counter_ns()
-        win_b.set_input_focus(X.RevertToParent, X.CurrentTime); changer.sync()
+        changer.create_resource_object("window", b_id).set_input_focus(X.RevertToParent, X.CurrentTime)
+        changer.sync()
         focus_sync = time.perf_counter_ns()
         focus_b = changer.get_input_focus().focus
         observed_focus_b = focus_b.id if hasattr(focus_b, "id") else focus_b
@@ -194,28 +257,17 @@ def run(out):
         if release_record is None:
             raise TimeoutError("owner did not record focus_changed release")
         # Sample the actual owner connection's focus checks as a bounded evidence trace.
-        samples = []
-        sample_d = display.Display(display_name)
-        sample_deadline = time.perf_counter_ns() + 300_000_000
-        while time.perf_counter_ns() < sample_deadline:
-            started = time.perf_counter_ns()
-            focus = sample_d.get_input_focus().focus
-            finished = time.perf_counter_ns()
-            samples.append({"focus": int(focus.id if hasattr(focus, "id") else focus),
-                            "started_ns": started, "finished_ns": finished})
-            if release_record.get("verified_ns") is not None and finished >= release_record["verified_ns"]:
-                break
-            time.sleep(.001)
+        with owner_focus_lock:
+            samples = list(owner_focus_samples)
         raw["trial"]["owner_focus_samples"] = [
-            {**s, "focus": "A" if s["focus"] == expected_a else ("B" if s["focus"] == b_id else str(s["focus"]))}
+            {"focus": "A" if s["focus_id"] == win_a.id else ("B" if s["focus_id"] == b_id else str(s["focus_id"])),
+             "started_ns": s["started_ns"], "finished_ns": s["finished_ns"]}
             for s in samples
         ]
-        release_request_ns = int(release_record.get("release_requested_ns", focus_observed_ns))
         raw["trial"]["owner_release"] = {
             "reason": "focus_changed", "keycode": int(keycode),
-            "request_ns": release_request_ns,
-            "sync_returned_ns": int(release_record["verified_ns"]),
             "verified_ns": int(release_record["verified_ns"]),
+            "verified": bool(release_record.get("verified")),
             "verified_empty": bool(release_record.get("verified") is True and not release_record.get("keys_down")),
             "keys_down": list(release_record.get("keys_down", [])),
         }
@@ -226,8 +278,9 @@ def run(out):
             "window": "B", "started_ns": int(pump_started), "stopped_ns": int(pump_stopped),
             "complete": not pump_thread.is_alive(), "events": pump_rows,
         }
-        changer.close(); sample_d.close(); owner_display.close(); d_b.close()
+        changer.close(); owner_display.close(); d_b.close()
         owner.close(); owner = None
+        owner_module.display.Display = real_display_factory
     except BaseException:
         error_text = traceback.format_exc()
         raw["error"] = error_text
@@ -241,6 +294,8 @@ def run(out):
                 raw["owner_close_verified"] = True
             except BaseException as exc:
                 raw["owner_close_error"] = repr(exc)
+        if "real_display_factory" in locals():
+            owner_module.display.Display = real_display_factory
         if control is not None:
             try:
                 control.close()
