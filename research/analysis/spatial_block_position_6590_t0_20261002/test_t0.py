@@ -1,6 +1,9 @@
 from __future__ import annotations
 
 import json
+import subprocess
+import sys
+import tempfile
 import unittest
 from copy import deepcopy
 from pathlib import Path
@@ -62,6 +65,27 @@ class SpatialBlockT0(unittest.TestCase):
         result = auditor.audit(FIXTURE, mutated)
         self.assertEqual(result["decision"], "HOLD_AUDIT_INTEGRITY")
         self.assertTrue(result["errors"])
+
+    def test_missing_spatial_block_fails_closed_instead_of_becoming_zero_rate(self):
+        mutated = deepcopy(self.raw)
+        mutated["rows"] = [row for row in mutated["rows"] if row["block_id"] != "b11"]
+        result = auditor.audit(FIXTURE, mutated)
+        self.assertEqual(result["decision"], "HOLD_AUDIT_INTEGRITY")
+        self.assertTrue(any(error.startswith("row_id_set:") for error in result["errors"]))
+        self.assertEqual(auditor._support_state(0, 0, FIXTURE["decision_gate"]), "INSUFFICIENT")
+
+    def test_candidate_help_has_no_execution_or_filesystem_side_effect(self):
+        with tempfile.TemporaryDirectory(prefix="6590-help-") as temp_dir:
+            result = subprocess.run(
+                [sys.executable, str(ROOT / "candidate.py"), "--help"],
+                cwd=temp_dir,
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn("--fixture", result.stdout)
+            self.assertEqual(list(Path(temp_dir).iterdir()), [])
 
 
 if __name__ == "__main__":
