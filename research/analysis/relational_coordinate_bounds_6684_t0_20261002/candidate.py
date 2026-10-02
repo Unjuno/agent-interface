@@ -134,4 +134,3 @@ def main(fixture_path, out_path):
 if __name__ == "__main__":
     if len(sys.argv)!=3: raise SystemExit("usage: candidate.py FIXTURE.json RAW.json")
     main(sys.argv[1],sys.argv[2])
-
