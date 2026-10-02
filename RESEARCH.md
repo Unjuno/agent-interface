@@ -1,3 +1,7 @@
+# Issue #6581 T0b: path-width constrained continuous GUI fixture (2026-10-02)
+
+One frozen OrbStack candidate and one separate raw-only Python auditor ran once; both exited 0 and the auditor returned `PASS_METHOD_SCOPED` for six authored scenarios. The identical wide/narrow pointer traces reached the same endpoint but saved only in the wide corridor; the endpoint-after-exit adversary remained unsaved. Variable-width, corner-union, and ordinary unconstrained controls matched their frozen rules. This is a synthetic fixture/oracle result only—not ordinary GUI, human/agent movement, Steering-Law, timing, benefit, or safety evidence. Construction and auditor-container launch failures are preserved; the #6581 predecessor `STOP_DATA` remains unchanged and T1 remains open. See the [report, preregistration, freeze, and checksummed formal evidence](research/analysis/path_width_continuous_gui_6581_t0b_v1/REPORT.md) and [Issue #6581](https://github.com/Unjuno/agent-interface/issues/6581).
+
 # Issue #6617 T0: revision-timed cutover (2026-10-02)
 
 ## Issue #6619 T0: action-bound visual residual (2026-10-02)
@@ -8,6 +12,10 @@ The frozen WSLc T0 compared final-only preparation, an intentionally unsafe naiv
 # Issue #6604: disturbance-timescale profile T0 (2026-10-02)
 
 Successor isolated OrbStack Docker allocation 02 returned `PASS_METHOD_SCOPED`: a pinned-image candidate emitted 14 finite synthetic rows and an independent raw-only auditor reconstructed all 14 with zero errors. The planted matrix recovered the declared crossover (slow local-periodic error 10 vs direct 16; fast-reversal direct 45 vs local 59); pooled totals selected direct 61 vs local 69, hiding its slow-stratum loss. The no-crossover pair retained one ordering, and the unobservable semantic-swap case carried no semantic-effect claim. The predecessor shared-engine allocation 01 HOLD remains unchanged. See the [retained report and outputs](research/analysis/disturbance_timescale_6604_t0_v1/REPORT.md), [exact runtime record](research/analysis/disturbance_timescale_6604_t0_v1/formal_02/RUN_RECORD.json), and [Issue #6604](https://github.com/Unjuno/agent-interface/issues/6604). This establishes a deterministic method fixture only; no real controller, GUI, task-effect, safety, latency, or product-benefit result is claimed.
+
+# Issue #6576: extreme-tail eligibility pilot A02 (2026-10-02)
+
+A dedicated OrbStack Ubuntu machine ran its own pinned-image Docker Engine; no shared Engine was used. One preregistered stationary synthetic case (4,000 train + 4,000 holdout) produced `ELIGIBLE_REFERENCE`; the candidate and independent raw-only audit each ran once and exited 0, with `PASS_METHOD_SCOPED PASS_RAW_ONLY`. The eligible-gated p99 holdout was 42/4,000 (exact 95% CI 0.00758–0.01417); the TailID-equivalent p99 was 45/4,000 (0.00822–0.01502); both include nominal 1%. This one-case pilot establishes neither superiority nor TailID parity, and makes no physical input-release, safety, or worst-case claim. The formal six-case T0 remains unrun. See the [frozen run, raw output and hashes](research/analysis/extreme_tail_eligibility_6576_construction_v1/orbstack_pilot_a02_20261002/RUN_RECORD.md), [H/T/D/C/U and frozen input](research/analysis/extreme_tail_eligibility_6576_construction_v1/orbstack_pilot_a02_20261002/PREREGISTRATION.md), and [Issue #6576](https://github.com/Unjuno/agent-interface/issues/6576).
 
 # Issue #6501 T0-01 / T0b-01: scope-typed singleflight (2026-10-02)
 
@@ -2071,6 +2079,10 @@ One OrbStack Linux/arm64 candidate and one independent raw-only auditor evaluate
 ### Issue #6222: crossed verdict repeatability T1 eligibility (2026-10-02)
 
 A read-only inventory of the retained r133 v38/v39 MAP01 episodes found complete Git-tree path/size coverage (119/120 AIT/PNG for v38; 218/218 paths for v39, with its audit-v2 documenting one unchanged-image reuse). Both final scores are non-clear outcomes; the two episodes are not one identical artifact crossed over scorers/setups/repeats, and this pass did not verify a replayable second scorer implementation. Disposition: `HOLD_T1_NO_CROSSABLE_PANEL` for this bounded corpus only. No scorer, model, GUI, or live task was invoked. See [the frozen inputs and report](research/analysis/crossed_verdict_repeatability_6222_t1_eligibility_20261002_01/REPORT.md).
+
+## Issue #6222 T0 publication integrity — HOLD
+
+The retained CPU-only synthetic T0 contains 288 crossed observations and a nominal method-scoped audit, but independent Git-blob SHA-256 review found four of seven manifested output files mismatched (udit.json, uditor.stdout.txt, candidate.stdout.txt, and RUN.json). Original contemporaneous bytes were unavailable; the consumed run was not regenerated or rerun. Preserve the package as HOLD_ARTIFACT_HASH_MISMATCH, not an integrity-verified PASS. This is distinct from the bounded T1 eligibility HOLD and does not resolve the open repeatability hypothesis. See [preservation qualification](research/analysis/crossed_verdict_repeatability_6222_t0_20261001_01/PRESERVATION_QUALIFICATION.md), [original report](research/analysis/crossed_verdict_repeatability_6222_t0_20261001_01/REPORT.md), and [Issue #6222](https://github.com/Unjuno/agent-interface/issues/6222).
 
 # Issue #6524: typed quantity-effect oracle T0 (2026-10-02)
 
