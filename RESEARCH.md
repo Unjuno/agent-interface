@@ -28,6 +28,16 @@ equivalent at the preregistered tolerances. This remains synthetic method
 evidence only; the formal six-case T0 and physical release/safety evidence are
 still unestablished. See the additive [A03](research/analysis/extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a03_20261002/RUN_RECORD.md), [A04](research/analysis/extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a04_20261002/RUN_RECORD.md), and [A05](research/analysis/extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a05_20261002/RUN_RECORD.md) run records.
 
+Follow-up optimizer-sensitivity successors A06/A07 each retained a distinct
+infrastructure/auditor STOP without retry. A08 then completed on six new
+synthetic fixtures with independent raw-only audit: alternative converged R
+starts crossed the frozen sensitivity gate on 4/6, while default R/Python
+parameter parity passed 6/6. This makes optimizer-path sensitivity a plausible
+contributor to A05's isolated mismatch, but does not establish that causal
+explanation or a global MLE. All three run packages, failed starts, raw outputs
+and hashes are retained separately; formal six-case T0 and physical release
+evidence remain pending.
+
 # Issue #6501 T0-01 / T0b-01: scope-typed singleflight (2026-10-02)
 
 T0-01 is preserved as `STOP_OUTPUT_SERIALIZATION` / `NOT_EVALUATED`: the candidate ran once, the independent auditor ran once, retries were zero, and the wrapper's literal backslash-n caused JSON parsing to fail. No raw auditor result exists. The original STOP and receipts are immutable in [the predecessor package](research/analysis/scope_typed_singleflight_6501_t0_20261002/REPORT.md).
