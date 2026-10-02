@@ -1,0 +1,11 @@
+{
+  "schema": "planner-hysteresis-effect-cases-v1",
+  "mode_encoding": {"0": "LOCAL", "1": "ESCALATED"},
+  "cases": [
+    {"id":"B1", "purpose":"benign_extra_escalation", "symbols":[3,2,2], "allowed_modes":[[0,1],[0,1],[0,1]], "effect_if_valid":"completed", "effect_if_invalid":"blocked", "boundary_cost":1},
+    {"id":"H1", "purpose":"harmful_required_local_continuation", "symbols":[3,2,2], "required_modes":[1,0,0], "effect_if_valid":"completed", "effect_if_invalid":"blocked", "boundary_cost":1},
+    {"id":"P1", "purpose":"unsafe_prefix_same_terminal", "symbols":[3,2,2,1], "required_modes":[1,0,0,0], "prefix_forbidden":[1], "effect_if_valid":"completed", "effect_if_invalid":"completed", "boundary_cost":1},
+    {"id":"S1", "purpose":"stale_unknown_rebootstrap", "symbols":[3,5,2], "required_modes":[1,1,0], "effect_if_valid":"completed", "effect_if_invalid":"blocked", "boundary_cost":1},
+    {"id":"C1", "purpose":"no_op_escalation_real_cost", "symbols":[3,2,2,3], "required_modes":[0,0,0,0], "effect_if_valid":"completed", "effect_if_invalid":"blocked", "boundary_cost":1}
+  ]
+}
