@@ -139,8 +139,11 @@ def _bisect_probability(function, target: float, *, increasing: bool) -> float:
 
 
 def _score_prediction(rows: list[dict], fit: dict, nominal: float) -> dict:
+    uncensored_count = sum(not r["censored"] for r in rows)
+    if any(r["censored"] for r in rows):
+        return {"exceedances": None, "n_uncensored": uncensored_count, "cp95": None, "nominal_in_cp95": None, "reason": "NOT_ESTIMABLE_CENSORED_HOLDOUT"}
     if fit.get("status") != "ESTIMATED":
-        return {"exceedances": None, "n_uncensored": sum(not r["censored"] for r in rows), "cp95": None, "nominal_in_cp95": None}
+        return {"exceedances": None, "n_uncensored": uncensored_count, "cp95": None, "nominal_in_cp95": None, "reason": fit.get("reason", "NOT_ESTIMABLE_PREDICTION")}
     predicted = fit["p99"]
     eligible_rows = [r for r in rows if not r["censored"]]
     count = sum(r["latent"] > predicted for r in eligible_rows)
@@ -187,7 +190,9 @@ def run(source: Path) -> dict:
             "status": "ESTIMATED",
             "p99_by_mode": {mode: fit["p99"] for mode, fit in gated["by_mode"].items() if fit.get("status") == "ESTIMATED"},
         } if gated["status"] == "ESTIMATED" and all(fit.get("status") == "ESTIMATED" for fit in gated["by_mode"].values()) else {"status": "NOT_ESTIMABLE"}
-        if gated_fit["status"] == "ESTIMATED":
+        if any(r["censored"] for r in holdout):
+            gated_score = {"exceedances": None, "n_uncensored": sum(not r["censored"] for r in holdout), "by_mode": None, "cp95": None, "nominal_in_cp95": None, "reason": "NOT_ESTIMABLE_CENSORED_HOLDOUT"}
+        elif gated_fit["status"] == "ESTIMATED":
             gate_counts = {mode: sum(not r["censored"] and r["latent"] > gated_fit["p99_by_mode"][mode] for r in holdout if r["mode"] == mode) for mode in gated_fit["p99_by_mode"]}
             gate_sample_counts = {mode: sum(not r["censored"] and r["mode"] == mode for r in holdout) for mode in gated_fit["p99_by_mode"]}
             total_count = sum(gate_counts.values())
@@ -195,7 +200,7 @@ def run(source: Path) -> dict:
             gate_interval = _clopper_pearson(total_count, total_n)
             gated_score = {"exceedances": total_count, "n_uncensored": total_n, "by_mode": {mode: {"exceedances": gate_counts[mode], "n_uncensored": gate_sample_counts[mode], "cp95": list(_clopper_pearson(gate_counts[mode], gate_sample_counts[mode])), "nominal_in_cp95": _clopper_pearson(gate_counts[mode], gate_sample_counts[mode])[0] <= config["nominal_exceedance_probability"] <= _clopper_pearson(gate_counts[mode], gate_sample_counts[mode])[1]} for mode in gate_counts}, "cp95": list(gate_interval), "nominal_in_cp95": gate_interval[0] <= config["nominal_exceedance_probability"] <= gate_interval[1]}
         else:
-            gated_score = {"exceedances": None, "n_uncensored": sum(not r["censored"] for r in holdout), "by_mode": None, "cp95": None, "nominal_in_cp95": None}
+            gated_score = {"exceedances": None, "n_uncensored": sum(not r["censored"] for r in holdout), "by_mode": None, "cp95": None, "nominal_in_cp95": None, "reason": gated.get("reason", "NOT_ESTIMABLE_PREDICTION")}
         scores = {
             "naive_evt": _score_prediction(holdout, naive, config["nominal_exceedance_probability"]),
             "eligible_gated_evt": gated_score,

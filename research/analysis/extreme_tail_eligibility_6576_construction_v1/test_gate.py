@@ -31,7 +31,7 @@ class GateConstructionTests(unittest.TestCase):
         row["temporal_stability"] = False
         self.assertEqual(decide(row), "NOT_ESTIMABLE_NONSTATIONARY")
 
-    def test_declared_mode_with_too_few_independent_tail_events_is_not_estimable(self):
+    def test_declared_mode_with_too_few_observed_tail_events_is_not_estimable(self):
         row = copy.deepcopy(REFERENCE)
         row["mode_manifest"] = ["normal", "cleanup"]
         row["observed_modes"] = ["normal", "cleanup"]

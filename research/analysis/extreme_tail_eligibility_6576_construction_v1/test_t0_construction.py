@@ -7,6 +7,7 @@ from research.analysis.extreme_tail_eligibility_6576_construction_v1.t0_audit im
 )
 from research.analysis.extreme_tail_eligibility_6576_construction_v1.t0_candidate import (
     _clopper_pearson,
+    _score_prediction,
     generate,
 )
 
@@ -50,6 +51,15 @@ class T0ConstructionTests(unittest.TestCase):
                 oracle = _oracle_cp95(count, 4000)
                 self.assertAlmostEqual(candidate[0], oracle[0], places=12)
                 self.assertAlmostEqual(candidate[1], oracle[1], places=12)
+
+    def test_censored_holdout_is_not_scored_as_uncensored_population(self):
+        rows = [{"latent": 0.5, "censored": False}, {"latent": 9.0, "censored": True}]
+        fit = {"status": "ESTIMATED", "p99": 1.0}
+        score = _score_prediction(rows, fit, 0.01)
+        self.assertIsNone(score["exceedances"])
+        self.assertIsNone(score["cp95"])
+        self.assertEqual(score["n_uncensored"], 1)
+        self.assertEqual(score["reason"], "NOT_ESTIMABLE_CENSORED_HOLDOUT")
 
 
 if __name__ == "__main__":

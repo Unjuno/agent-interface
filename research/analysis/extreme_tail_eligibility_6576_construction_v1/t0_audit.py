@@ -163,6 +163,10 @@ def audit(config_path: Path, result_path: Path) -> tuple[bool, str]:
             holdout = output["raw_holdout"]
             uncensored = [r for r in holdout if not r["censored"]]
             score = output.get("holdout_scores", {}).get(key, {})
+            if len(uncensored) != len(holdout):
+                if score.get("exceedances") is not None or score.get("n_uncensored") != len(uncensored) or score.get("cp95") is not None or score.get("nominal_in_cp95") is not None or score.get("reason") != "NOT_ESTIMABLE_CENSORED_HOLDOUT":
+                    return False, f"FAIL_CENSORED_HOLDOUT_SCORED:{case['case_id']}:{key}"
+                continue
             if estimator == "eligible_gated_evt" and gated.get("status") == "ESTIMATED":
                 by_mode = gated.get("by_mode", {})
                 if set(by_mode) != set(case["declared_modes"]) or any(f.get("status") != "ESTIMATED" for f in by_mode.values()):
