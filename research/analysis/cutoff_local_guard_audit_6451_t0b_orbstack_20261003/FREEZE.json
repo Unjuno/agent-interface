@@ -1,0 +1,60 @@
+{
+  "schema": "cutoff-local-rd-t0b-freeze-v1",
+  "issue": 6451,
+  "allocation": "CUTOFF-LOCAL-GUARD-AUDIT-6451-T0B-ORB-20261003-01",
+  "frozen_base_commit": "511ff52b05ed852e9ebd03e20ee1f2b766ab0e04",
+  "predecessor": {
+    "pr": 6476,
+    "commit": "840b62a7309e86b6b7fbbc43a9a71daac2758974",
+    "allocation": "CUTOFF-LOCAL-GUARD-AUDIT-6451-T0-20261002-01",
+    "disposition": "STOP_RAW_OUTPUT_NOT_RETAINED",
+    "candidate_invocations": 1,
+    "auditor_invocations": 0,
+    "retries": 0,
+    "unmodified": true
+  },
+  "invocation_budget": {"candidate": 1, "auditor": 1, "retries": 0},
+  "cases_sha256": "149e857b66cefbd30d8c62c91017ae116f18354d370b85523574994d96e2fc95",
+  "candidate_sha256": "827e0f6f037c6bfee491a3f6159ef4c0e6c3e5dfac95faa070506756838b0047",
+  "auditor_sha256": "360920d250e1fa01fe0a5112d0a2eaac4899f1973bba4edbaa2968387e62b534",
+  "test_sha256": "eb817e48923af161979faa22290577ab516eb267944f02abe3d6d7f42f7c71ad",
+  "workflow_sha256": "75818e3f9b6f00a7daf85a095901607277470b3fbf64c4709c11d158cc2d0919",
+  "frozen_design": {
+    "cases": 6,
+    "bandwidth": 2.5,
+    "expected_decisions": ["ESTIMATE_LOCAL", "ESTIMATE_LOCAL", "REFUSE_SORTING", "REFUSE_COINCIDENT_TRANSITION", "REFUSE_TIMESTAMP_HEAPING", "ESTIMATE_LOCAL_FUZZY"],
+    "valid_local_effect": 2.0,
+    "smooth_zero_effect": 0.0,
+    "fuzzy_first_stage": 0.5,
+    "fuzzy_local_effect": 2.0,
+    "corruption_controls": 5
+  },
+  "runtime": {
+    "engine": "OrbStack Docker Engine (verify immediately before run)",
+    "platform": "linux/arm64",
+    "image": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "pull": "never",
+    "network": "none",
+    "read_only_rootfs": true,
+    "read_only_source": true,
+    "cpus": 1,
+    "memory_bytes_configured": 536870912,
+    "pids_limit": 64,
+    "cap_drop": ["ALL"],
+    "no_new_privileges": true,
+    "user": "1000:1000",
+    "candidate_output": "results/candidate/",
+    "auditor_output": "results/audit/",
+    "auditor_raw_input_read_only": true
+  },
+  "preformal": {
+    "construction_tests": "5/5 PASS",
+    "full_local_ci": "19 commands / 114 tests PASS",
+    "analysis_index_directories": 553,
+    "analysis_index": "PASS",
+    "py_compile": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "scope": "Synthetic six-case identification-method fixture only; no live optional GUI threshold, treatment effect, safety, user or product conclusion.",
+  "status": "FROZEN_PRE_RUN"
+}
