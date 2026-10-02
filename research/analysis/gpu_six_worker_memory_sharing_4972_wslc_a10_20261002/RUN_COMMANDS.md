@@ -8,7 +8,7 @@ This is a one-shot recipe. Do not run without an exact coordinator assignment fo
 2. Read current main SHA; it must equal `FREEZE.json`. The helper rechecks this with `git ls-remote` and stops if main moved.
 3. Confirm no branch/path/PR/output collision, no running or unknown-owned WSLc container, cached exact PyTorch digest/ID/platform, and current WSLc 3.0.1.0. The helper verifies the main/image/inventory/output gates and exact coordinator comment URL/time interval.
 4. Query the Windows-host RTX 3080 with `nvidia-smi`; identity must match and free VRAM must be >=10 GiB. Inspect the process list and resolve ownership. Unknown owner or unstable capacity means STOP. Do not stop or alter another process/container.
-5. Run the standard-library construction suite before the formal window. These host-only tests do not invoke CUDA or a container.
+5. Run the host standard-library construction suite before the formal window. It passes 9/9 without CUDA/container activity. The formal helper repeats the same suite inside a CPU-only WSLc container during the assigned window and tests that UID 65534 can read the source mount and write only to the dedicated output mount; both must pass before the GPU candidate is launched.
 
 ## Invocation
 
@@ -21,7 +21,7 @@ Invoke the script exactly once using the exact comment URL and UTC interval assi
   -LeaseEndUtc '<assigned-end-ISO-8601-Z>'
 ```
 
-The script captures a separate Windows-host `nvidia-smi` CSV sampler at 1 Hz; it launches one WSLc candidate with network disabled, GPU pass-through, the exact cached digest, unprivileged UID, read-only source/sample binds and a fresh candidate-output bind. It records exact argv, stdout/stderr, exit code, initial GPU/inventory/image/main snapshots and the coordinator lease reference. The candidate has six spawned GPU workers, a six-way barrier, 20 integer increments and a bounded 110-second worker deadline.
+The script first invokes one CPU-only WSLc construction container and records its tests/write-probe output. It then captures a separate Windows-host `nvidia-smi` CSV sampler at 1 Hz and launches one WSLc candidate with network disabled, GPU pass-through, the exact cached digest, unprivileged UID, read-only source/sample binds and a fresh candidate-output bind. It records exact argv, stdout/stderr, exit code, initial GPU/inventory/image/main snapshots and the coordinator lease reference. The candidate has six spawned GPU workers, a six-way barrier, 20 integer increments and a bounded 110-second worker deadline.
 
 Only after candidate exit 0 and a fresh empty WSLc inventory check does the script launch a separate WSLc CPU-only, network-disabled raw auditor. Candidate or auditor nonzero exits are terminal for this allocation; retries and seed substitution are forbidden. If the candidate exits nonzero, auditor is skipped. If an owned/unknown container remains, do not stop or delete it; preserve evidence and report HOLD/STOP.
 

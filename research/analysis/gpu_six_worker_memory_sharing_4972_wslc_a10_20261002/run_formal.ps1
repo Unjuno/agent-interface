@@ -26,7 +26,7 @@ if (Test-Path -LiteralPath $OutputRoot) { throw 'STOP: formal output path alread
 $freezePath = Join-Path $Source 'FREEZE.json'
 $freeze = Get-Content -LiteralPath $freezePath -Raw | ConvertFrom-Json
 if ($freeze.allocation -ne $Allocation -or $freeze.runtime.image -ne $Image) { throw 'STOP: freeze identity mismatch.' }
-foreach ($name in @('runner.py', 'audit.py', 'test_audit.py')) {
+foreach ($name in @('construction_check.py', 'runner.py', 'audit.py', 'test_audit.py')) {
     $expected = $freeze.source.$name
     $actual = (Get-FileHash -LiteralPath (Join-Path $Source $name) -Algorithm SHA256).Hash.ToLowerInvariant()
     if ($actual -ne $expected) { throw "STOP: frozen source hash mismatch for $name." }
@@ -66,7 +66,8 @@ if ($null -eq $drive -or $drive.Free -lt 1GB) { throw 'STOP: insufficient/unknow
 New-Item -ItemType Directory -Path $OutputRoot | Out-Null
 $candidateOut = Join-Path $OutputRoot 'candidate'
 $auditOut = Join-Path $OutputRoot 'audit'
-New-Item -ItemType Directory -Path $candidateOut, $auditOut | Out-Null
+$constructionOut = Join-Path $OutputRoot 'construction'
+New-Item -ItemType Directory -Path $candidateOut, $auditOut, $constructionOut | Out-Null
 $inventory | Set-Content -LiteralPath (Join-Path $OutputRoot 'containers_before.txt') -Encoding Ascii
 $info | Set-Content -LiteralPath (Join-Path $OutputRoot 'wslc_info.txt') -Encoding Ascii
 $imageInfoText | Set-Content -LiteralPath (Join-Path $OutputRoot 'image_inspect.json') -Encoding Ascii
@@ -80,6 +81,27 @@ $currentMain | Set-Content -LiteralPath (Join-Path $OutputRoot 'current_main.txt
     invocation_utc = $now.ToString('o')
     gpu_query = $gpuLine
 } | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath (Join-Path $OutputRoot 'gate.json') -Encoding Ascii
+
+$constructionArgs = @(
+    'run', '--rm', '--pull', 'never', '--network', 'none', '--cpus', '1', '--memory', '1G',
+    '--user', '65534:65534', '--mount', "type=bind,source=$Source,target=/src,readonly",
+    '--mount', "type=bind,source=$constructionOut,target=/construction",
+    '--env', 'PYTHONDONTWRITEBYTECODE=1', $Image, 'python', '/src/construction_check.py',
+    '/construction/write_probe.txt'
+)
+$constructionArgs | ConvertTo-Json -Depth 3 | Set-Content -LiteralPath (Join-Path $OutputRoot 'construction_argv.json') -Encoding Ascii
+& $Wslc @constructionArgs 1> (Join-Path $OutputRoot 'construction.stdout.txt') 2> (Join-Path $OutputRoot 'construction.stderr.txt')
+$constructionExit = $LASTEXITCODE
+Set-Content -LiteralPath (Join-Path $OutputRoot 'construction.exit') -Value $constructionExit -Encoding Ascii
+if ($constructionExit -ne 0 -or -not (Test-Path -LiteralPath (Join-Path $constructionOut 'write_probe.txt'))) {
+    throw 'STOP: WSLc construction suite or unprivileged output-bind probe failed; candidate not launched.'
+}
+$postConstructionInventory = @(& $Wslc list --all 2>&1 | Where-Object { $_.ToString().Trim() -ne '' })
+$postConstructionInventory | Set-Content -LiteralPath (Join-Path $OutputRoot 'containers_after_construction.txt') -Encoding Ascii
+if ($LASTEXITCODE -ne 0 -or $postConstructionInventory.Count -ne 1) {
+    throw 'STOP: WSLc inventory not empty after construction --rm container; candidate not launched.'
+}
+
 $samplesPath = Join-Path $OutputRoot 'host_gpu_samples.csv'
 $samplerError = Join-Path $OutputRoot 'host_sampler.stderr.txt'
 $stdout = Join-Path $OutputRoot 'candidate.stdout.txt'

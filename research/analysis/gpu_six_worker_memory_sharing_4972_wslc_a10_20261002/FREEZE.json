@@ -32,17 +32,20 @@
     "maximum_aggregate_allocator_peak_bytes": 8589934592
   },
   "source_sha256": {
+    "construction_check.py": "8b86555187bde45e91e6a4202fcb5e6cf6c7ae84c8918b30be2fc309d498ac46",
     "runner.py": "94812f21080d6915c375019e7a6d6743ca69ca5ebbe193734667ff5694e12fd1",
     "audit.py": "006c477d50795354326d55a38e36b437b761a4a08b30fea0af268ce894215eea",
     "test_audit.py": "45f78bc670fcc2474fd859b60090506854b69760635e5cf6fdffabe0ee39f7cd",
-    "run_formal.ps1": "7f4052241cc71df8190f3a1f9b8498205746a6f91e3f0bd306d032571082a81b"
+    "run_formal.ps1": "0de59605f299f5cb3dd30f391cbb2a741e35a0c2696a2799fd8c8db98354b75e"
   },
   "construction_tests": {
     "runtime": "local Python 3 standard library; preparation only",
+    "wslc_construction_container": 0,
     "passed": 9,
     "failed": 0
   },
   "invocations_at_freeze": {
+    "construction_container": 0,
     "candidate_container": 0,
     "cuda_worker": 0,
     "auditor_container": 0,

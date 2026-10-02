@@ -12,7 +12,7 @@ This new allocation uses native Microsoft WSL Containers (`wslc.exe`), not the P
 
 ## Construction evidence
 
-Host-only standard-library construction suite: 9/9 passed, covering six-worker checksum reconstruction, malformed/duplicate worker rejection, memory thresholds, the four frozen mutation controls, and independent host telemetry parsing. Python AST parsing passed. These tests are preparation only; no CUDA call or container run is implied.
+Host-only standard-library construction suite: 9/9 passed, covering six-worker checksum reconstruction, malformed/duplicate worker rejection, memory thresholds, the four frozen mutation controls, and independent host telemetry parsing. Python AST and PowerShell parser checks passed. The formal helper will repeat the suite plus a read/write-bind probe in one CPU-only WSLc construction container inside the assigned window; that WSLc construction container has not run yet. These tests are preparation only; no CUDA call or container run is implied.
 
 ## Resource and invocation status
 
