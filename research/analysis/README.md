@@ -1,5 +1,6 @@
 # Analytical research
 
+- [`wslc_control_plane_survivability_6669_t0_20261002/REPORT.md`](wslc_control_plane_survivability_6669_t0_20261002/REPORT.md) — Issue #6669 source/runtime applicability audit: `HOLD_APPLICABILITY_UNRESOLVED`; no WSLc pressure or survival claim.
 - [`observable_quiescence_6664_t0_v1/REPORT.md`](observable_quiescence_6664_t0_v1/REPORT.md) — Issue #6664 finite handoff protocol T0: 1,191 schedules independently audited; accounted quiescence had 0 false certificates (128 horizon certificates, all other cases UNKNOWN); epoch-only and fixed-delay comparators had 3,445 and 2,254 false certificates. No GUI/backend safety claim.
 - [`path_width_continuous_gui_6581_t0b_v1/REPORT.md`](path_width_continuous_gui_6581_t0b_v1/REPORT.md) — Issue #6581 synthetic path-width GUI fixture; six scenarios independently audited `PASS_METHOD_SCOPED`; no ordinary-GUI or human/agent transfer claim.
 - [`spatial_block_position_6590_t1_geometry_design_v2/REPORT.md`](spatial_block_position_6590_t1_geometry_design_v2/REPORT.md) — #6590 preformal geometry screen: 80×60 remains below the four-block floor; 112×84 provides 19/16/20/16 eligible unique centers and passes an independent finite audit. No image/model/container run; formal T1 still held on OrbStack API readiness.
@@ -517,7 +518,6 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`prefix_responsive_counterparty_6327_t0_v1/`](prefix_responsive_counterparty_6327_t0_v1/)
 - [`prefix_stability_6689_local_allocation01_20261002/`](prefix_stability_6689_local_allocation01_20261002/)
 - [`prefix_stability_6689_t0_20261002/`](prefix_stability_6689_t0_20261002/)
-- [`preview_constraint_parity_6565_t0_20261002/`](preview_constraint_parity_6565_t0_20261002/)
 - [`primary_refusal_terminality_59_spine07_20261001/`](primary_refusal_terminality_59_spine07_20261001/)
 - [`primary_refusal_terminality_59_t0_20261001/`](primary_refusal_terminality_59_t0_20261001/)
 - [`priority_inheritance_nested_5370_t6_20261001/`](priority_inheritance_nested_5370_t6_20261001/)
@@ -684,6 +684,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`voi_option_5306_t1/`](voi_option_5306_t1/)
 - [`wake_fence_6331_t0_v1/`](wake_fence_6331_t0_v1/)
 - [`worker_aging_6133_t1c_20261002/`](worker_aging_6133_t1c_20261002/)
+- [`wslc_control_plane_survivability_6669_t0_20261002/`](wslc_control_plane_survivability_6669_t0_20261002/)
 - [`x11_adaptation_multiseed_2459_v1/`](x11_adaptation_multiseed_2459_v1/)
 - [`x11_augmentation_fail_2394_v1/`](x11_augmentation_fail_2394_v1/)
 - [`x11_backend_process_restart_2437_v3/`](x11_backend_process_restart_2437_v3/)
