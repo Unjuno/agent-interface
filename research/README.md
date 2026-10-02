@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #6403 control-opportunity attribution T0: [`analysis/control_opportunity_attribution_6403_t0_v1/REPORT.md`](analysis/control_opportunity_attribution_6403_t0_v1/REPORT.md) — synthetic method pass; human responsibility attribution remains untested.
+
 | Need | Entry point |
 |---|---|
 | Evidence ledger and claims taxonomy | [../RESEARCH.md](../RESEARCH.md) |
