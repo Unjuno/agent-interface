@@ -1,12 +1,12 @@
 # Research and idea Issue index
 
-Last reconciled: 2026-10-02 (Asia/Tokyo). Retrieved every page of the GitHub Issues API in ascending creation order for `Unjuno/agent-interface`, all states, then removed pull requests. The snapshot contained 2,527 unique Issues and no duplicate Issue numbers.
+Last reconciled: 2026-10-02 (Asia/Tokyo). Retrieved every page of the GitHub Issues API in ascending creation order for `Unjuno/agent-interface`, all states, then removed pull requests. The snapshot contained 2528 unique Issues and no duplicate Issue numbers.
 
 ## Coverage and limits
 
-This index contains 1677 Issues (1136 open, 541 closed) selected when either the Issue has the `research` label or its title contains an explicit `research`, `idea`, `successor`, or `experiment` term. It includes direct proposals plus many validation, audit, coordination, and successor records.
+This index contains 1678 Issues (1137 open, 541 closed) selected when either the Issue has the `research` label or its title contains an explicit `research`, `idea`, `successor`, or `experiment` term. It includes direct proposals plus many validation, audit, coordination, and successor records.
 
-This is a broad discovery index, not a guarantee that every repository idea has a title or label matching the filter. The other Issues are not assumed to be non-ideas; search them when linked lineage points outside this table and add any missed idea. The curated [ideas and outcomes page](IDEAS_AND_OUTCOMES.md) explains selected idea clusters and verified dispositions. [RESEARCH.md](../RESEARCH.md), Issues, PRs, and reports remain evidence authorities.
+This is a broad discovery index, not a guarantee that every repository idea has a title or label matching the filter. Other Issues are not assumed to be non-ideas; search them when linked lineage points outside this table and add any missed idea. The curated [ideas and outcomes page](IDEAS_AND_OUTCOMES.md) explains selected idea clusters and verified dispositions. [RESEARCH.md](../RESEARCH.md), Issues, PRs, and reports remain evidence authorities.
 
 Open is workflow state, not “no result”; open Issues may contain scoped results. Closed is not PASS. Outcome markers below are literal words found in an Issue body and may be proposed gates, not achieved outcomes. Read each linked Issue's result section. Predecessor extraction is heuristic and can miss references.
 
@@ -14,6 +14,7 @@ Open is workflow state, not “no result”; open Issues may contain scoped resu
 
 | Issue | Title | GitHub state / closed date | Literal outcome markers* | Linked predecessor(s)** |
 |---|---|---|---|---|
+| [#6383](https://github.com/Unjuno/agent-interface/issues/6383) | [Research] Human mode awareness of the agent autonomy envelope before effects | open | FAIL_METHOD, HOLD | — |
 | [#6380](https://github.com/Unjuno/agent-interface/issues/6380) | [Research] Counterexample-driven elicitation of unstated task constraints before effect contracts | open | FAIL_METHOD, HOLD | — |
 | [#6373](https://github.com/Unjuno/agent-interface/issues/6373) | [Research Idea] Context-preserving delegation: restore caller-visible state after successful System-1 execution | open | PASS_METHOD_SCOPED, FAIL_METHOD, UNCERTAIN | — |
 | [#6367](https://github.com/Unjuno/agent-interface/issues/6367) | [Research] Matched exposed-success audit of protective local adaptation | open | PASS, HOLD_RETROSPECTIVE_ONLY, FAIL_SAFETY | — |
