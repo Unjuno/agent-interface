@@ -2,7 +2,7 @@
   "schema": "unjuno.raw-only-audit-freeze.v1",
   "issue": 6410,
   "allocation": "NEEDLE-ROLE-SKILL-LIFECYCLE-WSLC-6410-AUDIT-20261002-02",
-  "base_commit": "83e052c51fc5146b99e67645551f537ae322a21b",
+  "base_commit": "ad6bf3f1a5087c512a039c73739897a989e1e488",
   "branch": "research/needle-role-skill-lifecycle-6410-audit-20261002",
   "path": "research/analysis/needle_role_skill_lifecycle_6410_audit_20261002/",
   "question": "Independently reconstruct and adjudicate the unchanged candidate raw retained by Issue #6410 without invoking candidate, model, optimizer, or timing workloads.",
@@ -32,7 +32,15 @@
     "blocks": 15,
     "requests_per_arm_per_block": 1000,
     "request_schedule": "role i mod 3; per-role row (37*i+11) mod 4096",
-    "mutation_controls": ["prediction", "truncate", "block", "allocation", "source", "schedule", "duration"],
+    "mutation_controls": [
+      "prediction",
+      "truncate",
+      "block",
+      "allocation",
+      "source",
+      "schedule",
+      "duration"
+    ],
     "independence": "scalar float32 reconstruction from raw tensors and frozen input; no import of candidate.py, failed audit.py, or candidate prediction outputs as oracle"
   },
   "runtime": {
