@@ -5,6 +5,8 @@ Shared by the native research callers and portable Python API; X11 only.
 """
 from __future__ import annotations
 
+from contextlib import contextmanager
+from copy import deepcopy
 import hashlib
 import io
 import json
@@ -47,6 +49,10 @@ class _GuardedBackend(X11Backend):
         # Do not refocus automatically: release remains possible after focus loss.
         if down and self.owner.active is not None and not self.owner._focus_within_target():
             raise X11BackendError('focused window is outside guarded target before key press')
+        if (down and self.owner.active is not None
+                and getattr(self.owner, '_input_guard', None) is not None
+                and self.owner.active[0] == self.owner._input_guard['alias']):
+            self.owner.check('before_key_press:' + str(key))
         return super().key_state(key, down)
 
     def _wait_update(self, timeout_ms):
@@ -97,6 +103,8 @@ class NativeHandleBridge:
         self.history = ObservationHistory()
         self.checks = []
         self.active = None
+        self._input_guard = None
+        self.additional_checks = []
         self.moved_point = None
         self.deadline = None
         self.review_required = False
@@ -388,6 +396,72 @@ class NativeHandleBridge:
         self._save('feedback-' + uuid.uuid4().hex + '.json', row)
         return row
 
+    @contextmanager
+    def input_guard(self, alias, offset, *, tail, verify):
+        """Explicit additional check for one frozen keyboard program.
+
+        Trusted synchronous caller code, never authority or automatic renewal.
+        The caller serializes this context with all other use of the owner.
+        The callback must return exactly True; releases always bypass it.
+        """
+        if self.active is not None or getattr(self, '_input_guard', None) is not None:
+            raise RuntimeError('input guard requires an idle, unguarded bridge')
+        if self.review_required or self.session.recovery_required:
+            raise RuntimeError('input guard requires reviewed, recovered bridge')
+        if (not isinstance(alias, str) or not alias or not isinstance(offset, list)
+                or len(offset) != 2 or any(type(v) is not int or v < 0 for v in offset)
+                or not isinstance(tail, (list, tuple)) or not tail or not callable(verify)):
+            raise ValueError('explicit alias, integer offset, frozen tail and callable check required')
+        self._input_guard = {'alias':alias, 'offset':deepcopy(offset),
+                             'tail':deepcopy(list(tail)), 'verify':verify,
+                             'scope':self.scope, 'revision':self.binding_revision}
+        try:
+            yield
+        finally:
+            self._input_guard = None
+
+    def _check_additional_input(self, stage, observation):
+        guard = getattr(self, '_input_guard', None)
+        if guard is None or self.active[0] != guard['alias']:
+            return
+        sequence = self.sequence
+        active, deadline = deepcopy(self.active), self.deadline
+        source, image = self.history[sequence]
+        row = {'stage':stage, 'observation_sequence':sequence,
+               'scope':self.scope, 'binding_revision':self.binding_revision,
+               'started_ns':time.monotonic_ns(), 'eligible':False,
+               'authority_granted':False}
+        try:
+            if self.scope != guard['scope'] or self.binding_revision != guard['revision']:
+                raise X11BackendError('input guard binding changed')
+            decision = guard['verify'](stage, deepcopy(source), image.copy())
+            if decision is not True:
+                raise X11BackendError('additional input dependency refused')
+            if (self.sequence != sequence or self.active != active
+                    or self.deadline != deadline or self._input_guard is not guard
+                    or self.scope != guard['scope']
+                    or self.binding_revision != guard['revision']
+                    or self._binding() != observation['pointer_binding']
+                    or not self._focus_within_target()
+                    or self.review_required or self.session.recovery_required):
+                raise X11BackendError('input guard association changed during check')
+            if self.deadline is not None and time.monotonic_ns() >= self.deadline:
+                raise X11BackendError('input guard lease expired during check')
+            # The trusted callback can consume the captured source's freshness
+            # budget. Re-resolve against the same RGB/history at the new time;
+            # no recapture, renewal or callback retry is allowed here.
+            after = self.store.resolve_point(self.active[0], self.active[1], observation,
+                image, time.monotonic_ns(), session_scope=self.scope)
+            if not after['eligible']:
+                raise X11BackendError('native target guard expired during additional check: ' + after['status'])
+            row['eligible'] = True
+        except Exception as error:
+            row['error'] = repr(error)
+            raise X11BackendError('additional input dependency unavailable: ' + repr(error)) from error
+        finally:
+            row['ended_ns'] = time.monotonic_ns()
+            self.additional_checks.append(row)
+
     def check(self, stage):
         if self.active is None:
             raise X11BackendError("no active native target guard")
@@ -402,6 +476,7 @@ class NativeHandleBridge:
             raise X11BackendError("native target guard refused: " + outcome["status"])
         if self.deadline is not None and time.monotonic_ns() >= self.deadline:
             raise X11BackendError("native target guard lease expired during capture")
+        self._check_additional_input(stage, observation)
         return outcome
 
     def click(self, alias, offset, *, tail=(), expires_at_ns=None):
@@ -427,6 +502,14 @@ class NativeHandleBridge:
             row = {'status': 'refused', 'error': 'WINDOW_REVIEW_REQUIRED', 'input_dispatched': False}
             self._save('result-' + uuid.uuid4().hex + '.json', row)
             return row
+        guard = getattr(self, '_input_guard', None)
+        protected = guard is not None and alias == guard['alias']
+        if protected:
+            if self.scope != guard['scope'] or self.binding_revision != guard['revision']:
+                raise X11BackendError('input guard binding changed before dispatch')
+            if (interaction != 'keyboard' or offset != guard['offset']
+                    or list(tail) != guard['tail']):
+                raise ValueError('protected input differs from frozen keyboard program')
         # An outer method may shorten, never renew, this input lease. The caller
         # must use this process's monotonic clock domain (not wall-clock time).
         if expires_at_ns is not None:
@@ -449,6 +532,7 @@ class NativeHandleBridge:
             raise ValueError('keyboard continuation requires explicit keyboard input')
         self.active = (alias, offset)
         self.checks = []
+        self.additional_checks = []
         self.deadline = time.monotonic_ns() + 5_000_000_000
         if expires_at_ns is not None:
             self.deadline = min(self.deadline, expires_at_ns)
@@ -487,6 +571,8 @@ class NativeHandleBridge:
                                        + str(report.get("error", report["status"])))
                 row = report["result"]
             row["guard_checks"] = list(self.checks)
+            if protected:
+                row["additional_input_checks"] = list(self.additional_checks)
             self._save("result-" + uuid.uuid4().hex + ".json", row)
             return row
         finally:

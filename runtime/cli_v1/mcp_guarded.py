@@ -1,4 +1,5 @@
 """Explicit scoped-X11 owner for the existing retained public MCP transport."""
+from contextlib import contextmanager
 from copy import deepcopy
 from pathlib import Path
 from mcp.types import CallToolResult
@@ -79,6 +80,20 @@ class GuardedSessionOwner(MCPSessionOwner):
             'observation_id':source['observation_id'], 'observation':source['native'],
             'side_effect_authority':False, 'input_dispatched':False}
         return row
+
+    @contextmanager
+    def input_guard(self, alias, offset, *, tail, verify):
+        """Opt-in synchronous dependency check for a frozen keyboard program.
+
+        Register around an explicit invocation on this open Python owner.
+        The callback receives stage, copied current native source and RGB image;
+        exactly True permits continuation only after existing guards pass.
+        No MCP endpoint, capture loop, input authority or automatic renewal.
+        """
+        if self.state != 'open' or self.bridge is None or self.session is None:
+            raise RuntimeError('input guard requires this open guarded owner')
+        with self.bridge.input_guard(alias, offset, tail=tail, verify=verify):
+            yield
 
     def run_compiled(self, interface, bindings, *, call_root, perceive,
                      verify_effect, cancelled=lambda: False):

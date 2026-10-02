@@ -804,3 +804,40 @@ class PublicCompiledOwnerTests(unittest.TestCase):
                 row=owner.run_compiled({}, {}, call_root=root/'method', **self.callbacks())
             self.assertEqual(row['method_receipt'],receipt);self.assertTrue(owner.bridge.review_required)
             self.assertEqual(row['feedback']['image_status'],'needs_review');self.assertIsNone(row['feedback']['image'])
+
+
+class InputDependencyOwnerTests(unittest.TestCase):
+    def test_unopened_owner_cannot_register(self):
+        from .mcp_guarded import GuardedSessionOwner
+        with tempfile.TemporaryDirectory() as d:
+            owner=GuardedSessionOwner({'app':1},d)
+            with self.assertRaises(RuntimeError):
+                with owner.input_guard('save',[0,0],tail=[{'op':'key_chord','keys':['CTRL','s']}],verify=lambda *a:True):pass
+            self.assertIsNone(owner.bridge)
+
+    def test_state_is_checked_at_context_entry(self):
+        from .mcp_guarded import GuardedSessionOwner
+        from contextlib import nullcontext
+        owner=object.__new__(GuardedSessionOwner);owner.state='open';owner.session=object()
+        owner.bridge=SimpleNamespace(input_guard=Mock(return_value=nullcontext()))
+        context=owner.input_guard('save',[0,0],tail=[],verify=lambda *a:True)
+        owner.state='closed'
+        with self.assertRaises(RuntimeError):
+            with context:pass
+        owner.bridge.input_guard.assert_not_called()
+
+    def test_open_owner_delegates_context_without_input_or_reopen(self):
+        from .mcp_guarded import GuardedSessionOwner
+        from contextlib import contextmanager
+        entered=[]
+        @contextmanager
+        def guard(*args,**kwargs):
+            entered.append('enter')
+            try:yield
+            finally:entered.append('exit')
+        owner=object.__new__(GuardedSessionOwner);owner.state='open';owner.session=object()
+        owner.bridge=SimpleNamespace(input_guard=Mock(side_effect=guard))
+        verify=lambda *a:True;tail=[{'op':'key_chord','keys':['CTRL','s']}]
+        with owner.input_guard('save',[0,0],tail=tail,verify=verify):self.assertEqual(entered,['enter'])
+        self.assertEqual(entered,['enter','exit'])
+        owner.bridge.input_guard.assert_called_once_with('save',[0,0],tail=tail,verify=verify)
