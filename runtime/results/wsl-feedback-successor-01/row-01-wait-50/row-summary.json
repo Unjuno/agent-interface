@@ -1,0 +1,64 @@
+{
+  "row": 1,
+  "status": "terminal",
+  "independent_saved_score": {
+    "expected": {
+      "A1": 431,
+      "A2": 683
+    },
+    "actual_nonempty_cells": {
+      "A1": 431,
+      "A2": 683
+    },
+    "success": true,
+    "after_all_owned_processes_terminal": true,
+    "workbook_sha256": "737bf63755c0c7c36f39f8e3436c5237dea0fcb052a6c80cd3d178d73781b842"
+  },
+  "input_checks": [
+    {
+      "command": 2,
+      "completed": true,
+      "neutral": true,
+      "capture_wait": {
+        "requested_ms": 50,
+        "started_ns": 15410315063266,
+        "completed": true,
+        "update_observed": null,
+        "ended_ns": 15410365220631
+      }
+    },
+    {
+      "command": 4,
+      "completed": true,
+      "neutral": true,
+      "capture_wait": {
+        "requested_ms": 50,
+        "started_ns": 15463745491005,
+        "completed": true,
+        "update_observed": null,
+        "ended_ns": 15463795702607
+      }
+    },
+    {
+      "command": 6,
+      "completed": true,
+      "neutral": true,
+      "capture_wait": {
+        "requested_ms": 50,
+        "started_ns": 15521267395229,
+        "completed": true,
+        "update_observed": null,
+        "ended_ns": 15521317636198
+      }
+    }
+  ],
+  "commands": 8,
+  "input_programs": 3,
+  "extra_entry_observations": 1,
+  "extra_final_observations": 1,
+  "primary_completion": "visual sheet/modal check followed by independent terminal saved-file audit",
+  "first_useful_model_ingestion_ns": null,
+  "semantic_model_ingestion_ns": null,
+  "provider_billing": null,
+  "scope": "One50ms row; no250ms comparator yet. No causal speed or token benefit."
+}

@@ -1,0 +1,7 @@
+# Native WSL feedback successor01 — in progress
+
+Pinned source eacb1346866f660d9d34eb36cd9691fd8184e5ff. Plan and executable freeze committed before first GUI allocation. Four rows50/250/250/50ms; only row1 is terminal. This distinct WSL-native comparison does not rerun or reclassify the frozen Docker/OrbStack study#3700.
+
+Row1 used the actual public persistent Python API in Ubuntu/Xvfb/Openbox/Calc. Entry431/683 completed and released, but its50ms post-release image was visibly blank; one permitted explicit observe confirmed values. Save returned the format modal and an explicit one-use review selected it. Separate Return completed and released, but its image still showed the modal fragment; one permitted explicit observe showed the full sheet with modal absent. No input replay or model helper/sensor. Eight commands and three input programs. Repeated partial modal presentation was used only after byte-for-byte equality to the immediately reviewed full PNG from the same owner was checked and recorded before confirmation.
+
+Original owner and children are terminal; unique XLSX independently contains only A1=431,A2=683. All frozen hashes unchanged. Full command/reply/original PNG/primary decision/cleanup/scoring evidence retained. Primary visible interpretation is distinct from file scoring. Exact image-ingestion timing, provider billing and source-selected actual model usage are unavailable/pending, not zero. No250ms comparator is yet allocated: HOLD_PENDING_COMPARISON, not a wait-default promotion or speed claim.
