@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #5424 T4: [severity-ranking inversion with hard-catastrophe control](analysis/action_class_error_budget_5424_t4_v1/REPORT.md) — 128 synthetic continuation rows independently reconstructed; hard gate prevented the two scripted catastrophic primary effects while correlated fallback risk remained. Method-scoped only.
+
 - Issue #6723 successor to #5370 T7: [composed bounded priority-inheritance experiment](analysis/priority_inheritance_5370_t7_composition_20261002_01/REPORT.md) — 36 rows independently audited; synthetic method-scoped result only, with historical T6 STOP preserved.
 
 - Issue #6710 successor to #6650: [independent controller-law replay](analysis/persistence_gated_throttle_6650_control_replay_20261002_01/REPORT.md) — allocation 01 freeze-key STOP preserved; allocation 02 OrbStack audit exactly reconstructed 36 policy runs and rejected all 9 mutations. Original #6650 `FAIL_HYPOTHESIS` remains unchanged; synthetic audit conformance only.
@@ -48,6 +50,8 @@ For claims and scientific disposition, start with the top-level [research index]
 | Issue #5970 no-input X event baseline T12 | [analysis/blackstart_x11_noinput_baseline_5970_t12_20261002/REPORT.md](analysis/blackstart_x11_noinput_baseline_5970_t12_20261002/REPORT.md) |
 | Issue #6147 safe-probe T0 allocation 02 | [STOP report](analysis/safe_probe_identifiability_6147_t0_20261002_a02/STOP.md) — candidate runtime STOP; not evaluated |
 | Issue #6147 safe-probe T0 allocation 03 | [qualified report](analysis/safe_probe_identifiability_6147_t0_20261003_a03/REPORT.md) — 9 layers independently matched, but unsafe-probe mutation gate was not exercised; no method PASS claimed |
+| Issue #6147 safe-probe T0 allocation 04 | [method-scoped report](analysis/safe_probe_identifiability_6147_t0_20261003_a04/REPORT.md) — post-probe stale-action denied, one-step convergence, 7 mutation rejects; exact p→q convergence deferred |
+| Issue #6147 safe-probe T0 allocation 05 | [method-scoped report](analysis/safe_probe_identifiability_6147_t0_20261003_a05/REPORT.md) — exact p→q convergence to safe terminal state without initial identity claim; 6 mutation rejects |
 | Issue #6413 evaluation-cue T0 | [WSLc report](analysis/evaluation_cue_reactivity_6413_t0_wslc_20261003/REPORT.md) — static synthetic construction passed independent audit; no model-behavior or evaluation-awareness claim |
 | Issue #6074 interval-robustness finite-method T0 | [analysis/interval_robustness_6074_t0_20261002/REPORT.md](analysis/interval_robustness_6074_t0_20261002/REPORT.md) |
 | Issue #6045 opportunity-conditioned age T0 container method result | [analysis/opportunity_conditioned_actuated_info_6045_t0_20261002/REPORT.md](analysis/opportunity_conditioned_actuated_info_6045_t0_20261002/REPORT.md) |
