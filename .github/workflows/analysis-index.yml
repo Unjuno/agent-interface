@@ -73,6 +73,8 @@ jobs:
         run: python -B -m unittest discover -s research/analysis/path_width_continuous_gui_6581_t0b_v1 -p 'test_*.py' -v
       - name: Test #6650 independent controller-law replay audit
         run: python -B -m unittest discover -s research/analysis/persistence_gated_throttle_6650_control_replay_20261002_01 -p 'test_*.py' -v
+      - name: Test Issue #6645 counterexample-qualified skill-guard refinement T0 construction
+        run: python -B -m unittest discover -s research/analysis/counterexample_guard_refinement_6645_t0b_orbstack_20261003 -p 'test_*.py' -v
       - name: Test #5370 composed bounded inheritance T7
         run: python -B -m unittest discover -s research/analysis/priority_inheritance_5370_t7_composition_20261002_01 -p 'test_*.py' -v
       - name: Test Issue #6451 cutoff-local guard T0b construction contract

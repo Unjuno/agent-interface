@@ -14,6 +14,10 @@ New OrbStack allocation A01 ran the frozen eight-case New York temporal fixture 
 
 One frozen OrbStack candidate and one separate raw-only Python auditor ran once; both exited 0 and the auditor returned `PASS_METHOD_SCOPED` for six authored scenarios. The identical wide/narrow pointer traces reached the same endpoint but saved only in the wide corridor; the endpoint-after-exit adversary remained unsaved. Variable-width, corner-union, and ordinary unconstrained controls matched their frozen rules. This is a synthetic fixture/oracle result only—not ordinary GUI, human/agent movement, Steering-Law, timing, benefit, or safety evidence. Construction and auditor-container launch failures are preserved; the #6581 predecessor `STOP_DATA` remains unchanged and T1 remains open. See the [report, preregistration, freeze, and checksummed formal evidence](research/analysis/path_width_continuous_gui_6581_t0b_v1/REPORT.md) and [Issue #6581](https://github.com/Unjuno/agent-interface/issues/6581).
 
+# Issue #6645 T0-C: counterexample-qualified skill-guard refinement (2026-10-03)
+
+The fresh OrbStack formal allocation passed its finite method gate: ten authored rows were independently audited with zero errors; false admissions were 0/7 versus 7 for unchanged guard and 6 for exact-state blacklist. Both shared-predicate siblings were invalidated; an observationally indistinguishable valid rare control and harmful stale-target case both returned UNKNOWN. Candidate/auditor each ran once with no retries. A01 construction/environment STOP and A02 preformal launch STOP are retained separately. This is synthetic method evidence only, not a GUI/runtime/product safety claim. See [T0-C report and checksummed artifacts](research/analysis/counterexample_guard_refinement_6645_t0c_orbstack_20261003/REPORT.md) and [Issue #6645](https://github.com/Unjuno/agent-interface/issues/6645).
+
 # Issue #6617 T0: revision-timed cutover (2026-10-02)
 
 ## Issue #6619 T0: action-bound visual residual (2026-10-02)
