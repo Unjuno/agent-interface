@@ -12,13 +12,13 @@
 
 ## Freeze and gates
 
-1. Confirm branch is based on the current GitHub main SHA. Recheck Issue #6477, related #6461/#6179, branches, open/closed PRs, local active worktrees, and owner/resource status. Confirm there is no overlapping allocation.
+1. Before freeze, confirm branch is synchronized to the latest GitHub main SHA. Recheck Issue #6477, related #6461/#6179, branches, open/closed PRs, local active worktrees, and owner/resource status. Confirm there is no overlapping allocation.
 2. Run final host test/mutation suite. Freeze exact source SHA-256, issue allocation ID, main SHA, image ID/digest, runtime version, and UTC time in `FREEZE.json`. Do not edit frozen candidate/auditor after this point.
-3. Immediately before WSLc construction, recheck GitHub main and active owner state; if main changed since freeze, write STOP and stop. Run construction suite once. Require exit 0 and `memory.max=1073741824`.
-4. Before candidate, repeat main/owner/hash checks. Run candidate exactly once to fresh raw JSON. Nonzero exit => preserve raw/output and record `FORMAL_FAILURE.md`; never retry.
-5. Before audit, repeat main/owner/hash checks. Run independent auditor exactly once with raw only. Nonzero exit or non-pass => preserve all evidence and record `FORMAL_FAILURE.md`; never rerun candidate.
+3. Immediately before WSLc construction, verify frozen hashes and active owner state. Run construction suite once. Require exit 0 and `memory.max=1073741824`.
+4. Before candidate, repeat frozen hash and owner/resource checks. Run candidate exactly once to fresh raw JSON. Nonzero exit => preserve raw/output and record `FORMAL_FAILURE.md`; never retry.
+5. Before audit, repeat frozen hash and owner/resource checks. Run independent auditor exactly once with raw only. Nonzero exit or non-pass => preserve all evidence and record `FORMAL_FAILURE.md`; never rerun candidate.
 6. Write report with exact commands, UTC start/end, exits, complete warning/stdout/stderr, container IDs, raw/audit SHA-256, row counts, results and scope. Do not promote synthetic results beyond preregistered limits.
 
 ## Stop conditions
 
-STOP before the next rung if main advances after freeze, a WSLc owner conflict appears, memory.max is not exactly 1073741824, source/image identity is uncertain, mounts are not fresh/read-only as specified, or the previous rung exits nonzero. A STOP is not scientific FAIL. T0b remains a separate terminal allocation.
+STOP before the next rung if a WSLc owner conflict appears, memory.max is not exactly 1073741824, a frozen hash/source/image identity changes, a same-path collision appears, mounts are not fresh/read-only as specified, or the previous rung exits nonzero. Unrelated main advances after freeze do not invalidate this main-independent study; the exact base SHA remains in `FREEZE.json`. A STOP is not scientific FAIL. T0b remains a separate terminal allocation.
