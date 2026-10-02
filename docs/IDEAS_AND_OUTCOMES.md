@@ -30,6 +30,7 @@ This index complements, rather than duplicates, the [durable design-theses ledge
 
 | Issue | Idea | Status / boundary |
 |---|---|---|
+| [#6492](https://github.com/Unjuno/agent-interface/issues/6492) | Evaluate the return-to-own-work cost after a deferrable agent interruption, comparing immediate/timing-only delivery with a source-bound return view and optional user-authored cue. | New unverified transfer idea, not agent task resumption or takeover. T0 is protocol-only; T1 needs separate consent/privacy/accessibility review. The cue policy's randomized offer (C–B intention-to-treat) is primary; no cue-writer-only causal claim. No participant work or human-benefit result. |
 | [#6483](https://github.com/Unjuno/agent-interface/issues/6483) | Bind effect-critical speech spans to an authenticated principal before speech-act interpretation and clause preservation; diarization cluster is not identity or authority. | New unverified voice-route transfer idea linked to #6471/#6424/#5805. T0 is no-audio/no-model representation testing; no voice authentication, audio collection, or experiment is authorized. Trusted push-to-talk is a required comparator. |
 | [#6480](https://github.com/Unjuno/agent-interface/issues/6480) | Test whether human deferral selects cases with independently measurable human-vs-agent resolution advantage, accounting for handoff presentation, nonresponse, safety gates, and outcome overlap. | New unverified proposal. T0 is synthetic method-only; no human study, handoff-quality result, or evidence that humans outperform agents. Counterfactual outcomes stay sealed from routing; nonidentifiable strata must remain UNKNOWN. |
 | [#6477](https://github.com/Unjuno/agent-interface/issues/6477) → [#6461](https://github.com/Unjuno/agent-interface/issues/6461) / [#6179](https://github.com/Unjuno/agent-interface/issues/6179) / Draft [PR #6489](https://github.com/Unjuno/agent-interface/pull/6489) | Successor proposes executable forged-capability, stale-generation replay, and cross-lane broker/reducer controls after #6461's pre-formal STOP. | Open T0c preparation only: host construction/mutation tests 6/6 and in-memory raw round-trip 0 errors; no WSLc construction, candidate, or audit invocation yet. Separate preflight verified `memory.max=1073741824` (1 GiB); swap-limit warning remains. Fresh source/main/owner gates required; no method result or production-isolation claim. |
@@ -100,6 +101,8 @@ Closure does not erase evidence. Preserve [#1968](https://github.com/Unjuno/agen
 - [CURRENT_GOAL.md](CURRENT_GOAL.md) and [ROADMAP.md](../ROADMAP.md) — current direction and roadmap, not result ledgers.
 
 ## Latest additions and result changes (2026-10-02)
+
+- [#6492](https://github.com/Unjuno/agent-interface/issues/6492): new unverified transfer idea measures a person's correct return to their own interrupted task and total burden after a deferrable agent prompt. The optional user-authored cue is randomized as an offer; C–B intention-to-treat is primary, while cue uptake is descriptive. No T0 result, participant study, or human-benefit claim; T1 requires separate consent/privacy/accessibility review.
 
 - [#6491](https://github.com/Unjuno/agent-interface/pull/6491) / open Draft [#5663](https://github.com/Unjuno/agent-interface/issues/5663): T1 construction attempt 03 passed six tests and a separate raw-only audit; attempts 01–02, including construction FAIL/incomplete receipts, remain preserved. Formal WSLc start gate STOPped because main advanced after freeze; candidate/auditor/retries=0/0/0, window released, no transport result.
 - [#6489](https://github.com/Unjuno/agent-interface/pull/6489) / open successor [#6477](https://github.com/Unjuno/agent-interface/issues/6477): host-only T0c design checks 6/6 and in-memory JSON audit 0 errors; no WSLc construction/candidate/audit yet. Draft preparation, not formal evidence.
@@ -186,7 +189,7 @@ These Issues remain open; a scoped method result does not close the broader tran
 
 ## Filtered research, idea, and successor Issue inventory
 
-The current full GitHub MCP listing contains 2,548 distinct non-PR Issues (1,377 open, 1,171 closed). The selected inventory in [RESEARCH_ISSUE_INDEX.md](RESEARCH_ISSUE_INDEX.md) now has 1,698 rows (1,155 open, 543 closed), including new #6480/#6483 and #6477, #6451, #6389; #6337's closure is reflected. The normalized connector omits labels, so the prior label-qualified set is carried forward; #6389 was explicitly added after reviewing its research-workflow migration scope. Open/closed is workflow status, not outcome.
+The current full GitHub MCP listing contains 2,549 distinct non-PR Issues (1,378 open, 1,171 closed). The selected inventory in [RESEARCH_ISSUE_INDEX.md](RESEARCH_ISSUE_INDEX.md) now has 1,699 rows (1,156 open, 543 closed), including new #6480/#6483 and #6477, #6451, #6389; #6337's closure is reflected. The normalized connector omits labels, so the prior label-qualified set is carried forward; #6389 was explicitly added after reviewing its research-workflow migration scope. Open/closed is workflow status, not outcome.
 
 ## Closed idea dispositions checked (2026-10-02)
 
