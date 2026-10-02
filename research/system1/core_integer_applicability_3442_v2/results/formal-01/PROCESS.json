@@ -1,0 +1,58 @@
+{
+  "allocation": "core-integer-applicability-3442-v2-20261001-01",
+  "candidate": {
+    "argv": [
+      "python3.13",
+      "-m",
+      "research.system1.core_integer_applicability_3442_v2.study",
+      "--out",
+      "research/system1/core_integer_applicability_3442_v2/results/formal-01/raw.jsonl",
+      "--main-sha",
+      "40885011a5d8e15ab10bb6cc0e8eef65661718ee"
+    ],
+    "invocations": 1,
+    "exit_code": 0,
+    "stdout": "rows=390 raw_sha256=f6a82afed906bdd7a7eb46539d59cc53c24a0b89a17cdc154d86531e5a41fdf7\n",
+    "stderr": "",
+    "raw_rows": 390,
+    "raw_sha256": "f6a82afed906bdd7a7eb46539d59cc53c24a0b89a17cdc154d86531e5a41fdf7"
+  },
+  "auditor": {
+    "argv": [
+      "python3.13",
+      "-m",
+      "research.system1.core_integer_applicability_3442_v2.auditor",
+      "--raw",
+      "research/system1/core_integer_applicability_3442_v2/results/formal-01/raw.jsonl",
+      "--out",
+      "research/system1/core_integer_applicability_3442_v2/results/formal-01/audit.json",
+      "--main-sha",
+      "40885011a5d8e15ab10bb6cc0e8eef65661718ee",
+      "--source-sha256",
+      "4ad7e4426148688b8ece0ffbc4e95527b3697c08c84e5d0ab23a84f364574dc2"
+    ],
+    "invocations": 1,
+    "exit_code": 1,
+    "stdout": "disposition=FAIL_OR_HOLD rows=390 controls=10/10 raw_sha256=f6a82afed906bdd7a7eb46539d59cc53c24a0b89a17cdc154d86531e5a41fdf7\n",
+    "stderr": "",
+    "audit_json_sha256": "ea301512bc3560d7c209da9ed909e885836fa85095e22b26cccef29592ae0581",
+    "auditor_source_sha256": "0265f9d9bf536c4e7dc809505912ff22cf48d2e2b5166d07bb0943b22eeec5d0",
+    "controls_passed": 10,
+    "controls_total": 10,
+    "disposition": "FAIL_OR_HOLD"
+  },
+  "environment": {
+    "os": "macOS 26.6.2 arm64",
+    "python": "CPython 3.13.14",
+    "container_used": false,
+    "backend_gui_input_network_used": false
+  },
+  "identity": {
+    "frozen_main_sha": "40885011a5d8e15ab10bb6cc0e8eef65661718ee",
+    "main_tip_observed_before_run": "8144e81cd134b35808884b53ac6503dbacd69902",
+    "contract_source_sha256": "4ad7e4426148688b8ece0ffbc4e95527b3697c08c84e5d0ab23a84f364574dc2"
+  },
+  "captured_completion_utc": "2026-10-01T02:09:56Z",
+  "timing_note": "Candidate and auditor ran sequentially immediately before the captured completion time; per-process start/end timestamps were not instrumented.",
+  "interpretation": "HOLD: the frozen auditor unconditionally expected operation_index for operation fields, while successful validation records null; do not reinterpret as PASS or rerun this one-shot allocation."
+}
