@@ -1,0 +1,91 @@
+{
+  "answer": {
+    "label": "Sync",
+    "x": 992,
+    "y": 585
+  },
+  "arm": "FULL_RESOLUTION",
+  "call_id": "01-full_resolution",
+  "case_id": "edge-small-target",
+  "eval_count": 23,
+  "eval_duration_ns": 285475000,
+  "http_status": 200,
+  "images": [
+    {
+      "bytes": 35367,
+      "encoded_size": [
+        1024,
+        640
+      ],
+      "role": "full",
+      "sha256": "fc96100e4ffe40057f38152b4a507bbf292ec8c6cf73f4add5788e356ab4767c",
+      "source_box": [
+        0,
+        0,
+        1024,
+        640
+      ]
+    }
+  ],
+  "load_duration_ns": 2243179,
+  "prompt_eval_count": 409,
+  "prompt_eval_duration_ns": 902949000,
+  "proposal": {
+    "all_scores": [
+      {
+        "box": [
+          0,
+          0,
+          512,
+          320
+        ],
+        "edge_mean": 4.438047655179166,
+        "tile": 0
+      },
+      {
+        "box": [
+          512,
+          0,
+          1024,
+          320
+        ],
+        "edge_mean": 3.0833323134912867,
+        "tile": 1
+      },
+      {
+        "box": [
+          0,
+          320,
+          512,
+          640
+        ],
+        "edge_mean": 3.224602873506951,
+        "tile": 2
+      },
+      {
+        "box": [
+          512,
+          320,
+          1024,
+          640
+        ],
+        "edge_mean": 4.643770192872528,
+        "tile": 3
+      }
+    ],
+    "box": [
+      512,
+      320,
+      1024,
+      640
+    ],
+    "edge_mean": 4.643770192872528,
+    "tile": 3
+  },
+  "request_bytes": 47760,
+  "request_sha256": "720bc6462b728c6cafb3dc4ea4b6b32fc47fa2bb2204890cdb6b6f674b3fbf7e",
+  "response_bytes": 369,
+  "response_sha256": "bdb520507b98ec3d083f38e0752f0911e65fd176dbadd593ec53616ff49302a5",
+  "total_duration_ns": 1281920411,
+  "wall_elapsed_ns": 1283311540
+}
