@@ -1,0 +1,91 @@
+{
+  "answer": {
+    "label": "Shore",
+    "x": 320,
+    "y": 160
+  },
+  "arm": "FULL_RESOLUTION",
+  "call_id": "02-full_resolution",
+  "case_id": "small-text-discriminator",
+  "eval_count": 23,
+  "eval_duration_ns": 302693000,
+  "http_status": 200,
+  "images": [
+    {
+      "bytes": 22858,
+      "encoded_size": [
+        1024,
+        640
+      ],
+      "role": "full",
+      "sha256": "359ce586c8e413db604d23d61cbea7476cdcb17e893e4ab1b28ef2ef927dd0e4",
+      "source_box": [
+        0,
+        0,
+        1024,
+        640
+      ]
+    }
+  ],
+  "load_duration_ns": 1844364,
+  "prompt_eval_count": 407,
+  "prompt_eval_duration_ns": 896197000,
+  "proposal": {
+    "all_scores": [
+      {
+        "box": [
+          0,
+          0,
+          512,
+          320
+        ],
+        "edge_mean": 4.254188491286469,
+        "tile": 0
+      },
+      {
+        "box": [
+          512,
+          0,
+          1024,
+          320
+        ],
+        "edge_mean": 2.801133860387703,
+        "tile": 1
+      },
+      {
+        "box": [
+          0,
+          320,
+          512,
+          640
+        ],
+        "edge_mean": 3.268972121597807,
+        "tile": 2
+      },
+      {
+        "box": [
+          512,
+          320,
+          1024,
+          640
+        ],
+        "edge_mean": 3.3400938662619932,
+        "tile": 3
+      }
+    ],
+    "box": [
+      0,
+      0,
+      512,
+      320
+    ],
+    "edge_mean": 4.254188491286469,
+    "tile": 0
+  },
+  "request_bytes": 31082,
+  "request_sha256": "af142440b962167bf248549d99cf7a1c08a413331cc16c599262da0e17b2edc0",
+  "response_bytes": 370,
+  "response_sha256": "70121eee3e937ad846f16f3d474cf7f0b357439814dea1829411b5f22398318d",
+  "total_duration_ns": 1303314839,
+  "wall_elapsed_ns": 1304680967
+}

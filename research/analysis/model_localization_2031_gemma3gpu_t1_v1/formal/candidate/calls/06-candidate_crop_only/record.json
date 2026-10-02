@@ -1,0 +1,92 @@
+{
+  "answer": {
+    "abstain": false,
+    "label": "Open",
+    "x": 160,
+    "y": 100
+  },
+  "arm": "CANDIDATE_CROP_ONLY",
+  "call_id": "06-candidate_crop_only",
+  "case_id": "ambiguous-duplicate-target",
+  "eval_count": 23,
+  "eval_duration_ns": 374545000,
+  "http_status": 200,
+  "images": [
+    {
+      "bytes": 10013,
+      "encoded_size": [
+        512,
+        320
+      ],
+      "role": "candidate_crop",
+      "sha256": "e3762483fd1a07bea1ce705fea8e2318fcad7fab5cca8f44a56921e9c6cb4028",
+      "source_box": [
+        0,
+        0,
+        512,
+        320
+      ]
+    }
+  ],
+  "load_duration_ns": 959982,
+  "prompt_eval_count": 410,
+  "prompt_eval_duration_ns": 1289876000,
+  "proposal": {
+    "all_scores": [
+      {
+        "box": [
+          0,
+          0,
+          512,
+          320
+        ],
+        "edge_mean": 4.098893063442334,
+        "tile": 0
+      },
+      {
+        "box": [
+          512,
+          0,
+          1024,
+          320
+        ],
+        "edge_mean": 2.713209198159389,
+        "tile": 1
+      },
+      {
+        "box": [
+          0,
+          320,
+          512,
+          640
+        ],
+        "edge_mean": 3.2619352114744466,
+        "tile": 2
+      },
+      {
+        "box": [
+          512,
+          320,
+          1024,
+          640
+        ],
+        "edge_mean": 3.224602873506951,
+        "tile": 3
+      }
+    ],
+    "box": [
+      0,
+      0,
+      512,
+      320
+    ],
+    "edge_mean": 4.098893063442334,
+    "tile": 0
+  },
+  "request_bytes": 13977,
+  "request_sha256": "6fd6deaa20cb3465bbe3085bf032f82512dd41a9c82f44e0b25ec31b458feea7",
+  "response_bytes": 382,
+  "response_sha256": "87709daf22d3f7668e771b4eda9d2c801987faeb1f91bf6e14ec8a5c4fdf3602",
+  "total_duration_ns": 1738721337,
+  "wall_elapsed_ns": 1740253149
+}
