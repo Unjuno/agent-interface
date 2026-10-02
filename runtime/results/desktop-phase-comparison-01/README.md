@@ -55,3 +55,29 @@ Construction inspection found the copied command helper still pointed at the
 old live02 folder. It was corrected to its own file directory before using it
 for any command; the read-only probe used explicit new paths. Its printable
 output now omits base64 data while original reply bytes remain retained.
+
+Frozen construction control1002202 (104988b77), one original owner/no retry:
+old primary context after independent move stopped SAFE_YIELD/unknown_state with
+present=false, no input. New observation+one explicit repair ran Enter and Save
+(20+4 emissions, both verified neutral release), then returned no final image.
+Common post-inspection was skipped because its MCPSessionOwner was never opened
+by C. No modal confirmation/retry followed. Original owner exit0, all3 children
+terminal, independent persisted workbook remains empty/success=false. Disposition
+HOLD_COMPOSED_REPAIR_FAILED; no integration-spine or efficiency acceptance.
+
+Primary image display also exposed a transport problem: view_image returned the
+valid PNG under application/octet-stream; fresh capture displayed black although
+saved PNG has2858 colors. A later same-byte image/png emission displayed the moved
+sheet correctly. No pixels changed or new capture/input occurred in that audit.
+The primary should not have grounded recovery from a visually black presentation;
+that gap remains recorded rather than retroactively treating the correct PNG as
+having been visible before input. Future original PNG emission normalizes its
+actual PNG media type before delivery. Exact provider/image audit remains pending.
+
+Frozen caller files are retained under construction-changed-frozen-caller with
+all nine pre-allocation hashes verified; original records are unchanged. Separate
+successor compiled_caller calls owner.get before graph input. A regression through
+the actual MCPSessionOwner.inspect_after_dispatch gate failed before the fix and
+passes normal/-O afterward. No live retry after this correction. Independent
+scoring was initially read before its file existed after cleanup publication;
+the original owner was polled to terminal and its completed score then read.

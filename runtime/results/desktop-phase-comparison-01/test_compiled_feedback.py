@@ -27,4 +27,32 @@ class CompiledFeedbackTests(unittest.TestCase):
    (root/'public-observation-one.json').unlink()
    raw,shown,native=present_native(bridge,selected)
    self.assertIsNone(native);self.assertIsNone(shown['image'])
+
+ def test_completed_graph_opens_actual_inspection_session_before_feedback(self):
+  from unittest.mock import patch
+  from compiled_caller import run
+  from runtime.cli_v1.mcp_session import MCPSessionOwner
+  with tempfile.TemporaryDirectory() as td:
+   root=Path(td);bridge,selected=self.fixture(root)
+   source=json.loads((root/'public-observation-one.json').read_text())
+   execution={'result':{'status':'completed','recovery_required':False,'execution':{'releases':[{'verified':True,'keys_down':[],'buttons_down':[]}]}}}
+   (root/'effect.json').write_text(json.dumps(execution))
+   bridge.sequence=1;bridge.mint_reference=lambda *a,**k:{'offset':[1,1]}
+   receipt={'outcome':'SAFE_YIELD','reason':'association_changed','transitions':[{'action':'save','release_verified':True,'effect_ref':'effect'}],'observations':[]}
+   owner=MCPSessionOwner.__new__(MCPSessionOwner)
+   owner.state='new';owner.session=None;owner.target_review=None
+   def open_session():
+    owner.state='open';owner.session=SimpleNamespace(recovery_required=False);return owner.session
+   owner.get=open_session
+   def inspect(*a,**k):
+    import copy
+    raw=copy.deepcopy(source);directory=Path(k['capture_directory']);directory.mkdir(exist_ok=True)
+    destination=directory/'post.png';destination.write_bytes(Path(source['observation']['artifact']['path']).read_bytes())
+    raw['observation']['artifact']['path']=str(destination)
+    return {'status':'needs_review','observation_report':raw}
+   owner.inspect_target=inspect
+   with patch('methods.run',return_value={'receipt':receipt}):
+    row,raw,shown,native=run(bridge,owner,{'box':[0,0,2,2],'pixels':bytes(12)},{'A1':[0,0,1,1],'A2':[0,0,1,1]},root/'method')
+   self.assertEqual(owner.state,'open');self.assertEqual(shown['image_status'],'image');self.assertEqual(native['artifact']['sha256'],selected['native']['artifact']['sha256'])
+
 if __name__=='__main__':unittest.main()

@@ -29,8 +29,6 @@ def present_native(bridge,selected,*,compact=False):
 def run(bridge,owner,ground,regions,out,*,repair=False,compact=False):
  from methods import run as graph_run
  out=Path(out);out.mkdir(exist_ok=False)
- # Initialize the common read-only inspection connection before graph input.
- owner.get()
  started=time.monotonic_ns();alias='sheet_repaired' if repair else 'sheet_context'
  box=ground['box'];point=[box[0]+(box[2]-box[0])//2,box[1]+(box[3]-box[1])//2]
  minted=bridge.mint_reference(alias,bridge.sequence,point,region_size=(box[2]-box[0],box[3]-box[1]))
