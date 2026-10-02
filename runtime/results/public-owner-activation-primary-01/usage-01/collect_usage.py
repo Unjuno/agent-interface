@@ -1,6 +1,7 @@
 import json,base64,hashlib
 from pathlib import Path
 from usage_projection import project
+from context_projection import project_context
 out=Path(__file__).resolve().parent
 source=Path('/mnt/c/Users/junny/.codex/sessions/2026/09/12/rollout-2026-09-12T23-46-37-01a09615-a96c-7b70-8284-e6391b885be5.jsonl')
 start=None;end=None;lines=[];records=[];images=[];context=None;active=False
@@ -30,5 +31,10 @@ expected=[json.loads((out.parent/c/'replies'/f'{i:03d}.json').read_text())['repl
 if sorted(expected)!=sorted(x['sha256'] for x in images):raise ValueError(('image multiset',expected,images))
 for name,data in [('usage-selection.json',selection),('primary-usage.json',result),('primary-images.json',{'images':images,'expected_sha256':expected,'exact_multiset_matches':True})]:
  (out/name).write_text(json.dumps(data,indent=2)+'\n')
+for record in records:
+ if json.loads(record['raw_line']).get('type')=='turn_context':
+  record['original_raw_sha256']=hashlib.sha256(record['raw_line'].encode()).hexdigest()
+  record['raw_line']=project_context(record['raw_line'])
+  record['privacy_projection']={'kind':'turn_context_metadata','payload_fields':['turn_id','model','effort']}
 (out/'primary-source-records.jsonl').write_text(''.join(json.dumps(x)+'\n' for x in records))
 print(json.dumps({'records':len(records),'images':len(images),'windows':[{'status':w['status'],'totals':w['totals'],'calls':len(w['calls']),'usage_records':len(w['usage_records'])} for w in result['windows']]}))
