@@ -1,0 +1,36 @@
+{
+  "allocation": "needle-cross-process-publication-5045-v1",
+  "issue": 5045,
+  "stage": "construction-only",
+  "command": "python -B -m unittest -v test_protocol.py test_audit.py; AST-parse protocol.py,runner.py,audit.py,test_protocol.py,test_audit.py",
+  "host_runtime": "CPython 3.11.9 on Windows; not formal experiment environment",
+  "unit_tests": {
+    "total": 7,
+    "passed": 7,
+    "failed": 0
+  },
+  "auditor_contract_controls": {
+    "rejected": 9,
+    "total": 9,
+    "source": "synthetic in-memory fixtures only"
+  },
+  "syntax_parse": {
+    "files": 5,
+    "result": "AST_SYNTAX_OK"
+  },
+  "formal_runner_invocations": 0,
+  "formal_auditor_invocations": 0,
+  "docker_invocations": 0,
+  "source_sha256": {
+    "audit.py": "a89427d902e78893b01f356aa999b3fab9f9d71fe5e89de2b4300385606d7c48",
+    "protocol.py": "80089279c98fa21b863b67b315655c5874f0fcdb17145748dba68778c4342f37",
+    "runner.py": "40d5113e267e3ac75ee7271a78742cc285e18c81176b266e34ba25bbbdef5f27",
+    "test_audit.py": "b09b35a2f9f7261771770829df30610a0bc372ab0c7d4ba638ea6b7399e55cbb",
+    "test_protocol.py": "404bb3580ea68bae2cf1ae1dbe1e7126d02eccfbb61c06ceb6062e9c00994582",
+    "PLAN.md": "9359420e125f41a7d982cb6834dcc095610b925cdbd644d768af2c148adeff0b"
+  },
+  "input_skill_git_blob": "45b80150dac503f4eb6f3cb5d82f9afa2c587107",
+  "disposition": "PASS_CONSTRUCTION_TESTS_ONLY",
+  "limits": "No multiprocessing workers, publication arms, Docker, race observation, source package execution, scientific decision gate, or product claim was exercised.",
+  "formal_resource_status": "waiting for explicit cross-lane Docker lease coordination"
+}

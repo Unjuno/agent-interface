@@ -1,0 +1,32 @@
+{
+  "allocation": "MAP01-OWNER-KEYUP-RELEASE-INVENTORY-5156-20260930-01",
+  "base_main": "1ddbe03f93556d6db3eb61a72fa1148bd031a596",
+  "predecessor": {
+    "pr": 5298,
+    "head": "75082c44cfe5a829dc94ed3dc6341e149ff4e950",
+    "blobs": {
+      "input_owner_v11": "c40db07e596b31557590cec5e90f6ab651573476",
+      "input_owner_v10": "341b3c01649943ddaad5f28431a792c4889cc36e",
+      "wrapper_v3": "0ea631abcf6272f0538a9ef9198ad8069b47b464",
+      "test_suite": "bdff3e3b6c4a55bcdc469aac401c3e30f10720f0",
+      "baseline_auditor": "8176b2d3bac8a12f025f409d37757172417bbb55"
+    }
+  },
+  "runtime": "CPython 3.14.5 host, deterministic fake-Xlib; no Docker or real display",
+  "scope": "construction-only; formal X11 not run; no physical key claim",
+  "prefreeze_exploration": "non-confirmatory; one fixture display-reference error was corrected; see PREFREEZE_NOTES.md",
+  "sha256": {
+    "PLAN.md": "f13dcf606c496fdc566aaf4ddf63f16eb4e97743c9a5b719d5f521bb507a3d28",
+    "PREFREEZE_NOTES.md": "9a6a717319e2703c8b8f12e94f3ea8c6c2060e59eb8abfe8b0815622ff4f9272",
+    "RESULT.md": "08d6fa559befb53b6bb9c4d948712db94a3dc48a6259946c5c210297f3c2e1ec",
+    "audit_expected_release_inventory.py": "986d46b42eeac6fe9ef053d5a7d0913249adb34add10b65c76d5c57c1877c080",
+    "audit_independent.py": "f6d4c519790f07d9218253d205753abd45ace4baf9543f9b21a64b34603361ea",
+    "audit_owner_release_brackets.py": "c7a73157dea55704a1c7e2dd7ca242e3c90614cca3c5d0336c03089d57580148",
+    "expected_inventory.json": "1c624eb00d80454cd551649e62902499a0addbdcf148691d6cb5117fb93aeb0c",
+    "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "input_owner_v11.py": "14333b8e8450950bcdb60fa7055f7a7d4b279438ab44fbb8d14eb2f45fad057c",
+    "input_transition_owner_v3.py": "5ffdbb3679451fefdc3836917d43d924f0f43c8082d21327207ecefbd87f5be6",
+    "run_completeness.py": "dbb9b118d78d5142564b0bfa2f407ae36e1541786f7ec991e43eff37ad67b516",
+    "test_owner_integration.py": "d893115defebc40e001359a08229aaa84cae2d18af497258eb1912e1ccde664d"
+  }
+}
