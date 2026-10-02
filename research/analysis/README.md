@@ -210,6 +210,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`action_bound_residual_6619_t0_v1/`](action_bound_residual_6619_t0_v1/)
 - [`action_class_error_budget_5424_t2_v1/`](action_class_error_budget_5424_t2_v1/)
 - [`action_class_error_budget_5424_t3_v1/`](action_class_error_budget_5424_t3_v1/)
+- [`action_class_error_budget_5424_t4_v1/`](action_class_error_budget_5424_t4_v1/)
 - [`action_conditioned_routing_repair_successor_2059_r2_v1/`](action_conditioned_routing_repair_successor_2059_r2_v1/)
 - [`action_conditioned_routing_repair_successor_2059_v1/`](action_conditioned_routing_repair_successor_2059_v1/)
 - [`action_conditioned_routing_successor_1934_r2/`](action_conditioned_routing_successor_1934_r2/)

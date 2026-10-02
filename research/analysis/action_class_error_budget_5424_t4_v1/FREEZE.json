@@ -1,0 +1,31 @@
+{
+  "allocation_id": "ACTION-ERROR-BUDGET-5424-T4-RANKING-INVERSION-HOSTCPU-20261003-01",
+  "auditor_command": "python -B audit.py",
+  "auditor_invocation_limit": 1,
+  "base_main_sha": "43f7cd88d91af05036fae2100ec4e155c59e105c",
+  "branch": "research/5424-ranking-inversion-t4-20261002",
+  "candidate_command": "python -B candidate.py --fixture fixtures.json --out raw/formal_01",
+  "candidate_invocation_limit": 1,
+  "execution_scope": "Windows host CPU; standard-library Python; no GPU/CUDA/model/GUI/WSL/WSLc/Docker/network",
+  "formal_output_paths_absent_at_freeze": [
+    "raw/formal_01/candidate_result.json",
+    "raw/formal_01/candidate_receipt.json",
+    "raw/formal_01/audit_result.json"
+  ],
+  "frozen_sha256": {
+    "PLAN.md": "2cce0eae846b428cdc19aef0977f66d40b8644e82f18457747cf9af80f81f72c",
+    "audit.py": "0962af9062f300fe598a8ed512a6c645b1004af95519f6eddad89c8b582e39dc",
+    "candidate.py": "47052c2b3874a5533af3f653a435cdf94c1c17f9aa3856ec8f396fef52cea3b6",
+    "fixtures.json": "e43c512d3628cdea7c88de606a6641159591e75f7f27fa1cd201c17bfe8bf7ca",
+    "freeze.py": "cdf6f1ca9c680f5881935b96a114cc2d99b0ac9d2930ee86883df919164504de",
+    "test_contract.py": "2b7a7a6c633502e023440fa9327e8bc49a9f679a6769020cd09023037e8ad9a1"
+  },
+  "issue": "https://github.com/Unjuno/agent-interface/issues/5424",
+  "owner_thread": "01a0b990-3d17-72f1-a908-9a2072104ce5",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "retry_limit": 0,
+  "schema": "action-class-error-budget-t4-freeze-v1",
+  "window_end_utc": "2026-10-02T16:30:00Z",
+  "window_start_utc": "2026-10-02T16:00:00Z"
+}

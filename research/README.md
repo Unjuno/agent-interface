@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #5424 T4: [severity-ranking inversion with hard-catastrophe control](analysis/action_class_error_budget_5424_t4_v1/REPORT.md) — 128 synthetic continuation rows independently reconstructed; hard gate prevented the two scripted catastrophic primary effects while correlated fallback risk remained. Method-scoped only.
+
 - Issue #6723 successor to #5370 T7: [composed bounded priority-inheritance experiment](analysis/priority_inheritance_5370_t7_composition_20261002_01/REPORT.md) — 36 rows independently audited; synthetic method-scoped result only, with historical T6 STOP preserved.
 
 - Issue #6710 successor to #6650: [independent controller-law replay](analysis/persistence_gated_throttle_6650_control_replay_20261002_01/REPORT.md) — allocation 01 freeze-key STOP preserved; allocation 02 OrbStack audit exactly reconstructed 36 policy runs and rejected all 9 mutations. Original #6650 `FAIL_HYPOTHESIS` remains unchanged; synthetic audit conformance only.
