@@ -9,6 +9,7 @@
 - Candidate output and auditor output paths on the dedicated OrbStack VM: absent at preregistration.
 - Pre-run command audit caught that a shared source bind mount would make `oracle.json` visible to the candidate despite the candidate not opening it. Before any invocation, commands were corrected to disjoint mounts (`src-candidate` excludes oracle/auditor; `src-audit` is mounted only into auditor). The initial preregistration freeze is preserved in Git history and superseded prospectively; Issue addendum records the source-visibility correction.
 - The initial preregistration freeze SHA-256 `1e07b1b8f7b6037cbb2c3b314a5867e9587779eaa16a3bdf9839a221aa2f1012` is superseded before execution by the corrected mount freeze. No invocation counters changed.
+- A final audit-source preflight found its independent hash verifier also reads `candidate.py`. Added that code to the auditor-only source mount (still not visible to candidate), superseding the immediately previous pre-run freeze SHA-256 `192004ca1e80cbf96434208e7758ba703dab97feb112225468c43f9e2f4c598c`. No invocation counters changed.
 - Construction contract tests: 6/6 passed locally before formal freeze. This is fixture-development evidence only.
 - Human responses: 0; independent reviewer signoffs: 0/not allocated.
 - A01 `STOP_CONTAINER_SOURCE_MOUNT_EMPTY` and A02 `HOLD_ALLOCATION_ID_MISMATCH` remain preserved in their separate packages and are not repaired, pooled, or rerun here.
