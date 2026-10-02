@@ -27,4 +27,3 @@ A full metadata scan may cost more than widening; a sufficiently large k can red
 ## U — limits
 
 No embeddings, model selection, tokens, latency, production registry scale, live applicability truth, GUI, action authority, task effect, or safety rate is measured. `NONE_PROVEN_APPLICABLE` is allowed only for a fully scanned registry with no unresolved eligibility. A bounded miss is not evidence of global absence. No runtime promotion follows.
-
