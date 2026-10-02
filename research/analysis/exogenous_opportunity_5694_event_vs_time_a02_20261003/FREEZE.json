@@ -9,7 +9,7 @@
   "paths": {
     "PREREGISTRATION.md": {
       "git_blob": "61e281f70507cf85bc3d03791be6adcfb6c10c7d",
-      "sha256": "7b73d92dc9b51d831446bb66397847345ebcbfafc18f0f944a49e0be2692e286"
+      "sha256": "0f3e2ba44c84b2cd02d3001fbb050c34ce0589c45402db5924d63e2dc6aa6721"
     },
     "candidate.py": {
       "git_blob": "48bcd9731c22c9eca020f36ddc89b5f12e5c43a2",
@@ -43,5 +43,6 @@
     "retries": 0,
     "package_installs": 0,
     "external_calls": 0
-  }
+  },
+  "verification_note": "PREREGISTRATION.md SHA-256 corrected before formal execution: GitHub MCP fetch_file and fetch_blob return identical UTF-8 content (3457 bytes, LF line endings); Arch WSL GitHub API blob download decodes to those same bytes. Original 7b73... value was inconsistent with the frozen Git blob/content. No source file changed."
 }
