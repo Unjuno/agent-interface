@@ -1,0 +1,41 @@
+{
+  "schema": "unjuno-research-process-v1",
+  "allocation_id": "t0-formal-02",
+  "superseded_unspent_allocation": "t0-formal-01; preserved in FREEZE-0001-SUPERSEDED.json after final preflight found missing independent checks for parent-edge aggregates and effect-count claims; no candidate invocation, auditor invocation or scientific output occurred",
+  "state_before_formal": "FROZEN_AND_COMPLETED",
+  "construction": {
+    "command": "python -B -m unittest -v",
+    "outcome": "PASS",
+    "tests_passed": 14,
+    "tests_failed": 0,
+    "python_compile": "PASS",
+    "initial_construction_attempt": "FAIL; independent auditor expectation keys did not match candidate card field names; fixed before any formal allocation",
+    "final_preflight_review": "found incomplete verification of raw parent-edge aggregates and independent task-effect totals; extended auditor and mutation tests before candidate launch; first frozen allocation superseded prospectively"
+  },
+  "formal_candidate_invocations": 1,
+  "formal_candidate_exit": 0,
+  "formal_auditor_invocations": 1,
+  "formal_auditor_exit": 0,
+  "formal_result": "PASS_METHOD_SCOPED",
+  "raw_outputs": {
+    "results/formal-02/candidate.json": "EC0FF53CD8AFBE7406692643C720910F351786FD6B475CD9363F87B23523DBB5",
+    "results/formal-02/audit.json": "2F6544E26145785E5BA13A05D0B18072CAC3839B92A8B155660650852ADF3E6B"
+  },
+  "observed": {
+    "exogenous_burst": {"parent_edges": 0, "notices_per_policy": 3},
+    "two_generation_chain": {"emit_each": {"notices": 3, "max_card_chain": 3, "effect_truth": 3}, "duplicate_batch": {"notices": 3, "max_card_chain": 3, "effect_truth": 3}, "source_linked": {"notices": 2, "max_card_chain": 2, "effect_truth": 3}, "trace_span": 12},
+    "identical_duplicates": {"emit_each_notices": 3, "duplicate_batch_notices": 1},
+    "target_revision": {"current_version_notices": 2, "stale_approval_accepted": false},
+    "denial_nonresponse": {"notices": 1, "trace_span": 20},
+    "cross_principal_attempt": {"unauthorized_notice_emitted": false},
+    "urgent_hard_alert": {"mandatory_hard_alerts_preserved": 2},
+    "opaque_negative_control": {"emit_each_notices": 3, "opaque_notices": 1, "correct_effects_emit_each": 3, "correct_effects_opaque": 0, "disposition": "CHAIN_REDUCTION_WITH_BURDEN_UNKNOWN_OR_WORSE"}
+  },
+  "scope": "Finite synthetic method discrimination only; no causal, human-burden, prevalence, Hawkes-parameter, runtime, or product claim.",
+  "host_snapshot": {
+    "wsl_version_output": "WSL software version 3.0.1.0; WSL kernel 6.6.87.1-1; installed distribution Arch Linux running WSL version 2",
+    "disk_C_free_bytes_before_formal": 196640116736,
+    "local_workspace_git_checkout": false,
+    "gpu_or_container_touched": false
+  }
+}
