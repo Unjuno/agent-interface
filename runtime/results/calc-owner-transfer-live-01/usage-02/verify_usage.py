@@ -1,6 +1,7 @@
 import json,hashlib,base64
 from pathlib import Path
 from usage_projection import project
+from context_projection import original_matches
 ROOT=Path(__file__).resolve().parent
 def require(v,m):
  if not v:raise ValueError(m)
@@ -27,13 +28,13 @@ def verify(check_original=True):
  require(len(images)==20 and sorted(replyhashes)==sorted(x['sha256'] for x in images),'original twenty reply image multiset')
  source=Path('/mnt/c/Users/junny/.codex/sessions/2026/09/12/rollout-2026-09-12T23-46-37-01a09615-a96c-7b70-8284-e6391b885be5.jsonl')
  if source.exists() and check_original:
-  wanted={r['source_line']:r['raw_line'] for r in records};last=max(wanted)
+  wanted={r['source_line']:r for r in records};last=max(wanted)
   with source.open() as f:
    for i,line in enumerate(f,1):
-    if i in wanted:require(line==wanted[i],'original session line changed')
+    if i in wanted:require(original_matches(wanted[i],line),'original session line or projected context changed')
     if i==last:break
   require(i==last,'original session incomplete')
-  sourcecheck='all retained raw lines match original session'
+  sourcecheck='raw records and original hashes/canonical projected contexts match original session'
  else:sourcecheck='original session not checked; retained projection and image reconstruction only'
  return {'status':'PASS_USAGE_RECONSTRUCTION','retained_records':len(records),'original_images':len(images),'windows':len(actual),'joint_totals':actual[0]['totals'],'source_check':sourcecheck,'contexts':sorted({str(c.get('context')) for w in actual for c in w['calls']}),'scope':'joint static OCR preparation, app adapters/guard/composition, interleaved WSL migration, all four fixed cases and retained audits; not matched baseline, causal activation benefit, immutable model attestation or billing'}
 if __name__=='__main__':

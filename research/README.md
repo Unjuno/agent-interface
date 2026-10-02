@@ -6,6 +6,9 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #6723 successor to #5370 T7: [composed bounded priority-inheritance experiment](analysis/priority_inheritance_5370_t7_composition_20261002_01/REPORT.md) — 36 rows independently audited; synthetic method-scoped result only, with historical T6 STOP preserved.
+
+- Issue #6710 successor to #6650: [independent controller-law replay](analysis/persistence_gated_throttle_6650_control_replay_20261002_01/REPORT.md) — allocation 01 freeze-key STOP preserved; allocation 02 OrbStack audit exactly reconstructed 36 policy runs and rejected all 9 mutations. Original #6650 `FAIL_HYPOTHESIS` remains unchanged; synthetic audit conformance only.
 - Issue #6581 path-width constrained GUI T0b: [`analysis/path_width_continuous_gui_6581_t0b_v1/REPORT.md`](analysis/path_width_continuous_gui_6581_t0b_v1/REPORT.md) — six synthetic scenarios independently audited `PASS_METHOD_SCOPED`; no ordinary-GUI or human/agent path claim.
 - Issue #6617 revision-timed cutover T0: [`analysis/revision_timed_cutover_6617_t0_v1/REPORT.md`](analysis/revision_timed_cutover_6617_t0_v1/REPORT.md) — WSLc `PASS_METHOD_SCOPED` on 30 logical-time traces; no speech, GUI, human, or measured-latency claim.
 - Issue #6604 disturbance-timescale T0: [isolated OrbStack Docker method result](analysis/disturbance_timescale_6604_t0_v1/REPORT.md) — 14 rows independently audited; synthetic method scope only, with the predecessor shared-engine HOLD retained separately.
@@ -52,6 +55,7 @@ For claims and scientific disposition, start with the top-level [research index]
 | Issue #6437 constraint-response normalization successor T0 | [analysis/constraint_response_normalization_6437_t0_v1/REPORT.md](analysis/constraint_response_normalization_6437_t0_v1/REPORT.md) |
 | Issue #6038 label/control ambiguity T0 (synthetic method only; formal-01 STOP retained) | [analysis/label_control_ambiguity_6038_t0_v1/REPORT.md](analysis/label_control_ambiguity_6038_t0_v1/REPORT.md) |
 | Issue #6422 authorized conditional-deferral boundary A02 | [analysis/denial_aware_deferral_authority_6422_a02_20261002_v1/REPORT.md](analysis/denial_aware_deferral_authority_6422_a02_20261002_v1/REPORT.md) |
+| Issue #6315 original finite-trace T0 (auditor-v1 HOLD retained; WSLc successor separate) | [analysis/temporal_coalescing_6315_t0_v1/REPORT.md](analysis/temporal_coalescing_6315_t0_v1/REPORT.md) |
 | Revisit history | [REVISIT_LEDGER.md](REVISIT_LEDGER.md) |
 | Analysis vs experiment decision flow | [../docs/RESEARCH_METHOD.md](../docs/RESEARCH_METHOD.md) |
 | Public evidence/document relationship map | [../docs/EVIDENCE_MAP.md](../docs/EVIDENCE_MAP.md) |

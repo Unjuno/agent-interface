@@ -1,48 +1,49 @@
 {
-  "schema": "issue6655-incidental-state-t0-freeze-v1",
-  "issue": 6655,
-  "allocation_id": "INCIDENTAL-STATE-LEGACY-6655-T0-20261002-01",
-  "base_main_sha": "9a573b00dc595e64d09387e567c85e10b61a46c1",
+  "schema": "issue6686-incidental-state-wslc-freeze-v1",
+  "issue": 6686,
+  "source_issue": 6655,
+  "allocation_id": "INCIDENTAL-STATE-LEGACY-6655-T0-WSLC-20261002-02",
+  "base_main_sha": "f92e56021e6bb8ef032836bdfb5e1329a67e60d2",
+  "source_branch": "research/issue6686-incidental-state-wslc-t0-r2-20261002",
+  "source_commit": "d4f30b250f7cba089bc68d413fb6c0e8b009b8d6",
+  "source_path": "research/analysis/incidental_state_legacy_6655_t0_20261002/",
   "runtime": {
-    "host": "local Windows host CPU",
-    "python": "CPython 3.11.9",
-    "dependencies": "Python standard library only",
-    "container": false,
+    "host": "WSL 3.0.1.0 native wslc",
+    "cli": "C:\\Program Files\\WSL\\wslc.exe",
+    "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "local_image_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "python": "3.12.15",
+    "platform": "linux/amd64",
+    "pull": "never",
+    "network": "none",
+    "cpus": "1",
+    "memory": "512m requested; cgroup/swap limit unsupported by current WSL kernel, effective enforcement unverified/not claimed",
     "gpu": false,
     "external_effects": false
   },
   "inputs": {
     "fixture.py": "sha256:a89ccf8711c2a0aebe12a4d39204517cb325b2ce90162e27a34f7d503f1c8575",
-    "seeds": [1, 32],
-    "case_ids": [
-      "helpful_incidental_view",
-      "harmful_stale_filter",
-      "irrelevant_theme",
-      "required_saved_effect",
-      "incomplete_restoration",
-      "shared_external_state",
-      "task_seed_mismatch"
+    "candidate.py": "sha256:cc807a04eb653ed770736dfde78183ddad344506197a041b761e45c42f7db4ba",
+    "audit.py": "sha256:2eaa0445f70b8a47240dc6797725044d34be974285cedd8bf2f191a5351d201e",
+    "test_t0.py": "sha256:0c947f3d1981fa4f191606dc0984b2fe67cd76e75503bb05270053b17e3b2ee2",
+    "seeds": [
+      1,
+      32
     ],
     "paired_rows": 224
   },
-  "source_sha256": {
-    "candidate.py": "cc807a04eb653ed770736dfde78183ddad344506197a041b761e45c42f7db4ba",
-    "audit.py": "2eaa0445f70b8a47240dc6797725044d34be974285cedd8bf2f191a5351d201e",
-    "test_t0.py": "0c947f3d1981fa4f191606dc0984b2fe67cd76e75503bb05270053b17e3b2ee2",
-    "preregistration.md": "sha256:2ddd05cdbe66f2a5156e11337799c9882fc463219fbf5605508e4087a55ddbba"
-  },
   "construction": {
-    "command": "py -3.11 -B -m unittest -v",
+    "command": "wslc run --pull never --network none --cpus 1 --memory 512m <image> python -B -m unittest -v",
     "test_count": 9,
-    "exit_code": 0,
-    "description": "one pre-freeze suite; includes control, helpful/harmful controls, required-effect retention, missing/relabelled diff, cross-seed, incomplete restore, shared state and assignment-order mutations"
+    "exit_code": null
   },
   "formal_limits": {
     "candidate_invocations_max": 1,
     "auditor_invocations_max": 1,
     "retries": 0,
-    "candidate_output": "formal_01_20261002/candidate/raw.json",
-    "auditor_output": "formal_01_20261002/auditor/audit.json",
+    "output": "formal_02_20261002/candidate/raw.json",
+    "audit_output": "formal_02_20261002/auditor/audit.json",
     "no_overwrite": true
-  }
+  },
+  "status": "FROZEN_NOT_RUN"
 }

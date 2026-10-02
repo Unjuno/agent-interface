@@ -1,0 +1,51 @@
+{
+  "claim_boundary": "synthetic T0 method fixture only; no real interface, human, or downstream benefit claim",
+  "descriptive_summary": {
+    "harmful_stale_filter": {
+      "inherit_correct_rate": 0.0,
+      "inherit_mean_observations": 1.0,
+      "inherit_mean_total_cost": 3.0,
+      "reset_correct_rate": 1.0,
+      "reset_mean_observations": 3.0,
+      "reset_mean_total_cost": 4.0
+    },
+    "helpful_incidental_view": {
+      "inherit_correct_rate": 1.0,
+      "inherit_mean_observations": 1.0,
+      "inherit_mean_total_cost": 1.0,
+      "reset_correct_rate": 1.0,
+      "reset_mean_observations": 3.0,
+      "reset_mean_total_cost": 4.0
+    },
+    "irrelevant_theme": {
+      "inherit_correct_rate": 1.0,
+      "inherit_mean_observations": 2.0,
+      "inherit_mean_total_cost": 2.0,
+      "reset_correct_rate": 1.0,
+      "reset_mean_observations": 2.0,
+      "reset_mean_total_cost": 3.0
+    },
+    "required_saved_effect": {
+      "inherit_correct_rate": 1.0,
+      "inherit_mean_observations": 2.0,
+      "inherit_mean_total_cost": 2.0,
+      "reset_correct_rate": 1.0,
+      "reset_mean_observations": 2.0,
+      "reset_mean_total_cost": 2.0
+    }
+  },
+  "eligible_cases": 4,
+  "errors": [],
+  "ineligible_cases": 3,
+  "rows": 224,
+  "seeds_per_case": {
+    "harmful_stale_filter": 32,
+    "helpful_incidental_view": 32,
+    "incomplete_restoration": 32,
+    "irrelevant_theme": 32,
+    "required_saved_effect": 32,
+    "shared_external_state": 32,
+    "task_seed_mismatch": 32
+  },
+  "status": "PASS_METHOD_SCOPED"
+}

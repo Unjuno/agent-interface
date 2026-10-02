@@ -1,18 +1,17 @@
-# Issue #6655 T0 preregistration — incidental interface-state legacy
+# Issue #6655 incidental-state legacy T0 — WSLc successor
+
+This is a runtime-conforming successor to the consumed host allocation; it does not edit, replace, or reinterpret its raw result. Scope remains a finite synthetic method test only: no real interface, GUI, model, user/workspace state, network, GPU, or external effect.
 
 ## H / T / D / C / U
 
-- **H:** In a frozen multi-episode task family, inheriting a persistent incidental state delta changes a later task's independently checked correctness or downstream observation/recovery cost relative to a paired reset-to-baseline replay. Direction is not assumed. This finite synthetic T0 tests method behavior only; it is not evidence of real-interface benefit.
-- **T:** Run seven synthetic case classes over seeds 1–32 (224 paired rows): helpful incidental view; harmful stale filter; irrelevant theme; required saved effect; incomplete restoration; unowned shared/external state; and task/seed mismatch. For eligible pairs, randomize inherit/reset arm order after the originating episode using the recorded deterministic seed, hold the later task contract and seed fixed, and report observation, recovery, restoration, and total cost separately. Exclude the last two state-integrity cases conservatively; score no outcome for them.
-- **D:** `PASS_METHOD_SCOPED` only if a separate raw-only auditor reconstructs every row, changed field/classification, deterministic assignment, contract/seed pair, state transition, outcome and cost; detects helpful and harmful controls; observes no downstream outcome difference for the irrelevant control; preserves the required effect in both arms; excludes incomplete/shared/mismatched cases; and rejects every frozen mutation. Any discrepancy is `HOLD_AUDIT_INTEGRITY`. No threshold or causal claim is revised.
-- **C:** A hand-authored finite oracle may overfit these cases; restoration cost can change total sequence cost even when downstream outcomes do not; different task choices and reset definitions can reverse effects.
-- **U:** Only synthetic state, 32 deterministic seeds, and seven authored cases; no GUI/application, model, real settings, user, or external effect. This cannot estimate prevalence, human preference, causal carryover on a real app, or T1 benefit.
+- **H:** The finite synthetic scorer distinguishes helpful incidental state, harmful stale state, irrelevant state, required effects, and ineligible shared/incompletely-restored state; an independent auditor reconstructs all 224 rows and rejects frozen protocol mutations.
+- **T0:** Run the immutable source/input snapshot with the exact local WSLc image in `FREEZE.json`, pull disabled, network none, CPU 1, requested memory 512m (WSL reported cgroup/swap-limit enforcement unavailable; memory enforcement is not claimed). First run the 9-test construction suite. Then invoke one candidate and one separate raw-only auditor, no retries or tuning. Freeze hashes/commands and prove outputs absent before formal invocations.
+- **D:** `PASS_METHOD_SCOPED` only if construction passes 9/9, candidate exits 0, separate auditor reconstructs all 224 rows with zero errors, and independent mutations are rejected. Else report exact STOP/FAIL/HOLD. No live-interface claim.
+- **C:** Tests deterministic scorer and runtime reproduction only, not user benefit or causal transfer.
+- **U:** Synthetic cases omit actual application timing, state ownership, concurrency and restoration behavior; observed WSLc enforcement is not generalized beyond recorded checks.
 
-## Freeze and one-shot boundary
+## Runtime
 
-- Base main: `9a573b00dc595e64d09387e567c85e10b61a46c1`.
-- Candidate: `candidate.py`; independent auditor: `audit.py`; fixed input: `fixture.py`; construction tests: `test_t0.py`.
-- Freeze file records exact source SHA-256 values, runtime, seed range, case list, and output paths.
-- Construction tests run before candidate invocation; the formal candidate may run once and the independent auditor once, only after fresh main/source/path checks. Retries, replacements, parameter tuning, and output overwrite are forbidden.
-- This T0 is deterministic standard-library CPU work, so no container/GUI/runtime semantics are under test and the shared container lane is not consumed. No GPU is relevant to this finite arithmetic/oracle test.
-- Candidate writes to a previously absent path. The auditor reads only the frozen raw record and writes a distinct absent path.
+WSL native `wslc` only (WSL 3.0.1.0), using the immutable local image digest in `FREEZE.json`, `--pull never --network none --cpus 1 --memory 512m`; WSL warned that swap/cgroup memory enforcement is unavailable, so effective memory limiting is not claimed. No Podman, Docker Engine, GPU, external data, or network. Source mount read-only; only a dedicated fresh result directory writable. Construction command and candidate/auditor command templates are pinned in the freeze. Candidate and auditor caps are 1 each; retries 0.
+
+The original allocation `INCIDENTAL-STATE-LEGACY-6655-T0-20261002-01` ran on Windows host in protocol deviation (1 candidate/1 auditor); preserve its output and classification unchanged. This successor uses a new output path and allocation ID.

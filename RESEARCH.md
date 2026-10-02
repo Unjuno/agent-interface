@@ -1,3 +1,7 @@
+# Issue #6530: temporal-effect identity across timezone transitions (2026-10-02)
+
+New OrbStack allocation A01 ran the frozen eight-case New York temporal fixture in the dedicated VM's private Docker Engine; candidate and independent raw-only auditor each ran once and exited 0, audit `PASS` (8 rows, no errors). The typed oracle detected the planted daily-local-versus-fixed-UTC recurrence error accepted by both display-string and offset-only baselines, and returned both possible instants for an unresolved fall-back fold. This is a synthetic method-only result, not a GUI/calendar or real persisted-effect claim. The predecessor WSLc pre-start STOP in PR #6666 remains unchanged. See the [A01 report and checksummed artifacts](research/analysis/temporal_effect_identity_6530_orbstack_a01_20261002/REPORT.md) and [Issue #6530](https://github.com/Unjuno/agent-interface/issues/6530).
+
 # Issue #6581 T0b: path-width constrained continuous GUI fixture (2026-10-02)
 
 One frozen OrbStack candidate and one separate raw-only Python auditor ran once; both exited 0 and the auditor returned `PASS_METHOD_SCOPED` for six authored scenarios. The identical wide/narrow pointer traces reached the same endpoint but saved only in the wide corridor; the endpoint-after-exit adversary remained unsaved. Variable-width, corner-union, and ordinary unconstrained controls matched their frozen rules. This is a synthetic fixture/oracle result only—not ordinary GUI, human/agent movement, Steering-Law, timing, benefit, or safety evidence. Construction and auditor-container launch failures are preserved; the #6581 predecessor `STOP_DATA` remains unchanged and T1 remains open. See the [report, preregistration, freeze, and checksummed formal evidence](research/analysis/path_width_continuous_gui_6581_t0b_v1/REPORT.md) and [Issue #6581](https://github.com/Unjuno/agent-interface/issues/6581).
@@ -15,7 +19,55 @@ Successor isolated OrbStack Docker allocation 02 returned `PASS_METHOD_SCOPED`: 
 
 # Issue #6576: extreme-tail eligibility pilot A02 (2026-10-02)
 
+### Follow-up: timer quantization exposes an eligibility-contract gap
+
+Fresh OrbStack Docker construction A01 tested continuous versus rounded
+synthetic timing samples. Independent audit confirmed that q=1.0 rounding was
+still labeled `ELIGIBLE_REFERENCE` with six distinct values among 333 training
+q90 exceedances; q=0.25 had 21 distinct values and also passed. The continuous
+control was rejected by the existing block-median ratio gate (1.545 > 1.5).
+This is a finite counterexample showing the current gate omits a measurement-
+resolution/tie-support condition, not a p99 calibration or real release result.
+Candidate and raw-only audit each ran once, exit 0, no retry. See the full
+[A01 run record](research/analysis/extreme_tail_eligibility_6576_construction_v1/timer_quantization_a01_20261002/RUN_RECORD.md)
+and [frozen hypothesis/protocol](research/analysis/extreme_tail_eligibility_6576_construction_v1/timer_quantization_a01_20261002/PREREGISTRATION.md).
+
+Fresh-seed follow-up A02 tested a 20-distinct-q90-exceedance support rule on
+30 fixtures per resolution. It held all 30/30 baseline-eligible q=1.0 samples,
+added 0/21 holds to continuous controls, and held 7/24 intermediate q=0.25
+samples; independent audit passed the frozen `PASS_SUPPORT_RULE_SCOPED`
+criteria. This tests only these synthetic generator/quantum arms and does not
+validate 20 as a production threshold. See the [A02 run record](research/analysis/extreme_tail_eligibility_6576_construction_v1/timer_quantization_a02_20261002/RUN_RECORD.md).
+
+Fresh-seed cutoff sweep A03 (50 samples per q=0/0.25/0.5/1.0 arm) found cutoff
+8 the smallest tested threshold meeting the preregistered synthetic criteria:
+48/50 eligible q=1.0 cases held, with 0/31 continuous and 0/36 q=0.25 cases
+additionally held. Cutoff 20 held 14/36 q=0.25 fixtures; q=0.5 had only 2/50
+baseline-eligible cases. This is a generator-specific finite tradeoff, not a
+production cutoff. See the [A03 run record](research/analysis/extreme_tail_eligibility_6576_construction_v1/timer_quantization_a03_20261002/RUN_RECORD.md).
+
 A dedicated OrbStack Ubuntu machine ran its own pinned-image Docker Engine; no shared Engine was used. One preregistered stationary synthetic case (4,000 train + 4,000 holdout) produced `ELIGIBLE_REFERENCE`; the candidate and independent raw-only audit each ran once and exited 0, with `PASS_METHOD_SCOPED PASS_RAW_ONLY`. The eligible-gated p99 holdout was 42/4,000 (exact 95% CI 0.00758–0.01417); the TailID-equivalent p99 was 45/4,000 (0.00822–0.01502); both include nominal 1%. This one-case pilot establishes neither superiority nor TailID parity, and makes no physical input-release, safety, or worst-case claim. The formal six-case T0 remains unrun. See the [frozen run, raw output and hashes](research/analysis/extreme_tail_eligibility_6576_construction_v1/orbstack_pilot_a02_20261002/RUN_RECORD.md), [H/T/D/C/U and frozen input](research/analysis/extreme_tail_eligibility_6576_construction_v1/orbstack_pilot_a02_20261002/PREREGISTRATION.md), and [Issue #6576](https://github.com/Unjuno/agent-interface/issues/6576).
+
+Successor CRAN/R parity studies then compared pinned TailID 1.0.0/ismev 1.43
+with the Python port in isolated OrbStack Docker containers. A03 stopped on an
+R harness error; A04 retained candidate outputs but its auditor crashed; A05
+completed the independent audit and failed numerical parity on one of six
+fresh synthetic fixtures (relative scale delta 0.001965, shape delta 0.002028,
+CI endpoint delta 0.003308), while all six candidate/sensitive-index and
+threshold checks passed. The Python port is not verified numerically
+equivalent at the preregistered tolerances. This remains synthetic method
+evidence only; the formal six-case T0 and physical release/safety evidence are
+still unestablished. See the additive [A03](research/analysis/extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a03_20261002/RUN_RECORD.md), [A04](research/analysis/extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a04_20261002/RUN_RECORD.md), and [A05](research/analysis/extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a05_20261002/RUN_RECORD.md) run records.
+
+Follow-up optimizer-sensitivity successors A06/A07 each retained a distinct
+infrastructure/auditor STOP without retry. A08 then completed on six new
+synthetic fixtures with independent raw-only audit: alternative converged R
+starts crossed the frozen sensitivity gate on 4/6, while default R/Python
+parameter parity passed 6/6. This makes optimizer-path sensitivity a plausible
+contributor to A05's isolated mismatch, but does not establish that causal
+explanation or a global MLE. All three run packages, failed starts, raw outputs
+and hashes are retained separately; formal six-case T0 and physical release
+evidence remain pending.
 
 # Issue #6501 T0-01 / T0b-01: scope-typed singleflight (2026-10-02)
 
@@ -83,6 +135,10 @@ One digest-pinned, network-disabled WSLc construction reconstructed 600 syntheti
 
 The unchanged #6262 synthetic CUDA candidate ran once in a pinned, network-disabled WSL Podman container with NVIDIA CDI passthrough. It enumerated 4,096/4,096 evidence subsets on the local RTX 3080; the independent CPU auditor exactly reconstructed every semantic row, refused 1,987 naive joint false promotions and the wide claim, retained the exact qualified `t01` narrow claim, and rejected all four frozen mutations. `PASS_CONTAINER_REPRODUCTION_SCOPED`; no retries. This is an environment-reproduction result only—not a real skill, GUI, safety, GPU-speed, or Docker-parity claim. The immutable predecessor result and its original non-container execution remain untouched. See [the freeze, raw evidence, manifest, and report](research/analysis/skill_applicability_6262_wslc_t0b_v1/REPORT.md) and [PR #6289](https://github.com/Unjuno/agent-interface/pull/6289).
 
+### Issue #6710 successor to #6650: independent persistence-throttle controller-law replay (2026-10-02)
+
+Allocation 01 is retained as `STOP_AUDITOR_FREEZE_KEY` before fixture/raw input. Its source and stderr are unchanged; it was not retried. Distinct allocation 02 ran one digest-pinned, network-disabled OrbStack auditor (candidate=0, retry=0) and reconstructed all 9×4 policy outputs exactly, with 0 mismatches and 9/9 corruption controls rejected. This is a scoped audit-conformance result only. It does not reverse #6650 T0's `FAIL_HYPOTHESIS` (age-persistence stale deliveries 6 vs queue-length 3 on the frozen sustained-overload trace), establish policy utility, or support a runtime/safety claim. See [report, both freezes, raw audit receipt, and failure record](research/analysis/persistence_gated_throttle_6650_control_replay_20261002_01/REPORT.md) and [successor Issue #6710](https://github.com/Unjuno/agent-interface/issues/6710).
+
 # Research index
 
 ### Issue #6533: frame-qualified collateral checks T0 (2026-10-02)
@@ -102,6 +158,10 @@ One candidate invocation in a pinned OrbStack `linux/arm64` Python 3.12.14 conta
 ### Issue #6038: label/control ambiguity T0
 
 Successor allocation S2 ran the ten-case synthetic finite fixture once in two separate pinned OrbStack containers; an independent audit reconstructed all decisions/final field states and rejected four corruption mutations (`PASS_METHOD_SCOPED`). The relation/abstention policy had exact effects in 7/7 unique cases and abstained on all 3 ambiguous/stale cases; nearest and same-scope-nearest baselines produced 7 and 5 wrong-field effects respectively on this authored fixture. The predecessor candidate launcher omitted its Docker image operand and stopped with exit 126 before Python execution; that STOP is retained unchanged and was not counted as a method result. No pixels or perception algorithm, live GUI/model/task, real accessibility relation, privacy/safety benefit, or product claim was tested. See [the immutable report and both allocation records](research/analysis/label_control_ambiguity_6038_t0_v1/REPORT.md) and [Issue #6038](https://github.com/Unjuno/agent-interface/issues/6038).
+
+### Issue #6315: original temporal-coalescing finite-trace T0
+
+The original OrbStack/Docker candidate ran once and emitted the retained raw output; auditor-v1 also ran once, but a post-run review found a decision-logic defect, so its apparent PASS is preserved as HOLD_AUDIT_IMPLEMENTATION. A separately run audit-only correction reconstructed 14/14 case-mode rows and rejected 4/4 mutations without rerunning the candidate. The later WSLc portability successor reproduced the same candidate bytes and independently audited this finite fixture; it does not erase the predecessor's auditor defect. No live GUI, deployed runtime, memory-enforcement, speed, or product benefit is established. See [the original report](research/analysis/temporal_coalescing_6315_t0_v1/REPORT.md), [the WSLc successor](research/analysis/temporal_coalescing_6315_wslc_successor_20261002/REPORT.md), and [Issue #6315](https://github.com/Unjuno/agent-interface/issues/6315).
 
 ## How to read this ledger
 
@@ -2095,3 +2155,11 @@ A new two-control OrbStack allocation extended #5927's finite feedback-necessity
 ### Issue #6147: safe distinguishing probes T0 allocation 02 — STOP (2026-10-01)
 
 The single frozen host-CPU candidate process exited 1 after writing an 11,020-byte raw file, then failed in its final summary (`KeyError: 'enumerated_policy_trees'`). Disposition: `STOP_CANDIDATE_RUNTIME_ERROR / NOT_EVALUATED`; the independent auditor ran zero times, with no retry. The raw file and its digest are retained but unverified and are not a method result. See [the STOP packet and freeze](research/analysis/safe_probe_identifiability_6147_t0_20261002_a02/STOP.md). No GUI, model, game, container, network, or GPU/CUDA work occurred.
+# Issue #6689 T0: prefix-stability certificates (2026-10-02)
+
+The frozen candidate ran once over 40 authored worlds / 2,592 interleavings and emitted 4,707 prefixes. The independent raw-only auditor ran once and exited 2 (`FAIL_AUDIT`): row-level classifications and all four mutation controls agreed/rejected as intended, but the candidate header mixed `EARLY_STABLE_*` metrics into `classification_counts`, which the auditor correctly rejected. No method pass is accepted; no post-freeze repair or rerun occurred. Raw output, audit and stop reason are retained in [the STOP packet](research/analysis/prefix_stability_6689_t0_20261002/STOP.md), [frozen inputs](research/analysis/prefix_stability_6689_t0_20261002/FREEZE.json), and [Issue #6689](https://github.com/Unjuno/agent-interface/issues/6689). A corrected aggregate contract requires a separately frozen successor. This finite authored model makes no runtime, freshness, GUI, authority, product-effect, or performance claim.
+
+A distinct allocation (`PREFIX-STABILITY-6689-T0-20261002-01`, base main `b711b778`) enumerated 768 reachable prefix states plus one unknown-contract row. Its candidate and raw-only auditor each ran once (both exit 0; retries 0); the auditor emitted `PASS_METHOD_SCOPED`. Posthoc adjudication against the preregistered obligation-preservation gate found 192 stable-negative rows suppressing the incomplete mandatory-check-vector obligation, so the accepted disposition is `FAIL_METHOD`, not PASS. The immutable raw/audit hashes and separate packet are retained in [allocation 01](research/analysis/prefix_stability_6689_local_allocation01_20261002/REPORT.md). This result is distinct from, and must not overwrite or be conflated with, the `FAIL_AUDIT` run above; no rerun or successor was performed.
+# Issue #5370 T7 successor #6723: composed bounded priority inheritance (2026-10-02)
+
+OrbStack candidate and separate raw-only auditor each ran once; all 36 finite rows reconstructed with zero audit errors. On the authored inversion subset, composed bounded inheritance reduced deadline misses from 7 to 6 versus deadline-only; an intentionally unsafe unbounded comparator had 1. This modest one-case synthetic difference does not establish real scheduler behavior, runtime performance, GUI integration, safety, or user-visible latency. Historical #5370 T6 `STOP_PROTOCOL_DEVIATION` remains unchanged. See [the formal report and preserved raw/audit evidence](research/analysis/priority_inheritance_5370_t7_composition_20261002_01/REPORT.md) and [successor Issue #6723](https://github.com/Unjuno/agent-interface/issues/6723).

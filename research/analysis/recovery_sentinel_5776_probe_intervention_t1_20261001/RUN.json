@@ -1,0 +1,21 @@
+{
+  "allocation": "recovery-sentinel-5776-probe-intervention-t1-20261001-01",
+  "issue": 5776,
+  "state": "STOPPED_BEFORE_CANDIDATE_MAIN_ADVANCE",
+  "observed_at_utc": "2026-10-01T06:59Z (minute-resolution)",
+  "base_main": "7e94ba9fdbfbff8d32d5dde27c086f2eb7582775",
+  "start_gate_main": "443bcb63333c4614d9a6fee5cb3ca3f9f6ea9710",
+  "reason": "STOP_MAIN_ADVANCED_BEFORE_CANDIDATE",
+  "scientific_result": false,
+  "invocations": {"candidate": 0, "independent_auditor": 0, "retry": 0},
+  "raw": null,
+  "local_construction_tests": "4/4 pass; not a formal result",
+  "guest": {
+    "name": "obs-5776-probe-intervention-t1-20261001-01",
+    "machine_id": "01M3V3YWYGT8S7QRW7Y6B9H54K",
+    "state": "stopped",
+    "docker_candidate_containers": 0,
+    "docker_auditor_containers": 0
+  },
+  "parallel_resource_note": "A different task's live shared-OrbStack Docker container was observed and not touched."
+}

@@ -1,0 +1,9 @@
+{
+  "truth_by_class": {
+    "cue-amber-7": {"label": "anomaly", "visibility": "visible", "required_safe_actions": ["inspect", "safe_takeover"]},
+    "cue-neutral-2": {"label": "benign", "visibility": "visible", "required_safe_actions": ["continue", "inspect"]},
+    "frame-gap-4": {"label": "anomaly", "visibility": "invisible", "required_safe_actions": ["unknown", "safe_takeover"]},
+    "receipt-green-9": {"label": "success", "visibility": "visible", "required_safe_actions": ["accept", "inspect"]}
+  },
+  "hard_stop": {"machine_action": "STOP_AND_RELEASE", "required": true, "suppressed": false}
+}

@@ -1,0 +1,208 @@
+test_callback_exception_retains_refusal (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_callback_exception_retains_refusal) ... ERROR
+test_changed_tail_offset_or_interaction_refuses_before_input (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_changed_tail_offset_or_interaction_refuses_before_input) ... ERROR
+test_context_restores_after_exception (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_context_restores_after_exception) ... ERROR
+test_deadline_focus_and_source_changes_during_callback_refuse (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_deadline_focus_and_source_changes_during_callback_refuse) ... 
+  test_deadline_focus_and_source_changes_during_callback_refuse (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_deadline_focus_and_source_changes_during_callback_refuse) (change='deadline') ... ERROR
+  test_deadline_focus_and_source_changes_during_callback_refuse (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_deadline_focus_and_source_changes_during_callback_refuse) (change='focus') ... ERROR
+  test_deadline_focus_and_source_changes_during_callback_refuse (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_deadline_focus_and_source_changes_during_callback_refuse) (change='sequence') ... ERROR
+  test_deadline_focus_and_source_changes_during_callback_refuse (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_deadline_focus_and_source_changes_during_callback_refuse) (change='scope') ... ERROR
+  test_deadline_focus_and_source_changes_during_callback_refuse (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_deadline_focus_and_source_changes_during_callback_refuse) (change='revision') ... ERROR
+  test_deadline_focus_and_source_changes_during_callback_refuse (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_deadline_focus_and_source_changes_during_callback_refuse) (change='review') ... ERROR
+  test_deadline_focus_and_source_changes_during_callback_refuse (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_deadline_focus_and_source_changes_during_callback_refuse) (change='recovery') ... ERROR
+test_existing_check_precedes_callback_and_source_is_defensive (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_existing_check_precedes_callback_and_source_is_defensive) ... ERROR
+test_existing_refusal_never_calls_additional_check (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_existing_refusal_never_calls_additional_check) ... ERROR
+test_false_none_or_truthy_non_boolean_refuses (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_false_none_or_truthy_non_boolean_refuses) ... 
+  test_false_none_or_truthy_non_boolean_refuses (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_false_none_or_truthy_non_boolean_refuses) (value=False) ... ERROR
+  test_false_none_or_truthy_non_boolean_refuses (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_false_none_or_truthy_non_boolean_refuses) (value=None) ... ERROR
+  test_false_none_or_truthy_non_boolean_refuses (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_false_none_or_truthy_non_boolean_refuses) (value=1) ... ERROR
+  test_false_none_or_truthy_non_boolean_refuses (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_false_none_or_truthy_non_boolean_refuses) (value='yes') ... ERROR
+test_nested_registration_and_registration_during_input_refuse (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_nested_registration_and_registration_during_input_refuse) ... ERROR
+test_no_guard_keeps_one_capture_and_no_extra_check (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_no_guard_keeps_one_capture_and_no_extra_check) ... ok
+test_other_alias_keeps_existing_check_without_callback (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_other_alias_keeps_existing_check_without_callback) ... ERROR
+test_rebinding_before_capture_refuses (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_rebinding_before_capture_refuses) ... ERROR
+test_refusal_after_modifier_preserves_prefix_and_release (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_refusal_after_modifier_preserves_prefix_and_release) ... ERROR
+
+======================================================================
+ERROR: test_callback_exception_retains_refusal (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_callback_exception_retains_refusal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_input_dependency.py", line 60, in test_callback_exception_retains_refusal
+    with self.b.input_guard('save',[0,0],tail=TAIL,verify=verify):
+         ^^^^^^^^^^^^^^^^^^
+AttributeError: 'NativeHandleBridge' object has no attribute 'input_guard'
+
+======================================================================
+ERROR: test_changed_tail_offset_or_interaction_refuses_before_input (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_changed_tail_offset_or_interaction_refuses_before_input)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_input_dependency.py", line 106, in test_changed_tail_offset_or_interaction_refuses_before_input
+    with self.b.input_guard('save',[0,0],tail=TAIL,verify=lambda *a:True):
+         ^^^^^^^^^^^^^^^^^^
+AttributeError: 'NativeHandleBridge' object has no attribute 'input_guard'
+
+======================================================================
+ERROR: test_context_restores_after_exception (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_context_restores_after_exception)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_input_dependency.py", line 101, in test_context_restores_after_exception
+    with self.b.input_guard('save',[0,0],tail=TAIL,verify=lambda *a:True):raise OSError('caller')
+         ^^^^^^^^^^^^^^^^^^
+AttributeError: 'NativeHandleBridge' object has no attribute 'input_guard'
+
+======================================================================
+ERROR: test_deadline_focus_and_source_changes_during_callback_refuse (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_deadline_focus_and_source_changes_during_callback_refuse) (change='deadline')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_input_dependency.py", line 77, in test_deadline_focus_and_source_changes_during_callback_refuse
+    with self.subTest(change=change),self.b.input_guard('save',[0,0],tail=TAIL,verify=verify):
+                                     ^^^^^^^^^^^^^^^^^^
+AttributeError: 'NativeHandleBridge' object has no attribute 'input_guard'
+
+======================================================================
+ERROR: test_deadline_focus_and_source_changes_during_callback_refuse (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_deadline_focus_and_source_changes_during_callback_refuse) (change='focus')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_input_dependency.py", line 77, in test_deadline_focus_and_source_changes_during_callback_refuse
+    with self.subTest(change=change),self.b.input_guard('save',[0,0],tail=TAIL,verify=verify):
+                                     ^^^^^^^^^^^^^^^^^^
+AttributeError: 'NativeHandleBridge' object has no attribute 'input_guard'
+
+======================================================================
+ERROR: test_deadline_focus_and_source_changes_during_callback_refuse (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_deadline_focus_and_source_changes_during_callback_refuse) (change='sequence')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_input_dependency.py", line 77, in test_deadline_focus_and_source_changes_during_callback_refuse
+    with self.subTest(change=change),self.b.input_guard('save',[0,0],tail=TAIL,verify=verify):
+                                     ^^^^^^^^^^^^^^^^^^
+AttributeError: 'NativeHandleBridge' object has no attribute 'input_guard'
+
+======================================================================
+ERROR: test_deadline_focus_and_source_changes_during_callback_refuse (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_deadline_focus_and_source_changes_during_callback_refuse) (change='scope')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_input_dependency.py", line 77, in test_deadline_focus_and_source_changes_during_callback_refuse
+    with self.subTest(change=change),self.b.input_guard('save',[0,0],tail=TAIL,verify=verify):
+                                     ^^^^^^^^^^^^^^^^^^
+AttributeError: 'NativeHandleBridge' object has no attribute 'input_guard'
+
+======================================================================
+ERROR: test_deadline_focus_and_source_changes_during_callback_refuse (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_deadline_focus_and_source_changes_during_callback_refuse) (change='revision')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_input_dependency.py", line 77, in test_deadline_focus_and_source_changes_during_callback_refuse
+    with self.subTest(change=change),self.b.input_guard('save',[0,0],tail=TAIL,verify=verify):
+                                     ^^^^^^^^^^^^^^^^^^
+AttributeError: 'NativeHandleBridge' object has no attribute 'input_guard'
+
+======================================================================
+ERROR: test_deadline_focus_and_source_changes_during_callback_refuse (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_deadline_focus_and_source_changes_during_callback_refuse) (change='review')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_input_dependency.py", line 77, in test_deadline_focus_and_source_changes_during_callback_refuse
+    with self.subTest(change=change),self.b.input_guard('save',[0,0],tail=TAIL,verify=verify):
+                                     ^^^^^^^^^^^^^^^^^^
+AttributeError: 'NativeHandleBridge' object has no attribute 'input_guard'
+
+======================================================================
+ERROR: test_deadline_focus_and_source_changes_during_callback_refuse (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_deadline_focus_and_source_changes_during_callback_refuse) (change='recovery')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_input_dependency.py", line 77, in test_deadline_focus_and_source_changes_during_callback_refuse
+    with self.subTest(change=change),self.b.input_guard('save',[0,0],tail=TAIL,verify=verify):
+                                     ^^^^^^^^^^^^^^^^^^
+AttributeError: 'NativeHandleBridge' object has no attribute 'input_guard'
+
+======================================================================
+ERROR: test_existing_check_precedes_callback_and_source_is_defensive (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_existing_check_precedes_callback_and_source_is_defensive)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_input_dependency.py", line 36, in test_existing_check_precedes_callback_and_source_is_defensive
+    with self.b.input_guard('save',[0,0],tail=TAIL,verify=verify):
+         ^^^^^^^^^^^^^^^^^^
+AttributeError: 'NativeHandleBridge' object has no attribute 'input_guard'
+
+======================================================================
+ERROR: test_existing_refusal_never_calls_additional_check (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_existing_refusal_never_calls_additional_check)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_input_dependency.py", line 44, in test_existing_refusal_never_calls_additional_check
+    with self.b.input_guard('save',[0,0],tail=TAIL,verify=verify):
+         ^^^^^^^^^^^^^^^^^^
+AttributeError: 'NativeHandleBridge' object has no attribute 'input_guard'
+
+======================================================================
+ERROR: test_false_none_or_truthy_non_boolean_refuses (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_false_none_or_truthy_non_boolean_refuses) (value=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_input_dependency.py", line 53, in test_false_none_or_truthy_non_boolean_refuses
+    with self.b.input_guard('save',[0,0],tail=TAIL,verify=lambda *a:value):
+         ^^^^^^^^^^^^^^^^^^
+AttributeError: 'NativeHandleBridge' object has no attribute 'input_guard'
+
+======================================================================
+ERROR: test_false_none_or_truthy_non_boolean_refuses (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_false_none_or_truthy_non_boolean_refuses) (value=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_input_dependency.py", line 53, in test_false_none_or_truthy_non_boolean_refuses
+    with self.b.input_guard('save',[0,0],tail=TAIL,verify=lambda *a:value):
+         ^^^^^^^^^^^^^^^^^^
+AttributeError: 'NativeHandleBridge' object has no attribute 'input_guard'
+
+======================================================================
+ERROR: test_false_none_or_truthy_non_boolean_refuses (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_false_none_or_truthy_non_boolean_refuses) (value=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_input_dependency.py", line 53, in test_false_none_or_truthy_non_boolean_refuses
+    with self.b.input_guard('save',[0,0],tail=TAIL,verify=lambda *a:value):
+         ^^^^^^^^^^^^^^^^^^
+AttributeError: 'NativeHandleBridge' object has no attribute 'input_guard'
+
+======================================================================
+ERROR: test_false_none_or_truthy_non_boolean_refuses (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_false_none_or_truthy_non_boolean_refuses) (value='yes')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_input_dependency.py", line 53, in test_false_none_or_truthy_non_boolean_refuses
+    with self.b.input_guard('save',[0,0],tail=TAIL,verify=lambda *a:value):
+         ^^^^^^^^^^^^^^^^^^
+AttributeError: 'NativeHandleBridge' object has no attribute 'input_guard'
+
+======================================================================
+ERROR: test_nested_registration_and_registration_during_input_refuse (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_nested_registration_and_registration_during_input_refuse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_input_dependency.py", line 92, in test_nested_registration_and_registration_during_input_refuse
+    with self.b.input_guard('save',[0,0],tail=TAIL,verify=lambda *a:True):
+         ^^^^^^^^^^^^^^^^^^
+AttributeError: 'NativeHandleBridge' object has no attribute 'input_guard'
+
+======================================================================
+ERROR: test_other_alias_keeps_existing_check_without_callback (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_other_alias_keeps_existing_check_without_callback)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_input_dependency.py", line 87, in test_other_alias_keeps_existing_check_without_callback
+    with self.b.input_guard('save',[0,0],tail=TAIL,verify=verify):
+         ^^^^^^^^^^^^^^^^^^
+AttributeError: 'NativeHandleBridge' object has no attribute 'input_guard'
+
+======================================================================
+ERROR: test_rebinding_before_capture_refuses (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_rebinding_before_capture_refuses)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_input_dependency.py", line 111, in test_rebinding_before_capture_refuses
+    with self.b.input_guard('save',[0,0],tail=TAIL,verify=lambda *a:True):
+         ^^^^^^^^^^^^^^^^^^
+AttributeError: 'NativeHandleBridge' object has no attribute 'input_guard'
+
+======================================================================
+ERROR: test_refusal_after_modifier_preserves_prefix_and_release (runtime.guarded_x11_v1.test_input_dependency.InputDependencyTests.test_refusal_after_modifier_preserves_prefix_and_release)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_input_dependency.py", line 129, in test_refusal_after_modifier_preserves_prefix_and_release
+    with self.b.input_guard('save',[0,0],tail=TAIL,verify=verify),patch.object(X11Backend,'key_state',side_effect=emit):
+         ^^^^^^^^^^^^^^^^^^
+AttributeError: 'NativeHandleBridge' object has no attribute 'input_guard'
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.026s
+
+FAILED (errors=20)

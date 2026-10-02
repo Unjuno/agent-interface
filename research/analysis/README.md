@@ -1,5 +1,10 @@
 # Analytical research
 
+- [`temporal_effect_identity_6530_orbstack_a01_20261002/REPORT.md`](temporal_effect_identity_6530_orbstack_a01_20261002/REPORT.md) — Issue #6530's frozen eight-case temporal identity fixture passed its scoped method gate in a digest-pinned OrbStack Docker candidate/auditor pair; no GUI, account, or real calendar event was used. Its earlier WSLc pre-start STOP remains unchanged.
+- [`trusted_confirmation_5836_t0_v1/RECOVERY_NOTE.md`](trusted_confirmation_5836_t0_v1/RECOVERY_NOTE.md) — Issue #5836 T0 source and pre-candidate resource STOP; formal candidate/auditor 0/0, scientific outcome NOT_EVALUATED.
+
+- [`wslc_control_plane_survivability_6669_t0_20261002/REPORT.md`](wslc_control_plane_survivability_6669_t0_20261002/REPORT.md) — Issue #6669 source/runtime applicability audit: `HOLD_APPLICABILITY_UNRESOLVED`; no WSLc pressure or survival claim.
+- [`observable_quiescence_6664_t0_v1/REPORT.md`](observable_quiescence_6664_t0_v1/REPORT.md) — Issue #6664 finite handoff protocol T0: 1,191 schedules independently audited; accounted quiescence had 0 false certificates (128 horizon certificates, all other cases UNKNOWN); epoch-only and fixed-delay comparators had 3,445 and 2,254 false certificates. No GUI/backend safety claim.
 - [`path_width_continuous_gui_6581_t0b_v1/REPORT.md`](path_width_continuous_gui_6581_t0b_v1/REPORT.md) — Issue #6581 synthetic path-width GUI fixture; six scenarios independently audited `PASS_METHOD_SCOPED`; no ordinary-GUI or human/agent transfer claim.
 - [`spatial_block_position_6590_t1_geometry_design_v2/REPORT.md`](spatial_block_position_6590_t1_geometry_design_v2/REPORT.md) — #6590 preformal geometry screen: 80×60 remains below the four-block floor; 112×84 provides 19/16/20/16 eligible unique centers and passes an independent finite audit. No image/model/container run; formal T1 still held on OrbStack API readiness.
 
@@ -15,6 +20,15 @@
 - [`retired_intention_cue_6556_t0_v1/`](retired_intention_cue_6556_t0_v1/) — Issue #6556: finite post-retirement cue lineage challenge; compare ordinary durable event-instance routing against generation/retirement fencing, preserve unresolved obligations, and return UNKNOWN when lineage is absent. Synthetic only.
 - [`observation_injection_transform_6575_t0_v1/`](observation_injection_transform_6575_t0_v1/) — Issue #6575 allocation 01 retained STOP: six sham-crop provenance mismatches between frozen candidate and auditor oracle; no scientific disposition or susceptibility/model claim.
 - [`extreme_tail_eligibility_6576_construction_v1/orbstack_pilot_a02_20261002/RUN_RECORD.md`](extreme_tail_eligibility_6576_construction_v1/orbstack_pilot_a02_20261002/RUN_RECORD.md) — Issue #6576 dedicated OrbStack Docker single-case pilot: candidate and independent raw-only audit passed 4,000/4,000 stationary synthetic rows, with nominal 1% inside exact held-out intervals. Formal six-case T0 and all real release/safety claims remain unestablished.
+- [`extreme_tail_eligibility_6576_construction_v1/timer_quantization_a01_20261002/RUN_RECORD.md`](extreme_tail_eligibility_6576_construction_v1/timer_quantization_a01_20261002/RUN_RECORD.md) — #6576 fresh OrbStack Docker timer-quantization probe: independent audit verified a q=1.0 synthetic arm passed `ELIGIBLE_REFERENCE` with only six distinct q90-exceedance values; finite gate-contract counterexample only, not EVT calibration or real timing evidence.
+- [`extreme_tail_eligibility_6576_construction_v1/timer_quantization_a02_20261002/RUN_RECORD.md`](extreme_tail_eligibility_6576_construction_v1/timer_quantization_a02_20261002/RUN_RECORD.md) — #6576 fresh-seed OrbStack Docker support-rule test: a 20-distinct-value cutoff held 30/30 eligible q=1.0 fixtures, added 0/21 holds to continuous controls, and held 7/24 intermediate q=0.25 fixtures; synthetic method scope only.
+- [`extreme_tail_eligibility_6576_construction_v1/timer_quantization_a03_20261002/RUN_RECORD.md`](extreme_tail_eligibility_6576_construction_v1/timer_quantization_a03_20261002/RUN_RECORD.md) — #6576 fresh-seed OrbStack Docker cutoff sweep: cutoff 8 was the smallest tested threshold meeting synthetic q=1.0 detection and continuous/q=0.25 false-hold criteria; q=0.5 baseline eligibility was sparse, and no production cutoff is validated.
+- [`extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a03_20261002/RUN_RECORD.md`](extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a03_20261002/RUN_RECORD.md) — #6576 TailID/R parity A03: one-shot R harness stopped before data evaluation; Python-only six-row artifact retained; no parity result or retry.
+- [`extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a04_20261002/RUN_RECORD.md`](extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a04_20261002/RUN_RECORD.md) — #6576 A04: both candidate arms completed, but the one-shot auditor crashed; descriptive post-hoc data retained separately from formal audit evidence.
+- [`extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a05_20261002/RUN_RECORD.md`](extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a05_20261002/RUN_RECORD.md) — #6576 A05: isolated OrbStack CRAN/R versus Python TailID comparison; indices and threshold matched on six synthetic cases, but one base GPD fit exceeded frozen MLE/CI tolerances (`FAIL_PARITY_NUMERICAL_MLE`). No formal T0, physical release or safety claim.
+- [`extreme_tail_eligibility_6576_construction_v1/orbstack_optimizer_sensitivity_a06_20261002/RUN_RECORD.md`](extreme_tail_eligibility_6576_construction_v1/orbstack_optimizer_sensitivity_a06_20261002/RUN_RECORD.md) — #6576 A06 fresh-seed optimizer-sensitivity candidate STOP: both one-shot arms failed on output UID permissions; no scientific result, auditor not invoked.
+- [`extreme_tail_eligibility_6576_construction_v1/orbstack_optimizer_sensitivity_a07_20261002/RUN_RECORD.md`](extreme_tail_eligibility_6576_construction_v1/orbstack_optimizer_sensitivity_a07_20261002/RUN_RECORD.md) — #6576 A07 fresh-seed R/Python candidates succeeded, but the one-shot auditor incorrectly rejected retained failed starts; no formal scientific conclusion.
+- [`extreme_tail_eligibility_6576_construction_v1/orbstack_optimizer_sensitivity_a08_20261002/RUN_RECORD.md`](extreme_tail_eligibility_6576_construction_v1/orbstack_optimizer_sensitivity_a08_20261002/RUN_RECORD.md) — #6576 A08 passed independent audit: alternate converged R fits were optimizer-sensitive on 4/6 synthetic fixtures; default R/Python parity passed 6/6. Method-scoped only; formal T0 and physical/safety claims remain unestablished.
 - [`model_ambiguity_lifetime_6580_t0_v1/formal_01_20261002/REPORT.md`](model_ambiguity_lifetime_6580_t0_v1/formal_01_20261002/REPORT.md) — Issue #6580 allocation 01 passed independent audit for finite FULL/ZERO/EVENT history sets and move-order information labels (12 rows, 56 histories); no continuation-policy or real-interface model-lifetime claim.
 - [`model_ambiguity_lifetime_6580_t0b_v1/REPORT.md`](model_ambiguity_lifetime_6580_t0b_v1/REPORT.md) — Issue #6580 decision-level T0b passed its 48-row finite table with explicit safe-continuation witnesses; public nature-first theta branches are not exhaustive, and T1 remains HOLD.
 - [`model_ambiguity_lifetime_6580_t0c_v1/formal_01_20261002/REPORT.md`](model_ambiguity_lifetime_6580_t0c_v1/formal_01_20261002/REPORT.md) — T0c passed an exhaustive 66-branch finite audit (48 scenario keys; WSLc CPU container); T1 remains HOLD and no real-interface claim is made.
@@ -51,6 +65,10 @@ flowchart TD
 ```
 
 ## Analysis families
+
+Issue #6315 retains both the original finite-trace T0 audit-v1 HOLD and the distinct WSLc portability successor; see each report for its exact scope and lineage.
+
+Issue #5370 T7 successor #6723: [composed bounded priority-inheritance report](priority_inheritance_5370_t7_composition_20261002_01/REPORT.md). Its isolated synthetic method result and explicit limits are retained; historical T6 STOP remains unchanged.
 
 - [Issue #6081 error-carry T0](error_carry_6081_t0_20261001/REPORT.md) — `STOP_METHOD_INVALID_BASELINE`; 672 rows reconstructed, but the 8-way dot-product baseline is not Euclidean-nearest. Frozen outputs are preserved; no PASS or application-transfer claim.
 
@@ -121,6 +139,7 @@ The table below summarizes major analytical chains and representative retained o
 | Decision / cost | [`evidence_dependent_compute_scheduler_dominance_r0_v1/`](evidence_dependent_compute_scheduler_dominance_r0_v1/) | Stale dependencies or missed hard deadlines make RUN infeasible; current metadata alone cannot universally choose RUN versus WAIT in the feasible region. | Measure invalidation likelihood, utility, contention, partial value, and production scheduler behavior. |
 | Decision / cost | [`evidence_compute_run_wait_break_even_r1_v1/`](evidence_compute_run_wait_break_even_r1_v1/) | After the hard feasibility gate, the one-horizon RUN/WAIT threshold depends on invalidation probability and the declared stable-wait versus obsolete-compute losses. | Calibrate those inputs for one concrete job class; correlated invalidation, preemption, partial reuse, and contention remain open. |
 | Decision / cost | [`evidence_compute_decision_lattice_r2_v1/`](evidence_compute_decision_lattice_r2_v1/) | Semantic reuse validity, temporal feasibility, and expected-cost selection compose as ordered gates without softer optimization overriding hard invalidation/deadline gates. | Calibrate parameters, rebuild economics, multi-job/resource scheduling, and partial/preemptive work. |
+| Queueing / fairness | [`service_debt_deadline_6613_a01/`](service_debt_deadline_6613_a01/) | OrbStack finite-trace A01 independently replayed 288 rows but `FAIL_HYPOTHESIS`: service-debt did not reduce worst wait vs FIFO/shortest; on-time floors held. Synthetic only. | Compare alternative service-fair policies only under a new, prospectively frozen successor; no GUI or human-fairness claim. |
 | Decision / cost | [`multicursor_parking_reposition_r0_v1/`](multicursor_parking_reposition_r0_v1/) | Under a serialized physical-pointer endpoint-cost model, logical parked cursors alone do not reduce physical reposition distance; a distinct cheap relocation primitive can. | Measure real relocation cost, hover/path equivalence, semantic re-grounding savings, and live correctness. |
 | Reuse / lifetime | [`evidence_dependent_compute_reuse_r0_v1/`](evidence_dependent_compute_reuse_r0_v1/) | For deterministic pure jobs with complete declared dependencies and non-reused semantic version identities, exact dependency-version equality is sufficient for reuse and necessary for universal safety across arbitrary jobs. | Defend against incomplete declarations, ABA/version reuse, nondeterminism, clocks/external state, side effects, and measure performance. |
 | Reuse / lifetime | [`layered_lifetime_admission_r0_v1/`](layered_lifetime_admission_r0_v1/) | Admission matches the oracle when reusable tokens bind every declared independently changing lifetime identity; global or route-only epochs lose narrowness or completeness in the frozen model. | Measure natural invalidation rates, runtime overhead, task correctness, model boundaries, and production ABI. |
@@ -243,6 +262,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`blackstart_x11_noinput_baseline_5970_t12_20261002/`](blackstart_x11_noinput_baseline_5970_t12_20261002/)
 - [`blackstart_xevent_target_5970_t5_20261002/`](blackstart_xevent_target_5970_t5_20261002/)
 - [`blackstart_xrecord_5970_t4_20261001/`](blackstart_xrecord_5970_t4_20261001/)
+- [`blackwell_observation_dominance_6678_t0_v1/`](blackwell_observation_dominance_6678_t0_v1/)
 - [`boundary_margin_5707_policy_pair_v1/`](boundary_margin_5707_policy_pair_v1/)
 - [`boundary_margin_5707_t0_v1/`](boundary_margin_5707_t0_v1/)
 - [`boundary_margin_5707_typed_v1/`](boundary_margin_5707_typed_v1/)
@@ -258,6 +278,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`capability_snapshot_currentness_fallback_r0_v1/`](capability_snapshot_currentness_fallback_r0_v1/)
 - [`causal_attribution_5323_t0_v1/`](causal_attribution_5323_t0_v1/)
 - [`causal_critical_path_elasticity_5851_t0_v1/`](causal_critical_path_elasticity_5851_t0_v1/)
+- [`causal_cut_5348_t1/`](causal_cut_5348_t1/)
 - [`causal_temporal_attention_successor_1941_v1/`](causal_temporal_attention_successor_1941_v1/)
 - [`causal_temporal_history_2026_v1/`](causal_temporal_history_2026_v1/)
 - [`cegis_grammar_gap_4294_v1/`](cegis_grammar_gap_4294_v1/)
@@ -317,6 +338,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`effect_path_antiwindup_5791_t0_v1/`](effect_path_antiwindup_5791_t0_v1/)
 - [`effect_path_antiwindup_5791_t0_v2/`](effect_path_antiwindup_5791_t0_v2/)
 - [`effect_terminal_feedback_6301_t0_20261002/`](effect_terminal_feedback_6301_t0_20261002/)
+- [`effect_terminal_feedback_6301_t0_successor_20261002/`](effect_terminal_feedback_6301_t0_successor_20261002/)
 - [`effect_time_contract_authorization_successor_532_v1/`](effect_time_contract_authorization_successor_532_v1/)
 - [`endogenous_demand_rebound_5702_t0_v1/`](endogenous_demand_rebound_5702_t0_v1/)
 - [`entrypoint_argv_preflight_5156_v2_20261001/`](entrypoint_argv_preflight_5156_v2_20261001/)
@@ -336,6 +358,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`exogenous_opportunity_5694_t0_20261001/`](exogenous_opportunity_5694_t0_20261001/)
 - [`explanation_dependence_5916_t0_v1/`](explanation_dependence_5916_t0_v1/)
 - [`exposed_success_audit_6367_t0_20261002/`](exposed_success_audit_6367_t0_20261002/)
+- [`faded_demonstration_6600_t0_orbstack_20261002/`](faded_demonstration_6600_t0_orbstack_20261002/)
 - [`failure_detector_5531_async_bound_t6_v1/`](failure_detector_5531_async_bound_t6_v1/)
 - [`feasible_attribution_6100_t0_20261001/`](feasible_attribution_6100_t0_20261001/)
 - [`feedback_necessity_5927_epistemic_controls_t0_20261002/`](feedback_necessity_5927_epistemic_controls_t0_20261002/)
@@ -359,6 +382,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`gpu_photometric_2912_v2/`](gpu_photometric_2912_v2/)
 - [`gpu_photometric_2912_v3/`](gpu_photometric_2912_v3/)
 - [`gpu_supervisor_compose_4972_cuda_v1/`](gpu_supervisor_compose_4972_cuda_v1/)
+- [`gpu_supervisor_transfer_breakeven_4972_a12_20261002/`](gpu_supervisor_transfer_breakeven_4972_a12_20261002/)
 - [`guard_induced_proposal_risk_6143_t0_20261002/`](guard_induced_proposal_risk_6143_t0_20261002/)
 - [`guard_policy_break_even_r0_v1/`](guard_policy_break_even_r0_v1/)
 - [`guard_policy_calibration_identifiability_r1_v1/`](guard_policy_calibration_identifiability_r1_v1/)
@@ -374,6 +398,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`human_return_to_own_work_6492_t0_20261002_v1/`](human_return_to_own_work_6492_t0_20261002_v1/)
 - [`iconfluence_5547_t0_v1/`](iconfluence_5547_t0_v1/)
 - [`ime_commit_effect_6523_t0_v1/`](ime_commit_effect_6523_t0_v1/)
+- [`incidental_state_legacy_6655_t0_20261002/`](incidental_state_legacy_6655_t0_20261002/)
 - [`incremental_focus_fold_z7r2_v1/`](incremental_focus_fold_z7r2_v1/)
 - [`independent_effect_evidence_successor_1295_v1/`](independent_effect_evidence_successor_1295_v1/)
 - [`infra_speed_fairness_6347_boundary_successor_v1/`](infra_speed_fairness_6347_boundary_successor_v1/)
@@ -387,6 +412,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`ioco_5518_t7_tick_bound/`](ioco_5518_t7_tick_bound/)
 - [`issue3152_broker_path_confinement_20260927_v1/`](issue3152_broker_path_confinement_20260927_v1/)
 - [`issue5541_mutation_t5_20260930/`](issue5541_mutation_t5_20260930/)
+- [`issue5730_gate_cleanup_fail_20261001/`](issue5730_gate_cleanup_fail_20261001/)
 - [`issue5760_assignment_exposure_t0_20261001/`](issue5760_assignment_exposure_t0_20261001/)
 - [`issue_3655_committed_evidence_audit_v1/`](issue_3655_committed_evidence_audit_v1/)
 - [`issue_5504_cegar_t0_v1/`](issue_5504_cegar_t0_v1/)
@@ -418,6 +444,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`map01_v12_plan_step_lineage_r0_v1/`](map01_v12_plan_step_lineage_r0_v1/)
 - [`map01_v13_source_provenance_audit_59_t0_20261001/`](map01_v13_source_provenance_audit_59_t0_20261001/)
 - [`map01_v13_source_provenance_audit_59_t1_20261001/`](map01_v13_source_provenance_audit_59_t1_20261001/)
+- [`matched_boundary_spectrum_6640_baseline_audit_6668_20261002/`](matched_boundary_spectrum_6640_baseline_audit_6668_20261002/)
 - [`matched_boundary_spectrum_6640_t1_20261002/`](matched_boundary_spectrum_6640_t1_20261002/)
 - [`max_permissive_supervisor_5550_successor04_20261001/`](max_permissive_supervisor_5550_successor04_20261001/)
 - [`max_permissive_supervisor_5550_t0_20261001/`](max_permissive_supervisor_5550_t0_20261001/)
@@ -451,10 +478,12 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`needle_role_skill_lifecycle_4916_parity_diag_v1/`](needle_role_skill_lifecycle_4916_parity_diag_v1/)
 - [`needle_role_skill_lifecycle_4916_v2/`](needle_role_skill_lifecycle_4916_v2/)
 - [`needle_role_skill_lifecycle_5133_v2/`](needle_role_skill_lifecycle_5133_v2/)
+- [`notification_sampling_reactivity_6657_t0_20261002/`](notification_sampling_reactivity_6657_t0_20261002/)
 - [`obligation_capacity_6121_t0_20261002/`](obligation_capacity_6121_t0_20261002/)
 - [`obligation_capacity_6121_t0_successor02_20261002/`](obligation_capacity_6121_t0_successor02_20261002/)
 - [`obligation_conservation_5817_t0_v1/`](obligation_conservation_5817_t0_v1/)
 - [`observable_predictive_tests_6258_t0_host_20261002/`](observable_predictive_tests_6258_t0_host_20261002/)
+- [`observable_quiescence_6664_t0_v1/`](observable_quiescence_6664_t0_v1/)
 - [`observation_bisimulation_branch_readiness_5516_t12/`](observation_bisimulation_branch_readiness_5516_t12/)
 - [`observation_loss_robust_tube_6089_t0b_20261002/`](observation_loss_robust_tube_6089_t0b_20261002/)
 - [`observation_manipulate_dynamic_certificate_v1/`](observation_manipulate_dynamic_certificate_v1/)
@@ -470,6 +499,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`oracle_boundary_swaps_6230_t0_20261002/`](oracle_boundary_swaps_6230_t0_20261002/)
 - [`oracle_boundary_swaps_6230_t0s2_20261002/`](oracle_boundary_swaps_6230_t0s2_20261002/)
 - [`oracle_bracket_5766_t0_v1/`](oracle_bracket_5766_t0_v1/)
+- [`origin_effect_binding_6500_t0_20261002/`](origin_effect_binding_6500_t0_20261002/)
 - [`owner_keyup_invocation_race_5156_t1_20261001/`](owner_keyup_invocation_race_5156_t1_20261001/)
 - [`owner_keyup_invocation_race_5156_t2_20261001/`](owner_keyup_invocation_race_5156_t2_20261001/)
 - [`owner_keyup_serializer_5156_t0_20261001_v1/`](owner_keyup_serializer_5156_t0_20261001_v1/)
@@ -478,6 +508,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`path_class_switch_6586_t0_20261002/`](path_class_switch_6586_t0_20261002/)
 - [`path_width_continuous_gui_6581_t0b_v1/`](path_width_continuous_gui_6581_t0b_v1/)
 - [`pending_outcome_route_learning_6129_t0_20261002/`](pending_outcome_route_learning_6129_t0_20261002/)
+- [`persistence_gated_throttle_6650_control_replay_20261002_01/`](persistence_gated_throttle_6650_control_replay_20261002_01/)
 - [`persistence_gated_throttle_6650_t0_v1/`](persistence_gated_throttle_6650_t0_v1/)
 - [`phase_diversified_capture_6067_t0_20261002/`](phase_diversified_capture_6067_t0_20261002/)
 - [`phase_overlap_dynamic_footprint_binding_r1_v1/`](phase_overlap_dynamic_footprint_binding_r1_v1/)
@@ -502,8 +533,12 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`preference_explicit_choice_6274_t0_20261002/`](preference_explicit_choice_6274_t0_20261002/)
 - [`preference_uncertainty_5749_t0_v1/`](preference_uncertainty_5749_t0_v1/)
 - [`prefix_responsive_counterparty_6327_t0_v1/`](prefix_responsive_counterparty_6327_t0_v1/)
+- [`prefix_stability_6689_local_allocation01_20261002/`](prefix_stability_6689_local_allocation01_20261002/)
+- [`prefix_stability_6689_t0_20261002/`](prefix_stability_6689_t0_20261002/)
+- [`preview_constraint_parity_6565_t0_20261002/`](preview_constraint_parity_6565_t0_20261002/)
 - [`primary_refusal_terminality_59_spine07_20261001/`](primary_refusal_terminality_59_spine07_20261001/)
 - [`primary_refusal_terminality_59_t0_20261001/`](primary_refusal_terminality_59_t0_20261001/)
+- [`priority_inheritance_5370_t7_composition_20261002_01/`](priority_inheritance_5370_t7_composition_20261002_01/)
 - [`priority_inheritance_nested_5370_t6_20261001/`](priority_inheritance_nested_5370_t6_20261001/)
 - [`privacy_discovery_6549_t0_v1/`](privacy_discovery_6549_t0_v1/)
 - [`private_witness_boundary_6498_t0_20261002_v1/`](private_witness_boundary_6498_t0_20261002_v1/)
@@ -516,6 +551,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`quiescent_epoch_binding_5361_t1/`](quiescent_epoch_binding_5361_t1/)
 - [`quiescent_reclamation_5361_t0_20261001/`](quiescent_reclamation_5361_t0_20261001/)
 - [`quiet_frontier_6310_t0_20261002/`](quiet_frontier_6310_t0_20261002/)
+- [`quiet_supervision_vigilance_6503_t0_20261002/`](quiet_supervision_vigilance_6503_t0_20261002/)
 - [`r133_domain_coverage_transfer_v1/`](r133_domain_coverage_transfer_v1/)
 - [`real_option_5428_t1/`](real_option_5428_t1/)
 - [`real_source_adapter_admission_v1/`](real_source_adapter_admission_v1/)
@@ -524,11 +560,13 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`recovery_absolute_outcome_6216_t0_v1/`](recovery_absolute_outcome_6216_t0_v1/)
 - [`recovery_presnapshot_5960_t0_20261002_01/`](recovery_presnapshot_5960_t0_20261002_01/)
 - [`recovery_sentinel_5776_contrast_t0_20261001/`](recovery_sentinel_5776_contrast_t0_20261001/)
+- [`recovery_sentinel_5776_probe_intervention_t1_20261001/`](recovery_sentinel_5776_probe_intervention_t1_20261001/)
 - [`recovery_sentinel_5776_probe_schedule_20261001_01/`](recovery_sentinel_5776_probe_schedule_20261001_01/)
 - [`recovery_sentinel_5776_t0_integrity_audit_v1/`](recovery_sentinel_5776_t0_integrity_audit_v1/)
 - [`recovery_sentinel_5776_t0_v1/`](recovery_sentinel_5776_t0_v1/)
 - [`recovery_sentinel_5776_t0_v2/`](recovery_sentinel_5776_t0_v2/)
 - [`register_automaton_dynamic_identity_r0_v1/`](register_automaton_dynamic_identity_r0_v1/)
+- [`relational_coordinate_bounds_6684_t0_20261002/`](relational_coordinate_bounds_6684_t0_20261002/)
 - [`relational_noninterference_5811_t0_v1/`](relational_noninterference_5811_t0_v1/)
 - [`rent_compile_5870_t0_v1/`](rent_compile_5870_t0_v1/)
 - [`representation_contrast_6624_t0_v1/`](representation_contrast_6624_t0_v1/)
@@ -545,6 +583,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`response_capacity_5771_successor_v1/`](response_capacity_5771_successor_v1/)
 - [`reusable_receipt_session_binding_v1/`](reusable_receipt_session_binding_v1/)
 - [`reusable_receipt_session_binding_v2/`](reusable_receipt_session_binding_v2/)
+- [`reversibility_horizon_6695_t0_20261002/`](reversibility_horizon_6695_t0_20261002/)
 - [`revision_timed_cutover_6617_t0_v1/`](revision_timed_cutover_6617_t0_v1/)
 - [`robust_reachable_tube_6089_t0_20261001/`](robust_reachable_tube_6089_t0_20261001/)
 - [`robust_recourse_5862_t0_v1/`](robust_recourse_5862_t0_v1/)
@@ -582,8 +621,10 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`semantic_serializability_5318_audit_t3_20261002/`](semantic_serializability_5318_audit_t3_20261002/)
 - [`semantic_truth_cycle_4259_v1/`](semantic_truth_cycle_4259_v1/)
 - [`semantic_truth_maintenance_4259_v1/`](semantic_truth_maintenance_4259_v1/)
+- [`service_debt_deadline_6613_a01/`](service_debt_deadline_6613_a01/)
 - [`serialized_attention_duplicate_label_successor_1968_v1/`](serialized_attention_duplicate_label_successor_1968_v1/)
 - [`serialized_attention_successor_1968_v1/`](serialized_attention_successor_1968_v1/)
+- [`shared_referent_6558_t0_orbstack_20261002/`](shared_referent_6558_t0_orbstack_20261002/)
 - [`siphon_5410_t0/`](siphon_5410_t0/)
 - [`skill_applicability_6262_gpu_t0_v1/`](skill_applicability_6262_gpu_t0_v1/)
 - [`skill_applicability_6262_wslc_t0b_v1/`](skill_applicability_6262_wslc_t0b_v1/)
@@ -595,6 +636,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`spatial_block_position_6590_t0_20261002/`](spatial_block_position_6590_t0_20261002/)
 - [`spatial_block_position_6590_t1_geometry_design_v2/`](spatial_block_position_6590_t1_geometry_design_v2/)
 - [`spatial_block_position_6590_t1_geometry_feasibility_v1/`](spatial_block_position_6590_t1_geometry_feasibility_v1/)
+- [`spatial_block_position_6590_t1_orbstack_v2/`](spatial_block_position_6590_t1_orbstack_v2/)
 - [`specialist_regeneration_4295_controls_20261001_01/`](specialist_regeneration_4295_controls_20261001_01/)
 - [`specialist_regeneration_4295_formal_20261001_01/`](specialist_regeneration_4295_formal_20261001_01/)
 - [`spoken_instruction_contract_preservation_6471_t0_20261002/`](spoken_instruction_contract_preservation_6471_t0_20261002/)
@@ -611,12 +653,15 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`target_belief_audit_4150_v1/`](target_belief_audit_4150_v1/)
 - [`task_ownership_horizon_4152_reopen_review_v1/`](task_ownership_horizon_4152_reopen_review_v1/)
 - [`temporal_break_even_retained_identifiability_v1/`](temporal_break_even_retained_identifiability_v1/)
+- [`temporal_coalescing_6315_t0_v1/`](temporal_coalescing_6315_t0_v1/)
 - [`temporal_coalescing_6315_wslc_successor_20261002/`](temporal_coalescing_6315_wslc_successor_20261002/)
+- [`temporal_effect_identity_6530_orbstack_a01_20261002/`](temporal_effect_identity_6530_orbstack_a01_20261002/)
 - [`temporal_contract_monitor_compilation_a2_v1/`](temporal_contract_monitor_compilation_a2_v1/)
 - [`temporal_contract_monitor_compilation_a3_v1/`](temporal_contract_monitor_compilation_a3_v1/)
 - [`temporal_contract_monitor_compilation_r0_v1/`](temporal_contract_monitor_compilation_r0_v1/)
 - [`temporal_observation_transfer_2013_v1/`](temporal_observation_transfer_2013_v1/)
 - [`temporal_predictivity_6071_t0_20261002/`](temporal_predictivity_6071_t0_20261002/)
+- [`temporal_preservation_5887_t0_v1/`](temporal_preservation_5887_t0_v1/)
 - [`temporal_query_specificity_2050_v1/`](temporal_query_specificity_2050_v1/)
 - [`temporal_ring_disambiguation_2045_v1/`](temporal_ring_disambiguation_2045_v1/)
 - [`temporal_ring_provenance_repair_successor_2053_v1/`](temporal_ring_provenance_repair_successor_2053_v1/)
@@ -624,6 +669,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`timing_receipt_6532_t0_20261002/`](timing_receipt_6532_t0_20261002/)
 - [`tiny_predicate_specialist_4218_v1/`](tiny_predicate_specialist_4218_v1/)
 - [`tiny_visual_equivariant_2564_v1/`](tiny_visual_equivariant_2564_v1/)
+- [`tiny_visual_equivariant_diagnosis_2564_v1/`](tiny_visual_equivariant_diagnosis_2564_v1/)
 - [`tiny_visual_extent_init_sensitivity_4817_v1/`](tiny_visual_extent_init_sensitivity_4817_v1/)
 - [`tiny_visual_extent_readout_4817_cuda_v2/`](tiny_visual_extent_readout_4817_cuda_v2/)
 - [`tiny_visual_extent_readout_4817_cuda_v3/`](tiny_visual_extent_readout_4817_cuda_v3/)
@@ -647,12 +693,14 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`typed_resolve_dependency_v1/`](typed_resolve_dependency_v1/)
 - [`typed_resumption_packet_5404_t0_v1/`](typed_resumption_packet_5404_t0_v1/)
 - [`unicode_target_binding_5993_t0_v1/`](unicode_target_binding_5993_t0_v1/)
+- [`unseen_failure_mode_yield_5665_t1_v1/`](unseen_failure_mode_yield_5665_t1_v1/)
 - [`user_relative_benefit_6593_t0_v1/`](user_relative_benefit_6593_t0_v1/)
 - [`verifier_cascade_capacity_5375_t0a2_20261002/`](verifier_cascade_capacity_5375_t0a2_20261002/)
 - [`verifier_exposure_5941_t0_20261001/`](verifier_exposure_5941_t0_20261001/)
 - [`verifier_exposure_5941_t0_v2_20261001/`](verifier_exposure_5941_t0_v2_20261001/)
 - [`verifier_metastability_5375_t0_20261001_a1/`](verifier_metastability_5375_t0_20261001_a1/)
 - [`version_crossing_artifact_survival_6611_t0_v1/`](version_crossing_artifact_survival_6611_t0_v1/)
+- [`version_defined_intervention_6691_t0_20261002/`](version_defined_intervention_6691_t0_20261002/)
 - [`versioned_predicate_specialist_switch_4284_reconciled_4603_v1/`](versioned_predicate_specialist_switch_4284_reconciled_4603_v1/)
 - [`visual_cue_coordinate_map_successor_2043_v1/`](visual_cue_coordinate_map_successor_2043_v1/)
 - [`visual_edge_aux_570_r8_v1/`](visual_edge_aux_570_r8_v1/)
@@ -662,6 +710,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`voi_option_5306_t1/`](voi_option_5306_t1/)
 - [`wake_fence_6331_t0_v1/`](wake_fence_6331_t0_v1/)
 - [`worker_aging_6133_t1c_20261002/`](worker_aging_6133_t1c_20261002/)
+- [`wslc_control_plane_survivability_6669_t0_20261002/`](wslc_control_plane_survivability_6669_t0_20261002/)
 - [`x11_adaptation_multiseed_2459_v1/`](x11_adaptation_multiseed_2459_v1/)
 - [`x11_augmentation_fail_2394_v1/`](x11_augmentation_fail_2394_v1/)
 - [`x11_backend_process_restart_2437_v3/`](x11_backend_process_restart_2437_v3/)
@@ -728,3 +777,7 @@ The checker compares the generated block against every child directory with a re
 - [Issue #5385 T1 preformal STOP archive](active_lifecycle_refinement_5385_t1_v1/ARCHIVAL_QUALIFICATION.md) — 13 exact branch-tip files plus an archival qualification; source-commit placeholder and conflicting STOP/freeze invocation metadata retained, formal candidate/auditor/container 0/0/0, no hypothesis result or rerun.
 - [Issue #5518 T0 provenance and novelty STOP archive](ioco_adapter_conformance_5518_t0/ARCHIVAL_QUALIFICATION.md) — 19 exact original files; raw's source commit points to different auditor bytes, and broad H overlaps prior T0–T7. Historical fixture labels and errata remain unchanged; no candidate rerun or novelty/PASS claim.
 - [Issue #5537 T7 mutation-audit STOP](gluing_approx_irreversible_5537_t7_v1/ARCHIVAL_QUALIFICATION.md) — exact 135-row raw/audit/STOP files; base oracle errors 0 but only 5/6 controls rejected because one mutation was a no-op. Runner/freeze absent from this packet; no scientific PASS or rerun.
+
+## Incomplete preregistration custody
+
+- [Issue #6655 / PR #6694 preregistration custody](incidental_state_legacy_6655_prereg_archive_226b426/README.md) — Eight exact published preregistration blobs; host outputs, process receipts and claimed report/results remain unrecovered. Consumed 1/1/0 host allocation and source-hash mismatches retained; no scientific promotion or rerun.

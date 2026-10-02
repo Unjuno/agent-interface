@@ -34,6 +34,10 @@ This is a reading guide only. Historical allocations differ in artifact shape, a
 
 Never overwrite a committed retained allocation. Use a distinct allocation/result path and preserve first outcomes according to the experiment's frozen protocol.
 
+## Recent measurement evidence
+
+- [MAP01 measurement-integration live-03](map01_measurement_integration_live_03/README.md) — one GitHub-hosted no-model telemetry allocation; measurement and terminal-score audits pass, but the episode did not finish or exit MAP01. Triggered by an archival-tag push; not recovery-vs-coast efficacy and not the WSLc allocation.
+
 ## Related navigation
 
 - Parent DOOM track: [`../README.md`](../README.md)
