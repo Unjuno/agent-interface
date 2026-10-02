@@ -559,6 +559,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`selection_aware_shadow_audit_5681_t1_v1/`](selection_aware_shadow_audit_5681_t1_v1/)
 - [`selection_aware_verifier_5917_t1_v1/`](selection_aware_verifier_5917_t1_v1/)
 - [`self_stabilizing_restart_5704_t0_20261001/`](self_stabilizing_restart_5704_t0_20261001/)
+- [`semantic_challenge_lane_6179_t0c_20261002/`](semantic_challenge_lane_6179_t0c_20261002/)
 - [`semantic_delta_successor_2000_v1/`](semantic_delta_successor_2000_v1/)
 - [`semantic_mvcc_readset_4257_v1/`](semantic_mvcc_readset_4257_v1/)
 - [`semantic_predicate_fabric_4215_v1/`](semantic_predicate_fabric_4215_v1/)
