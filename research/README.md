@@ -34,6 +34,7 @@ For claims and scientific disposition, start with the top-level [research index]
 | Issue #6074 interval-robustness finite-method T0 | [analysis/interval_robustness_6074_t0_20261002/REPORT.md](analysis/interval_robustness_6074_t0_20261002/REPORT.md) |
 | Issue #6045 opportunity-conditioned age T0 container method result | [analysis/opportunity_conditioned_actuated_info_6045_t0_20261002/REPORT.md](analysis/opportunity_conditioned_actuated_info_6045_t0_20261002/REPORT.md) |
 | Issue #6351 cross-role meaning drift synthetic T0 | [analysis/cross_role_meaning_drift_6351_t0_v1/REPORT.md](analysis/cross_role_meaning_drift_6351_t0_v1/REPORT.md) |
+| Issue #6373 context-preserving delegation synthetic T0 | [analysis/context_preserving_delegation_6373_t0_v1/REPORT.md](analysis/context_preserving_delegation_6373_t0_v1/REPORT.md) |
 | Revisit history | [REVISIT_LEDGER.md](REVISIT_LEDGER.md) |
 | Analysis vs experiment decision flow | [../docs/RESEARCH_METHOD.md](../docs/RESEARCH_METHOD.md) |
 | Public evidence/document relationship map | [../docs/EVIDENCE_MAP.md](../docs/EVIDENCE_MAP.md) |
@@ -220,6 +221,7 @@ A directory existing here does **not** mean its mechanism is promoted. Negative 
 
 ### Recent direct-root evidence
 - [`kernel_receipt_time_5215_20260928/`](kernel_receipt_time_5215_20260928/) — Issue #5215 frozen construction probe and independent audit for lease-expiry and causal timestamp receipt boundaries; scoped contract evidence only.
+- [`trace_reduction_5666_construction_v1/`](trace_reduction_5666_construction_v1/) — Issue #5666 host-only synthetic construction check; no independent replay, model, GUI, or authority result.
 
 - [`cli_fault_residue_3711_revalidation_v1/`](cli_fault_residue_3711_revalidation_v1/) — Issue #3711 report-temp fault revalidation protocol; see its linked PR/evidence for current matrix status.
 - [`needle_lora_3441_online_stream_v1/`](needle_lora_3441_online_stream_v1/) — Issue #3769 streamed online LoRA successor; scoped host-CPU metrics and limits are in its report.

@@ -1,10 +1,10 @@
 # Research and idea Issue index
 
-Last reconciled: 2026-10-02 (Asia/Tokyo). Retrieved every page of the GitHub Issues API in ascending creation order for `Unjuno/agent-interface`, all states, then removed pull requests. The snapshot contained 2528 unique Issues and no duplicate Issue numbers.
+Last full pagination reconciliation: 2026-10-02 (Asia/Tokyo); that snapshot contained 2528 unique Issues with no duplicates. Incremental reconciliation on 2026-10-02 inspected the latest 100 open and 100 closed Issues. Eight newer Issues matching the inclusion rule were added (seven open, one closed), for 2536 Issues represented here; no newer matching Issue appeared in those refreshed windows.
 
 ## Coverage and limits
 
-This index contains 1678 Issues (1137 open, 541 closed) selected when either the Issue has the `research` label or its title contains an explicit `research`, `idea`, `successor`, or `experiment` term. It includes direct proposals plus many validation, audit, coordination, and successor records.
+This index contains 1686 Issues (1144 open, 542 closed) selected when either the Issue has the `research` label or its title contains an explicit `research`, `idea`, `successor`, or `experiment` term. It includes direct proposals plus many validation, audit, coordination, and successor records.
 
 This is a broad discovery index, not a guarantee that every repository idea has a title or label matching the filter. Other Issues are not assumed to be non-ideas; search them when linked lineage points outside this table and add any missed idea. The curated [ideas and outcomes page](IDEAS_AND_OUTCOMES.md) explains selected idea clusters and verified dispositions. [RESEARCH.md](../RESEARCH.md), Issues, PRs, and reports remain evidence authorities.
 
@@ -14,6 +14,14 @@ Open is workflow state, not “no result”; open Issues may contain scoped resu
 
 | Issue | Title | GitHub state / closed date | Literal outcome markers* | Linked predecessor(s)** |
 |---|---|---|---|---|
+| [#6427](https://github.com/Unjuno/agent-interface/issues/6427) | Successor #6410: independently audit retained WSLc lifecycle raw output | closed 2026-10-02 | STOP_METHOD_FAILURE, STOP, PASS_AUDIT_SUCCESSOR_SCOPED, FAIL_AUDIT_SUCCESSOR | #6410 |
+| [#6424](https://github.com/Unjuno/agent-interface/issues/6424) | [Research] Speech-act grounding before consequential GUI effects | open | YIELD, HOLD | — |
+| [#6422](https://github.com/Unjuno/agent-interface/issues/6422) | [Research] Denial-aware agent request policy against approval nagging | open | YIELD, HOLD | — |
+| [#6417](https://github.com/Unjuno/agent-interface/issues/6417) | [Research] Deadline-pressure proposal drift at slack-equivalent GUI decisions | open | YIELD, HOLD | — |
+| [#6413](https://github.com/Unjuno/agent-interface/issues/6413) | [Research] Evaluation-cue reactivity in fixed-model GUI route comparisons | open | FAIL_METHOD_NO_EQUIVALENT_CUE, HOLD | — |
+| [#6410](https://github.com/Unjuno/agent-interface/issues/6410) | Successor #5084: replicate role-skill lifecycle under native WSLc | open | PASS, STOP, FAIL, HOLD, STOP_METHOD_FAILURE | #5084 |
+| [#6405](https://github.com/Unjuno/agent-interface/issues/6405) | [Research] Repeated approval prompts and changed-effect discrimination | open | HOLD | — |
+| [#6403](https://github.com/Unjuno/agent-interface/issues/6403) | [Research] Control-opportunity versus human responsibility attribution after agent effects | open | HOLD, PASS | — |
 | [#6383](https://github.com/Unjuno/agent-interface/issues/6383) | [Research] Human mode awareness of the agent autonomy envelope before effects | open | FAIL_METHOD, HOLD | — |
 | [#6380](https://github.com/Unjuno/agent-interface/issues/6380) | [Research] Counterexample-driven elicitation of unstated task constraints before effect contracts | open | FAIL_METHOD, HOLD | — |
 | [#6373](https://github.com/Unjuno/agent-interface/issues/6373) | [Research Idea] Context-preserving delegation: restore caller-visible state after successful System-1 execution | open | PASS_METHOD_SCOPED, FAIL_METHOD, UNCERTAIN | — |
