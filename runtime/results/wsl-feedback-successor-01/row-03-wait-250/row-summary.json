@@ -1,0 +1,44 @@
+{
+  "row": 3,
+  "case": "row-03-wait-250",
+  "status": "terminal",
+  "outcome": "STOP_PRIMARY_GROUNDING_UNAVAILABLE",
+  "independent_saved_score": {
+    "expected": {
+      "A1": 257,
+      "A2": 941
+    },
+    "actual_nonempty_cells": {},
+    "success": false,
+    "after_all_owned_processes_terminal": true,
+    "workbook_sha256": "b8659687798b42f56c7cc8c8d21da744ad75bd1cab6b8739b369fe0bae54a23f"
+  },
+  "commands": 2,
+  "input_programs": 0,
+  "additional_observations": 0,
+  "input_checks": [],
+  "cleanup": {
+    "host_exit": 0,
+    "children": [
+      {
+        "name": "calc",
+        "pid": 209529,
+        "returncode": 255
+      },
+      {
+        "name": "openbox",
+        "pid": 209526,
+        "returncode": 0
+      },
+      {
+        "name": "xvfb",
+        "pid": 209522,
+        "returncode": 0
+      }
+    ],
+    "ended_ns": 15879076248827
+  },
+  "first_useful_model_ingestion_ns": null,
+  "semantic_model_ingestion_ns": null,
+  "provider_billing": null
+}
