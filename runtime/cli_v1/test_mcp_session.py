@@ -89,7 +89,7 @@ class OwnedMCPTests(unittest.IsolatedAsyncioTestCase):
                 if case == 'release_failure': report['result']['execution']['releases'][0]['verified'] = False
                 if case == 'inspection_error': inspect.side_effect = OSError('lost focus metadata')
                 if case == 'helper_error': stack.enter_context(patch.object(MCPSessionOwner,'inspect_after_dispatch',side_effect=RuntimeError('helper failure')))
-                dispatch = stack.enter_context(patch('runtime.cli_v1.mcp_server.dispatch_in_session', return_value=report))
+                dispatch = stack.enter_context(patch('runtime.cli_v1.api.dispatch_in_session', return_value=report))
                 stack.enter_context(patch('runtime.cli_v1.mcp_server.present_result', side_effect=lambda report,*a,**k: {'report':deepcopy(report)}))
                 server = create_server({'fixture':123},td,session_mode='persistent-x11')
                 args = {'program':{},'current_observation_seq':1,'current_binding_revision':1,'inspect_after':'fixture','detail':'summary','compact':True,'report_refs':True}
@@ -115,7 +115,7 @@ class OwnedMCPTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_post_dispatch_inspection_rejects_invalid_target_or_mode_before_input(self):
         for mode,target in [('one-shot','fixture'),('persistent-x11','unknown')]:
-            with tempfile.TemporaryDirectory() as td, patch('runtime.cli_v1.mcp_server.dispatch') as direct, patch('runtime.cli_v1.mcp_server.dispatch_in_session') as owned, patch('runtime.cli_v1.mcp_session.open_session') as opened:
+            with tempfile.TemporaryDirectory() as td, patch('runtime.cli_v1.mcp_server.dispatch') as direct, patch('runtime.cli_v1.api.dispatch_in_session') as owned, patch('runtime.cli_v1.mcp_session.open_session') as opened:
                 server=create_server({'fixture':123},td,session_mode=mode)
                 reply=await server.call_tool('interface_dispatch',{'program':{},'current_observation_seq':1,'current_binding_revision':1,'inspect_after':target})
                 self.assertTrue(reply.isError)
@@ -272,6 +272,76 @@ class OwnedMCPTests(unittest.IsolatedAsyncioTestCase):
                 server = create_server({'fixture': 123}, Path(td)/mode, session_mode=mode)
                 names = {tool.name for tool in await server.list_tools()}
                 self.assertEqual('interface_recover_input' in names, mode == 'persistent-x11')
+
+    def test_owned_dispatch_returns_exact_api_report_and_closes_input_owner(self):
+        session = self.fixture()
+        program = {'owned': 'explicit'}
+        report = {'result': {'status': 'completed', 'effect_status': 'unknown'}}
+        with self.selection(), patch('runtime.cli_v1.mcp_session.open_session', return_value=session), patch('runtime.cli_v1.api.dispatch_in_session', return_value=report) as invoked:
+            owner = MCPSessionOwner({'fixture': 123})
+            actual = owner.dispatch(program, current_observation_seq=7, current_binding_revision=1, capture_directory='explicit-images')
+            self.assertIs(actual, report)
+            invoked.assert_called_once_with(session, program, current_observation_seq=7, current_binding_revision=1, capture_directory='explicit-images')
+            self.assertTrue(owner.dispatch_attempted)
+            owner.close()
+            owner.close()
+            session.backend.release_all.assert_called_once()
+            session.backend.close.assert_called_once()
+
+    def test_owned_dispatch_binding_refusal_has_no_dispatch_attempt(self):
+        session = self.fixture()
+        with self.selection(), patch('runtime.cli_v1.mcp_session.open_session', return_value=session), patch('runtime.cli_v1.api.dispatch_in_session') as invoked:
+            owner = MCPSessionOwner({'fixture': 123})
+            report = owner.dispatch({}, current_observation_seq=7, current_binding_revision=2)
+            self.assertEqual(report, {'status': 'invalid_request', 'error': 'SESSION_BINDING_REVISION_MISMATCH', 'input_dispatched': False, 'operation_invoked': False})
+            invoked.assert_not_called()
+            self.assertFalse(owner.dispatch_attempted)
+            owner.close()
+            session.backend.release_all.assert_not_called()
+
+    def test_owned_dispatch_boolean_revision_cannot_match_integer_owner(self):
+        session = self.fixture()
+        with self.selection(), patch('runtime.cli_v1.mcp_session.open_session', return_value=session), patch('runtime.cli_v1.api.dispatch_in_session') as invoked:
+            owner = MCPSessionOwner({'fixture': 123})
+            report = owner.dispatch({}, current_observation_seq=7, current_binding_revision=True)
+            self.assertEqual(report['error'], 'SESSION_BINDING_REVISION_MISMATCH')
+            invoked.assert_not_called()
+            self.assertFalse(owner.dispatch_attempted)
+            owner.close()
+
+    def test_owned_dispatch_after_close_cannot_open_or_invoke_input(self):
+        with patch('runtime.cli_v1.mcp_session.open_session') as opened, patch('runtime.cli_v1.api.dispatch_in_session') as invoked:
+            owner = MCPSessionOwner({'fixture': 123})
+            owner.close()
+            with self.assertRaisesRegex(RuntimeError, 'closed'):
+                owner.dispatch({}, current_observation_seq=7, current_binding_revision=1)
+            opened.assert_not_called()
+            invoked.assert_not_called()
+
+    def test_owned_dispatch_exception_still_releases_without_replay(self):
+        session = self.fixture()
+        with self.selection(), patch('runtime.cli_v1.mcp_session.open_session', return_value=session) as opened, patch('runtime.cli_v1.api.dispatch_in_session', side_effect=OSError('uncertain after emission')) as invoked:
+            owner = MCPSessionOwner({'fixture': 123})
+            with self.assertRaisesRegex(OSError, 'uncertain after emission'):
+                owner.dispatch({}, current_observation_seq=7, current_binding_revision=1)
+            self.assertTrue(owner.dispatch_attempted)
+            owner.close()
+            invoked.assert_called_once()
+            opened.assert_called_once()
+            session.backend.release_all.assert_called_once()
+            session.backend.close.assert_called_once()
+
+    def test_owned_dispatch_failed_initialization_never_reopens(self):
+        with self.selection(), patch('runtime.cli_v1.mcp_session.open_session', side_effect=OSError('display unavailable')) as opened, patch('runtime.cli_v1.api.dispatch_in_session') as invoked:
+            owner = MCPSessionOwner({'fixture': 123})
+            with self.assertRaises(OSError):
+                owner.dispatch({}, current_observation_seq=7, current_binding_revision=1)
+            with self.assertRaisesRegex(RuntimeError, 'failed'):
+                owner.dispatch({}, current_observation_seq=7, current_binding_revision=1)
+            self.assertFalse(owner.dispatch_attempted)
+            opened.assert_called_once()
+            invoked.assert_not_called()
+            owner.close()
 
     def fixture(self):
         backend = Mock()
