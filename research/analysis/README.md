@@ -172,6 +172,7 @@ The table below summarizes major analytical chains and representative retained o
 This compact list is generated from child directories that contain `REPORT.md` or `FORMAL_FAILURE.md`, or `STOP.md`. It is the completeness surface used by the index checker.
 
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
+- [`ime_commit_effect_6523_t0_v1/`](ime_commit_effect_6523_t0_v1/)
 
 <details>
 <summary><strong>Expand all retained result/failure directories</strong></summary>
