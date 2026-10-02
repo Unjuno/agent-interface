@@ -267,6 +267,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`cex_qualified_guard_refinement_6645_t0_v1/`](cex_qualified_guard_refinement_6645_t0_v1/)
 - [`change_cue_contrast_1931_v1/`](change_cue_contrast_1931_v1/)
 - [`claim_ladder_6113_t0_20261002/`](claim_ladder_6113_t0_20261002/)
+- [`claim_postdominator_6553_t0_20261002/`](claim_postdominator_6553_t0_20261002/)
 - [`claim_scoped_partial_verdict_6509_t0_20261002/`](claim_scoped_partial_verdict_6509_t0_20261002/)
 - [`cli_v1_lineage_direct_tests_2428_v1/`](cli_v1_lineage_direct_tests_2428_v1/)
 - [`competence_location_map_3446_v1/`](competence_location_map_3446_v1/)
