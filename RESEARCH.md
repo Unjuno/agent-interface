@@ -154,6 +154,21 @@ hypothesis remain failed; neither is to be tuned or rerun. See [the full report
 and checksummed raw evidence](research/analysis/service_fairness_6613_edf_a01_20261003/REPORT.md)
 and [Issue #6613](https://github.com/Unjuno/agent-interface/issues/6613).
 
+### Issue #5890 intake-versus-test denominator successor A02 (2026-10-02)
+
+One fresh 25-row host-CPU synthetic stream retained all 16 screened-out ideas
+in the qualitative intake funnel but excluded them from the statistical test
+family. All five formally started opportunities remained visible, including a
+negative trial abandoned after an interim result and a STOP without valid
+statistical evidence. Four eligible claims and four deterministic method/safety
+checks stayed in their separate ledgers. A separate raw-only auditor replayed
+25/25 rows and rejected all five frozen corruptions. Disposition:
+`PASS_METHOD_SCOPED`. This is bookkeeping evidence on one authored stream, not
+an FDR/error-rate guarantee, intake-quality estimate, GUI/model result, or
+safety/product claim. Allocation A01's pre-candidate STOP and prior #5890
+allocation-02 result remain unchanged. See the [report and raw artifacts](research/analysis/portfolio_multiplicity_5890_intake_a02_20261003/REPORT.md)
+and [Issue #5890](https://github.com/Unjuno/agent-interface/issues/5890).
+
 ### Issue #6533: frame-qualified collateral checks T0 (2026-10-02)
 
 One frozen OrbStack CPU fixture emitted 44 rows (11 traces × 4 policies); a separate raw-state auditor reconstructed all 44 with zero errors. The qualified-frame policy matched the full-state oracle on all 11 traces, including full fallback for alias, hidden/incomplete writer coverage, stale generation, and non-durable state. On three disjoint-size cases, checker-accounted bytes were 79.1% lower in aggregate (14,491 → 3,023), while the 8-cell case regressed 2.13× (473 → 1,007); wall-time figures are descriptive in-process measurements only. Disposition: `PASS_METHOD_SCOPED` for this synthetic method fixture. No real GUI/app writer completeness, race, safety, or end-to-end performance claim; UNKNOWN/FULL_CHECK remains the default beyond qualified evidence. See [the report and raw allocation](research/analysis/frame_qualified_collateral_6533_t0_20261002/REPORT.md) and [Issue #6533](https://github.com/Unjuno/agent-interface/issues/6533), which remains open.
