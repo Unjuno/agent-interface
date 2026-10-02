@@ -21,10 +21,11 @@ Status: **FROZEN, candidate/auditor not yet invoked**. Origin: [Issue #6509](htt
 - Allocation: `claim-scoped-verdict-6509-t0-20261002-01`
 - Branch: `research/claim-scoped-verdict-6509-t0-20261002`
 - Additive path: `research/analysis/claim_scoped_partial_verdict_6509_t0_20261002/`
-- Base `main`: `900c48368909a247ffd2b1b4dddd944cd6008d90` (current at the final
-  pre-run check). The earlier `f6c6d2004` freeze was not executed; main advanced
-  before candidate invocation. Its intervening changes were merged unchanged
-  into this branch, and the candidate/auditor/fixture hashes stayed identical.
+- Base `main`: `8150aa7f55c490bc1f1cdd861c764ec27d2e3fb2` (latest checked tip).
+  The earlier `f6c6d2004` and `900c4836` freezes were not executed; main
+  advanced before candidate invocation. The intervening changes were unrelated
+  evidence/index/documentation updates, merged unchanged, and the
+  candidate/auditor/fixture hashes stayed identical.
 - Source files: `candidate.py`, `audit.py`, `scenarios.json`; source SHA-256 values are recorded in `FREEZE.json` before formal invocation.
 - Construction unit tests: `test_harness.py`, run before freeze. No candidate/auditor formal invocation occurred during construction.
 - Candidate output path `results/allocation-01/` must be absent/empty before invocation. Candidate and auditor have separate container calls. No retries. Preserve first stdout, stderr, process exit and output bytes.
