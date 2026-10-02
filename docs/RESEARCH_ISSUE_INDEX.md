@@ -1,10 +1,10 @@
 # Research and idea Issue index
 
-Last full pagination reconciliation: 2026-10-02 (Asia/Tokyo). The prior full snapshot contained 2,528 unique Issues. Subsequent incremental reconciliation first added twelve qualifying Issues, then the current full-repo listing identified three further qualifying open Issues: #6461, #6468, and #6469. Current inventory: 2,543 Issues total (1,373 open, 1,170 closed), with 1,693 qualifying research/idea/successor/experiment entries (1,151 open, 542 closed). The three new Issue pages were individually checked; PRs are excluded from Issue counts.
+Current full GitHub MCP listing, reconciled 2026-10-02 (Asia/Tokyo): 2,545 distinct non-PR Issue records (1,374 open, 1,171 closed). This selected index has 1,693 rows (1,150 open, 543 closed) after adding #6471 and changing #6337 to closed. #6337 closed after merged PR #6352; its scoped portability result is recorded below. The connector's normalized full-list output omits labels, so the prior label-qualified selection is carried forward, and #6471 was individually checked. PRs are excluded from Issue counts.
 
 ## Coverage and limits
 
-This index contains 1,693 Issues (1,151 open, 542 closed) selected when either the Issue has the `research` label or its title contains an explicit `research`, `idea`, `successor`, or `experiment` term. The current normalized full-list connector output omits labels; the exact label-qualified baseline is carried forward from the previous reconciled inventory, and the three-item delta was individually verified. It includes direct proposals plus many validation, audit, coordination, and successor records.
+This index contains 1,693 rows (1,150 open, 543 closed), selected when either the Issue has the `research` label or its title contains an explicit `research`, `idea`, `successor`, or `experiment` term. The normalized full-list output omits labels; the prior label-qualified selection is carried forward, #6471 is added, and #6337's state change is reconciled. The list is navigational; Issue bodies and linked evidence remain authoritative. It includes direct proposals plus many validation, audit, coordination, and successor records.
 
 This is a broad discovery index, not a guarantee that every repository idea has a title or label matching the filter. Other Issues are not assumed to be non-ideas; search them when linked lineage points outside this table and add any missed idea. The curated [ideas and outcomes page](IDEAS_AND_OUTCOMES.md) explains selected idea clusters and verified dispositions. [RESEARCH.md](../RESEARCH.md), Issues, PRs, and reports remain evidence authorities.
 
@@ -14,6 +14,7 @@ Open is workflow state, not “no result”; open Issues may contain scoped resu
 
 | Issue | Title | GitHub state / closed date | Literal outcome markers* | Linked predecessor(s)** |
 |---|---|---|---|---|
+| [#6471](https://github.com/Unjuno/agent-interface/issues/6471) | [Research] Preserve effect-critical task clauses across spoken-instruction input | open | PASS, FAIL, HOLD, UNKNOWN | — |
 | [#6469](https://github.com/Unjuno/agent-interface/issues/6469) | [Research] Benign-error-triggered recovery scope drift before action admission | open | PASS, FAIL, STOP, HOLD | — |
 | [#6468](https://github.com/Unjuno/agent-interface/issues/6468) | [Research] Artifact-viability cut sets beyond partial GUI task scores | open | PASS, FAIL, HOLD, UNKNOWN | — |
 | [#6461](https://github.com/Unjuno/agent-interface/issues/6461) | Successor #6179: execute broker-boundary negative controls for isolated verifier challenges | open | PASS_METHOD_SCOPED, FAIL_METHOD, STOP | #6179 |
@@ -43,7 +44,7 @@ Open is workflow state, not “no result”; open Issues may contain scoped resu
 | [#6344](https://github.com/Unjuno/agent-interface/issues/6344) | [Coordination] Request fresh OrbStack X11 slot for #5156 T4 owner release bracket | open | STOP, FAIL | — |
 | [#6342](https://github.com/Unjuno/agent-interface/issues/6342) | [Research] Psychological reactance and safe-choice presentation after mandatory agent stops | open | HOLD, HOLD_FRAMING_CONFOUNDED | — |
 | [#6338](https://github.com/Unjuno/agent-interface/issues/6338) | [Research] Endogenous interruption-chain amplification across human–agent requests | open | HOLD, PASS | — |
-| [#6337](https://github.com/Unjuno/agent-interface/issues/6337) | Successor #6315: validate WSLc portability for frozen finite-trace workload | open | HOLD_AUDIT_IMPLEMENTATION, PASS_RUNTIME_PORTABILITY_SCOPED, PASS_METHOD_SCOPED | #6315 |
+| [#6337](https://github.com/Unjuno/agent-interface/issues/6337) | Successor #6315: validate WSLc portability for frozen finite-trace workload | closed 2026-10-02 | HOLD_AUDIT_IMPLEMENTATION, PASS_RUNTIME_PORTABILITY_SCOPED, PASS_METHOD_SCOPED | #6315 |
 | [#6331](https://github.com/Unjuno/agent-interface/issues/6331) | [Research successor #3880/#4442] Wake-fenced lease validity across host suspend | open | HOLD, PASS, HOLD_ENVIRONMENT | — |
 | [#6329](https://github.com/Unjuno/agent-interface/issues/6329) | Successor #6308: bounded six-worker RTX 3080 memory sharing in WSL | open | STOP, PASS | #6308 |
 | [#6327](https://github.com/Unjuno/agent-interface/issues/6327) | [Research] Closed-loop evaluation of prefix-responsive counterparty UI | open | HOLD, PASS, HOLD_REPLAY_SUPPORT | — |
