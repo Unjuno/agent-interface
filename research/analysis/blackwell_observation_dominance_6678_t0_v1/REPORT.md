@@ -12,7 +12,7 @@
 
 ## Frozen inputs and execution
 
-Source main: `f0242a7476d7ac12dedcf932ebfd18b82d583fca`. Branch: `research/blackwell-dominance-6678-orbstack-t0-20261002`. Package: `research/analysis/blackwell_observation_dominance_6678_t0_v1/`.
+Source main: `5f1cc2624469dea4624e98062423e928da083ca4` (merged into the allocation branch before any formal process; overlapping science paths were absent). Branch: `research/blackwell-dominance-6678-orbstack-t0-20261002`. Package: `research/analysis/blackwell_observation_dominance_6678_t0_v1/`.
 
 Container image: local `python:3.12-slim-bookworm`, immutable image ID `sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e`, linux/arm64. Pulls prohibited. Stage commands are frozen in `run_t0.sh`; fresh output paths are `formal/construction/`, `formal/candidate/out/`, and `formal/audit/out/`. Candidate output is consumed by the auditor through a read-only mount. No host user files, model, GPU, GUI, or live input.
 
