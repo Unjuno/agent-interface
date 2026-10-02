@@ -40,3 +40,7 @@ Both formal commands ran in separate fresh native WSLc containers from the pinne
 | `results/formal_01/auditor/audit.json` | 1,513 | `74cbf4f986098e9d9bf169187d08e79a7cfceece7324fc174ab4d7d8383c9865` |
 
 The raw retains each transition. Audit counts are one row per stratum/policy. All four decision gates are true; errors list is empty. No outputs were overwritten or rerun.
+
+## Post-run documentation clarification
+
+After the formal run, README.md's present-tense pre-run status was updated to point to REPORT.md and clarify that the listed formal commands are reproduction instructions, not authorization to rerun. The frozen pre-run README bytes remain in the parent commit and had SHA-256 `91283975a52b73f54abaa85d7a8dfea9ffb3c28d9ff670538d4442c20284f05f`. No hypothesis, schedule, decision gate, candidate, auditor, test, or raw output was changed. This follow-up is documentation-only and does not amend the allocation result.
