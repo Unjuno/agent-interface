@@ -37,6 +37,8 @@ jobs:
           python-version: '3.12'
       - name: Check retained analytical results are indexed
         run: python research/analysis/check_index.py
+      - name: Test #6749 corrected prefix-stability successor construction
+        run: python -B -m unittest discover -s research/analysis/prefix_stability_6689_successor_6749_orbstack_20261003 -p 'test_*.py' -v
       - name: Test benign-error recovery-scope T0 assay
         run: python -B -m unittest discover -s research/analysis/benign_error_recovery_scope_6469_t0_20261002_v1 -p 'test_*.py' -v
       - name: Test denial-aware request policy T0
