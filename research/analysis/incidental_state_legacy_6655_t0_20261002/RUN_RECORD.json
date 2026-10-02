@@ -1,0 +1,49 @@
+{
+  "allocation_id": "INCIDENTAL-STATE-LEGACY-6655-T0-WSLC-20261002-02",
+  "issue": 6686,
+  "source_issue": 6655,
+  "runtime": {
+    "wsl": "3.0.1.0",
+    "distro": "archlinux",
+    "wslc_image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "local_image_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "python": "3.12.15",
+    "pull": "never",
+    "network": "none",
+    "cpus": "1",
+    "memory": "512m requested; cgroup/swap enforcement not available, effective limiting not claimed",
+    "gpu": false
+  },
+  "counts": {
+    "construction_tests": 9,
+    "construction_exit": 0,
+    "candidate_invocations": 1,
+    "candidate_exit": 0,
+    "auditor_invocations": 1,
+    "auditor_exit": 0,
+    "retries": 0,
+    "rows": 224
+  },
+  "candidate_raw": {
+    "path": "results/formal_02_20261002/candidate/raw.json",
+    "bytes": 226381,
+    "sha256": "7ef2eb20a4159eadcda498b05ad0755632136d671abb2db83fab9ae3f801156c",
+    "git_blob": "f935c5faddcc94c10166d6079c08b99f6f3df265"
+  },
+  "auditor": {
+    "path": "results/formal_02_20261002/auditor/audit.json",
+    "bytes": 1533,
+    "sha256": "d6053d1f18a0aea4ba2b78133a86b3fb02ff36871eeca0c203c2f53628fd416e",
+    "git_blob": "3a8c48a557405c7fa73620913fdf64c704018fa9",
+    "status": "PASS_METHOD_SCOPED",
+    "errors": 0
+  },
+  "construction_hashes": {
+    "fixture": "b315045e906f8f3728d888fb0145a4370c3aa4fdaca750189323934de39e32e7",
+    "candidate": "e2cc2e28833bd224231f24897c53a6874c7bca9425347cea2d2e641d134825f5",
+    "audit": "e5f71dbeb6efc065741db755493f63c6f8c9fd4572f0042adf7e8655253daa09",
+    "test": "1077af2d9d5b9049f84f175498ed6676e00bcab8930d271463873d8ee9786e41"
+  },
+  "deviation": "No runtime mismatch; memory-limit effective enforcement unverified and not claimed.",
+  "claim_boundary": "Synthetic T0 method fixture only; no real UI/user/downstream benefit claim."
+}
