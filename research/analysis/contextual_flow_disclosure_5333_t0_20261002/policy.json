@@ -1,0 +1,10 @@
+{
+  "schema":"contextual-flow-policy-v1",
+  "allowed_contexts":[
+    {"recipient":"scheduler-service","purpose":"coordinate_meeting","fields":["availability"],"minimum_integrity":"TRUSTED"},
+    {"recipient":"calendar-service","purpose":"book_meeting","fields":["availability"],"minimum_integrity":"TRUSTED","explicit_release_revision":7}
+  ],
+  "protected_sinks":["capability-selector"],
+  "minimum_integrity":"TRUSTED",
+  "sensitive_label":"PERSONAL"
+}

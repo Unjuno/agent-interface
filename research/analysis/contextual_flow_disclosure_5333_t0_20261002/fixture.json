@@ -1,0 +1,14 @@
+{
+  "schema": "contextual-flow-disclosure-fixture-v1",
+  "cases": [
+    {"id":"F01_ALLOWED_SCHEDULER","actor":"planner-A","actor_authorized":true,"source_label":"PERSONAL","integrity":"TRUSTED","source_digest":"src-availability-v1","recipient":"scheduler-service","purpose":"coordinate_meeting","requested_fields":["availability"],"release_revision":null},
+    {"id":"F02_WRONG_RECIPIENT","actor":"planner-A","actor_authorized":true,"source_label":"PERSONAL","integrity":"TRUSTED","source_digest":"src-availability-v1","recipient":"public-channel","purpose":"coordinate_meeting","requested_fields":["availability"],"release_revision":null},
+    {"id":"F03_WRONG_PURPOSE","actor":"planner-A","actor_authorized":true,"source_label":"PERSONAL","integrity":"TRUSTED","source_digest":"src-availability-v1","recipient":"scheduler-service","purpose":"targeted-advertising","requested_fields":["availability"],"release_revision":null},
+    {"id":"F04_EXPLICIT_SCOPED_RELEASE","actor":"planner-A","actor_authorized":true,"source_label":"PERSONAL","integrity":"TRUSTED","source_digest":"src-availability-v1","recipient":"calendar-service","purpose":"book_meeting","requested_fields":["availability"],"release_revision":7},
+    {"id":"F05_MISSING_RECIPIENT","actor":"planner-A","actor_authorized":true,"source_label":"PERSONAL","integrity":"TRUSTED","source_digest":"src-availability-v1","recipient":null,"purpose":"coordinate_meeting","requested_fields":["availability"],"release_revision":null},
+    {"id":"F06_MISSING_PURPOSE","actor":"planner-A","actor_authorized":true,"source_label":"PERSONAL","integrity":"TRUSTED","source_digest":"src-availability-v1","recipient":"scheduler-service","purpose":null,"requested_fields":["availability"],"release_revision":null},
+    {"id":"F07_OVERSCOPED_FIELDS","actor":"planner-A","actor_authorized":true,"source_label":"PERSONAL","integrity":"TRUSTED","source_digest":"src-availability-v1","recipient":"scheduler-service","purpose":"coordinate_meeting","requested_fields":["availability","diagnosis"],"release_revision":null},
+    {"id":"F08_LOW_INTEGRITY_SOURCE","actor":"planner-A","actor_authorized":true,"source_label":"PERSONAL","integrity":"UNTRUSTED","source_digest":"retrieval-low-integrity-v1","recipient":"capability-selector","purpose":"select_effect_target","requested_fields":["target-id"],"release_revision":null},
+    {"id":"F09_STALE_RELEASE","actor":"planner-A","actor_authorized":true,"source_label":"PERSONAL","integrity":"TRUSTED","source_digest":"src-availability-v1","recipient":"calendar-service","purpose":"book_meeting","requested_fields":["availability"],"release_revision":6}
+  ]
+}
