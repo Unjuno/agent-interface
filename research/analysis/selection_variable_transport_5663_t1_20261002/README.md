@@ -1,7 +1,5 @@
 # Issue 5663 T1
 
-Preparation and local construction status only. This is a finite no-model method control for Issue 5663, not evidence that any repository GUI result transports to another app or platform.
+The single formal allocation ended STOP_BEFORE_CANDIDATE_MAIN_ADVANCED before candidate invocation. The freeze was based on f303f2f57baecd95f0dc5ef6bc063a29a63c90c3; the final same-window remote main check observed 30f23e59c9d4637985fac7cae7abf008e2da1f62. Formal candidate=0, auditor=0, retries=0. This is not a method or transport result; see START_GATE_STOP.md.
 
-The fixture contains a sign-reversal composition control, a conditional-effect-change countercontrol, a missing-support control, and an endpoint-mismatch control. Exact hypotheses, thresholds, inputs and limitations are in PREREGISTRATION.md. The candidate is candidate.py; the independent raw-only implementation is audit.py; test_method.py is the construction suite.
-
-Formal WSLc candidate/auditor runs have not occurred. A11's GPU allocation is unrelated and terminal; this T1 is CPU-only and makes no CUDA claim. No WSLc execution is started while same-host WSLc ownership is being clarified. See RUN_COMMANDS.md and FREEZE.json.
+Separate host-only construction attempt 03 passed six controls, emitted the four stipulated finite scenario outputs and was independently audited. It remains construction evidence, not the preregistered WSLc outcome. Attempts 01 and 02, including incomplete receipts and a retained construction failure, are preserved. No GPU was needed or used.
