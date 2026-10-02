@@ -1,6 +1,6 @@
 # Research and idea Issue index
 
-Current GitHub Search listing, reconciled 2026-10-02 (Asia/Tokyo): 2,569 distinct non-PR Issue records (1,396 open, 1,173 closed; complete search, no incomplete results). This selected index has 1,718 rows (1,173 open, 545 closed), including new ideas #6549/#6539; #6507/#6527's duplicate closures and #6471's reopened state are reflected. Earlier additions #6480/#6483, #6477/#6451/#6389 and #6337's closed state remain included. #6337 closed after merged PR #6352; its scoped portability result is recorded below. The normalized full-list output omits labels, so the prior label-qualified selection is carried forward; #6389 was explicitly included after review of its research-workflow migration scope. PRs are excluded from Issue counts.
+Current GitHub Search listing, reconciled 2026-10-02 (Asia/Tokyo): 2,568 distinct non-PR Issue records (1,395 open, 1,173 closed; complete search, no incomplete results). This selected index has 1,718 rows (1,173 open, 545 closed), including new ideas #6549/#6539; #6507/#6527's duplicate closures and #6471's reopened state are reflected. Earlier additions #6480/#6483, #6477/#6451/#6389 and #6337's closed state remain included. #6337 closed after merged PR #6352; its scoped portability result is recorded below. The normalized full-list output omits labels, so the prior label-qualified selection is carried forward; #6389 was explicitly included after review of its research-workflow migration scope. PRs are excluded from Issue counts.
 
 ## Coverage and limits
 
