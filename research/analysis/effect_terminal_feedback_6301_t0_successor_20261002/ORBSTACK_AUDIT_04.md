@@ -22,4 +22,4 @@ Runtime: dedicated OrbStack VM `effect-terminal-feedback-6301-t0-orbstack-202610
 
 ## Exact command
 
-`run_audit_orbstack_04.sh` verifies source/input hashes and main ancestry, refuses existing output/marker, starts one named container, saves stdout/exit/container inspection, and never invokes a candidate.
+`run_audit_orbstack_04.sh` verifies source/input hashes and main ancestry, refuses existing output/marker, creates only the absent formal output parent and separate output directory, starts one named container, saves stdout/exit/container inspection, and never invokes a candidate.

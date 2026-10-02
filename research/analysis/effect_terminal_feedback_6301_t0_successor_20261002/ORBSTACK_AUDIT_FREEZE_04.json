@@ -11,11 +11,17 @@
     "auditor_sha256": "831ad1e7a499b1d28bd5b0b9fbfb10b9f5409eddc47460e4a28209d84055977e",
     "candidate_raw_sha256": "c6024886ab276f24a033c18c5446651eae3adb30bb58ed3c999c1b77595085e1"
   },
-  "protocol_sha256": "09227b541a81651f96a77e6a1512ee93fc8b177407e24287c5c6c8a9c6b1e2a4",
-  "runner_sha256": "b39634cc606ad79ed4ede6b214719f3502cd1c12cbbeb47fbf246d608a4d3a0a",
+  "protocol_sha256": "87e1ec89a82baa2ec18181e8be42e55a86871c01f13f1b03c465cb4a5ab99747",
+  "runner_sha256": "94958e554e77ec303fcd5989fdfd6f515725c089ace132f88ba3dbc07c57fe29",
   "counts_at_freeze": {
     "candidate": 0,
     "raw_only_auditor_max": 1,
+    "retries": 0
+  },
+  "prestart_stop": {
+    "reason": "runner could not create audit_out because formal_04 parent was absent; stopped before creating a container or audit marker",
+    "container_invocation": 0,
+    "auditor_invocation": 0,
     "retries": 0
   },
   "runtime": {

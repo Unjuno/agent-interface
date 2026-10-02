@@ -22,6 +22,7 @@ git merge-base --is-ancestor "$base" HEAD
 [[ ! -e "$formal04/audit.started" ]]
 [[ ! -e "$formal04/audit_out" ]]
 
+mkdir -m 0755 "$formal04"
 mkdir -m 0777 "$formal04/audit_out"
 touch "$formal04/audit.started"
 name=issue6350-orb04-auditor
