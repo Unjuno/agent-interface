@@ -67,3 +67,5 @@ jobs:
         run: python -B -m unittest discover -s research/analysis/revision_timed_cutover_6617_t0_v1 -p 'test_*.py' -v
       - name: Test disturbance-timescale #6604 T0 construction contract
         run: python -B -m unittest discover -s research/analysis/disturbance_timescale_6604_t0_v1 -p 'test_*.py' -v
+      - name: Test Issue #6581 path-width constrained GUI fixture contract
+        run: python -B -m unittest discover -s research/analysis/path_width_continuous_gui_6581_t0b_v1 -p 'test_*.py' -v
