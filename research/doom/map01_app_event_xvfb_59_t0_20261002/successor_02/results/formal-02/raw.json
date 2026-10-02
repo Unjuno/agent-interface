@@ -1,0 +1,251 @@
+{
+  "actions": [
+    {
+      "action": "set_focus",
+      "event_type": null,
+      "keycode": null,
+      "ordinal": 1,
+      "scenario": "stable_focus_positive_control",
+      "started_ns": 291410014263201,
+      "sync_returned_ns": 291410016205970,
+      "window_id": 4194304
+    },
+    {
+      "action": "fake_key",
+      "event_type": 2,
+      "keycode": 25,
+      "ordinal": 2,
+      "scenario": "stable_focus_positive_control",
+      "started_ns": 291410016715892,
+      "sync_returned_ns": 291410019758505,
+      "window_id": null
+    },
+    {
+      "action": "fake_key",
+      "event_type": 3,
+      "keycode": 25,
+      "ordinal": 3,
+      "scenario": "stable_focus_positive_control",
+      "started_ns": 291410020180801,
+      "sync_returned_ns": 291410020474720,
+      "window_id": null
+    },
+    {
+      "action": "set_focus",
+      "event_type": null,
+      "keycode": null,
+      "ordinal": 4,
+      "scenario": "focus_transfer_while_key_down",
+      "started_ns": 291410020660597,
+      "sync_returned_ns": 291410020715764,
+      "window_id": 4194304
+    },
+    {
+      "action": "fake_key",
+      "event_type": 2,
+      "keycode": 25,
+      "ordinal": 5,
+      "scenario": "focus_transfer_while_key_down",
+      "started_ns": 291410020831682,
+      "sync_returned_ns": 291410020900058,
+      "window_id": null
+    },
+    {
+      "action": "set_focus",
+      "event_type": null,
+      "keycode": null,
+      "ordinal": 6,
+      "scenario": "focus_transfer_while_key_down",
+      "started_ns": 291410021039101,
+      "sync_returned_ns": 291410021222144,
+      "window_id": 4194305
+    },
+    {
+      "action": "fake_key",
+      "event_type": 3,
+      "keycode": 25,
+      "ordinal": 7,
+      "scenario": "focus_transfer_while_key_down",
+      "started_ns": 291410081556818,
+      "sync_returned_ns": 291410081887113,
+      "window_id": null
+    }
+  ],
+  "allocation_id": "ISSUE59-X11-APP-DELIVERY-T0-20261002-02",
+  "application_events": [
+    {
+      "detail": 3,
+      "received_ns": 291410019928340,
+      "scenario": "stable_focus_positive_control",
+      "type": 9,
+      "window_id": 4194304
+    },
+    {
+      "detail": 0,
+      "received_ns": 291410019947923,
+      "scenario": "stable_focus_positive_control",
+      "type": 34,
+      "window_id": null
+    },
+    {
+      "detail": 0,
+      "received_ns": 291410019957423,
+      "scenario": "stable_focus_positive_control",
+      "type": 34,
+      "window_id": null
+    },
+    {
+      "detail": 25,
+      "received_ns": 291410019965465,
+      "scenario": "stable_focus_positive_control",
+      "type": 2,
+      "window_id": 4194304
+    },
+    {
+      "detail": 25,
+      "received_ns": 291410020546013,
+      "scenario": "stable_focus_positive_control",
+      "type": 3,
+      "window_id": 4194304
+    },
+    {
+      "detail": 25,
+      "received_ns": 291410020929641,
+      "scenario": "focus_transfer_while_key_down",
+      "type": 2,
+      "window_id": 4194304
+    },
+    {
+      "detail": 3,
+      "received_ns": 291410081949822,
+      "scenario": "focus_transfer_while_key_down",
+      "type": 10,
+      "window_id": 4194304
+    },
+    {
+      "detail": 3,
+      "received_ns": 291410081959488,
+      "scenario": "focus_transfer_while_key_down",
+      "type": 9,
+      "window_id": 4194305
+    },
+    {
+      "detail": 25,
+      "received_ns": 291410081964363,
+      "scenario": "focus_transfer_while_key_down",
+      "type": 3,
+      "window_id": 4194305
+    }
+  ],
+  "b_keypress_count_while_down": 0,
+  "candidate_invocations": 1,
+  "candidate_sha256": "ac8a4094d07706bdcd480f47b337b984ad4b51af73684a223f9e1d012e1effcb",
+  "display_number": 0,
+  "event_checks": {
+    "a_positive_keypress": true,
+    "a_positive_keyrelease": true,
+    "a_transfer_keypress": true,
+    "b_transfer_keyrelease": true
+  },
+  "fixture_sha256": "3a4d71fb0ecfcb071595e44f41562d63d2adb272da7ec50d9455ca280ddafc9a",
+  "freeze_sha256": "a35e7a2a0ca22c9feb762440483b00470e9e64cff90f82cf470c753309fbae3c",
+  "image_digest": "sha256:fc3022d265f465748e0a39491e28f8447d0066266e00d2a8a9144e866bf148ed6",
+  "key_name": "W",
+  "keycode": 25,
+  "retries": 0,
+  "samples": [
+    {
+      "bitmap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "expected_focus_window_id": 4194304,
+      "focus_window_id": 4194304,
+      "key_down": false,
+      "keycode": 25,
+      "label": "pre_down",
+      "observed_ns": 291410016633349,
+      "scenario": "stable_focus_positive_control"
+    },
+    {
+      "bitmap_hex": "0000000200000000000000000000000000000000000000000000000000000000",
+      "expected_focus_window_id": 4194304,
+      "focus_window_id": 4194304,
+      "key_down": true,
+      "keycode": 25,
+      "label": "post_down",
+      "observed_ns": 291410020178259,
+      "scenario": "stable_focus_positive_control"
+    },
+    {
+      "bitmap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "expected_focus_window_id": 4194304,
+      "focus_window_id": 4194304,
+      "key_down": false,
+      "keycode": 25,
+      "label": "post_up",
+      "observed_ns": 291410020655347,
+      "scenario": "stable_focus_positive_control"
+    },
+    {
+      "bitmap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "expected_focus_window_id": 4194304,
+      "focus_window_id": 4194304,
+      "key_down": false,
+      "keycode": 25,
+      "label": "pre_down",
+      "observed_ns": 291410020830265,
+      "scenario": "focus_transfer_while_key_down"
+    },
+    {
+      "bitmap_hex": "0000000200000000000000000000000000000000000000000000000000000000",
+      "expected_focus_window_id": 4194304,
+      "focus_window_id": 4194304,
+      "key_down": true,
+      "keycode": 25,
+      "label": "post_down_a_focused",
+      "observed_ns": 291410021037892,
+      "scenario": "focus_transfer_while_key_down"
+    },
+    {
+      "bitmap_hex": "0000000200000000000000000000000000000000000000000000000000000000",
+      "expected_focus_window_id": 4194305,
+      "focus_window_id": 4194305,
+      "key_down": true,
+      "keycode": 25,
+      "label": "still_down_b_focused",
+      "observed_ns": 291410021344562,
+      "scenario": "focus_transfer_while_key_down"
+    },
+    {
+      "bitmap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "expected_focus_window_id": 4194305,
+      "focus_window_id": 4194305,
+      "key_down": false,
+      "keycode": 25,
+      "label": "post_up_b_focused",
+      "observed_ns": 291410082417826,
+      "scenario": "focus_transfer_while_key_down"
+    }
+  ],
+  "schema": "issue59-x11-app-delivery-raw-v1",
+  "scope": "private Xvfb + XTEST virtual protocol; no physical input or semantic app effect",
+  "source_main_sha": "2b25814229e6b7072a7e28eeaa8870f4448354ae",
+  "window_a_id": 4194304,
+  "window_b_id": 4194305,
+  "xvfb_argv": [
+    "Xvfb",
+    "-displayfd",
+    "1",
+    "-screen",
+    "0",
+    "640x480x24",
+    "-nolisten",
+    "tcp",
+    "-ac"
+  ],
+  "xvfb_exit_code_after_controlled_terminate": 0,
+  "xvfb_lock_removed": true,
+  "xvfb_pid": 6,
+  "xvfb_socket_removed": true,
+  "xvfb_stderr_fatal": false,
+  "xvfb_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "xvfb_tcp_enabled": false
+}

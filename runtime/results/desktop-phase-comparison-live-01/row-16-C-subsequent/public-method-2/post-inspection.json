@@ -1,0 +1,96 @@
+{
+  "review_id": "b621709c51d44d2e895a4ba14ba417f4",
+  "target": "app",
+  "binding_revision": 1,
+  "evidence": {
+    "window_id": 8390765,
+    "focus_path": [
+      8390765
+    ],
+    "transient_chain": [
+      8390765,
+      8389124
+    ],
+    "family_root": 8389124,
+    "title": "Confirm File Format",
+    "wm_class": [
+      "libreoffice",
+      "libreoffice-calc"
+    ],
+    "geometry": [
+      409,
+      333,
+      507,
+      174
+    ]
+  },
+  "expires_at_ns": 13613386840205,
+  "status": "needs_review",
+  "input_dispatched": false,
+  "authority_granted": false,
+  "review_request": {
+    "tool": "interface_review_target",
+    "arguments": {
+      "target": "app",
+      "window_id": 8390765,
+      "review_id": "b621709c51d44d2e895a4ba14ba417f4",
+      "screen_region": [
+        0,
+        0,
+        1280,
+        800
+      ]
+    }
+  },
+  "review_request_scope": "Candidate call after your explicit review of this evidence; not executed. The one-use ID expires at expires_at_ns and target evidence is rechecked. Retained results do not renew it. No input authority or replay permission.",
+  "observation_report": {
+    "schema": "agent-interface/runtime-observation-v1",
+    "observation_id": "2fc9588cbbc24a099042bc83459011b9",
+    "side_effect_authority": false,
+    "input_dispatched": false,
+    "status": "returned",
+    "observation": {
+      "bytes": 4096000,
+      "sha256": "d663b45ca0e68f26451e5fc89e61202ff53873390a1ffcc143f9e800373a3af0",
+      "width": 1280,
+      "height": 800,
+      "target": "app",
+      "native_window_id": 8389124,
+      "frame": "screen_physical_px",
+      "region": [
+        0,
+        0,
+        1280,
+        800
+      ],
+      "capture_started_ns": 13583353282955,
+      "capture_ended_ns": 13583356387526,
+      "artifact": {
+        "mime_type": "image/png",
+        "path": "/var/tmp/agent-interface-evidence-storage-main/runtime/results/desktop-phase-comparison-live-01/row-16-C-subsequent/public-method-2/images/95e9151f0db440ea86b143a8e63930b2.png",
+        "sha256": "9232aa2e8da3766c1f0aa5718eb874e06afbf1296e4d560d9a9b782143a2dc86",
+        "bytes": 76539,
+        "width": 1280,
+        "height": 800,
+        "source_raw_sha256": "d663b45ca0e68f26451e5fc89e61202ff53873390a1ffcc143f9e800373a3af0",
+        "timing_ns": {
+          "started": 13583358491499,
+          "converted": 13583359321025,
+          "encoded": 13583382097848,
+          "written": 13583382724430,
+          "hashed": 13583384972714
+        }
+      }
+    }
+  },
+  "capture_wait": {
+    "requested_ms": 100,
+    "started_ns": 13583251025406,
+    "completed": true,
+    "update_observed": null,
+    "ended_ns": 13583351178803
+  },
+  "started_ns": 13583251019024,
+  "ended_ns": 13583386867495,
+  "scope": "Metadata sampled after dispatch. Not atomically bound to its image; no redraw or task completion acknowledgement. Review explicitly; retained lookup does not renew the review ID."
+}
