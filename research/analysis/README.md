@@ -586,6 +586,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`r133_domain_coverage_transfer_v1/`](r133_domain_coverage_transfer_v1/)
 - [`reactance_safe_stop_6342_t0_20261003/`](reactance_safe_stop_6342_t0_20261003/)
 - [`real_option_5428_t1/`](real_option_5428_t1/)
+- [`real_option_wait_cost_monotonicity_5428_t0_20261003/`](real_option_wait_cost_monotonicity_5428_t0_20261003/)
 - [`real_source_adapter_admission_v1/`](real_source_adapter_admission_v1/)
 - [`real_source_role_adapter_registry_v1/`](real_source_role_adapter_registry_v1/)
 - [`receiver_synthesis_6112_t0_20261002/`](receiver_synthesis_6112_t0_20261002/)

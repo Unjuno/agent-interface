@@ -1,0 +1,23 @@
+{
+  "allocation": "REAL-OPTION-WAIT-COST-MONOTONICITY-5428-T0-20261003-01",
+  "base_main": "b573071d821e20e818304200a9e6ec8c9bbf5670",
+  "issue": 5428,
+  "runtime": "Windows host CPU; Python 3.11.9; standard library; deterministic exhaustive enumeration",
+  "execution_boundary": "No container/WSLc/Docker/OrbStack, model, GPU, GUI, network, or external action; finite contract is exactly decidable analytically",
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "retries": 0,
+  "source_sha256": {
+    "design.json": "5cbd131dd83e820e1fd52a2d90432f8718a8010310ca1b33e305e67206229d62",
+    "candidate.py": "b27a5e1972575b9ecee0f7855c34c30fe262e8cd4b46d003c45ce05ca63024d4",
+    "audit.py": "1d873f4de6426bc9150d72a5200fdd8cb8e543283dc1d0b5f5cf0749c07a108b",
+    "test_contract.py": "99c1520f3074dce370e83f12abcc2b55fff7c757ee1376b85d31d29a79e4db9f",
+    "PREREGISTRATION.md": "271f55fe9bbcd438cc80d1654452721c6b884210607fd1f11b7cd63448fb5123"
+  },
+  "decision": "V_now = commit_value - lost_flexibility_cost; V_wait = future_gross_value - wait_cost; commit iff V_now >= V_wait after hard gates pass; unpriceable => HOLD",
+  "grid": "5 x 5 x 3 x 3 = 225 numeric rows plus 10 fixed corner controls",
+  "formal_commands": [
+    "python -B research/analysis/real_option_wait_cost_monotonicity_5428_t0_20261003/candidate.py research/analysis/real_option_wait_cost_monotonicity_5428_t0_20261003/design.json research/analysis/real_option_wait_cost_monotonicity_5428_t0_20261003/candidate.raw.json",
+    "python -B research/analysis/real_option_wait_cost_monotonicity_5428_t0_20261003/audit.py research/analysis/real_option_wait_cost_monotonicity_5428_t0_20261003/design.json research/analysis/real_option_wait_cost_monotonicity_5428_t0_20261003/candidate.raw.json research/analysis/real_option_wait_cost_monotonicity_5428_t0_20261003/audit.json"
+  ]
+}
