@@ -1,6 +1,6 @@
 {
-  "row": 1,
-  "case": "row-01-wait-50",
+  "row": 2,
+  "case": "row-02-wait-250",
   "status": "terminal",
   "outcome": "success",
   "independent_saved_score": {
@@ -14,46 +14,46 @@
     },
     "success": true,
     "after_all_owned_processes_terminal": true,
-    "workbook_sha256": "737bf63755c0c7c36f39f8e3436c5237dea0fcb052a6c80cd3d178d73781b842"
+    "workbook_sha256": "dc743ce5dcf6e6aeee91181e1f43c70879a808dd92f0b5fd281122e8a0221614"
   },
-  "commands": 8,
+  "commands": 6,
   "input_programs": 3,
-  "additional_observations": 2,
+  "additional_observations": 0,
   "input_checks": [
     {
       "command": 2,
       "completed": true,
       "neutral": true,
       "capture_wait": {
-        "requested_ms": 50,
-        "started_ns": 15410315063266,
+        "requested_ms": 250,
+        "started_ns": 15692553422874,
         "completed": true,
         "update_observed": null,
-        "ended_ns": 15410365220631
+        "ended_ns": 15692803783114
       }
     },
     {
-      "command": 4,
+      "command": 3,
       "completed": true,
       "neutral": true,
       "capture_wait": {
-        "requested_ms": 50,
-        "started_ns": 15463745491005,
+        "requested_ms": 250,
+        "started_ns": 15720646401999,
         "completed": true,
         "update_observed": null,
-        "ended_ns": 15463795702607
+        "ended_ns": 15720896538026
       }
     },
     {
-      "command": 6,
+      "command": 5,
       "completed": true,
       "neutral": true,
       "capture_wait": {
-        "requested_ms": 50,
-        "started_ns": 15521267395229,
+        "requested_ms": 250,
+        "started_ns": 15778544973280,
         "completed": true,
         "update_observed": null,
-        "ended_ns": 15521317636198
+        "ended_ns": 15778795154345
       }
     }
   ],
@@ -62,21 +62,21 @@
     "children": [
       {
         "name": "calc",
-        "pid": 209047,
+        "pid": 209348,
         "returncode": 255
       },
       {
         "name": "openbox",
-        "pid": 209044,
+        "pid": 209345,
         "returncode": 0
       },
       {
         "name": "xvfb",
-        "pid": 209040,
+        "pid": 209341,
         "returncode": 0
       }
     ],
-    "ended_ns": 15567163940440
+    "ended_ns": 15803667344589
   },
   "first_useful_model_ingestion_ns": null,
   "semantic_model_ingestion_ns": null,

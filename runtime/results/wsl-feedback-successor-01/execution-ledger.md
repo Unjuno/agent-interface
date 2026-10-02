@@ -6,3 +6,5 @@ Ruling: use the fetched source commit for the archive, not the plan commit; all 
 Tasks2/3 remain pending. No performance, useful feedback or memory improvement is established.
 
 Row1 completed:8commands/3input programs/2extra explicit observations; original owner handle77944 terminal exit0; independent saved cells431/683 only; frozen hashes unchanged. Rows2..4 unallocated and pending, not censored or successful. Actual primary usage source collection and publication remain pending.
+
+Row2 terminal:6commands/3input programs/0extra observations, saved431/683. Row3 STOP before input: initial primary original PNG partial with no same-owner full prior;2commands/0input, empty file scored. Row4 censored under frozen stop rule. Original handles72773/88932 terminal exit0. Frozen hashes unchanged. No wait-default adoption.

@@ -1,7 +1,16 @@
-# Native WSL feedback successor01 — in progress
+# Native WSL feedback successor01 — execution terminal, HOLD
 
-Pinned source eacb1346866f660d9d34eb36cd9691fd8184e5ff. Plan and executable freeze committed before first GUI allocation. Four rows50/250/250/50ms; only row1 is terminal. This distinct WSL-native comparison does not rerun or reclassify the frozen Docker/OrbStack study#3700.
+Source eacb1346866f660d9d34eb36cd9691fd8184e5ff; archive42c8e066a9d2fdec67cb43f364e0f1c6bd28219a9fd23eb44f0fe85ca60270cc. Plan/schedule/executables frozen before GUI. Old Docker/OrbStack and18-phase studies unchanged. Public persistent Python API through primary functions tools, Ubuntu/Xvfb/Openbox/Calc, no sensor/helper model/input replay.
 
-Row1 used the actual public persistent Python API in Ubuntu/Xvfb/Openbox/Calc. Entry431/683 completed and released, but its50ms post-release image was visibly blank; one permitted explicit observe confirmed values. Save returned the format modal and an explicit one-use review selected it. Separate Return completed and released, but its image still showed the modal fragment; one permitted explicit observe showed the full sheet with modal absent. No input replay or model helper/sensor. Eight commands and three input programs. Repeated partial modal presentation was used only after byte-for-byte equality to the immediately reviewed full PNG from the same owner was checked and recorded before confirmation.
+|Row|Wait ms|Task A1/A2|Consequential programs|Commands|Additional observations|Terminal saved effect|
+|---|---:|---|---:|---:|---:|---|
+|1|50|431/683|3|8|2|correct, only intended cells|
+|2|250|431/683|3|6|0|correct, only intended cells|
+|3|250|257/941|0|2|0|STOP initial primary image partial; empty file retained|
+|4|50|257/941|0|0|0|censored, never allocated after block stop|
 
-Original owner and children are terminal; unique XLSX independently contains only A1=431,A2=683. All frozen hashes unchanged. Full command/reply/original PNG/primary decision/cleanup/scoring evidence retained. Primary visible interpretation is distinct from file scoring. Exact image-ingestion timing, provider billing and source-selected actual model usage are unavailable/pending, not zero. No250ms comparator is yet allocated: HOLD_PENDING_COMPARISON, not a wait-default promotion or speed claim.
+Row1 entry feedback blank and final confirmation feedback intermediate; primary made one explicit read-only observation at each boundary. Row2 visible expected cells and modal closure came in the initial post-release returned images; no extra observation. Both retained three verified-neutral completed input programs and independent terminal XLSX scores. They are only one development-known pair, not a generic feedback win or a wait-default promotion.
+
+Row3's initial original PNG was presented only partially to the primary. No fully reviewed prior image existed in that owner; another owner's image cannot ground new input. Primary therefore sent no consequential input, closed the original owner and halted the block under the predeclared rule. Row4 is censored rather than rerun. All attempted owners/children terminal, all frozen hashes unchanged. Partial presentation is observable; its cause in renderer/host/provider is unknown, not attributed to X11 or250ms.
+
+Exact primary image-ingestion/semantic awareness boundaries, provider billing and source-selected actual model usage remain unavailable/pending, not zero. Source UTC declarations and host clocks are distinct proxies. HOLD_INCOMPLETE_MATCHED_COMPARISON. Next integration blocker is reliably delivering the selected original image to the primary; changing waits alone has not qualified production benefit.
