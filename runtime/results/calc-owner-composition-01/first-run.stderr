@@ -1,0 +1,21 @@
+test_both_routes_request_save_without_claiming_persistence (test_composition.CompositionTests.test_both_routes_request_save_without_claiming_persistence) ... 
+  test_both_routes_request_save_without_claiming_persistence (test_composition.CompositionTests.test_both_routes_request_save_without_claiming_persistence) (route='compiled') ... FAIL
+test_both_routes_unknown_digits_stop_before_save (test_composition.CompositionTests.test_both_routes_unknown_digits_stop_before_save) ... ok
+test_both_routes_wrong_digits_stop_before_save (test_composition.CompositionTests.test_both_routes_wrong_digits_stop_before_save) ... ok
+
+======================================================================
+FAIL: test_both_routes_request_save_without_claiming_persistence (test_composition.CompositionTests.test_both_routes_request_save_without_claiming_persistence) (route='compiled')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/results-local/calc-owner-composition-01/test_composition.py", line 64, in test_both_routes_request_save_without_claiming_persistence
+    self.assertEqual(result['method_receipt']['outcome'],'SAFE_YIELD');self.assertEqual(result['method_receipt']['reason'],'effect_unavailable');self.assertIsNone(result['task_success'])
+                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'no_progress' != 'effect_unavailable'
+- no_progress
++ effect_unavailable
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 1.970s
+
+FAILED (failures=1)

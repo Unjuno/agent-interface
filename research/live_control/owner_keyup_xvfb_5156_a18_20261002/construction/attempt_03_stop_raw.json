@@ -1,0 +1,36 @@
+{
+  "allocation_id": "MAP01-OWNER-KEYUP-BRACKET-5156-WSLC-20261002-18",
+  "authority_granted": false,
+  "candidate_completed": false,
+  "candidate_finished_ns": 52322165860,
+  "candidate_started_ns": 52218866167,
+  "candidate_status": "STOP_CANDIDATE",
+  "cases": [],
+  "display_name": ":99",
+  "errors": [
+    {
+      "message": "field revert_to: argument <Window 0x00200000> not in (0, 1, 2)",
+      "traceback": "Traceback (most recent call last):\n  File \"/study/candidate.py\", line 115, in main\n    dpy.set_input_focus(X.RevertToParent, target, X.CurrentTime)\n  File \"/usr/local/lib/python3.12/site-packages/Xlib/display.py\", line 592, in set_input_focus\n    request.SetInputFocus(display = self.display,\n  File \"/usr/local/lib/python3.12/site-packages/Xlib/protocol/rq.py\", line 1346, in __init__\n    self._binary = self._request.to_binary(*args, **keys)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/site-packages/Xlib/protocol/rq.py\", line 1054, in to_binary\n    pack_items.append(f.check_value(field_args[f.name]))\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/site-packages/Xlib/protocol/rq.py\", line 365, in check_value\n    raise ValueError('field %s: argument %s not in %s'\nValueError: field revert_to: argument <Window 0x00200000> not in (0, 1, 2)\n",
+      "type": "ValueError"
+    }
+  ],
+  "explicit_calls": [],
+  "external_effects": 0,
+  "image_id": "sha256:ba221756a0f848b1b720f519ff7f8b2c1288067abd4bcd2c406d40d9640343d4",
+  "model_calls": 0,
+  "owner_snapshots": [],
+  "owner_thread_stopped": false,
+  "platform": "linux",
+  "processes_clean": true,
+  "python": "3.12.14 (main, Sep 19 2026, 01:04:57) [GCC 14.2.0]",
+  "schema": "owner-keyup-wslc-candidate-v1",
+  "source_sha256": {
+    "executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "input_owner_v11.py": "ce6e7417fc3afbbcf998d702dc84418eb630669ade8cf8e4df384c5715b59d13",
+    "input_transition_owner_v3.py": "5ffdbb3679451fefdc3836917d43d924f0f43c8082d21327207ecefbd87f5be6",
+    "lease.py": "3c79496bb3d4bbb9f25ff4c1c2482e44625ea04bb8ed1b2c5a5687870cffb560"
+  },
+  "xvfb_exit_code": 0,
+  "xvfb_log": "/out/xvfb.log"
+}

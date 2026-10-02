@@ -708,3 +708,99 @@ with patch('runtime.cli_v1.mcp_guarded.open_bridge',side_effect=FakeBridge):
                 self.assertEqual(row['result']['status'],'completed')
                 bridge.click.assert_called_once()
             await server.call_tool('interface_close',{})
+
+
+class PublicCompiledOwnerTests(unittest.TestCase):
+    def owner(self, root):
+        from runtime.cli_v1.mcp_guarded import GuardedSessionOwner
+        owner = GuardedSessionOwner({'app':7}, root, ':fixture')
+        with patch('runtime.cli_v1.mcp_guarded.open_bridge', side_effect=FakeBridge):
+            owner.get()
+        owner.bridge.history = {}
+        owner.bridge.configure(root/'previous-call/images', retain_rgb=True)
+        return owner
+
+    def callbacks(self):
+        return {'perceive':lambda native,rgb:{}, 'verify_effect':lambda req,native,rgb:{}}
+
+    def test_unopened_owner_is_not_implicitly_allocated(self):
+        from runtime.cli_v1.mcp_guarded import GuardedSessionOwner
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);owner=GuardedSessionOwner({'app':7},root,':fixture')
+            with patch('runtime.cli_v1.mcp_guarded.open_bridge') as opened:
+                with self.assertRaises(RuntimeError):
+                    owner.run_compiled({}, {}, call_root=root/'call', **self.callbacks())
+                opened.assert_not_called()
+
+    def test_final_image_uses_new_call_root_without_extra_observation(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);owner=self.owner(root);bridge=owner.bridge
+            receipt={'outcome':'TASK_SUCCEEDED','observations':[{'sequence':1}]}
+            def graph(actual,*args,**kwargs):
+                self.assertIs(actual,bridge)
+                native=bridge.capture();bridge.history[1]=(native,None)
+                return receipt
+            with patch('runtime.guarded_x11_v1.compiled.run',side_effect=graph) as run:
+                row=owner.run_compiled({}, {}, call_root=root/'method', **self.callbacks())
+            self.assertEqual(row['method_receipt'],receipt)
+            self.assertIsNone(row['task_success']);self.assertFalse(row['replay_allowed'])
+            self.assertEqual(row['feedback']['image_status'],'image')
+            self.assertTrue(Path(row['feedback']['image_reference']['path']).is_relative_to(root/'method'))
+            self.assertEqual(bridge.sequence,1);bridge.observe.assert_not_called();run.assert_called_once()
+
+    def test_zero_observation_yield_does_not_present_previous_capture(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);owner=self.owner(root);native=owner.bridge.capture();owner.bridge.history[1]=(native,None)
+            with patch('runtime.guarded_x11_v1.compiled.run',return_value={'outcome':'SAFE_YIELD','observations':[]}):
+                row=owner.run_compiled({}, {}, call_root=root/'method', **self.callbacks())
+            self.assertIsNone(row['feedback']);self.assertEqual(owner.bridge.sequence,1)
+
+    def test_exception_keeps_same_owner_cleanup_duty_and_never_replays(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);owner=self.owner(root);bridge=owner.bridge
+            with patch('runtime.guarded_x11_v1.compiled.run',side_effect=RuntimeError('after partial input')) as run:
+                with self.assertRaises(RuntimeError):
+                    owner.run_compiled({}, {}, call_root=root/'method', **self.callbacks())
+            self.assertTrue(bridge.review_required);run.assert_called_once()
+            close=owner.close();self.assertTrue(close['release']['verified']);bridge.backend.release_all.assert_called_once()
+            with self.assertRaises(RuntimeError):
+                owner.run_compiled({}, {}, call_root=root/'another', **self.callbacks())
+
+    def test_presentation_failure_retains_method_result_and_requires_review(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);owner=self.owner(root);bridge=owner.bridge
+            receipt={'outcome':'TASK_SUCCEEDED','observations':[{'sequence':1}]}
+            def graph(*args,**kwargs):
+                native=bridge.capture();bridge.history[1]=(native,None);return receipt
+            with patch('runtime.guarded_x11_v1.compiled.run',side_effect=graph), patch('runtime.cli_v1.review.present_result',side_effect=OSError('presentation unavailable')):
+                row=owner.run_compiled({}, {}, call_root=root/'method', **self.callbacks())
+            self.assertEqual(row['method_receipt'],receipt);self.assertTrue(bridge.review_required)
+            self.assertEqual(row['feedback']['image_status'],'needs_review');self.assertFalse(row['replay_allowed'])
+
+    def test_reused_call_directory_refuses_before_graph_execution(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);owner=self.owner(root);(root/'method').mkdir()
+            with patch('runtime.guarded_x11_v1.compiled.run') as run:
+                with self.assertRaises(FileExistsError):
+                    owner.run_compiled({}, {}, call_root=root/'method', **self.callbacks())
+                run.assert_not_called()
+
+    def test_review_or_recovery_requirement_is_not_reset(self):
+        for reason in ('review','recovery'):
+            with self.subTest(reason=reason), tempfile.TemporaryDirectory() as td:
+                root=Path(td);owner=self.owner(root)
+                if reason=='review':owner.bridge.review_required=True
+                else:owner.session.recovery_required=True
+                with patch('runtime.guarded_x11_v1.compiled.run') as run:
+                    with self.assertRaises(RuntimeError):
+                        owner.run_compiled({}, {}, call_root=root/'method', **self.callbacks())
+                    run.assert_not_called();self.assertFalse((root/'method').exists())
+
+    def test_old_graph_sequence_cannot_deliver_unrelated_previous_image(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);owner=self.owner(root);native=owner.bridge.capture();owner.bridge.history[1]=(native,None)
+            receipt={'outcome':'SAFE_YIELD','observations':[{'sequence':1}]}
+            with patch('runtime.guarded_x11_v1.compiled.run',return_value=receipt):
+                row=owner.run_compiled({}, {}, call_root=root/'method', **self.callbacks())
+            self.assertEqual(row['method_receipt'],receipt);self.assertTrue(owner.bridge.review_required)
+            self.assertEqual(row['feedback']['image_status'],'needs_review');self.assertIsNone(row['feedback']['image'])

@@ -1,0 +1,16 @@
+Formal allocation: ISSUE-6617-T0-WSLC-20261002-01
+Source base: 3246a9b6cb7a19209c4056d01472cb660390c4f4
+Image: python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016
+
+PowerShell variables (sourceDir is this package directory; formalDir is this directory/formal_01_20261002):
+
+$sourceDir = (Resolve-Path ..).Path
+$formalDir = (Resolve-Path .).Path
+
+Candidate — one invocation only:
+wslc run --rm --pull never --network none --cpus 1 --memory 512M --volume "${sourceDir}:/src:ro" --volume "${formalDir}:/out:rw" python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python3 -B /src/candidate.py --cases /src/cases.json --out /out/raw.json
+
+Auditor — one separate invocation only, after candidate exit 0:
+wslc run --rm --pull never --network none --cpus 1 --memory 512M --volume "${sourceDir}:/src:ro" --volume "${formalDir}:/out:rw" python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python3 -B /src/audit.py --raw /out/raw.json --out /out/audit.json
+
+No retries. No pull, build, network, package install, GPU, GUI, model, audio, or physical input.

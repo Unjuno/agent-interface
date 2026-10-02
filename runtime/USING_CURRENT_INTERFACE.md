@@ -751,3 +751,138 @@ Raw reports and their hashes remain unchanged; lookup/review does not execute in
 
 [Program-emission regression evidence](results/program-emission-review-01/README.md)
 includes the original-counter recheck, portable archive, and native test logs.
+
+
+### Bounded selection, movement and conditional saving
+
+A guarded compiled method can include selection as its first action when a
+fresh application-specific selection cue is available. Match the reference's
+returned offset to the action using that reference: a rectangle reference and
+keyboard context can have different region sizes and offsets. Keep texture,
+source, scope, admission, deadline and release checks; a fixed post-click wait
+is not a selection acknowledgement. Stop on an unknown or failed effect before
+moving or saving. Independently score the persisted document after control ends.
+
+The [first full-method comparison](results/inkscape-single-method-01/README.md)
+retains a compiled selection failure: normal tasks succeeded1/2, although both
+undertravel controls withheld Save. A separate, frozen
+[interior-point successor](results/inkscape-interior-point-01/README.md) used a
+visibly interior click point with a textured32x32reference, rather than a
+boundary point with16x16context. Both normal routes saved the correct rectangle,
+and both controls stopped before Save. The point and reference context changed
+together; the prior failure's actual input recipient/readiness/cause is unknown.
+These results do not establish generic selection detection or spatial robustness.
+
+The successor compared the full three-action graph against a strong ordinary
+conditional callback. Both normal routes used3input programs,37program emissions,
+13captures,5callercommands and2primaryimages. Local method time was704ms ordinary
+and845ms compiled in one case each: no graph efficiency advantage or human-tempo
+claim follows. Actual primary usage is reconstructed for each explicit joint
+window, including construction and verification; nested method windows exclude
+other task decisions and overlap those totals. Evolving context/cache prevents
+a causal token-saving comparison. Keep current defaults and the efficiency HOLD.
+The [selection-cue development preflight](results/inkscape-selection-gate-preflight-01/README.md)
+uses historical labeled frames; it is not held-out visual qualification.
+
+
+### Compose batch registration with the owned capture directory
+
+The public Python `GuardedSessionOwner.invoke_guarded('guarded_mint_many', ...)`
+can register multiple explicitly grounded references from one inspected source.
+Use each returned offset and inspect complete registration before input. Partial
+registration is not atomic: retain the registered prefix and stop uncertain input.
+
+This public owner configures capture artifacts under the supplied call directory.
+A custom continuation using its bridge must keep the next capture directory and
+the directory passed to `present_result` aligned. Do not relax image confinement
+or treat an internal successful method receipt as delivered visual feedback.
+The [first composition](results/inkscape-public-batch-mint-01/README.md) saved the
+correct file but failed final presentation because the adapter used the previous
+bridge directory. Its allocated failure and three unallocated cases are retained.
+
+A [separately frozen successor](results/inkscape-public-batch-mint-02/README.md)
+explicitly used a method-call capture/presentation directory. Both ordinary and
+guarded graph routes saved the correct normal task, and both undertravel controls
+withheld Save; the primary reviewed all eight original images. Each case used
+four caller commands instead of the historical five with separate registrations.
+The method, inputs, effect gates and confinement rules stayed unchanged. This is
+a public Python owner composition, not a compiled MCP tool or MCP transport test.
+Actual primary usage includes construction, failure and repair; the historical
+comparison and evolving context/cache do not prove token or speed gains. Keep
+production defaults and the efficiency HOLD.
+
+
+### Run a bounded graph through the public Python owner
+
+The explicit Python composition is retained after one fixed normal task and one
+short-movement control using the existing activation/review handoff before
+reference grounding. The prior two selection failures remain retained. See the
+[scoped qualification and actual usage](results/public-owner-activation-primary-01/PUBLICATION.md).
+This does not establish generic readiness, reliability or speed/token advantage.
+
+When explicitly activating a window, use `guarded_activate_window` with
+`review_after_activation=true`, verify the activation and neutral release,
+then review its original returned image before grounding in the new scope.
+A failed/unknown activation or review must stop editing; old references cannot
+cross this handoff. This is an explicit caller operation, not hidden behavior
+inside `run_compiled`, and does not prove the cause of an earlier click failure.
+
+After explicitly opening `GuardedSessionOwner` and grounding its references,
+call `owner.run_compiled(interface, bindings, call_root=fresh_directory,
+perceive=read_only_callback, verify_effect=read_only_callback)`. An optional
+`cancelled` callback uses the existing graph cancellation contract. Calls are
+serialized by the caller; this synchronous API does not add a scheduler or MCP
+tool. The owner must be open, reviewed and recovered. The call directory must
+be new; existing directories refuse before graph execution.
+
+The existing graph performs its scope, dependency, admission, deadline and
+release checks. Raw captures and graph evidence remain in the owner's bridge
+directory; image artifacts use this call's images directory. The result returns
+`method_receipt`, `feedback`, `session`, `task_success=null` and
+`replay_allowed=false`. Feedback presents the last capture actually used by
+this graph, without an additional observation. A graph with no observations
+returns feedback=null rather than presenting a previous image.
+
+Read method and feedback outcomes separately. If presentation is unavailable,
+the completed prefix remains in method_receipt and the owner requires review.
+An exception also requires review and retains cleanup duty on the same owner;
+close attempts release even when input may have happened before the exception.
+No automatic retry, re-grounding, restart or recovery reset follows. Callbacks
+are trusted caller code, not generic perception or independent task scoring.
+Independently verify saved effects, and retain the returned wrapper evidence.
+No hard real-time bound, matched latency or token advantage is established by
+this API addition. Existing input/MCP schemas and defaults are unchanged.
+
+### Existing Calc workflow on the same public owner
+
+The [fixed Calc transfer](results/calc-owner-transfer-live-01/PUBLICATION.md) uses
+`run_compiled` for conditional cell entry and Save, with synchronous app-local
+observation callbacks. A strong ordinary conditional callback uses the same
+owner, evidence and guarded programs. Both normal cases persisted731/864; both
+wrong-entry controls stopped before Save. Matching command/image/capture counts
+were identical. Keep the ordinary route and current efficiency HOLD.
+
+The retained [composition source](results/calc-owner-transfer-live-01/composition.py)
+and [owner harness](results/calc-owner-transfer-live-01/keeper.py) show the exact
+call path. They are trusted, fixed-layout recipes and evidence runners, not a
+generic Calc command or a new MCP endpoint. Ground references from a freshly
+reviewed image; OCR does not mint authority. The
+[Save dependency guard](results/calc-owner-transfer-live-01/save_guard.py)
+temporarily wraps private bridge methods under one serialized owner. Treat this
+as app-local qualification, not a stable extension API or atomic visual guard.
+
+When Tip of Day or XLSX confirmation becomes the focused window, explicitly
+review that window and its original image, ground a new scoped reference, and
+acknowledge once. After it closes, review the main window and ground again. A
+destroyed-window post-input capture failure does not authorize replaying a
+completed Return. Read completed input, graph stop, final visual feedback and
+independent persisted-file scoring separately. In this block the graph yielded
+on the Save modal; only later primary handling and post-terminal workbook
+scoring establish task completion.
+
+The retained18 semantic mutation audits include extra Save, altered values/pixels
+with updated hashes, stale source, lease changes, held keys and incomplete
+cleanup. [Joint primary usage](results/calc-owner-transfer-live-01/usage-02/usage-verify-normal.json)
+includes preparation, failures, live cases and audits; it is not a route-specific
+matched cost comparison. The earlier usage-01 window overlaps it and must not
+be added. No speed, token-cost, generic-readiness or human-tempo claim follows.

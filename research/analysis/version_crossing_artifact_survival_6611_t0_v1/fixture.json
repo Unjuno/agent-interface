@@ -1,0 +1,20 @@
+{
+  "schema": "version-crossing-fixture-v1",
+  "expected": {"open": true, "value": 5, "formula": "2+3", "link_target": "record-7", "render": "5"},
+  "routes": {
+    "compact": {"initial_cost": 1, "initial_properties": {"open": true, "value": 5, "formula": "2+3", "link_target": "record-7", "render": "5"}},
+    "portable": {"initial_cost": 3, "initial_properties": {"open": true, "value": 5, "formula": "2+3", "link_target": "record-7", "render": "5"}}
+  },
+  "cases": [
+    {"id": "identity", "changes": {}},
+    {"id": "property-preserving-migration", "changes": {"metadata_order": "canonicalized"}},
+    {"id": "silent-formula-drop", "route_changes": {"compact": {"formula": null}}},
+    {"id": "open-failure", "route_changes": {"portable": {"open": false}}},
+    {"id": "render-only-degradation", "route_changes": {"compact": {"render": "#VALUE!"}}},
+    {"id": "cosmetic-harmless-change", "changes": {"theme": "dark"}},
+    {"id": "external-dependency-missing", "route_changes": {"portable": {"value": null, "formula": null, "dependency": "missing"}}},
+    {"id": "compact-route-survives-better", "route_changes": {"portable": {"open": false}}}
+  ],
+  "acquisition_cost": {"compact": 1, "portable": 3},
+  "reader_reopen_cost": {"compact": 1, "portable": 1}
+}

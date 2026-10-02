@@ -6,6 +6,10 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #6581 path-width constrained GUI T0b: [`analysis/path_width_continuous_gui_6581_t0b_v1/REPORT.md`](analysis/path_width_continuous_gui_6581_t0b_v1/REPORT.md) — six synthetic scenarios independently audited `PASS_METHOD_SCOPED`; no ordinary-GUI or human/agent path claim.
+- Issue #6617 revision-timed cutover T0: [`analysis/revision_timed_cutover_6617_t0_v1/REPORT.md`](analysis/revision_timed_cutover_6617_t0_v1/REPORT.md) — WSLc `PASS_METHOD_SCOPED` on 30 logical-time traces; no speech, GUI, human, or measured-latency claim.
+- Issue #6604 disturbance-timescale T0: [isolated OrbStack Docker method result](analysis/disturbance_timescale_6604_t0_v1/REPORT.md) — 14 rows independently audited; synthetic method scope only, with the predecessor shared-engine HOLD retained separately.
+
 - Issue #6533 frame-qualified collateral T0: [`analysis/frame_qualified_collateral_6533_t0_20261002/REPORT.md`](analysis/frame_qualified_collateral_6533_t0_20261002/REPORT.md) — OrbStack synthetic method pass; 44/44 independently reconstructed, aggregate checker-byte reduction with a small-fixture regression; no real GUI/product claim.
 
 - Issue #6509 claim-scoped partial-verdict T0: [`analysis/claim_scoped_partial_verdict_6509_t0_20261002/REPORT.md`](analysis/claim_scoped_partial_verdict_6509_t0_20261002/REPORT.md) — 45 rows independently audited in OrbStack; method-scoped only, with no real persistence, GUI, safety or performance claim.
@@ -39,6 +43,7 @@ For claims and scientific disposition, start with the top-level [research index]
 | Issue #5970 parent-only stream diagnostic T10 | [analysis/blackstart_tk_parent_only_5970_t10_20261002/REPORT.md](analysis/blackstart_tk_parent_only_5970_t10_20261002/REPORT.md) |
 | Issue #5970 non-modifier control T11 | [analysis/blackstart_nonmodifier_trace_5970_t11_20261002/REPORT.md](analysis/blackstart_nonmodifier_trace_5970_t11_20261002/REPORT.md) |
 | Issue #5970 no-input X event baseline T12 | [analysis/blackstart_x11_noinput_baseline_5970_t12_20261002/REPORT.md](analysis/blackstart_x11_noinput_baseline_5970_t12_20261002/REPORT.md) |
+| Issue #6147 safe-probe T0 allocation 02 | [STOP report](analysis/safe_probe_identifiability_6147_t0_20261002_a02/STOP.md) — candidate runtime STOP; not evaluated |
 | Issue #6074 interval-robustness finite-method T0 | [analysis/interval_robustness_6074_t0_20261002/REPORT.md](analysis/interval_robustness_6074_t0_20261002/REPORT.md) |
 | Issue #6045 opportunity-conditioned age T0 container method result | [analysis/opportunity_conditioned_actuated_info_6045_t0_20261002/REPORT.md](analysis/opportunity_conditioned_actuated_info_6045_t0_20261002/REPORT.md) |
 | Issue #6351 cross-role meaning drift synthetic T0 | [analysis/cross_role_meaning_drift_6351_t0_v1/REPORT.md](analysis/cross_role_meaning_drift_6351_t0_v1/REPORT.md) |
@@ -83,6 +88,7 @@ Prefer the narrowest existing namespace. The diagram is a placement guide; retai
 
 ## Analytical studies
 
+- [`analysis/action_bound_residual_6619_t0_v1/REPORT.md`](analysis/action_bound_residual_6619_t0_v1/REPORT.md) — Issue #6619 WSLc T0 retained as audit-control STOP; no scientific PASS or live-control claim.
 - [Cyclic grounding #4431 / Draft PR #4443 published-byte archive](analysis/cyclic_justification_grounding_delivery_t6g2_v1/ARCHIVAL_QUALIFICATION.md) — nine exact published files (25,174 bytes); reported `PASS_LOCAL_CYCLIC_GROUNDING_CONTRACT` remains separate from `HOLD_REMOTE_RAW_DELIVERY`; full raw/audit/control/process bundle absent, no independent reproduction or runtime promotion.
 
 - [`analysis/preference_uncertainty_5749_t0_v1/REPORT.md`](analysis/preference_uncertainty_5749_t0_v1/REPORT.md) — Issue #5749 T0 method-only PASS: safe preference-query boundary, choice-version binding, neutral construction, framing-sensitivity hold; no human or runtime claim.

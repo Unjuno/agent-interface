@@ -1,0 +1,52 @@
+{
+  "allocation": "DISTURBANCE-TIMESCALE-6604-T0-ISOLATED-ORBSTACK-20261002-02",
+  "issue": 6604,
+  "base_main": "7d7f2f1a1ff281c68c9864ae1c56aa5f68b35ae0",
+  "previous_observed_main": "3246a9b6cb7a19209c4056d01472cb660390c4f4",
+  "branch": "research/disturbance-timescale-6604-t0-orbstack-20261002",
+  "path": "research/analysis/disturbance_timescale_6604_t0_v1/",
+  "protocol": "SUCCESSOR_ISOLATED_ALLOCATION_02.md",
+  "protocol_sha256": "232cf3e7270d4a315341764fed62ac4bac763a2868e576436ae9747984739fe1",
+  "candidate_invocations": 0,
+  "auditor_invocations": 0,
+  "retries": 0,
+  "outputs_pre_run_empty": true,
+  "source_sha256": {
+    "candidate.py": "c6602f0e8ccb04df65d410aa6f664ed888c92a97134952b50c40a8dd878ba2e7",
+    "audit.py": "c930829f85060838c5efdd5d0dd416d9c1be42e0496c6eca2917d3bbe2b3234c",
+    "cases.json": "24869a5363cb22211771009a1dd9e843dce8072cb5c07a40c9c32108a82a9a18",
+    "oracle.json": "528b1d45283a47e2b7121b0ebf3dc4fe649ed8c04ffacf5135a124b6eeffa4cd"
+  },
+  "runtime": {
+    "orbstack_machine_id": "01M3XTZQ3A37R9S2AWDK7PPJKC",
+    "orbstack_machine": "agent-interface-6604-t0-isolated-20261002",
+    "distribution": "Ubuntu 24.04.5",
+    "architecture": "arm64",
+    "configured_cpus": 1,
+    "configured_memory_mib": 2048,
+    "configured_disk_gib": 16,
+    "filesystem_and_agent_integration": "disabled",
+    "docker_engine": "29.1.3",
+    "cgroup_version": "2",
+    "daemon_reported_cpus": 10,
+    "daemon_reported_memory_bytes": 16819609600,
+    "host_vm_limits_effectively_enforced": false
+  },
+  "image": {
+    "reference": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "image_id": "sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "platform": "linux/arm64",
+    "pull_build_setup_completed": true,
+    "formal_pull_policy": "never"
+  },
+  "formal_container_requests": {
+    "network": "none",
+    "source_mount": "read-only",
+    "raw_input_mount_to_auditor": "read-only",
+    "requested_cpus": 0.25,
+    "requested_memory": "512m",
+    "requested_pids_limit": 64,
+    "root_filesystem": "read-only",
+    "effective_resource_enforcement_claim": false
+  }
+}
