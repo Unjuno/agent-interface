@@ -1,0 +1,38 @@
+{
+  "allocation_id": "SKILL-REGISTRY-TOPK-STARVATION-751-T0-20261002-01",
+  "base_main": "afea9a530cafd7af529df4c9e59f36b816bca24f",
+  "branch": "research/skill-retrieval-topk-starvation-751-t0-20261002",
+  "path": "research/analysis/skill_registry_topk_starvation_751_t0_20261002",
+  "parent_issue": 751,
+  "prior_scoped_rung_pr": 759,
+  "registry_cases": 8,
+  "retrieval_k": 2,
+  "scan_budget": 6,
+  "methods": [
+    "SEMANTIC_TOP_K_THEN_FILTER",
+    "FILTER_THEN_RANK",
+    "BOUNDED_WIDENING"
+  ],
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "formal_retries": 0,
+  "image_ref": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "image_id": "sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4",
+  "image_python": "3.12.14",
+  "platform": "linux/amd64",
+  "network": "none",
+  "pull": "never",
+  "cpus_requested": 1,
+  "memory_requested": "512m",
+  "memory_enforcement": "not_yet_observed",
+  "gpu": "not used; deterministic standard-library fixture",
+  "source_sha256": {
+    "PREREGISTRATION.md": "f12a4e54fcbb21cf7ed786c3115ef46d9027051f368b884c65a1b0dbe0e907d9",
+    "fixture.json": "643131f43e45c2bcf90ee99d40602a8fb6956e2eec1fdecd084d3b71cf0e7322",
+    "candidate.py": "4d49ae02b9528fd75b14dc2b014fadb618f96a7c52f94d265608a63930d56400",
+    "audit.py": "a144ac3331ea49bf422f75a53e48d5b2df0fe8570366f80ab35a9b2cb655a179",
+    "test_method.py": "f434eea7d5d212082c56583c95eff803398db6bb00c5dba8213d55817760c018"
+  },
+  "construction": "Windows host CPython suite 6/6 passed after retaining the initial auditor-accounting failure; see CONSTRUCTION.md"
+}
+
