@@ -1,0 +1,87 @@
+{
+  "schema": "feedback-necessity-orbstack-run-v1",
+  "issue": 5927,
+  "allocation": "FEEDBACK-NECESSITY-5927-ORBSTACK-CONTAINER-T0-20261002-01",
+  "base_main": "89f27caf1e9fcf3bc2c2c3c2db7d62ee6d19e4ae",
+  "integration_base_main_after_rebase": "faea456a68ced1eea34585d575ce8bef310f00d4",
+  "runtime": {
+    "engine": "OrbStack Docker Engine 29.4.0",
+    "client": "Docker version 29.5.2, build v29.5.2",
+    "platform": "linux/arm64",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "python": "Python 3.12.14",
+    "pull": "none; cached image only",
+    "network": "none",
+    "limits": {"cpus": 1, "memory": "256m", "pids": 64},
+    "filesystem": {"root": "read-only", "input": "read-only", "output": "fresh writable bind mount"}
+  },
+  "environment_probe": {
+    "command": "docker run --pull=never --rm --platform linux/arm64 --network none --cpus=1 --memory=128m --pids-limit=32 --read-only python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python --version",
+    "stdout": "Python 3.12.14\n",
+    "exit_code": 0
+  },
+  "source_sha256": {
+    "cases.json": "1868c4a36ab5055a8f0fe50aa593cd544b7c865c7d8da1ac0ac8bfd1e0f232ca",
+    "feedback_necessity.py": "b92859d2e454662507bc14edcfe25291b0b099084ac3a5ef255fe11a6ea89592",
+    "successor_02/audit_feedback_necessity_v2.py": "3e064ff613618bfc96883114d6890096ebdc43a87c4ca0cdb211d6a3ac9861c3",
+    "test_feedback_necessity.py": "befc58fd9ab40e7a481b8632444d1d71fd7de39cfcf96390b455b6cd493452fd",
+    "successor_02/test_audit_order.py": "a57d0e1eae3670e1f79b950f19300a4e8867d3fce4d021f375c8e519262463ef"
+  },
+  "construction": {
+    "command": "docker run --pull=never --rm --platform linux/arm64 --network none --cpus=1 --memory=256m --pids-limit=64 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,source=/Users/taka/Documents/Codex/2026-09-19/unjuno-agent-interface-github-mcp-main/work/feedback-necessity-5927-container/research/analysis/feedback_necessity_5927_host_t0_20261001,target=/input,readonly --workdir /input python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B -m unittest -v test_feedback_necessity.py successor_02.test_audit_order",
+    "exit_code": 0,
+    "tests": 8,
+    "status": "PASS"
+  },
+  "candidate": {
+    "invocations": 1,
+    "exit_code": 0,
+    "command": "docker run --pull=never --rm --platform linux/arm64 --network none --cpus=1 --memory=256m --pids-limit=64 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,source=/Users/taka/Documents/Codex/2026-09-19/unjuno-agent-interface-github-mcp-main/work/feedback-necessity-5927-container/research/analysis/feedback_necessity_5927_host_t0_20261001,target=/input,readonly --mount type=bind,source=/Users/taka/Documents/Codex/2026-09-19/unjuno-agent-interface-github-mcp-main/work/feedback-necessity-5927-container/research/analysis/feedback_necessity_5927_orbstack_t0_v1/results/formal-01,target=/out --workdir /input python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B feedback_necessity.py --cases /input/cases.json --out /out/candidate.raw.json",
+    "stdout": "{\"decision\": \"CANDIDATE_COMPLETE\", \"cases\": 2}\n",
+    "raw": "results/formal-01/candidate.raw.json",
+    "bytes": 1543,
+    "sha256": "48036b457091b3dd1eeb67291e96c7b801e3a70dd8e30f472ca5f6cbcfe731c6",
+    "results": [
+      {"case_id": "save-modal-positive", "decision": "PASS_METHOD_SCOPED", "minimum_exchanges": 1, "minimum_channel_set": ["persistence_receipt"]},
+      {"case_id": "shared-safe-inspect-null", "decision": "PASS_NULL_NO_LOWER_BOUND", "minimum_exchanges": 0, "minimum_channel_set": []}
+    ]
+  },
+  "independent_audit": {
+    "invocations": 1,
+    "exit_code": 0,
+    "command": "docker run --pull=never --rm --platform linux/arm64 --network none --cpus=1 --memory=256m --pids-limit=64 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,source=/Users/taka/Documents/Codex/2026-09-19/unjuno-agent-interface-github-mcp-main/work/feedback-necessity-5927-container/research/analysis/feedback_necessity_5927_host_t0_20261001,target=/input,readonly --mount type=bind,source=/Users/taka/Documents/Codex/2026-09-19/unjuno-agent-interface-github-mcp-main/work/feedback-necessity-5927-container/research/analysis/feedback_necessity_5927_orbstack_t0_v1/results/formal-01,target=/out --workdir /input python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B successor_02/audit_feedback_necessity_v2.py --cases /input/cases.json --candidate /out/candidate.raw.json --out /out/audit.raw.json",
+    "stdout": "{\"status\":\"PASS_RAW_AUDIT\",\"errors\":[]}\n",
+    "status": "PASS_RAW_AUDIT",
+    "errors": [],
+    "independently_reconstructed_cases": 2,
+    "raw": "results/formal-01/audit.raw.json",
+    "bytes": 1602,
+    "sha256": "cb79a6e3202bf1af4923c2938ad2f101794c39f6015dc81ab8a718389afb9a7b"
+  },
+  "timestamps_utc": {
+    "candidate_raw_mtime": "2026-10-02T00:56:38Z",
+    "audit_raw_mtime": "2026-10-02T00:56:51Z",
+    "construction_and_environment_probe": "2026-10-02; completed before the candidate invocation"
+  },
+  "local_ci": {
+    "analysis_index": {"command": "python research/analysis/check_index.py", "status": "PASS", "indexed_retained_result_directories": 381},
+    "analysis_index_unit_tests": {"command": "python -B -m unittest discover -s research/analysis -p 'test_check_index.py' -v", "status": "PASS", "passed": 6},
+    "workflow_5702_tests": {"command": "python -B -m unittest discover -s research/analysis/endogenous_demand_rebound_5702_t0_v1 -p 'test_*.py' -v", "status": "PASS", "passed": 8},
+    "workflow_5681_tests": {"command": "python -B -m unittest discover -s research/analysis/selection_aware_shadow_audit_5681_t1_v1 -p 'test_*.py' -v", "status": "PASS", "passed": 12},
+    "public_navigation": {"command": "python .github/check_public_navigation.py", "status": "PASS", "documents": 26, "repository_relative_links": 1244, "initial_attempt": "FAIL because new report targets were not yet staged; passed after staging the intended files"},
+    "research_workspace_tests": {"command": "python -B -m unittest discover -s research -p 'test_*workspace*.py' -v", "status": "PASS", "passed": 21},
+    "research_workspace_index": {"command": "python research/check_workspace_index.py --git-tree", "status": "PASS", "reachable_top_level_directories": 154},
+    "python_host": "Python 3.14.5",
+    "python_3_12_container_ci": {
+      "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+      "command": "docker run --pull=never --rm --platform linux/arm64 --network none --cpus=1 --memory=512m --pids-limit=64 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=32m --mount type=bind,source=/Users/taka/Documents/Codex/2026-09-19/unjuno-agent-interface-github-mcp-main/work/feedback-necessity-5927-container,target=/workspace,readonly --workdir /workspace python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f sh -c \"python -B -m unittest discover -s research/analysis -p 'test_check_index.py' -v && python -B -m unittest discover -s research/analysis/endogenous_demand_rebound_5702_t0_v1 -p 'test_*.py' -v && python -B -m unittest discover -s research/analysis/selection_aware_shadow_audit_5681_t1_v1 -p 'test_*.py' -v && python research/analysis/check_index.py\"",
+      "exit_code": 0,
+      "tests_passed": 26,
+      "analysis_index_retained_result_directories": 380
+    }
+  },
+  "verification_incident": "Two non-scientific verification command errors are retained: (1) one post-CI combined shell command was launched from the repository root while referring to the package-local predecessor SHA256SUMS, exiting 1 before later chained checks; earlier source/test hash verification had already run in the predecessor package directory and new package hashes are checked separately; (2) a trailing merge-base display used unsupported git option --short after all preceding CI checks had passed. Neither altered data nor reran an experiment.",
+  "candidate_retries": 0,
+  "auditor_retries": 0,
+  "scientific_scope": "finite authored task/channel method only; no live GUI/model/task-effect or universal lower-bound claim"
+}
