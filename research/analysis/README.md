@@ -708,6 +708,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`verifier_exposure_5941_t0_v2_20261001/`](verifier_exposure_5941_t0_v2_20261001/)
 - [`verifier_metastability_5375_t0_20261001_a1/`](verifier_metastability_5375_t0_20261001_a1/)
 - [`version_crossing_artifact_survival_6611_t0_v1/`](version_crossing_artifact_survival_6611_t0_v1/)
+- [`version_defined_intervention_6691_a02_20261003/`](version_defined_intervention_6691_a02_20261003/)
 - [`version_defined_intervention_6691_t0_20261002/`](version_defined_intervention_6691_t0_20261002/)
 - [`versioned_predicate_specialist_switch_4284_reconciled_4603_v1/`](versioned_predicate_specialist_switch_4284_reconciled_4603_v1/)
 - [`visual_cue_coordinate_map_successor_2043_v1/`](visual_cue_coordinate_map_successor_2043_v1/)
@@ -786,3 +787,4 @@ The checker compares the generated block against every child directory with a re
 - [Issue #5518 T0 provenance and novelty STOP archive](ioco_adapter_conformance_5518_t0/ARCHIVAL_QUALIFICATION.md) — 19 exact original files; raw's source commit points to different auditor bytes, and broad H overlaps prior T0–T7. Historical fixture labels and errata remain unchanged; no candidate rerun or novelty/PASS claim.
 - [Issue #5537 T7 mutation-audit STOP](gluing_approx_irreversible_5537_t7_v1/ARCHIVAL_QUALIFICATION.md) — exact 135-row raw/audit/STOP files; base oracle errors 0 but only 5/6 controls rejected because one mutation was a no-op. Runner/freeze absent from this packet; no scientific PASS or rerun.
 - [`history_receipt_provenance_6616_a02_20261003/RUN_RECORD.md`](history_receipt_provenance_6616_a02_20261003/RUN_RECORD.md) — #6616 successor A02: OrbStack candidate/auditor reconstructed five synthetic lifecycle states, but allocation-level disposition is HOLD because the fixture embeds A01's ID; A01 transfer STOP preserved separately.
+- [`version_defined_intervention_6691_a02_20261003/REPORT.md`](version_defined_intervention_6691_a02_20261003/REPORT.md) — #6691 successor A02: independent OrbStack audit reconstructed the retained synthetic version-mixture contrast (`PASS_AUDIT_ONLY_SCOPED`); A01 auditor-launch STOP remains unchanged.
