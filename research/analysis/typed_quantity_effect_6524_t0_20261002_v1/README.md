@@ -1,6 +1,6 @@
 # Typed quantity-effect contract — T0
 
-Status before formal use: PRE-REGISTERED, candidate=0, auditor=0, retries=0.
+Final disposition: `METHOD_PASS` and `H_PASS_SCOPED` for the preregistered synthetic fixture only. Formal counts: candidate=1, independent auditor=1, retries=0.
 
 This is the first bounded CPU-only method rung for [Issue #6524](https://github.com/Unjuno/agent-interface/issues/6524). It uses a deterministic synthetic app-state fixture, not a real GUI. The question is whether unit/dimension/kind/persistence/tolerance-aware adjudication separates cases that a bare numeric comparison misses.
 
@@ -19,3 +19,5 @@ This is the first bounded CPU-only method rung for [Issue #6524](https://github.
 ## Frozen inputs and execution
 
 Exact source/input/image identities and start gates are in [FREEZE.json](FREEZE.json). The host and WSLc construction checks are recorded in [CONSTRUCTION.md](CONSTRUCTION.md); neither is the formal result. Formal raw files go only into `results/allocation-01/`, which must be absent/empty before the sole run.
+
+The first formal raw result and audit are retained with the scoped interpretation in [REPORT.md](REPORT.md). No real GUI, runtime, model, user, or product outcome was tested.
