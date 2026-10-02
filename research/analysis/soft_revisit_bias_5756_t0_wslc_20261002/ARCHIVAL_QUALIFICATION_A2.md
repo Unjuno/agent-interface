@@ -42,3 +42,31 @@ The original branch also deletes unrelated MAP01 construction-log files and
 reverts shared documentation/index snapshots. Those deletions are deliberately
 not carried into this recovery. The predecessor allocation-01 STOP and its
 raw gate evidence remain untouched.
+
+## Frozen-source review limits (2026-10-02)
+
+Read-only inspection of the preserved source confirms two review findings:
+[policy-trace coverage](https://github.com/Unjuno/agent-interface/pull/6842#discussion_r4170368667)
+and [HOLD exit status](https://github.com/Unjuno/agent-interface/pull/6842#discussion_r4170368676).
+
+- `audit.py` accepts terminal refusal without checking that no eligible edge
+  remains, and checks selected edges for existence, reversibility and revisit
+  limits without reconstructing the registered policy's choice. A schema-valid
+  stateless `observe`/`refuse` trace with no target claim can therefore change
+  the reported soft-minus-stateless contrast without triggering those checks.
+  The retained auditor does not establish exact policy-decision reconstruction
+  or independently validate that contrast.
+- `run_audit.py` writes the scientific `decision` to its JSON report, but its
+  stdout omits that field and its nonzero exit condition checks only
+  `errors`. A threshold-gate `HOLD` with no structural errors can exit zero.
+  Process success is not a scientific PASS; the JSON decision and gates must
+  be read separately.
+
+These are static source findings, not a newly executed candidate, auditor,
+mutation challenge, or observed allocation-02 result. The earlier 13/13 host
+construction checks do not demonstrate coverage of these counterexamples.
+Allocation-02 remains STOP/HOLD with the invocation counts above unchanged.
+All 13 original preparation files and their frozen manifest remain unchanged;
+this note does not repair or refreeze them. Formal use would require separately
+authorized, versioned corrections and prospective review, not reinterpretation
+or replay of a retained allocation.
