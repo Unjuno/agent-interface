@@ -14,7 +14,8 @@ Open is workflow state, not “no result”; open Issues may contain scoped resu
 
 | Issue | Title | GitHub state / closed date | Literal outcome markers* | Linked predecessor(s)** |
 |---|---|---|---|---|
-| [#6442](https://github.com/Unjuno/agent-interface/issues/6442) | Successor #5756: test bounded soft revisit bias for incomplete search branches | open | PASS_METHOD_SCOPED, HOLD, FAIL, STOP | #5756 |\n| [#6437](https://github.com/Unjuno/agent-interface/issues/6437) | [Successor #6380] Test typed elicitation-response normalization into scoped contract clauses | open | FAIL_METHOD_CONSTRUCTION_MISMATCH, PASS_METHOD_SCOPED, FAIL_METHOD, HOLD | #6380 |
+| [#6442](https://github.com/Unjuno/agent-interface/issues/6442) | Successor #5756: test bounded soft revisit bias for incomplete search branches | open | PASS_METHOD_SCOPED, HOLD, FAIL, STOP | #5756 |
+| [#6437](https://github.com/Unjuno/agent-interface/issues/6437) | [Successor #6380] Test typed elicitation-response normalization into scoped contract clauses | open | FAIL_METHOD_CONSTRUCTION_MISMATCH, PASS_METHOD_SCOPED, FAIL_METHOD, HOLD | #6380 |
 | [#6435](https://github.com/Unjuno/agent-interface/issues/6435) | [Research] Deadline-conditioned semantic decision frontier for human–agent tempo | open | HOLD, PASS | — |
 | [#6427](https://github.com/Unjuno/agent-interface/issues/6427) | Successor #6410: independently audit retained WSLc lifecycle raw output | closed 2026-10-02 | STOP_METHOD_FAILURE, STOP, PASS_AUDIT_SUCCESSOR_SCOPED, FAIL_AUDIT_SUCCESSOR | #6410 |
 | [#6424](https://github.com/Unjuno/agent-interface/issues/6424) | [Research] Speech-act grounding before consequential GUI effects | open | YIELD, HOLD | — |
