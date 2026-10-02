@@ -2069,6 +2069,8 @@ The successor to #3780 passed a preregistered three-seed synthetic lifecycle in 
 
 ### Issue #6243 — method-selection accounting T0 successor-02
 
+The predecessor T0's initial construction-only audit failed on tuple-versus-JSON-array normalization; the root cause and limits are retained in [the original T0 package](research/analysis/method_selection_fairness_6243_t0_v1/REPORT.md). Its later frozen synthetic accounting run passed its narrow method gate, while empirical eligibility remains `HOLD_NO_MATCHED_METHOD_DATA`. The original missing candidate bytes and any human/GUI/causal claim are not implied by this archive.
+
 The one-shot OrbStack Docker candidate and independent raw-only auditor both exited 0; the auditor returned `METHOD_PASS_SCOPED` for 24 constructed attempts across four scenarios, with zero audit errors and 4/4 mutation controls rejected. Equal per-method fixture times yielded identical method-conditioned means while the designed natural-method mix and one-time acquisition charge changed the horizon ordering; the exact equal-method null remained 72,000 ms per arm. This validates only synthetic accounting and gate implementation. No human or GUI observations, coder reliability, empirical tempo, causal effect, population, or product claim is established. The predecessor allocation's `FAIL_AUDIT_GATE` is preserved unchanged. See [H/T/D/C/U report and reproduction package](research/analysis/method_selection_fairness_6243_t0_successor02_v1/REPORT.md) and [Issue #6243](https://github.com/Unjuno/agent-interface/issues/6243).
 
 ### Role-C support16/64 synthetic diagnostic — Issue #4853
