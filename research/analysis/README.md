@@ -352,6 +352,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`error_carry_6081_successor_orbstack_20261002/`](error_carry_6081_successor_orbstack_20261002/)
 - [`error_carry_6081_t0_20261001/`](error_carry_6081_t0_20261001/)
 - [`escrow_optional_budget_6156_t0_20261002/`](escrow_optional_budget_6156_t0_20261002/)
+- [`evaluation_cue_reactivity_6413_t0_wslc_20261003/`](evaluation_cue_reactivity_6413_t0_wslc_20261003/)
 - [`event_sourced_projection_r0_v1/`](event_sourced_projection_r0_v1/)
 - [`evidence_compute_calibration_identifiability_r3_v1/`](evidence_compute_calibration_identifiability_r3_v1/)
 - [`evidence_compute_decision_lattice_r2_v1/`](evidence_compute_decision_lattice_r2_v1/)
