@@ -1,0 +1,222 @@
+{
+  "schema": "agent-interface/host-timing-summary-v1",
+  "scope": "single retained host lifetime; boundaries, not model latency or semantic truth",
+  "timeline_status": "complete",
+  "transport_closed": true,
+  "call_count": 7,
+  "returned_count": 7,
+  "send_to_reply_total_ms": 1019.6107899999588,
+  "first_send_to_last_reply_ms": 180018.86922599998,
+  "unmeasured": [
+    "first useful model-visible feedback",
+    "semantic completion",
+    "isolated model wait/thinking",
+    "actual model tokens and cost",
+    "matched speedup and human tempo"
+  ],
+  "time_partition": {
+    "span": "first_send_to_last_reply",
+    "total_ms": 180018.86922599998,
+    "request_outstanding_ms": 1019.6107899999588,
+    "presentation_callbacks_ms": 7.455310000015743,
+    "other_host_intervals_ms": 178991.803126,
+    "scope": "Disjoint host-clock intervals only. Other includes orchestration, logging and caller gaps; not isolated model reasoning or wait."
+  },
+  "calls": [
+    {
+      "attempt": 1,
+      "tool": "interface_observe",
+      "send_ms": 17738.134278,
+      "reply_ms": 17909.721217,
+      "presentations": [
+        {
+          "start_ms": 17913.845397,
+          "completed_ms": 17917.089025
+        }
+      ],
+      "reviews": [
+        {
+          "recorded_ms": 32199.309425,
+          "task": "calc-1001079",
+          "phase": "initial",
+          "after_presentation": true,
+          "send_to_declared_review_ms": 14461.175146999998
+        }
+      ],
+      "text_acknowledgments": [],
+      "reply_sha256": "bf0a9663b0a349ac634baa829f02ee36c2ccc2f44aebf2a546d591fd63375428",
+      "send_to_reply_ms": 171.58693899999707,
+      "send_to_first_callbacks_completed_ms": 178.95474699999977,
+      "reply_to_next_send_ms": 16173.218109000001
+    },
+    {
+      "attempt": 2,
+      "tool": "interface_clock",
+      "send_ms": 34082.939326,
+      "reply_ms": 34089.627491,
+      "presentations": [
+        {
+          "start_ms": 34090.358385,
+          "completed_ms": 34090.570437
+        }
+      ],
+      "reviews": [],
+      "text_acknowledgments": [
+        {
+          "recorded_ms": 56856.461202,
+          "task": "calc-1001079",
+          "phase": "clock"
+        }
+      ],
+      "reply_sha256": "72686c48500776b942cd109a57a709fdf28dc70158dbbce7b598fd3064b6c568",
+      "send_to_reply_ms": 6.688164999999572,
+      "send_to_first_callbacks_completed_ms": 7.63111100000242,
+      "reply_to_next_send_ms": 24517.312400000003
+    },
+    {
+      "attempt": 3,
+      "tool": "interface_dispatch",
+      "send_ms": 58606.939891,
+      "reply_ms": 59080.288483,
+      "presentations": [
+        {
+          "start_ms": 59081.287031,
+          "completed_ms": 59083.15426
+        }
+      ],
+      "reviews": [
+        {
+          "recorded_ms": 79583.921461,
+          "task": "calc-1001079",
+          "phase": "format-modal",
+          "after_presentation": true,
+          "send_to_declared_review_ms": 20976.981570000004
+        }
+      ],
+      "text_acknowledgments": [],
+      "reply_sha256": "1921a348049e0dbca8813116da6ba6a992d77cfd76bd7728fd722fff61e8e27c",
+      "send_to_reply_ms": 473.3485919999948,
+      "send_to_first_callbacks_completed_ms": 476.21436900000117,
+      "reply_to_next_send_ms": 22219.758379000006
+    },
+    {
+      "attempt": 4,
+      "tool": "interface_inspect_target",
+      "send_ms": 81300.046862,
+      "reply_ms": 81379.94767,
+      "presentations": [
+        {
+          "start_ms": 81380.62704,
+          "completed_ms": 81381.263961
+        }
+      ],
+      "reviews": [
+        {
+          "recorded_ms": 100476.010298,
+          "task": "calc-1001079",
+          "phase": "inspect-modal",
+          "after_presentation": true,
+          "send_to_declared_review_ms": 19175.96343599999
+        }
+      ],
+      "text_acknowledgments": [],
+      "reply_sha256": "4d07ae4dd8eb8c687fb95386605b03a2fd2d44f1f35d038e363e0da47034e675",
+      "send_to_reply_ms": 79.90080799999123,
+      "send_to_first_callbacks_completed_ms": 81.21709900000133,
+      "reply_to_next_send_ms": 20821.65415500001
+    },
+    {
+      "attempt": 5,
+      "tool": "interface_review_target",
+      "send_ms": 102201.601825,
+      "reply_ms": 102281.740309,
+      "presentations": [
+        {
+          "start_ms": 102282.455253,
+          "completed_ms": 102283.129403
+        }
+      ],
+      "reviews": [
+        {
+          "recorded_ms": 146621.726429,
+          "task": "calc-1001079",
+          "phase": "selected-modal",
+          "after_presentation": true,
+          "send_to_declared_review_ms": 44420.124604
+        }
+      ],
+      "text_acknowledgments": [],
+      "reply_sha256": "76f749ae78547e545d04391be97182bcaed3db0118fbf637d9280cc6a468dd29",
+      "send_to_reply_ms": 80.13848399999551,
+      "send_to_first_callbacks_completed_ms": 81.52757799999381,
+      "reply_to_next_send_ms": 46070.88564000001
+    },
+    {
+      "attempt": 6,
+      "tool": "interface_dispatch",
+      "send_ms": 148352.625949,
+      "reply_ms": 148530.548213,
+      "presentations": [
+        {
+          "start_ms": 148531.30052,
+          "completed_ms": 148532.12185
+        }
+      ],
+      "reviews": [
+        {
+          "recorded_ms": 195993.42841,
+          "task": "calc-1001079",
+          "phase": "final-visible",
+          "after_presentation": true,
+          "send_to_declared_review_ms": 47640.802460999985
+        }
+      ],
+      "text_acknowledgments": [],
+      "reply_sha256": "b51f166cf191a0ade673d832e13a8cfbed358409a7a310d05933986d6f2ab738",
+      "send_to_reply_ms": 177.92226399999345,
+      "send_to_first_callbacks_completed_ms": 179.4959009999875,
+      "reply_to_next_send_ms": 49196.429753000004
+    },
+    {
+      "attempt": 7,
+      "tool": "interface_close",
+      "send_ms": 197726.977966,
+      "reply_ms": 197757.003504,
+      "presentations": [
+        {
+          "start_ms": 197757.733484,
+          "completed_ms": 197757.921631
+        }
+      ],
+      "reviews": [],
+      "text_acknowledgments": [],
+      "reply_sha256": "40df6733eba11e6d2436d38d1d7c4c7bbfe775acac1c02c67261e2cab9396e76",
+      "send_to_reply_ms": 30.025537999987137,
+      "send_to_first_callbacks_completed_ms": 30.943664999998873,
+      "reply_to_next_send_ms": null
+    }
+  ],
+  "input_sha256": {
+    "host-events.jsonl": "55d618c5b12b3c4640baacd2065f5a457fd86a658f9f5a3fd4f3ee30920dd25d",
+    "request-1.json": "2404ed80c27eccde2febec0c574368ae88782d319a13ba5ab1ff661b4bdf7953",
+    "reply-1.json": "bf0a9663b0a349ac634baa829f02ee36c2ccc2f44aebf2a546d591fd63375428",
+    "review-1.json": "4be77575e49ab1a8de9d43fb9938b85a009d0675176035d27f379c1f57151a4e",
+    "request-2.json": "481895d1d8400147f0d1aecad3c125f9be98bc6cf4e25839dfacbd2a8b9c258c",
+    "reply-2.json": "72686c48500776b942cd109a57a709fdf28dc70158dbbce7b598fd3064b6c568",
+    "text-acknowledgment-2.json": "874da7cc71e6965a2be7eb33a1cee27cbf86a4c5bed8ff5d1a29993e36323ab3",
+    "request-3.json": "d802a8c26f03bb2a22d52ca3ef9c69d0757c08e332deae20d9b6becbdf83b5ab",
+    "reply-3.json": "1921a348049e0dbca8813116da6ba6a992d77cfd76bd7728fd722fff61e8e27c",
+    "review-3.json": "ca1bceaea68856f5203805d2d29925f5d5122244f1bdabcbfeb8397e663ac739",
+    "request-4.json": "9a8caaf4cd6eacb005f2e942b85e06c9d7d2e6749cc4ab8136d6249eb3f7dc46",
+    "reply-4.json": "4d07ae4dd8eb8c687fb95386605b03a2fd2d44f1f35d038e363e0da47034e675",
+    "review-4.json": "7653c2a91e41806f48377e219189d8726b299adcdc39c6c7715d432af4722a36",
+    "request-5.json": "07f6916118da65f34b44afb529c9ca67b3f76537886bc118ba01be75c84ae07a",
+    "reply-5.json": "76f749ae78547e545d04391be97182bcaed3db0118fbf637d9280cc6a468dd29",
+    "review-5.json": "54460c1e254cbb049ac9411eec5f65d9091d9db7ce5f6b710b61cdc684701801",
+    "request-6.json": "476ae5f94a9b6394facb94d6c6ecf7c2e459058443f35e2d87c0245aee42d8a7",
+    "reply-6.json": "b51f166cf191a0ade673d832e13a8cfbed358409a7a310d05933986d6f2ab738",
+    "review-6.json": "592da89f82b381fdd23d2585ccd4af658d68a5ab78c6ed1346a4a4c917525b6e",
+    "request-7.json": "31b10fee7db7c4d4d36b4e9e9b42aa3f4d80e290ff847dad176ccc6b08b3c63a",
+    "reply-7.json": "40df6733eba11e6d2436d38d1d7c4c7bbfe775acac1c02c67261e2cab9396e76"
+  }
+}

@@ -1,0 +1,18 @@
+test_no_input_attestation_does_not_hide_execution_without_release (runtime.guarded_x11_v1.test_compiled.CompiledX11Tests.test_no_input_attestation_does_not_hide_execution_without_release) ... FAIL
+
+======================================================================
+FAIL: test_no_input_attestation_does_not_hide_execution_without_release (runtime.guarded_x11_v1.test_compiled.CompiledX11Tests.test_no_input_attestation_does_not_hide_execution_without_release)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_compiled.py", line 171, in test_no_input_attestation_does_not_hide_execution_without_release
+    self.assertEqual(r['outcome'],'RUNTIME_FAILED');self.assertEqual(b.inputs,[])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'SAFE_YIELD' != 'RUNTIME_FAILED'
+- SAFE_YIELD
++ RUNTIME_FAILED
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
