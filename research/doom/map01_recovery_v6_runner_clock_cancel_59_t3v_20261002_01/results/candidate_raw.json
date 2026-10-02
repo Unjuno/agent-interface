@@ -1,0 +1,387 @@
+{
+  "allocation": "MAP01-V6-RUNNER-CLOCK-CANCEL-59-T3V-20261002-01",
+  "base_commit": "4cf0a3dfde1219671b671bf0a9079a11dcb2e159",
+  "candidate_gate_errors": [],
+  "candidate_invocations": 1,
+  "cases": [
+    {
+      "gate_errors": [],
+      "row": {
+        "cancel_observed_ns": 285971112146708,
+        "cancel_requested": {
+          "event": "cancel_requested",
+          "id": "pair0-bounded_recovery-fallback",
+          "matched": true,
+          "requested_ns": 285971112117375
+        },
+        "clock_delay_ms": 400,
+        "clock_return_ns": 285971112097750,
+        "events": [
+          {
+            "accepted_ns": 285970080751916,
+            "event": "accepted",
+            "id": "pair0-bounded_recovery-prelude",
+            "program_sha256": "66ecccf2ef176de5dd84df941f63595d609de387974bbe1c0cede2dfe3795bbc",
+            "steps": 2,
+            "valid_until_ns": 285972080669500
+          },
+          {
+            "event": "step_started",
+            "id": "pair0-bounded_recovery-prelude",
+            "issued_ns": 285970080822125,
+            "operation": "hold",
+            "step": 0
+          },
+          {
+            "completed_ns": 285970080825250,
+            "event": "step_completed",
+            "id": "pair0-bounded_recovery-prelude",
+            "step": 0
+          },
+          {
+            "event": "step_started",
+            "id": "pair0-bounded_recovery-prelude",
+            "issued_ns": 285970080827208,
+            "operation": "observe",
+            "step": 1
+          },
+          {
+            "completed_ns": 285970080828958,
+            "event": "step_completed",
+            "id": "pair0-bounded_recovery-prelude",
+            "step": 1
+          },
+          {
+            "event": "input_released",
+            "id": "pair0-bounded_recovery-prelude",
+            "release_ns": 285970080830875,
+            "verified": true
+          },
+          {
+            "error": null,
+            "event": "terminal",
+            "id": "pair0-bounded_recovery-prelude",
+            "release": {
+              "verified": true
+            },
+            "semantic_completion": "program status only; task scoring is separate",
+            "status": "completed",
+            "steps_completed": 2,
+            "terminal_ns": 285970080842666
+          },
+          {
+            "accepted_ns": 285970080981541,
+            "event": "accepted",
+            "id": "pair0-bounded_recovery-fallback",
+            "program_sha256": "e3b223f89098399b2766ed6b4ccdb2fa31a96122054783e566cccb45ec6381e8",
+            "steps": 1,
+            "valid_until_ns": 285972080894625
+          },
+          {
+            "event": "step_started",
+            "id": "pair0-bounded_recovery-fallback",
+            "issued_ns": 285970081007333,
+            "operation": "hold",
+            "step": 0
+          },
+          {
+            "event": "cancel_requested",
+            "id": "pair0-bounded_recovery-fallback",
+            "matched": true,
+            "requested_ns": 285971112117375
+          },
+          {
+            "completed_ns": 285971112147333,
+            "event": "step_completed",
+            "id": "pair0-bounded_recovery-fallback",
+            "step": 0
+          },
+          {
+            "event": "input_released",
+            "id": "pair0-bounded_recovery-fallback",
+            "release_ns": 285971112153541,
+            "verified": true
+          },
+          {
+            "error": null,
+            "event": "terminal",
+            "id": "pair0-bounded_recovery-fallback",
+            "release": {
+              "verified": true
+            },
+            "semantic_completion": "program status only; task scoring is separate",
+            "status": "completed",
+            "steps_completed": 1,
+            "terminal_ns": 285971112155166
+          }
+        ],
+        "fallback_terminal_status": "completed",
+        "lease_ms": 2000,
+        "name": "A-clock-before-cancel-within-lease",
+        "planner_end_ns": 285971112097750,
+        "planner_start_ns": 285970080894625,
+        "planner_wait_ms": 600,
+        "release_ns": 285971112153541,
+        "runner_arm_summary": {
+          "arm": "BOUNDED_RECOVERY",
+          "fallback_id": "pair0-bounded_recovery-fallback",
+          "fallback_terminal_status": "completed",
+          "guard_cancel_reason": null,
+          "input_bounds": {
+            "event_count": 6,
+            "window_duration_ns": 1031203125
+          },
+          "pair_index": 0,
+          "planner_window": {
+            "duration_ns": 1031203125,
+            "end_boundary_phase": "immediately_after_delay_before_fallback_cleanup",
+            "end_ns": 285971112097750,
+            "start_ns": 285970080894625
+          },
+          "score": {
+            "mock": true,
+            "name": "score.json"
+          },
+          "scorer_events": [],
+          "scorer_summary": {
+            "mock": true,
+            "name": "scorer-summary.json"
+          },
+          "source_capture_ns": 285970075634791,
+          "source_health": {
+            "health": 100
+          },
+          "source_sequence": 7,
+          "source_typed_frame_sha256": "synthetic-frame",
+          "terminal_release_verified": true
+        },
+        "source_manifest": {
+          "executor": {
+            "bytes": "4202",
+            "git_blob": "e0a31884307eeac405094a624e3a63222acc656f",
+            "path": "research/live_control/executor_v10.py",
+            "sha256": "e55f82e6f15c39914a4213873d39386205a792c98b54d0cf54be0812c69ecb2e"
+          },
+          "lease": {
+            "bytes": "899",
+            "git_blob": "b9dac6bb4063928354733d79bf371909a288a3d1",
+            "path": "research/live_control/lease.py",
+            "sha256": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+          },
+          "v6_runner": {
+            "bytes": "6464",
+            "git_blob": "10344582ffa2ce339bc48dd8d680512a71f4eddc",
+            "path": "research/doom/map01_recovery_cover_mechanism_v6_runner.py",
+            "sha256": "9790becf98104b3a956c73bee945266a8517e41c2396c1a8b29c924e14d26012"
+          }
+        },
+        "terminal_release_verified": true,
+        "timer_expired_ns": 285970689729083,
+        "timer_started_ns": 285970080914291
+      }
+    },
+    {
+      "gate_errors": [],
+      "row": {
+        "cancel_observed_ns": null,
+        "cancel_requested": {
+          "event": "cancel_requested",
+          "id": "pair0-bounded_recovery-fallback",
+          "matched": false,
+          "requested_ns": 285974220559666
+        },
+        "clock_delay_ms": 1600,
+        "clock_return_ns": 285974220534041,
+        "events": [
+          {
+            "accepted_ns": 285971978692958,
+            "event": "accepted",
+            "id": "pair0-bounded_recovery-prelude",
+            "program_sha256": "66ecccf2ef176de5dd84df941f63595d609de387974bbe1c0cede2dfe3795bbc",
+            "steps": 2,
+            "valid_until_ns": 285973978617541
+          },
+          {
+            "event": "step_started",
+            "id": "pair0-bounded_recovery-prelude",
+            "issued_ns": 285971978764916,
+            "operation": "hold",
+            "step": 0
+          },
+          {
+            "completed_ns": 285971978770833,
+            "event": "step_completed",
+            "id": "pair0-bounded_recovery-prelude",
+            "step": 0
+          },
+          {
+            "event": "step_started",
+            "id": "pair0-bounded_recovery-prelude",
+            "issued_ns": 285971978772875,
+            "operation": "observe",
+            "step": 1
+          },
+          {
+            "completed_ns": 285971978774250,
+            "event": "step_completed",
+            "id": "pair0-bounded_recovery-prelude",
+            "step": 1
+          },
+          {
+            "event": "input_released",
+            "id": "pair0-bounded_recovery-prelude",
+            "release_ns": 285971978777500,
+            "verified": true
+          },
+          {
+            "error": null,
+            "event": "terminal",
+            "id": "pair0-bounded_recovery-prelude",
+            "release": {
+              "verified": true
+            },
+            "semantic_completion": "program status only; task scoring is separate",
+            "status": "completed",
+            "steps_completed": 2,
+            "terminal_ns": 285971978832875
+          },
+          {
+            "accepted_ns": 285971979043166,
+            "event": "accepted",
+            "id": "pair0-bounded_recovery-fallback",
+            "program_sha256": "e3b223f89098399b2766ed6b4ccdb2fa31a96122054783e566cccb45ec6381e8",
+            "steps": 1,
+            "valid_until_ns": 285973478917708
+          },
+          {
+            "event": "step_started",
+            "id": "pair0-bounded_recovery-fallback",
+            "issued_ns": 285971979078750,
+            "operation": "hold",
+            "step": 0
+          },
+          {
+            "event": "input_released",
+            "id": "pair0-bounded_recovery-fallback",
+            "release_ns": 285973479658541,
+            "verified": true
+          },
+          {
+            "error": null,
+            "event": "terminal",
+            "id": "pair0-bounded_recovery-fallback",
+            "release": {
+              "verified": true
+            },
+            "semantic_completion": "program status only; task scoring is separate",
+            "status": "expired",
+            "steps_completed": 0,
+            "terminal_ns": 285973479662625
+          },
+          {
+            "event": "cancel_requested",
+            "id": "pair0-bounded_recovery-fallback",
+            "matched": false,
+            "requested_ns": 285974220559666
+          }
+        ],
+        "fallback_terminal_status": "expired",
+        "lease_ms": 1500,
+        "name": "B-lease-before-clock-return",
+        "planner_end_ns": 285974220534041,
+        "planner_start_ns": 285971978917708,
+        "planner_wait_ms": 600,
+        "release_ns": 285973479658541,
+        "runner_arm_summary": {
+          "arm": "BOUNDED_RECOVERY",
+          "fallback_id": "pair0-bounded_recovery-fallback",
+          "fallback_terminal_status": "expired",
+          "guard_cancel_reason": null,
+          "input_bounds": {
+            "event_count": 5,
+            "window_duration_ns": 2241616333
+          },
+          "pair_index": 0,
+          "planner_window": {
+            "duration_ns": 2241616333,
+            "end_boundary_phase": "immediately_after_delay_before_fallback_cleanup",
+            "end_ns": 285974220534041,
+            "start_ns": 285971978917708
+          },
+          "score": {
+            "mock": true,
+            "name": "score.json"
+          },
+          "scorer_events": [],
+          "scorer_summary": {
+            "mock": true,
+            "name": "scorer-summary.json"
+          },
+          "source_capture_ns": 285971973571541,
+          "source_health": {
+            "health": 100
+          },
+          "source_sequence": 7,
+          "source_typed_frame_sha256": "synthetic-frame",
+          "terminal_release_verified": true
+        },
+        "source_manifest": {
+          "executor": {
+            "bytes": "4202",
+            "git_blob": "e0a31884307eeac405094a624e3a63222acc656f",
+            "path": "research/live_control/executor_v10.py",
+            "sha256": "e55f82e6f15c39914a4213873d39386205a792c98b54d0cf54be0812c69ecb2e"
+          },
+          "lease": {
+            "bytes": "899",
+            "git_blob": "b9dac6bb4063928354733d79bf371909a288a3d1",
+            "path": "research/live_control/lease.py",
+            "sha256": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+          },
+          "v6_runner": {
+            "bytes": "6464",
+            "git_blob": "10344582ffa2ce339bc48dd8d680512a71f4eddc",
+            "path": "research/doom/map01_recovery_cover_mechanism_v6_runner.py",
+            "sha256": "9790becf98104b3a956c73bee945266a8517e41c2396c1a8b29c924e14d26012"
+          }
+        },
+        "terminal_release_verified": true,
+        "timer_expired_ns": 285972589005208,
+        "timer_started_ns": 285971978938291
+      }
+    }
+  ],
+  "freeze_sha256": "799ace742daacf4772c9860f3043ba6885a604316ec6d22c826f856946912902",
+  "package_sha256": {
+    "auditor": "616d0dc5fa0fd365d51d0f30b5e78467dc7d8509f06fdd49698dd41abf9d07ea",
+    "candidate": "85c231108cc808e3f57eb14468b4d01ee9a41f202a0902d3a447f62316c8b965",
+    "plan": "cab996e987183c5ff581ba638dc765f892b80406a99a394191c7db500f72f397",
+    "tests": "029143ec9f8f3dbd458a627937438df9cbe6380025ea5f11269a94797dbe69ae"
+  },
+  "platform": "darwin",
+  "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "retries": 0,
+  "schema": "map01-v6-runner-shared-clock-t3v-v1",
+  "scope": "exact v6 _run_arm + exact Executor-v10/Lease objects; fake session/backend; shared monotonic source",
+  "source_manifest": {
+    "executor": {
+      "bytes": "4202",
+      "git_blob": "e0a31884307eeac405094a624e3a63222acc656f",
+      "path": "research/live_control/executor_v10.py",
+      "sha256": "e55f82e6f15c39914a4213873d39386205a792c98b54d0cf54be0812c69ecb2e"
+    },
+    "lease": {
+      "bytes": "899",
+      "git_blob": "b9dac6bb4063928354733d79bf371909a288a3d1",
+      "path": "research/live_control/lease.py",
+      "sha256": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+    },
+    "v6_runner": {
+      "bytes": "6464",
+      "git_blob": "10344582ffa2ce339bc48dd8d680512a71f4eddc",
+      "path": "research/doom/map01_recovery_cover_mechanism_v6_runner.py",
+      "sha256": "9790becf98104b3a956c73bee945266a8517e41c2396c1a8b29c924e14d26012"
+    }
+  },
+  "status": "PASS_CANDIDATE_GATES"
+}
