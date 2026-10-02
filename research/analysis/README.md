@@ -252,7 +252,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`auditor_completion_5895_t0_20261001_01/`](auditor_completion_5895_t0_20261001_01/)
 - [`auditor_completion_5895_t4_20261001_8d0c7f53/`](auditor_completion_5895_t4_20261001_8d0c7f53/)
 - [`auditor_completion_5895_t6_20261001_8d0c7f53_amd64/`](auditor_completion_5895_t6_20261001_8d0c7f53_amd64/)
-- [`backpressure_route_expansion_5372_a01_20261003/`](backpressure_route_expansion_5372_a01_20261003/) — Issue #5372 A01 WSLc route-expansion queue fixture: independent audit passed; local-cost improvement reduced horizon completions 5→3, reservation arm restored 5; synthetic method scope only.
+- [`backpressure_route_expansion_5372_a01_20261003/`](backpressure_route_expansion_5372_a01_20261003/)
 - [`backward_observable_guards_6256_comparator_t2_20261002/`](backward_observable_guards_6256_comparator_t2_20261002/)
 - [`backward_observable_guards_6256_stale_generation_t1_20261002/`](backward_observable_guards_6256_stale_generation_t1_20261002/)
 - [`backward_observable_guards_6256_t2_false_stop_t5_20261002/`](backward_observable_guards_6256_t2_false_stop_t5_20261002/)
@@ -620,6 +620,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`role_bound_ledger_lifetime_v1/`](role_bound_ledger_lifetime_v1/)
 - [`route_assignment_exposure_5760_t0_v1/`](route_assignment_exposure_5760_t0_v1/)
 - [`route_selector_5911_t0_20261001_02/`](route_selector_5911_t0_20261001_02/)
+- [`route_selector_label_consistency_5911_t0/`](route_selector_label_consistency_5911_t0/)
 - [`route_switching_costs_6009_t0_20261001/`](route_switching_costs_6009_t0_20261001/)
 - [`safe_probe_cost_optimal_tree_r1_v1/`](safe_probe_cost_optimal_tree_r1_v1/)
 - [`safe_probe_identifiability_6147_t0_20261002_a02/`](safe_probe_identifiability_6147_t0_20261002_a02/)
