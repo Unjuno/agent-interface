@@ -1,0 +1,14 @@
+{
+  "allocation": "MAP01-OWNER-KEYUP-BRACKET-5156-XVFB-20261002-10",
+  "candidate_process_invocations": 1,
+  "candidate_experiment_started": false,
+  "candidate_exit_code": 1,
+  "auditor_invocations": 0,
+  "retries": 0,
+  "disposition": "STOP_CANDIDATE_BOOTSTRAP_IMPORT",
+  "candidate_source_sha256": "de08744012aa93173cd3a433c6adeb28e47efe32e3cd665f7c5f7a3937f4fcbe",
+  "raw_artifact": null,
+  "stderr": "Traceback (most recent call last):\n  File \"/src/run_candidate.py\", line 444, in <module>\n    raise SystemExit(main())\n  File \"/src/run_candidate.py\", line 440, in main\n    return run_candidate(args.out)\n  File \"/src/run_candidate.py\", line 190, in run_candidate\n    from lease import Lease\nModuleNotFoundError: No module named 'lease'\n",
+  "command": "docker run --name unjuno-5156-xvfb-a10-candidate --rm --pull=never --platform linux/amd64 --network none --read-only --cpus=1 --memory=2g --pids-limit=128 --tmpfs /tmp:rw,nosuid,nodev,noexec,size=64m --mount type=bind,src=/private/tmp/agent-interface-59-held-repeat-20261002/research/live_control/owner_keyup_xvfb_5156_a10_20261002,dst=/src,readonly --mount type=bind,src=/tmp/unjuno-5156-a10-output.2wYFYY,dst=/out --workdir /src --entrypoint python map01-attack-start-gate-4223-t8:20261001 -B /src/run_candidate.py --out /out",
+  "note": "Failure occurred before Xvfb startup or any input operation. Allocation-10 is consumed as a STOP and must not be retried."
+}
