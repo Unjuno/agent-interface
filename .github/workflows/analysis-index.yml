@@ -39,6 +39,8 @@ jobs:
         run: python -B -m unittest discover -s research/analysis/approval_sequence_discrimination_6405_t0_v1 -p 'test_*.py' -v
       - name: Test #6590 spatial-block overlap mutation challenge
         run: python -B -m unittest discover -s research/analysis/spatial_block_position_6590_t0_20261002/mutation_challenge_v1 -p 'test_*.py' -v
+      - name: Test #6590 sparse-checkout freeze integrity fixture
+        run: python -B -m unittest discover -s research/analysis/spatial_block_position_6590_t1_geometry_ci_integrity_v1 -p 'test_*.py' -v
       - name: Test endogenous-demand rebound T0
         run: python -B -m unittest discover -s research/analysis/endogenous_demand_rebound_5702_t0_v1 -p 'test_*.py' -v
       - name: Test selection-aware shadow-audit T1
