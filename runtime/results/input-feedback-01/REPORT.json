@@ -1,0 +1,163 @@
+{
+  "frozen_source": "56b704f9ead16b8c6fc9dea7e5cb4b26256bf8f7",
+  "seed": 1001068,
+  "decision": "ADOPT_EXPLICIT_CUE_COMPOSITION; HOLD_EFFICIENCY",
+  "cases": [
+    {
+      "cue": "matched",
+      "call_ms": 705.783481,
+      "local_cue_wait_ms": 631.394476,
+      "local_cue_known_from_call_ms": 682.97263,
+      "sample_count": 13,
+      "save_count": 1,
+      "primary_semantic_awareness_ms": null,
+      "model_tokens": null,
+      "billing": null,
+      "case": "01-matched",
+      "control_requests": 4,
+      "primary_images": 2,
+      "independent_app_events": [
+        {
+          "event": "save",
+          "token": "t1001068",
+          "ns": 26050005169611
+        },
+        {
+          "event": "app_ack",
+          "status": "SAVED",
+          "ns": 26050606253882
+        }
+      ],
+      "task_completed": true,
+      "cleanup": {
+        "closed": true,
+        "child_exit_codes": [
+          -15,
+          0
+        ],
+        "ended_ns": 26067853383226
+      }
+    },
+    {
+      "cue": "rejected",
+      "call_ms": 731.359377,
+      "local_cue_wait_ms": 635.688577,
+      "local_cue_known_from_call_ms": 699.492086,
+      "sample_count": 13,
+      "save_count": 1,
+      "primary_semantic_awareness_ms": null,
+      "model_tokens": null,
+      "billing": null,
+      "case": "02-rejected",
+      "control_requests": 4,
+      "primary_images": 2,
+      "independent_app_events": [
+        {
+          "event": "save",
+          "token": "t1001068",
+          "ns": 26113961513187
+        },
+        {
+          "event": "app_ack",
+          "status": "REJECTED",
+          "ns": 26114562520013
+        }
+      ],
+      "task_completed": false,
+      "cleanup": {
+        "closed": true,
+        "child_exit_codes": [
+          -15,
+          0
+        ],
+        "ended_ns": 26127726058736
+      }
+    },
+    {
+      "cue": "pending",
+      "call_ms": 1097.366772,
+      "local_cue_wait_ms": 1016.332486,
+      "local_cue_known_from_call_ms": 1072.754576,
+      "sample_count": 21,
+      "save_count": 1,
+      "primary_semantic_awareness_ms": null,
+      "model_tokens": null,
+      "billing": null,
+      "case": "03-pending",
+      "control_requests": 4,
+      "primary_images": 2,
+      "independent_app_events": [
+        {
+          "event": "save",
+          "token": "t1001068",
+          "ns": 26179329186176
+        }
+      ],
+      "task_completed": false,
+      "cleanup": {
+        "closed": true,
+        "child_exit_codes": [
+          -15,
+          0
+        ],
+        "ended_ns": 26181382810894
+      }
+    }
+  ],
+  "limitations": [
+    "Title cue is caller application convention, may predate input and is not durable completion or authority.",
+    "Three authored Tk cases, not a general app benchmark or comparable performance study.",
+    "Primary semantic awareness and actual model tokens/billing not measured.",
+    "Public MCP owner used directly; no claim of extra process/relay end-to-end validation from this live scaffold."
+  ],
+  "primary_review": [
+    {
+      "case": "01-matched",
+      "image": "01-matched/primary-001.png",
+      "sha256": "93ede6355da6c6ad0c5088777bbfaaa4bbe530c0e46f0054c0c0d3d857a04b7a",
+      "reviewer": "primary gpt-6.1-sol, original image through view_image",
+      "phase": "ground Save at [360,172]",
+      "same_file_reemission": false
+    },
+    {
+      "case": "01-matched",
+      "image": "01-matched/primary-003.png",
+      "sha256": "42c961faa894d0f7c8a7f38cb96dd97fd79fcc84e6c3ddbe466026829fa3c24a",
+      "reviewer": "primary gpt-6.1-sol, original image through view_image",
+      "phase": "SAVED",
+      "same_file_reemission": false
+    },
+    {
+      "case": "02-rejected",
+      "image": "02-rejected/primary-001.png",
+      "sha256": "7d3a3b377581749843a28c1ec50c21e025ae557624fc1fb83eb4c7df56951ec1",
+      "reviewer": "primary gpt-6.1-sol, original image through view_image",
+      "phase": "ground Save at [360,172]",
+      "same_file_reemission": false
+    },
+    {
+      "case": "02-rejected",
+      "image": "02-rejected/primary-003.png",
+      "sha256": "f7b517d27f7e05595712f3b5428530eb1d045dda2212dc7b086dbb6b13e00527",
+      "reviewer": "primary gpt-6.1-sol, original image through view_image",
+      "phase": "REJECTED",
+      "same_file_reemission": false
+    },
+    {
+      "case": "03-pending",
+      "image": "03-pending/primary-001.png",
+      "sha256": "09cf0c4bcf92d73fdcb271637f6f4ad395f521586819b3b9b04bce25a75e98de",
+      "reviewer": "primary gpt-6.1-sol, original image through view_image",
+      "phase": "ground Save at [360,172]",
+      "same_file_reemission": false
+    },
+    {
+      "case": "03-pending",
+      "image": "03-pending/primary-003.png",
+      "sha256": "808f1dffc59bda6398fec1c2026773217be03a7d3ecb64081e60718acacd9592",
+      "reviewer": "primary gpt-6.1-sol, original image through view_image",
+      "phase": "PENDING",
+      "same_file_reemission": false
+    }
+  ]
+}

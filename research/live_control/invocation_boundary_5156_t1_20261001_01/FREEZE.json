@@ -1,0 +1,27 @@
+{
+  "schema": "issue5156-invocation-boundary-audit-successor-freeze-v1",
+  "allocation": "MAP01-OWNER-KEYUP-BRACKET-5156-20260930-04-audit-successor-t1",
+  "predecessor": {
+    "t0_commit": "4da05935e786ece4557fb05989d43cc725d0ee95",
+    "t0_raw_blob": "2acde56fb64e7da5e35ecdeb90453ecab0e0b24c",
+    "t0_raw_sha256": "d3fb121b95d95fa61ea771a7dd0c20a8e255ea83b72752a3ebe371b27762d4b2",
+    "t0_decision": "STOP_INVOCATION_BOUNDARY_AUDIT"
+  },
+  "current_main_at_freeze": "e94101a1bd2ad6e3e103088aa4d169c2ad112086",
+  "files_sha256": {
+    "audit.py": "82ff000fdb15dcd1e003be317e873d96219656342b08e188c2b1e106186a6a4c",
+    "inputs.json": "2cb27561a3ffe75701a846a68c76d4703fa2027028a9d22d504986db26a01869",
+    "results/raw.jsonl": "d3fb121b95d95fa61ea771a7dd0c20a8e255ea83b72752a3ebe371b27762d4b2",
+    "test_audit_mutation.py": "43440acedf7bb41f58754db2ab228aa072dde0b33a6f64e347b957e27fd4cbf7"
+  },
+  "plan": {
+    "hypothesis": "A corrected independent raw-only audit can reconstruct the byte-identical frozen T0 eight-row artifact and reject all six frozen controls while preserving the legacy collision as STOP with null invocation count.",
+    "test": "Run only the one pre-freeze construction unit test and py_compile before freezing. After freeze, run audit.py once against the copied input and raw evidence. Do not run the candidate runner, Docker, X11, GUI, model, or any allocation-specific formal runner; retries are zero.",
+    "decision": "PASS_INVOCATION_BOUNDARY_AUDIT iff audit errors are empty, raw reconstruction matches exactly, all six controls reject, the positive-row mutation payload proves changed_from_pristine and rejected_by_reconstruction, and the historical collision remains STOP with invocation_count null. Otherwise retain STOP_INVOCATION_BOUNDARY_AUDIT.",
+    "context": "Windows host CPython 3.12.10; stdlib only. This finite JSON oracle does not need a container or shared Docker/X11 allocation. No claim about live #5156 key-up timing, physical input occupancy, or Issue #59 threat response."
+  },
+  "formal_audit_command": ["python", "-B", "audit.py", "inputs.json", "results/raw.jsonl", "results/AUDIT.json"],
+  "formal_audit_invocations": 1,
+  "candidate_runner_invocations": 0,
+  "retries": 0
+}

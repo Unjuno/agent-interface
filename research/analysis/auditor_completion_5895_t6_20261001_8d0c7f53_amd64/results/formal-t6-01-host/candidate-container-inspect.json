@@ -1,0 +1,257 @@
+[
+    {
+        "Id": "8e77d2f64173d13df13018dfd6fc5c33d666a36eb4b82b0ec60049e7c90c917d",
+        "Created": "2026-10-01T12:38:19.320532937Z",
+        "Path": "python",
+        "Args": [
+            "-B",
+            "/study/source/candidate.py",
+            "--target",
+            "/study/source/target",
+            "--out",
+            "/out"
+        ],
+        "State": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-10-01T12:38:19.518594208Z",
+            "FinishedAt": "2026-10-01T12:38:22.227362938Z"
+        },
+        "Image": "sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+        "ResolvConfPath": "/var/lib/docker/containers/8e77d2f64173d13df13018dfd6fc5c33d666a36eb4b82b0ec60049e7c90c917d/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/8e77d2f64173d13df13018dfd6fc5c33d666a36eb4b82b0ec60049e7c90c917d/hostname",
+        "HostsPath": "/var/lib/docker/containers/8e77d2f64173d13df13018dfd6fc5c33d666a36eb4b82b0ec60049e7c90c917d/hosts",
+        "LogPath": "/var/lib/docker/containers/8e77d2f64173d13df13018dfd6fc5c33d666a36eb4b82b0ec60049e7c90c917d/8e77d2f64173d13df13018dfd6fc5c33d666a36eb4b82b0ec60049e7c90c917d-json.log",
+        "Name": "/audit-completion-5895-t6-amd64-candidate-8d0c7f53",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "/private/tmp/agent-interface-issue5895-t6-20261001/research/analysis/auditor_completion_5895_t6_20261001_8d0c7f53_amd64/results/formal-t6-01-host/candidate.cid",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {
+                    "max-file": "5",
+                    "max-size": "20m"
+                }
+            },
+            "NetworkMode": "none",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": [
+                "ALL"
+            ],
+            "CgroupnsMode": "private",
+            "Dns": null,
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": true,
+            "SecurityOpt": [
+                "no-new-privileges"
+            ],
+            "Tmpfs": {
+                "/tmp": "rw,noexec,nosuid,size=16m,uid=501,gid=20"
+            },
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 8409579520,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 536870912,
+            "NanoCpus": 1000000000,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": [],
+            "BlkioDeviceWriteBps": [],
+            "BlkioDeviceReadIOps": [],
+            "BlkioDeviceWriteIOps": [],
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 1073741824,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": 64,
+            "Ulimits": [],
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "Mounts": [
+                {
+                    "Type": "bind",
+                    "Source": "/private/tmp/agent-interface-issue5895-t6-20261001/research/analysis/auditor_completion_5895_t6_20261001_8d0c7f53_amd64/source",
+                    "Target": "/study/source",
+                    "ReadOnly": true
+                },
+                {
+                    "Type": "bind",
+                    "Source": "/private/tmp/agent-interface-issue5895-t6-20261001/research/analysis/auditor_completion_5895_t6_20261001_8d0c7f53_amd64/results/formal-t6-01/output",
+                    "Target": "/out"
+                }
+            ],
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "/private/tmp/agent-interface-issue5895-t6-20261001/research/analysis/auditor_completion_5895_t6_20261001_8d0c7f53_amd64/source",
+                "Destination": "/study/source",
+                "Mode": "",
+                "RW": false,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/private/tmp/agent-interface-issue5895-t6-20261001/research/analysis/auditor_completion_5895_t6_20261001_8d0c7f53_amd64/results/formal-t6-01/output",
+                "Destination": "/out",
+                "Mode": "",
+                "RW": true,
+                "Propagation": "rprivate"
+            }
+        ],
+        "Config": {
+            "Hostname": "8e77d2f64173",
+            "Domainname": "",
+            "User": "501:20",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "LANG=C.UTF-8",
+                "GPG_KEY=7169605F62C751356D054A26A821E680E5FA6305",
+                "PYTHON_VERSION=3.12.14",
+                "PYTHON_SHA256=5c8462af5790baf43a321a1559dbe0db06d1be4300fb85fb53c40060668e548a"
+            ],
+            "Cmd": [
+                "python",
+                "-B",
+                "/study/source/candidate.py",
+                "--target",
+                "/study/source/target",
+                "--out",
+                "/out"
+            ],
+            "Image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "Labels": {}
+        },
+        "NetworkSettings": {
+            "SandboxID": "",
+            "SandboxKey": "",
+            "Ports": {},
+            "Networks": {
+                "none": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "be4d057ee3ffc26baf9220196f1b89ed6bef1d8bcc10973725f59293e4e88c31",
+                    "EndpointID": "",
+                    "Gateway": "",
+                    "IPAddress": "",
+                    "MacAddress": "",
+                    "IPPrefixLen": 0,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": null
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "digest": "sha256:44ff437bba879d4941b710a369a8f19266aea34b29002807f0c487fabc9eec9b",
+            "size": 1746,
+            "annotations": {
+                "com.docker.official-images.bashbrew.arch": "amd64",
+                "org.opencontainers.image.base.digest": "sha256:7792b1f7702a86946cd518db72b6a407302c3e9bc1635634368b878189e8221c",
+                "org.opencontainers.image.base.name": "debian:trixie-slim",
+                "org.opencontainers.image.created": "2026-09-19T00:58:30Z",
+                "org.opencontainers.image.revision": "688a0b86bb44289df16a363e9f41d90514c1a5f9",
+                "org.opencontainers.image.source": "https://github.com/docker-library/python.git#688a0b86bb44289df16a363e9f41d90514c1a5f9:3.12/slim-trixie",
+                "org.opencontainers.image.url": "https://hub.docker.com/_/python",
+                "org.opencontainers.image.version": "3.12.14-slim-trixie"
+            },
+            "platform": {
+                "architecture": "amd64",
+                "os": "linux"
+            }
+        }
+    }
+]

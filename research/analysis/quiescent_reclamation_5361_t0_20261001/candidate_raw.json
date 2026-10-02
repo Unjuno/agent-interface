@@ -1,0 +1,678 @@
+{
+  "baseline_allowed_uses_after_declared_reclaim": 8,
+  "baseline_remove_then_active_use_witness": [
+    "A0",
+    "R",
+    "U0"
+  ],
+  "environment": {
+    "elapsed_ns": 49305300,
+    "implementation": "CPython",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]"
+  },
+  "event_alphabet": [
+    "A0",
+    "A1",
+    "R",
+    "U0",
+    "U1",
+    "Q0",
+    "Q1",
+    "Q0_STALE",
+    "F"
+  ],
+  "reachable_state_count": 32,
+  "reader_state_names": [
+    "NEVER",
+    "ACTIVE",
+    "QUIESCENT",
+    "FENCED"
+  ],
+  "reclaimed_states_with_active_reader": 0,
+  "shortest_paths": [
+    {
+      "events": [],
+      "state": [
+        0,
+        0,
+        false
+      ]
+    },
+    {
+      "events": [
+        "R"
+      ],
+      "state": [
+        0,
+        0,
+        true
+      ]
+    },
+    {
+      "events": [
+        "A1"
+      ],
+      "state": [
+        0,
+        1,
+        false
+      ]
+    },
+    {
+      "events": [
+        "A1",
+        "R"
+      ],
+      "state": [
+        0,
+        1,
+        true
+      ]
+    },
+    {
+      "events": [
+        "A1",
+        "Q1"
+      ],
+      "state": [
+        0,
+        2,
+        false
+      ]
+    },
+    {
+      "events": [
+        "A1",
+        "R",
+        "Q1"
+      ],
+      "state": [
+        0,
+        2,
+        true
+      ]
+    },
+    {
+      "events": [
+        "A1",
+        "F"
+      ],
+      "state": [
+        0,
+        3,
+        false
+      ]
+    },
+    {
+      "events": [
+        "A1",
+        "R",
+        "F"
+      ],
+      "state": [
+        0,
+        3,
+        true
+      ]
+    },
+    {
+      "events": [
+        "A0"
+      ],
+      "state": [
+        1,
+        0,
+        false
+      ]
+    },
+    {
+      "events": [
+        "A0",
+        "R"
+      ],
+      "state": [
+        1,
+        0,
+        true
+      ]
+    },
+    {
+      "events": [
+        "A0",
+        "A1"
+      ],
+      "state": [
+        1,
+        1,
+        false
+      ]
+    },
+    {
+      "events": [
+        "A0",
+        "A1",
+        "R"
+      ],
+      "state": [
+        1,
+        1,
+        true
+      ]
+    },
+    {
+      "events": [
+        "A0",
+        "A1",
+        "Q1"
+      ],
+      "state": [
+        1,
+        2,
+        false
+      ]
+    },
+    {
+      "events": [
+        "A0",
+        "A1",
+        "R",
+        "Q1"
+      ],
+      "state": [
+        1,
+        2,
+        true
+      ]
+    },
+    {
+      "events": [
+        "A1",
+        "F",
+        "A0"
+      ],
+      "state": [
+        1,
+        3,
+        false
+      ]
+    },
+    {
+      "events": [
+        "A1",
+        "F",
+        "A0",
+        "R"
+      ],
+      "state": [
+        1,
+        3,
+        true
+      ]
+    },
+    {
+      "events": [
+        "A0",
+        "Q0"
+      ],
+      "state": [
+        2,
+        0,
+        false
+      ]
+    },
+    {
+      "events": [
+        "A0",
+        "R",
+        "Q0"
+      ],
+      "state": [
+        2,
+        0,
+        true
+      ]
+    },
+    {
+      "events": [
+        "A0",
+        "A1",
+        "Q0"
+      ],
+      "state": [
+        2,
+        1,
+        false
+      ]
+    },
+    {
+      "events": [
+        "A0",
+        "A1",
+        "R",
+        "Q0"
+      ],
+      "state": [
+        2,
+        1,
+        true
+      ]
+    },
+    {
+      "events": [
+        "A0",
+        "A1",
+        "Q0",
+        "Q1"
+      ],
+      "state": [
+        2,
+        2,
+        false
+      ]
+    },
+    {
+      "events": [
+        "A0",
+        "A1",
+        "R",
+        "Q0",
+        "Q1"
+      ],
+      "state": [
+        2,
+        2,
+        true
+      ]
+    },
+    {
+      "events": [
+        "A0",
+        "A1",
+        "Q0",
+        "F"
+      ],
+      "state": [
+        2,
+        3,
+        false
+      ]
+    },
+    {
+      "events": [
+        "A0",
+        "A1",
+        "R",
+        "Q0",
+        "F"
+      ],
+      "state": [
+        2,
+        3,
+        true
+      ]
+    },
+    {
+      "events": [
+        "A0",
+        "F"
+      ],
+      "state": [
+        3,
+        0,
+        false
+      ]
+    },
+    {
+      "events": [
+        "A0",
+        "R",
+        "F"
+      ],
+      "state": [
+        3,
+        0,
+        true
+      ]
+    },
+    {
+      "events": [
+        "A0",
+        "F",
+        "A1"
+      ],
+      "state": [
+        3,
+        1,
+        false
+      ]
+    },
+    {
+      "events": [
+        "A0",
+        "F",
+        "A1",
+        "R"
+      ],
+      "state": [
+        3,
+        1,
+        true
+      ]
+    },
+    {
+      "events": [
+        "A0",
+        "A1",
+        "Q1",
+        "F"
+      ],
+      "state": [
+        3,
+        2,
+        false
+      ]
+    },
+    {
+      "events": [
+        "A0",
+        "A1",
+        "R",
+        "Q1",
+        "F"
+      ],
+      "state": [
+        3,
+        2,
+        true
+      ]
+    },
+    {
+      "events": [
+        "A0",
+        "A1",
+        "F"
+      ],
+      "state": [
+        3,
+        3,
+        false
+      ]
+    },
+    {
+      "events": [
+        "A0",
+        "A1",
+        "R",
+        "F"
+      ],
+      "state": [
+        3,
+        3,
+        true
+      ]
+    }
+  ],
+  "stale_receipt_state_changes": 0,
+  "terminal_state_inventory": [
+    {
+      "readers": [
+        "NEVER",
+        "NEVER"
+      ],
+      "reclaimed": false,
+      "removed": false
+    },
+    {
+      "readers": [
+        "NEVER",
+        "NEVER"
+      ],
+      "reclaimed": true,
+      "removed": true
+    },
+    {
+      "readers": [
+        "NEVER",
+        "ACTIVE"
+      ],
+      "reclaimed": false,
+      "removed": false
+    },
+    {
+      "readers": [
+        "NEVER",
+        "ACTIVE"
+      ],
+      "reclaimed": false,
+      "removed": true
+    },
+    {
+      "readers": [
+        "NEVER",
+        "QUIESCENT"
+      ],
+      "reclaimed": false,
+      "removed": false
+    },
+    {
+      "readers": [
+        "NEVER",
+        "QUIESCENT"
+      ],
+      "reclaimed": true,
+      "removed": true
+    },
+    {
+      "readers": [
+        "NEVER",
+        "FENCED"
+      ],
+      "reclaimed": false,
+      "removed": false
+    },
+    {
+      "readers": [
+        "NEVER",
+        "FENCED"
+      ],
+      "reclaimed": true,
+      "removed": true
+    },
+    {
+      "readers": [
+        "ACTIVE",
+        "NEVER"
+      ],
+      "reclaimed": false,
+      "removed": false
+    },
+    {
+      "readers": [
+        "ACTIVE",
+        "NEVER"
+      ],
+      "reclaimed": false,
+      "removed": true
+    },
+    {
+      "readers": [
+        "ACTIVE",
+        "ACTIVE"
+      ],
+      "reclaimed": false,
+      "removed": false
+    },
+    {
+      "readers": [
+        "ACTIVE",
+        "ACTIVE"
+      ],
+      "reclaimed": false,
+      "removed": true
+    },
+    {
+      "readers": [
+        "ACTIVE",
+        "QUIESCENT"
+      ],
+      "reclaimed": false,
+      "removed": false
+    },
+    {
+      "readers": [
+        "ACTIVE",
+        "QUIESCENT"
+      ],
+      "reclaimed": false,
+      "removed": true
+    },
+    {
+      "readers": [
+        "ACTIVE",
+        "FENCED"
+      ],
+      "reclaimed": false,
+      "removed": false
+    },
+    {
+      "readers": [
+        "ACTIVE",
+        "FENCED"
+      ],
+      "reclaimed": false,
+      "removed": true
+    },
+    {
+      "readers": [
+        "QUIESCENT",
+        "NEVER"
+      ],
+      "reclaimed": false,
+      "removed": false
+    },
+    {
+      "readers": [
+        "QUIESCENT",
+        "NEVER"
+      ],
+      "reclaimed": true,
+      "removed": true
+    },
+    {
+      "readers": [
+        "QUIESCENT",
+        "ACTIVE"
+      ],
+      "reclaimed": false,
+      "removed": false
+    },
+    {
+      "readers": [
+        "QUIESCENT",
+        "ACTIVE"
+      ],
+      "reclaimed": false,
+      "removed": true
+    },
+    {
+      "readers": [
+        "QUIESCENT",
+        "QUIESCENT"
+      ],
+      "reclaimed": false,
+      "removed": false
+    },
+    {
+      "readers": [
+        "QUIESCENT",
+        "QUIESCENT"
+      ],
+      "reclaimed": true,
+      "removed": true
+    },
+    {
+      "readers": [
+        "QUIESCENT",
+        "FENCED"
+      ],
+      "reclaimed": false,
+      "removed": false
+    },
+    {
+      "readers": [
+        "QUIESCENT",
+        "FENCED"
+      ],
+      "reclaimed": true,
+      "removed": true
+    },
+    {
+      "readers": [
+        "FENCED",
+        "NEVER"
+      ],
+      "reclaimed": false,
+      "removed": false
+    },
+    {
+      "readers": [
+        "FENCED",
+        "NEVER"
+      ],
+      "reclaimed": true,
+      "removed": true
+    },
+    {
+      "readers": [
+        "FENCED",
+        "ACTIVE"
+      ],
+      "reclaimed": false,
+      "removed": false
+    },
+    {
+      "readers": [
+        "FENCED",
+        "ACTIVE"
+      ],
+      "reclaimed": false,
+      "removed": true
+    },
+    {
+      "readers": [
+        "FENCED",
+        "QUIESCENT"
+      ],
+      "reclaimed": false,
+      "removed": false
+    },
+    {
+      "readers": [
+        "FENCED",
+        "QUIESCENT"
+      ],
+      "reclaimed": true,
+      "removed": true
+    },
+    {
+      "readers": [
+        "FENCED",
+        "FENCED"
+      ],
+      "reclaimed": false,
+      "removed": false
+    },
+    {
+      "readers": [
+        "FENCED",
+        "FENCED"
+      ],
+      "reclaimed": true,
+      "removed": true
+    }
+  ],
+  "transition_count": 288,
+  "two_phase_allowed_uses_after_remove": 8,
+  "two_phase_reclaim_then_active_use_witnesses": []
+}

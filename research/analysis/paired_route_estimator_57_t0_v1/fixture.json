@@ -1,0 +1,76 @@
+{
+  "schema": "57-paired-all-attempt-ledger-t0-v1",
+  "task": "synthetic_method_check_only",
+  "pairs": [
+    {
+      "scenario": "true_null",
+      "pair_id": "null-1",
+      "variant_id": "calc-small",
+      "pre_treatment": {"difficulty": 1, "captured_at": 10},
+      "attempts": [
+        {"attempt_id": "null-1-b", "arm": "baseline", "reset_id": "null-1-copy-b", "assigned_at": 20, "started_at": 21, "outcome": "COMPLETE", "tokens": 100, "elapsed_ms": 1000, "effect": "VERIFIED", "safety": "SAFE", "repair_count": 0},
+        {"attempt_id": "null-1-i", "arm": "integrated", "reset_id": "null-1-copy-i", "assigned_at": 20, "started_at": 21, "outcome": "COMPLETE", "tokens": 100, "elapsed_ms": 1000, "effect": "VERIFIED", "safety": "SAFE", "repair_count": 1}
+      ]
+    },
+    {
+      "scenario": "true_null",
+      "pair_id": "null-2",
+      "variant_id": "calc-large",
+      "pre_treatment": {"difficulty": 2, "captured_at": 10},
+      "attempts": [
+        {"attempt_id": "null-2-b", "arm": "baseline", "reset_id": "null-2-copy-b", "assigned_at": 20, "started_at": 21, "outcome": "COMPLETE", "tokens": 200, "elapsed_ms": 2000, "effect": "VERIFIED", "safety": "SAFE", "repair_count": 0},
+        {"attempt_id": "null-2-i", "arm": "integrated", "reset_id": "null-2-copy-i", "assigned_at": 20, "started_at": 21, "outcome": "COMPLETE", "tokens": 200, "elapsed_ms": 2000, "effect": "VERIFIED", "safety": "SAFE", "repair_count": 2}
+      ]
+    },
+    {
+      "scenario": "planted_benefit",
+      "pair_id": "benefit-1",
+      "variant_id": "sheet-a",
+      "pre_treatment": {"difficulty": 1, "captured_at": 10},
+      "attempts": [
+        {"attempt_id": "benefit-1-b", "arm": "baseline", "reset_id": "benefit-1-copy-b", "assigned_at": 20, "started_at": 21, "outcome": "COMPLETE", "tokens": 120, "elapsed_ms": 1200, "effect": "VERIFIED", "safety": "SAFE", "repair_count": 0},
+        {"attempt_id": "benefit-1-i", "arm": "integrated", "reset_id": "benefit-1-copy-i", "assigned_at": 20, "started_at": 21, "outcome": "COMPLETE", "tokens": 100, "elapsed_ms": 1000, "effect": "VERIFIED", "safety": "SAFE", "repair_count": 1}
+      ]
+    },
+    {
+      "scenario": "planted_benefit",
+      "pair_id": "benefit-2",
+      "variant_id": "sheet-b",
+      "pre_treatment": {"difficulty": 2, "captured_at": 10},
+      "attempts": [
+        {"attempt_id": "benefit-2-b", "arm": "baseline", "reset_id": "benefit-2-copy-b", "assigned_at": 20, "started_at": 21, "outcome": "COMPLETE", "tokens": 220, "elapsed_ms": 2200, "effect": "VERIFIED", "safety": "SAFE", "repair_count": 0},
+        {"attempt_id": "benefit-2-i", "arm": "integrated", "reset_id": "benefit-2-copy-i", "assigned_at": 20, "started_at": 21, "outcome": "COMPLETE", "tokens": 200, "elapsed_ms": 2000, "effect": "VERIFIED", "safety": "SAFE", "repair_count": 2}
+      ]
+    },
+    {
+      "scenario": "route_dependent_failure",
+      "pair_id": "failure-1",
+      "variant_id": "form-a",
+      "pre_treatment": {"difficulty": 1, "captured_at": 10},
+      "attempts": [
+        {"attempt_id": "failure-1-b", "arm": "baseline", "reset_id": "failure-1-copy-b", "assigned_at": 20, "started_at": 21, "outcome": "COMPLETE", "tokens": 150, "elapsed_ms": 1600, "effect": "VERIFIED", "safety": "SAFE", "repair_count": 0},
+        {"attempt_id": "failure-1-i", "arm": "integrated", "reset_id": "failure-1-copy-i", "assigned_at": 20, "started_at": 21, "outcome": "FAIL", "tokens": null, "elapsed_ms": null, "effect": "NOT_VERIFIED", "safety": "UNKNOWN", "repair_count": 2}
+      ]
+    },
+    {
+      "scenario": "route_dependent_failure",
+      "pair_id": "failure-2",
+      "variant_id": "form-b",
+      "pre_treatment": {"difficulty": 2, "captured_at": 10},
+      "attempts": [
+        {"attempt_id": "failure-2-b", "arm": "baseline", "reset_id": "failure-2-copy-b", "assigned_at": 20, "started_at": 21, "outcome": "UNKNOWN", "tokens": null, "elapsed_ms": null, "effect": "UNKNOWN", "safety": "UNKNOWN", "repair_count": 0},
+        {"attempt_id": "failure-2-i", "arm": "integrated", "reset_id": "failure-2-copy-i", "assigned_at": 20, "started_at": 21, "outcome": "COMPLETE", "tokens": 130, "elapsed_ms": 1400, "effect": "VERIFIED", "safety": "SAFE", "repair_count": 0}
+      ]
+    },
+    {
+      "scenario": "route_dependent_failure",
+      "pair_id": "failure-3",
+      "variant_id": "form-c",
+      "pre_treatment": {"difficulty": 1, "captured_at": 10},
+      "attempts": [
+        {"attempt_id": "failure-3-b", "arm": "baseline", "reset_id": "failure-3-copy-b", "assigned_at": 20, "started_at": 21, "outcome": "COMPLETE", "tokens": 140, "elapsed_ms": 1500, "effect": "VERIFIED", "safety": "SAFE", "repair_count": 0},
+        {"attempt_id": "failure-3-i", "arm": "integrated", "reset_id": "failure-3-copy-i", "assigned_at": 20, "started_at": 21, "outcome": "COMPLETE", "tokens": 145, "elapsed_ms": 1510, "effect": "UNKNOWN", "safety": "UNKNOWN", "repair_count": 3}
+      ]
+    }
+  ]
+}

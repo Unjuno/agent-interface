@@ -1,0 +1,79 @@
+✔ malformed delivered envelope prevents a second effectful host call (1.673351ms)
+✔ ordinary free-text MCP error returns original evidence and stops later input (0.190049ms)
+✔ missing text stops before the primary can send another call (0.189764ms)
+✔ non-JSON text stops before the primary can send another call (0.179369ms)
+✔ null JSON stops before the primary can send another call (0.153391ms)
+✔ array JSON stops before the primary can send another call (3.611454ms)
+✔ extraction preserves the original exception and latches before propagation (0.392431ms)
+✔ transport rejection preserves its exception and blocks later dispatch (0.234237ms)
+✔ fresh guarded observation uses the same no-target call as initial observation (0.835047ms)
+✔ fresh observation rejects accidental per-call arguments before host dispatch (0.269484ms)
+✔ direct observation preserves the explicit snapshotted observation configuration (0.252265ms)
+✔ a completed neutral direct result returns unchanged and permits the next call (0.188073ms)
+✔ an exception during neutral-release validation blocks later input (0.242528ms)
+✔ real host text-only declared refusal is presented and acknowledged without stopping (50.368586ms)
+✔ explicit input feedback matched retains evidence and enforces STOP (0.343907ms)
+✔ explicit input feedback pending retains evidence and enforces STOP (0.105112ms)
+✔ explicit input feedback rejected retains evidence and enforces STOP (0.100249ms)
+✔ explicit input feedback needs_review retains evidence and enforces STOP (0.090614ms)
+✔ original presentation resends only retained bytes even after primary STOP (45.133455ms)
+✔ original presentation snapshots sinks and preserves the host exception (0.333159ms)
+✔ original presentation rejects invalid arguments before host: [] (0.108385ms)
+✔ original presentation rejects invalid arguments before host: [0] (0.043358ms)
+✔ original presentation rejects invalid arguments before host: [1.5] (0.034185ms)
+✔ original presentation rejects invalid arguments before host: ["1"] (0.031286ms)
+✔ original presentation rejects invalid arguments before host: [1,{"forceImage":false}] (0.031408ms)
+✔ missing original presentation sinks refuse before the host (0.116023ms)
+✔ original presentation fails closed on unknown-attempt without another relay request (33.133005ms)
+✔ original presentation fails closed on changed-reply without another relay request (35.253957ms)
+✔ original presentation sink getter failure stops before dispatch and preserves its exception (0.365502ms)
+✖ direct primary forwards one explicit interface_inspect_target without following its result (0.21018ms)
+✖ direct primary forwards one explicit interface_review_target without following its result (0.101832ms)
+✖ direct primary returns failed target selection once and blocks inspection/review retry (0.149011ms)
+✔ guarded primary rejects persistent target tools locally (0.111377ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 30
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 237.093718
+
+✖ failing tests:
+
+test at runtime/host_v1/test_primary_caller.mjs:262:4
+✖ direct primary forwards one explicit interface_inspect_target without following its result (0.21018ms)
+  Error: unavailable tool interface_inspect_target
+      at Object.call (file:///var/tmp/agent-interface-evidence-storage-main/runtime/host_v1/primary_caller.mjs:125:15)
+      at TestContext.<anonymous> (file:///var/tmp/agent-interface-evidence-storage-main/runtime/host_v1/test_primary_caller.mjs:266:29)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1103:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:785:18)
+      at Test.postRun (node:internal/test_runner/test:1232:19)
+      at Test.run (node:internal/test_runner/test:1160:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:785:7)
+
+test at runtime/host_v1/test_primary_caller.mjs:262:4
+✖ direct primary forwards one explicit interface_review_target without following its result (0.101832ms)
+  Error: unavailable tool interface_review_target
+      at Object.call (file:///var/tmp/agent-interface-evidence-storage-main/runtime/host_v1/primary_caller.mjs:125:15)
+      at TestContext.<anonymous> (file:///var/tmp/agent-interface-evidence-storage-main/runtime/host_v1/test_primary_caller.mjs:266:29)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1103:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:785:18)
+      at Test.postRun (node:internal/test_runner/test:1232:19)
+      at Test.run (node:internal/test_runner/test:1160:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:785:7)
+
+test at runtime/host_v1/test_primary_caller.mjs:271:1
+✖ direct primary returns failed target selection once and blocks inspection/review retry (0.149011ms)
+  Error: unavailable tool interface_review_target
+      at Object.call (file:///var/tmp/agent-interface-evidence-storage-main/runtime/host_v1/primary_caller.mjs:125:15)
+      at TestContext.<anonymous> (file:///var/tmp/agent-interface-evidence-storage-main/runtime/host_v1/test_primary_caller.mjs:275:29)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1103:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:785:18)
+      at Test.postRun (node:internal/test_runner/test:1232:19)
+      at Test.run (node:internal/test_runner/test:1160:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:785:7)

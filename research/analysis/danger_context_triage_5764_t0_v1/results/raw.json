@@ -1,0 +1,45 @@
+{
+  "decisions": {
+    "5435_SAFE_IDENTITY_BATCH": [
+      "novel-benign-01",
+      "familiar-harm-01",
+      "novel-harm-01",
+      "familiar-benign-01"
+    ],
+    "5435_SEVERITY_ONLY": [
+      "high-severity-benign-01"
+    ],
+    "CHRONOLOGICAL": [
+      "novel-benign-01",
+      "novel-benign-01-copy",
+      "familiar-harm-01",
+      "temporal-neighbor-01"
+    ],
+    "DUAL": [
+      "novel-harm-01",
+      "familiar-harm-01",
+      "familiar-harm-02",
+      "high-severity-benign-01"
+    ],
+    "EFFECT_ONLY": [
+      "familiar-harm-01",
+      "familiar-harm-02",
+      "novel-harm-01",
+      "familiar-benign-01"
+    ],
+    "NOVELTY_ONLY": [
+      "high-severity-benign-01",
+      "novel-benign-01",
+      "novel-benign-01-copy",
+      "novel-benign-02"
+    ]
+  },
+  "mandatory_event_ids": [
+    "hard-01"
+  ],
+  "optional_audit_budget": 4,
+  "population_size": 12,
+  "schema": "issue-5764-triage-selection-v1",
+  "scope": "synthetic pre-audit selection only; no outcomes scored",
+  "stream_sha256": "3124d2eefcb04aa54bde669d859d822814bf5e08549a055e40ea3d353ba39abe"
+}

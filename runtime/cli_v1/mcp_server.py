@@ -8,6 +8,7 @@ import json
 from itertools import islice, dropwhile
 from pathlib import Path
 import threading
+import time
 from typing import Annotated, Literal
 import uuid
 
@@ -106,6 +107,16 @@ class PublicArgumentMCP(FastMCP):
 def present_management_report(report, call_root, *, include_image=True):
     row = dict(report)
     if 'observation_report' in report:
+        # Keep the raw capture and committed selection, but do not present an
+        # image whose target association failed or could not be rechecked.
+        # This gate also applies to retained lookup without renewing evidence.
+        inconsistent = (
+            (report.get('status') == 'needs_review' and report.get('error') is not None)
+            or ('capture_consistency' in report and report['capture_consistency'] != 'matched'))
+        if inconsistent:
+            row.update(image=None, image_status='needs_review',
+                       image_error='Target/capture association unconfirmed; inspect again before new input.')
+            return row
         shown = present_result(report['observation_report'], call_root, include_image=include_image)
         for key in ('image', 'image_status', 'image_error', 'image_delivery'):
             if key in shown:
@@ -161,6 +172,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         from .mcp_guarded import GuardedSessionOwner
         owner = GuardedSessionOwner(targets, root, display_name)
     shutting_down = False
+    server_instance_id = uuid.uuid4().hex
 
     def close_owner():
         report = owner.close()
@@ -207,6 +219,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                                   "state": "running", "arguments": deepcopy(kwargs),
                                   "backend_attempted": False, "persistence_failure": None}
             # Serialize before calling the backend. A persistence failure here sends no input.
+            authored_program = deepcopy(kwargs.get('program'))
             request = {'operation': operation, 'arguments': kwargs, 'targets': deepcopy(owner.targets) if owner else targets,
                        'display_name': display_name}
             if owner is not None:
@@ -226,6 +239,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             options = dict(kwargs, capture_directory=str(call_root / 'images'),
                            display_name=display_name)
             inspect_after = options.pop('inspect_after', None)
+            inspect_after_region = options.pop('inspect_after_region', None)
+            inspect_after_wait_ms = options.pop('inspect_after_wait_ms', None)
             # Attempt boundary only, not proof that the backend emitted input.
             with calls_lock:
                 calls[call_id]['backend_attempted'] = True
@@ -271,7 +286,13 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                                   operation_invoked=False, input_dispatched=False, effect_status='none')
             if operation == 'dispatch' and inspect_after is not None:
                 try:
-                    report['post_dispatch_inspection'] = owner.inspect_after_dispatch(report, inspect_after)
+                    capture_options = ({'screen_region': inspect_after_region,
+                                        'capture_directory': str(call_root / 'images')}
+                                       if inspect_after_region is not None else {})
+                    if inspect_after_wait_ms is not None:
+                        capture_options['wait_ms'] = inspect_after_wait_ms
+                    report['post_dispatch_inspection'] = owner.inspect_after_dispatch(
+                        report, inspect_after, **capture_options)
                 except Exception as error:
                     report['post_dispatch_inspection'] = {
                         'status': 'needs_review', 'error': repr(error),
@@ -309,7 +330,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                     result = brief_public_report(result)
             if detail == 'summary' and operation == 'dispatch':
                 from .public_summary import summarize_public_dispatch
-                result = summarize_public_dispatch(result)
+                result = summarize_public_dispatch(result, source_program=authored_program)
             if observation_refs and operation.startswith('guarded_'):
                 from .receipt_references import compact_guarded_observation
                 result = compact_guarded_observation(result)
@@ -435,6 +456,25 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             return await submit('close', {}, False, False)
 
     @server.tool()
+    async def interface_clock() -> CallToolResult:
+        """Read this execution host's monotonic clock without input or authority.
+
+        Use only on this live server connection when authoring an already
+        authorized absolute expiry; this call issues no lease or source sequence.
+        Transport/presentation time consumes the remaining deadline. Do not add
+        elapsed Windows time, renew a retained sample, or reuse it after server
+        replacement/suspend. No backend is opened and no action result is created.
+        """
+        return content({'schema': 'agent-interface/execution-clock-v1',
+                        'monotonic_ns': time.monotonic_ns(),
+                        'clock': 'time.monotonic_ns',
+                        'server_instance_id': server_instance_id,
+                        'input_dispatched': False, 'authority_granted': False,
+                        'lease_issued': False,
+                        'scope': 'Clock sample only; not freshness, admission or task completion. '
+                                 'Only comparable within this execution host clock domain.'})
+
+    @server.tool()
     async def interface_validate(program: dict) -> CallToolResult:
         """Check a draft program's static syntax/expansion without input or a backend.
 
@@ -481,7 +521,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                                current_binding_revision: StrictInt,
                                compact: StrictBool = False, report_refs: StrictBool = False,
                                detail: Literal["full", "brief", "summary"] = "full",
-                               inspect_after: StrictStr | None = None) -> CallToolResult:
+                               inspect_after: StrictStr | None = None,
+                               inspect_after_region: list[StrictInt] | None = None,
+                               inspect_after_wait_ms: StrictInt | None = None) -> CallToolResult:
             """Dispatch once through core admission. Include observe for an image; no implicit replay.
 
             Observation sequence is a caller assertion, not server-issued freshness.
@@ -490,7 +532,14 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             A returned image may precede redraw. Release and cleanup failures remain visible.
             inspect_after names a configured target in persistent-x11 mode. After
             completed, released input, return read-only target review metadata;
-            no implicit selection or new capture. Metadata is later than the image.
+            no implicit selection. With inspect_after_region, capture that explicit
+            screen_physical_px region once after verified release and recheck target
+            metadata. Optional inspect_after_wait_ms (0..1000) explicitly sleeps after
+            verified release before capture; capture_wait records that sleep, not a
+            redraw acknowledgement. Default adds no wait. This grants no input
+            authority and does not extend the input lease. The selected image names
+            post_dispatch_observation_id. Without
+            a region inspection is metadata only, later than the inline image.
             Inspection failure preserves input evidence. Summary preserves complete
             successful inspection context; errors or skipped inspection stay full.
             detail=brief with compact/report_refs summarizes supported successful paced
@@ -506,10 +555,25 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             if inspect_after is not None and (session_mode != 'persistent-x11' or inspect_after not in owner.targets):
                 return content({'status': 'invalid_request', 'error': 'INVALID_POST_DISPATCH_INSPECTION',
                                 'operation_invoked': False, 'input_dispatched': False}, error=True)
+            if inspect_after_region is not None:
+                from .observe import valid_observation_request
+                if (inspect_after is None or not valid_observation_request(
+                        inspect_after, 'screen_physical_px', inspect_after_region)):
+                    return content({'status': 'invalid_request',
+                        'error': 'INVALID_POST_DISPATCH_CAPTURE',
+                        'operation_invoked': False, 'input_dispatched': False}, error=True)
+            if inspect_after_wait_ms is not None and (inspect_after_region is None
+                    or not 0 <= inspect_after_wait_ms <= 1000):
+                return content({'status': 'invalid_request', 'error': 'INVALID_POST_DISPATCH_CAPTURE_WAIT',
+                                'operation_invoked': False, 'input_dispatched': False}, error=True)
             arguments = {'program': program, 'current_observation_seq': current_observation_seq,
                          'current_binding_revision': current_binding_revision}
             if inspect_after is not None:
                 arguments['inspect_after'] = inspect_after
+            if inspect_after_region is not None:
+                arguments['inspect_after_region'] = inspect_after_region
+            if inspect_after_wait_ms is not None:
+                arguments['inspect_after_wait_ms'] = inspect_after_wait_ms
             return await submit('dispatch', arguments, compact, report_refs, detail)
 
     @server.tool()
@@ -589,7 +653,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             result = brief_public_report(result)
         if detail == 'summary' and record['operation'] == 'dispatch':
             from .public_summary import summarize_public_dispatch
-            result = summarize_public_dispatch(result)
+            result = summarize_public_dispatch(result, source_program=record["arguments"].get("program"))
         if observation_refs and record['operation'].startswith('guarded_'):
             from .receipt_references import compact_guarded_observation
             result = compact_guarded_observation(result)

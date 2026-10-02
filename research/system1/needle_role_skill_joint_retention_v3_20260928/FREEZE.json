@@ -1,0 +1,47 @@
+{
+  "schema": "needle-role-skill-joint-retention-freeze-v1",
+  "allocation": "needle-role-skill-joint-retention-20260928-v3",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/4929",
+  "branch": "research/needle-role-skill-joint-retention-v3-20260928",
+  "path": "research/system1/needle_role_skill_joint_retention_v3_20260928",
+  "base_main_sha": "519f2c1bdb219697c2f5e92ae6c27714265d60e",
+  "lineage_pr": 4911,
+  "docker_image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+  "platform": "linux/amd64",
+  "formal_seeds": [
+    9934211,
+    9934311,
+    9934411
+  ],
+  "excluded_construction_seed": 9934014,
+  "formal_orchestrations": 0,
+  "formal_retries": 0,
+  "construction_orchestrations": 0,
+  "construction_retries": 0,
+  "construction_boundary_orchestrations": 1,
+  "construction_boundary_retries": 0,
+  "dataset_hash_fields": [
+    "base_train_x",
+    "base_train_y",
+    "base_row_indices",
+    "memory_x",
+    "memory_y",
+    "support_x",
+    "support_y",
+    "test_a_x",
+    "test_a_y",
+    "test_b_x",
+    "test_b_y"
+  ],
+  "source_github_blob_sha": {
+    "runner.py": "1e0e4c9686bcfa2af8590c1e1222e5b79c343f22",
+    "audit.py": "a3da9197eb02c8eb46c31aafa2d33e175e54f198",
+    "test_construction.py": "092461f57a30823fe36740d684c7d439936bf045",
+    "construction.py": "5f32a4164c3737ed976243eb4dbce88b2efa8bdd",
+    "construction_audit.py": "e6bb3ed27323582bc267b62b9a74bbbc38795652",
+    "construction_launcher.py": "79a914f99d210ca36078a420e7dc09ed94e367fa",
+    "test_launcher_boundary.py": "9f0633f04f3da1fa317744a9808b96b6932df876",
+    "CONSTRUCTION_BOUNDARY.md": "090af722d9485ab75c37db7f98ad6872c24a7ed4",
+    "README.md": "ac509916188ee135031745bd358b3a711a177497"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "original_files": 633,
+  "original_manifest_entries": 632,
+  "original_unchanged": true,
+  "audit_byte_identical": true,
+  "controls_byte_identical": true,
+  "formal_reruns": 0,
+  "commands": [
+    {
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "study/audit.py",
+        ".",
+        "formal"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "310fb8d651bcd9aa6715338f9be3baf1779727bfa89197250e38abb85f32cfd3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "study/controls.py",
+        "formal/13",
+        "/mnt/data/selection_delivery_20260926/recheck/CONTROLS.json"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "0fff65b1017d7c320e4f27f3a75b7ef549370e55c6752289734083cd39593097",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "study",
+        "-p",
+        "test_policy.py",
+        "-v"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "a846c7b94e97041e0a1bd66fd67cc103df45013ab220594c06f5c59914d41451"
+    }
+  ]
+}

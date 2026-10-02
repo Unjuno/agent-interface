@@ -1,0 +1,26 @@
+{
+  "status": "PASS_METHOD_SCOPED",
+  "independent_oracle": "explicit per-route arithmetic + argmin enumeration",
+  "errors": [],
+  "corruption_controls": [
+    {
+      "field": "status",
+      "rejected": true
+    },
+    {
+      "field": "endpoint_delta",
+      "rejected": true
+    },
+    {
+      "field": "selected",
+      "rejected": true
+    }
+  ],
+  "allocation": "ROUTE-SELECTOR-5911-T0-20261001-02",
+  "source_git_blobs": {
+    "fixture": "f1296f78ef1030361c5ccb64c8df6fb0965cb4c8",
+    "auditor": "20df8f47309a50ff9bbd3bc370f25be5b77bf1d2",
+    "candidate_result": "77460c4527c765e9d389f0279cbb6c9da673df5d"
+  },
+  "auditor_runtime": "Codex V8 Function binding adapter; independent route arithmetic"
+}

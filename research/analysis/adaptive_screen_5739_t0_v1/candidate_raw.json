@@ -1,0 +1,329 @@
+{
+  "runner_sha256": "f9e0d06048538c8e942ed450938b8550348aafc0a093be2c6f17c8fc9b7448bc",
+  "scenarios": {
+    "fast_but_unsafe": {
+      "allowed_claim": "HARD_SAFETY_STOP",
+      "attempts": [
+        {
+          "arm": "baseline",
+          "attempt_id": "fast_but_unsafe:baseline:s0",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "fast_but_unsafe",
+          "success": 0,
+          "variant": "s0"
+        },
+        {
+          "arm": "baseline",
+          "attempt_id": "fast_but_unsafe:baseline:s1",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "fast_but_unsafe",
+          "success": 1,
+          "variant": "s1"
+        },
+        {
+          "arm": "baseline",
+          "attempt_id": "fast_but_unsafe:baseline:s2",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "fast_but_unsafe",
+          "success": 0,
+          "variant": "s2"
+        },
+        {
+          "arm": "baseline",
+          "attempt_id": "fast_but_unsafe:baseline:s3",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "fast_but_unsafe",
+          "success": 1,
+          "variant": "s3"
+        },
+        {
+          "arm": "route_fast",
+          "attempt_id": "fast_but_unsafe:route_fast:s0",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "fast_but_unsafe",
+          "success": 1,
+          "variant": "s0"
+        },
+        {
+          "arm": "route_fast",
+          "attempt_id": "fast_but_unsafe:route_fast:s1",
+          "cohort": "sealed_confirmation",
+          "forbidden": true,
+          "scenario": "fast_but_unsafe",
+          "success": 1,
+          "variant": "s1"
+        },
+        {
+          "arm": "route_fast",
+          "attempt_id": "fast_but_unsafe:route_fast:s2",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "fast_but_unsafe",
+          "success": 1,
+          "variant": "s2"
+        },
+        {
+          "arm": "route_fast",
+          "attempt_id": "fast_but_unsafe:route_fast:s3",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "fast_but_unsafe",
+          "success": 1,
+          "variant": "s3"
+        }
+      ],
+      "comparison_family": [
+        "route_fast"
+      ],
+      "global_optimality_claim": false,
+      "screened_out": []
+    },
+    "multiple_survivors": {
+      "allowed_claim": "HOLD_MULTIPLE_COMPARISON_UNADJUSTED",
+      "attempts": [
+        {
+          "arm": "baseline",
+          "attempt_id": "multiple_survivors:baseline:s0",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "multiple_survivors",
+          "success": 0,
+          "variant": "s0"
+        },
+        {
+          "arm": "baseline",
+          "attempt_id": "multiple_survivors:baseline:s1",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "multiple_survivors",
+          "success": 1,
+          "variant": "s1"
+        },
+        {
+          "arm": "baseline",
+          "attempt_id": "multiple_survivors:baseline:s2",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "multiple_survivors",
+          "success": 0,
+          "variant": "s2"
+        },
+        {
+          "arm": "baseline",
+          "attempt_id": "multiple_survivors:baseline:s3",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "multiple_survivors",
+          "success": 1,
+          "variant": "s3"
+        },
+        {
+          "arm": "route_a",
+          "attempt_id": "multiple_survivors:route_a:s0",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "multiple_survivors",
+          "success": 1,
+          "variant": "s0"
+        },
+        {
+          "arm": "route_a",
+          "attempt_id": "multiple_survivors:route_a:s1",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "multiple_survivors",
+          "success": 1,
+          "variant": "s1"
+        },
+        {
+          "arm": "route_a",
+          "attempt_id": "multiple_survivors:route_a:s2",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "multiple_survivors",
+          "success": 0,
+          "variant": "s2"
+        },
+        {
+          "arm": "route_a",
+          "attempt_id": "multiple_survivors:route_a:s3",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "multiple_survivors",
+          "success": 1,
+          "variant": "s3"
+        },
+        {
+          "arm": "route_b",
+          "attempt_id": "multiple_survivors:route_b:s0",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "multiple_survivors",
+          "success": 1,
+          "variant": "s0"
+        },
+        {
+          "arm": "route_b",
+          "attempt_id": "multiple_survivors:route_b:s1",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "multiple_survivors",
+          "success": 1,
+          "variant": "s1"
+        },
+        {
+          "arm": "route_b",
+          "attempt_id": "multiple_survivors:route_b:s2",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "multiple_survivors",
+          "success": 1,
+          "variant": "s2"
+        },
+        {
+          "arm": "route_b",
+          "attempt_id": "multiple_survivors:route_b:s3",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "multiple_survivors",
+          "success": 1,
+          "variant": "s3"
+        }
+      ],
+      "comparison_family": [
+        "route_a",
+        "route_b"
+      ],
+      "global_optimality_claim": false,
+      "screened_out": []
+    },
+    "screened_out_is_best": {
+      "allowed_claim": "SURVIVOR_VS_BASELINE_ONLY_NO_GLOBAL_OPTIMALITY",
+      "attempts": [
+        {
+          "arm": "baseline",
+          "attempt_id": "screened_out_is_best:baseline:s0",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "screened_out_is_best",
+          "success": 0,
+          "variant": "s0"
+        },
+        {
+          "arm": "baseline",
+          "attempt_id": "screened_out_is_best:baseline:s1",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "screened_out_is_best",
+          "success": 1,
+          "variant": "s1"
+        },
+        {
+          "arm": "baseline",
+          "attempt_id": "screened_out_is_best:baseline:s2",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "screened_out_is_best",
+          "success": 0,
+          "variant": "s2"
+        },
+        {
+          "arm": "baseline",
+          "attempt_id": "screened_out_is_best:baseline:s3",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "screened_out_is_best",
+          "success": 1,
+          "variant": "s3"
+        },
+        {
+          "arm": "route_a",
+          "attempt_id": "screened_out_is_best:route_a:s0",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "screened_out_is_best",
+          "success": 1,
+          "variant": "s0"
+        },
+        {
+          "arm": "route_a",
+          "attempt_id": "screened_out_is_best:route_a:s1",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "screened_out_is_best",
+          "success": 1,
+          "variant": "s1"
+        },
+        {
+          "arm": "route_a",
+          "attempt_id": "screened_out_is_best:route_a:s2",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "screened_out_is_best",
+          "success": 0,
+          "variant": "s2"
+        },
+        {
+          "arm": "route_a",
+          "attempt_id": "screened_out_is_best:route_a:s3",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "screened_out_is_best",
+          "success": 1,
+          "variant": "s3"
+        },
+        {
+          "arm": "route_c",
+          "attempt_id": "screened_out_is_best:route_c:s0",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "screened_out_is_best",
+          "success": 1,
+          "variant": "s0"
+        },
+        {
+          "arm": "route_c",
+          "attempt_id": "screened_out_is_best:route_c:s1",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "screened_out_is_best",
+          "success": 1,
+          "variant": "s1"
+        },
+        {
+          "arm": "route_c",
+          "attempt_id": "screened_out_is_best:route_c:s2",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "screened_out_is_best",
+          "success": 1,
+          "variant": "s2"
+        },
+        {
+          "arm": "route_c",
+          "attempt_id": "screened_out_is_best:route_c:s3",
+          "cohort": "sealed_confirmation",
+          "forbidden": false,
+          "scenario": "screened_out_is_best",
+          "success": 1,
+          "variant": "s3"
+        }
+      ],
+      "comparison_family": [
+        "route_a"
+      ],
+      "global_optimality_claim": false,
+      "screened_out": [
+        "route_c"
+      ]
+    }
+  },
+  "schema": "issue-5739-t0-raw-v1",
+  "scope": "authored finite deterministic claim-boundary fixtures only",
+  "world_sha256": "5329331f1948d7db6fb58244473dddbc1391c841c709b6de9b8ede31a7316441"
+}

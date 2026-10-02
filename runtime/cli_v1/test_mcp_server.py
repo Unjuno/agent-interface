@@ -359,7 +359,7 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     await client.initialize()
                     listed = await client.list_tools()
                     self.assertEqual({tool.name for tool in listed.tools},
-                                     {'interface_observe', 'interface_dispatch', 'interface_results', 'interface_validate'})
+                                     {'interface_observe', 'interface_dispatch', 'interface_results', 'interface_validate', 'interface_clock'})
                     dispatch_tool = next(t for t in listed.tools if t.name == 'interface_dispatch')
                     validation = await client.call_tool('interface_validate', {'program': {}})
                     self.assertTrue(validation.isError)
@@ -387,7 +387,7 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     # Real packaged transport: choose v3 only on explicit reread.
                     from runtime.cli_v1.receipt_references import REPORT_REF, expand_receipt
                     for tool in listed.tools:
-                        if tool.name == 'interface_validate':
+                        if tool.name in ('interface_validate', 'interface_clock'):
                             self.assertNotIn('report_refs', tool.inputSchema['properties'])
                             continue
                         option = tool.inputSchema['properties']['report_refs']
@@ -535,7 +535,7 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                     await client.initialize()
                     listed = await client.list_tools()
                     self.assertEqual({tool.name for tool in listed.tools},
-                                     {'interface_observe', 'interface_dispatch', 'interface_results', 'interface_validate'})
+                                     {'interface_observe', 'interface_dispatch', 'interface_results', 'interface_validate', 'interface_clock'})
                     dispatch_tool = next(t for t in listed.tools if t.name == 'interface_dispatch')
                     program_schema = dispatch_tool.inputSchema['properties']['program']
                     self.assertEqual(program_schema['type'], 'object')

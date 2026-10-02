@@ -1,0 +1,672 @@
+{
+  "allocation_id": "COMPLEMENTARITY-5869-T0-20261001-01",
+  "horizon": 2,
+  "cases": [
+    {
+      "id": "xor-complementary",
+      "worlds": [
+        {
+          "id": "xor-complementary-00",
+          "weight": 0.25,
+          "target": false,
+          "obs": {
+            "a": 0,
+            "b": 0
+          }
+        },
+        {
+          "id": "xor-complementary-01",
+          "weight": 0.25,
+          "target": true,
+          "obs": {
+            "a": 0,
+            "b": 1
+          }
+        },
+        {
+          "id": "xor-complementary-10",
+          "weight": 0.25,
+          "target": true,
+          "obs": {
+            "a": 1,
+            "b": 0
+          }
+        },
+        {
+          "id": "xor-complementary-11",
+          "weight": 0.25,
+          "target": false,
+          "obs": {
+            "a": 1,
+            "b": 1
+          }
+        }
+      ],
+      "checks": [
+        {
+          "id": "a",
+          "cost": 0.1,
+          "latency_ms": 10,
+          "source_id": "camera-a",
+          "epoch": "e0"
+        },
+        {
+          "id": "b",
+          "cost": 0.1,
+          "latency_ms": 10,
+          "source_id": "camera-b",
+          "epoch": "e0"
+        }
+      ],
+      "budget": 0.5,
+      "deadline_ms": 50,
+      "mandatory_gate_passed": true,
+      "loss": {
+        "commit": {
+          "false": 2,
+          "true": 0
+        },
+        "decline": {
+          "false": 0,
+          "true": 2
+        },
+        "abstain": {
+          "false": 1,
+          "true": 1
+        }
+      }
+    },
+    {
+      "id": "redundant-duplicate",
+      "worlds": [
+        {
+          "id": "r0",
+          "weight": 0.5,
+          "target": false,
+          "obs": {
+            "a": 0,
+            "b": 0
+          }
+        },
+        {
+          "id": "r1",
+          "weight": 0.5,
+          "target": true,
+          "obs": {
+            "a": 1,
+            "b": 1
+          }
+        }
+      ],
+      "checks": [
+        {
+          "id": "a",
+          "cost": 0.1,
+          "latency_ms": 5,
+          "source_id": "cam-a",
+          "epoch": "e0"
+        },
+        {
+          "id": "b",
+          "cost": 0.1,
+          "latency_ms": 5,
+          "source_id": "cam-b",
+          "epoch": "e0"
+        }
+      ],
+      "budget": 0.5,
+      "deadline_ms": 50,
+      "mandatory_gate_passed": true,
+      "loss": {
+        "commit": {
+          "false": 100,
+          "true": 0
+        },
+        "decline": {
+          "false": 0,
+          "true": 1
+        },
+        "abstain": {
+          "false": 0.5,
+          "true": 0.5
+        }
+      }
+    },
+    {
+      "id": "diminishing-returns",
+      "worlds": [
+        {
+          "id": "n-000",
+          "weight": 0.32000000000000006,
+          "target": false,
+          "obs": {
+            "a": 0,
+            "b": 0
+          }
+        },
+        {
+          "id": "n-001",
+          "weight": 0.08000000000000002,
+          "target": false,
+          "obs": {
+            "a": 0,
+            "b": 1
+          }
+        },
+        {
+          "id": "n-010",
+          "weight": 0.08000000000000002,
+          "target": false,
+          "obs": {
+            "a": 1,
+            "b": 0
+          }
+        },
+        {
+          "id": "n-011",
+          "weight": 0.020000000000000004,
+          "target": false,
+          "obs": {
+            "a": 1,
+            "b": 1
+          }
+        },
+        {
+          "id": "n-100",
+          "weight": 0.020000000000000004,
+          "target": true,
+          "obs": {
+            "a": 0,
+            "b": 0
+          }
+        },
+        {
+          "id": "n-101",
+          "weight": 0.08000000000000002,
+          "target": true,
+          "obs": {
+            "a": 0,
+            "b": 1
+          }
+        },
+        {
+          "id": "n-110",
+          "weight": 0.08000000000000002,
+          "target": true,
+          "obs": {
+            "a": 1,
+            "b": 0
+          }
+        },
+        {
+          "id": "n-111",
+          "weight": 0.32000000000000006,
+          "target": true,
+          "obs": {
+            "a": 1,
+            "b": 1
+          }
+        }
+      ],
+      "checks": [
+        {
+          "id": "a",
+          "cost": 0.16,
+          "latency_ms": 5,
+          "source_id": "sensor-a",
+          "epoch": "e0"
+        },
+        {
+          "id": "b",
+          "cost": 0.16,
+          "latency_ms": 5,
+          "source_id": "sensor-b",
+          "epoch": "e0"
+        }
+      ],
+      "budget": 0.5,
+      "deadline_ms": 50,
+      "mandatory_gate_passed": true,
+      "loss": {
+        "commit": {
+          "false": 2,
+          "true": 0
+        },
+        "decline": {
+          "false": 0,
+          "true": 1
+        },
+        "abstain": {
+          "false": 0.6,
+          "true": 0.6
+        }
+      }
+    },
+    {
+      "id": "pair-too-costly",
+      "worlds": [
+        {
+          "id": "pair-too-costly-00",
+          "weight": 0.25,
+          "target": false,
+          "obs": {
+            "a": 0,
+            "b": 0
+          }
+        },
+        {
+          "id": "pair-too-costly-01",
+          "weight": 0.25,
+          "target": true,
+          "obs": {
+            "a": 0,
+            "b": 1
+          }
+        },
+        {
+          "id": "pair-too-costly-10",
+          "weight": 0.25,
+          "target": true,
+          "obs": {
+            "a": 1,
+            "b": 0
+          }
+        },
+        {
+          "id": "pair-too-costly-11",
+          "weight": 0.25,
+          "target": false,
+          "obs": {
+            "a": 1,
+            "b": 1
+          }
+        }
+      ],
+      "checks": [
+        {
+          "id": "a",
+          "cost": 0.6,
+          "latency_ms": 10,
+          "source_id": "camera-a",
+          "epoch": "e0"
+        },
+        {
+          "id": "b",
+          "cost": 0.6,
+          "latency_ms": 10,
+          "source_id": "camera-b",
+          "epoch": "e0"
+        }
+      ],
+      "budget": 1.5,
+      "deadline_ms": 50,
+      "mandatory_gate_passed": true,
+      "loss": {
+        "commit": {
+          "false": 2,
+          "true": 0
+        },
+        "decline": {
+          "false": 0,
+          "true": 2
+        },
+        "abstain": {
+          "false": 1,
+          "true": 1
+        }
+      }
+    },
+    {
+      "id": "pair-too-late",
+      "worlds": [
+        {
+          "id": "pair-too-late-00",
+          "weight": 0.25,
+          "target": false,
+          "obs": {
+            "a": 0,
+            "b": 0
+          }
+        },
+        {
+          "id": "pair-too-late-01",
+          "weight": 0.25,
+          "target": true,
+          "obs": {
+            "a": 0,
+            "b": 1
+          }
+        },
+        {
+          "id": "pair-too-late-10",
+          "weight": 0.25,
+          "target": true,
+          "obs": {
+            "a": 1,
+            "b": 0
+          }
+        },
+        {
+          "id": "pair-too-late-11",
+          "weight": 0.25,
+          "target": false,
+          "obs": {
+            "a": 1,
+            "b": 1
+          }
+        }
+      ],
+      "checks": [
+        {
+          "id": "a",
+          "cost": 0.1,
+          "latency_ms": 8,
+          "source_id": "camera-a",
+          "epoch": "e0"
+        },
+        {
+          "id": "b",
+          "cost": 0.1,
+          "latency_ms": 8,
+          "source_id": "camera-b",
+          "epoch": "e0"
+        }
+      ],
+      "budget": 0.5,
+      "deadline_ms": 10,
+      "mandatory_gate_passed": true,
+      "loss": {
+        "commit": {
+          "false": 2,
+          "true": 0
+        },
+        "decline": {
+          "false": 0,
+          "true": 2
+        },
+        "abstain": {
+          "false": 1,
+          "true": 1
+        }
+      }
+    },
+    {
+      "id": "epoch-mismatch",
+      "worlds": [
+        {
+          "id": "epoch-mismatch-00",
+          "weight": 0.25,
+          "target": false,
+          "obs": {
+            "a": 0,
+            "b": 0
+          }
+        },
+        {
+          "id": "epoch-mismatch-01",
+          "weight": 0.25,
+          "target": true,
+          "obs": {
+            "a": 0,
+            "b": 1
+          }
+        },
+        {
+          "id": "epoch-mismatch-10",
+          "weight": 0.25,
+          "target": true,
+          "obs": {
+            "a": 1,
+            "b": 0
+          }
+        },
+        {
+          "id": "epoch-mismatch-11",
+          "weight": 0.25,
+          "target": false,
+          "obs": {
+            "a": 1,
+            "b": 1
+          }
+        }
+      ],
+      "checks": [
+        {
+          "id": "a",
+          "cost": 0.1,
+          "latency_ms": 10,
+          "source_id": "camera-a",
+          "epoch": "e0"
+        },
+        {
+          "id": "b",
+          "cost": 0.1,
+          "latency_ms": 10,
+          "source_id": "camera-b",
+          "epoch": "e1"
+        }
+      ],
+      "budget": 0.5,
+      "deadline_ms": 50,
+      "mandatory_gate_passed": true,
+      "loss": {
+        "commit": {
+          "false": 2,
+          "true": 0
+        },
+        "decline": {
+          "false": 0,
+          "true": 2
+        },
+        "abstain": {
+          "false": 1,
+          "true": 1
+        }
+      }
+    },
+    {
+      "id": "shared-source",
+      "worlds": [
+        {
+          "id": "shared-source-00",
+          "weight": 0.25,
+          "target": false,
+          "obs": {
+            "a": 0,
+            "b": 0
+          }
+        },
+        {
+          "id": "shared-source-01",
+          "weight": 0.25,
+          "target": true,
+          "obs": {
+            "a": 0,
+            "b": 1
+          }
+        },
+        {
+          "id": "shared-source-10",
+          "weight": 0.25,
+          "target": true,
+          "obs": {
+            "a": 1,
+            "b": 0
+          }
+        },
+        {
+          "id": "shared-source-11",
+          "weight": 0.25,
+          "target": false,
+          "obs": {
+            "a": 1,
+            "b": 1
+          }
+        }
+      ],
+      "checks": [
+        {
+          "id": "a",
+          "cost": 0.1,
+          "latency_ms": 10,
+          "source_id": "camera-a",
+          "epoch": "e0"
+        },
+        {
+          "id": "b",
+          "cost": 0.1,
+          "latency_ms": 10,
+          "source_id": "camera-a",
+          "epoch": "e0"
+        }
+      ],
+      "budget": 0.5,
+      "deadline_ms": 50,
+      "mandatory_gate_passed": true,
+      "loss": {
+        "commit": {
+          "false": 2,
+          "true": 0
+        },
+        "decline": {
+          "false": 0,
+          "true": 2
+        },
+        "abstain": {
+          "false": 1,
+          "true": 1
+        }
+      }
+    },
+    {
+      "id": "mandatory-gate-failed",
+      "worlds": [
+        {
+          "id": "mandatory-gate-failed-00",
+          "weight": 0.25,
+          "target": false,
+          "obs": {
+            "a": 0,
+            "b": 0
+          }
+        },
+        {
+          "id": "mandatory-gate-failed-01",
+          "weight": 0.25,
+          "target": true,
+          "obs": {
+            "a": 0,
+            "b": 1
+          }
+        },
+        {
+          "id": "mandatory-gate-failed-10",
+          "weight": 0.25,
+          "target": true,
+          "obs": {
+            "a": 1,
+            "b": 0
+          }
+        },
+        {
+          "id": "mandatory-gate-failed-11",
+          "weight": 0.25,
+          "target": false,
+          "obs": {
+            "a": 1,
+            "b": 1
+          }
+        }
+      ],
+      "checks": [
+        {
+          "id": "a",
+          "cost": 0.1,
+          "latency_ms": 10,
+          "source_id": "camera-a",
+          "epoch": "e0"
+        },
+        {
+          "id": "b",
+          "cost": 0.1,
+          "latency_ms": 10,
+          "source_id": "camera-b",
+          "epoch": "e0"
+        }
+      ],
+      "budget": 0.5,
+      "deadline_ms": 50,
+      "mandatory_gate_passed": false,
+      "loss": {
+        "commit": {
+          "false": 2,
+          "true": 0
+        },
+        "decline": {
+          "false": 0,
+          "true": 2
+        },
+        "abstain": {
+          "false": 1,
+          "true": 1
+        }
+      }
+    },
+    {
+      "id": "one-bit-low-decision-value",
+      "worlds": [
+        {
+          "id": "v0",
+          "weight": 0.5,
+          "target": false,
+          "obs": {
+            "a": 0,
+            "b": 0
+          }
+        },
+        {
+          "id": "v1",
+          "weight": 0.5,
+          "target": true,
+          "obs": {
+            "a": 1,
+            "b": 1
+          }
+        }
+      ],
+      "checks": [
+        {
+          "id": "a",
+          "cost": 0.06,
+          "latency_ms": 5,
+          "source_id": "sensor-a",
+          "epoch": "e0"
+        },
+        {
+          "id": "b",
+          "cost": 0.06,
+          "latency_ms": 5,
+          "source_id": "sensor-b",
+          "epoch": "e0"
+        }
+      ],
+      "budget": 0.2,
+      "deadline_ms": 50,
+      "mandatory_gate_passed": true,
+      "loss": {
+        "commit": {
+          "false": 10,
+          "true": 0
+        },
+        "decline": {
+          "false": 0,
+          "true": 0.1
+        },
+        "abstain": {
+          "false": 0.2,
+          "true": 0.2
+        }
+      }
+    }
+  ]
+}
