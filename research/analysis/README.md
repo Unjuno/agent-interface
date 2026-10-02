@@ -1,5 +1,6 @@
 # Analytical research
 
+- [`path_width_continuous_gui_6581_t0b_v1/REPORT.md`](path_width_continuous_gui_6581_t0b_v1/REPORT.md) — Issue #6581 synthetic path-width GUI fixture; six scenarios independently audited `PASS_METHOD_SCOPED`; no ordinary-GUI or human/agent transfer claim.
 - [`spatial_block_position_6590_t1_geometry_feasibility_v1/REPORT.md`](spatial_block_position_6590_t1_geometry_feasibility_v1/REPORT.md) — #6590 OrbStack replication independently reconstructed the fixed-grid no-near-duplicate geometry; 6/6/3/3 eligible sites fail the eight-site block floor, so visual-model T1 remains unrun (`HOLD_GEOMETRY_NOT_IDENTIFIABLE`).
 
 - [`revision_timed_cutover_6617_t0_v1/REPORT.md`](revision_timed_cutover_6617_t0_v1/REPORT.md) — Issue #6617 WSLc synthetic T0: 30 event traces independently audited; one stable scripted case saved 3 logical ticks; no speech, GUI, human, or real-latency result.
@@ -462,6 +463,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`paired_route_estimator_57_t0_v1/`](paired_route_estimator_57_t0_v1/)
 - [`partial_order_replay_4889_v1/`](partial_order_replay_4889_v1/)
 - [`path_class_switch_6586_t0_20261002/`](path_class_switch_6586_t0_20261002/)
+- [`path_width_continuous_gui_6581_t0b_v1/`](path_width_continuous_gui_6581_t0b_v1/)
 - [`pending_outcome_route_learning_6129_t0_20261002/`](pending_outcome_route_learning_6129_t0_20261002/)
 - [`phase_diversified_capture_6067_t0_20261002/`](phase_diversified_capture_6067_t0_20261002/)
 - [`phase_overlap_dynamic_footprint_binding_r1_v1/`](phase_overlap_dynamic_footprint_binding_r1_v1/)
