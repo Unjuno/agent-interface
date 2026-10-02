@@ -22,7 +22,7 @@ The first two freezes and stop records are preserved unchanged. Allocation 03 ra
 
 - Construction suite: `python3 -W error::ResourceWarning -B -m unittest -v test_t0` — PASS 7/7.
 - Formal run: 75 rows, zero audit errors, 8/8 corruption controls rejected — PASS_METHOD_SCOPED.
-- Local `Analysis Index` workflow checks: index checker and this package's construction suite passed; the workflow's remaining listed analytical suites passed except two frozen-workflow provenance assertions. Those two expect `.github/workflows/analysis-index.yml` to be restored to pinned commit `e2e434d...` (hash `b19000e...`) by the workflow's preceding CI-only step; the local checkout instead has the current workflow (`9e5679...`). They are environment/precondition failures in the manually invoked sequence, not failures in this package. The authoritative Actions run must still confirm the full workflow.
+- Local `Analysis Index` workflow: PASS. Reproduced the workflow's preceding frozen-source restore in an isolated temporary worktree (pinned workflow hash `b19000e...`), then ran the index checker and every listed analytical test suite successfully. The first direct invocation without that CI setup step produced the expected two provenance-hash failures; rerunning with the workflow setup reproduced both successfully. The additional package construction test passed 7/7. GitHub Actions remains the authoritative hosted run.
 - Scope: no product/security verdict, real credential/provider behavior, actual authentication effect, byte-flow guarantee, GUI/user evidence, or product-benefit evidence.
 - Runtime: host CPython stdlib; container intentionally not used because the shared OrbStack/Docker allocation was unassigned and WSLc was prohibited by the current #5085 gate.
 
