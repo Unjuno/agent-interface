@@ -2,6 +2,10 @@
 
 The frozen allocation and fresh synthetic dataset are retained, but the requested exclusive GPU interval was withdrawn before execution when the user selected a different shared-memory question. `STOP_WITHDRAWN_BEFORE_CANDIDATE`: candidate=0, auditor=0, retries=0; no GPU measurement or scientific PASS/FAIL is claimed. Do not replay this allocation. It is distinct from successor #6329. See the [immutable stop and frozen package](research/analysis/gpu_supervisor_transfer_breakeven_4972_a07_20261002/STOP.md) and [Issue #6308](https://github.com/Unjuno/agent-interface/issues/6308).
 
+# Issue #6319 allocation-08 — six-worker memory-sharing proposal (duplicate-allocation STOP)
+
+The branch-held six-worker CUDA probe used seed `49720261008`, which collided with a concurrent allocation registration on #6322. It stopped before candidate/auditor/CUDA (`0/0/0`); this does not test the memory-sharing hypothesis. The branch's six source files are retained separately from #6322's different transfer-latency STOP. No candidate rerun is authorized; #6329 allocation 09 is a distinct successor. See the [STOP and preserved proposal](research/analysis/gpu_six_worker_memory_sharing_4972_a08_20261002/STOP.md) and [Issue #6319](https://github.com/Unjuno/agent-interface/issues/6319).
+
 # Issue #6530: temporal-effect identity across timezone transitions (2026-10-02)
 
 New OrbStack allocation A01 ran the frozen eight-case New York temporal fixture in the dedicated VM's private Docker Engine; candidate and independent raw-only auditor each ran once and exited 0, audit `PASS` (8 rows, no errors). The typed oracle detected the planted daily-local-versus-fixed-UTC recurrence error accepted by both display-string and offset-only baselines, and returned both possible instants for an unresolved fall-back fold. This is a synthetic method-only result, not a GUI/calendar or real persisted-effect claim. The predecessor WSLc pre-start STOP in PR #6666 remains unchanged. See the [A01 report and checksummed artifacts](research/analysis/temporal_effect_identity_6530_orbstack_a01_20261002/REPORT.md) and [Issue #6530](https://github.com/Unjuno/agent-interface/issues/6530).
