@@ -22,6 +22,10 @@ One OrbStack candidate run produced 80 exact-rational rows over 10 cases, 4-way/
 
 A bounded two-worker, four-right escrow state machine was exhaustively enumerated through depth 6: 9,988 reachable states and 27,748 transitions. The independent auditor reproduced both state and transition digests (`PASS_METHOD_SCOPED`); pre-freeze Docker construction tests passed 13/13. Balanced synthetic demand completed 4/4 optional units with two setup round-trips versus four central per-use checks; skew/crash completed 2/4 with two rights stranded. Heartbeat-only reclaim permitted a planted fifth consume against B=4; old generations, duplicate/delayed ACKs, mandatory verifier bypass, and role-label laundering were rejected. This is a finite protocol-method result, not measured latency, arbitrary distributed implementation, live GUI, or product evidence. See [the report and raw candidate/audit](research/analysis/escrow_optional_budget_6156_t0_20261002/REPORT.md).
 
+### Issue #6262: GPU-assisted applicability certificate T0 (2026-10-02)
+
+The frozen synthetic fixture had 12 feasible cells, 23 two-way projections, a planted predecessor failure and one unqualified route. The CUDA candidate exhaustively enumerated 4,096 evidence subsets. An independent pure-Python auditor matched every gate and rejected all four mutations (`PASS_METHOD_SCOPED`). A flat 83.33% success count and factorwise coverage would admit the wide fixture claim; the certificate refused it while retaining the exact qualified `t01` narrow claim. This is method evidence only: no real reusable skill, GUI, applicability, safety, or GPU performance claim. See [the report and raw evidence](research/analysis/skill_applicability_6262_gpu_t0_v1/REPORT.md).
+
 # Research index
 
 Agent Interface is being developed by analysis and experiment rather than by locking an API early. This file is the evidence ledger for the public repository.
@@ -138,6 +142,20 @@ flowchart LR
 ```
 
 Exact contract/state-machine questions should be reduced analytically first; timing, model behavior, OS/application behavior, and integrated capability remain empirical where their outcome depends on the real environment.
+
+## Issue #6403 — control-opportunity responsibility attribution T0
+
+The preregistered six-trace synthetic T0 passed independent evidence
+reconstruction (`PASS_METHOD`): effect-before-notification, sent-but-undelivered,
+accepted/sufficient-window, ambiguous delivery, stale-UI, and verified-correction
+cases matched their frozen classifications and timelines. A six-case mutation
+gate rejected delivery substitution, effect-time changes, hidden override facts,
+oracle leakage, and both promotion/display of misleading bidirectional negative
+controls. Factual reconstruction—not blame—was the primary endpoint. No human,
+live delivery/attention, GUI, model, causal responsibility, or product claim was
+tested; Issue #6403 remains open. The runner did not capture ephemeral container
+IDs, a retained evidence limitation. See the [full report](research/analysis/control_opportunity_attribution_6403_t0_v1/REPORT.md)
+and [Issue #6403](https://github.com/Unjuno/agent-interface/issues/6403).
 
 ## Research question
 
