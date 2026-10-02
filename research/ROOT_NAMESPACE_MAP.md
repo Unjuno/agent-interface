@@ -249,6 +249,8 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 - [`procedural_control_arena_v0/`](procedural_control_arena_v0/) - Procedural control arena; consult its README and VALIDATION for scope and current evidence.
 - [`procedural_control_arena_v1/`](procedural_control_arena_v1/) - Procedural control arena v1 construction environment; see README and VALIDATION for scope and open promotion gates.
 
+- [`procedural_ops_facility_v0/`](procedural_ops_facility_v0/) — recovered Procedural Operations Facility v0 construction benchmark; see README, VALIDATION, and RECOVERY_STATUS for reproducibility and explicit non-efficacy limits.
+
 - [`kernel_receipt_time_5215_20260928/`](kernel_receipt_time_5215_20260928/) — Issue #5215 kernel receipt timestamp construction probe; consult PLAN and REPORT for its contract-only scope and limitations.
 
 ### Issue #5236 X11 keymap successor evidence
