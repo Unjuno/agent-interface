@@ -5,6 +5,9 @@
 Retained as `STOP_AUDIT_MUTATION_CONTROL_DEFECT`. Candidate and auditor each ran once in pinned, network-disabled WSLc; no retries. The initial auditor's nominal `METHOD_PASS_SCOPED` is invalidated because the mutation harness did not independently validate corruptions. The sole held-out flash was detected by both action-bound and raw-delta arms at the same budget; no incremental benefit is demonstrated. No live GUI/game visual safety inference. See [report](research/analysis/action_bound_residual_6619_t0_v1/REPORT.md) and [Issue #6619](https://github.com/Unjuno/agent-interface/issues/6619).
 
 The frozen WSLc T0 compared final-only preparation, an intentionally unsafe naive-provisional arm, and exact-version-bound read-only preparation over 10 scripted cases (30 traces). One stable logical-time schedule favored version-bound preparation by 3 ticks (3 vs 6); both safe arms had zero provisional/unauthenticated/uncommitted inputs, while the naive comparator's 9 provisional inputs stayed visibly unsafe. A separate raw-only audit exited 0 and rejected all four frozen corruptions. This is `PASS_METHOD_SCOPED` only for the deterministic model; it says nothing about ASR, actual speaker identity or intent, voice/GUI safety, real effects, human utility, or measured latency. WSLc emitted an unsupported swap/cgroup warning; enforcement is not claimed. See [the report and checksummed formal artifacts](research/analysis/revision_timed_cutover_6617_t0_v1/REPORT.md) and [Issue #6617](https://github.com/Unjuno/agent-interface/issues/6617).
+# Issue #6604: disturbance-timescale profile T0 (2026-10-02)
+
+Successor isolated OrbStack Docker allocation 02 returned `PASS_METHOD_SCOPED`: a pinned-image candidate emitted 14 finite synthetic rows and an independent raw-only auditor reconstructed all 14 with zero errors. The planted matrix recovered the declared crossover (slow local-periodic error 10 vs direct 16; fast-reversal direct 45 vs local 59); pooled totals selected direct 61 vs local 69, hiding its slow-stratum loss. The no-crossover pair retained one ordering, and the unobservable semantic-swap case carried no semantic-effect claim. The predecessor shared-engine allocation 01 HOLD remains unchanged. See the [retained report and outputs](research/analysis/disturbance_timescale_6604_t0_v1/REPORT.md), [exact runtime record](research/analysis/disturbance_timescale_6604_t0_v1/formal_02/RUN_RECORD.json), and [Issue #6604](https://github.com/Unjuno/agent-interface/issues/6604). This establishes a deterministic method fixture only; no real controller, GUI, task-effect, safety, latency, or product-benefit result is claimed.
 
 # Issue #6501 T0-01 / T0b-01: scope-typed singleflight (2026-10-02)
 
@@ -91,6 +94,10 @@ Successor allocation S2 ran the ten-case synthetic finite fixture once in two se
 ## How to read this ledger
 
 This file is intentionally comprehensive. For public navigation, use the shorter status documents first and come here for the retained evidence history.
+
+### Issue #5156 T4: host-only caller/owner release-bracket construction (2026-10-02)
+
+One frozen current-main `InputOwner v10` worker-thread key-up call and `InputOwner v11` wrapper call were exercised with fake Xlib on Windows/CPython 3.12.10. The independent auditor joined six raw rows with zero errors: the caller interval enclosed the fake worker-thread KeyRelease request and sync return, the fake key transitioned down→up, and the worker terminated. Eight construction/audit tests passed. Disposition: `PASS_SYNTHETIC_OWNER_BRACKET_JOIN_SCOPED`. This is not Docker/X11 evidence and establishes no physical key occupancy, application consumption, useful feedback, recovery efficacy, MAP01 result, or human tempo; the separate #5156 X11 slot remains unassigned. See [the frozen package and first raw outcome](research/live_control/owner_keyup_bracket_host_t4_5156_v1/README.md).
 
 ### Issue #6061: prediction-error-triggered motor chunks T0 (2026-10-01)
 

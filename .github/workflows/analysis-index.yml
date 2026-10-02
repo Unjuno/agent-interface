@@ -63,3 +63,5 @@ jobs:
         run: python -B -m unittest discover -s research/analysis/semantic_receipt_target_binding_5442_t8 -p 'test_*.py' -v
       - name: Test revision-timed cutover Issue #6617 T0
         run: python -B -m unittest discover -s research/analysis/revision_timed_cutover_6617_t0_v1 -p 'test_*.py' -v
+      - name: Test disturbance-timescale #6604 T0 construction contract
+        run: python -B -m unittest discover -s research/analysis/disturbance_timescale_6604_t0_v1 -p 'test_*.py' -v
