@@ -15,6 +15,7 @@
 | X-server reincarnation identity boundary (Issue #3574; scoped, no promotion) | [lifetime replication report](../integration/typed_recovery_xserver_lifetime_v1/issue_3574_lifetime_01/evidence/REPORT.md) |
 | Implemented live-control surface | [What is implemented](#what-is-implemented) |
 | Reproduction notes | [Reproduce](#reproduce) |
+| Issue #2221 cross-domain retained-evidence transfer T1 | [Result and scope](cross_domain_handback_transfer_2221_t1_20261002/RESULT.md) |
 
 ## Track map
 
@@ -47,6 +48,7 @@ flowchart TD
 | Adaptive caller / local repair | [`ADAPTIVE_ACQUISITION_CALLER_V3.md`](ADAPTIVE_ACQUISITION_CALLER_V3.md), [`ADAPTIVE_SEMANTIC_REPAIR_LIVE_V2.md`](ADAPTIVE_SEMANTIC_REPAIR_LIVE_V2.md) |
 | Compiled / persistent interface | [`COMPILED_GUI_INTERFACE_LIVE_V5.md`](COMPILED_GUI_INTERFACE_LIVE_V5.md), [`INTEGRATED_EFFICIENCY_LIVE_V1.md`](INTEGRATED_EFFICIENCY_LIVE_V1.md) |
 | Cross-domain transfer | OpenTTD reports under `OPENTTD_*`, plus retained Calc/Inkscape/browser/Mindustry studies in this directory |
+| Issue #3311 allocation-01 pre-test STOP (historical source and disposition) | [Recovery record](issue3311_termination_report_v1/RECOVERY_STATUS.md) |
 
 This is a navigation map, not a dependency graph or promotion hierarchy. Individual reports remain authoritative for scope and disposition.
 
