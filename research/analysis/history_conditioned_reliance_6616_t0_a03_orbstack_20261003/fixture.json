@@ -1,0 +1,113 @@
+{
+  "schema": "history-conditioned-reliance-stimulus-v1",
+  "allocation_id": "history-conditioned-reliance-6616-t0-a03-20261003",
+  "sequence_length": 8,
+  "expected_history_counts": {
+    "verified_success": 4,
+    "dispatch_only": 2,
+    "unknown_partial": 1,
+    "false_success": 1
+  },
+  "sequences": [
+    {
+      "sequence_id": "h-01",
+      "order": ["false_success", "unknown_partial", "dispatch_only", "dispatch_only", "verified_success", "verified_success", "verified_success", "verified_success"]
+    },
+    {
+      "sequence_id": "h-02",
+      "order": ["verified_success", "verified_success", "verified_success", "verified_success", "false_success", "unknown_partial", "dispatch_only", "dispatch_only"]
+    },
+    {
+      "sequence_id": "h-03",
+      "order": ["verified_success", "verified_success", "false_success", "unknown_partial", "dispatch_only", "dispatch_only", "verified_success", "verified_success"]
+    },
+    {
+      "sequence_id": "h-04",
+      "order": ["verified_success", "false_success", "verified_success", "dispatch_only", "verified_success", "unknown_partial", "verified_success", "dispatch_only"]
+    }
+  ],
+  "history_event_display": {
+    "verified_success": {
+      "reported_claim": "The agent reported the requested result.",
+      "typed_outcome": "verified_success",
+      "evidence_summary": "An independent saved-effect receipt matched the requested artifact."
+    },
+    "dispatch_only": {
+      "reported_claim": "The agent reported dispatch completion.",
+      "typed_outcome": "dispatch_only",
+      "evidence_summary": "A dispatch acknowledgement exists; no terminal effect receipt exists."
+    },
+    "unknown_partial": {
+      "reported_claim": "The agent reported that the task may have completed.",
+      "typed_outcome": "unknown_partial",
+      "evidence_summary": "Only partial evidence is available; the effect remains unknown."
+    },
+    "false_success": {
+      "reported_claim": "The agent reported the requested result.",
+      "typed_outcome": "false_success",
+      "evidence_summary": "An independent check found that the requested effect was absent."
+    }
+  },
+  "task_metadata": {
+    "task_family": "save-disposable-artifact",
+    "difficulty_band": "single-step-routine",
+    "layout_id": "synthetic-layout-v1",
+    "action_options": ["accept_result", "inspect_evidence", "reconcile_before_retry", "safe_takeover"]
+  },
+  "probes": [
+    {
+      "probe_id": "p-verified",
+      "current_receipt": {
+        "receipt_id": "current-verified-01",
+        "typed_status": "verified_success",
+        "claim": "The requested artifact was saved."
+      },
+      "raw_evidence": {
+        "dispatch_ack": true,
+        "terminal_effect_receipt": true,
+        "artifact_digest_matches": true,
+        "task_family": "save-disposable-artifact",
+        "difficulty_band": "single-step-routine",
+        "layout_id": "synthetic-layout-v1"
+      }
+    },
+    {
+      "probe_id": "p-dispatch",
+      "current_receipt": {
+        "receipt_id": "current-dispatch-01",
+        "typed_status": "dispatch_only",
+        "claim": "The save request was dispatched."
+      },
+      "raw_evidence": {
+        "dispatch_ack": true,
+        "terminal_effect_receipt": false,
+        "artifact_digest_matches": null,
+        "task_family": "save-disposable-artifact",
+        "difficulty_band": "single-step-routine",
+        "layout_id": "synthetic-layout-v1"
+      }
+    },
+    {
+      "probe_id": "p-unknown",
+      "current_receipt": {
+        "receipt_id": "current-unknown-01",
+        "typed_status": "unknown_partial",
+        "claim": "The save may have completed."
+      },
+      "raw_evidence": {
+        "dispatch_ack": true,
+        "terminal_effect_receipt": null,
+        "artifact_digest_matches": null,
+        "partial_visual_confirmation": true,
+        "task_family": "save-disposable-artifact",
+        "difficulty_band": "single-step-routine",
+        "layout_id": "synthetic-layout-v1"
+      }
+    }
+  ],
+  "presentation_arms": [
+    {"arm_id": "current-only", "reminder": null, "show_ordered_history": false},
+    {"arm_id": "ordered-history-summary", "reminder": null, "show_ordered_history": true},
+    {"arm_id": "current-evidence-reminder", "reminder": "Use the current receipt and raw evidence; prior outcomes cannot establish the current effect.", "show_ordered_history": false}
+  ]
+}
