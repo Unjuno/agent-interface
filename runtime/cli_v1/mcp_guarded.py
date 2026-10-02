@@ -80,6 +80,63 @@ class GuardedSessionOwner(MCPSessionOwner):
             'side_effect_authority':False, 'input_dispatched':False}
         return row
 
+    def run_compiled(self, interface, bindings, *, call_root, perceive,
+                     verify_effect, cancelled=lambda: False):
+        """Run one explicit graph on this already-open Python owner.
+
+        Ground references first. Callbacks are trusted read-only caller code,
+        not a model, sensor or independent persistence oracle. Use a fresh call
+        directory; no reopen, retry, remint or extra final capture is performed.
+        The existing graph retains its raw evidence in the bridge directory.
+        The returned method verdict and delivered feedback remain distinct from
+        independently verified task success. This is not an MCP tool endpoint.
+        """
+        if self.state != 'open' or self.bridge is None or self.session is None:
+            raise RuntimeError('compiled method requires this open guarded owner')
+        if self.bridge.review_required or self.session.recovery_required:
+            raise RuntimeError('compiled method requires reviewed, recovered owner')
+        if not all(callable(fn) for fn in (perceive, verify_effect, cancelled)):
+            raise ValueError('explicit callable perception, effect and cancellation required')
+        from runtime.guarded_x11_v1 import compiled
+        from .review import present_result
+        root = Path(call_root)
+        root.mkdir(parents=True, exist_ok=False)
+        bridge = self.bridge
+        previous_sequence = bridge.sequence
+        # An exception can follow partial input. Keep cleanup on this same
+        # connection even when no terminal receipt reached the caller.
+        self.dispatch_attempted = True
+        try:
+            bridge.backend.configure_capture_artifacts(root/'images', retain_rgb=True)
+            receipt = compiled.run(bridge, interface, bindings, perceive=perceive,
+                                   verify_effect=verify_effect, cancelled=cancelled)
+        except Exception as error:
+            bridge.review_required = True
+            self.error = repr(error)
+            raise
+        feedback = None
+        if receipt['observations']:
+            try:
+                sequence = receipt['observations'][-1]['sequence']
+                if (type(sequence) is not int or sequence <= previous_sequence
+                        or sequence != bridge.sequence):
+                    raise ValueError('final graph observation no longer matches this owner')
+                source, _ = bridge.history[sequence]
+                feedback = present_result({
+                    'schema':'agent-interface/runtime-observation-v1',
+                    'status':'returned', 'observation_id':source['observation_id'],
+                    'observation':source['native'], 'input_dispatched':False,
+                    'side_effect_authority':False}, root, compact=True, report_refs=True)
+                if feedback.get('image_status') != 'image':
+                    bridge.review_required = True
+            except Exception as error:
+                bridge.review_required = True
+                feedback = {'image_status':'needs_review', 'image':None,
+                            'error':repr(error), 'replay_allowed':False,
+                            'scope':'Method receipt retained; final feedback unavailable. No replay.'}
+        return {'method_receipt':receipt, 'feedback':feedback,
+                'session':self.snapshot(), 'task_success':None, 'replay_allowed':False}
+
     def invoke_guarded(self, operation, arguments, call_root):
         cue = None
         if operation == 'guarded_input' and arguments.get('feedback') is not None:
