@@ -8,6 +8,7 @@
 - [`observation_injection_transform_6575_t0_v1/`](observation_injection_transform_6575_t0_v1/) — Issue #6575 allocation 01 retained STOP: six sham-crop provenance mismatches between frozen candidate and auditor oracle; no scientific disposition or susceptibility/model claim.
 - [`model_ambiguity_lifetime_6580_t0_v1/formal_01_20261002/REPORT.md`](model_ambiguity_lifetime_6580_t0_v1/formal_01_20261002/REPORT.md) — Issue #6580 allocation 01 passed independent audit for finite FULL/ZERO/EVENT history sets and move-order information labels (12 rows, 56 histories); no continuation-policy or real-interface model-lifetime claim.
 - [`model_ambiguity_lifetime_6580_t0b_v1/REPORT.md`](model_ambiguity_lifetime_6580_t0b_v1/REPORT.md) — Issue #6580 decision-level T0b passed its 48-row finite table with explicit safe-continuation witnesses; public nature-first theta branches are not exhaustive, and T1 remains HOLD.
+- [`model_ambiguity_lifetime_6580_t0c_v1/formal_01_20261002/REPORT.md`](model_ambiguity_lifetime_6580_t0c_v1/formal_01_20261002/REPORT.md) — T0c passed an exhaustive 66-branch finite audit (48 scenario keys; WSLc CPU container); T1 remains HOLD and no real-interface claim is made.
 
 - [`denial_aware_request_6422_t0_20261002_v1/`](denial_aware_request_6422_t0_20261002_v1/PRESERVATION_QUALIFICATION.md) — Issue #6422 A01: retained 14-case authored policy result only; missing deferral-principal and single-use/budget coverage means partial T0, not full completion or T1 basis.
 - [`denial_deferral_budget_6422_a03_20261002_v1/`](denial_deferral_budget_6422_a03_20261002_v1/REPORT.md) — Issue #6422 A03: same deferral receipt replay blocked under a new request ID; nine synthetic cases and five corruptions independently audited; method-scoped only.
@@ -394,6 +395,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`modal_call_return_6102_t0_20261001/`](modal_call_return_6102_t0_20261001/)
 - [`model_ambiguity_lifetime_6580_t0_v1/`](model_ambiguity_lifetime_6580_t0_v1/)
 - [`model_ambiguity_lifetime_6580_t0b_v1/`](model_ambiguity_lifetime_6580_t0b_v1/)
+- [`model_ambiguity_lifetime_6580_t0c_v1/`](model_ambiguity_lifetime_6580_t0c_v1/)
 - [`model_api_canary_6001_t0_a02_20261001/`](model_api_canary_6001_t0_a02_20261001/)
 - [`model_api_canary_detection_6001_t0_20261001/`](model_api_canary_detection_6001_t0_20261001/)
 - [`model_api_canary_interference_6001_t0_20261001/`](model_api_canary_interference_6001_t0_20261001/)
