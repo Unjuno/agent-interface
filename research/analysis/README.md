@@ -493,6 +493,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`same_cohort_negative_control_5841_t1_v1/`](same_cohort_negative_control_5841_t1_v1/)
 - [`same_image_reacquisition_6118_t0_20261002/`](same_image_reacquisition_6118_t0_20261002/)
 - [`scent_guided_hierarchy_5756_t0_v1/`](scent_guided_hierarchy_5756_t0_v1/)
+- [`scope_typed_singleflight_6501_t0_20261002/`](scope_typed_singleflight_6501_t0_20261002/)
+- [`scope_typed_singleflight_6501_t0b_20261002/`](scope_typed_singleflight_6501_t0b_20261002/)
 - [`selection_aware_shadow_audit_5681_t0_v1/`](selection_aware_shadow_audit_5681_t0_v1/)
 - [`selection_aware_shadow_audit_5681_t1_v1/`](selection_aware_shadow_audit_5681_t1_v1/)
 - [`selection_aware_verifier_5917_t1_v1/`](selection_aware_verifier_5917_t1_v1/)
