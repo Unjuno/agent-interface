@@ -14,7 +14,7 @@ python3 -m unittest discover -s research/analysis/human_return_oracle_blindness_
 
 The fixture builder refuses to overwrite a nonempty output root. Tests use temporary directories and host Python; these are construction checks, not formal candidate/auditor counts.
 
-The allocation-specific OrbStack private-Engine probe is retained under `construction/`. It verified public input visibility, auditor truth absence, read-only input/root filesystems, and cgroup `memory.max=536870912`, `cpu.max=100000 100000`. Its container was auto-removed and did not invoke candidate or auditor code.
+Allocation-specific OrbStack private-Engine probes are retained under `construction/`. They verified public input visibility, auditor truth absence, read-only input/root filesystems, cgroup `memory.max=536870912` and `cpu.max=100000 100000`, and non-root UID 65534 writing to a separate output bind mount. Both probe containers were auto-removed and did not invoke candidate or auditor code.
 
 ## Formal container sequence
 
