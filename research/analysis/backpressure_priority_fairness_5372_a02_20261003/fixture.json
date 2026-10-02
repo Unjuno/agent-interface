@@ -1,0 +1,32 @@
+{
+  "schema": "backpressure-priority-fairness-5372-a02-v1",
+  "issue": 5372,
+  "allocation": "SAFETY-BACKPRESSURE-PRIORITY-FAIRNESS-5372-A02-WSLC-20261003",
+  "horizon_ticks": 12,
+  "normal_service_per_tick": 1,
+  "offers_per_tick": [
+    "HIGH",
+    "LOW"
+  ],
+  "offer_ticks": 12,
+  "retry_after_ticks": 2,
+  "pressure_retry_queue_threshold": 4,
+  "fairness_age_ticks": 3,
+  "freshness_deadline_ticks": 4,
+  "safety_events": [
+    1,
+    4,
+    7,
+    10
+  ],
+  "safety_service_ticks": 1,
+  "safety_deadline_ticks": 1,
+  "arms": [
+    "FIFO_OPEN",
+    "PRIORITY_ONLY",
+    "PRESSURE_PRIORITY",
+    "PRESSURE_AGING"
+  ],
+  "success_definition": "A task is verified at the earliest completion of any verifier job for that task; later outstanding duplicate jobs are canceled. A verified result is fresh when latency is at most the configured freshness deadline. All offers remain in the denominator; unfinished or unadmitted work is UNKNOWN.",
+  "workload_fixed_across_arms": true
+}
