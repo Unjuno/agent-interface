@@ -1,0 +1,323 @@
+{
+  "allocation": "observer-ipc-freshness-20260926-r3",
+  "binary": {
+    "build_command": "gcc -O2 -Wall -Wextra -Werror -shared -fPIC native.c -lX11 -o native.so",
+    "native.so": {
+      "bytes": 16024,
+      "sha256": "e4b6d268a670005c6f5646db9c73786e6092688e25b3ea56c2f1fcf951df67cd"
+    }
+  },
+  "branch": "research/observer-ipc-freshness-3944-20260926-r3",
+  "construction": {
+    "scientific_pulse_cases": 0,
+    "status": "PASS_BATCH_WRAPPER_CONSTRUCTION",
+    "v2_static_construction_sha256": "de7caa5f93d16261620e9d9e10f5516d1d7e7fb520d7630c334bc4a3ffc826f5"
+  },
+  "decision": {
+    "age_limit_ns": 5000000,
+    "capture_margin_over_inline_thread_min": 3,
+    "exposure_max_ns": 8000000,
+    "exposure_min_ns": 4000000,
+    "process_thread_age_qualified_case_min": 9,
+    "process_thread_capture_min": 9
+  },
+  "files": {
+    "ENVIRONMENT.json": {
+      "bytes": 764,
+      "git_blob": "88e9628cca632be6ee3822fdae6f7d640d640a82",
+      "sha256": "84651219dffb9ede4f114d13d4e6d1d09c71eaa5ed1f820e960678a5d2fa8483"
+    },
+    "PLAN.md": {
+      "bytes": 2373,
+      "git_blob": "d2183d3f756c336a84ab1e728a51ea22a2344d3e",
+      "sha256": "efe6c0d038acceaa06db1258d67fa4cb87ec76a9099dde7d1a355982491b664e"
+    },
+    "assemble.py": {
+      "bytes": 1616,
+      "git_blob": "6660c5d52386851b79ef58a63259cae9d206d7d5",
+      "sha256": "9da0068b8e54351caca6aa7027a91c25600eac6147cf64a0d1538684f5b24f32"
+    },
+    "audit.py": {
+      "bytes": 5001,
+      "git_blob": "0186f08426ee440852bf63fae14f4067dca4669b",
+      "sha256": "fa683e1ec6a9b82314ff5086fb4c4aa3563098d19f0f56900db390e6130b2640"
+    },
+    "batch.py": {
+      "bytes": 2196,
+      "git_blob": "d1c5d6677f9c5f47a035afdca59e487f95050b51",
+      "sha256": "981fb3261ac063924d959518dd5022d37506f69dc8a0f74e4ba9984575a3c4cb"
+    },
+    "controls.py": {
+      "bytes": 2087,
+      "git_blob": "503dfc45ae5376dbf93800c125b511bd48a968c6",
+      "sha256": "acc5d5886bab29101985bf1cbd78408612a11c9901cce3dd5bb73cc253c9133b"
+    },
+    "native.c": {
+      "bytes": 2289,
+      "git_blob": "92b2ca11117f6bcb80f45dbac62e16d62bb4f6fd",
+      "sha256": "5297e1252113ab4d91c58bd5e7b9462af155979cc44259d42eb98c0d9ce35975"
+    },
+    "study.py": {
+      "bytes": 15610,
+      "git_blob": "fc4b2079aeeb68df37cb69956eb7a8ae735db93d",
+      "sha256": "b0832eed278e94b377e43d53a812e7cd0bc2f36354661c0ea6ab5234907d904f"
+    }
+  },
+  "formal_cases_before_freeze": 0,
+  "formal_invocations_before_freeze": 0,
+  "intake_main": "e2be13b9af699cfe9de8cc6d0ce2c32846cb6530",
+  "issue": 3944,
+  "parent_issue": 2117,
+  "path": "research/live_control/observer_ipc_freshness_v3",
+  "plan": {
+    "batch_count": 10,
+    "cadence_ns": 2000000,
+    "cases": [
+      {
+        "arm": "INLINE_IDLE",
+        "block": 0,
+        "case": "r3-b00-0-INLINE_IDLE",
+        "offset_ms": 50
+      },
+      {
+        "arm": "INLINE_THREAD",
+        "block": 0,
+        "case": "r3-b00-1-INLINE_THREAD",
+        "offset_ms": 50
+      },
+      {
+        "arm": "PROCESS_IDLE",
+        "block": 0,
+        "case": "r3-b00-2-PROCESS_IDLE",
+        "offset_ms": 50
+      },
+      {
+        "arm": "PROCESS_THREAD",
+        "block": 0,
+        "case": "r3-b00-3-PROCESS_THREAD",
+        "offset_ms": 50
+      },
+      {
+        "arm": "INLINE_THREAD",
+        "block": 1,
+        "case": "r3-b01-0-INLINE_THREAD",
+        "offset_ms": 52
+      },
+      {
+        "arm": "PROCESS_IDLE",
+        "block": 1,
+        "case": "r3-b01-1-PROCESS_IDLE",
+        "offset_ms": 52
+      },
+      {
+        "arm": "PROCESS_THREAD",
+        "block": 1,
+        "case": "r3-b01-2-PROCESS_THREAD",
+        "offset_ms": 52
+      },
+      {
+        "arm": "INLINE_IDLE",
+        "block": 1,
+        "case": "r3-b01-3-INLINE_IDLE",
+        "offset_ms": 52
+      },
+      {
+        "arm": "PROCESS_IDLE",
+        "block": 2,
+        "case": "r3-b02-0-PROCESS_IDLE",
+        "offset_ms": 54
+      },
+      {
+        "arm": "PROCESS_THREAD",
+        "block": 2,
+        "case": "r3-b02-1-PROCESS_THREAD",
+        "offset_ms": 54
+      },
+      {
+        "arm": "INLINE_IDLE",
+        "block": 2,
+        "case": "r3-b02-2-INLINE_IDLE",
+        "offset_ms": 54
+      },
+      {
+        "arm": "INLINE_THREAD",
+        "block": 2,
+        "case": "r3-b02-3-INLINE_THREAD",
+        "offset_ms": 54
+      },
+      {
+        "arm": "PROCESS_THREAD",
+        "block": 3,
+        "case": "r3-b03-0-PROCESS_THREAD",
+        "offset_ms": 56
+      },
+      {
+        "arm": "INLINE_IDLE",
+        "block": 3,
+        "case": "r3-b03-1-INLINE_IDLE",
+        "offset_ms": 56
+      },
+      {
+        "arm": "INLINE_THREAD",
+        "block": 3,
+        "case": "r3-b03-2-INLINE_THREAD",
+        "offset_ms": 56
+      },
+      {
+        "arm": "PROCESS_IDLE",
+        "block": 3,
+        "case": "r3-b03-3-PROCESS_IDLE",
+        "offset_ms": 56
+      },
+      {
+        "arm": "INLINE_IDLE",
+        "block": 4,
+        "case": "r3-b04-0-INLINE_IDLE",
+        "offset_ms": 58
+      },
+      {
+        "arm": "INLINE_THREAD",
+        "block": 4,
+        "case": "r3-b04-1-INLINE_THREAD",
+        "offset_ms": 58
+      },
+      {
+        "arm": "PROCESS_IDLE",
+        "block": 4,
+        "case": "r3-b04-2-PROCESS_IDLE",
+        "offset_ms": 58
+      },
+      {
+        "arm": "PROCESS_THREAD",
+        "block": 4,
+        "case": "r3-b04-3-PROCESS_THREAD",
+        "offset_ms": 58
+      },
+      {
+        "arm": "INLINE_IDLE",
+        "block": 5,
+        "case": "r3-b05-0-INLINE_IDLE",
+        "offset_ms": 50
+      },
+      {
+        "arm": "PROCESS_THREAD",
+        "block": 5,
+        "case": "r3-b05-1-PROCESS_THREAD",
+        "offset_ms": 50
+      },
+      {
+        "arm": "PROCESS_IDLE",
+        "block": 5,
+        "case": "r3-b05-2-PROCESS_IDLE",
+        "offset_ms": 50
+      },
+      {
+        "arm": "INLINE_THREAD",
+        "block": 5,
+        "case": "r3-b05-3-INLINE_THREAD",
+        "offset_ms": 50
+      },
+      {
+        "arm": "INLINE_THREAD",
+        "block": 6,
+        "case": "r3-b06-0-INLINE_THREAD",
+        "offset_ms": 52
+      },
+      {
+        "arm": "INLINE_IDLE",
+        "block": 6,
+        "case": "r3-b06-1-INLINE_IDLE",
+        "offset_ms": 52
+      },
+      {
+        "arm": "PROCESS_THREAD",
+        "block": 6,
+        "case": "r3-b06-2-PROCESS_THREAD",
+        "offset_ms": 52
+      },
+      {
+        "arm": "PROCESS_IDLE",
+        "block": 6,
+        "case": "r3-b06-3-PROCESS_IDLE",
+        "offset_ms": 52
+      },
+      {
+        "arm": "PROCESS_IDLE",
+        "block": 7,
+        "case": "r3-b07-0-PROCESS_IDLE",
+        "offset_ms": 54
+      },
+      {
+        "arm": "INLINE_THREAD",
+        "block": 7,
+        "case": "r3-b07-1-INLINE_THREAD",
+        "offset_ms": 54
+      },
+      {
+        "arm": "INLINE_IDLE",
+        "block": 7,
+        "case": "r3-b07-2-INLINE_IDLE",
+        "offset_ms": 54
+      },
+      {
+        "arm": "PROCESS_THREAD",
+        "block": 7,
+        "case": "r3-b07-3-PROCESS_THREAD",
+        "offset_ms": 54
+      },
+      {
+        "arm": "PROCESS_THREAD",
+        "block": 8,
+        "case": "r3-b08-0-PROCESS_THREAD",
+        "offset_ms": 56
+      },
+      {
+        "arm": "PROCESS_IDLE",
+        "block": 8,
+        "case": "r3-b08-1-PROCESS_IDLE",
+        "offset_ms": 56
+      },
+      {
+        "arm": "INLINE_THREAD",
+        "block": 8,
+        "case": "r3-b08-2-INLINE_THREAD",
+        "offset_ms": 56
+      },
+      {
+        "arm": "INLINE_IDLE",
+        "block": 8,
+        "case": "r3-b08-3-INLINE_IDLE",
+        "offset_ms": 56
+      },
+      {
+        "arm": "INLINE_IDLE",
+        "block": 9,
+        "case": "r3-b09-0-INLINE_IDLE",
+        "offset_ms": 58
+      },
+      {
+        "arm": "PROCESS_THREAD",
+        "block": 9,
+        "case": "r3-b09-1-PROCESS_THREAD",
+        "offset_ms": 58
+      },
+      {
+        "arm": "PROCESS_IDLE",
+        "block": 9,
+        "case": "r3-b09-2-PROCESS_IDLE",
+        "offset_ms": 58
+      },
+      {
+        "arm": "INLINE_THREAD",
+        "block": 9,
+        "case": "r3-b09-3-INLINE_THREAD",
+        "offset_ms": 58
+      }
+    ],
+    "cases_per_batch": 4,
+    "pulse_ns": 5000000,
+    "switch_s": 0.005,
+    "window_ns": 120000000
+  },
+  "schema": "observer-ipc-freshness-freeze-v3"
+}

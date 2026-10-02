@@ -1,7 +1,14 @@
 # Analytical research
 
+- [`frame_qualified_collateral_6533_t0_20261002/REPORT.md`](frame_qualified_collateral_6533_t0_20261002/REPORT.md) — Issue #6533 T0: 44/44 synthetic rows independently reconstructed; qualified-frame matched the full-state oracle, with a 79.1% aggregate accounted-byte reduction but a 2.13× regression at the smallest size. Method-scoped only; no GUI/product safety or performance claim.
+
 - [`claim_scoped_partial_verdict_6509_t0_20261002/REPORT.md`](claim_scoped_partial_verdict_6509_t0_20261002/REPORT.md) — Issue #6509: 45-row OrbStack candidate and independent audit passed the finite claim-ladder method gate; unsafe scalar comparator had 11 partial ALLOWs; logical early-reject advantage is simulation-only.
 - [`affordance_regression_envelope_6519_t0_20261002/formal_02_20261002/REPORT.md`](affordance_regression_envelope_6519_t0_20261002/formal_02_20261002/REPORT.md) — Issue #6519 T0b: native WSLc construction and independent audit passed `METHOD_PASS_SCOPED` on 72 synthetic rows; predecessor allocation 01 launch STOP retained separately; no model/GUI benefit claim.
+- [`retired_intention_cue_6556_t0_v1/`](retired_intention_cue_6556_t0_v1/) — Issue #6556: finite post-retirement cue lineage challenge; compare ordinary durable event-instance routing against generation/retirement fencing, preserve unresolved obligations, and return UNKNOWN when lineage is absent. Synthetic only.
+- [`observation_injection_transform_6575_t0_v1/`](observation_injection_transform_6575_t0_v1/) — Issue #6575 allocation 01 retained STOP: six sham-crop provenance mismatches between frozen candidate and auditor oracle; no scientific disposition or susceptibility/model claim.
+- [`model_ambiguity_lifetime_6580_t0_v1/formal_01_20261002/REPORT.md`](model_ambiguity_lifetime_6580_t0_v1/formal_01_20261002/REPORT.md) — Issue #6580 allocation 01 passed independent audit for finite FULL/ZERO/EVENT history sets and move-order information labels (12 rows, 56 histories); no continuation-policy or real-interface model-lifetime claim.
+- [`model_ambiguity_lifetime_6580_t0b_v1/REPORT.md`](model_ambiguity_lifetime_6580_t0b_v1/REPORT.md) — Issue #6580 decision-level T0b passed its 48-row finite table with explicit safe-continuation witnesses; public nature-first theta branches are not exhaustive, and T1 remains HOLD.
+- [`model_ambiguity_lifetime_6580_t0c_v1/formal_01_20261002/REPORT.md`](model_ambiguity_lifetime_6580_t0c_v1/formal_01_20261002/REPORT.md) — T0c passed an exhaustive 66-branch finite audit (48 scenario keys; WSLc CPU container); T1 remains HOLD and no real-interface claim is made.
 
 - [`denial_aware_request_6422_t0_20261002_v1/`](denial_aware_request_6422_t0_20261002_v1/PRESERVATION_QUALIFICATION.md) — Issue #6422 A01: retained 14-case authored policy result only; missing deferral-principal and single-use/budget coverage means partial T0, not full completion or T1 basis.
 - [`denial_deferral_budget_6422_a03_20261002_v1/`](denial_deferral_budget_6422_a03_20261002_v1/REPORT.md) — Issue #6422 A03: same deferral receipt replay blocked under a new request ID; nine synthetic cases and five corruptions independently audited; method-scoped only.
@@ -247,6 +254,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`conflict_aware_evidence_ledger_5305_t0/`](conflict_aware_evidence_ledger_5305_t0/)
 - [`conformal_verifier_risk_contract_5315_v1/`](conformal_verifier_risk_contract_5315_v1/)
 - [`consent_scoped_preparation_5793_t0_v1/`](consent_scoped_preparation_5793_t0_v1/)
+- [`constrained_interaction_testing_5330_t0_supplemental_raw_20260930/`](constrained_interaction_testing_5330_t0_supplemental_raw_20260930/)
 - [`constrained_interaction_testing_5330_t0_v1/`](constrained_interaction_testing_5330_t0_v1/)
 - [`constraint_elicitation_6380_t0_v1/`](constraint_elicitation_6380_t0_v1/)
 - [`constraint_response_normalization_6437_t0_v1/`](constraint_response_normalization_6437_t0_v1/)
@@ -265,6 +273,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`decision_opportunity_feedback_5986_b7q1_v1/`](decision_opportunity_feedback_5986_b7q1_v1/)
 - [`decision_sufficiency_5329_v1/`](decision_sufficiency_5329_v1/)
 - [`delay_gain_stability_6195_t0_host_20261001_01/`](delay_gain_stability_6195_t0_host_20261001_01/)
+- [`denial_aware_deferral_authority_6422_a02_20261002_v1/`](denial_aware_deferral_authority_6422_a02_20261002_v1/)
 - [`denial_aware_request_6422_t0_20261002_v1/`](denial_aware_request_6422_t0_20261002_v1/)
 - [`denial_aware_request_policy_6422_t0_v1/`](denial_aware_request_policy_6422_t0_v1/)
 - [`denial_deferral_budget_6422_a03_20261002_v1/`](denial_deferral_budget_6422_a03_20261002_v1/)
@@ -299,8 +308,10 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`exposed_success_audit_6367_t0_20261002/`](exposed_success_audit_6367_t0_20261002/)
 - [`failure_detector_5531_async_bound_t6_v1/`](failure_detector_5531_async_bound_t6_v1/)
 - [`feasible_attribution_6100_t0_20261001/`](feasible_attribution_6100_t0_20261001/)
+- [`feedback_necessity_5927_epistemic_controls_t0_20261002/`](feedback_necessity_5927_epistemic_controls_t0_20261002/)
 - [`feedback_necessity_5927_orbstack_t0_v1/`](feedback_necessity_5927_orbstack_t0_v1/)
 - [`focused_observation_request_successor_1935_v1/`](focused_observation_request_successor_1935_v1/)
+- [`frame_qualified_collateral_6533_t0_20261002/`](frame_qualified_collateral_6533_t0_20261002/)
 - [`full_golden_ipc_2813_v4/`](full_golden_ipc_2813_v4/)
 - [`full_golden_ipc_2813_v5/`](full_golden_ipc_2813_v5/)
 - [`generation_bound_container_revalidation_2166_v1/`](generation_bound_container_revalidation_2166_v1/)
@@ -383,6 +394,9 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`mission_survival_5962_t1_eligibility_20261001_02/`](mission_survival_5962_t1_eligibility_20261001_02/)
 - [`mixed_criticality_temporal_feasibility_5557_t15_transport_v1/`](mixed_criticality_temporal_feasibility_5557_t15_transport_v1/)
 - [`modal_call_return_6102_t0_20261001/`](modal_call_return_6102_t0_20261001/)
+- [`model_ambiguity_lifetime_6580_t0_v1/`](model_ambiguity_lifetime_6580_t0_v1/)
+- [`model_ambiguity_lifetime_6580_t0b_v1/`](model_ambiguity_lifetime_6580_t0b_v1/)
+- [`model_ambiguity_lifetime_6580_t0c_v1/`](model_ambiguity_lifetime_6580_t0c_v1/)
 - [`model_api_canary_6001_t0_a02_20261001/`](model_api_canary_6001_t0_a02_20261001/)
 - [`model_api_canary_detection_6001_t0_20261001/`](model_api_canary_detection_6001_t0_20261001/)
 - [`model_api_canary_interference_6001_t0_20261001/`](model_api_canary_interference_6001_t0_20261001/)
@@ -542,6 +556,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`temporal_ring_disambiguation_2045_v1/`](temporal_ring_disambiguation_2045_v1/)
 - [`temporal_ring_provenance_repair_successor_2053_v1/`](temporal_ring_provenance_repair_successor_2053_v1/)
 - [`temporal_sample_cost_identifiability_v1/`](temporal_sample_cost_identifiability_v1/)
+- [`timing_receipt_6532_t0_20261002/`](timing_receipt_6532_t0_20261002/)
 - [`tiny_predicate_specialist_4218_v1/`](tiny_predicate_specialist_4218_v1/)
 - [`tiny_visual_equivariant_2564_v1/`](tiny_visual_equivariant_2564_v1/)
 - [`tiny_visual_extent_init_sensitivity_4817_v1/`](tiny_visual_extent_init_sensitivity_4817_v1/)

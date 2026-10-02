@@ -43,6 +43,46 @@ class PublicSummaryTests(unittest.TestCase):
             (root/'report.json').write_bytes(raw+b' ')
             self.assertEqual(summarize_cli_dispatch(full, root), full)
 
+    def test_arbitrary_retained_report_summary_keeps_exact_retrieval_and_image(self):
+        import hashlib
+        from runtime.cli_v1.public_summary import summarize_retained_dispatch
+        full = fixture('paced_dispatch_review.json')
+        full.pop('call_id'); full.pop('call_directory')
+        full['image'] = {'type': 'image', 'mimeType': 'image/png', 'data': 'unchanged'}
+        raw = json.dumps(full['receipt']['source']['raw_report']).encode()
+        full['receipt']['source'].update(bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest())
+        with tempfile.TemporaryDirectory() as td:
+            report = Path(td)/'002-raw.json'
+            report.write_bytes(raw)
+            before = copy.deepcopy(full)
+            summary = summarize_retained_dispatch(full, report, td)
+            self.assertEqual(full, before)
+            self.assertEqual(summary['receipt']['schema'], SCHEMA)
+            self.assertEqual(summary['image'], full['image'])
+            self.assertEqual(summary['outcome_summary'], full['outcome_summary'])
+            args = summary['presentation']['retrieve']['arguments']
+            self.assertEqual(args['report'], str(report))
+            self.assertEqual(args['expected_report_sha256'], hashlib.sha256(raw).hexdigest())
+            self.assertEqual(args['run_directory'], td)
+            self.assertTrue(args['no_image'])
+            self.assertFalse((Path(td)/'report.json').exists())
+            report.write_bytes(raw+b' ')
+            self.assertEqual(summarize_retained_dispatch(full, report, td), full)
+            report.unlink()
+            self.assertEqual(summarize_retained_dispatch(full, report, td), full)
+
+    def test_arbitrary_retained_report_failure_preserves_full_evidence(self):
+        import hashlib
+        from runtime.cli_v1.public_summary import summarize_retained_dispatch
+        full = fixture('paced_dispatch_review.json')
+        full.pop('call_id'); full.pop('call_directory')
+        full['receipt']['source']['raw_report']['result']['recovery_required'] = True
+        raw = json.dumps(full['receipt']['source']['raw_report']).encode()
+        full['receipt']['source'].update(bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest())
+        with tempfile.TemporaryDirectory() as td:
+            report = Path(td)/'failed.json'; report.write_bytes(raw)
+            self.assertEqual(summarize_retained_dispatch(full, report, td), full)
+
     def test_cli_presentation_keeps_retention_and_falls_back_on_persistence_failure(self):
         import hashlib,io
         from runtime.cli_v1.__main__ import _present_result

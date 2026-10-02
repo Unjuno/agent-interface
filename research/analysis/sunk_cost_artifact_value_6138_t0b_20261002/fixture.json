@@ -1,0 +1,14 @@
+{
+  "schema": "sunk-cost-artifact-value-t0b-v1",
+  "cards": [
+    {"id":"baseline_low_sunk","prior_irrecoverable_spend":2,"present_state":"recovery-R1","surviving_artifacts":[],"artifact_applicability":"none","future_success_evidence":{"continue":"1/2","switch":"7/10"},"remaining_deadline":20,"remaining_budget":15,"safe_actions":["CONTINUE","SWITCH"],"options":{"CONTINUE":{"success_probability":"1/2","reward":10,"future_cost":1},"SWITCH":{"success_probability":"7/10","reward":10,"future_cost":2}}},
+    {"id":"same_forward_high_sunk","prior_irrecoverable_spend":200,"present_state":"recovery-R1","surviving_artifacts":[],"artifact_applicability":"none","future_success_evidence":{"continue":"1/2","switch":"7/10"},"remaining_deadline":20,"remaining_budget":15,"safe_actions":["CONTINUE","SWITCH"],"options":{"CONTINUE":{"success_probability":"1/2","reward":10,"future_cost":1},"SWITCH":{"success_probability":"7/10","reward":10,"future_cost":2}}},
+    {"id":"verified_reusable_artifact","prior_irrecoverable_spend":2,"present_state":"recovery-R1","surviving_artifacts":[{"id":"compiled-route-A","status":"verified","applicable_to":"recovery-R1"}],"artifact_applicability":"verified","future_success_evidence":{"continue":"9/10","switch":"7/10"},"remaining_deadline":20,"remaining_budget":15,"safe_actions":["CONTINUE","SWITCH"],"options":{"CONTINUE":{"success_probability":"9/10","reward":10,"future_cost":1},"SWITCH":{"success_probability":"7/10","reward":10,"future_cost":2}}},
+    {"id":"stale_nonapplicable_artifact","prior_irrecoverable_spend":200,"present_state":"recovery-R1","surviving_artifacts":[{"id":"compiled-route-old-layout","status":"stale","applicable_to":"recovery-R0"}],"artifact_applicability":"invalid","future_success_evidence":{"continue":"1/2","switch":"7/10"},"remaining_deadline":20,"remaining_budget":15,"safe_actions":["CONTINUE","SWITCH"],"options":{"CONTINUE":{"success_probability":"1/2","reward":10,"future_cost":1},"SWITCH":{"success_probability":"7/10","reward":10,"future_cost":2}}}
+  ],
+  "pairs": [
+    {"id":"sunk_only","left":"baseline_low_sunk","right":"same_forward_high_sunk","expect_forward_equivalent":true},
+    {"id":"verified_artifact_changes_forward_value","left":"baseline_low_sunk","right":"verified_reusable_artifact","expect_forward_equivalent":false},
+    {"id":"stale_artifact_is_not_future_value","left":"baseline_low_sunk","right":"stale_nonapplicable_artifact","expect_forward_equivalent":false}
+  ]
+}

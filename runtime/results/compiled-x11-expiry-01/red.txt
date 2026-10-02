@@ -1,0 +1,140 @@
+EEEEEEEEE.EEE.........
+======================================================================
+ERROR: test_caller_cannot_extend_existing_five_second_cap (runtime.guarded_x11_v1.test_deadline.CallerDeadlineTests.test_caller_cannot_extend_existing_five_second_cap)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_deadline.py", line 155, in test_caller_cannot_extend_existing_five_second_cap
+    self.invoke('click', 10_000_000_000)
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_deadline.py", line 141, in invoke
+    return getattr(self.bridge, interaction)('field', [0,0], tail=tail, expires_at_ns=expires)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: NativeHandleBridge.click() got an unexpected keyword argument 'expires_at_ns'
+
+======================================================================
+ERROR: test_capture_cost_cannot_leave_dispatch_with_expired_authority (runtime.guarded_x11_v1.test_deadline.CallerDeadlineTests.test_capture_cost_cannot_leave_dispatch_with_expired_authority)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_deadline.py", line 188, in test_capture_cost_cannot_leave_dispatch_with_expired_authority
+    row = self.invoke('click', 11_000_000)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_deadline.py", line 141, in invoke
+    return getattr(self.bridge, interaction)('field', [0,0], tail=tail, expires_at_ns=expires)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: NativeHandleBridge.click() got an unexpected keyword argument 'expires_at_ns'
+
+======================================================================
+ERROR: test_expired_caller_deadline_refuses_before_capture_or_dispatch (runtime.guarded_x11_v1.test_deadline.CallerDeadlineTests.test_expired_caller_deadline_refuses_before_capture_or_dispatch) (expires=999999)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_deadline.py", line 162, in test_expired_caller_deadline_refuses_before_capture_or_dispatch
+    row = self.invoke('click', expires)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_deadline.py", line 141, in invoke
+    return getattr(self.bridge, interaction)('field', [0,0], tail=tail, expires_at_ns=expires)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: NativeHandleBridge.click() got an unexpected keyword argument 'expires_at_ns'
+
+======================================================================
+ERROR: test_expired_caller_deadline_refuses_before_capture_or_dispatch (runtime.guarded_x11_v1.test_deadline.CallerDeadlineTests.test_expired_caller_deadline_refuses_before_capture_or_dispatch) (expires=1000000)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_deadline.py", line 162, in test_expired_caller_deadline_refuses_before_capture_or_dispatch
+    row = self.invoke('click', expires)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_deadline.py", line 141, in invoke
+    return getattr(self.bridge, interaction)('field', [0,0], tail=tail, expires_at_ns=expires)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: NativeHandleBridge.click() got an unexpected keyword argument 'expires_at_ns'
+
+======================================================================
+ERROR: test_invalid_deadline_does_not_activate_guard (runtime.guarded_x11_v1.test_deadline.CallerDeadlineTests.test_invalid_deadline_does_not_activate_guard) (expires=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_deadline.py", line 173, in test_invalid_deadline_does_not_activate_guard
+    self.invoke('click', expires)
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_deadline.py", line 141, in invoke
+    return getattr(self.bridge, interaction)('field', [0,0], tail=tail, expires_at_ns=expires)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: NativeHandleBridge.click() got an unexpected keyword argument 'expires_at_ns'
+
+======================================================================
+ERROR: test_invalid_deadline_does_not_activate_guard (runtime.guarded_x11_v1.test_deadline.CallerDeadlineTests.test_invalid_deadline_does_not_activate_guard) (expires=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_deadline.py", line 173, in test_invalid_deadline_does_not_activate_guard
+    self.invoke('click', expires)
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_deadline.py", line 141, in invoke
+    return getattr(self.bridge, interaction)('field', [0,0], tail=tail, expires_at_ns=expires)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: NativeHandleBridge.click() got an unexpected keyword argument 'expires_at_ns'
+
+======================================================================
+ERROR: test_invalid_deadline_does_not_activate_guard (runtime.guarded_x11_v1.test_deadline.CallerDeadlineTests.test_invalid_deadline_does_not_activate_guard) (expires=-1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_deadline.py", line 173, in test_invalid_deadline_does_not_activate_guard
+    self.invoke('click', expires)
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_deadline.py", line 141, in invoke
+    return getattr(self.bridge, interaction)('field', [0,0], tail=tail, expires_at_ns=expires)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: NativeHandleBridge.click() got an unexpected keyword argument 'expires_at_ns'
+
+======================================================================
+ERROR: test_invalid_deadline_does_not_activate_guard (runtime.guarded_x11_v1.test_deadline.CallerDeadlineTests.test_invalid_deadline_does_not_activate_guard) (expires=1.5)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_deadline.py", line 173, in test_invalid_deadline_does_not_activate_guard
+    self.invoke('click', expires)
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_deadline.py", line 141, in invoke
+    return getattr(self.bridge, interaction)('field', [0,0], tail=tail, expires_at_ns=expires)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: NativeHandleBridge.click() got an unexpected keyword argument 'expires_at_ns'
+
+======================================================================
+ERROR: test_invalid_deadline_does_not_activate_guard (runtime.guarded_x11_v1.test_deadline.CallerDeadlineTests.test_invalid_deadline_does_not_activate_guard) (expires='10000000')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_deadline.py", line 173, in test_invalid_deadline_does_not_activate_guard
+    self.invoke('click', expires)
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_deadline.py", line 141, in invoke
+    return getattr(self.bridge, interaction)('field', [0,0], tail=tail, expires_at_ns=expires)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: NativeHandleBridge.click() got an unexpected keyword argument 'expires_at_ns'
+
+======================================================================
+ERROR: test_shorter_caller_deadline_reaches_program_and_backend_guard (runtime.guarded_x11_v1.test_deadline.CallerDeadlineTests.test_shorter_caller_deadline_reaches_program_and_backend_guard) (interaction='click')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_deadline.py", line 148, in test_shorter_caller_deadline_reaches_program_and_backend_guard
+    self.invoke(interaction, 11_000_000)
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_deadline.py", line 141, in invoke
+    return getattr(self.bridge, interaction)('field', [0,0], tail=tail, expires_at_ns=expires)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: NativeHandleBridge.click() got an unexpected keyword argument 'expires_at_ns'
+
+======================================================================
+ERROR: test_shorter_caller_deadline_reaches_program_and_backend_guard (runtime.guarded_x11_v1.test_deadline.CallerDeadlineTests.test_shorter_caller_deadline_reaches_program_and_backend_guard) (interaction='move')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_deadline.py", line 148, in test_shorter_caller_deadline_reaches_program_and_backend_guard
+    self.invoke(interaction, 11_000_000)
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_deadline.py", line 141, in invoke
+    return getattr(self.bridge, interaction)('field', [0,0], tail=tail, expires_at_ns=expires)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: NativeHandleBridge.move() got an unexpected keyword argument 'expires_at_ns'
+
+======================================================================
+ERROR: test_shorter_caller_deadline_reaches_program_and_backend_guard (runtime.guarded_x11_v1.test_deadline.CallerDeadlineTests.test_shorter_caller_deadline_reaches_program_and_backend_guard) (interaction='keyboard')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_deadline.py", line 148, in test_shorter_caller_deadline_reaches_program_and_backend_guard
+    self.invoke(interaction, 11_000_000)
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/test_deadline.py", line 141, in invoke
+    return getattr(self.bridge, interaction)('field', [0,0], tail=tail, expires_at_ns=expires)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: NativeHandleBridge.keyboard() got an unexpected keyword argument 'expires_at_ns'
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.012s
+
+FAILED (errors=12)

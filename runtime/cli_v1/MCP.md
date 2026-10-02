@@ -333,6 +333,17 @@ Public MCP tools reject unknown top-level argument names before invoking the ope
 
 In guarded-x11 mode, interface_guarded_mint_many accepts one source_sequence and 1..8 references, each containing alias, point=[screen_x,screen_y], and region_size=[width,height]. Use the exact delivered source you inspected. Each alias must match [a-z][a-z0-9_]{0,31}; points are integer pairs and region dimensions are 4..96 pixels. Unknown nested fields and duplicate aliases refuse before any registration. This reuses the existing bridge mint operation; it does not capture, click, infer targets, acknowledge UI state, or weaken later input guards.
 
+Successful single mint replies and each successful `minted` entry include
+`lifetime`: `clock="time.monotonic_ns"`, `minted_ns`, `expires_ns`,
+`capture_freshness_ms` and `authority_granted=false`. Compare the deadline only
+with `interface_clock` from the same running execution host. References expire
+300 seconds after minting; each input still independently checks fresh captures,
+focus, exact pixels and the point immediately before pressing. A deadline in the
+future is not evidence of pixel validity or input authority. Retained results
+return the original lifetime and never renew it. After a pause, explicitly
+observe and review the screen, then mint a new unique alias if needed; there is
+no automatic renewal, input retry or extension of the original reference.
+
 Successful entries return alias/offset pairs under minted. Registration is sequential and not atomic. If minting raises, the reply retains earlier successes, identifies failed_index and failed_alias with failed_alias_state="unknown", and lists unattempted_aliases. Registration may have occurred before a persistence failure, so do not replay the batch or reuse the failed alias. Inspect the outcome and explicitly choose fresh references if needed. Full retained results remain available without reminting.
 
 This transport option reduces the number of registration requests for a supplied group by construction. It does not establish lower model latency, token cost, or generic task completion; primary GUI validation and matched measurement are separate requirements.
@@ -525,3 +536,46 @@ The relay host can retain its exact request/reply. It does not prove freshness,
 application readiness, task success, suspend continuity or hard-real-time timing.
 A clock reply remains metadata even after an input session has closed; it cannot
 reopen that session or clear a recovery block.
+
+## Explicit post-dispatch target context and capture region
+
+In `persistent-x11` mode, `interface_dispatch` accepts the existing optional
+`inspect_after`, `inspect_after_region` and `inspect_after_wait_ms` arguments.
+`inspect_after` names an actual configured target. Without a region, the
+inspection returns target-review metadata only. With a region, it captures once
+in `screen_physical_px` after completed input and verified neutral releases,
+then rechecks the target evidence. The original input outcome is retained even
+if this later inspection fails; do not replay the input to recover an image.
+Unsupported modes/targets and malformed options are rejected before dispatch.
+
+These are an option fragment to add to a complete authored dispatch request,
+not a standalone input program or portable coordinates:
+
+```json
+{"inspect_after":"configured-name","inspect_after_region":[0,165,290,116],"inspect_after_wait_ms":100}
+```
+
+Choose bounds from the actual layout and the cues needed for the next decision.
+The wait is an optional integer0..1000ms, defaults to no added wait, and occurs
+only after verified release. It does not extend the input lease or acknowledge
+redraw. `capture_wait.update_observed` remains unknown. Metadata sampled after
+input and captured pixels are not an atomic application-state guarantee.
+
+For a successful selected later capture, `image_reference` identifies
+`post_dispatch_observation_id`, the region and `capture_phase=after_dispatch_release`.
+Forward the selected original image block with its outcome/reference metadata.
+A screen ROI local point[u,v] maps to screen[region.x+u,region.y+v] at original
+pixel dimensions. Cropping does not rebind the target or issue action authority.
+Use the explicit one-use `interface_review_target` request only after reviewing
+its evidence; expiry/identity/revision are checked again. Retained lookup does
+not renew it. If needed cues are outside a crop, explicitly request a wider
+read-only observation; do not infer task completion from the cropped cells.
+
+[Fresh primary region use](../results/explicit-region-admission-01/README.md)
+used the public Python counterparts with small cell feedback, a larger format
+modal view and full-frame final feedback. It saved149/857 correctly but still
+needed one explicit final observation because the first final frame was stale.
+[Direct-block failure](../results/direct-selected-image-01/README.md) preserves a
+separate initial partial-presentation STOP. These cases do not qualify generic
+render reliability, wait defaults, speed or token savings, and do not certify
+provider MCP conversion of the Python route.

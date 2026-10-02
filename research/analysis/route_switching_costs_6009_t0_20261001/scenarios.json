@@ -1,0 +1,44 @@
+{
+  "schema": "route-switching-6009-scenarios-v1",
+  "allocation": "ROUTE-SWITCHING-6009-T0-20261001-01",
+  "main_sha": "b2e7221c3c374cacc7037515f2df1508e965ac81",
+  "cost_unit": "abstract_integer_cost",
+  "routes": ["A", "B", "C"],
+  "transition": {
+    "decision_cost": 1,
+    "initial": {"A": 0, "B": 2, "C": 4},
+    "between": {
+      "A": {"A": 0, "B": 8, "C": 4},
+      "B": {"A": 4, "B": 0, "C": 2},
+      "C": {"A": 9, "B": 3, "C": 0}
+    },
+    "terminal_to_A": {"A": 0, "B": 9, "C": 9}
+  },
+  "scenarios": [
+    {"id":"alternating_five","deadline":40,"terminal_handoff":"A","tasks":[
+      {"id":"p1","kind":"P","effect":"alt-p1","service":{"A":5,"B":1,"C":2},"eligible":{"A":"PASS","B":"PASS","C":"PASS"},"proof":{"A":"PASS","B":"PASS","C":"PASS"}},
+      {"id":"q1","kind":"Q","effect":"alt-q1","service":{"A":1,"B":5,"C":2},"eligible":{"A":"PASS","B":"PASS","C":"PASS"},"proof":{"A":"PASS","B":"PASS","C":"PASS"}},
+      {"id":"p2","kind":"P","effect":"alt-p2","service":{"A":5,"B":1,"C":2},"eligible":{"A":"PASS","B":"PASS","C":"PASS"},"proof":{"A":"PASS","B":"PASS","C":"PASS"}},
+      {"id":"q2","kind":"Q","effect":"alt-q2","service":{"A":1,"B":5,"C":2},"eligible":{"A":"PASS","B":"PASS","C":"PASS"},"proof":{"A":"PASS","B":"PASS","C":"PASS"}},
+      {"id":"p3","kind":"P","effect":"alt-p3","service":{"A":5,"B":1,"C":2},"eligible":{"A":"PASS","B":"PASS","C":"PASS"},"proof":{"A":"PASS","B":"PASS","C":"PASS"}}
+    ]},
+    {"id":"persistent_p_family","deadline":40,"terminal_handoff":"A","tasks":[
+      {"id":"p1","kind":"P","effect":"persist-p1","service":{"A":5,"B":1,"C":2},"eligible":{"A":"PASS","B":"PASS","C":"PASS"},"proof":{"A":"PASS","B":"PASS","C":"PASS"}},
+      {"id":"p2","kind":"P","effect":"persist-p2","service":{"A":5,"B":1,"C":2},"eligible":{"A":"PASS","B":"PASS","C":"PASS"},"proof":{"A":"PASS","B":"PASS","C":"PASS"}},
+      {"id":"p3","kind":"P","effect":"persist-p3","service":{"A":5,"B":1,"C":2},"eligible":{"A":"PASS","B":"PASS","C":"PASS"},"proof":{"A":"PASS","B":"PASS","C":"PASS"}},
+      {"id":"p4","kind":"P","effect":"persist-p4","service":{"A":5,"B":1,"C":2},"eligible":{"A":"PASS","B":"PASS","C":"PASS"},"proof":{"A":"PASS","B":"PASS","C":"PASS"}}
+    ]},
+    {"id":"binding_expiry","deadline":40,"terminal_handoff":"A","tasks":[
+      {"id":"p1","kind":"P","effect":"expiry-p1","service":{"A":5,"B":1,"C":2},"eligible":{"A":"PASS","B":"PASS","C":"PASS"},"proof":{"A":"PASS","B":"PASS","C":"PASS"}},
+      {"id":"p2","kind":"P","effect":"expiry-p2","service":{"A":5,"B":1,"C":2},"eligible":{"A":"PASS","B":"PASS","C":"PASS"},"proof":{"A":"PASS","B":"PASS","C":"PASS"}},
+      {"id":"r1","kind":"R","effect":"expiry-r1","service":{"A":10,"B":1,"C":1},"eligible":{"A":"PASS","B":"UNKNOWN","C":"PASS"},"proof":{"A":"PASS","B":"PASS","C":"PASS"}},
+      {"id":"r2","kind":"R","effect":"expiry-r2","service":{"A":10,"B":1,"C":1},"eligible":{"A":"PASS","B":"UNKNOWN","C":"PASS"},"proof":{"A":"PASS","B":"PASS","C":"PASS"}}
+    ]},
+    {"id":"unknown_effect_proof","deadline":20,"terminal_handoff":"A","tasks":[
+      {"id":"proof1","kind":"P","effect":"proof-required","service":{"A":6,"B":3,"C":0},"eligible":{"A":"PASS","B":"PASS","C":"PASS"},"proof":{"A":"PASS","B":"PASS","C":"UNKNOWN"}}
+    ]},
+    {"id":"deadline_no_safe_completion","deadline":1,"terminal_handoff":"A","tasks":[
+      {"id":"deadline1","kind":"P","effect":"deadline-effect","service":{"A":5,"B":1,"C":0},"eligible":{"A":"PASS","B":"PASS","C":"PASS"},"proof":{"A":"PASS","B":"PASS","C":"UNKNOWN"}}
+    ]}
+  ]
+}

@@ -1,0 +1,11 @@
+Container candidate (pre-fix) exit 1:
+Traceback (most recent call last):
+  File "/repo/research/doom/results/map01-coast-liveness-trajectory-audit-v1/audit.py", line 111, in <module>
+    main()
+  File "/repo/research/doom/results/map01-coast-liveness-trajectory-audit-v1/audit.py", line 89, in main
+    runs = [analyze(name) for name in RUNS]
+  File "/repo/research/doom/results/map01-coast-liveness-trajectory-audit-v1/audit.py", line 43, in analyze
+    assert all(step["op"] == "coast" for step in command["steps"]), ident
+AssertionError: cover-1
+
+Disposition: expected schema-discovery failure; cover-1 contains a non-coast motor step. Candidate updated to classify command steps before retaining any measurement. No source data changed and no live allocation occurred.

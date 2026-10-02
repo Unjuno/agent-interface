@@ -57,6 +57,26 @@ class MCPSessionOwner:
             self.error = repr(error)
             raise
 
+    def dispatch(self, program, *, current_observation_seq, current_binding_revision,
+                 capture_directory=None):
+        """Invoke the public API once while retaining this connection's cleanup duty.
+
+        Source and lease stay caller-authored. No inspection, replay, renewal,
+        recovery reset or task-success inference is added. Exceptions can follow
+        partial input; close still attempts release against this same owner.
+        """
+        from . import api
+        session = self.get()
+        if (type(current_binding_revision) is not int
+                or current_binding_revision != self.binding_revision):
+            return {'status': 'invalid_request', 'error': 'SESSION_BINDING_REVISION_MISMATCH',
+                    'input_dispatched': False, 'operation_invoked': False}
+        self.dispatch_attempted = True
+        return api.dispatch_in_session(session, program,
+            current_observation_seq=current_observation_seq,
+            current_binding_revision=current_binding_revision,
+            capture_directory=capture_directory)
+
     def inspect_target(self, target, screen_region=None, capture_directory=None):
         self.target_review = None
         if target not in self.targets:
@@ -64,6 +84,7 @@ class MCPSessionOwner:
         session = self.get()
         evidence = inspect_focused_target(session.backend, self.family_roots[target])
         observation = None
+        recheck_evidence = None
         if screen_region is not None:
             observation = observe_in_session(session, target=target,
                 frame='screen_physical_px', region=screen_region,
@@ -73,13 +94,15 @@ class MCPSessionOwner:
                 failure = 'TARGET_CAPTURE_FAILED'
             else:
                 try:
-                    if inspect_focused_target(session.backend, self.family_roots[target]) != evidence:
+                    recheck_evidence = inspect_focused_target(session.backend, self.family_roots[target])
+                    if recheck_evidence != evidence:
                         failure = 'TARGET_CHANGED_DURING_CAPTURE'
                 except Exception as error:
                     failure = 'TARGET_RECHECK_FAILED: ' + repr(error)
             if failure:
                 return {'status': 'needs_review', 'error': failure,
-                        'evidence': evidence, 'observation_report': observation,
+                        'evidence': evidence, 'recheck_evidence': recheck_evidence,
+                        'observation_report': observation,
                         'input_dispatched': False, 'authority_granted': False}
         review = {'review_id': uuid.uuid4().hex, 'target': target,
                   'binding_revision': self.binding_revision, 'evidence': evidence,
@@ -100,8 +123,8 @@ class MCPSessionOwner:
             row['observation_report'] = observation
         return row
 
-    def inspect_after_dispatch(self, report, target):
-        """Optional metadata only; never replace execution evidence or refresh its image."""
+    def inspect_after_dispatch(self, report, target, screen_region=None, capture_directory=None, wait_ms=None):
+        """Read-only inspection/capture after completed released input; no replay."""
         started = time.monotonic_ns()
         result = report.get('result', {})
         releases = result.get('execution', {}).get('releases', [])
@@ -117,10 +140,24 @@ class MCPSessionOwner:
         if not ready:
             inspection = {'status': 'skipped', 'reason': 'DISPATCH_NOT_COMPLETED_AND_RELEASED'}
         else:
+            capture_wait = None
             try:
-                inspection = self.inspect_target(target)
+                if wait_ms is not None:
+                    if screen_region is None or type(wait_ms) is not int or not 0 <= wait_ms <= 1000:
+                        raise ValueError('invalid post-release capture wait')
+                    capture_wait = {'requested_ms': wait_ms, 'started_ns': time.monotonic_ns(),
+                                    'completed': False, 'update_observed': None}
+                    try:
+                        time.sleep(wait_ms / 1000)
+                        capture_wait['completed'] = True
+                    finally:
+                        capture_wait['ended_ns'] = time.monotonic_ns()
+                inspection = self.inspect_target(target, screen_region=screen_region,
+                                                 capture_directory=capture_directory)
             except Exception as error:
                 inspection = {'status': 'needs_review', 'error': repr(error)}
+            if capture_wait is not None:
+                inspection['capture_wait'] = capture_wait
         return dict(inspection, started_ns=started, ended_ns=time.monotonic_ns(),
                     input_dispatched=False, authority_granted=False,
                     scope='Metadata sampled after dispatch. Not atomically bound to its image; '

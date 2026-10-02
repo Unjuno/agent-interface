@@ -36,6 +36,19 @@ Integration work should make the composed boundary explicit: runtime + caller, a
 
 Child directory names are retained provenance, not a canonical architecture tree. Use each experiment's report for the exact composition and decision rule.
 
+- [Tk first-character #5260 allocation proposal and construction record](tk_firstchar_5260_a01_20261002/PREREG.md) — 96-row GUI allocation is explicitly **HOLD_NOT_AUTHORIZED**; three construction-only probes are retained, with smoke-03 passing the scoped runner/auditor gate. No formal first-character trials were run.
+
+## Preserved older Draft publications
+
+- [Writer selection scope #4425 / Draft PR #4446](writer_selection_scope_w4m8_v1/ARCHIVAL_QUALIFICATION.md) — seven exact published files retained; complete 401-file raw corpus missing, so this is not an independent reproduction or qualification of the reported PASS.
+- [Router membership #4430 / Draft PR #4452](router_membership_q5m8_v1/ARCHIVAL_QUALIFICATION.md) — three exact STOP metadata files retained; complete 457-file capsule missing and the historical result is not independently reproduced here.
+
+## Freeze-only records with unrecoverable source/raw
+
+- [Text suffix recovery #4040](text_suffix_recovery_v1/ARCHIVAL_QUALIFICATION.md) — exact preformal freeze retained for provenance; Issue-reported 48-case PASS remains HOLD because sources, raw batches, audit receipts, and predecessor corpus are unavailable.
+- [Live GUI dependency ledger #2317](live_gui_dependency_ledger_2317_v1/ARCHIVAL_QUALIFICATION.md) — exact four-file freeze/plan/environment record retained; Issue-reported 36-case PASS remains unverified because runner/auditor source and raw/audit evidence are absent.
+- [Referenced-image retention budget #4064](referenced_image_retention_budget_v1/ARCHIVAL_QUALIFICATION.md), [text-consumption context #4061](text_consumption_context_9bd1_v1/ARCHIVAL_QUALIFICATION.md), [outcome-poll snapshot #4063](../verification/outcome_poll_snapshot_d19a_v1/ARCHIVAL_QUALIFICATION.md), [key-event reduction #4059](key_event_reduction_2107_v1/ARCHIVAL_QUALIFICATION.md), and [O2 cost attribution #4065](../measurement/o2_cost_attribution_v1/ARCHIVAL_QUALIFICATION.md) — exact freeze metadata only; see each qualification for reported disposition and missing source/raw gate. No result is independently reproduced or promoted.
+
 ## Interpretation
 
 - Use [`../../RESEARCH.md`](../../RESEARCH.md) for the evidence ledger and claims taxonomy.
@@ -64,11 +77,14 @@ Historical and superseded integration paths remain in place when their exact nam
 
 ## Retained construction and precheck archives
 
+- [Tk validation-lifecycle #4367 / Draft PR #4375 metadata archive](tk_validation_lifecycle_v9m3_v1/ARCHIVAL_QUALIFICATION.md): three exact published metadata files, not executable source or independently established construction/formal results; STOP_PRE_ALLOCATION_PUBLICATION and HOLD_PENDING_PERMITTED_PUBLICATION remain, original Draft and owner Issue stay open.
+- [X11 transition coalescing #4422 / Draft PR #4438 metadata archive](x11_transition_coalescing_c4d7_v1/ARCHIVAL_QUALIFICATION.md): three exact metadata files; STOP_PRE_ALLOCATION_PUBLICATION, formal 0/12 cases and 0/38 captures remain; no blocked runner/source, construction raw, or formal result is independently available, and the original Draft/branch/Issue stay open.
 - [Broker timeout-start #5074 / PR #5113 preservation](broker_fake_child_timeout_start_5074_v5_20260928/ARCHIVE_QUALIFICATION_20261001.md): `STOP_PRECHECK_ONLY_NOT_FORMAL`; 29 exact historical source/construction files, no formal raw or audit. The self-release declaration and freeze/receipt mismatches are preserved with explicit qualifications; no lease or scientific PASS/FAIL is established.
 
 - [Mindustry three-arm economics #5130 / PR #5136 preservation](mindustry_three_arm_economics_20260928/ARCHIVAL_QUALIFICATION.md): 44 exact historical source/synthetic-construction blobs; `PASS_CONSTRUCTION_ONLY`, sentinel identities and historical-only 86/86 host checks. Docker coordination violations remain disclosed; no live/model/formal economics result. Source PR remains Draft and owner #5130 stays open.
 
 ## Retained source with result-publication HOLD
 
+- [Passive-reader pagination #3985 / Draft PR #4012](passive_reader_pagination_cost_v1/ARCHIVAL_QUALIFICATION.md): 15 exact source/summary blobs; `HOLD_FULL_RAW_PUBLICATION`, full original raw absent and repository-only audit incomplete. Continue the existing recovery owner; no consumed-allocation rerun or original-branch cleanup.
 - [Inkscape ROI reanchor #4359](inkscape_roi_reanchor_d4p1_v1/RECOVERY_STATUS.md): exact frozen source capsule is recoverable; Issue #4359 reports the completed 30-case scoped PASS, but formal raw/result/audit/control bytes are absent from the branch and its Actions runs. This source-only preservation does not independently verify or integrate the reported formal result; keep the Issue and original branch open for exact-byte recovery.
 - [Inkscape first-motion #4388](inkscape_first_motion_f2a6_v1/RECOVERY_STATUS.md): the ten-file preformal source is preserved; Issue #4388 reports the completed eight-case scoped result, but the formal raw archive was not verified after its 17-fragment publication attempt. This source-only preservation does not independently verify the reported result; retain the Issue and original branch for exact-byte recovery.

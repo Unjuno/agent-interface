@@ -18,8 +18,13 @@ from .history import ObservationHistory
 from runtime.backends.x11_v1.backend import X11Backend, X11BackendError
 from runtime.backends.x11_v1.session import X11RuntimeSession
 from runtime.core_v1.contract import SCHEMA_PROGRAM
+from runtime.core_v1.compiled_gui import ObservationAssociationChanged
 from runtime.cli_v1.api import dispatch_in_session
 from runtime.cli_v1.observe import observe_in_session
+
+
+class CaptureBindingChanged(X11BackendError, ObservationAssociationChanged):
+    """Exact before/after binding mismatch; retains the existing X11 error type."""
 
 
 def read_window_title(connection, window):
@@ -153,7 +158,13 @@ class NativeHandleBridge:
         native = report["observation"]
         after = self._binding()
         if before != after:
-            raise X11BackendError("binding changed during native capture")
+            self.review_required = True
+            self._save("capture-binding-changed-" + report["observation_id"] + ".json", {
+                "reason": "association_changed", "before": before, "after": after,
+                "public_report": "public-observation-" + report["observation_id"] + ".json",
+                "last_valid_sequence": self.sequence, "authority_granted": False,
+                "replay_allowed": False})
+            raise CaptureBindingChanged("binding changed during native capture")
         binding_checked_ns = time.monotonic_ns()
         artifact = native["artifact"]
         data = Path(artifact["path"]).read_bytes()
@@ -210,6 +221,11 @@ class NativeHandleBridge:
         return None
 
     def mint(self, alias, source_sequence, point, *, region_size=(24, 38)):
+        """Legacy offset-only grounding; use mint_reference for expiry metadata."""
+        return self.mint_reference(alias, source_sequence, point, region_size=region_size)['offset']
+
+    def mint_reference(self, alias, source_sequence, point, *, region_size=(24, 38)):
+        """Ground a finite alias without capture, renewal, input or authority."""
         if getattr(getattr(self, 'session', None), 'recovery_required', False):
             raise X11BackendError('input recovery required before minting')
         if getattr(self, 'review_required', False):
@@ -220,12 +236,17 @@ class NativeHandleBridge:
         observation, image = self.history[source_sequence]
         w, h = region_size
         box = [point[0] - w // 2, point[1] - h // 2, w, h]
+        minted_ns = time.monotonic_ns()
         result = self.store.mint(alias, "window_content", box, observation, image,
-                                 time.monotonic_ns(), ttl_ms=300000, freshness_ms=1500,
+                                 minted_ns, ttl_ms=300000, freshness_ms=1500,
                                  search_radius=0, allowed_transformations=("window_translation",))
         self.used_aliases = getattr(self, 'used_aliases', set()) | {alias}
         self._save("mint-" + alias + ".json", result)
-        return [w // 2, h // 2]
+        return {'offset': [w // 2, h // 2], 'lifetime': {
+            'clock': 'time.monotonic_ns', 'minted_ns': minted_ns,
+            'expires_ns': result['expires_ns'], 'capture_freshness_ms': 1500,
+            'authority_granted': False,
+            'scope': 'Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it.'}}
 
     def activate_window(self, *, window_id, source_sequence, current_binding_revision,
                         expires_at_ns, timeout_ms):
@@ -271,7 +292,6 @@ class NativeHandleBridge:
             return result
         finally:
             self.active = None
-
 
     def review_window(self, window_id):
         """Explicit read-only handoff on this connection; revoke old aliases.
@@ -384,14 +404,18 @@ class NativeHandleBridge:
             raise X11BackendError("native target guard lease expired during capture")
         return outcome
 
-    def click(self, alias, offset, *, tail=()):
-        return self._run_guarded(alias, offset, tail=tail, activate=True)
+    def click(self, alias, offset, *, tail=(), expires_at_ns=None):
+        return self._run_guarded(alias, offset, tail=tail, interaction='click', expires_at_ns=expires_at_ns)
 
-    def keyboard(self, alias, offset, *, tail):
+    def move(self, alias, offset, *, tail=(), expires_at_ns=None):
+        """Guarded pointer motion only; hover may change the screen. No click."""
+        return self._run_guarded(alias, offset, tail=tail, interaction='move', expires_at_ns=expires_at_ns)
+
+    def keyboard(self, alias, offset, *, tail, expires_at_ns=None):
         """Continue in the currently focused, visually guarded context; no click."""
-        return self._run_guarded(alias, offset, tail=tail, activate=False)
+        return self._run_guarded(alias, offset, tail=tail, interaction='keyboard', expires_at_ns=expires_at_ns)
 
-    def _run_guarded(self, alias, offset, *, tail, activate):
+    def _run_guarded(self, alias, offset, *, tail, interaction, expires_at_ns=None):
         if self.active is not None:
             raise RuntimeError("native bridge already executing")
         if getattr(getattr(self, 'session', None), 'recovery_required', False):
@@ -403,29 +427,46 @@ class NativeHandleBridge:
             row = {'status': 'refused', 'error': 'WINDOW_REVIEW_REQUIRED', 'input_dispatched': False}
             self._save('result-' + uuid.uuid4().hex + '.json', row)
             return row
-        # At most one guarded click; keyboard continuation emits no pointer ops.
+        # An outer method may shorten, never renew, this input lease. The caller
+        # must use this process's monotonic clock domain (not wall-clock time).
+        if expires_at_ns is not None:
+            if type(expires_at_ns) is not int or expires_at_ns < 1:
+                raise ValueError('expires_at_ns must be a positive monotonic integer')
+            if time.monotonic_ns() >= expires_at_ns:
+                row = {'status': 'refused', 'error': 'CALLER_DEADLINE_EXPIRED',
+                       'input_dispatched': False}
+                self._save('result-' + uuid.uuid4().hex + '.json', row)
+                return row
+        # Motion can change hover state. It grants no press or keyboard authority.
         from runtime.core_v1.sequence import expand_text_gaps
-        # Core permits 128 ops: focus + optional pointer triplet + release.
-        tail = expand_text_gaps(tail, max_ops=123 if activate else 126)[0]
+        # Core permits 128 ops including focus, action and terminal release.
+        tail = expand_text_gaps(tail, max_ops={'click':123, 'move':125, 'keyboard':126}[interaction])[0]
+        if interaction == 'move' and any(op.get('op') not in {'wait_update', 'observe'} for op in tail):
+            raise ValueError('guarded move tail permits only wait_update and observe')
         if any(op.get("op") not in {"text", "key_chord", "wait_update", "observe"} for op in tail):
             raise ValueError("unsupported guarded-click tail")
-        if not activate and not any(op.get('op') in {'text', 'key_chord'} for op in tail):
+        if interaction == 'keyboard' and not any(op.get('op') in {'text', 'key_chord'} for op in tail):
             raise ValueError('keyboard continuation requires explicit keyboard input')
         self.active = (alias, offset)
         self.checks = []
         self.deadline = time.monotonic_ns() + 5_000_000_000
+        if expires_at_ns is not None:
+            self.deadline = min(self.deadline, expires_at_ns)
         self.moved_point = None
         try:
             try:
                 point = self.check("before_admission")["point"]
+                if time.monotonic_ns() >= self.deadline:
+                    raise X11BackendError('native target guard lease expired before dispatch')
             except Exception as error:
                 row = {"status": "refused", "error": repr(error), "input_dispatched": False}
             else:
-                pointer_ops = ([
-                    {"op": "pointer_move", "frame": "screen_physical_px", "x": point[0], "y": point[1]},
-                    {"op": "pointer_button", "button": "left", "down": True},
-                    {"op": "pointer_button", "button": "left", "down": False},
-                ] if activate else [])
+                pointer_ops = ([] if interaction == 'keyboard' else [
+                    {"op": "pointer_move", "frame": "screen_physical_px", "x": point[0], "y": point[1]}])
+                if interaction == 'click':
+                    pointer_ops.extend([
+                        {"op": "pointer_button", "button": "left", "down": True},
+                        {"op": "pointer_button", "button": "left", "down": False}])
                 program = {
                     "schema": SCHEMA_PROGRAM, "program_id": "guarded-" + uuid.uuid4().hex,
                     "source": {"observation_seq": self.sequence,

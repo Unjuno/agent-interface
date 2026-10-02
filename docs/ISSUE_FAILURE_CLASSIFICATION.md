@@ -64,6 +64,26 @@ delete a branch merely because its Issue is closed: verify merged evidence,
 remaining work and dependent PRs first. Publication-only problems do not justify
 rerunning the scientific allocation.
 
+### Before restoring an archival ref
+
+Inspect workflow definitions at the **exact historical commit** before creating
+or pushing a restoration branch/ref. Branch creation or push can schedule
+historical runners, including path-filtered one-shot workflows; current-main
+guards and an `archive/` name do not protect an older commit. Evaluate the
+chosen mechanism's branch/tag events, path filters and job guards before using
+a supported preservation route; a tag is not automatically safe either.
+
+Preserve the original commit identity, exact source/evidence bytes and hashes,
+and record the selected preservation mechanism and provenance without rewriting
+the historical source. Restoration grants no experiment allocation, rerun,
+resource or publication permission and does not reset a consumed allocation.
+If preservation triggers execution, retain its run ID, time, artifact and
+observed outcome separately, then reconcile authority and no-retry boundaries
+with the original record before using the output. See the
+[archive-ref side effect recorded on #672](https://github.com/Unjuno/agent-interface/issues/672#issuecomment-5942084600).
+Keep this operational incident under its existing owner; it creates neither a
+new scientific result nor a fleet-wide STOP.
+
 ## Consequences for promotion
 
 The existing correctness, release, provenance and integration gates are

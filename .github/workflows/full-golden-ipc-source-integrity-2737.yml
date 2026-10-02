@@ -14,6 +14,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          # Keep this list aligned with RESULT.json source_hashes.
+          # Missing sources must still reach the unchanged HOLD receipt.
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /.gitattributes
+            /research/analysis/full_golden_ipc_2737_v1/RESULT.json
+            /research/analysis/full_golden_ipc_2737_v1/audit_source_hashes.py
+            /research/live_control/container_host_model_ipc_runner_v1.py
+            /runtime/host_model_ipc_broker_v1.py
+            /research/live_control/integrated_efficiency_client_v1.py
+            /research/live_control/source_pixel_transform_v1.py
+            /research/live_control/run_integrated_efficiency_live_v1.py
       - name: Audit retained source hashes
         run: |
           set -o pipefail

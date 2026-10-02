@@ -148,9 +148,16 @@ def outcome_summary(report):
             if name in dispatch:
                 value = dispatch[name]
                 summary[name] = value if type(value) is bool else None
-        if 'program_emissions' in dispatch:
-            value = dispatch['program_emissions']
-            summary['program_emissions'] = value if type(value) is int and value >= 0 else None
+        # Executed programs report their delta inside execution; refusals may
+        # report it at dispatch level. Never substitute the backend's cumulative
+        # emissions counter or turn missing evidence into zero. Conflicting or
+        # malformed copies remain unknown, with both originals retained.
+        counts = [row['program_emissions'] for row in (dispatch, execution)
+                  if 'program_emissions' in row]
+        if counts:
+            summary['program_emissions'] = (counts[0] if all(
+                type(value) is int and value >= 0 and value == counts[0]
+                for value in counts) else None)
         if 'compilation' in report:
             summary['failed_source_operation'] = _failure_source(report, failed)
             summary['validation_source_operation'] = _failure_source(
@@ -194,6 +201,34 @@ def _review(data, view, run_directory, *, compact=False, report_refs=False, incl
                 # Preserve the list index; no synthetic exchange sequence.
                 native = observations[-1]
                 native_reference = {'execution_observation_index': len(observations) - 1}
+        if schema == 'agent-interface/runtime-dispatch-result-v1':
+            # Input result is unchanged. Select an explicitly requested later
+            # capture only after successful released input and target recheck.
+            post = report.get('post_dispatch_inspection', {})
+            later = post.get('observation_report', {}) if isinstance(post, dict) else {}
+            later_native = later.get('observation') if isinstance(later, dict) else None
+            releases = execution.get('releases', [])
+            ready = (dispatch.get('status') == 'completed'
+                     and dispatch.get('recovery_required') is False
+                     and bool(releases) and all(isinstance(r, dict)
+                         and r.get('verified') is True and r.get('keys_down') == []
+                         and r.get('buttons_down') == [] and 'error' not in r
+                         for r in releases)
+                     and post.get('status') == 'needs_review' and post.get('error') is None
+                     and post.get('input_dispatched') is False
+                     and post.get('authority_granted') is False
+                     and post.get('review_request', {}).get('tool') == 'interface_review_target'
+                     and later.get('status') == 'returned' and later.get('error') is None
+                     and later.get('input_dispatched') is False
+                     and later.get('side_effect_authority') is False)
+            if ready and isinstance(later_native, dict):
+                stamps = [execution.get('ended_ns')] + [r.get('monotonic_ns') for r in releases]
+                captured = later_native.get('capture_started_ns')
+                if (type(captured) is int and all(type(t) is int for t in stamps)
+                        and captured >= max(stamps)):
+                    native = later_native
+                    native_reference = {'post_dispatch_observation_id': later.get('observation_id'),
+                                        'capture_phase': 'after_dispatch_release'}
         if schema in ('agent-interface/runtime-observation-v1', 'agent-interface/runtime-dispatch-result-v1'):
             if native is None:
                 result['image_status'] = 'no_observation'

@@ -1,0 +1,53 @@
+{
+  "schema": "map01-terminal-sync-artifact-reaudit-v1",
+  "artifact_id": 10592018768,
+  "workflow_run_id": 35470604368,
+  "target_member": "results-local/doom/map01-terminal-sync-diagnostic-3211-04/pair-01/coast_control/session-events.jsonl",
+  "manifest_sha256": "9a26ee337c9fb3795dbc2a51f132d0dc8e014b6f01c9ceb1724d5eadaf3fe22f",
+  "actual_sha256": "9a26ee337c9fb3795dbc2a51f132d0dc8e014b6f01c9ceb1724d5eadaf3fe22f",
+  "byte_count": 35028,
+  "trace_member_count": 1,
+  "trace_members": [
+    "results-local/doom/map01-terminal-sync-diagnostic-3211-04/pair-01/coast_control/session-events.jsonl"
+  ],
+  "parsed_object_count": 45,
+  "event_counts": {
+    "accepted": 2,
+    "cancel_requested": 1,
+    "clock": 2,
+    "clock_probe": 1,
+    "coast_result": 1,
+    "command": 5,
+    "input_admission": 1,
+    "input_release_transition": 1,
+    "keys_held": 1,
+    "observation": 11,
+    "ready": 1,
+    "step_completed": 2,
+    "step_started": 3,
+    "terminal": 2,
+    "typed_observation": 11
+  },
+  "trace_format": "OBJECT_STREAM_WITH_ESCAPED_NEWLINE_DELIMITERS",
+  "terminal_rows": [
+    {
+      "id": "pair1-coast_control-prelude",
+      "status": "completed",
+      "terminal_ns": 419743700927,
+      "release_verified": true
+    },
+    {
+      "id": "pair1-coast_control-fallback",
+      "status": "cancelled",
+      "terminal_ns": 420400082101,
+      "release_verified": true
+    }
+  ],
+  "coast_terminal_count": 2,
+  "coast_terminals_release_verified": true,
+  "recovery_terminal_count": 0,
+  "recovery_trace_member_present": false,
+  "audit_decision": "PASS_RAW_ARTIFACT_INTEGRITY_PARTIAL_SCOPE",
+  "scientific_classification": "RECOVERY_TERMINAL_NOT_IDENTIFIABLE",
+  "claim_boundary": "The archived coast trace is hash-verified and structurally parseable. No recovery-arm trace is present in this artifact; this does not prove whether a recovery terminal was emitted outside the retained artifact."
+}

@@ -1,0 +1,15 @@
+# Explicit configured window review and retained spine11 failure
+
+Helper source: `8932b60fb`. Full live adoption: **HOLD**.
+
+Frozen spine11 used source290a88b00790f5a0e4bf9569aa23ae08eef7008b, seed1001058 and the public positional mint helper. Tasks1..3 saved exactly once, with no duplicates/unexpected submissions. Layout control38 returned the preregistered region_pixels_missing before admission, revision0, no input/execution. All15 original images were seen/reviewed. Actual39 returned calls included13 completed neutral programs and365 emissions.
+
+The primary then referenced `allocation.target`, which does not exist: the fixture's actual target is in `targets.json`, while allocation.json records display/source/seed. The proposed window review contained undefined window_id; the host refused finite JSON before creating a request. Public caller STOP latched transport or presentation failure. No window-review request was dispatched; only public close39 followed, with verified empty keys/buttons and text acknowledgment. Original fixture16368 and transport exited0; children are retained individually. Direct not launched, so comparison remains incomplete. Do not relabel3/6 as overall success or replace this allocation.
+
+The additive public `reviewWindow()` helper snapshots `options.reviewWindowId` from an explicitly configured real target registry. It builds exactly interface_guarded_review_window/window_id, takes no per-call arguments, rejects missing/invalid configuration and wrong mode before host dispatch, and preserves original replies, images and STOP. It does not discover a window, attest its identity, automatically recover, issue input or authorize retries. Generic call remains available for exact experiment controls.
+
+TDD11 RED assertions on the absent helper are retained as original logs; final local shared checks pass100 Node,337 protocol and149 harness cases. Tests cover snapshotted configured ID, detached invocation, invalid values, accidental per-call arguments, wrong route, STOP and close. This turn has no native GUI use of the new helper: contract tests do not establish that missing full integration gate. A multi-file patch failed atomically on a README context mismatch; the unchanged source was verified before applying the implementation separately. Initial failure and unchanged trial data are preserved.
+
+Archive414 raw files includes the unchanged12-file frozen source set, exchange/review originals, scorer, startup capacity and cleanup, RED and final test logs. Fresh normal/-O extraction audits and two rehashed false task6-score mutations reject the forged result. The verifier covers retention and helper contracts, not model comprehension, generic speed, provider tokens/cost, human tempo or WSL/Docker advantage.
+
+Next: obtain actual ID from targets.json during setup, configure the public helper once, then use a fresh fixed-source full comparison through all three rejection controls, explicit task5 observation, tasks4..6 and close. Existing failed allocations remain immutable.

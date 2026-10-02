@@ -1,0 +1,28 @@
+{
+  "schema": "agent-interface/runtime-dispatch-result-v1",
+  "status": "returned",
+  "result": {
+    "status": "refused",
+    "error": "BACKEND_CONSTRAINT",
+    "program_execution_started": false,
+    "program_emissions": 0,
+    "cleanup_attempted": true,
+    "detail": "unmapped key HOME; X11 keysym names are case-sensitive, use Home",
+    "required_capabilities": [
+      "clock.monotonic",
+      "event.feedback",
+      "input.keyboard",
+      "input.release_all",
+      "input.text",
+      "window.focus"
+    ],
+    "backend_emissions": 0,
+    "release": {
+      "keys_down": [],
+      "buttons_down": [],
+      "verified": true,
+      "monotonic_ns": 59105643780877
+    },
+    "recovery_required": false
+  }
+}

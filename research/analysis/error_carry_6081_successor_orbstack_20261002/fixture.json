@@ -1,0 +1,20 @@
+{
+  "schema": "error-carry-6081-t0-successor-v1",
+  "slot_duration_ms": 100,
+  "action_sets": {
+    "4way": [[0,0],[1,0],[0,1],[-1,0],[0,-1]],
+    "8way": [[0,0],[1,0],[1,1],[0,1],[-1,1],[-1,0],[-1,-1],[0,-1],[1,-1]]
+  },
+  "cases": [
+    {"id":"exact-east","intent":["1","0"],"horizon":4,"max_switches":3,"box":[-1,4,-1,1]},
+    {"id":"shallow-slope","intent":["1/2","1/4"],"horizon":4,"max_switches":3,"box":[-1,3,-1,2]},
+    {"id":"near-axis-duty","intent":["3/4","1/8"],"horizon":8,"max_switches":5,"box":[-1,7,-1,2]},
+    {"id":"diagonal","intent":["1/2","1/2"],"horizon":4,"max_switches":3,"box":[-1,3,-1,3]},
+    {"id":"zero","intent":["0","0"],"horizon":5,"max_switches":0,"box":[-1,1,-1,1]},
+    {"id":"reversed-diagonal","intent":["-1/2","1/2"],"horizon":4,"max_switches":3,"box":[-3,1,-1,3]},
+    {"id":"finite-lattice-mismatch","intent":["1/3","0"],"horizon":2,"max_switches":1,"box":[-1,2,-1,1]},
+    {"id":"envelope-limited","intent":["1","1/4"],"horizon":3,"max_switches":2,"box":[-1,3,-1,2]},
+    {"id":"outside-4way-hull","intent":["1","1"],"horizon":3,"max_switches":2,"box":[-1,4,-1,4],"control":"outside_hull"},
+    {"id":"unknown-calibration","intent":["1/2","0"],"horizon":3,"max_switches":2,"box":[-1,2,-1,1],"control":"unknown_calibration"}
+  ]
+}

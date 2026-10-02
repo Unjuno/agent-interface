@@ -1,0 +1,50 @@
+{
+  "allocation_id": "INTERMITTENT-IDENTITY-SWITCH-6061-T1-20261002-01",
+  "audit_sha256": "09336d35f1c9ce3e49d98ee32e934eb13f90eca5be5619a26f423a9a9676d953",
+  "auditor": {
+    "argv": [
+      "/usr/local/bin/python3",
+      "-B",
+      "/exp/audit.py",
+      "--input",
+      "/exp/input.json",
+      "--truth",
+      "/exp/truth.json",
+      "--raw",
+      "/out/candidate.raw.jsonl",
+      "--output",
+      "/out/audit.json"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "{\"decision\": \"HOLD_SILENT_IDENTITY_SWITCH_UNOBSERVABLE\", \"errors\": [], \"rows\": 20, \"status\": \"PASS_METHOD_SCOPED_WITH_IDENTIFIABILITY_HOLD\"}\n"
+  },
+  "auditor_invocations": 1,
+  "candidate": {
+    "argv": [
+      "/usr/local/bin/python3",
+      "-B",
+      "/exp/candidate.py",
+      "--input",
+      "/exp/input.json",
+      "--output",
+      "/out/candidate.raw.jsonl"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "{\"output\": \"/out/candidate.raw.jsonl\", \"rows\": 20}\n"
+  },
+  "candidate_invocations": 1,
+  "container_hostname": "7816f5029d5d",
+  "freeze_sha256": "161e5b7db7c52374acc9d2087e4dd49ad46a37d9429e3890f1ed3cfbf2f320f9",
+  "image_id": "sha256:c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b",
+  "raw_sha256": "367689762143537c538dccd86b70df1cf54e2708f40692e44a301e327dab24b2",
+  "retries": 0,
+  "scope": "synthetic commanded motor ticks only; no live motor, X11, GUI, model, game, network, or user data",
+  "sha256": {
+    "audit": "9868d560164915e3fe86ac51305e4d29ff5e833f842a45f4bf1e3c0991d44684",
+    "candidate": "db5e6ecb0b78c6f15d62df6ece548c1b9c2b0e4ea129e91bc9e7a9e7dfa4e5a2",
+    "input": "237bcfb7301a95f2b48bfa2aedee8abdac60d8e1b8b99c71544b4908abad79d2",
+    "truth": "ad915910df439bd621f06d3fba3670d5ce0b25f88903194a3e8ec1700e70ba29"
+  }
+}
