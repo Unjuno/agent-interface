@@ -1,0 +1,14 @@
+{
+  "schema": "exogenous-opportunity-scoring-oracle-v1",
+  "expected": {
+    "c01": {"boundary":"eligible_effect","reason":"verified_effect","receipt":"r01"},
+    "c02": {"boundary":"not_acquired","reason":"no_capture_before_expiry","receipt":null},
+    "c03": {"boundary":"acquired_not_delivered","reason":"delivery_after_expiry","receipt":null},
+    "c04": {"boundary":"delivered_no_decision","reason":"no_decision_before_expiry","receipt":null},
+    "c05": {"boundary":"decision_no_effect","reason":"no_verified_effect","receipt":null},
+    "c06": {"boundary":"decision_no_effect","reason":"safe_stop","receipt":null},
+    "c07": {"boundary":"UNKNOWN","reason":"clock_unsynced","receipt":null},
+    "c08": {"boundary":"UNKNOWN","reason":"right_censored","receipt":null},
+    "x01": {"boundary":"NOT_APPLICABLE","reason":"no_exogenous_opportunity","receipt":null}
+  }
+}
