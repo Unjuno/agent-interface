@@ -17,6 +17,17 @@ Successor isolated OrbStack Docker allocation 02 returned `PASS_METHOD_SCOPED`: 
 
 A dedicated OrbStack Ubuntu machine ran its own pinned-image Docker Engine; no shared Engine was used. One preregistered stationary synthetic case (4,000 train + 4,000 holdout) produced `ELIGIBLE_REFERENCE`; the candidate and independent raw-only audit each ran once and exited 0, with `PASS_METHOD_SCOPED PASS_RAW_ONLY`. The eligible-gated p99 holdout was 42/4,000 (exact 95% CI 0.00758–0.01417); the TailID-equivalent p99 was 45/4,000 (0.00822–0.01502); both include nominal 1%. This one-case pilot establishes neither superiority nor TailID parity, and makes no physical input-release, safety, or worst-case claim. The formal six-case T0 remains unrun. See the [frozen run, raw output and hashes](research/analysis/extreme_tail_eligibility_6576_construction_v1/orbstack_pilot_a02_20261002/RUN_RECORD.md), [H/T/D/C/U and frozen input](research/analysis/extreme_tail_eligibility_6576_construction_v1/orbstack_pilot_a02_20261002/PREREGISTRATION.md), and [Issue #6576](https://github.com/Unjuno/agent-interface/issues/6576).
 
+Successor CRAN/R parity studies then compared pinned TailID 1.0.0/ismev 1.43
+with the Python port in isolated OrbStack Docker containers. A03 stopped on an
+R harness error; A04 retained candidate outputs but its auditor crashed; A05
+completed the independent audit and failed numerical parity on one of six
+fresh synthetic fixtures (relative scale delta 0.001965, shape delta 0.002028,
+CI endpoint delta 0.003308), while all six candidate/sensitive-index and
+threshold checks passed. The Python port is not verified numerically
+equivalent at the preregistered tolerances. This remains synthetic method
+evidence only; the formal six-case T0 and physical release/safety evidence are
+still unestablished. See the additive [A03](research/analysis/extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a03_20261002/RUN_RECORD.md), [A04](research/analysis/extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a04_20261002/RUN_RECORD.md), and [A05](research/analysis/extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a05_20261002/RUN_RECORD.md) run records.
+
 # Issue #6501 T0-01 / T0b-01: scope-typed singleflight (2026-10-02)
 
 T0-01 is preserved as `STOP_OUTPUT_SERIALIZATION` / `NOT_EVALUATED`: the candidate ran once, the independent auditor ran once, retries were zero, and the wrapper's literal backslash-n caused JSON parsing to fail. No raw auditor result exists. The original STOP and receipts are immutable in [the predecessor package](research/analysis/scope_typed_singleflight_6501_t0_20261002/REPORT.md).
