@@ -53,13 +53,19 @@ experiments in the dedicated #6576 VM/private Engine (never the shared
 counterexample; A02 tested a 20-distinct-tail-value rule on 30 seeds/resolution;
 A03 swept cutoffs 8/12/16/20/24 on 50 fresh seeds/resolution and found 8 was
 the smallest tested cutoff meeting its synthetic detection/false-hold criteria.
-The first two records are merged in PRs #6726/#6728; A03 is being delivered as a
-reviewable successor. These are construction/method results only—not validation
+All three records are merged in PRs #6726/#6728/#6731. These are
+construction/method results only—not validation
 of an operational resolution cutoff, EVT tail calibration, physical release,
 safety, or worst-case claim. The separately gated formal six-case T0 remains
 uninvoked. See the additive packages under
 `research/analysis/extreme_tail_eligibility_6576_construction_v1/timer_quantization_a0{1,2,3}_20261002/`
 and [Issue #6576](https://github.com/Unjuno/agent-interface/issues/6576).
+
+The separate #6530 temporal-effect identity proposal also completed a new
+OrbStack-only synthetic A01 after its original WSLc environment STOP; the STOP
+was preserved, while the new eight-case candidate/auditor pair passed its
+scoped method gate. No GUI/calendar application was tested. See
+`research/analysis/temporal_effect_identity_6530_orbstack_a01_20261002/`.
 
 This user direction takes precedence over the narrower integration-only
 wording immediately below for the current autonomous research task; the

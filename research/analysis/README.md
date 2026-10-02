@@ -1,5 +1,7 @@
 # Analytical research
 
+- [`temporal_effect_identity_6530_orbstack_a01_20261002/REPORT.md`](temporal_effect_identity_6530_orbstack_a01_20261002/REPORT.md) — Issue #6530's frozen eight-case temporal identity fixture passed its scoped method gate in a digest-pinned OrbStack Docker candidate/auditor pair; no GUI, account, or real calendar event was used. Its earlier WSLc pre-start STOP remains unchanged.
+
 - [`wslc_control_plane_survivability_6669_t0_20261002/REPORT.md`](wslc_control_plane_survivability_6669_t0_20261002/REPORT.md) — Issue #6669 source/runtime applicability audit: `HOLD_APPLICABILITY_UNRESOLVED`; no WSLc pressure or survival claim.
 - [`observable_quiescence_6664_t0_v1/REPORT.md`](observable_quiescence_6664_t0_v1/REPORT.md) — Issue #6664 finite handoff protocol T0: 1,191 schedules independently audited; accounted quiescence had 0 false certificates (128 horizon certificates, all other cases UNKNOWN); epoch-only and fixed-delay comparators had 3,445 and 2,254 false certificates. No GUI/backend safety claim.
 - [`path_width_continuous_gui_6581_t0b_v1/REPORT.md`](path_width_continuous_gui_6581_t0b_v1/REPORT.md) — Issue #6581 synthetic path-width GUI fixture; six scenarios independently audited `PASS_METHOD_SCOPED`; no ordinary-GUI or human/agent transfer claim.
@@ -649,6 +651,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`temporal_break_even_retained_identifiability_v1/`](temporal_break_even_retained_identifiability_v1/)
 - [`temporal_coalescing_6315_t0_v1/`](temporal_coalescing_6315_t0_v1/)
 - [`temporal_coalescing_6315_wslc_successor_20261002/`](temporal_coalescing_6315_wslc_successor_20261002/)
+- [`temporal_effect_identity_6530_orbstack_a01_20261002/`](temporal_effect_identity_6530_orbstack_a01_20261002/)
 - [`temporal_contract_monitor_compilation_a2_v1/`](temporal_contract_monitor_compilation_a2_v1/)
 - [`temporal_contract_monitor_compilation_a3_v1/`](temporal_contract_monitor_compilation_a3_v1/)
 - [`temporal_contract_monitor_compilation_r0_v1/`](temporal_contract_monitor_compilation_r0_v1/)
