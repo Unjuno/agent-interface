@@ -2,7 +2,7 @@
   "schema": "safe-discriminating-observation-6680-run-record-v1",
   "issue": 6680,
   "allocation": "SAFE-DISCRIMINATING-OBSERVATION-6680-T0-20261002-01",
-  "base_main": "b3e630de5442bb018ccaffc8ead63ab31ccbfc88",
+  "base_main": "20e0db2f40c9f33d8b66e6d168f72b1ee8b88e3e",
   "branch": "research/safe-discriminating-observation-6680-t0-20261002",
   "package_path": "research/analysis/safe_discriminating_observation_6680_t0_20261002/",
   "status": "HOLD_RESOURCE_BEFORE_FORMAL_START",
@@ -11,7 +11,7 @@
     "9a573b00dc595e64d09387e567c85e10b61a46c1",
     "7b67b9709b2242db988646f36825be6c6399be27"
   ],
-  "main_advance_before_formal": "merged main through 4699966453e1e8ea781bdd91f7364aaa2ad07cad (#6565 T0, plus #6711 archive STOP), reviewed #6565 as unrelated; #6689 allocation-01 posthoc FAIL_METHOD despite original audit PASS motivated a separate D-gate adjudicator and mutation tests. Also reviewed #6709/#6708/#6705/#6701 and current README/CURRENT_GOAL/ROADMAP plus open/closed related issue, PR and branch inventory; no overlapping #6680 experiment found; merged origin/main b3e630de5442bb018ccaffc8ead63ab31ccbfc88 after reviewing #6715/#6717/#6713 as unrelated; analysis index now 524",
+  "main_advance_before_formal": "merged main through 4699966453e1e8ea781bdd91f7364aaa2ad07cad (#6565 T0, plus #6711 archive STOP), reviewed #6565 as unrelated; #6689 allocation-01 posthoc FAIL_METHOD despite original audit PASS motivated a separate D-gate adjudicator and mutation tests. Also reviewed #6709/#6708/#6705/#6701 and current README/CURRENT_GOAL/ROADMAP plus open/closed related issue, PR and branch inventory; no overlapping #6680 experiment found; merged origin/main b3e630de5442bb018ccaffc8ead63ab31ccbfc88 after reviewing #6715/#6717/#6713 as unrelated; analysis index now 524; refreshed origin/main to 20e0db2f40c9f33d8b66e6d168f72b1ee8b88e3e, collision scan clean for this path, index 527",
   "scope_correction_before_formal": "initial label-only fixture did not satisfy Issue #6680's requested trajectory/predictor/timestamp/lease-release/effect-oracle model; retained old raw unchanged and built temporal construction successor in same unconsumed allocation before formal start",
   "metric_definition_review": "temporal successor represents post_recovery_residual as a distinct oracle transition/output and auditor gate; action effects are still authored and not empirically causal",
   "construction_only_identifiable_case_counts": {
@@ -213,7 +213,7 @@
     "exclusive_assignment": false,
     "foreign_runtime_mutated": false
   },
-  "analysis_index_count_after_latest_main_merge": 524,
+  "analysis_index_count_after_latest_main_merge": 527,
   "formal_result": null,
   "scope_note": "No container candidate/auditor was started. Host construction tests and CLI smoke are not formal evidence. Await a named exclusive CPU/container assignment; do not reuse another Issue's machine or shared-engine state.",
   "latest_inventory": {
