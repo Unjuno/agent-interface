@@ -150,3 +150,14 @@ exercised the actual capture binding change and returned this typed receipt.
 After explicit primary modal review/new grounding/confirmation, the independently
 read saved workbook matched317/529. The preceding startup failure is retained.
 This qualifies the boundary and one saved task, not a speed or token improvement.
+
+## Failed Inkscape keyboard transfer
+
+[Guarded Inkscape transfer](../results/inkscape-guarded-transfer-03/README.md)
+compared this actual adapter with a strong ordinary conditional keyboard
+callback. Both completed input but observed no intended movement and stopped
+before Save; independently persisted task success was 0/2. Startup and context
+refusal predecessors remain retained. This does not qualify the move recipe or
+second-domain performance. Actual keyboard receipts established admission/focus
+guards, not per-key revalidation. Hold the recipe pending separately frozen
+application-effect diagnosis; do not infer task completion from input delivery.
