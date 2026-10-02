@@ -25,4 +25,3 @@ This uses authored rank order and fixture truth, not an embedding or approximate
 ## U — scope
 
 This is only a finite retrieval-method discriminator. It measures no real registry scale, embedding recall, model choice, token/latency economics, GUI behavior, task outcome, or execution safety. It provides no runtime promotion or deployment claim. Any model-facing follow-up needs a separately frozen protocol.
-
