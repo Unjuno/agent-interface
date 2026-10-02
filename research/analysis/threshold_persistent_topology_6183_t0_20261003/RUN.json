@@ -1,6 +1,6 @@
 {
   "schema": "topology-6183-run-v1",
-  "status": "FROZEN_NOT_RUN",
+  "status": "A01_STOP_INFRA; A02_FROZEN_NOT_RUN",
   "issue": "https://github.com/Unjuno/agent-interface/issues/6183",
   "preregistration_comment": "https://github.com/Unjuno/agent-interface/issues/6183#issuecomment-5962761927",
   "source_base": "fa791fe937fb24245e785d9e22928b3f4a6a42ae",
@@ -40,8 +40,32 @@
   "candidate_command": "docker run --name topology-6183-candidate-a01 --network none --cpus 1 --memory 512m --read-only --cap-drop ALL --security-opt no-new-privileges --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,src=/home/taka/inputs/threshold_persistent_topology_6183_t0_20261003,dst=/src,readonly --mount type=bind,src=/home/taka/outputs/topology-6183-a01,dst=/out -e OUT_DIR=/out -e PYTHONDONTWRITEBYTECODE=1 -w /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 sh -c 'cat /sys/fs/cgroup/memory.max > /out/candidate.memory.max; cat /sys/fs/cgroup/cpu.max > /out/candidate.cpu.max; python /src/candidate.py > /out/candidate.stdout.log 2>&1'",
   "auditor_command": "docker run --name topology-6183-auditor-a01 --network none --cpus 1 --memory 512m --read-only --cap-drop ALL --security-opt no-new-privileges --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,src=/home/taka/inputs/threshold_persistent_topology_6183_t0_20261003,dst=/src,readonly --mount type=bind,src=/home/taka/outputs/topology-6183-a01,dst=/out -e OUT_DIR=/out -e PYTHONDONTWRITEBYTECODE=1 -w /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 sh -c 'cat /sys/fs/cgroup/memory.max > /out/auditor.memory.max; cat /sys/fs/cgroup/cpu.max > /out/auditor.cpu.max; python /src/audit.py > /out/auditor.stdout.log 2>&1'",
   "limits_enforcement_note": "VM cgroup values are observed; container effective limits and cgroup values will be captured during each invocation. No inference from Docker configuration alone.",
-  "candidate_invocations": 0,
+  "candidate_invocations": 1,
+  "candidate_process_starts": 0,
   "auditor_invocations": 0,
   "retries": 0,
-  "outcome": null
+  "A01": {
+    "status": "STOP_INFRA_PRE_CANDIDATE",
+    "container_exit_code": 2,
+    "oom_killed": false,
+    "candidate_process_started": false,
+    "auditor_started": false,
+    "stderr": "sh: 1: cannot create /out/candidate.memory.max: Permission denied\\nsh: 1: cannot create /out/candidate.cpu.max: Permission denied\\nsh: 1: cannot create /out/candidate.stdout.log: Permission denied\\n",
+    "cause": "The container ran as UID 0 with all capabilities dropped. The separate output bind directory is owned by host UID 1000 and mode 0755; UID 0 without DAC override could not write it. This is a frozen runner invocation defect, not a candidate or auditor result.",
+    "read_only_diagnostics": "docker inspect: exited, code 2, OOMKilled=false, image sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016; source mount RW=false and output mount RW=true. Host output directory owner taka:taka, mode 0755. Container command completed in 75 ms.",
+    "disposition": "Preserved as first STOP. No retry of A01; no threshold/source/fixture change."
+  },
+  "A02": {
+    "status": "FROZEN_NOT_RUN",
+    "allocation_delta": "New allocation identity and output path after A01 runner-only STOP. Same frozen candidate, fixtures, labels, image digest, thresholds, scores, and gates. Change only container UID from root to 1000:1000 so the cap-dropped process owns the separately mounted output directory. No A01 output is overwritten.",
+    "output_path": "/home/taka/outputs/topology-6183-a02",
+    "candidate_container_name": "topology-6183-candidate-a02",
+    "auditor_container_name": "topology-6183-auditor-a02",
+    "candidate_command": "docker run --name topology-6183-candidate-a02 --network none --cpus 1 --memory 512m --read-only --user 1000:1000 --cap-drop ALL --security-opt no-new-privileges --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,src=/home/taka/inputs/threshold_persistent_topology_6183_t0_20261003,dst=/src,readonly --mount type=bind,src=/home/taka/outputs/topology-6183-a02,dst=/out -e OUT_DIR=/out -e PYTHONDONTWRITEBYTECODE=1 -w /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 sh -c 'cat /sys/fs/cgroup/memory.max > /out/candidate.memory.max; cat /sys/fs/cgroup/cpu.max > /out/candidate.cpu.max; python /src/candidate.py > /out/candidate.stdout.log 2>&1'",
+    "auditor_command": "docker run --name topology-6183-auditor-a02 --network none --cpus 1 --memory 512m --read-only --user 1000:1000 --cap-drop ALL --security-opt no-new-privileges --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,src=/home/taka/inputs/threshold_persistent_topology_6183_t0_20261003,dst=/src,readonly --mount type=bind,src=/home/taka/outputs/topology-6183-a02,dst=/out -e OUT_DIR=/out -e PYTHONDONTWRITEBYTECODE=1 -w /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 sh -c 'cat /sys/fs/cgroup/memory.max > /out/auditor.memory.max; cat /sys/fs/cgroup/cpu.max > /out/auditor.cpu.max; python /src/audit.py > /out/auditor.stdout.log 2>&1'",
+    "candidate_invocations": 0,
+    "auditor_invocations": 0,
+    "retries": 0,
+    "outcome": null
+  }
 }
