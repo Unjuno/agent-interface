@@ -1,5 +1,6 @@
 # Analytical research
 
+- [`wslc_control_plane_survivability_6669_t0_20261002/REPORT.md`](wslc_control_plane_survivability_6669_t0_20261002/REPORT.md) — Issue #6669 source/runtime applicability audit: `HOLD_APPLICABILITY_UNRESOLVED`; no WSLc pressure or survival claim.
 - [`path_width_continuous_gui_6581_t0b_v1/REPORT.md`](path_width_continuous_gui_6581_t0b_v1/REPORT.md) — Issue #6581 synthetic path-width GUI fixture; six scenarios independently audited `PASS_METHOD_SCOPED`; no ordinary-GUI or human/agent transfer claim.
 - [`spatial_block_position_6590_t1_geometry_design_v2/REPORT.md`](spatial_block_position_6590_t1_geometry_design_v2/REPORT.md) — #6590 preformal geometry screen: 80×60 remains below the four-block floor; 112×84 provides 19/16/20/16 eligible unique centers and passes an independent finite audit. No image/model/container run; formal T1 still held on OrbStack API readiness.
 
@@ -170,6 +171,10 @@ The table below summarizes major analytical chains and representative retained o
 - [Predictive safety-filter T0 host evidence and withdrawn container rung: #5317 / source PR #5336](predictive_safety_filter_5317_v1/ARCHIVAL_QUALIFICATION.md) — six exact files including the 35-cell host raw; reported scoped host PASS and later STOP/HOLD withdrawal retained, with zero container invocations. Distinct from merged T3 #5505; no new replay or runtime-safety claim. Owner #5317 and source Draft #5336 remain open.
 - [Issue #4956 audit-hardening HOLD source](predicate_order_drift_audit_integrity_4733_v4/RECOVERY_STATUS.md) — source/protocol archive only; the unchanged baseline was rejected by an over-strict exact-float gate, before mutation/audit results. Successor #4959 is distinct and does not change the recorded HOLD.
 - [Issue #5008 lifecycle allocation-01 STOP](needle_role_skill_lifecycle_4916_v2/RECOVERY_STATUS.md) — exact three-file recovery of the freeze-identity STOP, 11,464/12,288 construction parity failure, and no formal timing run; distinct from #5023/#5053 successors.
+
+## Complete retained result directory index
+
+This compact list is generated from child directories that contain `REPORT.md` or `FORMAL_FAILURE.md`, or `STOP.md`. It is the completeness surface used by the index checker.
 
 ## Complete retained result directory index
 
@@ -662,6 +667,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`voi_option_5306_t1/`](voi_option_5306_t1/)
 - [`wake_fence_6331_t0_v1/`](wake_fence_6331_t0_v1/)
 - [`worker_aging_6133_t1c_20261002/`](worker_aging_6133_t1c_20261002/)
+- [`wslc_control_plane_survivability_6669_t0_20261002/`](wslc_control_plane_survivability_6669_t0_20261002/)
 - [`x11_adaptation_multiseed_2459_v1/`](x11_adaptation_multiseed_2459_v1/)
 - [`x11_augmentation_fail_2394_v1/`](x11_augmentation_fail_2394_v1/)
 - [`x11_backend_process_restart_2437_v3/`](x11_backend_process_restart_2437_v3/)
