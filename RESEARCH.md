@@ -15,6 +15,19 @@ Successor isolated OrbStack Docker allocation 02 returned `PASS_METHOD_SCOPED`: 
 
 # Issue #6576: extreme-tail eligibility pilot A02 (2026-10-02)
 
+### Follow-up: timer quantization exposes an eligibility-contract gap
+
+Fresh OrbStack Docker construction A01 tested continuous versus rounded
+synthetic timing samples. Independent audit confirmed that q=1.0 rounding was
+still labeled `ELIGIBLE_REFERENCE` with six distinct values among 333 training
+q90 exceedances; q=0.25 had 21 distinct values and also passed. The continuous
+control was rejected by the existing block-median ratio gate (1.545 > 1.5).
+This is a finite counterexample showing the current gate omits a measurement-
+resolution/tie-support condition, not a p99 calibration or real release result.
+Candidate and raw-only audit each ran once, exit 0, no retry. See the full
+[A01 run record](research/analysis/extreme_tail_eligibility_6576_construction_v1/timer_quantization_a01_20261002/RUN_RECORD.md)
+and [frozen hypothesis/protocol](research/analysis/extreme_tail_eligibility_6576_construction_v1/timer_quantization_a01_20261002/PREREGISTRATION.md).
+
 A dedicated OrbStack Ubuntu machine ran its own pinned-image Docker Engine; no shared Engine was used. One preregistered stationary synthetic case (4,000 train + 4,000 holdout) produced `ELIGIBLE_REFERENCE`; the candidate and independent raw-only audit each ran once and exited 0, with `PASS_METHOD_SCOPED PASS_RAW_ONLY`. The eligible-gated p99 holdout was 42/4,000 (exact 95% CI 0.00758–0.01417); the TailID-equivalent p99 was 45/4,000 (0.00822–0.01502); both include nominal 1%. This one-case pilot establishes neither superiority nor TailID parity, and makes no physical input-release, safety, or worst-case claim. The formal six-case T0 remains unrun. See the [frozen run, raw output and hashes](research/analysis/extreme_tail_eligibility_6576_construction_v1/orbstack_pilot_a02_20261002/RUN_RECORD.md), [H/T/D/C/U and frozen input](research/analysis/extreme_tail_eligibility_6576_construction_v1/orbstack_pilot_a02_20261002/PREREGISTRATION.md), and [Issue #6576](https://github.com/Unjuno/agent-interface/issues/6576).
 
 Successor CRAN/R parity studies then compared pinned TailID 1.0.0/ismev 1.43
