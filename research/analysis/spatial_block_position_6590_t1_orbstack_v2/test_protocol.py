@@ -7,9 +7,21 @@ from protocol import (EVAL_CENTERS_PER_QUADRANT, QUADRANTS, design,
                       edge_margin, nearest_support_distance, validate_design)
 from auditor import independent_design
 from auditor import model_hash as audit_model_hash, refit as audit_refit
+from construction_runner import runtime_config
 
 
 class T1ConstructionTests(unittest.TestCase):
+    def test_construction_runner_reads_nested_runtime_freeze(self):
+        from pathlib import Path
+        import json
+        freeze_path = Path(__file__).with_name("FREEZE.json")
+        freeze = json.loads(freeze_path.read_text(encoding="utf-8"))
+        runtime = runtime_config(freeze)
+        self.assertEqual(runtime["docker_context"], "orbstack")
+        self.assertEqual(runtime["platform"], "linux/arm64")
+        self.assertTrue(runtime["image_id"].startswith("sha256:"))
+        self.assertIn("parity", runtime["construction_container_name"])
+
     def test_frozen_geometry_is_deterministic_and_auditable(self):
         first = design()
         self.assertEqual(first, design())

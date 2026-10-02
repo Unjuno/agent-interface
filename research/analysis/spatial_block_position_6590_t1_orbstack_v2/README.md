@@ -4,6 +4,8 @@ This package is a new, source-separated successor to the retained v1 allocation.
 
 The first v2 prelaunch (`training-parity-20261002-01`) STOPped before container creation because `main` advanced from frozen `2089690` to `cc67052` with only new Issue #6530 package paths. Counts were candidate fits 0, auditor fits 0, containers 0, retries 0. `results/prelaunch-01/STOP.json` preserves the exact reason. The follow-on runner permits disjoint main advances only when the frozen main remains an ancestor and no protected goal/roadmap/README, predecessor, package or workflow path changed; the run record captures those intervening paths. No scientific input or consumed seed is changed.
 
+The second prelaunch (`training-parity-20261002-02`) STOPped on `KeyError: docker_context` because the runner read runtime identity at the wrong freeze level. Again counts are candidate fits 0, auditor fits 0, containers 0, retries 0; exact STOP is in `results/prelaunch-02/STOP.json`. A ninth construction test now explicitly validates the nested runtime schema the runner consumes before a third preflight.
+
 ## H / T / D / C / U
 
 - **H:** The corrected candidate updates W1 and byte-matches the independent full-batch MLP refit for identical frozen rows, initialization, float32 learning rate and step count.

@@ -18,6 +18,14 @@ def now() -> str:
     return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
 
+def runtime_config(freeze: dict) -> dict:
+    runtime = freeze["runtime"]
+    for key in ("docker_context", "image_id", "platform", "construction_container_name"):
+        if not runtime.get(key):
+            raise ValueError(f"STOP_RUNTIME_FREEZE_MISSING:{key}")
+    return runtime
+
+
 def run(source: Path, output: Path) -> int:
     source = source.resolve()
     output = output.resolve()
@@ -32,6 +40,7 @@ def run(source: Path, output: Path) -> int:
         if sha(freeze_path) != freeze_sha:
             raise ValueError("STOP_FREEZE_SIDECAR_MISMATCH")
         freeze = json.loads(freeze_path.read_text(encoding="utf-8"))
+        runtime = runtime_config(freeze)
         stage = "source_readback"
         for rel, expected in freeze["source_sha256"].items():
             if sha(source / rel) != expected:
@@ -62,12 +71,12 @@ def run(source: Path, output: Path) -> int:
             raise ValueError(f"STOP_NON_ADDITIVE_SOURCE:{paths}")
         stage = "runtime_identity"
         context = subprocess.check_output(["docker", "context", "show"], text=True).strip()
-        if context != freeze["docker_context"]:
+        if context != runtime["docker_context"]:
             raise ValueError(f"STOP_DOCKER_CONTEXT:{context}")
-        identity = subprocess.check_output(["docker", "image", "inspect", freeze["image_id"], "--format", "{{.Id}} {{.Os}}/{{.Architecture}}"], text=True).strip()
-        if identity != f"{freeze['image_id']} {freeze['platform']}":
+        identity = subprocess.check_output(["docker", "image", "inspect", runtime["image_id"], "--format", "{{.Id}} {{.Os}}/{{.Architecture}}"], text=True).strip()
+        if identity != f"{runtime['image_id']} {runtime['platform']}":
             raise ValueError(f"STOP_IMAGE_IDENTITY:{identity}")
-        if subprocess.run(["docker", "container", "inspect", freeze["container_name"]], text=True, capture_output=True).returncode == 0:
+        if subprocess.run(["docker", "container", "inspect", runtime["construction_container_name"]], text=True, capture_output=True).returncode == 0:
             raise ValueError("STOP_CONTAINER_NAME_COLLISION")
     except Exception as exc:
         stop = {"schema": "spatial-block-6590-training-parity-stop-v1", "allocation": freeze.get("allocation") if freeze else None,
@@ -77,11 +86,11 @@ def run(source: Path, output: Path) -> int:
         print(json.dumps(stop, indent=2, sort_keys=True))
         return 1
 
-    command = ["docker", "create", "--name", freeze["container_name"], "--network=none", "--cpus=1", "--memory=2g",
+    command = ["docker", "create", "--name", runtime["construction_container_name"], "--network=none", "--cpus=1", "--memory=2g",
                "--pids-limit=64", "--cap-drop=ALL", "--security-opt=no-new-privileges", "--read-only",
                "--tmpfs", "/tmp:rw,noexec,nosuid,size=64m", "-e", "OPENBLAS_NUM_THREADS=1",
                "--mount", f"type=bind,src={source},dst=/experiment,readonly",
-               "--workdir=/experiment", "--entrypoint=python", freeze["image_id"], "-B", "-m", "unittest",
+               "--workdir=/experiment", "--entrypoint=python", runtime["image_id"], "-B", "-m", "unittest",
                "discover", "-s", ".", "-p", "test_*.py", "-v"]
     container_id = subprocess.check_output(command, text=True).strip()
     t0 = time.perf_counter()
@@ -93,12 +102,12 @@ def run(source: Path, output: Path) -> int:
     (output / "container-inspect.json").write_text(inspected, encoding="utf-8")
     state = json.loads(inspected)[0]["State"]
     subprocess.run(["docker", "rm", container_id], text=True, capture_output=True, timeout=30)
-    passed = process.returncode == 0 and "Ran 8 tests" in process.stderr and "OK" in process.stderr
+    passed = process.returncode == 0 and "Ran 9 tests" in process.stderr and "OK" in process.stderr
     record = {"schema": "spatial-block-6590-training-parity-run-v1", "allocation": freeze["construction_allocation"],
               "freeze_sha256": freeze_sha, "source_commit": head, "live_main_sha": latest_main,
               "main_advanced_disjointly": latest_main != freeze["main_sha"], "main_paths_advanced": main_changes,
-              "image_id": freeze["image_id"], "docker_context": context, "command_argv": command,
-              "container_id": container_id, "container_name": freeze["container_name"],
+              "image_id": runtime["image_id"], "docker_context": context, "command_argv": command,
+              "container_id": container_id, "container_name": runtime["construction_container_name"],
               "container_state": state, "duration_seconds": duration, "exit_code": process.returncode,
               "candidate_fit_calls": 1, "auditor_fit_calls": 1, "retries": 0,
               "stdout_sha256": sha(output / "stdout.txt"), "stderr_sha256": sha(output / "stderr.txt"),
