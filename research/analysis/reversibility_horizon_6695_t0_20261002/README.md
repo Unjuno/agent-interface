@@ -1,6 +1,6 @@
 # Reversibility horizon #6695 — T0
 
-Status: pre-registration/construction only. No formal allocation has run.
+Protocol frozen before formal execution. The executed outcome is recorded in [REPORT.md](REPORT.md); the frozen source identities and invocation record are in [RUN_RECORD.md](RUN_RECORD.md).
 
 ## H / T / D / C / U
 
@@ -32,4 +32,4 @@ python experiment.py --out results/formal_01/candidate/raw.jsonl
 python audit.py results/formal_01/candidate/raw.jsonl --out results/formal_01/auditor/audit.json
 ```
 
-The formal commands are run once after the GitHub freeze comment. Construction tests do not consume formal IDs.
+The formal candidate and audit invocations were each run once after the GitHub freeze comment. These commands document reproducibility; they are not permission to replace or rerun the retained allocation. Construction tests do not consume formal IDs.
