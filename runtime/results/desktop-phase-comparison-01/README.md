@@ -81,3 +81,31 @@ the actual MCPSessionOwner.inspect_after_dispatch gate failed before the fix and
 passes normal/-O afterward. No live retry after this correction. Independent
 scoring was initially read before its file existed after cleanup publication;
 the original owner was polled to terminal and its completed score then read.
+
+Distinct frozen successor1002203 (657c3098a) used the initialized common
+inspection connection. Old reference again stopped unknown_state/present=false
+without input. Fresh repair capture was byte-identical to the immediately reviewed
+changed PNG; primary recorded that match before grounding the moved header/cells,
+without inferring coordinates from the black repeated rendering. One repair ran
+Enter/Save, actual modal feedback delivered, explicit one-use review followed by
+separately authored confirmation. Seven commands,3 input programs/26 incremental
+emissions, all neutral releases; original host exit0/all3 children terminal.
+Independent XLSX contains exactly317/529. Final PNG has incomplete black redraw;
+saved success is the terminal scorer, not image completion. One scoped control,
+not reliability, efficiency or the18-phase comparison. No favourable rerun.
+
+Correction to the media-type explanation above: the explicit image/png header
+did not prevent the successor's identical-image repeat from appearing black.
+The exact retained primary input_image blocks are all PNG with original detail,
+including the previous black-appearing repeats. MIME alone is not established as
+the cause. Correct source bytes do not prove primary perception; preserve the
+failure and before-input byte-identity grounding distinction. No generic renderer
+fix is claimed.
+
+Joint construction through retained failure+fix (UTC00:29:44.548–00:48:08.010,
+source171958–172281):46 unique response records,137 exact retained source records,
+6 actual original primary image blocks. Input5790034,cached5711616 subset,
+uncached78418,output29456,reasoning8691 subset,total5819490. Exact source digests,
+response deduplication and original image blocks verified. Billing unavailable.
+This is shared preparation/failed-attempt accounting, not isolated per-arm cost;
+the successor lies outside this window and its accounting is still pending.
