@@ -222,6 +222,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`boundary_margin_5707_policy_pair_v1/`](boundary_margin_5707_policy_pair_v1/)
 - [`boundary_margin_5707_t0_v1/`](boundary_margin_5707_t0_v1/)
 - [`boundary_margin_5707_typed_v1/`](boundary_margin_5707_typed_v1/)
+- [`bounded_path_class_switching_6586_t0_20261002/`](bounded_path_class_switching_6586_t0_20261002/)
 - [`bounded_skew_context_join_successor_1218_v1/`](bounded_skew_context_join_successor_1218_v1/)
 - [`bounded_voi_scheduler_4263_v1/`](bounded_voi_scheduler_4263_v1/)
 - [`breakdown_t7/`](breakdown_t7/)
