@@ -161,6 +161,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`action_conditioned_routing_successor_1934_v1/`](action_conditioned_routing_successor_1934_v1/)
 - [`active_automata_learning_5385_t0_v1/`](active_automata_learning_5385_t0_v1/)
 - [`adaptive_privacy_filter_5420_t1_v1/`](adaptive_privacy_filter_5420_t1_v1/)
+- [`adaptive_screen_5722_t0_v1/`](adaptive_screen_5722_t0_v1/)
 - [`adaptive_screen_5739_t0_v1/`](adaptive_screen_5739_t0_v1/)
 - [`affine_clock_delivery_c6t9_t7k3_v1/`](affine_clock_delivery_c6t9_t7k3_v1/)
 - [`affine_receipt_5508_t12/`](affine_receipt_5508_t12/)
