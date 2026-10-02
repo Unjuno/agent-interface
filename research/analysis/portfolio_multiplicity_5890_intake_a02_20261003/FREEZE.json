@@ -1,0 +1,21 @@
+{
+  "schema":"portfolio-multiplicity-intake-a02-freeze-v1",
+  "issue":5890,
+  "allocation_id":"PORTFOLIO-MULTIPLICITY-5890-INTAKE-A02-20261003",
+  "owner_task":"01a0b990-3d17-72f1-a908-9a2072104ce5",
+  "base_main_sha":"f8e71fc777100281c67a51233b222334fada2863",
+  "branch":"research/5890-intake-funnel-a02-20261003",
+  "evidence_path":"research/analysis/portfolio_multiplicity_5890_intake_a02_20261003/",
+  "runtime":"Windows host CPython 3.11.9, standard library only; no shared WSLc/container/GPU/model/network",
+  "formal_invocations_max":{"candidate":1,"auditor":1,"retries":0},
+  "output_paths":["candidate_raw.json","audit.json"],
+  "source_sha256":{
+    "PROTOCOL.md":"4e99e478b3f778f94016c08d650d695ae80195cd4682a79943e639dd7c788eff",
+    "candidate.py":"6090226f02a6d5f895837f4857408f69a9ab299293a7dde30ad3cd63109291f2",
+    "auditor.py":"6cb79851f6b13d380528b63f3414a26551fd36599ba2668afe796fdb3751d914",
+    "test_method.py":"c1f6b695a21b8f5d012da8f291d2d3c1642daec4605e7a26220124ee38164ae0"
+  },
+  "input_sha256":"f8063007a064962d906bea872bded630c9a74e873b551c7c74b6d433ef5425b7",
+  "window_utc":{"start":"2026-10-02T17:45:00Z","end":"2026-10-02T18:05:00Z"},
+  "terminal_rule":"Main/source/input/runtime/hash/output mismatch or any failed start gate means STOP before candidate. No source edit or retry after candidate."
+}
