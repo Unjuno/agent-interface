@@ -1,0 +1,3 @@
+# Exact runtime command template. Replace <TEMP> with the preregistered run directory.
+wslc --session codex-wslc-audit-6669-20261003 run --detach --name cp6669-baseline-a01 --network none --pull never --memory 768M --cpus 1 --volume <TEMP>:/src:ro python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51 python -B /src/candidate.py baseline
+wslc --session codex-wslc-audit-6669-20261003 run --detach --name cp6669-pressure-a01 --network none --pull never --memory 768M --cpus 1 --volume <TEMP>:/src:ro python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51 python -B /src/candidate.py pressure

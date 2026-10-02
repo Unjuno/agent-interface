@@ -1,0 +1,9 @@
+# WSLc control-plane bounded experiment
+
+Allocation: WSLC-CONTROL-PLANE-6669-T1-20261003-A01. Frozen against main e7f11cdc2cdee42b0f745add6c4a93fc641abe6d. Runtime: WSLc 3.0.1.0; kernel 6.18.40.1-1; SDK Microsoft.WSL.Containers 3.0.1. Separate named session codex-wslc-audit-6669-20261003, CPU=1, memory=1024 MiB. Image python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51.
+
+T0 observed cgroup v2, memory.max=134217728 for a 128 MiB diagnostic container, memory.current=10235904, memory.peak=10731520, memory.events all zero, memory.swap.max=max. Guest MemTotal=922048 kB, MemAvailable=744144 kB. Warning states swap limit unavailable. Container memory flags are not treated as an effective safety ceiling.
+
+T1 baseline: allocate/touch 32 MiB. Pressure candidate: allocate/touch at most 80 x 8 MiB (640 MiB) in 8 MiB increments, 250 ms between, then hold at most 15 sec. Candidate container flags: --memory 768M --cpus 1, --network none --pull never. Session VM ceiling is 1024 MiB. No GPU, Docker, GUI, shared-session containers, or shared-host pressure.
+
+Before pressure, verify session identity/settings, guest MemTotal, and no other containers in named session. Sample info/list/stats/logs while candidate holds; stop, verify exited state, remove and verify absence. Every control op deadline 15 sec. Preserve raw stdout/stderr, timestamps, exit status, duration. PASS requires pressure evidenced by MemAvailable <128 MiB or positive PSI/limit-event delta, all required control ops and cleanup independently verified within deadlines, and auditor rejects false-success, missing-stop-ack, and missing-cleanup mutations. Otherwise classify FAIL only if pressure is proven and a required control operation fails; HOLD/STOP if ceiling, pressure, identity, raw evidence or cleanup is uncertain. No general OOM safety or hard per-container enforcement claim.

@@ -1,0 +1,18 @@
+# Reproduction command sequence (PowerShell; runtime is WSLc 3.0.1.0)
+
+$w = 'C:\Program Files\WSL\wslc.exe'
+$s = 'codex-wslc-audit-6669-20261003'
+$d = Join-Path $env:TEMP 'wslc-control-plane-6669-t1-20261003'
+$image = 'python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016'
+
+# Preconditions: named session lists as ID 5; no containers listed; guest MemTotal=922048 kB.
+& $w --session $s run --detach --name cp6669-term-control-a02 --network none --pull never --memory 768M --cpus 1 --volume "${d}:/src:ro" $image python -B /src/candidate-sigterm.py control
+# Wait for baseline_ready, then record logs/stats and stop/remove with --time 10.
+
+& $w --session $s run --detach --name cp6669-term-pressure-a02 --network none --pull never --memory 768M --cpus 1 --volume "${d}:/src:ro" $image python -B /src/candidate-sigterm.py pressure
+# On pressure_ready, record info/session list/container list/stats/logs; stop --time 10;
+# verify SIGTERM, exit 0, remove, then verify container list empty. Operation deadline: 15 seconds.
+
+& $w --session $s run --rm --network none --pull never --memory 128M --cpus 0.25 --volume "${d}:/evidence:ro" $image python -B /evidence/audit-final-v3.py /evidence/pressure-sigterm.raw.jsonl /evidence/term-pressure-a02.controls.jsonl /evidence/control-sigterm.raw.jsonl /evidence/term-control-a02.jsonl
+
+& $w --session $s run --rm --network none --pull never --memory 128M --cpus 0.25 --volume "${d}:/evidence:ro" $image python -B /evidence/audit-mutations-v3.py /evidence/audit-final-v3.py /evidence/pressure-sigterm.raw.jsonl /evidence/term-pressure-a02.controls.jsonl /evidence/control-sigterm.raw.jsonl /evidence/term-control-a02.jsonl
