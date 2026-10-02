@@ -138,6 +138,43 @@ validates the retained image. It does not establish token or latency savings.
 See [MCP result retrieval](cli_v1/MCP.md#recover-a-retained-result-without-resending-input)
 for the complete lifecycle and failure contract.
 
+## Python calls on one owned X11 connection
+
+For a serialized Python caller, `MCPSessionOwner.dispatch` shares the persistent
+MCP route's dispatch bookkeeping. After establishing the actual target mapping,
+selected display and current source, use the same complete public program:
+
+```python
+from runtime.cli_v1.mcp_session import MCPSessionOwner
+
+owner = MCPSessionOwner(targets, display_name=selected_display)
+try:
+    report = owner.dispatch(
+        program,
+        current_observation_seq=reviewed_sequence,
+        current_binding_revision=owner.binding_revision,
+        capture_directory=run_images,
+    )
+finally:
+    cleanup = owner.close()
+```
+
+The variables above are caller-supplied; this is not a complete allocation or
+source-grounding example. The method records the cleanup obligation before
+calling the public API, so callers do not need to assign `dispatch_attempted`
+manually. It returns the API report unchanged. A mismatched binding revision
+refuses dispatch; even that call may initialize the connection. Initialization
+failure is consumed once, and a closed owner cannot reopen.
+
+Source values and leases remain explicit. The method adds no inspection,
+replay, renewal, task-success inference or implicit input recovery. Review the
+input report and cleanup independently; an exception can follow input emission.
+`close()` attempts release on that same connection and reports failures. It does
+not prove the task succeeded. Use explicit `inspect_after_dispatch` when fresh
+post-release target context is wanted. This wrapper applies to its own ordinary
+public session; a compiled graph using a separate connection retains its own
+input owner and cleanup duty. Calls must be serialized by the caller.
+
 ## Batch actions between decisions
 
 Use one public `dispatch` program for a finite sequence whose actions can all be
