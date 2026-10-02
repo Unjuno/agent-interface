@@ -6,6 +6,8 @@ Formal audit has not run. This report will be updated only with the first frozen
 
 Pre-formal construction tests: 7/7 pass on macOS arm64 / CPython 3.14.5. These check the fresh model's finite-state count, a selected independent/dependent pair, Git blob hashing, topological-order discriminator, and all eight effective control values. They do not parse/recompute the 11,111 formal rows. The workspace analysis index passes at 550 retained result/failure directories after the latest-main integration.
 
+Full local Analysis Index workflow suite: 18 test commands / 111 tests passed on the frozen latest-main base. The workflow's pinned historical source was restored temporarily for provenance tests, then the committed source was restored and independently verified. The earlier manually transcribed test-directory typo is retained as a separate failed command attempt and is not counted as a test failure.
+
 ## H / T / D / C / U
 
 See `PREREGISTRATION.md`. The scope is an independent audit of #4889's retained finite reducer evidence. The predecessor's `HOLD_AUDIT_CONTROL_HARNESS`, raw data, and 7/8 control result remain unchanged.
