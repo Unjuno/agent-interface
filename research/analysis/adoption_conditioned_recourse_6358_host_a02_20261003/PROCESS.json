@@ -1,0 +1,34 @@
+{
+  "allocation": "ADOPTION-CONDITIONED-RECOURSE-6358-T0-MAC-HOST-20261003-02",
+  "freeze_commit": "bbd7497caeb26cbafda199b0d412a347f5159d3e",
+  "formal_candidate_invocations": 0,
+  "formal_auditor_invocations": 0,
+  "retries": 0,
+  "formal": "NOT_STARTED",
+  "predecessor_context": {
+    "allocation_01": "STOP_RUNNER_REDIRECTION_DIRECTORY_MISSING; candidate program invocations 0",
+    "local_a01": "STOP_RUNNER_OUTPUT_PARENT_MISSING; candidate process invocations 0; no retry"
+  },
+  "pre_formal_construction": [
+    {
+      "argv": ["python3", "-m", "unittest", "discover", "-s", "research/analysis/adoption_conditioned_recourse_6358_host_a02_20261003", "-p", "test_*.py", "-v"],
+      "exit": 0,
+      "result": "PASS",
+      "tests": 16
+    },
+    {
+      "argv": ["python3", "-m", "py_compile", "candidate.py", "auditor.py"],
+      "exit": 0,
+      "result": "PASS"
+    },
+    {
+      "argv": ["git", "diff", "--check"],
+      "exit": 0,
+      "result": "PASS"
+    },
+    {
+      "result": "PASS_OUTPUT_STAGING",
+      "detail": "Committed results/formal-02/READY.md establishes the output directory; candidate.raw.json, audit.raw.json, candidate.stdout.txt and candidate.stderr.txt are absent. Formal launch contains no mkdir."
+    }
+  ]
+}
