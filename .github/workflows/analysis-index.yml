@@ -26,6 +26,12 @@ jobs:
           fetch-depth: 1
           sparse-checkout: |
             research/analysis
+      - name: Restore the frozen workflow source for provenance tests
+        run: |
+          git fetch --no-tags --depth=1 origin e2e434dd07e1034c5c4303982a0b1ec33ea35cfd
+          mkdir -p .github/workflows
+          git show e2e434dd07e1034c5c4303982a0b1ec33ea35cfd:.github/workflows/analysis-index.yml > .github/workflows/analysis-index.yml
+          printf '%s  %s\n' b19000e027e7379ef6c0122e3f8cfd0b2faacb4c54d985ab87d27c1be914f7c2 .github/workflows/analysis-index.yml | sha256sum --check
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -39,6 +45,8 @@ jobs:
         run: python -B -m unittest discover -s research/analysis/approval_sequence_discrimination_6405_t0_v1 -p 'test_*.py' -v
       - name: Test #6590 spatial-block overlap mutation challenge
         run: python -B -m unittest discover -s research/analysis/spatial_block_position_6590_t0_20261002/mutation_challenge_v1 -p 'test_*.py' -v
+      - name: Test #6590 T1 geometry feasibility preflight
+        run: python -B -m unittest discover -s research/analysis/spatial_block_position_6590_t1_geometry_feasibility_v1 -p 'test_*.py' -v
       - name: Test endogenous-demand rebound T0
         run: python -B -m unittest discover -s research/analysis/endogenous_demand_rebound_5702_t0_v1 -p 'test_*.py' -v
       - name: Test selection-aware shadow-audit T1
