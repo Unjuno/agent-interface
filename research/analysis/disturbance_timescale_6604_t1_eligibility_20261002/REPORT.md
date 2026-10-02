@@ -39,3 +39,25 @@ From a current checkout, fetch the six exact main-branch paths below as UTF-8 JS
 - research/doom/results/map01-v39-coast-liveness-live-01/planner-protocol.jsonl
 
 This is a scoped, read-only eligibility audit—not the #6604 T2 experiment and not a MAP01 progress verdict.
+
+
+## Executable pre-screen and controls
+
+The package now includes:
+
+- audit.js — pure read-only structural pre-screen. It deliberately never emits an eligibility PASS: absent schedule markers yield HOLD_NO_ELIGIBLE_TRACE; any marker yields REVIEW_REQUIRED_NOT_ELIGIBLE until source binding/content receives separate review.
+- run_audit.js — local Node CLI that checks the six exact Git blob SHA-1 identities before parsing and auditing a checkout.
+- test_audit.js — four zero-dependency controls for absent schedule (HOLD), marker-only (review, never eligible), incomplete held receipts (HOLD), missing route-cost evidence (HOLD), and malformed JSON rejection.
+
+The committed audit function and committed control module were read back from the PR branch and executed in the task's isolated JavaScript runtime against the six raw text objects fetched from GitHub main. The controls passed **4/4**. The local Node CLI itself was not run in this environment; consequently no local checkout-based CLI execution is claimed. GitHub returned the six input blob IDs exactly as listed above.
+
+Observed prescreen output:
+
+| Allocation | Event rows | Planner rows | Admissions | Held receipts | Verified owner-release receipts | Schedule markers | Disposition |
+|---|---:|---:|---:|---:|---:|---:|---|
+| v38 | 340 | 391 | 11 | 11 | 8 | 0 | HOLD_NO_ELIGIBLE_TRACE |
+| v39 | 634 | 985 | 39 | 28 | 18 | 0 | HOLD_NO_ELIGIBLE_TRACE |
+
+The release-receipt counts are structural counts, not a proof that every admission has a correctly identity-joined terminal release. The v39 held-receipt deficit independently prevents treating its admissions as fully occupancy-covered. Even if a schedule-like marker is added, the auditor returns REVIEW_REQUIRED_NOT_ELIGIBLE; it does not infer schedule completeness, source binding, valid timing, or eligibility from a field name alone.
+
+Audit source blob: 48204e3953d216c0226044833b719212ac34f2c7. Test source blob: 02401045e46d9b59a2358821f9953b3f18a050bf. These are PR-branch identities, not main-branch result inputs. This additional prescreen does not change historical run files or the scoped HOLD.
