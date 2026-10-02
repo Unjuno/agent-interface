@@ -1,0 +1,30 @@
+{
+  "schema": "agent-interface.semantic-receipt-replay.v1",
+  "scenario_order": ["valid_effect", "wrong_target", "stale_pre_state", "noop"],
+  "scenarios": [
+    {
+      "id": "valid_effect",
+      "intent": {"target": "doc:A", "pre_version": 7, "goal": "title=done"},
+      "dispatch": {"accepted": true, "target": "doc:A", "observed_pre_version": 7},
+      "endpoint": {"target": "doc:A", "version": 8, "state": "title=done"}
+    },
+    {
+      "id": "wrong_target",
+      "intent": {"target": "doc:A", "pre_version": 7, "goal": "title=done"},
+      "dispatch": {"accepted": true, "target": "doc:B", "observed_pre_version": 7},
+      "endpoint": {"target": "doc:B", "version": 8, "state": "title=done"}
+    },
+    {
+      "id": "stale_pre_state",
+      "intent": {"target": "doc:A", "pre_version": 7, "goal": "title=done"},
+      "dispatch": {"accepted": true, "target": "doc:A", "observed_pre_version": 8},
+      "endpoint": {"target": "doc:A", "version": 9, "state": "title=done"}
+    },
+    {
+      "id": "noop",
+      "intent": {"target": "doc:A", "pre_version": 7, "goal": "title=done"},
+      "dispatch": {"accepted": true, "target": "doc:A", "observed_pre_version": 7},
+      "endpoint": {"target": "doc:A", "version": 7, "state": "title=before"}
+    }
+  ]
+}

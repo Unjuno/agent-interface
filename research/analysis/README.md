@@ -674,6 +674,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`semantic_delta_successor_2000_v1/`](semantic_delta_successor_2000_v1/)
 - [`semantic_mvcc_readset_4257_v1/`](semantic_mvcc_readset_4257_v1/)
 - [`semantic_predicate_fabric_4215_v1/`](semantic_predicate_fabric_4215_v1/)
+- [`semantic_receipt_container_replay_5442_t7/`](semantic_receipt_container_replay_5442_t7/)
 - [`semantic_receipt_dependency_cuts_5442_t3/`](semantic_receipt_dependency_cuts_5442_t3/)
 - [`semantic_receipt_target_binding_5442_t8/`](semantic_receipt_target_binding_5442_t8/)
 - [`semantic_selection_identity_successor_341_v1/`](semantic_selection_identity_successor_341_v1/)
