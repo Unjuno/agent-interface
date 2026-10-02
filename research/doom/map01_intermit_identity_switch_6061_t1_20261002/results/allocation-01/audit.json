@@ -1,0 +1,223 @@
+{
+  "decision": "HOLD_SILENT_IDENTITY_SWITCH_UNOBSERVABLE",
+  "details": [
+    {
+      "captures": 2,
+      "case_id": "same_identity_control",
+      "commanded_occupancy_ticks": 12,
+      "policy": "identity_epoch_gate",
+      "post_switch_command_ticks": 0,
+      "release_tick": null
+    },
+    {
+      "captures": 2,
+      "case_id": "same_identity_control",
+      "commanded_occupancy_ticks": 12,
+      "policy": "identity_only_gate",
+      "post_switch_command_ticks": 0,
+      "release_tick": null
+    },
+    {
+      "captures": 2,
+      "case_id": "same_identity_control",
+      "commanded_occupancy_ticks": 12,
+      "policy": "kinematic_only",
+      "post_switch_command_ticks": 0,
+      "release_tick": null
+    },
+    {
+      "captures": 1,
+      "case_id": "same_identity_control",
+      "commanded_occupancy_ticks": 1,
+      "policy": "no_continuation",
+      "post_switch_command_ticks": 0,
+      "release_tick": 1
+    },
+    {
+      "captures": 1,
+      "case_id": "visible_identity_switch",
+      "commanded_occupancy_ticks": 5,
+      "policy": "identity_epoch_gate",
+      "post_switch_command_ticks": 0,
+      "release_tick": 5
+    },
+    {
+      "captures": 1,
+      "case_id": "visible_identity_switch",
+      "commanded_occupancy_ticks": 5,
+      "policy": "identity_only_gate",
+      "post_switch_command_ticks": 0,
+      "release_tick": 5
+    },
+    {
+      "captures": 2,
+      "case_id": "visible_identity_switch",
+      "commanded_occupancy_ticks": 12,
+      "policy": "kinematic_only",
+      "post_switch_command_ticks": 7,
+      "release_tick": null
+    },
+    {
+      "captures": 1,
+      "case_id": "visible_identity_switch",
+      "commanded_occupancy_ticks": 1,
+      "policy": "no_continuation",
+      "post_switch_command_ticks": 0,
+      "release_tick": 1
+    },
+    {
+      "captures": 1,
+      "case_id": "epoch_only_switch",
+      "commanded_occupancy_ticks": 5,
+      "policy": "identity_epoch_gate",
+      "post_switch_command_ticks": 0,
+      "release_tick": 5
+    },
+    {
+      "captures": 2,
+      "case_id": "epoch_only_switch",
+      "commanded_occupancy_ticks": 12,
+      "policy": "identity_only_gate",
+      "post_switch_command_ticks": 7,
+      "release_tick": null
+    },
+    {
+      "captures": 2,
+      "case_id": "epoch_only_switch",
+      "commanded_occupancy_ticks": 12,
+      "policy": "kinematic_only",
+      "post_switch_command_ticks": 7,
+      "release_tick": null
+    },
+    {
+      "captures": 1,
+      "case_id": "epoch_only_switch",
+      "commanded_occupancy_ticks": 1,
+      "policy": "no_continuation",
+      "post_switch_command_ticks": 0,
+      "release_tick": 1
+    },
+    {
+      "captures": 1,
+      "case_id": "unknown_epoch_switch",
+      "commanded_occupancy_ticks": 5,
+      "policy": "identity_epoch_gate",
+      "post_switch_command_ticks": 0,
+      "release_tick": 5
+    },
+    {
+      "captures": 1,
+      "case_id": "unknown_epoch_switch",
+      "commanded_occupancy_ticks": 5,
+      "policy": "identity_only_gate",
+      "post_switch_command_ticks": 0,
+      "release_tick": 5
+    },
+    {
+      "captures": 2,
+      "case_id": "unknown_epoch_switch",
+      "commanded_occupancy_ticks": 12,
+      "policy": "kinematic_only",
+      "post_switch_command_ticks": 7,
+      "release_tick": null
+    },
+    {
+      "captures": 1,
+      "case_id": "unknown_epoch_switch",
+      "commanded_occupancy_ticks": 1,
+      "policy": "no_continuation",
+      "post_switch_command_ticks": 0,
+      "release_tick": 1
+    },
+    {
+      "captures": 2,
+      "case_id": "silent_identity_switch",
+      "commanded_occupancy_ticks": 12,
+      "policy": "identity_epoch_gate",
+      "post_switch_command_ticks": 7,
+      "release_tick": null
+    },
+    {
+      "captures": 2,
+      "case_id": "silent_identity_switch",
+      "commanded_occupancy_ticks": 12,
+      "policy": "identity_only_gate",
+      "post_switch_command_ticks": 7,
+      "release_tick": null
+    },
+    {
+      "captures": 2,
+      "case_id": "silent_identity_switch",
+      "commanded_occupancy_ticks": 12,
+      "policy": "kinematic_only",
+      "post_switch_command_ticks": 7,
+      "release_tick": null
+    },
+    {
+      "captures": 1,
+      "case_id": "silent_identity_switch",
+      "commanded_occupancy_ticks": 1,
+      "policy": "no_continuation",
+      "post_switch_command_ticks": 0,
+      "release_tick": 1
+    }
+  ],
+  "errors": [],
+  "identity_only_misses_epoch_only_switch": true,
+  "kinematic_only_misses_observable_switches": {
+    "epoch_only_switch": true,
+    "unknown_epoch_switch": true,
+    "visible_identity_switch": true
+  },
+  "mutations": [
+    {
+      "case": "drop_row",
+      "errors": [
+        "row_order_inventory",
+        "missing_row",
+        "silent_switch_not_quarantined"
+      ],
+      "rejected": true
+    },
+    {
+      "case": "duplicate_row",
+      "errors": [
+        "row_order_inventory",
+        "duplicate_or_unknown_row"
+      ],
+      "rejected": true
+    },
+    {
+      "case": "continue_after_epoch_change",
+      "errors": [
+        "trace_mismatch:epoch_only_switch:identity_epoch_gate",
+        "post_switch_command:epoch_only_switch"
+      ],
+      "rejected": true
+    },
+    {
+      "case": "shift_release_tick",
+      "errors": [
+        "summary_mismatch:visible_identity_switch:identity_epoch_gate",
+        "gate_boundary:visible_identity_switch"
+      ],
+      "rejected": true
+    },
+    {
+      "case": "oracle_leak_into_input",
+      "errors": [
+        "observation_fields_or_oracle_leak"
+      ],
+      "rejected": true
+    }
+  ],
+  "observable_gate_release_ticks": {
+    "epoch_only_switch": 5,
+    "unknown_epoch_switch": 5,
+    "visible_identity_switch": 5
+  },
+  "rows": 20,
+  "silent_switch_disposition": "UNKNOWN_NOT_CREDITED",
+  "silent_switch_observationally_equivalent_to_control": true,
+  "status": "PASS_METHOD_SCOPED_WITH_IDENTIFIABILITY_HOLD"
+}

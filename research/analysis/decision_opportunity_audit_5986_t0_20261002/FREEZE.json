@@ -1,0 +1,32 @@
+{
+  "allocation_id": "DECISION-OPPORTUNITY-5986-AUDIT-20261002-01",
+  "issue": "Unjuno/agent-interface#5986",
+  "type": "independent audit-only reproduction of immutable T0 raw; candidate not rerun",
+  "source_main_commit": "d6229435f9d651b5309a01dca30c2edd7de2f54a",
+  "predecessor_pr": 6131,
+  "predecessor_commit": "357989191b85cd4ed4ecacb313170b6294e56a62",
+  "predecessor_allocation": "DECISION-OPPORTUNITY-5986-T0-20261002-01",
+  "branch": "research/decision-opportunity-audit-5986-t0-20261002",
+  "formal_invocations": {"candidate": 0, "independent_auditor": 1, "retries": 0},
+  "oracle": "separate implementation in independent_audit.py; does not import predecessor candidate/auditor",
+  "container": {
+    "engine": "OrbStack Docker Engine 29.4.0; client 29.5.2",
+    "image": "python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "platform": "linux/arm64",
+    "network": "none",
+    "rootfs": "read-only",
+    "source_mount": "read-only",
+    "output_mount": "dedicated writable temporary directory",
+    "limits": {"cpus": 0.5, "memory": "256m", "pids": 32, "cap_drop": "ALL", "no_new_privileges": true}
+  },
+  "sha256": {
+    "independent_audit.py": "19230142d6374ca20fa03c0d4f73e7b6936b674da76286627f31fc1f46eae1a2",
+    "test_independent_audit.py": "8d1716073a77b7d4524daaa2c283f1e6e2304f6a7b6178650ee359c24d54ff77",
+    "frozen/FREEZE.json": "16736d9cd587b20f4eb985689baa27a06701dcf9bc628e1b8515ed12d91cc680",
+    "frozen/fixture.json": "a2dac053fd3c2b5aea63b2d48bcb11cdce3a7faa1542b8a7e8c153d256403a53",
+    "frozen/candidate.json": "c3023018f657e33c4d6a9bf70a956bfa030b04fdde32671a096e1d0a02a51a2f",
+    "frozen/candidate.py": "3fd9fdbbddcf59129000d68d8d57afb96d857293763c302fa377dc854ba60bfe",
+    "frozen/audit.py": "9e80fe89537b2a648135efa7fd2999adcf62b452db36e298fd293cc71bcd044b",
+    "frozen/audit.json": "19f05f1c9cbc0005b330d768d15212d0d338d6051e05d8c090e75898b12a73bc"
+  }
+}

@@ -12,9 +12,14 @@ YIELD_REASONS = {
     "unknown_state", "ambiguous_state", "stale_observation", "stale_symbol",
     "missing_symbol", "association_changed", "authority_unavailable",
     "effect_failed", "effect_unavailable", "no_progress", "cancelled",
-    "budget_exhausted", "delivery_uncertain", "execution_failed",
+    "budget_exhausted", "delivery_uncertain", "execution_failed", "execution_refused",
 }
 SCALAR = (str, int, bool)
+
+
+
+class ObservationAssociationChanged(RuntimeError):
+    """Adapter reports a capture whose association changed; no valid frame exists."""
 
 
 def _exact(value, fields, label):
@@ -149,6 +154,12 @@ def _observation(value, interface, previous_sequence):
     return copy.deepcopy(value), None
 
 
+def _matches(actual, expected):
+    # Predicates have JSON scalar meaning; bool and int are distinct even though
+    # Python considers True == 1 and False == 0. Missing values never match.
+    return type(actual) is type(expected) and actual == expected
+
+
 def run(interface, adapters, *, clock=time.perf_counter_ns):
     """Execute a bounded method locally; return an auditable compact receipt."""
     interface = validate(interface)
@@ -212,8 +223,13 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
             return finish("SAFE_YIELD", "cancelled")
         if clock() >= deadline:
             return finish("SAFE_YIELD", "budget_exhausted")
-        raw = adapters["observe"]({"state": state,
-                                    "required_predicates": interface["predicates"]})
+        try:
+            raw = adapters["observe"]({"state": state,
+                                        "required_predicates": interface["predicates"]})
+        except ObservationAssociationChanged:
+            # Preserve completed actions and pending effects, without inventing
+            # a sequence, usable image, effect verdict, or permission to replay.
+            return finish("SAFE_YIELD", "association_changed")
         observation, refusal = _observation(raw, interface, previous_sequence)
         if refusal:
             return finish("SAFE_YIELD", refusal)
@@ -235,7 +251,7 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
             observed = observation["predicates"]
             unknown = any(key not in observed or observed.get(key) == "unknown"
                           for key in expected)
-            mismatch = any(observed.get(key) != value
+            mismatch = any(not _matches(observed.get(key), value)
                            for key, value in expected.items())
             if unknown or mismatch:
                 status = "unavailable" if unknown else "failed"
@@ -264,7 +280,7 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
 
         matches = []
         for branch in interface["method"]["states"][state]["branches"]:
-            if all(observation["predicates"].get(key) == expected
+            if all(_matches(observation["predicates"].get(key), expected)
                    for key, expected in branch["when"].items()):
                 matches.append(branch)
         if not matches:
@@ -331,15 +347,29 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
             "expected_sequence": admission["expected_sequence"],
             "valid_until_ns": min(admission["valid_until_ns"], deadline),
         })
-        _exact(terminal, {"status", "action_id", "effect_ref", "release"},
-               "execution terminal")
+        terminal_fields = {"status", "action_id", "effect_ref", "release"}
+        delivery = {}
+        if type(terminal) is dict and "input_dispatched" in terminal:
+            terminal_fields.add("input_dispatched")
+            if type(terminal["input_dispatched"]) is not bool:
+                raise ValueError("strict boolean input_dispatched required")
+            if terminal["input_dispatched"] is False and terminal.get("status") != "refused":
+                raise ValueError("no-input terminal must be an explicit refusal")
+            delivery["input_dispatched"] = terminal["input_dispatched"]
+        _exact(terminal, terminal_fields, "execution terminal")
         release = terminal["release"]
         _exact(release, {"verified", "keys_down", "buttons_down"}, "release")
         released = (release["verified"] is True and release["keys_down"] == [] and
                     release["buttons_down"] == [])
         emit({"event": "action_terminal", "action": action_name,
               "status": terminal["status"], "action_id": terminal["action_id"],
-              "release_verified": released})
+              "release_verified": released, **delivery})
+        # An explicitly attested pre-input refusal has no new release receipt.
+        # Stop without inventing neutrality, a completed action or a replay.
+        # Unknown delivery and reported held input keep the stricter failure path.
+        if (terminal.get("input_dispatched") is False and terminal["status"] == "refused"
+                and release["keys_down"] == [] and release["buttons_down"] == []):
+            return finish("SAFE_YIELD", "execution_refused")
         if not released:
             return finish("RUNTIME_FAILED", "execution_failed")
         if terminal["status"] != "completed":

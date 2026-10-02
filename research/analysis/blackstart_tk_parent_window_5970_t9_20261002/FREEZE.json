@@ -1,0 +1,15 @@
+{
+  "schema": "blackstart-tk-parent-window-t9-freeze-v1",
+  "issue": 5970,
+  "t3_derived_app_sha256": "fe24b580beaf048921352cc49ec380ba6f3122240c9197a1b62fc766d72afa63",
+  "candidate_sha256": "c4ddf230ea23b01dacb5017dc7812f8fbfbcb6b05972e22ed62e47a0b9866708",
+  "runner_sha256": "995cbe48b14038d3e7090d5a0113382879eb6d552c3a038fcb0299fc18df8c9d",
+  "observer_sha256": "41bdff3300cf751bd40105707c8649972b7e5873518cb8b049ab816041ed26e2",
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "input": {"key": "Shift_L", "keycode": 50, "pairs": 1, "release_in_finally": true, "terminal_neutrality_required": true},
+  "observer": {"window_scope": "immediate parent of Tk root plus its descendants; stop before screen root", "masks": ["KeyPressMask", "KeyReleaseMask"]},
+  "record": {"clients": "AllClients", "delivered_events": ["KeyPress", "KeyRelease"]},
+  "formal_4135_allocation_rerun": false,
+  "docker": "Docker Desktop Linux engine unavailable; WSL2 private Xvfb fallback"
+}

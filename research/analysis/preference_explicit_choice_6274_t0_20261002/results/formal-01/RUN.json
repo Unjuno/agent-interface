@@ -1,0 +1,64 @@
+{
+  "allocation_id": "PREFERENCE-EXPLICIT-CHOICE-6274-T0-20261002-01",
+  "base_main_sha": "389b109629ca0c8baf7a9daf725eded76c358162",
+  "candidate": {
+    "command": "docker run --rm --network none --cpus=1 --memory=512m --pids-limit=64 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m -v /Users/taka/Documents/Codex/2026-10-02/issue-6274-social-choice-t0:/repo:ro -v /Users/taka/Documents/Codex/2026-10-02/issue-6274-social-choice-t0/research/analysis/preference_explicit_choice_6274_t0_20261002/results/formal-01:/repo/research/analysis/preference_explicit_choice_6274_t0_20261002/results/formal-01:rw -w /repo/research/analysis/preference_explicit_choice_6274_t0_20261002 python:3.12-alpine@sha256:c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b python candidate.py",
+    "exit_code": 0,
+    "invocations": 1,
+    "stdout_file": "candidate.stdout.json"
+  },
+  "auditor": {
+    "command": "docker run --rm --network none --cpus=1 --memory=512m --pids-limit=64 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m -v /Users/taka/Documents/Codex/2026-10-02/issue-6274-social-choice-t0:/repo:ro -v /Users/taka/Documents/Codex/2026-10-02/issue-6274-social-choice-t0/research/analysis/preference_explicit_choice_6274_t0_20261002/results/formal-01:/repo/research/analysis/preference_explicit_choice_6274_t0_20261002/results/formal-01:rw -w /repo/research/analysis/preference_explicit_choice_6274_t0_20261002 python:3.12-alpine@sha256:c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b python audit.py",
+    "exit_code": 0,
+    "invocations": 1,
+    "stdout_file": "auditor.stdout.json"
+  },
+  "retries": 0,
+  "container": {
+    "engine": "OrbStack Docker",
+    "image": "python:3.12-alpine@sha256:c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b",
+    "platform": "linux/arm64",
+    "network": "none",
+    "cpus": 1,
+    "memory_mib": 512,
+    "pids": 64,
+    "rootfs_read_only": true,
+    "tmpfs_mib": 16
+  },
+  "construction_tests": {
+    "command": "python3 -B -m unittest discover -s research/analysis/preference_explicit_choice_6274_t0_20261002 -p 'test_*.py' -v",
+    "passed": 9,
+    "failed": 0,
+    "environment": "host Python; construction only"
+  },
+  "local_ci": {
+    "analysis_index": {
+      "initial_state": "expected missing generated entry before index refresh",
+      "refresh_command": "python research/analysis/check_index.py --write",
+      "verified_command": "python research/analysis/check_index.py",
+      "status": "PASS",
+      "retained_result_directories": 368
+    },
+    "workflow_suite_1": {
+      "command": "python -B -m unittest discover -s research/analysis/endogenous_demand_rebound_5702_t0_v1 -p 'test_*.py' -v",
+      "passed": 8,
+      "failed": 0
+    },
+    "workflow_suite_2": {
+      "command": "python -B -m unittest discover -s research/analysis/selection_aware_shadow_audit_5681_t1_v1 -p 'test_*.py' -v",
+      "passed": 12,
+      "failed": 0
+    },
+    "public_navigation": {
+      "command": "python .github/check_public_navigation.py",
+      "status": "PASS",
+      "documents": 26,
+      "repository_relative_links": 1199
+    }
+  },
+  "classification": "PASS_METHOD_SCOPED",
+  "audit_status": "PASS_METHOD_SCOPED",
+  "mutation_controls_rejected": 4,
+  "formal_failures": 0,
+  "stop_reason": null
+}

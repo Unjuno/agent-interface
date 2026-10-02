@@ -1,0 +1,99 @@
+{
+  "button_down_admissions": 7,
+  "button_up_admissions": 0,
+  "classification": "HOLD_CROSS_DOMAIN_EFFECT_CLOCK_JOIN",
+  "down_to_neutral_receipts": [
+    {
+      "ack_to_neutral_confirmation_ns": 319502382,
+      "id": "durable-2b9c3473eecc444bb46e641b377ad4a1",
+      "input_ack_ns": 18844403082458,
+      "neutral_verified_ns": 18844722584840,
+      "step": 0
+    },
+    {
+      "ack_to_neutral_confirmation_ns": 1411022442,
+      "id": "durable-e272b663881b43b18b213c44226b84cd",
+      "input_ack_ns": 18884897846458,
+      "neutral_verified_ns": 18886308868900,
+      "step": 0
+    },
+    {
+      "ack_to_neutral_confirmation_ns": 902530629,
+      "id": "durable-6620a73738e64284b309a340940fb52d",
+      "input_ack_ns": 18902380329603,
+      "neutral_verified_ns": 18903282860232,
+      "step": 0
+    },
+    {
+      "ack_to_neutral_confirmation_ns": 1411871874,
+      "id": "durable-3e63e016f36b4ce2874cf6e1f27f41b8",
+      "input_ack_ns": 18972701118548,
+      "neutral_verified_ns": 18974112990422,
+      "step": 0
+    },
+    {
+      "ack_to_neutral_confirmation_ns": 925780084,
+      "id": "durable-724636f7798243f08cadead550ac0d0a",
+      "input_ack_ns": 19000681380124,
+      "neutral_verified_ns": 19001607160208,
+      "step": 0
+    },
+    {
+      "ack_to_neutral_confirmation_ns": 1131472922,
+      "id": "durable-bd02d3ca07eb4f33a45b8afdf4d34f8f",
+      "input_ack_ns": 19038594566166,
+      "neutral_verified_ns": 19039726039088,
+      "step": 0
+    },
+    {
+      "ack_to_neutral_confirmation_ns": 921730950,
+      "id": "durable-bd02d3ca07eb4f33a45b8afdf4d34f8f",
+      "input_ack_ns": 19038804308138,
+      "neutral_verified_ns": 19039726039088,
+      "step": 1
+    }
+  ],
+  "event_counts": {
+    "accepted": 25,
+    "clock": 25,
+    "command": 50,
+    "input_admission": 2,
+    "observation": 52,
+    "pointer_admission": 29,
+    "ready": 1,
+    "step_completed": 51,
+    "step_started": 51,
+    "terminal": 25
+  },
+  "event_rows": 311,
+  "exact_per_button_hold_duration": "NOT_IDENTIFIABLE",
+  "first_A_to_B_observer_record_zero_based": 91,
+  "host_observation_rows": 52,
+  "host_observation_sequence_range": [
+    1,
+    52
+  ],
+  "interpretation": "The same-program terminal confirms a later neutral input state, but input_ack_ns-to-neutral_verified_ns is only a request/confirmation interval, not button occupancy. The independently observed A-to-B transition has no shared host monotonic timestamp, sequence, or ID, so effect latency cannot be joined.",
+  "observer_effect_latency_on_host_clock": "NOT_IDENTIFIABLE",
+  "observer_records": 263,
+  "observer_top_level_keys": [
+    "edges",
+    "guard",
+    "stage",
+    "tiles",
+    "width",
+    "x",
+    "y"
+  ],
+  "observer_unique_declared_states": 2,
+  "pointer_admissions": 29,
+  "scope": "one immutable archived OpenTTD episode; no new model, GUI, input, game, or live claim",
+  "shared_observer_host_clock_or_identity_fields": [],
+  "source_sha256": {
+    "events_sha256": "b9e707b006a918b232f6d8915adc6a95e4d7e4ee789fec7ef4e1fba7e2df61ae",
+    "observer_sha256": "4bcfb5b2632e9b2dc76f5e3f67a73f30cbd6b142578b495f0b204a2ec9696ca4",
+    "posthoc_sha256": "8377e663d6f3b88eb41b73d85212f903f21b4879010835f9e2d1f100de4bee5c"
+  },
+  "unique_button_down_programs": 6
+}
+
