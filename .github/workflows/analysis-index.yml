@@ -85,3 +85,7 @@ jobs:
         run: python -B -m unittest discover -s research/analysis/counterexample_guard_coverage_gate_6645_t1b_v1 -p 'test_*.py' -v
       - name: Test Issue #6526 observation-intervention A01 auditor and allocation
         run: python -B -m unittest discover -s research/analysis/observation_intervention_6526_a01_orbstack_20261003 -p 'test_*.py' -v
+      - name: Test Issue #6526 observation-intervention A02 auditor and allocation
+        run: python -B -m unittest discover -s research/analysis/observation_intervention_6526_a02_orbstack_20261003 -p 'test_*.py' -v
+      - name: Test Issue #6526 observation-intervention A03 post-hoc audit contract
+        run: python -B -m unittest discover -s research/analysis/observation_intervention_6526_a03_deadline_audit_only_20261003 -p 'test_*.py' -v
