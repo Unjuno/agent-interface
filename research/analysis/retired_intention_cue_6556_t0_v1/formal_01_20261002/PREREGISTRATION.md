@@ -1,0 +1,21 @@
+# Preregistration — Issue #6556 T0
+
+## H / T / D / C / U
+
+- **H:** In the frozen finite histories, an origin-generation/retirement fence blocks all old-lineage cue responses after completion, cancellation, revision, accepted handoff, or restart, while admitting genuinely fresh authorized events for a reused cue and preserving unresolved effect/release obligations. A standard event-instance/ID lifecycle may already be sufficient when origin routing is preserved; the test explicitly measures that baseline and the provenance-loss residual.
+- **T:** Ten histories × five policies = 50 rows. Histories cover an old event with preserved A-origin delivered to a B listener (but targeted to retired A), a separate provenance-stripped old event rebound to generation B's reused cue, a fresh B event, a legitimate A event before retirement, duplicate event ID, cancellation/no active intent, accepted and unaccepted handoff, restart with retirement receipt, and restart with origin/receipt missing. Compare `CUE_ONLY`, `UNSUBSCRIBE_ONLY`, `CURRENT_GENERATION_AT_DELIVERY`, `DURABLE_INSTANCE_EVENT_ID`, and `ORIGIN_GENERATION_RETIREMENT_FENCE`. Candidate receives only fixture; auditor alone receives independent truth oracle. A refusal with missing origin must be `UNKNOWN`, never an admission. Response admission never resolves the external effect or release obligation. Explicit intent-revision scheduling and queued-before-retirement ordering are outside this T0 matrix.
+- **D:** `METHOD_PASS_SCOPED` only if the raw-only auditor reconstructs all 50 rows, the origin-generation fence admits no oracle-ineligible lineage, admits all oracle-eligible fresh/current lineages, returns UNKNOWN for missing origin provenance, preserves every obligation without false effect/release resolution, and has zero audit errors. Comparator policies may exhibit unsafe or missed admissions; these are measured outcomes, not auditor failures. Any fence-arm unsafe admission, eligible miss, false obligation resolution, row mismatch, or misattributed fresh response is FAIL. Unknown external truth, live queue semantics, or identity not represented in the frozen oracle would be HOLD, not inferred.
+- **C:** Standard durable instance IDs and event deduplication may fully prevent old-event transfer when routing provenance is preserved; the extra retirement artifact may add no value. The synthetic rebinding path is an adversarial boundary, not evidence it occurs in production.
+- **U:** No OS scheduling, true durable-store behavior, concurrent watcher process, real application event, user, model, network, GUI, physical input, or human prospective-memory effect is sampled. Synthetic oracle truth is stipulated. No safety, reliability, or general lifecycle guarantee follows.
+
+## Protocol and budget
+
+Allocation: `RETIRED-CUE-6556-T0-20261002-01`. One construction, one candidate, one independent auditor, zero retries. Construction and candidate source trees are separate; candidate cannot read `oracle.json` or `auditor.py`. Raw candidate bytes are copied unchanged into the auditor input and SHA-256 checked before audit.
+
+Use native WSL Containers `wslc.exe`; pinned cached image `python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f`; no pull, network disabled, one CPU, requested 1 GiB memory, UID 65534. The test is CPU-only; no GPU, Docker, Podman, GUI, or live host service. Preserve any kernel resource warning verbatim and do not infer memory-cap enforcement. Stage-specific fresh outputs are `construction/`, `candidate_output/`, `audit_input/`, `audit_output/`.
+
+Pinned source tree, fixture, oracle, tests, and runner are hash-recorded in `FREEZE.json` after construction checks. WSLc runtime must be read from the executing host at freeze; earlier conversation notes conflict, and no version is assumed here. Formal invocation counts are zero in this preregistration commit. A failed rung is retained and not retried.
+
+## Source hashes
+
+See `FREEZE.json` for complete SHA-256 hashes including staged candidate/audit sources. At freeze these must match package-root `candidate.py`/`fixture.json` and package-root `auditor.py`/`fixture.json`/`oracle.json`, respectively.

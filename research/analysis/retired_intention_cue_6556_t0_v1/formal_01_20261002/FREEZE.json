@@ -1,0 +1,57 @@
+{
+  "schema": "issue-6556-t0-freeze-v1",
+  "allocation": "RETIRED-CUE-6556-T0-20261002-01",
+  "base_main_sha": "6473562399159d8913839c0b6fa2da3df68c0bc3",
+  "branch": "research/post-retirement-cue-commission-6556-t0-wslc-20261002",
+  "runtime": {
+    "cli": "C:\\Program Files\\WSL\\wslc.exe",
+    "version": "wslc 3.0.1.0",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "pull": "never",
+    "network": "none",
+    "cpus": 1,
+    "memory_requested": "1G",
+    "user": "65534:65534",
+    "gpu": false,
+    "docker": false,
+    "podman": false
+  },
+  "denominator": {
+    "cases": 10,
+    "policies": 5,
+    "rows": 50
+  },
+  "formal_invocations": {
+    "construction": 0,
+    "candidate": 0,
+    "auditor": 0
+  },
+  "files": {
+    "README.md": "166eea581ebec0d04b4425d99346dc109a330887f8d1133d799042d168a1b81c",
+    "fixture.json": "8d691ece9c99e0814b6db3eb5d3921417050734ca7b120f14161d08989320e92",
+    "oracle.json": "d5d9c869fe234d1b1a1f62d67be731b0c20824e368af065071cfead6c8e474a4",
+    "candidate.py": "0b767ac778462c311fd2773f196392f39e1a8cf7b9f672b41535300c68656476",
+    "auditor.py": "761de516eb0367c81984bcc4ec5e3772b9a8a77fba5f357088f02a7e65e1e877",
+    "test_protocol.py": "b37ec519acd9b6e61cf3e47ec5cde099c971a7687e8c328305cc926817ec9df0",
+    "formal_01_20261002/PREREGISTRATION.md": "794dad270e8a799e81aaefce9448c72084f60795bd26bd9ffe170d50b4764e19",
+    "formal_01_20261002/runner.ps1": "fd7edde68c8f369d6c34f0b9934490f0251f5970cbb599c3826c3809fcb75c4d",
+    "formal_01_20261002/candidate_source/candidate.py": "0b767ac778462c311fd2773f196392f39e1a8cf7b9f672b41535300c68656476",
+    "formal_01_20261002/candidate_source/fixture.json": "8d691ece9c99e0814b6db3eb5d3921417050734ca7b120f14161d08989320e92",
+    "formal_01_20261002/audit_source/auditor.py": "761de516eb0367c81984bcc4ec5e3772b9a8a77fba5f357088f02a7e65e1e877",
+    "formal_01_20261002/audit_source/fixture.json": "8d691ece9c99e0814b6db3eb5d3921417050734ca7b120f14161d08989320e92",
+    "formal_01_20261002/audit_source/oracle.json": "d5d9c869fe234d1b1a1f62d67be731b0c20824e368af065071cfead6c8e474a4"
+  },
+  "staged_sources": {
+    "candidate_source/candidate.py": "0b767ac778462c311fd2773f196392f39e1a8cf7b9f672b41535300c68656476",
+    "candidate_source/fixture.json": "8d691ece9c99e0814b6db3eb5d3921417050734ca7b120f14161d08989320e92",
+    "audit_source/auditor.py": "761de516eb0367c81984bcc4ec5e3772b9a8a77fba5f357088f02a7e65e1e877",
+    "audit_source/fixture.json": "8d691ece9c99e0814b6db3eb5d3921417050734ca7b120f14161d08989320e92",
+    "audit_source/oracle.json": "d5d9c869fe234d1b1a1f62d67be731b0c20824e368af065071cfead6c8e474a4"
+  },
+  "output_directories": [
+    "formal_01_20261002/construction",
+    "formal_01_20261002/candidate_output",
+    "formal_01_20261002/audit_input",
+    "formal_01_20261002/audit_output"
+  ]
+}
