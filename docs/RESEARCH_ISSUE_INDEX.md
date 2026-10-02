@@ -1,10 +1,10 @@
 # Research and idea Issue index
 
-Last reconciled: 2026-10-02 (Asia/Tokyo). Retrieved every page of the GitHub Issues API in ascending creation order for `Unjuno/agent-interface`, all states, then removed pull requests. The snapshot contained 2528 unique Issues and no duplicate Issue numbers.
+Current full GitHub MCP listing, reconciled 2026-10-02 (Asia/Tokyo): 2,545 distinct non-PR Issue records (1,374 open, 1,171 closed). This selected index has 1,693 rows (1,150 open, 543 closed) after adding #6471 and changing #6337 to closed. #6337 closed after merged PR #6352; its scoped portability result is recorded below. The connector's normalized full-list output omits labels, so the prior label-qualified selection is carried forward, and #6471 was individually checked. PRs are excluded from Issue counts.
 
 ## Coverage and limits
 
-This index contains 1678 Issues (1137 open, 541 closed) selected when either the Issue has the `research` label or its title contains an explicit `research`, `idea`, `successor`, or `experiment` term. It includes direct proposals plus many validation, audit, coordination, and successor records.
+This index contains 1,693 rows (1,150 open, 543 closed), selected when either the Issue has the `research` label or its title contains an explicit `research`, `idea`, `successor`, or `experiment` term. The normalized full-list output omits labels; the prior label-qualified selection is carried forward, #6471 is added, and #6337's state change is reconciled. The list is navigational; Issue bodies and linked evidence remain authoritative. It includes direct proposals plus many validation, audit, coordination, and successor records.
 
 This is a broad discovery index, not a guarantee that every repository idea has a title or label matching the filter. Other Issues are not assumed to be non-ideas; search them when linked lineage points outside this table and add any missed idea. The curated [ideas and outcomes page](IDEAS_AND_OUTCOMES.md) explains selected idea clusters and verified dispositions. [RESEARCH.md](../RESEARCH.md), Issues, PRs, and reports remain evidence authorities.
 
@@ -14,6 +14,21 @@ Open is workflow state, not “no result”; open Issues may contain scoped resu
 
 | Issue | Title | GitHub state / closed date | Literal outcome markers* | Linked predecessor(s)** |
 |---|---|---|---|---|
+| [#6471](https://github.com/Unjuno/agent-interface/issues/6471) | [Research] Preserve effect-critical task clauses across spoken-instruction input | open | PASS, FAIL, HOLD, UNKNOWN | — |
+| [#6469](https://github.com/Unjuno/agent-interface/issues/6469) | [Research] Benign-error-triggered recovery scope drift before action admission | open | PASS, FAIL, STOP, HOLD | — |
+| [#6468](https://github.com/Unjuno/agent-interface/issues/6468) | [Research] Artifact-viability cut sets beyond partial GUI task scores | open | PASS, FAIL, HOLD, UNKNOWN | — |
+| [#6461](https://github.com/Unjuno/agent-interface/issues/6461) | Successor #6179: execute broker-boundary negative controls for isolated verifier challenges | open | PASS_METHOD_SCOPED, FAIL_METHOD, STOP | #6179 |
+| [#6442](https://github.com/Unjuno/agent-interface/issues/6442) | Successor #5756: test bounded soft revisit bias for incomplete search branches | open | PASS_METHOD_SCOPED, HOLD, FAIL, STOP | #5756 |
+| [#6437](https://github.com/Unjuno/agent-interface/issues/6437) | [Successor #6380] Test typed elicitation-response normalization into scoped contract clauses | open | FAIL_METHOD_CONSTRUCTION_MISMATCH, PASS_METHOD_SCOPED, FAIL_METHOD, HOLD | #6380 |
+| [#6435](https://github.com/Unjuno/agent-interface/issues/6435) | [Research] Deadline-conditioned semantic decision frontier for human–agent tempo | open | HOLD, PASS | — |
+| [#6427](https://github.com/Unjuno/agent-interface/issues/6427) | Successor #6410: independently audit retained WSLc lifecycle raw output | closed 2026-10-02 | STOP_METHOD_FAILURE, STOP, PASS_AUDIT_SUCCESSOR_SCOPED, FAIL_AUDIT_SUCCESSOR | #6410 |
+| [#6424](https://github.com/Unjuno/agent-interface/issues/6424) | [Research] Speech-act grounding before consequential GUI effects | open | YIELD, HOLD | — |
+| [#6422](https://github.com/Unjuno/agent-interface/issues/6422) | [Research] Denial-aware agent request policy against approval nagging | open | YIELD, HOLD | — |
+| [#6417](https://github.com/Unjuno/agent-interface/issues/6417) | [Research] Deadline-pressure proposal drift at slack-equivalent GUI decisions | open | YIELD, HOLD | — |
+| [#6413](https://github.com/Unjuno/agent-interface/issues/6413) | [Research] Evaluation-cue reactivity in fixed-model GUI route comparisons | open | FAIL_METHOD_NO_EQUIVALENT_CUE, HOLD | — |
+| [#6410](https://github.com/Unjuno/agent-interface/issues/6410) | Successor #5084: replicate role-skill lifecycle under native WSLc | open | PASS, STOP, FAIL, HOLD, STOP_METHOD_FAILURE | #5084 |
+| [#6405](https://github.com/Unjuno/agent-interface/issues/6405) | [Research] Repeated approval prompts and changed-effect discrimination | open | HOLD | — |
+| [#6403](https://github.com/Unjuno/agent-interface/issues/6403) | [Research] Control-opportunity versus human responsibility attribution after agent effects | open | HOLD, PASS | — |
 | [#6383](https://github.com/Unjuno/agent-interface/issues/6383) | [Research] Human mode awareness of the agent autonomy envelope before effects | open | FAIL_METHOD, HOLD | — |
 | [#6380](https://github.com/Unjuno/agent-interface/issues/6380) | [Research] Counterexample-driven elicitation of unstated task constraints before effect contracts | open | FAIL_METHOD, HOLD | — |
 | [#6373](https://github.com/Unjuno/agent-interface/issues/6373) | [Research Idea] Context-preserving delegation: restore caller-visible state after successful System-1 execution | open | PASS_METHOD_SCOPED, FAIL_METHOD, UNCERTAIN | — |
@@ -29,7 +44,7 @@ Open is workflow state, not “no result”; open Issues may contain scoped resu
 | [#6344](https://github.com/Unjuno/agent-interface/issues/6344) | [Coordination] Request fresh OrbStack X11 slot for #5156 T4 owner release bracket | open | STOP, FAIL | — |
 | [#6342](https://github.com/Unjuno/agent-interface/issues/6342) | [Research] Psychological reactance and safe-choice presentation after mandatory agent stops | open | HOLD, HOLD_FRAMING_CONFOUNDED | — |
 | [#6338](https://github.com/Unjuno/agent-interface/issues/6338) | [Research] Endogenous interruption-chain amplification across human–agent requests | open | HOLD, PASS | — |
-| [#6337](https://github.com/Unjuno/agent-interface/issues/6337) | Successor #6315: validate WSLc portability for frozen finite-trace workload | open | HOLD_AUDIT_IMPLEMENTATION, PASS_RUNTIME_PORTABILITY_SCOPED, PASS_METHOD_SCOPED | #6315 |
+| [#6337](https://github.com/Unjuno/agent-interface/issues/6337) | Successor #6315: validate WSLc portability for frozen finite-trace workload | closed 2026-10-02 | HOLD_AUDIT_IMPLEMENTATION, PASS_RUNTIME_PORTABILITY_SCOPED, PASS_METHOD_SCOPED | #6315 |
 | [#6331](https://github.com/Unjuno/agent-interface/issues/6331) | [Research successor #3880/#4442] Wake-fenced lease validity across host suspend | open | HOLD, PASS, HOLD_ENVIRONMENT | — |
 | [#6329](https://github.com/Unjuno/agent-interface/issues/6329) | Successor #6308: bounded six-worker RTX 3080 memory sharing in WSL | open | STOP, PASS | #6308 |
 | [#6327](https://github.com/Unjuno/agent-interface/issues/6327) | [Research] Closed-loop evaluation of prefix-responsive counterparty UI | open | HOLD, PASS, HOLD_REPLAY_SUPPORT | — |
