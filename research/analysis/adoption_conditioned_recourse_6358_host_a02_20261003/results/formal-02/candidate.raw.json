@@ -1,0 +1,5227 @@
+{
+  "allocation": "ADOPTION-CONDITIONED-RECOURSE-6358-T0-MAC-HOST-20261003-02",
+  "cases": [
+    {
+      "case_id": "shared-high-adoption",
+      "policies": {
+        "abandon_eligible_control": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 2,
+            "deadline_misses": 0,
+            "eligible_suppressed": 2,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "RESOLVED_VERIFIED": 2,
+              "UNRESOLVED_ELIGIBLE_SUPPRESSED": 2
+            },
+            "queue_occupancy_peak": 2,
+            "recipient_classes": {
+              "flexible": {
+                "deadline_misses": 0,
+                "offered": 2,
+                "resolved": 1
+              },
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 2,
+                "resolved": 1
+              }
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:h0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:h0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "flexible",
+              "id": "h0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:h1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:h1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "class": "shared_only",
+              "id": "h1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "SUPPRESSED_BY_ABANDONMENT_CONTROL",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "flexible",
+              "id": "h2",
+              "outcome": "UNRESOLVED_ELIGIBLE_SUPPRESSED",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "SUPPRESSED_BY_ABANDONMENT_CONTROL",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "h3",
+              "outcome": "UNRESOLVED_ELIGIBLE_SUPPRESSED",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "abandon_eligible_control"
+        },
+        "generic_retry": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 2,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 2,
+            "offered": 4,
+            "outcomes": {
+              "NO_FEASIBLE_RECOURSE": 2,
+              "RESOLVED_VERIFIED": 2
+            },
+            "queue_occupancy_peak": 2,
+            "recipient_classes": {
+              "flexible": {
+                "deadline_misses": 0,
+                "offered": 2,
+                "resolved": 1
+              },
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 2,
+                "resolved": 1
+              }
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:h0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:h0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "flexible",
+              "id": "h0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:h1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:h1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "class": "shared_only",
+              "id": "h1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "flexible",
+              "id": "h2",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "h3",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "generic_retry"
+        },
+        "no_advice": {
+          "metrics": {
+            "advice_issued": 0,
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "CONSERVATIVE_TYPED_STOP": 4
+            },
+            "queue_occupancy_peak": 0,
+            "recipient_classes": {
+              "flexible": {
+                "deadline_misses": 0,
+                "offered": 2,
+                "resolved": 0
+              },
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 2,
+                "resolved": 0
+              }
+            },
+            "resolved_verified": 0,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": false,
+              "advice_status": "NO_ADVICE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "flexible",
+              "id": "h0",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": false,
+              "advice_status": "NO_ADVICE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "h1",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": false,
+              "advice_status": "NO_ADVICE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "flexible",
+              "id": "h2",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": false,
+              "advice_status": "NO_ADVICE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "h3",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "no_advice"
+        },
+        "public_warning_stagger": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 2,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 2,
+            "offered": 4,
+            "outcomes": {
+              "NO_FEASIBLE_RECOURSE": 2,
+              "RESOLVED_VERIFIED": 2
+            },
+            "queue_occupancy_peak": 2,
+            "recipient_classes": {
+              "flexible": {
+                "deadline_misses": 0,
+                "offered": 2,
+                "resolved": 1
+              },
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 2,
+                "resolved": 1
+              }
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "COMMON_CAPACITY_WARNING",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:h0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:h0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "flexible",
+              "id": "h0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "COMMON_CAPACITY_WARNING",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:h1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:h1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "class": "shared_only",
+              "id": "h1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "flexible",
+              "id": "h2",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "h3",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "public_warning_stagger"
+        },
+        "recipient_specific_routing": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 1.0,
+            "attempted_offers": 4,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "RESOLVED_VERIFIED": 4
+            },
+            "queue_occupancy_peak": 2,
+            "recipient_classes": {
+              "flexible": {
+                "deadline_misses": 0,
+                "offered": 2,
+                "resolved": 2
+              },
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 2,
+                "resolved": 2
+              }
+            },
+            "resolved_verified": 4,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "SOURCE_BOUND_ROUTE",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:h0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:h0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "flexible",
+              "id": "h0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "disjoint"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "SOURCE_BOUND_ROUTE",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:h1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:h1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "shared_only",
+              "id": "h1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "SOURCE_BOUND_ROUTE",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:h2",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:h2",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "class": "flexible",
+              "id": "h2",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "disjoint"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "SOURCE_BOUND_ROUTE",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:h3",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:h3",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "class": "shared_only",
+              "id": "h3",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            }
+          ],
+          "policy": "recipient_specific_routing"
+        },
+        "witness_only": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 2,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 2,
+            "offered": 4,
+            "outcomes": {
+              "NO_FEASIBLE_RECOURSE": 2,
+              "RESOLVED_VERIFIED": 2
+            },
+            "queue_occupancy_peak": 2,
+            "recipient_classes": {
+              "flexible": {
+                "deadline_misses": 0,
+                "offered": 2,
+                "resolved": 1
+              },
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 2,
+                "resolved": 1
+              }
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:h0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:h0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "flexible",
+              "id": "h0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:h1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:h1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "class": "shared_only",
+              "id": "h1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "flexible",
+              "id": "h2",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "h3",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "witness_only"
+        },
+        "wording_placebo": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 2,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 2,
+            "offered": 4,
+            "outcomes": {
+              "NO_FEASIBLE_RECOURSE": 2,
+              "RESOLVED_VERIFIED": 2
+            },
+            "queue_occupancy_peak": 2,
+            "recipient_classes": {
+              "flexible": {
+                "deadline_misses": 0,
+                "offered": 2,
+                "resolved": 1
+              },
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 2,
+                "resolved": 1
+              }
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "A",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:h0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:h0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "flexible",
+              "id": "h0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "B",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:h1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:h1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "class": "shared_only",
+              "id": "h1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": "A",
+              "attempts": [],
+              "class": "flexible",
+              "id": "h2",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": "B",
+              "attempts": [],
+              "class": "shared_only",
+              "id": "h3",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "wording_placebo"
+        }
+      }
+    },
+    {
+      "case_id": "shared-low-adoption",
+      "policies": {
+        "abandon_eligible_control": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 2,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "RESOLVED_VERIFIED": 2,
+              "UNRESOLVED_NOT_ADOPTED": 2
+            },
+            "queue_occupancy_peak": 2,
+            "recipient_classes": {
+              "flexible": {
+                "deadline_misses": 0,
+                "offered": 2,
+                "resolved": 2
+              },
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 2,
+                "resolved": 0
+              }
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 2,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:l0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:l0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "flexible",
+              "id": "l0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NOT_ADOPTED",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "l1",
+              "outcome": "UNRESOLVED_NOT_ADOPTED",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:l2",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:l2",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "class": "flexible",
+              "id": "l2",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NOT_ADOPTED",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "l3",
+              "outcome": "UNRESOLVED_NOT_ADOPTED",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "abandon_eligible_control"
+        },
+        "generic_retry": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 2,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "RESOLVED_VERIFIED": 2,
+              "UNRESOLVED_NOT_ADOPTED": 2
+            },
+            "queue_occupancy_peak": 2,
+            "recipient_classes": {
+              "flexible": {
+                "deadline_misses": 0,
+                "offered": 2,
+                "resolved": 2
+              },
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 2,
+                "resolved": 0
+              }
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 2,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:l0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:l0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "flexible",
+              "id": "l0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NOT_ADOPTED",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "l1",
+              "outcome": "UNRESOLVED_NOT_ADOPTED",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:l2",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:l2",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "class": "flexible",
+              "id": "l2",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NOT_ADOPTED",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "l3",
+              "outcome": "UNRESOLVED_NOT_ADOPTED",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "generic_retry"
+        },
+        "no_advice": {
+          "metrics": {
+            "advice_issued": 0,
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "CONSERVATIVE_TYPED_STOP": 4
+            },
+            "queue_occupancy_peak": 0,
+            "recipient_classes": {
+              "flexible": {
+                "deadline_misses": 0,
+                "offered": 2,
+                "resolved": 0
+              },
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 2,
+                "resolved": 0
+              }
+            },
+            "resolved_verified": 0,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": false,
+              "advice_status": "NO_ADVICE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "flexible",
+              "id": "l0",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": false,
+              "advice_status": "NO_ADVICE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "l1",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": false,
+              "advice_status": "NO_ADVICE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "flexible",
+              "id": "l2",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": false,
+              "advice_status": "NO_ADVICE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "l3",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "no_advice"
+        },
+        "public_warning_stagger": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 2,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "RESOLVED_VERIFIED": 2,
+              "UNRESOLVED_NOT_ADOPTED": 2
+            },
+            "queue_occupancy_peak": 2,
+            "recipient_classes": {
+              "flexible": {
+                "deadline_misses": 0,
+                "offered": 2,
+                "resolved": 2
+              },
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 2,
+                "resolved": 0
+              }
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 2,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "COMMON_CAPACITY_WARNING",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:l0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:l0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "flexible",
+              "id": "l0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NOT_ADOPTED",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "l1",
+              "outcome": "UNRESOLVED_NOT_ADOPTED",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "COMMON_CAPACITY_WARNING",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:l2",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:l2",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "class": "flexible",
+              "id": "l2",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NOT_ADOPTED",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "l3",
+              "outcome": "UNRESOLVED_NOT_ADOPTED",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "public_warning_stagger"
+        },
+        "recipient_specific_routing": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 2,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "RESOLVED_VERIFIED": 2,
+              "UNRESOLVED_NOT_ADOPTED": 2
+            },
+            "queue_occupancy_peak": 1,
+            "recipient_classes": {
+              "flexible": {
+                "deadline_misses": 0,
+                "offered": 2,
+                "resolved": 2
+              },
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 2,
+                "resolved": 0
+              }
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 2,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "SOURCE_BOUND_ROUTE",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:l0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:l0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "flexible",
+              "id": "l0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "disjoint"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NOT_ADOPTED",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "l1",
+              "outcome": "UNRESOLVED_NOT_ADOPTED",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "SOURCE_BOUND_ROUTE",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:l2",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:l2",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "flexible",
+              "id": "l2",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NOT_ADOPTED",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "l3",
+              "outcome": "UNRESOLVED_NOT_ADOPTED",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "recipient_specific_routing"
+        },
+        "witness_only": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 2,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "RESOLVED_VERIFIED": 2,
+              "UNRESOLVED_NOT_ADOPTED": 2
+            },
+            "queue_occupancy_peak": 2,
+            "recipient_classes": {
+              "flexible": {
+                "deadline_misses": 0,
+                "offered": 2,
+                "resolved": 2
+              },
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 2,
+                "resolved": 0
+              }
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 2,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:l0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:l0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "flexible",
+              "id": "l0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NOT_ADOPTED",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "l1",
+              "outcome": "UNRESOLVED_NOT_ADOPTED",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:l2",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:l2",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "class": "flexible",
+              "id": "l2",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NOT_ADOPTED",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "l3",
+              "outcome": "UNRESOLVED_NOT_ADOPTED",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "witness_only"
+        },
+        "wording_placebo": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 2,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "RESOLVED_VERIFIED": 2,
+              "UNRESOLVED_NOT_ADOPTED": 2
+            },
+            "queue_occupancy_peak": 2,
+            "recipient_classes": {
+              "flexible": {
+                "deadline_misses": 0,
+                "offered": 2,
+                "resolved": 2
+              },
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 2,
+                "resolved": 0
+              }
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 2,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "A",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:l0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:l0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "flexible",
+              "id": "l0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NOT_ADOPTED",
+              "advice_variant": "B",
+              "attempts": [],
+              "class": "shared_only",
+              "id": "l1",
+              "outcome": "UNRESOLVED_NOT_ADOPTED",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "A",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:l2",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:l2",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "class": "flexible",
+              "id": "l2",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NOT_ADOPTED",
+              "advice_variant": "B",
+              "attempts": [],
+              "class": "shared_only",
+              "id": "l3",
+              "outcome": "UNRESOLVED_NOT_ADOPTED",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "wording_placebo"
+        }
+      }
+    },
+    {
+      "case_id": "disjoint-resource-null",
+      "policies": {
+        "abandon_eligible_control": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 1.0,
+            "attempted_offers": 4,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "RESOLVED_VERIFIED": 4
+            },
+            "queue_occupancy_peak": 1,
+            "recipient_classes": {
+              "c0": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              },
+              "c1": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              },
+              "c2": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              },
+              "c3": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              }
+            },
+            "resolved_verified": 4,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "c0",
+              "id": "d0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "r0"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "c1",
+              "id": "d1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "r1"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d2",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d2",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "c2",
+              "id": "d2",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "r2"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d3",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d3",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "c3",
+              "id": "d3",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "r3"
+            }
+          ],
+          "policy": "abandon_eligible_control"
+        },
+        "generic_retry": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 1.0,
+            "attempted_offers": 4,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "RESOLVED_VERIFIED": 4
+            },
+            "queue_occupancy_peak": 1,
+            "recipient_classes": {
+              "c0": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              },
+              "c1": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              },
+              "c2": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              },
+              "c3": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              }
+            },
+            "resolved_verified": 4,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "c0",
+              "id": "d0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "r0"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "c1",
+              "id": "d1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "r1"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d2",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d2",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "c2",
+              "id": "d2",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "r2"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d3",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d3",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "c3",
+              "id": "d3",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "r3"
+            }
+          ],
+          "policy": "generic_retry"
+        },
+        "no_advice": {
+          "metrics": {
+            "advice_issued": 0,
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "CONSERVATIVE_TYPED_STOP": 4
+            },
+            "queue_occupancy_peak": 0,
+            "recipient_classes": {
+              "c0": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 0
+              },
+              "c1": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 0
+              },
+              "c2": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 0
+              },
+              "c3": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 0
+              }
+            },
+            "resolved_verified": 0,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": false,
+              "advice_status": "NO_ADVICE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "c0",
+              "id": "d0",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": false,
+              "advice_status": "NO_ADVICE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "c1",
+              "id": "d1",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": false,
+              "advice_status": "NO_ADVICE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "c2",
+              "id": "d2",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": false,
+              "advice_status": "NO_ADVICE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "c3",
+              "id": "d3",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "no_advice"
+        },
+        "public_warning_stagger": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 1.0,
+            "attempted_offers": 4,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "RESOLVED_VERIFIED": 4
+            },
+            "queue_occupancy_peak": 1,
+            "recipient_classes": {
+              "c0": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              },
+              "c1": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              },
+              "c2": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              },
+              "c3": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              }
+            },
+            "resolved_verified": 4,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "COMMON_CAPACITY_WARNING",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "c0",
+              "id": "d0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "r0"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "COMMON_CAPACITY_WARNING",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "c1",
+              "id": "d1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "r1"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "COMMON_CAPACITY_WARNING",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d2",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d2",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "c2",
+              "id": "d2",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "r2"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "COMMON_CAPACITY_WARNING",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d3",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d3",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "c3",
+              "id": "d3",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "r3"
+            }
+          ],
+          "policy": "public_warning_stagger"
+        },
+        "recipient_specific_routing": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 1.0,
+            "attempted_offers": 4,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "RESOLVED_VERIFIED": 4
+            },
+            "queue_occupancy_peak": 1,
+            "recipient_classes": {
+              "c0": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              },
+              "c1": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              },
+              "c2": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              },
+              "c3": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              }
+            },
+            "resolved_verified": 4,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "SOURCE_BOUND_ROUTE",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "c0",
+              "id": "d0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "r0"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "SOURCE_BOUND_ROUTE",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "c1",
+              "id": "d1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "r1"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "SOURCE_BOUND_ROUTE",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d2",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d2",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "c2",
+              "id": "d2",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "r2"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "SOURCE_BOUND_ROUTE",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d3",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d3",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "c3",
+              "id": "d3",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "r3"
+            }
+          ],
+          "policy": "recipient_specific_routing"
+        },
+        "witness_only": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 1.0,
+            "attempted_offers": 4,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "RESOLVED_VERIFIED": 4
+            },
+            "queue_occupancy_peak": 1,
+            "recipient_classes": {
+              "c0": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              },
+              "c1": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              },
+              "c2": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              },
+              "c3": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              }
+            },
+            "resolved_verified": 4,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "c0",
+              "id": "d0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "r0"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "c1",
+              "id": "d1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "r1"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d2",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d2",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "c2",
+              "id": "d2",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "r2"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d3",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d3",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "c3",
+              "id": "d3",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "r3"
+            }
+          ],
+          "policy": "witness_only"
+        },
+        "wording_placebo": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 1.0,
+            "attempted_offers": 4,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "RESOLVED_VERIFIED": 4
+            },
+            "queue_occupancy_peak": 1,
+            "recipient_classes": {
+              "c0": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              },
+              "c1": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              },
+              "c2": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              },
+              "c3": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              }
+            },
+            "resolved_verified": 4,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "A",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "c0",
+              "id": "d0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "r0"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "B",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "c1",
+              "id": "d1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "r1"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "A",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d2",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d2",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "c2",
+              "id": "d2",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "r2"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "B",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d3",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d3",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "c3",
+              "id": "d3",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "r3"
+            }
+          ],
+          "policy": "wording_placebo"
+        }
+      }
+    },
+    {
+      "case_id": "no-feasible-fallback",
+      "policies": {
+        "abandon_eligible_control": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 0.25,
+            "attempted_offers": 1,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 3,
+            "offered": 4,
+            "outcomes": {
+              "NO_FEASIBLE_RECOURSE": 3,
+              "RESOLVED_VERIFIED": 1
+            },
+            "queue_occupancy_peak": 1,
+            "recipient_classes": {
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 4,
+                "resolved": 1
+              }
+            },
+            "resolved_verified": 1,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:n0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:n0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "shared_only",
+              "id": "n0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "n1",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "n2",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "n3",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "abandon_eligible_control"
+        },
+        "generic_retry": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 0.25,
+            "attempted_offers": 1,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 3,
+            "offered": 4,
+            "outcomes": {
+              "NO_FEASIBLE_RECOURSE": 3,
+              "RESOLVED_VERIFIED": 1
+            },
+            "queue_occupancy_peak": 1,
+            "recipient_classes": {
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 4,
+                "resolved": 1
+              }
+            },
+            "resolved_verified": 1,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:n0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:n0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "shared_only",
+              "id": "n0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "n1",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "n2",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "n3",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "generic_retry"
+        },
+        "no_advice": {
+          "metrics": {
+            "advice_issued": 0,
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "CONSERVATIVE_TYPED_STOP": 4
+            },
+            "queue_occupancy_peak": 0,
+            "recipient_classes": {
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 4,
+                "resolved": 0
+              }
+            },
+            "resolved_verified": 0,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": false,
+              "advice_status": "NO_ADVICE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "n0",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": false,
+              "advice_status": "NO_ADVICE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "n1",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": false,
+              "advice_status": "NO_ADVICE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "n2",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": false,
+              "advice_status": "NO_ADVICE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "n3",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "no_advice"
+        },
+        "public_warning_stagger": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 0.25,
+            "attempted_offers": 1,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 3,
+            "offered": 4,
+            "outcomes": {
+              "NO_FEASIBLE_RECOURSE": 3,
+              "RESOLVED_VERIFIED": 1
+            },
+            "queue_occupancy_peak": 1,
+            "recipient_classes": {
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 4,
+                "resolved": 1
+              }
+            },
+            "resolved_verified": 1,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "COMMON_CAPACITY_WARNING",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:n0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:n0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "shared_only",
+              "id": "n0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "n1",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "n2",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "n3",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "public_warning_stagger"
+        },
+        "recipient_specific_routing": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 0.25,
+            "attempted_offers": 1,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 3,
+            "offered": 4,
+            "outcomes": {
+              "NO_FEASIBLE_RECOURSE": 3,
+              "RESOLVED_VERIFIED": 1
+            },
+            "queue_occupancy_peak": 1,
+            "recipient_classes": {
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 4,
+                "resolved": 1
+              }
+            },
+            "resolved_verified": 1,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "SOURCE_BOUND_ROUTE",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:n0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:n0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "shared_only",
+              "id": "n0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "n1",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "n2",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "n3",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "recipient_specific_routing"
+        },
+        "witness_only": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 0.25,
+            "attempted_offers": 1,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 3,
+            "offered": 4,
+            "outcomes": {
+              "NO_FEASIBLE_RECOURSE": 3,
+              "RESOLVED_VERIFIED": 1
+            },
+            "queue_occupancy_peak": 1,
+            "recipient_classes": {
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 4,
+                "resolved": 1
+              }
+            },
+            "resolved_verified": 1,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:n0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:n0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "shared_only",
+              "id": "n0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "n1",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "n2",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "n3",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "witness_only"
+        },
+        "wording_placebo": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 0.25,
+            "attempted_offers": 1,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 3,
+            "offered": 4,
+            "outcomes": {
+              "NO_FEASIBLE_RECOURSE": 3,
+              "RESOLVED_VERIFIED": 1
+            },
+            "queue_occupancy_peak": 1,
+            "recipient_classes": {
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 4,
+                "resolved": 1
+              }
+            },
+            "resolved_verified": 1,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "A",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:n0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:n0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "shared_only",
+              "id": "n0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": "B",
+              "attempts": [],
+              "class": "shared_only",
+              "id": "n1",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": "A",
+              "attempts": [],
+              "class": "shared_only",
+              "id": "n2",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": "B",
+              "attempts": [],
+              "class": "shared_only",
+              "id": "n3",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "wording_placebo"
+        }
+      }
+    },
+    {
+      "case_id": "forbidden-alternative",
+      "policies": {
+        "abandon_eligible_control": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 2,
+            "deadline_misses": 0,
+            "eligible_suppressed": 2,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "RESOLVED_VERIFIED": 2,
+              "UNRESOLVED_ELIGIBLE_SUPPRESSED": 2
+            },
+            "queue_occupancy_peak": 2,
+            "recipient_classes": {
+              "authorized_flexible": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              },
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 3,
+                "resolved": 1
+              }
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:f0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:f0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "authorized_flexible",
+              "id": "f0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:f1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:f1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "class": "shared_only",
+              "id": "f1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "SUPPRESSED_BY_ABANDONMENT_CONTROL",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "f2",
+              "outcome": "UNRESOLVED_ELIGIBLE_SUPPRESSED",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "SUPPRESSED_BY_ABANDONMENT_CONTROL",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "f3",
+              "outcome": "UNRESOLVED_ELIGIBLE_SUPPRESSED",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "abandon_eligible_control"
+        },
+        "generic_retry": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 2,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 2,
+            "offered": 4,
+            "outcomes": {
+              "NO_FEASIBLE_RECOURSE": 2,
+              "RESOLVED_VERIFIED": 2
+            },
+            "queue_occupancy_peak": 2,
+            "recipient_classes": {
+              "authorized_flexible": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              },
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 3,
+                "resolved": 1
+              }
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:f0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:f0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "authorized_flexible",
+              "id": "f0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:f1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:f1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "class": "shared_only",
+              "id": "f1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "f2",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "f3",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "generic_retry"
+        },
+        "no_advice": {
+          "metrics": {
+            "advice_issued": 0,
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "CONSERVATIVE_TYPED_STOP": 4
+            },
+            "queue_occupancy_peak": 0,
+            "recipient_classes": {
+              "authorized_flexible": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 0
+              },
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 3,
+                "resolved": 0
+              }
+            },
+            "resolved_verified": 0,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": false,
+              "advice_status": "NO_ADVICE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "authorized_flexible",
+              "id": "f0",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": false,
+              "advice_status": "NO_ADVICE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "f1",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": false,
+              "advice_status": "NO_ADVICE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "f2",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": false,
+              "advice_status": "NO_ADVICE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "f3",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "no_advice"
+        },
+        "public_warning_stagger": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 2,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 2,
+            "offered": 4,
+            "outcomes": {
+              "NO_FEASIBLE_RECOURSE": 2,
+              "RESOLVED_VERIFIED": 2
+            },
+            "queue_occupancy_peak": 2,
+            "recipient_classes": {
+              "authorized_flexible": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              },
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 3,
+                "resolved": 1
+              }
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "COMMON_CAPACITY_WARNING",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:f0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:f0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "authorized_flexible",
+              "id": "f0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "COMMON_CAPACITY_WARNING",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:f1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:f1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "class": "shared_only",
+              "id": "f1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "f2",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "f3",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "public_warning_stagger"
+        },
+        "recipient_specific_routing": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 0.75,
+            "attempted_offers": 3,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 1,
+            "offered": 4,
+            "outcomes": {
+              "NO_FEASIBLE_RECOURSE": 1,
+              "RESOLVED_VERIFIED": 3
+            },
+            "queue_occupancy_peak": 2,
+            "recipient_classes": {
+              "authorized_flexible": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              },
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 3,
+                "resolved": 2
+              }
+            },
+            "resolved_verified": 3,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "SOURCE_BOUND_ROUTE",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:f0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:f0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "authorized_flexible",
+              "id": "f0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "disjoint"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "SOURCE_BOUND_ROUTE",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:f1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:f1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "shared_only",
+              "id": "f1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "SOURCE_BOUND_ROUTE",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:f2",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:f2",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "class": "shared_only",
+              "id": "f2",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "f3",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "recipient_specific_routing"
+        },
+        "witness_only": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 2,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 2,
+            "offered": 4,
+            "outcomes": {
+              "NO_FEASIBLE_RECOURSE": 2,
+              "RESOLVED_VERIFIED": 2
+            },
+            "queue_occupancy_peak": 2,
+            "recipient_classes": {
+              "authorized_flexible": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              },
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 3,
+                "resolved": 1
+              }
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:f0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:f0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "authorized_flexible",
+              "id": "f0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:f1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:f1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "class": "shared_only",
+              "id": "f1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "f2",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "f3",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "witness_only"
+        },
+        "wording_placebo": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 2,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 2,
+            "offered": 4,
+            "outcomes": {
+              "NO_FEASIBLE_RECOURSE": 2,
+              "RESOLVED_VERIFIED": 2
+            },
+            "queue_occupancy_peak": 2,
+            "recipient_classes": {
+              "authorized_flexible": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              },
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 3,
+                "resolved": 1
+              }
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "A",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:f0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:f0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "authorized_flexible",
+              "id": "f0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "B",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:f1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:f1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "class": "shared_only",
+              "id": "f1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": "A",
+              "attempts": [],
+              "class": "shared_only",
+              "id": "f2",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": "B",
+              "attempts": [],
+              "class": "shared_only",
+              "id": "f3",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "wording_placebo"
+        }
+      }
+    },
+    {
+      "case_id": "slow-alternative",
+      "policies": {
+        "abandon_eligible_control": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 2,
+            "deadline_misses": 0,
+            "eligible_suppressed": 2,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "RESOLVED_VERIFIED": 2,
+              "UNRESOLVED_ELIGIBLE_SUPPRESSED": 2
+            },
+            "queue_occupancy_peak": 2,
+            "recipient_classes": {
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 3,
+                "resolved": 1
+              },
+              "slow_alternative_available": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              }
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:s0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:s0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "slow_alternative_available",
+              "id": "s0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:s1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:s1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "class": "shared_only",
+              "id": "s1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "SUPPRESSED_BY_ABANDONMENT_CONTROL",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "s2",
+              "outcome": "UNRESOLVED_ELIGIBLE_SUPPRESSED",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "SUPPRESSED_BY_ABANDONMENT_CONTROL",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "s3",
+              "outcome": "UNRESOLVED_ELIGIBLE_SUPPRESSED",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "abandon_eligible_control"
+        },
+        "generic_retry": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 2,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 2,
+            "offered": 4,
+            "outcomes": {
+              "NO_FEASIBLE_RECOURSE": 2,
+              "RESOLVED_VERIFIED": 2
+            },
+            "queue_occupancy_peak": 2,
+            "recipient_classes": {
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 3,
+                "resolved": 1
+              },
+              "slow_alternative_available": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              }
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:s0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:s0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "slow_alternative_available",
+              "id": "s0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:s1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:s1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "class": "shared_only",
+              "id": "s1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "s2",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "s3",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "generic_retry"
+        },
+        "no_advice": {
+          "metrics": {
+            "advice_issued": 0,
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "CONSERVATIVE_TYPED_STOP": 4
+            },
+            "queue_occupancy_peak": 0,
+            "recipient_classes": {
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 3,
+                "resolved": 0
+              },
+              "slow_alternative_available": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 0
+              }
+            },
+            "resolved_verified": 0,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": false,
+              "advice_status": "NO_ADVICE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "slow_alternative_available",
+              "id": "s0",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": false,
+              "advice_status": "NO_ADVICE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "s1",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": false,
+              "advice_status": "NO_ADVICE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "s2",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": false,
+              "advice_status": "NO_ADVICE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "s3",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "no_advice"
+        },
+        "public_warning_stagger": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 2,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 2,
+            "offered": 4,
+            "outcomes": {
+              "NO_FEASIBLE_RECOURSE": 2,
+              "RESOLVED_VERIFIED": 2
+            },
+            "queue_occupancy_peak": 2,
+            "recipient_classes": {
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 3,
+                "resolved": 1
+              },
+              "slow_alternative_available": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              }
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "COMMON_CAPACITY_WARNING",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:s0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:s0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "slow_alternative_available",
+              "id": "s0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "COMMON_CAPACITY_WARNING",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:s1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:s1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "class": "shared_only",
+              "id": "s1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "s2",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "s3",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "public_warning_stagger"
+        },
+        "recipient_specific_routing": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 2,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 2,
+            "offered": 4,
+            "outcomes": {
+              "NO_FEASIBLE_RECOURSE": 2,
+              "RESOLVED_VERIFIED": 2
+            },
+            "queue_occupancy_peak": 2,
+            "recipient_classes": {
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 3,
+                "resolved": 1
+              },
+              "slow_alternative_available": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              }
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "SOURCE_BOUND_ROUTE",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:s0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:s0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "slow_alternative_available",
+              "id": "s0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "SOURCE_BOUND_ROUTE",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:s1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:s1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "class": "shared_only",
+              "id": "s1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "s2",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "s3",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "recipient_specific_routing"
+        },
+        "witness_only": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 2,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 2,
+            "offered": 4,
+            "outcomes": {
+              "NO_FEASIBLE_RECOURSE": 2,
+              "RESOLVED_VERIFIED": 2
+            },
+            "queue_occupancy_peak": 2,
+            "recipient_classes": {
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 3,
+                "resolved": 1
+              },
+              "slow_alternative_available": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              }
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:s0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:s0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "slow_alternative_available",
+              "id": "s0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": null,
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:s1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:s1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "class": "shared_only",
+              "id": "s1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "s2",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "s3",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "witness_only"
+        },
+        "wording_placebo": {
+          "metrics": {
+            "advice_issued": 4,
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 2,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 2,
+            "offered": 4,
+            "outcomes": {
+              "NO_FEASIBLE_RECOURSE": 2,
+              "RESOLVED_VERIFIED": 2
+            },
+            "queue_occupancy_peak": 2,
+            "recipient_classes": {
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 3,
+                "resolved": 1
+              },
+              "slow_alternative_available": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 1
+              }
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "A",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:s0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:s0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "class": "slow_alternative_available",
+              "id": "s0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "ADOPTED_VALID",
+              "advice_variant": "B",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:s1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:s1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "class": "shared_only",
+              "id": "s1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": "A",
+              "attempts": [],
+              "class": "shared_only",
+              "id": "s2",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_issued": true,
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "advice_variant": "B",
+              "attempts": [],
+              "class": "shared_only",
+              "id": "s3",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "wording_placebo"
+        }
+      }
+    },
+    {
+      "case_id": "expired-advice",
+      "policies": {
+        "abandon_eligible_control": {
+          "metrics": {
+            "advice_issued": 1,
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 1,
+            "outcomes": {
+              "STALE_ADVICE": 1
+            },
+            "queue_occupancy_peak": 0,
+            "recipient_classes": {
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 0
+              }
+            },
+            "resolved_verified": 0,
+            "stale_advice": 1,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "EXPIRED",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "e0",
+              "outcome": "STALE_ADVICE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "abandon_eligible_control"
+        },
+        "generic_retry": {
+          "metrics": {
+            "advice_issued": 1,
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 1,
+            "outcomes": {
+              "STALE_ADVICE": 1
+            },
+            "queue_occupancy_peak": 0,
+            "recipient_classes": {
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 0
+              }
+            },
+            "resolved_verified": 0,
+            "stale_advice": 1,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "EXPIRED",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "e0",
+              "outcome": "STALE_ADVICE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "generic_retry"
+        },
+        "no_advice": {
+          "metrics": {
+            "advice_issued": 0,
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 1,
+            "outcomes": {
+              "CONSERVATIVE_TYPED_STOP": 1
+            },
+            "queue_occupancy_peak": 0,
+            "recipient_classes": {
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 0
+              }
+            },
+            "resolved_verified": 0,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": false,
+              "advice_status": "NO_ADVICE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "e0",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "no_advice"
+        },
+        "public_warning_stagger": {
+          "metrics": {
+            "advice_issued": 1,
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 1,
+            "outcomes": {
+              "STALE_ADVICE": 1
+            },
+            "queue_occupancy_peak": 0,
+            "recipient_classes": {
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 0
+              }
+            },
+            "resolved_verified": 0,
+            "stale_advice": 1,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "EXPIRED",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "e0",
+              "outcome": "STALE_ADVICE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "public_warning_stagger"
+        },
+        "recipient_specific_routing": {
+          "metrics": {
+            "advice_issued": 1,
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 1,
+            "outcomes": {
+              "STALE_ADVICE": 1
+            },
+            "queue_occupancy_peak": 0,
+            "recipient_classes": {
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 0
+              }
+            },
+            "resolved_verified": 0,
+            "stale_advice": 1,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "EXPIRED",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "e0",
+              "outcome": "STALE_ADVICE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "recipient_specific_routing"
+        },
+        "witness_only": {
+          "metrics": {
+            "advice_issued": 1,
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 1,
+            "outcomes": {
+              "STALE_ADVICE": 1
+            },
+            "queue_occupancy_peak": 0,
+            "recipient_classes": {
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 0
+              }
+            },
+            "resolved_verified": 0,
+            "stale_advice": 1,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "EXPIRED",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "e0",
+              "outcome": "STALE_ADVICE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "witness_only"
+        },
+        "wording_placebo": {
+          "metrics": {
+            "advice_issued": 1,
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 1,
+            "outcomes": {
+              "STALE_ADVICE": 1
+            },
+            "queue_occupancy_peak": 0,
+            "recipient_classes": {
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 0
+              }
+            },
+            "resolved_verified": 0,
+            "stale_advice": 1,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "EXPIRED",
+              "advice_variant": "A",
+              "attempts": [],
+              "class": "shared_only",
+              "id": "e0",
+              "outcome": "STALE_ADVICE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "wording_placebo"
+        }
+      }
+    },
+    {
+      "case_id": "uncertain-delivery",
+      "policies": {
+        "abandon_eligible_control": {
+          "metrics": {
+            "advice_issued": 1,
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 1,
+            "outcomes": {
+              "UNKNOWN_NO_RETRY": 1
+            },
+            "queue_occupancy_peak": 0,
+            "recipient_classes": {
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 0
+              }
+            },
+            "resolved_verified": 0,
+            "stale_advice": 0,
+            "unknown_no_retry": 1,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "BLOCKED_UNCERTAIN_EFFECT",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "u0",
+              "outcome": "UNKNOWN_NO_RETRY",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "abandon_eligible_control"
+        },
+        "generic_retry": {
+          "metrics": {
+            "advice_issued": 1,
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 1,
+            "outcomes": {
+              "UNKNOWN_NO_RETRY": 1
+            },
+            "queue_occupancy_peak": 0,
+            "recipient_classes": {
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 0
+              }
+            },
+            "resolved_verified": 0,
+            "stale_advice": 0,
+            "unknown_no_retry": 1,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "BLOCKED_UNCERTAIN_EFFECT",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "u0",
+              "outcome": "UNKNOWN_NO_RETRY",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "generic_retry"
+        },
+        "no_advice": {
+          "metrics": {
+            "advice_issued": 0,
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 1,
+            "outcomes": {
+              "CONSERVATIVE_TYPED_STOP": 1
+            },
+            "queue_occupancy_peak": 0,
+            "recipient_classes": {
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 0
+              }
+            },
+            "resolved_verified": 0,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": false,
+              "advice_status": "NO_ADVICE",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "u0",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "no_advice"
+        },
+        "public_warning_stagger": {
+          "metrics": {
+            "advice_issued": 1,
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 1,
+            "outcomes": {
+              "UNKNOWN_NO_RETRY": 1
+            },
+            "queue_occupancy_peak": 0,
+            "recipient_classes": {
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 0
+              }
+            },
+            "resolved_verified": 0,
+            "stale_advice": 0,
+            "unknown_no_retry": 1,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "BLOCKED_UNCERTAIN_EFFECT",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "u0",
+              "outcome": "UNKNOWN_NO_RETRY",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "public_warning_stagger"
+        },
+        "recipient_specific_routing": {
+          "metrics": {
+            "advice_issued": 1,
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 1,
+            "outcomes": {
+              "UNKNOWN_NO_RETRY": 1
+            },
+            "queue_occupancy_peak": 0,
+            "recipient_classes": {
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 0
+              }
+            },
+            "resolved_verified": 0,
+            "stale_advice": 0,
+            "unknown_no_retry": 1,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "BLOCKED_UNCERTAIN_EFFECT",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "u0",
+              "outcome": "UNKNOWN_NO_RETRY",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "recipient_specific_routing"
+        },
+        "witness_only": {
+          "metrics": {
+            "advice_issued": 1,
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 1,
+            "outcomes": {
+              "UNKNOWN_NO_RETRY": 1
+            },
+            "queue_occupancy_peak": 0,
+            "recipient_classes": {
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 0
+              }
+            },
+            "resolved_verified": 0,
+            "stale_advice": 0,
+            "unknown_no_retry": 1,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "BLOCKED_UNCERTAIN_EFFECT",
+              "advice_variant": null,
+              "attempts": [],
+              "class": "shared_only",
+              "id": "u0",
+              "outcome": "UNKNOWN_NO_RETRY",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "witness_only"
+        },
+        "wording_placebo": {
+          "metrics": {
+            "advice_issued": 1,
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 1,
+            "outcomes": {
+              "UNKNOWN_NO_RETRY": 1
+            },
+            "queue_occupancy_peak": 0,
+            "recipient_classes": {
+              "shared_only": {
+                "deadline_misses": 0,
+                "offered": 1,
+                "resolved": 0
+              }
+            },
+            "resolved_verified": 0,
+            "stale_advice": 0,
+            "unknown_no_retry": 1,
+            "unresolved_not_adopted": 0,
+            "unsafe_or_forbidden_advice": 0
+          },
+          "offers": [
+            {
+              "advice_issued": true,
+              "advice_status": "BLOCKED_UNCERTAIN_EFFECT",
+              "advice_variant": "A",
+              "attempts": [],
+              "class": "shared_only",
+              "id": "u0",
+              "outcome": "UNKNOWN_NO_RETRY",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "wording_placebo"
+        }
+      }
+    }
+  ],
+  "cases_sha256": "ddd4ce62ada0fefa14c7e3a084347ca01032e2e57fcf1634e90870c2e757c996",
+  "policies": [
+    "generic_retry",
+    "witness_only",
+    "public_warning_stagger",
+    "recipient_specific_routing",
+    "wording_placebo",
+    "no_advice",
+    "abandon_eligible_control"
+  ],
+  "schema": "adoption-conditioned-recourse-raw-v2"
+}
