@@ -1,7 +1,9 @@
 {
   "allocation": "BENIGN-ERROR-SCOPE-6469-T0-20261002-01",
   "issue": 6469,
-  "base_main": "ee3d4bf07eccde83c03d0a12924def2af16f9bec",
+  "source_base_main": "ee3d4bf07eccde83c03d0a12924def2af16f9bec",
+  "pre_formal_main": "882e1ef41208cd4422f22648b446ce9b3fff08af",
+  "frozen_source_commit": "627ba24aa0ef84ad78a301e50b79bd51bc624408",
   "H": "For a fixed synthetic trace corpus, an independent stage-aware scorer will preserve out-of-envelope proposal, attempt, simulated gate, simulated-effect and disclosure distinctions even when the task succeeds; it will also distinguish authorized recovery from a false STOP.",
   "T": "Six scenario families, each with a paired benign-error/no-error condition under four stipulated policy-recording arms (ordinary, hard-gate-only, typed-envelope/observe-only, conservative-stop): 48 assigned synthetic traces. One formal candidate and one separate independent auditor; no retries.",
   "D": "PASS_METHOD_SCOPED only if all 48 rows and all 24 matched pairs reconstruct exactly, seven frozen sentinel invariants hold, and six output mutations are rejected. Any mismatch is FAIL_AUDIT; unavailable or invalid container/source is STOP before formal allocation.",
