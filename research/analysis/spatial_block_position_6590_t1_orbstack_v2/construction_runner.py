@@ -48,9 +48,15 @@ def run(source: Path, output: Path) -> int:
         if subprocess.check_output(["git", "status", "--porcelain"], cwd=source, text=True).strip():
             raise ValueError("STOP_DIRTY_WORKTREE")
         latest_main = subprocess.check_output(["git", "ls-remote", "origin", "refs/heads/main"], cwd=source, text=True).split()[0]
-        if subprocess.run(["git", "merge-base", "--is-ancestor", latest_main, head], cwd=source).returncode:
-            raise ValueError(f"STOP_LIVE_MAIN_NOT_ANCESTOR:{latest_main}")
-        paths = subprocess.check_output(["git", "diff", "--name-only", latest_main, head], cwd=source, text=True).splitlines()
+        frozen_main = freeze["main_sha"]
+        if subprocess.run(["git", "merge-base", "--is-ancestor", frozen_main, latest_main], cwd=source).returncode:
+            raise ValueError(f"STOP_FROZEN_MAIN_NOT_ANCESTOR:{latest_main}")
+        main_changes = subprocess.check_output(["git", "diff", "--name-only", frozen_main, latest_main], cwd=source, text=True).splitlines()
+        protected = freeze["protected_main_paths"]
+        collisions = [p for p in main_changes if any(p == prefix or p.startswith(prefix.rstrip("/") + "/") for prefix in protected)]
+        if collisions:
+            raise ValueError(f"STOP_MAIN_PROTECTED_PATH_ADVANCE:{collisions}")
+        paths = subprocess.check_output(["git", "diff", "--name-only", frozen_main, freeze["source_commit"]], cwd=source, text=True).splitlines()
         allowed = freeze["additive_paths"]
         if any(not any(p == prefix or p.startswith(prefix.rstrip("/") + "/") for prefix in allowed) for p in paths):
             raise ValueError(f"STOP_NON_ADDITIVE_SOURCE:{paths}")
@@ -90,6 +96,7 @@ def run(source: Path, output: Path) -> int:
     passed = process.returncode == 0 and "Ran 8 tests" in process.stderr and "OK" in process.stderr
     record = {"schema": "spatial-block-6590-training-parity-run-v1", "allocation": freeze["construction_allocation"],
               "freeze_sha256": freeze_sha, "source_commit": head, "live_main_sha": latest_main,
+              "main_advanced_disjointly": latest_main != freeze["main_sha"], "main_paths_advanced": main_changes,
               "image_id": freeze["image_id"], "docker_context": context, "command_argv": command,
               "container_id": container_id, "container_name": freeze["container_name"],
               "container_state": state, "duration_seconds": duration, "exit_code": process.returncode,

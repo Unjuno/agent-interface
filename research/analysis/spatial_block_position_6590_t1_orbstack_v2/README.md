@@ -1,6 +1,8 @@
 # #6590 T1 training-implementation successor
 
-This package is a new, source-separated successor to the retained v1 allocation. It repairs the v1 frozen candidate's missing first-layer update (`w1 -= learning_rate * dw1`) and first tests that the candidate's ten-step miniature construction fit is byte-identical to an independently coded raw auditor refit. The v1 source, failed formal output and issue history remain immutable.
+This package is a new, source-separated successor to the retained v1 allocation. It repairs the v1 frozen candidate's missing first-layer update (`w1 -= learning_rate * dw1`) and first tests that the candidate's 250-step construction fit is byte-identical to an independently coded raw auditor refit. The v1 source, failed formal output and issue history remain immutable.
+
+The first v2 prelaunch (`training-parity-20261002-01`) STOPped before container creation because `main` advanced from frozen `2089690` to `cc67052` with only new Issue #6530 package paths. Counts were candidate fits 0, auditor fits 0, containers 0, retries 0. `results/prelaunch-01/STOP.json` preserves the exact reason. The follow-on runner permits disjoint main advances only when the frozen main remains an ancestor and no protected goal/roadmap/README, predecessor, package or workflow path changed; the run record captures those intervening paths. No scientific input or consumed seed is changed.
 
 ## H / T / D / C / U
 

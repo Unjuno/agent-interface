@@ -63,19 +63,28 @@ def run(args) -> int:
         main_row = subprocess.check_output(["git", "ls-remote", "origin", "refs/heads/main"],
                                            cwd=source, text=True).strip().split()
         live_main = main_row[0] if main_row else ""
-        ancestor = subprocess.run(["git", "merge-base", "--is-ancestor", live_main, head],
+        ancestor = subprocess.run(["git", "merge-base", "--is-ancestor", freeze["main_sha"], live_main],
                                   cwd=source, text=True, capture_output=True)
         if ancestor.returncode != 0:
-            raise ValueError(f"STOP_LIVE_MAIN_NOT_ANCESTOR_OF_SOURCE:{live_main}")
+            raise ValueError(f"STOP_FROZEN_MAIN_NOT_ANCESTOR_OF_LIVE_MAIN:{live_main}")
         main_changes = subprocess.check_output(["git", "diff", "--name-only",
-                                                live_main, head],
+                                                freeze["main_sha"], live_main],
+                                               cwd=source, text=True).splitlines()
+        protected = freeze["protected_main_paths"]
+        collisions = [path for path in main_changes
+                      if any(path == prefix or path.startswith(prefix.rstrip("/") + "/")
+                             for prefix in protected)]
+        if collisions:
+            raise ValueError(f"STOP_MAIN_PROTECTED_PATH_ADVANCE:{collisions}")
+        source_paths = subprocess.check_output(["git", "diff", "--name-only",
+                                                freeze["main_sha"], freeze["source_commit"]],
                                                cwd=source, text=True).splitlines()
         additive_paths = freeze["additive_paths"]
-        collisions = [path for path in main_changes
-                      if not any(path == prefix or path.startswith(prefix.rstrip("/") + "/")
-                                 for prefix in additive_paths)]
-        if collisions:
-            raise ValueError(f"STOP_SOURCE_NOT_ADDITIVE:{collisions}")
+        non_additive = [path for path in source_paths
+                        if not any(path == prefix or path.startswith(prefix.rstrip("/") + "/")
+                                   for prefix in additive_paths)]
+        if non_additive:
+            raise ValueError(f"STOP_SOURCE_NOT_ADDITIVE:{non_additive}")
         stage = "docker_runtime_identity"
         context = subprocess.check_output(["docker", "context", "show"], text=True).strip()
         if context != freeze["runtime"]["docker_context"]:
