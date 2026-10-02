@@ -81,7 +81,7 @@ Closure does not erase evidence. [#6353](https://github.com/Unjuno/agent-interfa
 
 ## Full research-labeled inventory
 
-The point-in-time complete inventory of all research-labeled Issues in both states (including successors, audit/coordination records, and explicit STOP/HOLD/FAIL histories) is in [RESEARCH_ISSUE_INDEX.md](RESEARCH_ISSUE_INDEX.md). Reconciliation on 2026-10-02 found 1,286 such Issues (854 open, 432 closed) among 2,527 non-PR Issues returned by GitHub. The inventory is broader than ideas alone and includes Issues carrying the `research` label or with titles containing `research`, `idea`, `successor`, or `experiment`; closure is not a result. Each row links to the Issue for its authoritative disposition.
+The point-in-time filtered discovery inventory of all research-labeled Issues in both states (including successors, audit/coordination records, and explicit STOP/HOLD/FAIL histories) is in [RESEARCH_ISSUE_INDEX.md](RESEARCH_ISSUE_INDEX.md). Reconciliation on 2026-10-02 found 1,677 such Issues (1,136 open, 541 closed) among 2,527 non-PR Issues returned by GitHub. The inventory is broader than ideas alone and includes Issues carrying the `research` label or with titles containing `research`, `idea`, `successor`, or `experiment`; closure is not a result. Each row links to the Issue for its authoritative disposition.
 
 ## Closed idea dispositions checked (2026-10-02)
 
