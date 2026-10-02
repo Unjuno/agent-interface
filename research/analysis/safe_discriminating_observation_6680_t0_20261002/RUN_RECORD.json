@@ -18,7 +18,7 @@
   "host_construction_only": {
     "unit_suite_runs": 4,
     "unit_suite_outcomes": ["FAIL_PRE_FREEZE_CONSTRUCTION_DEFECT", "PASS_4_OF_4_PRE_ID_REVIEW", "PASS_4_OF_4_ABSOLUTE_PATH_PRE_ID_REVIEW", "PASS_5_OF_5_OPAQUE_CASE_IDS"],
-    "test_runner_invocation_failure": "workdir not applied by exec tool; corrected with absolute unittest discovery path; no candidate/auditor invocation",
+    "test_runner_invocation_failures": ["workdir not applied by exec tool; corrected with absolute unittest discovery path; no candidate/auditor invocation", "root module-qualified unittest import failed with ModuleNotFoundError: auditor before test body; package-directory command passed 5/5; no candidate/auditor invocation"],
     "candidate_cli_runs": 3,
     "auditor_cli_runs": 4,
     "smoke_rows": 20,
