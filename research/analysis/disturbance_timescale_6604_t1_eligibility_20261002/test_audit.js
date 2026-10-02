@@ -30,6 +30,12 @@ const markerNeedsReview = audit([fixture({ schedule: true })]);
 assert.equal(markerNeedsReview.verdict, "REVIEW_REQUIRED_NOT_ELIGIBLE");
 assert.notEqual(markerNeedsReview.verdict, "ELIGIBLE_FOR_T1_REVIEW");
 
+const reportOnlyMarker = fixture();
+reportOnlyMarker.reportText = JSON.stringify({ external_target_schedule: [{ t_ns: 5 }] });
+const reportMarkerNeedsReview = audit([reportOnlyMarker]);
+assert.equal(reportMarkerNeedsReview.verdict, "REVIEW_REQUIRED_NOT_ELIGIBLE");
+assert.equal(reportMarkerNeedsReview.results[0].candidateScheduleMarkers, 1);
+
 const incompleteOccupancy = audit([fixture({ held: false })]);
 assert.equal(incompleteOccupancy.results[0].occupancyCoverageProxy, false);
 assert.equal(incompleteOccupancy.verdict, "HOLD_NO_ELIGIBLE_TRACE");
@@ -39,4 +45,4 @@ assert.equal(missingCost.results[0].routeCostEvidencePresent, false);
 assert.equal(missingCost.verdict, "HOLD_NO_ELIGIBLE_TRACE");
 
 assert.throws(() => audit([{ id: "bad", reportText: "{", eventsText: "", protocolText: "" }]));
-process.stdout.write("4 tests passed; no eligibility PASS can be emitted from marker presence alone.\n");
+process.stdout.write("5 controls passed; report-only schedule markers are fail-closed to review.\n");
