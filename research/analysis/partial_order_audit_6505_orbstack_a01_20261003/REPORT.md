@@ -8,6 +8,8 @@ Pre-formal construction tests: 7/7 pass on macOS arm64 / CPython 3.14.5. These c
 
 Full local Analysis Index workflow suite: 18 test commands / 111 tests passed on the frozen latest-main base. The workflow's pinned historical source was restored temporarily for provenance tests, then the committed source was restored and independently verified. The earlier manually transcribed test-directory typo is retained as a separate failed command attempt and is not counted as a test failure.
 
+Main later advanced to `8acd49301826466e2c8a000c792d19ffce0b17ca` with an unrelated archived raw-log/recovery note. On that exact base the analysis index and this package's 7 tests were rerun and passed; no formal input or auditor source changed.
+
 ## H / T / D / C / U
 
 See `PREREGISTRATION.md`. The scope is an independent audit of #4889's retained finite reducer evidence. The predecessor's `HOLD_AUDIT_CONTROL_HARNESS`, raw data, and 7/8 control result remain unchanged.
