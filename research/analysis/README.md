@@ -1,5 +1,6 @@
 # Analytical research
 
+- [`action_bound_residual_6619_t0_v1/REPORT.md`](action_bound_residual_6619_t0_v1/REPORT.md) — Issue #6619 WSLc T0 retained as `STOP_AUDIT_MUTATION_CONTROL_DEFECT`; candidate/auditor each ran once, raw preserved, nominal method PASS invalidated; no incremental cue benefit shown.
 - [`revision_timed_cutover_6617_t0_v1/REPORT.md`](revision_timed_cutover_6617_t0_v1/REPORT.md) — Issue #6617 WSLc synthetic T0: 30 event traces independently audited; one stable scripted case saved 3 logical ticks; no speech, GUI, human, or real-latency result.
 - [`frame_qualified_collateral_6533_t0_20261002/REPORT.md`](frame_qualified_collateral_6533_t0_20261002/REPORT.md) — Issue #6533 T0: 44/44 synthetic rows independently reconstructed; qualified-frame matched the full-state oracle, with a 79.1% aggregate accounted-byte reduction but a 2.13× regression at the smallest size. Method-scoped only; no GUI/product safety or performance claim.
 
@@ -172,6 +173,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 
 - [`5352_unknown_recovery_audit_v1/`](5352_unknown_recovery_audit_v1/)
 - [`accessibility_configuration_effects_5922_t0_v1/`](accessibility_configuration_effects_5922_t0_v1/)
+- [`action_bound_residual_6619_t0_v1/`](action_bound_residual_6619_t0_v1/)
 - [`action_class_error_budget_5424_t2_v1/`](action_class_error_budget_5424_t2_v1/)
 - [`action_class_error_budget_5424_t3_v1/`](action_class_error_budget_5424_t3_v1/)
 - [`action_conditioned_routing_repair_successor_2059_r2_v1/`](action_conditioned_routing_repair_successor_2059_r2_v1/)
