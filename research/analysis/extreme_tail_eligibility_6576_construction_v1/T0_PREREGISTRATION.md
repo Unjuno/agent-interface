@@ -13,12 +13,16 @@ image/output freeze is recorded. No formal rows exist yet.
   over empirical p95/max, pooled EVT, and TailID is unknown.
 - **T:** In one pinned CPU-only OrbStack container, generate 4,000 training
   and 4,000 independent held-out rows per frozen scenario, with fixed seeds.
-  Compare train empirical p95/max, unstratified GPD extrapolation to p99,
-  eligibility-gated disposition, and the source-backed TailID algorithmic
-  comparator. Score p99 held-out exceedances (with exact binomial interval),
-  estimate availability/NOT_ESTIMABLE and false eligibility on negative
-  controls. Include a declared cleanup mode absent from training but present
-  in held-out deployment; do not claim detection of an undeclared mode.
+  Compare empirical p95/max, pooled naive GPD p99, eligibility-gated analysis,
+  and the source-backed TailID algorithmic comparator. The deliberately naive
+  comparators consume every reported endpoint and treat a censor-limit value
+  as if it were an observed endpoint; the eligibility gate must refuse such
+  training input, and any censored holdout makes comparator calibration
+  `NOT_ESTIMABLE_CENSORED_HOLDOUT`. Score p99 held-out exceedances (with exact
+  binomial intervals), estimate availability/NOT_ESTIMABLE and false
+  eligibility on negative controls. Include a declared cleanup mode absent
+  from training but present in held-out deployment; do not claim detection of
+  an undeclared mode.
 - **D:** `PASS_METHOD_SCOPED` only if stationary reference is eligible, every
   invalid synthetic control is refused with its typed reason, no censored
   row is silently treated as on-time, and the frozen coverage interval

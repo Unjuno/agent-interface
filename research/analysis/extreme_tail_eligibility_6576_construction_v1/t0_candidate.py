@@ -160,7 +160,10 @@ def run(source: Path) -> dict:
         train = generate(case, config["n_train"], "train", config)
         holdout = generate(case, config["n_holdout"], "holdout", config)
         diag = diagnostics(train, case, config)
-        values = [row["observed"] for row in train if not row["censored"]]
+        # Deliberately naive summaries/EVT comparators consume every reported
+        # endpoint, including a censor-limit value; the gate must refuse this
+        # input and censored holdout rows make calibration NOT_ESTIMABLE.
+        values = [row["observed"] for row in train]
         naive = _gpd_quantile(values, config["threshold_probability"], target)
         eligible = diag["decision"] == "ELIGIBLE_REFERENCE"
         gated = {

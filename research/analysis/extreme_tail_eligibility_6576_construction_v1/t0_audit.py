@@ -6,6 +6,7 @@ import hashlib
 import json
 import math
 import random
+from statistics import NormalDist
 import sys
 from pathlib import Path
 
@@ -39,6 +40,120 @@ def _q7(values: list[float], p: float) -> float:
     lo = math.floor(position)
     hi = min(lo + 1, len(ordered) - 1)
     return ordered[lo] + (position - lo) * (ordered[hi] - ordered[lo])
+
+
+def _profile_scale(excesses: list[float], shape: float) -> float:
+    """Independent scale MLE from the scalar score equation at fixed shape."""
+    if abs(shape) < 1e-10:
+        return sum(excesses) / len(excesses)
+    boundary = max(0.0, -shape * max(excesses))
+    lo = boundary + max(1.0, boundary) * 1e-12
+
+    def score(scale: float) -> float:
+        return (1 + shape) * sum(x / (scale + shape * x) for x in excesses) - len(excesses)
+
+    hi = max(sum(excesses) / len(excesses), max(excesses), 1.0)
+    while score(hi) > 0:
+        hi *= 2
+    if score(lo) <= 0:
+        raise ValueError("profile scale root not bracketed")
+    for _ in range(64):
+        mid = (lo + hi) / 2
+        if score(mid) > 0:
+            lo = mid
+        else:
+            hi = mid
+    return (lo + hi) / 2
+
+
+def _profile_log_likelihood(excesses: list[float], shape: float) -> tuple[float, float]:
+    scale = _profile_scale(excesses, shape)
+    if abs(shape) < 1e-10:
+        return -len(excesses) * math.log(scale) - sum(excesses) / scale, scale
+    supports = [1 + shape * x / scale for x in excesses]
+    if any(value <= 0 for value in supports):
+        return -math.inf, scale
+    likelihood = -len(excesses) * math.log(scale) - (1 + 1 / shape) * sum(math.log(value) for value in supports)
+    return likelihood, scale
+
+
+def _oracle_gpd_parameters(excesses: list[float]) -> tuple[float, float]:
+    """Profile-likelihood MLE, independent of the candidate Nelder-Mead fit."""
+    if len(excesses) < 3 or any(x < 0 or not math.isfinite(x) for x in excesses):
+        raise ValueError("invalid GPD sample")
+    grid = [-0.9 + i * 0.1 for i in range(60)]
+    likelihoods = [_profile_log_likelihood(excesses, shape)[0] for shape in grid]
+    best = max(range(len(grid)), key=likelihoods.__getitem__)
+    if best == 0 or best == len(grid) - 1:
+        raise ValueError("profile maximum at audit boundary")
+    lo, hi = grid[best - 1], grid[best + 1]
+    ratio = (math.sqrt(5) - 1) / 2
+    left = hi - ratio * (hi - lo)
+    right = lo + ratio * (hi - lo)
+    left_ll = _profile_log_likelihood(excesses, left)[0]
+    right_ll = _profile_log_likelihood(excesses, right)[0]
+    for _ in range(72):
+        if left_ll < right_ll:
+            lo, left, left_ll = left, right, right_ll
+            right = lo + ratio * (hi - lo)
+            right_ll = _profile_log_likelihood(excesses, right)[0]
+        else:
+            hi, right, right_ll = right, left, left_ll
+            left = hi - ratio * (hi - lo)
+            left_ll = _profile_log_likelihood(excesses, left)[0]
+    shape = (lo + hi) / 2
+    _, scale = _profile_log_likelihood(excesses, shape)
+    return scale, shape
+
+
+def _oracle_gpd_quantile(values: list[float], threshold_probability: float, target: float) -> dict:
+    threshold = _q7(values, threshold_probability)
+    excesses = [value - threshold for value in values if value > threshold]
+    base = {"status": "NOT_ESTIMABLE", "threshold": threshold, "exceedances": len(excesses)}
+    if len(excesses) < 3:
+        return base
+    try:
+        scale, shape = _oracle_gpd_parameters(excesses)
+    except ValueError:
+        return base
+    tail_fraction = len(excesses) / len(values)
+    conditional_probability = (1 - target) / tail_fraction
+    if not 0 < conditional_probability < 1:
+        return base
+    if abs(shape) < 1e-7:
+        estimate = threshold - scale * math.log(conditional_probability)
+    else:
+        estimate = threshold + scale / shape * (conditional_probability ** (-shape) - 1)
+    if not math.isfinite(estimate) or estimate < threshold:
+        return base
+    return {**base, "status": "ESTIMATED", "scale": scale, "shape": shape, "p99": estimate}
+
+
+def _oracle_tailid(sample: list[float], config: dict) -> dict:
+    threshold_probability = config["threshold_probability"]
+    threshold = _q7(sample, threshold_probability)
+    candidate_count = round(config["tailid_candidate_fraction"] * (1 - threshold_probability) * len(sample))
+    ranked = sorted(range(len(sample)), key=lambda i: sample[i], reverse=True)[:candidate_count]
+    removed = set(ranked)
+    base = [value for index, value in enumerate(sample) if index not in removed]
+    excesses = [value - threshold for value in base if value > threshold]
+    scale, shape = _oracle_gpd_parameters(excesses)
+    z = NormalDist().inv_cdf((1 + config["tailid_confidence"]) / 2)
+    radius = z * abs(shape) / math.sqrt(len(excesses))
+    upper = shape + radius
+    sensitive = []
+    ordered = list(reversed(ranked))
+    for position, index in enumerate(ordered):
+        restored = base + [sample[index]]
+        restored_excesses = [value - threshold for value in restored if value > threshold]
+        _, updated_shape = _oracle_gpd_parameters(restored_excesses)
+        if updated_shape > upper:
+            sensitive = sorted((sample[i] for i in ordered[position:]), reverse=True)
+            break
+        shape = updated_shape
+        radius = z * abs(shape) / math.sqrt(len(restored_excesses))
+        upper = shape + radius
+    return {"threshold": threshold, "candidate_count": candidate_count, "sensitive": sensitive}
 
 
 def _oracle_binomial_cdf(k: int, n: int, p: float) -> float:
@@ -129,11 +244,55 @@ def audit(config_path: Path, result_path: Path) -> tuple[bool, str]:
         expected = _expected_decision(output["raw_train"], case, config)
         if output.get("diagnostics", {}).get("decision") != expected:
             return False, f"FAIL_GATE_DECISION:{case['case_id']}:{expected}"
-        train = [r["observed"] for r in output["raw_train"] if not r["censored"]]
+        train = [r["observed"] for r in output["raw_train"]]
         if not math.isclose(output.get("empirical_p95", math.nan), _q7(train, 0.95), rel_tol=0, abs_tol=1e-12):
             return False, f"FAIL_P95:{case['case_id']}"
         if output.get("empirical_max") != max(train):
             return False, f"FAIL_MAX:{case['case_id']}"
+        target = 1 - config["nominal_exceedance_probability"]
+
+        def check_fit(reported: dict, expected_fit: dict, label: str) -> str | None:
+            if reported.get("status") != expected_fit.get("status"):
+                return f"FAIL_{label}_STATUS:{case['case_id']}"
+            for field in ("threshold", "scale", "shape", "p99"):
+                expected_value = expected_fit.get(field)
+                reported_value = reported.get(field)
+                if expected_value is None:
+                    if reported_value is not None:
+                        return f"FAIL_{label}_{field.upper()}:{case['case_id']}"
+                elif not isinstance(reported_value, (int, float)) or not math.isclose(reported_value, expected_value, rel_tol=2e-4, abs_tol=2e-6):
+                    return f"FAIL_{label}_{field.upper()}:{case['case_id']}"
+            if reported.get("exceedances") != expected_fit.get("exceedances"):
+                return f"FAIL_{label}_EXCEEDANCES:{case['case_id']}"
+            return None
+
+        expected_naive = _oracle_gpd_quantile(train, config["threshold_probability"], target)
+        fit_error = check_fit(output.get("naive_evt", {}), expected_naive, "NAIVE_EVT")
+        if fit_error:
+            return False, fit_error
+        try:
+            expected_tailid = _oracle_tailid(train, config)
+        except (ValueError, ZeroDivisionError):
+            expected_tailid = None
+        tailid = output.get("tailid", {})
+        if expected_tailid is None:
+            method_failures.append(f"tailid_audit_unavailable:{case['case_id']}")
+        elif tailid.get("threshold") != expected_tailid["threshold"] or tailid.get("candidate_count") != expected_tailid["candidate_count"] or tailid.get("sensitive") != expected_tailid["sensitive"]:
+            return False, f"FAIL_TAILID_SELECTION:{case['case_id']}"
+        if expected_tailid is not None:
+            sensitive_counts = {}
+            for value in expected_tailid["sensitive"]:
+                sensitive_counts[value] = sensitive_counts.get(value, 0) + 1
+            adjusted = []
+            for value in train:
+                if sensitive_counts.get(value, 0):
+                    sensitive_counts[value] -= 1
+                else:
+                    adjusted.append(value)
+            expected_tailid_fit = _oracle_gpd_quantile(adjusted, config["threshold_probability"], target) if len(adjusted) >= 100 else {"status": "NOT_ESTIMABLE"}
+            fit_error = check_fit(tailid.get("adjusted_evt", {}), expected_tailid_fit, "TAILID_EVT")
+            if fit_error:
+                return False, fit_error
         gated = output.get("eligible_gated_evt", {})
         if expected != "ELIGIBLE_REFERENCE" and gated.get("status") != "NOT_ESTIMABLE":
             return False, f"FAIL_INVALID_GATE_PUBLISHED:{case['case_id']}"
@@ -141,6 +300,16 @@ def audit(config_path: Path, result_path: Path) -> tuple[bool, str]:
             return False, f"FAIL_REFERENCE_NOT_ESTIMATED:{case['case_id']}"
         if expected == "ELIGIBLE_REFERENCE" and gated.get("status") == "NOT_ESTIMABLE" and gated.get("reason") != "NOT_ESTIMABLE_MODE_SPECIFIC_FIT":
             return False, f"FAIL_REFERENCE_FIT_REASON:{case['case_id']}"
+        if expected == "ELIGIBLE_REFERENCE":
+            by_mode = gated.get("by_mode", {})
+            if set(by_mode) != set(case["declared_modes"]):
+                return False, f"FAIL_GATED_MODE_SET:{case['case_id']}"
+            for mode in case["declared_modes"]:
+                mode_values = [r["observed"] for r in output["raw_train"] if r["mode"] == mode]
+                expected_mode_fit = _oracle_gpd_quantile(mode_values, config["threshold_probability"], target)
+                fit_error = check_fit(by_mode.get(mode, {}), expected_mode_fit, f"GATED_EVT_{mode}")
+                if fit_error:
+                    return False, fit_error
         if case["case_id"] in {"time_drift", "clustered_extremes", "informative_right_censoring", "declared_unseen_cleanup_shift"} and expected == "ELIGIBLE_REFERENCE":
             method_failures.append(f"false_eligibility:{case['case_id']}")
         if case["case_id"] == "stationary_light_tail" and expected != "ELIGIBLE_REFERENCE":
