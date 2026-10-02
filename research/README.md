@@ -182,6 +182,8 @@ For new work, prefer the narrowest existing category below rather than adding an
 
 - [`launch/`](launch/) — public-evidence/launch presentation experiments.
 - [`experiments/`](experiments/) — small scoped experiments without a narrower established category.
+- [#4988 original Qwen abstention-balance STOP package](experiments/qwen05b_abstention_balance_4780_v1/RECOVERY_STATUS.md) — original branch package preserved without overwriting the merged STOP/capture corrections; formal fit count 0.
+- [#5014 Qwen abstention-balance v2 resource HOLD](experiments/qwen05b_abstention_balance_4780_v2/RECOVERY_STATUS.md) — exact frozen package and `HOLD_RESOURCE_OWNERSHIP` preserved; formal fit count 0 and current-main refreeze/explicit arbitration required.
 
 ### Historical archival namespaces
 
