@@ -17,6 +17,7 @@
 - [`retired_intention_cue_6556_t0_v1/`](retired_intention_cue_6556_t0_v1/) — Issue #6556: finite post-retirement cue lineage challenge; compare ordinary durable event-instance routing against generation/retirement fencing, preserve unresolved obligations, and return UNKNOWN when lineage is absent. Synthetic only.
 - [`observation_injection_transform_6575_t0_v1/`](observation_injection_transform_6575_t0_v1/) — Issue #6575 allocation 01 retained STOP: six sham-crop provenance mismatches between frozen candidate and auditor oracle; no scientific disposition or susceptibility/model claim.
 - [`extreme_tail_eligibility_6576_construction_v1/orbstack_pilot_a02_20261002/RUN_RECORD.md`](extreme_tail_eligibility_6576_construction_v1/orbstack_pilot_a02_20261002/RUN_RECORD.md) — Issue #6576 dedicated OrbStack Docker single-case pilot: candidate and independent raw-only audit passed 4,000/4,000 stationary synthetic rows, with nominal 1% inside exact held-out intervals. Formal six-case T0 and all real release/safety claims remain unestablished.
+- [`extreme_tail_eligibility_6576_construction_v1/timer_quantization_a01_20261002/RUN_RECORD.md`](extreme_tail_eligibility_6576_construction_v1/timer_quantization_a01_20261002/RUN_RECORD.md) — #6576 fresh OrbStack Docker timer-quantization probe: independent audit verified a q=1.0 synthetic arm passed `ELIGIBLE_REFERENCE` with only six distinct q90-exceedance values; finite gate-contract counterexample only, not EVT calibration or real timing evidence.
 - [`extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a03_20261002/RUN_RECORD.md`](extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a03_20261002/RUN_RECORD.md) — #6576 TailID/R parity A03: one-shot R harness stopped before data evaluation; Python-only six-row artifact retained; no parity result or retry.
 - [`extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a04_20261002/RUN_RECORD.md`](extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a04_20261002/RUN_RECORD.md) — #6576 A04: both candidate arms completed, but the one-shot auditor crashed; descriptive post-hoc data retained separately from formal audit evidence.
 - [`extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a05_20261002/RUN_RECORD.md`](extreme_tail_eligibility_6576_construction_v1/orbstack_cran_parity_a05_20261002/RUN_RECORD.md) — #6576 A05: isolated OrbStack CRAN/R versus Python TailID comparison; indices and threshold matched on six synthetic cases, but one base GPD fit exceeded frozen MLE/CI tolerances (`FAIL_PARITY_NUMERICAL_MLE`). No formal T0, physical release or safety claim.
@@ -61,6 +62,8 @@ flowchart TD
 ## Analysis families
 
 Issue #6315 retains both the original finite-trace T0 audit-v1 HOLD and the distinct WSLc portability successor; see each report for its exact scope and lineage.
+
+Issue #5370 T7 successor #6723: [composed bounded priority-inheritance report](priority_inheritance_5370_t7_composition_20261002_01/REPORT.md). Its isolated synthetic method result and explicit limits are retained; historical T6 STOP remains unchanged.
 
 - [Issue #6081 error-carry T0](error_carry_6081_t0_20261001/REPORT.md) — `STOP_METHOD_INVALID_BASELINE`; 672 rows reconstructed, but the 8-way dot-product baseline is not Euclidean-nearest. Frozen outputs are preserved; no PASS or application-transfer claim.
 
@@ -528,6 +531,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`preview_constraint_parity_6565_t0_20261002/`](preview_constraint_parity_6565_t0_20261002/)
 - [`primary_refusal_terminality_59_spine07_20261001/`](primary_refusal_terminality_59_spine07_20261001/)
 - [`primary_refusal_terminality_59_t0_20261001/`](primary_refusal_terminality_59_t0_20261001/)
+- [`priority_inheritance_5370_t7_composition_20261002_01/`](priority_inheritance_5370_t7_composition_20261002_01/)
 - [`priority_inheritance_nested_5370_t6_20261001/`](priority_inheritance_nested_5370_t6_20261001/)
 - [`privacy_discovery_6549_t0_v1/`](privacy_discovery_6549_t0_v1/)
 - [`private_witness_boundary_6498_t0_20261002_v1/`](private_witness_boundary_6498_t0_20261002_v1/)

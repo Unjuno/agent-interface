@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #6723 successor to #5370 T7: [composed bounded priority-inheritance experiment](analysis/priority_inheritance_5370_t7_composition_20261002_01/REPORT.md) — 36 rows independently audited; synthetic method-scoped result only, with historical T6 STOP preserved.
+
 - Issue #6710 successor to #6650: [independent controller-law replay](analysis/persistence_gated_throttle_6650_control_replay_20261002_01/REPORT.md) — allocation 01 freeze-key STOP preserved; allocation 02 OrbStack audit exactly reconstructed 36 policy runs and rejected all 9 mutations. Original #6650 `FAIL_HYPOTHESIS` remains unchanged; synthetic audit conformance only.
 - Issue #6581 path-width constrained GUI T0b: [`analysis/path_width_continuous_gui_6581_t0b_v1/REPORT.md`](analysis/path_width_continuous_gui_6581_t0b_v1/REPORT.md) — six synthetic scenarios independently audited `PASS_METHOD_SCOPED`; no ordinary-GUI or human/agent path claim.
 - Issue #6617 revision-timed cutover T0: [`analysis/revision_timed_cutover_6617_t0_v1/REPORT.md`](analysis/revision_timed_cutover_6617_t0_v1/REPORT.md) — WSLc `PASS_METHOD_SCOPED` on 30 logical-time traces; no speech, GUI, human, or measured-latency claim.
