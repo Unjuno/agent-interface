@@ -1,0 +1,52 @@
+{
+  "schema": "post-success-collateral-fixture-v1",
+  "horizons_from_launch": [3, 6],
+  "episodes": [
+    {
+      "id": "late-collateral",
+      "launch": 0,
+      "task_contract": "synthetic-contract-1",
+      "events": [
+        {"type": "verified_success", "time": 1},
+        {"type": "collateral_observed", "time": 4, "oracle": "independent-fixture-oracle"},
+        {"type": "followup_complete", "time": 6}
+      ]
+    },
+    {
+      "id": "clean-success",
+      "launch": 0,
+      "task_contract": "synthetic-contract-1",
+      "events": [
+        {"type": "verified_success", "time": 2},
+        {"type": "followup_complete", "time": 6}
+      ]
+    },
+    {
+      "id": "followup-lost",
+      "launch": 0,
+      "task_contract": "synthetic-contract-1",
+      "events": [
+        {"type": "verified_success", "time": 1},
+        {"type": "followup_lost", "time": 4, "reason": "synthetic-administrative-loss"}
+      ]
+    },
+    {
+      "id": "verified-failure",
+      "launch": 0,
+      "task_contract": "synthetic-contract-1",
+      "events": [
+        {"type": "verified_failure", "time": 2},
+        {"type": "followup_complete", "time": 6}
+      ]
+    },
+    {
+      "id": "policy-safe-stop",
+      "launch": 0,
+      "task_contract": "synthetic-contract-1",
+      "events": [
+        {"type": "policy_safe_stop", "time": 2},
+        {"type": "followup_complete", "time": 6}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "schema": "path-class-evaluator-oracle-v1",
+  "target_by_case": {
+    "blocked_class_gain": "G",
+    "viable_same_class": "G",
+    "same_class_dead_end": "G",
+    "unsupported_false_cue": "G",
+    "dynamic_epoch_invalidation": "G",
+    "single_class_no_alternate": "G"
+  },
+  "route_token_to_evaluator_class": {
+    "upper": "class-A-around-obstacle",
+    "lower": "class-B-around-obstacle"
+  },
+  "true_cutset_cases": ["blocked_class_gain", "single_class_no_alternate"],
+  "expected_primary_case": "blocked_class_gain",
+  "scope": "Evaluator-only graph topology and route-class labels; never candidate input."
+}

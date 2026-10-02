@@ -1,5 +1,9 @@
 # Issue #6617 T0: revision-timed cutover (2026-10-02)
 
+## Issue #6619 T0: action-bound visual residual (2026-10-02)
+
+Retained as `STOP_AUDIT_MUTATION_CONTROL_DEFECT`. Candidate and auditor each ran once in pinned, network-disabled WSLc; no retries. The initial auditor's nominal `METHOD_PASS_SCOPED` is invalidated because the mutation harness did not independently validate corruptions. The sole held-out flash was detected by both action-bound and raw-delta arms at the same budget; no incremental benefit is demonstrated. No live GUI/game visual safety inference. See [report](research/analysis/action_bound_residual_6619_t0_v1/REPORT.md) and [Issue #6619](https://github.com/Unjuno/agent-interface/issues/6619).
+
 The frozen WSLc T0 compared final-only preparation, an intentionally unsafe naive-provisional arm, and exact-version-bound read-only preparation over 10 scripted cases (30 traces). One stable logical-time schedule favored version-bound preparation by 3 ticks (3 vs 6); both safe arms had zero provisional/unauthenticated/uncommitted inputs, while the naive comparator's 9 provisional inputs stayed visibly unsafe. A separate raw-only audit exited 0 and rejected all four frozen corruptions. This is `PASS_METHOD_SCOPED` only for the deterministic model; it says nothing about ASR, actual speaker identity or intent, voice/GUI safety, real effects, human utility, or measured latency. WSLc emitted an unsupported swap/cgroup warning; enforcement is not claimed. See [the report and checksummed formal artifacts](research/analysis/revision_timed_cutover_6617_t0_v1/REPORT.md) and [Issue #6617](https://github.com/Unjuno/agent-interface/issues/6617).
 
 # Issue #6501 T0-01 / T0b-01: scope-typed singleflight (2026-10-02)

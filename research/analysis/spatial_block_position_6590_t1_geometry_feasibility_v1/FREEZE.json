@@ -1,0 +1,75 @@
+{
+  "schema": "spatial-block-position-6590-t1-geometry-feasibility-freeze-v1",
+  "issue": 6590,
+  "allocation": "spatial-block-position-6590-t1-geometry-feasibility-orbstack-20261002-01",
+  "frozen_at_utc": "2026-10-02T08:01:23Z",
+  "base_main_sha": "a1528b935914c8370ad310af905219038c3676ae",
+  "branch": "research/spatial-block-6590-t1-geometry-feasibility-orbstack-v1",
+  "package_path": "research/analysis/spatial_block_position_6590_t1_geometry_feasibility_v1/",
+  "prior_evidence_unchanged": ["#4752", "#4814", "#6590 T0 METHOD_PASS", "#6605 MUTATION_PASS"],
+  "allocation_type": "known-result independent-runtime replication, not a blind preregistered confirmation",
+  "hypothesis": "OrbStack reproduces the pre-freeze host construction enumeration byte-for-byte, and an independent raw-only auditor reconstructs every coordinate and eligibility label.",
+  "known_preformal_observation": {"counts": {"northwest": 6, "northeast": 6, "southwest": 3, "southeast": 3}, "model_fits": 0, "source": "preformal/host_candidate.json"},
+  "treatment": "Rerun the deterministic geometry enumeration once in a fresh isolated OrbStack container, then run the independent raw-only auditor once in a separate isolated OrbStack container. No model fit is part of this allocation.",
+  "decision_gate": {
+    "minimum_unique_centers_per_block": 8,
+    "patch_size": [9, 9],
+    "target_patch_disjointness": "max(abs(dx),abs(dy)) >= 9 from every training-support center",
+    "geometry_feasible_if": "all four block counts >= 8",
+    "geometry_hold_if": "any block count < 8",
+    "replication_pass_if": "container candidate bytes equal preformal host output and independent audit errors are empty",
+    "auditor_invocations": 1,
+    "candidate_invocations": 1,
+    "retries": 0,
+    "model_fits": 0
+  },
+  "geometry": {
+    "tile_width": 40,
+    "tile_height": 30,
+    "strict_interior_x": [5, 34],
+    "strict_interior_y": [5, 24],
+    "split_x": 20,
+    "split_y": 15,
+    "training_support_centers": [[20, 15], [8, 8], [32, 8], [8, 22], [32, 22]],
+    "counts_previously_observed_during_construction": true,
+    "geometry_and_gate_frozen_before_container_replication": true
+  },
+  "H_T_D_C_U": {
+    "H": "The OrbStack candidate exactly reproduces the known host enumeration, and the independent raw-only audit verifies all rows.",
+    "T": "One candidate enumeration and one independent auditor in separate isolated OrbStack containers; zero fits; zero retries.",
+    "D": "REPLICATION_PASS_WITH_GEOMETRY_HOLD iff raw bytes reproduce exactly, audit has zero errors, and any block has fewer than eight qualifying sites; HOLD_AUDIT_INTEGRITY on a reconstruction mismatch.",
+    "C": "Finite synthetic tile and patch arithmetic only.",
+    "U": "No visual model, GUI, task effect, calibration, authority, safety, human, or generalized spatial dependence result. A larger canvas or changed support layout requires a new freeze."
+  },
+  "environment": {
+    "runtime": "OrbStack Docker Engine on macOS arm64",
+    "wslc_available": false,
+    "image": "unjuno-6590-geometry-preflight:20261002",
+    "image_id": "sha256:d4be3c65847d7276752000268bf97c5ea9cb6ce85f93b1ffc9aced409c189dcc",
+    "image_manifest_digest": "unjuno-6590-geometry-preflight@sha256:d4be3c65847d7276752000268bf97c5ea9cb6ce85f93b1ffc9aced409c189dcc",
+    "base_image": "python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "platform": "linux/arm64",
+    "network": "none",
+    "resource_limits": {"cpus": 1, "memory": "256m", "pids": 32, "rootfs_readonly": true, "capabilities": "dropped_all", "no_new_privileges": true},
+    "shared_container_access": false,
+    "gui_or_effects": false
+  },
+  "candidate_container_name": "unjuno-6590-t1-geometry-candidate-20261002-01",
+  "auditor_container_name": "unjuno-6590-t1-geometry-auditor-20261002-01",
+  "commands": {
+    "local_construction_tests": "python -B -m unittest discover -s research/analysis/spatial_block_position_6590_t1_geometry_feasibility_v1 -p 'test_*.py' -v",
+    "formal_runner": "python research/analysis/spatial_block_position_6590_t1_geometry_feasibility_v1/run_formal.py --root research/analysis/spatial_block_position_6590_t1_geometry_feasibility_v1"
+  },
+  "preformal_candidate_sha256": "4092bc96be090a5a441abac0adc07db44a5855247e06c68785caedf57bf2e38f",
+  "source_sha256": {
+    "README.md": "3f1e393bf449075e51b4c8a9aa9889dc8b227266523e8f184977c73c312cc4fd",
+    "PROTOCOL.md": "6c46ba94876a83eed2eabaa041df96db8a640e1c0c362c036b70654e9503af10",
+    "Dockerfile": "f5eab26b12bf373a1f2a5104fe8860f396378021b9e3f2e8f300de5ea931569d",
+    "candidate.py": "98bc237ff587e4b279f278809419e52147dae9dcc9d14865dd3e14932e57bf4a",
+    "auditor.py": "c61770b7ecb0a70f84f2f1f1dfc7d2c6e65e6aa527b93c2a714dc4679c0f597e",
+    "test_geometry.py": "b908674db8c508399c8ab6fa30cc169ff780f95b564055ef8f0234bd2baf5562",
+    "run_formal.py": "43f465c7785a9a3163da1f85d4a7b0e1ab5611e0bcd10a263a0148d5d42ad35c",
+    "preformal/README.md": "1d8aee10059fbdc417b026279aabd9be51b5d481ce656b7cdf53be55d59856d1",
+    "../../../.github/workflows/analysis-index.yml": "b19000e027e7379ef6c0122e3f8cfd0b2faacb4c54d985ab87d27c1be914f7c2"
+  }
+}

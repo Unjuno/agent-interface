@@ -1,5 +1,7 @@
 # Analytical research
 
+- [`spatial_block_position_6590_t1_geometry_feasibility_v1/REPORT.md`](spatial_block_position_6590_t1_geometry_feasibility_v1/REPORT.md) — #6590 OrbStack replication independently reconstructed the fixed-grid no-near-duplicate geometry; 6/6/3/3 eligible sites fail the eight-site block floor, so visual-model T1 remains unrun (`HOLD_GEOMETRY_NOT_IDENTIFIABLE`).
+
 - [`revision_timed_cutover_6617_t0_v1/REPORT.md`](revision_timed_cutover_6617_t0_v1/REPORT.md) — Issue #6617 WSLc synthetic T0: 30 event traces independently audited; one stable scripted case saved 3 logical ticks; no speech, GUI, human, or real-latency result.
 - [`frame_qualified_collateral_6533_t0_20261002/REPORT.md`](frame_qualified_collateral_6533_t0_20261002/REPORT.md) — Issue #6533 T0: 44/44 synthetic rows independently reconstructed; qualified-frame matched the full-state oracle, with a 79.1% aggregate accounted-byte reduction but a 2.13× regression at the smallest size. Method-scoped only; no GUI/product safety or performance claim.
 
@@ -152,6 +154,8 @@ The table below summarizes major analytical chains and representative retained o
 | Audit / provenance | [`locale_semantic_invariance_5919_audit_review_20261001_01/`](locale_semantic_invariance_5919_audit_review_20261001_01/) | Post-merge raw-only audit confirms the eight T0 outcomes and rejects three actual corrupted copies plus duplicate/missing/extra rows; no candidate rerun. Original visual proxy remains fixture metadata. | Obtain independently adjudicated high-fidelity locale traces before extending the method claim. |
 | Route selection / topology | [`route_selector_5911_t0_20261001_02/`](route_selector_5911_t0_20261001_02/) | Five finite synthetic cases and an independent enumerator pass the explicit minimum-cost route/tie contract; scope is method-only. | Test selector semantics on real source traces before making any live routing or causal claim. |
 
+| Audit / provenance | [`native_wsl2_migration_6389_audit_repair_v1_20261002/`](native_wsl2_migration_6389_audit_repair_v1_20261002/) | Seven host-only synthetic tests verify the frozen nested-field contract and reject Boolean-as-integer raw values; not a migration experiment or performance/memory claim. | Obtain shared-lane release before a fresh WSL candidate run and independent formal audit. |
+
 </details>
 
 ## Historical source and construction archives
@@ -163,7 +167,7 @@ The table below summarizes major analytical chains and representative retained o
 
 ## Complete retained result directory index
 
-This compact list is generated from child directories that contain `REPORT.md` or `FORMAL_FAILURE.md`. It is the completeness surface used by the index checker.
+This compact list is generated from child directories that contain `REPORT.md` or `FORMAL_FAILURE.md`, or `STOP.md`. It is the completeness surface used by the index checker.
 
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
@@ -172,6 +176,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 
 - [`5352_unknown_recovery_audit_v1/`](5352_unknown_recovery_audit_v1/)
 - [`accessibility_configuration_effects_5922_t0_v1/`](accessibility_configuration_effects_5922_t0_v1/)
+- [`action_bound_residual_6619_t0_v1/`](action_bound_residual_6619_t0_v1/)
 - [`action_class_error_budget_5424_t2_v1/`](action_class_error_budget_5424_t2_v1/)
 - [`action_class_error_budget_5424_t3_v1/`](action_class_error_budget_5424_t3_v1/)
 - [`action_conditioned_routing_repair_successor_2059_r2_v1/`](action_conditioned_routing_repair_successor_2059_r2_v1/)
@@ -205,6 +210,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`attention_provenance_successor_1936_v1/`](attention_provenance_successor_1936_v1/)
 - [`attention_provenance_value_repair_successor_2039_v1/`](attention_provenance_value_repair_successor_2039_v1/)
 - [`auditor_completion_5895_t0_20261001_01/`](auditor_completion_5895_t0_20261001_01/)
+- [`auditor_completion_5895_t4_20261001_8d0c7f53/`](auditor_completion_5895_t4_20261001_8d0c7f53/)
 - [`auditor_completion_5895_t6_20261001_8d0c7f53_amd64/`](auditor_completion_5895_t6_20261001_8d0c7f53_amd64/)
 - [`backward_observable_guards_6256_comparator_t2_20261002/`](backward_observable_guards_6256_comparator_t2_20261002/)
 - [`backward_observable_guards_6256_stale_generation_t1_20261002/`](backward_observable_guards_6256_stale_generation_t1_20261002/)
@@ -230,6 +236,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`boundary_margin_5707_policy_pair_v1/`](boundary_margin_5707_policy_pair_v1/)
 - [`boundary_margin_5707_t0_v1/`](boundary_margin_5707_t0_v1/)
 - [`boundary_margin_5707_typed_v1/`](boundary_margin_5707_typed_v1/)
+- [`bounded_path_class_switching_6586_t0_20261002/`](bounded_path_class_switching_6586_t0_20261002/)
 - [`bounded_skew_context_join_successor_1218_v1/`](bounded_skew_context_join_successor_1218_v1/)
 - [`bounded_voi_scheduler_4263_v1/`](bounded_voi_scheduler_4263_v1/)
 - [`breakdown_t7/`](breakdown_t7/)
@@ -289,6 +296,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`disturbance_response_5771_t1_v3/`](disturbance_response_5771_t1_v3/)
 - [`effect_interference_5366_t2_v1/`](effect_interference_5366_t2_v1/)
 - [`effect_interference_5366_t3_v1/`](effect_interference_5366_t3_v1/)
+- [`effect_overlap_6278_filter_control_t0_v3/`](effect_overlap_6278_filter_control_t0_v3/)
+- [`effect_overlap_6278_portfolio_t0_v2/`](effect_overlap_6278_portfolio_t0_v2/)
 - [`effect_path_antiwindup_5791_eligibility_v1/`](effect_path_antiwindup_5791_eligibility_v1/)
 - [`effect_path_antiwindup_5791_resume_boundary_v1/`](effect_path_antiwindup_5791_resume_boundary_v1/)
 - [`effect_path_antiwindup_5791_t0_v1/`](effect_path_antiwindup_5791_t0_v1/)
@@ -317,6 +326,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`feasible_attribution_6100_t0_20261001/`](feasible_attribution_6100_t0_20261001/)
 - [`feedback_necessity_5927_epistemic_controls_t0_20261002/`](feedback_necessity_5927_epistemic_controls_t0_20261002/)
 - [`feedback_necessity_5927_orbstack_t0_v1/`](feedback_necessity_5927_orbstack_t0_v1/)
+- [`focused_observation_request_container_successor_2046_v1/`](focused_observation_request_container_successor_2046_v1/)
 - [`focused_observation_request_successor_1935_v1/`](focused_observation_request_successor_1935_v1/)
 - [`frame_qualified_collateral_6533_t0_20261002/`](frame_qualified_collateral_6533_t0_20261002/)
 - [`full_golden_ipc_2813_v4/`](full_golden_ipc_2813_v4/)
@@ -332,6 +342,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`gpu_grounding_template_diversity_2912_v1/`](gpu_grounding_template_diversity_2912_v1/)
 - [`gpu_grounding_template_diversity_2912_v2/`](gpu_grounding_template_diversity_2912_v2/)
 - [`gpu_grounding_template_diversity_4561_cpu_gate_v1/`](gpu_grounding_template_diversity_4561_cpu_gate_v1/)
+- [`gpu_photometric_2912_v2/`](gpu_photometric_2912_v2/)
+- [`gpu_photometric_2912_v3/`](gpu_photometric_2912_v3/)
 - [`gpu_supervisor_compose_4972_cuda_v1/`](gpu_supervisor_compose_4972_cuda_v1/)
 - [`guard_induced_proposal_risk_6143_t0_20261002/`](guard_induced_proposal_risk_6143_t0_20261002/)
 - [`guard_policy_break_even_r0_v1/`](guard_policy_break_even_r0_v1/)
@@ -356,6 +368,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`interface_mutation_adequacy_5541_t0_20261001_v1/`](interface_mutation_adequacy_5541_t0_20261001_v1/)
 - [`interrupt_stack_resume_contract_v1/`](interrupt_stack_resume_contract_v1/)
 - [`interval_robustness_6074_t0_20261002/`](interval_robustness_6074_t0_20261002/)
+- [`invariant_confluence_prefix_5547_v1/`](invariant_confluence_prefix_5547_v1/)
 - [`ioco_5518_t7_tick_bound/`](ioco_5518_t7_tick_bound/)
 - [`issue3152_broker_path_confinement_20260927_v1/`](issue3152_broker_path_confinement_20260927_v1/)
 - [`issue5541_mutation_t5_20260930/`](issue5541_mutation_t5_20260930/)
@@ -414,10 +427,12 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`multicursor_parking_reposition_r0_v1/`](multicursor_parking_reposition_r0_v1/)
 - [`multicursor_target_handle_regrounding_r0_v1/`](multicursor_target_handle_regrounding_r0_v1/)
 - [`multifidelity_route_contrast_6155_t0_v1/`](multifidelity_route_contrast_6155_t0_v1/)
+- [`native_wsl2_migration_6389_audit_repair_v1_20261002/`](native_wsl2_migration_6389_audit_repair_v1_20261002/)
 - [`needle_role_skill_lifecycle_4916_first_rung_v2/`](needle_role_skill_lifecycle_4916_first_rung_v2/)
 - [`needle_role_skill_lifecycle_4916_parity_diag_v1/`](needle_role_skill_lifecycle_4916_parity_diag_v1/)
 - [`needle_role_skill_lifecycle_4916_v2/`](needle_role_skill_lifecycle_4916_v2/)
 - [`needle_role_skill_lifecycle_5133_v2/`](needle_role_skill_lifecycle_5133_v2/)
+- [`obligation_capacity_6121_t0_20261002/`](obligation_capacity_6121_t0_20261002/)
 - [`obligation_capacity_6121_t0_successor02_20261002/`](obligation_capacity_6121_t0_successor02_20261002/)
 - [`obligation_conservation_5817_t0_v1/`](obligation_conservation_5817_t0_v1/)
 - [`observable_predictive_tests_6258_t0_host_20261002/`](observable_predictive_tests_6258_t0_host_20261002/)
@@ -449,6 +464,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`phase_overlap_resource_footprint_r0_v2/`](phase_overlap_resource_footprint_r0_v2/)
 - [`planner_hysteresis_5352_t10_20261001/`](planner_hysteresis_5352_t10_20261001/)
 - [`portfolio_multiplicity_5890_t0_v2_20261001/`](portfolio_multiplicity_5890_t0_v2_20261001/)
+- [`post_success_collateral_5593_t0_20261002/`](post_success_collateral_5593_t0_20261002/)
 - [`pre_failure_route_diversification_6225_t0_v1/`](pre_failure_route_diversification_6225_t0_v1/)
 - [`predicate_cache_persist_4217_v1/`](predicate_cache_persist_4217_v1/)
 - [`predicate_dependency_cache_4217_v1/`](predicate_dependency_cache_4217_v1/)
@@ -474,6 +490,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`probabilistic_automaton_retained_calibration_r3_v1/`](probabilistic_automaton_retained_calibration_r3_v1/)
 - [`quality_diversity_5908_t1_20261002/`](quality_diversity_5908_t1_20261002/)
 - [`query_version_writer_atomicity_v1/`](query_version_writer_atomicity_v1/)
+- [`quiescent_epoch_binding_5361_t1/`](quiescent_epoch_binding_5361_t1/)
 - [`quiescent_reclamation_5361_t0_20261001/`](quiescent_reclamation_5361_t0_20261001/)
 - [`quiet_frontier_6310_t0_20261002/`](quiet_frontier_6310_t0_20261002/)
 - [`r133_domain_coverage_transfer_v1/`](r133_domain_coverage_transfer_v1/)
@@ -491,6 +508,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`register_automaton_dynamic_identity_r0_v1/`](register_automaton_dynamic_identity_r0_v1/)
 - [`relational_noninterference_5811_t0_v1/`](relational_noninterference_5811_t0_v1/)
 - [`rent_compile_5870_t0_v1/`](rent_compile_5870_t0_v1/)
+- [`representation_contrast_6624_t0_v1/`](representation_contrast_6624_t0_v1/)
 - [`research_failure_detector_5531_t4/`](research_failure_detector_5531_t4/)
 - [`research_failure_detector_5531_t5/`](research_failure_detector_5531_t5/)
 - [`resident_gtk_incremental_3518_v1/`](resident_gtk_incremental_3518_v1/)
@@ -512,6 +530,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`route_selector_5911_t0_20261001_02/`](route_selector_5911_t0_20261001_02/)
 - [`route_switching_costs_6009_t0_20261001/`](route_switching_costs_6009_t0_20261001/)
 - [`safe_probe_cost_optimal_tree_r1_v1/`](safe_probe_cost_optimal_tree_r1_v1/)
+- [`safe_probe_identifiability_6147_t0_20261002_a02/`](safe_probe_identifiability_6147_t0_20261002_a02/)
 - [`safe_probe_identification_successor_1716_v1/`](safe_probe_identification_successor_1716_v1/)
 - [`safe_probe_minimax_r0_v1/`](safe_probe_minimax_r0_v1/)
 - [`safety_backpressure_5372_t1_successor_20261001/`](safety_backpressure_5372_t1_successor_20261001/)
@@ -544,9 +563,11 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`siphon_5410_t0/`](siphon_5410_t0/)
 - [`skill_applicability_6262_gpu_t0_v1/`](skill_applicability_6262_gpu_t0_v1/)
 - [`skill_router_adapter_selection_3446_v1/`](skill_router_adapter_selection_3446_v1/)
+- [`soft_revisit_bias_5756_t0_wslc_20261002/`](soft_revisit_bias_5756_t0_wslc_20261002/)
 - [`source_bound_gui_frame_preflight_2193_v1/`](source_bound_gui_frame_preflight_2193_v1/)
 - [`source_window_type_boundary_4782_v1/`](source_window_type_boundary_4782_v1/)
 - [`spatial_block_position_6590_t0_20261002/`](spatial_block_position_6590_t0_20261002/)
+- [`spatial_block_position_6590_t1_geometry_feasibility_v1/`](spatial_block_position_6590_t1_geometry_feasibility_v1/)
 - [`specialist_regeneration_4295_controls_20261001_01/`](specialist_regeneration_4295_controls_20261001_01/)
 - [`specialist_regeneration_4295_formal_20261001_01/`](specialist_regeneration_4295_formal_20261001_01/)
 - [`spoken_instruction_contract_preservation_6471_t0_20261002/`](spoken_instruction_contract_preservation_6471_t0_20261002/)
@@ -558,6 +579,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`sunk_cost_artifact_value_6138_t0b_20261002/`](sunk_cost_artifact_value_6138_t0b_20261002/)
 - [`sunk_cost_forward_equivalence_6138_t0_20261002/`](sunk_cost_forward_equivalence_6138_t0_20261002/)
 - [`support_closed_crop_successor_1820_v1/`](support_closed_crop_successor_1820_v1/)
+- [`symmetry_reduction_6251_t0_host_20261002/`](symmetry_reduction_6251_t0_host_20261002/)
 - [`tail_risk_12_construction_v1/`](tail_risk_12_construction_v1/)
 - [`target_belief_audit_4150_v1/`](target_belief_audit_4150_v1/)
 - [`task_ownership_horizon_4152_reopen_review_v1/`](task_ownership_horizon_4152_reopen_review_v1/)
@@ -606,6 +628,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`versioned_predicate_specialist_switch_4284_reconciled_4603_v1/`](versioned_predicate_specialist_switch_4284_reconciled_4603_v1/)
 - [`visual_cue_coordinate_map_successor_2043_v1/`](visual_cue_coordinate_map_successor_2043_v1/)
 - [`visual_edge_aux_570_r8_v1/`](visual_edge_aux_570_r8_v1/)
+- [`visual_encoding_570_gpu_diagnostic_v3/`](visual_encoding_570_gpu_diagnostic_v3/)
 - [`visual_encoding_570_gpu_local_successor_v1/`](visual_encoding_570_gpu_local_successor_v1/)
 - [`voi_exact_boundary_5411_dot_v1/`](voi_exact_boundary_5411_dot_v1/)
 - [`voi_option_5306_t1/`](voi_option_5306_t1/)
