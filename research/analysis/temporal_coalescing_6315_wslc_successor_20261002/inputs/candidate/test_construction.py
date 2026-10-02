@@ -8,7 +8,7 @@ spec = importlib.util.spec_from_file_location("candidate", ROOT / "candidate.py"
 candidate = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(candidate)
 fixture = json.loads((ROOT / "fixture.json").read_text(encoding="utf-8"))
-auditor_path = ROOT.parent / "auditor_src" / "auditor.py"
+auditor_path = ROOT.parent / "auditor" / "auditor.py"
 spec_a = importlib.util.spec_from_file_location("auditor", auditor_path)
 auditor = importlib.util.module_from_spec(spec_a)
 spec_a.loader.exec_module(auditor)
