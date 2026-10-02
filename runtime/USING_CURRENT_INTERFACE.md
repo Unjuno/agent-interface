@@ -175,6 +175,12 @@ post-release target context is wanted. This wrapper applies to its own ordinary
 public session; a compiled graph using a separate connection retains its own
 input owner and cleanup duty. Calls must be serialized by the caller.
 
+[Fresh primary Inkscape use](results/inkscape-owned-public-01/README.md) used this
+entry point for two pointer drags in one program, followed by a visually chosen
+save program. The independently inspected SVG met the two-rectangle predicate.
+This is scoped transfer evidence; it does not establish a comparative speed or
+token benefit.
+
 ## Batch actions between decisions
 
 Use one public `dispatch` program for a finite sequence whose actions can all be
