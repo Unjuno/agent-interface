@@ -1,0 +1,20 @@
+{
+  "checks": [
+    {
+      "command": [
+        "/tmp/agent-interface-mcp-venv/bin/python",
+        "test_capture_request.py"
+      ],
+      "exit": 0
+    },
+    {
+      "command": [
+        "/tmp/agent-interface-mcp-venv/bin/python",
+        "-O",
+        "test_capture_request.py"
+      ],
+      "exit": 0
+    }
+  ],
+  "scope": "Pure fixture request guard; source/missing selected image/primary perception and live input remain separate."
+}

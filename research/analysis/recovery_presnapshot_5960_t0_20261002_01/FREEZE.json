@@ -1,0 +1,13 @@
+{
+  "allocation_id": "R133-RECOVERY-PRESNAPSHOT-5960-T0-20261002-01",
+  "source_main_sha": "69a1bf509eb432e5e3c0c294d05ad7671d86adb6",
+  "issue": 5960,
+  "status": "EXECUTED_FROZEN_ALLOCATION",
+  "scenarios": ["cause_a", "cause_b", "null_cause", "hazard_held", "zero_slack", "privacy_forbidden", "stale_source", "lost_receipt", "observer_perturbation"],
+  "policies": ["IMMEDIATE_RECOVER", "PRE_RECOVERY_MINIMAL_CAPTURE", "CAPTURE_EVERYTHING"],
+  "seeds": 32,
+  "formal_candidate_invocations": 1,
+  "formal_auditor_invocations": 1,
+  "retries": 0,
+  "decision": "A simulator PASS is method-only and cannot establish empirical diagnostic or recovery benefit."
+}

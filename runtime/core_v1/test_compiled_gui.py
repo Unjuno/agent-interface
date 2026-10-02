@@ -33,6 +33,44 @@ class Driver:
 
 class CompiledBoundaryTests(unittest.TestCase):
 
+ def test_cross_type_predicate_cannot_select_action_or_complete(self):
+  for expected, observed in ((0,False),(False,0),(1,True),(True,1)):
+   for outcome in ('action','complete'):
+    with self.subTest(expected=expected,observed=observed,outcome=outcome):
+     d=Driver();s=interface();b=s['method']['states']['empty']['branches'][0]
+     b['when']['phase']=expected
+     if outcome=='complete':b.update(outcome='complete',action=None,next_state=None)
+     base=d.observe
+     def observe(p):
+      r=base(p);r['predicates']['phase']=observed;return r
+     d.observe=observe;r=d.run(s)
+     self.assertEqual((r['outcome'],r['reason']),('SAFE_YIELD','unknown_state'))
+     self.assertEqual(r['completed_transitions'],0);self.assertEqual(d.calls['admit'],[])
+     self.assertEqual(d.calls['execute'],[])
+ def test_cross_type_effect_retains_prefix_and_never_calls_verifier_or_next_action(self):
+  for expected,observed in ((0,False),(False,0),(1,True),(True,1)):
+   with self.subTest(expected=expected,observed=observed):
+    d=Driver();s=interface();s['actions']['enter']['expected_effect']['phase']=expected
+    base=d.observe
+    def observe(p):
+     r=base(p)
+     if len(d.calls['observe'])==2:r['predicates']['phase']=observed
+     return r
+    d.observe=observe;r=d.run(s)
+    self.assertEqual((r['outcome'],r['reason']),('SAFE_YIELD','effect_failed'))
+    self.assertEqual(r['completed_transitions'],1);self.assertEqual(r['pending_effect']['action'],'enter')
+    self.assertEqual(len(d.calls['execute']),1);self.assertEqual(d.calls['verify_effect'],[])
+ def test_same_type_scalar_completion_remains_supported(self):
+  for value in (0,False,1,True,2,-1,'ready'):
+   with self.subTest(value=value):
+    d=Driver();s=interface();b=s['method']['states']['empty']['branches'][0]
+    b.update(when={'phase':value},outcome='complete',action=None,next_state=None)
+    base=d.observe
+    def observe(p):
+     r=base(p);r['predicates']['phase']=value;return r
+    d.observe=observe;r=d.run(s)
+    self.assertEqual(r['outcome'],'TASK_SUCCEEDED');self.assertEqual(d.calls['execute'],[])
+
  def stopped(self,d,transitions,executions):
   r=d.run();self.assertEqual((r['outcome'],r['reason']),('SAFE_YIELD','budget_exhausted'));self.assertEqual(r['completed_transitions'],transitions);self.assertEqual(len(d.calls['execute']),executions);return r
  def test_late_initial_observation_never_admits(self):

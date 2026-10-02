@@ -1,0 +1,43 @@
+{
+  "allocation_id": "CROSS-TASK-SUCCESS-HISTORY-CALIBRATION-6241-T0-20261002-01",
+  "issue": 6241,
+  "frozen_at_utc": "2026-10-02T01:48:05Z",
+  "main_sha": "d7e8a932da27e7f271920de409b079fedc75dee1",
+  "branch": "research/6241-success-history-calibration-t0-20261002",
+  "branch_base_sha": "d7e8a932da27e7f271920de409b079fedc75dee1",
+  "path": "research/analysis/context_success_history_calibration_6241_t0_20261002/",
+  "python": "CPython 3.11.9 (tags/v3.11.9:de54cf5, Apr 2 2024, 10:12:12), MSC v.1938 AMD64",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "execution_scope": "one local Windows host CPU candidate; one separate local Windows host CPU raw-only auditor; no WSL/WSLc/container, network, model, GUI, GPU/CUDA, or external effect",
+  "random_seed": null,
+  "construction_command": "python -m unittest -v test_construction.py",
+  "construction_result": "exit 0; 8/8 tests passed after allocation/main metadata binding was finalized",
+  "construction_sha256": {
+    "PLAN.md": "22676425a3e01c1fd11e77951aa90d829c707687f99c68ee5e60af10fd871fca",
+    "fixtures.json": "6080034ad067b48336e09797de9497db93b2892b70db0651a85e039d04f8246f",
+    "candidate.py": "f67e6021042a4387ca799fedad7a3ebf4137b67298d6f697aa40ad2ca26c6b07",
+    "audit.py": "0219f1c3387cae0f17458b099a413211c29f9e14779f28c53d8e8bfac8cb98a0",
+    "test_construction.py": "3fc9233cd6c9ec4615a1f7b9e2640e587c2314f016f1ab7f5aff8fdfb14db338"
+  },
+  "formal_invocation_budget": {
+    "candidate": 1,
+    "independent_raw_auditor": 1,
+    "retries": 0
+  },
+  "output_namespace_preflight": {
+    "candidate_output.json_absent": true,
+    "audit_report.json_absent": true
+  },
+  "resource_snapshot_preformal": {
+    "nvidia_smi": "RTX 3080 Laptop GPU; 0 MiB used / 16384 MiB total; 0% utilization",
+    "windows_wsl_distros": "archlinux only, WSL version 2",
+    "docker_cli_process_service": "not visible in the Windows snapshot",
+    "wslc": "three exited containers were reported by a parallel read-only inventory; no container inspected, started, stopped, or modified by this allocation",
+    "disk_c_free_bytes": 201281593344
+  },
+  "limits": [
+    "T0 tests a typed synthetic calibration discriminator only; it does not test an LLM or confirm relation-label truth.",
+    "No inference about human confidence, cross-task GUI quality, privacy guarantee, runtime latency, task completion, or product benefit.",
+    "The formal candidate and auditor outputs must be raw-retained and bound to this allocation_id and main_sha."
+  ]
+}

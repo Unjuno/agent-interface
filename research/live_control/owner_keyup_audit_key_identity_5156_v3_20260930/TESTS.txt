@@ -1,0 +1,15 @@
+Command: python3 -B -m unittest -v test_audit_key_identity.py
+Runtime: CPython 3.14.5
+Exit code: 0
+
+test_autonomous_cleanup_key_must_remain_exact_null ... ok
+test_explicit_key_must_be_exact_frozen_nonempty_string ... ok
+test_invalid_expected_key_contract_is_rejected ... ok
+test_missing_and_duplicate_release_rows_are_rejected ... ok
+test_missing_key_and_foreign_release_are_rejected ... ok
+test_original_auditor_false_accepts_cleanup_key_mutation ... ok
+test_original_auditor_false_accepts_explicit_key_mutation ... ok
+test_pristine_retained_raw_is_accepted_by_both_auditors ... ok
+
+Ran 8 tests in 0.001s
+OK

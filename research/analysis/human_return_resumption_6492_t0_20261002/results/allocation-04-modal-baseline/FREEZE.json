@@ -1,0 +1,30 @@
+{
+  "schema": "human-return-resumption-modal-baseline-freeze-v1",
+  "issue": 6492,
+  "allocation": "HUMAN-RETURN-RESUMPTION-6492-MODAL-T0-20261002-01",
+  "status": "FROZEN_NOT_YET_RUN",
+  "source_base_main": "a7817597b8405f9b7581820fe79c9242a5f65255",
+  "branch_head_at_freeze": "a7817597b8405f9b7581820fe79c9242a5f65255",
+  "created_utc": "2026-10-02T03:55:37Z",
+  "manifest_sha256": "f143c3d3ea1cf25c805f379a5f3bb6b1ca3e8e11b93d95a0c82be64e66987b9f",
+  "fixture_sha256": "f2dc10f43fa5f5486150b101213ef1b99e359050900eee92b3786f77b1cea96d",
+  "parallel_result_reference": "PR #6499: six scenarios x three arms; no immediate_modal arm",
+  "invocation_limits": {"candidate": 1, "independent_auditor": 1, "retries": 0},
+  "image": "python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "platform": "linux/arm64",
+  "engine": "OrbStack Docker Engine 29.4.0",
+  "runtime_requests": {
+    "network": "none",
+    "cpus": 1,
+    "memory": "512m",
+    "pids_limit": 64,
+    "user": "501:20",
+    "rootfs": "read-only",
+    "source": "read-only",
+    "output": "separate read-write directory",
+    "gpu": false,
+    "candidate_and_auditor": "separate ephemeral containers"
+  },
+  "pre_launch_gate": "Fetch current origin/main; fast-forward path-disjoint unrelated advances only; re-read issue and PR #6499; reject any modal-arm competitor or package/governance path change; verify SHA256SUMS and output path absence.",
+  "outcome_scope": "six authored immediate-modal baseline rows only; no human or product effect"
+}
