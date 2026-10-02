@@ -718,3 +718,18 @@ old dialog, so the primary withheld completion and observed separately.
 remains retained. These are bounded integration results, not a general image
 compression, token-cost, latency or human-speed claim. Region selection remains
 explicit and defaults remain unchanged.
+
+
+### Conditional Inkscape continuation on the public owner
+
+The [finite primary comparison](results/inkscape-conditional-live-01/README.md)
+connects the existing shared core graph to the same public input owner as a strong
+ordinary callback. Both draw, verify a fresh post-release image, then conditionally
+Save without a model resumption between the actions. Both stop before Save for an
+unknown fixed layout cue. Independent saved SVG scoring accepts both positive
+cases; the negative controls retain the original empty SVG. This is a scoped
+application-authored public adapter, not qualification of the guarded X11 graph
+adapter on Inkscape. Same inputs/captures/primary roundtrips and single-case timing
+do not establish a graph advantage. Keep the ordinary route/default and existing
+efficiency HOLD. Use explicit source/lease/deadline/release checks and independently
+score persistence; neither the pixel cue nor graph task verdict certifies saving.

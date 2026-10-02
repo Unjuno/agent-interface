@@ -1,0 +1,47 @@
+[
+  {
+    "args": [
+      "-m",
+      "unittest",
+      "-v",
+      "test_methods",
+      "test_verify"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": "test_expired_authority_never_dispatches (test_methods.MethodsTests.test_expired_authority_never_dispatches) ... ok\ntest_positive_same_input_sequence_and_tail (test_methods.MethodsTests.test_positive_same_input_sequence_and_tail) ... ok\ntest_uncertain_dispatch_exception_once (test_methods.MethodsTests.test_uncertain_dispatch_exception_once) ... ok\ntest_unknown_draw_effect_stops_before_save (test_methods.MethodsTests.test_unknown_draw_effect_stops_before_save) ... ok\ntest_unverified_release_prevents_capture_and_save (test_methods.MethodsTests.test_unverified_release_prevents_capture_and_save) ... ok\ntest_false_terminal (test_verify.AuditTests.test_false_terminal) ... ok\ntest_frozen_caller_change (test_verify.AuditTests.test_frozen_caller_change) ... ok\ntest_negative_save_claim (test_verify.AuditTests.test_negative_save_claim) ... ok\ntest_positive (test_verify.AuditTests.test_positive) ... ok\ntest_primary_image_mismatch (test_verify.AuditTests.test_primary_image_mismatch) ... ok\ntest_unverified_release (test_verify.AuditTests.test_unverified_release) ... ok\ntest_wrong_source_sequence (test_verify.AuditTests.test_wrong_source_sequence) ... ok\n\n----------------------------------------------------------------------\nRan 12 tests in 0.690s\n\nOK\n"
+  },
+  {
+    "args": [
+      "-O",
+      "-m",
+      "unittest",
+      "-v",
+      "test_methods",
+      "test_verify"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": "test_expired_authority_never_dispatches (test_methods.MethodsTests.test_expired_authority_never_dispatches) ... ok\ntest_positive_same_input_sequence_and_tail (test_methods.MethodsTests.test_positive_same_input_sequence_and_tail) ... ok\ntest_uncertain_dispatch_exception_once (test_methods.MethodsTests.test_uncertain_dispatch_exception_once) ... ok\ntest_unknown_draw_effect_stops_before_save (test_methods.MethodsTests.test_unknown_draw_effect_stops_before_save) ... ok\ntest_unverified_release_prevents_capture_and_save (test_methods.MethodsTests.test_unverified_release_prevents_capture_and_save) ... ok\ntest_false_terminal (test_verify.AuditTests.test_false_terminal) ... ok\ntest_frozen_caller_change (test_verify.AuditTests.test_frozen_caller_change) ... ok\ntest_negative_save_claim (test_verify.AuditTests.test_negative_save_claim) ... ok\ntest_positive (test_verify.AuditTests.test_positive) ... ok\ntest_primary_image_mismatch (test_verify.AuditTests.test_primary_image_mismatch) ... ok\ntest_unverified_release (test_verify.AuditTests.test_unverified_release) ... ok\ntest_wrong_source_sequence (test_verify.AuditTests.test_wrong_source_sequence) ... ok\n\n----------------------------------------------------------------------\nRan 12 tests in 0.613s\n\nOK\n"
+  },
+  {
+    "args": [
+      "-O",
+      "/var/tmp/agent-interface-evidence-storage-main/runtime/results/inkscape-conditional-live-01/verify_usage.py"
+    ],
+    "returncode": 0,
+    "stdout": "{\"status\": \"PASS\", \"records\": 61, \"images\": 8, \"windows\": 5, \"scope\": \"original chronological whole-context usage, not provider-attested isolated cost\"}\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "-m",
+      "unittest",
+      "-v",
+      "test_predicate"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": "test_all_original_blank_and_drawn_frames (test_predicate.PredicateTests.test_all_original_blank_and_drawn_frames) ... ok\ntest_changed_bytes_and_wrong_frame_rejected (test_predicate.PredicateTests.test_changed_bytes_and_wrong_frame_rejected) ... ok\ntest_missing_rectangle_and_uncertain_color_yield_unknown (test_predicate.PredicateTests.test_missing_rectangle_and_uncertain_color_yield_unknown) ... ok\ntest_opposite_layout_does_not_admit (test_predicate.PredicateTests.test_opposite_layout_does_not_admit) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.239s\n\nOK\n"
+  }
+]
