@@ -2,7 +2,7 @@
 
 Allocation: `FEEDBACK-NECESSITY-5927-EPISTEMIC-CONTROLS-T0-20261002-01`
 
-Frozen source base: `2a01df459a488f1e09d20c57afc09ddc683420fd`
+Frozen source base: `f1d8f6319ad6a1d6fd7f0219c17bb13f48fae7aa`
 
 Additive path: `research/analysis/feedback_necessity_5927_epistemic_controls_t0_20261002/`
 
