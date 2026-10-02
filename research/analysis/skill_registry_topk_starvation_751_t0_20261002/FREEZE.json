@@ -24,7 +24,7 @@
   "pull": "never",
   "cpus_requested": 1,
   "memory_requested": "512m",
-  "memory_enforcement": "not_yet_observed",
+  "memory_enforcement": "not_claimed; WSLc reported cgroup not mounted and swap limit unsupported",
   "gpu": "not used; deterministic standard-library fixture",
   "source_sha256": {
     "PREREGISTRATION.md": "f12a4e54fcbb21cf7ed786c3115ef46d9027051f368b884c65a1b0dbe0e907d9",
@@ -33,6 +33,5 @@
     "audit.py": "a144ac3331ea49bf422f75a53e48d5b2df0fe8570366f80ab35a9b2cb655a179",
     "test_method.py": "f434eea7d5d212082c56583c95eff803398db6bb00c5dba8213d55817760c018"
   },
-  "construction": "Windows host CPython suite 6/6 passed after retaining the initial auditor-accounting failure; see CONSTRUCTION.md"
+  "construction": "Windows host CPython suite 6/6 passed after retaining the initial auditor-accounting failure; WSLc construction suite 6/6 passed; memory ceiling not claimed due cgroup warning; see CONSTRUCTION.md"
 }
-
