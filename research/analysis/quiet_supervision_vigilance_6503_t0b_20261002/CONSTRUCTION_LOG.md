@@ -89,3 +89,28 @@ branch workflow was restored and verified byte-for-byte against `HEAD` after
 that test. `py_compile` and the #6503 13-test suite passed. These are local
 construction/regression checks, not the formal candidate/auditor experiment;
 no candidate/auditor CLI, container, human, or model was invoked.
+
+## Attempt 7 — independent visibility and score corruption challenges
+
+Added two prospective negative controls against the T0b decision gate: flip
+the uncaptured `late-03` opportunity to visible in the continuous arm, and
+mutate the scripted `early-04` hit score to a miss. The independent auditor
+rejected the first as `display_not_source_bound` and the second as
+`scripted_scorer_outcome_mismatch`; the full package suite passed 15/15 under
+CPython 3.12. This is a host-side construction/boundary test, not the frozen
+OrbStack candidate/auditor run and not a human-vigilance result. Formal CLI
+invocation remains 0/0 pending the exact exclusive assignment and complete
+freeze receipt required by the execution boundary.
+
+## Attempt 8 — post-challenge CI-equivalent regression
+
+Re-ran all 18 Python test commands in the current Analysis Index workflow under
+CPython 3.12, after adding the two mutation controls: 119/119 tests passed.
+The #6590 workflow-pinned-source provenance suite was run with its declared
+restore behavior reproduced; omitting that step gives the expected two hash
+failures against the current workflow, not a code regression. The restored
+branch workflow matches `HEAD` byte-for-byte. The current index check passes
+with 535 retained result/failure directories, as do `py_compile` and
+`git diff --check`. No candidate/auditor CLI, Docker/OrbStack container,
+human, GUI or model was invoked; this remains construction and corruption-test
+evidence only.

@@ -114,6 +114,20 @@ class T0bTests(unittest.TestCase):
         row["review_visible"] = False
         self.assertIn("fixed_schedule_deviation", audit(STIMULI, TRUTH, material, scored)["errors"])
 
+    def test_uncaptured_visibility_flip_rejected(self):
+        material, scored, _ = make_result()
+        row = next(r for r in material["rows"] if r["opportunity_id"] == "late-03" and r["policy"] == "A_CONTINUOUS")
+        row["review_visible"] = True
+        errors = audit(STIMULI, TRUTH, material, scored)["errors"]
+        self.assertIn("display_not_source_bound", errors)
+
+    def test_scripted_score_corruption_rejected(self):
+        material, scored, _ = make_result()
+        row = next(r for r in scored if r["opportunity_id"] == "early-04" and r["policy"] == "A_CONTINUOUS")
+        row["signal_outcome"] = "miss"
+        errors = audit(STIMULI, TRUTH, material, scored)["errors"]
+        self.assertIn("scripted_scorer_outcome_mismatch", errors)
+
 
 if __name__ == "__main__":
     unittest.main()
