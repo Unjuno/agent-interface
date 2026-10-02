@@ -2,6 +2,7 @@
 
 - [`infra_speed_fairness_6347_t0_v1/`](infra_speed_fairness_6347_t0_v1/REPORT.md) — Issue #6347 synthetic FRFS/FIFO/bounded-window comparison; finite winner/status rows independently audited, with a separately frozen boundary-observability successor required before phase-jitter or strategic-timing claims.
 - [`infra_speed_fairness_6347_boundary_successor_v1/`](infra_speed_fairness_6347_boundary_successor_v1/REPORT.md) — Issue #6347 boundary-focused successor: independently audited 16-row OrbStack trace exposes the 4→6 tick collection/winner discontinuity; synthetic only.
+- [`prefix_responsive_counterparty_6327_t0_v1/`](prefix_responsive_counterparty_6327_t0_v1/REPORT.md) — Issue #6327 T0 method check: 64/64 synthetic rows independently reconstructed; equal variant marginals, prefix-only reactive selector, exogenous replay provenance, and effect-boundary outcome distinctions verified. No model/site susceptibility claim.
 
 This directory contains retained analytical studies: proofs, exact finite-state or exhaustive results, break-even derivations, and identifiability analyses.
 
@@ -384,6 +385,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`predictive_safety_filter_5317_t3_v1/`](predictive_safety_filter_5317_t3_v1/)
 - [`preference_explicit_choice_6274_t0_20261002/`](preference_explicit_choice_6274_t0_20261002/)
 - [`preference_uncertainty_5749_t0_v1/`](preference_uncertainty_5749_t0_v1/)
+- [`prefix_responsive_counterparty_6327_t0_v1/`](prefix_responsive_counterparty_6327_t0_v1/)
 - [`primary_refusal_terminality_59_spine07_20261001/`](primary_refusal_terminality_59_spine07_20261001/)
 - [`primary_refusal_terminality_59_t0_20261001/`](primary_refusal_terminality_59_t0_20261001/)
 - [`probabilistic_automaton_censor_bounds_r1_v1/`](probabilistic_automaton_censor_bounds_r1_v1/)

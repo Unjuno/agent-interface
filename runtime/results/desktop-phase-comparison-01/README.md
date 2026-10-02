@@ -109,3 +109,35 @@ uncached78418,output29456,reasoning8691 subset,total5819490. Exact source digest
 response deduplication and original image blocks verified. Billing unavailable.
 This is shared preparation/failed-attempt accounting, not isolated per-arm cost;
 the successor lies outside this window and its accounting is still pending.
+
+Ordinary counterparts frozen together (fa59117ed) and run sequentially:
+plain1002204 then compact1002205. Both old-context methods SAFE_YIELD with
+reason dependency_changed and no input. Each fresh repair capture exactly matches
+the immediately reviewed changed PNG; identity basis retained before input.
+Each one repair performs genuine public Enter/readback→Save without a model
+resumption between Enter and Save, then primary reviews the original actual
+modal, explicitly reviews target and authors a separate confirmation. Both
+owners exit0/all3 children terminal; independent saved XLSX contains exactly
+A1=317/A2=529, no extra cells. Original C1002202 failure remains unchanged.
+
+Both routes:7 commands,3 input programs,26 incremental emissions,6 selected
+primary PNG artifacts,8 native capture artifacts; four OCR crops are not captures.
+Black repeated image rendering persists; plain final screenshot retains the
+stale greyed modal and compact final has incomplete redraw. Neither is a save
+completion acknowledgement. Ordinary already has local conditional continuation;
+no reduced roundtrip count from compact presentation is demonstrated here.
+Local method durations are retained in summary but exclude primary waits/setup
+and are not meaningful model-feedback/semantic completion times or a comparison.
+Provider usage/cost extraction remains pending, not zero; no gain is claimed.
+
+A branch checkout initially omitted sparse source files, so hash collection and
+owner invocation failed before any GUI allocation. Exact HEAD-owned files were
+materialized, first setup failure retained; scientific controls were not retried.
+No code changed during either frozen allocation. Shared A/B/C changed/repair
+mechanics are now scoped-qualified. Next is the actual finite phase comparison,
+with fixed accounting/timing and all failures retained, not another admission loop.
+
+Counterpart accounting is now retained and replayed normally/-O against exact source digests, unique response IDs and18 actual primary original PNG input blocks (6 C +6 A +6 B). Not deduplicated by identical pixel hashes.
+compiled-successor-through-terminal-score: UTC2026-10-02T00:51:24.532Z–2026-10-02T00:55:14.704Z, source172336–172416, totals {"input_tokens": 2210985, "cached_input_tokens": 2196608, "cache_write_input_tokens": 0, "output_tokens": 4897, "reasoning_output_tokens": 1260, "total_tokens": 2215882, "uncached_input_tokens": 14377}. Billing null.
+ordinary-pair-including-failed-setup-through-terminal-audit: UTC2026-10-02T01:02:39.077Z–2026-10-02T01:09:20.356Z, source172487–172601, totals {"input_tokens": 3568683, "cached_input_tokens": 3545216, "cache_write_input_tokens": 0, "output_tokens": 9535, "reasoning_output_tokens": 1081, "total_tokens": 3578218, "uncached_input_tokens": 23467}. Billing null.
+The C window covers freeze through terminal score; A/B joint window includes failed sparse setup through terminal audit. These windows do not overlap earlier joint construction. Audit/publication gaps are not treated as free; they are outside these declared execution windows. Whole-context counters and order/cache drift do not establish per-arm causality, priced cost or meaningful-gain thresholds. The earlier pending successor/counterpart accounting statements describe the state before this additive extraction. Economic comparison remains HOLD.
