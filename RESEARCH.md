@@ -1,3 +1,7 @@
+# Issue #6617 T0: revision-timed cutover (2026-10-02)
+
+The frozen WSLc T0 compared final-only preparation, an intentionally unsafe naive-provisional arm, and exact-version-bound read-only preparation over 10 scripted cases (30 traces). One stable logical-time schedule favored version-bound preparation by 3 ticks (3 vs 6); both safe arms had zero provisional/unauthenticated/uncommitted inputs, while the naive comparator's 9 provisional inputs stayed visibly unsafe. A separate raw-only audit exited 0 and rejected all four frozen corruptions. This is `PASS_METHOD_SCOPED` only for the deterministic model; it says nothing about ASR, actual speaker identity or intent, voice/GUI safety, real effects, human utility, or measured latency. WSLc emitted an unsupported swap/cgroup warning; enforcement is not claimed. See [the report and checksummed formal artifacts](research/analysis/revision_timed_cutover_6617_t0_v1/REPORT.md) and [Issue #6617](https://github.com/Unjuno/agent-interface/issues/6617).
+
 # Issue #6501 T0-01 / T0b-01: scope-typed singleflight (2026-10-02)
 
 T0-01 is preserved as `STOP_OUTPUT_SERIALIZATION` / `NOT_EVALUATED`: the candidate ran once, the independent auditor ran once, retries were zero, and the wrapper's literal backslash-n caused JSON parsing to fail. No raw auditor result exists. The original STOP and receipts are immutable in [the predecessor package](research/analysis/scope_typed_singleflight_6501_t0_20261002/REPORT.md).
