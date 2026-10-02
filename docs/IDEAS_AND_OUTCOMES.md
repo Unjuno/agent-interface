@@ -80,7 +80,6 @@ Closure does not erase evidence. [#6353](https://github.com/Unjuno/agent-interfa
 - **Changed result for [#5366](https://github.com/Unjuno/agent-interface/issues/5366):** main commit [89f27ca](https://github.com/Unjuno/agent-interface/commit/89f27caf1e9fcf3bc2c2c3db7d62ee6d19e4ae) records synthetic T3 freshness result PASS_METHOD_SCOPED (12/12 rows, candidate and independent raw-only audit each once). This is finite method evidence only; no live resource-timing or runtime/product claim. The Issue remains open for broader transfer.
 - [#6363](https://github.com/Unjuno/agent-interface/pull/6363) is an open rescue PR preserving the exact T11 predecessor blobs and keeping T12 as canonical strict-scope/schema record; no T11 rerun or retroactive upgrade.
 
-
 ## Open ideas with recorded scoped outcomes (2026-10-02)
 
 These Issues remain open; a scoped method result does not close the broader transfer question. PR state below was checked separately on 2026-10-02. A result in an open PR is review-pending, not merged into main.
