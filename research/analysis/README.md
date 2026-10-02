@@ -463,6 +463,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`local_relevance_gating_preflight_2188_v1/`](local_relevance_gating_preflight_2188_v1/)
 - [`locale_semantic_invariance_5919_audit_review_20261001_01/`](locale_semantic_invariance_5919_audit_review_20261001_01/)
 - [`locale_semantic_invariance_5919_t0_20261001/`](locale_semantic_invariance_5919_t0_20261001/)
+- [`looming_visual_assumption_gate_5905_s02_wslc_20261003/`](looming_visual_assumption_gate_5905_s02_wslc_20261003/)
 - [`looming_yield_5905_audit_recovery_s4/`](looming_yield_5905_audit_recovery_s4/)
 - [`looming_yield_5905_t0_20261001_01/`](looming_yield_5905_t0_20261001_01/)
 - [`looming_yield_5905_visual_identifiability_v3/`](looming_yield_5905_visual_identifiability_v3/)
