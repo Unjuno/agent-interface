@@ -27,11 +27,11 @@ $freezePath = Join-Path $Source 'FREEZE.json'
 $freeze = Get-Content -LiteralPath $freezePath -Raw | ConvertFrom-Json
 if ($freeze.allocation -ne $Allocation -or $freeze.runtime.image -ne $Image) { throw 'STOP: freeze identity mismatch.' }
 foreach ($name in @('construction_check.py', 'runner.py', 'audit.py', 'test_audit.py')) {
-    $expected = $freeze.source.$name
+    $expected = $freeze.source_sha256.$name
     $actual = (Get-FileHash -LiteralPath (Join-Path $Source $name) -Algorithm SHA256).Hash.ToLowerInvariant()
     if ($actual -ne $expected) { throw "STOP: frozen source hash mismatch for $name." }
 }
-$expectedScript = $freeze.source.'run_formal.ps1'
+$expectedScript = $freeze.source_sha256.'run_formal.ps1'
 $actualScript = (Get-FileHash -LiteralPath $PSCommandPath -Algorithm SHA256).Hash.ToLowerInvariant()
 if ($actualScript -ne $expectedScript) { throw 'STOP: frozen formal-runner script hash mismatch.' }
 

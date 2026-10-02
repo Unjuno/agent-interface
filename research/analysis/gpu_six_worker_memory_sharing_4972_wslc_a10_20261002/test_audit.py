@@ -1,3 +1,6 @@
+import hashlib
+import json
+from pathlib import Path
 import unittest
 
 import audit
@@ -74,6 +77,18 @@ class AuditContractTests(unittest.TestCase):
         mutations = audit.mutation_controls([good_row(i) for i in range(6)], good_samples())
         self.assertEqual(len(mutations), 4)
         self.assertTrue(all(item["rejected"] for item in mutations), mutations)
+
+
+class FreezeContractTests(unittest.TestCase):
+    def test_formal_runner_uses_and_matches_frozen_source_sha256(self):
+        package = Path(__file__).resolve().parent
+        freeze = json.loads((package / "FREEZE.json").read_text(encoding="utf-8"))
+        runner = (package / "run_formal.ps1").read_text(encoding="utf-8")
+        self.assertIn("$freeze.source_sha256.$name", runner)
+        self.assertIn("$freeze.source_sha256.'run_formal.ps1'", runner)
+        for filename, expected in freeze["source_sha256"].items():
+            actual = hashlib.sha256((package / filename).read_bytes()).hexdigest()
+            self.assertEqual(actual, expected, filename)
 
 
 if __name__ == "__main__":
