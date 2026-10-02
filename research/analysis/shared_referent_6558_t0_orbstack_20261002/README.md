@@ -1,6 +1,6 @@
 # Issue #6558 — purpose-bound shared referent T0 (OrbStack)
 
-Status: preregistered finite method experiment; no formal container invocation yet. This T0 tests only whether a synthetic protocol can reject or re-ground a previously acknowledged referent after selected GUI source-generation changes. It does not represent participant comprehension, GUI behavior, runtime safety, or product benefit.
+Status: allocation 02 `PASS_METHOD_SCOPED`; allocation 01 preserved as a terminal Docker-launch STOP. This T0 tests only whether a synthetic protocol can reject or re-ground a previously acknowledged referent after selected GUI source-generation changes. It does not represent participant comprehension, GUI behavior, runtime safety, or product benefit.
 
 ## H / T / D / C / U
 
@@ -12,8 +12,8 @@ Status: preregistered finite method experiment; no formal container invocation y
 
 ## Frozen protocol
 
-See `RUN_PROTOCOL.md` and `FREEZE.json`. The candidate input deliberately excludes the oracle file. The auditor is run in another clean container; no result is eligible until its independent report and hashes agree. The construction suite is a pre-freeze check and is not formal candidate/auditor evidence.
+See `RUN_PROTOCOL.md`, `FREEZE.json`, and `formal_02_20261002/PREREGISTRATION.md`. Allocation 01's invalid Docker mount was recorded as STOP and not retried. Allocation 02's candidate input excluded the oracle file; the auditor ran in another clean container and independently passed. The construction suite is a pre-freeze check and is not formal candidate/auditor evidence.
 
 ## Reproduction
 
-Commands, exact image identity, container IDs, stdout, output hashes and cleanup will be recorded in `formal_01_20261002/REPORT.md` after execution. Formal execution is no-retry. The report will distinguish construction, candidate, and independent audit stages.
+Commands, exact image identity, container IDs, stdout, output hashes and cleanup are recorded under `formal_01_20261002/` and `formal_02_20261002/`. The top-level `REPORT.md` is the index entry; each allocation report preserves its own outcome.

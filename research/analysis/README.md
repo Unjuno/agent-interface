@@ -611,6 +611,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`semantic_truth_maintenance_4259_v1/`](semantic_truth_maintenance_4259_v1/)
 - [`serialized_attention_duplicate_label_successor_1968_v1/`](serialized_attention_duplicate_label_successor_1968_v1/)
 - [`serialized_attention_successor_1968_v1/`](serialized_attention_successor_1968_v1/)
+- [`shared_referent_6558_t0_orbstack_20261002/`](shared_referent_6558_t0_orbstack_20261002/)
 - [`siphon_5410_t0/`](siphon_5410_t0/)
 - [`skill_applicability_6262_gpu_t0_v1/`](skill_applicability_6262_gpu_t0_v1/)
 - [`skill_applicability_6262_wslc_t0b_v1/`](skill_applicability_6262_wslc_t0b_v1/)
