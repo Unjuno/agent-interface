@@ -522,6 +522,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`owner_keyup_invocation_race_5156_t2_20261001/`](owner_keyup_invocation_race_5156_t2_20261001/)
 - [`owner_keyup_serializer_5156_t0_20261001_v1/`](owner_keyup_serializer_5156_t0_20261001_v1/)
 - [`paired_route_estimator_57_t0_v1/`](paired_route_estimator_57_t0_v1/)
+- [`partial_order_audit_6505_orbstack_a02_20261003/`](partial_order_audit_6505_orbstack_a02_20261003/)
 - [`partial_order_replay_4889_v1/`](partial_order_replay_4889_v1/)
 - [`path_class_switch_6586_t0_20261002/`](path_class_switch_6586_t0_20261002/)
 - [`path_width_continuous_gui_6581_t0b_v1/`](path_width_continuous_gui_6581_t0b_v1/)
