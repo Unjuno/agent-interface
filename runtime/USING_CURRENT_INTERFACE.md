@@ -852,3 +852,37 @@ are trusted caller code, not generic perception or independent task scoring.
 Independently verify saved effects, and retain the returned wrapper evidence.
 No hard real-time bound, matched latency or token advantage is established by
 this API addition. Existing input/MCP schemas and defaults are unchanged.
+
+### Existing Calc workflow on the same public owner
+
+The [fixed Calc transfer](results/calc-owner-transfer-live-01/PUBLICATION.md) uses
+`run_compiled` for conditional cell entry and Save, with synchronous app-local
+observation callbacks. A strong ordinary conditional callback uses the same
+owner, evidence and guarded programs. Both normal cases persisted731/864; both
+wrong-entry controls stopped before Save. Matching command/image/capture counts
+were identical. Keep the ordinary route and current efficiency HOLD.
+
+The retained [composition source](results/calc-owner-transfer-live-01/composition.py)
+and [owner harness](results/calc-owner-transfer-live-01/keeper.py) show the exact
+call path. They are trusted, fixed-layout recipes and evidence runners, not a
+generic Calc command or a new MCP endpoint. Ground references from a freshly
+reviewed image; OCR does not mint authority. The
+[Save dependency guard](results/calc-owner-transfer-live-01/save_guard.py)
+temporarily wraps private bridge methods under one serialized owner. Treat this
+as app-local qualification, not a stable extension API or atomic visual guard.
+
+When Tip of Day or XLSX confirmation becomes the focused window, explicitly
+review that window and its original image, ground a new scoped reference, and
+acknowledge once. After it closes, review the main window and ground again. A
+destroyed-window post-input capture failure does not authorize replaying a
+completed Return. Read completed input, graph stop, final visual feedback and
+independent persisted-file scoring separately. In this block the graph yielded
+on the Save modal; only later primary handling and post-terminal workbook
+scoring establish task completion.
+
+The retained18 semantic mutation audits include extra Save, altered values/pixels
+with updated hashes, stale source, lease changes, held keys and incomplete
+cleanup. [Joint primary usage](results/calc-owner-transfer-live-01/usage-02/usage-verify-normal.json)
+includes preparation, failures, live cases and audits; it is not a route-specific
+matched cost comparison. The earlier usage-01 window overlaps it and must not
+be added. No speed, token-cost, generic-readiness or human-tempo claim follows.

@@ -1,0 +1,97 @@
+{
+  "format": "compiled-gui-runtime-receipt-v1",
+  "interface_id": "calc-entry-checked-save",
+  "method": "enter-check-request-save",
+  "method_version": "1",
+  "session_scope": "native-x11:3e1b538f859f4ce1a75d339dc76c2b8e",
+  "outcome": "SAFE_YIELD",
+  "reason": "effect_failed",
+  "completed_transitions": 1,
+  "frontier_model_resumptions": 0,
+  "observations": [
+    {
+      "sequence": 6,
+      "captured_ns": 6932480156061,
+      "evidence_ref": "observation-6",
+      "evidence_digest": "0f3a9245b0499be3e06256490df816c43732438c5187653529af73e6ca556a72",
+      "predicates": {
+        "context_ok": true,
+        "blank": true,
+        "cells_filled": "unknown"
+      }
+    },
+    {
+      "sequence": 11,
+      "captured_ns": 6933179610296,
+      "evidence_ref": "observation-11",
+      "evidence_digest": "8033e1494bb6dcfd545a5c43f62efaaa39248e89003016d2f057a7ec5932a0b3",
+      "predicates": {
+        "context_ok": true,
+        "blank": false,
+        "cells_filled": false
+      }
+    }
+  ],
+  "transitions": [
+    {
+      "from_state": "initial",
+      "to_state": "filled",
+      "action": "enter",
+      "matched_conditions": {
+        "context_ok": true,
+        "blank": true
+      },
+      "observation_sequence": 6,
+      "evidence_ref": "observation-6",
+      "action_id": "action-29e90c2c0b1744bcaffb365853e851cc",
+      "effect_ref": "compiled-918d8b61eddb4b5c970268728ed7b496-7-execution",
+      "release_verified": true
+    }
+  ],
+  "critical_events": [
+    {
+      "event": "branch_selected",
+      "state": "initial",
+      "outcome": "action",
+      "action": "enter",
+      "matched_conditions": {
+        "context_ok": true,
+        "blank": true
+      },
+      "evidence_ref": "observation-6"
+    },
+    {
+      "event": "action_terminal",
+      "action": "enter",
+      "status": "completed",
+      "action_id": "action-29e90c2c0b1744bcaffb365853e851cc",
+      "release_verified": true
+    },
+    {
+      "event": "effect_checked",
+      "action": "enter",
+      "status": "failed",
+      "evidence_ref": "observation-11",
+      "verifier": "compiled_predicate_condition"
+    },
+    {
+      "event": "runtime_finished",
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_failed",
+      "completed_transitions": 1
+    }
+  ],
+  "latest_evidence_ref": "observation-11",
+  "pending_effect": {
+    "action": "enter",
+    "expected_effect": {
+      "cells_filled": true
+    },
+    "effect_ref": "compiled-918d8b61eddb4b5c970268728ed7b496-7-execution"
+  },
+  "started_ns": 6932478999973,
+  "ended_ns": 6933467131194,
+  "elapsed_ns": 988131221,
+  "input_authority": "admission_per_action_only",
+  "raw_evidence_retention": "adapter_responsibility_unverified"
+}
