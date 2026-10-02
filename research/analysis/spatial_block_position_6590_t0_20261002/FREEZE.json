@@ -1,0 +1,50 @@
+{
+  "schema": "spatial-block-position-6590-t0-freeze-v1",
+  "issue": 6590,
+  "allocation": "spatial-block-position-6590-t0-20261002-01",
+  "base_main_sha": "547cd5e64603de9235a036c0170ecb77016c1383",
+  "branch": "research/spatial-block-qualification-6590-t0-20261002",
+  "package_path": "research/analysis/spatial_block_position_6590_t0_20261002/",
+  "hypothesis_t0": "The fixed no-model finite field can detect the planted local concentration, mark random-split position overlap diagnostic-only, preserve disjoint spatial-block folds, and return INSUFFICIENT for empty support.",
+  "issue_level_hypothesis_t1": "A position-random held-out estimate overstates positive ACCEPT in disjoint position blocks by at least 0.20 absolute for a fresh #4752-style diversified-position task.",
+  "decision_gate": {
+    "uniform_block_rate_range": 0.0,
+    "hotspot_random_minus_worst_block_min": 0.2,
+    "minimum_centers_per_block": 8,
+    "minimum_positive_rows_per_block": 100,
+    "required_empty_support": "INSUFFICIENT",
+    "candidate_invocations": 1,
+    "auditor_invocations": 1_if_candidate_exit_0,
+    "retries": 0
+  },
+  "environment_plan": {
+    "execution": "host-only T0 method control; separate candidate/auditor processes",
+    "python_expected": "record exact runtime before execution",
+    "network": "none",
+    "gpu": false,
+    "model_fits": 0,
+    "gui_or_effects": 0,
+    "reason_not_container": "WSLc absent in this macOS task; shared OrbStack container belongs to another active task and no release/assignment is recorded",
+    "not_t1_evidence": true
+  },
+  "source_sha256": {
+    "fixture.json": "TO_BE_FILLED_BEFORE_FREEZE",
+    "candidate.py": "TO_BE_FILLED_BEFORE_FREEZE",
+    "auditor.py": "TO_BE_FILLED_BEFORE_FREEZE",
+    "test_t0.py": "TO_BE_FILLED_BEFORE_FREEZE",
+    "README.md": "TO_BE_FILLED_BEFORE_FREEZE",
+    "RUN_PROTOCOL.md": "TO_BE_FILLED_BEFORE_FREEZE",
+    "PRIOR_EVIDENCE_RECONSTRUCTION.json": "TO_BE_FILLED_BEFORE_FREEZE",
+    ".github/workflows/analysis-index.yml": "TO_BE_FILLED_BEFORE_FREEZE"
+  },
+  "prior_evidence": {
+    "4752_saved_audit_decision": "PASS_TARGET_POSITION_SUPPORT_SCOPED",
+    "4752_saved_audit_errors": 0,
+    "4752_translation_a_treatment_positive_accepts": "0/200",
+    "4752_translation_b_treatment_positive_accepts": "200/200",
+    "4814_efficacy": "FAIL",
+    "4814_raw_bundle_sha256": "4edc2022cd1b911a57f702c3d3ccbb7208c42afc90721dd40001986197fd81c7",
+    "4814_saved_raw_delivery_audit": "PASS_RAW_BUNDLE_RECONCILES_MANIFEST",
+    "host_reaudit_diagnostic": "11/2400 prediction_recompute differences, max 1.1920928955078125e-7, zero ACCEPT-gate changes; host NumPy 2.5.2 vs frozen NumPy 1.24.2"
+  }
+}
