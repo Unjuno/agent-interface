@@ -10,6 +10,6 @@
 
 ## Freeze and allocation state
 
-Planning main: `7c788b3df33928d84b327bb8b4b0ac8690de13c3` (2026-10-02).
+Initial preparation main: `7c788b3df33928d84b327bb8b4b0ac8690de13c3` (2026-10-02); branch is synced to main `f891ccb0fabac44f43a0d05edfce5fac050e66f0`.
 This package is prepared on `research/visual-presentation-injection-6575-t0-20261002`.
-The WSLc invocation is **not yet authorized or run**; this is source preparation only. Before a single candidate and independent auditor invocation, require an explicit bounded CPU/WSLc assignment on #5085, refresh main/branch/path/container collision checks, and regenerate the source/image freeze at launch. Reuse only the cached digest-pinned Python image; no pull/build. Network disabled, source read-only, outputs unique and separate, retries zero. Record cgroup warnings and make no resource-enforcement claim.
+This is source preparation only. The scientific owner has since completed the same #6575 T0 question under allocation `OBS-INJECTION-TRANSFORM-6575-T0-20261002-01`; main retains its `STOP_HARNESS_FIXTURE_MISMATCH` under PR #6582. This duplicate package was never assigned or run (candidate/auditor 0/0), and must not be invoked or used to retry/repair that consumed allocation. See `PREPARATION_REPORT.md` and the follow-up on #6575.

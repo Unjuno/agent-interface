@@ -2,8 +2,8 @@
   "schema": "visual-presentation-injection-6575-t0-freeze-v1",
   "issue": 6575,
   "allocation_id": "VISUAL-PRESENTATION-INJECTION-6575-T0-20261002-01",
-  "status": "PREPARED_UNASSIGNED_NOT_AUTHORIZED",
-  "planning_main": "7c788b3df33928d84b327bb8b4b0ac8690de13c3",
+  "status": "SUPERSEDED_NO_RUN",
+  "planning_main": "f891ccb0fabac44f43a0d05edfce5fac050e66f0",
   "branch": "research/visual-presentation-injection-6575-t0-20261002",
   "candidate_invocation_ceiling": 1,
   "independent_auditor_invocation_ceiling": 1,
@@ -16,8 +16,8 @@
   "limits_enforcement_claim": "none; record host cgroup/swap warnings and do not infer enforcement",
   "source_sha256": {
     ".gitattributes": "a79691a93b46e49ce460c26ef22afcc03d6eca1e63bf2edbc20e96159510f6c9",
-    "README.md": "1adf5964a4dc2ba1bd26159e2685b446b4c8712e66a8a5ee7e6de2437287163e",
-    "PREPARATION_REPORT.md": "3a979233f8208948b530a9a78ea49386f71e0e0a4e2fcecc23d7debf9891b2cd",
+    "README.md": "fe275999cf6010aec45a6a485d3e04f211f6cde7f318a6fce90e66b61b8fad43",
+    "PREPARATION_REPORT.md": "8def5d76e04d4e9a647cdd0832071b11e1f1206eb46a0a7108943a78979f3447",
     "fixtures.json": "f6e82bf8b47448caf353c65afa04eee7a88e5cc5d2db3b614c3b6fcee465fd7d",
     "ppm.py": "bde805a071379bbed359ddd7aab4c634f84f9073c644586b2284ebc9a0d7b3eb",
     "make_fixtures.py": "727739780ec75cd9c1d8bcef0afde5a917086f205d41f9188c879896d8bde559",
@@ -35,7 +35,13 @@
     "candidate_or_auditor_formal_count": "0/0",
     "formal_output_created": false
   },
-  "stop_gate": "Do not invoke either WSLc command until a named physical-host coordinator explicitly assigns this exact bounded CPU container allocation on #5085 and the start-time main, path, image, and collision checks pass.",
+  "superseded_by": {
+    "main_commit": "f891ccb0fabac44f43a0d05edfce5fac050e66f0",
+    "pull_request": 6582,
+    "allocation": "OBS-INJECTION-TRANSFORM-6575-T0-20261002-01",
+    "disposition": "STOP_HARNESS_FIXTURE_MISMATCH"
+  },
+  "stop_gate": "Do not invoke this duplicate package. Main retains the consumed #6575 T0 STOP in PR #6582; preserve that first outcome and do not retry or repair it in this allocation.",
   "planned_sequence": [
     "one WSLc candidate invocation writes 18 frozen rows and derived PPM views into a unique output mount",
     "only if candidate exits 0, one separate WSLc raw-only auditor invocation reads the read-only frozen source and candidate outputs",
