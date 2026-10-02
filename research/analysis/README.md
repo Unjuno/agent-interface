@@ -1,6 +1,7 @@
 # Analytical research
 
 - [`temporal_effect_identity_6530_orbstack_a01_20261002/REPORT.md`](temporal_effect_identity_6530_orbstack_a01_20261002/REPORT.md) — Issue #6530's frozen eight-case temporal identity fixture passed its scoped method gate in a digest-pinned OrbStack Docker candidate/auditor pair; no GUI, account, or real calendar event was used. Its earlier WSLc pre-start STOP remains unchanged.
+- [`trusted_confirmation_5836_t0_v1/RECOVERY_NOTE.md`](trusted_confirmation_5836_t0_v1/RECOVERY_NOTE.md) — Issue #5836 T0 source and pre-candidate resource STOP; formal candidate/auditor 0/0, scientific outcome NOT_EVALUATED.
 
 - [`wslc_control_plane_survivability_6669_t0_20261002/REPORT.md`](wslc_control_plane_survivability_6669_t0_20261002/REPORT.md) — Issue #6669 source/runtime applicability audit: `HOLD_APPLICABILITY_UNRESOLVED`; no WSLc pressure or survival claim.
 - [`observable_quiescence_6664_t0_v1/REPORT.md`](observable_quiescence_6664_t0_v1/REPORT.md) — Issue #6664 finite handoff protocol T0: 1,191 schedules independently audited; accounted quiescence had 0 false certificates (128 horizon certificates, all other cases UNKNOWN); epoch-only and fixed-delay comparators had 3,445 and 2,254 false certificates. No GUI/backend safety claim.
@@ -138,6 +139,7 @@ The table below summarizes major analytical chains and representative retained o
 | Decision / cost | [`evidence_dependent_compute_scheduler_dominance_r0_v1/`](evidence_dependent_compute_scheduler_dominance_r0_v1/) | Stale dependencies or missed hard deadlines make RUN infeasible; current metadata alone cannot universally choose RUN versus WAIT in the feasible region. | Measure invalidation likelihood, utility, contention, partial value, and production scheduler behavior. |
 | Decision / cost | [`evidence_compute_run_wait_break_even_r1_v1/`](evidence_compute_run_wait_break_even_r1_v1/) | After the hard feasibility gate, the one-horizon RUN/WAIT threshold depends on invalidation probability and the declared stable-wait versus obsolete-compute losses. | Calibrate those inputs for one concrete job class; correlated invalidation, preemption, partial reuse, and contention remain open. |
 | Decision / cost | [`evidence_compute_decision_lattice_r2_v1/`](evidence_compute_decision_lattice_r2_v1/) | Semantic reuse validity, temporal feasibility, and expected-cost selection compose as ordered gates without softer optimization overriding hard invalidation/deadline gates. | Calibrate parameters, rebuild economics, multi-job/resource scheduling, and partial/preemptive work. |
+| Queueing / fairness | [`service_debt_deadline_6613_a01/`](service_debt_deadline_6613_a01/) | OrbStack finite-trace A01 independently replayed 288 rows but `FAIL_HYPOTHESIS`: service-debt did not reduce worst wait vs FIFO/shortest; on-time floors held. Synthetic only. | Compare alternative service-fair policies only under a new, prospectively frozen successor; no GUI or human-fairness claim. |
 | Decision / cost | [`multicursor_parking_reposition_r0_v1/`](multicursor_parking_reposition_r0_v1/) | Under a serialized physical-pointer endpoint-cost model, logical parked cursors alone do not reduce physical reposition distance; a distinct cheap relocation primitive can. | Measure real relocation cost, hover/path equivalence, semantic re-grounding savings, and live correctness. |
 | Reuse / lifetime | [`evidence_dependent_compute_reuse_r0_v1/`](evidence_dependent_compute_reuse_r0_v1/) | For deterministic pure jobs with complete declared dependencies and non-reused semantic version identities, exact dependency-version equality is sufficient for reuse and necessary for universal safety across arbitrary jobs. | Defend against incomplete declarations, ABA/version reuse, nondeterminism, clocks/external state, side effects, and measure performance. |
 | Reuse / lifetime | [`layered_lifetime_admission_r0_v1/`](layered_lifetime_admission_r0_v1/) | Admission matches the oracle when reusable tokens bind every declared independently changing lifetime identity; global or route-only epochs lose narrowness or completeness in the frozen model. | Measure natural invalidation rates, runtime overhead, task correctness, model boundaries, and production ABI. |
@@ -549,6 +551,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`quiescent_epoch_binding_5361_t1/`](quiescent_epoch_binding_5361_t1/)
 - [`quiescent_reclamation_5361_t0_20261001/`](quiescent_reclamation_5361_t0_20261001/)
 - [`quiet_frontier_6310_t0_20261002/`](quiet_frontier_6310_t0_20261002/)
+- [`quiet_supervision_vigilance_6503_t0_20261002/`](quiet_supervision_vigilance_6503_t0_20261002/)
 - [`r133_domain_coverage_transfer_v1/`](r133_domain_coverage_transfer_v1/)
 - [`real_option_5428_t1/`](real_option_5428_t1/)
 - [`real_source_adapter_admission_v1/`](real_source_adapter_admission_v1/)
@@ -618,6 +621,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`semantic_serializability_5318_audit_t3_20261002/`](semantic_serializability_5318_audit_t3_20261002/)
 - [`semantic_truth_cycle_4259_v1/`](semantic_truth_cycle_4259_v1/)
 - [`semantic_truth_maintenance_4259_v1/`](semantic_truth_maintenance_4259_v1/)
+- [`service_debt_deadline_6613_a01/`](service_debt_deadline_6613_a01/)
 - [`serialized_attention_duplicate_label_successor_1968_v1/`](serialized_attention_duplicate_label_successor_1968_v1/)
 - [`serialized_attention_successor_1968_v1/`](serialized_attention_successor_1968_v1/)
 - [`shared_referent_6558_t0_orbstack_20261002/`](shared_referent_6558_t0_orbstack_20261002/)
@@ -657,6 +661,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`temporal_contract_monitor_compilation_r0_v1/`](temporal_contract_monitor_compilation_r0_v1/)
 - [`temporal_observation_transfer_2013_v1/`](temporal_observation_transfer_2013_v1/)
 - [`temporal_predictivity_6071_t0_20261002/`](temporal_predictivity_6071_t0_20261002/)
+- [`temporal_preservation_5887_t0_v1/`](temporal_preservation_5887_t0_v1/)
 - [`temporal_query_specificity_2050_v1/`](temporal_query_specificity_2050_v1/)
 - [`temporal_ring_disambiguation_2045_v1/`](temporal_ring_disambiguation_2045_v1/)
 - [`temporal_ring_provenance_repair_successor_2053_v1/`](temporal_ring_provenance_repair_successor_2053_v1/)
