@@ -467,6 +467,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`semantic_predicate_fabric_4215_v1/`](semantic_predicate_fabric_4215_v1/)
 - [`semantic_receipt_dependency_cuts_5442_t3/`](semantic_receipt_dependency_cuts_5442_t3/)
 - [`semantic_selection_identity_successor_341_v1/`](semantic_selection_identity_successor_341_v1/)
+- [`semantic_serializability_5318_audit_t3_20261002/`](semantic_serializability_5318_audit_t3_20261002/)
 - [`semantic_truth_cycle_4259_v1/`](semantic_truth_cycle_4259_v1/)
 - [`semantic_truth_maintenance_4259_v1/`](semantic_truth_maintenance_4259_v1/)
 - [`serialized_attention_duplicate_label_successor_1968_v1/`](serialized_attention_duplicate_label_successor_1968_v1/)
