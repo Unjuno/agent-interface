@@ -39,17 +39,24 @@
     "run_formal.ps1": "a5e100747be3577c125cd66611fe370d5831a082c2e7990ec02d59271d054a55"
   },
   "construction_tests": {
-    "runtime": "local Python 3 standard library; preparation only",
-    "wslc_construction_container": 0,
-    "passed": 9,
+    "runtime": "local Python 3 standard library plus standalone WSLc CPU construction preparation; not formal candidate evidence",
+    "wslc_construction_container": 1,
+    "passed": 10,
     "failed": 0
   },
-  "invocations_at_freeze": {
-    "construction_container": 0,
+  "formal_invocations_at_freeze": {
+    "in_window_construction_container": 0,
     "candidate_container": 0,
     "cuda_worker": 0,
     "auditor_container": 0,
     "retries": 0
+  },
+  "standalone_preflight": {
+    "path": "construction-preflight-20261002-01/",
+    "source_commit": "7999f5628623d024f713f4ecc3577ad04ee09ae7",
+    "container_exit": 0,
+    "tests_passed": 10,
+    "candidate_cuda_auditor_retries": [0, 0, 0, 0]
   },
   "resource": {
     "status": "DEFERRED_UNASSIGNED",

@@ -8,7 +8,7 @@ This is a one-shot recipe. Do not run without an exact coordinator assignment fo
 2. Read current main SHA; it must equal `FREEZE.json`. The helper rechecks this with `git ls-remote` and stops if main moved.
 3. Confirm no branch/path/PR/output collision, no running or unknown-owned WSLc container, cached exact PyTorch digest/ID/platform, and current WSLc 3.0.1.0. The helper verifies the main/image/inventory/output gates and exact coordinator comment URL/time interval.
 4. Query the Windows-host RTX 3080 with `nvidia-smi`; identity must match and free VRAM must be >=10 GiB. Inspect the process list and resolve ownership. Unknown owner or unstable capacity means STOP. Do not stop or alter another process/container.
-5. Run the host standard-library construction suite before the formal window. It passes 9/9 without CUDA/container activity. The formal helper repeats the same suite inside a CPU-only WSLc container during the assigned window and tests that UID 65534 can read the source mount and write only to the dedicated output mount; both must pass before the GPU candidate is launched.
+5. Run the host standard-library construction suite before the formal window. It currently passes 10/10 without CUDA/container activity. One separate standalone WSLc construction preflight also passed 10/10 and verified UID 65534's writable output bind; that prep receipt is not the in-window gate. The formal helper must repeat the 10-test suite inside a CPU-only WSLc container during the assigned window and test that UID 65534 can read the source mount and write only to the dedicated output mount; both fresh checks must pass before the GPU candidate is launched.
 
 ## Invocation
 
