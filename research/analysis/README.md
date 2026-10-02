@@ -144,6 +144,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 <details>
 <summary><strong>Expand all retained result/failure directories</strong></summary>
 
+- [`5352_unknown_recovery_audit_v1/`](5352_unknown_recovery_audit_v1/)
 - [`action_class_error_budget_5424_t2_v1/`](action_class_error_budget_5424_t2_v1/)
 - [`action_class_error_budget_5424_t3_v1/`](action_class_error_budget_5424_t3_v1/)
 - [`action_conditioned_routing_repair_successor_2059_r2_v1/`](action_conditioned_routing_repair_successor_2059_r2_v1/)
