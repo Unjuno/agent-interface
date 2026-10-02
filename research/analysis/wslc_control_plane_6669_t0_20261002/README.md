@@ -28,6 +28,21 @@ The code-level trace positively identifies a dedicated WSLc HCS VM and its conta
 
 T1 pressure testing is **not authorized by this result** and remains unrun. It requires (1) tested build identity, (2) explicit source/runtime proof of the protected-boundary applicability or a revised hypothesis, and (3) a disposable isolated VM with a kernel-confirmed hard ceiling. Shared-host pressure/OOM remains prohibited. Configured WSLc memory values alone are not a safety boundary.
 
+## Read-only runtime fingerprint (2026-10-02)
+
+Commands executed in PowerShell:
+
+```text
+wsl.exe --version
+wsl.exe --list --verbose
+wslc.exe --version
+wslc.exe info --format json
+```
+
+Observed: WSL and WSLc client `3.0.1.0`; WSL kernel `6.18.40.1-1`; WSLc Session Manager `3.0.1`; Windows `10.0.26200.9550`. The successful `wslc info` response reported two active sessions. Session names and creator PIDs are deliberately omitted from this public report; neither session was attached to, listed, started, stopped, or otherwise changed. `wsl.exe --list --verbose` failed with `Wsl/EnumerateDistros/Service/E_ACCESSDENIED`, so distro identity and per-distro cgroup state remain unavailable. `wslc info` exposes client/server/session metadata only; it does not expose the utility VM's cgroup tree or prove the installed binary corresponds to the pinned source commit above.
+
+This improves runtime attribution to the reported software/kernel/Windows versions, but does not close the S5 source bridge or establish the kernel-confirmed test ceiling. Applicability remains **HOLD**; no WSLc workload, pressure allocation, or OOM test was run.
+
 ## Independent review checklist
 
 This claim/evidence crosswalk is intentionally falsifiable. A follow-on reviewer should verify each cited path at the pinned commit, check that S1/S2 do not imply S4, and reject any promotion of this HOLD to a protection-absence or liveness claim. No raw pressure-run artifacts exist because no pressure run occurred. Branch/PR collision search for `6669` was empty at intake; it is not a global novelty proof.
