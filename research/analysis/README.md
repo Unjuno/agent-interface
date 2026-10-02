@@ -304,6 +304,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`complementarity_marginal_evidence_5869_t0_v1/`](complementarity_marginal_evidence_5869_t0_v1/)
 - [`composition_heldout_fixture_2068_v1/`](composition_heldout_fixture_2068_v1/)
 - [`conditional_deadline_certificate_6059_t0_20261001/`](conditional_deadline_certificate_6059_t0_20261001/)
+- [`conditional_parallax_6079_foreground_control_a01_20261003/`](conditional_parallax_6079_foreground_control_a01_20261003/)
 - [`conditional_parallax_6079_t0_v1_20261003/`](conditional_parallax_6079_t0_v1_20261003/)
 - [`conditional_route_rescue_5598_t0_20261001/`](conditional_route_rescue_5598_t0_20261001/)
 - [`conflict_aware_evidence_ledger_5305_t0/`](conflict_aware_evidence_ledger_5305_t0/)

@@ -1,0 +1,26 @@
+{
+  "allocation_id": "CONDITIONAL-PARALLAX-6079-FOREGROUND-A01-20261003-01",
+  "disposition": "CONTROL_EXPOSED",
+  "candidate": {
+    "invocations": 1,
+    "exit_code": 0,
+    "classification": "DISTINGUISHED_UNDER_RIGID_OVERLAY_ASSUMPTIONS",
+    "reported_max_relative_separation_px": 50.712652,
+    "stdout": "pairs=1 distinguished=1 unknown=0\n",
+    "stderr": ""
+  },
+  "auditor": {
+    "invocations": 1,
+    "exit_code": 0,
+    "passive_frames_identical": true,
+    "target_pixels_unchanged": true,
+    "target_separation_px": [0.0, 0.0, 0.0],
+    "candidate_landmark_separation_px": [50.71265242985877, 50.71265242985877, 50.71265242985877],
+    "candidate_false_distinction": true,
+    "stdout": "disposition=CONTROL_EXPOSED target_pixels_unchanged=True\n",
+    "stderr": ""
+  },
+  "timing": "Candidate/auditor start timestamps were not captured; no duration is claimed.",
+  "retries": 0,
+  "scope": "Synthetic perturbation of one frozen sham pair only; establishes a method-boundary counterexample, not a real-world or contact result."
+}
