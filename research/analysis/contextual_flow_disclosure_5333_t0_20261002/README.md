@@ -7,7 +7,7 @@ This is separate from the local predicate-only receipt toy noted in #5333: that 
 ## Hypothesis / method / limits
 
 - **H:** Context-bound policy can permit one narrow intended flow and one exact purpose-bound release, block wrong recipient/purpose and excess fields, and return UNKNOWN for missing context; actor-only authorization alone is insufficient.
-- **T:** Nine synthetic cards × three policies = 27 rows. The auditor independently checks row completeness, matched-pair invariance, context/provenance, decisions, released-field scope, and seven planted corruptions.
+- **T:** Nine synthetic cards × three policies = 27 rows. The auditor independently checks row completeness, matched-pair invariance, exact output schema, context/provenance, decisions, released-field scope, and eight planted corruptions.
 - **D:** PASS only if all frozen expectations reconcile and all corruption controls fail closed. Status is `PASS_METHOD_SCOPED` for this fixture only.
 - **C:** Context norms are stipulated by policy JSON; all data and recipients are synthetic.
 - **U:** No model, human, actual personal data, GUI, external recipient, runtime sink, covert channel, privacy/safety benefit, or product claim.

@@ -21,6 +21,13 @@ def audit(fixture, oracle, actual):
             raise ValueError("matched pair does not change declared context axis")
     keys = set()
     for row in actual:
+        required_fields = {
+            "case_id", "mode", "decision", "released_fields", "source_digest", "actor",
+            "actor_authorized", "source_label", "integrity", "requested_fields",
+            "release_revision", "recipient", "purpose"
+        }
+        if set(row) != required_fields:
+            raise ValueError("candidate output schema mismatch")
         key = (row["case_id"], row["mode"])
         if key in keys or row["case_id"] not in cases:
             raise ValueError("duplicate or unknown row")

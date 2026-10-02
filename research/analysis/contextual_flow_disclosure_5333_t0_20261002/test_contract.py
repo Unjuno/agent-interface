@@ -44,7 +44,7 @@ class ContractTests(unittest.TestCase):
         self.assertEqual("BLOCKED_FLOW", rows[("F08_LOW_INTEGRITY_SOURCE", "CONTEXT_BOUND")]["decision"])
         self.assertEqual("BLOCKED_FLOW", rows[("F09_STALE_RELEASE", "CONTEXT_BOUND")]["decision"])
 
-    def test_seven_frozen_corruptions_are_rejected(self):
+    def test_eight_frozen_corruptions_are_rejected(self):
         mutations = []
         for predicate, mutate in [
             (lambda r: r["case_id"] == "F02_WRONG_RECIPIENT" and r["mode"] == "CONTEXT_BOUND", lambda r: r.update(decision="ALLOWED", released_fields=["availability"])),
@@ -54,6 +54,7 @@ class ContractTests(unittest.TestCase):
             (lambda r: r["case_id"] == "F04_EXPLICIT_SCOPED_RELEASE" and r["mode"] == "CONTEXT_BOUND", lambda r: r.update(recipient="public-channel")),
             (lambda r: r["case_id"] == "F01_ALLOWED_SCHEDULER" and r["mode"] == "CONTEXT_BOUND", lambda r: r.update(source_digest="mutated")),
             (lambda r: r["case_id"] == "F08_LOW_INTEGRITY_SOURCE" and r["mode"] == "CONTEXT_BOUND", lambda r: r.update(decision="ALLOWED", released_fields=["target-id"])),
+            (lambda r: r["case_id"] == "F01_ALLOWED_SCHEDULER" and r["mode"] == "CONTEXT_BOUND", lambda r: r.update(unapproved_extra_field="hidden-data")),
         ]:
             broken = json.loads(json.dumps(self.rows))
             target = next(row for row in broken if predicate(row))
@@ -61,7 +62,7 @@ class ContractTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 auditor.audit(self.fixture, self.oracle, broken)
             mutations.append(True)
-        self.assertEqual(7, len(mutations))
+        self.assertEqual(8, len(mutations))
 
 
 if __name__ == "__main__":
