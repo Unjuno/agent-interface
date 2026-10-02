@@ -42,6 +42,8 @@ class MatchedPhaseTests(unittest.TestCase):
         self.assertEqual(result["result"], "PASS_METHOD_SCOPED")
         self.assertEqual(result["errors"], [])
         self.assertEqual(result["rows_replayed"], 9)
+        self.assertEqual(result["corruptions_rejected"], 5)
+        self.assertTrue(all(result["corruption_controls"].values()))
 
     def test_rejects_missing_row(self):
         raw = copy.deepcopy(self.raw); raw["rows"].pop()

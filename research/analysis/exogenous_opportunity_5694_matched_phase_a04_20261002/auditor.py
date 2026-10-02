@@ -1,5 +1,6 @@
 """Independent raw-only reconstruction; deliberately does not import candidate.py."""
 import argparse
+import copy
 import json
 from pathlib import Path
 
@@ -34,7 +35,7 @@ def expected_for(case, oracle):
     return derived
 
 
-def audit(fixture, oracle, raw):
+def audit_once(fixture, oracle, raw):
     errors = []
     cases = {c["case_id"]: c for c in fixture["cases"]}
     expected_ids = set(cases)
@@ -62,7 +63,36 @@ def audit(fixture, oracle, raw):
             errors.append(f"receipt_mismatch:{case_id}")
         if row.get("capture_schedule_ms") != case["capture_schedule_ms"] or row.get("observation_horizon_ms") != case["observation_horizon_ms"]:
             errors.append(f"schedule_or_horizon_mismatch:{case_id}")
-    return {"rows_replayed":len(rows), "errors":errors, "corruptions_rejected":None, "result":"PASS_METHOD_SCOPED" if not errors else "FAIL_AUDIT"}
+    return {"rows_replayed":len(rows), "errors":errors, "result":"PASS_METHOD_SCOPED" if not errors else "FAIL_AUDIT"}
+
+
+def audit(fixture, oracle, raw):
+    base = audit_once(fixture, oracle, raw)
+    mutants = []
+    missing = copy.deepcopy(raw); missing["rows"].pop()
+    mutants.append(("missing_row", missing))
+    duplicate = copy.deepcopy(raw); duplicate["rows"].append(copy.deepcopy(duplicate["rows"][0]))
+    mutants.append(("duplicate_row", duplicate))
+    wrong = copy.deepcopy(raw)
+    next(r for r in wrong["rows"] if r["case_id"] == "c02")["boundary"] = "eligible_effect"
+    mutants.append(("wrong_phase_classification", wrong))
+    schedule = copy.deepcopy(raw)
+    next(r for r in schedule["rows"] if r["case_id"] == "c02")["capture_schedule_ms"] = [10, 55]
+    mutants.append(("changed_capture_schedule", schedule))
+    forged = copy.deepcopy(raw)
+    forged_row = next(r for r in forged["rows"] if r["case_id"] == "c05")
+    forged_row.update(boundary="eligible_effect", reason="verified_effect", effect_receipt_id="forged")
+    mutants.append(("forged_effect_receipt", forged))
+    controls = {name: bool(audit_once(fixture, oracle, mutated)["errors"]) for name, mutated in mutants}
+    errors = list(base["errors"])
+    errors.extend("corruption_accepted:" + name for name, rejected in controls.items() if not rejected)
+    return {
+        "rows_replayed": base["rows_replayed"],
+        "errors": errors,
+        "corruptions_rejected": sum(controls.values()),
+        "corruption_controls": controls,
+        "result": "PASS_METHOD_SCOPED" if not errors and all(controls.values()) else "FAIL_AUDIT",
+    }
 
 
 def main():
