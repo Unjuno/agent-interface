@@ -10,7 +10,7 @@
 
 ## Freeze and one-shot boundary
 
-- Base main: `762bb46b5037a2cd4a09672a2e130760a96ff669`.
+- Base main: `9a573b00dc595e64d09387e567c85e10b61a46c1`.
 - Candidate: `candidate.py`; independent auditor: `audit.py`; fixed input: `fixture.py`; construction tests: `test_t0.py`.
 - Freeze file records exact source SHA-256 values, runtime, seed range, case list, and output paths.
 - Construction tests run before candidate invocation; the formal candidate may run once and the independent auditor once, only after fresh main/source/path checks. Retries, replacements, parameter tuning, and output overwrite are forbidden.

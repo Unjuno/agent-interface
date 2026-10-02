@@ -2,7 +2,7 @@
   "schema": "issue6655-incidental-state-t0-freeze-v1",
   "issue": 6655,
   "allocation_id": "INCIDENTAL-STATE-LEGACY-6655-T0-20261002-01",
-  "base_main_sha": "762bb46b5037a2cd4a09672a2e130760a96ff669",
+  "base_main_sha": "9a573b00dc595e64d09387e567c85e10b61a46c1",
   "runtime": {
     "host": "local Windows host CPU",
     "python": "CPython 3.11.9",
@@ -12,7 +12,7 @@
     "external_effects": false
   },
   "inputs": {
-    "fixture.py": "sha256:3c1318af851af3cf4f5b842603baf121d1f93aff0390d945bc972506bda0516c",
+    "fixture.py": "sha256:a89ccf8711c2a0aebe12a4d39204517cb325b2ce90162e27a34f7d503f1c8575",
     "seeds": [1, 32],
     "case_ids": [
       "helpful_incidental_view",
@@ -26,10 +26,10 @@
     "paired_rows": 224
   },
   "source_sha256": {
-    "candidate.py": "e2cc2e28833bd224231f24897c53a6874c7bca9425347cea2d2e641d134825f5",
-    "audit.py": "e5f71dbeb6efc065741db755493f63c6f8c9fd4572f0042adf7e8655253daa09",
-    "test_t0.py": "1077af2d9d5b9049f84f175498ed6676e00bcab8930d271463873d8ee9786e41",
-    "preregistration.md": "sha256:69ffad42c0d7c70fc1e9956fe81e49bc605d99df9c5afa41d409d2c5858d77b6"
+    "candidate.py": "cc807a04eb653ed770736dfde78183ddad344506197a041b761e45c42f7db4ba",
+    "audit.py": "2eaa0445f70b8a47240dc6797725044d34be974285cedd8bf2f191a5351d201e",
+    "test_t0.py": "0c947f3d1981fa4f191606dc0984b2fe67cd76e75503bb05270053b17e3b2ee2",
+    "preregistration.md": "sha256:2ddd05cdbe66f2a5156e11337799c9882fc463219fbf5605508e4087a55ddbba"
   },
   "construction": {
     "command": "py -3.11 -B -m unittest -v",

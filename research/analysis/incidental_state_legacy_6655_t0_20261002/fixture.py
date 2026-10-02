@@ -1,6 +1,6 @@
 """Finite synthetic episodes for Issue #6655; no external state or effects."""
 
-BASE_MAIN_SHA = "762bb46b5037a2cd4a09672a2e130760a96ff669"
+BASE_MAIN_SHA = "9a573b00dc595e64d09387e567c85e10b61a46c1"
 SEEDS = tuple(range(1, 33))
 
 CASES = (
