@@ -1,0 +1,25 @@
+name: preview-constraint-parity-6565
+
+on:
+  pull_request:
+    paths:
+      - 'research/analysis/preview_constraint_parity_6565_t0_20261002/**'
+      - '.github/workflows/preview-constraint-parity-6565.yml'
+      - 'research/analysis/README.md'
+      - 'research/analysis/check_index.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  method-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -B -m unittest discover -s research/analysis/preview_constraint_parity_6565_t0_20261002 -p 'test_*.py' -v
+      - run: python research/analysis/check_index.py
