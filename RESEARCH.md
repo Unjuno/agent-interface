@@ -62,6 +62,10 @@ One digest-pinned, network-disabled WSLc construction reconstructed 600 syntheti
 
 # Research index
 
+### Issue #6533: frame-qualified collateral checks T0 (2026-10-02)
+
+One frozen OrbStack CPU fixture emitted 44 rows (11 traces × 4 policies); a separate raw-state auditor reconstructed all 44 with zero errors. The qualified-frame policy matched the full-state oracle on all 11 traces, including full fallback for alias, hidden/incomplete writer coverage, stale generation, and non-durable state. On three disjoint-size cases, checker-accounted bytes were 79.1% lower in aggregate (14,491 → 3,023), while the 8-cell case regressed 2.13× (473 → 1,007); wall-time figures are descriptive in-process measurements only. Disposition: `PASS_METHOD_SCOPED` for this synthetic method fixture. No real GUI/app writer completeness, race, safety, or end-to-end performance claim; UNKNOWN/FULL_CHECK remains the default beyond qualified evidence. See [the report and raw allocation](research/analysis/frame_qualified_collateral_6533_t0_20261002/REPORT.md) and [Issue #6533](https://github.com/Unjuno/agent-interface/issues/6533), which remains open.
+
 Agent Interface is being developed by analysis and experiment rather than by locking an API early. This file is the evidence ledger for the public repository.
 
 ### Issue #6045: opportunity-conditioned age of actuated information T0 (2026-10-02)
