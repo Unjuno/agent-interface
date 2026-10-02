@@ -11,6 +11,8 @@
 
 Latest main `c2dc6e4fe2f5114418468cafbdd57deec0e4096e` was merged before allocation start (unrelated archived evidence only); all frozen source hashes remained unchanged. The full local Analysis Index suite passed 19 commands / 114 tests; T0b construction 5/5 and index 556 passed.
 
+After formal completion, main advanced to `87959b5ecac0f8ea34b1c72877fdb5c9904c0653` with unrelated archived evidence. It was merged as `afd8d33af110be816f934ef0ec8b287cd77a1306` without modifying any frozen case/source/workflow; full local CI was rerun on that exact tree and passed 19 commands / 114 tests, focused T0b 5/5, and index 557.
+
 ## H / T / D / C / U
 
 See `PREREGISTRATION.md`. The predecessor allocation remains `STOP_RAW_OUTPUT_NOT_RETAINED`; candidate=1, auditor=0, retries=0. T0b is a new allocation with fresh raw output and no changes to its predecessor evidence. Raw candidate, separate audit receipt, both stage run records, stdout, exit codes, container configuration/state and SHA-256 manifests are retained under `results/` and `execution/`.
