@@ -10,7 +10,7 @@
 
 ## Frozen boundary
 
-Source `main` commit: `645bc89c71f28a88d8ff37f995d56057cb4cf734`.
+Source `main` commit: `8ff2eddf995e079f7e3a11b87f964734403996fb` (formal-run freeze).
 Package: `research/analysis/interruption_chain_6338_t0_20261002/`.
 Run ID: `t0-formal-02`; deterministic; candidate invocation exactly once, then independent raw-only auditor exactly once. The first prospective freeze (`t0-formal-01`) was superseded before any candidate launch after final construction review added independent parent-edge and effect-count reconstruction; it remains preserved in `FREEZE-0001-SUPERSEDED.json`. The formal boundary begins only after the revised construction tests, output directory creation and amended prospective freeze comment on Issue #6338. No retry, seed substitution or policy tuning after candidate start.
 
@@ -19,3 +19,4 @@ The primary measures are delivered-card count, reconstructed parent-chain tail, 
 ## Reproduce
 
 From this directory on Windows with Python 3.11+: `python -B candidate.py cases.json results/formal-02/candidate.json`; after a zero candidate exit only: `python -B auditor.py cases.json results/formal-02/candidate.json results/formal-02/audit.json`. The results directory is created before either command. Run construction tests separately with `python -B -m unittest -v`.
+
