@@ -1,0 +1,31 @@
+{
+  "allocation": "ISSUE-6469-BENIGN-ERROR-SCOPE-DRIFT-T0-20261002-01",
+  "status": "CONSTRUCTION_PASS_FORMAL_NOT_STARTED",
+  "base_main": "f9ff8a50ff487470c7c1c3f7c2f7d1e61fc3b6b8",
+  "branch": "research/issue-6469-t0-20261002",
+  "runtime": "Microsoft WSL Containers (wslc.exe) 3.0.1.0",
+  "wsl": "3.0.1.0",
+  "wsl_kernel": "6.1.80.1-1",
+  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "image_platform": "linux/amd64",
+  "python": "3.12.14",
+  "network": "none",
+  "cpus_requested": 1,
+  "memory_requested": "512M",
+  "memory_enforcement": "unknown; swap-limit/cgroup warning; do not infer enforcement",
+  "gpu_requested": false,
+  "model_calls": 0,
+  "external_effects": 0,
+  "candidate_invocations_planned": 1,
+  "auditor_invocations_planned": 1,
+  "candidate_output": "research/analysis/benign_error_scope_drift_6469_t0_20261002/formal_candidate/",
+  "auditor_output": "research/analysis/benign_error_scope_drift_6469_t0_20261002/formal_auditor/",
+  "gates": {
+    "formal_start_requires_main_equal_base": true,
+    "formal_start_requires_source_hash_match": true,
+    "formal_start_requires_empty_running_wslc_inventory": true,
+    "formal_start_requires_no_new_same-issue_branch_or_pr": true,
+    "formal_start_requires_candidate_exit_zero_before_auditor": true,
+    "retry_allowed": false
+  }
+}
