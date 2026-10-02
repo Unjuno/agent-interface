@@ -36,6 +36,8 @@ The 32/32 candidate calls completed once. Independent audit reconciled all rows 
 
 Both target-present cases where the crop omitted the target were incorrect in crop-only (2/2). The combined overview+crop arm had the greatest request bytes, image bytes and prompt-evaluation count. Result: `NO_MODEL_UTILITY_DEMONSTRATED_ON_THIS_SYNTHETIC_ALLOCATION`; no attention-representation or runtime promotion.
 
+**Scoring interpretation correction:** candidate selections commonly omit the `abstain` field; the frozen scorer treats a missing field as invalid (`invalid_abstention_type`) and scores it false. Therefore 1/8 per arm is not a valid pure localization-accuracy count. The retained raw records expose coordinates/labels, but this implementation mismatch requires a separately preregistered scoring successor for coordinate-accuracy claims. Do not alter the retained audit or report the 1/8 values as established model accuracy.
+
 ## C — caveats
 
 Synthetic fixtures, one model snapshot, one prompt family and one heuristic; not a representative GUI distribution. `prompt_eval_count` is the server prompt metric, not an image-token count. JSON bytes do not measure backend memory or latency. No user data, GUI input, product integration, human-tempo, universal cost, causal benefit or population-rate claim.
