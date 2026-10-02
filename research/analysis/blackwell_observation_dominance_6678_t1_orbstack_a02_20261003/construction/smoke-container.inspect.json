@@ -1,0 +1,230 @@
+[
+    {
+        "Id": "65e84e3c4423964c1185365e25e08791609e0a602dfe9a3d361eb02c2c433cac",
+        "Created": "2026-10-02T20:03:01.94867427Z",
+        "Path": "node",
+        "Args": [
+            "-e",
+            "const {chromium}=require(process.env.PLAYWRIGHT_MODULE_PATH);(async()=>{const b=await chromium.launch({headless:true,args:[\"--no-sandbox\"]});const p=await b.newPage({viewport:{width:960,height:640}});await p.setContent(\"<title>smoke</title><p>ok</p>\");console.log(JSON.stringify({version:b.version(),title:await p.title(),browser:await p.locator(\"p\").innerText()}));await b.close()})().catch(e=>{console.error(e);process.exit(1)})"
+        ],
+        "State": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-10-02T20:03:02.237722585Z",
+            "FinishedAt": "2026-10-02T20:03:03.083073613Z"
+        },
+        "Image": "sha256:941cc91e5022880ac1d14ae90b476b624deb6399dbbc28d612d5d5bd7928fcbd",
+        "ResolvConfPath": "/var/lib/docker/containers/65e84e3c4423964c1185365e25e08791609e0a602dfe9a3d361eb02c2c433cac/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/65e84e3c4423964c1185365e25e08791609e0a602dfe9a3d361eb02c2c433cac/hostname",
+        "HostsPath": "/var/lib/docker/containers/65e84e3c4423964c1185365e25e08791609e0a602dfe9a3d361eb02c2c433cac/hosts",
+        "LogPath": "/var/lib/docker/containers/65e84e3c4423964c1185365e25e08791609e0a602dfe9a3d361eb02c2c433cac/65e84e3c4423964c1185365e25e08791609e0a602dfe9a3d361eb02c2c433cac-json.log",
+        "Name": "/blackwell-6678-a02-browser-smoke-20261003",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {
+                    "max-file": "5",
+                    "max-size": "20m"
+                }
+            },
+            "NetworkMode": "none",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": [
+                "ALL"
+            ],
+            "CgroupnsMode": "private",
+            "Dns": null,
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": true,
+            "SecurityOpt": [
+                "no-new-privileges"
+            ],
+            "Tmpfs": {
+                "/tmp": "rw,nosuid,size=256m"
+            },
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 8409579520,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 1073741824,
+            "NanoCpus": 1000000000,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": [],
+            "BlkioDeviceWriteBps": [],
+            "BlkioDeviceReadIOps": [],
+            "BlkioDeviceWriteIOps": [],
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 2147483648,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": 128,
+            "Ulimits": [],
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "Mounts": [
+                {
+                    "Type": "bind",
+                    "Source": "/Users/taka/node_modules",
+                    "Target": "/opt/pw",
+                    "ReadOnly": true
+                }
+            ],
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "/Users/taka/node_modules",
+                "Destination": "/opt/pw",
+                "Mode": "",
+                "RW": false,
+                "Propagation": "rprivate"
+            }
+        ],
+        "Config": {
+            "Hostname": "65e84e3c4423",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PLAYWRIGHT_BROWSERS_PATH=/ms-playwright",
+                "HOME=/tmp",
+                "NODE_PATH=/opt/pw",
+                "PLAYWRIGHT_MODULE_PATH=/opt/pw/playwright",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "LANG=C.UTF-8",
+                "LC_ALL=C.UTF-8"
+            ],
+            "Cmd": [
+                "node",
+                "-e",
+                "const {chromium}=require(process.env.PLAYWRIGHT_MODULE_PATH);(async()=>{const b=await chromium.launch({headless:true,args:[\"--no-sandbox\"]});const p=await b.newPage({viewport:{width:960,height:640}});await p.setContent(\"<title>smoke</title><p>ok</p>\");console.log(JSON.stringify({version:b.version(),title:await p.title(),browser:await p.locator(\"p\").innerText()}));await b.close()})().catch(e=>{console.error(e);process.exit(1)})"
+            ],
+            "Image": "mcr.microsoft.com/playwright@sha256:941cc91e5022880ac1d14ae90b476b624deb6399dbbc28d612d5d5bd7928fcbd",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "Labels": {
+                "org.opencontainers.image.version": "24.04"
+            }
+        },
+        "NetworkSettings": {
+            "SandboxID": "",
+            "SandboxKey": "",
+            "Ports": {},
+            "Networks": {
+                "none": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "be4d057ee3ffc26baf9220196f1b89ed6bef1d8bcc10973725f59293e4e88c31",
+                    "EndpointID": "",
+                    "Gateway": "",
+                    "IPAddress": "",
+                    "MacAddress": "",
+                    "IPPrefixLen": 0,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": null
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "digest": "sha256:941cc91e5022880ac1d14ae90b476b624deb6399dbbc28d612d5d5bd7928fcbd",
+            "size": 1644,
+            "platform": {
+                "architecture": "arm64",
+                "os": "linux"
+            }
+        }
+    }
+]
