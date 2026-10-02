@@ -14,7 +14,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parent
-RESULTS = ROOT / "results" / "formal-01"
+RESULTS: Path
 
 
 def sha256(path: Path) -> str:
@@ -26,10 +26,10 @@ def git(*args: str) -> str:
 
 
 def prelaunch_stop(reason: str, details: dict) -> int:
-    path = ROOT / "results" / "prelaunch-01" / "STOP.json"
+    path = RESULTS.parent / "prelaunch-01" / "STOP.json"
     path.parent.mkdir(parents=True, exist_ok=False)
     record = {"schema": "relational-coordinate-bounds-6684-prelaunch-stop-v1",
-              "allocation": "relational-coordinate-bounds-6684-t0-20261002-01",
+              "allocation": json.loads((ROOT / "FREEZE.json").read_text())["allocation"],
               "reason": reason, "candidate_invocations": 0,
               "auditor_invocations": 0, "retries": 0, **details}
     path.write_text(json.dumps(record, sort_keys=True, indent=2) + "\n")
@@ -40,12 +40,12 @@ def prelaunch_stop(reason: str, details: dict) -> int:
 
 def source_preflight_failure(reason: str, details: dict) -> int:
     """Preserve a failed source preflight without claiming formal allocation."""
-    path = ROOT / "results" / "preformal-03" / "source-preflight-failure.json"
+    path = RESULTS.parent / "preformal" / "source-preflight-failure.json"
     path.parent.mkdir(parents=True, exist_ok=True)
     if path.exists():
         raise SystemExit("STOP_PREFORMAL_FAILURE_RECORD_ALREADY_EXISTS")
     record = {"schema": "relational-coordinate-bounds-6684-preformal-failure-v1",
-              "allocation": "relational-coordinate-bounds-6684-t0-20261002-03",
+              "allocation": json.loads((ROOT / "FREEZE.json").read_text())["allocation"],
               "stage": "construction/preflight", "reason": reason,
               "candidate_invocations": 0, "auditor_invocations": 0,
               "retries": 0, "formal_allocation_started": False, **details}
@@ -57,12 +57,12 @@ def source_preflight_failure(reason: str, details: dict) -> int:
 
 
 def write_preformal_failure(reason: str, details: dict) -> int:
-    path = ROOT / "results" / "preformal-03" / "construction-performance-failure.json"
+    path = RESULTS.parent / "preformal" / "construction-performance-failure.json"
     path.parent.mkdir(parents=True, exist_ok=True)
     if path.exists():
         raise SystemExit("STOP_PREFORMAL_FAILURE_RECORD_ALREADY_EXISTS")
     record = {"schema": "relational-coordinate-bounds-6684-preformal-failure-v1",
-              "allocation": "relational-coordinate-bounds-6684-t0-20261002-03",
+              "allocation": json.loads((ROOT / "FREEZE.json").read_text())["allocation"],
               "stage": "construction test", "reason": reason,
               "candidate_invocations": 0, "auditor_invocations": 0,
               "retries": 0, "formal_allocation_started": False, **details}
@@ -73,13 +73,14 @@ def write_preformal_failure(reason: str, details: dict) -> int:
 
 
 def main() -> int:
-    if RESULTS.exists() or (ROOT / "results" / "prelaunch-01").exists() or \
-            (ROOT / "results" / "preformal" / "source-preflight-failure.json").exists():
-        raise SystemExit("STOP_OUTPUT_PATH_ALREADY_EXISTS")
+    global RESULTS
     freeze_path = ROOT / "FREEZE.json"
     freeze_sha_path = ROOT / "FREEZE.sha256"
     freeze = json.loads(freeze_path.read_text())
     allocation = freeze["allocation"]
+    RESULTS = ROOT / "results" / allocation / "formal-01"
+    if RESULTS.exists():
+        raise SystemExit("STOP_OUTPUT_PATH_ALREADY_EXISTS")
     prior_freeze_sha = freeze["supersedes_freeze_sha256"]
     retired = ROOT / "FREEZE_T0_RETIRED.json"
     if retired.exists() or not freeze_sha_path.exists():
@@ -92,7 +93,7 @@ def main() -> int:
                                         {"expected": prior_freeze_sha, "actual": sha256(retired)})
     if freeze_sha_path.read_text().split()[0] != sha256(freeze_path):
         return prelaunch_stop("STOP_FREEZE_HASH_MISMATCH", {})
-    if not allocation.endswith("-03"):
+    if not allocation.endswith("-04"):
         return source_preflight_failure("STOP_WRONG_SUCCESSOR_ALLOCATION", {"allocation": allocation})
     ancestor = subprocess.run(["git", "merge-base", "--is-ancestor", freeze["source_commit"], "HEAD"],
                              cwd=ROOT, check=False, capture_output=True)
