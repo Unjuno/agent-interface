@@ -1,0 +1,26 @@
+{
+  "schema": "causal-cut-5348-t1-audit-attempt",
+  "attempt": "AUDIT-01",
+  "source_git_blob_sha": "7b7e1c23c6d28607c934036e5f64c452f3ec9c06",
+  "raw_sha256": "9f1d207ca95552af19b3416d9393bec0559028cb9fb80a2dc3212d7fff645800",
+  "exit_code": 1,
+  "output": {
+    "schema": "causal-cut-5348-t1-audit-v1",
+    "errors": [
+      "raw_reconstruction_mismatch"
+    ],
+    "integrity_pass": false,
+    "cut_rows_recomputed": 25,
+    "control_rows_recomputed": 6,
+    "candidate_imported": false
+  },
+  "diagnosis": {
+    "classification": "AUDITOR_EXPECTED_OUTPUT_SCHEMA_OMISSION",
+    "differences": [
+      "/runtime",
+      "/disposition"
+    ],
+    "candidate_runner_rerun": false,
+    "raw_modified": false
+  }
+}

@@ -258,6 +258,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`capability_snapshot_currentness_fallback_r0_v1/`](capability_snapshot_currentness_fallback_r0_v1/)
 - [`causal_attribution_5323_t0_v1/`](causal_attribution_5323_t0_v1/)
 - [`causal_critical_path_elasticity_5851_t0_v1/`](causal_critical_path_elasticity_5851_t0_v1/)
+- [`causal_cut_5348_t1/`](causal_cut_5348_t1/)
 - [`causal_temporal_attention_successor_1941_v1/`](causal_temporal_attention_successor_1941_v1/)
 - [`causal_temporal_history_2026_v1/`](causal_temporal_history_2026_v1/)
 - [`cegis_grammar_gap_4294_v1/`](cegis_grammar_gap_4294_v1/)
