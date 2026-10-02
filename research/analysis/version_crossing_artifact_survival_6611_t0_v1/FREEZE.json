@@ -1,0 +1,44 @@
+{
+  "study_id": "issue-6611-version-crossing-survival-t0-v1",
+  "issue": 6611,
+  "branch": "research/version-crossing-artifact-survival-6611-t0-20261002",
+  "intake_main": "9193a7af1023f583f12f7abc921018aa73943cae",
+  "additive_path": "research/analysis/version_crossing_artifact_survival_6611_t0_v1/",
+  "H": "On a finite synthetic artifact corpus, two routes with equal initial task-effect success can have different significant-property survival after deterministic reader-version changes, while preserving harmless transformations and recording open failure as UNKNOWN.",
+  "T": {
+    "kind": "exhaustive synthetic method-sensitivity test",
+    "artifact_families": ["calculation artifact with linked source"],
+    "routes": ["compact", "portable"],
+    "reader_cases": ["identity", "property_preserving_migration", "silent_formula_drop", "open_failure", "render_only_degradation", "cosmetic_harmless_change", "external_dependency_missing", "compact_route_survives_better"],
+    "case_count": 16,
+    "initial_contract": ["open", "value=5", "formula=2+3", "link_target=record-7", "render=5"],
+    "post_crossing_significant_properties": ["value=5", "formula=2+3", "link_target=record-7", "render=5"],
+    "metric": "synthetic route operation-cost units; not time or real effort",
+    "container": {
+      "runtime": "Microsoft WSLc",
+      "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+      "image_id": "sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4",
+      "platform": "linux/amd64",
+      "python": "3.12.14",
+      "network": "none",
+      "cpus": 0.25,
+      "memory": "256m",
+      "source_mount": "read-only",
+      "output_mount": "dedicated writable directory"
+    }
+  },
+  "D": {
+    "pass": "All routes satisfy the same initial contract; the auditor detects the planted significant-property losses and render-only degradation, accepts cosmetic-only change, retains failed opens as UNKNOWN, distinguishes post-crossing survival from parse/hash indicators, and detects the frozen case where compact survives better.",
+    "fail": "An open failure is credited as success/failure rather than UNKNOWN; harmless cosmetic change is rejected; parse success or hash identity substitutes for property/render oracle; initial contract differs by route; or controls fail.",
+    "stop": "Source/image/output provenance mismatch or candidate/audit execution failure before a complete interpretable record."
+  },
+  "C": "Reader outcomes and operation costs are hand-authored. The finite transformations do not model real office-format semantics or software versions. Route labels and relative costs are illustrative.",
+  "U": "A T0 PASS establishes only scorer sensitivity. It does not establish compatibility across real application builds, long-term preservation, format recommendations, user value, actual repair cost, or product benefit.",
+  "sources": {
+    "candidate.py": "82eb0c42d8b4c58bc0e8fe77761c14543d0a638151f9e574e044c87a5d3e85bf",
+    "audit.py": "fec047327bc2c54f064a973420ee97c51f6733d8cdb489ac2d6bca85e194c61f",
+    "fixture.json": "9f528e9e4484f5cf68cf310327d1fc52fb603beb657923a9aa799ed821c9dd8f",
+    "test_t0.py": "d40d5838be7f8ed6f3f5cbd36ef8d5ca4c94936abb70e20e2efa32acffc02fb"
+  },
+  "allocation": {"candidate_invocations": 1, "auditor_invocations": 1, "retries": 0, "real_application_invocations": 0, "network_access": 0}
+}
