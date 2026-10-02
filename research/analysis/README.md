@@ -331,6 +331,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`guard_induced_proposal_risk_6143_t0_20261002/`](guard_induced_proposal_risk_6143_t0_20261002/)
 - [`guard_policy_break_even_r0_v1/`](guard_policy_break_even_r0_v1/)
 - [`guard_policy_calibration_identifiability_r1_v1/`](guard_policy_calibration_identifiability_r1_v1/)
+- [`guard_proposal_risk_6143_t0_20261002/`](guard_proposal_risk_6143_t0_20261002/)
 - [`guard_stale_cost_2494_v1/`](guard_stale_cost_2494_v1/)
 - [`hard_boundary_equivalence_6109_t0_20261001/`](hard_boundary_equivalence_6109_t0_20261001/)
 - [`hazard_discretionary_capture_6086_t0_20261002/`](hazard_discretionary_capture_6086_t0_20261002/)
