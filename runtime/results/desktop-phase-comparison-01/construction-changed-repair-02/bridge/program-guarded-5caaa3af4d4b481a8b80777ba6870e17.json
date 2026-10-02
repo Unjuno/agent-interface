@@ -1,0 +1,91 @@
+{
+  "schema": "agent-interface/program-v1",
+  "program_id": "guarded-5caaa3af4d4b481a8b80777ba6870e17",
+  "source": {
+    "observation_seq": 5,
+    "binding_revision": 1
+  },
+  "authority": {
+    "lease_id": "native-x11-4ec49cd2ed9a44a680b7a7420237569e",
+    "expires_at_ns": 9339106168765
+  },
+  "terminal": {
+    "release_all_required": true
+  },
+  "ops": [
+    {
+      "op": "focus",
+      "target": "app"
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "CTRL",
+        "Home"
+      ]
+    },
+    {
+      "op": "text",
+      "text": "3"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 20
+    },
+    {
+      "op": "text",
+      "text": "1"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 20
+    },
+    {
+      "op": "text",
+      "text": "7"
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "ENTER"
+      ]
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 100
+    },
+    {
+      "op": "text",
+      "text": "5"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 20
+    },
+    {
+      "op": "text",
+      "text": "2"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 20
+    },
+    {
+      "op": "text",
+      "text": "9"
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "ENTER"
+      ]
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 100
+    },
+    {
+      "op": "release_all"
+    }
+  ]
+}

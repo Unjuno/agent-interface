@@ -1,0 +1,20 @@
+{
+  "schema":"wake-fence-6331-fixture.v1",
+  "ttl_ns":160,
+  "scenarios":[
+    {"id":"no_gap","mono_elapsed_ns":50,"boottime_elapsed_ns":50,"wake_notice":"none","held_input":false,"release_ack":false,"fresh_rebind":false,"clock_coverage":"complete"},
+    {"id":"short_wake","mono_elapsed_ns":10,"boottime_elapsed_ns":60,"wake_notice":"on_time","held_input":false,"release_ack":false,"fresh_rebind":false,"clock_coverage":"complete"},
+    {"id":"long_wake","mono_elapsed_ns":0,"boottime_elapsed_ns":200,"wake_notice":"on_time","held_input":false,"release_ack":false,"fresh_rebind":false,"clock_coverage":"complete"},
+    {"id":"awake_expiry","mono_elapsed_ns":160,"boottime_elapsed_ns":160,"wake_notice":"none","held_input":false,"release_ack":false,"fresh_rebind":false,"clock_coverage":"complete"},
+    {"id":"missed_notice_held","mono_elapsed_ns":0,"boottime_elapsed_ns":200,"wake_notice":"missing","held_input":true,"release_ack":false,"fresh_rebind":false,"clock_coverage":"complete"},
+    {"id":"late_notice_held","mono_elapsed_ns":0,"boottime_elapsed_ns":200,"wake_notice":"late_after_first_admission","held_input":true,"release_ack":false,"fresh_rebind":false,"clock_coverage":"complete"},
+    {"id":"wake_ack_rebind","mono_elapsed_ns":0,"boottime_elapsed_ns":200,"wake_notice":"on_time","held_input":true,"release_ack":true,"fresh_rebind":true,"clock_coverage":"complete"},
+    {"id":"clock_coverage_gap","mono_elapsed_ns":null,"boottime_elapsed_ns":200,"wake_notice":"missing","held_input":true,"release_ack":false,"fresh_rebind":false,"clock_coverage":"incomplete"}
+  ],
+  "mutations":[
+    {"id":"flip_clock_verdict","kind":"replace","scenario":"long_wake","arm":"current_perf_lease","field":"outcome","value":"EXPIRED"},
+    {"id":"erase_release_request","kind":"replace","scenario":"missed_notice_held","arm":"wake_fence","field":"release_requested","value":false},
+    {"id":"claim_unobserved_release","kind":"replace","scenario":"wake_ack_rebind","arm":"wake_fence","field":"release_ack_observed","value":false},
+    {"id":"promote_missing_wake","kind":"replace","scenario":"missed_notice_held","arm":"wake_fence","field":"outcome","value":"ADMIT_OLD_AUTHORITY"}
+  ]
+}
