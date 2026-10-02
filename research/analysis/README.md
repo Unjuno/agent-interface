@@ -1,6 +1,8 @@
 # Analytical research
 
 - [`revision_timed_cutover_6617_t0_v1/REPORT.md`](revision_timed_cutover_6617_t0_v1/REPORT.md) — Issue #6617 WSLc synthetic T0: 30 event traces independently audited; one stable scripted case saved 3 logical ticks; no speech, GUI, human, or real-latency result.
+- [`disturbance_timescale_6604_t0_v1/REPORT.md`](disturbance_timescale_6604_t0_v1/REPORT.md) — Issue #6604 isolated OrbStack Docker successor: 14 synthetic rows independently audited `PASS_METHOD_SCOPED`; pooled score hides a planted slow-stratum local win; no real route/controller claim.
+
 - [`frame_qualified_collateral_6533_t0_20261002/REPORT.md`](frame_qualified_collateral_6533_t0_20261002/REPORT.md) — Issue #6533 T0: 44/44 synthetic rows independently reconstructed; qualified-frame matched the full-state oracle, with a 79.1% aggregate accounted-byte reduction but a 2.13× regression at the smallest size. Method-scoped only; no GUI/product safety or performance claim.
 
 - [`claim_scoped_partial_verdict_6509_t0_20261002/REPORT.md`](claim_scoped_partial_verdict_6509_t0_20261002/REPORT.md) — Issue #6509: 45-row OrbStack candidate and independent audit passed the finite claim-ladder method gate; unsafe scalar comparator had 11 partial ALLOWs; logical early-reject advantage is simulation-only.
@@ -289,6 +291,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`desktop_lifecycle_rebind_3190_host_preflight_v1/`](desktop_lifecycle_rebind_3190_host_preflight_v1/)
 - [`deterministic_replay_boundary_r0_v1/`](deterministic_replay_boundary_r0_v1/)
 - [`disturbance_response_5771_t1_v3/`](disturbance_response_5771_t1_v3/)
+- [`disturbance_timescale_6604_t0_v1/`](disturbance_timescale_6604_t0_v1/)
 - [`effect_interference_5366_t2_v1/`](effect_interference_5366_t2_v1/)
 - [`effect_interference_5366_t3_v1/`](effect_interference_5366_t3_v1/)
 - [`effect_path_antiwindup_5791_eligibility_v1/`](effect_path_antiwindup_5791_eligibility_v1/)
