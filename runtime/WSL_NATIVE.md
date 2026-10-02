@@ -70,10 +70,29 @@ Ubuntu; optional isolated runs use WSLc. Existing research workflows that requir
 a frozen Docker image/environment remain historical or separately scoped, and
 are not silently relabeled as WSLc results.
 
-No global `.wslconfig` was changed or WSL shutdown performed. Other MCP servers
-and Git operations were active in Ubuntu. Global memory limits apply to all WSL2
-distros and take effect on VM restart. Configure those only against the combined
-workload budget, rather than claiming a lower limit alone fixes an OOM condition.
+The initial migration did not change global `.wslconfig`. A subsequent local
+confirmation staged the following host budget on this 16 GB Windows machine:
+
+```ini
+[wsl2]
+memory=6GB
+swap=2GB
+[experimental]
+autoMemoryReclaim=dropCache
+```
+
+These are host-specific settings, not project defaults. The running Ubuntu VM
+still reports approximately 7.6 GiB total RAM; the 6 GB cap remains pending a
+complete WSL stop/start. Other MCP servers are active, so no global shutdown was
+performed. At a coordinated idle boundary, stop owned work, run `wsl --shutdown`,
+and start Ubuntu again. Check `/proc/meminfo` after starting it before declaring
+the cap active. Global limits affect all WSL2 distros; swap uses host disk space.
+A configured cap alone does not prove that peak memory or OOMs improved.
+
+[Native migration confirmation](results/wsl-native-migration-confirmation-20261002-01/README.md)
+retains the 409 protocol and 192 harness checks, staged configuration and host
+snapshot. Optional WSLc memory enforcement was inadequate in the prior host
+experiment, so Ubuntu direct execution is the normal integration route.
 
 [Migration evidence](results/wsl301-docker-free-migration-01/README.md) records the
 native suite result and actual bounded WSLc launch. No matched Docker/WSLc speed,
@@ -82,3 +101,27 @@ peak-memory, provider-token or application-success improvement is established.
 References: [WSL 3.0.1](https://github.com/microsoft/WSL/releases/tag/3.0.1),
 [WSL containers GA](https://blogs.windows.com/windowsdeveloper/2026/09/29/wsl-containers-now-generally-available/),
 [WSL configuration](https://learn.microsoft.com/en-us/windows/wsl/wsl-config).
+
+## Repeat checks from Windows without reinstalling dependencies
+
+Use [wsl-native.ps1](integration_checks/wsl-native.ps1) with an absolute Linux
+repository path and a fresh result directory:
+
+```powershell
+pwsh -NoProfile -ExecutionPolicy Bypass -File ./runtime/integration_checks/wsl-native.ps1 `
+  -Repository /var/tmp/agent-interface-evidence-storage-main `
+  -Output results-local/native-iteration-01
+```
+
+The explicit process-scoped execution policy also permits the inspected script
+when the checkout is accessed through a WSL UNC path; it does not change the
+host execution policy. Direct UNC invocation was refused by this host policy
+before any suite started.
+
+This forwards to the same native runner, propagates its exit code and never
+builds an image or installs dependencies. Interpreter paths are overridable.
+If the reused environment is absent, provision it once using the commands above;
+subsequent iterations reuse it. Keep live profiles and output in the Linux
+filesystem. Existing registered integration MCP configuration already launches
+`wsl.exe --cd /var/tmp/agent-interface-integrated-main --exec ...native_mcp_v1.py`;
+it requires no Docker daemon. This evidence checkout is a separate source path.
