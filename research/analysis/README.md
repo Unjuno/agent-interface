@@ -174,7 +174,6 @@ The table below summarizes major analytical chains and representative retained o
 This compact list is generated from child directories that contain `REPORT.md` or `FORMAL_FAILURE.md`, or `STOP.md`. It is the completeness surface used by the index checker.
 
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
-- [`ime_commit_effect_6523_t0_v1/`](ime_commit_effect_6523_t0_v1/)
 
 <details>
 <summary><strong>Expand all retained result/failure directories</strong></summary>
@@ -260,6 +259,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`cegis_skill_4262_v1/`](cegis_skill_4262_v1/)
 - [`censored_useful_effect_integrity_2514_v1/`](censored_useful_effect_integrity_2514_v1/)
 - [`censored_useful_effect_membership_successor_1838_v1/`](censored_useful_effect_membership_successor_1838_v1/)
+- [`cex_qualified_guard_refinement_6645_t0_v1/`](cex_qualified_guard_refinement_6645_t0_v1/)
 - [`change_cue_contrast_1931_v1/`](change_cue_contrast_1931_v1/)
 - [`claim_ladder_6113_t0_20261002/`](claim_ladder_6113_t0_20261002/)
 - [`claim_scoped_partial_verdict_6509_t0_20261002/`](claim_scoped_partial_verdict_6509_t0_20261002/)
@@ -366,6 +366,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`human_return_resumption_6492_t0_20261002/`](human_return_resumption_6492_t0_20261002/)
 - [`human_return_to_own_work_6492_t0_20261002_v1/`](human_return_to_own_work_6492_t0_20261002_v1/)
 - [`iconfluence_5547_t0_v1/`](iconfluence_5547_t0_v1/)
+- [`ime_commit_effect_6523_t0_v1/`](ime_commit_effect_6523_t0_v1/)
 - [`incremental_focus_fold_z7r2_v1/`](incremental_focus_fold_z7r2_v1/)
 - [`independent_effect_evidence_successor_1295_v1/`](independent_effect_evidence_successor_1295_v1/)
 - [`infra_speed_fairness_6347_boundary_successor_v1/`](infra_speed_fairness_6347_boundary_successor_v1/)
@@ -575,8 +576,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`siphon_5410_t0/`](siphon_5410_t0/)
 - [`skill_applicability_6262_gpu_t0_v1/`](skill_applicability_6262_gpu_t0_v1/)
 - [`skill_applicability_6262_wslc_t0b_v1/`](skill_applicability_6262_wslc_t0b_v1/)
-- [`skill_router_adapter_selection_3446_v1/`](skill_router_adapter_selection_3446_v1/)
 - [`skill_registry_topk_starvation_751_t0_20261002/`](skill_registry_topk_starvation_751_t0_20261002/)
+- [`skill_router_adapter_selection_3446_v1/`](skill_router_adapter_selection_3446_v1/)
 - [`soft_revisit_bias_5756_t0_wslc_20261002/`](soft_revisit_bias_5756_t0_wslc_20261002/)
 - [`source_bound_gui_frame_preflight_2193_v1/`](source_bound_gui_frame_preflight_2193_v1/)
 - [`source_window_type_boundary_4782_v1/`](source_window_type_boundary_4782_v1/)
