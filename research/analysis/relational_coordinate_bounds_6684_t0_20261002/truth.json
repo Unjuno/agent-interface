@@ -1,0 +1,17 @@
+{
+  "schema": "relational-coordinate-independent-truth-v1",
+  "expected": {
+    "common_safe": {"oracle_safe": true, "box_admit": false, "relational_admit": true, "reason": "relational_safe"},
+    "common_boundary": {"oracle_safe": true, "box_admit": false, "relational_admit": true, "reason": "relational_safe"},
+    "common_unsafe": {"oracle_safe": false, "box_admit": false, "relational_admit": false, "reason": "unknown_geometry"},
+    "independent_no_gain": {"oracle_safe": false, "box_admit": false, "relational_admit": false, "reason": "unknown_geometry"},
+    "neighbor_overlap": {"oracle_safe": false, "box_admit": false, "relational_admit": false, "reason": "unknown_geometry"},
+    "mutate_sign": {"oracle_safe": false, "box_admit": false, "relational_admit": false, "reason": "relation_sign_invalid"},
+    "mutate_units": {"oracle_safe": false, "box_admit": false, "relational_admit": false, "reason": "unit_mismatch"},
+    "mutate_frame": {"oracle_safe": false, "box_admit": false, "relational_admit": false, "reason": "frame_mismatch"},
+    "mutate_epoch": {"oracle_safe": false, "box_admit": false, "relational_admit": false, "reason": "stale_epoch"},
+    "mutate_identity": {"oracle_safe": false, "box_admit": false, "relational_admit": false, "reason": "target_identity_mismatch"},
+    "mutate_contradiction": {"oracle_safe": false, "box_admit": false, "relational_admit": false, "reason": "contradictory_zone"}
+  }
+}
+
