@@ -604,3 +604,34 @@ a completed Return plus a 100ms wait still captured the dialog; a fresh read-onl
 inspection confirmed it had closed. Do not repeat uncertain input merely because
 the result image has not yet changed. This is scoped usability evidence, not a
 matched speed, token/cost or generic readiness result.
+
+## Select feedback context explicitly
+
+Use the existing capture region to keep the evidence needed for the next decision
+readable. A small cell view may suffice to check entered numbers; a format dialog
+needs its header and choice buttons; final save confirmation may need a wider
+view. Preserve the returned frame, origin, dimensions and original image hash.
+For `screen_physical_px`, translate local image coordinates by the returned origin.
+`window_client` uses a different frame. A region view does not grant target or
+input authority, and completion cues outside it remain unknown.
+
+Persistent public MCP can request read-only post-release target inspection and
+an explicit region in the same dispatch using
+[`inspect_after` options](cli_v1/MCP.md#explicit-post-dispatch-target-context-and-capture-region).
+The public Python API uses `MCPSessionOwner.inspect_after_dispatch` with
+`screen_region` and an optional `wait_ms`, then `present_result` returns its
+selected original ImageContent and reference. CLI text alone does not present
+pixels: assistant hosts must forward the image block as an image and keep the
+outcome metadata. Direct original forwarding is useful plumbing, but does not
+by itself prove the primary saw every pixel.
+
+[Current primary region admission](results/explicit-region-admission-01/README.md)
+completed a fresh Calc save with seven commands, three input programs and one
+extra full-frame observation. Initial cells and the format modal were readable;
+a repeated modal image was used only after exact equality to the immediately
+reviewed original from that same owner. Final100ms feedback still showed the
+old dialog, so the primary withheld completion and observed separately.
+[The prior direct-forwarding STOP](results/direct-selected-image-01/README.md)
+remains retained. These are bounded integration results, not a general image
+compression, token-cost, latency or human-speed claim. Region selection remains
+explicit and defaults remain unchanged.
