@@ -1,29 +1,15 @@
 # Local CI record
 
-## Current-main run after formal allocation 02
+## Current-main validation after rebase
 
-Revalidated after rebasing the result commit onto main `89f4fbd399f352c19f63ef543519b53fc4ed2025` (2026-10-02). The updated `.github/workflows/analysis-index.yml` sequence passed **66 tests across 12 suites**: the 59 tests from the prior sequence plus the new #6617 suite (7 tests), including #6604's 11/11. Its first run found the #6617 and #6604 directories absent from this sparse checkout (`NO TESTS RAN`, exit 5); both exact directories were added to the local sparse paths and the exact suites then passed 7/7 and 11/11. This was checkout setup, not a test or experiment result. Current-main `research/analysis/check_index.py` passed with 463 retained result/failure directories; public navigation passed with 26 documents / 1,400 relative links; workspace index passed with 156 top-level directories. JSON validation and the refreshed package SHA256SUMS passed. `FREEZE.json` and its workflow hash remain the preserved earlier freeze; main's intervening workflow change only added the independently retained #6617 suite step, and the current workflow hash is recorded by SHA256SUMS. The historical `git diff --check` note below concerns Markdown hard-break trailing spaces in preserved `PLAN.md` and `PREREGISTRATION.md`, not the experiment source/result.
+Validated 2026-10-02 on branch `research/disturbance-timescale-6604-t0-orbstack-20261002`, rebased onto main `a2f157397adcfdf490d010707a6a413c9a8c0562`.
 
-Validated on 2026-10-02 from branch `research/disturbance-timescale-6604-t0-orbstack-20261002`, fast-forwarded to current main `3246a9b6cb7a19209c4056d01472cb660390c4f4` before local checks.
+- Exact current Analysis Index workflow sequence: **76 tests PASS across 13 suites**. This includes the #6590 geometry-feasibility suite (10 tests), #6617 (7), and #6604 (11).
+- `research/analysis/check_index.py`: **PASS**, 481 retained result/failure directories indexed.
+- `.github/check_public_navigation.py`: **PASS**, 26 documents / 1,421 repository-relative links.
+- `research/check_workspace_index.py --git-tree`: **PASS**, 156 top-level directories reachable.
+- The Actions workflow restores frozen workflow source `e2e434dd07e1034c5c4303982a0b1ec33ea35cfd` before tests; this local run reproduced that setup and verified its pinned SHA-256. The restored file was returned to the branch version afterward.
+- Initial local attempts exposed two setup mismatches: the sparse checkout lacked 12 directories already retained in main's generated analysis index, and two suites require the workflow's declared working directory/frozen-workflow setup. The directories were materialized locally without changing the generated index; the full exact sequence then passed. These were local harness setup issues, not source or experiment failures.
+- The first direct hash-check command was GNU-specific and unavailable on macOS; the same frozen-source digest was verified with `shasum -a 256`.
 
-- Issue #6604 construction suite: **11/11 PASS**.
-- Existing Analysis Index test steps: **48 tests PASS** across ten suites, including the #6590 mutation challenge after its full sparse path was materialized; #6604 adds 11, for **59 tests PASS** total. (The existing ten-suite steps were last executed on the preceding base `7ae79a8`; current-base checks below were rerun.)
-- Current-base `research/analysis/check_index.py`: **PASS**, 458 retained result/failure directories.
-- Current-base `.github/check_public_navigation.py`: **PASS**, 26 documents / 1,384 relative links.
-- Current-base `research/check_workspace_index.py --git-tree`: **PASS**, 156 top-level directories.
-- `git diff --check`: **PASS**.
-- SHA256SUMS was refreshed after this record and FREEZE base metadata were updated; full manifest verification is recorded below after refresh.
-
-- Issue #6604 construction suite: **8/8 PASS**.
-- Existing Analysis Index test steps: **48 tests PASS** across ten suites, including the #6590 mutation challenge after its full sparse path was materialized; #6604 adds 11, for **59 tests PASS** total.
-- `research/analysis/check_index.py`: **PASS**, 458 retained result/failure directories.
-- `.github/check_public_navigation.py`: **PASS**, 26 documents / 1,384 relative links.
-- `research/check_workspace_index.py --git-tree`: **PASS**, 156 top-level directories.
-- `sha256sum -c research/analysis/disturbance_timescale_6604_t0_v1/SHA256SUMS`: all listed files **PASS**.
-- `git diff --check`: **PASS**.
-
-This checkout is sparse. The initial #6590 command failed because the mutation-challenge subtree and its parent candidate/auditor sources were marked skip-worktree and absent locally. After adding `research/analysis/spatial_block_position_6590_t0_20261002` to this worktree's sparse-checkout paths, the exact workflow command passed 1/1. No #6590 files or workflow step were modified.
-
-One local invocation of #6492 `allocation-02` was initially issued from the repository root instead of the workflow's declared working directory and failed import resolution; rerunning the exact command from `research/analysis/human_return_resumption_6492_t0_20261002` passed 1/1. This is a corrected command-location setup error, not a research result or source failure.
-
-The host-local construction/CI checks are distinct from the completed isolated OrbStack formal T0; see `formal_02/REPORT.md` and `formal_02/RUN_RECORD.json` for that allocation's evidence.
+The formal isolated OrbStack allocation is separate from host-local construction/CI checks. See `formal_02/REPORT.md` and `formal_02/RUN_RECORD.json`; no real GUI/DOOM efficacy or product-level benefit is claimed.
