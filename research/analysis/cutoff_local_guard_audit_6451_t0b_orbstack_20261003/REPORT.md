@@ -2,7 +2,7 @@
 
 ## Disposition
 
-Formal candidate and auditor have not run. No scientific disposition is implied by pre-formal construction checks.
+Formal candidate and auditor have not run. Latest main `5d02cdb388caa2ba9464bc84486bb533854878d9` was merged before allocation start; all frozen source hashes are unchanged. The full local Analysis Index suite then passed 19 commands / 114 tests; A02 construction 5/5 and index 555 passed. No scientific disposition is implied by these checks.
 
 ## H / T / D / C / U
 
