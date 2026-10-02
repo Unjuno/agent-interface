@@ -1,0 +1,23 @@
+{
+  "schema": "issue-6509-t0-construction-stop-v1",
+  "allocation": "CLAIM-SCOPED-PARTIAL-VERDICT-6509-T0-20261002-01",
+  "status": "STOP_PROTOCOL_COMMAND_MISMATCH",
+  "invocation_count": 1,
+  "retry_count": 0,
+  "expected_command": "python -B -c <print /sys/fs/cgroup/memory.max and Python version> && python -B -m unittest -v test_protocol",
+  "actual_command": "python -B -c \"import sys; print(sys.version); print(open('/sys/fs/cgroup/memory.max').read().strip())\"",
+  "expected_test_suite_ran": false,
+  "exit_code": 0,
+  "container_id": "d6031c661294",
+  "container_name": "claim-ladder-6509-construction",
+  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "observed_python": "3.12.14",
+  "observed_cgroup_memory_max_bytes": 1073741824,
+  "warning": "wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.",
+  "interpretation": "Runtime identity and configured memory ceiling were observed, but the required frozen unittest command was omitted. The construction rung is consumed; exit 0 does not establish construction PASS.",
+  "candidate_ran": false,
+  "auditor_ran": false,
+  "timestamps": {
+    "container_created_local": "2026-10-02 13:20:08 +0900 JST"
+  }
+}
