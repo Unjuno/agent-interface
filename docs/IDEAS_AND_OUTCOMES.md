@@ -112,6 +112,17 @@ The point-in-time discovery inventory of research-labeled Issues and Issues whos
 | [#1936](https://github.com/Unjuno/agent-interface/issues/1936) attention-cue provenance | Merged [PR #2039](https://github.com/Unjuno/agent-interface/pull/2039) validated the finite provenance contract: required observed/inferred fields pass; missing frame, invalid confidence, and authority escalation reject. | Schema-level only; no detector or model usefulness claim. Open follow-up [#2755](https://github.com/Unjuno/agent-interface/issues/2755) tests diagnostic value and integrity on frozen evidence. |
 | [#1934](https://github.com/Unjuno/agent-interface/issues/1934) action-conditioned attention routing | Merged [PR #2059](https://github.com/Unjuno/agent-interface/pull/2059) found save/move routes choose disjoint intent-appropriate regions, while unknown/malformed intents fail closed; raw evidence retained and authority stayed false. | Finite routing-safety result only, not model/GUI benefit. Open follow-up [#2757](https://github.com/Unjuno/agent-interface/issues/2757) tests whether routing improves decisions and remains separate. |
 
+
+### Closed parents continued by open successors
+
+A parent's closure does not close a distinct transfer question. These checked lineages keep the parent disposition and successor scope separate.
+
+| Closed parent / finite result | Open successor and what remains |
+|---|---|
+| [#6184](https://github.com/Unjuno/agent-interface/issues/6184) → [#6191](https://github.com/Unjuno/agent-interface/pull/6191) | The finite synthetic sensor-cover method earned **PASS_METHOD_SCOPED**: 16 subsets; unique minimum `{app_status, os_focus_input}` cost 7 (full bundle 11; greedy 8); screenshot-only and effect-alias controls had no sufficient cover; producer dropout failed closed; 4/4 mutations rejected. A construction attempt had 6/7 tests pass but formal candidate=0; a separate local execution then disclosed candidate once and auditor twice after another worker had run the allocation. Preserve that duplicate/provenance STOP; do not count it as another scientific result. The official PR #6191 is merged. [#6181](https://github.com/Unjuno/agent-interface/issues/6181) was reopened because the finite PASS does not establish real GUI sensor independence, measured costs, safety, provenance/common-cause behavior, or product readiness. No GUI/GPU/model result. |
+| [#6353](https://github.com/Unjuno/agent-interface/issues/6353) → closed [#1968](https://github.com/Unjuno/agent-interface/issues/1968) → [open #2031](https://github.com/Unjuno/agent-interface/issues/2031) | #6353 closed as duplicate after collision audit found no distinct falsifiable method remainder: #2031 already owns truth-independent region selection, coordinate mapping, byte-cost accounting and adversarial controls, plus model-facing utility. Preserve #1968's `HOLD_NO_FORMAL_CONTAINER` and its separate later scoped report; WSLc availability does not create a distinct result. Do not launch #6353's proposed duplicate allocation. |
+
+
 These entries summarize documented outcomes, not closure labels. Successor STOPs remain STOPs and do not erase predecessor results.
 
 This curated page is not exhaustive of all repository Issues. Keep its thematic summaries current, and use the full inventory to discover open/closed research threads; preserve full raw logs and detailed claims in linked Issues, PRs, and reports.
