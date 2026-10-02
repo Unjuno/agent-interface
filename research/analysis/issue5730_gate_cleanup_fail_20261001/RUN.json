@@ -1,0 +1,138 @@
+{
+  "base_main": "5ff239141f49c1603c0f6b078268f4a2f6e082df",
+  "candidate_invocations": 5,
+  "cases": [
+    {
+      "candidate_calls": 0,
+      "case": "empty_inventory",
+      "outcome": {
+        "candidate_invocations": 0,
+        "raw_sha256": null,
+        "scientific_result": "NOT_EVALUATED",
+        "status": "STOP_INVENTORY_OUTPUT_EMPTY_OR_MISSING"
+      },
+      "published_artifact_sha256": null
+    },
+    {
+      "candidate_calls": 0,
+      "case": "inventory_command_failure",
+      "outcome": {
+        "candidate_invocations": 0,
+        "raw_sha256": null,
+        "scientific_result": "NOT_EVALUATED",
+        "status": "STOP_INVENTORY_COMMAND_FAILED"
+      },
+      "published_artifact_sha256": null
+    },
+    {
+      "candidate_calls": 0,
+      "case": "malformed_inventory",
+      "outcome": {
+        "candidate_invocations": 0,
+        "raw_sha256": null,
+        "scientific_result": "NOT_EVALUATED",
+        "status": "STOP_INVENTORY_OUTPUT_MALFORMED"
+      },
+      "published_artifact_sha256": null
+    },
+    {
+      "candidate_calls": 0,
+      "case": "inventory_schema_invalid",
+      "outcome": {
+        "candidate_invocations": 0,
+        "raw_sha256": null,
+        "scientific_result": "NOT_EVALUATED",
+        "status": "STOP_INVENTORY_SCHEMA_INVALID"
+      },
+      "published_artifact_sha256": null
+    },
+    {
+      "candidate_calls": 0,
+      "case": "incomplete_source_identity",
+      "outcome": {
+        "candidate_invocations": 0,
+        "raw_sha256": null,
+        "scientific_result": "NOT_EVALUATED",
+        "status": "STOP_SOURCE_IDENTITY_INCOMPLETE"
+      },
+      "published_artifact_sha256": null
+    },
+    {
+      "candidate_calls": 0,
+      "case": "changed_source_digest",
+      "outcome": {
+        "candidate_invocations": 0,
+        "raw_sha256": null,
+        "scientific_result": "NOT_EVALUATED",
+        "status": "STOP_SOURCE_IDENTITY_CHANGED"
+      },
+      "published_artifact_sha256": null
+    },
+    {
+      "candidate_calls": 1,
+      "case": "candidate_nonzero",
+      "outcome": {
+        "candidate_invocations": 1,
+        "raw_sha256": null,
+        "scientific_result": "NOT_EVALUATED",
+        "status": "STOP_CANDIDATE_NONZERO"
+      },
+      "published_artifact_sha256": null
+    },
+    {
+      "candidate_calls": 1,
+      "case": "candidate_output_absent",
+      "outcome": {
+        "candidate_invocations": 1,
+        "raw_sha256": null,
+        "scientific_result": "NOT_EVALUATED",
+        "status": "STOP_OUTPUT_MISSING_OR_TRUNCATED"
+      },
+      "published_artifact_sha256": null
+    },
+    {
+      "candidate_calls": 1,
+      "case": "candidate_json_truncated",
+      "outcome": {
+        "candidate_invocations": 1,
+        "raw_sha256": null,
+        "scientific_result": "NOT_EVALUATED",
+        "status": "STOP_OUTPUT_MISSING_OR_TRUNCATED"
+      },
+      "published_artifact_sha256": null
+    },
+    {
+      "candidate_calls": 1,
+      "case": "postwrite_digest_mismatch",
+      "outcome": {
+        "candidate_invocations": 1,
+        "raw_sha256": null,
+        "scientific_result": "NOT_EVALUATED",
+        "status": "STOP_POSTWRITE_DIGEST_MISMATCH"
+      },
+      "published_artifact_sha256": "61627ac50e5dddfd98ea963b9e406d7621af482e5b01341a9c246cfe41a38863"
+    },
+    {
+      "candidate_calls": 1,
+      "case": "valid_success",
+      "outcome": {
+        "candidate_invocations": 1,
+        "raw_sha256": "f89883766b7272dbb5a205ae0af60b9e649b8ee5370131bcc6f90f7f655ecc8d",
+        "scientific_result": "READY_FOR_INDEPENDENT_AUDIT",
+        "status": "ARTIFACT_PUBLISHED"
+      },
+      "published_artifact_sha256": "f89883766b7272dbb5a205ae0af60b9e649b8ee5370131bcc6f90f7f655ecc8d"
+    }
+  ],
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "schema": "issue5730-construction-run-v1",
+  "scope": "synthetic host-only; no GPU, CUDA, Docker, model, game, GUI or input",
+  "source_sha256": {
+    "PREREG.md": "8d5dbd1d9f6e8efc753a8ef211b6aedd66d89ee4aa2ad1492d3b6d8a888da312",
+    "audit.py": "9c719bbeda1edd6d1c569a8a90f8caeb56f01d529aa5f74aec384c2337e6ea4a",
+    "gate.py": "16ee28ef0ee97da19e89de97a3a01e132055023013fb9c2b579a4264462c498c",
+    "run_construction.py": "590e2fbfe82191d2ac19381500767c8514f8acbf64b22cb1c27716dfb06dd7ff",
+    "test_audit.py": "9cf1b45af14a5e628a566e9976a4c637e70290017ef6a3fa9e8f09cb80b405e1",
+    "test_gate.py": "9e91dbb23dd1a90596079df0d59724fd4ff0497b592b34a74102ab9afcedc410"
+  }
+}
