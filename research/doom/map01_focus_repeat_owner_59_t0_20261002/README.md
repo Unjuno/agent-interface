@@ -123,3 +123,7 @@ are in `formal_01_20261002/RESULTS.md` and `RESULTS_SHA256SUMS.txt`.
 
 This is a single private Xvfb/XTEST mechanism result. No GPU was used because
 this event-order fixture is not GPU-compute-bound.
+
+## Protocol deviation disclosure
+
+After the primary one-shot result had already been committed, a second candidate/auditor pair was accidentally launched under the same consumed allocation because the live PR branch was not rechecked immediately before execution. The second pair is **not** a replication or additional scientific evidence. Its raw files are isolated under [`collision_run_02_20261002/`](collision_run_02_20261002/RUN_RECORD.md); allocation-wide actual invocation counts are 2/2, not 1/1. The primary formal result and raw files remain unchanged. No further invocation is permitted for this allocation; see the Issue #59 disclosure and linked preservation PR.
