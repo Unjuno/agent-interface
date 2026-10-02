@@ -1,6 +1,6 @@
 # Issue #5156 allocation-13: explicit-up owner/caller bracket in private Xvfb
 
-Status at freeze: candidate and independent audit not run. A12's terminal case-lifecycle STOP is preserved separately; A13 uses a new source base, path, output directory and one-shot allocation.
+Status: **STOP — candidate failed; auditor not run; no retry.** The one-shot candidate reached all explicit-up, stale-owner, and two teardown observations, then failed collecting cancellation cleanup by looking in a lease-local receipt list. The existing owner record confirms cleanup itself was logged; the lease-local instrumentation sink was the wrong retrieval path. This is a candidate/harness failure, not a passing formal result and not evidence that owner cancellation cleanup failed.
 
 ## H / T / D / C / U
 
@@ -41,3 +41,10 @@ docker run --name unjuno-5156-xvfb-a13-candidate --rm --pull=never --platform li
 Only on candidate exit 0, run exactly one independent auditor in a fresh network-disabled container with read-only source/result mounts and separate audit output. Nonzero candidate exit forbids the auditor and all retries for A13. Preserve exact raw/stdout/stderr/status without repairing the consumed allocation.
 
 A12 partial raw and `STOP_CASE_SETUP_ACTIVE_PREVIOUS_LEASE` remain in its separate branch/PR; A13 does not reuse them.
+
+## Formal outcome
+
+- Candidate: **FAIL** (one execution; exit 1); independent auditor: **NOT RUN** (forbidden after candidate failure); retries: **0**.
+- Failure: `RuntimeError: cancel cleanup did not produce exactly one release receipt` at candidate line 399. The runner searched `lease3._a13_owner_release_receipts`, but cancellation cleanup is performed asynchronously by the owner thread and the meaningful cleanup evidence is its owner record.
+- Raw evidence: `raw.json`, SHA-256 `e9c70ea55924e428a52b9edbd8a7e16f7c61b30ecee11769407e56e5ee660daf`. It retains three explicit-up rows, stale-up rejection while W remained down, both neutral case teardowns, clean owner/Xvfb status, and the exact terminal exception. Since candidate_status is failed and cancellation evidence was not joined, this is not auditable as a full successful experiment.
+- STOP reason: this allocation is consumed. A successor must separately test owner-record extraction, bind cleanup rows to the cancel admission identity, and add positive/corruption controls before a one-shot candidate.
