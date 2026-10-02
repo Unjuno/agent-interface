@@ -494,6 +494,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`register_automaton_dynamic_identity_r0_v1/`](register_automaton_dynamic_identity_r0_v1/)
 - [`relational_noninterference_5811_t0_v1/`](relational_noninterference_5811_t0_v1/)
 - [`rent_compile_5870_t0_v1/`](rent_compile_5870_t0_v1/)
+- [`representation_contrast_6624_t0_v1/`](representation_contrast_6624_t0_v1/)
 - [`research_failure_detector_5531_t4/`](research_failure_detector_5531_t4/)
 - [`research_failure_detector_5531_t5/`](research_failure_detector_5531_t5/)
 - [`resident_gtk_incremental_3518_v1/`](resident_gtk_incremental_3518_v1/)
