@@ -42,6 +42,11 @@ def run(args) -> int:
         stage = "git_head_and_main"
         head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=source, text=True).strip()
         parent = subprocess.check_output(["git", "rev-parse", "HEAD^"], cwd=source, text=True).strip()
+        frozen_main = freeze["main_sha"]
+        ancestry = subprocess.run(["git", "merge-base", "--is-ancestor", frozen_main, parent],
+                                  cwd=source, text=True, capture_output=True)
+        if ancestry.returncode != 0:
+            raise ValueError(f"STOP_SOURCE_BASE_NOT_FROZEN_MAIN:{parent}")
         if parent != freeze["source_commit"]:
             raise ValueError(f"STOP_SOURCE_COMMIT_MISMATCH:{head}:parent={parent}")
         changed = subprocess.check_output(["git", "diff-tree", "--no-commit-id", "--name-only", "-r", "HEAD"],
@@ -54,19 +59,18 @@ def run(args) -> int:
         main_row = subprocess.check_output(["git", "ls-remote", "origin", "refs/heads/main"],
                                            cwd=source, text=True).strip().split()
         live_main = main_row[0] if main_row else ""
-        ancestor = subprocess.run(["git", "merge-base", "--is-ancestor", freeze["main_sha"], live_main],
+        ancestor = subprocess.run(["git", "merge-base", "--is-ancestor", live_main, head],
                                   cwd=source, text=True, capture_output=True)
         if ancestor.returncode != 0:
-            raise ValueError(f"STOP_FROZEN_MAIN_NOT_ANCESTOR:{live_main}")
+            raise ValueError(f"STOP_LIVE_MAIN_NOT_ANCESTOR_OF_SOURCE:{live_main}")
         main_changes = subprocess.check_output(["git", "diff", "--name-only",
-                                                freeze["main_sha"], live_main],
+                                                live_main, head],
                                                cwd=source, text=True).splitlines()
-        protected = freeze["main_conflict_paths"]
-        collisions = [path for path in main_changes
-                      if any(path == prefix or path.startswith(prefix.rstrip("/") + "/")
-                             for prefix in protected)]
+        package_prefix = freeze["package_path"].rstrip("/") + "/"
+        collisions = [path for path in main_changes if not path.startswith(package_prefix)
+                      and path != ".github/workflows/spatial-block-6590-t1.yml"]
         if collisions:
-            raise ValueError(f"STOP_MAIN_RELEVANT_ADVANCE:{collisions}")
+            raise ValueError(f"STOP_SOURCE_NOT_ADDITIVE:{collisions}")
         stage = "docker_runtime_identity"
         context = subprocess.check_output(["docker", "context", "show"], text=True).strip()
         if context != freeze["runtime"]["docker_context"]:
