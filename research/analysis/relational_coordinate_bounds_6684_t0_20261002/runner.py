@@ -82,18 +82,19 @@ def main() -> int:
     if RESULTS.exists():
         raise SystemExit("STOP_OUTPUT_PATH_ALREADY_EXISTS")
     prior_freeze_sha = freeze["supersedes_freeze_sha256"]
+    retired_record_sha = freeze["supersedes_retired_record_sha256"]
     retired = ROOT / "FREEZE_T0_RETIRED.json"
-    if retired.exists() or not freeze_sha_path.exists():
+    if not retired.exists() or not freeze_sha_path.exists():
         return source_preflight_failure("STOP_SUPERSEDED_ALLOCATION_STATE", {})
-    retired.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(freeze_path, retired)
-    retired.with_suffix(".sha256").write_text(sha256(retired) + "  FREEZE_T0_RETIRED.json\n")
-    if sha256(retired) != prior_freeze_sha:
-        return source_preflight_failure("STOP_SUPERSEDED_FREEZE_HASH_MISMATCH",
-                                        {"expected": prior_freeze_sha, "actual": sha256(retired)})
+    if sha256(retired) != retired_record_sha:
+        return source_preflight_failure("STOP_RETIRED_RECORD_HASH_MISMATCH",
+                                        {"expected": retired_record_sha, "actual": sha256(retired)})
+    retired_record = json.loads(retired.read_text())
+    if retired_record.get("superseded_freeze_sha256") != prior_freeze_sha:
+        return source_preflight_failure("STOP_RETIRED_FREEZE_CHAIN_MISMATCH", {})
     if freeze_sha_path.read_text().split()[0] != sha256(freeze_path):
         return prelaunch_stop("STOP_FREEZE_HASH_MISMATCH", {})
-    if not allocation.endswith("-04"):
+    if not allocation.endswith("-05"):
         return source_preflight_failure("STOP_WRONG_SUCCESSOR_ALLOCATION", {"allocation": allocation})
     ancestor = subprocess.run(["git", "merge-base", "--is-ancestor", freeze["source_commit"], "HEAD"],
                              cwd=ROOT, check=False, capture_output=True)
