@@ -1,6 +1,7 @@
 # Analytical research
 
 - [`issue59_wslc_ollama_store_mount_t0_20261003/REPORT.md`](issue59_wslc_ollama_store_mount_t0_20261003/REPORT.md) - #59 read-only Ollama store mount A01 STOP before launch: no candidate/auditor container (0/0) while #5085 allocation and shared WSLc bridge state remain unreconciled; WSL-host synthetic auditor contract suite 5/5, not container evidence.
+- [`issue59_wsl_cuda_model_route_smoke_20261003/REPORT.md`](issue59_wsl_cuda_model_route_smoke_20261003/REPORT.md) — #59 exploratory local WSL GPU/model-route smoke: CUDA offload to RTX 3080 PASS, exact-response contract FAIL; no formal allocation or game/task-effect claim, and the full temporary log is not retained.
 
 
 - [`temporal_effect_identity_6530_orbstack_a01_20261002/REPORT.md`](temporal_effect_identity_6530_orbstack_a01_20261002/REPORT.md) — Issue #6530's frozen eight-case temporal identity fixture passed its scoped method gate in a digest-pinned OrbStack Docker candidate/auditor pair; no GUI, account, or real calendar event was used. Its earlier WSLc pre-start STOP remains unchanged.
