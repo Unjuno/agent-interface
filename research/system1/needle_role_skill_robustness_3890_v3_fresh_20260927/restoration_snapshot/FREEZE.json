@@ -1,0 +1,65 @@
+{
+  "schema": "needle-role-skill-robustness-v3-fresh-freeze-v1",
+  "allocation": "needle-role-skill-robustness-3890-v3-fresh-20260927",
+  "issue": 4580,
+  "status": "FROZEN_BEFORE_FORMAL_ORCHESTRATION",
+  "base_main_commit": "e8c0e24ecdf409c74dc8266fe3e86ddad906ade4",
+  "branch": "research/needle-role-skill-robustness-3890-v3-fresh-20260927",
+  "path": "research/system1/needle_role_skill_robustness_3890_v3_fresh_20260927/",
+  "parent_issue": 4529,
+  "parent_formal_issue": 3890,
+  "parent_freeze_blob_sha1": "e38183535b74c49727daccc9be8b935a9c720787",
+  "parent_source_sha256": {
+    "runner.py": "a0e99b991a8a3ab9b2f4b6f4f22f7c705989447ce64a14738026fcd763b55abb",
+    "loader.py": "5ff6df91ea3929f68fe77ccd6156bdb1310d0fec86088489d8b99905a7c5854f",
+    "audit.py": "4e53e241aa115202ce9ca2ce3a5b3df76599b80ad03290a61594bd6b0e35c3a0",
+    "PREREGISTRATION.md": "b2ccbac02e0d759c662b955fb34127310ea87d2cbdfe72d91b356a750ffd3c7a"
+  },
+  "seeds": [2026092700, 2026092800, 2026092900, 2026093000, 2026093100, 2026093200, 2026093300, 2026093400, 2026093500, 2026093600],
+  "substreams": "Each seed uses offsets +1..+12; 100-point spacing proves within-block substreams disjoint.",
+  "predecessor_seed_ranges": {
+    "3890_formal": [3788, 3789, 3790],
+    "3890_retired": [3781, 3782, 3783, 3787, 3791],
+    "4479_frozen_source_candidates": "3792..4692 step 100 (never trained)",
+    "4479_issue_candidates": "100000..100900 step 100 (never trained)"
+  },
+  "runtime": {
+    "image": "needle-pilot05:local",
+    "image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+    "platform": "linux/amd64",
+    "docker_version": "29.8.0",
+    "python": "3.12.14",
+    "torch": "2.5.1+cpu",
+    "device": "cpu; torch.cuda.is_available=False",
+    "torch_default_threads_before_runner": 10,
+    "runner_threads": 1,
+    "limits": {"cpus": 1, "memory_bytes": 2147483648, "pids": 64},
+    "network": "none",
+    "root_read_only": true,
+    "source_read_only": true,
+    "package_read_only_in_loaders": true,
+    "numpy_import_warning": "PyTorch emits a warning that NumPy is not installed; exact pinned runner/loader use only torch tensor operations and list/json serialization. No dependency was installed."
+  },
+  "training_contract": {
+    "architecture": "8 input / 16 hidden tanh / 4 classes; rank-2 output LoRA; roles A/B/C",
+    "rows": {"base": 512, "support_per_adapter": 16, "heldout_per_role": 4096},
+    "steps": {"base": 400, "adapter_B": 120, "adapter_C": 120},
+    "optimizer": "AdamW; base lr .025; adapter lr .04; batch 32",
+    "one_formal_orchestration": true,
+    "retries": 0,
+    "tuning": 0,
+    "seed_replacements": 0
+  },
+  "construction_tests": {"test_formal.py": {"sha256": "5d4560a73c1806e2763797b227074594c40469c079d053f67a1e48df968172c6", "passed": 6, "failed": 0, "optimizer_or_formal_invocations": 0}},
+  "source_sha256": {
+    "PRE_REGISTRATION.md": "a70cd45f9c1c9f14497a6524cfa0122bd59b3ed54501af9f3c6739c42b10eaf4",
+    "formal.py": "d9fb9aef97b2c51970e905a45e6d90584ec5f14c5da26fed4afc9742f585352d",
+    "audit_v3.py": "57dae908578298a6af3a638390443012fa38e729e2f0585f670bf4eef6d2427a",
+    "test_formal.py": "5d4560a73c1806e2763797b227074594c40469c079d053f67a1e48df968172c6",
+    "source/FREEZE.json": "93d245b5769f509e5a38b3f410ab29ac5e5d0eb5c883b2d80076e2d05e446443",
+    "source/runner.py": "a0e99b991a8a3ab9b2f4b6f4f22f7c705989447ce64a14738026fcd763b55abb",
+    "source/loader.py": "5ff6df91ea3929f68fe77ccd6156bdb1310d0fec86088489d8b99905a7c5854f",
+    "source/audit.py": "4e53e241aa115202ce9ca2ce3a5b3df76599b80ad03290a61594bd6b0e35c3a0",
+    "source/PREREGISTRATION.md": "b2ccbac02e0d759c662b955fb34127310ea87d2cbdfe72d91b356a750ffd3c7a"
+  }
+}
