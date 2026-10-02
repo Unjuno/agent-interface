@@ -322,6 +322,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`deadline_slack_equivalence_6435_t0_v1/`](deadline_slack_equivalence_6435_t0_v1/)
 - [`decision_opportunity_audit_5986_t0_20261002/`](decision_opportunity_audit_5986_t0_20261002/)
 - [`decision_opportunity_feedback_5986_b7q1_v1/`](decision_opportunity_feedback_5986_b7q1_v1/)
+- [`decision_reversal_6003_container_repro_a01_20261003/`](decision_reversal_6003_container_repro_a01_20261003/)
+- [`decision_reversal_6003_container_repro_a02_20261003/`](decision_reversal_6003_container_repro_a02_20261003/)
 - [`decision_sufficiency_5329_v1/`](decision_sufficiency_5329_v1/)
 - [`delay_gain_stability_6195_t0_host_20261001_01/`](delay_gain_stability_6195_t0_host_20261001_01/)
 - [`denial_aware_deferral_authority_6422_a02_20261002_v1/`](denial_aware_deferral_authority_6422_a02_20261002_v1/)
