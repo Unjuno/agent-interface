@@ -18,4 +18,4 @@ No GPU, Docker runtime, shared-session container, network access from candidate 
 
 ## Reproduction and audit
 
-See `FREEZE.md`, `AMENDMENT-01.md`, `AMENDMENT-02.md`, `AMENDMENT-03.md`, `candidate-sigterm.py`, `audit-final-v2.py`, and `audit-mutations.py`. Raw candidate logs and every control command result are preserved alongside SHA-256 hashes in `SHA256SUMS.md`. The experiment and results were posted to issue #6669 before this PR.
+See `FREEZE.md`, `AMENDMENT-01.md`, `AMENDMENT-02.md`, `AMENDMENT-03.md`, `candidate-sigterm.py`, `audit-final-v3.py`, and `audit-mutations-v3.py`. Raw candidate logs and every control command result are preserved alongside SHA-256 hashes in `SHA256SUMS.md`. The experiment and results were posted to issue #6669 before this PR.
