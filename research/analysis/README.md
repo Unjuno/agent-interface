@@ -355,6 +355,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`issue5760_assignment_exposure_t0_20261001/`](issue5760_assignment_exposure_t0_20261001/)
 - [`issue_3655_committed_evidence_audit_v1/`](issue_3655_committed_evidence_audit_v1/)
 - [`issue_5504_cegar_t0_v1/`](issue_5504_cegar_t0_v1/)
+- [`joint_authority_5805_t0_exploratory/`](joint_authority_5805_t0_exploratory/)
 - [`justification_bound_action_safe_r1_v1/`](justification_bound_action_safe_r1_v1/)
 - [`justification_graph_invalidation_r0_v1/`](justification_graph_invalidation_r0_v1/)
 - [`justification_graph_truth_maintenance_r0_v1/`](justification_graph_truth_maintenance_r0_v1/)
