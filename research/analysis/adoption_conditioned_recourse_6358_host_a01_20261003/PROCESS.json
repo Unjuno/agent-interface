@@ -1,0 +1,31 @@
+{
+  "allocation": "ADOPTION-CONDITIONED-RECOURSE-6358-T0-MAC-HOST-20261003-01",
+  "freeze_commit": "4dfb13d8c864c833d37771919980ad9cc75e141e",
+  "formal_candidate_invocations": 0,
+  "formal_auditor_invocations": 0,
+  "retries": 0,
+  "pre_formal_construction": [
+    {
+      "argv": ["python3", "-m", "unittest", "-v", "test_candidate", "test_auditor"],
+      "cwd": "research/analysis/adoption_conditioned_recourse_6358_host_a01_20261003/",
+      "exit": 0,
+      "result": "PASS",
+      "tests": 16
+    },
+    {
+      "argv": ["python3", "-m", "unittest", "-v", "research.analysis.adoption_conditioned_recourse_6358_host_a01_20261003.test_candidate", "research.analysis.adoption_conditioned_recourse_6358_host_a01_20261003.test_auditor"],
+      "cwd": "repository root",
+      "exit": 1,
+      "result": "STOP_CONSTRUCTION_TEST_INVOCATION_IMPORT_PATH",
+      "detail": "Both test modules failed import because candidate and auditor were not on sys.path from repository-root dotted-module invocation. No candidate/auditor formal CLI was invoked and no formal output was created. This was an invocation-path error, not a test assertion failure."
+    },
+    {
+      "argv": ["python3", "-m", "unittest", "discover", "-s", "research/analysis/adoption_conditioned_recourse_6358_host_a01_20261003", "-p", "test_*.py", "-v"],
+      "cwd": "repository root",
+      "exit": 0,
+      "result": "PASS",
+      "tests": 16
+    }
+  ],
+  "formal": "NOT_STARTED"
+}
