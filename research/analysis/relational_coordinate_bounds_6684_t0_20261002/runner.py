@@ -94,7 +94,7 @@ def main() -> int:
         return source_preflight_failure("STOP_RETIRED_FREEZE_CHAIN_MISMATCH", {})
     if freeze_sha_path.read_text().split()[0] != sha256(freeze_path):
         return prelaunch_stop("STOP_FREEZE_HASH_MISMATCH", {})
-    if not allocation.endswith("-05"):
+    if not allocation.endswith("-06"):
         return source_preflight_failure("STOP_WRONG_SUCCESSOR_ALLOCATION", {"allocation": allocation})
     ancestor = subprocess.run(["git", "merge-base", "--is-ancestor", freeze["source_commit"], "HEAD"],
                              cwd=ROOT, check=False, capture_output=True)
@@ -129,7 +129,7 @@ def main() -> int:
         return prelaunch_stop("STOP_FROZEN_MAIN_NOT_ANCESTOR", {"baseline_main": baseline,
                                 "live_main": live_main})
     advanced_paths = git("diff", "--name-only", baseline + ".." + live_main).splitlines()
-    protected = freeze["protected_paths"]
+    protected = freeze["prelaunch_parallel_guard"]["protected_paths"]
     collisions = sorted(path for path in advanced_paths
                         if any(path == prefix or path.startswith(prefix.rstrip("/") + "/")
                                for prefix in protected))
