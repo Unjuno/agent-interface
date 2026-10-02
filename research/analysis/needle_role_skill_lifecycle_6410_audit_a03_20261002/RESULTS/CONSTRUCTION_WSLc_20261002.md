@@ -5,7 +5,7 @@
 - Allocation: `NEEDLE-ROLE-SKILL-LIFECYCLE-WSLC-6410-AUDIT-20261002-03`
 - Frozen base: `926144e0bbbc197e00aa3b4821f1d49afe831529`
 - Branch/package: `research/needle-role-skill-lifecycle-6410-audit-a03-20261002` / `research/analysis/needle_role_skill_lifecycle_6410_audit_a03_20261002/`
-- Freeze SHA-256: `52d4fa62...` (the exact full value is in the branch's `FREEZE.json` / `SHA256SUMS`; tests were run from a checksum-verified Git-tree staging copy normalized to the frozen LF bytes).
+- Freeze SHA-256: `52d4fa62bceac0c8ba7a58b9288b66638fc47be9ea6c90c27ff99bfedea2f2fa`
 - Test source SHA-256: `4aad2d445da496b74564a795e782b0df2ca85ebb661aeda4bfe6d3d19c79ad28`
 - Runtime: Microsoft WSL Containers native CLI (`wslc.exe`) 3.0.1.0; cached `python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f`, image ID `sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4`, Linux/amd64, CPython 3.12.14.
 - Invocation: `wslc run --rm --pull never --network none --cpus 0.25 --memory 512m --user 65534:65534 -v <verified-stage>:/src:ro <pinned-image> python -B -m unittest discover -v -s /src/research/analysis/needle_role_skill_lifecycle_6410_audit_a03_20261002 -p test_*.py`
