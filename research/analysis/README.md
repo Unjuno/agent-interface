@@ -411,6 +411,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`gpu_photometric_2912_v2/`](gpu_photometric_2912_v2/)
 - [`gpu_photometric_2912_v3/`](gpu_photometric_2912_v3/)
 - [`gpu_six_worker_memory_sharing_4972_a08_20261002/`](gpu_six_worker_memory_sharing_4972_a08_20261002/)
+- [`gpu_six_worker_memory_sharing_4972_wslc_a10_20261002/`](gpu_six_worker_memory_sharing_4972_wslc_a10_20261002/)
 - [`gpu_supervisor_compose_4972_cuda_v1/`](gpu_supervisor_compose_4972_cuda_v1/)
 - [`gpu_supervisor_transfer_breakeven_4972_a03_20261001/`](gpu_supervisor_transfer_breakeven_4972_a03_20261001/)
 - [`gpu_supervisor_transfer_breakeven_4972_a07_20261002/`](gpu_supervisor_transfer_breakeven_4972_a07_20261002/)
