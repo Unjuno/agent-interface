@@ -219,6 +219,7 @@ A directory existing here does **not** mean its mechanism is promoted. Negative 
 
 ### Recent direct-root evidence
 - [`kernel_receipt_time_5215_20260928/`](kernel_receipt_time_5215_20260928/) — Issue #5215 frozen construction probe and independent audit for lease-expiry and causal timestamp receipt boundaries; scoped contract evidence only.
+- [`trace_reduction_5666_construction_v1/`](trace_reduction_5666_construction_v1/) — Issue #5666 host-only synthetic construction check; no independent replay, model, GUI, or authority result.
 
 - [`cli_fault_residue_3711_revalidation_v1/`](cli_fault_residue_3711_revalidation_v1/) — Issue #3711 report-temp fault revalidation protocol; see its linked PR/evidence for current matrix status.
 - [`needle_lora_3441_online_stream_v1/`](needle_lora_3441_online_stream_v1/) — Issue #3769 streamed online LoRA successor; scoped host-CPU metrics and limits are in its report.
