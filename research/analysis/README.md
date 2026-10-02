@@ -422,6 +422,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`obligation_conservation_5817_t0_v1/`](obligation_conservation_5817_t0_v1/)
 - [`observable_predictive_tests_6258_t0_host_20261002/`](observable_predictive_tests_6258_t0_host_20261002/)
 - [`observation_bisimulation_branch_readiness_5516_t12/`](observation_bisimulation_branch_readiness_5516_t12/)
+- [`observation_loss_robust_tube_6089_t0b_20261002/`](observation_loss_robust_tube_6089_t0b_20261002/)
 - [`observation_manipulate_dynamic_certificate_v1/`](observation_manipulate_dynamic_certificate_v1/)
 - [`observation_manipulate_support_union_v1/`](observation_manipulate_support_union_v1/)
 - [`observation_o4_x11_verify_schema_readiness_v1/`](observation_o4_x11_verify_schema_readiness_v1/)
