@@ -36,11 +36,26 @@ This result must not be represented as #6576 T0. A separate, prospectively froze
 - Candidate direct-script invocation was reproduced as STOP (`ModuleNotFoundError: No module named 'research'`, zero candidate/audit rows); module invocation was then run separately and raw-only audit passed 7/7. The preserved boundary A02 output hash is `90901d18023c723c47450f90e85477b26c72a56c8b5dcfdb3265c5604fdcd1ec`.
 - Runtime-shift construction tests: first run 3/4 because positive infinity was accepted; the finite-input guard was fixed, and the combined construction suite passed 17/17. The exact synthetic case confirms that a detected shift can still be inadequate when a safety-deadline miss occurs before alarm. This is not a detector false-alarm/delay estimate.
 
+### One-shot comparator runner preparation (not executed)
+
+The outstanding #6576 T0 comparator is the original R implementation, not the
+provisional Python port. A future exclusively assigned container run should
+mount read-only copies of TailID 1.0.0 at commit
+`f99b10ff27f37ac62ba1d44ce79b4fc886f72997` and ismev at commit
+`25223b17285d45bf3911efd79ac75f363e7ae495`, plus a write-only output mount;
+disable network and pull, and freeze package/library hashes before invoking
+the candidate. The source-backed Python port must be compared on identical
+fixtures for threshold, candidate count, GPD fit, selected sensitive tail and
+typed refusal. Candidate, then raw-only audit, each run at most once. This
+paragraph is a protocol note only: no R image was pulled, no container was
+started, and no comparator parity result exists.
+
 ### Current local CI / provenance checks
 
-On 2026-10-02, the preparation branch was rebased without conflicts onto
-`origin/main` `7b5afc3d718682b7b6efb2e6037acbd3f199f8b4`, then rebased again
-after main advanced to `6942e950281832d01db6468ae47affef6513e3ba`.
+On 2026-10-02, the preparation branch was successively reconciled with main
+through `7b5afc3d718682b7b6efb2e6037acbd3f199f8b4`,
+`6942e950281832d01db6468ae47affef6513e3ba`, and later PR-head merges. The
+latest base must be refreshed again at formal start.
 Focused construction suite: 17/17 PASS; `py_compile`: PASS; `git diff
 --check`: PASS. Candidate module plus independent raw-only audit: PASS 7/7.
 Repository-wide `python3 research/analysis/check_index.py`:
