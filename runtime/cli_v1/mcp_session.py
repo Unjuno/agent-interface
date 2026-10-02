@@ -57,6 +57,26 @@ class MCPSessionOwner:
             self.error = repr(error)
             raise
 
+    def dispatch(self, program, *, current_observation_seq, current_binding_revision,
+                 capture_directory=None):
+        """Invoke the public API once while retaining this connection's cleanup duty.
+
+        Source and lease stay caller-authored. No inspection, replay, renewal,
+        recovery reset or task-success inference is added. Exceptions can follow
+        partial input; close still attempts release against this same owner.
+        """
+        from . import api
+        session = self.get()
+        if (type(current_binding_revision) is not int
+                or current_binding_revision != self.binding_revision):
+            return {'status': 'invalid_request', 'error': 'SESSION_BINDING_REVISION_MISMATCH',
+                    'input_dispatched': False, 'operation_invoked': False}
+        self.dispatch_attempted = True
+        return api.dispatch_in_session(session, program,
+            current_observation_seq=current_observation_seq,
+            current_binding_revision=current_binding_revision,
+            capture_directory=capture_directory)
+
     def inspect_target(self, target, screen_region=None, capture_directory=None):
         self.target_review = None
         if target not in self.targets:
