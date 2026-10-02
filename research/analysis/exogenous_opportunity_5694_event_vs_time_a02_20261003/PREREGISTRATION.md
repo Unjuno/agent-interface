@@ -1,7 +1,7 @@
 # Issue #5694 A02: event-count versus time-weighted opportunity coverage
 
 Allocation: `EXOGENOUS-OPPORTUNITY-5694-A02-EVENT-TIME-20261003-01`
-Base main: `523ff6d3ae8b9ee09b435dd7460e6582b8d0d258`
+Base main: `b100d9acee4ec99490b2e97066ec6af5312f1ed9`
 Evidence path: `research/analysis/exogenous_opportunity_5694_event_vs_time_a02_20261003/`
 
 ## H / T / D / C / U
