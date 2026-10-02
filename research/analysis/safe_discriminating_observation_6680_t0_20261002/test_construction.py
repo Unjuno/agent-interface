@@ -27,7 +27,7 @@ class ConstructionTests(unittest.TestCase):
 
     def test_oracle_corruption_is_detected_by_decision_gate(self):
         bad_oracle = copy.deepcopy(self.oracle)
-        bad_oracle["hidden_worlds"]["obs-path-identifiable"]["correct_recovery"] = "reset"
+        bad_oracle["hidden_worlds"]["c01"]["correct_recovery"] = "reset"
         result = auditor.audit(candidate.run(self.fixture), self.fixture, bad_oracle)
         self.assertIn("diagnostic policy failed an identifiable world", result["errors"])
 
@@ -36,6 +36,11 @@ class ConstructionTests(unittest.TestCase):
         action, observations = candidate.diagnose(fx, fx["cases"][3])
         self.assertIsNone(action)
         self.assertEqual(observations, 0)
+
+    def test_candidate_case_ids_do_not_disclose_hidden_world(self):
+        ids = [case["id"] for case in self.fixture["cases"]]
+        self.assertEqual(ids, ["c01", "c02", "c03", "c04", "c05"])
+        self.assertTrue(all(not any(term in case_id.lower() for term in ("obs", "dynamics", "mixed", "fault", "unknown")) for case_id in ids))
 
 
 if __name__ == "__main__":

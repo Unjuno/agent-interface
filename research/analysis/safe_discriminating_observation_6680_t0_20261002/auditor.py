@@ -67,14 +67,14 @@ def audit(raw, fixture, oracle):
             errors.append("release tick violated")
         if row["forbidden_transition"]:
             errors.append("forbidden transition")
-    identifiable = {"obs-path-identifiable", "dynamics-identifiable"}
+    identifiable = {"c01", "c02"}
     diagnostic = [r for r in want if r["policy"] == "bounded_diagnose" and r["case_id"] in identifiable]
     fixed = {p: [r for r in want if r["policy"] == p and r["case_id"] in identifiable] for p in ("always_reobserve", "always_reset")}
     if any(r["action"] != oracle["hidden_worlds"][r["case_id"]]["correct_recovery"] for r in diagnostic):
         errors.append("diagnostic policy failed an identifiable world")
     if not all(sum(r["wrong_recovery"] for r in diagnostic) < sum(r["wrong_recovery"] for r in rows) for rows in fixed.values()):
         errors.append("diagnosis did not strictly reduce wrong recovery against both fixed arms")
-    if any(r["action"] != "yield" for r in want if r["policy"] == "bounded_diagnose" and r["case_id"] in {"mixed-nonidentifiable", "probe-ineligible", "unsupported-observation"}):
+    if any(r["action"] != "yield" for r in want if r["policy"] == "bounded_diagnose" and r["case_id"] in {"c03", "c04", "c05"}):
         errors.append("diagnosis acted on non-identifiable, ineligible, or unsupported evidence")
     return {"status": "PASS_METHOD_SCOPED" if not errors else "FAIL_AUDIT", "rows": len(want), "errors": errors}
 

@@ -15,11 +15,11 @@
     }
   },
   "cases": [
-    {"id": "obs-path-identifiable", "probe_admissible": true, "observed": "path-anomaly"},
-    {"id": "dynamics-identifiable", "probe_admissible": true, "observed": "motion-anomaly"},
-    {"id": "mixed-nonidentifiable", "probe_admissible": true, "observed": "ambiguous"},
-    {"id": "probe-ineligible", "probe_admissible": false, "observed": null},
-    {"id": "unsupported-observation", "probe_admissible": true, "observed": "unsupported"}
+    {"id": "c01", "probe_admissible": true, "observed": "path-anomaly"},
+    {"id": "c02", "probe_admissible": true, "observed": "motion-anomaly"},
+    {"id": "c03", "probe_admissible": true, "observed": "ambiguous"},
+    {"id": "c04", "probe_admissible": false, "observed": null},
+    {"id": "c05", "probe_admissible": true, "observed": "unsupported"}
   ],
   "policies": ["always_reobserve", "always_reset", "immediate_yield", "bounded_diagnose"]
 }

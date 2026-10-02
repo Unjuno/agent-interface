@@ -2,11 +2,13 @@
   "schema": "safe-discriminating-observation-6680-run-record-v1",
   "issue": 6680,
   "allocation": "SAFE-DISCRIMINATING-OBSERVATION-6680-T0-20261002-01",
-  "base_main": "9a573b00dc595e64d09387e567c85e10b61a46c1",
+  "base_main": "5f1cc2624469dea4624e98062423e928da083ca4",
   "branch": "research/safe-discriminating-observation-6680-t0-20261002",
   "package_path": "research/analysis/safe_discriminating_observation_6680_t0_20261002/",
   "status": "HOLD_RESOURCE_BEFORE_FORMAL_START",
-  "observed_at_utc": "2026-10-02T11:20:12Z",
+  "observed_at_utc": "2026-10-02T11:38:03Z",
+  "previous_source_draft_bases": ["9a573b00dc595e64d09387e567c85e10b61a46c1", "7b67b9709b2242db988646f36825be6c6399be27"],
+  "main_advance_before_formal": "merged latest main; read adjacent #6664 preregistration/report and confirmed it tests handoff quiescence, not the four-policy residual recovery contrast; collision check repeated; no formal candidate/auditor rerun",
   "formal_invocations": {
     "candidate": 0,
     "independent_auditor": 0,
@@ -14,16 +16,21 @@
     "retry": 0
   },
   "host_construction_only": {
-    "unit_suite_runs": 3,
-    "unit_suite_outcomes": ["FAIL_PRE_FREEZE_CONSTRUCTION_DEFECT", "PASS_4_OF_4_AFTER_CORRECTION", "PASS_4_OF_4_ABSOLUTE_PATH"],
+    "unit_suite_runs": 4,
+    "unit_suite_outcomes": ["FAIL_PRE_FREEZE_CONSTRUCTION_DEFECT", "PASS_4_OF_4_PRE_ID_REVIEW", "PASS_4_OF_4_ABSOLUTE_PATH_PRE_ID_REVIEW", "PASS_5_OF_5_OPAQUE_CASE_IDS"],
     "test_runner_invocation_failure": "workdir not applied by exec tool; corrected with absolute unittest discovery path; no candidate/auditor invocation",
-    "candidate_cli_runs": 1,
-    "auditor_cli_runs": 1,
+    "candidate_cli_runs": 3,
+    "auditor_cli_runs": 4,
     "smoke_rows": 20,
-    "smoke_audit": "PASS_METHOD_SCOPED",
+    "smoke_audit": "PASS_METHOD_SCOPED_CONSTRUCTION_ONLY",
+    "first_smoke_invalidated_by_candidate_visible_case_id_leak": true,
+    "corrected_smoke_outputs": ["/tmp/6680-construct-final.raw.json", "construction_smoke_final.raw.json"],
+    "latest_smoke_raw_sha256": "7cfdeb03a227ee7ad78222c817072c9273157ba8c37acdf515abd2fcb4792a4b",
+    "cli_help_behavior": "candidate.py and auditor.py treat --help as a positional path; the resulting 20-row host construction raw was retained under construction_smoke_final.raw.json, never formal",
     "smoke_output_promoted": false
   },
   "runtime_snapshot": {
+    "observed_at_utc": "2026-10-02T11:20:12Z",
     "host": "macOS arm64",
     "wslc_available": false,
     "docker_server": "29.4.0 OrbStack aarch64",
@@ -37,6 +44,20 @@
       "obs-audit-t1-5681-20261001",
       "research-path-width-6581-t0b-20261002"
     ],
+    "exclusive_assignment": false,
+    "foreign_runtime_mutated": false
+  },
+  "latest_runtime_recheck": {
+    "observed_at_utc": "2026-10-02T11:28:29Z",
+    "shared_engine_running_containers": ["unjuno-native-ci-6092", "cans-of14-n64-dt0.00025"],
+    "other_running_orbstack_machines_unchanged": true,
+    "exclusive_assignment": false,
+    "foreign_runtime_mutated": false
+  },
+  "runtime_inventory_recheck": {
+    "observed_at_utc": "2026-10-02T11:37:40Z",
+    "shared_engine_running_containers": ["unjuno-native-ci-6092"],
+    "running_orbstack_machines": ["agent-interface-6576-tailid-parity-a03-20261002", "agent-interface-6604-t0-isolated-20261002", "effect-terminal-feedback-6301-t0-orbstack-20261002", "obs-audit-t1-5681-20261001", "research-path-width-6581-t0b-20261002"],
     "exclusive_assignment": false,
     "foreign_runtime_mutated": false
   },
