@@ -52,6 +52,8 @@ flowchart TD
 
 ## Analysis families
 
+Issue #6315 retains both the original finite-trace T0 audit-v1 HOLD and the distinct WSLc portability successor; see each report for its exact scope and lineage.
+
 - [Issue #6081 error-carry T0](error_carry_6081_t0_20261001/REPORT.md) — `STOP_METHOD_INVALID_BASELINE`; 672 rows reconstructed, but the 8-way dot-product baseline is not Euclidean-nearest. Frozen outputs are preserved; no PASS or application-transfer claim.
 
 Issue #6331 wake-fenced lease T0: [`wake_fence_6331_t0_v1/`](wake_fence_6331_t0_v1/). A finite synthetic Docker run against the exact current `Lease` source found relative-clock LIVE vs suspend-inclusive EXPIRED after a long modelled gap; the wake-fence arm blocked stale generation and returned UNKNOWN on missing wake evidence. Two post-freeze main-advance STOPs and the scoped runtime limits are retained. No actual host sleep or physical input.
@@ -258,6 +260,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`capability_snapshot_currentness_fallback_r0_v1/`](capability_snapshot_currentness_fallback_r0_v1/)
 - [`causal_attribution_5323_t0_v1/`](causal_attribution_5323_t0_v1/)
 - [`causal_critical_path_elasticity_5851_t0_v1/`](causal_critical_path_elasticity_5851_t0_v1/)
+- [`causal_cut_5348_t1/`](causal_cut_5348_t1/)
 - [`causal_temporal_attention_successor_1941_v1/`](causal_temporal_attention_successor_1941_v1/)
 - [`causal_temporal_history_2026_v1/`](causal_temporal_history_2026_v1/)
 - [`cegis_grammar_gap_4294_v1/`](cegis_grammar_gap_4294_v1/)
@@ -317,6 +320,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`effect_path_antiwindup_5791_t0_v1/`](effect_path_antiwindup_5791_t0_v1/)
 - [`effect_path_antiwindup_5791_t0_v2/`](effect_path_antiwindup_5791_t0_v2/)
 - [`effect_terminal_feedback_6301_t0_20261002/`](effect_terminal_feedback_6301_t0_20261002/)
+- [`effect_terminal_feedback_6301_t0_successor_20261002/`](effect_terminal_feedback_6301_t0_successor_20261002/)
 - [`effect_time_contract_authorization_successor_532_v1/`](effect_time_contract_authorization_successor_532_v1/)
 - [`endogenous_demand_rebound_5702_t0_v1/`](endogenous_demand_rebound_5702_t0_v1/)
 - [`entrypoint_argv_preflight_5156_v2_20261001/`](entrypoint_argv_preflight_5156_v2_20261001/)
@@ -613,6 +617,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`target_belief_audit_4150_v1/`](target_belief_audit_4150_v1/)
 - [`task_ownership_horizon_4152_reopen_review_v1/`](task_ownership_horizon_4152_reopen_review_v1/)
 - [`temporal_break_even_retained_identifiability_v1/`](temporal_break_even_retained_identifiability_v1/)
+- [`temporal_coalescing_6315_t0_v1/`](temporal_coalescing_6315_t0_v1/)
 - [`temporal_coalescing_6315_wslc_successor_20261002/`](temporal_coalescing_6315_wslc_successor_20261002/)
 - [`temporal_contract_monitor_compilation_a2_v1/`](temporal_contract_monitor_compilation_a2_v1/)
 - [`temporal_contract_monitor_compilation_a3_v1/`](temporal_contract_monitor_compilation_a3_v1/)
