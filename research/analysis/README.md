@@ -252,6 +252,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`conflict_aware_evidence_ledger_5305_t0/`](conflict_aware_evidence_ledger_5305_t0/)
 - [`conformal_verifier_risk_contract_5315_v1/`](conformal_verifier_risk_contract_5315_v1/)
 - [`consent_scoped_preparation_5793_t0_v1/`](consent_scoped_preparation_5793_t0_v1/)
+- [`constrained_interaction_testing_5330_t0_supplemental_raw_20260930/`](constrained_interaction_testing_5330_t0_supplemental_raw_20260930/)
 - [`constrained_interaction_testing_5330_t0_v1/`](constrained_interaction_testing_5330_t0_v1/)
 - [`constraint_elicitation_6380_t0_v1/`](constraint_elicitation_6380_t0_v1/)
 - [`constraint_response_normalization_6437_t0_v1/`](constraint_response_normalization_6437_t0_v1/)
