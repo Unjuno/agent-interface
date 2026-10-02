@@ -1,0 +1,21 @@
+{
+  "allocation_id": "PREFailure-ROUTE-DIVERSIFICATION-6225-T0-HOST-20261002-01",
+  "horizon": 8,
+  "mixture_b_slots_per_session": 2,
+  "switch_detection_consecutive_unresolved": 3,
+  "tail_unresolved_threshold": 3,
+  "direct_cost": {"A": 1, "B": 2},
+  "mean_cost_budget_per_task": 1.75,
+  "conservative_completion_floor": 0.9,
+  "route_completion_lower_bound": {"A": 0.95, "B": 0.8},
+  "scenarios": [
+    {"id": "hidden_exogenous", "kind": "hidden", "onsets": [1, 2, 3, 4, 5, 6], "b_eligible": true, "shared_failure": false},
+    {"id": "observable_exogenous", "kind": "observable", "onsets": [1, 2, 3, 4, 5, 6], "b_eligible": true, "shared_failure": false},
+    {"id": "shared_failure", "kind": "hidden", "onsets": [1, 2, 3, 4, 5, 6], "b_eligible": true, "shared_failure": true},
+    {"id": "stable_a_dominant", "kind": "stable", "onsets": [0], "b_eligible": true, "shared_failure": false},
+    {"id": "b_idle_decay", "kind": "idle_decay", "onsets": [0], "b_eligible": true, "shared_failure": false},
+    {"id": "route_carryover", "kind": "queue", "onsets": [0], "b_eligible": true, "shared_failure": false},
+    {"id": "no_eligible_b", "kind": "hidden", "onsets": [1, 2, 3, 4, 5, 6], "b_eligible": false, "shared_failure": false}
+  ],
+  "policies": ["best_reactive", "context_gated", "bounded_mixture", "conservative_default", "oracle"]
+}

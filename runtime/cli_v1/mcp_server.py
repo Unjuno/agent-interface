@@ -17,7 +17,7 @@ import anyio
 from mcp.types import CallToolResult, ImageContent, TextContent
 from pydantic import Field, StrictBool, StrictInt, StrictStr
 
-from .api import dispatch, dispatch_in_session
+from .api import dispatch
 from .mcp_session import MCPSessionOwner
 from .attempt import _write_json
 from .observe import observe, observe_in_session
@@ -260,17 +260,12 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                         report = {'status': 'needs_review', 'error': repr(error),
                                   'input_dispatched': False, 'authority_granted': False}
                 elif owner is not None:
-                    session = owner.get()
                     options.pop('display_name')
                     if operation == 'observe':
-                        report = observe_in_session(session, **options)
-                    elif options['current_binding_revision'] != owner.binding_revision:
-                        report = {'status': 'invalid_request', 'error': 'SESSION_BINDING_REVISION_MISMATCH',
-                                  'input_dispatched': False, 'operation_invoked': False}
+                        report = observe_in_session(owner.get(), **options)
                     else:
-                        owner.dispatch_attempted = True
                         program = options.pop('program')
-                        report = dispatch_in_session(session, program, **options)
+                        report = owner.dispatch(program, **options)
                 elif operation == 'observe':
                     report = observe(deepcopy(targets), **options)
                 else:

@@ -21,13 +21,27 @@ def summarize_public_dispatch(view, *, source_program=None):
 
 
 def summarize_cli_dispatch(view, run_directory):
-    """Project only when the exact complete raw report is locally recoverable."""
+    """Project only when the exact complete CLI raw report is locally recoverable."""
+    from pathlib import Path
+    try:
+        return summarize_retained_dispatch(view, Path(run_directory).absolute() / 'report.json',
+                                           run_directory)
+    except (OSError, TypeError, ValueError):
+        return deepcopy(view)
+
+
+def summarize_retained_dispatch(view, report_path, run_directory):
+    """Opt-in Python projection with an explicit exact retained-report path.
+
+    No writing, capture or input. Unsupported, changed or missing evidence keeps
+    the full view; the same existing success-only projection governs omissions.
+    """
     import hashlib
     from pathlib import Path
     full = deepcopy(view)
     try:
         root = Path(run_directory).absolute()
-        report = root / 'report.json'
+        report = Path(report_path).absolute()
         data = report.read_bytes()
         source = view['receipt']['source']
         if len(data) != source['bytes'] or hashlib.sha256(data).hexdigest() != source['sha256']:

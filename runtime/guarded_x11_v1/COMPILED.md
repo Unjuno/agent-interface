@@ -150,3 +150,27 @@ exercised the actual capture binding change and returned this typed receipt.
 After explicit primary modal review/new grounding/confirmation, the independently
 read saved workbook matched317/529. The preceding startup failure is retained.
 This qualifies the boundary and one saved task, not a speed or token improvement.
+
+## Failed Inkscape keyboard transfer
+
+[Guarded Inkscape transfer](../results/inkscape-guarded-transfer-03/README.md)
+compared this actual adapter with a strong ordinary conditional keyboard
+callback. Both completed input but observed no intended movement and stopped
+before Save; independently persisted task success was 0/2. Startup and context
+refusal predecessors remain retained. This does not qualify the move recipe or
+second-domain performance. Actual keyboard receipts established admission/focus
+guards, not per-key revalidation. Hold the recipe pending separately frozen
+application-effect diagnosis; do not infer task completion from input delivery.
+
+## Explicit application interaction before keyboard continuation
+
+[Inkscape canvas diagnosis](../results/inkscape-explicit-canvas-01/README.md)
+found one independently saved ordinary task after a separately grounded
+rectangle click. Immediate, 100ms-gap and separately reviewed keyboard selection
+predecessors all failed to move the rectangle. Window focus and visible object
+selection alone did not establish the successful keyboard context in those
+cases. The mechanism is not isolated; this is not a generic click repair or a
+qualified compiled transfer. Explicit pointer input needs its own current target
+and authority. Do not silently insert a click into keyboard continuation. A
+fresh matched graph comparison must include the same application interaction
+and independent effect scoring in its strong ordinary baseline.

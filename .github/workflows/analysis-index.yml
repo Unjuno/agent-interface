@@ -31,9 +31,21 @@ jobs:
           python-version: '3.12'
       - name: Check retained analytical results are indexed
         run: python research/analysis/check_index.py
+      - name: Test benign-error recovery-scope T0 assay
+        run: python -B -m unittest discover -s research/analysis/benign_error_recovery_scope_6469_t0_20261002_v1 -p 'test_*.py' -v
+      - name: Test denial-aware request policy T0
+        run: python -B -m unittest discover -s research/analysis/denial_aware_request_policy_6422_t0_v1 -p 'test_*.py' -v
       - name: Test approval-sequence discrimination T0
         run: python -B -m unittest discover -s research/analysis/approval_sequence_discrimination_6405_t0_v1 -p 'test_*.py' -v
       - name: Test endogenous-demand rebound T0
         run: python -B -m unittest discover -s research/analysis/endogenous_demand_rebound_5702_t0_v1 -p 'test_*.py' -v
       - name: Test selection-aware shadow-audit T1
         run: python -B -m unittest discover -s research/analysis/selection_aware_shadow_audit_5681_t1_v1 -p 'test_*.py' -v
+      - name: Test human return-to-own-work T0 construction contract
+        run: python -B -m unittest discover -s research/analysis/human_return_resumption_6492_t0_20261002 -p 'test_t0.py' -v
+      - name: Test independent auditor corruption controls
+        working-directory: research/analysis/human_return_resumption_6492_t0_20261002
+        run: python -B -m unittest discover -s results/allocation-02 -p 'test_*.py' -v
+      - name: Test immediate-modal baseline successor
+        working-directory: research/analysis/human_return_resumption_6492_t0_20261002
+        run: python -B -m unittest discover -s results/allocation-04-modal-baseline -p 'test_*.py' -v

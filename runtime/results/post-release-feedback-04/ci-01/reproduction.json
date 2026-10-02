@@ -1,0 +1,22 @@
+{
+  "status": "REPRODUCED_FAILURE",
+  "error": "'agent-interface/receipt-view-v3-report-ref' != 'agent-interface/receipt-view-dispatch-summary-v1'\n- agent-interface/receipt-view-v3-report-ref\n+ agent-interface/receipt-view-dispatch-summary-v1\n",
+  "rows": [
+    {
+      "started_ns": 989302261925,
+      "ended_ns": 20024600103,
+      "waits": [
+        {
+          "operation_index": 2,
+          "requested_ms": 100,
+          "started_ns": 989304860947,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 989405155179
+        }
+      ],
+      "execution_time_order_valid": false
+    }
+  ]
+}

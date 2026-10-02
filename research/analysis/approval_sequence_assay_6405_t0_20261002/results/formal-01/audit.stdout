@@ -1,0 +1,42 @@
+{
+  "schema": "approval-sequence-assay-audit-v1",
+  "status": "PASS_METHOD_SCOPED",
+  "request_rows": 5,
+  "display_arms": 3,
+  "baseline_errors": [],
+  "mutation_controls": {
+    "total": 6,
+    "rejected": 6,
+    "cases": {
+      "omitted_recipient": true,
+      "swapped_recipient": true,
+      "stale_changed_field_highlight": true,
+      "overbroad_consequential_batch": true,
+      "stale_receipt_reuse": true,
+      "deny_cancel_choice_erased": true
+    },
+    "case_errors": {
+      "omitted_recipient": [
+        "static:effect_fields_do_not_match_truth",
+        "static:required_field_not_visible"
+      ],
+      "swapped_recipient": [
+        "static:effect_fields_do_not_match_truth"
+      ],
+      "stale_changed_field_highlight": [
+        "changed_fields:changed_field_highlight_mismatch"
+      ],
+      "overbroad_consequential_batch": [
+        "consequential_effects_grouped"
+      ],
+      "stale_receipt_reuse": [
+        "receipt_not_bound_to_exact_request_digest"
+      ],
+      "deny_cancel_choice_erased": [
+        "deny_cancel_response_record_changed"
+      ]
+    }
+  },
+  "participant_observations": 0,
+  "scope": "finite authored fixture contract only; no human discrimination, attention, burden, or security-behavior result"
+}
