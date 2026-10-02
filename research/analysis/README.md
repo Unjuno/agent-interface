@@ -1,6 +1,5 @@
 # Analytical research
 
-- [`action_bound_residual_6619_t0_v1/REPORT.md`](action_bound_residual_6619_t0_v1/REPORT.md) — Issue #6619 WSLc T0 retained as `STOP_AUDIT_MUTATION_CONTROL_DEFECT`; candidate/auditor each ran once, raw preserved, nominal method PASS invalidated; no incremental cue benefit shown.
 - [`revision_timed_cutover_6617_t0_v1/REPORT.md`](revision_timed_cutover_6617_t0_v1/REPORT.md) — Issue #6617 WSLc synthetic T0: 30 event traces independently audited; one stable scripted case saved 3 logical ticks; no speech, GUI, human, or real-latency result.
 - [`frame_qualified_collateral_6533_t0_20261002/REPORT.md`](frame_qualified_collateral_6533_t0_20261002/REPORT.md) — Issue #6533 T0: 44/44 synthetic rows independently reconstructed; qualified-frame matched the full-state oracle, with a 79.1% aggregate accounted-byte reduction but a 2.13× regression at the smallest size. Method-scoped only; no GUI/product safety or performance claim.
 
@@ -153,6 +152,8 @@ The table below summarizes major analytical chains and representative retained o
 | Audit / provenance | [`locale_semantic_invariance_5919_audit_review_20261001_01/`](locale_semantic_invariance_5919_audit_review_20261001_01/) | Post-merge raw-only audit confirms the eight T0 outcomes and rejects three actual corrupted copies plus duplicate/missing/extra rows; no candidate rerun. Original visual proxy remains fixture metadata. | Obtain independently adjudicated high-fidelity locale traces before extending the method claim. |
 | Route selection / topology | [`route_selector_5911_t0_20261001_02/`](route_selector_5911_t0_20261001_02/) | Five finite synthetic cases and an independent enumerator pass the explicit minimum-cost route/tie contract; scope is method-only. | Test selector semantics on real source traces before making any live routing or causal claim. |
 
+| Audit / provenance | [`native_wsl2_migration_6389_audit_repair_v1_20261002/`](native_wsl2_migration_6389_audit_repair_v1_20261002/) | Seven host-only synthetic tests verify the frozen nested-field contract and reject Boolean-as-integer raw values; not a migration experiment or performance/memory claim. | Obtain shared-lane release before a fresh WSL candidate run and independent formal audit. |
+
 </details>
 
 ## Historical source and construction archives
@@ -173,7 +174,6 @@ This compact list is generated from child directories that contain `REPORT.md` o
 
 - [`5352_unknown_recovery_audit_v1/`](5352_unknown_recovery_audit_v1/)
 - [`accessibility_configuration_effects_5922_t0_v1/`](accessibility_configuration_effects_5922_t0_v1/)
-- [`action_bound_residual_6619_t0_v1/`](action_bound_residual_6619_t0_v1/)
 - [`action_class_error_budget_5424_t2_v1/`](action_class_error_budget_5424_t2_v1/)
 - [`action_class_error_budget_5424_t3_v1/`](action_class_error_budget_5424_t3_v1/)
 - [`action_conditioned_routing_repair_successor_2059_r2_v1/`](action_conditioned_routing_repair_successor_2059_r2_v1/)
@@ -416,6 +416,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`multicursor_parking_reposition_r0_v1/`](multicursor_parking_reposition_r0_v1/)
 - [`multicursor_target_handle_regrounding_r0_v1/`](multicursor_target_handle_regrounding_r0_v1/)
 - [`multifidelity_route_contrast_6155_t0_v1/`](multifidelity_route_contrast_6155_t0_v1/)
+- [`native_wsl2_migration_6389_audit_repair_v1_20261002/`](native_wsl2_migration_6389_audit_repair_v1_20261002/)
 - [`needle_role_skill_lifecycle_4916_first_rung_v2/`](needle_role_skill_lifecycle_4916_first_rung_v2/)
 - [`needle_role_skill_lifecycle_4916_parity_diag_v1/`](needle_role_skill_lifecycle_4916_parity_diag_v1/)
 - [`needle_role_skill_lifecycle_4916_v2/`](needle_role_skill_lifecycle_4916_v2/)
