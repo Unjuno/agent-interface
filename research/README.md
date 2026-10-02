@@ -13,6 +13,7 @@ For claims and scientific disposition, start with the top-level [research index]
 | Latest detailed handoff | [../docs/LOCAL_RESEARCH_HANDOFF.md](../docs/LOCAL_RESEARCH_HANDOFF.md) |
 | Progress and remaining gates | [../docs/PROGRESS_FROM_BASELINE.md](../docs/PROGRESS_FROM_BASELINE.md) |
 | Current Linux research caller | [live_control/CURRENT_CLIENT.md](live_control/CURRENT_CLIENT.md) |
+| Historical local-GPU triage snapshot (not current resource authorization) | [gpu/RECOVERY_STATUS.md](gpu/RECOVERY_STATUS.md) |
 | Research convergence/freeze criteria | [evolution/freeze_criteria.md](evolution/freeze_criteria.md) |
 | Issue #59 global-owner event/head invariance T0 | [analysis/map01_global_owner_invariance_59_t0_20261001/REPORT.md](analysis/map01_global_owner_invariance_59_t0_20261001/REPORT.md) |
 | Issue #5970 × #5348 causal-cut recovery reachability T0 | [analysis/blackstart_causal_cut_5970_t0_20261001/REPORT.md](analysis/blackstart_causal_cut_5970_t0_20261001/REPORT.md) |
@@ -181,6 +182,8 @@ For new work, prefer the narrowest existing category below rather than adding an
 
 - [`launch/`](launch/) — public-evidence/launch presentation experiments.
 - [`experiments/`](experiments/) — small scoped experiments without a narrower established category.
+- [#4988 original Qwen abstention-balance STOP package](experiments/qwen05b_abstention_balance_4780_v1/RECOVERY_STATUS.md) — original branch package preserved without overwriting the merged STOP/capture corrections; formal fit count 0.
+- [#5014 Qwen abstention-balance v2 resource HOLD](experiments/qwen05b_abstention_balance_4780_v2/RECOVERY_STATUS.md) — exact frozen package and `HOLD_RESOURCE_OWNERSHIP` preserved; formal fit count 0 and current-main refreeze/explicit arbitration required.
 
 ### Historical archival namespaces
 
