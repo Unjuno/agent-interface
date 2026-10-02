@@ -12,6 +12,6 @@ Construction chronology: the first WSLc test command stopped before tests becaus
 
 See [`PROTOCOL.md`](PROTOCOL.md) and its source/data identities in [`FREEZE.json`](FREEZE.json).
 
-## Frozen result
+## Result
 
-Pending the one-shot candidate and separate auditor. This section must preserve the first raw result, including FAIL/HOLD/STOP, without rerun or relabeling.
+Allocation-01 completed: candidate exit 0 and separate raw-only auditor exit 0; retries 0. Raw result and audit are retained unchanged under `results/allocation-01/`. The auditor verifies the output (`audit_status=PASS`) but applies the frozen scientific gate as `FAIL_METHOD`: matched MRR improves over the unstratified baseline by 0.0729, below the preregistered 0.10 threshold. See [`REPORT.md`](REPORT.md) and [`RUN_RECEIPTS.json`](RUN_RECEIPTS.json). This is a finite synthetic method result only; empirical T0/T2 remain `HOLD_NO_COMPARABLE_SPECTRUM`.
