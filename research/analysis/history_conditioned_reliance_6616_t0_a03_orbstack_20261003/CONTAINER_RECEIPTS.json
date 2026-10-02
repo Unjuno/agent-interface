@@ -1,0 +1,76 @@
+{
+  "schema": "obstac-container-receipts-v1",
+  "allocation_id": "history-conditioned-reliance-6616-t0-a03-20261003",
+  "freeze_sha256": "391c4dbad116e8d67d87d20a98598a896d99bd6c06bad3eff1e908fe020204d8",
+  "source_commit": "5e9d5b3e8d1f5685ccd71fc1ebb50b1cb729eb69",
+  "vm": {
+    "name": "research-6680-a01-20261003",
+    "os": "Ubuntu 24.04",
+    "architecture": "arm64",
+    "docker_engine": "29.1.3",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "image_id": "sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "image_platform": "linux/arm64",
+    "vm_network_isolation_claimed": false
+  },
+  "common_container_limits": {
+    "network_mode": "none",
+    "nano_cpus": 250000000,
+    "memory_bytes": 268435456,
+    "memory_swap_bytes": 268435456,
+    "pids_limit": 32,
+    "readonly_rootfs": true,
+    "user": "1000:1000",
+    "cap_drop": ["ALL"],
+    "security_opt": ["no-new-privileges"]
+  },
+  "candidate": {
+    "name": "6616-a03-candidate-20261003",
+    "id": "bfd7283584db03a0ab4c3a3b35d957c17e41a1d54ba4e02f6fb0e7676c370ca7",
+    "command": ["python", "-B", "/src/candidate.py", "/src/fixture.json", "/freeze/FREEZE.json", "/out/run"],
+    "environment": {
+      "OBSTAC_ALLOCATION_ID": "history-conditioned-reliance-6616-t0-a03-20261003",
+      "OBSTAC_SOURCE_COMMIT": "5e9d5b3e8d1f5685ccd71fc1ebb50b1cb729eb69",
+      "OBSTAC_IMAGE_ID": "sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+      "OBSTAC_FREEZE_SHA256": "391c4dbad116e8d67d87d20a98598a896d99bd6c06bad3eff1e908fe020204d8",
+      "OBSTAC_CONSTRUCTION": "0"
+    },
+    "started_at": "2026-10-02T20:25:53.331557571Z",
+    "finished_at": "2026-10-02T20:25:53.739166659Z",
+    "exit_code": 0,
+    "oom_killed": false,
+    "mounts": [
+      {"source": "/home/taka/6616-a03-20261003/src-candidate", "target": "/src", "read_only": true},
+      {"source": "/home/taka/6616-a03-20261003/src-candidate/FREEZE.json", "target": "/freeze/FREEZE.json", "read_only": true},
+      {"source": "/home/taka/6616-a03-20261003/out-candidate", "target": "/out", "read_only": false}
+    ],
+    "candidate_source_file_names": ["FREEZE.json", "candidate.py", "fixture.json"],
+    "stdout": "",
+    "stderr": ""
+  },
+  "auditor": {
+    "name": "6616-a03-auditor-20261003",
+    "id": "53a4bfe6e3ff2e1cecf327bdcc853a7de8c1b5132346370ae3875ce619a60e9a",
+    "command": ["python", "-B", "/src/audit.py", "/src/fixture.json", "/src/oracle.json", "/freeze/FREEZE.json", "/candidate/run/candidate.raw.json", "/candidate/run/reviewer_packets.json", "/out/run/audit.json"],
+    "environment": {
+      "OBSTAC_ALLOCATION_ID": "history-conditioned-reliance-6616-t0-a03-20261003",
+      "OBSTAC_SOURCE_COMMIT": "5e9d5b3e8d1f5685ccd71fc1ebb50b1cb729eb69",
+      "OBSTAC_IMAGE_ID": "sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+      "OBSTAC_FREEZE_SHA256": "391c4dbad116e8d67d87d20a98598a896d99bd6c06bad3eff1e908fe020204d8",
+      "OBSTAC_CONSTRUCTION": "0"
+    },
+    "started_at": "2026-10-02T20:26:10.145917743Z",
+    "finished_at": "2026-10-02T20:26:10.485909510Z",
+    "exit_code": 0,
+    "oom_killed": false,
+    "mounts": [
+      {"source": "/home/taka/6616-a03-20261003/src-audit", "target": "/src", "read_only": true},
+      {"source": "/home/taka/6616-a03-20261003/src-audit/FREEZE.json", "target": "/freeze/FREEZE.json", "read_only": true},
+      {"source": "/home/taka/6616-a03-20261003/out-candidate", "target": "/candidate", "read_only": true},
+      {"source": "/home/taka/6616-a03-20261003/out-audit", "target": "/out", "read_only": false}
+    ],
+    "stdout": "",
+    "stderr": ""
+  },
+  "invocation_counts": {"candidate": 1, "auditor": 1, "formal_containers": 2, "retries": 0}
+}

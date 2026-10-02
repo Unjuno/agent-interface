@@ -420,6 +420,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`hazard_discretionary_capture_6086_t0_v1/`](hazard_discretionary_capture_6086_t0_v1/)
 - [`hedged_evidence_start_4277_v1/`](hedged_evidence_start_4277_v1/)
 - [`hidden_cause_sensitivity_5440_t2/`](hidden_cause_sensitivity_5440_t2/)
+- [`history_conditioned_reliance_6616_t0_a03_orbstack_20261003/`](history_conditioned_reliance_6616_t0_a03_orbstack_20261003/)
 - [`human_autonomy_envelope_6383_t0_20261002/`](human_autonomy_envelope_6383_t0_20261002/)
 - [`human_return_resumption_6492_t0_20261002/`](human_return_resumption_6492_t0_20261002/)
 - [`human_return_to_own_work_6492_t0_20261002_v1/`](human_return_to_own_work_6492_t0_20261002_v1/)
