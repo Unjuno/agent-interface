@@ -1,0 +1,5 @@
+# Start-gate metadata correction
+
+`FREEZE.json` is retained byte-for-byte as read by the formal candidate and auditor. It records `formal_start_gate_main` as `91d8221875efd9421db76f667ecff0cd242dd16b`. Immediately before the formal candidate invocation, `git fetch` advanced main to `844a1098f20b980f264595dcfc5dacbe6db6e79d`; the gate command then compared the governing goal, observation-gating README and protocol from preregistered base `df2a230251cbb4452ae916f3e8c69c14c5b985d4` to that fetched main and reported no changed paths. This fetched SHA was not copied into the frozen manifest before the one-shot run.
+
+The candidate uses only the committed synthetic fixture, frozen Python sources and supplied image; none of the changed main tree was an experiment input. This is a start-gate metadata deviation, not a data/source mismatch. Preserve both SHAs and do not rewrite the freeze or relabel the run. The scoped method finding remains limited to the immutable 16-pair synthetic raster fixture.
