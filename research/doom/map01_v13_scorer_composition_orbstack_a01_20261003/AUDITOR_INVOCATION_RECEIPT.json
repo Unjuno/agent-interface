@@ -1,0 +1,25 @@
+{
+  "schema": "obstac-invocation-receipt-v1",
+  "allocation_id": "issue59-v13-scorer-composition-orbstack-a01-20261003",
+  "role": "independent_raw_only_auditor",
+  "runtime": "OrbStack Docker context",
+  "image_id": "sha256:ebb7ae5e517a94516e0e22a2dec1013f95ce5432a23a03784e6621682ee8cf1c",
+  "platform": "linux/arm64",
+  "network": "none",
+  "readonly_rootfs": true,
+  "entrypoint": "python",
+  "argv": ["-B", "research/doom/map01_v13_scorer_composition_orbstack_a01_20261003/audit.py"],
+  "obstac_environment": {
+    "OBSTAC_ALLOCATION_ID": "issue59-v13-scorer-composition-orbstack-a01-20261003",
+    "OBSTAC_SOURCE_COMMIT": "9379817a8a5f5c3dda86be7db4d2ca226358854b",
+    "OBSTAC_IMAGE_ID": "sha256:ebb7ae5e517a94516e0e22a2dec1013f95ce5432a23a03784e6621682ee8cf1c",
+    "OBSTAC_FREEZE_SHA256": "216a71c15c5eb6a642577d1f039f2c34aaee952dd6f52b7c22144c296b56192e",
+    "OBSTAC_CONSTRUCTION": "1"
+  },
+  "exit_code": 0,
+  "auditor_invocations": 1,
+  "candidate_invocations": 1,
+  "retry_count": 0,
+  "decision": "PASS_CONSTRUCTION_SCOPED",
+  "errors": 0
+}
