@@ -762,6 +762,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`temporal_ring_disambiguation_2045_v1/`](temporal_ring_disambiguation_2045_v1/)
 - [`temporal_ring_provenance_repair_successor_2053_v1/`](temporal_ring_provenance_repair_successor_2053_v1/)
 - [`temporal_sample_cost_identifiability_v1/`](temporal_sample_cost_identifiability_v1/)
+- [`threshold_persistent_topology_6183_t0_20261003/`](threshold_persistent_topology_6183_t0_20261003/)
 - [`timing_receipt_6532_t0_20261002/`](timing_receipt_6532_t0_20261002/)
 - [`tiny_predicate_specialist_4218_v1/`](tiny_predicate_specialist_4218_v1/)
 - [`tiny_visual_equivariant_2564_v1/`](tiny_visual_equivariant_2564_v1/)
