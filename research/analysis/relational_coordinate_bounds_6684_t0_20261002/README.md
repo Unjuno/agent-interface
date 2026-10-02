@@ -10,4 +10,4 @@ The frozen H/T/D/C/U, finite-state semantics, count limit, and decision gates ar
 python3 -B -m unittest discover -s research/analysis/relational_coordinate_bounds_6684_t0_20261002 -p 'test_*.py' -v
 ```
 
-The formal candidate and independent exact enumerator, environment, raw output, audit and run record are retained in `results/formal-01/` after the one-shot allocation.
+The frozen allocation and all prelaunch stops are preserved with allocation-specific records. The executed candidate and independent exact enumerator, environment, raw output, audit and run record are retained under `results/relational-coordinate-bounds-6684-t0-20261002-06/formal-01/`. See [`REPORT.md`](REPORT.md) for the scoped result and revalidation instructions.
