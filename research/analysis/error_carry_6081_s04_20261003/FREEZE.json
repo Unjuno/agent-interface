@@ -1,0 +1,32 @@
+{
+  "allocation": "ERROR-CARRY-6081-S04-WSLC-20261003-01",
+  "repository": "Unjuno/agent-interface",
+  "issue": 6081,
+  "branch": "research/error-carry-6081-s04-20261003",
+  "base_main": "16cc4b523992bbd5131ee495d52a5bd16329e3d5",
+  "wslc": "3.0.1.0",
+  "kernel": "6.18.40.1-1",
+  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "local_image_id": "sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4",
+  "python": "3.12.14",
+  "architecture": "amd64",
+  "candidate_runs": 1,
+  "retries": 0,
+  "network": "none",
+  "cpu_limit_requested": 1,
+  "memory_limit_requested": "512M",
+  "cgroup_swap_enforcement": "unverified: kernel warning",
+  "source_sha256": {
+    "cases.json": "2d86dd87034ed11f55045818b4ab8c782a7ab705b91dad78087a4f7d429f624c",
+    "audit.py": "200fafa048451197a9d897ba093ef6b324568f8fd53b21d5288950f85fcc5c3a",
+    "build_cases.py": "d6438a3342f57e46af0f581e917cbb43a3f9c92ab34aa922d1fbe4e672a56630",
+    "truth.json": "16b70464f50c17be390086d326124f663ebeca2e53a843c008916d3e45b371da",
+    "CONSTRUCTION.md": "4156f578648bfa085ff6c69b196c54f6eb18cef0f571bcba0519a7489c753e85",
+    "candidate.py": "e9182d738cef684b8f68e2246330c5e5d092461b61fbec248ebea46e60f70b98",
+    "test_s04.py": "160f027e8fbc686a2bbfbf45ad24cd44a46dd6083027184aa03e08dfabfa5eff",
+    "PLAN.md": "1c304a8f63299dae6ffc368e3da286dcab09b63b3c5e7bd444c00c8a69015d2e"
+  },
+  "audit_invocations": 2,
+  "audit_runs": 1,
+  "audit_correction": "First audit exited 2 from oracle bookkeeping bug; preserved. Corrected auditor re-run once, exit 0. Candidate ran once; retries 0."
+}
