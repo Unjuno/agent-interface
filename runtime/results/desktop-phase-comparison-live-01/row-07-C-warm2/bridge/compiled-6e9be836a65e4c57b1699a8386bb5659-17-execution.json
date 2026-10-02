@@ -1,0 +1,110 @@
+{
+  "request": {
+    "action": "save",
+    "operation": "request_save",
+    "authorization": "23724520f89545dab390feeca07bc322",
+    "expected_sequence": 5,
+    "valid_until_ns": 12461015786445
+  },
+  "action_id": "action-e993f92b3ea54bea87b3025e7b2b3ff4",
+  "result": {
+    "status": "completed",
+    "admission": "accepted",
+    "required_capabilities": [
+      "input.keyboard",
+      "input.release_all",
+      "window.focus"
+    ],
+    "execution": {
+      "started_ns": 12459885880229,
+      "ended_ns": 12459940901811,
+      "emissions": 24,
+      "program_emissions": 4,
+      "observations": [],
+      "releases": [
+        {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 12459940896385
+        }
+      ],
+      "waits": [],
+      "activations": [],
+      "completed_ops": [
+        0,
+        1,
+        2
+      ]
+    },
+    "recovery_required": false,
+    "guard_checks": [
+      {
+        "stage": "before_admission",
+        "observation_sequence": 6,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "sheet_context",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "sheet_context",
+        "point": [
+          78,
+          172
+        ],
+        "observed_box": [
+          37,
+          164,
+          83,
+          16
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 6,
+        "valid_until_ns": 12461325374869,
+        "patch_sha256": "90060cd72800f781b67e3cfc13023e197df261d9bb3d22626ccf45bb00a7684b",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      },
+      {
+        "stage": "before_focus",
+        "observation_sequence": 7,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "sheet_context",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "sheet_context",
+        "point": [
+          78,
+          172
+        ],
+        "observed_box": [
+          37,
+          164,
+          83,
+          16
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 7,
+        "valid_until_ns": 12461386695394,
+        "patch_sha256": "90060cd72800f781b67e3cfc13023e197df261d9bb3d22626ccf45bb00a7684b",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+# Untagged identical-input effect alignment — H/T/D/C/U
+
+Parent #4391/#4134/#34. Distinct from delayed tagged-effect reporting: three identical F8 requests have zero or one synchronous application increment each. The reporter is given only the closed ordered list of requests and untagged increment notifications. App filtering is deliberately configured by the fixture, NOT claimed loss of native events or a production defect. App receives no request IDs.
+
+H: ordinal ZIP_ORDER can misattribute later effects after some requests have no effect. ORDER_POSSIBLE preserves every order-consistent source and reports a unique origin only when identifiable. All-effects cases must remain unique, not rejected indiscriminately.
+
+T: six masks in plan.json, two repetitions,12 new private authenticated TCP-disabled Xvfb/Tk sessions, three real F8 programs each. Exact existing X11 backend/core modules, no stubs. Two excluded construction cases ALL/DROP_MIDDLE. One bounded child invocation per formal case, disjoint consumed directories. Both reporters operate on the SAME saved view in separate display-free processes; these are paired reports, not24 GUI trials. No model, user desktop, external experiment network, package installation or Docker image-attestation.
+
+D:12 complete cases,36 native admissions,20 real increments; naive wrong8; candidate wrong-singleton0, unique6, ambiguous14, every true origin inside the reported possible set. Final native input neutral, all process/child exits retained, source freeze unchanged, separate raw auditor agrees and rejects at least8 effective copied-record mutations. Unsealed/unordered input must be UNKNOWN. Missing coverage/process/source/control is HOLD/STOP; complete contradiction is FAIL. First outcomes only, no retry/replacement/exclusion/tuning.
+
+C: one trusted sender and receiver, three completely observed ordered inputs; each input causes at most one effect; all effects are ordered and complete at an explicit receiver seal. No timings, receiver ordinals, filter mask or cause IDs reach reporters. The auditor alone receives raw native/app journals. This is information-limited reporting, not a new universal matching algorithm. The candidate cannot recover absent information and may over-retain hypotheses.
+
+U: asynchronous reordering, repeated effects, unrelated/background increments, missing seal/notifications, multiple senders, authentication, restarts, general GUI/model usefulness and performance are excluded. Wrong source assumptions can cause false uniqueness, explicitly demonstrated by a non-GUI out-of-contract example. Same-author distinct implementation audit is not third-party review. No natural failure probability or calibrated combined uncertainty is estimated.
+
+Roadmap: disjoint construction -> exact public source/plan freeze/readback ->12 unique bounded cases -> saved-data audit/effective controls -> complete additive evidence PR -> applicable exact-head CI and scoped review -> qualified main readback. Preserve all prior studies and global ROADMAP.

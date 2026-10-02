@@ -41,6 +41,12 @@ Child directory names are retained provenance, not a canonical architecture tree
 - [Writer selection scope #4425 / Draft PR #4446](writer_selection_scope_w4m8_v1/ARCHIVAL_QUALIFICATION.md) — seven exact published files retained; complete 401-file raw corpus missing, so this is not an independent reproduction or qualification of the reported PASS.
 - [Router membership #4430 / Draft PR #4452](router_membership_q5m8_v1/ARCHIVAL_QUALIFICATION.md) — three exact STOP metadata files retained; complete 457-file capsule missing and the historical result is not independently reproduced here.
 
+## Freeze-only records with unrecoverable source/raw
+
+- [Text suffix recovery #4040](text_suffix_recovery_v1/ARCHIVAL_QUALIFICATION.md) — exact preformal freeze retained for provenance; Issue-reported 48-case PASS remains HOLD because sources, raw batches, audit receipts, and predecessor corpus are unavailable.
+- [Live GUI dependency ledger #2317](live_gui_dependency_ledger_2317_v1/ARCHIVAL_QUALIFICATION.md) — exact four-file freeze/plan/environment record retained; Issue-reported 36-case PASS remains unverified because runner/auditor source and raw/audit evidence are absent.
+- [Referenced-image retention budget #4064](referenced_image_retention_budget_v1/ARCHIVAL_QUALIFICATION.md), [text-consumption context #4061](text_consumption_context_9bd1_v1/ARCHIVAL_QUALIFICATION.md), [outcome-poll snapshot #4063](../verification/outcome_poll_snapshot_d19a_v1/ARCHIVAL_QUALIFICATION.md), [key-event reduction #4059](key_event_reduction_2107_v1/ARCHIVAL_QUALIFICATION.md), and [O2 cost attribution #4065](../measurement/o2_cost_attribution_v1/ARCHIVAL_QUALIFICATION.md) — exact freeze metadata only; see each qualification for reported disposition and missing source/raw gate. No result is independently reproduced or promoted.
+
 ## Interpretation
 
 - Use [`../../RESEARCH.md`](../../RESEARCH.md) for the evidence ledger and claims taxonomy.

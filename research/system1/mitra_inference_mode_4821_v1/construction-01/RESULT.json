@@ -1,0 +1,23 @@
+{
+  "schema": "mitra-mode-construction-result-4935-v1",
+  "issue": 4935,
+  "allocation": "mitra-inference-mode-diagnostic-4821-20260928-01",
+  "status": "PASS_CONSTRUCTION_SOURCE_PREFLIGHT_ONLY",
+  "freeze_sha256": "922bbf6a0f53d73432c894fc9b4162502acaab614ea9d6680f6da58844265cb6",
+  "main_intake_sha": "f7daef79c9bb8e71e5e73f72e3d4352945d730af",
+  "image_id": "sha256:01ea4e60b03e8a7d48644d0dce596bd2e42ab3815fdc52b0c7a6d4cbcf757dac",
+  "model_sha256": "5ffab0e2cf52f61c5b7c7eb1e8542996736d1023a0212190cc09abc2119a1e09",
+  "support_sha256": "bf4d64cf826ea2d727990bd799d7e6d0f813a97a64119751e05d22a819fdf785",
+  "queries_sha256": "dc68fe551034d6f961900e0300af8c41fea641e058380d21c904bc4146df7fd1",
+  "tests": "6/6 PASS",
+  "test_command": "python -m unittest -v test_audit.py",
+  "compile": "probe.py,audit.py,runner.py py_compile PASS",
+  "powershell_parser": "run-diagnostic.ps1 parse PASS",
+  "preflight_only": "PASS",
+  "cuda_requested": false,
+  "model_loaded": false,
+  "optimizer_steps": 0,
+  "formal_invocations": 0,
+  "launch_clearance": "NOT_ESTABLISHED",
+  "notes": "The non-launch preflight verified cached image/model/input/GPU/container identities. Active task leases must be rechecked immediately before the single formal invocation."
+}

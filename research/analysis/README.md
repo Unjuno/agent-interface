@@ -559,6 +559,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`voi_exact_boundary_5411_dot_v1/`](voi_exact_boundary_5411_dot_v1/)
 - [`voi_option_5306_t1/`](voi_option_5306_t1/)
 - [`wake_fence_6331_t0_v1/`](wake_fence_6331_t0_v1/)
+- [`worker_aging_6133_t1c_20261002/`](worker_aging_6133_t1c_20261002/)
 - [`x11_adaptation_multiseed_2459_v1/`](x11_adaptation_multiseed_2459_v1/)
 - [`x11_augmentation_fail_2394_v1/`](x11_augmentation_fail_2394_v1/)
 - [`x11_backend_process_restart_2437_v3/`](x11_backend_process_restart_2437_v3/)

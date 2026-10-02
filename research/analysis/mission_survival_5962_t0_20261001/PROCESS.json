@@ -1,0 +1,57 @@
+{
+  "issue": 5962,
+  "allocation": "5962-allocation-01",
+  "disposition": "PASS_METHOD_SCOPED",
+  "base_main": "c7346fe1ad0c0d40254c6aa7898a8ed6de76c0dc",
+  "host": "Windows PowerShell 7.6.6 / Python 3.12.10",
+  "docker": {
+    "cli": "28.5.1",
+    "context": "desktop-linux (Docker Desktop)",
+    "daemon_probe": "docker info did not return within approximately 15 seconds; interrupted; no container started",
+    "image": null
+  },
+  "construction": {
+    "failed_checks_before_freeze": [
+      "Auditor endpoint oracle failed to make any-F failure state absorbing.",
+      "Auditor burst oracle failed to make threshold state absorbing.",
+      "Censoring mutation selected a zero-censor row and was ineffective."
+    ],
+    "repairs_completed_before_freeze": true,
+    "unittest_passed": "4/4",
+    "py_compile_exit": 0
+  },
+  "candidate": {
+    "command": "python candidate.py",
+    "invocations": 1,
+    "exit_code": 0,
+    "artifact": "raw-candidate.json (retained in published package as gzip)",
+    "sha256": "15e1c649839961fda74319d7481772614bfa352ddcfe59216a03e10560ba2634",
+    "published_artifact": "raw-candidate.json.gz",
+    "published_sha256": "8e139ae44cdc291fc5e857d9f556fbba0506b7ffd095ef26cadc8480df0fb94c",
+    "published_bytes": 11030
+  },
+  "auditor": {
+    "command": "python auditor.py raw-candidate.json",
+    "invocations": 1,
+    "exit_code": 0,
+    "artifact": "audit-result.json",
+    "sha256": "320dafbb15bdbccdadd299e343b00c22b83a35f4ef7a40566302f58debd4fbc8",
+    "errors": [],
+    "controls_rejected": {
+      "change_probability": true,
+      "drop_failed_session_denominator": true,
+      "drop_path": true,
+      "duplicate_path": true,
+      "erase_censoring": true
+    }
+  },
+  "post_freeze_candidate_reruns": 0,
+  "population": {
+    "kernels": 3,
+    "lengths": [1,2,3,4,5,6,7,8],
+    "paths": 1530,
+    "failure_marginal_at_each_position": "1/5",
+    "initiated_sessions_removed_from_denominator": 0
+  },
+  "scope": "exact synthetic finite process model only; no Docker/GPU/model/GUI/network/input"
+}

@@ -1,0 +1,1625 @@
+{
+  "rows": [
+    {
+      "action_attempted": true,
+      "action_epoch": 1,
+      "decision": {
+        "accepted": true,
+        "first_invalid_read": null,
+        "reason": "final_generation_match"
+      },
+      "events": [
+        {
+          "generation": 1,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 1,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "seq": 3,
+          "tx": "read-tx",
+          "type": "commit"
+        },
+        {
+          "action_epoch": 1,
+          "action_id": "a1",
+          "read_id": "r1",
+          "seq": 4,
+          "type": "consume"
+        }
+      ],
+      "final_generation": 1,
+      "oracle_invalid_reason": null,
+      "pattern": "clean_commit",
+      "policy": "FINAL_STATE_ONLY",
+      "read_provenance": {
+        "action_relevant": true,
+        "consume_seq": 4,
+        "consumer_action": "a1",
+        "producer_final_status": "committed",
+        "read_id": "r1",
+        "source_generation": 1
+      },
+      "role": "action_consumed"
+    },
+    {
+      "action_attempted": true,
+      "action_epoch": 1,
+      "decision": {
+        "accepted": true,
+        "first_invalid_read": null,
+        "reason": "valid"
+      },
+      "events": [
+        {
+          "generation": 1,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 1,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "seq": 3,
+          "tx": "read-tx",
+          "type": "commit"
+        },
+        {
+          "action_epoch": 1,
+          "action_id": "a1",
+          "read_id": "r1",
+          "seq": 4,
+          "type": "consume"
+        }
+      ],
+      "final_generation": 1,
+      "oracle_invalid_reason": null,
+      "pattern": "clean_commit",
+      "policy": "ACTION_RELEVANT_OPACITY",
+      "read_provenance": {
+        "action_relevant": true,
+        "consume_seq": 4,
+        "consumer_action": "a1",
+        "producer_final_status": "committed",
+        "read_id": "r1",
+        "source_generation": 1
+      },
+      "role": "action_consumed"
+    },
+    {
+      "action_attempted": false,
+      "action_epoch": null,
+      "decision": {
+        "accepted": false,
+        "first_invalid_read": null,
+        "reason": "no_action_attempt"
+      },
+      "events": [
+        {
+          "generation": 1,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 1,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "seq": 3,
+          "tx": "read-tx",
+          "type": "commit"
+        },
+        {
+          "action_epoch": null,
+          "action_id": null,
+          "read_id": "r1",
+          "seq": 4,
+          "type": "present_only"
+        }
+      ],
+      "final_generation": 1,
+      "oracle_invalid_reason": null,
+      "pattern": "clean_commit",
+      "policy": "FINAL_STATE_ONLY",
+      "read_provenance": {
+        "action_relevant": false,
+        "consume_seq": 4,
+        "consumer_action": null,
+        "producer_final_status": "committed",
+        "read_id": "r1",
+        "source_generation": 1
+      },
+      "role": "presentation_only"
+    },
+    {
+      "action_attempted": false,
+      "action_epoch": null,
+      "decision": {
+        "accepted": false,
+        "first_invalid_read": null,
+        "reason": "no_action_attempt"
+      },
+      "events": [
+        {
+          "generation": 1,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 1,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "seq": 3,
+          "tx": "read-tx",
+          "type": "commit"
+        },
+        {
+          "action_epoch": null,
+          "action_id": null,
+          "read_id": "r1",
+          "seq": 4,
+          "type": "present_only"
+        }
+      ],
+      "final_generation": 1,
+      "oracle_invalid_reason": null,
+      "pattern": "clean_commit",
+      "policy": "ACTION_RELEVANT_OPACITY",
+      "read_provenance": {
+        "action_relevant": false,
+        "consume_seq": 4,
+        "consumer_action": null,
+        "producer_final_status": "committed",
+        "read_id": "r1",
+        "source_generation": 1
+      },
+      "role": "presentation_only"
+    },
+    {
+      "action_attempted": true,
+      "action_epoch": 1,
+      "decision": {
+        "accepted": true,
+        "first_invalid_read": null,
+        "reason": "final_generation_match"
+      },
+      "events": [
+        {
+          "generation": 1,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 1,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "seq": 3,
+          "tx": "read-tx",
+          "type": "abort"
+        },
+        {
+          "action_epoch": 1,
+          "action_id": "a1",
+          "read_id": "r1",
+          "seq": 4,
+          "type": "consume"
+        }
+      ],
+      "final_generation": 1,
+      "oracle_invalid_reason": "aborted",
+      "pattern": "read_then_abort",
+      "policy": "FINAL_STATE_ONLY",
+      "read_provenance": {
+        "action_relevant": true,
+        "consume_seq": 4,
+        "consumer_action": "a1",
+        "producer_final_status": "aborted",
+        "read_id": "r1",
+        "source_generation": 1
+      },
+      "role": "action_consumed"
+    },
+    {
+      "action_attempted": true,
+      "action_epoch": 1,
+      "decision": {
+        "accepted": false,
+        "first_invalid_read": "r1",
+        "reason": "aborted"
+      },
+      "events": [
+        {
+          "generation": 1,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 1,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "seq": 3,
+          "tx": "read-tx",
+          "type": "abort"
+        },
+        {
+          "action_epoch": 1,
+          "action_id": "a1",
+          "read_id": "r1",
+          "seq": 4,
+          "type": "consume"
+        }
+      ],
+      "final_generation": 1,
+      "oracle_invalid_reason": "aborted",
+      "pattern": "read_then_abort",
+      "policy": "ACTION_RELEVANT_OPACITY",
+      "read_provenance": {
+        "action_relevant": true,
+        "consume_seq": 4,
+        "consumer_action": "a1",
+        "producer_final_status": "aborted",
+        "read_id": "r1",
+        "source_generation": 1
+      },
+      "role": "action_consumed"
+    },
+    {
+      "action_attempted": false,
+      "action_epoch": null,
+      "decision": {
+        "accepted": false,
+        "first_invalid_read": null,
+        "reason": "no_action_attempt"
+      },
+      "events": [
+        {
+          "generation": 1,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 1,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "seq": 3,
+          "tx": "read-tx",
+          "type": "abort"
+        },
+        {
+          "action_epoch": null,
+          "action_id": null,
+          "read_id": "r1",
+          "seq": 4,
+          "type": "present_only"
+        }
+      ],
+      "final_generation": 1,
+      "oracle_invalid_reason": null,
+      "pattern": "read_then_abort",
+      "policy": "FINAL_STATE_ONLY",
+      "read_provenance": {
+        "action_relevant": false,
+        "consume_seq": 4,
+        "consumer_action": null,
+        "producer_final_status": "aborted",
+        "read_id": "r1",
+        "source_generation": 1
+      },
+      "role": "presentation_only"
+    },
+    {
+      "action_attempted": false,
+      "action_epoch": null,
+      "decision": {
+        "accepted": false,
+        "first_invalid_read": null,
+        "reason": "no_action_attempt"
+      },
+      "events": [
+        {
+          "generation": 1,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 1,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "seq": 3,
+          "tx": "read-tx",
+          "type": "abort"
+        },
+        {
+          "action_epoch": null,
+          "action_id": null,
+          "read_id": "r1",
+          "seq": 4,
+          "type": "present_only"
+        }
+      ],
+      "final_generation": 1,
+      "oracle_invalid_reason": null,
+      "pattern": "read_then_abort",
+      "policy": "ACTION_RELEVANT_OPACITY",
+      "read_provenance": {
+        "action_relevant": false,
+        "consume_seq": 4,
+        "consumer_action": null,
+        "producer_final_status": "aborted",
+        "read_id": "r1",
+        "source_generation": 1
+      },
+      "role": "presentation_only"
+    },
+    {
+      "action_attempted": true,
+      "action_epoch": 1,
+      "decision": {
+        "accepted": true,
+        "first_invalid_read": null,
+        "reason": "final_generation_match"
+      },
+      "events": [
+        {
+          "generation": 1,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 1,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "after_consume": true,
+          "seq": 3,
+          "tx": "read-tx",
+          "type": "commit"
+        },
+        {
+          "action_epoch": 1,
+          "action_id": "a1",
+          "read_id": "r1",
+          "seq": 4,
+          "type": "consume"
+        }
+      ],
+      "final_generation": 1,
+      "oracle_invalid_reason": "not_committed_at_consume",
+      "pattern": "delayed_completion",
+      "policy": "FINAL_STATE_ONLY",
+      "read_provenance": {
+        "action_relevant": true,
+        "consume_seq": 4,
+        "consumer_action": "a1",
+        "producer_final_status": "committed",
+        "read_id": "r1",
+        "source_generation": 1
+      },
+      "role": "action_consumed"
+    },
+    {
+      "action_attempted": true,
+      "action_epoch": 1,
+      "decision": {
+        "accepted": false,
+        "first_invalid_read": "r1",
+        "reason": "not_committed_at_consume"
+      },
+      "events": [
+        {
+          "generation": 1,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 1,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "after_consume": true,
+          "seq": 3,
+          "tx": "read-tx",
+          "type": "commit"
+        },
+        {
+          "action_epoch": 1,
+          "action_id": "a1",
+          "read_id": "r1",
+          "seq": 4,
+          "type": "consume"
+        }
+      ],
+      "final_generation": 1,
+      "oracle_invalid_reason": "not_committed_at_consume",
+      "pattern": "delayed_completion",
+      "policy": "ACTION_RELEVANT_OPACITY",
+      "read_provenance": {
+        "action_relevant": true,
+        "consume_seq": 4,
+        "consumer_action": "a1",
+        "producer_final_status": "committed",
+        "read_id": "r1",
+        "source_generation": 1
+      },
+      "role": "action_consumed"
+    },
+    {
+      "action_attempted": false,
+      "action_epoch": null,
+      "decision": {
+        "accepted": false,
+        "first_invalid_read": null,
+        "reason": "no_action_attempt"
+      },
+      "events": [
+        {
+          "generation": 1,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 1,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "after_consume": true,
+          "seq": 3,
+          "tx": "read-tx",
+          "type": "commit"
+        },
+        {
+          "action_epoch": null,
+          "action_id": null,
+          "read_id": "r1",
+          "seq": 4,
+          "type": "present_only"
+        }
+      ],
+      "final_generation": 1,
+      "oracle_invalid_reason": null,
+      "pattern": "delayed_completion",
+      "policy": "FINAL_STATE_ONLY",
+      "read_provenance": {
+        "action_relevant": false,
+        "consume_seq": 4,
+        "consumer_action": null,
+        "producer_final_status": "committed",
+        "read_id": "r1",
+        "source_generation": 1
+      },
+      "role": "presentation_only"
+    },
+    {
+      "action_attempted": false,
+      "action_epoch": null,
+      "decision": {
+        "accepted": false,
+        "first_invalid_read": null,
+        "reason": "no_action_attempt"
+      },
+      "events": [
+        {
+          "generation": 1,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 1,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "after_consume": true,
+          "seq": 3,
+          "tx": "read-tx",
+          "type": "commit"
+        },
+        {
+          "action_epoch": null,
+          "action_id": null,
+          "read_id": "r1",
+          "seq": 4,
+          "type": "present_only"
+        }
+      ],
+      "final_generation": 1,
+      "oracle_invalid_reason": null,
+      "pattern": "delayed_completion",
+      "policy": "ACTION_RELEVANT_OPACITY",
+      "read_provenance": {
+        "action_relevant": false,
+        "consume_seq": 4,
+        "consumer_action": null,
+        "producer_final_status": "committed",
+        "read_id": "r1",
+        "source_generation": 1
+      },
+      "role": "presentation_only"
+    },
+    {
+      "action_attempted": true,
+      "action_epoch": 1,
+      "decision": {
+        "accepted": false,
+        "first_invalid_read": null,
+        "reason": "final_generation_mismatch"
+      },
+      "events": [
+        {
+          "generation": 2,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 2,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "seq": 3,
+          "tx": "read-tx",
+          "type": "commit"
+        },
+        {
+          "action_epoch": 1,
+          "action_id": "a1",
+          "read_id": "r1",
+          "seq": 4,
+          "type": "consume"
+        }
+      ],
+      "final_generation": 2,
+      "oracle_invalid_reason": "generation_mismatch",
+      "pattern": "mixed_generation",
+      "policy": "FINAL_STATE_ONLY",
+      "read_provenance": {
+        "action_relevant": true,
+        "consume_seq": 4,
+        "consumer_action": "a1",
+        "producer_final_status": "committed",
+        "read_id": "r1",
+        "source_generation": 2
+      },
+      "role": "action_consumed"
+    },
+    {
+      "action_attempted": true,
+      "action_epoch": 1,
+      "decision": {
+        "accepted": false,
+        "first_invalid_read": "r1",
+        "reason": "generation_mismatch"
+      },
+      "events": [
+        {
+          "generation": 2,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 2,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "seq": 3,
+          "tx": "read-tx",
+          "type": "commit"
+        },
+        {
+          "action_epoch": 1,
+          "action_id": "a1",
+          "read_id": "r1",
+          "seq": 4,
+          "type": "consume"
+        }
+      ],
+      "final_generation": 2,
+      "oracle_invalid_reason": "generation_mismatch",
+      "pattern": "mixed_generation",
+      "policy": "ACTION_RELEVANT_OPACITY",
+      "read_provenance": {
+        "action_relevant": true,
+        "consume_seq": 4,
+        "consumer_action": "a1",
+        "producer_final_status": "committed",
+        "read_id": "r1",
+        "source_generation": 2
+      },
+      "role": "action_consumed"
+    },
+    {
+      "action_attempted": false,
+      "action_epoch": null,
+      "decision": {
+        "accepted": false,
+        "first_invalid_read": null,
+        "reason": "no_action_attempt"
+      },
+      "events": [
+        {
+          "generation": 2,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 2,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "seq": 3,
+          "tx": "read-tx",
+          "type": "commit"
+        },
+        {
+          "action_epoch": null,
+          "action_id": null,
+          "read_id": "r1",
+          "seq": 4,
+          "type": "present_only"
+        }
+      ],
+      "final_generation": 2,
+      "oracle_invalid_reason": null,
+      "pattern": "mixed_generation",
+      "policy": "FINAL_STATE_ONLY",
+      "read_provenance": {
+        "action_relevant": false,
+        "consume_seq": 4,
+        "consumer_action": null,
+        "producer_final_status": "committed",
+        "read_id": "r1",
+        "source_generation": 2
+      },
+      "role": "presentation_only"
+    },
+    {
+      "action_attempted": false,
+      "action_epoch": null,
+      "decision": {
+        "accepted": false,
+        "first_invalid_read": null,
+        "reason": "no_action_attempt"
+      },
+      "events": [
+        {
+          "generation": 2,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 2,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "seq": 3,
+          "tx": "read-tx",
+          "type": "commit"
+        },
+        {
+          "action_epoch": null,
+          "action_id": null,
+          "read_id": "r1",
+          "seq": 4,
+          "type": "present_only"
+        }
+      ],
+      "final_generation": 2,
+      "oracle_invalid_reason": null,
+      "pattern": "mixed_generation",
+      "policy": "ACTION_RELEVANT_OPACITY",
+      "read_provenance": {
+        "action_relevant": false,
+        "consume_seq": 4,
+        "consumer_action": null,
+        "producer_final_status": "committed",
+        "read_id": "r1",
+        "source_generation": 2
+      },
+      "role": "presentation_only"
+    },
+    {
+      "action_attempted": true,
+      "action_epoch": 1,
+      "decision": {
+        "accepted": false,
+        "first_invalid_read": null,
+        "reason": "final_generation_mismatch"
+      },
+      "events": [
+        {
+          "generation": 1,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 1,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "seq": 3,
+          "tx": "read-tx",
+          "type": "commit"
+        },
+        {
+          "new_generation": 2,
+          "old_generation": 1,
+          "seq": 4,
+          "type": "supersede"
+        },
+        {
+          "action_epoch": 1,
+          "action_id": "a1",
+          "read_id": "r1",
+          "seq": 4,
+          "type": "consume"
+        }
+      ],
+      "final_generation": 2,
+      "oracle_invalid_reason": null,
+      "pattern": "supersession",
+      "policy": "FINAL_STATE_ONLY",
+      "read_provenance": {
+        "action_relevant": true,
+        "consume_seq": 4,
+        "consumer_action": "a1",
+        "producer_final_status": "committed",
+        "read_id": "r1",
+        "source_generation": 1
+      },
+      "role": "action_consumed"
+    },
+    {
+      "action_attempted": true,
+      "action_epoch": 1,
+      "decision": {
+        "accepted": true,
+        "first_invalid_read": null,
+        "reason": "valid"
+      },
+      "events": [
+        {
+          "generation": 1,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 1,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "seq": 3,
+          "tx": "read-tx",
+          "type": "commit"
+        },
+        {
+          "new_generation": 2,
+          "old_generation": 1,
+          "seq": 4,
+          "type": "supersede"
+        },
+        {
+          "action_epoch": 1,
+          "action_id": "a1",
+          "read_id": "r1",
+          "seq": 4,
+          "type": "consume"
+        }
+      ],
+      "final_generation": 2,
+      "oracle_invalid_reason": null,
+      "pattern": "supersession",
+      "policy": "ACTION_RELEVANT_OPACITY",
+      "read_provenance": {
+        "action_relevant": true,
+        "consume_seq": 4,
+        "consumer_action": "a1",
+        "producer_final_status": "committed",
+        "read_id": "r1",
+        "source_generation": 1
+      },
+      "role": "action_consumed"
+    },
+    {
+      "action_attempted": false,
+      "action_epoch": null,
+      "decision": {
+        "accepted": false,
+        "first_invalid_read": null,
+        "reason": "no_action_attempt"
+      },
+      "events": [
+        {
+          "generation": 1,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 1,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "seq": 3,
+          "tx": "read-tx",
+          "type": "commit"
+        },
+        {
+          "new_generation": 2,
+          "old_generation": 1,
+          "seq": 4,
+          "type": "supersede"
+        },
+        {
+          "action_epoch": null,
+          "action_id": null,
+          "read_id": "r1",
+          "seq": 4,
+          "type": "present_only"
+        }
+      ],
+      "final_generation": 2,
+      "oracle_invalid_reason": null,
+      "pattern": "supersession",
+      "policy": "FINAL_STATE_ONLY",
+      "read_provenance": {
+        "action_relevant": false,
+        "consume_seq": 4,
+        "consumer_action": null,
+        "producer_final_status": "committed",
+        "read_id": "r1",
+        "source_generation": 1
+      },
+      "role": "presentation_only"
+    },
+    {
+      "action_attempted": false,
+      "action_epoch": null,
+      "decision": {
+        "accepted": false,
+        "first_invalid_read": null,
+        "reason": "no_action_attempt"
+      },
+      "events": [
+        {
+          "generation": 1,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 1,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "seq": 3,
+          "tx": "read-tx",
+          "type": "commit"
+        },
+        {
+          "new_generation": 2,
+          "old_generation": 1,
+          "seq": 4,
+          "type": "supersede"
+        },
+        {
+          "action_epoch": null,
+          "action_id": null,
+          "read_id": "r1",
+          "seq": 4,
+          "type": "present_only"
+        }
+      ],
+      "final_generation": 2,
+      "oracle_invalid_reason": null,
+      "pattern": "supersession",
+      "policy": "ACTION_RELEVANT_OPACITY",
+      "read_provenance": {
+        "action_relevant": false,
+        "consume_seq": 4,
+        "consumer_action": null,
+        "producer_final_status": "committed",
+        "read_id": "r1",
+        "source_generation": 1
+      },
+      "role": "presentation_only"
+    },
+    {
+      "action_attempted": true,
+      "action_epoch": 1,
+      "decision": {
+        "accepted": true,
+        "first_invalid_read": null,
+        "reason": "final_generation_match"
+      },
+      "events": [
+        {
+          "generation": 1,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 1,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "seq": 3,
+          "tx": "read-tx",
+          "type": "rollback"
+        },
+        {
+          "action_epoch": 1,
+          "action_id": "a1",
+          "read_id": "r1",
+          "seq": 4,
+          "type": "consume"
+        }
+      ],
+      "final_generation": 1,
+      "oracle_invalid_reason": "rolled_back",
+      "pattern": "rollback_after_read",
+      "policy": "FINAL_STATE_ONLY",
+      "read_provenance": {
+        "action_relevant": true,
+        "consume_seq": 4,
+        "consumer_action": "a1",
+        "producer_final_status": "rolled_back",
+        "read_id": "r1",
+        "source_generation": 1
+      },
+      "role": "action_consumed"
+    },
+    {
+      "action_attempted": true,
+      "action_epoch": 1,
+      "decision": {
+        "accepted": false,
+        "first_invalid_read": "r1",
+        "reason": "rolled_back"
+      },
+      "events": [
+        {
+          "generation": 1,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 1,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "seq": 3,
+          "tx": "read-tx",
+          "type": "rollback"
+        },
+        {
+          "action_epoch": 1,
+          "action_id": "a1",
+          "read_id": "r1",
+          "seq": 4,
+          "type": "consume"
+        }
+      ],
+      "final_generation": 1,
+      "oracle_invalid_reason": "rolled_back",
+      "pattern": "rollback_after_read",
+      "policy": "ACTION_RELEVANT_OPACITY",
+      "read_provenance": {
+        "action_relevant": true,
+        "consume_seq": 4,
+        "consumer_action": "a1",
+        "producer_final_status": "rolled_back",
+        "read_id": "r1",
+        "source_generation": 1
+      },
+      "role": "action_consumed"
+    },
+    {
+      "action_attempted": false,
+      "action_epoch": null,
+      "decision": {
+        "accepted": false,
+        "first_invalid_read": null,
+        "reason": "no_action_attempt"
+      },
+      "events": [
+        {
+          "generation": 1,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 1,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "seq": 3,
+          "tx": "read-tx",
+          "type": "rollback"
+        },
+        {
+          "action_epoch": null,
+          "action_id": null,
+          "read_id": "r1",
+          "seq": 4,
+          "type": "present_only"
+        }
+      ],
+      "final_generation": 1,
+      "oracle_invalid_reason": null,
+      "pattern": "rollback_after_read",
+      "policy": "FINAL_STATE_ONLY",
+      "read_provenance": {
+        "action_relevant": false,
+        "consume_seq": 4,
+        "consumer_action": null,
+        "producer_final_status": "rolled_back",
+        "read_id": "r1",
+        "source_generation": 1
+      },
+      "role": "presentation_only"
+    },
+    {
+      "action_attempted": false,
+      "action_epoch": null,
+      "decision": {
+        "accepted": false,
+        "first_invalid_read": null,
+        "reason": "no_action_attempt"
+      },
+      "events": [
+        {
+          "generation": 1,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 1,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "seq": 3,
+          "tx": "read-tx",
+          "type": "rollback"
+        },
+        {
+          "action_epoch": null,
+          "action_id": null,
+          "read_id": "r1",
+          "seq": 4,
+          "type": "present_only"
+        }
+      ],
+      "final_generation": 1,
+      "oracle_invalid_reason": null,
+      "pattern": "rollback_after_read",
+      "policy": "ACTION_RELEVANT_OPACITY",
+      "read_provenance": {
+        "action_relevant": false,
+        "consume_seq": 4,
+        "consumer_action": null,
+        "producer_final_status": "rolled_back",
+        "read_id": "r1",
+        "source_generation": 1
+      },
+      "role": "presentation_only"
+    },
+    {
+      "action_attempted": true,
+      "action_epoch": 1,
+      "decision": {
+        "accepted": true,
+        "first_invalid_read": null,
+        "reason": "final_generation_match"
+      },
+      "events": [
+        {
+          "generation": 1,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 1,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "seq": 3,
+          "tx": "read-tx",
+          "type": "commit"
+        },
+        {
+          "duplicate": true,
+          "seq": 4,
+          "tx": "read-tx",
+          "type": "commit"
+        },
+        {
+          "action_epoch": 1,
+          "action_id": "a1",
+          "read_id": "r1",
+          "seq": 4,
+          "type": "consume"
+        }
+      ],
+      "final_generation": 1,
+      "oracle_invalid_reason": null,
+      "pattern": "duplicate_completion",
+      "policy": "FINAL_STATE_ONLY",
+      "read_provenance": {
+        "action_relevant": true,
+        "consume_seq": 4,
+        "consumer_action": "a1",
+        "producer_final_status": "committed",
+        "read_id": "r1",
+        "source_generation": 1
+      },
+      "role": "action_consumed"
+    },
+    {
+      "action_attempted": true,
+      "action_epoch": 1,
+      "decision": {
+        "accepted": true,
+        "first_invalid_read": null,
+        "reason": "valid"
+      },
+      "events": [
+        {
+          "generation": 1,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 1,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "seq": 3,
+          "tx": "read-tx",
+          "type": "commit"
+        },
+        {
+          "duplicate": true,
+          "seq": 4,
+          "tx": "read-tx",
+          "type": "commit"
+        },
+        {
+          "action_epoch": 1,
+          "action_id": "a1",
+          "read_id": "r1",
+          "seq": 4,
+          "type": "consume"
+        }
+      ],
+      "final_generation": 1,
+      "oracle_invalid_reason": null,
+      "pattern": "duplicate_completion",
+      "policy": "ACTION_RELEVANT_OPACITY",
+      "read_provenance": {
+        "action_relevant": true,
+        "consume_seq": 4,
+        "consumer_action": "a1",
+        "producer_final_status": "committed",
+        "read_id": "r1",
+        "source_generation": 1
+      },
+      "role": "action_consumed"
+    },
+    {
+      "action_attempted": false,
+      "action_epoch": null,
+      "decision": {
+        "accepted": false,
+        "first_invalid_read": null,
+        "reason": "no_action_attempt"
+      },
+      "events": [
+        {
+          "generation": 1,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 1,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "seq": 3,
+          "tx": "read-tx",
+          "type": "commit"
+        },
+        {
+          "duplicate": true,
+          "seq": 4,
+          "tx": "read-tx",
+          "type": "commit"
+        },
+        {
+          "action_epoch": null,
+          "action_id": null,
+          "read_id": "r1",
+          "seq": 4,
+          "type": "present_only"
+        }
+      ],
+      "final_generation": 1,
+      "oracle_invalid_reason": null,
+      "pattern": "duplicate_completion",
+      "policy": "FINAL_STATE_ONLY",
+      "read_provenance": {
+        "action_relevant": false,
+        "consume_seq": 4,
+        "consumer_action": null,
+        "producer_final_status": "committed",
+        "read_id": "r1",
+        "source_generation": 1
+      },
+      "role": "presentation_only"
+    },
+    {
+      "action_attempted": false,
+      "action_epoch": null,
+      "decision": {
+        "accepted": false,
+        "first_invalid_read": null,
+        "reason": "no_action_attempt"
+      },
+      "events": [
+        {
+          "generation": 1,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 1,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "seq": 3,
+          "tx": "read-tx",
+          "type": "commit"
+        },
+        {
+          "duplicate": true,
+          "seq": 4,
+          "tx": "read-tx",
+          "type": "commit"
+        },
+        {
+          "action_epoch": null,
+          "action_id": null,
+          "read_id": "r1",
+          "seq": 4,
+          "type": "present_only"
+        }
+      ],
+      "final_generation": 1,
+      "oracle_invalid_reason": null,
+      "pattern": "duplicate_completion",
+      "policy": "ACTION_RELEVANT_OPACITY",
+      "read_provenance": {
+        "action_relevant": false,
+        "consume_seq": 4,
+        "consumer_action": null,
+        "producer_final_status": "committed",
+        "read_id": "r1",
+        "source_generation": 1
+      },
+      "role": "presentation_only"
+    },
+    {
+      "action_attempted": true,
+      "action_epoch": 1,
+      "decision": {
+        "accepted": true,
+        "first_invalid_read": null,
+        "reason": "final_generation_match"
+      },
+      "events": [
+        {
+          "generation": 1,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 1,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "read_id": "r1",
+          "seq": 3,
+          "type": "present"
+        },
+        {
+          "action_epoch": 1,
+          "action_id": "a1",
+          "read_id": "r1",
+          "seq": 4,
+          "type": "consume"
+        }
+      ],
+      "final_generation": 1,
+      "oracle_invalid_reason": "not_committed_at_consume",
+      "pattern": "tentative_presentation",
+      "policy": "FINAL_STATE_ONLY",
+      "read_provenance": {
+        "action_relevant": true,
+        "consume_seq": 4,
+        "consumer_action": "a1",
+        "producer_final_status": "tentative",
+        "read_id": "r1",
+        "source_generation": 1
+      },
+      "role": "action_consumed"
+    },
+    {
+      "action_attempted": true,
+      "action_epoch": 1,
+      "decision": {
+        "accepted": false,
+        "first_invalid_read": "r1",
+        "reason": "not_committed_at_consume"
+      },
+      "events": [
+        {
+          "generation": 1,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 1,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "read_id": "r1",
+          "seq": 3,
+          "type": "present"
+        },
+        {
+          "action_epoch": 1,
+          "action_id": "a1",
+          "read_id": "r1",
+          "seq": 4,
+          "type": "consume"
+        }
+      ],
+      "final_generation": 1,
+      "oracle_invalid_reason": "not_committed_at_consume",
+      "pattern": "tentative_presentation",
+      "policy": "ACTION_RELEVANT_OPACITY",
+      "read_provenance": {
+        "action_relevant": true,
+        "consume_seq": 4,
+        "consumer_action": "a1",
+        "producer_final_status": "tentative",
+        "read_id": "r1",
+        "source_generation": 1
+      },
+      "role": "action_consumed"
+    },
+    {
+      "action_attempted": false,
+      "action_epoch": null,
+      "decision": {
+        "accepted": false,
+        "first_invalid_read": null,
+        "reason": "no_action_attempt"
+      },
+      "events": [
+        {
+          "generation": 1,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 1,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "read_id": "r1",
+          "seq": 3,
+          "type": "present"
+        },
+        {
+          "action_epoch": null,
+          "action_id": null,
+          "read_id": "r1",
+          "seq": 4,
+          "type": "present_only"
+        }
+      ],
+      "final_generation": 1,
+      "oracle_invalid_reason": null,
+      "pattern": "tentative_presentation",
+      "policy": "FINAL_STATE_ONLY",
+      "read_provenance": {
+        "action_relevant": false,
+        "consume_seq": 4,
+        "consumer_action": null,
+        "producer_final_status": "tentative",
+        "read_id": "r1",
+        "source_generation": 1
+      },
+      "role": "presentation_only"
+    },
+    {
+      "action_attempted": false,
+      "action_epoch": null,
+      "decision": {
+        "accepted": false,
+        "first_invalid_read": null,
+        "reason": "no_action_attempt"
+      },
+      "events": [
+        {
+          "generation": 1,
+          "seq": 1,
+          "tx": "read-tx",
+          "type": "begin"
+        },
+        {
+          "generation": 1,
+          "id": "r1",
+          "producer_status": "tentative",
+          "seq": 2,
+          "type": "read"
+        },
+        {
+          "read_id": "r1",
+          "seq": 3,
+          "type": "present"
+        },
+        {
+          "action_epoch": null,
+          "action_id": null,
+          "read_id": "r1",
+          "seq": 4,
+          "type": "present_only"
+        }
+      ],
+      "final_generation": 1,
+      "oracle_invalid_reason": null,
+      "pattern": "tentative_presentation",
+      "policy": "ACTION_RELEVANT_OPACITY",
+      "read_provenance": {
+        "action_relevant": false,
+        "consume_seq": 4,
+        "consumer_action": null,
+        "producer_final_status": "tentative",
+        "read_id": "r1",
+        "source_generation": 1
+      },
+      "role": "presentation_only"
+    }
+  ],
+  "schema": "opacity-action-relevance-5360-t1/v1"
+}

@@ -1,0 +1,235 @@
+﻿2026-10-01T10:35:34.7527820Z Current runner version: '2.337.0'
+2026-10-01T10:35:34.7560770Z ##[group]Runner Image Provisioner
+2026-10-01T10:35:34.7561680Z Hosted Compute Agent
+2026-10-01T10:35:34.7562090Z Version: 20260828.587
+2026-10-01T10:35:34.7562660Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+2026-10-01T10:35:34.7563160Z Build Date: 2026-08-28T16:44:25Z
+2026-10-01T10:35:34.7563700Z Worker ID: {b9aa021b-c0d6-451b-ba45-df23405bbd37}
+2026-10-01T10:35:34.7564180Z Azure Region: westus
+2026-10-01T10:35:34.7565140Z ##[endgroup]
+2026-10-01T10:35:34.7566690Z ##[group]Operating System
+2026-10-01T10:35:34.7567180Z macOS
+2026-10-01T10:35:34.7567550Z 26.6.2
+2026-10-01T10:35:34.7567870Z 25G83
+2026-10-01T10:35:34.7568200Z ##[endgroup]
+2026-10-01T10:35:34.7568570Z ##[group]Runner Image
+2026-10-01T10:35:34.7569160Z Image: macos-26-arm64
+2026-10-01T10:35:34.7569800Z Version: 20260907.0351.1
+2026-10-01T10:35:34.7570840Z Included Software: https://github.com/actions/runner-images/blob/macos-26-arm64/20260907.0351/images/macos/macos-26-arm64-Readme.md
+2026-10-01T10:35:34.7572290Z Image Release: https://github.com/actions/runner-images/releases/tag/macos-26-arm64%2F20260907.0351
+2026-10-01T10:35:34.7572970Z ##[endgroup]
+2026-10-01T10:35:34.7574070Z ##[group]GITHUB_TOKEN Permissions
+2026-10-01T10:35:34.7576240Z Contents: read
+2026-10-01T10:35:34.7576760Z Metadata: read
+2026-10-01T10:35:34.7577290Z ##[endgroup]
+2026-10-01T10:35:34.7579420Z Secret source: Actions
+2026-10-01T10:35:34.7580050Z Cache mode: write
+2026-10-01T10:35:34.7580690Z Prepare workflow directory
+2026-10-01T10:35:34.8035740Z Prepare all required actions
+2026-10-01T10:35:34.8102700Z Getting action download info
+2026-10-01T10:35:34.9851410Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-01T10:35:35.3893700Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-10-01T10:35:35.6255210Z Complete job name: core-contract (macos-latest)
+2026-10-01T10:35:35.6951220Z ##[group]Run actions/checkout@v4
+2026-10-01T10:35:35.6951900Z with:
+2026-10-01T10:35:35.6952220Z   fetch-depth: 1
+2026-10-01T10:35:35.6952570Z   sparse-checkout: runtime/core_v1
+
+2026-10-01T10:35:35.6952990Z   sparse-checkout-cone-mode: false
+2026-10-01T10:35:35.6953400Z   repository: Unjuno/agent-interface
+2026-10-01T10:35:35.6956480Z   token: ***
+2026-10-01T10:35:35.6956800Z   ssh-strict: true
+2026-10-01T10:35:35.6957120Z   ssh-user: git
+2026-10-01T10:35:35.6957450Z   persist-credentials: true
+2026-10-01T10:35:35.6957800Z   clean: true
+2026-10-01T10:35:35.6958110Z   fetch-tags: false
+2026-10-01T10:35:35.6958430Z   show-progress: true
+2026-10-01T10:35:35.6958810Z   lfs: false
+2026-10-01T10:35:35.6959190Z   submodules: false
+2026-10-01T10:35:35.6959540Z   set-safe-directory: true
+2026-10-01T10:35:35.6960030Z   allow-unsafe-pr-checkout: false
+2026-10-01T10:35:35.6960760Z ##[endgroup]
+2026-10-01T10:35:36.1849240Z Syncing repository: Unjuno/agent-interface
+2026-10-01T10:35:36.1850830Z ##[group]Getting Git version info
+2026-10-01T10:35:36.1851540Z Working directory is '/Users/runner/work/agent-interface/agent-interface'
+2026-10-01T10:35:36.1852430Z [command]/opt/homebrew/bin/git version
+2026-10-01T10:35:36.2507340Z git version 2.55.0
+2026-10-01T10:35:36.2523320Z ##[endgroup]
+2026-10-01T10:35:36.2532380Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/32eaed58-ec43-4f53-9abc-c277b2d8623c/.gitconfig'
+2026-10-01T10:35:36.2545750Z Temporarily overriding HOME='/Users/runner/work/_temp/32eaed58-ec43-4f53-9abc-c277b2d8623c' before making global git config changes
+2026-10-01T10:35:36.2548420Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-01T10:35:36.2549370Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/agent-interface/agent-interface
+2026-10-01T10:35:36.2698610Z Deleting the contents of '/Users/runner/work/agent-interface/agent-interface'
+2026-10-01T10:35:36.2705380Z ##[group]Initializing the repository
+2026-10-01T10:35:36.2708700Z [command]/opt/homebrew/bin/git init /Users/runner/work/agent-interface/agent-interface
+2026-10-01T10:35:36.3022000Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-01T10:35:36.3024620Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-01T10:35:36.3026680Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-01T10:35:36.3028380Z hint: call:
+2026-10-01T10:35:36.3029240Z hint:
+2026-10-01T10:35:36.3030390Z hint: 	git config --global init.defaultBranch <name>
+2026-10-01T10:35:36.3031780Z hint:
+2026-10-01T10:35:36.3033080Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-01T10:35:36.3035770Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-01T10:35:36.3037440Z hint:
+2026-10-01T10:35:36.3038660Z hint: 	git branch -m <name>
+2026-10-01T10:35:36.3039710Z hint:
+2026-10-01T10:35:36.3041560Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-01T10:35:36.3042880Z Initialized empty Git repository in /Users/runner/work/agent-interface/agent-interface/.git/
+2026-10-01T10:35:36.3044550Z [command]/opt/homebrew/bin/git remote add origin https://github.com/Unjuno/agent-interface
+2026-10-01T10:35:36.3173190Z ##[endgroup]
+2026-10-01T10:35:36.3174680Z ##[group]Disabling automatic garbage collection
+2026-10-01T10:35:36.3185990Z [command]/opt/homebrew/bin/git config --local gc.auto 0
+2026-10-01T10:35:36.3293130Z ##[endgroup]
+2026-10-01T10:35:36.3294190Z ##[group]Setting up auth
+2026-10-01T10:35:36.3298960Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-01T10:35:36.3434970Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-01T10:35:36.5376800Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-01T10:35:36.5500430Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-01T10:35:36.6921680Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-01T10:35:36.7232470Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-01T10:35:36.8242200Z [command]/opt/homebrew/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-01T10:35:36.8330530Z ##[endgroup]
+2026-10-01T10:35:36.8332960Z ##[group]Fetching the repository
+2026-10-01T10:35:36.8344440Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --filter=blob:none --depth=1 origin +b25e7c07b5281a2a63a8c4886bb4c19d2b451f16:refs/remotes/pull/5981/merge
+2026-10-01T10:35:37.9284610Z From https://github.com/Unjuno/agent-interface
+2026-10-01T10:35:37.9299230Z  * [new ref]         b25e7c07b5281a2a63a8c4886bb4c19d2b451f16 -> pull/5981/merge
+2026-10-01T10:35:37.9318390Z ##[endgroup]
+2026-10-01T10:35:37.9320580Z ##[group]Determining the checkout info
+2026-10-01T10:35:37.9329540Z ##[endgroup]
+2026-10-01T10:35:37.9333980Z ##[group]Setting up sparse checkout
+2026-10-01T10:35:37.9335190Z [command]/opt/homebrew/bin/git config core.sparseCheckout true
+2026-10-01T10:35:37.9486920Z [command]/opt/homebrew/bin/git rev-parse --git-path info/sparse-checkout
+2026-10-01T10:35:37.9684050Z .git/info/sparse-checkout
+2026-10-01T10:35:38.0048320Z ##[endgroup]
+2026-10-01T10:35:38.0151030Z ##[group]Checking out the ref
+2026-10-01T10:35:38.0219210Z [command]/opt/homebrew/bin/git checkout --progress --force refs/remotes/pull/5981/merge
+2026-10-01T10:35:39.2166990Z HEAD is now at b25e7c0 Merge 9dca02d16314006bfdac4874ac3851e313730634 into ad123c3875d81ebdc8bdfbdb59340005d705a60d
+2026-10-01T10:35:39.2185880Z ##[endgroup]
+2026-10-01T10:35:39.2355870Z [command]/opt/homebrew/bin/git log -1 --format=%H
+2026-10-01T10:35:39.2423780Z b25e7c07b5281a2a63a8c4886bb4c19d2b451f16
+2026-10-01T10:35:39.2948210Z ##[group]Run actions/setup-python@v5
+2026-10-01T10:35:39.2948510Z with:
+2026-10-01T10:35:39.2948750Z   python-version: 3.12
+2026-10-01T10:35:39.2948960Z   check-latest: false
+2026-10-01T10:35:39.2951360Z   token: ***
+2026-10-01T10:35:39.2951610Z   update-environment: true
+2026-10-01T10:35:39.2951890Z   allow-prereleases: false
+2026-10-01T10:35:39.2952090Z   freethreaded: false
+2026-10-01T10:35:39.2952260Z ##[endgroup]
+2026-10-01T10:35:39.4759040Z ##[group]Installed versions
+2026-10-01T10:35:39.4844330Z (node:10278) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-01T10:35:39.4845180Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-01T10:35:39.4845720Z Successfully set up CPython (3.12.10)
+2026-10-01T10:35:39.4846260Z ##[endgroup]
+2026-10-01T10:35:39.4951510Z ##[group]Run python -m compileall -q runtime/core_v1
+2026-10-01T10:35:39.4951990Z [36;1mpython -m compileall -q runtime/core_v1[0m
+2026-10-01T10:35:39.5010890Z shell: /bin/bash -e {0}
+2026-10-01T10:35:39.5011310Z env:
+2026-10-01T10:35:39.5011730Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-01T10:35:39.5012190Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/arm64/lib/pkgconfig
+2026-10-01T10:35:39.5012630Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-01T10:35:39.5013100Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-01T10:35:39.5013490Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-01T10:35:39.5013780Z ##[endgroup]
+2026-10-01T10:35:39.9579070Z ##[group]Run python -m unittest discover -s runtime/core_v1 -p 'test_*.py' -v
+2026-10-01T10:35:39.9579820Z [36;1mpython -m unittest discover -s runtime/core_v1 -p 'test_*.py' -v[0m
+2026-10-01T10:35:39.9616600Z shell: /bin/bash -e {0}
+2026-10-01T10:35:39.9616890Z env:
+2026-10-01T10:35:39.9617200Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-01T10:35:39.9617730Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/arm64/lib/pkgconfig
+2026-10-01T10:35:39.9618360Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-01T10:35:39.9618830Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-01T10:35:39.9619310Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-01T10:35:39.9619660Z ##[endgroup]
+2026-10-01T10:35:40.1098220Z test_compiled_archive (unittest.loader._FailedTest.test_compiled_archive) ... ERROR
+2026-10-01T10:35:40.1099540Z test_compiled_gui (unittest.loader._FailedTest.test_compiled_gui) ... ERROR
+2026-10-01T10:35:40.1100130Z test_accepts_fresh_valid_program (test_contract.AdmissionTests.test_accepts_fresh_valid_program) ... ok
+2026-10-01T10:35:40.1100870Z test_coordinate_frame_mismatch (test_contract.AdmissionTests.test_coordinate_frame_mismatch) ... ok
+2026-10-01T10:35:40.1118160Z test_expired_lease (test_contract.AdmissionTests.test_expired_lease) ... ok
+2026-10-01T10:35:40.1120200Z test_permission_required (test_contract.AdmissionTests.test_permission_required) ... ok
+2026-10-01T10:35:40.1121460Z test_stale_binding (test_contract.AdmissionTests.test_stale_binding) ... ok
+2026-10-01T10:35:40.1122650Z test_stale_observation (test_contract.AdmissionTests.test_stale_observation) ... ok
+2026-10-01T10:35:40.1124140Z test_unknown_capability_fails_closed (test_contract.AdmissionTests.test_unknown_capability_fails_closed) ... ok
+2026-10-01T10:35:40.1126100Z test_manifest_overlap_rejected (test_contract.CrossPlatformManifestTests.test_manifest_overlap_rejected) ... ok
+2026-10-01T10:35:40.1127920Z test_synthetic_linux_windows_macos_same_program (test_contract.CrossPlatformManifestTests.test_synthetic_linux_windows_macos_same_program) ... ok
+2026-10-01T10:35:40.1129890Z test_unimplemented_profile_is_not_ready (test_contract.CrossPlatformManifestTests.test_unimplemented_profile_is_not_ready) ... ok
+2026-10-01T10:35:40.1130830Z test_activation_rejects_invalid_or_missing_timeout (test_contract.ProgramTests.test_activation_rejects_invalid_or_missing_timeout) ... ok
+2026-10-01T10:35:40.1131700Z test_activation_requires_explicit_optional_capability (test_contract.ProgramTests.test_activation_requires_explicit_optional_capability) ... ok
+2026-10-01T10:35:40.1132370Z test_key_lifecycle (test_contract.ProgramTests.test_key_lifecycle) ... ok
+2026-10-01T10:35:40.1133180Z test_release_all_exactly_once (test_contract.ProgramTests.test_release_all_exactly_once) ... ok
+2026-10-01T10:35:40.1133910Z test_release_all_must_be_final (test_contract.ProgramTests.test_release_all_must_be_final) ... ok
+2026-10-01T10:35:40.1134580Z test_required_capabilities (test_contract.ProgramTests.test_required_capabilities) ... ok
+2026-10-01T10:35:40.1135360Z test_unexpanded_repeat_cannot_be_silently_ignored (test_contract.ProgramTests.test_unexpanded_repeat_cannot_be_silently_ignored) ... ok
+2026-10-01T10:35:40.1136240Z test_unexpanded_text_gap_cannot_be_silently_ignored (test_contract.ProgramTests.test_unexpanded_text_gap_cannot_be_silently_ignored) ... ok
+2026-10-01T10:35:40.1137030Z test_unknown_op_rejected (test_contract.ProgramTests.test_unknown_op_rejected) ... ok
+2026-10-01T10:35:40.1137690Z test_valid_program (test_contract.ProgramTests.test_valid_program) ... ok
+2026-10-01T10:35:40.1138400Z test_global_error_has_no_operation_location (test_contract.ValidationLocationTests.test_global_error_has_no_operation_location) ... ok
+2026-10-01T10:35:40.1140530Z test_operation_location_preserves_stateful_failure_and_message (test_contract.ValidationLocationTests.test_operation_location_preserves_stateful_failure_and_message) ... ok
+2026-10-01T10:35:40.1141600Z test_linux_wayland_preferred_if_present (test_platform_probe.ProbeTests.test_linux_wayland_preferred_if_present) ... ok
+2026-10-01T10:35:40.1142380Z test_linux_without_graphical_session (test_platform_probe.ProbeTests.test_linux_without_graphical_session) ... ok
+2026-10-01T10:35:40.1143030Z test_linux_x11 (test_platform_probe.ProbeTests.test_linux_x11) ... ok
+2026-10-01T10:35:40.1143490Z test_macos (test_platform_probe.ProbeTests.test_macos) ... ok
+2026-10-01T10:35:40.1143880Z test_unknown_os (test_platform_probe.ProbeTests.test_unknown_os) ... ok
+2026-10-01T10:35:40.1144350Z test_windows (test_platform_probe.ProbeTests.test_windows) ... ok
+2026-10-01T10:35:40.1145030Z test_all_valid_enum_members_are_unchanged (test_program_enum_types_e9q4.ProgramEnumTypesTests.test_all_valid_enum_members_are_unchanged) ... ok
+2026-10-01T10:35:40.1145910Z test_capability_and_freshness_controls_remain (test_program_enum_types_e9q4.ProgramEnumTypesTests.test_capability_and_freshness_controls_remain) ... ok
+2026-10-01T10:35:40.1146870Z test_core_error_keeps_expanded_operation_location (test_program_enum_types_e9q4.ProgramEnumTypesTests.test_core_error_keeps_expanded_operation_location) ... ok
+2026-10-01T10:35:40.1147870Z test_earlier_failure_keeps_precedence (test_program_enum_types_e9q4.ProgramEnumTypesTests.test_earlier_failure_keeps_precedence) ... ok
+2026-10-01T10:35:40.1148820Z test_global_error_has_no_operation_index (test_program_enum_types_e9q4.ProgramEnumTypesTests.test_global_error_has_no_operation_index) ... ok
+2026-10-01T10:35:40.1151220Z test_invalid_json_values_have_exact_contract_location (test_program_enum_types_e9q4.ProgramEnumTypesTests.test_invalid_json_values_have_exact_contract_location) ... ok
+2026-10-01T10:35:40.1160280Z test_invalid_values_are_admission_refusals (test_program_enum_types_e9q4.ProgramEnumTypesTests.test_invalid_values_are_admission_refusals) ... ok
+2026-10-01T10:35:40.1161560Z test_operation_capacity_boundary_remains (test_program_enum_types_e9q4.ProgramEnumTypesTests.test_operation_capacity_boundary_remains) ... ok
+2026-10-01T10:35:40.1162300Z 
+2026-10-01T10:35:40.1162480Z ======================================================================
+2026-10-01T10:35:40.1163110Z ERROR: test_compiled_archive (unittest.loader._FailedTest.test_compiled_archive)
+2026-10-01T10:35:40.1163580Z ----------------------------------------------------------------------
+2026-10-01T10:35:40.1163980Z ImportError: Failed to import test module: test_compiled_archive
+2026-10-01T10:35:40.1164260Z Traceback (most recent call last):
+2026-10-01T10:35:40.1170670Z   File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+2026-10-01T10:35:40.1171300Z     module = self._get_module_from_name(name)
+2026-10-01T10:35:40.1171590Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-01T10:35:40.1172240Z   File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+2026-10-01T10:35:40.1172720Z     __import__(name)
+2026-10-01T10:35:40.1173250Z   File "/Users/runner/work/agent-interface/agent-interface/runtime/core_v1/test_compiled_archive.py", line 9, in <module>
+2026-10-01T10:35:40.1173890Z     from runtime.distribution_v2.build import SOURCE_FILES, build
+2026-10-01T10:35:40.1174330Z ModuleNotFoundError: No module named 'runtime.distribution_v2'
+2026-10-01T10:35:40.1174620Z 
+2026-10-01T10:35:40.1174630Z 
+2026-10-01T10:35:40.1174750Z ======================================================================
+2026-10-01T10:35:40.1175090Z ERROR: test_compiled_gui (unittest.loader._FailedTest.test_compiled_gui)
+2026-10-01T10:35:40.1175450Z ----------------------------------------------------------------------
+2026-10-01T10:35:40.1175800Z ImportError: Failed to import test module: test_compiled_gui
+2026-10-01T10:35:40.1176110Z Traceback (most recent call last):
+2026-10-01T10:35:40.1176960Z   File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+2026-10-01T10:35:40.1177550Z     module = self._get_module_from_name(name)
+2026-10-01T10:35:40.1177810Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-01T10:35:40.1178430Z   File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+2026-10-01T10:35:40.1178950Z     __import__(name)
+2026-10-01T10:35:40.1179480Z   File "/Users/runner/work/agent-interface/agent-interface/runtime/core_v1/test_compiled_gui.py", line 4, in <module>
+2026-10-01T10:35:40.1179990Z     from research.live_control.compiled_gui_interface_v1 import run
+2026-10-01T10:35:40.1180330Z ModuleNotFoundError: No module named 'research'
+2026-10-01T10:35:40.1180520Z 
+2026-10-01T10:35:40.1180520Z 
+2026-10-01T10:35:40.1180640Z ----------------------------------------------------------------------
+2026-10-01T10:35:40.1181330Z Ran 38 tests in 0.007s
+2026-10-01T10:35:40.1181500Z 
+2026-10-01T10:35:40.1181580Z FAILED (errors=2)
+2026-10-01T10:35:40.1245430Z ##[error]Process completed with exit code 1.
+2026-10-01T10:35:40.1379310Z Post job cleanup.
+2026-10-01T10:35:40.2481470Z [command]/opt/homebrew/bin/git version
+2026-10-01T10:35:40.2562280Z git version 2.55.0
+2026-10-01T10:35:40.2581730Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/82006fbd-3547-43f7-a8f3-7c28bd9c525b/.gitconfig'
+2026-10-01T10:35:40.2590300Z Temporarily overriding HOME='/Users/runner/work/_temp/82006fbd-3547-43f7-a8f3-7c28bd9c525b' before making global git config changes
+2026-10-01T10:35:40.2591280Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-01T10:35:40.2593770Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/agent-interface/agent-interface
+2026-10-01T10:35:40.2677220Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-01T10:35:40.2760030Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-01T10:35:40.4382050Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-01T10:35:40.4486390Z http.https://github.com/.extraheader
+2026-10-01T10:35:40.4594030Z [command]/opt/homebrew/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-01T10:35:40.4599200Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-01T10:35:40.6536970Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-01T10:35:40.6842190Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-01T10:35:40.8466740Z Cleaning up orphan processes
+2026-10-01T10:35:41.2897930Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
