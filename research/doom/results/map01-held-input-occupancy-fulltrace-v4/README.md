@@ -89,6 +89,11 @@ The v4 candidate outputs were verified by the independently implemented
 v5 raw-only auditor. The v4 auditor's omitted-boolean failure is retained and
 was not rerun.
 
+The v4 freeze's final line names a planned `audit.json`; the v4 auditor STOP
+emitted no file at that path. The audit-only v5 successor's actual retained
+output is `audit-v5.json`. This filename correction is documented here without
+changing the frozen STOP or candidate/audit bytes.
+
 ## Environment
 
 macOS arm64, Python 3.14.5, deterministic CPU-only posthoc analysis. The
