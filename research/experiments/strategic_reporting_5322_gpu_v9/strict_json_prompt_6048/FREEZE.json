@@ -1,0 +1,40 @@
+{
+  "issue": 6048,
+  "allocation_id": "5478-json-format-gpu-6048-01-20261001-01",
+  "lease_issue": 5085,
+  "lease_comment_id": 5931736473,
+  "owner_thread": "01a0b990-3d17-72f1-a908-9a2072104ce5",
+  "main_sha_at_reservation": "9c1d62df57ec135f0a541106674b5bfe9d7438ea",
+  "main_sha_at_run": "cc804427c14a5c98370b84f9d63809cb5ca0c0ca",
+  "window_start_utc": "2026-10-01T13:20:00Z",
+  "window_end_utc": "2026-10-01T13:40:00Z",
+  "data_seed": 901734,
+  "input_sha256": "576d9739585c39fc22a986072937c10480a7dcb1881a53280c6a97d061ebca8e",
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "model_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+  "model_file": "model.safetensors",
+  "model_sha256": "fdf756fa7fcbe7404d5c60e26bff1a0c8b8aa1f72ced49e7dd0210fe288fb7fe",
+  "tokenizer_manifest_sha256": "b9d0e50a6671c2bef75da87d7191555a21db5c801bd7f6d5863f5262581b203e",
+  "tokenizer_file_hashes": {
+    ".gitattributes": "11ad7efa24975ee4b0c3c3a38ed18737f0658a5f75a0a96787b576a78a023361",
+    "config.json": "18e18afcaccafade98daf13a54092927904649e1dd4eba8299ab717d5d94ff45",
+    "generation_config.json": "e558847a8b4402616f1273797b015104dc266fe4b520056fca88823ba8f8ebe6",
+    "LICENSE": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+    "merges.txt": "599bab54075088774b1733fde865d5bd747cbcc7a547c5bc12610e874e26f5e3",
+    "README.md": "b19c806a904db6dc878a0462e70b551f6b7ac78dfbb88c2eb966ca2b9109ae15",
+    "tokenizer_config.json": "5b5d4f65d0acd3b2d56a35b56d374a36cbc1c8fa5cf3b3febbbfabf22f359583",
+    "tokenizer.json": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539",
+    "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+  },
+  "source_manifest_sha256": "d0f0d65a7b003ab15e4810c06d8c40ac0fd86425b8f2cc2e1dfde74c8dd83919",
+  "runtime": {"python": "3.11.9", "torch": "2.5.1+cu121", "transformers": "5.16.1", "safetensors": "0.8.0"},
+  "generation": {"do_sample": false, "max_new_tokens": 192},
+  "required_fields": ["prediction", "confidence", "unknown_probability", "evidence_source", "missing_evidence", "audit_recommendation"],
+  "enums": {
+    "prediction": ["HIGH", "LOW", "INCONCLUSIVE"],
+    "evidence_source": ["REPORT_1", "REPORT_2", "REPORT_3", "REPORT_4", null],
+    "audit_recommendation": ["CHECK_DENOMINATOR", "REQUEST_MORE_DATA", "NO_ACTION"]
+  },
+  "source_hashes": "see SOURCE_HASHES.json; the manifest hash is frozen above",
+  "scope": "one prompt-only generation; no tuning, adapter, trie, retry, or behavioral claim"
+}
