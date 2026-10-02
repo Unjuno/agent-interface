@@ -69,6 +69,8 @@ used.
 
 The implementation and independent construction tests have since been aligned
 on pre-action authority/evidence/freshness/target admission versus post-action
-effect completion. Formal `FREEZE.json`, exact command/source identity, fresh
-main and parallel-work checks, and a named exclusive WSLc allocation assignment
-are still required. The existing #6539 request remains unassigned.
+effect completion. `FREEZE.json` and `RUN_COMMANDS.md` now pin source hashes and
+the WSLc command contract; the formal package is indexed and present on Draft
+PR #6697. Before launch, refresh main/Issue/PR/parallel-owner state and the
+allocation, re-freeze if any pinned input changed, and require the exact
+non-overlapping WSLc assignment. The existing #6539 request remains unassigned.
