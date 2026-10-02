@@ -43,6 +43,8 @@ flowchart TD
 
 ## Analysis families
 
+- [Issue #6081 error-carry T0](error_carry_6081_t0_20261001/REPORT.md) — `STOP_METHOD_INVALID_BASELINE`; 672 rows reconstructed, but the 8-way dot-product baseline is not Euclidean-nearest. Frozen outputs are preserved; no PASS or application-transfer claim.
+
 Issue #6331 wake-fenced lease T0: [`wake_fence_6331_t0_v1/`](wake_fence_6331_t0_v1/). A finite synthetic Docker run against the exact current `Lease` source found relative-clock LIVE vs suspend-inclusive EXPIRED after a long modelled gap; the wake-fence arm blocked stale generation and returned UNKNOWN on missing wake evidence. Two post-freeze main-advance STOPs and the scoped runtime limits are retained. No actual host sleep or physical input.
 
 ```mermaid
@@ -296,6 +298,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`entrypoint_argv_preflight_5156_v2_20261001/`](entrypoint_argv_preflight_5156_v2_20261001/)
 - [`epistemic_commit_5441_t4/`](epistemic_commit_5441_t4/)
 - [`error_carry_6081_successor_orbstack_20261002/`](error_carry_6081_successor_orbstack_20261002/)
+- [`error_carry_6081_t0_20261001/`](error_carry_6081_t0_20261001/)
 - [`escrow_optional_budget_6156_t0_20261002/`](escrow_optional_budget_6156_t0_20261002/)
 - [`event_sourced_projection_r0_v1/`](event_sourced_projection_r0_v1/)
 - [`evidence_compute_calibration_identifiability_r3_v1/`](evidence_compute_calibration_identifiability_r3_v1/)
