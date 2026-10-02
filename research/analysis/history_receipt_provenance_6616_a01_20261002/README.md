@@ -14,4 +14,4 @@ This additive successor uses a new allocation ID and directory; predecessor file
 
 ## Result
 
-Formal invocation pending. No empirical or participant claim is made.
+Formal disposition: `STOP_CONTAINER_SOURCE_MOUNT_EMPTY`. One candidate container started and exited 2 before reading the fixture; auditor=0, retries=0. Full preserved details are in `RUN_RECORD.md`. This is infrastructure evidence only, not a scientific result.
