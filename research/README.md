@@ -7,6 +7,7 @@ For claims and scientific disposition, start with the top-level [research index]
 ## Start here
 
 - Issue #6403 control-opportunity attribution T0: [`analysis/control_opportunity_attribution_6403_t0_v1/REPORT.md`](analysis/control_opportunity_attribution_6403_t0_v1/REPORT.md) — synthetic method pass; human responsibility attribution remains untested.
+- Issue #6133 T1c worker-aging measurement-gate successor: [`analysis/worker_aging_6133_t1c_20261002/REPORT.md`](analysis/worker_aging_6133_t1c_20261002/REPORT.md) — WSLc synthetic method pass, 600 rows independently reconstructed; no real worker-aging or restart-safety claim.
 
 | Need | Entry point |
 |---|---|
