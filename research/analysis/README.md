@@ -1,5 +1,7 @@
 # Analytical research
 
+- [`frame_qualified_collateral_6533_t0_20261002/REPORT.md`](frame_qualified_collateral_6533_t0_20261002/REPORT.md) — Issue #6533 T0: 44/44 synthetic rows independently reconstructed; qualified-frame matched the full-state oracle, with a 79.1% aggregate accounted-byte reduction but a 2.13× regression at the smallest size. Method-scoped only; no GUI/product safety or performance claim.
+
 - [`claim_scoped_partial_verdict_6509_t0_20261002/REPORT.md`](claim_scoped_partial_verdict_6509_t0_20261002/REPORT.md) — Issue #6509: 45-row OrbStack candidate and independent audit passed the finite claim-ladder method gate; unsafe scalar comparator had 11 partial ALLOWs; logical early-reject advantage is simulation-only.
 - [`affordance_regression_envelope_6519_t0_20261002/formal_02_20261002/REPORT.md`](affordance_regression_envelope_6519_t0_20261002/formal_02_20261002/REPORT.md) — Issue #6519 T0b: native WSLc construction and independent audit passed `METHOD_PASS_SCOPED` on 72 synthetic rows; predecessor allocation 01 launch STOP retained separately; no model/GUI benefit claim.
 - [`retired_intention_cue_6556_t0_v1/`](retired_intention_cue_6556_t0_v1/) — Issue #6556: finite post-retirement cue lineage challenge; compare ordinary durable event-instance routing against generation/retirement fencing, preserve unresolved obligations, and return UNKNOWN when lineage is absent. Synthetic only.
@@ -302,6 +304,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`feasible_attribution_6100_t0_20261001/`](feasible_attribution_6100_t0_20261001/)
 - [`feedback_necessity_5927_orbstack_t0_v1/`](feedback_necessity_5927_orbstack_t0_v1/)
 - [`focused_observation_request_successor_1935_v1/`](focused_observation_request_successor_1935_v1/)
+- [`frame_qualified_collateral_6533_t0_20261002/`](frame_qualified_collateral_6533_t0_20261002/)
 - [`full_golden_ipc_2813_v4/`](full_golden_ipc_2813_v4/)
 - [`full_golden_ipc_2813_v5/`](full_golden_ipc_2813_v5/)
 - [`generation_bound_container_revalidation_2166_v1/`](generation_bound_container_revalidation_2166_v1/)
