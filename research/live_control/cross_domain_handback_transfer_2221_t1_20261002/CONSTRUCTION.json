@@ -1,0 +1,61 @@
+{
+  "experiment_id": "CROSS-DOMAIN-HANDBACK-2221-T1-20261002-01",
+  "classification": "TDD construction; separate from frozen candidate/auditor pair",
+  "source_base": "9ccad4d889168e5d40933c8d03d76dc4d1cdd26a",
+  "host": "Windows x64; CPython 3.12",
+  "containerized": false,
+  "docker_desktop_engine_available": false,
+  "docker_desktop_service": "Stopped",
+  "construction_history": [
+    {
+      "stage": "RED-candidate-contract",
+      "outcome": "EXPECTED_ASSERTION_FAILURE",
+      "reason": "candidate.py absent; behavior test expected successful source-bound projection"
+    },
+    {
+      "stage": "GREEN-candidate-contract",
+      "outcome": "PASS",
+      "tests": 1,
+      "scope": "actual pinned MAP01 analysis and public task-6 provenance audit"
+    },
+    {
+      "stage": "RED-independent-audit-contract",
+      "outcome": "EXPECTED_ASSERTION_FAILURE",
+      "reason": "audit.py absent; positive audit and corruption-rejection tests failed"
+    },
+    {
+      "stage": "auditor-source-shape-defect",
+      "outcome": "CONSTRUCTION_FAILURE",
+      "reason": "analysis running_release_latency is a one-element list, not an object; candidate/auditor assumptions were corrected from retained JSON"
+    },
+    {
+      "stage": "auditor-git-blob-identity-check",
+      "outcome": "CONSTRUCTION_FAILURE",
+      "reason": "recomputing a Git blob SHA1 from Windows worktree bytes disagreed for a CRLF-normalized file although its pinned SHA-256 matched; retained debug audit is FAIL_AUDIT. Auditor was corrected to query the pinned commit tree with git rev-parse while independently hashing the materialized file bytes."
+    },
+    {
+      "stage": "GREEN-full-contract-and-mutations",
+      "outcome": "PASS",
+      "tests": 8,
+      "controls": [
+        "visual change promoted to task effect",
+        "release relabelled as task effect",
+        "visual acknowledgement invented",
+        "source hash forged",
+        "cross-source clock join asserted",
+        "authority expanded"
+      ]
+    }
+  ],
+  "candidate_construction_processes": 53,
+  "candidate_expected_missing-source_attempts": 1,
+  "auditor_construction_processes": 40,
+  "auditor_expected_missing-source_attempts": 6,
+  "retries": 0,
+  "formal_candidate_invocations": 0,
+  "formal_auditor_invocations": 0,
+  "network_task_calls": 0,
+  "model_calls": 0,
+  "gui_calls": 0,
+  "os_input_calls": 0
+}

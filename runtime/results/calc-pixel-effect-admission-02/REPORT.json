@@ -1,0 +1,86 @@
+{
+  "disposition": "PASS_VISIBLE_CELL_READ_SCOPED / FAIL_LEASE_EXPIRED / HOLD_FULL_WORKFLOW",
+  "model_review_contract": "correct; no local review error",
+  "commands": 12,
+  "public_requests": 7,
+  "input_programs_attempted": 3,
+  "input_programs_completed": 2,
+  "input_programs_refused": 1,
+  "delivered_original_images": 4,
+  "visible_values": {
+    "A1": "317",
+    "A2": "529",
+    "B1_blank_control": "unknown"
+  },
+  "wrong_expected_318_matches": false,
+  "blank_ocr_raw_word": "Be",
+  "blank_ocr_confidence": 0.0,
+  "ocr_local_ms": 279.87169,
+  "input_expiry_ns": 55927919235815,
+  "refusal_receipt": {
+    "status": "refused",
+    "error": "LEASE_EXPIRED",
+    "required_capabilities": [
+      "input.keyboard",
+      "input.release_all",
+      "window.focus"
+    ],
+    "backend_emissions": 20
+  },
+  "skipped_inspection_started_ns": 55927979661847,
+  "skipped_inspection_after_expiry_ms": 60.426032,
+  "expiry_excess_scope": "post-dispatch skipped-inspection timestamp; not exact refusal decision instant",
+  "binding_before": 1,
+  "binding_after_explicit_review": 2,
+  "target_after_explicit_review": 8390723,
+  "capture_consistency": "matched",
+  "cleanup": {
+    "host_exit": 0,
+    "children": [
+      {
+        "name": "primary",
+        "pid": 787845,
+        "returncode": 0
+      },
+      {
+        "name": "calc",
+        "pid": 787803,
+        "returncode": 255
+      },
+      {
+        "name": "openbox",
+        "pid": 787800,
+        "returncode": 0
+      },
+      {
+        "name": "xvfb",
+        "pid": 787796,
+        "returncode": 0
+      }
+    ],
+    "ended_ns": 55968795253110
+  },
+  "independent_task_effect": {
+    "expected": {
+      "A1": 317,
+      "A2": 529
+    },
+    "actual_nonempty_cells": {},
+    "success": false,
+    "after_all_owned_processes_terminal": true,
+    "workbook_sha256": "87472d4bc9017e9c38aa2b677053ab2b8cd1b352cb43e373038a29728e28cc5e"
+  },
+  "model_tokens": {
+    "input_tokens": 1604417,
+    "cached_input_tokens": 1584000,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 6421,
+    "reasoning_output_tokens": 1658,
+    "total_tokens": 1610838,
+    "uncached_input_tokens": 20417
+  },
+  "cost": null,
+  "full_lifecycle_comparison": false,
+  "usage_unique_responses": 8,
+  "usage_scope": "own shared-context setup/build/launch through controller terminal/file oracle, chronological not isolated arm billing; earlier setup/discovery and later audits excluded/unmeasured"
+}

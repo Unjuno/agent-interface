@@ -10,6 +10,10 @@ bounded graph with `session_scope=bridge.scope` and
 `surface=compiled.surface(bridge)`. For each graph action, provide an exact
 binding with `interaction` (`click`, `move`, or `keyboard`), its alias-local
 `offset`, and an explicit `tail` list using the existing bridge contract.
+Native target references must match `[a-z][a-z0-9_]{0,31}`, the same alias
+contract as the handle store. For example, use `sheet_context`. Graph symbol
+labels remain separate and may use the graph's broader naming contract.
+The adapter rejects invalid native aliases before capture or any callback.
 Bindings and graph are copied before any perception callback can change them.
 
 ```python
@@ -33,7 +37,12 @@ A plan cannot remint a reference, renew the scope or replay an uncertain action.
 
 `verify_effect(payload, native_observation, rgb)` supplies the graph's typed
 `status` and `evidence_ref` verdict. The graph checks its declared expected
-predicates first. The callback must establish the intended effect for that
+predicates first. Branch conditions and expected effects require both the same
+scalar type and value: boolean `true` does not satisfy integer `1`, and boolean
+`false` does not satisfy integer `0`. A branch mismatch yields `unknown_state`;
+an effect mismatch yields `effect_failed`, preserves the completed prefix and
+pending effect, and stops before the verifier or any next action.
+The callback must establish the intended effect for that
 application; returning succeeded without an adequate contract does not verify
 text or durable saving. Both callbacks are trusted caller code, not sandboxed,
 not an independent oracle and not a generic vision/OCR service. Scope/sequence
@@ -72,3 +81,72 @@ speed/token/default-route promotion. The unmodified form helper still does not
 verify text or saving; an adequate application callback and independent scoring
 remain necessary. Choose the existing method or graph according to the needed
 control/evidence contract, rather than assuming that the graph is faster.
+
+## Refusal immediately before input
+
+A native target/sequence change after admission can refuse execution before any
+input. The adapter preserves explicit `input_dispatched: false` evidence and the
+graph stops with `SAFE_YIELD / execution_refused`. It retains completed actions,
+records `release_verified: false` if no release occurred, and does not continue
+or automatically retry. This is a typed abstention, not proof of neutral input or
+of task completion. Read the retained raw refusal before choosing a new action.
+
+The optional terminal field is strict boolean. A false value is valid only with
+`status: refused`; malformed or contradictory metadata is rejected. Missing
+no-input evidence, actual delivery, held keys/buttons, native execution metadata or failed release or
+recovery-required state keep the existing stricter failure handling. Existing
+adapter terminal shapes remain supported. [Boundary regression evidence](../results/compiled-refusal-integration-01/README.md)
+uses deterministic adapters, not a live GUI performance comparison.
+
+## Pixel-only effect callbacks and deadlines
+
+The [real Calc pixel admission](../results/calc-pixel-effect-admission-02/README.md)
+read two visible cell values from an exact delivered capture using caller-grounded
+regions and a fixed OCR rule. A blank control produced a spurious word that the
+rule classified unknown. This supplies narrow feasibility evidence for common
+read-only assistance; it does not qualify a generic text verifier, saved effect,
+all comparison arms or this compiled adapter on Calc. The primary workflow's
+final confirmation expired and its independent saved-task score failed.
+
+Keep input expiry separate from the entire task's elapsed time. The existing
+compiled adapter checks each action's current reference and clamps its deadline
+to the method/reference minimum. Neither pixel recognition nor a fresh clock
+renews authority. After a model wait, use the ordinary target/dependency review
+and admission; preserve a refusal instead of replaying input with a longer lease.
+A useful visible predicate is separate from independently scored persisted effects.
+
+## Native cleanup receipts before execution
+
+Backend validation may refuse a program before execution and return its verified
+cleanup in the top-level `release` field. The adapter preserves that receipt along
+with any execution releases. Neutrality requires all provided receipts to be
+verified and empty and the session to require no recovery. Reported held input
+is retained; malformed or unverified cleanup cannot become a safe abstention.
+A missing receipt still does not invent neutrality. No-input evidence is not
+inferred from counters or from a release receipt, and a refusal remains incomplete.
+
+Bindings use the backend's actual key names. Linux/X11 keysym names are
+case-sensitive: `Home` is valid, while `HOME` is rejected unless explicitly
+supported as an alias. Backend preflight can refuse such a program before
+execution; read its retained detail and cleanup rather than claiming an action
+completed or blindly retrying it.
+
+## Binding changes during capture
+
+If the bridge detects a different focus/surface/geometry before and after a
+capture, it retains the public report and a `capture-binding-changed-*.json`
+record, requires explicit window review, and raises `CaptureBindingChanged`
+(an `X11BackendError` subtype). The compiled graph recognizes only its typed
+`ObservationAssociationChanged` boundary and returns `SAFE_YIELD /
+association_changed`, preserving completed transitions and pending effects.
+No valid observation sequence/history entry is published for that capture.
+The latest evidence still refers to the last valid frame, not the changed
+capture. Review the actual window and obtain fresh grounding before new input.
+There is no automatic window selection, retry, confirmation or effect success.
+Other capture, callback, artifact and I/O errors still propagate and are retained.
+
+[Primary Calc successor](../results/calc-compiled-pixel-admission-05/README.md)
+exercised the actual capture binding change and returned this typed receipt.
+After explicit primary modal review/new grounding/confirmation, the independently
+read saved workbook matched317/529. The preceding startup failure is retained.
+This qualifies the boundary and one saved task, not a speed or token improvement.

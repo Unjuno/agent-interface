@@ -1,0 +1,47 @@
+{
+  "schema": "passive-sensor-cover-run-v1",
+  "issue": 6184,
+  "idea_issue": 6181,
+  "allocation_id": "PASSIVE-SENSOR-COVER-6181-T0-20261002-01",
+  "owner": "this local task",
+  "branch": "research/6181-passive-sensor-cover-t0-20261002",
+  "main_sha": "8d6ad7be277fff929a665e4fed44f8ee89b33bad",
+  "execution": {
+    "host": "Windows 10 build 26200",
+    "python": "CPython 3.11.9",
+    "mode": "host CPU only",
+    "docker": false,
+    "wsl": false,
+    "gpu": false,
+    "model": false,
+    "gui": false,
+    "os_input": false,
+    "network_candidate": false
+  },
+  "construction": {
+    "attempt_01": "FAIL_TEST_HARNESS_ONLY 6/7; formal invocations 0",
+    "attempt_02": "PASS 7/7 on previous freeze; formal invocations 0",
+    "attempt_03": "PASS 7/7 and AST parse on exact refreshed blobs; formal invocations 0"
+  },
+  "candidate": {
+    "command": "python -B candidate.py fixture.json --out results/candidate.json",
+    "started_utc": "2026-10-01T18:44:12.9970925Z",
+    "ended_utc": "2026-10-01T18:44:13.2596434Z",
+    "exit_code": 0,
+    "invocations": 1,
+    "sha256": "c1e3e485b34947b39957bc18320afa5b652e150a0ec5631eb01d189041115d78",
+    "bytes": 9371
+  },
+  "auditor": {
+    "command": "python -B audit.py fixture.json results/candidate.json --out results/audit.json",
+    "started_utc": "2026-10-01T18:44:22.7532503Z",
+    "ended_utc": "2026-10-01T18:44:22.9835237Z",
+    "exit_code": 0,
+    "invocations": 1,
+    "sha256": "95cffbdbf430a148d0fb7acf58cbfbb6fb4441df0bd1c977721d320f04590b54",
+    "bytes": 9389
+  },
+  "retry_count": 0,
+  "result": "PASS_METHOD_SCOPED",
+  "scope": "Synthetic finite method test only; costs and observation truth are stipulated."
+}

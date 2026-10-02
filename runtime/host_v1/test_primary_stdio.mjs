@@ -4,6 +4,7 @@ import {PassThrough,Writable} from 'node:stream';
 import {mkdtemp,readFile} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
+import {createPrimaryExchange} from './primary_exchange.mjs';
 import {servePrimaryLines,validatePrimaryConfig,runPrimaryStdio} from './primary_stdio.mjs';
 
 function setup(execute) {
@@ -78,4 +79,39 @@ test('startup output failure keeps original exception, closes one relay and neve
   await assert.rejects(runPrimaryStdio(config,{input:new PassThrough(),output}),value=>value===error);
   assert.equal(writes,1);
   assert.deepEqual(JSON.parse(await readFile(join(root,'host/exit.json'))),{code:0,signal:null});
+});
+
+
+test('failed review is correlated to its consumed command without a host call or replay',async()=>{
+  let hostCalls=0;
+  const directory=join(await mkdtemp(join(tmpdir(),'primary-error-id-')),'exchange');
+  const host={review:async()=>{hostCalls++;},sendPresented:async()=>{hostCalls++;return {attempt:1,result:{isError:false,content:[{type:'text',text:'{"status":"closed"}'}]}};}};
+  const exchange=await createPrimaryExchange({host,directory,route:'guarded-local'});
+  const input=new PassThrough(),output=new PassThrough();let bytes='';
+  output.on('data',chunk=>{bytes+=chunk;});
+  const pending=servePrimaryLines({exchange,input,output});
+  input.end(JSON.stringify({id:1,method:'review',args:[1,{image:{index:1}}]})+'\n');await pending;
+  const row=JSON.parse(bytes.trim());
+  assert.equal(row.status,'command_error');assert.equal(row.command_id,1);
+  assert.equal(row.command_method,'review');assert.equal(row.state.next_id,2);
+  assert.equal(row.replay_allowed,false);assert.ok(row.state.stopped);assert.equal(hostCalls,0);
+  await assert.rejects(exchange.execute({id:2,method:'observe',args:[]}),/exchange stopped/);
+  assert.equal(hostCalls,0);
+  await exchange.execute({id:2,method:'call',args:['interface_close',{}]});assert.equal(hostCalls,1);
+});
+test('pre-admission envelope error keeps requested id distinct from unconsumed next id',async()=>{
+  const directory=join(await mkdtemp(join(tmpdir(),'primary-invalid-id-')),'exchange');
+  const exchange=await createPrimaryExchange({host:{},directory,route:'guarded-local'});
+  const input=new PassThrough(),output=new PassThrough();let bytes='';output.on('data',chunk=>{bytes+=chunk;});
+  const pending=servePrimaryLines({exchange,input,output});
+  input.end(JSON.stringify({id:9,method:'observe',args:[]})+'\n');await pending;
+  const row=JSON.parse(bytes.trim());assert.equal(row.status,'command_error');
+  assert.equal(row.command_id,9);assert.equal(row.command_method,'observe');
+  assert.equal(row.state.next_id,1);assert.equal(row.state.stopped,null);
+});
+test('malformed command identity stays bounded and does not become a valid correlation',async()=>{
+  const s=setup(async()=>{throw Error('invalid envelope');});const pending=servePrimaryLines(s);
+  s.input.end(JSON.stringify({id:{not:'number'},method:'x'.repeat(1000)})+'\n');await pending;
+  const row=s.rows()[0];assert.equal(row.status,'command_error');
+  assert.equal(row.command_id,null);assert.equal(row.command_method,null);assert.equal(row.replay_allowed,false);
 });

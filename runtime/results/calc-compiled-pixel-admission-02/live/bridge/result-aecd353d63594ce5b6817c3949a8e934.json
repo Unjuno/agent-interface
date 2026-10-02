@@ -1,0 +1,59 @@
+{
+  "status": "refused",
+  "error": "BACKEND_CONSTRAINT",
+  "program_execution_started": false,
+  "program_emissions": 0,
+  "cleanup_attempted": true,
+  "detail": "unmapped key HOME; X11 keysym names are case-sensitive, use Home",
+  "required_capabilities": [
+    "clock.monotonic",
+    "event.feedback",
+    "input.keyboard",
+    "input.release_all",
+    "input.text",
+    "window.focus"
+  ],
+  "backend_emissions": 0,
+  "release": {
+    "keys_down": [],
+    "buttons_down": [],
+    "verified": true,
+    "monotonic_ns": 59105643780877
+  },
+  "recovery_required": false,
+  "guard_checks": [
+    {
+      "stage": "before_admission",
+      "observation_sequence": 3,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "sheet_context",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "sheet_context",
+      "point": [
+        162,
+        172
+      ],
+      "observed_box": [
+        150,
+        160,
+        24,
+        24
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 3,
+      "valid_until_ns": 59107056699543,
+      "patch_sha256": "a911f1f7ac653021259162bb6879bc6ba52c47fdcc966ac9f5c4251424e0ff3c",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    }
+  ]
+}

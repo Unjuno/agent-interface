@@ -1,0 +1,44 @@
+{
+  "allocation": "NEEDLE-ONLINE-CORRECTION-4824-DATA-AUDIT-SUCCESSOR-20261002-01",
+  "auditor_invocations": 1,
+  "auditor_source_sha256": "874cec68c4c6f70ffb3d0b685c3b08fc86c4ec153fc3e0250b79a07d26bfe97c",
+  "candidate_invocations": 0,
+  "errors": [],
+  "freeze_sha256": "a843bdaf87530dac8e4eb8af4a91c10298e670237a93df44b4d49730cb6363f6",
+  "input_bytes": 123117,
+  "input_sha256": "dad06f71a4a7acfd4ce110852ce5ee82f5e2ce654e1cf0f1d4401106f2edd188",
+  "mutations": [
+    {
+      "name": "invert_A_target",
+      "rejected": true
+    },
+    {
+      "name": "invert_B_target",
+      "rejected": true
+    },
+    {
+      "name": "drop_row",
+      "rejected": true
+    },
+    {
+      "name": "duplicate_id_and_row",
+      "rejected": true
+    },
+    {
+      "name": "wrong_role",
+      "rejected": true
+    },
+    {
+      "name": "feature_label_disagreement",
+      "rejected": true
+    },
+    {
+      "name": "wrong_seed",
+      "rejected": true
+    }
+  ],
+  "retries": 0,
+  "rows": 984,
+  "seed_count": 3,
+  "status": "PASS_DATA_AUDIT_SUCCESSOR_SCOPED"
+}

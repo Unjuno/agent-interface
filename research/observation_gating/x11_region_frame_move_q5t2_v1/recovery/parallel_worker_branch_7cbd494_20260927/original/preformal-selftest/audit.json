@@ -1,0 +1,71 @@
+{
+  "corruption_controls": {
+    "bad_bytes_count": true,
+    "bad_candidate_digest": true,
+    "bad_compressed_digest": true,
+    "duplicate_case": true,
+    "false_match_flag": true,
+    "missing_row": true,
+    "pixel_tamper": true,
+    "reversed_clock": true,
+    "target_pattern_collapse": true,
+    "unsafe_authority": true,
+    "wrong_exit": true,
+    "wrong_location": true,
+    "wrong_policy": true,
+    "wrong_schedule": true
+  },
+  "errors": [],
+  "mode": "formal",
+  "outcomes": {
+    "PINNED_SCREEN/MOVE_BEFORE": {
+      "matches": 0,
+      "mismatches": 3,
+      "n": 3
+    },
+    "PINNED_SCREEN/MOVE_BETWEEN": {
+      "matches": 0,
+      "mismatches": 3,
+      "n": 3
+    },
+    "PINNED_SCREEN/STABLE": {
+      "matches": 3,
+      "mismatches": 0,
+      "n": 3
+    },
+    "REFRESH_SCREEN/MOVE_BEFORE": {
+      "matches": 3,
+      "mismatches": 0,
+      "n": 3
+    },
+    "REFRESH_SCREEN/MOVE_BETWEEN": {
+      "matches": 0,
+      "mismatches": 3,
+      "n": 3
+    },
+    "REFRESH_SCREEN/STABLE": {
+      "matches": 3,
+      "mismatches": 0,
+      "n": 3
+    },
+    "WINDOW_CLIENT/MOVE_BEFORE": {
+      "matches": 3,
+      "mismatches": 0,
+      "n": 3
+    },
+    "WINDOW_CLIENT/MOVE_BETWEEN": {
+      "matches": 3,
+      "mismatches": 0,
+      "n": 3
+    },
+    "WINDOW_CLIENT/STABLE": {
+      "matches": 3,
+      "mismatches": 0,
+      "n": 3
+    }
+  },
+  "passed": true,
+  "raw_sha256": "13a7296f2a3791cb6d429c42e9420f962092b8aa0fd52d5cd749a1947dac8fa3",
+  "rows": 27,
+  "schema": "x11-region-frame-move-audit-v1"
+}
