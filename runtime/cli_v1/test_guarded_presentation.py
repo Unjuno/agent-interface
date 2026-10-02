@@ -129,3 +129,55 @@ class GuardedObservationReferenceTests(unittest.TestCase):
             for key in path[:-1]:parent=parent[key]
             parent[path[-1]]=value
             with self.assertRaises(ValueError):expand_guarded_observation(row)
+
+class GuardedFeedbackReferenceTests(unittest.TestCase):
+    def fixture(self):
+        row=GuardedObservationReferenceTests().fixture()
+        row.update(feedback_status='cue_returned',presentation={'requested':'brief','returned':'full','reason':'critical_or_unsupported_result'})
+        row['feedback']={'status':'matched','task_success':None,'authority_granted':False,
+            'input_dispatched':False,'expected_title':'saved','rejected_titles':['failed'],
+            'title':'saved','after_title':'saved','samples':[{'title':'pending'},{'title':'saved'}],
+            'observation':deepcopy(row['source'])}
+        return row
+
+    def test_feedback_exact_roundtrip_keeps_receipts_literals_and_image(self):
+        from runtime.cli_v1.receipt_references import compact_guarded_observation,expand_guarded_observation
+        row=self.fixture();row['literal']={'observation_ref':'/source'}
+        before=deepcopy(row);compact=compact_guarded_observation(row)
+        self.assertIn('reference_schema',compact)
+        self.assertEqual(compact['feedback']['observation'],{'observation_ref':'/source'})
+        self.assertEqual(compact['observation_report']['observation'],{'observation_ref':'/source/native'})
+        self.assertEqual(expand_guarded_observation(compact),before)
+        self.assertEqual(row,before);self.assertEqual(compact['image'],before['image'])
+        self.assertEqual(compact['result'],before['result'])
+        self.assertEqual(compact['literal'],before['literal'])
+        self.assertEqual(compact_guarded_observation(compact),compact)
+
+    def test_feedback_unknown_failure_or_near_duplicate_stays_full(self):
+        from runtime.cli_v1.receipt_references import compact_guarded_observation
+        for change in ['near','source_id','pending','rejected','unstable','authority','release','recovery','error','reserved']:
+            with self.subTest(change=change):
+                row=self.fixture()
+                if change=='near':row['feedback']['observation']['native']['extension']['value']=True
+                elif change=='source_id':row['feedback']['observation']['observation_id']='other'
+                elif change in ('pending','rejected'):row['feedback']['status']=change;row['status']='needs_review'
+                elif change=='unstable':row['feedback']['after_title']='changed'
+                elif change=='authority':row['feedback']['authority_granted']=True
+                elif change=='release':row['result']['execution']['releases'][0]['verified']=False
+                elif change=='recovery':row['session']['recovery_required']=True
+                elif change=='error':row['feedback']['error']='capture problem'
+                else:row['reference_schema']='literal'
+                self.assertEqual(compact_guarded_observation(row),row)
+
+    def test_feedback_decoder_never_follows_redirects_or_chains(self):
+        from runtime.cli_v1.receipt_references import compact_guarded_observation,expand_guarded_observation
+        compact=compact_guarded_observation(self.fixture())
+        self.assertIn('reference_schema',compact)
+        for change in ['redirect','extra','chain','scope','identity']:
+            row=deepcopy(compact)
+            if change=='redirect':row['observation_references']['/feedback/observation']='/image'
+            elif change=='extra':row['observation_references']['/literal']='/source'
+            elif change=='chain':row['feedback']['observation']={'observation_ref':'/observation_report/observation'}
+            elif change=='scope':row['reference_scope']='arbitrary paths'
+            else:row['source']['observation_id']='different'
+            with self.assertRaises(ValueError):expand_guarded_observation(row)

@@ -1,0 +1,32 @@
+{
+  "allocation": "AI-5881-T0B-20261002-01",
+  "base_main_commit": "69a1bf509eb432e5e3c0c294d05ad7671d86adb6",
+  "frozen_at_utc": "2026-10-01T17:56:04Z",
+  "scope": "no-model deterministic synthetic method successor to Issue #5881 T0",
+  "formal_invocation_budget": {"candidate": 1, "effect_simulator": 1, "unit_tests": 1, "independent_auditor": 1, "retries": 0},
+  "commands": ["python candidate.py", "python effect_simulator.py", "python -m unittest -v test_contract.py", "python audit.py"],
+  "source_sha256": {
+    "PLAN.md": "0f342e7e8b95534161879b8822635758c4d93dc1911c9a4a60687c7e105039d9",
+    "cases.json": "6f3ee6bff480d8fa5bb0c11f20540764bb75c6178755890f3ade7309e13da5c3",
+    "oracle.json": "296b93f2307d34bf84b35327af0c5d50063966a5543703e44fd7710726fe59c6",
+    "candidate.py": "bb1eb11d64194f4b5d7e4de02cc44a75a64c07f86abe147993ee50b798b14492",
+    "effect_simulator.py": "ffd032e2ba4b1ec9884f6e0a8db491527cc1fb1000b301060921bb4224d4d43d",
+    "audit.py": "d83a6bda3784e0d2be9937bdb4d5e5f4e56a150383b50a1a7e7160d24930a84a",
+    "test_contract.py": "88aa20c5734c99669dc8a6d9d8eafc231f2e6d20779742e96e1872f4c8d26c49"
+  },
+  "environment": {
+    "host_python": "3.12.10",
+    "docker_desktop_service": "Stopped",
+    "docker_desktop_wsl_distro": "Stopped",
+    "ubuntu_docker_cli": "29.5.2 linux/amd64",
+    "engine_error": "cannot connect to unix:///var/run/docker.sock; socket absent",
+    "container_used": false,
+    "network_model_gui_site_user_data_live_input": "none"
+  },
+  "decision_rule": {
+    "pass": "fresh gate blocks the single readable pre-admission unauthorized effect change; yields on unavailable/stale/digest-invalid source state; stable required task and explicitly authorized deceptive-looking opt-in complete; unauthorized add-ons in the four pre-admission cases fall from 4 under TARGET_ONLY to 0 under FRESH_EFFECT_BOUNDARY; one post-admission race remains and is explicitly retained as unauthorized residual; independent audit and mutation tests pass.",
+    "fail": "Any target/geometry mismatch; missing attempt; hidden-oracle field in candidate decision; pre-admission unauthorized effect admitted; explicit authorized option suppressed; stale/unknown/integrity-invalid state admitted; or residual race hidden/reclassified.",
+    "limit": "Method pass only. The final state may still change after non-atomic admission and before click; no production safety or runtime claim."
+  },
+  "collision_check": {"issue_5881_state": "open", "matching_branch_search": "none", "matching_pr_search": 0, "issue_comments_at_freeze": 3}
+}

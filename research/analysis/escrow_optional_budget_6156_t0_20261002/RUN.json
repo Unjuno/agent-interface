@@ -1,0 +1,44 @@
+{
+  "schema": "issue-6156-t0-run-v1",
+  "allocation": "issue6156-escrow-optional-budget-t0-20261002",
+  "status": "PASS_METHOD_SCOPED",
+  "date": "2026-10-02",
+  "source_main_sha": "9ab5da4d1e862fdb2cf55c0cb46c64b20e6684cb",
+  "environment": {
+    "runtime": "OrbStack Docker Engine 29.4.0",
+    "platform": "linux/arm64",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "network": "none",
+    "rootfs": "read-only",
+    "limits": "1 CPU, 512 MiB RAM, 64 PIDs, all capabilities dropped, no-new-privileges"
+  },
+  "invocations": {
+    "construction_tests_before_freeze": 13,
+    "candidate_formal": 1,
+    "auditor_formal": 1,
+    "retries": 0
+  },
+  "commands": {
+    "candidate": "docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-privileges --cpus=1 --memory=512m --pids-limit=64 -v <package>:/src:ro -v <out>:/out:rw -w /src python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python3 -B /src/candidate.py /out/candidate.json",
+    "auditor": "docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-privileges --cpus=1 --memory=512m --pids-limit=64 -v <package>:/src:ro -v <out>:/out:rw -w /src python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python3 -B /src/audit.py /out/candidate.json /out/audit.json"
+  },
+  "outcome": {
+    "reachable_states": 9988,
+    "transition_edges": 27748,
+    "max_depth": 6,
+    "global_budget": 4,
+    "audit": "PASS_METHOD_SCOPED",
+    "audit_errors": [],
+    "state_set_sha256": "b0be810c40f2eefd0230ce7e42bcdfe141dc9771224cc5b2d109810b8b897670",
+    "transition_set_sha256": "57e0c5ff03a7d11ca2eb62a24ff0a52f5968da7c2e5a3cc2b51bf2d97165ca0a"
+  },
+  "result_hashes": {
+    "candidate_json_sha256": "d105be7ebb3bb6d57c8971a9bb913320890e7414683395265300d6446ff18ad8",
+    "audit_json_sha256": "133b93f146dbf9da51c8aa71d3ba39a0b6d1487efafe0ed708c3a9ca9fd7fe02"
+  },
+  "stdout": {
+    "candidate": "",
+    "auditor": "{\"errors\": [], \"global_budget\": 4, \"reachable_states\": 9988, \"status\": \"PASS_METHOD_SCOPED\", \"transition_edges\": 27748}"
+  },
+  "scope": "Finite synthetic protocol method experiment only; no elapsed-time, GUI, model, live effect, or production guarantee."
+}

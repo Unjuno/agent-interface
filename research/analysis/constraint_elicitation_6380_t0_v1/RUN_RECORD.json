@@ -1,0 +1,16 @@
+{
+  "allocation": "issue6380-constraint-elicitation-t0-20261002-01",
+  "base_sha": "893f7dc78ef814b1d5533b45b358a069f884e65c",
+  "branch": "research/constraint-elicitation-6380-t0-20261002-893f7dc",
+  "candidate_command": "podman run --rm --network=none -v /home/unjuno/agent-interface-6380-t0/research/analysis/constraint_elicitation_6380_t0_v1:/work:rw docker.io/pytorch/pytorch@sha256:831247999fbf7e08f61b3e39f6d77ee434f38f6f07f769d00db451e853878067 python /work/run_t0.py",
+  "candidate_exit": 0,
+  "candidate_rows": 32,
+  "candidate_sha256": "4e4c545a7fc16e9dcb0dec78d22ebc38d89aa08aec8846a641f379639d8a3eb9",
+  "candidate_replays": 0,
+  "auditor_command": "podman run --rm --network=none -v /home/unjuno/agent-interface-6380-t0/research/analysis/constraint_elicitation_6380_t0_v1:/work:rw docker.io/pytorch/pytorch@sha256:831247999fbf7e08f61b3e39f6d77ee434f38f6f07f769d00db451e853878067 python /work/audit_t0.py",
+  "auditor_exit": 1,
+  "auditor_replays": 0,
+  "auditor_failure": "AssertionError at audit_t0.py:46: hidden_constraint_credit mismatch; see STOP.md",
+  "disposition": "FAIL_METHOD_CONSTRUCTION_MISMATCH",
+  "scope": "finite scripted method construction only; no human or runtime claims"
+}

@@ -1,0 +1,27 @@
+{
+  "schema": "map01-attack-onset-allocation-02-local-unit-test-v1",
+  "decision": "PASS",
+  "command": "docker run --rm --platform linux/amd64 --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=2g --mount frozen-v12-test-copy:/v12:ro --mount exact-runtime-source:/runtime:ro -e PYTHONPATH=/v12:/runtime/research/live_control:/runtime/research/observation_gating:/runtime/research/doom map01-attack-onset-phase-a2:20260927-r2 python /v12/test_input_owner_v12.py",
+  "exit_code": 0,
+  "tests_run": 10,
+  "tests_passed": 10,
+  "tests_failed": 0,
+  "tests_errored": 0,
+  "image_id": "sha256:fc3022d265f465748e0a39491e28f8447d0066266e00d2a8a9144e866bf148ed",
+  "platform": "linux/amd64",
+  "network": "none",
+  "rootfs_read_only": true,
+  "formal_or_scientific_claim": false,
+  "formal_invocations": 0,
+  "test_only_reference": {
+    "path": "research/live_control/input_owner_v10.py",
+    "commit": "3c34e3cea2a39e961e097b41444ff4a7563a4170",
+    "git_blob_sha": "341b3c01649943ddaad5f28431a792c4889cc36e",
+    "mount_role": "unit-test comparator only; excluded from formal mounts"
+  },
+  "runtime_source_commit": "9e6d5ecdbb5440fd5df1883161f2c63b2c3bb245",
+  "limitations": [
+    "These are unit tests of the frozen v12 InputOwner mechanics, not the eight MAP01 formal sessions.",
+    "This does not claim TASK_EFFECT, onset-phase discrimination, or gameplay success."
+  ]
+}
