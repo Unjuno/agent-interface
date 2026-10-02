@@ -1,6 +1,8 @@
 # Issue #6469 T0 — benign-error recovery scope-drift measurement gate
 
-Status: preregistration candidate; **no formal run has occurred**.
+Status: **STOP_BEFORE_CANDIDATE — active same-Issue allocation conflict**.
+Construction tests passed, but formal candidate and auditor invocations are both
+zero. No scientific result is claimed.
 
 ## Question and boundary
 
@@ -73,3 +75,15 @@ requested memory ceiling is configuration only and is not treated as enforced.
 No model/API calls, GPU, GUI, external services, secrets, executable action,
 Docker Desktop, or product-safety claim. WSLc and WSL share the physical host;
 this finite CPU check makes no throughput, memory-relief, or isolation claim.
+
+## Terminal disposition for this local allocation
+
+Before formal invocation, Issue #6469 comments
+[#5944983873](https://github.com/Unjuno/agent-interface/issues/6469#issuecomment-5944983873)
+and [#5944993396](https://github.com/Unjuno/agent-interface/issues/6469#issuecomment-5944993396)
+showed an existing same-Issue T0 allocation on a different frozen branch, with
+the same stage-aware synthetic measurement question and its formal attempt
+still at zero. To avoid concurrent duplicate allocation/ownership, this branch
+stopped before candidate invocation. This is an ownership/provenance STOP, not a
+method PASS/FAIL, not a result of the other allocation, and not a request to
+retry or supersede it. All locally built construction evidence remains intact.

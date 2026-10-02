@@ -1,6 +1,6 @@
 {
   "allocation": "ISSUE-6469-BENIGN-ERROR-SCOPE-DRIFT-T0-20261002-01",
-  "status": "CONSTRUCTION_PASS_FORMAL_NOT_STARTED",
+  "status": "STOP_BEFORE_CANDIDATE_ACTIVE_SAME_ISSUE_ALLOCATION",
   "base_main": "f4fcea6a67f1d8695626447d97ae697fa454a04e",
   "branch": "research/issue-6469-t0-20261002",
   "runtime": "Microsoft WSL Containers (wslc.exe) 3.0.1.0",
@@ -16,8 +16,8 @@
   "gpu_requested": false,
   "model_calls": 0,
   "external_effects": 0,
-  "candidate_invocations_planned": 1,
-  "auditor_invocations_planned": 1,
+  "candidate_invocations_planned": 0,
+  "auditor_invocations_planned": 0,
   "candidate_output": "research/analysis/benign_error_scope_drift_6469_t0_20261002/formal_candidate/",
   "auditor_output": "research/analysis/benign_error_scope_drift_6469_t0_20261002/formal_auditor/",
   "gates": {
@@ -25,7 +25,12 @@
     "formal_start_requires_source_hash_match": true,
     "formal_start_requires_empty_running_wslc_inventory": true,
     "formal_start_requires_no_new_same-issue_branch_or_pr": true,
+    "formal_start_blocked_by_existing_preregistered_6469_t0_on_other_branch": true,
     "formal_start_requires_candidate_exit_zero_before_auditor": true,
     "retry_allowed": false
-  }
+  },
+  "stop_evidence": [
+    "https://github.com/Unjuno/agent-interface/issues/6469#issuecomment-5944983873",
+    "https://github.com/Unjuno/agent-interface/issues/6469#issuecomment-5944993396"
+  ]
 }

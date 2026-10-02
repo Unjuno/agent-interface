@@ -1,6 +1,6 @@
 {
-  "kind": "construction-only",
-  "decision": "PASS_CONSTRUCTION_SCOPED",
+  "kind": "construction-only; terminal allocation disposition is ownership STOP",
+  "decision": "STOP_BEFORE_CANDIDATE_ACTIVE_SAME_ISSUE_ALLOCATION",
   "tests_passed": 10,
   "tests_failed": 0,
   "latest_source_test_result": "10/10 pass after rebase to f4fcea6a67f1d8695626447d97ae697fa454a04e",
@@ -19,5 +19,6 @@
   "memory_requested": "512M",
   "memory_enforcement": "unknown; WSLc warned swap limit/cgroup is unavailable; no enforcement claim",
   "gpu_requested": false,
-  "formal_result": false
+  "formal_result": false,
+  "stop_reason": "A separately preregistered #6469 T0 on another branch owns the same synthetic stage-measurement question; stop this local allocation before formal candidate to avoid a duplicate concurrent run."
 }
