@@ -1,9 +1,11 @@
 import copy
 import json
+import tempfile
 import unittest
+from pathlib import Path
 
-from auditor import audit
-from candidate import build_raw
+from auditor import audit, main as audit_file
+from candidate import build_raw, main as write_raw
 
 
 class BrokerBoundaryTests(unittest.TestCase):
@@ -12,6 +14,23 @@ class BrokerBoundaryTests(unittest.TestCase):
         self.assertEqual(len(raw["runs"]), 18)
         self.assertEqual(audit(raw), [])
         self.assertEqual(audit(json.loads(json.dumps(raw))), [])
+
+    def test_candidate_and_auditor_file_interfaces(self):
+        with tempfile.TemporaryDirectory() as directory:
+            raw_path = f"{directory}/raw.json"
+            report_path = f"{directory}/audit.json"
+            write_raw(raw_path)
+            self.assertEqual(audit_file(raw_path, report_path), 0)
+            report = json.loads(Path(report_path).read_text(encoding="utf-8"))
+            self.assertEqual(report["audit"], "PASS_METHOD_SCOPED")
+            self.assertEqual(report["rows"], 18)
+
+    def test_auditor_rejects_false_baseline_contract_claim(self):
+        raw = copy.deepcopy(build_raw())
+        row = next(r for r in raw["runs"] if r["route"] == "heartbeat_only"
+                   and r["condition"] == "stuck_pass")
+        row["trace"][-1]["matches_contract"] = True
+        self.assertTrue(audit(raw))
 
     def test_three_actual_submissions_are_rejected_at_each_boundary(self):
         for row in build_raw()["runs"]:
