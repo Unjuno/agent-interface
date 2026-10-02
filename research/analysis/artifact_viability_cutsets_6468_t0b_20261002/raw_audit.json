@@ -1,0 +1,69 @@
+{
+  "accepted": true,
+  "all_mutations_rejected": true,
+  "audited_cases": 6,
+  "audited_routes": 12,
+  "errors": [],
+  "minimal_cut_sets": {
+    "document": [
+      [
+        "claim_citation_binding"
+      ],
+      [
+        "export_exists"
+      ],
+      [
+        "source_fidelity"
+      ],
+      [
+        "structure"
+      ],
+      [
+        "accessible_text_export",
+        "render_readable"
+      ]
+    ],
+    "spreadsheet": [
+      [
+        "export_exists"
+      ],
+      [
+        "formula_correct"
+      ],
+      [
+        "formula_range_correct"
+      ],
+      [
+        "source_values"
+      ],
+      [
+        "accessible_summary",
+        "chart_visible"
+      ]
+    ]
+  },
+  "mutation_controls": [
+    {
+      "mutation": "drop_critical_requirement",
+      "rejected": true
+    },
+    {
+      "mutation": "unknown_to_pass",
+      "rejected": true
+    },
+    {
+      "mutation": "swap_citation_target",
+      "rejected": true
+    },
+    {
+      "mutation": "double_count_checkpoint",
+      "rejected": true
+    },
+    {
+      "mutation": "cosmetic_as_hard_gate",
+      "rejected": true
+    }
+  ],
+  "partial_score_inversions": 1,
+  "strict_dependency_decision_disagreements": 0
+}

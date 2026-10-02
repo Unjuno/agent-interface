@@ -1,10 +1,10 @@
 # Research and idea Issue index
 
-Current full GitHub MCP listing, reconciled 2026-10-02 (Asia/Tokyo): 2,548 distinct non-PR Issue records (1,377 open, 1,171 closed). This selected index has 1,698 rows (1,155 open, 543 closed) after adding #6480 and #6483. Earlier additions #6477/#6451/#6389 and #6337's closed state remain included. #6337 closed after merged PR #6352; its scoped portability result is recorded below. The normalized full-list output omits labels, so the prior label-qualified selection is carried forward; #6389 was explicitly included after review of its research-workflow migration scope. PRs are excluded from Issue counts.
+Current full GitHub MCP listing, reconciled 2026-10-02 (Asia/Tokyo): 2,549 distinct non-PR Issue records (1,378 open, 1,171 closed). This selected index has 1,699 rows (1,156 open, 543 closed), including new idea #6492. Earlier additions #6480/#6483, #6477/#6451/#6389 and #6337's closed state remain included. #6337 closed after merged PR #6352; its scoped portability result is recorded below. The normalized full-list output omits labels, so the prior label-qualified selection is carried forward; #6389 was explicitly included after review of its research-workflow migration scope. PRs are excluded from Issue counts.
 
 ## Coverage and limits
 
-This index contains 1,698 rows (1,155 open, 543 closed), selected by research labels/title terms plus explicit inclusion of reviewed related research ideas such as #6389. The normalized full-list output omits labels; the prior label-qualified selection is carried forward, #6480/#6483 are added, earlier explicit additions remain, and #6337's state change is reconciled. The index is a discovery aid; Issue bodies and linked evidence remain authoritative. It includes direct proposals plus many validation, audit, coordination, and successor records.
+This index contains 1,699 rows (1,156 open, 543 closed), selected by research labels/title terms plus explicit inclusion of reviewed related research ideas such as #6389. The normalized full-list output omits labels; the prior label-qualified selection is carried forward, #6492 is newly added, #6480/#6483 and earlier explicit additions remain, and #6337's state change is reconciled. The index is a discovery aid; Issue bodies and linked evidence remain authoritative. It includes direct proposals plus many validation, audit, coordination, and successor records.
 
 This is a broad discovery index, not a guarantee that every repository idea has a title or label matching the filter. Other Issues are not assumed to be non-ideas; search them when linked lineage points outside this table and add any missed idea. The curated [ideas and outcomes page](IDEAS_AND_OUTCOMES.md) explains selected idea clusters and verified dispositions. [RESEARCH.md](../RESEARCH.md), Issues, PRs, and reports remain evidence authorities.
 
@@ -14,6 +14,7 @@ Open is workflow state, not “no result”; open Issues may contain scoped resu
 
 | Issue | Title | GitHub state / closed date | Literal outcome markers* | Linked predecessor(s)** |
 |---|---|---|---|---|
+| [#6492](https://github.com/Unjuno/agent-interface/issues/6492) | [Research] Human return-to-own-work cost after deferrable agent interruptions | open | METHOD_PASS_SCOPED, H_PASS_SCOPED, H_FAIL_SCOPED, HOLD | — |
 | [#6483](https://github.com/Unjuno/agent-interface/issues/6483) | [Research] Bind effect-critical spoken spans to authenticated principals under mixed speech | open | PASS_METHOD_SCOPED, FAIL_METHOD, HOLD | #6471, #6424, #5805 |
 | [#6480](https://github.com/Unjuno/agent-interface/issues/6480) | [Research] Comparative-advantage audit for human deferral on verified GUI effects | open | METHOD_PASS_SCOPED, METHOD_FAIL, H_PASS_SCOPED, H_FAIL_SCOPED, HOLD | #5324, #5819, #5830 |
 | [#6477](https://github.com/Unjuno/agent-interface/issues/6477) | Successor #6461: execute isolated verifier challenge lane after T0b STOP | open | PASS_METHOD_SCOPED, FAIL_METHOD, STOP | #6461, #6179 |
