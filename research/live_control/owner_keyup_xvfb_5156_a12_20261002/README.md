@@ -1,6 +1,6 @@
 # Issue #5156 allocation-12: explicit-up owner/caller bracket in private Xvfb
 
-Status at freeze: candidate and independent audit not yet run. This README records the preregistered question and repeatable local procedure; it is not a result. A10's bootstrap STOP and the inconsistent, unlaunched A11 package remain unchanged.
+The candidate was invoked once and stopped during scenario setup; the independent auditor was correctly not run. The exact partial raw output and STOP record are retained below. This is not a scientific result for or against the timing hypothesis. A10's bootstrap STOP and the inconsistent, unlaunched A11 package remain unchanged.
 
 ## H / T / D / C / U
 
@@ -50,3 +50,11 @@ docker run --rm --pull=never --platform linux/amd64 --network none --read-only -
 The exact outputs, stdout/stderr, exit statuses, raw SHA-256 and audit receipt are retained next to this README after the one-shot run. A candidate nonzero exit forbids the auditor and any retry under allocation-12.
 
 Allocation-10's bootstrap STOP is in the adjacent `owner_keyup_xvfb_5156_a10_20261002/STOP.json`; it is preserved and not reused.
+
+## A12 one-shot outcome
+
+- Candidate: one private Docker/Xvfb invocation; exit 1 while beginning case 2. Case 1 completed single W admission and explicit-up with a nested receipt and keymap down→up.
+- Case 2 could not admit W under a new lease: the owner correctly raised `ValueError: another intent owns input` because the previous lease remained active after the last key was explicitly released. This is a case-lifecycle/setup STOP, not a timing-hypothesis failure.
+- Raw output: `outputs/formal-01/raw.json`, SHA-256 `a37784c18e6423fcdcd84758dea38336c406b7e4d67f8bd6d23d01a9ffea64ba`.
+- Independent auditor: not invoked because candidate exit was nonzero. Candidate retries: 0.
+- Next distinct successor must explicitly close/release each case lease and verify neutral owner state before admitting a different intent. Do not rerun A12.
