@@ -1,0 +1,108 @@
+{
+  "allocation": "5593-MULTISTATE-FROZEN-ROSTER-T1-20261002-02",
+  "episode_ids": [
+    "ms02-e01",
+    "ms02-e02",
+    "ms02-e03",
+    "ms02-e04",
+    "ms02-e05",
+    "ms02-e06"
+  ],
+  "launched_n": 6,
+  "occupancy": [
+    {
+      "counts": {
+        "RUNNING": 6
+      },
+      "tick": 0
+    },
+    {
+      "counts": {
+        "RUNNING": 3,
+        "SAFE_STOP": 3
+      },
+      "tick": 1
+    },
+    {
+      "counts": {
+        "CENSORED": 1,
+        "RECOVERING": 2,
+        "RUNNING": 1,
+        "TERMINAL_STOP": 1,
+        "VERIFIED_FAILURE": 1
+      },
+      "tick": 2
+    },
+    {
+      "counts": {
+        "CENSORED": 1,
+        "RECOVERING": 1,
+        "SAFE_STOP": 1,
+        "TERMINAL_STOP": 1,
+        "VERIFIED_FAILURE": 1,
+        "VERIFIED_SUCCESS": 1
+      },
+      "tick": 3
+    },
+    {
+      "counts": {
+        "CENSORED": 1,
+        "RECOVERING": 1,
+        "TERMINAL_STOP": 1,
+        "VERIFIED_FAILURE": 1,
+        "VERIFIED_SUCCESS": 2
+      },
+      "tick": 4
+    },
+    {
+      "counts": {
+        "CENSORED": 1,
+        "TERMINAL_STOP": 1,
+        "VERIFIED_FAILURE": 2,
+        "VERIFIED_SUCCESS": 2
+      },
+      "tick": 5
+    }
+  ],
+  "transitions": [
+    {
+      "counts": {},
+      "tick": 0
+    },
+    {
+      "counts": {
+        "RUNNING->SAFE_STOP": 3
+      },
+      "tick": 1
+    },
+    {
+      "counts": {
+        "RUNNING->ADMIN_CENSOR": 1,
+        "RUNNING->VERIFIED_FAILURE": 1,
+        "SAFE_STOP->RECOVERING": 2,
+        "SAFE_STOP->TERMINAL_STOP": 1
+      },
+      "tick": 2
+    },
+    {
+      "counts": {
+        "RECOVERING->SAFE_STOP": 1,
+        "RUNNING->VERIFIED_SUCCESS": 1
+      },
+      "tick": 3
+    },
+    {
+      "counts": {
+        "RECOVERING->VERIFIED_SUCCESS": 1,
+        "SAFE_STOP->RECOVERING": 1
+      },
+      "tick": 4
+    },
+    {
+      "counts": {
+        "RECOVERING->VERIFIED_FAILURE": 1
+      },
+      "tick": 5
+    }
+  ]
+}
