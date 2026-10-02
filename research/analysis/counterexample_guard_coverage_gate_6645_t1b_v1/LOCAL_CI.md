@@ -15,7 +15,9 @@ execution against the current workflow source (without historical restoration)
 did fail two geometry provenance tests, as expected from their pinned hash;
 those tests passed after restoration.
 
-Additional direct checks: T1b construction tests 5/5; analysis index contains
-568 retained result/failure directories and is current; `git diff --check`
-passed. Formal Docker allocation ran once per role (candidate and auditor),
-with zero retries; no formal rerun was performed during CI.
+Additional direct checks: T1b construction tests 5/5; analysis index contained
+568 retained result/failure directories before merging concurrent main commit
+`753c702a6`, and 569 afterward; it is current at both checks. The index unit
+suite passed 17/17 and `git diff --check` passed. Formal Docker allocation ran
+once per role (candidate and auditor), with zero retries; no formal rerun was
+performed during CI.
