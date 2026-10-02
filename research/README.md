@@ -46,6 +46,7 @@ For claims and scientific disposition, start with the top-level [research index]
 | Issue #6435 deadline/slack measurement-method T0 | [analysis/deadline_slack_equivalence_6435_t0_v1/REPORT.md](analysis/deadline_slack_equivalence_6435_t0_v1/REPORT.md) |
 | Issue #6437 constraint-response normalization successor T0 | [analysis/constraint_response_normalization_6437_t0_v1/REPORT.md](analysis/constraint_response_normalization_6437_t0_v1/REPORT.md) |
 | Issue #6038 label/control ambiguity T0 (synthetic method only; formal-01 STOP retained) | [analysis/label_control_ambiguity_6038_t0_v1/REPORT.md](analysis/label_control_ambiguity_6038_t0_v1/REPORT.md) |
+| Issue #6422 authorized conditional-deferral boundary A02 | [analysis/denial_aware_deferral_authority_6422_a02_20261002_v1/REPORT.md](analysis/denial_aware_deferral_authority_6422_a02_20261002_v1/REPORT.md) |
 | Revisit history | [REVISIT_LEDGER.md](REVISIT_LEDGER.md) |
 | Analysis vs experiment decision flow | [../docs/RESEARCH_METHOD.md](../docs/RESEARCH_METHOD.md) |
 | Public evidence/document relationship map | [../docs/EVIDENCE_MAP.md](../docs/EVIDENCE_MAP.md) |
