@@ -250,3 +250,39 @@ test('original presentation sink getter failure stops before dispatch and preser
   await assert.rejects(caller.call('interface_clock',{}),/stopped/);
   assert.equal(calls,0);
 });
+
+// The public modal tools already exist. Removing either from the direct route
+// must break this test; no synthetic task success or automatic selection is used.
+for (const [tool, args, metadata] of [
+  ['interface_inspect_target', {target:'app',screen_region:[0,0,640,480]},
+    {status:'needs_review',input_dispatched:false,authority_granted:false,
+      review_request:{tool:'interface_review_target',arguments:{target:'app',window_id:21,review_id:'once'}}}],
+  ['interface_review_target', {target:'app',window_id:21,review_id:'once',screen_region:[0,0,640,480]},
+    {status:'target_reviewed',input_dispatched:false,authority_granted:false,binding_revision:2}],
+]) test('direct primary forwards one explicit '+tool+' without following its result',async()=>{
+  const calls=[];
+  const reply={attempt:1,result:{isError:false,content:[{type:'text',text:JSON.stringify(metadata)}]}};
+  const caller=createPrimaryCaller({sendPresented:async(t,a)=>{calls.push([t,a]);return reply;}},'direct-post',{});
+  assert.equal(await caller.call(tool,args),reply);
+  assert.deepEqual(calls,[[tool,args]],'inspection must not auto-select, and selection must not auto-input');
+  assert.equal(caller.state().stopped,null);
+});
+
+test('direct primary returns failed target selection once and blocks inspection/review retry',async()=>{
+  let calls=0;
+  const reply={result:{isError:true,content:[{type:'text',text:JSON.stringify({status:'needs_review',error:'target changed',input_dispatched:false,authority_granted:false})}]}};
+  const caller=createPrimaryCaller({sendPresented:async()=>{calls++;return reply;}},'direct-post',{});
+  assert.equal(await caller.call('interface_review_target',{target:'app',window_id:21,review_id:'once'}),reply);
+  assert.ok(caller.state().stopped);
+  await assert.rejects(caller.call('interface_inspect_target',{target:'app'}),/trial stopped/);
+  await assert.rejects(caller.call('interface_review_target',{target:'app',window_id:21,review_id:'once'}),/trial stopped/);
+  assert.equal(calls,1);
+});
+
+test('guarded primary rejects persistent target tools locally',async()=>{
+  let calls=0;
+  const caller=createPrimaryCaller({sendPresented:async()=>{calls++;}},'guarded-local',{});
+  await assert.rejects(caller.call('interface_inspect_target',{target:'app'}),/unavailable tool/);
+  assert.equal(calls,0);
+  await assert.rejects(caller.call('interface_guarded_observe',{}),/trial stopped/);
+});

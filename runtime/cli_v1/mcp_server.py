@@ -17,7 +17,7 @@ import anyio
 from mcp.types import CallToolResult, ImageContent, TextContent
 from pydantic import Field, StrictBool, StrictInt, StrictStr
 
-from .api import dispatch, dispatch_in_session
+from .api import dispatch
 from .mcp_session import MCPSessionOwner
 from .attempt import _write_json
 from .observe import observe, observe_in_session
@@ -107,6 +107,16 @@ class PublicArgumentMCP(FastMCP):
 def present_management_report(report, call_root, *, include_image=True):
     row = dict(report)
     if 'observation_report' in report:
+        # Keep the raw capture and committed selection, but do not present an
+        # image whose target association failed or could not be rechecked.
+        # This gate also applies to retained lookup without renewing evidence.
+        inconsistent = (
+            (report.get('status') == 'needs_review' and report.get('error') is not None)
+            or ('capture_consistency' in report and report['capture_consistency'] != 'matched'))
+        if inconsistent:
+            row.update(image=None, image_status='needs_review',
+                       image_error='Target/capture association unconfirmed; inspect again before new input.')
+            return row
         shown = present_result(report['observation_report'], call_root, include_image=include_image)
         for key in ('image', 'image_status', 'image_error', 'image_delivery'):
             if key in shown:
@@ -250,17 +260,12 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                         report = {'status': 'needs_review', 'error': repr(error),
                                   'input_dispatched': False, 'authority_granted': False}
                 elif owner is not None:
-                    session = owner.get()
                     options.pop('display_name')
                     if operation == 'observe':
-                        report = observe_in_session(session, **options)
-                    elif options['current_binding_revision'] != owner.binding_revision:
-                        report = {'status': 'invalid_request', 'error': 'SESSION_BINDING_REVISION_MISMATCH',
-                                  'input_dispatched': False, 'operation_invoked': False}
+                        report = observe_in_session(owner.get(), **options)
                     else:
-                        owner.dispatch_attempted = True
                         program = options.pop('program')
-                        report = dispatch_in_session(session, program, **options)
+                        report = owner.dispatch(program, **options)
                 elif operation == 'observe':
                     report = observe(deepcopy(targets), **options)
                 else:

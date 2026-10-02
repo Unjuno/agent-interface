@@ -1,0 +1,33 @@
+{
+  "allocation": "HUMAN-AUTONOMY-ENVELOPE-6383-T0-20261002-01",
+  "base_main_sha": "4bd6d473eab20ce4e23d7ac2275aeae706187e7f",
+  "branch": "research/autonomy-envelope-6383-t0-20261002",
+  "candidate_invocations_at_freeze": 0,
+  "configured_cpu": 1,
+  "configured_memory": "1g (configuration only; enforcement not presumed)",
+  "fixture_rows": 10,
+  "gpu_flag": "omitted",
+  "image_id": "sha256:048a0de5d4322054f9d92a9dfd36f4cab1cd82dfbd1042ce2c51bd94f7e45d32",
+  "image_ref": "pytorch/pytorch@sha256:831247999fbf7e08f61b3e39f6d77ee434f38f6f07f769d00db451e853878067",
+  "independent_auditor_invocations_at_freeze": 0,
+  "issue": 6383,
+  "limitations": [
+    "Synthetic finite receipts only; no people, model, GUI, or input.",
+    "WSLc may warn that cgroup/swap limits are unavailable; no enforcement claim without effective-limit readback.",
+    "WSLc invocation does not provide read-only-root or PID-limit controls."
+  ],
+  "network": "none",
+  "path": "research/analysis/human_autonomy_envelope_6383_t0_20261002/",
+  "platform": "linux/amd64",
+  "random_seed": null,
+  "retries_at_freeze": 0,
+  "runtime": "Microsoft WSL Containers CLI (wslc.exe) 3.0.1.0",
+  "source_hashes_sha256": {
+    "PREREGISTRATION.md": "9607beb068c47070d68af80712cc715afeb7d4a2abbd86072caaa9ca5e102d10",
+    "RUN_COMMANDS.md": "dd347dc58b2d716a44d93d62e01e9a76ef651dfacfcc081ba8ad94cbf66abae6",
+    "audit.py": "ed7ec35a1f804c355b61faaf8a346ff601a0216360d3510888f334bf382b03eb",
+    "candidate.py": "a90eeb52d5b36a9a695b54031d16d8f266fd3416b0436d75a04b31c15fc54021",
+    "fixture.json": "2437596c7d41065e32a4c2cb0e51974034dffa2d948821db04836136ec0f6e21",
+    "test_contract.py": "a52359b9eddc81aae994d935ed7f9c1c80977a26ab6b6c41e5c2e000ee1b9670"
+  }
+}

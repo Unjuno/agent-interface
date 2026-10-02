@@ -26,6 +26,7 @@ class PortableDistributionTests(unittest.TestCase):
             self.assertNotIn('host_bundle', plain)
             self.assertTrue((td/'host/FEEDBACK.md').is_file(), 'linked feedback guide must ship with host')
             self.assertTrue((td/'host/primary_exchange.mjs').is_file(), 'primary exchange adapter must ship with host')
+            self.assertTrue((td/'host/primary_stdio.mjs').is_file(), 'primary stdio entry must ship with host')
             meta = json.loads((td/'host/HOST_MANIFEST.json').read_bytes())
             self.assertEqual(meta['source_revision'], revision)
             for rel in HOST_SOURCE_FILES:

@@ -1,0 +1,39 @@
+{
+  "schema": "adoption-conditioned-recourse-freeze-v2",
+  "issue": 6358,
+  "allocation": "ADOPTION-CONDITIONED-RECOURSE-6358-T0-HOST-20261002-01",
+  "base_main": "44416db9decb5182b8119591580fc2a652b8cebb",
+  "branch": "research/adoption-conditioned-recourse-6358-t0-20261002",
+  "path": "research/analysis/adoption_conditioned_recourse_6358_t0_20261002/",
+  "runtime": "Windows host CPython 3.11.9; deterministic standard-library simulation; no WSL/container/model/GPU/GUI/network",
+  "analysis_unit": "one isolated offered-stop cohort assigned exactly one predeclared policy; no mixed arms on shared capacity",
+  "advice_budget": "exactly one advice per offered ID in each advice arm; zero in no_advice; per-row and summary audited",
+  "identification_boundary": "single deterministic cohort per frozen case; synthetic counterexample only; no population or causal policy-effect estimate",
+  "cohort_refinement": "Issue comment 5943195315: freeze cohort/resource graph/window, adoption schedule, offered IDs, reset/cooldown and carryover; if not established report HOLD_INTERFERENCE. T0 uses isolated synthetic cohorts.",
+  "literature_refinement": "Issue comment 5943274533: compare public warning+bounded stagger with source-bound recipient-specific authorized routing; include wording-only placebo and slow/forbidden alternative cases.",
+  "formal_invocations": {"candidate_max": 1, "candidate_launch_attempts_used": 1, "candidate_program_started": false, "independent_auditor_max_after_candidate_exit_0": 1, "independent_auditor_invocations": 0, "retries": 0},
+  "construction_only_invocations": {"v1_candidate_cli_before_v2_freeze": 1, "v1_auditor_cli_before_v2_freeze": 1, "v2_candidate_cli_before_freeze": 0, "v2_auditor_cli_before_freeze": 0, "formal_candidate": 0, "formal_auditor": 0},
+  "construction_only_note": "v1 construction outputs are preserved as superseded construction-only evidence; never reuse as v2 or formal results.",
+  "policies": ["generic_retry", "witness_only", "public_warning_stagger", "recipient_specific_routing", "wording_placebo", "no_advice", "abandon_eligible_control"],
+  "cases": ["shared-high-adoption", "shared-low-adoption", "disjoint-resource-null", "no-feasible-fallback", "forbidden-alternative", "slow-alternative", "expired-advice", "uncertain-delivery"],
+  "expected_primary": {"offered": 4, "generic_retry_resolved": 2, "witness_only_resolved": 2, "public_warning_stagger_resolved": 2, "recipient_specific_routing_resolved": 4, "wording_placebo_resolved": 2, "abandon_eligible_control_resolved": 2, "wording_placebo_routes_and_outcomes_equal_generic": true, "recipient_classes": {"flexible": "2/2 resolved", "shared_only": "2/2 resolved"}},
+  "controls": {"low_adoption": "2/4 adopted resolve, retain four offered IDs", "disjoint_null": "all four resolve under the routing policy", "no_feasible_fallback": "1 resolved, 3 explicit NO_FEASIBLE_RECOURSE", "forbidden_alternative": "only individually authorized recipients may use it", "slow_alternative": "do not select a route missing the deadline", "expired": "STALE_ADVICE and zero attempts", "uncertain": "UNKNOWN_NO_RETRY and zero attempts"},
+  "source_sha256": {
+    "cases.json": "ddd4ce62ada0fefa14c7e3a084347ca01032e2e57fcf1634e90870c2e757c996",
+    "candidate.py": "3b7439e81f71bd8e29aff304762afd15e34f7530b2898f741b7c06b48f76ea10",
+    "auditor.py": "4ef5811f3b2535b5d57ee3edcd5199d7dfd3ef0b37159c88260b86d53a73db1d",
+    "test_candidate.py": "7329fc9fc01745341e5787a6b6503fe6a7ab48e7adc0bd70dd8387422f9485e7",
+    "test_auditor.py": "589916a7c1c7a830ce4d5e4bc87d6cf265168713281d4e31dfcc25a63688d637",
+    "README.md": "785acd448f250ad68cf55a912449adc25cb7b0fc7a83e0438f26e495c5c7e672",
+    "RUN.md": "f0fca11a6df45413c2e6a12200d9a97b43e820c8af7d44e2d9e8529654db6b49",
+    "PROCESS.json": "09f2e4f1fa5c61aa5f68f0ee45fa6ada74d3d932cfb5a7ed69c9d5728112b850",
+    "CONSTRUCTION.md": "a25adb25cea787affa7ae1387bdf527d12fcf6268a829253ceea33a5e54bb52c"
+  },
+  "formal_argv": {
+    "candidate": ["python", "-B", "candidate.py", "--cases", "cases.json", "--out", "results/formal-01/candidate.raw.json"],
+    "auditor_after_candidate_exit_0": ["python", "-B", "auditor.py", "--cases", "cases.json", "--candidate", "results/formal-01/candidate.raw.json", "--out", "results/formal-01/audit.raw.json"]
+  },
+  "result_path": "results/formal-01/STOP.json",
+  "stop_sha256": "afd5bbd53c4b8e9d1b3a3a744fee1c14d6f956f070df8e13cf8479ed96a9d661",
+  "no_tuning_or_retry": true
+}
