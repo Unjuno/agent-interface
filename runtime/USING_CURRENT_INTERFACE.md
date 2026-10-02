@@ -751,3 +751,35 @@ Raw reports and their hashes remain unchanged; lookup/review does not execute in
 
 [Program-emission regression evidence](results/program-emission-review-01/README.md)
 includes the original-counter recheck, portable archive, and native test logs.
+
+
+### Bounded selection, movement and conditional saving
+
+A guarded compiled method can include selection as its first action when a
+fresh application-specific selection cue is available. Match the reference's
+returned offset to the action using that reference: a rectangle reference and
+keyboard context can have different region sizes and offsets. Keep texture,
+source, scope, admission, deadline and release checks; a fixed post-click wait
+is not a selection acknowledgement. Stop on an unknown or failed effect before
+moving or saving. Independently score the persisted document after control ends.
+
+The [first full-method comparison](results/inkscape-single-method-01/README.md)
+retains a compiled selection failure: normal tasks succeeded1/2, although both
+undertravel controls withheld Save. A separate, frozen
+[interior-point successor](results/inkscape-interior-point-01/README.md) used a
+visibly interior click point with a textured32x32reference, rather than a
+boundary point with16x16context. Both normal routes saved the correct rectangle,
+and both controls stopped before Save. The point and reference context changed
+together; the prior failure's actual input recipient/readiness/cause is unknown.
+These results do not establish generic selection detection or spatial robustness.
+
+The successor compared the full three-action graph against a strong ordinary
+conditional callback. Both normal routes used3input programs,37program emissions,
+13captures,5callercommands and2primaryimages. Local method time was704ms ordinary
+and845ms compiled in one case each: no graph efficiency advantage or human-tempo
+claim follows. Actual primary usage is reconstructed for each explicit joint
+window, including construction and verification; nested method windows exclude
+other task decisions and overlap those totals. Evolving context/cache prevents
+a causal token-saving comparison. Keep current defaults and the efficiency HOLD.
+The [selection-cue development preflight](results/inkscape-selection-gate-preflight-01/README.md)
+uses historical labeled frames; it is not held-out visual qualification.
