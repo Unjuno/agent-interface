@@ -1,0 +1,47 @@
+{
+  "schema": "temporal-preservation-5887-a02-v1",
+  "deadline_ms": 10,
+  "traces": [
+    {
+      "id": "benign_exact_timed_stutter",
+      "rows": [
+        {"t_ms": 0, "pixels": "p0", "props": {"ready": true}, "generation": 1, "edges": []},
+        {"t_ms": 0, "pixels": "p0", "props": {"ready": true}, "generation": 1, "edges": []},
+        {"t_ms": 8, "pixels": "p1", "props": {"ready": false}, "generation": 1, "edges": [{"kind": "commit_ack"}]}
+      ]
+    },
+    {
+      "id": "repeated_edge_occurrence",
+      "rows": [
+        {"t_ms": 0, "pixels": "p0", "props": {"ready": true}, "generation": 1, "edges": []},
+        {"t_ms": 4, "pixels": "p0", "props": {"ready": true}, "generation": 1, "edges": [{"kind": "warning"}]},
+        {"t_ms": 6, "pixels": "p0", "props": {"ready": true}, "generation": 1, "edges": [{"kind": "warning"}]},
+        {"t_ms": 8, "pixels": "p1", "props": {"ready": false}, "generation": 1, "edges": []}
+      ]
+    },
+    {
+      "id": "only_within_deadline_witness",
+      "rows": [
+        {"t_ms": 0, "pixels": "p0", "props": {"ready": true}, "generation": 1, "edges": []},
+        {"t_ms": 8, "pixels": "p0", "props": {"ready": true}, "generation": 1, "edges": [{"kind": "commit_ack"}]},
+        {"t_ms": 12, "pixels": "p0", "props": {"ready": true}, "generation": 1, "edges": []}
+      ]
+    },
+    {
+      "id": "missing_timestamp",
+      "rows": [
+        {"t_ms": 0, "pixels": "p0", "props": {"ready": true}, "generation": 1, "edges": []},
+        {"t_ms": null, "pixels": "p0", "props": {"ready": true}, "generation": 1, "edges": [{"kind": "commit_ack"}]},
+        {"t_ms": 12, "pixels": "p1", "props": {"ready": false}, "generation": 1, "edges": []}
+      ]
+    },
+    {
+      "id": "pixel_equal_generation_change",
+      "rows": [
+        {"t_ms": 0, "pixels": "same", "props": {"ready": true}, "generation": 1, "edges": []},
+        {"t_ms": 1, "pixels": "same", "props": {"ready": true}, "generation": 2, "edges": []},
+        {"t_ms": 2, "pixels": "same", "props": {"ready": true}, "generation": 2, "edges": []}
+      ]
+    }
+  ]
+}
