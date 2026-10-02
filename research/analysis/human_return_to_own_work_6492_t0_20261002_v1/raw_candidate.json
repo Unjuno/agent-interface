@@ -1,0 +1,586 @@
+{
+  "arms": [
+    "timing_only",
+    "preserved_view",
+    "optional_cue"
+  ],
+  "case_order": [
+    "case01",
+    "case02",
+    "case03",
+    "case04",
+    "case05",
+    "case06"
+  ],
+  "fixture_sha256": "4165dce25557790ecc780c74182e204d55d037121aec87cce2137f1feb614fb7",
+  "rows": [
+    {
+      "answers": [
+        "CSV",
+        "PDF"
+      ],
+      "arm": "timing_only",
+      "automated_actions": [],
+      "before_version": "v3",
+      "case_id": "case01",
+      "cue": {
+        "author": null,
+        "offered": false,
+        "status": "not_offered",
+        "text": null
+      },
+      "current_version": "v3",
+      "delay_ms": 1000,
+      "interrupt_id": "interrupt-01",
+      "priority": "deferrable",
+      "question": "Which synthetic export format?",
+      "source_view": null,
+      "source_view_digest": "f035ce60177b116927acf6ebeddf5a758a913b7b26264a830fa56b054900101d",
+      "state_change_warning": false,
+      "surface_id": "surface-editor",
+      "task_id": "task-invoice-01",
+      "window_id": "window-invoice"
+    },
+    {
+      "answers": [
+        "CSV",
+        "PDF"
+      ],
+      "arm": "preserved_view",
+      "automated_actions": [],
+      "before_version": "v3",
+      "case_id": "case01",
+      "cue": {
+        "author": null,
+        "offered": false,
+        "status": "not_offered",
+        "text": null
+      },
+      "current_version": "v3",
+      "delay_ms": 1000,
+      "interrupt_id": "interrupt-01",
+      "priority": "deferrable",
+      "question": "Which synthetic export format?",
+      "source_view": {
+        "historical": false,
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "surface_id": "surface-editor",
+        "task_id": "task-invoice-01",
+        "version": "v3",
+        "window_id": "window-invoice"
+      },
+      "source_view_digest": "f035ce60177b116927acf6ebeddf5a758a913b7b26264a830fa56b054900101d",
+      "state_change_warning": false,
+      "surface_id": "surface-editor",
+      "task_id": "task-invoice-01",
+      "window_id": "window-invoice"
+    },
+    {
+      "answers": [
+        "CSV",
+        "PDF"
+      ],
+      "arm": "optional_cue",
+      "automated_actions": [],
+      "before_version": "v3",
+      "case_id": "case01",
+      "cue": {
+        "author": "user",
+        "offered": true,
+        "status": "used",
+        "text": "finish the second row"
+      },
+      "current_version": "v3",
+      "delay_ms": 1000,
+      "interrupt_id": "interrupt-01",
+      "priority": "deferrable",
+      "question": "Which synthetic export format?",
+      "source_view": {
+        "historical": false,
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "surface_id": "surface-editor",
+        "task_id": "task-invoice-01",
+        "version": "v3",
+        "window_id": "window-invoice"
+      },
+      "source_view_digest": "f035ce60177b116927acf6ebeddf5a758a913b7b26264a830fa56b054900101d",
+      "state_change_warning": false,
+      "surface_id": "surface-editor",
+      "task_id": "task-invoice-01",
+      "window_id": "window-invoice"
+    },
+    {
+      "answers": [
+        "UTC",
+        "JST"
+      ],
+      "arm": "timing_only",
+      "automated_actions": [],
+      "before_version": "v7",
+      "case_id": "case02",
+      "cue": {
+        "author": null,
+        "offered": false,
+        "status": "not_offered",
+        "text": null
+      },
+      "current_version": "v8",
+      "delay_ms": 1000,
+      "interrupt_id": "interrupt-02",
+      "priority": "deferrable",
+      "question": "Use which synthetic timezone?",
+      "source_view": null,
+      "source_view_digest": "db7c0b37b7d2f3a7afd8b868cb19677d1ebe4072f25d3c05500268da3b1706af",
+      "state_change_warning": true,
+      "surface_id": "surface-calendar",
+      "task_id": "task-calendar-02",
+      "window_id": "window-calendar"
+    },
+    {
+      "answers": [
+        "UTC",
+        "JST"
+      ],
+      "arm": "preserved_view",
+      "automated_actions": [],
+      "before_version": "v7",
+      "case_id": "case02",
+      "cue": {
+        "author": null,
+        "offered": false,
+        "status": "not_offered",
+        "text": null
+      },
+      "current_version": "v8",
+      "delay_ms": 1000,
+      "interrupt_id": "interrupt-02",
+      "priority": "deferrable",
+      "question": "Use which synthetic timezone?",
+      "source_view": {
+        "historical": true,
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "surface_id": "surface-calendar",
+        "task_id": "task-calendar-02",
+        "version": "v7",
+        "window_id": "window-calendar"
+      },
+      "source_view_digest": "db7c0b37b7d2f3a7afd8b868cb19677d1ebe4072f25d3c05500268da3b1706af",
+      "state_change_warning": true,
+      "surface_id": "surface-calendar",
+      "task_id": "task-calendar-02",
+      "window_id": "window-calendar"
+    },
+    {
+      "answers": [
+        "UTC",
+        "JST"
+      ],
+      "arm": "optional_cue",
+      "automated_actions": [],
+      "before_version": "v7",
+      "case_id": "case02",
+      "cue": {
+        "author": "user",
+        "offered": true,
+        "status": "stale_withheld",
+        "text": null
+      },
+      "current_version": "v8",
+      "delay_ms": 1000,
+      "interrupt_id": "interrupt-02",
+      "priority": "deferrable",
+      "question": "Use which synthetic timezone?",
+      "source_view": {
+        "historical": true,
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "surface_id": "surface-calendar",
+        "task_id": "task-calendar-02",
+        "version": "v7",
+        "window_id": "window-calendar"
+      },
+      "source_view_digest": "db7c0b37b7d2f3a7afd8b868cb19677d1ebe4072f25d3c05500268da3b1706af",
+      "state_change_warning": true,
+      "surface_id": "surface-calendar",
+      "task_id": "task-calendar-02",
+      "window_id": "window-calendar"
+    },
+    {
+      "answers": [
+        "A",
+        "B"
+      ],
+      "arm": "timing_only",
+      "automated_actions": [],
+      "before_version": "v2",
+      "case_id": "case03",
+      "cue": {
+        "author": null,
+        "offered": false,
+        "status": "not_offered",
+        "text": null
+      },
+      "current_version": "v3",
+      "delay_ms": 1000,
+      "interrupt_id": "interrupt-03",
+      "priority": "deferrable",
+      "question": "Which synthetic sheet?",
+      "source_view": null,
+      "source_view_digest": "1f807925d29318fb063efcc4a6cdc89f9607408e74a0242da216fea03c509849",
+      "state_change_warning": true,
+      "surface_id": "surface-sheet",
+      "task_id": "task-sheet-03",
+      "window_id": "window-sheet"
+    },
+    {
+      "answers": [
+        "A",
+        "B"
+      ],
+      "arm": "preserved_view",
+      "automated_actions": [],
+      "before_version": "v2",
+      "case_id": "case03",
+      "cue": {
+        "author": null,
+        "offered": false,
+        "status": "not_offered",
+        "text": null
+      },
+      "current_version": "v3",
+      "delay_ms": 1000,
+      "interrupt_id": "interrupt-03",
+      "priority": "deferrable",
+      "question": "Which synthetic sheet?",
+      "source_view": {
+        "historical": true,
+        "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "surface_id": "surface-sheet",
+        "task_id": "task-sheet-03",
+        "version": "v2",
+        "window_id": "window-sheet"
+      },
+      "source_view_digest": "1f807925d29318fb063efcc4a6cdc89f9607408e74a0242da216fea03c509849",
+      "state_change_warning": true,
+      "surface_id": "surface-sheet",
+      "task_id": "task-sheet-03",
+      "window_id": "window-sheet"
+    },
+    {
+      "answers": [
+        "A",
+        "B"
+      ],
+      "arm": "optional_cue",
+      "automated_actions": [],
+      "before_version": "v2",
+      "case_id": "case03",
+      "cue": {
+        "author": null,
+        "offered": true,
+        "status": "unused",
+        "text": null
+      },
+      "current_version": "v3",
+      "delay_ms": 1000,
+      "interrupt_id": "interrupt-03",
+      "priority": "deferrable",
+      "question": "Which synthetic sheet?",
+      "source_view": {
+        "historical": true,
+        "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "surface_id": "surface-sheet",
+        "task_id": "task-sheet-03",
+        "version": "v2",
+        "window_id": "window-sheet"
+      },
+      "source_view_digest": "1f807925d29318fb063efcc4a6cdc89f9607408e74a0242da216fea03c509849",
+      "state_change_warning": true,
+      "surface_id": "surface-sheet",
+      "task_id": "task-sheet-03",
+      "window_id": "window-sheet"
+    },
+    {
+      "answers": [
+        "Release"
+      ],
+      "arm": "timing_only",
+      "automated_actions": [],
+      "before_version": "v1",
+      "case_id": "case04",
+      "cue": {
+        "author": null,
+        "offered": false,
+        "status": "not_offered",
+        "text": null
+      },
+      "current_version": "v1",
+      "delay_ms": 0,
+      "interrupt_id": "interrupt-04",
+      "priority": "emergency_release",
+      "question": "Release the synthetic stuck input now.",
+      "source_view": null,
+      "source_view_digest": "192ea5556c287e0900d6de71a893926bef4d108434a6cfe0d44a78026ebd8e38",
+      "state_change_warning": false,
+      "surface_id": "surface-release",
+      "task_id": "task-release-04",
+      "window_id": "window-release"
+    },
+    {
+      "answers": [
+        "Release"
+      ],
+      "arm": "preserved_view",
+      "automated_actions": [],
+      "before_version": "v1",
+      "case_id": "case04",
+      "cue": {
+        "author": null,
+        "offered": false,
+        "status": "not_offered",
+        "text": null
+      },
+      "current_version": "v1",
+      "delay_ms": 0,
+      "interrupt_id": "interrupt-04",
+      "priority": "emergency_release",
+      "question": "Release the synthetic stuck input now.",
+      "source_view": {
+        "historical": false,
+        "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "surface_id": "surface-release",
+        "task_id": "task-release-04",
+        "version": "v1",
+        "window_id": "window-release"
+      },
+      "source_view_digest": "192ea5556c287e0900d6de71a893926bef4d108434a6cfe0d44a78026ebd8e38",
+      "state_change_warning": false,
+      "surface_id": "surface-release",
+      "task_id": "task-release-04",
+      "window_id": "window-release"
+    },
+    {
+      "answers": [
+        "Release"
+      ],
+      "arm": "optional_cue",
+      "automated_actions": [],
+      "before_version": "v1",
+      "case_id": "case04",
+      "cue": {
+        "author": null,
+        "offered": true,
+        "status": "unused",
+        "text": null
+      },
+      "current_version": "v1",
+      "delay_ms": 0,
+      "interrupt_id": "interrupt-04",
+      "priority": "emergency_release",
+      "question": "Release the synthetic stuck input now.",
+      "source_view": {
+        "historical": false,
+        "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "surface_id": "surface-release",
+        "task_id": "task-release-04",
+        "version": "v1",
+        "window_id": "window-release"
+      },
+      "source_view_digest": "192ea5556c287e0900d6de71a893926bef4d108434a6cfe0d44a78026ebd8e38",
+      "state_change_warning": false,
+      "surface_id": "surface-release",
+      "task_id": "task-release-04",
+      "window_id": "window-release"
+    },
+    {
+      "answers": [
+        "Draft",
+        "Final"
+      ],
+      "arm": "timing_only",
+      "automated_actions": [],
+      "before_version": "v4",
+      "case_id": "case05",
+      "cue": {
+        "author": null,
+        "offered": false,
+        "status": "not_offered",
+        "text": null
+      },
+      "current_version": "v4",
+      "delay_ms": 1000,
+      "interrupt_id": "interrupt-05",
+      "priority": "deferrable",
+      "question": "Which synthetic note label?",
+      "source_view": null,
+      "source_view_digest": "e352b2364ae90576ace17fd26c731016c9787bdcaa691835ebb5ab8d8610a330",
+      "state_change_warning": false,
+      "surface_id": "surface-note",
+      "task_id": "task-note-05",
+      "window_id": "window-note"
+    },
+    {
+      "answers": [
+        "Draft",
+        "Final"
+      ],
+      "arm": "preserved_view",
+      "automated_actions": [],
+      "before_version": "v4",
+      "case_id": "case05",
+      "cue": {
+        "author": null,
+        "offered": false,
+        "status": "not_offered",
+        "text": null
+      },
+      "current_version": "v4",
+      "delay_ms": 1000,
+      "interrupt_id": "interrupt-05",
+      "priority": "deferrable",
+      "question": "Which synthetic note label?",
+      "source_view": {
+        "historical": false,
+        "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "surface_id": "surface-note",
+        "task_id": "task-note-05",
+        "version": "v4",
+        "window_id": "window-note"
+      },
+      "source_view_digest": "e352b2364ae90576ace17fd26c731016c9787bdcaa691835ebb5ab8d8610a330",
+      "state_change_warning": false,
+      "surface_id": "surface-note",
+      "task_id": "task-note-05",
+      "window_id": "window-note"
+    },
+    {
+      "answers": [
+        "Draft",
+        "Final"
+      ],
+      "arm": "optional_cue",
+      "automated_actions": [],
+      "before_version": "v4",
+      "case_id": "case05",
+      "cue": {
+        "author": null,
+        "offered": true,
+        "status": "unused",
+        "text": null
+      },
+      "current_version": "v4",
+      "delay_ms": 1000,
+      "interrupt_id": "interrupt-05",
+      "priority": "deferrable",
+      "question": "Which synthetic note label?",
+      "source_view": {
+        "historical": false,
+        "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "surface_id": "surface-note",
+        "task_id": "task-note-05",
+        "version": "v4",
+        "window_id": "window-note"
+      },
+      "source_view_digest": "e352b2364ae90576ace17fd26c731016c9787bdcaa691835ebb5ab8d8610a330",
+      "state_change_warning": false,
+      "surface_id": "surface-note",
+      "task_id": "task-note-05",
+      "window_id": "window-note"
+    },
+    {
+      "answers": [
+        "Yes",
+        "No"
+      ],
+      "arm": "timing_only",
+      "automated_actions": [],
+      "before_version": "v5",
+      "case_id": "case06",
+      "cue": {
+        "author": null,
+        "offered": false,
+        "status": "not_offered",
+        "text": null
+      },
+      "current_version": "v5",
+      "delay_ms": 1000,
+      "interrupt_id": "interrupt-06",
+      "priority": "deferrable",
+      "question": "Should the synthetic draft be saved?",
+      "source_view": null,
+      "source_view_digest": "ab1dcd59059a9d2cda66f7a9158ebac1821434e17bc4b4743bc67dd67d213544",
+      "state_change_warning": false,
+      "surface_id": "surface-save",
+      "task_id": "task-save-06",
+      "window_id": "window-save"
+    },
+    {
+      "answers": [
+        "Yes",
+        "No"
+      ],
+      "arm": "preserved_view",
+      "automated_actions": [],
+      "before_version": "v5",
+      "case_id": "case06",
+      "cue": {
+        "author": null,
+        "offered": false,
+        "status": "not_offered",
+        "text": null
+      },
+      "current_version": "v5",
+      "delay_ms": 1000,
+      "interrupt_id": "interrupt-06",
+      "priority": "deferrable",
+      "question": "Should the synthetic draft be saved?",
+      "source_view": {
+        "historical": false,
+        "sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "surface_id": "surface-save",
+        "task_id": "task-save-06",
+        "version": "v5",
+        "window_id": "window-save"
+      },
+      "source_view_digest": "ab1dcd59059a9d2cda66f7a9158ebac1821434e17bc4b4743bc67dd67d213544",
+      "state_change_warning": false,
+      "surface_id": "surface-save",
+      "task_id": "task-save-06",
+      "window_id": "window-save"
+    },
+    {
+      "answers": [
+        "Yes",
+        "No"
+      ],
+      "arm": "optional_cue",
+      "automated_actions": [],
+      "before_version": "v5",
+      "case_id": "case06",
+      "cue": {
+        "author": "user",
+        "offered": true,
+        "status": "used",
+        "text": "save once after checking totals"
+      },
+      "current_version": "v5",
+      "delay_ms": 1000,
+      "interrupt_id": "interrupt-06",
+      "priority": "deferrable",
+      "question": "Should the synthetic draft be saved?",
+      "source_view": {
+        "historical": false,
+        "sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "surface_id": "surface-save",
+        "task_id": "task-save-06",
+        "version": "v5",
+        "window_id": "window-save"
+      },
+      "source_view_digest": "ab1dcd59059a9d2cda66f7a9158ebac1821434e17bc4b4743bc67dd67d213544",
+      "state_change_warning": false,
+      "surface_id": "surface-save",
+      "task_id": "task-save-06",
+      "window_id": "window-save"
+    }
+  ],
+  "schema": "return-to-work-candidate-raw-v1"
+}

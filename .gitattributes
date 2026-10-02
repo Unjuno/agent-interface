@@ -1,5 +1,6 @@
 # Frozen research hashes describe exact on-disk bytes, including line endings.
 # Preserve sources, manifests and raw evidence across Windows/Linux checkouts.
+research/analysis/README.md text eol=lf
 research/observation_gating/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 research/observation_tiles/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 research/live_control/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
@@ -76,6 +77,50 @@ research/analysis/blackstart_causal_cut_5970_t0_20261001/** -text whitespace=bla
 # Preserve exact retained trace audit sources and raw outputs for Issue #5970 T1.
 research/analysis/blackstart_causal_cut_5970_t1_20261001/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 research/analysis/blackstart_prospective_trace_5970_t2_20261001/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# Preserve exact source, derived diffs, and raw trace bytes for the Issue #5970 T3.
+research/analysis/blackstart_source_bound_5970_t3_20261001/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# Preserve exact source, raw X RECORD payloads and audit bytes for Issue #5970 T4.
+research/analysis/blackstart_xrecord_5970_t4_20261001/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# Preserve exact frozen source, output and audit bytes for Issue #6067 T0.
+research/analysis/phase_diversified_capture_6067_t0_20261002/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/analysis/hazard_discretionary_capture_6086_t0_20261002/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# Preserve exact inputs, outputs and raw traces for Issue #5970 T5/T6.
+research/analysis/blackstart_xevent_target_5970_t5_20261002/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/analysis/blackstart_allwindow_trace_5970_t6_20261002/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/analysis/blackstart_record_target_liveness_5970_t7_20261002/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/analysis/blackstart_record_target_ancestor_5970_t8_20261002/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/analysis/blackstart_tk_parent_window_5970_t9_20261002/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/analysis/blackstart_tk_parent_only_5970_t10_20261002/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/analysis/blackstart_nonmodifier_trace_5970_t11_20261002/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/analysis/blackstart_x11_noinput_baseline_5970_t12_20261002/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/analysis/interval_robustness_6074_t0_20261002/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# Preserve exact frozen source and raw construction replay for Issue #6001 allocation-02.
+research/analysis/model_api_canary_6001_t0_a02_20261001/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# Preserve the exact frozen bytes and line endings for Issue #5881 T0b.
+research/analysis/deceptive_ui_effect_option_toctou_5881_t0b_v1/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+research/analysis/safe_probe_identifiability_6147_t0_20261002_a02/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# Preserve exact frozen source, including intentional trailing spaces, for Issue #2437 Allocation 04.
+research/analysis/x11_backend_process_restart_2437_v4/** -text -whitespace
+
+# Preserve exact frozen source and one-shot raw output bytes for Issue #6048.
+research/experiments/strategic_reporting_5322_gpu_v9/strict_json_prompt_6048/** -text -whitespace
+# Preserve exact preformal source, STOP records, and construction evidence for Issue #5385 T1.
+research/analysis/active_lifecycle_refinement_5385_t1_v1/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# Preserve the exact source, run sidecar, raw, and audit involved in the Issue #5518 T0 provenance STOP.
+research/analysis/ioco_adapter_conformance_5518_t0/** -text -whitespace
+
+# Preserve the exact frozen source/input/result bytes for Issue #6553 T0.
+research/analysis/claim_postdominator_6553_t0_20261002/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# Preserve exact frozen inputs and terminal pre-candidate STOP for #5156 A07.
+research/live_control/owner_keyup_formal_x11_5156_20261001_07/** -text -whitespace
+# Preserve exact one-shot candidate, raw, auditor and receipt bytes for #3442 v2.
+research/system1/core_integer_applicability_3442_v2/** -text -whitespace
+# Preserve exact frozen source, raw fixture, and audit-attempt bytes for #5348 T1.
+research/analysis/causal_cut_5348_t1/** -text -whitespace
+
+# Preserve exact source/result bytes for Issue #6689 prefix-stability T0.
+research/analysis/prefix_stability_6689_t0_20261002/** -text -whitespace
+research/analysis/prefix_stability_6689_local_allocation01_20261002/** -text -whitespace
 
 # Preserve the exact raw bytes of this synthetic run's generated JSON outputs.
 research/analysis/decision_reversal_6003_t0_v1/candidate_result.json -text -whitespace

@@ -1,0 +1,152 @@
+{
+  "compiled_result": {
+    "receipt": {
+      "format": "compiled-gui-runtime-receipt-v1",
+      "interface_id": "calc-pixel-admission",
+      "method": "enter-read-save-yield",
+      "method_version": "1",
+      "session_scope": "native-x11:470c877c3fdb4b6ca823ffa63bd87c29",
+      "outcome": "SAFE_YIELD",
+      "reason": "association_changed",
+      "completed_transitions": 2,
+      "frontier_model_resumptions": 0,
+      "observations": [
+        {
+          "sequence": 4,
+          "captured_ns": 8709742299701,
+          "evidence_ref": "observation-4",
+          "evidence_digest": "54ce5a3ab2f5d3e61990a6afb0deaeed20e48988418a1e1e8c4225318ef889f4",
+          "predicates": {
+            "present": true,
+            "main_focus": true,
+            "handoff": false
+          }
+        },
+        {
+          "sequence": 7,
+          "captured_ns": 8710875389561,
+          "evidence_ref": "observation-7",
+          "evidence_digest": "a84bd6e40e7f962276002c4c1daf29f226c20460ec82e43b2f2acbae638c2bd5",
+          "predicates": {
+            "present": true,
+            "main_focus": true,
+            "handoff": false,
+            "cells_match": true
+          }
+        }
+      ],
+      "transitions": [
+        {
+          "from_state": "start",
+          "to_state": "filled",
+          "action": "enter",
+          "matched_conditions": {
+            "present": true,
+            "main_focus": true
+          },
+          "observation_sequence": 4,
+          "evidence_ref": "observation-4",
+          "action_id": "action-19360f8b14c04a88a89ec73e572b87c8",
+          "effect_ref": "compiled-ef27b2d19d284d58ad5a1112a11e6ad1-7-execution",
+          "release_verified": true
+        },
+        {
+          "from_state": "filled",
+          "to_state": "handoff",
+          "action": "save",
+          "matched_conditions": {
+            "cells_match": true,
+            "present": true,
+            "main_focus": true
+          },
+          "observation_sequence": 7,
+          "evidence_ref": "observation-7",
+          "action_id": "action-ba0c2173caf44f6ca1e5a5ef5fd2ea6c",
+          "effect_ref": "compiled-ef27b2d19d284d58ad5a1112a11e6ad1-17-execution",
+          "release_verified": true
+        }
+      ],
+      "critical_events": [
+        {
+          "event": "branch_selected",
+          "state": "start",
+          "outcome": "action",
+          "action": "enter",
+          "matched_conditions": {
+            "present": true,
+            "main_focus": true
+          },
+          "evidence_ref": "observation-4"
+        },
+        {
+          "event": "action_terminal",
+          "action": "enter",
+          "status": "completed",
+          "action_id": "action-19360f8b14c04a88a89ec73e572b87c8",
+          "release_verified": true
+        },
+        {
+          "event": "effect_checked",
+          "action": "enter",
+          "status": "succeeded",
+          "evidence_ref": "observation-7"
+        },
+        {
+          "event": "branch_selected",
+          "state": "filled",
+          "outcome": "action",
+          "action": "save",
+          "matched_conditions": {
+            "cells_match": true,
+            "present": true,
+            "main_focus": true
+          },
+          "evidence_ref": "observation-7"
+        },
+        {
+          "event": "action_terminal",
+          "action": "save",
+          "status": "completed",
+          "action_id": "action-ba0c2173caf44f6ca1e5a5ef5fd2ea6c",
+          "release_verified": true
+        },
+        {
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "association_changed",
+          "completed_transitions": 2
+        }
+      ],
+      "latest_evidence_ref": "observation-7",
+      "pending_effect": {
+        "action": "save",
+        "expected_effect": {
+          "handoff": true
+        },
+        "effect_ref": "compiled-ef27b2d19d284d58ad5a1112a11e6ad1-17-execution"
+      },
+      "started_ns": 8709741248519,
+      "ended_ns": 8711565793297,
+      "elapsed_ns": 1824544778,
+      "input_authority": "admission_per_action_only",
+      "raw_evidence_retention": "adapter_responsibility_unverified"
+    },
+    "image_path": "/var/tmp/agent-interface-evidence-storage-main/runtime/results/desktop-phase-comparison-01/construction-changed-repair-01/bridge/images/66a9e53e8aa04d399136ff10ecc585e5.png",
+    "image_sha256": "49032e207ec0d4b41a1867a1e7f782f3f0803b74851f7dd2f5c62b949ee0ee70",
+    "focused_candidate": 6294235,
+    "task_success": null,
+    "scope": "graph mechanics; independent saved task still unscored"
+  },
+  "outcome": "SAFE_YIELD",
+  "reason": "association_changed",
+  "confirmed_completed_inputs": [
+    "enter",
+    "save"
+  ],
+  "changed_dependency_refused": false,
+  "task_success": null,
+  "replay_allowed": false,
+  "started_ns": 8709738913716,
+  "ended_ns": 8711568421960,
+  "final_capture": null
+}

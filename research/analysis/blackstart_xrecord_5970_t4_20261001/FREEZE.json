@@ -1,0 +1,27 @@
+{
+  "schema": "blackstart-xrecord-t4-freeze-v1",
+  "issue": 5970,
+  "upstream_source_commit": "7625a3fc99f1da2099dc6e20e67383ee88c7f337",
+  "upstream_archive_sha256": "5f153824d677503275f268e2aef9c9971d5f0a3f369c573feaa1a5d10604ad8d",
+  "t3_merge_commit": "4583b12ca0d944cb21ea48982aa3a36e3c5e888b",
+  "t3_derived_app_sha256": "fe24b580beaf048921352cc49ec380ba6f3122240c9197a1b62fc766d72afa63",
+  "t3_derived_observer_sha256": "a3e46223019f67bf98bb2a202aa24196628d2c975255bec034bd7855bf812d4d",
+  "input": {"key": "Shift_L", "events": ["KeyPress", "KeyRelease"], "repeat": 1, "release_in_finally": true, "terminal_neutrality_required": true},
+  "record_filter": {"clients": "AllClients", "category": "FromServer", "delivered_events": ["KeyPress", "KeyRelease"]},
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "formal_4135_allocation_rerun": false,
+  "environment": {"docker_service": "Stopped/Manual; engine server unavailable", "fallback": "WSL2 Ubuntu 24.04.4 private xvfb-run display", "user_desktop": false},
+  "construction_stops": [
+    "Initial RECORD API smoke treated returned context XID int as an object; stopped before XTest input.",
+    "Separate connection attempted to enable a context it did not own; BadContext before XTest input.",
+    "Same-connection enable blocked synchronously; 4-second construction timeout, no input dispatched.",
+    "Corrected no-input RECORD context probe completed StartOfData, disabled and freed the context.",
+    "One pre-candidate /tmp runner launch validated wiring and safety cleanup but used an empty oracle dataset and was not an inference run.",
+    "Candidate wrapper's first hash-gate attempt used a wrong sparse-worktree parent path; stopped before X input.",
+    "Independent auditor's first host-Python attempt lacked Xlib and stopped before reading raw data.",
+    "Independent parser initial attempts used high-level display and integer conversion of Xlib resource objects; corrected against unchanged raw bytes."
+  ],
+  "candidate_teardown_diagnostic": "Python-Xlib RECORD enable worker raised TypeError(object of type NoneType has no len()) during context disable after retaining two 32-byte FromServer payloads; unconditional key release and neutral keymap check completed.",
+  "result": "PASS_RECORD_DISAMBIGUATES_OBSERVER_GAP; scope and raw audit in REPORT.md and audit.raw.json"
+}

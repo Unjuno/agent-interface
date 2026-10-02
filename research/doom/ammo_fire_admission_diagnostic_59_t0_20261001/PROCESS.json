@@ -1,0 +1,40 @@
+{
+  "schema": "map01-ammo-fire-diagnostic-process-v1",
+  "allocation": "MAP01-AMMO-FIRE-DIAGNOSTIC-59-T0-20261001-01",
+  "source_freeze_history": [
+    {
+      "main": "cdfebdb125e0566d2cbe741c4925b94eb17b439b",
+      "disposition": "preparation only; main advanced before candidate execution"
+    },
+    {
+      "main": "0ea5f4a757775ee6a783ca12bc30000423cc41bf",
+      "comparison": "only research/analysis index and unrelated research packages changed before freeze"
+    },
+    {
+      "main": "4b7fe7837e4ee8c0d035ebfbf52baf014f042295",
+      "comparison": "only docs/WORKER_QUICKSTART.md changed after the first freeze; refroze source package here"
+    }
+  ],
+  "pre_candidate_process_errors": [
+    {
+      "event": "preflight path invocation error",
+      "detail": "One shell preflight was run from inside the package directory while supplying repository-root-relative paths, so git hash-object could not open a doubled path.",
+      "effect": "preflight stopped before candidate; no candidate.raw.json or audit.raw.json existed; corrected preflight ran from repository root and passed",
+      "scientific_effect": "none"
+    }
+  ],
+  "post_result_process_errors": [
+    {
+      "event": "initial manifest verification command used package cwd",
+      "detail": "SHA256SUMS entries are repository-root-relative; the first verification call was made from the package directory and could not open the prefixed paths.",
+      "effect": "hash check stopped before any file or result mutation; reran once from repository root and all ten entries passed",
+      "scientific_effect": "none; candidate and auditor were not repeated"
+    }
+  ],
+  "resource_boundary": {
+    "docker_orb": "not used; this computation reads only frozen local raw files and uses standard-library parsing",
+    "gpu_model_gui_input": "none",
+    "parallel_issue59_work": "three host-construction refs were preserved untouched; this analysis uses a distinct read-only event-data question and additive path"
+  },
+  "result_state": "candidate and independent audit each ran once; no retries; original v38/v39 files were not modified"
+}

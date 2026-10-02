@@ -1,0 +1,3 @@
+# Post-run challenge — host-run-01
+
+The raw output and the auditor's original `PASS_METHOD_SCOPED` are retained as emitted. A subsequent independent design challenge found the gate insufficient: output collapsed route-specific collaborator burdens, and the requester principal vector showed zero task-effect minutes despite separate requester totals. The run is therefore reclassified `FAIL_METHOD / AUDIT_INCOMPLETE`; its PASS is not accepted as evidence. No raw data was overwritten. The successor candidate adds route × principal vectors, route-specific task effects, and complete event-status counts.

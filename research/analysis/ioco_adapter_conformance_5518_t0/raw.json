@@ -1,0 +1,205 @@
+{
+  "allocation_id": "issue-5518-ioco-synthetic-t0-20260930-01",
+  "baseline": {
+    "agent_visible_io_equal": true,
+    "compared": [
+      "reference-direct",
+      "reference-hidden-batch-retry"
+    ],
+    "exact_raw_trace_equal": false
+  },
+  "freeze_sha256": "2ae24ccc0b9728c22e3808a64ec4c02454a91980368b80ee8eb87cf0b0ee525f",
+  "frozen_sources_verified": true,
+  "results": [
+    {
+      "case_id": "reference-direct",
+      "implementation": "direct-synchronous",
+      "result": {
+        "final_state": "DONE",
+        "prefix_length": 4,
+        "reason": "ALL_PREFIXES_ALLOWED",
+        "status": "CONFORMANT"
+      }
+    },
+    {
+      "case_id": "reference-hidden-batch-retry",
+      "implementation": "batched-cache-retry",
+      "result": {
+        "final_state": "DONE",
+        "prefix_length": 4,
+        "reason": "ALL_PREFIXES_ALLOWED",
+        "status": "CONFORMANT"
+      }
+    },
+    {
+      "case_id": "forbidden-target-switch",
+      "implementation": "mutant-target-switch",
+      "result": {
+        "counterexample": {
+          "allowed_outputs": [
+            {
+              "admission": "act-1",
+              "evidence": "obs-1",
+              "target": "A",
+              "type": "ADMITTED"
+            }
+          ],
+          "index": 2,
+          "input": {
+            "evidence": "obs-1",
+            "target": "A",
+            "type": "ADMIT"
+          },
+          "observed_outputs": [
+            {
+              "admission": "act-1",
+              "evidence": "obs-1",
+              "target": "B",
+              "type": "ADMITTED"
+            }
+          ],
+          "prefix_length": 2,
+          "reason": "OUTPUT_NOT_ALLOWED",
+          "state": "FRESH"
+        },
+        "reason": "OUTPUT_NOT_ALLOWED",
+        "status": "NONCONFORMANT"
+      }
+    },
+    {
+      "case_id": "forbidden-stale-admission",
+      "implementation": "mutant-stale-evidence",
+      "result": {
+        "counterexample": {
+          "allowed_outputs": [
+            {
+              "reason": "STALE_EVIDENCE",
+              "type": "REFUSED"
+            }
+          ],
+          "index": 3,
+          "input": {
+            "evidence": "obs-1",
+            "target": "A",
+            "type": "ADMIT"
+          },
+          "observed_outputs": [
+            {
+              "admission": "act-1",
+              "evidence": "obs-1",
+              "target": "A",
+              "type": "ADMITTED"
+            }
+          ],
+          "prefix_length": 3,
+          "reason": "OUTPUT_NOT_ALLOWED",
+          "state": "STALE"
+        },
+        "reason": "OUTPUT_NOT_ALLOWED",
+        "status": "NONCONFORMANT"
+      }
+    },
+    {
+      "case_id": "forbidden-unauthorized-admission",
+      "implementation": "mutant-authority-bypass",
+      "result": {
+        "counterexample": {
+          "allowed_outputs": [
+            {
+              "reason": "NO_FRESH_EVIDENCE",
+              "type": "REFUSED"
+            }
+          ],
+          "index": 1,
+          "input": {
+            "evidence": "obs-1",
+            "target": "A",
+            "type": "ADMIT"
+          },
+          "observed_outputs": [
+            {
+              "admission": "act-1",
+              "evidence": "obs-1",
+              "target": "A",
+              "type": "ADMITTED"
+            }
+          ],
+          "prefix_length": 1,
+          "reason": "OUTPUT_NOT_ALLOWED",
+          "state": "READY"
+        },
+        "reason": "OUTPUT_NOT_ALLOWED",
+        "status": "NONCONFORMANT"
+      }
+    },
+    {
+      "case_id": "forbidden-semantic-false-success",
+      "implementation": "mutant-false-success",
+      "result": {
+        "counterexample": {
+          "allowed_outputs": [
+            {
+              "reason": "EFFECT_NOT_OBSERVED",
+              "type": "UNKNOWN"
+            }
+          ],
+          "index": 4,
+          "input": {
+            "observation": "NOT_OBSERVED",
+            "type": "VERIFY"
+          },
+          "observed_outputs": [
+            {
+              "effect": "task-complete",
+              "evidence": "score-1",
+              "type": "CONFIRMED"
+            }
+          ],
+          "prefix_length": 4,
+          "reason": "OUTPUT_NOT_ALLOWED",
+          "state": "RELEASED"
+        },
+        "reason": "OUTPUT_NOT_ALLOWED",
+        "status": "NONCONFORMANT"
+      }
+    },
+    {
+      "case_id": "delayed-unknown-and-explicit-quiescence",
+      "implementation": "delayed-verifier",
+      "result": {
+        "final_state": "DONE",
+        "prefix_length": 6,
+        "reason": "ALL_PREFIXES_ALLOWED",
+        "status": "CONFORMANT"
+      }
+    },
+    {
+      "case_id": "missing-output-is-not-quiescence",
+      "implementation": "mutant-silent-adapter",
+      "result": {
+        "input": {
+          "type": "OBSERVE_CURRENT"
+        },
+        "prefix_length": 1,
+        "reason": "MISSING_OUTPUT_NOT_QUIESCENCE",
+        "state": "READY",
+        "status": "UNKNOWN"
+      }
+    }
+  ],
+  "schema": "agent-interface-ioco-raw-t0-v1",
+  "source_base_main_sha": "bf95329e9c787fa600f92e1f3b207cc77083fee4",
+  "source_commit_sha": "798efe7ba45e22f393043878c5c600a1980afa4a",
+  "source_sha256": {
+    "README.md": "49e8c48a572c1675582a667d2f42cff5d2952037d2403d9dad4988036b136690",
+    "audit.py": "613f70e52dc4c36334b7794e4e5a92849f20d06307ce5af109f2c32a5dee7ec2",
+    "cases.json": "a92c5f62e99cdd9c025d5743eecfc1f5bc7eac6e345375ebc6d15a35234ff551",
+    "contract.py": "423a44217e0afeefb8418fa2e5c2a8e6efe7b7a7444f0359176b59040e245941",
+    "run.py": "9cccdb711848c3f41d7324eb212b79ff2e173af1b4055badda2c8c982784f042",
+    "spec.json": "a1d388c12063643ef87fa90df0b211ba7d098bc36b69a0b5db3853aaee738e23",
+    "tests/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tests/test_audit.py": "474ab42f12d421d7fef9dcf252f163f2c12af0496db536c776b326875fae0417",
+    "tests/test_contract.py": "1c9f265b97c4549075c734f3129cb2926d59ada090a006e713ffe09dd9c07f17",
+    "tests/test_corpus.py": "a692847c11aae6af9ab68a7750c65a2c4881a9fb8e771691735d83acc894dd4d"
+  }
+}

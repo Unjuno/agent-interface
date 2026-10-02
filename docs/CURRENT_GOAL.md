@@ -6,7 +6,7 @@ The primary task is to test concrete ideas already posted in repository Issues.
 Do not substitute branch/PR cleanup, roadmap restatement, documentation-only
 work, or merging for an experiment. For each selected idea, state H/T/D/C/U,
 freeze the source and decision gates, and run the smallest meaningful first
-experimental rung in a local Docker/OrbStack container whenever feasible. Keep
+experimental rung in WSLc for eligible local single-container CPU work. Use Docker/OrbStack only when a frozen protocol requires Engine API, Compose, unsupported isolation/resource controls, or GUI-specific behavior. Keep GitHub-hosted Actions unchanged, record host cgroup/swap warnings, and do not infer resource enforcement from configuration alone. Keep
 construction checks distinct from formal allocations; preserve raw PASS, FAIL,
 HOLD, STOP, and infrastructure evidence without retries or silent relabeling.
 If the exact experiment has already been performed, do not duplicate it: pick a
@@ -18,15 +18,17 @@ inspect and independently revalidate it. The PR/merge is the evidence-delivery
 mechanism, not the research objective. A component or readiness PASS must not
 be promoted to integrated runtime, model, task-effect, or product success.
 
+**Resource-contention override (2026-10-02):** The cadence below does not require filler experiments while a needed resource or authority is unavailable. Keep at most one pending need per scientific question in [#5085](https://github.com/Unjuno/agent-interface/issues/5085), updating only meaningful readiness, ownership, assignment/release or outcome changes; do not roll GPU bookings or create new Issues merely for window, runtime, launcher or auditor repairs. Resource HOLD is valid while useful, nonconflicting work proceeds within existing authorization. Genuinely new hypotheses or integration decisions remain valid under [failure-classification rules](ISSUE_FAILURE_CLASSIFICATION.md). Preserve explicitly assigned/running finite allocations, their original safe stopping boundaries and all original outcomes; no grant or consumed-allocation retry is implied. Microsoft WSLc (`wslc.exe`) shares the host's physical GPU and does not prove memory-limit enforcement.
+
 ### Required work cadence for autonomous agents
 
 The unit of progress is an executed experiment against one concrete Issue
 hypothesis—not a branch, PR, issue comment, plan, or document update. In each
 work segment, proceed from intake and H/T/D/C/U to a frozen, smallest useful
-Docker/OrbStack experiment and actually run it. A proposed command or a green
+eligible WSLc experiment for local CPU/single-container work (or a required Docker/OrbStack experiment) and actually run it. A proposed command or a green
 test remembered from an earlier run is not a current result. If a formal/live
 allocation is separately gated or already consumed, do not spend it again;
-run a distinct construction or boundary experiment that advances the same
+for recurring workflows, compare the same frozen workload under its established runtime and WSLc before changing the default. Run a distinct construction or boundary experiment that advances the same
 Issue question, or select another unresolved Issue hypothesis.
 
 Before calling a segment complete, retain the executed command, source/image
@@ -38,6 +40,32 @@ worktree, an Issue comment, a list of next steps, or a PR/merge with no new
 experiment. When blocked, state the exact missing authority/resource or failed
 gate and keep the research goal open. This cadence is experiment-first; it does
 not authorize retries of consumed allocations or broad runtime/product claims.
+
+### Issue-scoped experiment chain — #6576 (2026-10-02)
+
+This user's active direction is to execute the hypotheses inside the Issue,
+retain each first outcome, and use PR/main as the evidence handoff so an
+integration worker can independently revalidate it. Do not treat the merge as
+the research result or substitute issue/branch bookkeeping for a run. The
+timer-quantization chain has now run three distinct, fresh-input OrbStack Docker
+experiments in the dedicated #6576 VM/private Engine (never the shared
+`unjuno-native-ci-6092`): A01 found a q=1.0 finite synthetic eligibility
+counterexample; A02 tested a 20-distinct-tail-value rule on 30 seeds/resolution;
+A03 swept cutoffs 8/12/16/20/24 on 50 fresh seeds/resolution and found 8 was
+the smallest tested cutoff meeting its synthetic detection/false-hold criteria.
+All three records are merged in PRs #6726/#6728/#6731. These are
+construction/method results only—not validation
+of an operational resolution cutoff, EVT tail calibration, physical release,
+safety, or worst-case claim. The separately gated formal six-case T0 remains
+uninvoked. See the additive packages under
+`research/analysis/extreme_tail_eligibility_6576_construction_v1/timer_quantization_a0{1,2,3}_20261002/`
+and [Issue #6576](https://github.com/Unjuno/agent-interface/issues/6576).
+
+The separate #6530 temporal-effect identity proposal also completed a new
+OrbStack-only synthetic A01 after its original WSLc environment STOP; the STOP
+was preserved, while the new eight-case candidate/auditor pair passed its
+scoped method gate. No GUI/calendar application was tested. See
+`research/analysis/temporal_effect_identity_6530_orbstack_a01_20261002/`.
 
 This user direction takes precedence over the narrower integration-only
 wording immediately below for the current autonomous research task; the
@@ -94,12 +122,14 @@ For new work: prefer deterministic macro/servo/watcher/graph when sufficient; us
 
 Canonical detail: `docs/principles.md#governing-intent-principle--preserve-rich-model-intent-localize-refinement` and `docs/architecture.md#rich-model-intent-and-local-refinement`.
 
-Current direction (r133): SHA-bound posthoc reconstruction of retained v38/v39 raw MAP01 traces, no new model/GUI calls. V39 completed5/6 answers and admitted3/6 plans, but its43.318s model wait contained21.484s input-free coast-program envelope,21.821s motor-capable cover envelope and0.013s no-program tail. During two post-rejection coast waits, typed health fell85→73 and73→68 despite answers completing; decision2 action still failed fresh admission. One active typed revocation reached verified empty physical input26.090ms after typed event emission and52.961ms before terminal. Earliest exact plan frames arrived51-78ms after acceptance but viewport-change receipts do not establish independently useful task feedback. Windows/WSL analysis audit agrees SHA7b754117...; no causal v38/v39 speed, actual held-key duration, matched human tempo or MAP01-clear claim. Next instrument true held-input occupancy, independent first useful feedback and bounded recovery cover under a matched condition; transfer coverage semantics to non-DOOM domains. See research/doom/MAP01_V38_V39_CONTROL_TEMPO_POSTHOC_V1.md. Full goal remains open.
+Current direction (r134): add a SHA-bound conservative reconstruction to the retained v38/v39 occupancy record (#6175/#6198) without altering those prior results. Candidate v4 plus independent raw-stream auditor v5 pass. V38 11/11 hold starts bound planner-wait overlap to3.049–4.040s; v39 29/29 include the previously unrepresented Down-only in-flight cancel/ack start and bound overlap to6.301–8.453s; that row is [0,13.209ms]. This is descriptive across different trajectories: it does not identify exact normal key-up duration, semantic useful feedback, recovery efficacy, causal v38/v39 effect, matched human tempo, or MAP01 completion. No new model/GUI allocation or container run occurred because no exclusive container lane was available. Next instrument per-key admission/up/release and independently useful feedback plus bounded recovery under matched conditions; continue #59 real-time threat-control gate. See `research/doom/results/map01-held-input-occupancy-fulltrace-v4/README.md` and `research/doom/MAP01_HELD_INPUT_OCCUPANCY_POSTHOC_V1.md`. Full goal remains open.
 
 > **Document role:** The governing invariant and newest direction stay visible. Earlier retained directions remain verbatim below for provenance.
 
 <details>
 <summary><strong>Earlier retained direction history (r132 and earlier) — expand</strong></summary>
+
+Current direction (r133): SHA-bound posthoc reconstruction of retained v38/v39 raw MAP01 traces, no new model/GUI calls. V39 completed5/6 answers and admitted3/6 plans, but its43.318s model wait contained21.484s input-free coast-program envelope,21.821s motor-capable cover envelope and0.013s no-program tail. During two post-rejection coast waits, typed health fell85→73 and73→68 despite answers completing; decision2 action still failed fresh admission. One active typed revocation reached verified empty physical input26.090ms after typed event emission and52.961ms before terminal. Earliest exact plan frames arrived51-78ms after acceptance but viewport-change receipts do not establish independently useful task feedback. Windows/WSL analysis audit agrees SHA7b754117...; no causal v38/v39 speed, actual held-key duration, matched human tempo or MAP01-clear claim. Next instrument true held-input occupancy, independent first useful feedback and bounded recovery cover under a matched condition; transfer coverage semantics to non-DOOM domains. See research/doom/MAP01_V38_V39_CONTROL_TEMPO_POSTHOC_V1.md. Full goal remains open.
 
 Current direction (r132): V38 raw attribution corrected: after decision1 failed fresh action validity, reusable_cover dropped authored policy and unauthored empty coast defaulted to zero tolerated health loss, interrupting decisions2-5 on any damage. V39 makes only that unauthored coast have no policy guard while retaining exact observations and fresh returned-action admission. Frozen same-fixture six-turn live run completed three coast-mode decisions, at least one through damage; 3/6 model plans admitted. One running plan naturally revoked from typed health73→65 against authored six-point limit, with matched early verified physical release before cancelled empty terminal. Nine accepted programs all empty-release;218 typed/exact observations,217 PNG plus one exact unchanged AIT reuse. Original audit failed its PNG-count assumption; retained v2 pixel/hash audit and Windows/WSL manifest pass464 files/63,880,177 bytes. Independent score1 kill/0 deaths/no MAP01 exit after50.371s control/43.318s model-wall. Next measure useful-control gaps, renewal and survival under a separately frozen condition and cross-domain coverage; no causal v38/v39 speed or human-tempo claim. See research/doom/MAP01_V39_COAST_LIVENESS_LIVE_V1.md. Full goal remains open.
 

@@ -1,0 +1,106 @@
+{
+  "status": "PASS_SETUP_ONLY",
+  "archive_sha256": "e74be0156b68efc613e87f550b1ff9e7bcc5097b6c7002c7e08dc3c66064570f",
+  "python": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+  "openpyxl": "3.1.5",
+  "compiled_module": "/var/tmp/agent-interface-evidence-storage-main/runtime/results/desktop-composition-admission-01/runtime.pyz/runtime/guarded_x11_v1/compiled.py",
+  "scorer_control_values": [
+    317,
+    529
+  ],
+  "modes": {
+    "persistent-x11": {
+      "initialized": {
+        "meta": null,
+        "protocolVersion": "2025-11-25",
+        "capabilities": {
+          "experimental": {},
+          "logging": null,
+          "prompts": {
+            "listChanged": false
+          },
+          "resources": {
+            "subscribe": false,
+            "listChanged": false
+          },
+          "tools": {
+            "listChanged": false
+          },
+          "completions": null,
+          "tasks": null
+        },
+        "serverInfo": {
+          "name": "Agent Interface public API",
+          "title": null,
+          "version": "1.30.0",
+          "websiteUrl": null,
+          "icons": null
+        },
+        "instructions": "Configured target names: [\"app\"]. One X11 connection is retained until interface_close or transport shutdown; no automatic reopen. Use session.binding_revision (initially 1) for dispatch. Explicit target review advances it. No source/lease is issued by this server. Inspect action, image and cleanup outcomes separately. Never replay an uncertain action automatically."
+      },
+      "tools": [
+        "interface_recover_input",
+        "interface_inspect_target",
+        "interface_review_target",
+        "interface_close",
+        "interface_clock",
+        "interface_validate",
+        "interface_observe",
+        "interface_dispatch",
+        "interface_results"
+      ],
+      "input_calls": 0,
+      "native_connection_requested": false
+    },
+    "guarded-x11": {
+      "initialized": {
+        "meta": null,
+        "protocolVersion": "2025-11-25",
+        "capabilities": {
+          "experimental": {},
+          "logging": null,
+          "prompts": {
+            "listChanged": false
+          },
+          "resources": {
+            "subscribe": false,
+            "listChanged": false
+          },
+          "tools": {
+            "listChanged": false
+          },
+          "completions": null,
+          "tasks": null
+        },
+        "serverInfo": {
+          "name": "Agent Interface public API",
+          "title": null,
+          "version": "1.30.0",
+          "websiteUrl": null,
+          "icons": null
+        },
+        "instructions": "Configured target names: [\"app\"]. One guarded X11 connection remains until close or transport shutdown; no reopen. Guarded mode provides bridge source sequences and internally bounded guarded input; one explicit target, image-grounded aliases, no automatic replay. Inspect action, image and cleanup outcomes separately. Never replay an uncertain action automatically."
+      },
+      "tools": [
+        "interface_close",
+        "interface_clock",
+        "interface_validate",
+        "interface_guarded_activate_window",
+        "interface_guarded_observe",
+        "interface_guarded_mint",
+        "interface_guarded_mint_many",
+        "interface_guarded_input",
+        "interface_guarded_review_window",
+        "interface_results"
+      ],
+      "input_calls": 0,
+      "native_connection_requested": false
+    }
+  },
+  "live_gui": false,
+  "provider_schema_preflight": "unverified",
+  "comparison": "not_allocated",
+  "model_usage": null,
+  "compiled_public_tool": false,
+  "scope": "SDK metadata admission and offline scorer only; no GUI/effect/performance evidence"
+}

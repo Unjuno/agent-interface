@@ -1,0 +1,23 @@
+{
+  "schema": "worker-aging-t1c-scenario-v1",
+  "jobs_per_cell": 40,
+  "scenarios": ["no_aging", "monotone_leak", "cache_plateau", "thermal_only", "hidden_state"],
+  "policies": ["NEVER", "FIXED_AGE_10", "RESOURCE_THRESHOLD_112"],
+  "pending_obligation_jobs": [10, 11, 12],
+  "hidden_state_corruption_job": 7,
+  "restart_receipt_rule": "required iff this job commits a generation transition",
+  "metrics_rule": "rss_mb and latency_ms are sampled at age_before in generation_before; post-transition age is separate",
+  "leak_rule": "rss_mb=100+2*age; latency_ms=20+age",
+  "cache_rule": "rss_mb=100+3*min(age,8); latency_ms=20",
+  "thermal_rule": "rss_mb=100; latency_ms=20+0.5*max(0,job_index-10)",
+  "aging_gate": "within one generation, age span >= 4 and both RSS increase >= 8 MB and latency increase >= 4 ms",
+  "resource_threshold_mb": 112,
+  "fixed_age_due": 10,
+  "network": "none",
+  "container_image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "platform": "linux/amd64",
+  "cpu_requested": 1,
+  "memory_requested": "512M",
+  "source_mount": "read-only",
+  "output_mount": "separate writable mount"
+}

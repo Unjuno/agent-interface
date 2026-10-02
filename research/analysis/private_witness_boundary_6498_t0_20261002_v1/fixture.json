@@ -1,0 +1,14 @@
+{
+  "schema": "private-witness-boundary-fixture-v1",
+  "predicate": {"id":"effect_exact_v1","target":"synthetic-primary","effect":"submit","receipt":"exact"},
+  "cases": [
+    {"case_id":"case01","predicate_id":"effect_exact_v1","scorer_id":"effect_exact_v1","commitment_ms":10,"outcome_ms":20,"capture_age_ms":0,"coverage_scope":"full_synthetic_window","origin_attested":true,"evidence":{"events":[{"target":"synthetic-primary","effect":"submit","receipt":"exact"}],"collateral_effects":[]}},
+    {"case_id":"case02","predicate_id":"effect_exact_v1","scorer_id":"effect_exact_v1","commitment_ms":10,"outcome_ms":20,"capture_age_ms":0,"coverage_scope":"full_synthetic_window","origin_attested":true,"evidence":{"events":[{"target":"lookalike-decoy","effect":"submit","receipt":"exact"}],"collateral_effects":[]}},
+    {"case_id":"case03","predicate_id":"effect_exact_v1","scorer_id":"effect_exact_v1","commitment_ms":10,"outcome_ms":20,"capture_age_ms":0,"coverage_scope":"target-event-only","origin_attested":true,"evidence":{"events":[{"target":"synthetic-primary","effect":"submit","receipt":"exact"}],"collateral_effects":[{"target":"synthetic-secondary","effect":"delete"}]}},
+    {"case_id":"case04","predicate_id":"effect_exact_v1","scorer_id":"effect_exact_v1","commitment_ms":30,"outcome_ms":20,"capture_age_ms":0,"coverage_scope":"full_synthetic_window","origin_attested":true,"evidence":{"events":[{"target":"synthetic-primary","effect":"submit","receipt":"exact"}],"collateral_effects":[]}},
+    {"case_id":"case05","predicate_id":"effect_exact_v1","scorer_id":"effect_exact_v1","commitment_ms":10,"outcome_ms":20,"capture_age_ms":90000,"coverage_scope":"full_synthetic_window","origin_attested":true,"evidence":{"events":[{"target":"synthetic-primary","effect":"submit","receipt":"exact"}],"collateral_effects":[]}},
+    {"case_id":"case06","predicate_id":"effect_exact_v1","scorer_id":"effect_exact_v0","commitment_ms":10,"outcome_ms":20,"capture_age_ms":0,"coverage_scope":"full_synthetic_window","origin_attested":true,"evidence":{"events":[{"target":"synthetic-primary","effect":"submit","receipt":"exact"}],"collateral_effects":[]}},
+    {"case_id":"case07","predicate_id":"effect_exact_v1","scorer_id":"effect_exact_v1","commitment_ms":10,"outcome_ms":20,"capture_age_ms":0,"coverage_scope":"full_synthetic_window","origin_attested":false,"evidence":{"events":[{"target":"synthetic-primary","effect":"submit","receipt":"exact"}],"collateral_effects":[]}},
+    {"case_id":"case08","predicate_id":"visibility_only_v1","scorer_id":"visibility_only_v1","commitment_ms":10,"outcome_ms":20,"capture_age_ms":0,"coverage_scope":"full_synthetic_window","origin_attested":true,"evidence":{"visible_label":"submit","events":[],"collateral_effects":[]}}
+  ]
+}

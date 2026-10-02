@@ -1,7 +1,8 @@
 # Native integration checks: one local/CI entry point
 
-Run these development checks in Linux, WSL, or an already provisioned Docker
-container. GitHub availability and model-host tool discovery are not prerequisites.
+The default local route is Linux or Ubuntu on WSL, with one reused Python
+environment. Docker Desktop is not required. See [WSL-native development](../WSL_NATIVE.md)
+for the Windows migration and optional WSLc isolation route. GitHub availability and model-host tool discovery are not prerequisites.
 This entry point exercises the existing protocol and inert harness contracts;
 it does not start a GUI, call a model or certify application performance.
 
@@ -22,6 +23,9 @@ python3 runtime/integration_checks/native.py \
   --output results-local/native-check-01
 ```
 
+From Windows, the [WSL launcher](wsl-native.ps1) calls this same runner without
+Docker or dependency installation; see [the direct invocation](../WSL_NATIVE.md#repeat-checks-from-windows-without-reinstalling-dependencies).
+
 Use a fresh output path each time. The runner sets its own repository import
 paths, runs both fixed suites, retains full stdout/stderr with hashes, and writes
 result.json. It exits nonzero if either suite fails or its interpreter cannot
@@ -37,7 +41,7 @@ round trips. Reference-shaped literal data, unknown fields, booleans versus
 numbers, and malformed reference chains remain covered. Two interpreters are optional;
 CI uses a single installed environment. No sensor development is included.
 
-## Docker environment matching the native CI checks
+## Optional legacy Docker environment matching the native CI checks
 
 Build once from the repository root (dependency installation requires network):
 

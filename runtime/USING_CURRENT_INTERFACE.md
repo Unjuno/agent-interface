@@ -4,6 +4,9 @@ The current Linux/X11 interface supports explicit actions, referenced images and
 bounded continuation. It remains a research preview. The primary model chooses
 the action; these entry points do not require a second model or a subagent.
 
+On Windows, use [WSL-native development](WSL_NATIVE.md) for local setup and
+contract checks. Docker Desktop is not required for these entry points.
+
 ## Choose an entry point
 
 | Entry point | Use | Lifecycle |
@@ -134,6 +137,89 @@ Image delivery and image availability are separate: `include_image=false` leaves
 validates the retained image. It does not establish token or latency savings.
 See [MCP result retrieval](cli_v1/MCP.md#recover-a-retained-result-without-resending-input)
 for the complete lifecycle and failure contract.
+
+## Python calls on one owned X11 connection
+
+For a serialized Python caller, `MCPSessionOwner.dispatch` shares the persistent
+MCP route's dispatch bookkeeping. After establishing the actual target mapping,
+selected display and current source, use the same complete public program:
+
+```python
+from runtime.cli_v1.mcp_session import MCPSessionOwner
+
+owner = MCPSessionOwner(targets, display_name=selected_display)
+try:
+    report = owner.dispatch(
+        program,
+        current_observation_seq=reviewed_sequence,
+        current_binding_revision=owner.binding_revision,
+        capture_directory=run_images,
+    )
+finally:
+    cleanup = owner.close()
+```
+
+The variables above are caller-supplied; this is not a complete allocation or
+source-grounding example. The method records the cleanup obligation before
+calling the public API, so callers do not need to assign `dispatch_attempted`
+manually. It returns the API report unchanged. A mismatched binding revision
+refuses dispatch; even that call may initialize the connection. Initialization
+failure is consumed once, and a closed owner cannot reopen.
+
+Source values and leases remain explicit. The method adds no inspection,
+replay, renewal, task-success inference or implicit input recovery. Review the
+input report and cleanup independently; an exception can follow input emission.
+`close()` attempts release on that same connection and reports failures. It does
+not prove the task succeeded. Use explicit `inspect_after_dispatch` when fresh
+post-release target context is wanted. This wrapper applies to its own ordinary
+public session; a compiled graph using a separate connection retains its own
+input owner and cleanup duty. Calls must be serialized by the caller.
+
+[Fresh primary Inkscape use](results/inkscape-owned-public-01/README.md) used this
+entry point for two pointer drags in one program, followed by a visually chosen
+save program. The independently inspected SVG met the two-rectangle predicate.
+This is scoped transfer evidence; it does not establish a comparative speed or
+token benefit.
+
+## Explicit Python summaries of retained dispatch reports
+
+A Python caller can opt into the same success-only summary as CLI/MCP while
+keeping an arbitrary original report filename. Review the exact retained bytes,
+then supply their path and the directory used to resolve image artifacts:
+
+```python
+from pathlib import Path
+from runtime.cli_v1.review import review_bytes
+from runtime.cli_v1.public_summary import summarize_retained_dispatch
+
+report_path = Path(saved_report_path)
+full = review_bytes(report_path.read_bytes(), run_images,
+                    compact=True, report_refs=True)
+shown = summarize_retained_dispatch(full, report_path, run_images)
+```
+
+The caller already retained the report; this reads it and does not write, capture
+or dispatch input. The method checks the exact byte length and SHA-256 before
+using the existing completed-and-released summary gate. It preserves the original
+image, reference, outcome, capture and release evidence. Only supported repeated
+program/expansion/wait details are omitted. The partial summary explicitly names
+the exact full report and its hash for read-only CLI retrieval without an image.
+
+Missing, changed, unsupported or failed reports keep the full view. The ordinary
+file `review()` can return v1 when compaction is not smaller; this helper then
+keeps it full. The example uses `review_bytes` to match the existing received-report
+presentation shape. It does not make a retained image fresh or acknowledge task
+success. Default dispatch and full presentation remain unchanged.
+
+[Two retained Inkscape projections](results/retained-python-summary-01/README.md)
+verify byte-identical images/outcomes and exact full retrieval. Text bytes are
+measured separately from image payload; no model-token, cost or speed benefit is
+inferred from the offline comparison.
+
+[A four-case primary Inkscape comparison](results/inkscape-live-summary-01/README.md)
+completed both representations correctly with identical saved results per pair.
+It did not meet the predeclared joint token/declaration-time improvement gate;
+full remains the default and summary remains an explicit option.
 
 ## Batch actions between decisions
 
@@ -601,3 +687,243 @@ a completed Return plus a 100ms wait still captured the dialog; a fresh read-onl
 inspection confirmed it had closed. Do not repeat uncertain input merely because
 the result image has not yet changed. This is scoped usability evidence, not a
 matched speed, token/cost or generic readiness result.
+
+## Select feedback context explicitly
+
+Use the existing capture region to keep the evidence needed for the next decision
+readable. A small cell view may suffice to check entered numbers; a format dialog
+needs its header and choice buttons; final save confirmation may need a wider
+view. Preserve the returned frame, origin, dimensions and original image hash.
+For `screen_physical_px`, translate local image coordinates by the returned origin.
+`window_client` uses a different frame. A region view does not grant target or
+input authority, and completion cues outside it remain unknown.
+
+Persistent public MCP can request read-only post-release target inspection and
+an explicit region in the same dispatch using
+[`inspect_after` options](cli_v1/MCP.md#explicit-post-dispatch-target-context-and-capture-region).
+The public Python API uses `MCPSessionOwner.inspect_after_dispatch` with
+`screen_region` and an optional `wait_ms`, then `present_result` returns its
+selected original ImageContent and reference. CLI text alone does not present
+pixels: assistant hosts must forward the image block as an image and keep the
+outcome metadata. Direct original forwarding is useful plumbing, but does not
+by itself prove the primary saw every pixel.
+
+[Current primary region admission](results/explicit-region-admission-01/README.md)
+completed a fresh Calc save with seven commands, three input programs and one
+extra full-frame observation. Initial cells and the format modal were readable;
+a repeated modal image was used only after exact equality to the immediately
+reviewed original from that same owner. Final100ms feedback still showed the
+old dialog, so the primary withheld completion and observed separately.
+[The prior direct-forwarding STOP](results/direct-selected-image-01/README.md)
+remains retained. These are bounded integration results, not a general image
+compression, token-cost, latency or human-speed claim. Region selection remains
+explicit and defaults remain unchanged.
+
+
+### Conditional Inkscape continuation on the public owner
+
+The [finite primary comparison](results/inkscape-conditional-live-01/README.md)
+connects the existing shared core graph to the same public input owner as a strong
+ordinary callback. Both draw, verify a fresh post-release image, then conditionally
+Save without a model resumption between the actions. Both stop before Save for an
+unknown fixed layout cue. Independent saved SVG scoring accepts both positive
+cases; the negative controls retain the original empty SVG. This is a scoped
+application-authored public adapter, not qualification of the guarded X11 graph
+adapter on Inkscape. Same inputs/captures/primary roundtrips and single-case timing
+do not establish a graph advantage. Keep the ordinary route/default and existing
+efficiency HOLD. Use explicit source/lease/deadline/release checks and independently
+score persistence; neither the pixel cue nor graph task verdict certifies saving.
+
+
+### Program emission accounting
+
+For a dispatch review, `outcome_summary.program_emissions` now exposes the
+explicit current-program count from `result.execution.program_emissions`, or the
+existing top-level refusal count. Valid duplicate copies must agree; malformed
+or conflicting copies return null. Missing counters remain absent. This field
+is recorded evidence, not a claim of no input, verified release or task success.
+On the X11 backend, `execution.emissions` is cumulative for the backend connection
+while `execution.program_emissions` is the current execute-call delta, including
+cleanup emissions during that call. Sum program deltas, not cumulative totals.
+Counts outside a program, such as a later owner close, require their own receipt.
+The retained Inkscape sequence reports cumulative10→14 but program10+4=14, not24.
+Raw reports and their hashes remain unchanged; lookup/review does not execute input.
+
+[Program-emission regression evidence](results/program-emission-review-01/README.md)
+includes the original-counter recheck, portable archive, and native test logs.
+
+
+### Bounded selection, movement and conditional saving
+
+A guarded compiled method can include selection as its first action when a
+fresh application-specific selection cue is available. Match the reference's
+returned offset to the action using that reference: a rectangle reference and
+keyboard context can have different region sizes and offsets. Keep texture,
+source, scope, admission, deadline and release checks; a fixed post-click wait
+is not a selection acknowledgement. Stop on an unknown or failed effect before
+moving or saving. Independently score the persisted document after control ends.
+
+The [first full-method comparison](results/inkscape-single-method-01/README.md)
+retains a compiled selection failure: normal tasks succeeded1/2, although both
+undertravel controls withheld Save. A separate, frozen
+[interior-point successor](results/inkscape-interior-point-01/README.md) used a
+visibly interior click point with a textured32x32reference, rather than a
+boundary point with16x16context. Both normal routes saved the correct rectangle,
+and both controls stopped before Save. The point and reference context changed
+together; the prior failure's actual input recipient/readiness/cause is unknown.
+These results do not establish generic selection detection or spatial robustness.
+
+The successor compared the full three-action graph against a strong ordinary
+conditional callback. Both normal routes used3input programs,37program emissions,
+13captures,5callercommands and2primaryimages. Local method time was704ms ordinary
+and845ms compiled in one case each: no graph efficiency advantage or human-tempo
+claim follows. Actual primary usage is reconstructed for each explicit joint
+window, including construction and verification; nested method windows exclude
+other task decisions and overlap those totals. Evolving context/cache prevents
+a causal token-saving comparison. Keep current defaults and the efficiency HOLD.
+The [selection-cue development preflight](results/inkscape-selection-gate-preflight-01/README.md)
+uses historical labeled frames; it is not held-out visual qualification.
+
+
+### Compose batch registration with the owned capture directory
+
+The public Python `GuardedSessionOwner.invoke_guarded('guarded_mint_many', ...)`
+can register multiple explicitly grounded references from one inspected source.
+Use each returned offset and inspect complete registration before input. Partial
+registration is not atomic: retain the registered prefix and stop uncertain input.
+
+This public owner configures capture artifacts under the supplied call directory.
+A custom continuation using its bridge must keep the next capture directory and
+the directory passed to `present_result` aligned. Do not relax image confinement
+or treat an internal successful method receipt as delivered visual feedback.
+The [first composition](results/inkscape-public-batch-mint-01/README.md) saved the
+correct file but failed final presentation because the adapter used the previous
+bridge directory. Its allocated failure and three unallocated cases are retained.
+
+A [separately frozen successor](results/inkscape-public-batch-mint-02/README.md)
+explicitly used a method-call capture/presentation directory. Both ordinary and
+guarded graph routes saved the correct normal task, and both undertravel controls
+withheld Save; the primary reviewed all eight original images. Each case used
+four caller commands instead of the historical five with separate registrations.
+The method, inputs, effect gates and confinement rules stayed unchanged. This is
+a public Python owner composition, not a compiled MCP tool or MCP transport test.
+Actual primary usage includes construction, failure and repair; the historical
+comparison and evolving context/cache do not prove token or speed gains. Keep
+production defaults and the efficiency HOLD.
+
+
+### Run a bounded graph through the public Python owner
+
+The explicit Python composition is retained after one fixed normal task and one
+short-movement control using the existing activation/review handoff before
+reference grounding. The prior two selection failures remain retained. See the
+[scoped qualification and actual usage](results/public-owner-activation-primary-01/PUBLICATION.md).
+This does not establish generic readiness, reliability or speed/token advantage.
+
+When explicitly activating a window, use `guarded_activate_window` with
+`review_after_activation=true`, verify the activation and neutral release,
+then review its original returned image before grounding in the new scope.
+A failed/unknown activation or review must stop editing; old references cannot
+cross this handoff. This is an explicit caller operation, not hidden behavior
+inside `run_compiled`, and does not prove the cause of an earlier click failure.
+
+After explicitly opening `GuardedSessionOwner` and grounding its references,
+call `owner.run_compiled(interface, bindings, call_root=fresh_directory,
+perceive=read_only_callback, verify_effect=read_only_callback)`. An optional
+`cancelled` callback uses the existing graph cancellation contract. Calls are
+serialized by the caller; this synchronous API does not add a scheduler or MCP
+tool. The owner must be open, reviewed and recovered. The call directory must
+be new; existing directories refuse before graph execution.
+
+The existing graph performs its scope, dependency, admission, deadline and
+release checks. Raw captures and graph evidence remain in the owner's bridge
+directory; image artifacts use this call's images directory. The result returns
+`method_receipt`, `feedback`, `session`, `task_success=null` and
+`replay_allowed=false`. Feedback presents the last capture actually used by
+this graph, without an additional observation. A graph with no observations
+returns feedback=null rather than presenting a previous image.
+
+Read method and feedback outcomes separately. If presentation is unavailable,
+the completed prefix remains in method_receipt and the owner requires review.
+An exception also requires review and retains cleanup duty on the same owner;
+close attempts release even when input may have happened before the exception.
+No automatic retry, re-grounding, restart or recovery reset follows. Callbacks
+are trusted caller code, not generic perception or independent task scoring.
+Independently verify saved effects, and retain the returned wrapper evidence.
+No hard real-time bound, matched latency or token advantage is established by
+this API addition. Existing input/MCP schemas and defaults are unchanged.
+
+### Existing Calc workflow on the same public owner
+
+The [fixed Calc transfer](results/calc-owner-transfer-live-01/PUBLICATION.md) uses
+`run_compiled` for conditional cell entry and Save, with synchronous app-local
+observation callbacks. A strong ordinary conditional callback uses the same
+owner, evidence and guarded programs. Both normal cases persisted731/864; both
+wrong-entry controls stopped before Save. Matching command/image/capture counts
+were identical. Keep the ordinary route and current efficiency HOLD.
+
+The retained [composition source](results/calc-owner-transfer-live-01/composition.py)
+and [owner harness](results/calc-owner-transfer-live-01/keeper.py) show the exact
+call path. They are trusted, fixed-layout recipes and evidence runners, not a
+generic Calc command or a new MCP endpoint. Ground references from a freshly
+reviewed image; OCR does not mint authority. The
+[Save dependency guard](results/calc-owner-transfer-live-01/save_guard.py)
+temporarily wraps private bridge methods under one serialized owner. Treat this
+as app-local qualification, not a stable extension API or atomic visual guard.
+
+When Tip of Day or XLSX confirmation becomes the focused window, explicitly
+review that window and its original image, ground a new scoped reference, and
+acknowledge once. After it closes, review the main window and ground again. A
+destroyed-window post-input capture failure does not authorize replaying a
+completed Return. Read completed input, graph stop, final visual feedback and
+independent persisted-file scoring separately. In this block the graph yielded
+on the Save modal; only later primary handling and post-terminal workbook
+scoring establish task completion.
+
+The retained18 semantic mutation audits include extra Save, altered values/pixels
+with updated hashes, stale source, lease changes, held keys and incomplete
+cleanup. [Joint primary usage](results/calc-owner-transfer-live-01/usage-02/usage-verify-normal.json)
+includes preparation, failures, live cases and audits; it is not a route-specific
+matched cost comparison. The earlier usage-01 window overlaps it and must not
+be added. No speed, token-cost, generic-readiness or human-tempo claim follows.
+
+### Explicit additional dependency check before keyboard input
+
+The public Python owner provides a serialized, opt-in `input_guard` context for
+one frozen keyboard program. Use it around an explicit invocation on an already
+open and reviewed owner:
+
+```python
+with owner.input_guard(save_alias, save_offset, tail=save_tail,
+                       verify=dependency_check):
+    result = owner.run_compiled(interface, bindings, call_root=fresh_directory,
+                                perceive=perceive, verify_effect=verify_effect)
+```
+
+`dependency_check(stage, source, rgb)` receives copies of the current verified
+native source and RGB image. It must return exactly `True`; false, unavailable
+results and exceptions refuse further protected input. The existing target
+resolver runs first and is rechecked against the same image after the callback.
+Scope, binding, active input, review/recovery state, freshness and lease cannot
+change during the callback. Same-alias changes to offset, keyboard tail or
+interaction refuse before input. Other aliases retain their existing guards.
+
+Additional checks run at admission, focus and before every new protected key
+press, including the key following a modifier. Releases bypass the callback so
+cleanup remains possible after refusal. The guarded input result retains
+`additional_input_checks` separately from its existing guard and execution
+records. Read completed prefix and verified releases; a callback refusal is not
+proof that earlier keys had no effect and never authorizes replay.
+
+The caller must serialize use of the owner and bound callback I/O. This is trusted
+synchronous Python code, not an interruptible deadline, hostile-code sandbox,
+sensor, scheduler or an MCP endpoint. Registration does not capture, mint a
+reference or grant input authority. Without registration, no additional callback
+or capture is introduced. The callback may refuse an input; it cannot replace
+existing checks or renew a lease. Capture-to-emission remains non-atomic.
+
+The [fixed primary Calc successor](results/calc-public-input-guard-live-01/FINAL_REPORT.md)
+uses this context instead of replacing bridge/backend methods. One normal case
+persists731/864 after explicit modal handling; one wrong-entry case stops before
+Save and persists empty cells. These are scoped integration controls, not
+qualification of generic visual dependencies, reliability or speed/token gains.

@@ -1,0 +1,324 @@
+{
+  "schema": "path-width-gui-raw-v1",
+  "allocation_id": "PATH-WIDTH-CONTINUOUS-GUI-6581-T0B-20261002-01",
+  "run_role": "construction",
+  "freeze_sha256": "5f413aa7c8e0a3aa63926cf33c2c6ec9dad7b533982d971984c4b2997d60d174",
+  "runtime_image_ref": "mcr.microsoft.com/playwright@sha256:a51a0edc496f3e0cb386de2438eb1c2578de64cc7af60bfcbc7abfd410567fcd",
+  "fixture_spec_sha256": "8c04370dac08aecf39d79188f1e90fca104054c1546c2f50ebca492755a62a90",
+  "fixture_html_sha256": "55a65672d296917ee2d9422e1d22a35287b26d539d74297932bf3ef00f61b506",
+  "browser": {
+    "name": "Chromium",
+    "version": "140.0.7339.186",
+    "playwright_package": "1.55.1",
+    "platform": "linux",
+    "arch": "arm64"
+  },
+  "scenarios": [
+    {
+      "scenario_id": "primary_wide",
+      "raw_events": [
+        {
+          "seq": 0,
+          "type": "down",
+          "x": 10,
+          "y": 30,
+          "trusted": true
+        },
+        {
+          "seq": 1,
+          "type": "move",
+          "x": 30,
+          "y": 37,
+          "trusted": true
+        },
+        {
+          "seq": 2,
+          "type": "move",
+          "x": 90,
+          "y": 37,
+          "trusted": true
+        },
+        {
+          "seq": 3,
+          "type": "move",
+          "x": 110,
+          "y": 30,
+          "trusted": true
+        },
+        {
+          "seq": 4,
+          "type": "up",
+          "x": 110,
+          "y": 30,
+          "trusted": true
+        }
+      ],
+      "app_receipt": {
+        "endpoint_hit": true,
+        "saved_effect": true,
+        "path_validity": "VALID",
+        "first_exit": null
+      }
+    },
+    {
+      "scenario_id": "primary_narrow",
+      "raw_events": [
+        {
+          "seq": 0,
+          "type": "down",
+          "x": 10,
+          "y": 30,
+          "trusted": true
+        },
+        {
+          "seq": 1,
+          "type": "move",
+          "x": 30,
+          "y": 37,
+          "trusted": true
+        },
+        {
+          "seq": 2,
+          "type": "move",
+          "x": 90,
+          "y": 37,
+          "trusted": true
+        },
+        {
+          "seq": 3,
+          "type": "move",
+          "x": 110,
+          "y": 30,
+          "trusted": true
+        },
+        {
+          "seq": 4,
+          "type": "up",
+          "x": 110,
+          "y": 30,
+          "trusted": true
+        }
+      ],
+      "app_receipt": {
+        "endpoint_hit": true,
+        "saved_effect": false,
+        "path_validity": "INVALID",
+        "first_exit": {
+          "seq": 1,
+          "t": 0.57142857143
+        }
+      }
+    },
+    {
+      "scenario_id": "variable_width",
+      "raw_events": [
+        {
+          "seq": 0,
+          "type": "down",
+          "x": 10,
+          "y": 30,
+          "trusted": true
+        },
+        {
+          "seq": 1,
+          "type": "move",
+          "x": 30,
+          "y": 37,
+          "trusted": true
+        },
+        {
+          "seq": 2,
+          "type": "move",
+          "x": 90,
+          "y": 37,
+          "trusted": true
+        },
+        {
+          "seq": 3,
+          "type": "move",
+          "x": 110,
+          "y": 30,
+          "trusted": true
+        },
+        {
+          "seq": 4,
+          "type": "up",
+          "x": 110,
+          "y": 30,
+          "trusted": true
+        }
+      ],
+      "app_receipt": {
+        "endpoint_hit": true,
+        "saved_effect": false,
+        "path_validity": "INVALID",
+        "first_exit": {
+          "seq": 2,
+          "t": 2.777777777777778e-12
+        }
+      }
+    },
+    {
+      "scenario_id": "corner_control",
+      "raw_events": [
+        {
+          "seq": 0,
+          "type": "down",
+          "x": 10,
+          "y": 30,
+          "trusted": true
+        },
+        {
+          "seq": 1,
+          "type": "move",
+          "x": 40,
+          "y": 30,
+          "trusted": true
+        },
+        {
+          "seq": 2,
+          "type": "move",
+          "x": 60,
+          "y": 30,
+          "trusted": true
+        },
+        {
+          "seq": 3,
+          "type": "move",
+          "x": 60,
+          "y": 70,
+          "trusted": true
+        },
+        {
+          "seq": 4,
+          "type": "move",
+          "x": 60,
+          "y": 110,
+          "trusted": true
+        },
+        {
+          "seq": 5,
+          "type": "up",
+          "x": 60,
+          "y": 110,
+          "trusted": true
+        }
+      ],
+      "app_receipt": {
+        "endpoint_hit": true,
+        "saved_effect": true,
+        "path_validity": "VALID",
+        "first_exit": null
+      }
+    },
+    {
+      "scenario_id": "endpoint_after_exit",
+      "raw_events": [
+        {
+          "seq": 0,
+          "type": "down",
+          "x": 10,
+          "y": 30,
+          "trusted": true
+        },
+        {
+          "seq": 1,
+          "type": "move",
+          "x": 30,
+          "y": 30,
+          "trusted": true
+        },
+        {
+          "seq": 2,
+          "type": "move",
+          "x": 50,
+          "y": 46,
+          "trusted": true
+        },
+        {
+          "seq": 3,
+          "type": "move",
+          "x": 80,
+          "y": 46,
+          "trusted": true
+        },
+        {
+          "seq": 4,
+          "type": "move",
+          "x": 110,
+          "y": 30,
+          "trusted": true
+        },
+        {
+          "seq": 5,
+          "type": "up",
+          "x": 110,
+          "y": 30,
+          "trusted": true
+        }
+      ],
+      "app_receipt": {
+        "endpoint_hit": true,
+        "saved_effect": false,
+        "path_validity": "INVALID",
+        "first_exit": {
+          "seq": 2,
+          "t": 0.250000000000625
+        }
+      }
+    },
+    {
+      "scenario_id": "ordinary_drag_no_corridor",
+      "raw_events": [
+        {
+          "seq": 0,
+          "type": "down",
+          "x": 10,
+          "y": 30,
+          "trusted": true
+        },
+        {
+          "seq": 1,
+          "type": "move",
+          "x": 30,
+          "y": 30,
+          "trusted": true
+        },
+        {
+          "seq": 2,
+          "type": "move",
+          "x": 50,
+          "y": 46,
+          "trusted": true
+        },
+        {
+          "seq": 3,
+          "type": "move",
+          "x": 80,
+          "y": 46,
+          "trusted": true
+        },
+        {
+          "seq": 4,
+          "type": "move",
+          "x": 110,
+          "y": 30,
+          "trusted": true
+        },
+        {
+          "seq": 5,
+          "type": "up",
+          "x": 110,
+          "y": 30,
+          "trusted": true
+        }
+      ],
+      "app_receipt": {
+        "endpoint_hit": true,
+        "saved_effect": true,
+        "path_validity": "NOT_APPLICABLE",
+        "first_exit": null
+      }
+    }
+  ]
+}

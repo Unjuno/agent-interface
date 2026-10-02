@@ -1,0 +1,27 @@
+{
+  "allocation_id": "ROUTE-DEADLINE-6059-T0-20261001-01",
+  "base_main_sha": "9371fda8617bdf49e7fbeebb04fa64a633712aaa",
+  "scope": "synthetic finite method-only fixture; host-only Python 3.12.10; no product claim",
+  "formal_invocations_planned": {
+    "candidate": 1,
+    "independent_auditor": 1,
+    "rerun_allowed": false
+  },
+  "pre_freeze_construction": {
+    "command": "python -B -m unittest -v test_method.py",
+    "result": "PASS; 4 tests",
+    "first_failure_preserved_in_issue_comment": "burst queueing upper bound omitted by naive stage addition; corrected before freeze"
+  },
+  "source_sha256": {
+    "audit.py": "3AEF2A4642347290C8C9BECD3045B9BEFB4CBBD76093C49711B3104E5DE9A74F",
+    "candidate.py": "95B0D4A5958567C6E6F51F66BBCB2E7B0F28BAEBA3C798C4B51D51F16CA48BFA",
+    "PROTOCOL.md": "5AC02CB29C186A72B957E8D7CBD44E1F9B48EBDFBD9A29896427493AA8E7744E",
+    "scenarios.json": "EB4230E752669E9F3B680B5E684F25F481B5832D3629D4F790BE98445F07B567",
+    "test_method.py": "99D7F91F2978BFE48C3696EA82D4FB68C562FF13BBB8282BE346927C103E4DC7"
+  },
+  "limits": [
+    "No Docker container: docker info did not return within the bounded probe; shared container slot is reserved elsewhere.",
+    "Finite synthetic service ranges are not empirical Agent Interface guarantees.",
+    "Timely typed termination is not semantic task success."
+  ]
+}

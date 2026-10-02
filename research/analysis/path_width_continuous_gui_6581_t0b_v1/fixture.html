@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Path-width constrained GUI fixture</title>
+<style>
+  body { margin: 0; font: 14px sans-serif; }
+  #surface { width: 480px; height: 480px; outline: 1px solid #333; touch-action: none; }
+  #status { min-height: 1.5em; }
+</style>
+<div id="status" role="status">Idle</div>
+<canvas id="surface" width="120" height="120" aria-label="Disposable path-constrained GUI"></canvas>
+<script>
+(() => {
+  const canvas = document.getElementById('surface');
+  const ctx = canvas.getContext('2d');
+  const status = document.getElementById('status');
+  let scenario = null;
+  let events = [];
+  let firstExit = null;
+  let endpointHit = false;
+  let savedEffect = false;
+  let down = false;
+
+  function cross(a, b, c) {
+    return (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]);
+  }
+  function segmentPolygonInterval(a, b, polygon) {
+    const area = polygon.reduce((sum, p, i) => {
+      const q = polygon[(i + 1) % polygon.length];
+      return sum + p[0] * q[1] - q[0] * p[1];
+    }, 0);
+    const sign = area >= 0 ? 1 : -1;
+    let lo = 0, hi = 1;
+    for (let i = 0; i < polygon.length; i++) {
+      const p = polygon[i], q = polygon[(i + 1) % polygon.length];
+      const c0 = sign * cross(p, q, a);
+      const c1 = sign * (cross(p, q, b) - cross(p, q, a));
+      if (Math.abs(c1) < 1e-12) {
+        if (c0 < -1e-9) return null;
+      } else {
+        const t = (-1e-9 - c0) / c1;
+        if (c1 > 0) lo = Math.max(lo, t); else hi = Math.min(hi, t);
+        if (lo > hi + 1e-9) return null;
+      }
+    }
+    return [Math.max(0, lo), Math.min(1, hi)];
+  }
+  function firstUncovered(a, b, polygons) {
+    if (!polygons) return null;
+    const intervals = polygons.map(p => segmentPolygonInterval(a, b, p)).filter(Boolean)
+      .sort((x, y) => x[0] - y[0] || x[1] - y[1]);
+    let cursor = 0;
+    for (const [lo, hi] of intervals) {
+      if (lo > cursor + 1e-8) return cursor;
+      cursor = Math.max(cursor, hi);
+      if (cursor >= 1 - 1e-8) return null;
+    }
+    return cursor < 1 - 1e-8 ? cursor : null;
+  }
+  function point(e) {
+    const r = canvas.getBoundingClientRect();
+    return [(e.clientX - r.left) * canvas.width / r.width,
+            (e.clientY - r.top) * canvas.height / r.height];
+  }
+  function record(type, p, trusted) {
+    events.push({seq: events.length, type, x: p[0], y: p[1], trusted: Boolean(trusted)});
+  }
+  function draw() {
+    ctx.clearRect(0, 0, 120, 120);
+    if (scenario && scenario.corridor_polygons) {
+      ctx.fillStyle = '#d7e9ff'; ctx.strokeStyle = '#1256a0'; ctx.lineWidth = 0.5;
+      for (const poly of scenario.corridor_polygons) {
+        ctx.beginPath(); poly.forEach((p, i) => i ? ctx.lineTo(...p) : ctx.moveTo(...p));
+        ctx.closePath(); ctx.fill(); ctx.stroke();
+      }
+    }
+    if (scenario?.centerline) {
+      ctx.strokeStyle = '#555'; ctx.lineWidth = 0.5; ctx.setLineDash([1, 1]);
+      ctx.beginPath(); scenario.centerline.forEach((p, i) => i ? ctx.lineTo(...p) : ctx.moveTo(...p)); ctx.stroke(); ctx.setLineDash([]);
+    }
+    if (events.length) {
+      ctx.strokeStyle = firstExit === null ? '#159447' : '#c01828'; ctx.lineWidth = 1;
+      ctx.beginPath();
+      const pts = events.filter(e => e.type !== 'up');
+      pts.forEach((e, i) => i ? ctx.lineTo(e.x, e.y) : ctx.moveTo(e.x, e.y)); ctx.stroke();
+    }
+  }
+  canvas.addEventListener('pointerdown', e => {
+    if (!scenario) return;
+    const p = point(e); down = true; events = []; firstExit = null; endpointHit = false; savedEffect = false;
+    record('down', p, e.isTrusted);
+    if (scenario.mode === 'constrained' && firstUncovered(p, p, scenario.corridor_polygons) !== null) firstExit = {seq: 0, t: 0};
+    draw();
+  });
+  canvas.addEventListener('pointermove', e => {
+    if (!down || !scenario) return;
+    const p = point(e), prev = events[events.length - 1];
+    const seq = events.length;
+    record('move', p, e.isTrusted);
+    if (scenario.mode === 'constrained' && firstExit === null) {
+      const t = firstUncovered([prev.x, prev.y], p, scenario.corridor_polygons);
+      if (t !== null) firstExit = {seq, t};
+    }
+    draw();
+  });
+  canvas.addEventListener('pointerup', e => {
+    if (!down || !scenario) return;
+    const p = point(e); record('up', p, e.isTrusted); down = false;
+    const end = scenario.trace[scenario.trace.length - 1];
+    endpointHit = Math.hypot(p[0] - end[0], p[1] - end[1]) <= window.__spec.endpoint_tolerance;
+    savedEffect = endpointHit && (scenario.mode === 'unconstrained' || firstExit === null);
+    status.textContent = `${scenario.id}: endpoint=${endpointHit}; saved=${savedEffect}; firstExit=${firstExit ? firstExit.seq : 'none'}`;
+    window.__last = {
+      scenario_id: scenario.id,
+      raw_events: events,
+      app_receipt: {
+        endpoint_hit: endpointHit,
+        saved_effect: savedEffect,
+        path_validity: scenario.mode === 'unconstrained' ? 'NOT_APPLICABLE' : (firstExit === null ? 'VALID' : 'INVALID'),
+        first_exit: firstExit
+      }
+    };
+    draw();
+  });
+  window.beginScenario = id => {
+    scenario = window.__spec.scenarios.find(s => s.id === id);
+    if (!scenario) throw new Error(`unknown scenario ${id}`);
+    events = []; firstExit = null; endpointHit = false; savedEffect = false; down = false; window.__last = null;
+    status.textContent = `Ready: ${id}`; draw();
+  };
+  window.__geometry = {segmentPolygonInterval, firstUncovered};
+})();
+</script>
+</html>

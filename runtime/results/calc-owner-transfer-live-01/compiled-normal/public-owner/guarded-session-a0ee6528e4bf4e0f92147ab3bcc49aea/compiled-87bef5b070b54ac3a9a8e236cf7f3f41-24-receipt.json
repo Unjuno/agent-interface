@@ -1,0 +1,146 @@
+{
+  "format": "compiled-gui-runtime-receipt-v1",
+  "interface_id": "calc-entry-checked-save",
+  "method": "enter-check-request-save",
+  "method_version": "1",
+  "session_scope": "native-x11:f5835082695749d08cad0066777270af",
+  "outcome": "SAFE_YIELD",
+  "reason": "effect_unavailable",
+  "completed_transitions": 2,
+  "frontier_model_resumptions": 0,
+  "observations": [
+    {
+      "sequence": 6,
+      "captured_ns": 6728476639639,
+      "evidence_ref": "observation-6",
+      "evidence_digest": "0f3a9245b0499be3e06256490df816c43732438c5187653529af73e6ca556a72",
+      "predicates": {
+        "context_ok": true,
+        "blank": true,
+        "cells_filled": "unknown"
+      }
+    },
+    {
+      "sequence": 11,
+      "captured_ns": 6729346463630,
+      "evidence_ref": "observation-11",
+      "evidence_digest": "18489abc680fdd6b17d727f7d2f41344fec41c12eb6b4d664d20944ec5296b2b",
+      "predicates": {
+        "context_ok": true,
+        "blank": false,
+        "cells_filled": true
+      }
+    },
+    {
+      "sequence": 16,
+      "captured_ns": 6729986906621,
+      "evidence_ref": "observation-16",
+      "evidence_digest": "0d9e81176dd284f83586d9a5bded0f81314b061d23b6220dbce9ac5ae624a8f5",
+      "predicates": {
+        "context_ok": false,
+        "blank": false,
+        "cells_filled": "unknown"
+      }
+    }
+  ],
+  "transitions": [
+    {
+      "from_state": "initial",
+      "to_state": "filled",
+      "action": "enter",
+      "matched_conditions": {
+        "context_ok": true,
+        "blank": true
+      },
+      "observation_sequence": 6,
+      "evidence_ref": "observation-6",
+      "action_id": "action-f8f08de41fdd43b8b1787f7f9ae5d890",
+      "effect_ref": "compiled-87bef5b070b54ac3a9a8e236cf7f3f41-7-execution",
+      "release_verified": true
+    },
+    {
+      "from_state": "filled",
+      "to_state": "handoff",
+      "action": "save",
+      "matched_conditions": {
+        "context_ok": true,
+        "cells_filled": true
+      },
+      "observation_sequence": 11,
+      "evidence_ref": "observation-11",
+      "action_id": "action-b468cba7669c4a8b8da989d8047ee77a",
+      "effect_ref": "compiled-87bef5b070b54ac3a9a8e236cf7f3f41-17-execution",
+      "release_verified": true
+    }
+  ],
+  "critical_events": [
+    {
+      "event": "branch_selected",
+      "state": "initial",
+      "outcome": "action",
+      "action": "enter",
+      "matched_conditions": {
+        "context_ok": true,
+        "blank": true
+      },
+      "evidence_ref": "observation-6"
+    },
+    {
+      "event": "action_terminal",
+      "action": "enter",
+      "status": "completed",
+      "action_id": "action-f8f08de41fdd43b8b1787f7f9ae5d890",
+      "release_verified": true
+    },
+    {
+      "event": "effect_checked",
+      "action": "enter",
+      "status": "succeeded",
+      "evidence_ref": "observation-11"
+    },
+    {
+      "event": "branch_selected",
+      "state": "filled",
+      "outcome": "action",
+      "action": "save",
+      "matched_conditions": {
+        "context_ok": true,
+        "cells_filled": true
+      },
+      "evidence_ref": "observation-11"
+    },
+    {
+      "event": "action_terminal",
+      "action": "save",
+      "status": "completed",
+      "action_id": "action-b468cba7669c4a8b8da989d8047ee77a",
+      "release_verified": true
+    },
+    {
+      "event": "effect_checked",
+      "action": "save",
+      "status": "unavailable",
+      "evidence_ref": "observation-16",
+      "verifier": "compiled_predicate_condition"
+    },
+    {
+      "event": "runtime_finished",
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_unavailable",
+      "completed_transitions": 2
+    }
+  ],
+  "latest_evidence_ref": "observation-16",
+  "pending_effect": {
+    "action": "save",
+    "expected_effect": {
+      "cells_filled": true
+    },
+    "effect_ref": "compiled-87bef5b070b54ac3a9a8e236cf7f3f41-17-execution"
+  },
+  "started_ns": 6728475933437,
+  "ended_ns": 6730043624027,
+  "elapsed_ns": 1567690590,
+  "input_authority": "admission_per_action_only",
+  "raw_evidence_retention": "adapter_responsibility_unverified"
+}

@@ -1,0 +1,13 @@
+{
+  "schema": "map01-workflow-path-owner-cross-head-fixture-v1",
+  "allocation_id": "map01-measurement-integration-live-03",
+  "workflow_path": ".github/workflows/map01-measurement-integration-live-03.yml",
+  "source_commit": "4b7fe7837e4ee8c0d035ebfbf52baf014f042295",
+  "owner_helper_path": "research/orchestration/o3-g6/launch-owner/formal_allocation_launch_owner_v1.py",
+  "owner_helper_blob": "85658f40c0fb689993d5034909326fd2364485d6",
+  "runs": [
+    {"id": 34970434429, "run_number": 1, "status": "completed", "head_sha": "48a9de4d863404e21d7d347b0cfe6a16ac7f871d"},
+    {"id": 34970546156, "run_number": 2, "status": "completed", "head_sha": "5c7d77f221cf7ff08f86d65f8ee442080ec29d2d"}
+  ],
+  "expected_safety_invariant": "At most one distinct run for this versioned workflow/allocation may enter the one-shot formal step, independent of head_sha."
+}

@@ -36,6 +36,8 @@ Integration work should make the composed boundary explicit: runtime + caller, a
 
 Child directory names are retained provenance, not a canonical architecture tree. Use each experiment's report for the exact composition and decision rule.
 
+- [Tk first-character #5260 allocation proposal and construction record](tk_firstchar_5260_a01_20261002/PREREG.md) — 96-row GUI allocation is explicitly **HOLD_NOT_AUTHORIZED**; three construction-only probes are retained, with smoke-03 passing the scoped runner/auditor gate. No formal first-character trials were run.
+
 ## Preserved older Draft publications
 
 - [Writer selection scope #4425 / Draft PR #4446](writer_selection_scope_w4m8_v1/ARCHIVAL_QUALIFICATION.md) — seven exact published files retained; complete 401-file raw corpus missing, so this is not an independent reproduction or qualification of the reported PASS.

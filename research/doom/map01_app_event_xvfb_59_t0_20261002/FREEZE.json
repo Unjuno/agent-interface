@@ -1,0 +1,47 @@
+{
+  "schema": "issue59-x11-app-delivery-freeze-v1",
+  "allocation_id": "ISSUE59-X11-APP-DELIVERY-T0-20261002-01",
+  "issue": 59,
+  "source_main_sha": "2b25814229e6b7072a7e28eeaa8870f4448354ae",
+  "current_goal_blob_sha": "dd6d691331bd602f97d9aa0e3f52fc6202b06525",
+  "roadmap_blob_sha": "c322beb5fc2a9f6217dd3cc6205b9cbf05e84c19",
+  "candidate": "candidate.py",
+  "candidate_sha256": "19eea1fe57eb57b9958531fd8690e40d80b8e425db05a6c8b88755638834e691",
+  "auditor": "audit.py",
+  "auditor_sha256": "7d36149fc3a7a0b3619f60e4e7952dfa1005c62a01485c232591ac342fa1d6e5",
+  "fixture": "fixture.json",
+  "fixture_sha256": "d41b73fcfa5c69639c3d5933f0ebcfeceae4a3d2bd14f58385dcb9613495320d",
+  "construction_tests": "test_contract.py",
+  "construction_tests_sha256": "ef48c4616ba5533ca844497b3556e44ca8a9ad54be0ce8cee302d228b4fbfa8b",
+  "plan_sha256": "574e06a17bcabd3e46cb5af5317d433290b2b920e35605644c0fe33abe5e2fd7",
+  "image": "map01-attack-onset-phase-a2:20260927-r2",
+  "image_digest": "sha256:fc3022d265f465748e0a39491e28f8447d0066266e00d2a8a9144e866bf148ed6",
+  "platform": "linux/amd64 (OrbStack on arm64 host; emulated)",
+  "command_limits": {
+    "network": "none",
+    "cpus": 1,
+    "memory_mib": 768,
+    "pids_limit": 96,
+    "root_filesystem": "read-only",
+    "tmpfs": "/tmp:rw,noexec,nosuid,size=96m"
+  },
+  "formal_invocations": {
+    "candidate": 1,
+    "independent_auditor": 1,
+    "retries": 0
+  },
+  "construction_delta": "Add two real X11 client windows and explicitly observe per-window KeyPress/KeyRelease delivery during a positive-control pulse and a focus transfer while the same XTEST key remains down; T3 only observed XQueryKeymap state.",
+  "predecessor_t3": {
+    "candidate_sha256": "89957f558d912f1fa56e26d59224ba3fb37496d2ed992b5300304f5b506f6469",
+    "auditor_sha256": "7cb78c5731d7311dcc88a4947ae349be3b6ae8ab0651f73bcc3c8bdcf51701ab",
+    "freeze_sha256": "6d6b7a8bad7458401793238a5970353df66c5b255d15fc5c036f8ed76bd6af10",
+    "raw_sha256": "525f18279fc68f5631c6e031634f86e4a4178a585dddf80f7e8646bf91f4c502",
+    "audit_sha256": "7504102817a2fe3e5f57672f9cee99fca2c1c6303e5450befcfba495aa1163d5"
+  },
+  "decision_gates": {
+    "pass": "PASS_X11_APP_DELIVERY_BOUNDARY_SCOPED only when the focused positive control delivers both W events with false/true/false keymap state, and during transfer A receives W KeyPress, the global W bit remains true after B becomes focus, but B receives zero W KeyPress before release; identities, full bitmaps, event order, and private-server cleanup must audit.",
+    "fail": "FAIL if frozen expected event/focus/keymap relationships contradict the raw record.",
+    "stop": "STOP if source/image identity, Xvfb startup, one-shot run, raw retention, or cleanup is incomplete.",
+    "scope": "Virtual XTEST/Xvfb protocol evidence only; no physical input, semantic app effect, game, model, MAP01, safety, latency, or efficacy claim."
+  }
+}

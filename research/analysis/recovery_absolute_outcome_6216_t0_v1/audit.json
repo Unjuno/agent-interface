@@ -1,0 +1,24 @@
+{
+  "candidate_exact_match": true,
+  "candidate_sha256": "d72d32cada465af69edc7e56e47d5013d95e230dff4d53afb265aaf5c9b28f20",
+  "disposition": "METHOD_PASS_SCOPED",
+  "gates": {
+    "absolute_measures_differ": true,
+    "checkpoint_marginals_preserved_and_binding_changes": true,
+    "forbidden_effect_not_promoted": true,
+    "selective_bounds_no_imputation": true,
+    "stable_high_control": true,
+    "winner_sets_equal_all_sizes": true,
+    "yield_remains_typed": true
+  },
+  "input_sha256": "d5dc963c6b7f025ade1fc1623b19316489e41a3870d92f8b35de3f6fd8ffcb9d",
+  "mutations_rejected": {
+    "checkpoint_label": true,
+    "missing_label_imputed": true,
+    "unsafe_positive_admitted": true,
+    "winner_count": true,
+    "yield_as_zero": true
+  },
+  "pass": true,
+  "scope": "exact synthetic method test only; no empirical recovery outcome or runtime claim"
+}
