@@ -3,7 +3,7 @@
   "issue": 6350,
   "allocation": "EFFECT-TERMINAL-FEEDBACK-6301-T0-ORB-20261002-03",
   "predecessor_allocation_02": "expired requested window; remains unconsumed and unchanged",
-  "current_main_sha": "762bb46b5037a2cd4a09672a2e130760a96ff669",
+  "current_main_sha": "9a573b00dc595e64d09387e567c85e10b61a46c1",
   "package_commit": "43e921435e6272816fd2615dbaabee0685f26511",
   "execution_branch": "research/effect-terminal-feedback-6301-orbstack-t0b-20261002",
   "superseded_unstarted_branch": "research/effect-terminal-feedback-6301-orbstack-t0-20261002",
@@ -20,8 +20,8 @@
     "candidate.py": "b41036c61ebece89a2f1b990e7ae2f9b896512fc2983b29a9b4dd9e712c9cc88",
     "auditor.py": "831ad1e7a499b1d28bd5b0b9fbfb10b9f5409eddc47460e4a28209d84055977e",
     "test_construction.py": "5e206a9109b4c4442c3ba52facd14559c8241b339c8fbf648575da4377a7542a",
-    "run_orbstack.sh": "b5c09a5ab9c1fbc966e9858f5f2120a35d99ac7759dec245c8982d8abe9b256d",
-    "ORBSTACK_ALLOCATION_03.md": "4b0c73e353f49af386f9c571f07cdb8746727cbff747d1431bdf88c8c523c87e"
+    "run_orbstack.sh": "b31845d94b023e64dc8529ca76da8d8dd6b336bdee9c311cb7dd94ac0c5f2457",
+    "ORBSTACK_ALLOCATION_03.md": "c630033848b6a3795aa06424f7bee090196ae207e4328906b776efaf0c82e81b"
   },
   "runtime": {
     "host": "OrbStack dedicated Ubuntu 24.04 VM",
@@ -44,6 +44,15 @@
     "docker_info_observed_memory_bytes": 16819609600,
     "cgroup_controllers_observed": ["cpuset", "cpu", "io", "memory", "pids"],
     "resource_enforcement_claim": "requested container limits must be verified via container HostConfig and in-container cgroup files; no VM-level limit claim"
+  },
+  "prestart_stop": {
+    "reason": "main advanced after initial freeze; exact-SHA equality gate stopped before Docker invocation",
+    "from_main": "762bb46b5037a2cd4a09672a2e130760a96ff669",
+    "to_main": "9a573b00dc595e64d09387e567c85e10b61a46c1",
+    "changed_paths": "Unrelated Issue #59 disclosure/evidence only; no #6350 package overlap",
+    "construction_container": 0,
+    "candidate": 0,
+    "auditor": 0
   },
   "formal_invocation_counts_at_freeze": {
     "construction_container": 0,

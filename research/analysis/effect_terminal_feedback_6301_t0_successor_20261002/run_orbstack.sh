@@ -14,7 +14,9 @@ formal="$src/formal_03"
 machine=effect-terminal-feedback-6301-t0-orbstack-20261002
 image=sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f
 
-[[ $(git rev-parse origin/main) == 762bb46b5037a2cd4a09672a2e130760a96ff669 ]]
+git fetch origin main >/dev/null 2>&1
+git merge-base --is-ancestor 9a573b00dc595e64d09387e567c85e10b61a46c1 origin/main
+git merge-base --is-ancestor 9a573b00dc595e64d09387e567c85e10b61a46c1 HEAD
 [[ $(git branch --show-current) == research/effect-terminal-feedback-6301-orbstack-t0b-20261002 ]]
 [[ $(shasum -a 256 "$src/fixture.json" | cut -d' ' -f1) == 35bfa13d5edee93d834ddc54c980bb24a48b8a5bb9a4e9bcc9dcddd11d1b51a9 ]]
 [[ $(shasum -a 256 "$src/candidate.py" | cut -d' ' -f1) == b41036c61ebece89a2f1b990e7ae2f9b896512fc2983b29a9b4dd9e712c9cc88 ]]
