@@ -1,0 +1,3 @@
+# S6 construction history
+
+The first OrbStack construction-test pass had 3/4 passing. The synthetic “unsafe baseline, safe carry” fixture initially chose a shallow-slope target whose nearest-action tie correctly selected the neutral action, so the assertion that the baseline was unsafe was invalid. This was a test-fixture defect, not formal evidence. Before freeze, the test was changed to the preregistered near-axis intent `(3/4, 1/8)` with `xmax=3`; construction then passed 4/4. No S4 raw or S5 audit input was loaded by these construction tests. The corrected test source/hash is in S6 `FREEZE.json`.

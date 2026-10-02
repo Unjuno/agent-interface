@@ -1,0 +1,30 @@
+{
+  "allocation_id": "INTENT-SLOT-6081-T0S5-20261002-AUDIT-01",
+  "scope": "audit-only; candidate invocation budget 0",
+  "source_allocation": "INTENT-SLOT-6081-T0S4-20261002-ORBSTACK-01",
+  "immutable_input_raw_sha256": "81e8e0f9d34de42272744a3793162fe0cb857c77b8e67f28108f28dfc4bc8e49",
+  "fixture_sha256": "153bf5ac8cd481722af07386ac0ab15aafc4af9a4d1031257e631a2837e8e0fa",
+  "base_main": "c09f073f2a6e078c0fe5d8192246cc821cecc29c",
+  "branch": "research/error-carry-6081-successor-orbstack-20261002",
+  "artifact_path": "research/analysis/error_carry_6081_successor_orbstack_20261002/audit_successor_s5/",
+  "formal_budget": {"audit_cli": 1, "candidate_cli": 0, "retries": 0},
+  "container": {
+    "runtime": "OrbStack",
+    "image": "python:3.12-alpine",
+    "image_id": "sha256:c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b",
+    "platform": "linux/arm64",
+    "network": "none",
+    "package_mount": "read-only",
+    "input_raw_mount": "read-only",
+    "output_mount": "separate read-write directory",
+    "limits": {"cpus": "0.5", "memory": "128m", "pids": 32}
+  },
+  "construction_tests": {"command": "python -B -m unittest -v test_audit.py", "result": "PASS 5/5", "formal_input_loaded": false},
+  "source_sha256": {
+    "PLAN.md": "9cfd132a8260b870d1b9720f4012253265edeb102c4a6fb80635413c0a27acc6",
+    "audit.py": "9bd4842100ad77a496d83d0fb90c7a4b9b1b285183511020c46de69d010f1512",
+    "test_audit.py": "18e7e3050060821d919bb51f72abe8cfc4d67d06b9c8d519c937bb5129c762a8"
+  },
+  "formal_command": "python -B audit.py ../fixture.json <read-only S4 raw.json> /out/audit.json",
+  "freeze_note": "Auditor construction tests used synthetic unit fixtures only and did not load S4 formal raw. S5 formal audit runs once against S4 raw; no candidate run or retry is authorized."
+}
