@@ -19,7 +19,7 @@ class ContractTests(unittest.TestCase):
 
     def test_all_frozen_rows_reconcile(self):
         self.assertEqual(27, len(self.rows))
-        self.assertEqual("PASS_METHOD_SCOPED", auditor.audit(self.fixture, self.oracle, self.rows)["status"])
+        self.assertEqual("PASS_METHOD_SCOPED", auditor.audit(self.fixture, self.policy, self.oracle, self.rows)["status"])
 
     def test_same_label_actor_allowed_vs_wrong_recipient(self):
         rows = {(r["case_id"], r["mode"]): r for r in self.rows}
@@ -60,7 +60,7 @@ class ContractTests(unittest.TestCase):
             target = next(row for row in broken if predicate(row))
             mutate(target)
             with self.assertRaises(ValueError):
-                auditor.audit(self.fixture, self.oracle, broken)
+                auditor.audit(self.fixture, self.policy, self.oracle, broken)
             mutations.append(True)
         self.assertEqual(8, len(mutations))
 

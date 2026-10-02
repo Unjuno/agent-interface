@@ -5,7 +5,36 @@ import sys
 from pathlib import Path
 
 
-def audit(fixture, oracle, actual):
+def independently_derive(case, mode, policy):
+    if mode == "ACTOR_ONLY":
+        return ("ALLOWED", case["requested_fields"]) if case["actor_authorized"] else ("BLOCKED_FLOW", [])
+    if mode == "LABEL_ONLY":
+        return ("ALLOWED", case["requested_fields"]) if case["source_label"] != policy["sensitive_label"] else ("BLOCKED_FLOW", [])
+    if not case["actor_authorized"]:
+        return "BLOCKED_FLOW", []
+    if case["recipient"] in policy["protected_sinks"] and case["integrity"] != policy["minimum_integrity"]:
+        return "BLOCKED_FLOW", []
+    if case["source_label"] != policy["sensitive_label"]:
+        return "ALLOWED", case["requested_fields"]
+    if case["recipient"] is None or case["purpose"] is None:
+        return "UNKNOWN_FLOW", []
+    matching_rules = []
+    for rule in policy["allowed_contexts"]:
+        if rule["recipient"] != case["recipient"] or rule["purpose"] != case["purpose"]:
+            continue
+        if rule["fields"] != case["requested_fields"] or rule["minimum_integrity"] != case["integrity"]:
+            continue
+        if "explicit_release_revision" in rule and rule["explicit_release_revision"] != case["release_revision"]:
+            continue
+        matching_rules.append(rule)
+    if not matching_rules:
+        return "BLOCKED_FLOW", []
+    if any("explicit_release_revision" in rule for rule in matching_rules):
+        return "DECLASSIFIED", case["requested_fields"]
+    return "ALLOWED", case["requested_fields"]
+
+
+def audit(fixture, policy, oracle, actual):
     cases = {case["id"]: case for case in fixture["cases"]}
     expected = oracle["expected"]
     if len(actual) != len(cases) * 3:
@@ -33,16 +62,18 @@ def audit(fixture, oracle, actual):
             raise ValueError("duplicate or unknown row")
         keys.add(key)
         case = cases[row["case_id"]]
-        if row["decision"] != expected[case["id"]][row["mode"]]:
+        derived_decision, derived_release = independently_derive(case, row["mode"], policy)
+        if derived_decision != expected[case["id"]][row["mode"]]:
+            raise ValueError("frozen oracle and independent policy replay disagree")
+        if row["mode"] == "CONTEXT_BOUND" and derived_release != oracle["released_fields"].get(case["id"], []):
+            raise ValueError("frozen oracle and independent released-field replay disagree")
+        if row["decision"] != derived_decision:
             raise ValueError("decision mismatch")
         for field in ("source_digest", "actor", "actor_authorized", "source_label", "integrity",
                       "requested_fields", "release_revision", "recipient", "purpose"):
             if row[field] != case[field]:
                 raise ValueError(field + " provenance mismatch")
-        expected_release = oracle["released_fields"].get(case["id"], []) if row["mode"] == "CONTEXT_BOUND" else (
-            case["requested_fields"] if row["decision"] == "ALLOWED" else []
-        )
-        if sorted(row["released_fields"]) != sorted(expected_release):
+        if sorted(row["released_fields"]) != sorted(derived_release):
             raise ValueError("released field scope mismatch")
         if row["decision"] in ("BLOCKED_FLOW", "UNKNOWN_FLOW") and row["released_fields"]:
             raise ValueError("blocked or unknown flow disclosed fields")
@@ -59,15 +90,17 @@ def audit(fixture, oracle, actual):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--fixture", default="fixture.json")
+    parser.add_argument("--policy", default="policy.json")
     parser.add_argument("--oracle", default="expected.json")
     parser.add_argument("--candidate", required=True)
     parser.add_argument("--out", required=True)
     args = parser.parse_args()
     fixture = json.loads(Path(args.fixture).read_text(encoding="utf-8"))
+    policy = json.loads(Path(args.policy).read_text(encoding="utf-8"))
     oracle = json.loads(Path(args.oracle).read_text(encoding="utf-8"))
     actual = json.loads(Path(args.candidate).read_text(encoding="utf-8"))
     try:
-        result = audit(fixture, oracle, actual)
+        result = audit(fixture, policy, oracle, actual)
     except Exception as exc:
         result = {"status":"FAIL_METHOD","error":type(exc).__name__ + ": " + str(exc)}
     Path(args.out).write_text(json.dumps(result, sort_keys=True, separators=(",", ":")) + "\n", encoding="utf-8")
