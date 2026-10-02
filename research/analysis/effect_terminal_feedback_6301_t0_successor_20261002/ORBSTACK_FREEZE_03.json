@@ -1,0 +1,63 @@
+{
+  "schema": "effect-terminal-feedback-orbstack-allocation-freeze-v1",
+  "issue": 6350,
+  "allocation": "EFFECT-TERMINAL-FEEDBACK-6301-T0-ORB-20261002-03",
+  "predecessor_allocation_02": "expired requested window; remains unconsumed and unchanged",
+  "current_main_sha": "32ee821d08ccb27cef49f6554a14df4ae120e137",
+  "package_commit": "2e9c6f97919f04de4102d01c227ffee7c6a6a618",
+  "fixture_origin_commit": "eba652642a7a741d57bbdfe0c1a9929d3b15bd7f",
+  "hypothesis": "Corrected finite effect cue preserves distinct current VERIFIED, NOT_APPLIED_VERIFIED, UNKNOWN, and stale-as-UNKNOWN states; task terminal remains a separate conjunction; exact source fixture is reconstructed and all four semantic mutations reject.",
+  "counts": {
+    "fixture_traces": 9,
+    "task_rows": 10,
+    "display_records": 30,
+    "mutations": 4
+  },
+  "source_sha256": {
+    "fixture.json": "35bfa13d5edee93d834ddc54c980bb24a48b8a5bb9a4e9bcc9dcddd11d1b51a9",
+    "candidate.py": "b41036c61ebece89a2f1b990e7ae2f9b896512fc2983b29a9b4dd9e712c9cc88",
+    "auditor.py": "831ad1e7a499b1d28bd5b0b9fbfb10b9f5409eddc47460e4a28209d84055977e",
+    "test_construction.py": "5e206a9109b4c4442c3ba52facd14559c8241b339c8fbf648575da4377a7542a",
+    "run_orbstack.sh": "76afe7d2b5c48378b91c4d0536e432d9f81b09a0fcba46739dd35d1d34ebe26d",
+    "ORBSTACK_ALLOCATION_03.md": "c80950250605b3298bee31683e7af2ed8e01dc8540b61e0e2acb232be83a46c2"
+  },
+  "runtime": {
+    "host": "OrbStack dedicated Ubuntu 24.04 VM",
+    "machine": "effect-terminal-feedback-6301-t0-orbstack-20261002",
+    "docker_engine": "29.1.3",
+    "engine_platform": "linux/arm64",
+    "container_image_source_ref": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "container_image_id": "sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "image_transfer": "exported from preexisting local host cache and loaded into this dedicated VM; no image pull",
+    "architecture_note": "ARM64 differs from the earlier unconsumed WSLc proposal; this deterministic semantic test makes no timing or cross-runtime claim",
+    "network": "none",
+    "rootfs_read_only": true,
+    "user": "65534:65534",
+    "requested_cpu": 0.25,
+    "requested_memory": "512 MiB",
+    "requested_pids_limit": 64,
+    "vm_provisioned_cpu": 1,
+    "vm_provisioned_memory": "2 GiB",
+    "docker_info_observed_cpu": 10,
+    "docker_info_observed_memory_bytes": 16819609600,
+    "cgroup_controllers_observed": ["cpuset", "cpu", "io", "memory", "pids"],
+    "resource_enforcement_claim": "requested container limits must be verified via container HostConfig and in-container cgroup files; no VM-level limit claim"
+  },
+  "formal_invocation_counts_at_freeze": {
+    "construction_container": 0,
+    "candidate": 0,
+    "independent_auditor": 0,
+    "retries": 0
+  },
+  "decision": {
+    "pass": "PASS_METHOD_SCOPED iff independent raw-only audit reconstructs all 10 tasks/30 display rows, rejects all four mutations, preserves truthful non-application, stale UNKNOWN, accepted-input-not-effect, and pending terminal obligations",
+    "failure": "FAIL/STOP on any output discrepancy or method/integrity error",
+    "infrastructure": "STOP without retry on identity, source, mount, engine, or container failure"
+  },
+  "limitations": [
+    "Synthetic deterministic truth table only",
+    "No model, GUI, game, GPU, user input/data, or external task effect",
+    "No model response, real application effect, user benefit, safety rate, latency, MAP01, or product claim",
+    "No cross-runtime or performance comparison"
+  ]
+}
