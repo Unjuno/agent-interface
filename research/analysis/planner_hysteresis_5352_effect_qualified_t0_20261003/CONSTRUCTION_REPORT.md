@@ -1,11 +1,13 @@
 # #5352 T15 construction report (not a formal result)
 
-Disposition: `CONSTRUCTION_PASS_ONLY`. Five host construction tests pass against the exact GitHub branch snapshot. No formal candidate CLI, independent auditor CLI, or WSLc container was invoked; counts remain candidate=0, auditor=0, formal containers=0, retries=0.
+Disposition: `CONSTRUCTION_PASS_ONLY`. Five host construction tests and six Analysis Index checker tests pass against the exact GitHub branch snapshot. No formal candidate CLI, independent auditor CLI, or WSLc container was invoked; counts remain candidate=0, auditor=0, formal containers=0, retries=0.
 
 ## Exact tested source
 
 Branch: `research/planner-hysteresis-5352-effect-qualified-t15-20261003`  
-Tested commit: `ab2abb0bffb2b98729b9ffaaaf37702a18c44085`  
+Package source test commit: `ab2abb0bffb2b98729b9ffaaaf37702a18c44085`  
+Current branch head after main synchronization/indexing: `6cde25a822cb3843d8eb147fc13b50d0b3c6b54c`  
+Current main first parent: `581aa10d619f8c83c4c8fadf602a691fd554d3cb` (compare reports behind_by=0). Package source blob IDs are unchanged between the tested source commit and current branch head.  
 Runtime: Windows x64, CPython 3.11.9, standard library; zero seed.
 
 SHA-256 (UTF-8 file bytes):
@@ -15,14 +17,22 @@ SHA-256 (UTF-8 file bytes):
 - `auditor.py`: `53f5d91df5706032cb3248dc0fd57baa40f6e8e7191ba05a8c44237200c7e4a8`
 - `test_contract.py`: `f7541322738b315b84ab47501b12d9f3fbd8dd9e7783f25848b37ab3598a8a1d`
 
-## Command and outcome
+## Commands and outcomes
 
 ```text
 python -B -m unittest research.analysis.planner_hysteresis_5352_effect_qualified_t0_20261003.test_contract -v
-Ran 5 tests in 0.008s — OK
+Ran 5 tests — OK
+
+python -B -m unittest research.analysis.test_check_index -v
+Ran 6 tests — OK
+
+python -B research/analysis/check_index.py
+sparse checkout: exit 0; warning text notes absent sibling directories are not treated as removals
+git diff --check
+exit 0
 ```
 
-The tests cover frozen case identity/shape, policy schedule shape, raw-only reconstruction of the planted benign/harmful/unsafe-prefix witnesses, and rejection of a changed schedule bit and a missing row. The expected scoped fixture label tests only whether this finite oracle distinguishes the planted conditions. It is not task-performance evidence and does not validate any real workload effect.
+The five package tests cover frozen case identity/shape, policy schedule shape, raw-only reconstruction of planted benign/harmful/unsafe-prefix witnesses, and rejection of a changed schedule bit and missing row. The expected scoped fixture label tests only whether this finite oracle distinguishes the planted conditions. It is not task-performance evidence and does not validate any real workload effect. The six repository checker tests validate sorted/missing/duplicate/extra generated-index behavior and independent-addition merging.
 
 ## Execution hold
 
