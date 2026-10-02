@@ -1,0 +1,18 @@
+All commands used the same WSLc construction invocation (read-only package mount, disposable container, --pull never, network none, 1 CPU, requested 512M):
+wslc container run --rm --pull never --network none --cpus 1 --memory 512M --mount "type=bind,source=C:/Users/junny/Documents/Codex/w/agent-interface-6483-t0/research/analysis/effect_critical_principal_binding_6483_t0_20261002,target=/src,readonly" --env PYTHONDONTWRITEBYTECODE=1 --workdir /src python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python construction_tests.py
+
+Run 1, before main rebase: exit 0, 7/7 passed in 0.289s.
+Run 2, after rebase to main 95431dc7537e55782dd3997fe04b55a729b91fe6 and before the final denominator mutation check: exit 0, 7/7 passed in 0.337s.
+Run 3, final source after denominator mutation check: exit 0, 7/7 passed in 0.423s.
+
+Final run stdout:
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+test_all_scenario_policy_assignments_retained ... ok
+test_cli_roundtrip_is_construction_only ... ok
+test_gate_holds_mixed_stale_unknown_and_ungranted_sources ... ok
+test_gate_preserves_clean_and_explicit_joint_requests ... ok
+test_independent_oracle_and_all_four_mutations ... ok
+test_naive_baselines_expose_wrong_or_unauthenticated_proposals ... ok
+test_quote_is_not_actionable ... ok
+Ran 7 tests in 0.423s
+OK
