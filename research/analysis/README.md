@@ -516,6 +516,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`wake_fence_6331_t0_v1/`](wake_fence_6331_t0_v1/)
 - [`x11_adaptation_multiseed_2459_v1/`](x11_adaptation_multiseed_2459_v1/)
 - [`x11_augmentation_fail_2394_v1/`](x11_augmentation_fail_2394_v1/)
+- [`x11_backend_process_restart_2437_v3/`](x11_backend_process_restart_2437_v3/)
 - [`x11_composed_ood_gate_2419_v1/`](x11_composed_ood_gate_2419_v1/)
 - [`x11_container_transfer_1635_v1/`](x11_container_transfer_1635_v1/)
 - [`x11_fresh_adaptation_hold_2471_v1/`](x11_fresh_adaptation_hold_2471_v1/)
