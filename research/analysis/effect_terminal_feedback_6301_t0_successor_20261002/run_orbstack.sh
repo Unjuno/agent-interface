@@ -14,7 +14,7 @@ formal="$src/formal_03"
 machine=effect-terminal-feedback-6301-t0-orbstack-20261002
 image=sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f
 
-[[ $(git rev-parse origin/main) == 32ee821d08ccb27cef49f6554a14df4ae120e137 ]]
+[[ $(git rev-parse origin/main) == 0af906a66a2f4f7215bc17d241a7569ebe7fbbdc ]]
 [[ $(shasum -a 256 "$src/fixture.json" | cut -d' ' -f1) == 35bfa13d5edee93d834ddc54c980bb24a48b8a5bb9a4e9bcc9dcddd11d1b51a9 ]]
 [[ $(shasum -a 256 "$src/candidate.py" | cut -d' ' -f1) == b41036c61ebece89a2f1b990e7ae2f9b896512fc2983b29a9b4dd9e712c9cc88 ]]
 [[ $(shasum -a 256 "$src/auditor.py" | cut -d' ' -f1) == 831ad1e7a499b1d28bd5b0b9fbfb10b9f5409eddc47460e4a28209d84055977e ]]
