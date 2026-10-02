@@ -75,5 +75,8 @@ Use cached `python:3.12-slim` linux/arm64 image digest
 `sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f`,
 `--pull=never`, `--network=none`, read-only source, unique writable output,
 CPU-only limits, and record effective host cgroup/swap settings. Start only
-after exact exclusive allocation assignment and release of the shared
-`unjuno-native-ci-6092` lane. This document alone is not a lease.
+after an exact exclusive allocation assignment. If assigned to the shared
+Engine, also require explicit owner release of `unjuno-native-ci-6092`. If
+assigned to a dedicated isolated OrbStack machine, record and verify that
+machine's exact Docker daemon endpoint/identity and resource limits; do not
+reuse another Issue's machine. This document alone is not a lease.
