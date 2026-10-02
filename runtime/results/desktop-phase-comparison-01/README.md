@@ -103,7 +103,7 @@ failure and before-input byte-identity grounding distinction. No generic rendere
 fix is claimed.
 
 Joint construction through retained failure+fix (UTC00:29:44.548–00:48:08.010,
-source171958–172281):46 unique response records,137 exact retained source records,
+source171958–172280):46 unique response records,137 exact retained source records,
 6 actual original primary image blocks. Input5790034,cached5711616 subset,
 uncached78418,output29456,reasoning8691 subset,total5819490. Exact source digests,
 response deduplication and original image blocks verified. Billing unavailable.
