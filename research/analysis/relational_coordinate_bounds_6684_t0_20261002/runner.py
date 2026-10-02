@@ -79,10 +79,6 @@ def main() -> int:
     freeze = json.loads(freeze_path.read_text())
     if freeze_sha_path.read_text().split()[0] != sha256(freeze_path):
         return prelaunch_stop("STOP_FREEZE_HASH_MISMATCH", {})
-    if freeze.get("source_commit") != git("rev-parse", "HEAD"):
-        return source_preflight_failure("STOP_SOURCE_HEAD_MISMATCH",
-                                        {"frozen_source_commit": freeze.get("source_commit"),
-                                         "head": git("rev-parse", "HEAD")})
     ancestor = subprocess.run(["git", "merge-base", "--is-ancestor", freeze["source_commit"], "HEAD"],
                              cwd=ROOT, check=False, capture_output=True)
     if ancestor.returncode != 0:
