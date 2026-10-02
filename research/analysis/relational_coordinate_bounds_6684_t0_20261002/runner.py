@@ -37,6 +37,40 @@ def prelaunch_stop(reason: str, details: dict) -> int:
     return 3
 
 
+def source_preflight_failure(reason: str, details: dict) -> int:
+    """Preserve a failed source preflight without claiming formal allocation."""
+    path = ROOT / "results" / "preformal" / "source-preflight-failure.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if path.exists():
+        raise SystemExit("STOP_PREFORMAL_FAILURE_RECORD_ALREADY_EXISTS")
+    record = {"schema": "relational-coordinate-bounds-6684-preformal-failure-v1",
+              "allocation": "relational-coordinate-bounds-6684-t0-20261002-01",
+              "stage": "construction/preflight", "reason": reason,
+              "candidate_invocations": 0, "auditor_invocations": 0,
+              "retries": 0, "formal_allocation_started": False, **details}
+    path.write_text(json.dumps(record, sort_keys=True, indent=2) + "\n")
+    path.with_suffix(".sha256").write_text(sha256(path) + "  source-preflight-failure.json\n")
+    print(json.dumps({"decision": "PREFORMAL_FAILURE", "reason": reason,
+                      "formal_counts": "0/0/0"}))
+    return 3
+
+
+def write_preformal_failure(reason: str, details: dict) -> int:
+    path = ROOT / "results" / "preformal" / "construction-performance-failure.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if path.exists():
+        raise SystemExit("STOP_PREFORMAL_FAILURE_RECORD_ALREADY_EXISTS")
+    record = {"schema": "relational-coordinate-bounds-6684-preformal-failure-v1",
+              "allocation": "relational-coordinate-bounds-6684-t0-20261002-01",
+              "stage": "construction test", "reason": reason,
+              "candidate_invocations": 0, "auditor_invocations": 0,
+              "retries": 0, "formal_allocation_started": False, **details}
+    path.write_text(json.dumps(record, sort_keys=True, indent=2) + "\n")
+    path.with_suffix(".sha256").write_text(sha256(path) + "  construction-performance-failure.json\n")
+    print(json.dumps({"decision": "PREFORMAL_FAILURE_RETAINED", "formal_counts": "0/0/0"}))
+    return 0
+
+
 def main() -> int:
     if RESULTS.exists():
         raise SystemExit("STOP_OUTPUT_PATH_ALREADY_EXISTS")
@@ -45,16 +79,20 @@ def main() -> int:
     freeze = json.loads(freeze_path.read_text())
     if freeze_sha_path.read_text().split()[0] != sha256(freeze_path):
         return prelaunch_stop("STOP_FREEZE_HASH_MISMATCH", {})
+    if freeze.get("source_commit") != git("rev-parse", "HEAD"):
+        return source_preflight_failure("STOP_SOURCE_HEAD_MISMATCH",
+                                        {"frozen_source_commit": freeze.get("source_commit"),
+                                         "head": git("rev-parse", "HEAD")})
     ancestor = subprocess.run(["git", "merge-base", "--is-ancestor", freeze["source_commit"], "HEAD"],
                              cwd=ROOT, check=False, capture_output=True)
     if ancestor.returncode != 0:
         return prelaunch_stop("STOP_FROZEN_SOURCE_NOT_ANCESTOR", {"head": git("rev-parse", "HEAD")})
+    repo_root = Path(git("rev-parse", "--show-toplevel"))
     for rel, expected in freeze["source_sha256"].items():
-        actual = sha256(ROOT / rel)
+        actual = sha256(repo_root / rel)
         if actual != expected:
             return prelaunch_stop("STOP_SOURCE_HASH_MISMATCH", {"path": rel,
                                   "expected": expected, "actual": actual})
-    repo_root = Path(git("rev-parse", "--show-toplevel"))
     design_rel = (ROOT / "design.json").relative_to(repo_root).as_posix()
     design_blob = subprocess.run(["git", "cat-file", "-e", freeze["source_commit"] + ":" + design_rel],
                                  cwd=ROOT, check=False, capture_output=True)
