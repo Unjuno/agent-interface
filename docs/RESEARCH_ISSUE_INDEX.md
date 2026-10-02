@@ -1,10 +1,10 @@
 # Research and idea Issue index
 
-Last full pagination reconciliation: 2026-10-02 (Asia/Tokyo); that snapshot contained 2528 unique Issues with no duplicates. Incremental reconciliation on 2026-10-02 inspected the latest 100 open and 100 closed Issues. Nine newer Issues matching the inclusion rule were added (eight open, one closed), for 2537 unique repository Issues; the filtered inventory now has 1687 entries. No newer matching Issue appeared in those refreshed windows.
+Last full pagination reconciliation: 2026-10-02 (Asia/Tokyo); that snapshot contained 2528 unique Issues with no duplicates. Incremental reconciliation on 2026-10-02 inspected the latest 100 open and 100 closed Issues. Ten newer Issues matching the inclusion rule were added (nine open, one closed), for 2538 unique repository Issues; the filtered inventory now has 1688 entries. No newer matching Issue appeared in those refreshed windows.
 
 ## Coverage and limits
 
-This index contains 1687 Issues (1145 open, 542 closed) selected when either the Issue has the `research` label or its title contains an explicit `research`, `idea`, `successor`, or `experiment` term. It includes direct proposals plus many validation, audit, coordination, and successor records.
+This index contains 1688 Issues (1146 open, 542 closed) selected when either the Issue has the `research` label or its title contains an explicit `research`, `idea`, `successor`, or `experiment` term. It includes direct proposals plus many validation, audit, coordination, and successor records.
 
 This is a broad discovery index, not a guarantee that every repository idea has a title or label matching the filter. Other Issues are not assumed to be non-ideas; search them when linked lineage points outside this table and add any missed idea. The curated [ideas and outcomes page](IDEAS_AND_OUTCOMES.md) explains selected idea clusters and verified dispositions. [RESEARCH.md](../RESEARCH.md), Issues, PRs, and reports remain evidence authorities.
 
@@ -14,6 +14,7 @@ Open is workflow state, not “no result”; open Issues may contain scoped resu
 
 | Issue | Title | GitHub state / closed date | Literal outcome markers* | Linked predecessor(s)** |
 |---|---|---|---|---|
+| [#6437](https://github.com/Unjuno/agent-interface/issues/6437) | [Successor #6380] Test typed elicitation-response normalization into scoped contract clauses | open | FAIL_METHOD_CONSTRUCTION_MISMATCH, PASS_METHOD_SCOPED, FAIL_METHOD, HOLD | #6380 |
 | [#6435](https://github.com/Unjuno/agent-interface/issues/6435) | [Research] Deadline-conditioned semantic decision frontier for human–agent tempo | open | HOLD, PASS | — |
 | [#6427](https://github.com/Unjuno/agent-interface/issues/6427) | Successor #6410: independently audit retained WSLc lifecycle raw output | closed 2026-10-02 | STOP_METHOD_FAILURE, STOP, PASS_AUDIT_SUCCESSOR_SCOPED, FAIL_AUDIT_SUCCESSOR | #6410 |
 | [#6424](https://github.com/Unjuno/agent-interface/issues/6424) | [Research] Speech-act grounding before consequential GUI effects | open | YIELD, HOLD | — |
