@@ -1,0 +1,11 @@
+{
+  "auditor": "audit_v2.py separate raw-only process",
+  "candidate_invocations": 5,
+  "cases": 11,
+  "errors": [],
+  "interpretation": "typed STOP and no scientific hash were correct; a tampered output-path file remained observable after STOP, so fail-closed publication cleanup is not demonstrated",
+  "result": "FAIL_CONSTRUCTION_CLEANUP_GAP",
+  "run_sha256": "160f606db1d2f32d613b805412c138b8053feeabff37c66816890a6c8750ba65",
+  "scope": "synthetic host-only protocol construction; no GPU/Docker/model/game/GUI/input evidence",
+  "source_hashes_match": true
+}
