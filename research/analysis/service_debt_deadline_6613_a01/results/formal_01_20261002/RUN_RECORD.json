@@ -1,0 +1,41 @@
+{
+  "allocation_id": "LONG-HORIZON-SERVICE-DEBT-6613-ORB-A01-20261002-01",
+  "candidate": {
+    "container_id": "269a3b3a11ba4e25636c0318c810d732accdf58c0875dd4dadfc4a3ad5c66353",
+    "exit": 0,
+    "oom_killed": false,
+    "invocations": 1,
+    "raw_bytes": 557828,
+    "raw_sha256": "774e950e7ff434f3c768337bfc763d33a41af2da6b6ac1a74f73269c6328b25c"
+  },
+  "auditor": {
+    "container_id": "23271059c8e7f83bde34fedb799d22257c1af093652e55cfeeb5d21d910c066b",
+    "exit": 0,
+    "oom_killed": false,
+    "invocations": 1,
+    "result": "PASS_RAW_REPLAY",
+    "errors": [],
+    "rows": 288,
+    "json_bytes": 866,
+    "sha256": "408c14501efb9ba30710d1bdca8b48f4812e03bbbdd8b1ff51df3f1bda467398"
+  },
+  "retries": 0,
+  "image": "python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "container_argv": {
+    "common": ["docker", "run", "--pull=never", "--network=none", "--cpus=1", "--memory=256m", "--pids-limit=64", "--user=65534:65534", "--read-only", "--tmpfs", "/tmp:rw,noexec,nosuid,size=8m", "--cap-drop=ALL", "--security-opt=no-new-privileges"],
+    "candidate": ["docker", "run", "--name", "service-debt-6613-a01-candidate", "--pull=never", "--network=none", "--cpus=1", "--memory=256m", "--pids-limit=64", "--user=65534:65534", "--read-only", "--tmpfs", "/tmp:rw,noexec,nosuid,size=8m", "--cap-drop=ALL", "--security-opt=no-new-privileges", "--mount", "type=bind,src=/Users/taka/Documents/Codex/2026-10-02/agent-interface-6613-service-debt-a01/research/analysis/service_debt_deadline_6613_a01,dst=/input,readonly", "--mount", "type=bind,src=/Users/taka/Documents/Codex/2026-10-02/agent-interface-6613-service-debt-a01/research/analysis/service_debt_deadline_6613_a01/results/formal_01_20261002,dst=/output", "python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f", "sh", "-c", "cat /sys/fs/cgroup/memory.max >&2; cat /sys/fs/cgroup/pids.max >&2; python -B /input/candidate.py /input/fixture.json /output/candidate_raw.json"],
+    "auditor": ["docker", "run", "--name", "service-debt-6613-a01-auditor", "--pull=never", "--network=none", "--cpus=1", "--memory=256m", "--pids-limit=64", "--user=65534:65534", "--read-only", "--tmpfs", "/tmp:rw,noexec,nosuid,size=8m", "--cap-drop=ALL", "--security-opt=no-new-privileges", "--mount", "type=bind,src=/Users/taka/Documents/Codex/2026-10-02/agent-interface-6613-service-debt-a01/research/analysis/service_debt_deadline_6613_a01,dst=/input,readonly", "--mount", "type=bind,src=/Users/taka/Documents/Codex/2026-10-02/agent-interface-6613-service-debt-a01/research/analysis/service_debt_deadline_6613_a01/results/formal_01_20261002/candidate_raw.json,dst=/raw/candidate_raw.json,readonly", "--mount", "type=bind,src=/Users/taka/Documents/Codex/2026-10-02/agent-interface-6613-service-debt-a01/research/analysis/service_debt_deadline_6613_a01/results/formal_01_20261002,dst=/output", "python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f", "sh", "-c", "cat /sys/fs/cgroup/memory.max >&2; cat /sys/fs/cgroup/pids.max >&2; python -B /input/auditor.py /input/fixture.json /raw/candidate_raw.json /output/audit.json"]
+  },
+  "engine": "OrbStack Docker 29.4.0",
+  "kernel": "7.0.14-orbstack-00380-ga7e0a2dc9535",
+  "container_observations": {"platform": "linux/arm64", "memory_max_bytes": 268435456, "pids_max": 64, "configured_cpus": 1, "configured_memory_bytes": 268435456, "configured_pid_limit": 64},
+  "formal_seeds": [10000, 10031],
+  "policy_trace_rows": 288,
+  "hypothesis_disposition": "FAIL_HYPOTHESIS",
+  "decision_reasons": ["no_asymmetric_wait_gain"],
+  "summaries": {
+    "asymmetric_recurring": {"debt_mean_trace_max_wait": 33.28125, "fifo_mean_trace_max_wait": 31.875, "shortest_mean_trace_max_wait": 32.28125, "debt_on_time": 117, "fifo_on_time": 109, "shortest_on_time": 181},
+    "burst_recovery": {"debt_mean_trace_max_wait": 28.9375, "fifo_mean_trace_max_wait": 28.78125, "shortest_mean_trace_max_wait": 30.1875, "debt_on_time": 129, "fifo_on_time": 121, "shortest_on_time": 209},
+    "rights_interrupt": {"debt_mean_trace_max_wait": 31.625, "fifo_mean_trace_max_wait": 30.09375, "shortest_mean_trace_max_wait": 29.9375, "debt_on_time": 103, "fifo_on_time": 102, "shortest_on_time": 160}
+  }
+}
