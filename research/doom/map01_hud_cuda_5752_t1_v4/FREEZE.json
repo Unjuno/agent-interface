@@ -1,0 +1,49 @@
+{
+  "allocation": "GPU-HUD-CUDA-5752-20261001-04",
+  "audit_sha256": "fb91083703a50030840687d5367ec189386c1bb5f25ac7bbcc5069e1a2926c0f",
+  "auditor_invocations_allowed": 1,
+  "base_main_observed_utc": "2026-10-01T07:26:44Z",
+  "base_main_sha": "da7770df8bd896738a8a7e0ccc8ea45e10b3e645",
+  "branch": "research/gpu-hud-cuda-5752-20261001-04",
+  "candidate_invocations_allowed": 1,
+  "dataset": {
+    "baselines": 4,
+    "in_envelope_observations": 19,
+    "timed_repeats": 30,
+    "unique_images": 23
+  },
+  "dataset_sha256": "4546d17f230608952e4bf26f2eb7d596c1c7a976090eefc1a4677187b3088e1c",
+  "environment_precheck": {
+    "cuda": "12.1",
+    "driver": "581.57",
+    "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU",
+    "python": "CPython 3.11.9",
+    "torch": "2.5.1+cu121"
+  },
+  "hud_independent_sha256": "59f271038f481f81580c3b67367ba633a09797983fc81cfbe50b9f0ef865ffb6",
+  "path": "research/doom/map01_hud_cuda_5752_t1_v4/",
+  "preflight_sha256": "746ece4327a9d9a9d04d47616e43f2e548b03445a7038098ec55aedb53216ef4",
+  "preflight_tests_sha256": "ac8dbb421e31abf2358dc33d1fd52371cab5d5cf356f6c1ed7382567069a03c1",
+  "runner_sha256": "4c8db95658be1e3cca5141ef0dce6c15c5b4d4d12713609b3373015d456083db",
+  "schema": "map01-hud-cuda-freeze-v1",
+  "source_inputs": {
+    "map01-v38-integrated-threat-live-01/report.json": {
+      "bytes": 171428,
+      "sha256": "7fa222f9b273ee10ad1ed3e24b8f7f234f46cc137265a90d70c6073981602f58"
+    },
+    "map01-v38-integrated-threat-live-01/runtime/events.jsonl": {
+      "bytes": 308873,
+      "sha256": "80b964c9ab7d86fbd0b2bc56957157e018e9dbb90457f286995a2e6036192bc3"
+    },
+    "map01-v39-coast-liveness-live-01/report.json": {
+      "bytes": 344806,
+      "sha256": "719db21040b843c5c91c5ff1f3d9fb2051ae1f1e008971547f39f015b4337687"
+    },
+    "map01-v39-coast-liveness-live-01/runtime/events.jsonl": {
+      "bytes": 565849,
+      "sha256": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381"
+    }
+  },
+  "wad_archive_sha256": "3f9b264f3e3ce503b4fb7f6bdcb1f419d93c7b546f4df3e874dd878db9688f59",
+  "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+}
