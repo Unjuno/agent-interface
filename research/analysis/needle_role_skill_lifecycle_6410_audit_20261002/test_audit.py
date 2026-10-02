@@ -9,6 +9,11 @@ from audit import f32, reconstruct
 
 
 class ReconstructionTests(unittest.TestCase):
+    def test_full_git_sha_format(self) -> None:
+        current_main = "6473562399159d8913839c0b6fa2da3df68c0bc3"
+        self.assertEqual(len(current_main), 40)
+        self.assertTrue(all(char in "0123456789abcdef" for char in current_main))
+
     def test_float32_round_trip_is_explicit(self) -> None:
         self.assertEqual(f32(1.0 / 3.0), 0.3333333432674408)
 

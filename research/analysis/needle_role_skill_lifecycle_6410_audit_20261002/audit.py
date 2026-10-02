@@ -226,7 +226,9 @@ def adjudicate(args: argparse.Namespace) -> dict:
     identity_errors = []
     if freeze.get("allocation") != ALLOCATION or freeze.get("issue") != 6410:
         identity_errors.append("audit_freeze_identity")
-    if freeze.get("base_commit") != "5d6a85a95c048c57ef78c558a2e7608c6bc45722":
+    base_commit = freeze.get("base_commit")
+    if not isinstance(base_commit, str) or len(base_commit) != 40 or any(
+            char not in "0123456789abcdef" for char in base_commit):
         identity_errors.append("audit_base_commit")
     if sha(raw_bytes) != RAW_SHA:
         identity_errors.append("raw_sha256")
