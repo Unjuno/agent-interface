@@ -4,10 +4,10 @@
   "branch": "research/spatial-block-6590-t1-training-fix-20261002",
   "package_path": "research/analysis/spatial_block_position_6590_t1_orbstack_v2/",
   "allocation": "spatial-block-position-6590-t1-orbstack-20261002-03",
-  "construction_allocation": "spatial-block-position-6590-t1-training-parity-20261002-02",
-  "frozen_at_utc": "2026-10-02T11:45:00Z",
+  "construction_allocation": "spatial-block-position-6590-t1-training-parity-20261002-03",
+  "frozen_at_utc": "2026-10-02T10:58:59Z",
   "main_sha": "20896908089b52db95678626b295219012769627",
-  "source_commit": "885007c0f925e2cb31ed8898adbc97bb33b42609",
+  "source_commit": "80adf141002b0c82be389d2062ba5a301a58e74e",
   "additive_paths": [
     "research/analysis/spatial_block_position_6590_t1_orbstack_v2/",
     ".github/workflows/spatial-block-6590-t1-v2.yml",
@@ -30,6 +30,7 @@
   "prior_allocation_preservation": {
     "v1_formal_allocation_02": "HOLD_AUDIT_INTEGRITY; candidate omitted W1 update; raw/audit and all predecessor evidence unchanged on main",
     "v2_prelaunch_01": "STOP_LIVE_MAIN_NOT_ANCESTOR; disjoint #6530 paths advanced; candidate fits 0, auditor fits 0, containers 0, retries 0; source fix in 885007c",
+    "v2_prelaunch_02": "STOP runtime config looked up docker_context at wrong schema level; candidate fits 0, auditor fits 0, containers 0, retries 0; helper/test fix in 80adf14",
     "no_consumed_fit_reuse": true,
     "fresh_seed_block": [659101, 659102, 659103, 659104, 659105]
   },
@@ -77,14 +78,14 @@
     "tmpfs": "/tmp:rw,noexec,nosuid,size=64m",
     "candidate_container_name": "unjuno-6590-t1-candidate-20261002-03",
     "auditor_container_name": "unjuno-6590-t1-auditor-20261002-03",
-    "construction_container_name": "unjuno-6590-t1-parity-20261002-02",
+    "construction_container_name": "unjuno-6590-t1-parity-20261002-03",
     "construction_timeout_seconds": 600,
     "formal_timeout_seconds": 1800
   },
   "construction_output_root": "results/construction-01/",
   "formal_output_root": "results/formal-03/",
   "source_sha256": {
-    "README.md": "c8e01913eadb2e7c816d0d8f012122fd18ecfe4ea4be3fc8a8a72b121fe5c7af",
+    "README.md": "39ecb2a321ba5e95fac24de10b5b36aa7b55e25410f9de8f1c978269f5013d82",
     "Dockerfile": "4e964cf9ef0cd70ba61087f5a65f890457c36a280873a27477c39d51b1397d6f",
     "requirements.lock": "6c5c8debbab2ea8ebb2c5b3d41484619aeb1012c189e680510dcfa102cfc0b57",
     "design.json": "d6c4c3e636bb7832cefcfb2a09758a8138a6e7e483a1e257e6710529409b103c",
@@ -92,8 +93,8 @@
     "candidate.py": "41f2686a38ca503f6b9774c12af62a3dc3b0a27ea819a1c5884289af6e737a3f",
     "auditor.py": "b420a17010e408efc7054f471e3483e95d743f6982209f95639f39722fa9b236",
     "runner.py": "db1050fde64d9bc30c21bd8a3f089376b12c903cc2a54f4fda5c0461113d8af6",
-    "construction_runner.py": "333869d34d18638affd341ec50c32eba09fa34bc3716540605007d3249eb5466",
-    "test_protocol.py": "9d746868feeb3abbad88c0710da848dc78a7054de72417dc046279df45014af6",
+    "construction_runner.py": "bb075a1f1e92f9dd1bf66d93cd31e2fe67c6dcaac3a0fd47f489f60d0ab7a60a",
+    "test_protocol.py": "6b0f7520e4fdc828c514e1b2515dd46b4896165cdd9de51f3f1293501c658963",
     "../../../.github/workflows/spatial-block-6590-t1-v2.yml": "9a2540431e9b8d609f53f21eb5093333b847c5d1aed38936df4188a0696c20d9",
     "../README.md": "bf2a1a5f3de65acf4028df30b5ad195c4ef8268ebd9e9dd3c2e35017525854c4"
   },
