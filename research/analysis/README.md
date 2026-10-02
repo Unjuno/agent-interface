@@ -652,6 +652,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`timing_receipt_6532_t0_20261002/`](timing_receipt_6532_t0_20261002/)
 - [`tiny_predicate_specialist_4218_v1/`](tiny_predicate_specialist_4218_v1/)
 - [`tiny_visual_equivariant_2564_v1/`](tiny_visual_equivariant_2564_v1/)
+- [`tiny_visual_equivariant_diagnosis_2564_v1/`](tiny_visual_equivariant_diagnosis_2564_v1/) — Issue #4817 construction-only CNN diagnosis; finite-difference gate passed, balanced 5×5 task did not reach competence, STOP retained with zero formal fits.
 - [`tiny_visual_extent_init_sensitivity_4817_v1/`](tiny_visual_extent_init_sensitivity_4817_v1/)
 - [`tiny_visual_extent_readout_4817_cuda_v2/`](tiny_visual_extent_readout_4817_cuda_v2/)
 - [`tiny_visual_extent_readout_4817_cuda_v3/`](tiny_visual_extent_readout_4817_cuda_v3/)
