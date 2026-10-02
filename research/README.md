@@ -17,6 +17,7 @@ For claims and scientific disposition, start with the top-level [research index]
 | Current Linux research caller | [live_control/CURRENT_CLIENT.md](live_control/CURRENT_CLIENT.md) |
 | Historical local-GPU triage snapshot (not current resource authorization) | [gpu/RECOVERY_STATUS.md](gpu/RECOVERY_STATUS.md) |
 | Research convergence/freeze criteria | [evolution/freeze_criteria.md](evolution/freeze_criteria.md) |
+| Issue #6422 denial-aware approval-request A01 | [Preservation qualification](analysis/denial_aware_request_6422_t0_20261002_v1/PRESERVATION_QUALIFICATION.md) — partial 14-case synthetic method evidence; missing deferral-authority and one-use/budget coverage, not full T0 or a T1 basis. |
 | Issue #6380 counterexample-driven contract elicitation T0 | [analysis/constraint_elicitation_6380_t0_v1/REPORT.md](analysis/constraint_elicitation_6380_t0_v1/REPORT.md) — retained method-construction failure; no human or runtime claim. |
 | Issue #59 global-owner event/head invariance T0 | [analysis/map01_global_owner_invariance_59_t0_20261001/REPORT.md](analysis/map01_global_owner_invariance_59_t0_20261001/REPORT.md) |
 | Issue #5970 × #5348 causal-cut recovery reachability T0 | [analysis/blackstart_causal_cut_5970_t0_20261001/REPORT.md](analysis/blackstart_causal_cut_5970_t0_20261001/REPORT.md) |
