@@ -3,7 +3,7 @@
   "issue": 6530,
   "base_commit": "a5756d9b3",
   "branch": "research/temporal-effect-identity-6530-t0-wslc-20261002-01",
-  "source_commit": "436f7f4cee053fba6b8ced4ee652b87c70aa7077",
+  "source_commit": "4517a77aac7189c2e3bd414a9a82afe1cf248dab",
   "image": {
     "reference": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
     "config_id": "sha256:9e87977b (full ID to verify in formal preflight)",
@@ -55,6 +55,6 @@
     "candidate": "wslc --session wslc-cli-junny run --rm --pull never --network none --cpus 1 --memory 512M --volume <source-ro> --volume <raw-output-rw> python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python candidate.py /src/fixture.json /out/raw.json",
     "auditor": "wslc --session wslc-cli-junny run --rm --pull never --network none --cpus 1 --memory 512M --volume <audit-source-ro> --volume <raw-output-ro> --volume <audit-output-rw> python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python audit.py /raw/raw.json /src/truth.json /out/audit.json"
   },
-  "freeze_note": "Image/TZDB values are from environment-only preflight and must be revalidated before formal run; source_commit placeholder must be bound by a follow-on freeze commit.",
+  "freeze_note": "Image/TZDB values are from environment-only preflight and must be revalidated before formal run; source_commit binds the immediately preceding source commit. This manifest's final blob SHA-256 is recorded in the following commit message.",
   "memory_enforcement": "Not claimed; WSLc warned swap limits/cgroup unavailable."
 }
