@@ -1,0 +1,50 @@
+{
+  "schema": "visual-presentation-injection-6575-t0-freeze-v1",
+  "issue": 6575,
+  "allocation_id": "VISUAL-PRESENTATION-INJECTION-6575-T0-20261002-01",
+  "status": "SUPERSEDED_NO_RUN",
+  "planning_main": "f891ccb0fabac44f43a0d05edfce5fac050e66f0",
+  "branch": "research/visual-presentation-injection-6575-t0-20261002",
+  "candidate_invocation_ceiling": 1,
+  "independent_auditor_invocation_ceiling": 1,
+  "retries": 0,
+  "formal_t1_model_calls": 0,
+  "gpu": "not requested; T0 is byte/geometry-only",
+  "wslc_image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "wslc_image_config_id": "sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4",
+  "wslc_limits_requested_only": {"network": "none", "cpus": 1, "memory": "512M", "source_mount": "read-only"},
+  "limits_enforcement_claim": "none; record host cgroup/swap warnings and do not infer enforcement",
+  "source_sha256": {
+    ".gitattributes": "a79691a93b46e49ce460c26ef22afcc03d6eca1e63bf2edbc20e96159510f6c9",
+    "README.md": "fe275999cf6010aec45a6a485d3e04f211f6cde7f318a6fce90e66b61b8fad43",
+    "PREPARATION_REPORT.md": "8def5d76e04d4e9a647cdd0832071b11e1f1206eb46a0a7108943a78979f3447",
+    "fixtures.json": "f6e82bf8b47448caf353c65afa04eee7a88e5cc5d2db3b614c3b6fcee465fd7d",
+    "ppm.py": "bde805a071379bbed359ddd7aab4c634f84f9073c644586b2284ebc9a0d7b3eb",
+    "make_fixtures.py": "727739780ec75cd9c1d8bcef0afde5a917086f205d41f9188c879896d8bde559",
+    "candidate.py": "d1118003ffbf5ba365cba91d9605bdaea4833b4f7da3113fa70ef2a9a1fa3ef9",
+    "audit.py": "804aca32c211d87d8561cb09be97e5fa8486d8890c1a228807516eec9d3c4f97",
+    "test_t0.py": "32555e96ecfa00dcda693379c2cffcb0f0bbeda536a52ee9e50c65463abd44c8",
+    "run_t0.ps1": "08e608c1831c99ca5b0be4427c9ae497ab350ade6927f6f53d67c124b9d3468b",
+    "sources/benign_text.ppm": "63ac756667188fa1cd3b7731c99c70ba8becbb002fb08b0712633ebbf18ab425",
+    "sources/off_task_instruction.ppm": "0ed7bea038e4f1da5834e5e3175dd9efb555cc8c322eacccd9a3521d6c8a8980",
+    "sources/instruction_free_distractor.ppm": "b75d4733c2314306c5780b5d6a8f5f126ebf39e7998ea43ed201b0ebb3314766"
+  },
+  "preparation_only": {
+    "runtime": "WSL Arch Linux / CPython 3.14 host process; not a container",
+    "unit_tests": "3/3 passed; 2 corruption controls reject pixel tamper and omitted-row mutations",
+    "candidate_or_auditor_formal_count": "0/0",
+    "formal_output_created": false
+  },
+  "superseded_by": {
+    "main_commit": "f891ccb0fabac44f43a0d05edfce5fac050e66f0",
+    "pull_request": 6582,
+    "allocation": "OBS-INJECTION-TRANSFORM-6575-T0-20261002-01",
+    "disposition": "STOP_HARNESS_FIXTURE_MISMATCH"
+  },
+  "stop_gate": "Do not invoke this duplicate package. Main retains the consumed #6575 T0 STOP in PR #6582; preserve that first outcome and do not retry or repair it in this allocation.",
+  "planned_sequence": [
+    "one WSLc candidate invocation writes 18 frozen rows and derived PPM views into a unique output mount",
+    "only if candidate exits 0, one separate WSLc raw-only auditor invocation reads the read-only frozen source and candidate outputs",
+    "preserve all stdout/stderr and exit codes; retries remain zero"
+  ]
+}
