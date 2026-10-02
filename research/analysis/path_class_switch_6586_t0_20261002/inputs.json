@@ -1,0 +1,612 @@
+{
+  "schema": "path-class-switch-input-v1",
+  "obstacle": [
+    -0.5,
+    -1.0,
+    0.5,
+    1.0
+  ],
+  "event_budget": 6,
+  "cases": [
+    {
+      "case_id": "blocked_class_positive",
+      "map_version": 1,
+      "observed_version": 1,
+      "branch_visible": true,
+      "current_prefix": [
+        [
+          -2.0,
+          0.0
+        ],
+        [
+          -1.0,
+          0.0
+        ]
+      ],
+      "prior_attempt_prefix": [
+        [
+          -2.0,
+          0.0
+        ],
+        [
+          -1.0,
+          0.0
+        ],
+        [
+          -0.9,
+          0.3
+        ],
+        [
+          -0.75,
+          1.5
+        ],
+        [
+          0.75,
+          1.5
+        ]
+      ],
+      "routes": {
+        "upper_a": [
+          [
+            -2.0,
+            0.0
+          ],
+          [
+            -1.0,
+            0.0
+          ],
+          [
+            -0.9,
+            0.3
+          ],
+          [
+            -0.75,
+            1.5
+          ],
+          [
+            0.75,
+            1.5
+          ],
+          [
+            2.0,
+            0.0
+          ]
+        ],
+        "lower_a": [
+          [
+            -2.0,
+            0.0
+          ],
+          [
+            -1.0,
+            0.0
+          ],
+          [
+            -0.75,
+            -1.5
+          ],
+          [
+            0.75,
+            -1.5
+          ],
+          [
+            2.0,
+            0.0
+          ]
+        ],
+        "upper_b": [
+          [
+            -2.0,
+            0.0
+          ],
+          [
+            -1.0,
+            0.0
+          ],
+          [
+            -0.9,
+            0.3
+          ],
+          [
+            -0.65,
+            1.6
+          ],
+          [
+            0.65,
+            1.6
+          ],
+          [
+            2.0,
+            0.0
+          ]
+        ],
+        "upper_c": [
+          [
+            -2.0,
+            0.0
+          ],
+          [
+            -1.0,
+            0.0
+          ],
+          [
+            -0.9,
+            0.3
+          ],
+          [
+            -0.8,
+            1.8
+          ],
+          [
+            0.8,
+            1.8
+          ],
+          [
+            2.0,
+            0.0
+          ]
+        ]
+      },
+      "visible_barriers": [
+        {
+          "rect": [
+            -0.96,
+            0.1,
+            -0.84,
+            0.25
+          ],
+          "id": "upper_gate"
+        }
+      ],
+      "blocked_route_claim": "upper_a",
+      "policy_order": [
+        "upper_a",
+        "upper_b",
+        "upper_c",
+        "lower_a"
+      ],
+      "attempted_route_ids": [
+        "upper_a"
+      ],
+      "route_costs": {
+        "upper_b": 2,
+        "upper_c": 2,
+        "upper_a": 2,
+        "lower_a": 5
+      },
+      "event_budget": 6
+    },
+    {
+      "case_id": "shared_prefix_ambiguous",
+      "map_version": 1,
+      "observed_version": 1,
+      "branch_visible": true,
+      "current_prefix": [
+        [
+          -2.0,
+          0.0
+        ],
+        [
+          -1.0,
+          0.0
+        ]
+      ],
+      "prior_attempt_prefix": [
+        [
+          -2.0,
+          0.0
+        ],
+        [
+          -1.0,
+          0.0
+        ]
+      ],
+      "routes": {
+        "upper_a": [
+          [
+            -2.0,
+            0.0
+          ],
+          [
+            -1.0,
+            0.0
+          ],
+          [
+            -0.75,
+            1.5
+          ],
+          [
+            0.75,
+            1.5
+          ],
+          [
+            2.0,
+            0.0
+          ]
+        ],
+        "lower_a": [
+          [
+            -2.0,
+            0.0
+          ],
+          [
+            -1.0,
+            0.0
+          ],
+          [
+            -0.75,
+            -1.5
+          ],
+          [
+            0.75,
+            -1.5
+          ],
+          [
+            2.0,
+            0.0
+          ]
+        ]
+      },
+      "visible_barriers": [],
+      "blocked_route_claim": null,
+      "policy_order": [
+        "upper_a",
+        "lower_a"
+      ],
+      "event_budget": 6,
+      "attempted_route_ids": [],
+      "route_costs": {
+        "lower_a": 5,
+        "upper_a": 5
+      }
+    },
+    {
+      "case_id": "same_class_deceptive_branch",
+      "map_version": 1,
+      "observed_version": 1,
+      "branch_visible": true,
+      "current_prefix": [
+        [
+          -2.0,
+          0.0
+        ],
+        [
+          -1.0,
+          0.0
+        ]
+      ],
+      "prior_attempt_prefix": [
+        [
+          -2.0,
+          0.0
+        ],
+        [
+          -1.0,
+          0.0
+        ],
+        [
+          -0.75,
+          1.5
+        ],
+        [
+          0.75,
+          1.5
+        ]
+      ],
+      "routes": {
+        "upper_a": [
+          [
+            -2.0,
+            0.0
+          ],
+          [
+            -1.0,
+            0.0
+          ],
+          [
+            -0.75,
+            1.5
+          ],
+          [
+            0.75,
+            1.5
+          ],
+          [
+            2.0,
+            0.0
+          ]
+        ],
+        "upper_b": [
+          [
+            -2.0,
+            0.0
+          ],
+          [
+            -1.0,
+            0.0
+          ],
+          [
+            -0.7,
+            1.7
+          ],
+          [
+            0.0,
+            2.0
+          ],
+          [
+            0.7,
+            1.7
+          ],
+          [
+            2.0,
+            0.0
+          ]
+        ]
+      },
+      "visible_barriers": [],
+      "blocked_route_claim": null,
+      "policy_order": [
+        "upper_a",
+        "upper_b"
+      ],
+      "event_budget": 6,
+      "attempted_route_ids": [],
+      "route_costs": {
+        "upper_b": 5,
+        "upper_a": 5
+      }
+    },
+    {
+      "case_id": "geometry_revision",
+      "map_version": 2,
+      "observed_version": 1,
+      "branch_visible": true,
+      "current_prefix": [
+        [
+          -2.0,
+          0.0
+        ],
+        [
+          -1.0,
+          0.0
+        ]
+      ],
+      "prior_attempt_prefix": [
+        [
+          -2.0,
+          0.0
+        ],
+        [
+          -1.0,
+          0.0
+        ],
+        [
+          -0.75,
+          1.5
+        ],
+        [
+          0.75,
+          1.5
+        ]
+      ],
+      "routes": {
+        "upper_a": [
+          [
+            -2.0,
+            0.0
+          ],
+          [
+            -1.0,
+            0.0
+          ],
+          [
+            -0.75,
+            1.5
+          ],
+          [
+            0.75,
+            1.5
+          ],
+          [
+            2.0,
+            0.0
+          ]
+        ],
+        "lower_a": [
+          [
+            -2.0,
+            0.0
+          ],
+          [
+            -1.0,
+            0.0
+          ],
+          [
+            -0.75,
+            -1.5
+          ],
+          [
+            0.75,
+            -1.5
+          ],
+          [
+            2.0,
+            0.0
+          ]
+        ]
+      },
+      "visible_barriers": [],
+      "blocked_route_claim": null,
+      "policy_order": [
+        "upper_a",
+        "lower_a"
+      ],
+      "event_budget": 6,
+      "attempted_route_ids": [],
+      "route_costs": {
+        "lower_a": 5,
+        "upper_a": 5
+      }
+    },
+    {
+      "case_id": "false_class_cue",
+      "map_version": 1,
+      "observed_version": 1,
+      "branch_visible": true,
+      "current_prefix": [
+        [
+          -2.0,
+          0.0
+        ],
+        [
+          -1.0,
+          0.0
+        ]
+      ],
+      "prior_attempt_prefix": [
+        [
+          -2.0,
+          0.0
+        ],
+        [
+          -1.0,
+          0.0
+        ],
+        [
+          -0.75,
+          1.5
+        ],
+        [
+          0.75,
+          1.5
+        ]
+      ],
+      "routes": {
+        "upper_a": [
+          [
+            -2.0,
+            0.0
+          ],
+          [
+            -1.0,
+            0.0
+          ],
+          [
+            -0.75,
+            1.5
+          ],
+          [
+            0.75,
+            1.5
+          ],
+          [
+            2.0,
+            0.0
+          ]
+        ],
+        "lower_a": [
+          [
+            -2.0,
+            0.0
+          ],
+          [
+            -1.0,
+            0.0
+          ],
+          [
+            -0.75,
+            -1.5
+          ],
+          [
+            0.75,
+            -1.5
+          ],
+          [
+            2.0,
+            0.0
+          ]
+        ]
+      },
+      "visible_barriers": [],
+      "blocked_route_claim": "upper_a",
+      "policy_order": [
+        "upper_a",
+        "lower_a"
+      ],
+      "event_budget": 6,
+      "attempted_route_ids": [],
+      "route_costs": {
+        "lower_a": 5,
+        "upper_a": 5
+      }
+    },
+    {
+      "case_id": "single_class_graph",
+      "map_version": 1,
+      "observed_version": 1,
+      "branch_visible": true,
+      "current_prefix": [
+        [
+          -2.0,
+          0.0
+        ],
+        [
+          -1.0,
+          0.0
+        ]
+      ],
+      "prior_attempt_prefix": [
+        [
+          -2.0,
+          0.0
+        ],
+        [
+          -1.0,
+          0.0
+        ],
+        [
+          -0.75,
+          1.5
+        ],
+        [
+          0.75,
+          1.5
+        ]
+      ],
+      "routes": {
+        "upper_a": [
+          [
+            -2.0,
+            0.0
+          ],
+          [
+            -1.0,
+            0.0
+          ],
+          [
+            -0.75,
+            1.5
+          ],
+          [
+            0.75,
+            1.5
+          ],
+          [
+            2.0,
+            0.0
+          ]
+        ]
+      },
+      "visible_barriers": [],
+      "blocked_route_claim": null,
+      "policy_order": [
+        "upper_a"
+      ],
+      "event_budget": 6,
+      "attempted_route_ids": [],
+      "route_costs": {
+        "upper_a": 5
+      }
+    }
+  ]
+}
