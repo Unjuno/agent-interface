@@ -9,4 +9,3 @@
 7. Formal retries: 0. Existing A01 files and outputs were not modified.
 
 Audit-output note: the frozen audit source emitted the metadata scope string “six authored synthetic ... cases” although it reconstructed eight rows. Counts, fixture/raw hashes, decisions and five corruption results are internally recorded; the free-text scope is a retained reporting defect, explicitly disclosed in `REPORT.md` and not edited after the formal invocation.
-
