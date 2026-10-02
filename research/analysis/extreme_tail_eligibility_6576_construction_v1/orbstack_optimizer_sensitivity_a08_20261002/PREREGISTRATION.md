@@ -1,0 +1,13 @@
+# A08 preregistration — optimizer sensitivity with failed-start-aware audit
+
+## H / T / D / C / U
+
+- **H:** The A05 numerical discrepancy is consistent with Python optimizer/termination differences rather than instability of the pinned R reference if default R Nelder–Mead and BFGS agree closely while alternative converged starts have measurably different estimates/objectives. Alternatively, if converged R fits vary materially, the reference optimizer itself is start-sensitive on these finite samples.
+- **T:** Generate six fresh `n=400` stationary exponential samples in R 4.4.3 using seeds 65769943–65769948. Reuse the byte-identical, frozen A07 R/Python candidate programs, remove the two largest observations, and fit exceedances above the type-7 0.90 threshold. Run the R matrix once, Python port once, and a separate raw-only auditor once. Candidate counts R=1/Python=1; auditor=1 only if both candidates exit 0; retries=0.
+- **D:** The auditor validates input hashes, candidate indices, thresholds, every converged R likelihood, and Python/R default-fit parity. Failed/error/nonconverged R starts are retained and counted, not treated as corrupt data. A fixture is classifiable only with a converged `default_nm` and at least one additional converged predeclared R variant. `R_OPTIMIZER_SENSITIVE` if any classifiable fixture exceeds relative scale range 0.001, shape range 0.001, or NLL range 1e-6 among converged fits. Otherwise `R_FITS_STABLE_AT_GATE`. Python default parity limits remain relative scale 0.001 and absolute shape 0.001. If any fixture lacks the minimum two converged fits, disposition is `INCONCLUSIVE_INSUFFICIENT_CONVERGED_VARIANTS`; no post-hoc dropping.
+- **C:** Six synthetic fixtures and this finite set of optimizer variants only. No statistical calibration, population inference, operational endpoint, or global optimizer guarantee.
+- **U:** No formal six-case #6576 T0, real input-release delay, physical key-up, GUI, safety, worst-case, product, or broad numerical equivalence claim.
+
+## Execution boundary
+
+Fresh seed/path successor after A07's `STOP_AUDITOR_CLASSIFICATION_MISMATCH`; A07 remains immutable. Before freeze, independently confirm output-write access on disposable mounts for both frozen images using default container root. Run network-disabled containers in the dedicated #6576 OrbStack VM/private Docker daemon; read-only root/source/input, separate writable outputs, one CPU, 2 GiB memory, no swap. Inspect all configurations before starting candidate containers. Start each candidate once; start independent auditor once only after both candidates exit 0. Any failure is retained, never retried or patched in place.
