@@ -1,0 +1,50 @@
+{
+  "schema": "effect-terminal-feedback-audit-only-freeze-v1",
+  "issue": 6350,
+  "allocation": "EFFECT-TERMINAL-FEEDBACK-6301-RAW-AUDIT-ORB-20261002-04",
+  "predecessor": "EFFECT-TERMINAL-FEEDBACK-6301-T0-ORB-20261002-03",
+  "predecessor_disposition": "STOP_METHOD_FAILURE; candidate raw retained; do not rerun candidate or auditor allocation 03",
+  "current_main_source_base": "9a573b00dc595e64d09387e567c85e10b61a46c1",
+  "execution_branch": "research/effect-terminal-feedback-6301-orbstack-t0b-20261002",
+  "inputs": {
+    "fixture_sha256": "35bfa13d5edee93d834ddc54c980bb24a48b8a5bb9a4e9bcc9dcddd11d1b51a9",
+    "auditor_sha256": "831ad1e7a499b1d28bd5b0b9fbfb10b9f5409eddc47460e4a28209d84055977e",
+    "candidate_raw_sha256": "c6024886ab276f24a033c18c5446651eae3adb30bb58ed3c999c1b77595085e1"
+  },
+  "protocol_sha256": "87e1ec89a82baa2ec18181e8be42e55a86871c01f13f1b03c465cb4a5ab99747",
+  "runner_sha256": "94958e554e77ec303fcd5989fdfd6f515725c089ace132f88ba3dbc07c57fe29",
+  "counts_at_freeze": {
+    "candidate": 0,
+    "raw_only_auditor_max": 1,
+    "retries": 0
+  },
+  "prestart_stop": {
+    "reason": "runner could not create audit_out because formal_04 parent was absent; stopped before creating a container or audit marker",
+    "container_invocation": 0,
+    "auditor_invocation": 0,
+    "retries": 0
+  },
+  "runtime": {
+    "machine": "effect-terminal-feedback-6301-t0-orbstack-20261002",
+    "docker_engine": "29.1.3",
+    "image_id": "sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "image_platform": "linux/arm64",
+    "network": "none",
+    "rootfs_read_only": true,
+    "capabilities": "drop ALL",
+    "no_new_privileges": true,
+    "user": "65534:65534",
+    "requested_cpu": 0.25,
+    "requested_memory": 536870912,
+    "requested_pids_limit": 64,
+    "source_mount": "read-only /src",
+    "candidate_mount": "read-only /in",
+    "output_mount": "new writable /out"
+  },
+  "decision": "PASS_AUDIT_ONLY_SCOPED iff audit JSON reports PASS_METHOD_SCOPED, 10 tasks, 30 display records, four rejected mutations, errors empty; otherwise retain STOP/FAIL without retry",
+  "limitations": [
+    "Synthetic deterministic fixture only",
+    "No candidate rerun, model, GUI, game, GPU, or input",
+    "No real application effect, task success, safety, speed, or product claim"
+  ]
+}
