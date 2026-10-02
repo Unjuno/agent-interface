@@ -1,5 +1,7 @@
 # Analytical research
 
+- [`backpressure_route_expansion_5372_a01_20261003/`](backpressure_route_expansion_5372_a01_20261003/) — Issue #5372 A01 WSLc route-expansion queue fixture: independent audit passed; local-cost improvement reduced horizon completions 5→3, reservation arm restored 5; synthetic method scope only.
+
 - [`wslc_control_plane_6669_t1_20261003/REPORT.md`](wslc_control_plane_6669_t1_20261003/REPORT.md) — Issue #6669 isolated WSLc 3.0.1.0 control-plane T1: bounded 640 MiB synthetic pressure with cgroup, PSI and control-operation evidence; SIGTERM-aware candidate stopped cleanly and raw auditor/mutation checks passed. Container memory-cap enforcement remains unproven.
 
 - [`model_interface_crossover_6035_t0_a03_20261002/REPORT.md`](model_interface_crossover_6035_t0_a03_20261002/REPORT.md) — #6035 synthetic model-by-interface T0 A03: 64/64 assignments audited; planted crossover detected, safety/contract gates dominated; method-scoped only.
@@ -498,6 +500,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`multi_principal_effect_auth_5805_t0_v1/`](multi_principal_effect_auth_5805_t0_v1/)
 - [`multicursor_parking_reposition_r0_v1/`](multicursor_parking_reposition_r0_v1/)
 - [`multicursor_target_handle_regrounding_r0_v1/`](multicursor_target_handle_regrounding_r0_v1/)
+- [`multifidelity_control_variate_6155_t0f_integrity_stop_20261003/`](multifidelity_control_variate_6155_t0f_integrity_stop_20261003/)
 - [`multifidelity_route_contrast_6155_t0_v1/`](multifidelity_route_contrast_6155_t0_v1/)
 - [`multistate_stop_recovery_5593_t0_20261002_01/`](multistate_stop_recovery_5593_t0_20261002_01/)
 - [`multistate_stop_recovery_5593_t1_20261002_02/`](multistate_stop_recovery_5593_t1_20261002_02/)
