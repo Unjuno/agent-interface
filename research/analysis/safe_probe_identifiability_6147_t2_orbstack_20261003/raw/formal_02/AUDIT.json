@@ -1,0 +1,57 @@
+{
+  "audit": "PASS_RAW_REPLAY",
+  "errors": [],
+  "hypothesis": "H_PASS_SCOPED",
+  "metrics": [
+    {
+      "arm": "adaptive",
+      "effects": 6,
+      "effects_by_family": {
+        "action_equivalent": 2,
+        "convergent": 2,
+        "impossible": 0,
+        "separable": 2,
+        "stale": 0
+      },
+      "rows": 10,
+      "safe_probes": 16,
+      "unsafe_probes": 0
+    },
+    {
+      "arm": "no_probe",
+      "effects": 2,
+      "effects_by_family": {
+        "action_equivalent": 2,
+        "convergent": 0,
+        "impossible": 0,
+        "separable": 0,
+        "stale": 0
+      },
+      "rows": 10,
+      "safe_probes": 0,
+      "unsafe_probes": 0
+    },
+    {
+      "arm": "one_step",
+      "effects": 2,
+      "effects_by_family": {
+        "action_equivalent": 2,
+        "convergent": 0,
+        "impossible": 0,
+        "separable": 0,
+        "stale": 0
+      },
+      "rows": 10,
+      "safe_probes": 10,
+      "unsafe_probes": 0
+    }
+  ],
+  "mutation_controls_rejected": {
+    "act_after_expiry": true,
+    "drop_candidate_row": true,
+    "forge_candidate_hidden_state": true,
+    "inject_unsafe_probe": true,
+    "swap_distinguishing_branch": true
+  },
+  "scope": "disposable deterministic Xvfb GUI fixture only; no user app, model, authority, external effect, or general GUI claim"
+}
