@@ -1,0 +1,221 @@
+{
+  "operation": "guarded_activate_window",
+  "task_success": null,
+  "replay_allowed": false,
+  "status": "reviewed",
+  "result": {
+    "status": "completed",
+    "admission": "accepted",
+    "required_capabilities": [
+      "clock.monotonic",
+      "input.release_all",
+      "window.activate"
+    ],
+    "execution": {
+      "started_ns": 1645721866374,
+      "ended_ns": 1645725526638,
+      "emissions": 0,
+      "program_emissions": 0,
+      "observations": [],
+      "releases": [
+        {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 1645725523890
+        }
+      ],
+      "waits": [],
+      "activations": [
+        {
+          "operation_index": 0,
+          "target": "app",
+          "window_id": 6291463,
+          "started_ns": 1645723111424,
+          "requested_ms": 300,
+          "request_attempted": true,
+          "status": "active_and_focused",
+          "visual_confirmation": false,
+          "active_window_ids": [
+            6291463
+          ],
+          "focus_within_target": true,
+          "ended_ns": 1645724533199
+        }
+      ],
+      "completed_ops": [
+        0,
+        1
+      ]
+    },
+    "recovery_required": false
+  },
+  "feedback_status": "review_returned",
+  "review": {
+    "status": "reviewed",
+    "authority_granted": false,
+    "input_dispatched": false,
+    "previous_scope": "native-x11:5b8fc4eedbab4d709949508039ee56ce",
+    "previous_binding_revision": 0,
+    "binding_revision": 1,
+    "scope": "native-x11:b6b669def01d4d65b5961f3f796a7fe8",
+    "previous_window_id": 6291463,
+    "requested_window_id": 6291463,
+    "started_ns": 1645726070908,
+    "observation": {
+      "sequence": 2,
+      "observation_id": "ef433977664047d38dcdbba19fe3492d",
+      "binding_revision": 1,
+      "capture_ns": 1645727661550,
+      "image_source": "exact_capture_rgb_handoff",
+      "pointer_binding": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          21,
+          40,
+          900,
+          600
+        ]
+      },
+      "native": {
+        "bytes": 2800000,
+        "sha256": "db8a1cad860b298392f57a0e241f80ec7091f173e543b030aa3e5cc33f01ef3b",
+        "width": 1000,
+        "height": 700,
+        "target": "app",
+        "native_window_id": 6291463,
+        "frame": "screen_physical_px",
+        "region": [
+          0,
+          0,
+          1000,
+          700
+        ],
+        "capture_started_ns": 1645727661550,
+        "capture_ended_ns": 1645735810487,
+        "artifact": {
+          "mime_type": "image/png",
+          "path": "/var/tmp/agent-interface-evidence-storage-main/results-local/public-owner-activation-primary-01/short-compiled/activation-call/images/b85a211c36914a3b861653b5d2beb14d.png",
+          "sha256": "c8c768c802c0f14c12f9f2b5ba9da915a3bd2ea91c9e4d5cbc5142c6d7bf58e6",
+          "bytes": 42878,
+          "width": 1000,
+          "height": 700,
+          "source_raw_sha256": "db8a1cad860b298392f57a0e241f80ec7091f173e543b030aa3e5cc33f01ef3b",
+          "timing_ns": {
+            "started": 1645737835451,
+            "converted": 1645741535224,
+            "encoded": 1645759677483,
+            "written": 1645760355000,
+            "hashed": 1645762190365
+          }
+        }
+      },
+      "timing_ns": {
+        "started": 1645726620256,
+        "public_returned": 1645762232401,
+        "binding_checked": 1645763283500,
+        "artifact_verified": 1645763394147,
+        "decoded": 1645763398992
+      }
+    },
+    "ended_ns": 1645764071680
+  },
+  "source": {
+    "sequence": 2,
+    "observation_id": "ef433977664047d38dcdbba19fe3492d",
+    "binding_revision": 1,
+    "capture_ns": 1645727661550,
+    "image_source": "exact_capture_rgb_handoff",
+    "pointer_binding": {
+      "focus": 6291464,
+      "surface": 6291463,
+      "geometry": [
+        21,
+        40,
+        900,
+        600
+      ]
+    },
+    "native": {
+      "bytes": 2800000,
+      "sha256": "db8a1cad860b298392f57a0e241f80ec7091f173e543b030aa3e5cc33f01ef3b",
+      "width": 1000,
+      "height": 700,
+      "target": "app",
+      "native_window_id": 6291463,
+      "frame": "screen_physical_px",
+      "region": [
+        0,
+        0,
+        1000,
+        700
+      ],
+      "capture_started_ns": 1645727661550,
+      "capture_ended_ns": 1645735810487,
+      "artifact": {
+        "mime_type": "image/png",
+        "path": "/var/tmp/agent-interface-evidence-storage-main/results-local/public-owner-activation-primary-01/short-compiled/activation-call/images/b85a211c36914a3b861653b5d2beb14d.png",
+        "sha256": "c8c768c802c0f14c12f9f2b5ba9da915a3bd2ea91c9e4d5cbc5142c6d7bf58e6",
+        "bytes": 42878,
+        "width": 1000,
+        "height": 700,
+        "source_raw_sha256": "db8a1cad860b298392f57a0e241f80ec7091f173e543b030aa3e5cc33f01ef3b",
+        "timing_ns": {
+          "started": 1645737835451,
+          "converted": 1645741535224,
+          "encoded": 1645759677483,
+          "written": 1645760355000,
+          "hashed": 1645762190365
+        }
+      }
+    },
+    "timing_ns": {
+      "started": 1645726620256,
+      "public_returned": 1645762232401,
+      "binding_checked": 1645763283500,
+      "artifact_verified": 1645763394147,
+      "decoded": 1645763398992
+    }
+  },
+  "observation_report": {
+    "schema": "agent-interface/runtime-observation-v1",
+    "status": "returned",
+    "observation_id": "ef433977664047d38dcdbba19fe3492d",
+    "observation": {
+      "bytes": 2800000,
+      "sha256": "db8a1cad860b298392f57a0e241f80ec7091f173e543b030aa3e5cc33f01ef3b",
+      "width": 1000,
+      "height": 700,
+      "target": "app",
+      "native_window_id": 6291463,
+      "frame": "screen_physical_px",
+      "region": [
+        0,
+        0,
+        1000,
+        700
+      ],
+      "capture_started_ns": 1645727661550,
+      "capture_ended_ns": 1645735810487,
+      "artifact": {
+        "mime_type": "image/png",
+        "path": "/var/tmp/agent-interface-evidence-storage-main/results-local/public-owner-activation-primary-01/short-compiled/activation-call/images/b85a211c36914a3b861653b5d2beb14d.png",
+        "sha256": "c8c768c802c0f14c12f9f2b5ba9da915a3bd2ea91c9e4d5cbc5142c6d7bf58e6",
+        "bytes": 42878,
+        "width": 1000,
+        "height": 700,
+        "source_raw_sha256": "db8a1cad860b298392f57a0e241f80ec7091f173e543b030aa3e5cc33f01ef3b",
+        "timing_ns": {
+          "started": 1645737835451,
+          "converted": 1645741535224,
+          "encoded": 1645759677483,
+          "written": 1645760355000,
+          "hashed": 1645762190365
+        }
+      }
+    },
+    "side_effect_authority": false,
+    "input_dispatched": false
+  }
+}

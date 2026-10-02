@@ -1,0 +1,31 @@
+{
+  "status": "PREPARED_NOT_EXECUTED",
+  "allocation": "AUDIT-COMPLETION-5895-T4-ORBSTACK-20261001-01-8d0c7f53",
+  "owner_thread": "01a0b98b-8d0c-7f53-92bc-4c6a28d73c73",
+  "exclusive_window_utc": ["2026-10-01T10:30:00Z", "2026-10-01T10:50:00Z"],
+  "candidate_invocations": 0,
+  "independent_auditor_invocations": 0,
+  "host_construction_tests": {"passed": 9, "failed": 0},
+  "candidate_matrix_executed": false,
+  "main_at_preparation": "c7346fe1ad0c0d40254c6aa7898a8ed6de76c0dc",
+  "pr5630_head_at_preparation": "288d0498d11cf16657e523a04616bf4f49cd94f4",
+  "frozen_source_worktree_commit": "7a969fb26e36879ca467e8d17db4b60fa2338bb0",
+  "container_user": "501:20",
+  "container_preflight_read_only": {
+    "context": "orbstack",
+    "client": "29.5.2",
+    "server": "29.4.0",
+    "platform": "linux/arm64",
+    "image_digest": "sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "running_containers": 0,
+    "created_containers_observed": [
+      "frosty_solomon (created 2026-09-26; Issue #4588 reanalysis command; not running)",
+      "issue4466-formal-stage-01-20260926 (created 2026-09-26; command /bin/true; not running)",
+      "issue4466-image-layer-20260926 (created; not running)",
+      "issue4466-xwd-donor-20260926 (created; not running)"
+    ],
+    "containers_modified_or_removed": 0
+  },
+  "t3_preserved": "STOP_RUNNER_OUTPUT_PATH_NOT_EMPTY; candidate 0/8; auditor 0; no retry",
+  "start_gate_pending": true
+}

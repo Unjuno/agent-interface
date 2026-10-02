@@ -1,0 +1,21 @@
+{
+  "schema":"agent-interface.hard-boundary-equivalence-6109.truth.v2",
+  "expected":{
+    "exact":{"exact":true,"approx":"EQUIVALENT"},
+    "tau-refactor":{"exact":true,"approx":"EQUIVALENT"},
+    "benign-jitter":{"exact":false,"approx":"EQUIVALENT"},
+    "renamed-fresh-ids":{"exact":true,"approx":"EQUIVALENT"},
+    "extra-may-divergence":{"exact":false,"approx":"DISTINGUISHED"},
+    "distinct-incarnation-same-pixels":{"exact":false,"approx":"HOLD_IDENTITY"},
+    "receipt-alias-one-to-many":{"exact":false,"approx":"HOLD_IDENTITY"},
+    "stale-generation":{"exact":false,"approx":"DISTINGUISHED"},
+    "changed-effect-lineage":{"exact":false,"approx":"DISTINGUISHED"},
+    "release-mismatch":{"exact":false,"approx":"DISTINGUISHED"},
+    "unknown-outcome":{"exact":false,"approx":"DISTINGUISHED"},
+    "task-margin-crossing":{"exact":false,"approx":"DISTINGUISHED"},
+    "unmapped-identity-hold":{"exact":false,"approx":"HOLD_IDENTITY"},
+    "unit-mismatch-hold":{"exact":false,"approx":"HOLD_UNITS"},
+    "missing-bound-hold":{"exact":false,"approx":"HOLD_BOUND"}
+  },
+  "scope":"Expected dispositions are authored finite fixture assertions, not empirical measurements or route truth."
+}

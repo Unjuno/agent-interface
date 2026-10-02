@@ -1,0 +1,37 @@
+{
+  "allocation_id": "ACTION-BOUND-RESIDUALS-6619-T0-WSLC-20261002-01",
+  "architecture": "linux/amd64",
+  "base_main": "df2a230251cbb4452ae916f3e8c69c14c5b985d4",
+  "branch": "research/action-bound-residuals-6619-t0-wslc-20261002",
+  "cgroup_enforced": false,
+  "cpus_requested": 1,
+  "formal_auditor_invocations": 1,
+  "formal_candidate_invocations": 1,
+  "formal_retries": 0,
+  "formal_start_gate_main": "91d8221875efd9421db76f667ecff0cd242dd16b",
+  "gpu": "not used; fixture raster workload is small CPU-only",
+  "image_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+  "image_ref": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+  "inputs_sha256": "d4a45af04d2f352ca009ec841d00d5ef2e3d115e9e6ef59b4ffec6756f622545",
+  "memory_requested": "512m",
+  "network": "none",
+  "oracle_sha256": "481938c77239e9ecb50c5a73a4f377d201f28ee1b0472db0ee0230e80997dfb5",
+  "output_paths": {
+    "audit": "formal_01/audit_output/audit.json",
+    "candidate": "formal_01/candidate_output/raw.json"
+  },
+  "path": "research/observation_gating/results/action_bound_residuals_6619_t0_20261002",
+  "pull": "never",
+  "python": "3.12.15",
+  "relevant_main_paths_unchanged_since_base": [
+    "docs/CURRENT_GOAL.md",
+    "research/observation_gating/README.md",
+    "research/observation_gating/PROTOCOL.md"
+  ],
+  "source_sha256": {
+    "PREREGISTRATION.md": "ea71c6acdfca474e11d7978119c8944c5655a58c08c2ee224bd6a1abc7fa2372",
+    "audit.py": "564700f36b4d04faaf2e42a5873493285fa8e5c19171a7ae16fed26076b758bc",
+    "candidate.py": "ee7f36462b11e613cb4668be5f7f91491ca3c2f7ef516b42a854ac21c17e15b0",
+    "make_fixture.py": "e3d5326d74a60b292ea4111eb181a456ef6ef64d54371d08f7fb03e5103cd22d"
+  }
+}

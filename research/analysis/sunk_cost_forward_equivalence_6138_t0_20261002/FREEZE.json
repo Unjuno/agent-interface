@@ -1,0 +1,19 @@
+{
+  "schema":"unjuno-experiment-freeze-v1",
+  "issue":6138,
+  "allocation":"T0",
+  "source_main_commit":"66b12669ff833b9fdae9471f4e312c64f020bb9d",
+  "card_count":10,
+  "pair_count":7,
+  "candidate_visibility":["fixture.json","candidate.py"],
+  "audit_visibility":["fixture.json","oracle_output.json","audit.py"],
+  "candidate_invocations":1,
+  "auditor_invocations":1,
+  "retries":0,
+  "image":"python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "platform":"linux/arm64",
+  "network":"none",
+  "rootfs":"read-only",
+  "limits":{"cpus":"0.5","memory":"256m","pids":32},
+  "sha256":{"fixture.json":"69ea871c2bb004bde1f90bf924732657ff8df03188f1e83febde0bcea68f946e","candidate.py":"285b0adacf0512d832ef39e6e79beabe8977e976d22577bfcc430409bbb02d1d","audit.py":"9fa79525b2efe49b9ad32377bfe93a6bc61ee6f5180af9e05736b14084c47a11","test_t0.py":"ced6a9f2c80e1e50921490c3220fc7858cfd7287e3cf98199acc9c62c7ac9965","PROTOCOL.md":"b1ad692b444b4dc54adbee4ab2e5b65b9052105cfa67ce37080acbc0dcb12236"}
+}

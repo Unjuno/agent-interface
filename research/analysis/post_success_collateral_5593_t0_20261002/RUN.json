@@ -1,0 +1,25 @@
+{
+  "allocation": "POST-SUCCESS-COLLATERAL-5593-T0-20261002-01",
+  "status": "PASS_METHOD_SCOPED",
+  "scope": "Synthetic finite event-time accounting only; no empirical agent-interface, task-contract, runtime, model, GUI, or product claim.",
+  "base_main": "e3a57eeef93153483d2ce40d2ef8050c89945fcc",
+  "image": "python:3.13.5-slim@sha256:4c2cf9917bd1cbacc5e9b07320025bdb7cdf2df7b0ceaccb55e9dd7e30987419",
+  "network": "none",
+  "limits": {"cpus": 1, "memory_mb": 256, "pids": 64, "read_only_root": true, "source_read_only": true, "writable_output_only": "runs/formal-01", "capabilities": "drop all", "no_new_privileges": true},
+  "commands": [
+    "python /work/runner.py --input /work/fixture.json --output /out/candidate_result.json",
+    "python /work/independent_audit.py --input /work/fixture.json --candidate /out/candidate_result.json --output /out/audit_result.json"
+  ],
+  "invocations": {"candidate": 1, "independent_auditor": 1, "retries": 0},
+  "audit": {"status": "PASS_METHOD_SCOPED", "reconstructed_episodes": 5, "reconstructed_horizon_rows": 10, "errors": []},
+  "first_terminal": {"all_launched_n": 5, "verified_success": 3, "verified_failure": 1, "policy_safe_stop": 1, "success_fraction": 0.6},
+  "horizons": {
+    "launch_plus_3": {"clean_lower_n": 3, "clean_upper_n": 3, "all_launched_n": 5, "lower_fraction": 0.6, "upper_fraction": 0.6},
+    "launch_plus_6": {"clean_lower_n": 1, "clean_upper_n": 2, "all_launched_n": 5, "lower_fraction": 0.2, "upper_fraction": 0.4, "delayed_collateral": 1, "followup_unknown": 1}
+  },
+  "sha256": {
+    "FREEZE.json": "a4903b861366ac766902cf32260b7bb9426667d788f69409960643435fde24d3",
+    "runs/formal-01/candidate_result.json": "38a0150b9c160714e34fd8955d05fa0797d730ae55b0fb9401ffdc187f4d905c",
+    "runs/formal-01/audit_result.json": "ef954444d4e7e37e88ddad7e124adac3fc2ffe03505d94c2d4e294403629b764"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "schema":"pending-route-t003-truth-v1",
+  "terminal_events":{
+    "delay_inversion":[["A1","VERIFIED_SUCCESS",3],["A2","VERIFIED_SUCCESS",3],["A3","VERIFIED_SUCCESS",3],["A4","VERIFIED_FAILURE",1],["B1","VERIFIED_SUCCESS",1],["B2","VERIFIED_SUCCESS",1],["B3","VERIFIED_FAILURE",1],["B4","VERIFIED_FAILURE",1]],
+    "equal_delay_null":[["C1","VERIFIED_SUCCESS",1],["C2","VERIFIED_FAILURE",1],["D1","VERIFIED_SUCCESS",1],["D2","VERIFIED_FAILURE",1]],
+    "known_independent_loss":[["E1","VERIFIED_SUCCESS",1],["E2","VERIFIED_FAILURE",1],["E3","VERIFIED_FAILURE",1],["E4","ADMIN_LOST_FOLLOWUP",3],["F1","VERIFIED_SUCCESS",1],["F2","VERIFIED_SUCCESS",1],["F3","VERIFIED_SUCCESS",1],["F4","ADMIN_LOST_FOLLOWUP",3]],
+    "typed_terminals":[["S1","POLICY_TERMINAL_SAFE_STOP",1],["S2","VERIFIED_SUCCESS",1],["W1","VERIFIED_WRONG_EFFECT",1],["W2","VERIFIED_SUCCESS",1]],
+    "yield_recovery":[["Y1","VERIFIED_SUCCESS",3],["Y2","VERIFIED_FAILURE",3]],
+    "unknown_loss":[["U1","VERIFIED_SUCCESS",1],["U2","ADMIN_LOST_FOLLOWUP",3],["V1","VERIFIED_FAILURE",1],["V2","ADMIN_LOST_FOLLOWUP",3]],
+    "state_coupled":[["Q1","VERIFIED_SUCCESS",1],["Q2","VERIFIED_FAILURE",3]]
+  },
+  "expected_as_of":{
+    "delay_inversion":{"complete_case":"SELECT:B","pending_aware":"NO_RANKING"},
+    "equal_delay_null":{"complete_case":"NO_PREFERENCE","pending_aware":"NO_PREFERENCE"},
+    "known_independent_loss":{"complete_case":"SELECT:F","pending_aware":"SELECT:F"},
+    "typed_terminals":{"pending_aware":"REPORT_TYPED_OUTCOMES_NO_COLLAPSE"},
+    "yield_recovery":{"pending_aware":"PENDING_AT_CHECKPOINT"},
+    "unknown_loss":{"pending_aware":"NONIDENTIFIABLE"},
+    "state_coupled":{"pending_aware":"MODEL_MISMATCH_UNKNOWN"}
+  },
+  "expected_deadline_success_rates":{"delay_inversion":{"A":"3/4","B":"1/2"}},
+  "switch_per_change":10
+}

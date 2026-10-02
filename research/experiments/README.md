@@ -9,6 +9,7 @@ Current contents remain at their existing paths for provenance. Use [`../../RESE
 ## Historical preparation archives
 
 - [Qwen support-balance preparation: #5139 / source PR #5208](qwen05b_abstention_balance_5139_sampler_v1/ARCHIVAL_QUALIFICATION.md) — 74 exact historical sampler/auditor and construction-evidence files, with original STOPs and provenance corrections retained; 29 already-identical files excluded. Preservation only: no fresh execution, scientific PASS, candidate promotion, or formal GPU authorization. #5139 remains open and source PR #5208 remains Draft.
+- [Stratified-support feasibility probe: #5139 / source PR #5169](needle_stratified_support_5139_v1/ARCHIVAL_QUALIFICATION.md) — five exact historical files retaining a host-only synthetic 16-vs-4 marginal-balance feasibility result. Preservation only; the joint template×field imbalance remains, and no model, quality, GPU, Docker, or formal allocation result is claimed.
 
 ## Historical diagnostic archives
 

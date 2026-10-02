@@ -1,0 +1,18 @@
+{
+  "schema": "issue-6519-t0-construction-stop-v1",
+  "allocation": "AFFORDANCE-REGRESSION-6519-T0-20261002-01",
+  "status": "STOP_LAUNCH_PATH_UNRESOLVED",
+  "attempt_count": 1,
+  "retry_count": 0,
+  "frozen_command": "python -B -m unittest -v test_protocol",
+  "attempted_invocation_shape": "wslc.exe run --pull never --network none --cpus 1 --memory 1G --user 65534:65534 --name affordance-6519-construction-01 --mount type=bind,source=,target=/src,readonly --mount type=bind,source=,target=/out --workdir /src python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B -m unittest -v test_protocol",
+  "exit_code": 1,
+  "shell_context": "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\goal-unjuno-agent-interface-github-mcp-2 (workspace root), not the repository worktree",
+  "observed_failure": "Resolve-Path research/analysis/affordance_regression_envelope_6519_t0_20261002 failed because that relative path did not exist under the shell context; pkg/out/stdout/stderr were null and follow-on Join-Path/Get-Content operations also failed.",
+  "wslc_container_found_after_attempt": false,
+  "stdout_stderr_files": "NOT_CREATED; output redirection paths were unresolved",
+  "candidate_ran": false,
+  "auditor_ran": false,
+  "interpretation": "Conservatively consume the one-shot construction attempt; do not retry this allocation. No test result or scientific conclusion.",
+  "observed_at_utc": "2026-10-02T05:02:28Z"
+}
