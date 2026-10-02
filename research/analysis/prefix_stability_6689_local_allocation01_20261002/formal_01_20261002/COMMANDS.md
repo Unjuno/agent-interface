@@ -1,6 +1,6 @@
 # Formal commands (frozen; candidate and auditor each once)
 
-Construction command executed in cached pinned WSLc image:
+Construction command executed in cached pinned WSLc image. The amended final frozen-byte gate was re-run in container `issue6689-prefix-t0-construction-03` immediately before formal candidate launch and passed 9/9 (exit 0); earlier construction passes are not substituted for that final gate.
 
 ```text
 wslc run --rm --name issue6689-prefix-t0-construction-01 --pull never --network none --cpus 1 --memory 512m --mount type=bind,source=<package>,target=/src,readonly --workdir /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python -B -m unittest -v
