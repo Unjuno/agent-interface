@@ -13,6 +13,68 @@ from runtime.cli_v1.mcp_session import MCPSessionOwner
 
 class OwnedMCPTests(unittest.IsolatedAsyncioTestCase):
 
+    async def test_management_capture_disagreement_withholds_image_on_call_and_lookup(self):
+        for operation, consistency in [('inspect_target', 'changed'),
+                                       ('review_target', 'changed'),
+                                       ('review_target', 'unconfirmed')]:
+            with self.subTest(operation=operation, consistency=consistency), tempfile.TemporaryDirectory() as td, ExitStack() as stack:
+                session = self.fixture()
+                session.backend.targets = {'fixture': SimpleNamespace(id=123)}
+                session.backend.d.create_resource_object.side_effect = lambda kind, wid: SimpleNamespace(id=wid)
+                stack.enter_context(self.selection())
+                stack.enter_context(patch('runtime.cli_v1.mcp_session.open_session', return_value=session))
+                evidence = {'window_id':456,'geometry':[1,2,30,40]}
+                inspect = stack.enter_context(patch('runtime.cli_v1.mcp_session.inspect_focused_target', return_value=evidence))
+                shown = stack.enter_context(patch('runtime.cli_v1.mcp_server.present_result', return_value={
+                    'image_status':'image','image':{'type':'image','mimeType':'image/png','data':'YWJj'}}))
+                server = create_server({'fixture':123}, td, session_mode='persistent-x11')
+                if operation == 'inspect_target':
+                    inspect.side_effect = [evidence,dict(evidence,window_id=457)]
+                    arguments = {'target':'fixture','screen_region':[0,0,10,10]}
+                else:
+                    initial = self.row(await server.call_tool('interface_inspect_target',{'target':'fixture'}))
+                    arguments = dict(initial['review_request']['arguments'],screen_region=[0,0,10,10])
+                    if consistency == 'changed':
+                        inspect.side_effect = [evidence,dict(evidence,window_id=457)]
+                    else:
+                        inspect.side_effect = [evidence,OSError('metadata unavailable')]
+                reply = await server.call_tool('interface_'+operation, arguments)
+                row = self.row(reply)
+                self.assertEqual([item.type for item in reply.content],['text'])
+                self.assertEqual(row['image_status'],'needs_review')
+                self.assertNotIn('image',row)
+                self.assertFalse(row['input_dispatched'])
+                self.assertFalse(row['authority_granted'])
+                if operation == 'review_target':
+                    self.assertEqual(row['status'],'target_reviewed')
+                    self.assertEqual(row['capture_consistency'],consistency)
+                    self.assertEqual(row['binding_revision'],2)
+                    self.assertEqual(row['session']['targets'],{'fixture':456})
+                else:
+                    self.assertEqual(row['error'],'TARGET_CHANGED_DURING_CAPTURE')
+                    self.assertNotIn('review_id',row)
+                raw_path = Path(row['call_directory'],'report.json')
+                retained_bytes = raw_path.read_bytes()
+                raw = json.loads(retained_bytes)
+                self.assertEqual(raw['observation_report']['status'],'returned')
+                previous_calls = inspect.call_count
+                captured = session.backend.observe_read_only.call_count
+                for include_image in (True,False):
+                    retained = await server.call_tool('interface_results',{'call_id':row['call_id'],'include_image':include_image})
+                    history = self.row(retained)
+                    self.assertEqual([item.type for item in retained.content],['text'])
+                    self.assertEqual(history['image_status'],'needs_review')
+                    self.assertFalse(history['operation_invoked'])
+                    self.assertEqual(history['observation_report'],raw['observation_report'])
+                self.assertEqual(raw_path.read_bytes(),retained_bytes)
+                self.assertEqual(inspect.call_count,previous_calls)
+                self.assertEqual(session.backend.observe_read_only.call_count,captured)
+                shown.assert_not_called()
+                session.backend.focus.assert_not_called()
+                session.backend.release_all.assert_not_called()
+                session.dispatch.assert_not_called()
+                await server.call_tool('interface_close',{})
+
     async def test_post_dispatch_inspection_is_opt_in_retained_and_never_replayed(self):
         from copy import deepcopy
         raw = json.loads((Path(__file__).parent/'fixtures/nonpaced_dispatch_review.json').read_text())['receipt']['source']['raw_report']
