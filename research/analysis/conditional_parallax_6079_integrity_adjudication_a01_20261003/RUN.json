@@ -1,0 +1,36 @@
+{
+  "allocation_id": "CONDITIONAL-PARALLAX-6079-INTEGRITY-A01-20261003-01",
+  "disposition": "HOLD_PARENT_FORMAL_PROMOTION",
+  "candidate_invocations": 0,
+  "raw_only_auditor_invocations": 1,
+  "raw_only_auditor_exit_code": 0,
+  "parent_candidate_rerun": false,
+  "parent_raw_reconstruction_errors": [],
+  "independent_reconstruction": {
+    "pair_count": 9,
+    "screen_overlay_max_separations_px": [11.0, 11.0, 12.0],
+    "sham_and_world_match_separations_px": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+    "visible_background_pixel_count_per_passive_member_a": [1, 1, 1, 1, 1, 1, 1, 1, 1],
+    "regenerated_visible_input_sha256_matches_freeze": true,
+    "regenerated_truth_sidecar_sha256_matches_freeze": true
+  },
+  "provenance": {
+    "parent_freeze_expected_prereg_sha256": "e78b67a3691bf405b4c8342664ed9100dd35143a4325daee692f7049d19666e3",
+    "parent_delivered_prereg_sha256": "d6a96771cafdcac20475bd9b37c4a2052f5239c326b612a5f2d5b6d9fc360cdd",
+    "parent_current_manifest_matches_delivered_prereg": true,
+    "original_expected_bytes_available": false,
+    "same_fixture_candidate_run_in_parent_construction_test": true,
+    "parent_first_exposure_condition_met": false
+  },
+  "parent_original_auditor": {
+    "reported_mutation_controls_rejected": "4/4",
+    "correctly_routed_truth_controls": "2 invalidly routed in the parent; their schema rejection does not establish intended mutations",
+    "successor_correctly_routed_mutation_controls_rejected": "4/4",
+    "retroactive_repair_claimed": false
+  },
+  "auditor_stdout_sha256": "e3dd20582fabe023e9c20bf3a63958f6b8c1ab18171a08ed648e70d36b164309",
+  "auditor_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "audit_output_sha256": "8bf2ffd64208241af9e94a7219315a739506de35df82aa7c7d00e8a8010c78e0",
+  "runtime": "CPython 3.12.13; Darwin 25.6.0; arm64; host CPU only",
+  "scope": "Post-hoc source/raw integrity adjudication. No parent candidate/auditor rerun, no source repair, no reconstruction of missing original bytes."
+}
