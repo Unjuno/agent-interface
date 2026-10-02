@@ -28,7 +28,15 @@
     "image_id": "sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
     "platform": "linux/arm64"
   },
-  "transfer_command": "orbctl push -m research-6183-t0-20261003 <absolute-package-directory>/ /home/taka/inputs/",
+  "transfer_command": "orbctl push -m research-6183-t0-20261003 /Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/analysis/threshold_persistent_topology_6183_t0_20261003/ /home/taka/inputs/",
+  "pre_candidate_staging_incident": {
+    "classification": "infrastructure/command-target error; no scientific invocation",
+    "first_command": "orbctl push /Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/analysis/threshold_persistent_topology_6183_t0_20261003 research-6183-t0/",
+    "observation": "-m was omitted, so OrbStack default machine obs-audit-t1-5681-20261001 received the package at /home/taka/research-6183-t0 rather than the dedicated VM. A subsequent read on the intended VM found no files.",
+    "recovery": "Read-only listing confirmed that the default-machine directory contained only this task's transferred package files. The exact newly created /home/taka/research-6183-t0 directory was removed as root; post-removal existence check passed. No container or candidate/auditor process was started on that machine.",
+    "formal_candidate_invocations": 0,
+    "formal_auditor_invocations": 0
+  },
   "candidate_command": "docker run --name topology-6183-candidate-a01 --network none --cpus 1 --memory 512m --read-only --cap-drop ALL --security-opt no-new-privileges --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,src=/home/taka/inputs/threshold_persistent_topology_6183_t0_20261003,dst=/src,readonly --mount type=bind,src=/home/taka/outputs/topology-6183-a01,dst=/out -e OUT_DIR=/out -e PYTHONDONTWRITEBYTECODE=1 -w /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 sh -c 'cat /sys/fs/cgroup/memory.max > /out/candidate.memory.max; cat /sys/fs/cgroup/cpu.max > /out/candidate.cpu.max; python /src/candidate.py > /out/candidate.stdout.log 2>&1'",
   "auditor_command": "docker run --name topology-6183-auditor-a01 --network none --cpus 1 --memory 512m --read-only --cap-drop ALL --security-opt no-new-privileges --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,src=/home/taka/inputs/threshold_persistent_topology_6183_t0_20261003,dst=/src,readonly --mount type=bind,src=/home/taka/outputs/topology-6183-a01,dst=/out -e OUT_DIR=/out -e PYTHONDONTWRITEBYTECODE=1 -w /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 sh -c 'cat /sys/fs/cgroup/memory.max > /out/auditor.memory.max; cat /sys/fs/cgroup/cpu.max > /out/auditor.cpu.max; python /src/audit.py > /out/auditor.stdout.log 2>&1'",
   "limits_enforcement_note": "VM cgroup values are observed; container effective limits and cgroup values will be captured during each invocation. No inference from Docker configuration alone.",
