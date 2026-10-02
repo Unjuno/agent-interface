@@ -1,5 +1,6 @@
 # Analytical research
 
+- [`constraint_response_normalization_6437_t0_v1/`](constraint_response_normalization_6437_t0_v1/REPORT.md) — Successor to Issue #6380: typed answer normalization passed 32/32 synthetic rows and rejected seven corruptions; method-scoped only.
 - [`context_preserving_delegation_6373_t0_v1/`](context_preserving_delegation_6373_t0_v1/REPORT.md) — Issue #6373 synthetic 8×4 policy comparison; RESTORE_PLUS_DIFF beat SUMMARY_ONLY on stipulated next-context proxy while preserving effects/external state/artifacts/unknowns; blind restore-only had four destructive controls. Not GUI/human evidence.
 - [`cross_role_meaning_drift_6351_t0_v1/`](cross_role_meaning_drift_6351_t0_v1/REPORT.md) — Issue #6351 synthetic T0; flattened status falsely completed an unresolved-child case and contradictory receipts; direct typed queries and projections were equivalent, so no projection increment was demonstrated. Invalid first audits and corrected independent audit preserved.
 - [`infra_speed_fairness_6347_t0_v1/`](infra_speed_fairness_6347_t0_v1/REPORT.md) — Issue #6347 synthetic FRFS/FIFO/bounded-window comparison; finite winner/status rows independently audited, with a separately frozen boundary-observability successor required before phase-jitter or strategic-timing claims.
@@ -233,6 +234,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`consent_scoped_preparation_5793_t0_v1/`](consent_scoped_preparation_5793_t0_v1/)
 - [`constrained_interaction_testing_5330_t0_v1/`](constrained_interaction_testing_5330_t0_v1/)
 - [`constraint_elicitation_6380_t0_v1/`](constraint_elicitation_6380_t0_v1/)
+- [`constraint_response_normalization_6437_t0_v1/`](constraint_response_normalization_6437_t0_v1/)
 - [`context_preserving_delegation_6373_t0_v1/`](context_preserving_delegation_6373_t0_v1/)
 - [`context_success_history_calibration_6241_t0_20261002/`](context_success_history_calibration_6241_t0_20261002/)
 - [`cost_predicate_order_4258_v1/`](cost_predicate_order_4258_v1/)
