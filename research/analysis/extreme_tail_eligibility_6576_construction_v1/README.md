@@ -85,11 +85,25 @@ CRAN/ismev. Full results and immutable raw outputs are linked below.
   candidate order, sensitive-index sets, thresholds and R convergence passed,
   but one base MLE/CI exceeded frozen numeric tolerances. Overall
   `FAIL_PARITY_NUMERICAL_MLE`.
+- [A06](orbstack_optimizer_sensitivity_a06_20261002/RUN_RECORD.md): both
+  fresh-seed candidate arms stopped before producing fits because container UID
+  1000 could not write to VM-host UID 501 output mounts; auditor correctly did
+  not run. This is infrastructure STOP only.
+- [A07](orbstack_optimizer_sensitivity_a07_20261002/RUN_RECORD.md): both
+  fresh-seed candidates produced raw fits, but its one-shot auditor treated
+  expected failed starts as invalid receipts. Retained as
+  `STOP_AUDITOR_CLASSIFICATION_MISMATCH`; no audit rerun.
+- [A08](orbstack_optimizer_sensitivity_a08_20261002/RUN_RECORD.md): fresh
+  six-case candidate and failed-start-aware independent audit passed. Four of
+  six fixtures exceeded the preregistered converged-R-fit sensitivity gate;
+  default R/Python numerical parity passed six of six. A05's specific
+  discrepancy cause remains unproven.
 
 These are method-comparator studies on dedicated isolated OrbStack Docker
 containers, not allocation #6576 T0. Their failures and scope boundaries remain
 separate; all raw inputs, outputs, source, image identities and hashes are
-retained.
+retained. None establishes a real release-delay tail, physical key-up, safety,
+or worst-case guarantee.
 
 ### Execution status and local CI / provenance checks
 
