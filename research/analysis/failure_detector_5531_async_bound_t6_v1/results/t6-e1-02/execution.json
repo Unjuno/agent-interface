@@ -1,0 +1,66 @@
+{
+  "auditor_argv": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "-B",
+    "audit.py",
+    "/Users/taka/Documents/Codex/2026-09-19/new-chat-7/work/agent-interface-5531-async-boundary-t6/research/analysis/failure_detector_5531_async_bound_t6_v1/results/t6-e1-02/raw.jsonl",
+    "/Users/taka/Documents/Codex/2026-09-19/new-chat-7/work/agent-interface-5531-async-boundary-t6/research/analysis/failure_detector_5531_async_bound_t6_v1/results/t6-e1-02/audit.json",
+    "/Users/taka/Documents/Codex/2026-09-19/new-chat-7/work/agent-interface-5531-async-boundary-t6/research/analysis/failure_detector_5531_async_bound_t6_v1/freeze.json"
+  ],
+  "auditor_invocations": 1,
+  "auditor_pid": 32591,
+  "auditor_returncode": 0,
+  "auditor_timed_out": false,
+  "base_main": "b92f2abb21e796150287135a74599fea64cc9759",
+  "candidate_argv": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "-B",
+    "candidate.py",
+    "--raw",
+    "/Users/taka/Documents/Codex/2026-09-19/new-chat-7/work/agent-interface-5531-async-boundary-t6/research/analysis/failure_detector_5531_async_bound_t6_v1/results/t6-e1-02/raw.jsonl"
+  ],
+  "candidate_invocations": 1,
+  "candidate_pid": 32590,
+  "candidate_returncode": 0,
+  "candidate_timed_out": false,
+  "container_used": false,
+  "disposition": "PASS_ASYNC_DELAY_BOUNDARY_SCOPED",
+  "host_platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "infrastructure_preflight_sha256": "7f6c7c95500f29eaa9ffced790f6213bb7d863083eeaa89b7586944a18ed3c4a",
+  "python_version": "3.14.5",
+  "raw_sha256": "876868a980214b6659fc928969e3fb2e60449879105fd697c4c3c2c16a8ac0f6",
+  "schema": "failure-detector-async-bound-execution-v1",
+  "source_checks": {
+    "audit.py": {
+      "actual": "2d4328b53c97459a3ebe37f029f8e8fd7c84c97d871164e6399145fd5b3c274d",
+      "expected": "2d4328b53c97459a3ebe37f029f8e8fd7c84c97d871164e6399145fd5b3c274d",
+      "matches": true
+    },
+    "candidate.py": {
+      "actual": "fd916e83098b3ae4e2a9a408f34438c9bd10aad1f16b9410197da88e4fbb1f3c",
+      "expected": "fd916e83098b3ae4e2a9a408f34438c9bd10aad1f16b9410197da88e4fbb1f3c",
+      "matches": true
+    },
+    "freeze.json": {
+      "actual": "7eb868ae684364add68b97b3309fabbe64341df41644698e5bc41df1a85341c7",
+      "expected": "7eb868ae684364add68b97b3309fabbe64341df41644698e5bc41df1a85341c7",
+      "matches": true
+    },
+    "infrastructure-preflight.json": {
+      "actual": "7f6c7c95500f29eaa9ffced790f6213bb7d863083eeaa89b7586944a18ed3c4a",
+      "expected": "7f6c7c95500f29eaa9ffced790f6213bb7d863083eeaa89b7586944a18ed3c4a",
+      "matches": true
+    },
+    "run_experiment.py": {
+      "actual": "5ad8a258569d286a6abc1693dfa8dbc4212ca1d26f996c44084ec233e9d17064",
+      "expected": "5ad8a258569d286a6abc1693dfa8dbc4212ca1d26f996c44084ec233e9d17064",
+      "matches": true
+    },
+    "test_audit.py": {
+      "actual": "84af54e17f7eb846cb6762f714e993a787696035720cfa24563e96a529b1ce00",
+      "expected": "84af54e17f7eb846cb6762f714e993a787696035720cfa24563e96a529b1ce00",
+      "matches": true
+    }
+  },
+  "source_manifest_sha256": "0222d1906f9fb137b7b0e8f56138fb3189d233d4b48428882e8bcf688d02167b"
+}

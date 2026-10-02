@@ -1,0 +1,45 @@
+{
+  "allocation": "snapshot-index-rss-4122-20260923-01",
+  "arms": ["NO_INDEX", "EAGER_INDEX"],
+  "audit_command": "python -B audit.py <formal_root> <fixture_manifest> --controls",
+  "base_main": "118b385697a03be6452249bf2a0111718d7535c2",
+  "batch_command": "python -B batch.py <N> <src_dir> <fixtures_dir> <batch_dir>",
+  "branch": "research/snapshot-index-rss-4122-20260923",
+  "decision": {
+    "evidence": "STOP/HOLD",
+    "magnitude_miss": "HOLD_RESIDENT_TRANSLATION_NOT_ESTABLISHED",
+    "pass": "Rss and Private_Dirty effect(8192)-effect(128) each >=1048576 bytes with full integrity",
+    "semantic": "FAIL"
+  },
+  "eager_git_blob": "0e32e820f49d87181dc61420f0c5003128a6e90f",
+  "fixtures": [
+    {"bytes":1048576,"file":"n128.jsonl","n":128,"sha256":"9cd11167ce253a8d5a6bb93c830b3dc1fd0b896311b791b2a6ca97a8829138e8","width":8192},
+    {"bytes":1048576,"file":"n1024.jsonl","n":1024,"sha256":"aa6341a8147f8a2d377dbaf4ba0e72c0a3c7484c122ac9fca03e2fa045d6bdc9","width":1024},
+    {"bytes":1048576,"file":"n8192.jsonl","n":8192,"sha256":"59d5eb41b9646f979cf1716bfbd091628936d310b352ea6c7df73ae780591a9e","width":128}
+  ],
+  "fixture_manifest_sha256": "3f78e0831b3c0bb9236238e0633a4c6cee23599fd1ccc485fad59f9561b188e5",
+  "formal_batches": [128,1024,8192],
+  "formal_cases": 30,
+  "formal_reruns": 0,
+  "formal_started": false,
+  "issue": 4161,
+  "local_source_patch_sha256": "82203f4122aba43dd1981ef8a4b91e0932a0d0d3c055ef5c2103c59b96dd7909",
+  "path": "research/integration/snapshot_index_rss_4122_v1/",
+  "reader_git_blob": "ea72c166c2cea511ea91031dfbb14563fe4e3245",
+  "repetitions": 5,
+  "schema": "snapshot-index-rss-freeze-v1",
+  "source_files": {
+    "CONSTRUCTION_NOTE.md":{"bytes":1092,"sha256":"5c163ca8614ac63a959412b754b3fe3c153663d2cf0551a4b9bc75a69a91a0ae"},
+    "ENVIRONMENT.json":{"bytes":1014,"sha256":"551447e2dd84d7f8727aa1f8fd9892500492564ef6fafc6f0c93f5ab54a3ace3"},
+    "PLAN.md":{"bytes":2871,"sha256":"2e81937d38f44d61dfba6e784d9abd342c8e22abbd0c9ff3005cb2e66b592437"},
+    "audit.py":{"bytes":7152,"sha256":"2b92e2db9f29370c1a2280511a5859cf9864992e99ae3b55f694a6ede49759a0"},
+    "batch.py":{"bytes":1459,"sha256":"759746261db02f6525a0c94d4f0cc6945c274dfe8c2ecd2dfd62b6d80cd74b52"},
+    "eager_snapshot.py":{"bytes":5626,"sha256":"b3f4e81be3389b40cccb6b435e1f6bc1ded1bf0697312475a54523d430001232"},
+    "fixture.py":{"bytes":1272,"sha256":"a6630dfa5d342887afa7d3a0658958934924c458ef2a09e4756cc456a7b21fc1"},
+    "test_audit.py":{"bytes":770,"sha256":"f6af99c889cd03900c9548cd3de15627cd0420803c2ae6f2a6eaa3e3aa34172e"},
+    "upstream/reader.py":{"bytes":3689,"sha256":"5917fdbda5b2d3dbef5856ba9cc5c8463a07022ad8a31113ec3fdf9b21034240"},
+    "worker.py":{"bytes":3258,"sha256":"3553c9ef5856ac9a9d6453f65d92396e541ae52f993ffe6311a2262deab6d353"}
+  },
+  "threshold_bytes": 1048576,
+  "worker_command": "python -B worker.py <N> <ARM> <REP> <fixture> <case_dir>"
+}

@@ -1,0 +1,23 @@
+{
+  "allocation": "DENIAL-AWARE-REQUEST-6422-T0-20261002-01",
+  "issue": "Unjuno/agent-interface#6422",
+  "issue_updated_at_at_freeze": "2026-10-02T01:50:53Z",
+  "main_sha_at_source_preparation": "f56a816bd346790255011b4fc0020ad10c52bedd",
+  "branch": "research/denial-aware-request-6422-t0-20261002-01",
+  "package": "research/analysis/denial_aware_request_6422_t0_20261002_v1/",
+  "runtime": "Windows host CPU; CPython 3.11.9; no WSLc/Docker/GPU/model",
+  "case_count": 14,
+  "policies": ["id_only", "prompt_count_cap", "denial_ledger"],
+  "source_sha256": {
+    "fixtures.json": "5e737e8e2fd7e6e9223f2ce46ebb65beb4bbd821dcc42f6f193de3f170a022b8",
+    "candidate.py": "3c49415f71c753aaaed3a00beb17dee0c05add151e92f271effdadde123e8a77",
+    "audit.py": "e218a707e65d3f67e1ba8dd90f80c4df58e9ce5f3adc427ef493e5d8451ca88e",
+    "test_candidate.py": "f05ab9a5417db56dcf29d49731b545f53a88bb31a65859dc66a5fd0d4e6494c1",
+    "test_audit.py": "fcccdfa9d424f70500f86abdb3dcc88301dd825745d25b18ca4cbbffab176a82"
+  },
+  "construction_suite": "python -m unittest discover -s research/analysis/denial_aware_request_6422_t0_20261002_v1 -p 'test_*.py' -v",
+  "formal_candidate_invocations": 1,
+  "formal_auditor_invocations": 1,
+  "retries_allowed": 0,
+  "decision_scope": "synthetic finite method-mechanics only; no human/model/GUI/live authority/effect claim"
+}

@@ -1,0 +1,14 @@
+{
+  "allocation_id": "MAP01-OWNER-OCCURRENCE-XVFB-59-T3-20261002-01",
+  "main_sha": "d6229435f9d651b5309a01dca30c2edd7de2f54a",
+  "upstream_owner_commit": "288d0498d11cf16657e523a04616bf4f49cd94f4",
+  "upstream_owner_blob_sha1": "c40db07e596b31557590cec5e90f6ab651573476",
+  "expected_key": "W",
+  "expected_keycode": 25,
+  "occurrences": 2,
+  "witness_stages": ["pre_down", "post_down", "post_up"],
+  "expected_key_down_by_stage": [false, true, false],
+  "expected_all_down_keycodes_by_stage": [[], [25], []],
+  "x_server": "Xvfb, screen 640x480x24, XTEST, TCP disabled",
+  "isolation": "unprivileged WSL user+mount namespace with private tmpfs /tmp and private /tmp/.X11-unix"
+}

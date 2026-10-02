@@ -1,0 +1,28 @@
+{
+  "schema": "route-switching-6009-start-gate-v1",
+  "checked_at_utc": "2026-10-01T12:03:27Z",
+  "allocation": "ROUTE-SWITCHING-6009-T0-20261001-01",
+  "main_remote_sha": "b2e7221c3c374cacc7037515f2df1508e965ac81",
+  "local_head_sha": "b2e7221c3c374cacc7037515f2df1508e965ac81",
+  "experiment_branch_remote_present": false,
+  "experiment_path_in_main_present": false,
+  "output_directory_precreated_empty": true,
+  "docker": {
+    "context": "desktop-linux",
+    "service": "Stopped",
+    "service_start_type": "Manual",
+    "version_probe": "no output after about 8 seconds; interrupted by this task",
+    "container_inventory": "not available; no container command that could mutate state was run",
+    "launch_authorized": false,
+    "launch_attempted": false
+  },
+  "shared_resource": {
+    "queue_issue": 5085,
+    "previous_6000_allocation_01": "STOP_BEFORE_CANDIDATE and released at 11:38 UTC; not transferable",
+    "6000_allocation_02": "separate owner reservation 14:50-15:00 UTC",
+    "6003": "separate owner reservation 15:05-15:15 UTC",
+    "this_task_has_owner_bound_container_slot": false
+  },
+  "decision": "run the frozen standard-library method candidate on host only; do not launch Docker or touch containers",
+  "scope_exclusions": ["GPU", "model/provider", "network", "GUI", "game", "input", "runtime effect"]
+}

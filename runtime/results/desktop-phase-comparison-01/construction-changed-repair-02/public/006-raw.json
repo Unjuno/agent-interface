@@ -1,0 +1,131 @@
+{
+  "schema": "agent-interface/runtime-dispatch-result-v1",
+  "status": "returned",
+  "result": {
+    "status": "completed",
+    "admission": "accepted",
+    "required_capabilities": [
+      "input.keyboard",
+      "input.release_all",
+      "window.focus"
+    ],
+    "execution": {
+      "started_ns": 9381958690106,
+      "ended_ns": 9381960387367,
+      "emissions": 2,
+      "program_emissions": 2,
+      "observations": [],
+      "releases": [
+        {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 9381960382846
+        }
+      ],
+      "waits": [],
+      "activations": [],
+      "completed_ops": [
+        0,
+        1,
+        2
+      ]
+    },
+    "recovery_required": false
+  },
+  "post_dispatch_inspection": {
+    "review_id": "956563a6bde64dd6ad1db36bad92cef1",
+    "target": "app",
+    "binding_revision": 2,
+    "evidence": {
+      "window_id": 8389124,
+      "focus_path": [
+        8389124
+      ],
+      "transient_chain": [
+        8389124
+      ],
+      "family_root": 8389124,
+      "title": "sheet-1002203.xlsx \u2014 LibreOffice Calc",
+      "wm_class": [
+        "libreoffice",
+        "libreoffice-calc"
+      ],
+      "geometry": [
+        40,
+        49,
+        1165,
+        700
+      ]
+    },
+    "expires_at_ns": 9412145717529,
+    "status": "needs_review",
+    "input_dispatched": false,
+    "authority_granted": false,
+    "review_request": {
+      "tool": "interface_review_target",
+      "arguments": {
+        "target": "app",
+        "window_id": 8389124,
+        "review_id": "956563a6bde64dd6ad1db36bad92cef1",
+        "screen_region": [
+          0,
+          0,
+          1280,
+          800
+        ]
+      }
+    },
+    "review_request_scope": "Candidate call after your explicit review of this evidence; not executed. The one-use ID expires at expires_at_ns and target evidence is rechecked. Retained results do not renew it. No input authority or replay permission.",
+    "observation_report": {
+      "schema": "agent-interface/runtime-observation-v1",
+      "observation_id": "b9e9903d6f6d4f83a096a7562a4cae90",
+      "side_effect_authority": false,
+      "input_dispatched": false,
+      "status": "returned",
+      "observation": {
+        "bytes": 4096000,
+        "sha256": "ef53d6c51ece232a5aa1ca61d2c63f3f895e90006afee1701c257954b384484a",
+        "width": 1280,
+        "height": 800,
+        "target": "app",
+        "native_window_id": 8391268,
+        "frame": "screen_physical_px",
+        "region": [
+          0,
+          0,
+          1280,
+          800
+        ],
+        "capture_started_ns": 9382063356358,
+        "capture_ended_ns": 9382085106858,
+        "artifact": {
+          "mime_type": "image/png",
+          "path": "/var/tmp/agent-interface-evidence-storage-main/runtime/results/desktop-phase-comparison-01/construction-changed-repair-02/public/images/e3764e2063ed4fc682ecde2126f26c95.png",
+          "sha256": "45e0ad94a89e3e51bb03044b2073dfbf23940209f04ba73f5f3b2cc17136ad67",
+          "bytes": 77256,
+          "width": 1280,
+          "height": 800,
+          "source_raw_sha256": "ef53d6c51ece232a5aa1ca61d2c63f3f895e90006afee1701c257954b384484a",
+          "timing_ns": {
+            "started": 9382088217845,
+            "converted": 9382089712963,
+            "encoded": 9382138510579,
+            "written": 9382139106286,
+            "hashed": 9382142344992
+          }
+        }
+      }
+    },
+    "capture_wait": {
+      "requested_ms": 100,
+      "started_ns": 9381960549218,
+      "completed": true,
+      "update_observed": null,
+      "ended_ns": 9382060741201
+    },
+    "started_ns": 9381960539285,
+    "ended_ns": 9382145763303,
+    "scope": "Metadata sampled after dispatch. Not atomically bound to its image; no redraw or task completion acknowledgement. Review explicitly; retained lookup does not renew the review ID."
+  }
+}
