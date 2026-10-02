@@ -1,10 +1,10 @@
 # Research and idea Issue index
 
-Last full pagination reconciliation: 2026-10-02 (Asia/Tokyo); that snapshot contained 2528 unique Issues with no duplicates. Since that baseline, incremental reconciliation on 2026-10-02 identified twelve qualifying Issues in the refreshed latest-100 open and latest-100 closed windows (eleven open, one closed), bringing the repository total to 2540 unique Issues and the filtered inventory to 1690 entries. A recheck after #6442's addition found no further newer qualifying Issue within those same windows. Search results were spot-checked against individual Issue pages because PRs can appear in Issue search output.
+Last full pagination reconciliation: 2026-10-02 (Asia/Tokyo). The prior full snapshot contained 2,528 unique Issues. Subsequent incremental reconciliation first added twelve qualifying Issues, then the current full-repo listing identified three further qualifying open Issues: #6461, #6468, and #6469. Current inventory: 2,543 Issues total (1,373 open, 1,170 closed), with 1,693 qualifying research/idea/successor/experiment entries (1,151 open, 542 closed). The three new Issue pages were individually checked; PRs are excluded from Issue counts.
 
 ## Coverage and limits
 
-This index contains 1690 Issues (1148 open, 542 closed) selected when either the Issue has the `research` label or its title contains an explicit `research`, `idea`, `successor`, or `experiment` term. It includes direct proposals plus many validation, audit, coordination, and successor records.
+This index contains 1,693 Issues (1,151 open, 542 closed) selected when either the Issue has the `research` label or its title contains an explicit `research`, `idea`, `successor`, or `experiment` term. The current normalized full-list connector output omits labels; the exact label-qualified baseline is carried forward from the previous reconciled inventory, and the three-item delta was individually verified. It includes direct proposals plus many validation, audit, coordination, and successor records.
 
 This is a broad discovery index, not a guarantee that every repository idea has a title or label matching the filter. Other Issues are not assumed to be non-ideas; search them when linked lineage points outside this table and add any missed idea. The curated [ideas and outcomes page](IDEAS_AND_OUTCOMES.md) explains selected idea clusters and verified dispositions. [RESEARCH.md](../RESEARCH.md), Issues, PRs, and reports remain evidence authorities.
 
@@ -14,6 +14,9 @@ Open is workflow state, not “no result”; open Issues may contain scoped resu
 
 | Issue | Title | GitHub state / closed date | Literal outcome markers* | Linked predecessor(s)** |
 |---|---|---|---|---|
+| [#6469](https://github.com/Unjuno/agent-interface/issues/6469) | [Research] Benign-error-triggered recovery scope drift before action admission | open | PASS, FAIL, STOP, HOLD | — |
+| [#6468](https://github.com/Unjuno/agent-interface/issues/6468) | [Research] Artifact-viability cut sets beyond partial GUI task scores | open | PASS, FAIL, HOLD, UNKNOWN | — |
+| [#6461](https://github.com/Unjuno/agent-interface/issues/6461) | Successor #6179: execute broker-boundary negative controls for isolated verifier challenges | open | PASS_METHOD_SCOPED, FAIL_METHOD, STOP | #6179 |
 | [#6442](https://github.com/Unjuno/agent-interface/issues/6442) | Successor #5756: test bounded soft revisit bias for incomplete search branches | open | PASS_METHOD_SCOPED, HOLD, FAIL, STOP | #5756 |
 | [#6437](https://github.com/Unjuno/agent-interface/issues/6437) | [Successor #6380] Test typed elicitation-response normalization into scoped contract clauses | open | FAIL_METHOD_CONSTRUCTION_MISMATCH, PASS_METHOD_SCOPED, FAIL_METHOD, HOLD | #6380 |
 | [#6435](https://github.com/Unjuno/agent-interface/issues/6435) | [Research] Deadline-conditioned semantic decision frontier for human–agent tempo | open | HOLD, PASS | — |
