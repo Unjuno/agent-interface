@@ -203,11 +203,15 @@ This compact list is generated from child directories that contain `REPORT.md` o
 
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
+<details>
+<summary><strong>Expand all retained result/failure directories</strong></summary>
+
 - [`5352_unknown_recovery_audit_v1/`](5352_unknown_recovery_audit_v1/)
 - [`accessibility_configuration_effects_5922_t0_v1/`](accessibility_configuration_effects_5922_t0_v1/)
 - [`action_bound_residual_6619_t0_v1/`](action_bound_residual_6619_t0_v1/)
 - [`action_class_error_budget_5424_t2_v1/`](action_class_error_budget_5424_t2_v1/)
 - [`action_class_error_budget_5424_t3_v1/`](action_class_error_budget_5424_t3_v1/)
+- [`action_class_error_budget_5424_t4_v1/`](action_class_error_budget_5424_t4_v1/)
 - [`action_conditioned_routing_repair_successor_2059_r2_v1/`](action_conditioned_routing_repair_successor_2059_r2_v1/)
 - [`action_conditioned_routing_repair_successor_2059_v1/`](action_conditioned_routing_repair_successor_2059_v1/)
 - [`action_conditioned_routing_successor_1934_r2/`](action_conditioned_routing_successor_1934_r2/)
@@ -422,6 +426,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`issue5541_mutation_t5_20260930/`](issue5541_mutation_t5_20260930/)
 - [`issue5730_gate_cleanup_fail_20261001/`](issue5730_gate_cleanup_fail_20261001/)
 - [`issue5760_assignment_exposure_t0_20261001/`](issue5760_assignment_exposure_t0_20261001/)
+- [`issue59_wsl_cuda_model_route_smoke_20261003/`](issue59_wsl_cuda_model_route_smoke_20261003/)
 - [`issue59_wslc_ollama_store_mount_t0_20261003/`](issue59_wslc_ollama_store_mount_t0_20261003/)
 - [`issue_3655_committed_evidence_audit_v1/`](issue_3655_committed_evidence_audit_v1/)
 - [`issue_5504_cegar_t0_v1/`](issue_5504_cegar_t0_v1/)
@@ -603,6 +608,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`safe_probe_cost_optimal_tree_r1_v1/`](safe_probe_cost_optimal_tree_r1_v1/)
 - [`safe_probe_identifiability_6147_t0_20261002_a02/`](safe_probe_identifiability_6147_t0_20261002_a02/)
 - [`safe_probe_identifiability_6147_t0_20261003_a03/`](safe_probe_identifiability_6147_t0_20261003_a03/)
+- [`safe_probe_identifiability_6147_t0_20261003_a04/`](safe_probe_identifiability_6147_t0_20261003_a04/)
+- [`safe_probe_identifiability_6147_t0_20261003_a05/`](safe_probe_identifiability_6147_t0_20261003_a05/)
 - [`safe_probe_identification_successor_1716_v1/`](safe_probe_identification_successor_1716_v1/)
 - [`safe_probe_minimax_r0_v1/`](safe_probe_minimax_r0_v1/)
 - [`safety_backpressure_5372_t1_successor_20261001/`](safety_backpressure_5372_t1_successor_20261001/)
@@ -747,6 +754,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`xterm_resource_footprint_transfer_v3/`](xterm_resource_footprint_transfer_v3/)
 
 </details>
+
 <!-- END GENERATED ANALYSIS RESULT INDEX -->
 
 - [`map01_owner_cross_head_59_t0_20261001/`](map01_owner_cross_head_59_t0_20261001/PRESERVATION_QUALIFICATION.md) — Preserved historical cross-head selector FAIL; synthetic rank placeholders, unchanged live-03 invalidation, no new runtime or allocation claim.
