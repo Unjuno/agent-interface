@@ -1,6 +1,7 @@
 # Analytical research
 
 - [`approval_sequence_assay_6405_t0_20261002/`](approval_sequence_assay_6405_t0_20261002/REPORT.md) — Issue #6405 T0 `PASS_METHOD_SCOPED`: five authored requests, three presentation arms, six independent corruption controls rejected; no human-behavior result.
+- [`cross_role_meaning_drift_6351_t0_v1/`](cross_role_meaning_drift_6351_t0_v1/REPORT.md) — Issue #6351 synthetic T0; flattened status falsely completed an unresolved-child case and contradictory receipts; direct typed queries and projections were equivalent, so no projection increment was demonstrated. Invalid first audits and corrected independent audit preserved.
 - [`infra_speed_fairness_6347_t0_v1/`](infra_speed_fairness_6347_t0_v1/REPORT.md) — Issue #6347 synthetic FRFS/FIFO/bounded-window comparison; finite winner/status rows independently audited, with a separately frozen boundary-observability successor required before phase-jitter or strategic-timing claims.
 - [`infra_speed_fairness_6347_boundary_successor_v1/`](infra_speed_fairness_6347_boundary_successor_v1/REPORT.md) — Issue #6347 boundary-focused successor: independently audited 16-row OrbStack trace exposes the 4→6 tick collection/winner discontinuity; synthetic only.
 - [`prefix_responsive_counterparty_6327_t0_v1/`](prefix_responsive_counterparty_6327_t0_v1/REPORT.md) — Issue #6327 T0 method check: 64/64 synthetic rows independently reconstructed; equal variant marginals, prefix-only reactive selector, exogenous replay provenance, and effect-boundary outcome distinctions verified. No model/site susceptibility claim.
@@ -233,6 +234,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`constrained_interaction_testing_5330_t0_v1/`](constrained_interaction_testing_5330_t0_v1/)
 - [`cost_predicate_order_4258_v1/`](cost_predicate_order_4258_v1/)
 - [`cross_handoff_pending_correction_6284_t0_20261002/`](cross_handoff_pending_correction_6284_t0_20261002/)
+- [`cross_role_meaning_drift_6351_t0_v1/`](cross_role_meaning_drift_6351_t0_v1/)
 - [`danger_context_triage_5764_t0_v1/`](danger_context_triage_5764_t0_v1/)
 - [`deadline_identity_5265_dot/`](deadline_identity_5265_dot/)
 - [`decision_opportunity_audit_5986_t0_20261002/`](decision_opportunity_audit_5986_t0_20261002/)
@@ -394,6 +396,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`prefix_responsive_counterparty_6327_t0_v1/`](prefix_responsive_counterparty_6327_t0_v1/)
 - [`primary_refusal_terminality_59_spine07_20261001/`](primary_refusal_terminality_59_spine07_20261001/)
 - [`primary_refusal_terminality_59_t0_20261001/`](primary_refusal_terminality_59_t0_20261001/)
+- [`priority_inheritance_nested_5370_t6_20261001/`](priority_inheritance_nested_5370_t6_20261001/)
 - [`probabilistic_automaton_censor_bounds_r1_v1/`](probabilistic_automaton_censor_bounds_r1_v1/)
 - [`probabilistic_automaton_censoring_identifiability_r0_v1/`](probabilistic_automaton_censoring_identifiability_r0_v1/)
 - [`probabilistic_automaton_dwell_censor_r2_v1/`](probabilistic_automaton_dwell_censor_r2_v1/)
