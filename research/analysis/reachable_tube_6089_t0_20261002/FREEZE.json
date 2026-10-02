@@ -1,0 +1,48 @@
+{
+  "schema": "unjuno-experiment-freeze-v1",
+  "issue": 6089,
+  "allocation_id": "REACHABLE-TUBE-6089-T0-HOSTCPU-20261002-01",
+  "owner": "current Unjuno autonomous research task (local Windows host)",
+  "branch": "research/reachable-tube-6089-t0-hostcpu-20261002",
+  "path": "research/analysis/reachable_tube_6089_t0_20261002/",
+  "base_main": "702c411c54af2e83b7b5b9640a0ace26be973b45",
+  "planned_window_utc": {
+    "start": "2026-10-02T08:07:00Z",
+    "end": "2026-10-02T08:12:00Z"
+  },
+  "source_sha256": {
+    "README.md": "00160f90c1cb75843b7287eefcd066f4da82722c922393852ce8a67b263f7ae6",
+    "cases.json": "6132f3c769d306302c2e60309570c7ba99f8fbb91af06d144150b33625188be2",
+    "candidate.py": "149fb66e98be4334333fc00200db86ff608d6b1a1b38cf5d2aa1c9495c39b876",
+    "audit.py": "0d21e57bdaec1f55fb44d6eb49281e03fda6d07480f228ae47391a9acf183c86",
+    "run_candidate.py": "af5b0dd8111dc6b6a7dc100ccbbe4400a0cd77968b89c52ac7afe7c6095cea25",
+    "run_audit.py": "9ae6264c8e4bfa1f203fad0b8bc4aba1b4dd7c05b9a7d60be0d81c462501f73a",
+    "test_method.py": "6cf89607bdf1d877248eb9a358378d04940a04d16aeebd338ffacb12f24efb3f"
+  },
+  "construction": {
+    "command": "python -m unittest -v test_method.py",
+    "python": "3.11.9",
+    "result": "PASS 3/3 tests",
+    "formal_candidate": 0,
+    "formal_auditor": 0
+  },
+  "execution": {
+    "runtime": "local Windows host CPU; stdlib only",
+    "candidate_command": "python run_candidate.py candidate_raw.json",
+    "candidate_invocations_max": 1,
+    "auditor_command": "python run_audit.py candidate_raw.json audit.json",
+    "auditor_invocations_max": 1,
+    "candidate_output": "candidate_raw.json (must be absent before launch)",
+    "audit_output": "audit.json (must be absent before launch)",
+    "retry_budget": 0,
+    "gpu_cuda_model_container_network_gui_game_input": 0
+  },
+  "stop_conditions": [
+    "main differs from base_main immediately before candidate",
+    "any source/data SHA-256 mismatch",
+    "either output path already exists",
+    "candidate nonzero exit or malformed output (auditor must not run)",
+    "auditor nonzero exit or any error"
+  ],
+  "decision": "PASS_METHOD_SCOPED only if independent recursive audit is clean and all five corruption controls are rejected; otherwise retain first outcome as FAIL/STOP/HOLD without retry."
+}

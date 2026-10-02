@@ -1,0 +1,93 @@
+{
+  "schema": "reachable-tube-t0-cases-v1",
+  "cases": [
+    {
+      "id": "narrow_corridor",
+      "initial_states": [0],
+      "action": 1,
+      "disturbances": [-1, 0, 1],
+      "boundary_by_step": [11, 11, 11, 11, 11, 11, 11],
+      "max_horizon": 5,
+      "release_lag": 1,
+      "invalidated": false,
+      "stress_disturbances": null
+    },
+    {
+      "id": "wide_initial_uncertainty",
+      "initial_states": [0, 1, 2],
+      "action": 1,
+      "disturbances": [-1, 0, 1],
+      "boundary_by_step": [10, 10, 10, 10, 10, 10, 10],
+      "max_horizon": 5,
+      "release_lag": 1,
+      "invalidated": false,
+      "stress_disturbances": null
+    },
+    {
+      "id": "safe_long_corridor",
+      "initial_states": [-1, 0, 1],
+      "action": 1,
+      "disturbances": [-1, 0, 1],
+      "boundary_by_step": [30, 30, 30, 30, 30, 30, 30],
+      "max_horizon": 5,
+      "release_lag": 1,
+      "invalidated": false,
+      "stress_disturbances": null
+    },
+    {
+      "id": "near_boundary",
+      "initial_states": [6],
+      "action": 1,
+      "disturbances": [-1, 0, 1],
+      "boundary_by_step": [9, 9, 9, 9, 9, 9, 9],
+      "max_horizon": 5,
+      "release_lag": 1,
+      "invalidated": false,
+      "stress_disturbances": null
+    },
+    {
+      "id": "moving_forbidden_boundary",
+      "initial_states": [0],
+      "action": 1,
+      "disturbances": [-1, 0, 1],
+      "boundary_by_step": [12, 11, 9, 8, 7, 10, 10],
+      "max_horizon": 5,
+      "release_lag": 1,
+      "invalidated": false,
+      "stress_disturbances": null
+    },
+    {
+      "id": "invalidated_target",
+      "initial_states": [0],
+      "action": 1,
+      "disturbances": [-1, 0, 1],
+      "boundary_by_step": [20, 20, 20, 20, 20, 20, 20],
+      "max_horizon": 5,
+      "release_lag": 1,
+      "invalidated": true,
+      "stress_disturbances": null
+    },
+    {
+      "id": "zero_slack_release",
+      "initial_states": [0],
+      "action": 1,
+      "disturbances": [0],
+      "boundary_by_step": [3, 3, 3, 3, 3, 3, 3],
+      "max_horizon": 2,
+      "release_lag": 2,
+      "invalidated": false,
+      "stress_disturbances": null
+    },
+    {
+      "id": "disturbance_bound_violation_stress",
+      "initial_states": [0],
+      "action": 1,
+      "disturbances": [-1, 0, 1],
+      "boundary_by_step": [8, 8, 8, 8, 8, 8, 8],
+      "max_horizon": 5,
+      "release_lag": 1,
+      "invalidated": false,
+      "stress_disturbances": [2, 2, 2, 2, 2, 2]
+    }
+  ]
+}
