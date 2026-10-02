@@ -69,7 +69,7 @@ The TailID port remains without numeric comparison to CRAN/R.
 ### One-shot comparator runner preparation (not executed)
 
 The outstanding #6576 T0 comparator is the original R implementation, not the
-provisional Python port. A future exclusively assigned container run should
+provisional Python port. A future exclusively assigned formal container run should
 mount read-only copies of TailID 1.0.0 at commit
 `f99b10ff27f37ac62ba1d44ce79b4fc886f72997` and ismev at commit
 `25223b17285d45bf3911efd79ac75f363e7ae495`, plus a write-only output mount;
@@ -80,22 +80,29 @@ typed refusal. Candidate, then raw-only audit, each run at most once. This
 paragraph is a protocol note only: no R image was pulled, no container was
 started, and no comparator parity result exists.
 
-### Current local CI / provenance checks
+### Execution status and local CI / provenance checks
 
-On 2026-10-02, the preparation branch was successively reconciled with main
-through `7b5afc3d718682b7b6efb2e6037acbd3f199f8b4`,
-`6942e950281832d01db6468ae47affef6513e3ba`, and later PR-head merges. The
-latest base must be refreshed again at formal start.
-Focused construction suite: 17/17 PASS; `py_compile`: PASS; `git diff
---check`: PASS. Candidate module plus independent raw-only audit: PASS 7/7.
+The earlier host-only boundary package and censor-cap probe remain preserved.
+Pilot A01's OrbStack-machine process stopped before raw persistence due to a
+root-owned output directory; that allocation was not retried. Its successor,
+[OrbStack Docker pilot A02](orbstack_pilot_a02_20261002/RUN_RECORD.md), ran one
+new stationary synthetic case in a dedicated nested Docker Engine. Candidate
+and raw-only auditor each ran once, exited 0, and the audit returned
+`PASS_METHOD_SCOPED PASS_RAW_ONLY cases=1 train=4000 holdout=4000`. This is a
+single-case pilot only, not the formal six-case T0 or an input-release result.
+
+After refreshing through current main `a81614d975631b1c2d0ad78fe98e4e96ba20b93a`,
+the focused construction suite passes 24/24; `py_compile` and `git diff
+--check` pass. The A02 raw output and all source/input/output hashes are checked
+in `orbstack_pilot_a02_20261002/SHA256SUMS`.
 Repository-wide `python3 research/analysis/check_index.py`:
 FAIL, reporting broad pre-existing stale generated entries across unrelated
 analysis directories. Its suggested `--write` was deliberately not run because
-it would modify unrelated shared research history. No new result-index entry
-was written. The formal request in #5085 remains unassigned; the active
-`unjuno-native-ci-6092` container is still running, so no Docker experiment was
-started.
+it would modify unrelated shared research history. The formal six-case
+candidate/auditor remain uninvoked (0/0), and the #5085 formal allocation still
+has no exact assignment/release recorded. The dedicated A02 Engine did not use
+the shared `unjuno-native-ci-6092` container.
 
-This rebase is preparation-only, not an execution freeze. At any formally
-assigned start, recheck and freeze the exact current main and all input/source/
-image hashes before candidate invocation.
+The formal T0 remains pending. At its assigned start, recheck and freeze the
+exact current main and all input/source/image hashes before candidate
+invocation.
