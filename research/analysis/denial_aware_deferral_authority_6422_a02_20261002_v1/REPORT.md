@@ -9,4 +9,3 @@ This supports the narrow hypothesis that deferral eligibility must bind the stat
 Evidence caveat: `audit_report.json` says eight rows were reconstructed and records zero errors, but its free-text `scope` field incorrectly says “six” cases. That exact formal output is preserved unchanged. The free-text defect does not change its row-count field or per-row decision checks, but reduces report polish; see `BUILD_HISTORY.md`. No post-run editing or rerun was used to conceal it.
 
 Formal local work: candidate once, raw-only auditor once, retries zero; 3 host construction tests passed. Windows host CPU, CPython 3.11.9. No model, person, GUI, WSLc, Docker, GPU, CUDA, live approval, or effect.
-
