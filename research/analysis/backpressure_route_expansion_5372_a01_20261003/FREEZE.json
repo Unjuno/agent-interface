@@ -1,0 +1,32 @@
+{
+  "schema": "backpressure-route-expansion-freeze-v1",
+  "issue": 5372,
+  "allocation": "SAFETY-BACKPRESSURE-ROUTE-EXPANSION-5372-A01-WSLC-20261003",
+  "branch": "research/backpressure-route-expansion-5372-a01-wslc-20261003",
+  "base_main": "024ba046557b85d6921f114f65b5d18a79841843",
+  "path": "research/analysis/backpressure_route_expansion_5372_a01_20261003/",
+  "formal_invocation_budget": {"candidate": 1, "auditor": 1, "retry": 0},
+  "container": {
+    "engine": "Microsoft WSLc",
+    "version": "3.0.1.0",
+    "platform": "linux/amd64",
+    "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "image_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "pull": "never",
+    "network": "none",
+    "cpus": 1,
+    "memory_requested": "256m",
+    "memory_enforcement": "unverified; record WSLc cgroup/swap warning if emitted",
+    "uid_gid": "65532:65532"
+  },
+  "source_sha256": {
+    "fixture.json": "D71E14A0114D279D003005DA418422473D600C4D8C488522E0C084C167798B4D",
+    "candidate.py": "3189DED9537ECB8E745337ED9EB7E5EB4682C8186EF25BE38F4739E84D0B17DC",
+    "audit.py": "6EFD6F116E889C5EE7B0244A17180C4E28230BA4FDF24034ABF84FC808D032DD",
+    "test_protocol.py": "D5C936043D24809EE26435D1D18CC21866167CFD4EB1481F8AD32DB6140A0A29",
+    "PREREGISTRATION.md": "86265B7504D3EA24D16A6C3DBBD1611DC0AD2DEEDC70387C1FDBF3EC3F3F534C"
+  },
+  "construction": {"host_tests": 3, "result": "PASS", "formal_candidate": 0, "formal_auditor": 0},
+  "formal_outputs_absent_at_freeze": ["results/candidate/raw.json", "results/audit/audit.json"],
+  "scope": "finite authored route-set queueing fixture only; no live GUI/runtime/product inference"
+}
