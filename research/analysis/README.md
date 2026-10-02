@@ -1,6 +1,7 @@
 # Analytical research
 
-- [`map01_owner_cross_head_59_t0_20261001/`](map01_owner_cross_head_59_t0_20261001/PRESERVATION_QUALIFICATION.md) — Preserved historical cross-head selector FAIL; synthetic rank placeholders, unchanged live-03 invalidation, no new runtime or allocation claim.
+- [`claim_scoped_partial_verdict_6509_t0_20261002/REPORT.md`](claim_scoped_partial_verdict_6509_t0_20261002/REPORT.md) — Issue #6509: 45-row OrbStack candidate and independent audit passed the finite claim-ladder method gate; unsafe scalar comparator had 11 partial ALLOWs; logical early-reject advantage is simulation-only.
+
 - [`denial_aware_request_6422_t0_20261002_v1/`](denial_aware_request_6422_t0_20261002_v1/PRESERVATION_QUALIFICATION.md) — Issue #6422 A01: retained 14-case authored policy result only; missing deferral-principal and single-use/budget coverage means partial T0, not full completion or T1 basis.
 - [`denial_deferral_budget_6422_a03_20261002_v1/`](denial_deferral_budget_6422_a03_20261002_v1/REPORT.md) — Issue #6422 A03: same deferral receipt replay blocked under a new request ID; nine synthetic cases and five corruptions independently audited; method-scoped only.
 - [`control_opportunity_attribution_6403_t0_v1/`](control_opportunity_attribution_6403_t0_v1/REPORT.md) — Issue #6403 six-trace synthetic control-opportunity method passed independent reconstruction and six mutation checks; no human attribution/blame claim.
@@ -235,6 +236,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`censored_useful_effect_membership_successor_1838_v1/`](censored_useful_effect_membership_successor_1838_v1/)
 - [`change_cue_contrast_1931_v1/`](change_cue_contrast_1931_v1/)
 - [`claim_ladder_6113_t0_20261002/`](claim_ladder_6113_t0_20261002/)
+- [`claim_scoped_partial_verdict_6509_t0_20261002/`](claim_scoped_partial_verdict_6509_t0_20261002/)
 - [`cli_v1_lineage_direct_tests_2428_v1/`](cli_v1_lineage_direct_tests_2428_v1/)
 - [`competence_location_map_3446_v1/`](competence_location_map_3446_v1/)
 - [`complementarity_marginal_evidence_5869_t0_v1/`](complementarity_marginal_evidence_5869_t0_v1/)
@@ -253,6 +255,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`cost_predicate_order_4258_v1/`](cost_predicate_order_4258_v1/)
 - [`cross_handoff_pending_correction_6284_t0_20261002/`](cross_handoff_pending_correction_6284_t0_20261002/)
 - [`cross_role_meaning_drift_6351_t0_v1/`](cross_role_meaning_drift_6351_t0_v1/)
+- [`crossed_verdict_repeatability_6222_t1_eligibility_20261002_01/`](crossed_verdict_repeatability_6222_t1_eligibility_20261002_01/)
 - [`danger_context_triage_5764_t0_v1/`](danger_context_triage_5764_t0_v1/)
 - [`deadline_identity_5265_dot/`](deadline_identity_5265_dot/)
 - [`deadline_slack_equivalence_6417_t0_20261002/`](deadline_slack_equivalence_6417_t0_20261002/)
@@ -260,6 +263,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`decision_opportunity_audit_5986_t0_20261002/`](decision_opportunity_audit_5986_t0_20261002/)
 - [`decision_opportunity_feedback_5986_b7q1_v1/`](decision_opportunity_feedback_5986_b7q1_v1/)
 - [`decision_sufficiency_5329_v1/`](decision_sufficiency_5329_v1/)
+- [`delay_gain_stability_6195_t0_host_20261001_01/`](delay_gain_stability_6195_t0_host_20261001_01/)
 - [`denial_aware_request_6422_t0_20261002_v1/`](denial_aware_request_6422_t0_20261002_v1/)
 - [`denial_aware_request_policy_6422_t0_v1/`](denial_aware_request_policy_6422_t0_v1/)
 - [`denial_deferral_budget_6422_a03_20261002_v1/`](denial_deferral_budget_6422_a03_20261002_v1/)
@@ -352,6 +356,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`looming_yield_5905_t0_20261001_01/`](looming_yield_5905_t0_20261001_01/)
 - [`looming_yield_5905_visual_identifiability_v3/`](looming_yield_5905_visual_identifiability_v3/)
 - [`map01_crossdomain_time_coverage_59_audit_successor_6169_20261002/`](map01_crossdomain_time_coverage_59_audit_successor_6169_20261002/)
+- [`map01_delay_gain_t1_trace_eligibility_6195_20261001_01/`](map01_delay_gain_t1_trace_eligibility_6195_20261001_01/)
 - [`map01_global_owner_invariance_59_t0_20261001/`](map01_global_owner_invariance_59_t0_20261001/)
 - [`map01_matched_causal_task_effect_r4_v1/`](map01_matched_causal_task_effect_r4_v1/)
 - [`map01_matched_recovery_entry_gate_1866_r5/`](map01_matched_recovery_entry_gate_1866_r5/)
@@ -448,6 +453,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`real_source_role_adapter_registry_v1/`](real_source_role_adapter_registry_v1/)
 - [`receiver_synthesis_6112_t0_20261002/`](receiver_synthesis_6112_t0_20261002/)
 - [`recovery_absolute_outcome_6216_t0_v1/`](recovery_absolute_outcome_6216_t0_v1/)
+- [`recovery_presnapshot_5960_t0_20261002_01/`](recovery_presnapshot_5960_t0_20261002_01/)
 - [`recovery_sentinel_5776_contrast_t0_20261001/`](recovery_sentinel_5776_contrast_t0_20261001/)
 - [`recovery_sentinel_5776_probe_schedule_20261001_01/`](recovery_sentinel_5776_probe_schedule_20261001_01/)
 - [`recovery_sentinel_5776_t0_integrity_audit_v1/`](recovery_sentinel_5776_t0_integrity_audit_v1/)
@@ -591,6 +597,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 </details>
 
 <!-- END GENERATED ANALYSIS RESULT INDEX -->
+
+- [`map01_owner_cross_head_59_t0_20261001/`](map01_owner_cross_head_59_t0_20261001/PRESERVATION_QUALIFICATION.md) — Preserved historical cross-head selector FAIL; synthetic rank placeholders, unchanged live-03 invalidation, no new runtime or allocation claim.
 
 ## Interpretation
 
