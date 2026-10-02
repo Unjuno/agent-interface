@@ -483,5 +483,64 @@ class PublicReviewTests(unittest.TestCase):
             self.assertIsNone(row["image"])
 
 
+
+class ProgramEmissionReviewTests(unittest.TestCase):
+    def report(self, result):
+        return {'schema': 'agent-interface/runtime-dispatch-result-v1',
+                'status': 'returned', 'result': result}
+
+    def test_persistent_program_counts_do_not_sum_cumulative_backend_counter(self):
+        from runtime.cli_v1.review import outcome_summary
+        reports = [self.report({'status': 'completed', 'execution':
+                    {'emissions': total, 'program_emissions': program}})
+                   for total, program in ((10, 10), (14, 4))]
+        self.assertEqual([outcome_summary(r)['program_emissions'] for r in reports], [10, 4])
+        self.assertEqual(sum(outcome_summary(r)['program_emissions'] for r in reports), 14)
+        self.assertIsNone(outcome_summary(reports[1])['input_release_verified'])
+
+    def test_missing_program_counter_never_uses_emissions_or_zero(self):
+        from runtime.cli_v1.review import outcome_summary
+        for execution in ({'emissions': 14}, {'emissions': 0}, {}):
+            summary = outcome_summary(self.report({'status': 'completed', 'execution': execution}))
+            self.assertNotIn('program_emissions', summary)
+        summary = outcome_summary(self.report({'status': 'execution_failed',
+                                   'execution': {'emissions': 14, 'program_emissions': 0}}))
+        self.assertEqual(summary['program_emissions'], 0)
+        self.assertIsNone(summary['input_release_verified'])
+        self.assertNotIn('input_dispatched', summary)
+
+    def test_invalid_or_conflicting_reported_program_counts_stay_unknown(self):
+        from runtime.cli_v1.review import outcome_summary
+        for invalid in (True, False, -1, 4.0, '4', None):
+            with self.subTest(value=invalid):
+                row = self.report({'status': 'completed', 'execution': {'program_emissions': invalid}})
+                self.assertIsNone(outcome_summary(row)['program_emissions'])
+        for top, nested in ((0, 4), (4, True), (None, 4), (4, -1)):
+            row = self.report({'status': 'completed', 'program_emissions': top,
+                              'execution': {'program_emissions': nested}})
+            self.assertIsNone(outcome_summary(row)['program_emissions'])
+        row = self.report({'status': 'refused', 'program_emissions': 0,
+                          'program_execution_started': False, 'cleanup_attempted': True})
+        self.assertEqual(outcome_summary(row)['program_emissions'], 0)
+        row['execution'] = {'program_emissions': 0}
+        self.assertEqual(outcome_summary(row)['program_emissions'], 0)
+
+    def test_retained_review_preserves_exact_report_and_exposes_nested_count(self):
+        from runtime.cli_v1.review import present_result
+        from unittest.mock import patch
+        row = self.report({'status': 'completed', 'execution':
+                           {'emissions': 14, 'program_emissions': 4}})
+        raw = json.dumps(row).encode()
+        with tempfile.TemporaryDirectory() as td:
+            for options in ({}, {'compact': True}, {'compact': True, 'report_refs': True}):
+                viewed = review_bytes(raw, td, include_image=False, **options)
+                self.assertEqual(viewed['outcome_summary']['program_emissions'], 4)
+                self.assertEqual(viewed['receipt']['source']['sha256'], hashlib.sha256(raw).hexdigest())
+            with patch('runtime.cli_v1.review.review_bytes', side_effect=ValueError('image unavailable')):
+                fallback = present_result(row, td)
+            self.assertEqual(fallback['outcome_summary']['program_emissions'], 4)
+            self.assertEqual(fallback['raw_result'], row)
+            self.assertEqual(json.dumps(row).encode(), raw)
+
 if __name__ == "__main__":
     unittest.main()

@@ -1,0 +1,118 @@
+{
+  "errors": [],
+  "independently_recomputed": [
+    {
+      "case_id": "known-save-intent-effect-unknown",
+      "current_transcript_partitions": [
+        {
+          "common_safe_actions": [],
+          "transcript": [
+            "dispatch accepted",
+            "save value 41"
+          ],
+          "worlds": [
+            "persisted",
+            "modal_blocked"
+          ]
+        }
+      ],
+      "decision": "PASS_METHOD_SCOPED",
+      "minimum_additional_channel_set": [
+        "independent_persistence_receipt"
+      ],
+      "minimum_additional_exchanges": 1,
+      "minimum_policy_partitions": [
+        {
+          "common_safe_actions": [
+            "dismiss_modal_and_retry"
+          ],
+          "transcript": [
+            "dispatch accepted",
+            "save value 41",
+            "saved=false"
+          ],
+          "worlds": [
+            "modal_blocked"
+          ]
+        },
+        {
+          "common_safe_actions": [
+            "claim_completion"
+          ],
+          "transcript": [
+            "dispatch accepted",
+            "save value 41",
+            "saved=true"
+          ],
+          "worlds": [
+            "persisted"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "fresh-local-receipt-no-extra-tool",
+      "current_transcript_partitions": [
+        {
+          "common_safe_actions": [
+            "dismiss_modal_and_retry"
+          ],
+          "transcript": [
+            "dispatch accepted",
+            "saved=false",
+            "save value 41"
+          ],
+          "worlds": [
+            "modal_blocked"
+          ]
+        },
+        {
+          "common_safe_actions": [
+            "claim_completion"
+          ],
+          "transcript": [
+            "dispatch accepted",
+            "saved=true",
+            "save value 41"
+          ],
+          "worlds": [
+            "persisted"
+          ]
+        }
+      ],
+      "decision": "PASS_NO_ADDITIONAL_EXCHANGE",
+      "minimum_additional_channel_set": [],
+      "minimum_additional_exchanges": 0,
+      "minimum_policy_partitions": [
+        {
+          "common_safe_actions": [
+            "dismiss_modal_and_retry"
+          ],
+          "transcript": [
+            "dispatch accepted",
+            "saved=false",
+            "save value 41"
+          ],
+          "worlds": [
+            "modal_blocked"
+          ]
+        },
+        {
+          "common_safe_actions": [
+            "claim_completion"
+          ],
+          "transcript": [
+            "dispatch accepted",
+            "saved=true",
+            "save value 41"
+          ],
+          "worlds": [
+            "persisted"
+          ]
+        }
+      ]
+    }
+  ],
+  "schema": "feedback-necessity-epistemic-audit-v1",
+  "status": "PASS_RAW_AUDIT"
+}

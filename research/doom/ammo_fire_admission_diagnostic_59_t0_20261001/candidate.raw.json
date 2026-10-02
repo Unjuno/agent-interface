@@ -1,0 +1,530 @@
+{
+  "allocation": "MAP01-AMMO-FIRE-DIAGNOSTIC-59-T0-20261001-01",
+  "base_main": "4b7fe7837e4ee8c0d035ebfbf52baf014f042295",
+  "decision": "PASS_DIAGNOSTIC_CONTRAST_SCOPED",
+  "hypothesis_supported": true,
+  "measurement_integrity_ok": true,
+  "runs": [
+    {
+      "completed_decrease_fraction": 0.0,
+      "counts": {
+        "completed_keyset_confirmed": 1,
+        "completed_missing_in_loop_ammo_sample": 0,
+        "completed_missing_source_ammo": 0,
+        "completed_with_in_loop_ammo_decrease": 0,
+        "interrupted_after_keyset": 0,
+        "partial_or_unconfirmed_no_keyset_marker": 0,
+        "source_ammo_unknown": 0,
+        "source_ammo_zero": 0,
+        "space_steps_started": 1
+      },
+      "events_sha256": "80b964c9ab7d86fbd0b2bc56957157e018e9dbb90457f286995a2e6036192bc3",
+      "post_control_score": null,
+      "report_sha256": "7fa222f9b273ee10ad1ed3e24b8f7f234f46cc137265a90d70c6073981602f58",
+      "run": "map01-v38-integrated-threat-live-01",
+      "space_steps": [
+        {
+          "admitted_keys": [
+            "space"
+          ],
+          "ammo_decreased_in_loop": false,
+          "id": "plan-0-primary-0-0",
+          "in_loop_ammo_values": [
+            48
+          ],
+          "keys_held": [
+            "space"
+          ],
+          "programmed_duration_ms": 100,
+          "requested_keys": [
+            "space"
+          ],
+          "source_ammo": 48,
+          "source_ammo_binding": {
+            "focus": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ],
+            "surface": 6291472
+          },
+          "source_expected_sequence": 27,
+          "source_sample_age_ms": 249.253,
+          "source_sequence": 27,
+          "source_status": "observed",
+          "status": "completed_keyset_confirmed",
+          "step": 0,
+          "step_started_ns": 54879826869968,
+          "terminal_status": "completed"
+        }
+      ]
+    },
+    {
+      "completed_decrease_fraction": 1.0,
+      "counts": {
+        "completed_keyset_confirmed": 9,
+        "completed_missing_in_loop_ammo_sample": 0,
+        "completed_missing_source_ammo": 0,
+        "completed_with_in_loop_ammo_decrease": 9,
+        "interrupted_after_keyset": 1,
+        "partial_or_unconfirmed_no_keyset_marker": 1,
+        "source_ammo_unknown": 0,
+        "source_ammo_zero": 0,
+        "space_steps_started": 11
+      },
+      "events_sha256": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381",
+      "post_control_score": null,
+      "report_sha256": "719db21040b843c5c91c5ff1f3d9fb2051ae1f1e008971547f39f015b4337687",
+      "run": "map01-v39-coast-liveness-live-01",
+      "space_steps": [
+        {
+          "admitted_keys": [
+            "Up",
+            "Shift_L",
+            "space"
+          ],
+          "ammo_decreased_in_loop": true,
+          "id": "plan-0-primary-0-1",
+          "in_loop_ammo_values": [
+            48,
+            47,
+            47
+          ],
+          "keys_held": [
+            "Shift_L",
+            "Up",
+            "space"
+          ],
+          "programmed_duration_ms": 350,
+          "requested_keys": [
+            "Up",
+            "Shift_L",
+            "space"
+          ],
+          "source_ammo": 48,
+          "source_ammo_binding": {
+            "focus": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ],
+            "surface": 6291472
+          },
+          "source_expected_sequence": 28,
+          "source_sample_age_ms": 265.574,
+          "source_sequence": 28,
+          "source_status": "observed",
+          "status": "completed_keyset_confirmed",
+          "step": 0,
+          "step_started_ns": 55510733600034,
+          "terminal_status": "completed"
+        },
+        {
+          "admitted_keys": [
+            "Down",
+            "space"
+          ],
+          "ammo_decreased_in_loop": true,
+          "id": "cover-1",
+          "in_loop_ammo_values": [
+            46,
+            46,
+            45
+          ],
+          "keys_held": [
+            "Down",
+            "space"
+          ],
+          "programmed_duration_ms": 300,
+          "requested_keys": [
+            "Down",
+            "space"
+          ],
+          "source_ammo": 46,
+          "source_ammo_binding": {
+            "focus": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ],
+            "surface": 6291472
+          },
+          "source_expected_sequence": 36,
+          "source_sample_age_ms": 80.999,
+          "source_sequence": 44,
+          "source_status": "observed",
+          "status": "completed_keyset_confirmed",
+          "step": 2,
+          "step_started_ns": 55512968867957,
+          "terminal_status": "cancelled"
+        },
+        {
+          "admitted_keys": [
+            "Down",
+            "space"
+          ],
+          "ammo_decreased_in_loop": true,
+          "id": "cover-1",
+          "in_loop_ammo_values": [
+            45,
+            44,
+            44
+          ],
+          "keys_held": [
+            "Down",
+            "space"
+          ],
+          "programmed_duration_ms": 300,
+          "requested_keys": [
+            "Down",
+            "space"
+          ],
+          "source_ammo": 45,
+          "source_ammo_binding": {
+            "focus": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ],
+            "surface": 6291472
+          },
+          "source_expected_sequence": 36,
+          "source_sample_age_ms": 113.485,
+          "source_sequence": 62,
+          "source_status": "observed",
+          "status": "completed_keyset_confirmed",
+          "step": 6,
+          "step_started_ns": 55516104893595,
+          "terminal_status": "cancelled"
+        },
+        {
+          "admitted_keys": [
+            "Down",
+            "space"
+          ],
+          "ammo_decreased_in_loop": null,
+          "id": "plan-3-primary-0-1",
+          "in_loop_ammo_values": [],
+          "keys_held": [
+            "Down",
+            "space"
+          ],
+          "programmed_duration_ms": 500,
+          "requested_keys": [
+            "Down",
+            "space"
+          ],
+          "source_ammo": 44,
+          "source_ammo_binding": {
+            "focus": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ],
+            "surface": 6291472
+          },
+          "source_expected_sequence": 113,
+          "source_sample_age_ms": 372.662,
+          "source_sequence": 113,
+          "source_status": "observed",
+          "status": "interrupted_after_keyset",
+          "step": 0,
+          "step_started_ns": 55531909404452,
+          "terminal_status": "cancelled"
+        },
+        {
+          "admitted_keys": [
+            "Down",
+            "space"
+          ],
+          "ammo_decreased_in_loop": true,
+          "id": "cover-4",
+          "in_loop_ammo_values": [
+            43,
+            42,
+            42
+          ],
+          "keys_held": [
+            "Down",
+            "space"
+          ],
+          "programmed_duration_ms": 300,
+          "requested_keys": [
+            "Down",
+            "space"
+          ],
+          "source_ammo": 43,
+          "source_ammo_binding": {
+            "focus": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ],
+            "surface": 6291472
+          },
+          "source_expected_sequence": 115,
+          "source_sample_age_ms": 94.872,
+          "source_sequence": 123,
+          "source_status": "observed",
+          "status": "completed_keyset_confirmed",
+          "step": 2,
+          "step_started_ns": 55533459395029,
+          "terminal_status": "cancelled"
+        },
+        {
+          "admitted_keys": [
+            "Down",
+            "space"
+          ],
+          "ammo_decreased_in_loop": true,
+          "id": "cover-4",
+          "in_loop_ammo_values": [
+            42,
+            41,
+            41
+          ],
+          "keys_held": [
+            "Down",
+            "space"
+          ],
+          "programmed_duration_ms": 300,
+          "requested_keys": [
+            "Down",
+            "space"
+          ],
+          "source_ammo": 42,
+          "source_ammo_binding": {
+            "focus": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ],
+            "surface": 6291472
+          },
+          "source_expected_sequence": 115,
+          "source_sample_age_ms": 115.431,
+          "source_sequence": 141,
+          "source_status": "observed",
+          "status": "completed_keyset_confirmed",
+          "step": 6,
+          "step_started_ns": 55536648511119,
+          "terminal_status": "cancelled"
+        },
+        {
+          "admitted_keys": [
+            "Down"
+          ],
+          "ammo_decreased_in_loop": null,
+          "id": "cover-4",
+          "in_loop_ammo_values": [],
+          "keys_held": null,
+          "programmed_duration_ms": 300,
+          "requested_keys": [
+            "Down",
+            "space"
+          ],
+          "source_ammo": 41,
+          "source_ammo_binding": {
+            "focus": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ],
+            "surface": 6291472
+          },
+          "source_expected_sequence": 115,
+          "source_sample_age_ms": 100.193,
+          "source_sequence": 159,
+          "source_status": "observed",
+          "status": "partial_or_unconfirmed_no_keyset_marker",
+          "step": 10,
+          "step_started_ns": 55539809187659,
+          "terminal_status": "cancelled"
+        },
+        {
+          "admitted_keys": [
+            "space"
+          ],
+          "ammo_decreased_in_loop": true,
+          "id": "plan-4-primary-0-1",
+          "in_loop_ammo_values": [
+            41,
+            40
+          ],
+          "keys_held": [
+            "space"
+          ],
+          "programmed_duration_ms": 180,
+          "requested_keys": [
+            "space"
+          ],
+          "source_ammo": 41,
+          "source_ammo_binding": {
+            "focus": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ],
+            "surface": 6291472
+          },
+          "source_expected_sequence": 159,
+          "source_sample_age_ms": 208.278,
+          "source_sequence": 159,
+          "source_status": "observed",
+          "status": "completed_keyset_confirmed",
+          "step": 0,
+          "step_started_ns": 55539917272757,
+          "terminal_status": "completed"
+        },
+        {
+          "admitted_keys": [
+            "Down",
+            "space"
+          ],
+          "ammo_decreased_in_loop": true,
+          "id": "cover-5",
+          "in_loop_ammo_values": [
+            40,
+            40,
+            39
+          ],
+          "keys_held": [
+            "Down",
+            "space"
+          ],
+          "programmed_duration_ms": 300,
+          "requested_keys": [
+            "Down",
+            "space"
+          ],
+          "source_ammo": 40,
+          "source_ammo_binding": {
+            "focus": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ],
+            "surface": 6291472
+          },
+          "source_expected_sequence": 166,
+          "source_sample_age_ms": 95.335,
+          "source_sequence": 174,
+          "source_status": "observed",
+          "status": "completed_keyset_confirmed",
+          "step": 2,
+          "step_started_ns": 55542128595133,
+          "terminal_status": "cancelled"
+        },
+        {
+          "admitted_keys": [
+            "Down",
+            "space"
+          ],
+          "ammo_decreased_in_loop": true,
+          "id": "cover-5",
+          "in_loop_ammo_values": [
+            39,
+            38,
+            38
+          ],
+          "keys_held": [
+            "Down",
+            "space"
+          ],
+          "programmed_duration_ms": 300,
+          "requested_keys": [
+            "Down",
+            "space"
+          ],
+          "source_ammo": 39,
+          "source_ammo_binding": {
+            "focus": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ],
+            "surface": 6291472
+          },
+          "source_expected_sequence": 166,
+          "source_sample_age_ms": 108.564,
+          "source_sequence": 192,
+          "source_status": "observed",
+          "status": "completed_keyset_confirmed",
+          "step": 6,
+          "step_started_ns": 55545282798211,
+          "terminal_status": "cancelled"
+        },
+        {
+          "admitted_keys": [
+            "Down",
+            "space"
+          ],
+          "ammo_decreased_in_loop": true,
+          "id": "cover-5",
+          "in_loop_ammo_values": [
+            38,
+            37,
+            37
+          ],
+          "keys_held": [
+            "Down",
+            "space"
+          ],
+          "programmed_duration_ms": 300,
+          "requested_keys": [
+            "Down",
+            "space"
+          ],
+          "source_ammo": 38,
+          "source_ammo_binding": {
+            "focus": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ],
+            "surface": 6291472
+          },
+          "source_expected_sequence": 166,
+          "source_sample_age_ms": 104.798,
+          "source_sequence": 210,
+          "source_status": "observed",
+          "status": "completed_keyset_confirmed",
+          "step": 10,
+          "step_started_ns": 55548457847580,
+          "terminal_status": "cancelled"
+        }
+      ]
+    }
+  ],
+  "schema": "map01-ammo-fire-diagnostic-v1",
+  "scope_limits": [
+    "two unmatched stochastic retained episodes; descriptive contrast only",
+    "ammo decreases temporally inside a declared space hold do not prove which shot caused the HUD change",
+    "no target hit, tactical appropriateness, survival benefit, completion, speed, or human-tempo claim",
+    "interrupted and partial/unconfirmed holds are excluded from the completed-step fraction"
+  ]
+}

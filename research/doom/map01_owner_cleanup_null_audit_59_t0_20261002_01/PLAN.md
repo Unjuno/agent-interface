@@ -1,0 +1,15 @@
+# #59 cleanup-null audit successor T0
+
+Allocation: `MAP01-OWNER-CLEANUP-NULL-AUDIT-59-T0-20261002-01`
+
+## H / T / D / C / U
+
+- **H:** The retained #6105 `FAIL_AUDIT` is caused by an overstrict audit predicate that requires `key == "W"` on both release rows. A separate raw-only audit should accept `key: null` only for the owner-terminal cleanup row when keycode, owner, intent, reason, trigger, ordering, and the pinned source identity all match; it must reject the same null on explicit-up and reject altered identity/timing evidence.
+- **T:** Audit-only successor over byte-identical `predecessor_raw.json`, `predecessor_audit.json`, and the pinned #5630 owner source identity. The candidate classifies the retained raw; a separately implemented auditor independently reconstructs the boundary and verifies that the predecessor remains `FAIL_AUDIT`. Candidate once, auditor once, retries zero. No InputOwner execution, X server, GUI, game, model, physical input, or network.
+- **D:** `PASS_AUDIT_OWNER_BOUNDARY_SCOPED` only if (1) predecessor raw/audit hashes and source identity match the freeze; (2) the candidate and independent auditor agree on two W admissions without interval IDs, ordered explicit-up/cleanup releases with keys W/null but shared owner/intent/keycode, ordered request/sync brackets and final empty snapshot; and (3) mutations of cleanup keycode, owner, reason, explicit-up null, timing, source identity, and candidate boolean claims are rejected. Preserve the old `FAIL_AUDIT` verbatim; never promote it retroactively.
+- **C:** Main advanced after initial intake: latest observed commit is `abd0ce6425e24934731b763ece83421d309535b5` (T0 failure-preservation integration). Predecessor is PR #6105 head `6dca821d1961608c48e972055b063c0340f88f8d`; its body now also records a distinct T1 explicit-up scoped pass, while preserving this T0 `FAIL_AUDIT`. Owner source is pinned commit `288d0498d11cf16657e523a04616bf4f49cd94f4`, Git blob `c40db07e596b31557590cec5e90f6ab651573476`. This successor audits only the earlier immutable T0 raw/audit, not the T1 trace. Deterministic standard-library JSON audit on local CPython; no container because no platform, dependency, or external runtime behavior is under test. This does not reserve or consume any shared Docker/OrbStack slot.
+- **U:** This checks interpretation of a retained fake-Xlib owner trace only. It does not demonstrate live X11 sampling, physical held-input occupancy, occurrence IDs, application delivery, useful task effect, safety, matched recovery, or MAP01 success.
+
+## Frozen-source and execution rules
+
+Construction tests run before the source freeze and are excluded from allocation invocation counts. After `FREEZE.json` is published and read back, run `python3 candidate.py` once. Only if it exits 0, run `python3 audit.py` once. Any source/hash mismatch is STOP before candidate. No retries, replacement, correction of predecessor artifacts, or post-outcome tuning. `abd0ce…` was checked for this unique branch; latest main and the path must be checked again immediately before publication.

@@ -1,0 +1,5 @@
+Host construction verification, before formal one-shot:
+python -m unittest -v test_audit_successor2.py
+
+Formal one-shot WSLc audit (no candidate/old auditor invocation):
+wslc run --rm --pull never --network none --cpus 1 --memory 512M --mount 'type=bind,source=C:\Users\junny\Documents\Codex\2026-09-19\unjuno-agent-interface-x20\.scratch_6311_audit02\input,target=/input,readonly' --mount 'type=bind,source=C:\Users\junny\Documents\Codex\2026-09-19\unjuno-agent-interface-x20\.scratch_6311_audit02\audit_successor2.py,target=/audit.py,readonly' --mount 'type=bind,source=C:\Users\junny\Documents\Codex\2026-09-19\unjuno-agent-interface-x20\.scratch_6311_audit02\output,target=/output' python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python /audit.py --bundle /input/research/doom/map01_terminal_sync_wait_boundary_3211_t5_container_20261002 --candidate-dir /input/research/doom/map01_terminal_sync_wait_boundary_3211_t5_container_20261002/results/container-01 --out /output/audit-02

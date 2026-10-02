@@ -1,0 +1,32 @@
+{
+  "schema": "constrained-event-sequence-fixture-v1",
+  "events": ["ACT", "OBS", "REV", "REL", "STALE", "PING"],
+  "max_trace_length": 4,
+  "canonical_presence_order": ["ACT", "OBS", "REL", "REV", "STALE", "PING"],
+  "random_seed": 6206,
+  "pair_witness_rule": "For every feasible adjacent ordered pair, choose the shortest then lexicographically first legal trace of length <=4 containing it; exclude traces containing contiguous OBS,REV,ACT; deduplicate and sort selected traces.",
+  "reset": {
+    "lease_open": true,
+    "evidence_fresh": true,
+    "held": false,
+    "committed": 0,
+    "verified_releases": 0
+  },
+  "legality": "All event deliveries are attempts except REL, which exists only as the owner release of a currently active admitted hold.",
+  "transitions": {
+    "ACT": "Commit iff lease_open and evidence_fresh and not held; otherwise deny.",
+    "OBS": "Set evidence_fresh=true; never changes lease_open.",
+    "REV": "Set lease_open=false; if held, clear held and increment verified_releases.",
+    "REL": "Feasible iff held; clear held and increment verified_releases.",
+    "STALE": "Set evidence_fresh=false; if held, clear held and increment verified_releases.",
+    "PING": "No semantic state change."
+  },
+  "mutants": {
+    "pair_stale_lease": "ACT immediately following REV ignores the revoked lease if evidence is fresh.",
+    "triple_stale_permit": "ACT following exact suffix OBS,REV ignores the revoked lease if evidence is fresh."
+  },
+  "controls": {
+    "impossible": [["REL"], ["REV", "REL"]],
+    "order_invariant": ["PING"]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "admission_rows_carry_interval_id": false,
+  "auditor_imports_candidate_or_owner": false,
+  "checks": {
+    "allocation_main_and_owner_source": true,
+    "candidate_once_no_retry": true,
+    "case_hash": true,
+    "fake_transport_event_order": true,
+    "keymap_only_after_terminal_release": true,
+    "no_per_occurrence_down_or_up_sample_fields": true,
+    "release_timing_order": true,
+    "two_admission_replies_without_occurrence_ids": true,
+    "two_owner_release_brackets_same_repeated_identity": false
+  },
+  "interpretation": "owner/intent/key identity repeats; only terminal empty keymap sample exists in this sequence",
+  "raw_sha256": "e1914137f78c009346c13acba25e893db272d0fada2268d982b372cd0566ef82",
+  "release_bracket_count": 2,
+  "release_rows_carry_interval_id": false,
+  "schema": "map01-owner-occurrence-binding-audit-v1",
+  "status": "FAIL_AUDIT",
+  "terminal_keymap_snapshot_count": 1
+}
+

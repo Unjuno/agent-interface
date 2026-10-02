@@ -1,0 +1,24 @@
+{
+  "schema": "issue6604-t0-scorer-oracle-v1",
+  "case_labels": {
+    "C01": "planted_slow",
+    "C02": "planted_fast_reversal",
+    "C03": "null_slow",
+    "C04": "null_medium",
+    "C05": "abrupt_step",
+    "C06": "no_motion",
+    "C07": "semantic_swap_unobservable"
+  },
+  "matrices": {
+    "planted_crossover": ["C01", "C02"],
+    "no_crossover": ["C03", "C04"],
+    "controls": ["C05", "C06", "C07"]
+  },
+  "semantic_swap_unobservable": {
+    "case_id": "C07",
+    "tick": 6,
+    "visible_cue": false,
+    "required_semantic_disposition": "UNKNOWN",
+    "visible_numeric_stream_alias_of": "C01"
+  }
+}

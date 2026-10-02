@@ -62,7 +62,7 @@ class PostDispatchCaptureTests(unittest.IsolatedAsyncioTestCase):
                 if case=='refused':raw['result']={'status':'refused','error':'LEASE_EXPIRED','backend_emissions':0}
                 if case=='recovery':session.recovery_required=True;raw['result']['recovery_required']=True
                 return raw
-            stack.enter_context(patch('runtime.cli_v1.mcp_server.dispatch_in_session',side_effect=dispatch))
+            stack.enter_context(patch('runtime.cli_v1.api.dispatch_in_session',side_effect=dispatch))
             server=create_server({'fixture':123},td,session_mode='persistent-x11')
             reply=await server.call_tool('interface_dispatch',{'program':request_program,'current_observation_seq':1,
                 'current_binding_revision':1,'inspect_after':'fixture','inspect_after_region':[0,0,1,1],
@@ -165,13 +165,13 @@ class PostDispatchCaptureTests(unittest.IsolatedAsyncioTestCase):
             with self.subTest(case=case):await self.exercise(case,wait_ms=20)
     async def test_invalid_wait_rejects_before_session_or_input(self):
         for args in [{'inspect_after_wait_ms':10},{'inspect_after':'fixture','inspect_after_wait_ms':10},{'inspect_after':'fixture','inspect_after_region':[0,0,1,1],'inspect_after_wait_ms':-1},{'inspect_after':'fixture','inspect_after_region':[0,0,1,1],'inspect_after_wait_ms':1001}]:
-            with self.subTest(args=args),tempfile.TemporaryDirectory() as td,patch('runtime.cli_v1.mcp_session.open_session') as opened,patch('runtime.cli_v1.mcp_server.dispatch_in_session') as dispatch:
+            with self.subTest(args=args),tempfile.TemporaryDirectory() as td,patch('runtime.cli_v1.mcp_session.open_session') as opened,patch('runtime.cli_v1.api.dispatch_in_session') as dispatch:
                 server=create_server({'fixture':123},td,session_mode='persistent-x11')
                 reply=await server.call_tool('interface_dispatch',dict(program={},current_observation_seq=1,current_binding_revision=1,**args))
                 self.assertTrue(reply.isError);opened.assert_not_called();dispatch.assert_not_called()
     async def test_invalid_post_capture_rejects_before_session_or_input(self):
         for mode,target,region in [('one-shot','fixture',[0,0,1,1]),('persistent-x11',None,[0,0,1,1]),('persistent-x11','missing',[0,0,1,1]),('persistent-x11','fixture',[0,0,0,1]),('persistent-x11','fixture',[0,0,True,1]),('persistent-x11','fixture',[0,0,8192,8192])]:
-            with self.subTest(mode=mode,target=target,region=region),tempfile.TemporaryDirectory() as td,patch('runtime.cli_v1.mcp_session.open_session') as opened,patch('runtime.cli_v1.mcp_server.dispatch_in_session') as dispatch:
+            with self.subTest(mode=mode,target=target,region=region),tempfile.TemporaryDirectory() as td,patch('runtime.cli_v1.mcp_session.open_session') as opened,patch('runtime.cli_v1.api.dispatch_in_session') as dispatch:
                 server=create_server({'fixture':123},td,session_mode=mode)
                 args={'program':{},'current_observation_seq':1,'current_binding_revision':1,'inspect_after_region':region}
                 if target is not None:args['inspect_after']=target

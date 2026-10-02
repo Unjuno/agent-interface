@@ -1,0 +1,51 @@
+{
+  "study_id": "issue-6610-post-success-changeability-t0-v1",
+  "issue": 6610,
+  "branch": "research/post-success-artifact-changeability-6610-t0-20261002",
+  "intake_main": "c99e4907d5cb97561b4ca4f88486cc3c4ec47e6e",
+  "additive_path": "research/analysis/post_success_artifact_changeability_6610_t0_v1/",
+  "H": "On two finite artifact families, flat/literal and structure-preserving routes can pass the same representation-neutral initial effect contract, while the declared follow-up mix reverses their initial-cost ranking; an independently reconstructed assay detects both the inversion and cases where flat output is preferable.",
+  "T": {
+    "kind": "exhaustive synthetic method-sensitivity test",
+    "artifact_families": ["spreadsheet", "drawing"],
+    "routes": ["flat", "structured"],
+    "followups": ["none", "structural_edit", "raster_patch"],
+    "case_count": 6,
+    "followup_distribution": {"none": 0.4, "structural_edit": 0.4, "raster_patch": 0.2},
+    "metric": "declared integer operation-cost units; not wall time",
+    "candidate_command": "python -B candidate.py /src/fixture.json /out/raw.json",
+    "auditor_command": "python -B audit.py /src/fixture.json /out/raw.json /out/audit.json",
+    "container": {
+      "runtime": "Microsoft WSLc",
+      "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+      "image_id": "sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4",
+      "platform": "linux/amd64",
+      "python": "3.12.14",
+      "network": "none",
+      "cpus": 0.25,
+      "memory": "256m",
+      "source_mount": "read-only",
+      "output_mount": "dedicated writable directory"
+    }
+  },
+  "D": {
+    "pass": "All six cases have exact initial-render parity and satisfy initial required/forbidden effects; structural edits and raster patches independently meet their requested effects while preserving declared unrelated content; the follow-up mixture reverses initial-only route ranking on both families; no-follow-up and raster-patch strata favor flat; all corruption controls are rejected by the raw-only auditor.",
+    "fail": "A complete case accepts a wrong initial or follow-up effect, mutates unrelated content, reports false structure, or the declared ranking predicates do not hold.",
+    "stop": "Source/image/output/provenance mismatch, unavailable WSLc boundary, or candidate/audit execution failure before a complete interpretable raw record."
+  },
+  "C": "The fixture and operation costs are hand-authored abstractions. Operation units do not measure human, model, GUI, tool, or wall-clock effort. The follow-up distribution is illustrative, not estimated from users. Spreadsheet/drawing states are finite and deterministic.",
+  "U": "This only establishes whether the T0 assay detects a planted ranking inversion and negative controls. It does not establish realistic artifact editability, actual application semantics, route performance, user agency/preference, future-change prevalence, model behavior, or product benefit.",
+  "sources": {
+    "candidate.py": "414b6b8b166cbe312c80ff1e505b9e0930a1af88b2ee17643489c9c4fb2c6360",
+    "audit.py": "f3153da66a083360b09b94ecb4e9510c6b99c73f39ae48b4fd080985c411f859",
+    "fixture.json": "c2c9141f816bbb9320e097a5478e314db88cb927ed96ee43dcda5edb69734b2e",
+    "test_t0.py": "a38319e14c45de5086346c173194ad064a84f5d81962bfd33ef2813774e91822"
+  },
+  "allocation": {
+    "candidate_invocations": 1,
+    "auditor_invocations": 1,
+    "retries": 0,
+    "formal_or_live_gui_invocations": 0,
+    "result_path": "results/"
+  }
+}

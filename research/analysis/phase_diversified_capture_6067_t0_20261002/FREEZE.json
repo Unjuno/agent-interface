@@ -1,0 +1,28 @@
+{
+  "allocation_id": "PHASE-DIVERSIFIED-6067-T0-20261002-01",
+  "issue": 6067,
+  "frozen_at": "2026-10-01",
+  "candidate": "candidate.py",
+  "candidate_sha256": "E1421566BB64C0085CF09636856D4BCEED1D82613F82030A55C140B23DD243EA",
+  "independent_auditor": "audit.py",
+  "auditor_sha256": "E5EA1A524F9A99811F554B56231DBBB0ECA7996DB15E8F55683D125DCE1C5064",
+  "construction_tests": "test_audit.py",
+  "construction_tests_sha256": "20507413514C0279F2A96E5C6D0195AC5C0257FD615CB9DE47C557911CCDDA7E",
+  "design": {
+    "period_slots": 12,
+    "repetitions": 4,
+    "cue_width_slots": [1, 2, 3],
+    "cue_phase_slots": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    "offset_choices_per_capture": 12,
+    "cyclic_max_gap_slots": 18,
+    "selection": "uniform over all admitted deterministic offset cycles"
+  },
+  "decision_gate": {
+    "expected_admitted_cycles": 12546,
+    "independent_phase_miss_vectors_must_match": true,
+    "worst_phase_four_miss_probability_must_be_below_periodic_worst_for_each_width": true,
+    "all_admitted_cycles_must_respect_gap_cap": true
+  },
+  "retries": 0,
+  "container_required": false
+}

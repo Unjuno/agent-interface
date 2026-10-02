@@ -1,0 +1,47 @@
+{
+  "schema": "issue-6519-t0-freeze-v1",
+  "issue": 6519,
+  "allocation": "AFFORDANCE-REGRESSION-6519-T0-20261002-01",
+  "frozen_at_utc": "2026-10-02T04:58:36Z",
+  "base_main_sha": "378a671c958a14456223a973db05535356436aa8",
+  "branch": "research/6519-affordance-regression-t0-wslc-20261002",
+  "source_path": "research/analysis/affordance_regression_envelope_6519_t0_20261002/",
+  "source_hashes_sha256": {
+    "README.md": "1d7ca1d9195a27690130af79271e99d49757678be0859a50229c2c34ed8ed6d1",
+    "PREREGISTRATION.md": "8f79bee1184b48e40c501ed0741bd6316edfae010a149d3ebe6675851998da04",
+    "RUN_PROTOCOL.md": "40648d1db63703e6980b34acb89f0350a9157cdadcd9f653deae39063525059a",
+    "fixture.json": "23fa159a1c8720f1c783d34bd0b26bf570d50628f04ae1cd4a34c22fb8d261ff",
+    "oracle.json": "16d3c3d967e1a22401594686ef07d646c94c4593b1e7d32df4c32f24f65bbb1f",
+    "candidate.py": "964926f73a9d5a2bbf1929ac26a87395dba5a96fe9ea3581f7d6c62b36e202bb",
+    "auditor.py": "8dc5eb835970e433579ae9d7e9e488f367566243e2cc7dfea9d8bc168d8f8a80",
+    "test_protocol.py": "513c9bfb5e4cfba7e6b4431b305aa1ddc3546fe2390f06da5836262a6adc40c6",
+    "formal_01_20261002/candidate_source/candidate.py": "964926f73a9d5a2bbf1929ac26a87395dba5a96fe9ea3581f7d6c62b36e202bb",
+    "formal_01_20261002/candidate_source/fixture.json": "23fa159a1c8720f1c783d34bd0b26bf570d50628f04ae1cd4a34c22fb8d261ff",
+    "formal_01_20261002/audit_source/auditor.py": "8dc5eb835970e433579ae9d7e9e488f367566243e2cc7dfea9d8bc168d8f8a80",
+    "formal_01_20261002/audit_source/fixture.json": "23fa159a1c8720f1c783d34bd0b26bf570d50628f04ae1cd4a34c22fb8d261ff",
+    "formal_01_20261002/audit_source/oracle.json": "16d3c3d967e1a22401594686ef07d646c94c4593b1e7d32df4c32f24f65bbb1f"
+  },
+  "runtime": {
+    "name": "Microsoft WSL Containers",
+    "cli": "wslc.exe",
+    "version": "3.0.1.0",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "image_id": "sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4",
+    "platform": "linux/amd64",
+    "python": "3.12.14 (pinned image metadata previously verified on this host)",
+    "pull": "never",
+    "network": "none",
+    "cpus": "1",
+    "memory_requested": "1G; WSLc warning expected; enforcement not asserted",
+    "user": "65534:65534",
+    "remove_after_run": false
+  },
+  "commands": {
+    "construction": "python -B -m unittest -v test_protocol",
+    "candidate": "python -B /src/candidate.py /src/fixture.json /out/candidate.raw.json",
+    "auditor": "python -B /src/auditor.py /src/fixture.json /src/oracle.json /in/candidate.raw.json /out/audit.json"
+  },
+  "budget": {"construction_runs_max": 1, "candidate_runs_max": 1, "auditor_runs_max": 1, "retries": 0},
+  "status_gate": "METHOD_PASS_SCOPED only under PREREGISTRATION.md; no model, GUI, application-effect, human, runtime-safety, or benefit claim",
+  "post_freeze_main_advance": "Any main change overlapping this source, fixture, image, or commands stops the next rung; unrelated advances are recorded and do not authorize source edits."
+}
