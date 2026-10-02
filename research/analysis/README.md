@@ -379,6 +379,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`evidence_dependent_compute_reuse_r0_v1/`](evidence_dependent_compute_reuse_r0_v1/)
 - [`evidence_dependent_compute_scheduler_dominance_r0_v1/`](evidence_dependent_compute_scheduler_dominance_r0_v1/)
 - [`exception_envelope_6021_t0_20261002/`](exception_envelope_6021_t0_20261002/)
+- [`exogenous_opportunity_5694_matched_phase_a04_20261002/`](exogenous_opportunity_5694_matched_phase_a04_20261002/)
 - [`exogenous_opportunity_5694_t0_20261001/`](exogenous_opportunity_5694_t0_20261001/)
 - [`explanation_dependence_5916_t0_v1/`](explanation_dependence_5916_t0_v1/)
 - [`exposed_success_audit_6367_t0_20261002/`](exposed_success_audit_6367_t0_20261002/)

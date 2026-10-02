@@ -1,0 +1,60 @@
+{
+  "schema": "exogenous-opportunity-matched-phase-a04-freeze-v1",
+  "issue": 6803,
+  "allocation_id": "EXOGENOUS-OPPORTUNITY-5694-A04-MATCHED-PHASE-20261002-01",
+  "main_sha_at_intake": "52c42c40bb074f46db1dc74afb20508e68bc1282",
+  "main_sha_at_preformal_refresh": "c17490cae4cb1e9600b816484f5103e3613700af",
+  "preformal_main_advance": "Cumulative compare from intake: only analysis-index workflow, RESEARCH.md, analysis README, and unrelated #6155/#6645 evidence changed; no frozen A04 path overlap; ROADMAP.md and docs/CURRENT_GOAL.md unchanged.",
+  "branch": "research/exogenous-opportunity-5694-matched-phase-a04-20261002",
+  "artifact_path": "research/analysis/exogenous_opportunity_5694_matched_phase_a04_20261002/",
+  "owner": "Codex desktop autonomous-research task; native Windows host CPU only",
+  "window_utc": {"start":"2026-10-02T20:15:00Z","end":"2026-10-02T20:30:00Z"},
+  "runtime": {
+    "platform": "Windows AMD64",
+    "python": "3.11.9",
+    "dependencies": "Python standard library only",
+    "container": null,
+    "gpu": false,
+    "network": false,
+    "gui_or_input": false
+  },
+  "budget": {
+    "candidate_processes_max": 1,
+    "auditor_processes_max": 1,
+    "retries": 0,
+    "candidate_command": "python -B candidate.py --fixture fixture.json --out execution/formal-01/candidate.raw.json",
+    "auditor_command": "python -B auditor.py --fixture fixture.json --oracle oracle.json --raw execution/formal-01/candidate.raw.json --out execution/formal-01/audit.json"
+  },
+  "fixture": {
+    "sha256": "2b3c934bef9dfdb9ea0b758521570bf8ee5d3878e2008d9b9702c9a1a371919e",
+    "bytes": 3125,
+    "opportunity_rows": 8,
+    "not_applicable_rows": 1,
+    "random_seed": null
+  },
+  "source_sha256": {
+    "candidate.py": "c1e39ebd99e1eee81dbac6902d6d71b03ba1deb872bec8753c22372f270c6d29",
+    "auditor.py": "47c6ca37c73f5a95fc91bb140dfcce62c9abb9b193e8ced20cb65cec3f4bfa3d",
+    "fixture.json": "2b3c934bef9dfdb9ea0b758521570bf8ee5d3878e2008d9b9702c9a1a371919e",
+    "oracle.json": "07f969d95b4acdfaff9ee84fb70e5491069d35b65fcffab280cba81fc7b22a31",
+    "test_protocol.py": "90faf8bc7cf51d58a64a66b39fe2f2e52dcf15c36278a3752551bd32c5cf531c",
+    "PREREGISTRATION.md": "44cd38ba4ebc108f33678dbf4b0814d77a16cf2580128a649682cecdf142467f",
+    "PRE_FORMAL.md": "07529039639ac00027ea927d60de1f8f247cefdd7f110628141fc00f71bc7075"
+  },
+  "construction": {
+    "command": "python -B -m unittest -v",
+    "result": "PASS 9/9",
+    "compile_command": "python -B -m py_compile candidate.py auditor.py test_protocol.py",
+    "compile_result": "PASS"
+  },
+  "decision": {
+    "phase_pair": {"case_ids":["c01","c02"],"capture_schedule_ms":[10,50],"horizon_ms":60,"expiry_ms":20,"onset_ms":[9,11]},
+    "expected_phase_hit": "eligible_effect/verified_effect",
+    "expected_phase_miss": "not_acquired/no_capture_before_expiry",
+    "corruption_controls": ["missing row","duplicate row","wrong phase classification","changed capture schedule","forged effect receipt"],
+    "success": "PASS_METHOD_SCOPED",
+    "semantic_failure": "FAIL_METHOD",
+    "provenance_failure": "STOP"
+  },
+  "scope": "Authored finite method fixture only; no live-control, GUI, model, safety, human-tempo, GPU or product claim."
+}
