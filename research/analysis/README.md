@@ -1,5 +1,6 @@
 # Analytical research
 
+- [`path_width_continuous_gui_6581_t0b_v1/REPORT.md`](path_width_continuous_gui_6581_t0b_v1/REPORT.md) — Issue #6581 synthetic path-width GUI fixture; six scenarios independently audited `PASS_METHOD_SCOPED`; no ordinary-GUI or human/agent transfer claim.
 - [`spatial_block_position_6590_t1_geometry_design_v2/REPORT.md`](spatial_block_position_6590_t1_geometry_design_v2/REPORT.md) — #6590 preformal geometry screen: 80×60 remains below the four-block floor; 112×84 provides 19/16/20/16 eligible unique centers and passes an independent finite audit. No image/model/container run; formal T1 still held on OrbStack API readiness.
 
 - [`spatial_block_position_6590_t1_geometry_feasibility_v1/REPORT.md`](spatial_block_position_6590_t1_geometry_feasibility_v1/REPORT.md) — #6590 OrbStack replication independently reconstructed the fixed-grid no-near-duplicate geometry; 6/6/3/3 eligible sites fail the eight-site block floor, so visual-model T1 remains unrun (`HOLD_GEOMETRY_NOT_IDENTIFIABLE`).
@@ -415,6 +416,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`map01_v13_source_provenance_audit_59_t0_20261001/`](map01_v13_source_provenance_audit_59_t0_20261001/)
 - [`map01_v13_source_provenance_audit_59_t1_20261001/`](map01_v13_source_provenance_audit_59_t1_20261001/)
 - [`max_permissive_supervisor_5550_successor04_20261001/`](max_permissive_supervisor_5550_successor04_20261001/)
+- [`matched_boundary_spectrum_6640_t1_20261002/`](matched_boundary_spectrum_6640_t1_20261002/)
 - [`max_permissive_supervisor_5550_t0_20261001/`](max_permissive_supervisor_5550_t0_20261001/)
 - [`max_permissive_supervisor_5550_t1_observability_20261001/`](max_permissive_supervisor_5550_t1_observability_20261001/)
 - [`mediated_typed_dependency_ledger_v1/`](mediated_typed_dependency_ledger_v1/)
@@ -471,6 +473,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`paired_route_estimator_57_t0_v1/`](paired_route_estimator_57_t0_v1/)
 - [`partial_order_replay_4889_v1/`](partial_order_replay_4889_v1/)
 - [`path_class_switch_6586_t0_20261002/`](path_class_switch_6586_t0_20261002/)
+- [`path_width_continuous_gui_6581_t0b_v1/`](path_width_continuous_gui_6581_t0b_v1/)
 - [`pending_outcome_route_learning_6129_t0_20261002/`](pending_outcome_route_learning_6129_t0_20261002/)
 - [`phase_diversified_capture_6067_t0_20261002/`](phase_diversified_capture_6067_t0_20261002/)
 - [`phase_overlap_dynamic_footprint_binding_r1_v1/`](phase_overlap_dynamic_footprint_binding_r1_v1/)
