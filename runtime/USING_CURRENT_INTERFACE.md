@@ -810,3 +810,32 @@ a public Python owner composition, not a compiled MCP tool or MCP transport test
 Actual primary usage includes construction, failure and repair; the historical
 comparison and evolving context/cache do not prove token or speed gains. Keep
 production defaults and the efficiency HOLD.
+
+
+### Run a bounded graph through the public Python owner
+
+After explicitly opening `GuardedSessionOwner` and grounding its references,
+call `owner.run_compiled(interface, bindings, call_root=fresh_directory,
+perceive=read_only_callback, verify_effect=read_only_callback)`. An optional
+`cancelled` callback uses the existing graph cancellation contract. Calls are
+serialized by the caller; this synchronous API does not add a scheduler or MCP
+tool. The owner must be open, reviewed and recovered. The call directory must
+be new; existing directories refuse before graph execution.
+
+The existing graph performs its scope, dependency, admission, deadline and
+release checks. Raw captures and graph evidence remain in the owner's bridge
+directory; image artifacts use this call's images directory. The result returns
+`method_receipt`, `feedback`, `session`, `task_success=null` and
+`replay_allowed=false`. Feedback presents the last capture actually used by
+this graph, without an additional observation. A graph with no observations
+returns feedback=null rather than presenting a previous image.
+
+Read method and feedback outcomes separately. If presentation is unavailable,
+the completed prefix remains in method_receipt and the owner requires review.
+An exception also requires review and retains cleanup duty on the same owner;
+close attempts release even when input may have happened before the exception.
+No automatic retry, re-grounding, restart or recovery reset follows. Callbacks
+are trusted caller code, not generic perception or independent task scoring.
+Independently verify saved effects, and retain the returned wrapper evidence.
+No hard real-time bound, matched latency or token advantage is established by
+this API addition. Existing input/MCP schemas and defaults are unchanged.
