@@ -1,0 +1,19 @@
+import hashlib, json
+from datetime import datetime, timezone
+from pathlib import Path
+
+root = Path(__file__).resolve().parent.parent
+private = root / 'work/repairs/appserver-journal-close-01'
+out = root / 'outputs/appserver-journal-close-01'
+old = json.loads((out / 'FREEZE_BEFORE_RED_V2.json').read_bytes())
+source = (private / 'codex_app_server_client_v2.py').read_bytes()
+assert hashlib.sha256(source).hexdigest() == 'da2c00920e0d833d989c93dd9d5ac6c2a845eebdb9e794d775ee6d7c238c406a'
+tests = (root / 'work/test_appserver_journal_close_01a0ff2d.py').read_bytes()
+(private / 'test_appserver_journal_close_01a0ff2d.py').write_bytes(tests)
+freeze = dict(old, methods=7, test_sha256=hashlib.sha256(tests).hexdigest(), test_bytes=len(tests),
+              before_compatibility_command_utc=datetime.now(timezone.utc).isoformat(),
+              additional_condition='Preserve accepted explicit timeout=None mode for unheld journal and disabled journal. Two pure-object cases; no new transport child for compatibility RED.')
+with (out / 'FREEZE_BEFORE_RED_V3.json').open('x', encoding='utf-8') as f:
+    json.dump(freeze, f, indent=2)
+    f.write('\n')
+print(json.dumps({'test_sha256': freeze['test_sha256'], 'methods': 7, 'compatibility_red_children': 0}, indent=2))

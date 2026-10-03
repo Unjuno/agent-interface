@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Archived S05-WSLC image-gate preparation](looming_visual_assumption_gate_5905_s05_wslc_20261003/ARCHIVAL_QUALIFICATION.md) — #6808/#5905 frozen source and 24 images preserved; no published formal result. Distinct from the cancelled native S05 and executed S06; archival checks do not authorize a run.
+
 - [Issue #6061 archived T0 preparation](intermittent_control_6061_t0_20261003/README.md) — Original construction raw and freezes preserved; formal candidate/auditor 0/0. Offline construction replay/mutations are not a formal result or runtime clearance.
 
 - [`semantic_receipt_runtime_boundary_5442_t4/RESCUE_QUALIFICATION_20261003.md`](semantic_receipt_runtime_boundary_5442_t4/RESCUE_QUALIFICATION_20261003.md) — #5442 T4 host-only mechanical-boundary archive; package raw-audit tests 2/2, six source/artifact checksums, frozen-kernel tests 18/18. No containerized simulator, application effect, or semantic-success claim.
@@ -260,6 +262,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`affine_receipt_5508_t15/`](affine_receipt_5508_t15/)
 - [`alert_actionability_5435_t4/`](alert_actionability_5435_t4/)
 - [`altgr_preflight_contract_successor_2171_v1/`](altgr_preflight_contract_successor_2171_v1/)
+- [`amendment_effect_6219_publication_recovery_20261003/`](amendment_effect_6219_publication_recovery_20261003/)
 - [`answer_surface_audit_6173_factored_axes_t0_20261002/`](answer_surface_audit_6173_factored_axes_t0_20261002/)
 - [`anytime_fidelity_typed_admission_r0_v1/`](anytime_fidelity_typed_admission_r0_v1/)
 - [`anytime_t5/`](anytime_t5/)

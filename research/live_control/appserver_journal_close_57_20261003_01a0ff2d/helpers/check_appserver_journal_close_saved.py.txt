@@ -1,0 +1,163 @@
+"""Saved-only source/receipt reducer; never import the client or tests."""
+import ast
+import base64
+import copy
+from datetime import datetime, timezone
+import hashlib
+import json
+from pathlib import Path
+import platform
+import re
+import sys
+
+root = Path(__file__).resolve().parent.parent
+out = root / 'outputs/appserver-journal-close-01'
+specs = [('red', 1, 5, 5, 2, 0), ('red-corrected', 1, 5, 5, 1, 0),
+         ('green-normal', 0, 5, 5, 0, 0), ('green-optimized', 0, 5, 5, 0, 0),
+         ('compatibility-red', 1, 2, 1, 0, 1), ('final-normal', 0, 7, 7, 0, 0),
+         ('final-optimized', 0, 7, 7, 0, 0)]
+
+def require(condition, message):
+    if not condition:
+        raise ValueError(message)
+
+def integer(value, message):
+    require(type(value) is int, message)
+
+def semantic(row, stage):
+    method = row['method']
+    if row['kind'] == 'owned-native-silent-transport':
+        for key in ('child_pid', 'child_exit_at_checkpoint', 'final_child_exit', 'checkpoint_ns'):
+            integer(row[key], key)
+        require(row['child_pid'] > 0, 'PID must be positive')
+        require(row['child_exit_at_checkpoint'] == row['final_child_exit'], 'terminal process identity drift')
+        for key in ('completed_at_checkpoint', 'caller_alive_at_checkpoint', 'reader_alive_at_checkpoint',
+                    'journal_enabled', 'fixture_held_lock', 'journal_lock_still_locked', 'final_reader_alive', 'final_caller_alive'):
+            require(type(row[key]) is bool, key)
+        require(not row['reader_alive_at_checkpoint'] and not row['final_reader_alive'] and not row['final_caller_alive'], 'owned thread custody')
+        require(row['driver_closed_pipe_handles'] == [True, True, True], 'owned final pipes')
+        require(all(type(x) is bool for x in row['driver_closed_pipe_handles']), 'pipe types')
+        require(row['client_pipes_closed_at_checkpoint'] == [False, False, False], 'client versus driver pipe ownership')
+        require(row['configured_wait_seconds'] == 0.05 and row['fixed_checkpoint_seconds'] == 0.25, 'frozen timing endpoints')
+        checkpoint = row['checkpoint_outcome']
+        cleanup = row['cleanup_outcome']
+        integer(checkpoint['start_ns'], 'start ns')
+        integer(cleanup['end_ns'], 'end ns')
+        require(cleanup['start_ns'] == checkpoint['start_ns'], 'same close call')
+        require(checkpoint['start_ns'] <= row['checkpoint_ns'], 'checkpoint follows entry')
+        held = method == 'test_contended_journal_reports_incomplete_retirement'
+        disabled = method == 'test_no_journal_does_not_acquire_contended_lock'
+        require(row['journal_enabled'] is not disabled, 'journal condition')
+        require(row['fixture_held_lock'] is (held or disabled), 'holder condition')
+        if held or disabled:
+            require(row['journal_lock_still_locked'], 'another holder retains lock')
+        if held and stage in ('red', 'red-corrected'):
+            require(not row['completed_at_checkpoint'] and row['caller_alive_at_checkpoint'], 'original held-lock counterexample')
+            require('end_ns' not in checkpoint and 'error_type' not in checkpoint, 'no fabricated original completion')
+            require(cleanup['end_ns'] >= row['checkpoint_ns'] and cleanup.get('return_value') is None, 'holder release permits original cleanup')
+        else:
+            require(row['completed_at_checkpoint'] and not row['caller_alive_at_checkpoint'], 'finite retirement response')
+            integer(checkpoint['end_ns'], 'checkpoint end ns')
+            require(checkpoint['start_ns'] <= checkpoint['end_ns'] <= row['checkpoint_ns'], 'response before checkpoint')
+            require(checkpoint == cleanup, 'unchanged settled result')
+            if held:
+                require(checkpoint.get('error_type') == 'TimeoutError', 'typed incomplete cleanup')
+                require(checkpoint.get('error_message') == 'app-server journal close timed out', 'journal error identity')
+            else:
+                require('error_type' not in checkpoint and checkpoint.get('return_value') is None, 'healthy cleanup control')
+        if row['journal_enabled']:
+            require(row['final_journal_closed'] is True, 'later explicit journal cleanup')
+            require(row['journal_closed_at_checkpoint'] is not held, 'journal custody at checkpoint')
+            if stage != 'red':
+                seed = base64.b64decode(row['journal_seed_base64'], validate=True)
+                final = base64.b64decode(row['journal_final_base64'], validate=True)
+                require(seed in (b'{"fixture":"retained-owned-journal"}\n', b'{"fixture":"retained-owned-journal"}\r\n'), 'exact fixture journal bytes')
+                require(final == seed and row['final_journal_bytes_equal_seed'] is True, 'actual retained journal bytes')
+                if held:
+                    require(row['journal_bytes_equal_seed_at_checkpoint'] is True, 'failed retirement did not change raw')
+        else:
+            require(row['final_journal_closed'] is None and row['journal_closed_at_checkpoint'] is None, 'disabled journal')
+    elif method == 'test_already_closed_journal_does_not_acquire_contended_lock':
+        require(type(row['journal_close_calls']) is int and row['journal_close_calls'] == 0, 'closed journal not repeated')
+        require(row['journal_closed'] is True and row['holder_lock_remains_locked'] is True, 'closed bypass preserves holder')
+    elif method == 'test_journal_close_exception_preserves_error_and_releases_lock':
+        require(row['same_error_instance'] is True and row['error_type'] == 'ValueError', 'same journal close error')
+        require(type(row['journal_close_calls']) is int and row['journal_close_calls'] == 1, 'one journal attempt')
+        require(row['journal_closed'] is False and row['lock_released'] is True, 'exceptional lock retirement')
+    elif method in ('test_explicit_none_timeout_preserves_unlimited_journal_mode',
+                    'test_explicit_none_timeout_without_journal_preserves_reader_join'):
+        require(row['return_value'] is None and row['reader_join_timeout'] is None and row['lock_released'] is True, 'explicit None mode')
+        if 'journal_close_calls' in row:
+            require(type(row['journal_close_calls']) is int and row['journal_close_calls'] == 1 and row['journal_closed'] is True, 'None-mode journal close')
+    else:
+        raise ValueError('unknown saved method')
+
+summary = []
+all_rows = {}
+for stage, exit_code, methods, cases, failures, errors in specs:
+    target = out / stage
+    receipt = json.loads((target / 'receipt.json').read_bytes())
+    require(type(receipt['exit_code']) is int and receipt['exit_code'] == exit_code, 'actual command exit')
+    integer(receipt['pid'], 'command PID')
+    require(datetime.fromisoformat(receipt['started_utc']) <= datetime.fromisoformat(receipt['ended_utc']), 'actual command clock order')
+    for name in ('stdout', 'stderr'):
+        require(hashlib.sha256((target / (name + '.log')).read_bytes()).hexdigest() == receipt[name + '_sha256'], 'actual stream join')
+    for name, key in [('executed-client.py.txt', 'source_sha256'), ('executed-test.py.txt', 'test_sha256')]:
+        require(hashlib.sha256((target / name).read_bytes()).hexdigest() == receipt[key], 'actual executed source join')
+    stderr = (target / 'stderr.log').read_text(encoding='utf-8')
+    require(re.search(r'Ran ' + str(methods) + r' tests? in ', stderr) is not None, 'actual unittest methods')
+    if exit_code == 0:
+        require(re.search(r'^OK$', stderr, re.M) is not None and '-O' in receipt['argv'] if stage.endswith('optimized') else re.search(r'^OK$', stderr, re.M) is not None, 'ordinary pass/optimization flag')
+    else:
+        require(('failures=' + str(failures)) in stderr if failures else ('errors=' + str(errors)) in stderr, 'first ordinary failure retained')
+    rows = [json.loads(path.read_bytes()) for path in sorted((target / 'cases').glob('*.json'))]
+    require(len(rows) == cases, 'saved case count; compatibility exception has no fabricated successful row')
+    for row in rows:
+        semantic(row, stage)
+    native = [row for row in rows if row['kind'] == 'owned-native-silent-transport']
+    require(len(native) == receipt['native_child_count_expected'], 'actual child count')
+    summary.append({'stage': stage, 'exit_code': exit_code, 'methods': methods, 'saved_rows': cases,
+                    'native_children': len(native), 'pid': receipt['pid'], 'start_utc': receipt['started_utc'], 'end_utc': receipt['ended_utc'],
+                    'source_sha256': receipt['source_sha256'], 'test_sha256': receipt['test_sha256']})
+    all_rows[stage] = rows
+
+final = {r['method']: r for r in all_rows['final-normal']}
+contended = 'test_contended_journal_reports_incomplete_retirement'
+challenges = []
+def corrupt(label, method, edit):
+    altered = copy.deepcopy(final[method])
+    edit(altered)
+    require(json.dumps(altered, sort_keys=True) != json.dumps(final[method], sort_keys=True), 'effective copy')
+    try:
+        semantic(altered, 'final-normal')
+    except ValueError as error:
+        challenges.append({'name': label, 'rejected': True, 'reason': str(error)})
+    else:
+        raise ValueError('accepted semantic corruption: ' + label)
+
+corrupt('wrong-incomplete-error', contended, lambda r: [r[x].update(error_type='AppServerError') for x in ('checkpoint_outcome', 'cleanup_outcome')])
+corrupt('journal-closed-by-failed-acquisition', contended, lambda r: r.update(journal_closed_at_checkpoint=True))
+corrupt('released-another-holder-lock', contended, lambda r: r.update(journal_lock_still_locked=False))
+corrupt('live-final-reader', contended, lambda r: r.update(final_reader_alive=True))
+corrupt('Boolean-process-exit-alias', contended, lambda r: r.update(child_exit_at_checkpoint=True, final_child_exit=True))
+corrupt('changed-actual-journal-bytes', contended, lambda r: r.update(journal_final_base64=base64.b64encode(b'{"fixture":"lost"}\n').decode()))
+corrupt('masked-original-close-error', 'test_journal_close_exception_preserves_error_and_releases_lock', lambda r: r.update(same_error_instance=False))
+corrupt('lost-explicit-None-mode', 'test_explicit_none_timeout_preserves_unlimited_journal_mode', lambda r: r.update(reader_join_timeout=0))
+corrupt('response-before-entry', contended, lambda r: [r[x].update(end_ns=r[x]['start_ns'] - 1) for x in ('checkpoint_outcome', 'cleanup_outcome')])
+
+baseline = (out / 'red/executed-client.py.txt').read_bytes()
+candidate = (out / 'final-normal/executed-client.py.txt').read_bytes()
+old = b'            with self._journal_lock:\n                self._journal.close()'
+new = b'            if not self._journal_lock.acquire(timeout=-1 if timeout is None else timeout):\n                raise TimeoutError("app-server journal close timed out")\n            try:\n                self._journal.close()\n            finally:\n                self._journal_lock.release()'
+require(baseline.count(old) == 1 and baseline.replace(old, new, 1) == candidate, 'literal production-only replacement')
+result = {'verified_utc': datetime.now(timezone.utc).isoformat(), 'scope': 'same-author separately expressed saved-only reducer, not nonauthor vote',
+          'actual_commands': summary, 'actual_native_children': sum(x['native_children'] for x in summary),
+          'saved_rows': sum(x['saved_rows'] for x in summary), 'effective_semantic_copies': challenges,
+          'first_missing_temporary_journal_bytes': 'Initial red native journal seed/final were represented by booleans only; v2 and later literal base64 bytes verify. No first raw journal bytes invented.',
+          'source_only_close_replacement': True, 'new_client_or_native_producer_execution': False,
+          'environment': {'python': sys.version, 'platform': platform.platform()},
+          'limits': 'positive finite mutex wait only; explicit None remains unlimited. Stage waits/OS close/flush/arbitrary descendants/pipe ownership/global deadlines/physical effect/model/efficiency remain separate.'}
+with (out / 'SAVED_AUDIT.json').open('x', encoding='utf-8') as stream:
+    json.dump(result, stream, indent=2)
+    stream.write('\n')
+print(json.dumps({k: v for k, v in result.items() if k != 'actual_commands'}, indent=2))
