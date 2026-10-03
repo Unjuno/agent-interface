@@ -24,6 +24,8 @@ repository-root comparison exits 0 and is the exact-copy evidence used here.
 An initial lookup used a nonexistent sibling verifier path; it executed no
 tests. Correct existing `causal_review_rescue_92cf265` checks then passed 2/2.
 
-Local analysis-index CI remains pending. No deletion authority is inferred from
+Local analysis-index CI completed 43 steps with zero failures on the restored
+integration tree; full transcript is retained in `local-ci.log`.
+No deletion authority is inferred from
 archive copying; merge/current-main equality, source tag and dependency checks
 are required before retiring the source branch.
