@@ -1,0 +1,14 @@
+fatal: path 'runtime/host_v1/runtime/host_v1/primary_stdio.mjs' does not exist in 'd00d617180d75d237942a45390d352a219518b2d'
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\relay-exit-journal-7772\check_composition_v2.py", line 21, in <module>
+    original=git('show',tree+':'+path);raw=overrides[path].read_bytes() if path in overrides else original
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\relay-exit-journal-7772\check_composition_v2.py", line 8, in git
+    return subprocess.check_output(['git',*args],cwd=repo,env=os.environ.copy() if args[0]=='show' else env_git,input=data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', 'show', 'd00d617180d75d237942a45390d352a219518b2d:runtime/host_v1/runtime/host_v1/primary_stdio.mjs']' returned non-zero exit status 128.
