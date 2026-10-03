@@ -323,8 +323,7 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                   "phase_timings": phases,
                   "input_authority": ("none" if execution_progress is not None and
                       execution_progress.get("status") == "safe_yield" and
-                      execution_progress.get("completed_actions") == 0 and
-                      execution_progress.get("input_dispatched") is not True else
+                      delivery == "not_attempted" else
                       "consumed_by_recorded_execute_stage" if stages["execute"]["status"] == "completed"
                       else "none")}
         emit({"event": "adaptive_route_finished", "outcome": outcome,
@@ -407,7 +406,10 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
         execution = _execution_decision(local("execute", {"target": selected, "check": revalidation}))
         if execution["status"] == "safe_yield":
             return finish("EXECUTION_INCOMPLETE", execution["reason"],
-                          delivery=("confirmed_partial" if execution["completed_actions"] else
+                          delivery=("delivery_uncertain" if
+                              execution["reason"] in {"delivery_uncertain", "execution_failed"} and
+                              execution.get("input_dispatched") is not False else
+                              "confirmed_partial" if execution["completed_actions"] else
                                     "delivery_uncertain" if execution.get("input_dispatched") is True
                                     else "not_attempted"),
                           execution_progress=execution)
