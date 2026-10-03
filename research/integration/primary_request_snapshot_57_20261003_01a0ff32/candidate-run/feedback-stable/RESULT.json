@@ -1,0 +1,167 @@
+{
+  "label": "feedback-stable",
+  "started_utc": "2026-10-03T12:56:47.572Z",
+  "ended_utc": "2026-10-03T12:56:47.869Z",
+  "original_arguments": {
+    "alias": "save",
+    "offset": [
+      1,
+      2
+    ],
+    "interaction": "click",
+    "tail": [],
+    "detail": "brief",
+    "observation_refs": true,
+    "feedback": {
+      "expected_title": "saved",
+      "rejected_titles": [],
+      "timeout_ms": 10
+    }
+  },
+  "caller_arguments_after": {
+    "alias": "save",
+    "offset": [
+      1,
+      2
+    ],
+    "interaction": "click",
+    "tail": [],
+    "detail": "brief",
+    "observation_refs": true,
+    "feedback": {
+      "expected_title": "saved",
+      "rejected_titles": [],
+      "timeout_ms": 10
+    }
+  },
+  "caller_state": {
+    "stopped": null
+  },
+  "error": null,
+  "original_reply": {
+    "status": "returned",
+    "id": 1,
+    "tool": "interface_guarded_input",
+    "next_id": 2,
+    "result": {
+      "isError": false,
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"status\":\"completed\",\"image_status\":\"image\",\"result\":{\"execution\":{\"releases\":[{\"verified\":true,\"keys_down\":[],\"buttons_down\":[]}]}},\"feedback\":{\"status\":\"matched\",\"expected_title\":\"saved\",\"rejected_titles\":[],\"title\":\"saved\",\"after_title\":\"saved\",\"task_success\":null,\"authority_granted\":false,\"input_dispatched\":false}}"
+        },
+        {
+          "type": "image",
+          "data": "AAECAw==",
+          "mimeType": "image/png"
+        }
+      ]
+    },
+    "attempt": 1
+  },
+  "saved_reply": {
+    "status": "returned",
+    "id": 1,
+    "tool": "interface_guarded_input",
+    "next_id": 2,
+    "result": {
+      "isError": false,
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"status\":\"completed\",\"image_status\":\"image\",\"result\":{\"execution\":{\"releases\":[{\"verified\":true,\"keys_down\":[],\"buttons_down\":[]}]}},\"feedback\":{\"status\":\"matched\",\"expected_title\":\"saved\",\"rejected_titles\":[],\"title\":\"saved\",\"after_title\":\"saved\",\"task_success\":null,\"authority_granted\":false,\"input_dispatched\":false}}"
+        },
+        {
+          "type": "image",
+          "data": "AAECAw==",
+          "mimeType": "image/png"
+        }
+      ]
+    }
+  },
+  "fixture_start": {
+    "pid": 37264,
+    "ppid": 22940
+  },
+  "fixture_exit": {
+    "pid": 37264,
+    "ppid": 22940,
+    "code": 0,
+    "requests": 1
+  },
+  "host_exit": {
+    "code": 0,
+    "signal": null
+  },
+  "wire_requests": [
+    {
+      "id": 1,
+      "tool": "interface_guarded_input",
+      "arguments": {
+        "alias": "save",
+        "offset": [
+          1,
+          2
+        ],
+        "interaction": "click",
+        "tail": [],
+        "detail": "brief",
+        "observation_refs": true,
+        "feedback": {
+          "expected_title": "saved",
+          "rejected_titles": [],
+          "timeout_ms": 10
+        }
+      }
+    }
+  ],
+  "host_events": [
+    {
+      "schema": "agent-interface/relay-host-event-v1",
+      "sequence": 1,
+      "host_monotonic_ms": 261.6548,
+      "kind": "send_requested",
+      "attempt": 1,
+      "tool": "interface_guarded_input"
+    },
+    {
+      "schema": "agent-interface/relay-host-event-v1",
+      "sequence": 2,
+      "host_monotonic_ms": 314.2872,
+      "kind": "reply_available",
+      "attempt": 1,
+      "tool": "interface_guarded_input",
+      "relay_id": 1,
+      "reply_sha256": "b85c4d64d31bb7fd38926e516838408828802df896458d3d8d9585add18c9005"
+    },
+    {
+      "schema": "agent-interface/relay-host-event-v1",
+      "sequence": 3,
+      "host_monotonic_ms": 314.9108,
+      "kind": "presentation_started",
+      "attempt": 1,
+      "reply_sha256": "b85c4d64d31bb7fd38926e516838408828802df896458d3d8d9585add18c9005"
+    },
+    {
+      "schema": "agent-interface/relay-host-event-v1",
+      "sequence": 4,
+      "host_monotonic_ms": 315.6719,
+      "kind": "presentation_callbacks_completed",
+      "attempt": 1,
+      "reply_sha256": "b85c4d64d31bb7fd38926e516838408828802df896458d3d8d9585add18c9005"
+    },
+    {
+      "schema": "agent-interface/relay-host-event-v1",
+      "sequence": 5,
+      "host_monotonic_ms": 322.9573,
+      "kind": "transport_closed",
+      "code": 0,
+      "signal": null
+    }
+  ],
+  "text_callbacks": 2,
+  "image_callbacks": 1,
+  "semantic_pass": true,
+  "retained_original_wire_identity": true,
+  "request_count": 1
+}

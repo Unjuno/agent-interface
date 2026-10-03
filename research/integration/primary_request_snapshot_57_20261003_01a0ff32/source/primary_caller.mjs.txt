@@ -125,10 +125,6 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
         stop('unavailable tool ' + tool);
         throw Error(stopped); // Local rejection before host dispatch.
       }
-      // Validate the result against the same arguments admitted for this call.
-      // Presentation callbacks may mutate the caller's original object.
-      try { args = structuredClone(args); }
-      catch (error) { stop('primary request snapshot failure'); throw error; }
       if (tool === 'interface_guarded_input' && args?.interaction !== undefined &&
           !['click', 'keyboard', 'move'].includes(args.interaction)) {
         stop('invalid guarded interaction');

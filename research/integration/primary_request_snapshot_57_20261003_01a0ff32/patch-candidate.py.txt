@@ -1,0 +1,9 @@
+from pathlib import Path
+import shutil,json,hashlib,datetime
+O=Path(__file__).resolve().parent;C=O/'candidate';C.mkdir(exist_ok=False)
+for p in (O/'source').iterdir():shutil.copyfile(p,C/p.name)
+p=C/'primary_caller.mjs';old=p.read_bytes().decode();needle="      if (tool === 'interface_guarded_input' && args?.interaction !== undefined &&"
+assert old.count(needle)==1
+new=old.replace(needle,"      // Validate the result against the same arguments admitted for this call.\n      // Presentation callbacks may mutate the caller's original object.\n      try { args = structuredClone(args); }\n      catch (error) { stop('primary request snapshot failure'); throw error; }\n"+needle)
+p.write_bytes(new.encode())
+(O/'CANDIDATE-FREEZE.json').write_bytes(json.dumps({'frozen_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'original_source_sha256':hashlib.sha256(old.encode()).hexdigest(),'candidate_source_sha256':hashlib.sha256(new.encode()).hexdigest(),'fixture_sha256':hashlib.sha256((O/'fixture.mjs').read_bytes()).hexdigest(),'probe_sha256':hashlib.sha256((O/'probe.mjs').read_bytes()).hexdigest(),'same_six_cases_and_gates':True,'ordinary_source_repair':True,'original_outcome_preserved':'ORIGINAL_A01 exit1 / four PASS two false STOP','reviewed_old_or_formal_producers':0},indent=2).encode());print('private patch: four added lines; frozen unchanged six-cell fixture/probe')

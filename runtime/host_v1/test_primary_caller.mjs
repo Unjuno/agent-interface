@@ -286,3 +286,6 @@ test('guarded primary rejects persistent target tools locally',async()=>{
   assert.equal(calls,0);
   await assert.rejects(caller.call('interface_guarded_observe',{}),/trial stopped/);
 });
+
+// Keep request snapshot regressions in the existing local/CI caller entry.
+import './test_primary_request_snapshot.mjs';
