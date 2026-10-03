@@ -59,10 +59,14 @@ sg={'__name__':'wheel_session','Any':object,'admit_program':contract.admit_progr
     'X11Backend':Backend,'X11BackendError':native['X11BackendError'],'X11ExecutionError':native['X11ExecutionError']}
 exec(compile(class_module(sources['session.py']),'actual_session_class.py','exec'),sg)
 Session=sg['X11RuntimeSession']
+class MixedEndpoint(Endpoint):
+    def sync(self):
+        self.events.append({'sync':True})
+        if self.fault=='sync' and any(e.get('kind')==X.ButtonPress for e in self.events):raise RuntimeError('sync')
 class WheelTests(unittest.TestCase):
-    def make(self,**kw):
+    def make(self,endpoint_class=Endpoint,**kw):
         global current_endpoint
-        current_endpoint=Endpoint(**kw);b=Backend('inert',{})
+        current_endpoint=endpoint_class(**kw);b=Backend('inert',{})
         b._refresh_keyboard_mapping=lambda:False;b._keyboard_mapping_snapshot=lambda:('fixed',)
         b._activation_supported=lambda:False
         return b,Session(b)
@@ -127,6 +131,50 @@ class WheelTests(unittest.TestCase):
         self.assertEqual(b.held_scroll_buttons,{4})
         b.d.fault=None;r=b.release_all();self.row(b,s,'direct_recovered',r)
         self.assertTrue(r['verified']);self.assertFalse(b.held_scroll_buttons)
+    def test_mixed_key_up_and_wheel_recover_without_replay(self):
+        # A previously-owned key must survive an uncertain explicit UP even
+        # when a later wheel obligation also needs recovery.
+        for fault in (None,'release_pre','release_post','press_post','sync','keys_read','buttons_read','stubborn'):
+            for dy,code in ((-1,4),(1,5)):
+                with self.subTest(fault=fault,code=code):
+                    b,s=self.make(endpoint_class=MixedEndpoint,fault=fault)
+                    b._keycode=lambda key:38
+                    case='mixed_'+str(fault)+'_'+str(code)
+                    p={'schema':contract.SCHEMA_PROGRAM,'program_id':case,
+                       'source':{'observation_seq':7,'binding_revision':3},
+                       'authority':{'lease_id':'ordinary-mixed','expires_at_ns':100},
+                       'terminal':{'release_all_required':True},
+                       'ops':[{'op':'key_state','key':'a','down':True},
+                              {'op':'key_state','key':'a','down':False},
+                              {'op':'scroll','dx':0,'dy':dy},{'op':'release_all'}]}
+                    def record(stage,reply):
+                        print(json.dumps({'mixed_case':case,'stage':stage,'fault':fault,'dy':dy,
+                            'reply':reply,'fixture_keys':sorted(b.d.keys),'fixture_buttons':sorted(b.d.buttons),
+                            'held_keycodes':dict(b.held_keycodes),'held_scroll_buttons':sorted(b.held_scroll_buttons),
+                            'events':list(b.d.events),'emissions':b.emissions,'recovery_required':s.recovery_required},sort_keys=True))
+                    def dispatch():return s.dispatch(p,current_observation_seq=7,current_binding_revision=3,now_ns=1)
+                    reply=dispatch();record('dispatch',reply)
+                    self.assertEqual(reply['admission'],'accepted')
+                    self.assertEqual(reply['status'],'completed' if fault is None else ('release_unverified' if fault=='stubborn' else 'execution_failed'))
+                    needs=fault not in (None,'press_post')
+                    self.assertEqual(s.recovery_required,needs)
+                    if needs:
+                        self.assertEqual(b.held_keycodes,{'a':38});self.assertEqual(b.held_scroll_buttons,{code})
+                        before=list(b.d.events);follow=dispatch();record('quarantined_followup',follow)
+                        self.assertEqual(follow['error'],'INPUT_RECOVERY_REQUIRED');self.assertEqual(b.d.events,before)
+                        presses=[e for e in before if e.get('kind') in (X.KeyPress,X.ButtonPress)]
+                        b.d.fault=None;recovered=s.recover_input();record('recover',recovered)
+                        self.assertEqual(recovered['status'],'input_recovered');self.assertFalse(recovered['replay_allowed'])
+                        self.assertEqual([e for e in b.d.events if e.get('kind') in (X.KeyPress,X.ButtonPress)],presses)
+                    else:
+                        before=list(b.d.events);control=s.recover_input();record('recovery_not_required',control)
+                        self.assertEqual(control['error'],'INPUT_RECOVERY_NOT_REQUIRED');self.assertEqual(b.d.events,before)
+                    self.assertFalse(b.d.keys or b.d.buttons);self.assertFalse(b.held_keycodes or b.held_buttons or b.held_scroll_buttons)
+                    self.assertFalse(s.recovery_required)
+                    b.d.fault=None;fresh=dispatch();record('new_explicit_dispatch',fresh)
+                    self.assertEqual(fresh['status'],'completed');self.assertFalse(b.d.keys or b.d.buttons)
+                    self.assertFalse(b.held_keycodes or b.held_buttons or b.held_scroll_buttons or s.recovery_required)
+
 print(json.dumps({'source_pins':{n:hashlib.sha256(t.encode()).hexdigest() for n,t in sources.items()},
     'clock_ns':1,'expires_ns':100,'scope':'ordinary inert source-class regression; native/backend module import0'}))
 if __name__=='__main__':unittest.main(verbosity=2)

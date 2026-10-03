@@ -187,8 +187,6 @@ class X11Backend:
         xtest.fake_input(self.d, X.ButtonPress if down else X.ButtonRelease, number)
         self.emissions += 1
         self.d.sync()
-        if not down:
-            self.held_buttons.discard(button)
 
     def _keycode(self, key: str) -> int:
         aliases = {
@@ -218,8 +216,6 @@ class X11Backend:
         xtest.fake_input(self.d, X.KeyPress if down else X.KeyRelease, code)
         self.emissions += 1
         self.d.sync()
-        if not down:
-            self.held_keycodes.pop(key, None)
 
     def key_chord(self, keys: list[str]) -> None:
         for key in keys:

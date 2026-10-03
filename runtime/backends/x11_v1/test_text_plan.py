@@ -23,7 +23,29 @@ class TextPlanTests(unittest.TestCase):
             backend.key_state("a", False)
         emitted.assert_called_once_with(backend.d, X.KeyRelease, 38)
         backend._keycode.assert_not_called()
+        # Explicit UP keeps the original physical-code obligation until the
+        # complete terminal readback, even when a logical remap chooses99.
+        self.assertEqual(backend.held_keycodes, {"a": 38})
+        backend.held_buttons = set()
+        backend.held_scroll_buttons = set()
+        backend.root = mock.Mock()
+        backend.root.query_pointer.return_value = mock.Mock(mask=0)
+        backend.d.query_keymap.side_effect = OSError("inert readback lost")
+        with mock.patch("runtime.backends.x11_v1.backend.xtest.fake_input") as cleanup:
+            with self.assertRaisesRegex(OSError, "readback lost"):
+                backend.release_all()
+            self.assertEqual(backend.held_keycodes, {"a": 38})
+            cleanup.assert_called_once_with(backend.d, X.KeyRelease, 38)
+            backend.d.query_keymap.side_effect = None
+            backend.d.query_keymap.return_value = bytes(32)
+            released = backend.release_all()
+        self.assertEqual(cleanup.call_args_list,
+                         [mock.call(backend.d, X.KeyRelease, 38)] * 2)
+        backend._keycode.assert_not_called()
         self.assertEqual(backend.held_keycodes, {})
+        self.assertTrue(released["verified"])
+        self.assertEqual(released["keys_down"], [])
+        self.assertEqual(released["buttons_down"], [])
 
     def test_uppercase_refusal_explains_canonical_name_without_emission(self):
         backend = object.__new__(X11Backend)

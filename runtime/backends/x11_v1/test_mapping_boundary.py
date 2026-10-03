@@ -9,8 +9,7 @@ class MappingBoundaryTests(unittest.TestCase):
     def backend(self):
         backend=object.__new__(X11Backend)
         events=[];physical=set();emitted=[];mapping={'code':25,'modifier':1}
-        backend.held_keycodes={};backend.held_buttons=set();backend.emissions=0
-        backend.held_scroll_buttons = set()
+        backend.held_keycodes={};backend.held_buttons=set();backend.held_scroll_buttons=set();backend.emissions=0
         backend.d=mock.Mock();backend.root=mock.Mock()
         backend.d.pending_events.side_effect=lambda:len(events)
         backend.d.next_event.side_effect=lambda:events.pop(0)
@@ -33,14 +32,17 @@ class MappingBoundaryTests(unittest.TestCase):
             elif kind==X.KeyRelease:physical.discard(code)
         return backend,events,physical,emitted,emit
 
-    def execute_changed(self,kind,ops):
+    def execute_changed(self,kind,ops,*,expected_emitted=None):
         backend,events,physical,emitted,emit=self.backend()
         backend._wait_update=lambda ms:events.append(SimpleNamespace(type=X.MappingNotify,request=kind))
         with mock.patch('runtime.backends.x11_v1.backend.xtest.fake_input',side_effect=emit):
             with self.assertRaises(X11ExecutionError) as caught:backend.execute({'ops':ops})
         backend.text.assert_not_called()
         self.assertEqual(physical,set())
-        self.assertEqual(emitted,[(X.KeyPress,25),(X.KeyRelease,25)])
+        if expected_emitted is None:
+            expected_emitted=[(X.KeyPress,25),(X.KeyRelease,25)]
+        self.assertEqual(emitted,expected_emitted)
+        self.assertEqual(backend.held_keycodes,{})
         self.assertTrue(caught.exception.execution['releases'][-1]['verified'])
         return caught.exception.execution
 
@@ -50,7 +52,8 @@ class MappingBoundaryTests(unittest.TestCase):
         self.assertIn('keyboard mapping changed',execution['error'])
 
     def test_release_is_allowed_but_cannot_clear_changed_program_state(self):
-        execution=self.execute_changed(X.MappingKeyboard,[{'op':'key_state','key':'w','down':True},{'op':'wait_update','timeout_ms':1},{'op':'key_state','key':'w','down':False},{'op':'text','text':'_'},{'op':'release_all'}])
+        execution=self.execute_changed(X.MappingKeyboard,[{'op':'key_state','key':'w','down':True},{'op':'wait_update','timeout_ms':1},{'op':'key_state','key':'w','down':False},{'op':'text','text':'_'},{'op':'release_all'}],
+            expected_emitted=[(X.KeyPress,25),(X.KeyRelease,25),(X.KeyRelease,25)])
         self.assertEqual(execution['completed_ops'],[0,1,2]);self.assertEqual(execution['failed_op'],3)
 
     def test_modifier_map_change_also_stops_new_keyboard_input(self):
