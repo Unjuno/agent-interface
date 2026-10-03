@@ -1,5 +1,9 @@
 # Constructor-journal evidence rescue
 
+After main integration, the only conflict was adjacent navigation additions.
+Both were preserved. Saved checks still pass and fresh local CI43 exits0 with
+failures=[] at 75d7735db; complete transcript is merged-local-ci.log.
+
 Original source `f4cc2e0f8ba5d03334d1218b025cbb684855ec05`. Retain the original twelve first construction cells, private reference and first archive STOP without active adoption. The original counterexample requires keeping the failed constructor's exception traceback; it does not prove a permanent leak after traceback disposal/GC or a general cleanup bound.
 
 `verify_saved.py` checks every public manifest entry and executes only the original data-only auditor, replacing its private ROOT with the published retained folder and suppressing the final historical result write/print. Twelve literal saved cells, actual saved journal bytes and ten effective copied refusals are reconciled. Original/public raw hashes remain distinct fields because projected paths cannot authenticate missing private originals.
