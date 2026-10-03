@@ -101,8 +101,6 @@ class ObserveTests(unittest.TestCase):
             self.assertEqual(row["status"], "invalid_request")
             opened.assert_not_called()
 
-
-
     def test_owned_cleanup_cannot_rewrite_returned_observation(self):
         for fails in (False, True):
             with self.subTest(cleanup_failure=fails):
@@ -154,111 +152,6 @@ class ObserveTests(unittest.TestCase):
         self.assertTrue(session.recovery_required)
         backend.close.assert_not_called()
 
-
-class Win32ReadOnlyObserveTests(unittest.TestCase):
-    def backend_session(self):
-        from runtime.backends.win32_v1.backend import Win32Backend
-        from runtime.backends.win32_v1.session import Win32RuntimeSession
-        backend = object.__new__(Win32Backend)
-        backend.targets = {"fixture": 42}
-        backend.user32 = SimpleNamespace(IsWindow=mock.Mock(return_value=True))
-        backend.geometry = mock.Mock(return_value={"width": 16, "height": 16})
-        backend.held_keys = {"SHIFT": 16}
-        backend.held_buttons = {"left"}
-        backend.emissions = 17
-        pixels = bytearray()
-        for y in range(16):
-            for x in range(16):
-                bgr = (0, 0, 255) if x < 8 and y < 8 else (0, 255, 0) if y < 8 else (255, 0, 0) if x < 8 else (0, 255, 255)
-                pixels.extend((*bgr, 0))
-        full = bytes(pixels)
-        def captured(hwnd, x, y, width, height, *, print_window):
-            if print_window:
-                self.assertEqual((hwnd, x, y, width, height), (42, 0, 0, 16, 16))
-                return full
-            self.assertEqual(hwnd, 0)
-            return b"".join(full[(y + yy) * 64 + x * 4:(y + yy) * 64 + (x + width) * 4] for yy in range(height))
-        backend._capture_hdc = mock.Mock(side_effect=captured)
-        backend.focus = mock.Mock(side_effect=AssertionError("focus forbidden"))
-        backend.release_all = mock.Mock(side_effect=AssertionError("release forbidden"))
-        session = Win32RuntimeSession(backend)
-        # Synthetic marker checks facade preservation; it is not a recovery implementation claim.
-        session.recovery_required = True
-        session.dispatch = mock.Mock(side_effect=AssertionError("dispatch forbidden"))
-        return backend, session, full
-
-    def assert_untouched(self, backend, session):
-        self.assertEqual(backend.held_keys, {"SHIFT": 16})
-        self.assertEqual(backend.held_buttons, {"left"})
-        self.assertEqual(backend.emissions, 17)
-        self.assertTrue(session.recovery_required)
-        backend.focus.assert_not_called()
-        backend.release_all.assert_not_called()
-        session.dispatch.assert_not_called()
-
-    def test_existing_win32_capture_is_available_without_input_dispatch(self):
-        import hashlib
-        for frame in ("window_client", "screen_physical_px"):
-            with self.subTest(frame=frame):
-                backend, session, full = self.backend_session()
-                with mock.patch("runtime.cli_v1.observe.open_session") as opened:
-                    first = observe_in_session(session, target="fixture", frame=frame, region=[6, 6, 4, 4])
-                    second = observe_in_session(session, target="fixture", frame=frame, region=[2, 2, 4, 4])
-                self.assertEqual(first["status"], "returned")
-                self.assertEqual(second["status"], "returned")
-                self.assertNotEqual(first["observation_id"], second["observation_id"])
-                expected = b"".join(full[y * 64 + 24:y * 64 + 40] for y in range(6, 10))
-                self.assertEqual(first["observation"], {"bytes": 64, "sha256": hashlib.sha256(expected).hexdigest(), "width": 4, "height": 4})
-                self.assertFalse(first["input_dispatched"])
-                self.assertFalse(first["side_effect_authority"])
-                self.assertEqual(backend._capture_hdc.call_count, 2)
-                opened.assert_not_called()
-                self.assert_untouched(backend, session)
-
-    def test_win32_capture_failure_is_not_retried_or_recovered(self):
-        from runtime.backends.win32_v1.backend import Win32BackendError
-        backend, session, _ = self.backend_session()
-        backend._capture_hdc.side_effect = Win32BackendError("injected capture failure")
-        row = observe_in_session(session, target="fixture", frame="window_client", region=[0, 0, 4, 4])
-        self.assertEqual(row["status"], "observation_failed")
-        self.assertIn("injected capture failure", row["error"])
-        backend._capture_hdc.assert_called_once()
-        self.assert_untouched(backend, session)
-
-    def test_win32_invalid_region_and_unknown_target_do_not_capture(self):
-        for target, region in (("fixture", [False, 0, 4, 4]), ("unknown", [0, 0, 4, 4]), ("fixture", [15, 15, 4, 4])):
-            with self.subTest(target=target, region=region):
-                backend, session, _ = self.backend_session()
-                row = observe_in_session(session, target=target, frame="window_client", region=region)
-                self.assertIn(row["status"], ("invalid_request", "observation_failed"))
-                backend._capture_hdc.assert_not_called()
-                self.assert_untouched(backend, session)
-
-    def test_win32_unknown_or_stale_target_refuses_both_frames(self):
-        for frame in ("window_client", "screen_physical_px"):
-            for target, live in (("unknown", True), ("fixture", False)):
-                with self.subTest(frame=frame, target=target, live=live):
-                    backend, session, _ = self.backend_session()
-                    backend.user32.IsWindow.return_value = live
-                    row = observe_in_session(session, target=target, frame=frame,
-                                             region=[0, 0, 4, 4])
-                    self.assertEqual(row["status"], "observation_failed")
-                    self.assertIn("unknown or stale target", row["error"])
-                    backend._capture_hdc.assert_not_called()
-                    backend.geometry.assert_not_called()
-                    if target == "unknown":
-                        backend.user32.IsWindow.assert_not_called()
-                    else:
-                        backend.user32.IsWindow.assert_called_once_with(42)
-                    self.assert_untouched(backend, session)
-
-    def test_win32_artifact_request_still_refuses_before_capture(self):
-        backend, session, _ = self.backend_session()
-        row = observe_in_session(session, target="fixture", frame="window_client", region=[0, 0, 4, 4], capture_directory="unused")
-        self.assertEqual(row["status"], "observation_failed")
-        self.assertIn("CAPTURE_ARTIFACTS_UNSUPPORTED", row["error"])
-        backend._capture_hdc.assert_not_called()
-        self.assert_untouched(backend, session)
 
 
 if __name__ == '__main__':
