@@ -1,0 +1,8 @@
+{
+  "source": "audit_once.py frozen ce21515da745aa9412746d4156c9b92a7fd5fd74",
+  "attempts": 1,
+  "exit_code": 1,
+  "exception": "KeyError: cleanup_physical",
+  "reason": "frozen full-completion reader did not tolerate raw checkpoint after external first-effect-failure STOP; no auditor result file created",
+  "next_reader": "audit_partial.py handles missing cleanup explicitly UNKNOWN and excludes incomplete ratios; original auditor/experiment unchanged"
+}
