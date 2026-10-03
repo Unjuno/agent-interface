@@ -118,3 +118,27 @@ PASS). Selected-import identity/custody is still an Important open gate. Prior
 review and six-test container CI do not transfer to this corrected nine-test
 source. Own Engine had zero running containers after dependency probe and exact
 VM was authoritatively stopped; reviewer is closed. No push/PR/native launch.
+
+## Selected imported backend/owner custody preparation
+
+Added a generated session gate reading actual sys.modules __file__, comparing
+resolved paths and SHA256 against the derived sibling files, and verifying
+Backend.__module__ plus the backend's InputOwner class identity. A separate
+selected_imports.json receipt is emitted by the generated session before setup.
+This is distinct from the existing historical/derivation source list.
+
+Two new helper tests first failed (11 tests, 2 FAIL, exit 1, missing gate), then
+11 passed after implementation. A connected gate control with actual generated
+files and a controlled module registry additionally rejects a substituted
+backend InputOwner class; it passed first-run, final 12 HOST tests PASS/exit0.
+Tests execute generated custody statements and use real temporary file reads,
+but do NOT perform the complete Python imports or start native/runtime input.
+
+This addresses only selected derived backend/owner identity. The independent
+review's full inherited-dependency provenance finding remains open. Missing
+numpy/VizDoom and the original controller cleanup/resource/allocation gates also
+remain. Hashing disk bytes after import is not loaded-code attestation or a
+guarantee against import-time side effects, mutation races or hostile sys.modules.
+Final runtime requires independently frozen, read-only dependencies and actual
+selected-import qualification. Original six-test container receipt remains
+historical; it does not qualify this twelve-test source.

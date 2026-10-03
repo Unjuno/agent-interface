@@ -9,6 +9,23 @@ from pathlib import Path
 
 SOURCE_SHA256 = 'ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b'
 
+CUSTODY_HELPER = '''
+def _measurement_selected_source(module_name, expected_path, expected_sha256):
+    module = sys.modules.get(module_name)
+    selected_file = getattr(module, '__file__', None)
+    if selected_file is None:
+        raise ValueError('selected module has no source file: ' + module_name)
+    selected = Path(selected_file).resolve()
+    expected = Path(expected_path).resolve()
+    if selected != expected:
+        raise ValueError('selected import path mismatch: ' + module_name)
+    actual_sha256 = hashlib.sha256(selected.read_bytes()).hexdigest()
+    if actual_sha256 != expected_sha256:
+        raise ValueError('selected import bytes mismatch: ' + module_name)
+    return dict(module=module_name, path=str(selected), sha256=actual_sha256)
+
+'''
+
 HELPERS = '''
 def _measurement_now(clock):
     try:
@@ -131,12 +148,27 @@ def compose(sources, repo_root, destination):
             + 'sys.path.insert(0, str(HERE))')
         text = change(text, 'HERE = Path(__file__).resolve().parent', setup)
         if original.startswith('session_'):
-            text = change(text, 'from doom_typed_release_backend_v1 import Backend, suite',
-                          'from doom_release_measured_5ce3 import Backend, suite')
+            owner_digest = hashlib.sha256(owner.encode()).hexdigest()
+            backend_digest = hashlib.sha256(backend.encode()).hexdigest()
+            selected_gate = (CUSTODY_HELPER
+                + 'from doom_release_measured_5ce3 import Backend, suite\n'
+                + 'MEASUREMENT_IMPORTED_SOURCES = [\n'
+                + '    _measurement_selected_source("doom_release_measured_5ce3",\n'
+                + '        MEASUREMENT_HERE / "doom_release_measured_5ce3.py", ' + repr(backend_digest) + '),\n'
+                + '    _measurement_selected_source("input_owner_measured_5ce3",\n'
+                + '        MEASUREMENT_HERE / "input_owner_measured_5ce3.py", ' + repr(owner_digest) + ')]\n'
+                + 'if (Backend.__module__ != "doom_release_measured_5ce3" or\n'
+                + '    sys.modules["doom_release_measured_5ce3"].InputOwner is not\n'
+                + '    sys.modules["input_owner_measured_5ce3"].InputOwner):\n'
+                + '    raise ValueError("selected backend/owner class identity mismatch")')
+            text = change(text, 'from doom_typed_release_backend_v1 import Backend, suite', selected_gate)
             text = change(text, 'for path in (Path(__file__),',
                 'for path in (Path(__file__), MEASUREMENT_HERE / "input_owner_measured_5ce3.py",\n'
                 + '                 MEASUREMENT_HERE / "doom_release_measured_5ce3.py",\n'
                 + '                 MEASUREMENT_HERE / "controller_measured_5ce3.py",')
+            source_receipt = '(args.out / "sources.json").write_text(json.dumps(sources, indent=2))'
+            text = change(text, source_receipt, source_receipt + '\n'
+                + '    (args.out / "selected_imports.json").write_text(json.dumps(MEASUREMENT_IMPORTED_SOURCES, indent=2))')
         else:
             text = change(text, setup, '')
             first_local_import = 'from map01_stagnation_v1 import descriptor, normalized_mae'

@@ -8,6 +8,8 @@ import types
 import unittest
 import sys
 import builtins
+import hashlib
+import tempfile
 
 HERE = Path(__file__).resolve().parent
 PIN = '12e4c1ebaf382d70760eafbe3cf2e5fda90a9d2c'
@@ -100,6 +102,73 @@ class BuilderTests(unittest.TestCase):
             failure = str(error)
         self.assertIsNone(failure, 'generated controller imports before dependency setup')
         self.assertEqual(selected, ['map01_stagnation_v1'])
+
+    def custody_function(self):
+        text = self.builder().compose(self.bundle_sources(), HERE.parents[2],
+                    HERE / 'generated')['session_measured_5ce3.py']
+        functions = [node for node in ast.parse(text).body if isinstance(node, ast.FunctionDef)
+                     and node.name == '_measurement_selected_source']
+        self.assertEqual(len(functions), 1, 'missing selected-import custody gate')
+        modules = {}
+        env = dict(Path=Path, hashlib=hashlib, sys=types.SimpleNamespace(modules=modules))
+        exec(compile(ast.Module(body=functions, type_ignores=[]), '<selected-custody>', 'exec'), env)
+        return env['_measurement_selected_source'], modules
+
+    def test_custody_rejects_selected_file_at_wrong_path_even_with_equal_bytes(self):
+        gate, modules = self.custody_function()
+        with tempfile.TemporaryDirectory() as temporary:
+            first = Path(temporary) / 'expected.py'
+            other = Path(temporary) / 'substitute.py'
+            first.write_bytes(b'fixture')
+            other.write_bytes(b'fixture')
+            modules['selected'] = types.SimpleNamespace(__file__=str(other))
+            with self.assertRaises(ValueError):
+                gate('selected', first, hashlib.sha256(b'fixture').hexdigest())
+
+    def test_custody_reports_actual_selected_file_and_rejects_changed_bytes(self):
+        gate, modules = self.custody_function()
+        with tempfile.TemporaryDirectory() as temporary:
+            selected = Path(temporary) / 'expected.py'
+            selected.write_bytes(b'fixture')
+            modules['selected'] = types.SimpleNamespace(__file__=str(selected))
+            digest = hashlib.sha256(b'fixture').hexdigest()
+            row = gate('selected', selected, digest)
+            self.assertEqual(row, dict(module='selected', path=str(selected.resolve()), sha256=digest))
+            selected.write_bytes(b'changed')
+            with self.assertRaises(ValueError):
+                gate('selected', selected, digest)
+
+    def test_connected_import_gate_rejects_backend_owner_class_substitution(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            destination = root / 'research/doom/candidate'
+            destination.mkdir(parents=True)
+            bundle = self.builder().compose(self.bundle_sources(), root, destination)
+            for name, text in bundle.items():
+                (destination / name).write_bytes(text.encode())
+            tree = ast.parse(bundle['session_measured_5ce3.py'])
+            gate_nodes = [node for node in tree.body
+                if (isinstance(node, ast.FunctionDef) and node.name == '_measurement_selected_source')
+                or (isinstance(node, ast.Assign) and any(isinstance(target, ast.Name)
+                    and target.id == 'MEASUREMENT_IMPORTED_SOURCES' for target in node.targets))
+                or (isinstance(node, ast.If) and 'Backend.__module__' in ast.unparse(node.test))]
+            self.assertEqual(len(gate_nodes), 3, 'missing connected custody/identity statements')
+            code = compile(ast.Module(body=gate_nodes, type_ignores=[]), '<connected-import-gate>', 'exec')
+            owner_class = type('InputOwner', (), {})
+            backend_class = type('Backend', (), {'__module__': 'doom_release_measured_5ce3'})
+            modules = {
+                'input_owner_measured_5ce3': types.SimpleNamespace(
+                    __file__=str(destination / 'input_owner_measured_5ce3.py'), InputOwner=owner_class),
+                'doom_release_measured_5ce3': types.SimpleNamespace(
+                    __file__=str(destination / 'doom_release_measured_5ce3.py'), InputOwner=owner_class)}
+            env = dict(sys=types.SimpleNamespace(modules=modules), Path=Path, hashlib=hashlib,
+                       MEASUREMENT_HERE=destination, Backend=backend_class)
+            exec(code, env)
+            self.assertEqual([row['module'] for row in env['MEASUREMENT_IMPORTED_SOURCES']],
+                             ['doom_release_measured_5ce3', 'input_owner_measured_5ce3'])
+            modules['doom_release_measured_5ce3'].InputOwner = type('OtherOwner', (), {})
+            with self.assertRaises(ValueError):
+                exec(code, env)
 
     def key_case(self, identity_failure=False):
         tree = ast.parse(self.builder().instrument(self.source()))
