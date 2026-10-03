@@ -2,6 +2,8 @@ name: MAP01 measurement integration live 02
 
 on:
   push:
+    branches:
+      - '**'
     paths:
       - '.github/workflows/map01-measurement-integration-live-02.yml'
 
@@ -10,6 +12,7 @@ permissions:
 
 jobs:
   measurement-gate:
+    if: github.event_name == 'push' && github.ref_type == 'branch'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
