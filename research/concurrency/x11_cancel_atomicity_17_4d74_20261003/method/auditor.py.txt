@@ -1,0 +1,371 @@
+"""Independent saved-only reconstruction; never imports producer, gate, or X11."""
+from __future__ import annotations
+import argparse
+import hashlib
+import json
+from pathlib import Path, PurePosixPath
+import re
+import sys
+
+
+class AuditError(ValueError):
+    """Invalid schema, custody, instrumentation, or cleanup."""
+
+
+class ResultMismatch(AuditError):
+    """Saved evidence does not establish the scoped expected result."""
+
+
+def need(condition, message, result=False):
+    if not condition:
+        raise (ResultMismatch if result else AuditError)(message)
+
+
+def integer(value, label, minimum=0):
+    need(type(value) is int and value >= minimum, label + ": expected integer")
+    return value
+
+
+def boolean(value, label):
+    need(type(value) is bool, label + ": expected Boolean")
+    return value
+
+
+def mapping(value, label):
+    need(type(value) is dict, label + ": expected object")
+    return value
+
+
+def sequence(value, label):
+    need(type(value) is list, label + ": expected array")
+    return value
+
+
+def typed_equal(a, b):
+    if type(a) is not type(b):
+        return False
+    if type(a) is dict:
+        return a.keys() == b.keys() and all(typed_equal(a[k], b[k]) for k in a)
+    if type(a) is list:
+        return len(a) == len(b) and all(typed_equal(x, y) for x, y in zip(a, b))
+    return a == b
+
+
+def exact(value, fields, label):
+    mapping(value, label)
+    need(set(value) == set(fields.split()), label + ": unexpected/missing fields")
+
+
+def keymap(value, label):
+    sequence(value, label)
+    for code in value:
+        integer(code, label, 8)
+        need(code <= 255, label + ": invalid keycode")
+    need(value == sorted(set(value)), label + ": unordered/duplicate keycodes")
+    return value
+
+
+def sample(value, label):
+    exact(value, "started_ns ended_ns keys_down buttons_mask", label)
+    start = integer(value["started_ns"], label + ".started_ns", 1)
+    end = integer(value["ended_ns"], label + ".ended_ns", 1)
+    need(start <= end, label + ": reversed query bracket")
+    keymap(value["keys_down"], label + ".keys_down")
+    need(integer(value["buttons_mask"], label + ".buttons_mask") == 0,
+         label + ": unexpected physical button state")
+    return value
+
+
+def release(value, label, start, end):
+    exact(value, "keys_down buttons_down verified monotonic_ns", label)
+    need(type(value["keys_down"]) is list and value["keys_down"] == [], label + ": nonneutral keys")
+    need(type(value["buttons_down"]) is list and value["buttons_down"] == [], label + ": nonneutral buttons")
+    need(boolean(value["verified"], label + ".verified") is True, label + ": unverified release")
+    observed = integer(value["monotonic_ns"], label + ".monotonic_ns", 1)
+    need(start <= observed <= end, label + ": receipt outside owner bracket")
+
+
+def source_checks(plan, raw, root):
+    pins = mapping(plan["source_hashes"], "PLAN.source_hashes")
+    need(bool(pins), "no source pins")
+    for field in ("source_hashes_before", "source_hashes_after"):
+        need(typed_equal(mapping(raw[field], field), pins), field + ": source custody changed")
+    base = Path(root).resolve()
+    for name, digest in pins.items():
+        need(type(name) is str and "\\" not in name and ":" not in name, "unsafe source path")
+        path = PurePosixPath(name)
+        need(not path.is_absolute() and not any(p in (".", "..") for p in path.parts), "unsafe source path")
+        need(type(digest) is str and re.fullmatch(r"[0-9a-f]{64}", digest), "invalid source digest")
+        target = (base / path).resolve()
+        need(target.is_relative_to(base) and target.is_file(), "missing/outside source: " + name)
+        need(hashlib.sha256(target.read_bytes()).hexdigest() == digest, "source hash mismatch: " + name)
+
+
+def check_cell(cell, spec, plan, artifacts):
+    label = spec["id"]
+    exact(cell, "id arm paused keycodes program dispatch_started_ns dispatch_ended_ns checks native_calls "
+          "pause cancel checkpoint samples events program_receipt terminal errors thread_errors "
+          "Xvfb_pid Xvfb_argv window_id cleanup_receipt cell_elapsed_ns xvfb_log_sha256", label)
+    need(type(cell["errors"]) is list and cell["errors"] == [] and
+         type(cell["thread_errors"]) is list and cell["thread_errors"] == [], label + ": producer/thread error")
+    integer(cell["Xvfb_pid"], label + ".Xvfb_pid", 1)
+    integer(cell["window_id"], label + ".window_id", 1)
+    integer(cell["cell_elapsed_ns"], label + ".cell_elapsed_ns", 1)
+    argv = sequence(cell["Xvfb_argv"], label + ".Xvfb_argv")
+    need(len(argv) == 8 and argv[0] == "Xvfb" and type(argv[1]) is str and
+         re.fullmatch(r":[0-9]+", argv[1]) and
+         argv[2:] == ["-screen", "0", "320x240x24", "-nolisten", "tcp", "-ac"],
+         label + ": unexpected owned Xvfb route")
+    digest = cell["xvfb_log_sha256"]
+    need(type(digest) is str and re.fullmatch(r"[0-9a-f]{64}", digest), label + ": invalid log digest")
+    log = Path(artifacts) / (label + ".xvfb.log")
+    need(log.is_file() and hashlib.sha256(log.read_bytes()).hexdigest() == digest, label + ": Xvfb log custody")
+    for field in ("id", "arm", "paused"):
+        need(typed_equal(cell[field], spec[field]), label + ": identity/type mismatch")
+    paused = boolean(cell["paused"], label + ".paused")
+    arm = cell["arm"]
+    exact(cell["keycodes"], "F8 F9", label + ".keycodes")
+    f8, f9 = [integer(cell["keycodes"][k], label + "." + k, 8) for k in ("F8", "F9")]
+    need(f8 != f9 and max(f8, f9) <= 255, label + ": invalid keycode pair")
+    program = mapping(cell["program"], label + ".program")
+    exact(program, "schema program_id source authority terminal ops", label + ".program")
+    need(program["schema"] == "agent-interface/program-v1" and
+         program["program_id"] == "program-" + label, label + ": wrong public program identity")
+    need(typed_equal(program["source"], {"observation_seq": 1, "binding_revision": 1}) and
+         typed_equal(program["terminal"], {"release_all_required": True}), label + ": program source/terminal changed")
+    exact(program["authority"], "lease_id expires_at_ns", label + ".authority")
+    need(program["authority"]["lease_id"] == "owned-" + label, label + ": lease owner changed")
+    expiry = integer(program["authority"]["expires_at_ns"], label + ".expires_at_ns", 1)
+    need(typed_equal(program.get("ops"), plan["program_ops"]), label + ": altered program ops")
+    for field in ("observation_seq", "binding_revision", "deadline_ns"):
+        if field in program:
+            integer(program[field], label + ".program." + field)
+    ds = integer(cell["dispatch_started_ns"], label + ".dispatch_started_ns", 1)
+    de = integer(cell["dispatch_ended_ns"], label + ".dispatch_ended_ns", 1)
+    need(ds < de, label + ": invalid dispatch bracket")
+    need(de < expiry, label + ": lease expiry confounds cancellation")
+    checks = sequence(cell["checks"], label + ".checks")
+    calls = sequence(cell["native_calls"], label + ".native_calls")
+    need(len(checks) == len(calls) == 2, label + ": incomplete positive-input census")
+    for i, key in enumerate(("F8", "F9")):
+        gate, call = checks[i], calls[i]
+        exact(gate, "key checked_ns allowed lock_held", label + ".check")
+        need(gate["key"] == key, label + ": wrong check key")
+        need(boolean(gate["allowed"], label + ".allowed") is True, label + ": gate did not pass")
+        need(boolean(gate["lock_held"], label + ".lock_held") is (arm == "atomic"),
+             label + ": gate lock mismatch")
+        checked = integer(gate["checked_ns"], label + ".checked_ns", 1)
+        exact(call, "kind key down started_ns ended_ns thread_id", label + ".native")
+        need(call["kind"] == "key_state" and call["key"] == key, label + ": wrong native call")
+        need(boolean(call["down"], label + ".down") is True, label + ": not positive native input")
+        start = integer(call["started_ns"], label + ".native.started_ns", 1)
+        end = integer(call["ended_ns"], label + ".native.ended_ns", 1)
+        integer(call["thread_id"], label + ".thread_id", 1)
+        need(ds <= checked <= start < end <= de, label + ": check/native/dispatch order")
+    need(calls[0]["thread_id"] == calls[1]["thread_id"], label + ": dispatch thread changed")
+    need(calls[0]["ended_ns"] <= checks[1]["checked_ns"], label + ": native input order changed")
+
+    receipt = cell["program_receipt"]
+    exact(receipt, "status admission required_capabilities execution recovery_required", label + ".receipt")
+    need(receipt["status"] == "completed" and receipt["admission"] == "accepted",
+         label + ": program incomplete", True)
+    need(boolean(receipt["recovery_required"], label + ".recovery_required") is False, label + ": recovery remains")
+    caps = sequence(receipt["required_capabilities"], label + ".capabilities")
+    need(typed_equal(caps, ["clock.monotonic", "event.feedback", "input.keyboard",
+                           "input.release_all", "window.focus"]), label + ": wrong public capabilities")
+    execution = receipt["execution"]
+    exact(execution, "started_ns ended_ns emissions program_emissions observations releases waits "
+          "activations completed_ops", label + ".execution")
+    es = integer(execution["started_ns"], label + ".execution.started_ns", 1)
+    ee = integer(execution["ended_ns"], label + ".execution.ended_ns", 1)
+    need(ds <= es <= checks[0]["checked_ns"] and calls[1]["ended_ns"] <= ee <= de,
+         label + ": execution brackets disagree")
+    need(typed_equal(execution["completed_ops"], [0, 1, 2, 3, 4]), label + ": wrong completed prefix", True)
+    for field in ("observations", "activations"):
+        need(type(execution[field]) is list and execution[field] == [], label + ": unexpected " + field)
+    for field in ("emissions", "program_emissions"):
+        need(integer(execution[field], label + "." + field) == 4, label + ": native emission census differs")
+    releases = sequence(execution["releases"], label + ".releases")
+    need(len(releases) == 1, label + ": wrong program release census")
+    release(releases[0], label + ".program.release", es, ee)
+    waits = sequence(execution["waits"], label + ".waits")
+    need(len(waits) == 1, label + ": wrong wait census")
+    wait = waits[0]
+    exact(wait, "operation_index requested_ms started_ns ended_ns completed kind update_observed", label + ".wait")
+    need(integer(wait["operation_index"], label + ".wait.op") == 3 and
+         integer(wait["requested_ms"], label + ".wait.ms") == plan["constants"]["healthy_wait_ms"],
+         label + ": altered wait")
+    need(boolean(wait["completed"], label + ".wait.completed") is True and
+         wait["kind"] == "fixed_delay" and wait["update_observed"] is None, label + ": wrong wait semantics")
+    ws = integer(wait["started_ns"], label + ".wait.started_ns", 1)
+    we = integer(wait["ended_ns"], label + ".wait.ended_ns", 1)
+    need(calls[1]["ended_ns"] <= ws <= we <= releases[0]["monotonic_ns"] <= ee, label + ": wait/release order")
+    need(we - ws >= wait["requested_ms"] * 1_000_000, label + ": wait duration not observed")
+
+    samples = sequence(cell["samples"], label + ".samples")
+    need(bool(samples), label + ": no independent physical samples")
+    previous = 0
+    for i, row in enumerate(samples):
+        sample(row, label + ".samples." + str(i))
+        need(previous <= row["started_ns"], label + ": physical samples not ordered")
+        previous = row["ended_ns"]
+        need(set(row["keys_down"]) <= {f8, f9}, label + ": unrelated physical input")
+    need(any(row["started_ns"] >= de and row["keys_down"] == [] for row in samples),
+         label + ": no final physical neutral readback")
+
+    events = sequence(cell["events"], label + ".events")
+    expected = [("press", f8), ("release", f8), ("press", f9), ("release", f9)] if paused and arm == "precheck" else [
+        ("press", f8), ("press", f9), ("release", f8), ("release", f9)]
+    need(len(events) == 4, label + ": incomplete/extra app event census", True)
+    previous_received, previous_server = 0, None
+    for event, (kind, code) in zip(events, expected):
+        exact(event, "type keycode received_ns server_time_ms", label + ".event")
+        need(event["type"] == kind and integer(event["keycode"], label + ".event.keycode", 8) == code,
+             label + ": app event order/census mismatch", True)
+        received = integer(event["received_ns"], label + ".event.received_ns", 1)
+        server = integer(event["server_time_ms"], label + ".event.server_time_ms")
+        need(server <= 0xffffffff and received >= previous_received, label + ": unordered app clocks")
+        if previous_server is not None:
+            need((server - previous_server) % (1 << 32) < (1 << 31), label + ": reversed server event clock")
+        native = calls[0] if code == f8 else calls[1]
+        need(received >= native["started_ns"], label + ": app event precedes native call")
+        previous_received, previous_server = received, server
+    # Event RECEIPT times may lag cancellation acceptance; never use them as injection clocks.
+
+    if not paused:
+        need(cell["pause"] is None and cell["cancel"] is None and cell["checkpoint"] is None,
+             label + ": cancellation injected into healthy control")
+        need(any(row["started_ns"] >= calls[1]["ended_ns"] and row["ended_ns"] <= we and
+                 row["keys_down"] == sorted([f8, f9]) for row in samples),
+             label + ": healthy held keys not independently observed")
+        disposition, late = "HEALTHY_COMPLETE_CONTROL", False
+    else:
+        pause, cancel, cp = cell["pause"], cell["cancel"], cell["checkpoint"]
+        exact(pause, "entered_ns resumed_ns", label + ".pause")
+        exact(cancel, "request_ns lock_acquired_ns accepted_ns ended_ns receipt", label + ".cancel")
+        exact(cp, "at_ns program_alive canceller_alive cancel_accepted query", label + ".checkpoint")
+        pe, pr = [integer(pause[k], label + ".pause." + k, 1) for k in ("entered_ns", "resumed_ns")]
+        cr, cl, ca, ce = [integer(cancel[k], label + ".cancel." + k, 1) for k in
+                         ("request_ns", "lock_acquired_ns", "accepted_ns", "ended_ns")]
+        at = integer(cp["at_ns"], label + ".checkpoint.at_ns", 1)
+        query = sample(cp["query"], label + ".checkpoint.query")
+        need(checks[1]["checked_ns"] <= pe <= cr <= cl <= ca <= ce, label + ": pause/cancel order")
+        need(at >= cr + plan["constants"]["checkpoint_delay_ns"] and at < pr,
+             label + ": checkpoint gate not observed")
+        need(pr >= cr + plan["constants"]["resume_delay_ns"] and pr <= calls[1]["started_ns"],
+             label + ": resume gate not observed")
+        need(cr + plan["constants"]["checkpoint_delay_ns"] <= query["started_ns"] <=
+             query["ended_ns"] <= at, label + ": checkpoint query bracket")
+        need(any(typed_equal(query, row) for row in samples), label + ": checkpoint query absent from physical census")
+        need(boolean(cp["program_alive"], label + ".program_alive") is True, label + ": dispatch not pending")
+        release(cancel["receipt"], label + ".cancel.receipt", ca, ce)
+        need(any(row["started_ns"] >= calls[0]["ended_ns"] and row["ended_ns"] <= cr and
+                 row["keys_down"] == [f8] for row in samples), label + ": F8-down prerequisite not measured")
+        if arm == "precheck":
+            need(boolean(cp["cancel_accepted"], label + ".cancel_accepted") is True and
+                 boolean(cp["canceller_alive"], label + ".canceller_alive") is False,
+                 label + ": precheck cancel not settled")
+            need(ce <= query["started_ns"] and query["keys_down"] == [], label + ": neutral checkpoint missing")
+            need(calls[1]["started_ns"] > ca and calls[1]["started_ns"] >= pr,
+                 label + ": no post-accepted positive native bracket", True)
+            need(any(row["started_ns"] >= calls[1]["ended_ns"] and row["ended_ns"] <= we and
+                     row["keys_down"] == [f9] for row in samples),
+                 label + ": post-accepted F9 not physically observed", True)
+            disposition, late = "POST_ACCEPTED_INPUT_COUNTEREXAMPLE", True
+        else:
+            need(boolean(cp["cancel_accepted"], label + ".cancel_accepted") is False and
+                 boolean(cp["canceller_alive"], label + ".canceller_alive") is True,
+                 label + ": atomic cancellation pending state missing")
+            need(query["keys_down"] == [f8] and at < cl, label + ": atomic reachability delay missing")
+            need(calls[1]["ended_ns"] < cl <= ca and all(call["ended_ns"] < ca for call in calls),
+                 label + ": native positive input after atomic acceptance", True)
+            disposition, late = "ATOMIC_SERIALIZATION_WITH_CANCEL_REACHABILITY_DELAY", False
+            # A 2ms sampler may miss transient atomic F9-down. No absence inference is made.
+    terminal = cell["terminal"]
+    exact(terminal, "keys_down buttons_mask threads_alive Xvfb_exit query", label + ".terminal")
+    final = sample(terminal["query"], label + ".terminal.query")
+    need(de <= final["started_ns"] and typed_equal(final["keys_down"], terminal["keys_down"]) and
+         typed_equal(final["buttons_mask"], terminal["buttons_mask"]), label + ": terminal query does not join")
+    need(all(row["ended_ns"] <= final["started_ns"] for row in samples), label + ": observer samples after terminal query")
+    need(all(event["received_ns"] <= final["started_ns"] for event in events), label + ": observer events after terminal query")
+    if paused:
+        need(cell["cancel"]["ended_ns"] <= final["started_ns"], label + ": cancellation not terminal")
+    need(keymap(terminal["keys_down"], label + ".terminal.keys_down") == [] and
+         integer(terminal["buttons_mask"], label + ".terminal.buttons_mask") == 0, label + ": terminal nonneutral")
+    need(type(terminal["threads_alive"]) is list and terminal["threads_alive"] == [], label + ": threads remain")
+    need(type(terminal["Xvfb_exit"]) is int and terminal["Xvfb_exit"] in (0, -15),
+         label + ": Xvfb not normally/explicitly terminated")
+    cleanup_stamp = integer(cell["cleanup_receipt"]["monotonic_ns"], label + ".cleanup.monotonic_ns", 1)
+    release(cell["cleanup_receipt"], label + ".cleanup_receipt", de, cleanup_stamp)
+    return {"id": label, "disposition": disposition, "post_accepted_positive": late,
+            "native_positive_calls": 2, "app_key_events": 4, "physical_samples": len(samples)}
+
+
+def audit(raw, plan, sources, plan_digest, artifacts):
+    mapping(plan, "PLAN")
+    need(plan["schema"] == "x11-cancel-atomicity-plan-v1", "wrong PLAN schema")
+    need(plan["raw_schema"] == "x11-cancel-atomicity-raw-v1", "wrong raw schema in PLAN")
+    constants = mapping(plan["constants"], "PLAN.constants")
+    for key, expected in (("checkpoint_delay_ns", 150_000_000), ("resume_delay_ns", 400_000_000), ("healthy_wait_ms", 40)):
+        need(integer(constants[key], "PLAN.constants." + key) == expected, "changed scientific threshold")
+    specs = sequence(plan["cells"], "PLAN.cells")
+    order = [("precheck-healthy", "precheck", False), ("atomic-paused", "atomic", True),
+             ("precheck-paused", "precheck", True), ("atomic-healthy", "atomic", False)]
+    need(typed_equal(specs, [{"id": i, "arm": a, "paused": p} for i, a, p in order]), "changed four-cell definition")
+    need(typed_equal(plan["program_ops"], [{"op": "focus", "target": "owned"}, {"op": "key_state", "key": "F8", "down": True},
+                                         {"op": "key_state", "key": "F9", "down": True}, {"op": "wait_update", "timeout_ms": 40},
+                                         {"op": "release_all"}]), "changed program")
+    exact(raw, "schema allocation cells source_hashes_before source_hashes_after plan_sha256 environment first_disposition", "raw")
+    need(type(plan_digest) is str and re.fullmatch(r"[0-9a-f]{64}", plan_digest) and
+         raw["plan_sha256"] == plan_digest, "actual frozen PLAN bytes mismatch")
+    environment = mapping(raw["environment"], "environment")
+    for field in ("python", "platform", "clock"):
+        need(type(environment.get(field)) is str and bool(environment[field]), "missing environment " + field)
+    integer(environment.get("pid"), "environment.pid", 1)
+    need(type(raw["schema"]) is str and raw["schema"] == plan["raw_schema"], "wrong raw schema")
+    need(type(raw["allocation"]) is str and raw["allocation"] == plan["allocation"], "allocation mismatch")
+    need(raw["first_disposition"] == "COLLECTED_NOT_SCORED", "producer did not collect an unscored complete result")
+    source_checks(plan, raw, sources)
+    cells = sequence(raw["cells"], "raw.cells")
+    need(len(cells) == 4, "missing/extra cells")
+    results = [check_cell(cell, spec, plan, artifacts) for cell, spec in zip(cells, specs)]
+    return {"schema": "x11-cancel-atomicity-audit-v1", "allocation": plan["allocation"],
+            "status": "SCOPED_RESULTS_RECONSTRUCTED", "cells": results,
+            "dispositions": ["POST_ACCEPTED_INPUT_COUNTEREXAMPLE", "ATOMIC_SERIALIZATION_WITH_CANCEL_REACHABILITY_DELAY"],
+            "limits": ["separate acceptance and cancellation-reachability results", "saved instrumentation/source custody only",
+                       "event receipt clocks do not establish injection order", "no atomic transient-key absence inference",
+                       "no unconditional promotion, hard deadline, production adoption, task or model benefit"]}
+
+
+def unique_object(pairs):
+    result = {}
+    for key, value in pairs:
+        need(key not in result, "duplicate JSON key: " + key)
+        result[key] = value
+    return result
+
+
+def read_json(path):
+    return json.loads(Path(path).read_text(encoding="utf-8"), object_pairs_hook=unique_object,
+                      parse_constant=lambda value: (_ for _ in ()).throw(AuditError("nonfinite JSON: " + value)))
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    for name in ("plan", "raw", "sources", "out"):
+        parser.add_argument("--" + name, required=True)
+    args = parser.parse_args()
+    try:
+        digest = hashlib.sha256(Path(args.plan).read_bytes()).hexdigest()
+        result, code = audit(read_json(args.raw), read_json(args.plan), args.sources, digest, Path(args.raw).parent), 0
+    except ResultMismatch as error:
+        result, code = {"schema": "x11-cancel-atomicity-audit-v1", "status": "FAIL_SCOPED_EXPECTATION", "error": str(error)}, 1
+    except (AuditError, OSError, KeyError, TypeError, json.JSONDecodeError) as error:
+        result, code = {"schema": "x11-cancel-atomicity-audit-v1", "status": "STOP_EVIDENCE_INVALID", "error": str(error)}, 2
+    Path(args.out).write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    print(json.dumps(result, sort_keys=True))
+    return code
+
+
+if __name__ == "__main__":
+    sys.exit(main())
