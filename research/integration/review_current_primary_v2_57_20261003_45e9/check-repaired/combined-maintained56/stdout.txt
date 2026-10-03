@@ -1,0 +1,348 @@
+TAP version 13
+# Subtest: numbered commands return exact file/text descriptors with no image encoding
+ok 1 - numbered commands return exact file/text descriptors with no image encoding
+  ---
+  duration_ms: 4.2511
+  type: 'test'
+  ...
+# Subtest: commands arriving while outstanding are rejected rather than queued
+ok 2 - commands arriving while outstanding are rejected rather than queued
+  ---
+  duration_ms: 3.9247
+  type: 'test'
+  ...
+# Subtest: EOF waits for the already committed command without replaying it
+ok 3 - EOF waits for the already committed command without replaying it
+  ---
+  duration_ms: 1.2206
+  type: 'test'
+  ...
+# Subtest: malformed JSON is refused without invoking exchange or consuming a command
+ok 4 - malformed JSON is refused without invoking exchange or consuming a command
+  ---
+  duration_ms: 0.8787
+  type: 'test'
+  ...
+# Subtest: command error reports uncertainty and state without retry
+ok 5 - command error reports uncertainty and state without retry
+  ---
+  duration_ms: 0.9231
+  type: 'test'
+  ...
+# Subtest: output failure rejects the stream owner after one completed command
+ok 6 - output failure rejects the stream owner after one completed command
+  ---
+  duration_ms: 1.1649
+  type: 'test'
+  ...
+# Subtest: config refuses unknown routes and fields before starting a host
+ok 7 - config refuses unknown routes and fields before starting a host
+  ---
+  duration_ms: 0.2166
+  type: 'test'
+  ...
+# Subtest: terminal output refuses before starting a relay or allocating its evidence
+ok 8 - terminal output refuses before starting a relay or allocating its evidence
+  ---
+  duration_ms: 0.2398
+  type: 'test'
+  ...
+# Subtest: startup output failure keeps original exception, closes one relay and never writes again
+ok 9 - startup output failure keeps original exception, closes one relay and never writes again
+  ---
+  duration_ms: 69.0627
+  type: 'test'
+  ...
+# Subtest: failed review is correlated to its consumed command without a host call or replay
+ok 10 - failed review is correlated to its consumed command without a host call or replay
+  ---
+  duration_ms: 6.514
+  type: 'test'
+  ...
+# STARTUP_EXCHANGE_WITNESS {"phase":"healthy","root":"<OWN_WORKSPACE>\\\\work\\\\review6979-v2-45e9\\\\repaired-startup-cases\\\\healthy","hookCalls":1,"errorObserved":false,"statuses":["ready","terminal"],"rows":[{"schema":"agent-interface/primary-stdio-v1","status":"ready","state":{"next_id":1,"busy":false,"stopped":null,"caller_state":{"stopped":null}}},{"schema":"agent-interface/primary-stdio-v1","status":"terminal","exit":{"code":0,"signal":null},"state":{"next_id":1,"busy":false,"stopped":null,"caller_state":{"stopped":null}}}],"hostExit":{"code":0,"signal":null},"fixtureStart":{"pid":42540,"ppid":6644},"fixtureExit":{"pid":42540,"code":0,"bytes":0},"childAbsent":true,"listeners":{"input":0,"output":0}}
+# STARTUP_EXCHANGE_WITNESS {"phase":"fault","root":"<OWN_WORKSPACE>\\\\work\\\\review6979-v2-45e9\\\\repaired-startup-cases\\\\fault","hookCalls":1,"errorObserved":true,"statuses":[],"rows":[],"hostExit":{"code":0,"signal":null},"fixtureStart":{"pid":37592,"ppid":21548},"fixtureExit":{"pid":37592,"code":0,"bytes":0},"childAbsent":true,"listeners":{"input":0,"output":0}}
+# Subtest: pre-admission envelope error keeps requested id distinct from unconsumed next id
+ok 11 - pre-admission envelope error keeps requested id distinct from unconsumed next id
+  ---
+  duration_ms: 4.4456
+  type: 'test'
+  ...
+# Subtest: malformed command identity stays bounded and does not become a valid correlation
+ok 12 - malformed command identity stays bounded and does not become a valid correlation
+  ---
+  duration_ms: 0.6215
+  type: 'test'
+  ...
+# Subtest: input read failure waits for an accepted command and preserves its result
+ok 13 - input read failure waits for an accepted command and preserves its result
+  ---
+  duration_ms: 61.4502
+  type: 'test'
+  ...
+# Subtest: input read failure before a command rejects through the owned transport path
+ok 14 - input read failure before a command rejects through the owned transport path
+  ---
+  duration_ms: 60.7591
+  type: 'test'
+  ...
+# Subtest: whole owner retains ready_input failure and observes its original relay exit
+ok 15 - whole owner retains ready_input failure and observes its original relay exit
+  ---
+  duration_ms: 127.4982
+  type: 'test'
+  ...
+# Subtest: whole owner retains ready_output failure and observes its original relay exit
+ok 16 - whole owner retains ready_output failure and observes its original relay exit
+  ---
+  duration_ms: 121.4318
+  type: 'test'
+  ...
+# Subtest: whole owner retains terminal_output failure and observes its original relay exit
+ok 17 - whole owner retains terminal_output failure and observes its original relay exit
+  ---
+  duration_ms: 129.1231
+  type: 'test'
+  ...
+# Subtest: startup exchange creation healthy control publishes ready and terminal
+ok 18 - startup exchange creation healthy control publishes ready and terminal
+  ---
+  duration_ms: 131.6863
+  type: 'test'
+  ...
+# Subtest: startup exchange creation failure never publishes ready
+ok 19 - startup exchange creation failure never publishes ready
+  ---
+  duration_ms: 128.8035
+  type: 'test'
+  ...
+# Subtest: blocked busy output bounds response work for a batch of rejected commands
+ok 20 - blocked busy output bounds response work for a batch of rejected commands
+  ---
+  duration_ms: 4.6309
+  type: 'test'
+  ...
+# Subtest: overload preserves the committed result before rejecting the stream owner
+ok 21 - overload preserves the committed result before rejecting the stream owner
+  ---
+  duration_ms: 1.414
+  type: 'test'
+  ...
+# Subtest: separately observed busy replies remain available during one committed command
+ok 22 - separately observed busy replies remain available during one committed command
+  ---
+  duration_ms: 1.0951
+  type: 'test'
+  ...
+# Subtest: first busy failure survives later input error
+ok 23 - first busy failure survives later input error
+  ---
+  duration_ms: 115.4194
+  type: 'test'
+  ...
+# Subtest: first busy failure survives later output error
+ok 24 - first busy failure survives later output error
+  ---
+  duration_ms: 101.8294
+  type: 'test'
+  ...
+# Subtest: illegal-ff
+ok 25 - illegal-ff
+  ---
+  duration_ms: 6.3427
+  type: 'test'
+  ...
+# Subtest: incomplete-e3-in-string
+ok 26 - incomplete-e3-in-string
+  ---
+  duration_ms: 0.7709
+  type: 'test'
+  ...
+# Subtest: lone-continuation
+ok 27 - lone-continuation
+  ---
+  duration_ms: 0.5548
+  type: 'test'
+  ...
+# Subtest: overlong-slash
+ok 28 - overlong-slash
+  ---
+  duration_ms: 0.5159
+  type: 'test'
+  ...
+# Subtest: utf8-surrogate
+ok 29 - utf8-surrogate
+  ---
+  duration_ms: 0.4258
+  type: 'test'
+  ...
+# Subtest: incomplete-byte-at-EOF
+ok 30 - incomplete-byte-at-EOF
+  ---
+  duration_ms: 0.9113
+  type: 'test'
+  ...
+# Subtest: ordinary-ascii-is-unchanged
+ok 31 - ordinary-ascii-is-unchanged
+  ---
+  duration_ms: 0.7735
+  type: 'test'
+  ...
+# Subtest: split-valid-multibyte-survives-byte-boundaries
+ok 32 - split-valid-multibyte-survives-byte-boundaries
+  ---
+  duration_ms: 0.5982
+  type: 'test'
+  ...
+# Subtest: literal-replacement-character-is-valid
+ok 33 - literal-replacement-character-is-valid
+  ---
+  duration_ms: 0.5335
+  type: 'test'
+  ...
+# Subtest: already-decoded-text-caller-is-preserved
+ok 34 - already-decoded-text-caller-is-preserved
+  ---
+  duration_ms: 0.8918
+  type: 'test'
+  ...
+# Subtest: existing-malformed-JSON-is-refused-without-consuming
+ok 35 - existing-malformed-JSON-is-refused-without-consuming
+  ---
+  duration_ms: 0.682
+  type: 'test'
+  ...
+# Subtest: accepted-same-promise-finishes-before-malformed-byte-rejection
+ok 36 - accepted-same-promise-finishes-before-malformed-byte-rejection
+  ---
+  duration_ms: 1.5317
+  type: 'test'
+  ...
+# Subtest: unaccepted-valid-prefix-in-corrupted-chunk-is-refused
+ok 37 - unaccepted-valid-prefix-in-corrupted-chunk-is-refused
+  ---
+  duration_ms: 0.5443
+  type: 'test'
+  ...
+# Subtest: existing-BOM-JSON-refusal-is-preserved
+ok 38 - existing-BOM-JSON-refusal-is-preserved
+  ---
+  duration_ms: 0.545
+  type: 'test'
+  ...
+# Subtest: owned-validation-listeners-retire-and-foreign-observers-stay
+ok 39 - owned-validation-listeners-retire-and-foreign-observers-stay
+  ---
+  duration_ms: 0.5796
+  type: 'test'
+  ...
+# Subtest: one pending call survives interrupted waiting; no resend, exact content presentation
+ok 40 - one pending call survives interrupted waiting; no resend, exact content presentation
+  ---
+  duration_ms: 156.1897
+  type: 'test'
+  ...
+# Subtest: refused IDs can remain unchanged while attempt records never overwrite
+ok 41 - refused IDs can remain unchanged while attempt records never overwrite
+  ---
+  duration_ms: 152.1964
+  type: 'test'
+  ...
+# Subtest: process loss makes delivery uncertain and blocks new sends
+ok 42 - process loss makes delivery uncertain and blocks new sends
+  ---
+  duration_ms: 60.1703
+  type: 'test'
+  ...
+# Subtest: mismatched response retained but never presented as the pending result
+ok 43 - mismatched response retained but never presented as the pending result
+  ---
+  duration_ms: 162.7051
+  type: 'test'
+  ...
+# Subtest: existing evidence directory is refused before spawn
+ok 44 - existing evidence directory is refused before spawn
+  ---
+  duration_ms: 2.0986
+  type: 'test'
+  ...
+# Subtest: nonfinite or omitted values are refused before recording or sending
+ok 45 - nonfinite or omitted values are refused before recording or sending
+  ---
+  duration_ms: 58.7154
+  type: 'test'
+  ...
+# Subtest: review attribution comes from explicit retained reply and cannot overwrite history
+ok 46 - review attribution comes from explicit retained reply and cannot overwrite history
+  ---
+  duration_ms: 12.5074
+  type: 'test'
+  ...
+# Subtest: public and management captures have explicit identity without invented sequence
+ok 47 - public and management captures have explicit identity without invented sequence
+  ---
+  duration_ms: 13.8137
+  type: 'test'
+  ...
+# Subtest: review refuses ambiguous, missing-image, uncertain and incomplete evidence
+ok 48 - review refuses ambiguous, missing-image, uncertain and incomplete evidence
+  ---
+  duration_ms: 11.5575
+  type: 'test'
+  ...
+# Subtest: presentation preserves explicit MCP error status before unchanged content
+ok 49 - presentation preserves explicit MCP error status before unchanged content
+  ---
+  duration_ms: 0.5555
+  type: 'test'
+  ...
+# Subtest: presentation retains explicit error status for empty content and does not invent an absent flag
+ok 50 - presentation retains explicit error status for empty content and does not invent an absent flag
+  ---
+  duration_ms: 0.1736
+  type: 'test'
+  ...
+# Subtest: copied public host modules run outside the checkout using only Node built-ins
+ok 51 - copied public host modules run outside the checkout using only Node built-ins
+  ---
+  duration_ms: 164.1829
+  type: 'test'
+  ...
+# Subtest: wrong response identity still retains actual exit and original journal error
+ok 52 - wrong response identity still retains actual exit and original journal error
+  ---
+  duration_ms: 66.8061
+  type: 'test'
+  ...
+# Subtest: invalid reply JSON still retains actual exit without retrying the request
+ok 53 - invalid reply JSON still retains actual exit without retrying the request
+  ---
+  duration_ms: 65.8222
+  type: 'test'
+  ...
+# Subtest: occupied original reply file still allows a new terminal receipt
+ok 54 - occupied original reply file still allows a new terminal receipt
+  ---
+  duration_ms: 62.5713
+  type: 'test'
+  ...
+# Subtest: failed reply journal and occupied exit preserve both errors and original exit bytes
+ok 55 - failed reply journal and occupied exit preserve both errors and original exit bytes
+  ---
+  duration_ms: 60.7637
+  type: 'test'
+  ...
+# Subtest: healthy reply journal preserves the existing occupied-exit error behavior
+ok 56 - healthy reply journal preserves the existing occupied-exit error behavior
+  ---
+  duration_ms: 60.0026
+  type: 'test'
+  ...
+1..56
+# tests 56
+# suites 0
+# pass 56
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2547.7473
