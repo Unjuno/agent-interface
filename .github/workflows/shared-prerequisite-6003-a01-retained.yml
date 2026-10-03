@@ -1,0 +1,33 @@
+name: Issue 6003 A01 retained evidence
+
+on:
+  pull_request:
+    paths:
+      - 'research/analysis/shared_prerequisite_falsification_6003_a01_wslc_20261003/**'
+      - '.github/workflows/shared-prerequisite-6003-a01-retained.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/analysis/shared_prerequisite_falsification_6003_a01_wslc_20261003/**'
+      - '.github/workflows/shared-prerequisite-6003-a01-retained.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  retained-evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            research/analysis/shared_prerequisite_falsification_6003_a01_wslc_20261003
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Construction gates
+        run: python -B -m unittest discover -s research/analysis/shared_prerequisite_falsification_6003_a01_wslc_20261003 -p test_method.py -v
+      - name: Revalidate retained evidence without formal rerun
+        run: python -B research/analysis/shared_prerequisite_falsification_6003_a01_wslc_20261003/verify_packet.py
