@@ -17,6 +17,9 @@ No original candidate, auditor, launcher or consumed allocation was rerun.
 The original FINAL-v5 nonauthor-approval HOLD remains unchanged; this rescuer
 does not supply or invent either required approval. Scientific parents remain open.
 
-Local workflow replay is pending; neither hosted CI nor main integration is
-claimed here. Original source branch must remain until integration, archival
+Local workflow replay at `b9e5996df4` exited 0: 43 steps, failures=[];
+full output is `local-ci.log`. Initial index-order failure is retained in
+`first-local-ci.log`; only the index ordering was corrected. This local replay
+does not establish full runtime or native/live validity. Neither hosted CI nor
+main integration is claimed here. Original source branch must remain until integration, archival
 identity and dependency checks establish safe retirement.
