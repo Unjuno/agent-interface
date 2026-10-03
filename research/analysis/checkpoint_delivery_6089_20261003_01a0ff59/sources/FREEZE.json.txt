@@ -1,0 +1,43 @@
+{
+  "schema": "unjuno-experiment-freeze-v1",
+  "issue": 6089,
+  "allocation_id": "OBS-LOSS-ROBUST-TUBE-6089-T0B-HOSTCPU-20261002-01",
+  "owner": "current Unjuno autonomous research task on this Windows host",
+  "branch": "research/observation-loss-robust-tube-6089-t0b-20261002",
+  "path": "research/analysis/observation_loss_robust_tube_6089_t0b_20261002/",
+  "base_main": "c000d85275a6689035a5bd7f5b75803b095c8299",
+  "planned_window_utc": {"start":"2026-10-02T08:32:00Z","end":"2026-10-02T08:40:00Z"},
+  "source_sha256": {
+    "README.md": "1615fa407f70a05f1224520d0630881d05dcd76479786ec1077428b953334f97",
+    "cases.json": "2344ba478659e666d87662ce99276266239124824668cb4431485363be2aca45",
+    "candidate.py": "6f86b94d42225eb9e67d2ba6b39ca226575be0b07ef6bc1af30ca99833efc49d",
+    "audit.py": "8ac1b02bbe55ec64daf4027e80fc880b5da385ecbf82f07de563e6b8a524854c",
+    "run_candidate.py": "7c155aa56c2b0739d69a5b422dbe76e4c505765784a56e60b97b99bd5137fedf",
+    "run_audit.py": "2be27a10edf0f572f3b185d172633a5a9c64fbba1c9c8f077d8db7f5ec61cc1a",
+    "test_method.py": "cdd785587b789265fef50ef94027bce5e8b76b6cb2803d17d60ee07bf8df99d6"
+  },
+  "construction": {
+    "command":"python -m unittest -v test_method.py",
+    "python":"3.11.9",
+    "result":"PASS 6/6",
+    "formal_candidate":0,
+    "formal_auditor":0
+  },
+  "execution": {
+    "runtime":"local Windows host CPU; stdlib only",
+    "candidate_command":"python run_candidate.py candidate_raw.json",
+    "candidate_invocations_max":1,
+    "auditor_command":"python run_audit.py candidate_raw.json audit.json",
+    "auditor_invocations_max":1,
+    "retry_budget":0,
+    "gpu_cuda_model_container_network_gui_game_input":0
+  },
+  "stop_conditions":[
+    "main differs from base_main immediately before candidate",
+    "any source/data SHA-256 mismatch",
+    "candidate_raw.json or audit.json already exists",
+    "candidate nonzero exit or invalid output (auditor must not run)",
+    "auditor nonzero exit or any error"
+  ],
+  "decision":"PASS_METHOD_SCOPED only if k=0 recovers the original horizon, the planted optimistic extension is unsafe, B releases on absent/stale input, C is safe for every declared loss pattern through release, target invalidation/unsupported bound yields, all five corruption controls are rejected, and the beyond-bound case is explicitly uncertified."
+}
