@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "<reviewer-workspace>\work\review6919.py", line 190, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "<reviewer-workspace>\work\review6919.py", line 108, in main
+    for name,digest in freeze['helper_sha256'].items(): require(original_hash(name) == digest,stage+':helper:'+name)
+                       ~~~~~~^^^^^^^^^^^^^^^^^
+KeyError: 'helper_sha256'
