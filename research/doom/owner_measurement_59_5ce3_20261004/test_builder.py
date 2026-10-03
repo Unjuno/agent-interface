@@ -103,6 +103,34 @@ class BuilderTests(unittest.TestCase):
         self.assertIsNone(failure, 'generated controller imports before dependency setup')
         self.assertEqual(selected, ['map01_stagnation_v1'])
 
+    def test_session_exposes_repository_package_root_before_backend_import(self):
+        root = HERE.parents[2]
+        destination = HERE / 'generated'
+        tree = ast.parse(self.builder().compose(self.bundle_sources(), root,
+                        destination)['session_measured_5ce3.py'])
+        prefix = []
+        for node in tree.body:
+            if isinstance(node, (ast.Assign, ast.Expr)):
+                prefix.append(node)
+            if isinstance(node, ast.ImportFrom) and node.module == 'doom_release_measured_5ce3':
+                prefix.append(node)
+                break
+        fake_sys = types.SimpleNamespace(path=[])
+        def local_import(name, globals=None, locals=None, fromlist=(), level=0):
+            if name != 'doom_release_measured_5ce3':
+                raise AssertionError('unexpected import boundary')
+            if str(root) not in fake_sys.path:
+                raise ModuleNotFoundError('repository package root unavailable to inherited imports')
+            return types.SimpleNamespace(Backend=object(), suite=object())
+        env = dict(Path=Path, sys=fake_sys, __file__=str(destination / 'session_measured_5ce3.py'),
+                   __builtins__={**vars(builtins), '__import__': local_import})
+        failure = None
+        try:
+            exec(compile(ast.Module(body=prefix, type_ignores=[]), '<session-import-prefix>', 'exec'), env)
+        except ModuleNotFoundError as error:
+            failure = str(error)
+        self.assertIsNone(failure, 'missing root for inherited package-qualified imports')
+
     def custody_function(self):
         text = self.builder().compose(self.bundle_sources(), HERE.parents[2],
                     HERE / 'generated')['session_measured_5ce3.py']

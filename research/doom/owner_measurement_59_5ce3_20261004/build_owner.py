@@ -145,7 +145,8 @@ def compose(sources, repo_root, destination):
         text = sources[original].decode().replace('\r\n', '\n')
         setup = ('MEASUREMENT_HERE = Path(__file__).resolve().parent\n'
             + 'HERE = Path(' + repr(str(doom)) + ')\n'
-            + 'sys.path.insert(0, str(HERE))')
+            + 'sys.path.insert(0, str(HERE))\n'
+            + 'sys.path.insert(0, str(HERE.parents[1]))')
         text = change(text, 'HERE = Path(__file__).resolve().parent', setup)
         if original.startswith('session_'):
             owner_digest = hashlib.sha256(owner.encode()).hexdigest()

@@ -193,3 +193,47 @@ sandbox/safety validation. Own Engine0running and exactVM stopped after probe.
 Next preparation must freeze the actual inherited dependency closure including
 observation_tiles and correctly establish repository package resolution, while
 preserving this first result. No scientific/native/game allocation or PR/main.
+
+## Second guarded real route import — STOP preserved
+
+New prefix test reproduced missing repository-root path (15 tests, 1FAIL), then
+derived session/controller setup adds repository root before inherited imports
+(15HOSTPASS). Separate import_sources_02 preserves same originalsourcecommit plus
+observation_tiles flat sources: 1911 files, not full dependency-closure proof.
+Separate container/import_probe_02 imported beyond prior package-root failure
+and stopped at openpyxl missing in observation_gating/gui_suite.py. Raw first
+STOP_IMPORT_ERROR, traceback and terminal retained unchanged; no source-custody
+gate reached. Imported source count is null/unavailable, not zero. No guard
+attempts, exit1/noOOM. PrivateEngine0running then exactVMstoppedconfirmed.
+
+Reading this actual inherited source also identifies real_apps_v1, outside the
+second freeze. Next preparation must include that package and openpyxl, not
+assume four directory snapshots form the full dependency closure. Earlier
+COMMAND.py.txt archival blank at EOF caused a diff-check warning in the prior
+commit; preserved raw archival text, no silent claim that check was clean.
+
+## Third guarded real route import — PASS_IMPORT_ONLY
+
+Prepared a separate child image with openpyxl3.1.5 and resolved et_xmlfile2.0.0;
+actual wheel hashes retained in unchanged ENVIRONMENT_OPENPYXL_REPORT.json,
+openpyxl hash matched official PyPI metadata. Installation firstexit0/noOOM,
+no reinstall. New image200f0ba1c5b6689261b30f1cc89c26da1b8c8b522fbcbe27b688d55ea67348c5
+retains parent environment unchanged. Neither image pushed.
+
+Separate sourcefreeze03 from samef6db commit includes real_apps_v1 (1914 flat
+source files; four derived files make1918). Actual new guarded container03
+imports generated session AND controller, checks selected backend/owner actual
+paths/digests/class identity, records46 imported repo modules with actual paths
+and hashes compared against pre-import snapshot, and exercises real imported
+controller session_command without starting its returned command. Exit0/noOOM,
+zero guarded X11/game/child attempts, PASS_IMPORT_ONLY. Evidence RESULT.json,
+COMMAND.py.txt, TERMINAL.json retained under import_probe_03. Original probes01
+and02 remain STOP. No main-function/custody-output-loop/runtime/input/effect run.
+
+This is not a scientific result, useful task-feedback, physical release or
+live-safety certificate. Observed imported-file snapshots are not all future
+dynamic dependencies or loaded-code attestation; mutable tmpfs/import-time
+side effects and narrow Python guards limit the claim. Original closure/runtime
+qualification and independent re-review still required. Host15 construction
+tests PASS is separate from real container import. Dedicated Engine0running,
+exactVMstopped after probe; no formal/shared allocation or push/PR/main change.
