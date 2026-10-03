@@ -1,0 +1,23 @@
+"""Run one frozen ordinary job once with complete original streams and actual endpoints."""
+from pathlib import Path
+from datetime import datetime,timezone
+import hashlib,json,os,subprocess,sys,psutil
+r=Path(__file__).resolve().parent;f=json.loads((r/'FREEZE.json').read_bytes());job=next(x for x in f['jobs'] if x['name']==sys.argv[1])
+for x in f['source']:assert hashlib.sha256((r/x['variant']/x['path']).read_bytes()).hexdigest()==x['sha256']
+for x in f['helpers']:assert hashlib.sha256((r/x['path']).read_bytes()).hexdigest()==x['sha256']
+out=r/'check-first'/job['name'];out.mkdir(parents=True,exist_ok=False)
+tmp=r/'tmp';tmp.mkdir(exist_ok=True);cases=r/'maintained-startup-cases'
+if job['name']=='combined-maintained54':cases.mkdir(exist_ok=False)
+delta={'TMP':str(tmp),'TEMP':str(tmp)}
+if job['name']=='combined-maintained54':delta['PRIMARY_STDIO_STARTUP_EVIDENCE']=str(cases)
+env=dict(os.environ,**delta);started=datetime.now(timezone.utc).isoformat();code=None;live=False
+def put(n,x):(out/n).write_text(json.dumps(x,sort_keys=True,indent=2)+'\n',encoding='utf-8',newline='\n')
+with (out/'stdout.txt').open('wb') as stdout,(out/'stderr.txt').open('wb') as stderr:
+ p=subprocess.Popen(job['argv'],cwd=job['cwd'],env=env,stdout=stdout,stderr=stderr)
+ put('START.json',{'job':job,'environment_delta':delta,'pid':p.pid,'ppid':os.getpid(),'started_utc':started,'freeze_sha256':hashlib.sha256((r/'FREEZE.json').read_bytes()).hexdigest()})
+ try:code=p.wait(timeout=25)
+ except subprocess.TimeoutExpired:live=True
+ended=datetime.now(timezone.utc).isoformat();absent=not psutil.pid_exists(p.pid)
+put('RECEIPT.json',{'job':job,'pid':p.pid,'ppid':os.getpid(),'started_utc':started,'ended_or_observed_utc':ended,'exit_code':code,'confirmed_live_at_timeout':live,'original_pid_observed_absent':absent,'stdout_bytes':(out/'stdout.txt').stat().st_size,'stderr_bytes':(out/'stderr.txt').stat().st_size,'stdout_sha256':hashlib.sha256((out/'stdout.txt').read_bytes()).hexdigest(),'stderr_sha256':hashlib.sha256((out/'stderr.txt').read_bytes()).hexdigest()})
+print(json.dumps({'job':job['name'],'pid':p.pid,'exit_code':code,'pid_absent':absent,'live':live,'stdout_bytes':(out/'stdout.txt').stat().st_size,'stderr_bytes':(out/'stderr.txt').stat().st_size}))
+assert code==0 and absent and not live,('inspect this original PID; no restart',p.pid,code,absent,live)
