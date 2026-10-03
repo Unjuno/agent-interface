@@ -22,4 +22,6 @@ parent index was 4 instead of 3; corrected before the successful runs. This is
 not a historical experiment failure or a product regression.
 
 Run: python3 runtime/results/predicate_retry_rescue_a0e0/verify_saved.py
-Repeat with -O. Full local CI is recorded separately after committing.
+Repeat with -O. Frozen local CI passed 43 steps with no failures at
+5b14aa3b3; full output is local-ci.log. This is the exercised local CI gate,
+not whole-repository/native certification or a new formal container run.
