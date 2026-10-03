@@ -1,0 +1,1187 @@
+{
+  "rows": [
+    {
+      "case": "completed",
+      "native_program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "completed",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-converter-fixture",
+          "expires_at_ns": 21517678874
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "key_state",
+            "key": "Shift_L",
+            "down": true
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 1
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "native_receipt": {
+        "status": "completed",
+        "admission": "accepted",
+        "required_capabilities": [
+          "clock.monotonic",
+          "event.feedback",
+          "input.keyboard",
+          "input.release_all"
+        ],
+        "execution": {
+          "started_ns": 16522154091,
+          "ended_ns": 16524851146,
+          "emissions": 2,
+          "program_emissions": 2,
+          "observations": [],
+          "releases": [
+            {
+              "keys_down": [],
+              "buttons_down": [],
+              "verified": true,
+              "monotonic_ns": 16524848890
+            }
+          ],
+          "waits": [
+            {
+              "operation_index": 1,
+              "requested_ms": 1,
+              "started_ns": 16522703655,
+              "completed": true,
+              "kind": "fixed_delay",
+              "update_observed": null,
+              "ended_ns": 16523813436
+            }
+          ],
+          "activations": [],
+          "completed_ops": [
+            0,
+            1,
+            2
+          ]
+        },
+        "recovery_required": false
+      },
+      "conversion": {
+        "decision": {
+          "status": "completed"
+        },
+        "native_receipt": {
+          "status": "completed",
+          "admission": "accepted",
+          "required_capabilities": [
+            "clock.monotonic",
+            "event.feedback",
+            "input.keyboard",
+            "input.release_all"
+          ],
+          "execution": {
+            "started_ns": 16522154091,
+            "ended_ns": 16524851146,
+            "emissions": 2,
+            "program_emissions": 2,
+            "observations": [],
+            "releases": [
+              {
+                "keys_down": [],
+                "buttons_down": [],
+                "verified": true,
+                "monotonic_ns": 16524848890
+              }
+            ],
+            "waits": [
+              {
+                "operation_index": 1,
+                "requested_ms": 1,
+                "started_ns": 16522703655,
+                "completed": true,
+                "kind": "fixed_delay",
+                "update_observed": null,
+                "ended_ns": 16523813436
+              }
+            ],
+            "activations": [],
+            "completed_ops": [
+              0,
+              1,
+              2
+            ]
+          },
+          "recovery_required": false
+        },
+        "native_receipt_sha256": "28e75c5386fd349971561283d1e47847b691b1248c1a56908061e6c55fdd63f0",
+        "count_unit": "completed input-bearing native IR operations; not XTEST emissions",
+        "authority": "none"
+      },
+      "calls": [
+        "execute",
+        "verify"
+      ],
+      "events": [
+        {
+          "event": "stage_started",
+          "stage": "reuse_revalidate",
+          "started_ns": 2806335337
+        },
+        {
+          "event": "stage_completed",
+          "stage": "reuse_revalidate",
+          "ended_ns": 2806342605
+        },
+        {
+          "event": "stage_started",
+          "stage": "final_revalidate",
+          "started_ns": 2806352401
+        },
+        {
+          "event": "stage_completed",
+          "stage": "final_revalidate",
+          "ended_ns": 2806356946
+        },
+        {
+          "event": "stage_started",
+          "stage": "execute",
+          "started_ns": 2806363108
+        },
+        {
+          "event": "stage_completed",
+          "stage": "execute",
+          "ended_ns": 2806371607
+        },
+        {
+          "event": "stage_started",
+          "stage": "verify_effect",
+          "started_ns": 2806377526
+        },
+        {
+          "event": "stage_completed",
+          "stage": "verify_effect",
+          "ended_ns": 2806381242
+        },
+        {
+          "event": "adaptive_route_finished",
+          "outcome": "TASK_NOT_VERIFIED",
+          "reason": "unavailable",
+          "repair_path": "none",
+          "attempted_calls": 0
+        }
+      ],
+      "caller_result": {
+        "outcome": "TASK_NOT_VERIFIED",
+        "reason": "unavailable",
+        "task_effect": "unavailable",
+        "delivery": "confirmed",
+        "execution_progress": null,
+        "selected_target": {
+          "window_id": 6291969
+        },
+        "cache_update": {
+          "window_id": 6291969
+        },
+        "repair_path": "none",
+        "route": "reuse",
+        "repair_trace": [
+          {
+            "stage": "reuse_revalidate",
+            "status": "revalidated"
+          }
+        ],
+        "coarse_origin": "caller_provided",
+        "comparison": {
+          "class": "warm_reuse",
+          "omitted_stages": [
+            "observe_source",
+            "coarse_model",
+            "acquire_anchor",
+            "anchor_model"
+          ],
+          "comparable_to_full_cold": false
+        },
+        "stages": {
+          "observe_source": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "coarse_model": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "acquire_anchor": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "anchor_model": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "reuse_revalidate": {
+            "status": "completed",
+            "reason": null
+          },
+          "local_repair": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "acquire_expansion": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "expanded_model": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "post_model_observe": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "post_model_revalidate": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "final_revalidate": {
+            "status": "completed",
+            "reason": null
+          },
+          "execute": {
+            "status": "completed",
+            "reason": null
+          },
+          "verify_effect": {
+            "status": "completed",
+            "reason": null
+          }
+        },
+        "attempt_ledger": [],
+        "model_call_ledger": [],
+        "accounting": {
+          "attempted_calls": 0,
+          "completed_calls": 0,
+          "duplicate_call_ids": [],
+          "usage_totals": {
+            "input_tokens": 0,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0
+          },
+          "usage_coverage": {
+            "input_tokens": 0,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0
+          },
+          "visible_images_submitted": 0,
+          "visible_image_coverage": 0,
+          "model_wait_ns": 0,
+          "model_wait_coverage": 0,
+          "cost": 0,
+          "cached_input_semantics": "subset of input_tokens; never added to input total"
+        },
+        "phase_timings": [
+          {
+            "stage": "reuse_revalidate",
+            "started_ns": 2806335337,
+            "ended_ns": 2806342605,
+            "elapsed_ns": 7268
+          },
+          {
+            "stage": "final_revalidate",
+            "started_ns": 2806352401,
+            "ended_ns": 2806356946,
+            "elapsed_ns": 4545
+          },
+          {
+            "stage": "execute",
+            "started_ns": 2806363108,
+            "ended_ns": 2806371607,
+            "elapsed_ns": 8499
+          },
+          {
+            "stage": "verify_effect",
+            "started_ns": 2806377526,
+            "ended_ns": 2806381242,
+            "elapsed_ns": 3716
+          }
+        ],
+        "input_authority": "consumed_by_recorded_execute_stage"
+      }
+    },
+    {
+      "case": "preinput_refusal",
+      "native_program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "preinput_refusal",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-converter-fixture",
+          "expires_at_ns": 1
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "key_state",
+            "key": "Shift_L",
+            "down": true
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 1
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "native_receipt": {
+        "status": "refused",
+        "error": "LEASE_EXPIRED",
+        "required_capabilities": [
+          "clock.monotonic",
+          "event.feedback",
+          "input.keyboard",
+          "input.release_all"
+        ],
+        "backend_emissions": 0
+      },
+      "conversion": {
+        "decision": {
+          "status": "safe_yield",
+          "reason": "execution_refused",
+          "completed_actions": 0,
+          "input_dispatched": false
+        },
+        "native_receipt": {
+          "status": "refused",
+          "error": "LEASE_EXPIRED",
+          "required_capabilities": [
+            "clock.monotonic",
+            "event.feedback",
+            "input.keyboard",
+            "input.release_all"
+          ],
+          "backend_emissions": 0
+        },
+        "native_receipt_sha256": "0ae631041ff41e1d11369ae561e92e94df08ce13b8a501bfe482a412eb46af8c",
+        "count_unit": "completed input-bearing native IR operations; not XTEST emissions",
+        "authority": "none"
+      },
+      "calls": [
+        "execute"
+      ],
+      "events": [
+        {
+          "event": "stage_started",
+          "stage": "reuse_revalidate",
+          "started_ns": 2808276023
+        },
+        {
+          "event": "stage_completed",
+          "stage": "reuse_revalidate",
+          "ended_ns": 2808282578
+        },
+        {
+          "event": "stage_started",
+          "stage": "final_revalidate",
+          "started_ns": 2808291532
+        },
+        {
+          "event": "stage_completed",
+          "stage": "final_revalidate",
+          "ended_ns": 2808295241
+        },
+        {
+          "event": "stage_started",
+          "stage": "execute",
+          "started_ns": 2808299995
+        },
+        {
+          "event": "stage_completed",
+          "stage": "execute",
+          "ended_ns": 2808309242
+        },
+        {
+          "event": "adaptive_route_finished",
+          "outcome": "CALLER_FAILED",
+          "reason": "ValueError('exact safe_yield execution decision required')",
+          "repair_path": "none",
+          "attempted_calls": 0
+        }
+      ],
+      "caller_result": {
+        "outcome": "CALLER_FAILED",
+        "reason": "ValueError('exact safe_yield execution decision required')",
+        "task_effect": null,
+        "delivery": null,
+        "execution_progress": null,
+        "selected_target": {
+          "window_id": 6291969
+        },
+        "cache_update": {
+          "window_id": 6291969
+        },
+        "repair_path": "none",
+        "route": "reuse",
+        "repair_trace": [
+          {
+            "stage": "reuse_revalidate",
+            "status": "revalidated"
+          }
+        ],
+        "coarse_origin": "caller_provided",
+        "comparison": {
+          "class": "warm_reuse",
+          "omitted_stages": [
+            "observe_source",
+            "coarse_model",
+            "acquire_anchor",
+            "anchor_model"
+          ],
+          "comparable_to_full_cold": false
+        },
+        "stages": {
+          "observe_source": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "coarse_model": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "acquire_anchor": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "anchor_model": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "reuse_revalidate": {
+            "status": "completed",
+            "reason": null
+          },
+          "local_repair": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "acquire_expansion": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "expanded_model": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "post_model_observe": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "post_model_revalidate": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "final_revalidate": {
+            "status": "completed",
+            "reason": null
+          },
+          "execute": {
+            "status": "completed",
+            "reason": null
+          },
+          "verify_effect": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          }
+        },
+        "attempt_ledger": [],
+        "model_call_ledger": [],
+        "accounting": {
+          "attempted_calls": 0,
+          "completed_calls": 0,
+          "duplicate_call_ids": [],
+          "usage_totals": {
+            "input_tokens": 0,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0
+          },
+          "usage_coverage": {
+            "input_tokens": 0,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0
+          },
+          "visible_images_submitted": 0,
+          "visible_image_coverage": 0,
+          "model_wait_ns": 0,
+          "model_wait_coverage": 0,
+          "cost": 0,
+          "cached_input_semantics": "subset of input_tokens; never added to input total"
+        },
+        "phase_timings": [
+          {
+            "stage": "reuse_revalidate",
+            "started_ns": 2808276023,
+            "ended_ns": 2808282578,
+            "elapsed_ns": 6555
+          },
+          {
+            "stage": "final_revalidate",
+            "started_ns": 2808291532,
+            "ended_ns": 2808295241,
+            "elapsed_ns": 3709
+          },
+          {
+            "stage": "execute",
+            "started_ns": 2808299995,
+            "ended_ns": 2808309242,
+            "elapsed_ns": 9247
+          }
+        ],
+        "input_authority": "consumed_by_recorded_execute_stage"
+      }
+    },
+    {
+      "case": "partial_wait_fault",
+      "native_program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "partial_wait_fault",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-converter-fixture",
+          "expires_at_ns": 21596407441
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "key_state",
+            "key": "Shift_L",
+            "down": true
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 1
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "native_receipt": {
+        "status": "execution_failed",
+        "admission": "accepted",
+        "error": "BACKEND_EXECUTION_FAILED",
+        "required_capabilities": [
+          "clock.monotonic",
+          "event.feedback",
+          "input.keyboard",
+          "input.release_all"
+        ],
+        "execution": {
+          "started_ns": 16599659155,
+          "ended_ns": 16600210000,
+          "emissions": 2,
+          "program_emissions": 2,
+          "observations": [],
+          "releases": [
+            {
+              "keys_down": [],
+              "buttons_down": [],
+              "verified": true,
+              "monotonic_ns": 16600207982
+            }
+          ],
+          "waits": [
+            {
+              "operation_index": 1,
+              "requested_ms": 1,
+              "started_ns": 16599897168,
+              "completed": false,
+              "kind": "fixed_delay",
+              "update_observed": null,
+              "ended_ns": 16599900311
+            }
+          ],
+          "activations": [],
+          "completed_ops": [
+            0
+          ],
+          "error": "OSError('prospective injected wait fault')",
+          "failed_op": 1,
+          "failed_op_effect": "unknown; may have emitted partial input"
+        },
+        "recovery_required": false
+      },
+      "conversion": {
+        "decision": {
+          "status": "safe_yield",
+          "reason": "execution_failed",
+          "completed_actions": 1,
+          "input_dispatched": true
+        },
+        "native_receipt": {
+          "status": "execution_failed",
+          "admission": "accepted",
+          "error": "BACKEND_EXECUTION_FAILED",
+          "required_capabilities": [
+            "clock.monotonic",
+            "event.feedback",
+            "input.keyboard",
+            "input.release_all"
+          ],
+          "execution": {
+            "started_ns": 16599659155,
+            "ended_ns": 16600210000,
+            "emissions": 2,
+            "program_emissions": 2,
+            "observations": [],
+            "releases": [
+              {
+                "keys_down": [],
+                "buttons_down": [],
+                "verified": true,
+                "monotonic_ns": 16600207982
+              }
+            ],
+            "waits": [
+              {
+                "operation_index": 1,
+                "requested_ms": 1,
+                "started_ns": 16599897168,
+                "completed": false,
+                "kind": "fixed_delay",
+                "update_observed": null,
+                "ended_ns": 16599900311
+              }
+            ],
+            "activations": [],
+            "completed_ops": [
+              0
+            ],
+            "error": "OSError('prospective injected wait fault')",
+            "failed_op": 1,
+            "failed_op_effect": "unknown; may have emitted partial input"
+          },
+          "recovery_required": false
+        },
+        "native_receipt_sha256": "a20551cb9ccf03f200c19ab011e8b872eb3dd2e5aebb94a5d48ddcd91ab16fe6",
+        "count_unit": "completed input-bearing native IR operations; not XTEST emissions",
+        "authority": "none"
+      },
+      "calls": [
+        "execute"
+      ],
+      "events": [
+        {
+          "event": "stage_started",
+          "stage": "reuse_revalidate",
+          "started_ns": 2810294517
+        },
+        {
+          "event": "stage_completed",
+          "stage": "reuse_revalidate",
+          "ended_ns": 2810300767
+        },
+        {
+          "event": "stage_started",
+          "stage": "final_revalidate",
+          "started_ns": 2810309385
+        },
+        {
+          "event": "stage_completed",
+          "stage": "final_revalidate",
+          "ended_ns": 2810312839
+        },
+        {
+          "event": "stage_started",
+          "stage": "execute",
+          "started_ns": 2810317480
+        },
+        {
+          "event": "stage_completed",
+          "stage": "execute",
+          "ended_ns": 2810326357
+        },
+        {
+          "event": "adaptive_route_finished",
+          "outcome": "CALLER_FAILED",
+          "reason": "ValueError('exact safe_yield execution decision required')",
+          "repair_path": "none",
+          "attempted_calls": 0
+        }
+      ],
+      "caller_result": {
+        "outcome": "CALLER_FAILED",
+        "reason": "ValueError('exact safe_yield execution decision required')",
+        "task_effect": null,
+        "delivery": null,
+        "execution_progress": null,
+        "selected_target": {
+          "window_id": 6291969
+        },
+        "cache_update": {
+          "window_id": 6291969
+        },
+        "repair_path": "none",
+        "route": "reuse",
+        "repair_trace": [
+          {
+            "stage": "reuse_revalidate",
+            "status": "revalidated"
+          }
+        ],
+        "coarse_origin": "caller_provided",
+        "comparison": {
+          "class": "warm_reuse",
+          "omitted_stages": [
+            "observe_source",
+            "coarse_model",
+            "acquire_anchor",
+            "anchor_model"
+          ],
+          "comparable_to_full_cold": false
+        },
+        "stages": {
+          "observe_source": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "coarse_model": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "acquire_anchor": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "anchor_model": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "reuse_revalidate": {
+            "status": "completed",
+            "reason": null
+          },
+          "local_repair": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "acquire_expansion": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "expanded_model": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "post_model_observe": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "post_model_revalidate": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "final_revalidate": {
+            "status": "completed",
+            "reason": null
+          },
+          "execute": {
+            "status": "completed",
+            "reason": null
+          },
+          "verify_effect": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          }
+        },
+        "attempt_ledger": [],
+        "model_call_ledger": [],
+        "accounting": {
+          "attempted_calls": 0,
+          "completed_calls": 0,
+          "duplicate_call_ids": [],
+          "usage_totals": {
+            "input_tokens": 0,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0
+          },
+          "usage_coverage": {
+            "input_tokens": 0,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0
+          },
+          "visible_images_submitted": 0,
+          "visible_image_coverage": 0,
+          "model_wait_ns": 0,
+          "model_wait_coverage": 0,
+          "cost": 0,
+          "cached_input_semantics": "subset of input_tokens; never added to input total"
+        },
+        "phase_timings": [
+          {
+            "stage": "reuse_revalidate",
+            "started_ns": 2810294517,
+            "ended_ns": 2810300767,
+            "elapsed_ns": 6250
+          },
+          {
+            "stage": "final_revalidate",
+            "started_ns": 2810309385,
+            "ended_ns": 2810312839,
+            "elapsed_ns": 3454
+          },
+          {
+            "stage": "execute",
+            "started_ns": 2810317480,
+            "ended_ns": 2810326357,
+            "elapsed_ns": 8877
+          }
+        ],
+        "input_authority": "consumed_by_recorded_execute_stage"
+      }
+    },
+    {
+      "case": "release_omission",
+      "native_program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "release_omission",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-converter-fixture",
+          "expires_at_ns": 21634616494
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "key_state",
+            "key": "Shift_L",
+            "down": true
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 1
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "native_receipt": {
+        "status": "release_unverified",
+        "admission": "accepted",
+        "required_capabilities": [
+          "clock.monotonic",
+          "event.feedback",
+          "input.keyboard",
+          "input.release_all"
+        ],
+        "execution": {
+          "started_ns": 16636549661,
+          "ended_ns": 16637869074,
+          "emissions": 1,
+          "program_emissions": 1,
+          "observations": [],
+          "releases": [
+            {
+              "keys_down": [
+                "Shift_L"
+              ],
+              "buttons_down": [],
+              "verified": false,
+              "monotonic_ns": 16637867474,
+              "fixture_fault": "first owned key release omitted"
+            }
+          ],
+          "waits": [
+            {
+              "operation_index": 1,
+              "requested_ms": 1,
+              "started_ns": 16636780642,
+              "completed": true,
+              "kind": "fixed_delay",
+              "update_observed": null,
+              "ended_ns": 16637860722
+            }
+          ],
+          "activations": [],
+          "completed_ops": [
+            0,
+            1,
+            2
+          ]
+        },
+        "recovery_required": true
+      },
+      "conversion": {
+        "decision": {
+          "status": "safe_yield",
+          "reason": "delivery_uncertain",
+          "completed_actions": 1,
+          "input_dispatched": true
+        },
+        "native_receipt": {
+          "status": "release_unverified",
+          "admission": "accepted",
+          "required_capabilities": [
+            "clock.monotonic",
+            "event.feedback",
+            "input.keyboard",
+            "input.release_all"
+          ],
+          "execution": {
+            "started_ns": 16636549661,
+            "ended_ns": 16637869074,
+            "emissions": 1,
+            "program_emissions": 1,
+            "observations": [],
+            "releases": [
+              {
+                "keys_down": [
+                  "Shift_L"
+                ],
+                "buttons_down": [],
+                "verified": false,
+                "monotonic_ns": 16637867474,
+                "fixture_fault": "first owned key release omitted"
+              }
+            ],
+            "waits": [
+              {
+                "operation_index": 1,
+                "requested_ms": 1,
+                "started_ns": 16636780642,
+                "completed": true,
+                "kind": "fixed_delay",
+                "update_observed": null,
+                "ended_ns": 16637860722
+              }
+            ],
+            "activations": [],
+            "completed_ops": [
+              0,
+              1,
+              2
+            ]
+          },
+          "recovery_required": true
+        },
+        "native_receipt_sha256": "a520ec93777fd4942ae7862eb6978312ee21eb1e687aa5990d8178df2208990c",
+        "count_unit": "completed input-bearing native IR operations; not XTEST emissions",
+        "authority": "none"
+      },
+      "calls": [
+        "execute"
+      ],
+      "events": [
+        {
+          "event": "stage_started",
+          "stage": "reuse_revalidate",
+          "started_ns": 2812470773
+        },
+        {
+          "event": "stage_completed",
+          "stage": "reuse_revalidate",
+          "ended_ns": 2812477027
+        },
+        {
+          "event": "stage_started",
+          "stage": "final_revalidate",
+          "started_ns": 2812484904
+        },
+        {
+          "event": "stage_completed",
+          "stage": "final_revalidate",
+          "ended_ns": 2812488416
+        },
+        {
+          "event": "stage_started",
+          "stage": "execute",
+          "started_ns": 2812493003
+        },
+        {
+          "event": "stage_completed",
+          "stage": "execute",
+          "ended_ns": 2812501990
+        },
+        {
+          "event": "adaptive_route_finished",
+          "outcome": "CALLER_FAILED",
+          "reason": "ValueError('exact safe_yield execution decision required')",
+          "repair_path": "none",
+          "attempted_calls": 0
+        }
+      ],
+      "caller_result": {
+        "outcome": "CALLER_FAILED",
+        "reason": "ValueError('exact safe_yield execution decision required')",
+        "task_effect": null,
+        "delivery": null,
+        "execution_progress": null,
+        "selected_target": {
+          "window_id": 6291969
+        },
+        "cache_update": {
+          "window_id": 6291969
+        },
+        "repair_path": "none",
+        "route": "reuse",
+        "repair_trace": [
+          {
+            "stage": "reuse_revalidate",
+            "status": "revalidated"
+          }
+        ],
+        "coarse_origin": "caller_provided",
+        "comparison": {
+          "class": "warm_reuse",
+          "omitted_stages": [
+            "observe_source",
+            "coarse_model",
+            "acquire_anchor",
+            "anchor_model"
+          ],
+          "comparable_to_full_cold": false
+        },
+        "stages": {
+          "observe_source": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "coarse_model": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "acquire_anchor": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "anchor_model": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "reuse_revalidate": {
+            "status": "completed",
+            "reason": null
+          },
+          "local_repair": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "acquire_expansion": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "expanded_model": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "post_model_observe": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "post_model_revalidate": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          },
+          "final_revalidate": {
+            "status": "completed",
+            "reason": null
+          },
+          "execute": {
+            "status": "completed",
+            "reason": null
+          },
+          "verify_effect": {
+            "status": "skipped",
+            "reason": "branch_not_reached"
+          }
+        },
+        "attempt_ledger": [],
+        "model_call_ledger": [],
+        "accounting": {
+          "attempted_calls": 0,
+          "completed_calls": 0,
+          "duplicate_call_ids": [],
+          "usage_totals": {
+            "input_tokens": 0,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0
+          },
+          "usage_coverage": {
+            "input_tokens": 0,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0
+          },
+          "visible_images_submitted": 0,
+          "visible_image_coverage": 0,
+          "model_wait_ns": 0,
+          "model_wait_coverage": 0,
+          "cost": 0,
+          "cached_input_semantics": "subset of input_tokens; never added to input total"
+        },
+        "phase_timings": [
+          {
+            "stage": "reuse_revalidate",
+            "started_ns": 2812470773,
+            "ended_ns": 2812477027,
+            "elapsed_ns": 6254
+          },
+          {
+            "stage": "final_revalidate",
+            "started_ns": 2812484904,
+            "ended_ns": 2812488416,
+            "elapsed_ns": 3512
+          },
+          {
+            "stage": "execute",
+            "started_ns": 2812493003,
+            "ended_ns": 2812501990,
+            "elapsed_ns": 8987
+          }
+        ],
+        "input_authority": "consumed_by_recorded_execute_stage"
+      }
+    }
+  ],
+  "disposition": "HOLD_CURRENT_MAIN_COMPOSITION",
+  "native_runs": 0,
+  "model_calls": 0
+}
