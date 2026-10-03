@@ -1,0 +1,51 @@
+import ast,copy,datetime,hashlib,json
+from pathlib import Path
+root=Path(__file__).resolve().parent
+def same(a,b):return json.dumps(a,sort_keys=True)==json.dumps(b,sort_keys=True)
+def need(ok,msg):
+    if not ok:raise ValueError(msg)
+def load(name):return json.loads((root/name).read_bytes())
+def rows(phase):return {r['case']:r['result'] for r in [json.loads(l) for l in (root/phase/'rows.jsonl').read_bytes().splitlines()]}
+red=rows('first-red');normal=rows('green-normal');optimized=rows('green-optimized')
+expected={'zero_attempt_warm':0,'one_known_success':7,'one_unknown_success':None,'first_upstream_failure':None,'success_then_failure':None,'malformed_result':None,'missing_adapter':None,'two_known_successes':12,'zero_cost_safe_stop':0}
+def check(records):
+    need(set(records)==set(expected),'nine exact cases')
+    for name,r in records.items():
+        need(same(r['accounting']['cost'],expected[name]),'all-attempt cost '+name)
+        attempts=r['attempt_ledger'];completed=r['model_call_ledger']
+        need(type(r['accounting']['attempted_calls']) is int and r['accounting']['attempted_calls']==len(attempts),'attempt denominator')
+        available=[row['cost'] for row in completed if row['cost'] is not None]
+        reference=sum(available) if len(available)==len(attempts) else None
+        need(same(reference,r['accounting']['cost']),'independent coverage reducer')
+check(normal);check(optimized)
+changed=[]
+for name in expected:
+    need(same(normal[name],optimized[name]),'normal/O complete records')
+    old=copy.deepcopy(red[name]);new=copy.deepcopy(normal[name])
+    before=old['accounting'].pop('cost');after=new['accounting'].pop('cost')
+    need(same(old,new),'all noncost result/ledger/timing/authority fields '+name)
+    if not same(before,after):changed.append({'case':name,'before':before,'after':after})
+need(len(changed)==4,'exact four repaired cases')
+baseline=(root/'baseline/adaptive_acquisition_caller_v3.py').read_bytes();candidate=(root/'candidate/adaptive_acquisition_caller_v3.py').read_bytes()
+need(baseline.replace(b'"cost": sum(costs) if len(costs) == len(model_calls) else None,',b'"cost": sum(costs) if len(costs) == len(attempts) else None,')==candidate,'sole source expression')
+need((root/'baseline/test_adaptive_acquisition_caller_v3.py').read_bytes()==(root/'candidate/test_adaptive_acquisition_caller_v3.py').read_bytes(),'existing12tests unchanged')
+for stage,n,exitcode,summary in [('first-red',9,1,b'FAILED (failures=4)'),('green-normal',21,0,b'OK'),('green-optimized',21,0,b'OK')]:
+    result=load(stage+'/RESULT.json');log=(root/stage/'stderr.bin').read_bytes()
+    need(type(result['exit_code']) is int and result['exit_code']==exitcode and result['guard_expired'] is False and result['freeze_unchanged'] is True,'terminal '+stage)
+    need(('Ran '+str(n)+' tests').encode() in log and log.rstrip().endswith(summary),'complete summary '+stage)
+    for stream in ['stdout','stderr']:
+        b=(root/stage/(stream+'.bin')).read_bytes();need(result[stream]=={'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()},'full stream '+stage)
+controls=[]
+def refuse(name,mutate):
+    c=copy.deepcopy(normal);mutate(c)
+    try:check(c)
+    except (ValueError,KeyError):controls.append(name);return
+    raise ValueError('ineffective copied control '+name)
+refuse('invented failed zero',lambda r:r['first_upstream_failure']['accounting'].__setitem__('cost',0))
+refuse('success-only subtotal',lambda r:r['success_then_failure']['accounting'].__setitem__('cost',5))
+refuse('lost warm zero',lambda r:r['zero_attempt_warm']['accounting'].__setitem__('cost',None))
+refuse('boolean zero alias',lambda r:r['zero_attempt_warm']['accounting'].__setitem__('cost',False))
+refuse('lost first attempt',lambda r:r['first_upstream_failure']['attempt_ledger'].clear())
+refuse('known total changed',lambda r:r['two_known_successes']['accounting'].__setitem__('cost',7))
+report={'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'all27complete_records_verified':True,'nine_cases':len(expected),'exactly_four_accounting_cost_deltas':changed,'all_other_fields_unchanged':True,'sole_source_expression_verified':True,'existing12methods_unchanged':True,'effective_copied_semantic_controls':controls,'first9_red4failures_preserved':True,'normal_optimized21_pass':True,'source_model_native_formal_replays':0,'limits':'Synthetic reported cost controls; no actual prices/currency/provider usage, token/latency/GUI benefit.'}
+(root/'AUDIT.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8');print(json.dumps(report))
