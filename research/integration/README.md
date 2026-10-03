@@ -46,6 +46,11 @@ Child directory names are retained provenance, not a canonical architecture tree
   mismatches: overall STOP. Original sources/raw/failed checker/images
   retained. Not a qualified scientific PASS/FAIL or production fix.
 
+- [Tk readiness #5260 A03 no-input successor](tk_firstchar_5260_a03_wslc_20261003/REPORT.md)
+  — four legacy apps wrote two readiness epochs, four corrected apps wrote
+  one; independent construction custody passed, no key/click input and no
+  first-character/public-client/migration-benefit qualification.
+
 ## Preserved older Draft publications
 
 - [Writer selection scope #4425 / Draft PR #4446](writer_selection_scope_w4m8_v1/ARCHIVAL_QUALIFICATION.md) — seven exact published files retained; complete 401-file raw corpus missing, so this is not an independent reproduction or qualification of the reported PASS.
