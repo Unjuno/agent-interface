@@ -1,0 +1,50 @@
+import hashlib,json,pathlib,sys,xml.etree.ElementTree as ET
+from PIL import Image
+N={'t':'urn:oasis:names:tc:opendocument:xmlns:table:1.0','o':'urn:oasis:names:tc:opendocument:xmlns:office:1.0'}
+def saved(blob):
+ root=ET.fromstring(blob);rows=[]
+ for row in root.findall('.//t:table/t:table-row',N):
+  cells=[]
+  for cell in row.findall('t:table-cell',N):cells.extend([cell]*min(4,int(cell.get('{'+N['t']+'}number-columns-repeated','1'))))
+  rows.extend([cells]*min(3,int(row.get('{'+N['t']+'}number-rows-repeated','1'))))
+  if len(rows)>=2:break
+ r=rows[1];return dict(a=r[0].get('{'+N['o']+'}value'),b=r[1].get('{'+N['o']+'}value'),product=r[2].get('{'+N['o']+'}value'),formula=r[2].get('{'+N['t']+'}formula'))
+def score(plan,raw,primary,folder,effect):
+ errors=[]
+ def need(v,m):
+  if not v:errors.append(m)
+ def pixels(im):
+  a=im['artifact'];relative=a['path'].removeprefix('/out/');p=folder/relative
+  if '..' in pathlib.PurePosixPath(relative).parts or relative.startswith('/'):raise ValueError('unsafe image path')
+  need(hashlib.sha256(p.read_bytes()).hexdigest()==a['sha256'],'PNG hash');need(a['source_raw_sha256']==im['sha256'],'raw/PNG join')
+  with Image.open(p) as v:
+   need(v.size==(1280,800),'image dimensions');return v.convert('RGB').crop(plan['roi']).tobytes()
+ try:
+  spec=raw['spec'];need(spec==plan['rows'][spec['index']],'row identity');need(raw['source_hashes']==plan['source_hashes'],'source pins');need(raw['errors']==[],'producer errors')
+  need(effect==dict(a='43',b='47',product='2021',formula='of:=[.A2]*[.B2]'),'saved formula/effect')
+  need(raw['program']['ops']==spec['program']['ops'] and raw['program']['source']==spec['program']['source'] and raw['program']['program_id']==spec['program']['program_id'],'program frozen');need(raw['program']['authority']['expires_at_ns']>raw['dispatch_end_ns'],'lease')
+  x=raw['receipt'];need(x['status']=='completed' and x['admission']=='accepted' and not x['recovery_required'],'public completed');need(x['execution']['completed_ops']==list(range(30)),'complete prefix');need(len(x['execution']['observations'])==1 and raw['final_image']==x['execution']['observations'][0],'one public capture')
+  need(all(r['verified'] is True and r['keys_down']==[] and r['buttons_down']==[] for r in x['execution']['releases']),'public release')
+  wait=x['execution']['waits'][-1];need(wait['kind']=='fixed_delay' and wait['update_observed'] is None and wait['requested_ms']==spec['wait_ms'] and wait['completed'],'fixed wait')
+  for k in ('after_dispatch_physical','final_physical','cleanup_physical'):need(raw[k]['keys']==[] and raw[k]['buttons']==0,'neutral '+k)
+  need(len(raw['terminal'])==4 and {t['name'] for t in raw['terminal']}=={'observer','Calc','openbox','Xvfb'} and all(t['exit_code'] in (0,255) for t in raw['terminal']) and next(t for t in raw['terminal'] if t['name']=='observer')['exit_code']==0,'helper parents')
+  stream=raw['stream'];s=stream['samples'];need(stream['input_emissions']==0 and 3<=len(s)<=80,'read-only bounded stream');need(s[0]==raw['observer_first'] and s[-1]==raw['late_image'],'first/last join');need(s[0]['capture_ended_ns']<=raw['dispatch_start_ns'],'negative before input');need(raw['events'][0]['request']['ready'] is True,'initial review')
+  previous=-1
+  for i,r in enumerate(s):
+   need(r['index']==i and previous<=r['capture_started_ns']<=r['capture_ended_ns']<=r['written_ns'],'stream order');previous=r['written_ns']
+  initial=pixels(raw['initial']['image']);final=pixels(raw['final_image']);target=pixels(raw['late_image']);cues=[pixels(r) for r in s];need(initial!=target and cues[0]!=target,'negative raster control');need(all(c==target for c in cues[-3:]),'last three stable')
+  need(primary['late']['confirmed'] is True and primary['late']['values']==[43,47,2021] and primary['late']['artifact_sha256']==raw['late_image']['artifact']['sha256'],'late primary declaration')
+  need(primary['final']['artifact_sha256']==raw['final_image']['artifact']['sha256'],'final primary identity')
+  if primary['final']['confirmed']:need(primary['final']['values']==[43,47,2021] and final==target,'false primary completion')
+  positive=[i for i,c in enumerate(cues) if c==target]
+  need(bool(positive),'positive sample');first=positive[0] if positive else None
+  need(first is not None and first>0 and all(c==target for c in cues[first:]),'unbracketed/nonmonotone cue')
+  bracket=[s[first-1]['capture_started_ns'],s[first]['capture_ended_ns']] if first is not None and first>0 else None
+  return dict(errors=errors,samples=len(s),first_positive=first,render_bracket_ns=bracket,bracket_relative_to_dispatch_ms=[(t-raw['dispatch_start_ns'])/1e6 for t in bracket] if bracket else None,public_capture_matches_target=final==target,public_completed_ns=raw['dispatch_end_ns'],final_capture_bracket_ns=[raw['final_image']['capture_started_ns'],raw['final_image']['capture_ended_ns']])
+ except (KeyError,ValueError,IndexError,TypeError,OSError) as e:return dict(errors=errors+['missing/malformed: '+repr(e)])
+if __name__=='__main__':
+ src,data,out=map(pathlib.Path,sys.argv[1:]);plan=json.loads((src/'PLAN.json').read_text());results=[]
+ for spec in plan['rows']:
+  folder=data/('row'+str(spec['index']+1));raw=json.loads((folder/'raw.json').read_text());primary=json.loads((folder/'PRIMARY.json').read_text());results.append(score(plan,raw,primary,folder,saved((folder/'heldout-comparison.fods').read_bytes())))
+ bad=[e for r in results for e in r['errors']];result=dict(disposition='PASS_SAMPLED_RENDER_BRACKET_SCOPED' if not bad else 'STOP_OR_UNBRACKETED_RETAIN_FIRST',errors=bad,rows=results,adoption='HOLD_EXACT_RENDER_INGESTION_MODEL_USEFULNESS_SPEED_TOKEN_GENERALIZATION')
+ out.write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result));sys.exit(bool(bad))
