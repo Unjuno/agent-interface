@@ -38,5 +38,9 @@ class PolicyTests(unittest.TestCase):
             p=Path(d)/'memory.json';self.record(p)
             with self.assertRaises(FileExistsError):self.record(p)
             self.assertEqual(json.loads(p.read_text())['observed_preconditions'],{'focus':False})
+    def test_fresh_guard_requires_no_memory_file(self):
+        with tempfile.TemporaryDirectory() as d:
+            absent=Path(d)/'absent.json'
+            self.assertEqual(decide('FRESH',absent,{k:True for k in ('cover','geometry','focus','pending','business')},'target','click_then_F8'),'TRY')
 
 if __name__=='__main__':unittest.main()

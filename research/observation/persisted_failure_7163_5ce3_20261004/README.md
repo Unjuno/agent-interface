@@ -66,6 +66,28 @@ Only after terminal exit0 run frozen saved-only `python3 -B audit.py runs/native
 Auditor is created before this run but is construction-only, not a separately gated
 formal independent auditor. Its unit corpus is explicitly synthetic, not native data.
 Pure policy TDD: 7 tests, 4 actual failures against UNKNOWN/no-store stub, then 7 pass.
+Reviewer found FRESH initially depended on record scope. Added absent-memory test;
+it failed FileNotFoundError before repair, then FRESH no longer reads a memory file.
 Checker tests are construction, not empirical evidence. Counts in AUDIT are declared
 history, not independent exhaustive execution attestation. Pre/post source hashes
 and parent resource-stop records do not independently authenticate an execution.
+
+### Parent-owned terminal and archive gate (mandatory)
+
+If attached start times out or returns uncertain, do not rerun or create another
+container. Inspect only `persisted-failure-7163-c02-5ce3` through this exact VM.
+Confirm its ID equals the create receipt and owner label equals this owner before
+stopping it with `docker stop --time 3 <verified-own-ID>`; retain timeout/partial
+raw/stdout/stderr and both inspections in an additive STOP record. Confirm terminal,
+then own Engine running-count0 before stopping this exact VM. If identity/inventory
+is unavailable, retain UNKNOWN and seek authoritative observation of that same
+handle; never kill peer containers or infer completion from a client timeout.
+Any STOP remains first outcome; no candidate/auditor/native retry.
+
+Archive acceptance separately requires: freeze7 source hashes match before/after,
+raw100 exactly match parsed start stdout100, create/inspect ID and owner label/image,
+terminal exit0/notRunning/notOOM, actual ENV cpu.max100000100000/memory.max536870912/
+memory.swap.max0/pids.max128, source/output read-only/RW bindings, unchanged source,
+private Engine running-count0 and exact VM stopped. Missing gate is HOLD/STOP;
+the saved-only auditor does not certify this resource/execution provenance.
+HISTORY is intentionally outside the source7 freeze and remains immutable history.

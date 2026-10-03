@@ -13,8 +13,10 @@ def learn(path,target,action,observed,failed_field,evidence):
 def decide(arm,path,observed,target,action):
     if arm=='NO_MEMORY':return 'TRY'
     if arm=='NOTE':return 'BLOCK'
-    record=json.loads(path.read_text())
-    if record['target']!=target or record['attempted_action']!=action:return 'UNKNOWN'
-    fields=FIELDS if arm in ('FRESH','TYPED_PLUS_FRESH') else (record['applicability_envelope']['field'],)
+    if arm=='FRESH':fields=FIELDS
+    else:
+        record=json.loads(path.read_text())
+        if record['target']!=target or record['attempted_action']!=action:return 'UNKNOWN'
+        fields=FIELDS if arm=='TYPED_PLUS_FRESH' else (record['applicability_envelope']['field'],)
     if any(type(observed.get(k)) is not bool for k in fields):return 'UNKNOWN'
     return 'TRY' if all(observed[k] for k in fields) else 'BLOCK'
