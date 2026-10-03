@@ -1,9 +1,55 @@
 # Actual asyncio singleflight cancellation transfer boundary — #6501
 
-Prospective source package; executed first outcomes will be added after the freeze.
-See [the prospective plan](PLAN.md) and [source/image freeze](FREEZE.json).
+**PASS_ASYNCIO_BOUNDARY_SCOPED**: 48 conditions / 120 caller outcomes in an actual
+CPython 3.12.15 asyncio event loop, with one candidate and one separate raw-only
+auditor invocation, both exit 0, retries zero. All eight effective corruptions
+were rejected. See [the prospective plan](PLAN.md), [source/image freeze](FREEZE.json),
+[raw events](execution/raw.json), [audit](execution/audit.json) and
+[summary counts](SUMMARY.json).
 No legacy #6501 allocation is invoked or changed. No runtime adoption or user-task
 benefit is established by this research harness.
+
+| Policy (12 conditions each) | Producer starts | Unaffected deliveries in one-cancel controls | Pending producers after all-cancel, before harness cleanup | Pending after cleanup |
+|---|---:|---:|---:|---:|
+| Independent | 30 | 6/6 | 0 | 0 |
+| Direct shared await | 12 | 0/6 | 0 | 0 |
+| Standard shield | 12 | 6/6 | 2 (one in each caller-count condition) | 0 |
+| Shield + last-detach ownership | 12 | 6/6 | 0 | 0 |
+
+The direct arm's six lost unaffected deliveries are the negative comparison,
+not exclusions or unsafe actuation observations. Every arm refuses all five
+generation-change caller outcomes as STALE and reports all five owner failures.
+Plain shield needs an explicit producer owner to terminate work after all callers
+leave; the small reference counter is one serialized-event-loop illustration.
+Final cleanup was observed for all tasks in all 48 conditions. None of these
+counts measures useful GUI effects, elapsed-time advantage or real offered demand.
+
+The raw file is 136,089 bytes; SHA256
+`d3262358814f4fd724d0b36b0fc027d2b4fee70f5a7e56a090d8ee794c5c2441`.
+Source commit `88126633f0616f12d6510cab114e11267a7644f4` preceded invocation;
+[candidate receipt](execution/candidate-receipt.json) and
+[audit receipt](execution/audit-receipt.json) retain actual UTC start/end and exit.
+Both [candidate environment](execution/candidate-environment.json) and
+[audit environment](execution/audit-environment.json) match all five frozen hashes,
+`cpu.max=25000 100000` and `memory.max=134217728`. The dedicated OrbStack guest's
+Docker daemon was used; no shared host daemon repair/restart occurred. Original
+source/raw bytes were copied back and read against their hashes. The own guest is
+stopped and retained for reversible recovery; no other guest/container was changed.
+
+Construction: five mini-tests passed on native macOS CPython 3.14.5 and the frozen
+Linux image before allocation. Those transcripts were observed in tool execution;
+they were not separately saved or rerun to manufacture log files. Shared Docker's
+initial inventory failure is an infrastructure observation, not a candidate failure;
+no candidate was submitted to that daemon. Guest setup/build and interpreter probe
+were separate from the formal candidate/auditor.
+
+Adopt the cancellation-separation/owned-cleanup requirement as a transfer condition
+for a future actual read-only coalescer; this package does not integrate a broker.
+Dynamic joins, TaskGroups, noncooperative reads, ABA, semantic equivalence, live
+task effects and efficiency remain untested. Raw-only audit is a separate
+implementation authored by this worker, not non-author review. Two non-author
+FINAL-v5 content votes, current-base combination and conditional main application
+remain separate from this result. Optional hosted CI is not claimed passed.
 
 The strongest simple comparator is standard Python `asyncio.shield`. The extra
 remaining-waiter counter addresses only its all-waiters-gone work-ownership residual.
