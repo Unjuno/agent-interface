@@ -49,7 +49,6 @@ class RequestLifecycle:
         self.execution: ExecutionReceipt | None = None
         self.effect: EffectReceipt | None = None
         self.stop_reason: str | None = None
-        self.execution_started_ns: int | None = None
 
     def record_observation(self, observation: Observation) -> None:
         if self.stage is not Stage.NEW:
@@ -95,7 +94,6 @@ class RequestLifecycle:
         if request.binding != self.binding or request.lease != self.lease:
             raise ContractError("execution request changed bound target or authority")
         self.request = request
-        self.execution_started_ns = now_ns
 
     def record_execution(self, receipt: ExecutionReceipt) -> None:
         if self.stage is not Stage.AUTHORIZED or self.request is None:
@@ -140,8 +138,6 @@ class RequestLifecycle:
         if self.stage is Stage.AUTHORIZED:
             if release is None or not release.released:
                 raise ContractError("stopping active authority requires verified empty release")
-            if self.execution_started_ns is not None and release.observed_ns < self.execution_started_ns:
-                raise ContractError("cancellation release predates execution begin")
         if self.stage is Stage.EXECUTED and self.execution is not None and not self.execution.release.released:
             raise ContractError("executed lifecycle lacks verified release")
         self.stop_reason = reason
