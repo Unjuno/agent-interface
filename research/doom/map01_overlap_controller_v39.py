@@ -454,6 +454,23 @@ def temporal_sheet(sources, target):
     sheet.save(target,optimize=True)
 
 
+def _startup_exception_text(error, use_repr=False):
+    """Diagnostic hooks must not replace the original startup exception."""
+    try:
+        text = repr(error) if use_repr else str(error)
+        return str.__str__(text)
+    except BaseException:
+        return "<exception text unavailable>"
+
+def _note_startup_exception(error, note):
+    try:
+        add_note = getattr(error, "add_note", None)
+        if add_note is not None:
+            add_note(note)
+    except BaseException:
+        pass
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", type=Path, required=True)
@@ -947,9 +964,20 @@ def main():
            "remaining_action_discarded":running_action_receipt["state"]!=RUNNING_COMPLETED})
     process.stdin.write('{"op":"finish"}\n');process.stdin.flush()
     score=wait(lambda r:r["event"]=="post_control_score")
-    process.wait(timeout=20)
-    planner_client.close()
-    atexit.unregister(planner_client.close)
+    try:
+        process.wait(timeout=20)
+    except BaseException as session_wait_error:
+        try:
+            planner_client.close()
+            atexit.unregister(planner_client.close)
+        except BaseException as planner_cleanup_error:
+            _note_startup_exception(
+                session_wait_error, "runtime planner cleanup failed: " +
+                _startup_exception_text(planner_cleanup_error, use_repr=True))
+        raise
+    else:
+        planner_client.close()
+        atexit.unregister(planner_client.close)
     (args.out/"stderr.txt").write_text(process.stderr.read())
     typed_events = {row["sequence"]:row for row in all_events
                     if row.get("event")=="typed_observation"}
