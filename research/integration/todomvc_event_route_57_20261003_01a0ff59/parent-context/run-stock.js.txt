@@ -1,0 +1,82 @@
+async function runStockTodo(tab, ready, inputs, fs, root) {
+  const raw = { id: inputs.id, start_utc: new Date().toISOString(), upstream_commit: inputs.upstream_commit, events: [], action_counts: { fill: 0, blur: 0, edit_open: 0, complete: 0, filter: 0, reload: 0 }, status: 'RUNNING' };
+  const require = (condition, message) => { if (!condition) throw new Error(message); };
+  const url = ready.base + inputs.app_path;
+  async function capture(stage) {
+    const ax = await tab.getAXState({ emit: false, disableDiffing: true });
+    const dom = await tab.playwright.evaluate(() => ({
+      title: document.title,
+      rows: Array.from(document.querySelectorAll('.todoapp .todo-list > li')).map(li => ({ id: li.getAttribute('data-id'), title: li.querySelector('label').textContent, checked: li.querySelector('input.toggle').checked, editing: li.classList.contains('editing'), edit_value: li.querySelector('input.edit') ? li.querySelector('input.edit').value : null })),
+      input: document.querySelector('.todoapp .new-todo').value,
+      selected_filter: document.querySelector('.todoapp .filters a.selected').getAttribute('href'),
+      footer_display: document.querySelector('.todoapp .footer').style.display,
+      counter: document.querySelector('.todoapp .todo-count').textContent
+    }));
+    const event = { stage, utc: new Date().toISOString(), url: await tab.url(), ax, dom };
+    require(event.url.startsWith(url), 'STOP_ORIGIN_OR_APP_PATH');
+    raw.events.push(event);
+    fs.appendFileSync(root + '/UI_EVENTS.jsonl', JSON.stringify(event) + '\n');
+    return dom;
+  }
+  function expected(dom, rows, route = '#/') {
+    require(JSON.stringify(dom.rows) === JSON.stringify(rows), 'STOP_UNEXPECTED_STOCK_ROWS');
+    require(dom.selected_filter === route, 'STOP_UNEXPECTED_FILTER');
+  }
+  const item = (id, title, checked = false, editing = false, edit_value = null) => ({ id, title, checked, editing, edit_value });
+  const initial = [];
+  try {
+    let state = await capture('initial');
+    expected(state, initial);
+    require(state.input === '' && state.footer_display === 'none' && state.counter === '0 items left' && state.title === 'TodoMVC: JavaScript Es5', 'STOP_INITIAL_APP_READINESS_OR_STATE');
+    const rows = [];
+    for (let index = 0; index < inputs.titles.length; index++) {
+      const input = tab.playwright.getByPlaceholder('What needs to be done?', { exact: true });
+      require(await input.count() === 1, 'STOP_NEW_INPUT_COUNT');
+      await input.fill(inputs.titles[index], { timeoutMs: 1500 }); raw.action_counts.fill++;
+      state = await capture('fill' + (index + 1)); expected(state, rows);
+      require(state.input === inputs.titles[index], 'STOP_FILLED_VALUE');
+      await input.press('Tab', { timeoutMs: 1500 }); raw.action_counts.blur++;
+      rows.push(item(inputs.initial_ids[index], inputs.titles[index]));
+      state = await capture('add' + (index + 1)); expected(state, rows);
+      require(state.input === '', 'STOP_NEW_INPUT_NOT_CLEARED');
+    }
+    let row = tab.playwright.locator('.todoapp .todo-list > li[data-id="1"]');
+    require(await row.count() === 1 && await row.getByText(inputs.titles[0], { exact: true }).count() === 1, 'STOP_TARGET_ID_TITLE');
+    await row.getByText(inputs.titles[0], { exact: true }).dblclick({ timeoutMs: 1500 }); raw.action_counts.edit_open++;
+    state = await capture('edit_open');
+    expected(state, [item('1', inputs.titles[0], false, true, inputs.titles[0]), rows[1], rows[2]]);
+    const edit = tab.playwright.locator('.todoapp .todo-list > li[data-id="1"] input.edit');
+    require(await edit.count() === 1, 'STOP_EDIT_COUNT');
+    await edit.fill(inputs.edited_title, { timeoutMs: 1500 }); raw.action_counts.fill++;
+    state = await capture('edit_fill');
+    expected(state, [item('1', inputs.titles[0], false, true, inputs.edited_title), rows[1], rows[2]]);
+    await edit.press('Tab', { timeoutMs: 1500 }); raw.action_counts.blur++;
+    rows[0] = item('1', inputs.edited_title);
+    state = await capture('edit_commit'); expected(state, rows);
+    row = tab.playwright.locator('.todoapp .todo-list > li[data-id="1"]');
+    require(await row.count() === 1 && await row.getByText(inputs.edited_title, { exact: true }).count() === 1 && await row.getByRole('checkbox').count() === 1, 'STOP_COMPLETION_ID_TITLE_COUNT');
+    await row.getByRole('checkbox').setChecked(true, { timeoutMs: 1500 }); raw.action_counts.complete++;
+    rows[0] = item('1', inputs.edited_title, true);
+    state = await capture('complete1'); expected(state, rows);
+    for (const test of [['Completed', 'filter_completed', '#/completed', [rows[0]]], ['Active', 'filter_active', '#/active', rows.slice(1)], ['All', 'filter_all', '#/', rows]]) {
+      const link = tab.playwright.locator('.todoapp .filters').getByRole('link', { name: test[0], exact: true });
+      require(await link.count() === 1, 'STOP_FILTER_COUNT');
+      await link.click({ timeoutMs: 1500 }); raw.action_counts.filter++;
+      state = await capture(test[1]); expected(state, test[3], test[2]);
+    }
+    require(state.counter === '2 items left', 'STOP_ACTIVE_COUNT');
+    const before = await tab.screenshot({ fullPage: false });
+    fs.writeFileSync(root + '/STOCK_LOADED_TASK.jpg', before);
+    await tab.reload(); raw.action_counts.reload++;
+    state = await capture('reload_reset'); expected(state, []);
+    require(state.input === '' && state.footer_display === 'none', 'STOP_EXPECTED_MEMORY_RESET');
+    const after = await tab.screenshot({ fullPage: false });
+    fs.writeFileSync(root + '/STOCK_RELOAD_RESET.jpg', after);
+    raw.status = 'STOCK_LOADED_CONTROL_PASS_DURABILITY_UNAVAILABLE';
+  } catch (error) {
+    raw.status = 'STOP_FIRST_STOCK_OUTCOME'; raw.error = String(error);
+  }
+  raw.end_utc = new Date().toISOString();
+  fs.writeFileSync(root + '/UI_RAW.json', JSON.stringify(raw, null, 2) + '\n');
+  return raw;
+}
