@@ -1,0 +1,1052 @@
+{
+  "schema": "selected-missing-quotient-model-v1",
+  "allocation": "17-SELECTED-MISSING-QUOTIENT-A01-20261003-e0cc",
+  "source_pins": {
+    "baseline": {
+      "bytes": 6508,
+      "sha256": "2290f2f8b3d2693db7358cbfe6fca4daf0553e8e2cec9ebcf88db533352c0abb"
+    },
+    "outside": {
+      "bytes": 7136,
+      "sha256": "43ae0a2a5dcee47a2346e1e77989f3b99004d015431ce3ec6d4a282e072f326b"
+    },
+    "false_deadline_first": {
+      "bytes": 7303,
+      "sha256": "76a44e2732ec32f85e5b7278691b3a69cc59e24c26547953495491b3a9e2867b"
+    },
+    "retry_guard": {
+      "bytes": 7482,
+      "sha256": "31645eddeba5a228a08c56ce84999dfde23b2b3fc41564ee627073b30c209e51"
+    }
+  },
+  "graphs": [
+    {
+      "policy": "baseline",
+      "states": [
+        {
+          "pc": "SNAP",
+          "q": 0,
+          "snap": null
+        },
+        {
+          "pc": "DONE_MATCH",
+          "q": null,
+          "snap": null
+        },
+        {
+          "pc": "SNAP",
+          "q": null,
+          "snap": null
+        },
+        {
+          "pc": "DONE_TIMEOUT",
+          "q": null,
+          "snap": null
+        }
+      ],
+      "edges": [
+        {
+          "from": 0,
+          "to": 1,
+          "actor": "A",
+          "event": "A_ATOMIC_MATCH"
+        },
+        {
+          "from": 0,
+          "to": 2,
+          "actor": "B",
+          "event": "B_CONSUME"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "actor": "A",
+          "event": "A_ATOMIC_TIMEOUT"
+        },
+        {
+          "from": 2,
+          "to": 0,
+          "actor": "R",
+          "event": "R_FRESH_APPEND"
+        }
+      ],
+      "initial": 0,
+      "A_progress_cycle": false,
+      "all3_progress_cycle": false,
+      "lasso": null
+    },
+    {
+      "policy": "outside",
+      "states": [
+        {
+          "pc": "SNAP",
+          "q": 0,
+          "snap": null
+        },
+        {
+          "pc": "SCAN",
+          "q": 0,
+          "snap": 0
+        },
+        {
+          "pc": "SNAP",
+          "q": null,
+          "snap": null
+        },
+        {
+          "pc": "MATCH_CHECK",
+          "q": 0,
+          "snap": 0
+        },
+        {
+          "pc": "SCAN",
+          "q": null,
+          "snap": 0
+        },
+        {
+          "pc": "SCAN",
+          "q": null,
+          "snap": null
+        },
+        {
+          "pc": "DONE_MATCH",
+          "q": null,
+          "snap": 0
+        },
+        {
+          "pc": "MATCH_CHECK",
+          "q": null,
+          "snap": 0
+        },
+        {
+          "pc": "SCAN",
+          "q": 1,
+          "snap": 0
+        },
+        {
+          "pc": "FALSE_CHECK",
+          "q": null,
+          "snap": null
+        },
+        {
+          "pc": "SCAN",
+          "q": 0,
+          "snap": null
+        },
+        {
+          "pc": "MISSING",
+          "q": null,
+          "snap": 0
+        },
+        {
+          "pc": "MATCH_CHECK",
+          "q": 1,
+          "snap": 0
+        },
+        {
+          "pc": "DONE_TIMEOUT",
+          "q": null,
+          "snap": null
+        },
+        {
+          "pc": "FALSE_CHECK",
+          "q": 0,
+          "snap": null
+        },
+        {
+          "pc": "SNAP",
+          "q": null,
+          "snap": 0
+        },
+        {
+          "pc": "MISSING",
+          "q": 1,
+          "snap": 0
+        },
+        {
+          "pc": "SNAP",
+          "q": 1,
+          "snap": 0
+        }
+      ],
+      "edges": [
+        {
+          "from": 0,
+          "to": 1,
+          "actor": "A",
+          "event": "A_SNAPSHOT"
+        },
+        {
+          "from": 0,
+          "to": 2,
+          "actor": "B",
+          "event": "B_CONSUME"
+        },
+        {
+          "from": 1,
+          "to": 3,
+          "actor": "A",
+          "event": "A_TRUE_SCAN"
+        },
+        {
+          "from": 1,
+          "to": 4,
+          "actor": "B",
+          "event": "B_CONSUME"
+        },
+        {
+          "from": 2,
+          "to": 5,
+          "actor": "A",
+          "event": "A_SNAPSHOT"
+        },
+        {
+          "from": 2,
+          "to": 0,
+          "actor": "R",
+          "event": "R_FRESH_APPEND"
+        },
+        {
+          "from": 3,
+          "to": 6,
+          "actor": "A",
+          "event": "A_MATCH_REMOVE"
+        },
+        {
+          "from": 3,
+          "to": 7,
+          "actor": "B",
+          "event": "B_CONSUME"
+        },
+        {
+          "from": 4,
+          "to": 7,
+          "actor": "A",
+          "event": "A_TRUE_SCAN"
+        },
+        {
+          "from": 4,
+          "to": 8,
+          "actor": "R",
+          "event": "R_FRESH_APPEND"
+        },
+        {
+          "from": 5,
+          "to": 9,
+          "actor": "A",
+          "event": "A_EMPTY_SCAN"
+        },
+        {
+          "from": 5,
+          "to": 10,
+          "actor": "R",
+          "event": "R_FRESH_APPEND"
+        },
+        {
+          "from": 7,
+          "to": 11,
+          "actor": "A",
+          "event": "A_SELECTED_MISSING"
+        },
+        {
+          "from": 7,
+          "to": 12,
+          "actor": "R",
+          "event": "R_FRESH_APPEND"
+        },
+        {
+          "from": 8,
+          "to": 12,
+          "actor": "A",
+          "event": "A_TRUE_SCAN"
+        },
+        {
+          "from": 8,
+          "to": 4,
+          "actor": "B",
+          "event": "B_CONSUME"
+        },
+        {
+          "from": 9,
+          "to": 13,
+          "actor": "A",
+          "event": "A_FALSE_TIMEOUT"
+        },
+        {
+          "from": 9,
+          "to": 14,
+          "actor": "R",
+          "event": "R_FRESH_APPEND"
+        },
+        {
+          "from": 10,
+          "to": 14,
+          "actor": "A",
+          "event": "A_EMPTY_SCAN"
+        },
+        {
+          "from": 10,
+          "to": 5,
+          "actor": "B",
+          "event": "B_CONSUME"
+        },
+        {
+          "from": 11,
+          "to": 15,
+          "actor": "A",
+          "event": "A_MISSING_RETRY"
+        },
+        {
+          "from": 11,
+          "to": 16,
+          "actor": "R",
+          "event": "R_FRESH_APPEND"
+        },
+        {
+          "from": 12,
+          "to": 16,
+          "actor": "A",
+          "event": "A_SELECTED_MISSING"
+        },
+        {
+          "from": 12,
+          "to": 7,
+          "actor": "B",
+          "event": "B_CONSUME"
+        },
+        {
+          "from": 14,
+          "to": 0,
+          "actor": "A",
+          "event": "A_CHANGED_RETRY"
+        },
+        {
+          "from": 14,
+          "to": 9,
+          "actor": "B",
+          "event": "B_CONSUME"
+        },
+        {
+          "from": 15,
+          "to": 5,
+          "actor": "A",
+          "event": "A_SNAPSHOT"
+        },
+        {
+          "from": 15,
+          "to": 17,
+          "actor": "R",
+          "event": "R_FRESH_APPEND"
+        },
+        {
+          "from": 16,
+          "to": 17,
+          "actor": "A",
+          "event": "A_MISSING_RETRY"
+        },
+        {
+          "from": 16,
+          "to": 11,
+          "actor": "B",
+          "event": "B_CONSUME"
+        },
+        {
+          "from": 17,
+          "to": 1,
+          "actor": "A",
+          "event": "A_SNAPSHOT"
+        },
+        {
+          "from": 17,
+          "to": 15,
+          "actor": "B",
+          "event": "B_CONSUME"
+        }
+      ],
+      "initial": 0,
+      "A_progress_cycle": true,
+      "all3_progress_cycle": true,
+      "lasso": {
+        "start": 0,
+        "edges": [
+          {
+            "from": 0,
+            "to": 1,
+            "actor": "A",
+            "event": "A_SNAPSHOT"
+          },
+          {
+            "from": 1,
+            "to": 3,
+            "actor": "A",
+            "event": "A_TRUE_SCAN"
+          },
+          {
+            "from": 3,
+            "to": 7,
+            "actor": "B",
+            "event": "B_CONSUME"
+          },
+          {
+            "from": 7,
+            "to": 11,
+            "actor": "A",
+            "event": "A_SELECTED_MISSING"
+          },
+          {
+            "from": 11,
+            "to": 15,
+            "actor": "A",
+            "event": "A_MISSING_RETRY"
+          },
+          {
+            "from": 15,
+            "to": 5,
+            "actor": "A",
+            "event": "A_SNAPSHOT"
+          },
+          {
+            "from": 5,
+            "to": 9,
+            "actor": "A",
+            "event": "A_EMPTY_SCAN"
+          },
+          {
+            "from": 9,
+            "to": 14,
+            "actor": "R",
+            "event": "R_FRESH_APPEND"
+          },
+          {
+            "from": 14,
+            "to": 0,
+            "actor": "A",
+            "event": "A_CHANGED_RETRY"
+          }
+        ]
+      }
+    },
+    {
+      "policy": "false_deadline_first",
+      "states": [
+        {
+          "pc": "SNAP",
+          "q": 0,
+          "snap": null
+        },
+        {
+          "pc": "SCAN",
+          "q": 0,
+          "snap": 0
+        },
+        {
+          "pc": "SNAP",
+          "q": null,
+          "snap": null
+        },
+        {
+          "pc": "MATCH_CHECK",
+          "q": 0,
+          "snap": 0
+        },
+        {
+          "pc": "SCAN",
+          "q": null,
+          "snap": 0
+        },
+        {
+          "pc": "SCAN",
+          "q": null,
+          "snap": null
+        },
+        {
+          "pc": "DONE_MATCH",
+          "q": null,
+          "snap": 0
+        },
+        {
+          "pc": "MATCH_CHECK",
+          "q": null,
+          "snap": 0
+        },
+        {
+          "pc": "SCAN",
+          "q": 1,
+          "snap": 0
+        },
+        {
+          "pc": "FALSE_CHECK",
+          "q": null,
+          "snap": null
+        },
+        {
+          "pc": "SCAN",
+          "q": 0,
+          "snap": null
+        },
+        {
+          "pc": "MISSING",
+          "q": null,
+          "snap": 0
+        },
+        {
+          "pc": "MATCH_CHECK",
+          "q": 1,
+          "snap": 0
+        },
+        {
+          "pc": "DONE_TIMEOUT",
+          "q": null,
+          "snap": null
+        },
+        {
+          "pc": "FALSE_CHECK",
+          "q": 0,
+          "snap": null
+        },
+        {
+          "pc": "SNAP",
+          "q": null,
+          "snap": 0
+        },
+        {
+          "pc": "MISSING",
+          "q": 1,
+          "snap": 0
+        },
+        {
+          "pc": "DONE_TIMEOUT",
+          "q": 0,
+          "snap": null
+        },
+        {
+          "pc": "SNAP",
+          "q": 1,
+          "snap": 0
+        }
+      ],
+      "edges": [
+        {
+          "from": 0,
+          "to": 1,
+          "actor": "A",
+          "event": "A_SNAPSHOT"
+        },
+        {
+          "from": 0,
+          "to": 2,
+          "actor": "B",
+          "event": "B_CONSUME"
+        },
+        {
+          "from": 1,
+          "to": 3,
+          "actor": "A",
+          "event": "A_TRUE_SCAN"
+        },
+        {
+          "from": 1,
+          "to": 4,
+          "actor": "B",
+          "event": "B_CONSUME"
+        },
+        {
+          "from": 2,
+          "to": 5,
+          "actor": "A",
+          "event": "A_SNAPSHOT"
+        },
+        {
+          "from": 2,
+          "to": 0,
+          "actor": "R",
+          "event": "R_FRESH_APPEND"
+        },
+        {
+          "from": 3,
+          "to": 6,
+          "actor": "A",
+          "event": "A_MATCH_REMOVE"
+        },
+        {
+          "from": 3,
+          "to": 7,
+          "actor": "B",
+          "event": "B_CONSUME"
+        },
+        {
+          "from": 4,
+          "to": 7,
+          "actor": "A",
+          "event": "A_TRUE_SCAN"
+        },
+        {
+          "from": 4,
+          "to": 8,
+          "actor": "R",
+          "event": "R_FRESH_APPEND"
+        },
+        {
+          "from": 5,
+          "to": 9,
+          "actor": "A",
+          "event": "A_EMPTY_SCAN"
+        },
+        {
+          "from": 5,
+          "to": 10,
+          "actor": "R",
+          "event": "R_FRESH_APPEND"
+        },
+        {
+          "from": 7,
+          "to": 11,
+          "actor": "A",
+          "event": "A_SELECTED_MISSING"
+        },
+        {
+          "from": 7,
+          "to": 12,
+          "actor": "R",
+          "event": "R_FRESH_APPEND"
+        },
+        {
+          "from": 8,
+          "to": 12,
+          "actor": "A",
+          "event": "A_TRUE_SCAN"
+        },
+        {
+          "from": 8,
+          "to": 4,
+          "actor": "B",
+          "event": "B_CONSUME"
+        },
+        {
+          "from": 9,
+          "to": 13,
+          "actor": "A",
+          "event": "A_FALSE_TIMEOUT"
+        },
+        {
+          "from": 9,
+          "to": 14,
+          "actor": "R",
+          "event": "R_FRESH_APPEND"
+        },
+        {
+          "from": 10,
+          "to": 14,
+          "actor": "A",
+          "event": "A_EMPTY_SCAN"
+        },
+        {
+          "from": 10,
+          "to": 5,
+          "actor": "B",
+          "event": "B_CONSUME"
+        },
+        {
+          "from": 11,
+          "to": 15,
+          "actor": "A",
+          "event": "A_MISSING_RETRY"
+        },
+        {
+          "from": 11,
+          "to": 16,
+          "actor": "R",
+          "event": "R_FRESH_APPEND"
+        },
+        {
+          "from": 12,
+          "to": 16,
+          "actor": "A",
+          "event": "A_SELECTED_MISSING"
+        },
+        {
+          "from": 12,
+          "to": 7,
+          "actor": "B",
+          "event": "B_CONSUME"
+        },
+        {
+          "from": 14,
+          "to": 17,
+          "actor": "A",
+          "event": "A_FALSE_TIMEOUT"
+        },
+        {
+          "from": 14,
+          "to": 9,
+          "actor": "B",
+          "event": "B_CONSUME"
+        },
+        {
+          "from": 15,
+          "to": 5,
+          "actor": "A",
+          "event": "A_SNAPSHOT"
+        },
+        {
+          "from": 15,
+          "to": 18,
+          "actor": "R",
+          "event": "R_FRESH_APPEND"
+        },
+        {
+          "from": 16,
+          "to": 18,
+          "actor": "A",
+          "event": "A_MISSING_RETRY"
+        },
+        {
+          "from": 16,
+          "to": 11,
+          "actor": "B",
+          "event": "B_CONSUME"
+        },
+        {
+          "from": 18,
+          "to": 1,
+          "actor": "A",
+          "event": "A_SNAPSHOT"
+        },
+        {
+          "from": 18,
+          "to": 15,
+          "actor": "B",
+          "event": "B_CONSUME"
+        }
+      ],
+      "initial": 0,
+      "A_progress_cycle": true,
+      "all3_progress_cycle": true,
+      "lasso": {
+        "start": 1,
+        "edges": [
+          {
+            "from": 1,
+            "to": 3,
+            "actor": "A",
+            "event": "A_TRUE_SCAN"
+          },
+          {
+            "from": 3,
+            "to": 7,
+            "actor": "B",
+            "event": "B_CONSUME"
+          },
+          {
+            "from": 7,
+            "to": 11,
+            "actor": "A",
+            "event": "A_SELECTED_MISSING"
+          },
+          {
+            "from": 11,
+            "to": 15,
+            "actor": "A",
+            "event": "A_MISSING_RETRY"
+          },
+          {
+            "from": 15,
+            "to": 18,
+            "actor": "R",
+            "event": "R_FRESH_APPEND"
+          },
+          {
+            "from": 18,
+            "to": 1,
+            "actor": "A",
+            "event": "A_SNAPSHOT"
+          }
+        ]
+      }
+    },
+    {
+      "policy": "retry_guard",
+      "states": [
+        {
+          "pc": "SNAP",
+          "q": 0,
+          "snap": null
+        },
+        {
+          "pc": "SCAN",
+          "q": 0,
+          "snap": 0
+        },
+        {
+          "pc": "SNAP",
+          "q": null,
+          "snap": null
+        },
+        {
+          "pc": "MATCH_CHECK",
+          "q": 0,
+          "snap": 0
+        },
+        {
+          "pc": "SCAN",
+          "q": null,
+          "snap": 0
+        },
+        {
+          "pc": "SCAN",
+          "q": null,
+          "snap": null
+        },
+        {
+          "pc": "DONE_MATCH",
+          "q": null,
+          "snap": 0
+        },
+        {
+          "pc": "MATCH_CHECK",
+          "q": null,
+          "snap": 0
+        },
+        {
+          "pc": "SCAN",
+          "q": 1,
+          "snap": 0
+        },
+        {
+          "pc": "FALSE_CHECK",
+          "q": null,
+          "snap": null
+        },
+        {
+          "pc": "SCAN",
+          "q": 0,
+          "snap": null
+        },
+        {
+          "pc": "MISSING",
+          "q": null,
+          "snap": 0
+        },
+        {
+          "pc": "MATCH_CHECK",
+          "q": 1,
+          "snap": 0
+        },
+        {
+          "pc": "DONE_TIMEOUT",
+          "q": null,
+          "snap": null
+        },
+        {
+          "pc": "FALSE_CHECK",
+          "q": 0,
+          "snap": null
+        },
+        {
+          "pc": "DONE_TIMEOUT",
+          "q": null,
+          "snap": 0
+        },
+        {
+          "pc": "MISSING",
+          "q": 1,
+          "snap": 0
+        },
+        {
+          "pc": "DONE_TIMEOUT",
+          "q": 0,
+          "snap": null
+        },
+        {
+          "pc": "DONE_TIMEOUT",
+          "q": 1,
+          "snap": 0
+        }
+      ],
+      "edges": [
+        {
+          "from": 0,
+          "to": 1,
+          "actor": "A",
+          "event": "A_SNAPSHOT"
+        },
+        {
+          "from": 0,
+          "to": 2,
+          "actor": "B",
+          "event": "B_CONSUME"
+        },
+        {
+          "from": 1,
+          "to": 3,
+          "actor": "A",
+          "event": "A_TRUE_SCAN"
+        },
+        {
+          "from": 1,
+          "to": 4,
+          "actor": "B",
+          "event": "B_CONSUME"
+        },
+        {
+          "from": 2,
+          "to": 5,
+          "actor": "A",
+          "event": "A_SNAPSHOT"
+        },
+        {
+          "from": 2,
+          "to": 0,
+          "actor": "R",
+          "event": "R_FRESH_APPEND"
+        },
+        {
+          "from": 3,
+          "to": 6,
+          "actor": "A",
+          "event": "A_MATCH_REMOVE"
+        },
+        {
+          "from": 3,
+          "to": 7,
+          "actor": "B",
+          "event": "B_CONSUME"
+        },
+        {
+          "from": 4,
+          "to": 7,
+          "actor": "A",
+          "event": "A_TRUE_SCAN"
+        },
+        {
+          "from": 4,
+          "to": 8,
+          "actor": "R",
+          "event": "R_FRESH_APPEND"
+        },
+        {
+          "from": 5,
+          "to": 9,
+          "actor": "A",
+          "event": "A_EMPTY_SCAN"
+        },
+        {
+          "from": 5,
+          "to": 10,
+          "actor": "R",
+          "event": "R_FRESH_APPEND"
+        },
+        {
+          "from": 7,
+          "to": 11,
+          "actor": "A",
+          "event": "A_SELECTED_MISSING"
+        },
+        {
+          "from": 7,
+          "to": 12,
+          "actor": "R",
+          "event": "R_FRESH_APPEND"
+        },
+        {
+          "from": 8,
+          "to": 12,
+          "actor": "A",
+          "event": "A_TRUE_SCAN"
+        },
+        {
+          "from": 8,
+          "to": 4,
+          "actor": "B",
+          "event": "B_CONSUME"
+        },
+        {
+          "from": 9,
+          "to": 13,
+          "actor": "A",
+          "event": "A_FALSE_TIMEOUT"
+        },
+        {
+          "from": 9,
+          "to": 14,
+          "actor": "R",
+          "event": "R_FRESH_APPEND"
+        },
+        {
+          "from": 10,
+          "to": 14,
+          "actor": "A",
+          "event": "A_EMPTY_SCAN"
+        },
+        {
+          "from": 10,
+          "to": 5,
+          "actor": "B",
+          "event": "B_CONSUME"
+        },
+        {
+          "from": 11,
+          "to": 15,
+          "actor": "A",
+          "event": "A_MISSING_TIMEOUT"
+        },
+        {
+          "from": 11,
+          "to": 16,
+          "actor": "R",
+          "event": "R_FRESH_APPEND"
+        },
+        {
+          "from": 12,
+          "to": 16,
+          "actor": "A",
+          "event": "A_SELECTED_MISSING"
+        },
+        {
+          "from": 12,
+          "to": 7,
+          "actor": "B",
+          "event": "B_CONSUME"
+        },
+        {
+          "from": 14,
+          "to": 17,
+          "actor": "A",
+          "event": "A_FALSE_TIMEOUT"
+        },
+        {
+          "from": 14,
+          "to": 9,
+          "actor": "B",
+          "event": "B_CONSUME"
+        },
+        {
+          "from": 16,
+          "to": 18,
+          "actor": "A",
+          "event": "A_MISSING_TIMEOUT"
+        },
+        {
+          "from": 16,
+          "to": 11,
+          "actor": "B",
+          "event": "B_CONSUME"
+        }
+      ],
+      "initial": 0,
+      "A_progress_cycle": false,
+      "all3_progress_cycle": false,
+      "lasso": null
+    }
+  ],
+  "decision": "PASS_SCOPED_SELECTED_MISSING_COUNTEREXAMPLE",
+  "limits": [
+    "finite pureTrueA/pureTrueB/queuecap1/expired-open equality quotient only",
+    "B macro is one legal finite no-interference schedule, not complete B/native linearizability",
+    "matching closedwalk is existential actor progress, not strongtransition/OS fairness",
+    "two comparison handles, not total livePythonreferences/object allocation bound",
+    "guard preserves source initialstillpresent matching return before expiry; fresh-match/selected-late priority remains qualified",
+    "guard max4 A macrosteps conditional on A advancing is not 4seconds, lockdeadline, arbitrarycallback bound or whole-call liveness",
+    "new sourceprojection only; no native/model/task/gui/input release/production adoption/whole17/59/57 goal PASS"
+  ]
+}
