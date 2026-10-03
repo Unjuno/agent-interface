@@ -487,6 +487,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`local_relevance_gating_preflight_2188_v1/`](local_relevance_gating_preflight_2188_v1/)
 - [`locale_semantic_invariance_5919_audit_review_20261001_01/`](locale_semantic_invariance_5919_audit_review_20261001_01/)
 - [`locale_semantic_invariance_5919_t0_20261001/`](locale_semantic_invariance_5919_t0_20261001/)
+- [`looming_visual_assumption_gate_5905_s02_wslc_20261003/`](looming_visual_assumption_gate_5905_s02_wslc_20261003/)
 - [`looming_visual_assumption_gate_5905_s03_wslc_20261003/`](looming_visual_assumption_gate_5905_s03_wslc_20261003/)
 - [`looming_visual_assumption_gate_5905_s04_orbstack_contrast_20261003/`](looming_visual_assumption_gate_5905_s04_orbstack_contrast_20261003/)
 - [`looming_visual_assumption_gate_5905_s06_orbstack_contrast_20261003/`](looming_visual_assumption_gate_5905_s06_orbstack_contrast_20261003/)
@@ -875,3 +876,5 @@ The checker compares the generated block against every child directory with a re
 - [Issue #5537 T7 mutation-audit STOP](gluing_approx_irreversible_5537_t7_v1/ARCHIVAL_QUALIFICATION.md) — exact 135-row raw/audit/STOP files; base oracle errors 0 but only 5/6 controls rejected because one mutation was a no-op. Runner/freeze absent from this packet; no scientific PASS or rerun.
 - [`history_receipt_provenance_6616_a02_20261003/RUN_RECORD.md`](history_receipt_provenance_6616_a02_20261003/RUN_RECORD.md) — #6616 successor A02: OrbStack candidate/auditor reconstructed five synthetic lifecycle states, but allocation-level disposition is HOLD because the fixture embeds A01's ID; A01 transfer STOP preserved separately.
 - [`version_defined_intervention_6691_a02_20261003/REPORT.md`](version_defined_intervention_6691_a02_20261003/REPORT.md) — #6691 successor A02: independent OrbStack audit reconstructed the retained synthetic version-mixture contrast (`PASS_AUDIT_ONLY_SCOPED`); A01 auditor-launch STOP remains unchanged.
+
+- [Issue #6808 / PR #6816 S02 session-isolation STOP](looming_visual_assumption_gate_5905_s02_wslc_20261003/STOP.md) — 34 exact original files (271,291 bytes); historical host construction only, formal candidate/auditor/retries 0/0/0, retrospective qualification, no scientific result or rerun.
