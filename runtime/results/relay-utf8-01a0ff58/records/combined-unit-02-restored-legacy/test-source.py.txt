@@ -5,44 +5,6 @@ from mcp.types import CallToolResult,ImageContent,TextContent
 from runtime.cli_v1.mcp_relay import Relay,PUBLIC_TOOLS
 
 class PublicRelayTests(unittest.IsolatedAsyncioTestCase):
-    async def test_unpaired_surrogates_refuse_before_sdk_and_keep_same_id(self):
-        invalid = [
-            {'text': chr(0xd800)}, {'text': chr(0xdfff)},
-            {chr(0xd800): 'key'}, {'nested': [{chr(0xdc00): 'key'}]},
-            {'nested': ['ok', {'text': chr(0xd800) + 'x' + chr(0xdc00)}]},
-        ]
-        for arguments in invalid:
-            for as_bytes in [False, True]:
-                with self.subTest(arguments=repr(arguments), as_bytes=as_bytes):
-                    client = AsyncMock();relay = Relay(client)
-                    client.call_tool.return_value = CallToolResult(content=[])
-                    line = json.dumps({'id':1,'tool':'interface_validate','arguments':arguments})
-                    response = await relay.request(line.encode('ascii') if as_bytes else line)
-                    self.assertEqual((response['status'],response['dispatched'],response['next_id']),
-                                     ('refused',False,1))
-                    client.call_tool.assert_not_awaited()
-                    valid = await relay.request(b'{"id":1,"tool":"interface_clock","arguments":{}}')
-                    self.assertEqual((valid['status'],valid['next_id']), ('returned',2))
-                    client.call_tool.assert_awaited_once_with('interface_clock',{})
-
-    async def test_decoded_literal_surrogates_are_also_refused_before_sdk(self):
-        client = AsyncMock();relay = Relay(client)
-        response = await relay.request('{"id":1,"tool":"interface_validate","arguments":{"text":"' + chr(0xd800) + '"}}')
-        self.assertEqual((response['status'],response['dispatched'],response['next_id']), ('refused',False,1))
-        client.call_tool.assert_not_awaited()
-
-    async def test_unicode_scalars_pairs_and_literal_escape_text_keep_exact_meaning(self):
-        arguments = {'text': '\x00' + chr(0xd7ff) + chr(0xe000) + chr(0xffff) + chr(0x10ffff),
-                     'pair': chr(0x1f600), chr(0x1f600): ['日本語', '\\ud800']}
-        for ensure_ascii in [True, False]:
-            with self.subTest(ensure_ascii=ensure_ascii):
-                client = AsyncMock();relay = Relay(client)
-                client.call_tool.return_value = CallToolResult(content=[])
-                line = json.dumps({'id':1,'tool':'interface_validate','arguments':arguments},ensure_ascii=ensure_ascii)
-                response = await relay.request(line.encode('utf-8'))
-                self.assertEqual((response['status'],response['next_id']), ('returned',2))
-                client.call_tool.assert_awaited_once_with('interface_validate',arguments)
-
     async def test_serve_preserves_utf8_wire_despite_text_stream_encoding(self):
         from runtime.cli_v1 import mcp_relay as module
         duplicate = r'{"id":1,"tool":"interface_validate","arguments":{"program":{"\ud83d\ude00":1,"' + '\U0001f600' + '":2}}}\n'

@@ -34,21 +34,6 @@ def _unique_object(pairs):
     return result
 
 
-def _unicode_scalars(value):
-    # JSON escapes may decode to lone surrogate code points even on a valid
-    # UTF-8 wire. Refuse them before entering the SDK's JSON serialization.
-    pending = [value]
-    while pending:
-        item = pending.pop()
-        if isinstance(item, str):
-            item.encode('utf-8')
-        elif isinstance(item, dict):
-            pending.extend(item.keys())
-            pending.extend(item.values())
-        elif isinstance(item, list):
-            pending.extend(item)
-
-
 class Relay:
     def __init__(self, client, *, tools=PUBLIC_TOOLS):
         self.client = client
@@ -61,7 +46,6 @@ class Relay:
                 line = line.decode('utf-8')
             request = json.loads(line, object_pairs_hook=_unique_object, parse_float=_finite_float,
                                  parse_constant=lambda value: (_ for _ in ()).throw(ValueError(value)))
-            _unicode_scalars(request)
             if not isinstance(request, dict) or set(request) != {'id', 'tool', 'arguments'}:
                 raise ValueError('exact id/tool/arguments envelope required')
             if type(request['id']) is not int or request['id'] != self.next_id:

@@ -450,7 +450,33 @@ python3 runtime.pyz relay -- --targets /absolute/targets.json --output-directory
 
 Pipe stdin/stdout; terminal stdout is refused to preserve exact image JSON bytes. Install the same optional `mcp==1.30.0` dependency used by MCP mode. The relay launches `mcp` from that exact archive using the same Python executable; no research checkout, research allocation or native_start tool is involved. Source development also supports `python3 -m runtime.cli_v1.mcp_relay -- ...` from a checkout.
 
+Send UTF-8 JSON lines without a byte order mark. The relay reads an OS pipe's
+binary stream and decodes each line strictly as UTF-8 before JSON admission,
+independently of the standard stream's locale encoding. Invalid UTF-8 and
+UTF-16/32 byte inputs are refused without consuming an ID or entering the SDK.
+Valid Unicode keys and values retain their decoded meaning, including equality
+between a literal character and its JSON escape. Decoded strings undergo an
+additional check: lone surrogate code points in object
+keys or values are refused before SDK entry and ID consumption. Valid escaped
+surrogate pairs decode to their Unicode character; literal backslash-u text
+remains text. This prevents those non-scalar strings from reaching SDK JSON
+serialization. It does not promise a response after arbitrary SDK cancellation
+or task-group failure; an already accepted ID remains consumed and must not be
+replayed even if no response is received. Already decoded text inputs
+used by source callers retain their existing text contract. An error after SDK
+entry still consumes the accepted ID and requires reconciliation without replay.
+
 Each line is exactly `{"id":1,"tool":"list_tools","arguments":{}}`, followed by IDs 2, 3, and so on for accepted calls. Public `interface_*` tools are forwarded unchanged, including image blocks and full/summary options. Inspect discovery to choose a tool. A refused envelope consumes no ID and reports `dispatched:false`; an accepted request consumes its ID before the SDK call, even if the outcome becomes unknown. Never resend an accepted ID or replay uncertain input. `sdk_entry_ns` and `sdk_return_ns` are execution-host monotonic boundaries, not model latency.
+
+Every JSON object must have unique decoded keys, including nested program and
+argument objects. Duplicate keys are refused before dispatch or ID consumption,
+even if their values agree or one key uses a Unicode escape. Repeated keys in
+separate objects and distinct case-sensitive keys remain valid. Numeric values
+must decode to finite numbers; an exponent that overflows the float decoder is
+also refused before dispatch. Numeric-looking strings remain strings.
+If JSON decoding exceeds the interpreter's recursion limit, the line is refused
+without consuming an ID; the relay remains available for the next request.
+This does not promise support for arbitrarily deep JSON.
 
 Call `interface_close` explicitly and inspect release/cleanup results before closing the pipe. EOF is a disconnect, not a task completion or application-cleanup guarantee. Keep stderr separate from the JSON-lines stream. This adapter does not add a model, queue, automatic retry, task policy or performance claim. The older research relay remains unchanged for frozen research callers.
 
