@@ -36,7 +36,16 @@ class CodexAppServerClient:
         self._notifications = deque()
         self._next_id = 1
         self._closed = False
-        self._reader = threading.Thread(target=self._read, daemon=True)
+        # Own the complete reader access interval, including pending bootstrap.
+        reader_access = threading.Lock()
+        reader_cancelled = False
+
+        def read_unless_cancelled():
+            with reader_access:
+                if not reader_cancelled:
+                    self._read()
+
+        self._reader = threading.Thread(target=read_unless_cancelled, daemon=True)
         try:
             self._reader.start()
         except BaseException as startup_error:
@@ -61,14 +70,18 @@ class CodexAppServerClient:
                         self.process.kill()
                         self.process.wait(timeout=1)
 
-            def retire_reader():
-                if self._reader.ident is not None:
-                    self._reader.join(timeout=1)
-                    if self._reader.is_alive():
-                        raise TimeoutError("app-server startup reader did not retire")
+            def cancel_reader_access():
+                nonlocal reader_cancelled
+                if not reader_access.acquire(timeout=1):
+                    raise TimeoutError("app-server startup reader access did not finish")
+                try:
+                    # A pending reader may still run, but cannot access resources.
+                    reader_cancelled = True
+                finally:
+                    reader_access.release()
 
             cleanup(stop_process)
-            if cleanup(retire_reader):
+            if cleanup(cancel_reader_access):
                 for stream_name in ("stdin", "stdout", "stderr"):
                     cleanup(lambda name=stream_name: getattr(self.process, name).close())
                 if self._journal is not None:
