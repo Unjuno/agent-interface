@@ -1,0 +1,25 @@
+{
+  "allocation": "CONDITIONAL-PARALLAX-6079-LAYER-IDENTITY-A03-20261003-01",
+  "issue": 6843,
+  "candidate_invocations": 0,
+  "auditor_invocations_max": 1,
+  "retries": 0,
+  "output": "results/audit_controls_01/audit.json",
+  "runtime": "native macOS arm64 / CPython stdlib; no container claim",
+  "sha256": {
+    "audit_controls.py": "fb5aeff698f2cf6c5251084f18ad73247cb530c6dc757dd9ef01bbd22234d07c",
+    "test_construction.py": "c898f59622f21fe44aab400ac2bd02c0a31cc00b438dec739a6574876da5e354",
+    "public.json": "8614e740c5651471c957ece8df6728f10996e4e24ded12ef2eed21fcf90a45b3",
+    "auditor_truth.json": "9f41feb02e9871415bb9492a88f5ed0a3676e7c7bff79b44d52358fd8808fc6d",
+    "candidate.raw.jsonl": "4e4f95a92add0cc8f19ae7f10725e21905ab81116f7db17847e0abd26fc277d0"
+  },
+  "construction_tests_use_formal_inputs": false,
+  "required_actual_mutation": "foreground-dominance-sham right-scene tracks[4], expected original layer foreground, changed layer target; assert canonical bytes differ before expected hash rejection",
+  "required_controls": {
+    "actual_foreground_relabel": "public_hash_mismatch",
+    "probe_status": "public_hash_mismatch",
+    "frame_binding": "public_hash_mismatch",
+    "dropped_row": "exact_row_count_mismatch",
+    "forged_classification": "independent_reconstruction_mismatch"
+  }
+}

@@ -1,5 +1,9 @@
 # Analytical research
 
+- [`conditional_parallax_6079_layer_identity_a01_20261003/FORMAL_FAILURE.md`](conditional_parallax_6079_layer_identity_a01_20261003/FORMAL_FAILURE.md) — #6838 A01: eight candidate rows retained, original auditor stopped with recursion failure; supplemental A03 raw-only audit later reconciled, without erasing this execution HOLD.
+- [`conditional_parallax_6079_layer_identity_a02_audit_20261003/FORMAL_FAILURE.md`](conditional_parallax_6079_layer_identity_a02_audit_20261003/FORMAL_FAILURE.md) — #6841 A02 audit-only attempt: HOLD at the mutation-control gate because one layer relabel was a no-op; no output or retry.
+- [`conditional_parallax_6079_layer_identity_a03_controls_20261003/REPORT.md`](conditional_parallax_6079_layer_identity_a03_controls_20261003/REPORT.md) — #6843 A03 supplemental raw-only audit: 8/8 rows and truth labels reconciled; five actual mutations rejected; finite synthetic 2-D scope only.
+
 - [`observation_intervention_6526_a03_deadline_audit_only_20261003/REPORT.md`](observation_intervention_6526_a03_deadline_audit_only_20261003/REPORT.md) — #6526 post-hoc audit-only successor finds all A02 deadline snapshots late and one post-deadline effect seen only by a 12.428 ms late sample; current disposition `HOLD_AUDIT_TIMING`, no candidate rerun or H classification.
 - [`observation_intervention_6526_a02_orbstack_20261003/REPORT.md`](observation_intervention_6526_a02_orbstack_20261003/REPORT.md) — Historical first-auditor A02 output `H_FAIL_SCOPED` is preserved; subsequent audit-only #6526 A03 review supersedes its scientific interpretation as `HOLD_AUDIT_TIMING` because deadline sampling was unbounded.
 - [`observation_intervention_6526_a01_orbstack_20261003/FORMAL_FAILURE.md`](observation_intervention_6526_a01_orbstack_20261003/FORMAL_FAILURE.md) — Issue #6526 A01 OrbStack formal allocation: 180 trials completed, but the independent auditor stopped on the frozen exact 90 ms action-origin gate; no hypothesis statistics or conclusion. Raw evidence and prospective freeze retained; successor must use a fresh allocation.
@@ -328,6 +332,9 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`conditional_deadline_certificate_6059_t0_20261001/`](conditional_deadline_certificate_6059_t0_20261001/)
 - [`conditional_parallax_6079_foreground_control_a01_20261003/`](conditional_parallax_6079_foreground_control_a01_20261003/)
 - [`conditional_parallax_6079_integrity_adjudication_a01_20261003/`](conditional_parallax_6079_integrity_adjudication_a01_20261003/)
+- [`conditional_parallax_6079_layer_identity_a01_20261003/`](conditional_parallax_6079_layer_identity_a01_20261003/)
+- [`conditional_parallax_6079_layer_identity_a02_audit_20261003/`](conditional_parallax_6079_layer_identity_a02_audit_20261003/)
+- [`conditional_parallax_6079_layer_identity_a03_controls_20261003/`](conditional_parallax_6079_layer_identity_a03_controls_20261003/)
 - [`conditional_parallax_6079_t0_v1_20261003/`](conditional_parallax_6079_t0_v1_20261003/)
 - [`conditional_route_rescue_5598_t0_20261001/`](conditional_route_rescue_5598_t0_20261001/)
 - [`conflict_aware_evidence_ledger_5305_t0/`](conflict_aware_evidence_ledger_5305_t0/)
@@ -480,6 +487,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`local_relevance_gating_preflight_2188_v1/`](local_relevance_gating_preflight_2188_v1/)
 - [`locale_semantic_invariance_5919_audit_review_20261001_01/`](locale_semantic_invariance_5919_audit_review_20261001_01/)
 - [`locale_semantic_invariance_5919_t0_20261001/`](locale_semantic_invariance_5919_t0_20261001/)
+- [`looming_visual_assumption_gate_5905_s03_wslc_20261003/`](looming_visual_assumption_gate_5905_s03_wslc_20261003/)
 - [`looming_visual_assumption_gate_5905_s04_orbstack_contrast_20261003/`](looming_visual_assumption_gate_5905_s04_orbstack_contrast_20261003/)
 - [`looming_visual_assumption_gate_5905_s06_orbstack_contrast_20261003/`](looming_visual_assumption_gate_5905_s06_orbstack_contrast_20261003/)
 - [`looming_yield_5905_audit_recovery_s4/`](looming_yield_5905_audit_recovery_s4/)
@@ -856,6 +864,8 @@ python research/analysis/check_index.py --write  # refresh generated directory l
 The checker compares the generated block against every child directory with a retained `REPORT.md` or `FORMAL_FAILURE.md`. PLAN-only/in-progress directories do not enter the generated index until a retained result/failure artifact exists. The curated table above may remain selective because completeness is enforced by the generated block.
 
 ## Retained construction archives
+
+- [Issue #6808 / PR #6821 S03 pre-invocation STOP](looming_visual_assumption_gate_5905_s03_wslc_20261003/STOP.md) — 35 exact original files preserved; main advanced after freeze, construction/candidate/auditor/container/retry counts all zero; no scientific result or S03 rerun.
 
 - [Issue #5346 / PR #5365 T0 chronology STOP](stigmergic_coordination_5346_t0_v1/ARCHIVAL_QUALIFICATION.md) — 11 exact original files (86,873 bytes), including the host raw; pre-formal model/audit STOP and stale plan-hash field preserved, container invocations zero, no rerun or scientific promotion.
 - [Issue #5325 / PR #5377 capability-chain construction archive](attenuated_capability_5325_t0_v1/ARCHIVAL_QUALIFICATION.md) — eight exact published files (36,073 bytes); 55-row host construction only, withdrawn CPU request, formal runner/auditor 0/0, intake-main mismatch retained; later toy T0/T1 records remain separate, with no security-efficacy claim.
