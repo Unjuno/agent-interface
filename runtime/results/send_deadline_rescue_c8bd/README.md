@@ -99,3 +99,8 @@ the actual POSIX soft RLIMIT_NOFILE cannot allocate FD>=2048; unexpected
 allocation failures remain errors. Fresh local normal/O runs both48 PASS with
 zero skips; a separate owned interpreter capped to1024 records exactly one
 explicit capability skip. No host/global resource limit is changed.
+
+Final fixture-qualified local CI at b2d77c18e: exit0,43steps,failures=[];
+portable-local-ci.log retains the full output. Documentation/log-only followup
+does not change reviewed runtime code. Adoption remains HOLD, not merge-ready
+by inherited committee votes or same-agent technical review.
