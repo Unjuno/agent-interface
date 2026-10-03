@@ -1,5 +1,8 @@
 # Receipt audit v2 rescue
 
+Latest main merged cleanly at88e0cddd69; original5tests pass normal/-O again.
+Fresh localCI43 exits0 failures=[]; full output merged-local-ci.log.
+
 Fresh138manifest hashes match. First CI43 failed only the missing analytical
 index row; original sorted row restored without changing packet data.
 CI43 then exits0 failures=[] at741cfb87ec. Both full transcripts retained as
