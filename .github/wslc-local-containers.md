@@ -30,7 +30,7 @@ To smoke-check that WSLc is installed, the approved Python image is already cach
 
 ## Dockerless Dockerfile build — scoped verification, 2026-10-03
 
-[PR #7020](https://github.com/Unjuno/agent-interface/pull/7020) retains a real WSLc build/run of a tiny local Dockerfile on this Windows host: cached digest-pinned Python base, `WORKDIR`/`COPY`/`ENTRYPOINT`, exact copied-payload hash, exit 0, and verified removal of the named container. Its separate retained-receipt audit and five regression/mutation tests passed. This establishes that this build/run path does not need Docker Desktop or `docker.exe`; it does not establish an application migration or general Dockerfile parity.
+[PR #7020](https://github.com/Unjuno/agent-interface/pull/7020) retains a real WSLc build/run of a tiny local Dockerfile on this Windows host: cached digest-pinned Python base, `WORKDIR`/`COPY`/`ENTRYPOINT`, exact copied-payload hash, exit 0, and verified removal of the named container. Five regression/mutation tests passed. Its separate offline auditor exited 0, but independent review found missing receipt-hash and run-record image-ID checks; read the [review qualification](../research/analysis/wslc_dockerfile_build_smoke_t0_20261003/REVIEW_QUALIFICATION.md) rather than treating that CLI output as a fully verified audit gate. This establishes a narrow Dockerless build/run capability, not an application migration or general Dockerfile parity.
 
 For an eligible new local iteration, `wslc build --file Dockerfile --tag <fresh-owned-tag> .` is the Dockerless build route. Use a digest-pinned base and a fresh owned build context/tag. Before an evidence-bearing run, resolve and freeze the resulting image identity, source hashes and full run command; use the cached-image/no-network/read-only-source invocation above where the protocol allows it. Do not reuse #7020's consumed formal allocation or silently replace the runtime of another frozen study.
 
@@ -53,4 +53,3 @@ The WSLc CLI does not expose a Docker Engine-compatible socket; do not point Doc
 - [Microsoft: WSL containers general availability](https://blogs.windows.com/windowsdeveloper/2026/09/29/wsl-containers-now-generally-available/)
 - [Microsoft Learn: Get started with WSL containers](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-containers)
 - [Microsoft Learn: WSL advanced settings](https://learn.microsoft.com/en-us/windows/wsl/wsl-config)
-
