@@ -344,32 +344,21 @@ def main():
             except (ValueError, TypeError, KeyError, Expired) as error:
                 emit({"event": "rejected", "reason": str(error)})
     finally:
-        # A close or evidence-save error must not skip later owned resources.
-        # Each finally preserves failure reporting and the existing close order.
-        try:
+        if executor is not None:
+            executor.close()
+        if backend is not None:
             try:
-                if executor is not None:
-                    executor.close()
+                backend.close()
             finally:
-                if backend is not None:
-                    try:
-                        backend.close()
-                    finally:
-                        (args.out / "owner-events.json").write_text(
-                            json.dumps(backend.owner.records, indent=2))
-        finally:
-            try:
-                if game is not None:
-                    game.close()
-            finally:
-                if session is not None:
-                    try:
-                        if (session.tmp / "doom.ini").exists():
-                            shutil.copy2(session.tmp / "doom.ini", args.out / "doom.ini")
-                    finally:
-                        session.close()
-                    # Preserve the directory if config saving or close fails.
-                    shutil.rmtree(session.tmp)
+                (args.out / "owner-events.json").write_text(
+                    json.dumps(backend.owner.records, indent=2))
+        if game is not None:
+            game.close()
+        if session is not None:
+            if (session.tmp / "doom.ini").exists():
+                shutil.copy2(session.tmp / "doom.ini", args.out / "doom.ini")
+            session.close()
+            shutil.rmtree(session.tmp)
 
 
 if __name__ == "__main__":
