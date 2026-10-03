@@ -12,7 +12,7 @@ exec(compile(SOURCES['runtime/core_v1/contract.py'],'pinned_actual_contract.py',
 
 class InertClock:
     @staticmethod
-    def monotonic_ns():return 123456
+    def monotonic_ns():return 1
     @staticmethod
     def sleep(value):raise AssertionError('unplanned sleep/native path')
 
