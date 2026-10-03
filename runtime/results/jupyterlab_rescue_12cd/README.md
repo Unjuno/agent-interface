@@ -1,5 +1,10 @@
 # JupyterLab retained-result rescue
 
+Latest main merged cleanly at5c8266222. Fresh normal/-O saved verification
+matches the committed reports byte-for-byte (275 manifest targets,3 cases and
+8 refused copied controls). Local CI43 exits0 failures=[]; full transcript is
+merged-local-ci.log. No original application allocation was replayed.
+
 Original source 12cdc5967e0f311ee76e9e3b1becc7f71f516ee9,
 research/5442-jupyterlab-01a0ff58-20261003, delivery PR #7028.
 All 276 original public packet files, including original screenshots, license,
