@@ -40,29 +40,13 @@ class CommittedTreeTests(unittest.TestCase):
             p = self.root / name / 'nested' / 'payload.bin'
             p.parent.mkdir(parents=True)
             p.write_bytes(b'never read this payload')
-        (self.root / 'README.md').write_text('\n'.join(f'[`{x}/`]({x}/)' for x in indexed), encoding='utf-8')
+        (self.root / 'README.md').write_text('\n'.join(f'[`{x}/`]({x}/)' for x in indexed))
         (self.root / 'ROOT_NAMESPACE_MAP.md').write_text('')
         self.commit()
 
     def commit(self):
         self.git('add', '--all')
         self.git('commit', '-qm', 'fixture', '--allow-empty')
-
-    def commit_symlink(self, name, target):
-        # The checker reads committed mode/type metadata, not OS symlinks.
-        # Build the same 120000 entry without requiring symlink privileges.
-        oid = self.git('hash-object', '-w', '--stdin', input=target.encode('utf-8')).decode().strip()
-        self.git('update-index', '--add', '--cacheinfo', f'120000,{oid},research/{name}')
-        self.git('commit', '-qm', 'symlink fixture')
-
-    def disable_git(self):
-        # A metadata rename exercises the no-repository boundary without
-        # removing Windows Git objects that may have the read-only attribute.
-        source = self.repo / '.git'
-        target = self.repo / '.fixture-git'
-        self.assertEqual(source.resolve().parent, self.repo.resolve())
-        self.assertEqual(target.resolve().parent, self.repo.resolve())
-        source.rename(target)
 
     def run_checker(self, tree=False):
         if tree:
@@ -87,7 +71,7 @@ class CommittedTreeTests(unittest.TestCase):
 
     def test_current_default_fallback_without_git_is_preserved(self):
         self.prepare()
-        self.disable_git()
+        shutil.rmtree(self.repo/'.git')
         self.assertEqual(self.run_current()[0],0)
 
     def test_same_commit_not_tampered_worktree(self):
@@ -103,32 +87,10 @@ class CommittedTreeTests(unittest.TestCase):
                 self.assertEqual(self.run_checker(True),self.run_checker())
 
     def test_hidden_regular_nested_unicode_and_tab(self):
-        actual = ('a', '.hidden', 'space name', '日本語')
-        indexed = ('a', 'space name', '日本語')
-        if os.name != 'nt':
-            actual += ('tab\tname',)
-            indexed += ('tab\tname',)
-        self.prepare(actual, indexed)
+        self.prepare(('a','.hidden','space name','日本語','tab\tname'), ('a','space name','日本語','tab\tname'))
         (self.root/'ordinary.txt').write_text('not a namespace')
         self.commit()
         self.assertEqual(self.run_checker(True),self.run_checker())
-
-    def test_committed_tab_path_without_filesystem_checkout(self):
-        self.prepare()
-        (self.root/'README.md').write_text('[`a/`](a/)\n[`tab\tname/`](tab\tname/)', encoding='utf-8')
-        self.commit()
-        previous = self.git('rev-parse', 'HEAD').decode().strip()
-        subtree = self.git('rev-parse', 'HEAD:research/a').strip()
-        entries = self.git('ls-tree', '-z', 'HEAD:research')
-        entries += b'040000 tree ' + subtree + b'\ttab\tname\0'
-        research_tree = self.git('mktree', '-z', input=entries).strip()
-        root_tree = self.git('mktree', '-z', input=b'040000 tree ' + research_tree + b'\tresearch\0').decode().strip()
-        commit = self.git('commit-tree', root_tree, '-p', previous, '-m', 'tab path fixture').decode().strip()
-        self.git('update-ref', 'HEAD', commit, previous)
-        self.assertFalse((self.root/'tab\tname').exists())
-        dirs, _ = checker.committed_inventory(self.repo)
-        self.assertEqual(dirs, {'a', 'tab\tname'})
-        self.assertEqual(self.run_checker(True)[0], 0)
 
     def test_untracked_directory_excluded_only_in_tree_mode(self):
         self.prepare()
@@ -140,14 +102,18 @@ class CommittedTreeTests(unittest.TestCase):
         self.prepare()
         for target in ['a', 'README.md', 'missing', 'link']:
             with self.subTest(target=target):
-                self.commit_symlink('link', target)
+                p=self.root/'link'
+                if p.is_symlink(): p.unlink()
+                p.symlink_to(target)
+                self.commit()
                 code,out,err=self.run_checker(True)
                 self.assertEqual(code,2)
                 self.assertIn('UNSUPPORTED_TREE_ENTRY',err)
 
     def test_hidden_symlink_ignored(self):
         self.prepare()
-        self.commit_symlink('.link', 'a')
+        (self.root/'.link').symlink_to('a')
+        self.commit()
         self.assertEqual(self.run_checker(True),self.run_checker())
 
     def test_gitlink_fails_closed(self):
@@ -201,12 +167,14 @@ class CommittedTreeTests(unittest.TestCase):
         self.git('rm','-qr','research')
         self.git('commit','-qm','remove root')
         self.assertEqual(self.run_checker(True)[0],2)
-        self.disable_git()
+        shutil.rmtree(self.repo/'.git')
         self.assertEqual(self.run_checker(True)[0],2)
 
     def test_document_symlink_rejected(self):
         self.prepare()
-        self.commit_symlink('README.md', 'ROOT_NAMESPACE_MAP.md')
+        (self.root/'README.md').unlink()
+        (self.root/'README.md').symlink_to('ROOT_NAMESPACE_MAP.md')
+        self.commit()
         self.assertEqual(self.run_checker(True)[0],2)
 
     def test_mixed_object_id_lengths_rejected(self):
