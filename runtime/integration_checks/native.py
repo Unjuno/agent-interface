@@ -92,3 +92,5 @@ SUITES['protocol'].append('runtime.cli_v1.test_receipt_empty_index_r7p4')
 
 if __name__ == '__main__':
     raise SystemExit(main())
+
+SUITES['protocol'].append('test_planner_schema_interrupt_custody_01a0ff2d')
