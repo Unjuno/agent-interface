@@ -1,0 +1,58 @@
+param(
+  [Parameter(Mandatory=$true)]
+  [ValidateSet('construction','producer','auditor')]
+  [string]$Phase,
+  [ValidateRange(1,3)]
+  [int]$ConstructionOrdinal = 1
+)
+$ErrorActionPreference = 'Stop'
+$studyRoot = $PSScriptRoot
+$stageName = 'guarded01'
+$stageRoot = Join-Path $studyRoot ('runs\' + $stageName)
+if (Test-Path -LiteralPath $stageRoot) { throw 'First stage path already exists; refusing replay.' }
+New-Item -ItemType Directory -Path $stageRoot | Out-Null
+$sourceRoot = if ($Phase -eq 'producer') { Join-Path $studyRoot 'candidate-input' } else { $studyRoot }
+$containerName = 'calc-shared-guarded-3311-4d74-' + $stageName
+$nativeArgs = @('run','--name',$containerName,'--pull','never','--network','none',
+  '--cpus','1','--memory','512m','--user','65534:65534',
+  '--tmpfs','/tmp:rw,size=64m,mode=1777','--env','PYTHONDONTWRITEBYTECODE=1',
+  '--env','PYTHONPATH=/src/sources',
+  '--volume',('{0}:/src:ro' -f $sourceRoot),'--volume',('{0}:/out' -f $stageRoot),
+  '--workdir','/src')
+if ($Phase -eq 'auditor') {
+  $nativeArgs += @('--volume',('{0}:/data:ro' -f (Join-Path $studyRoot 'runs\producer')))
+}
+$nativeArgs += 'sha256:f649ccab8aec3b94e451c6b0037e60fca72d7d7559381f8cd4aa98530b786c55'
+$nativeArgs += @('timeout','--signal=TERM','--kill-after=3s','180s','python3','-B','guarded_construction.py','0')
+$startedUtc = [DateTimeOffset]::UtcNow.ToString('o')
+$processInfo = [System.Diagnostics.ProcessStartInfo]::new()
+$processInfo.FileName = (Get-Command wslc.exe).Source
+$processInfo.UseShellExecute = $false
+$processInfo.CreateNoWindow = $true
+$processInfo.RedirectStandardOutput = $true
+$processInfo.RedirectStandardError = $true
+$processInfo.StandardOutputEncoding = [Text.UTF8Encoding]::new($false)
+$processInfo.StandardErrorEncoding = [Text.UTF8Encoding]::new($false)
+foreach ($item in $nativeArgs) { $processInfo.ArgumentList.Add($item) }
+$client = [System.Diagnostics.Process]::new()
+$client.StartInfo = $processInfo
+[void]$client.Start()
+$clientPid = $client.Id
+$stdoutTask = $client.StandardOutput.ReadToEndAsync()
+$stderrTask = $client.StandardError.ReadToEndAsync()
+$client.WaitForExit()
+$exitCode = $client.ExitCode
+$endedUtc = [DateTimeOffset]::UtcNow.ToString('o')
+[IO.File]::WriteAllText((Join-Path $stageRoot 'host.stdout.txt'),$stdoutTask.Result,[Text.UTF8Encoding]::new($false))
+[IO.File]::WriteAllText((Join-Path $stageRoot 'host.stderr.txt'),$stderrTask.Result,[Text.UTF8Encoding]::new($false))
+$receipt = [ordered]@{phase=$Phase;started_utc=$startedUtc;ended_utc=$endedUtc;
+  host_launcher_pid=$PID;client_pid=$clientPid;exit_code=$exitCode;
+  executable=$processInfo.FileName;argv=$nativeArgs;container_name=$containerName;
+  note='Requested CPU/memory settings are not evidence of enforcement. No Docker/GPU/model/host display.'}
+[IO.File]::WriteAllText((Join-Path $stageRoot 'HOST_RECEIPT.json'),($receipt|ConvertTo-Json -Depth 8),[Text.UTF8Encoding]::new($false))
+$terminalText = & wslc inspect $containerName 2>&1 | Out-String
+[IO.File]::WriteAllText((Join-Path $stageRoot 'CONTAINER_TERMINAL.txt'),$terminalText,[Text.UTF8Encoding]::new($false))
+Write-Output ($receipt|ConvertTo-Json -Depth 8 -Compress)
+Write-Output $stdoutTask.Result
+Write-Output $stderrTask.Result
+exit $exitCode

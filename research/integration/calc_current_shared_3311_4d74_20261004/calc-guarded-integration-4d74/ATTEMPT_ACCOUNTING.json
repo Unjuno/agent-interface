@@ -1,0 +1,69 @@
+{
+  "scope": "retained raw receipt inventory; no replay",
+  "attempts": [
+    {
+      "ordinal": 2,
+      "key": "guarded_result",
+      "status": "completed",
+      "input_dispatched": null,
+      "guard_stages": [
+        "before_admission",
+        "before_focus",
+        "before_move",
+        "before_press"
+      ]
+    },
+    {
+      "ordinal": 3,
+      "key": "guarded_result",
+      "status": "completed",
+      "input_dispatched": null,
+      "guard_stages": [
+        "before_admission",
+        "before_focus",
+        "before_move",
+        "before_press"
+      ]
+    },
+    {
+      "ordinal": 3,
+      "key": "reuse_old_result",
+      "status": "refused",
+      "input_dispatched": false,
+      "guard_stages": [
+        "before_admission"
+      ]
+    },
+    {
+      "ordinal": 3,
+      "key": "repair_result",
+      "status": "completed",
+      "input_dispatched": null,
+      "guard_stages": [
+        "before_admission",
+        "before_focus",
+        "before_move",
+        "before_press"
+      ]
+    },
+    {
+      "ordinal": 3,
+      "key": "warm_result",
+      "status": "completed",
+      "input_dispatched": null,
+      "guard_stages": [
+        "before_admission",
+        "before_focus",
+        "before_move",
+        "before_press"
+      ]
+    }
+  ],
+  "accepted_programs": 4,
+  "refused_programs": 1,
+  "preinput_alias_failures": [
+    1
+  ],
+  "original_producer_counter_correction": "G03 task_dispatches=1 undercounts three completed programs; original retained",
+  "original_auditor_counter_limit": "printed accepted/refused counts were constants; use this raw-derived inventory"
+}

@@ -1,0 +1,109 @@
+{
+  "disposition": "PASS_SCOPED_UNKNOWN_EFFECT_YIELD",
+  "errors": [],
+  "graph_outcome": "SAFE_YIELD",
+  "graph_reason": "effect_unavailable",
+  "native_attempts": 1,
+  "admissions": 1,
+  "completed_transitions": 1,
+  "observations": 2,
+  "saved_effect": {
+    "pass_effect": true,
+    "populated": [
+      [
+        0,
+        0,
+        "a",
+        null,
+        null
+      ],
+      [
+        0,
+        1,
+        "b",
+        null,
+        null
+      ],
+      [
+        0,
+        2,
+        "product",
+        null,
+        null
+      ],
+      [
+        1,
+        0,
+        "31",
+        "31",
+        null
+      ],
+      [
+        1,
+        1,
+        "37",
+        "37",
+        null
+      ],
+      [
+        1,
+        2,
+        "1147",
+        "1147",
+        "of:=[.A2]*[.B2]"
+      ]
+    ],
+    "expected": [
+      [
+        0,
+        0,
+        "a",
+        null,
+        null
+      ],
+      [
+        0,
+        1,
+        "b",
+        null,
+        null
+      ],
+      [
+        0,
+        2,
+        "product",
+        null,
+        null
+      ],
+      [
+        1,
+        0,
+        "31",
+        "31",
+        null
+      ],
+      [
+        1,
+        1,
+        "37",
+        "37",
+        null
+      ],
+      [
+        1,
+        2,
+        "1147",
+        "1147",
+        "of:=[.A2]*[.B2]"
+      ]
+    ]
+  },
+  "cgroups": {
+    "cpu.max": "100000 100000",
+    "memory.max": "536870912",
+    "pids.max": "max"
+  },
+  "primary_usage": "UNKNOWN",
+  "additional_benchmark_client_calls": 0,
+  "limits": "intentional semantic-predicate unavailability; no semantic detector efficacy, broad release, same-model comparison or token benefit"
+}
