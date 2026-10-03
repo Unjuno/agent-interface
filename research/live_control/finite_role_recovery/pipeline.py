@@ -21,6 +21,7 @@ def run_task(task,arm,retained_label,editor,subject,record):
     if change is None:
         record('subject_attempt_before_send',{'task_id':task['id']})
         output=subject(task,original)
+        if type(output) is dict:output=dict(output) # Own response fields before journaling.
         change=contract.validate_subject(original,task,output)
         record('subject_contract',{'outcome':change['outcome']})
         if change['outcome']!='READY':raise RuntimeError('STOP: subject contract refusal')
