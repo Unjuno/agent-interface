@@ -1,0 +1,122 @@
+{
+  "id": "N01",
+  "display": ":80",
+  "commands": [
+    {
+      "argv": [
+        "xdotool",
+        "windowfocus",
+        "--sync",
+        "6291462"
+      ],
+      "exit_code": 0,
+      "stdout_hex": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "xclip",
+        "-selection",
+        "clipboard",
+        "-target",
+        "text/plain",
+        "-out"
+      ],
+      "exit_code": 0,
+      "stdout_hex": "526f62696e",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "xclip",
+        "-selection",
+        "clipboard",
+        "-target",
+        "text/html",
+        "-out"
+      ],
+      "exit_code": 0,
+      "stdout_hex": "3c703e3c623e526f62696e3c2f623e3c2f703e",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "xdotool",
+        "key",
+        "--clearmodifiers",
+        "ctrl+v"
+      ],
+      "exit_code": 0,
+      "stdout_hex": "",
+      "stderr": ""
+    }
+  ],
+  "pids": {
+    "xvfb": 7,
+    "owner": 10,
+    "consumer": 13
+  },
+  "exits": {
+    "consumer": 0,
+    "owner": 0,
+    "xvfb": 0
+  },
+  "owner_ready": {
+    "role": "owner",
+    "platform": "xcb"
+  },
+  "consumer_ready": {
+    "role": "consumer",
+    "platform": "xcb",
+    "window": 6291462
+  },
+  "before": {
+    "clipboard_owner": 4194308,
+    "focus": 6291462,
+    "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "monotonic_ns": 8283503187698
+  },
+  "transport_sha256": {
+    "text/plain": "b4eb71306c2267a12979550569be28017dff1b00e790ac016129b80c3d660214",
+    "text/html": "0f068b05f3c24b71d3f917d30c84ebf746cb8a40488c4910cf7b1dc5148bd70b"
+  },
+  "key_releases": [
+    16777249,
+    86
+  ],
+  "dump": {
+    "op": "dump",
+    "text": "Robin"
+  },
+  "after": {
+    "clipboard_owner": 4194308,
+    "focus": 6291462,
+    "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "monotonic_ns": 8283549558551
+  },
+  "saved_sha256": {
+    "text.txt": "b4eb71306c2267a12979550569be28017dff1b00e790ac016129b80c3d660214",
+    "document.html": "ca71d8fe434fe5664141f6f16f77269e7ad401f78e40ff6ae47734f2fe6f38df",
+    "window.png": "1a87ef15ac64338ec0c8e7c55769e1413eb72c54a4571f10f2396cce5c14d7ca"
+  },
+  "status": "RECORDED",
+  "final": {
+    "clipboard_owner": 0,
+    "focus": 543,
+    "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "monotonic_ns": 8283611152090
+  },
+  "artifact_sha256": {
+    "case.json": "839539902372ae4df5be9374c48cc4310320f962d1a709f84fd2dd19d5a93efa",
+    "consumer.events.jsonl": "8330af9bb41ef266a2d6b19ba3564be1fa508b8978920d8e9fedbcfb82b55812",
+    "consumer.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+    "document.html": "ca71d8fe434fe5664141f6f16f77269e7ad401f78e40ff6ae47734f2fe6f38df",
+    "owner.events.jsonl": "6957af8c4b4795be099a2ed78b775cbf58d5f2ce20be15f4be9092eaea978f19",
+    "owner.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+    "text.txt": "b4eb71306c2267a12979550569be28017dff1b00e790ac016129b80c3d660214",
+    "transport-html.txt": "0f068b05f3c24b71d3f917d30c84ebf746cb8a40488c4910cf7b1dc5148bd70b",
+    "transport-plain.txt": "b4eb71306c2267a12979550569be28017dff1b00e790ac016129b80c3d660214",
+    "window.png": "1a87ef15ac64338ec0c8e7c55769e1413eb72c54a4571f10f2396cce5c14d7ca",
+    "xvfb.stderr": "f172a1b0f5cf2a0d462c51dfc335af1a1dfc8e873cb66f61d018c8b1b35fe416"
+  }
+}
