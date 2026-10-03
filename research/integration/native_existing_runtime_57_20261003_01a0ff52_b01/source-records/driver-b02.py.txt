@@ -1,0 +1,48 @@
+import sys,os,json,time,pathlib,datetime,subprocess,traceback,hashlib
+root=pathlib.Path('/home/study/57-existing-b01'); public=root/'public';public.mkdir()
+sys.path.insert(0,str(root/'source'));sys.path.insert(0,str(root/'source/research/live_control'))
+result={'started_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'pid':os.getpid(),'model_calls':0,'input_down_calls':0,'formal_task_attempts':0,'scope':'ordinary historical-source native construction only'}
+session=None;backend=None;server=None
+try:
+ cg=pathlib.Path('/sys/fs/cgroup')/pathlib.Path(open('/proc/self/cgroup').read().strip().split('::')[1].lstrip('/'))
+ result['cgroup']={f:(cg/f).read_text().strip() for f in ('cpu.max','memory.max','pids.max')}
+ assert result['cgroup']=={'cpu.max':'100000 100000','memory.max':'805306368','pids.max':'256'}
+ assert os.getuid()==501;result['uid']=os.getuid()
+ import gui_suite as suite
+ import integrated_efficiency_runtime_v1 as fixture
+ from session_v33 import Backend
+ session=suite.Session();result['display']=session.name
+ empty=root/'empty-Xauthority';empty.touch(mode=0o600)
+ denial=subprocess.run(['xdpyinfo'],env={**session.env,'XAUTHORITY':str(empty)},capture_output=True,timeout=5)
+ result['unauthenticated_probe']={'exit_code':denial.returncode,'stdout_bytes':len(denial.stdout),'stderr':denial.stderr.decode(errors='replace')}
+ assert denial.returncode!=0,'X server admitted missing cookie'
+ goal,output,server=fixture.prepare(session,'chromium',57031003,'/usr/bin/chromium')
+ result['fixture_tasks']=len(goal['tasks']);result['windows']=session.windows()
+ for p in session.procs:
+  argv=pathlib.Path('/proc',str(p.pid),'cmdline').read_bytes().split(bytes([0]));argv=[x.decode() for x in argv if x]
+  assert '--no-sandbox' not in argv and '-ac' not in argv
+ result['session_children']=[{'pid':p.pid,'argv':p.args} for p in session.procs]
+ events=[]
+ backend=Backend(session,public,lambda event:events.append(event))
+ backend.snapshot('b01-initial',0)
+ result['observation']=backend.observation();result['image_size']=list(backend.image().size)
+ release=backend.release_all();result['release']=release
+ assert release['verified'] and release['keys_down']==[]
+ result['owner_records_before_close']=list(backend.owner.records)
+ (public/'events.json').write_text(json.dumps(events,indent=2)+'\n')
+ result['status']='PASS_CONSTRUCTION'
+except Exception as error:
+ result['status']='FAIL_CONSTRUCTION';result['error']=repr(error);(public/'traceback.txt').write_text(traceback.format_exc())
+finally:
+ try:
+  if backend is not None:
+   backend.close();result['owner_thread_alive_after_close']=backend.owner.thread.is_alive()
+  if server is not None:server.shutdown();server.server_close()
+  if session is not None:
+   session.close();result['child_exits']=[{'pid':p.pid,'exit_code':p.poll()} for p in session.procs]
+ except Exception as error:
+  result['cleanup_error']=repr(error);result['status']='FAIL_CONSTRUCTION'
+ result['ended_utc']=datetime.datetime.now(datetime.timezone.utc).isoformat()
+ result['public_bytes']=sum(p.stat().st_size for p in public.rglob('*') if p.is_file());assert result['public_bytes']<33554432
+ (public/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result))
+raise SystemExit(0 if result['status']=='PASS_CONSTRUCTION' else 3)

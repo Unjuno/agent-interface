@@ -1,0 +1,47 @@
+{
+  "argv": [
+    "/opt/homebrew/bin/orbctl",
+    "run",
+    "-m",
+    "unjuno-57-5884-debian-a02-20261003",
+    "-u",
+    "root",
+    "/usr/bin/systemd-run",
+    "--wait",
+    "--pipe",
+    "--collect",
+    "--unit",
+    "unjuno-57-existing-b02-5884",
+    "-p",
+    "User=study",
+    "-p",
+    "CPUQuota=100%",
+    "-p",
+    "MemoryMax=805306368",
+    "-p",
+    "TasksMax=256",
+    "-p",
+    "RuntimeMaxSec=90",
+    "-p",
+    "KillMode=control-group",
+    "/usr/bin/env",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/usr/bin/python3",
+    "/home/study/57-existing-b01/driver-b02.py"
+  ],
+  "timeout_seconds": 110,
+  "stdin_sha256": null,
+  "started_utc": "2026-10-03T14:05:01.179692+00:00",
+  "pid": 9760,
+  "exit_code": 3,
+  "timed_out": false,
+  "ended_utc": "2026-10-03T14:05:03.570688+00:00",
+  "stdout": {
+    "bytes": 428,
+    "sha256": "ce6d9a4815724bfa54a31799b83e9eed84809f781ee42d889d1250422df6ecfd"
+  },
+  "stderr": {
+    "bytes": 188,
+    "sha256": "9dae516f3db5afa537b719984309cad80026576e345748a9ef372696a2646b70"
+  }
+}

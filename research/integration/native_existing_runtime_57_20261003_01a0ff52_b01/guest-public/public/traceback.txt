@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/home/study/57-existing-b01/driver-b02.py", line 14, in <module>
+    session=suite.Session();result['display']=session.name
+            ^^^^^^^^^^^^^^^
+  File "/home/study/57-existing-b01/source/research/observation_gating/gui_suite.py", line 91, in __init__
+    super().__init__()
+  File "/home/study/57-existing-b01/source/research/real_apps_v1/real_app_suite_v1.py", line 29, in __init__
+    self._wait(lambda:sock.exists(),2.0,'Xvfb')
+  File "/home/study/57-existing-b01/source/research/observation_gating/gui_suite.py", line 119, in _wait
+    return super()._wait(fn, timeout, label)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/study/57-existing-b01/source/research/real_apps_v1/real_app_suite_v1.py", line 46, in _wait
+    raise TimeoutError(label)
+TimeoutError: Xvfb

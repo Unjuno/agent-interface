@@ -1,0 +1,5 @@
+{
+  "cause": "existing gui_suite.Session._wait uses Xlib inherited process environment before base constructor installs XAUTHORITY; with cookie enforced, readiness handshake fails",
+  "delta": "install existing intended DISPLAY/XAUTHORITY assignment before initial handshake; no weakened auth or timeout increase",
+  "source_base": "3cdb84dc177f3efcfa4fb2fafc2eec87832515b5"
+}
