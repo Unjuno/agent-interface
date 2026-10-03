@@ -27,3 +27,12 @@ class DeliveryTests(unittest.TestCase):
                 handle.write(b' ')
             with self.assertRaisesRegex(ValueError, 'audit anchor'):
                 check_delivery(root)
+
+    def test_modified_receipt(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / 'record'
+            shutil.copytree(Path(__file__).resolve().parent / 'raw', root / 'raw')
+            with (root / 'raw/native-container-inspect.json').open('ab') as handle:
+                handle.write(b' ')
+            with self.assertRaisesRegex(ValueError, 'receipt anchor'):
+                check_delivery(root)

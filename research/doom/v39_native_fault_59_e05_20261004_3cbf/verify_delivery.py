@@ -4,6 +4,10 @@ import json
 from pathlib import Path
 
 AUDIT_SHA = '047e1a0f6b89679dd38854e01041e97e6ff15e818a42d76426b09a4ff7152322'
+RECEIPTS = {
+    'native': 'ffc677d8ad471eb86e972e6f155d2808538261f75452c024c373840ef5bbbe76',
+    'audit': '1137c19108e7ec208f1ec0b4c1b41e2de26fb882060e770e1d0acf6cca5e182a',
+}
 
 
 def require(condition, reason):
@@ -27,7 +31,9 @@ def check_delivery(root):
     require(audit['scientific_pass'] is True and audit['producer_reruns'] == 0,
             'saved audit outcome')
     for name in ('native', 'audit'):
-        receipt = json.loads((root / f'raw/{name}-container-inspect.json').read_text())
+        receipt_bytes = (root / f'raw/{name}-container-inspect.json').read_bytes()
+        require(hashlib.sha256(receipt_bytes).hexdigest() == RECEIPTS[name], 'receipt anchor ' + name)
+        receipt = json.loads(receipt_bytes)
         require(len(receipt) == 1, 'receipt cardinality')
         state = receipt[0]['State']
         require(state['Running'] is False and state['OOMKilled'] is False
