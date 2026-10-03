@@ -7,7 +7,7 @@ Refresh actual main/ownership/dependencies again before any formal source freeze
 
 The intended experiment is the matched live image-only versus guarded task-effect
 and bounded changed-evidence rich-model recovery comparison described in the
-outside local _research_5260_a15_design_20261004.md. It must use the actual current
+retained DESIGN.md. It must use the actual current
 GuardedSessionOwner / NativeHandleBridge input_guard path, not replace the
 shared executor with an easier helper-only implementation.
 
@@ -25,9 +25,13 @@ model latency. A12's1500ms exit and A14'sfinish-before-review cannot be reused.
 Snapshot binding comes from this separately frozen cooperative app; comparisons
 are not public/hardware attestation or atomic focus-plus-input guarantees.
 
-Only deterministic construction tests exist so far; no live guard, host bridge,
-model allocation, task file, matched comparison or bounded recovery result exists.
-No H_PASS/STOP/PASS_RESEARCH conclusion may be inferred from these unit tests.
+Construction now includes a live cooperative app, actual shared guarded native
+input/file-effect tests, and a once-only host subprocess custody primitive.
+Fixed review fixtures and synthetic subprocess event streams are not real
+model answers. The full live host driver, paired comparison, conditional model
+recovery and independent formal raw audit are still absent. No A15 source
+freeze/allocation or actual model request has occurred.
+No H_PASS/STOP/PASS_RESEARCH conclusion may be inferred from these tests.
 Full #57/#59 roadmap stays open; other-owner native measurement is untouched.
 
 ## Construction log, no scientific disposition
@@ -41,6 +45,7 @@ retained in the proposal and repair completion must be later (GREEN).
 Final eight deterministic tests pass Windows and pinned WSLc; sourceRO,
 networknone/nonroot/requestCPU0.5/512M, no GUI/model/task-file inputs. Original
 WSL swap/cgroup warning remains; flags do not prove effective resource limits.
-This is construction only. Actual shared-entry wiring, dependency qualification,
-live app over model latency, host bridge, paired model/effect/recovery experiment,
-independent raw audit/review and formal allocation remain to implement.
+The above eight-test log is historical. Current construction checks and retained
+command receipts are summarized in CONSTRUCTION.md; those are not formal paired
+outcomes. Actual model wait/custody, matched recovery, full lazy dependency closure,
+independent formal audit and prospective allocation remain to qualify.
