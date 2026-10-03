@@ -19,7 +19,7 @@ repair was applied to this consumed allocation.
   Xvfb/fixture/observer child exit0; PIDs7/8/12. Native cgroups enforce CPU1,
   memory536870912, memory.swap0 and PIDs64, not merely command flags.
 - Eight source events, sixteen source waits, eight native XGetImage captures;
-  native closed-file denominator16files. Full host wrapper copy exited0.
+  native closed-file denominator16files. Native result-directory copy exited0.
 - The saved-only auditor exited1 at evidence.admit_launch, BEFORE profile
   reconstruction and BEFORE all six controls. Controls executed0/6.
   Its result directory did not exist; subsequent exact copy exited1, retained.
