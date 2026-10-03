@@ -12,7 +12,7 @@ class AuditControls(unittest.TestCase):
         return [row for row in values if 'case' in row]
 
     def test_saved_construction(self):
-        self.assertEqual(check_rows(self.rows()), 'VERIFIED_CONSTRUCTION_ROWS')
+        self.assertEqual(check_rows(self.rows(), historical=True), 'VERIFIED_HISTORICAL_CONSTRUCTION_ROWS')
 
     def directory(self, root):
         rows = self.rows()
@@ -32,7 +32,7 @@ class AuditControls(unittest.TestCase):
     def test_rejects_incomplete_extra_or_inconsistent_directory(self):
         for defect in ('missing', 'extra', 'summary', 'row_gate', 'symlink'):
             with self.subTest(defect=defect), tempfile.TemporaryDirectory() as name:
-                root = Path(name); self.directory(root)
+                root = Path(name) / 'data'; root.mkdir(); self.directory(root)
                 target = root / 'candidate_eof.json'
                 if defect == 'missing':
                     target.unlink()
@@ -44,8 +44,8 @@ class AuditControls(unittest.TestCase):
                     row = json.loads(target.read_text()); row['gate'] = False
                     target.write_text(json.dumps(row))
                 else:
-                    target.rename(root / 'outside.json')
-                    target.symlink_to(root / 'outside.json')
+                    target.rename(root.parent / 'outside.json')
+                    target.symlink_to(root.parent / 'outside.json')
                 with self.assertRaises(ValueError):
                     check_directory(root)
 
@@ -53,6 +53,8 @@ class AuditControls(unittest.TestCase):
         for field, value in [('start_ns', True), ('reader_alive_after_ready', False),
                              ('ready', {'event': 'terminal'}), ('pins', {}), ('child_alive', 1)]:
             rows = copy.deepcopy(self.rows()); rows[2][field] = value
+            for row in rows:
+                row.update(cleanup_child_alive=False, cleanup_reader_alive=False)
             with self.subTest(field=field), self.assertRaises(ValueError):
                 check_rows(rows)
 

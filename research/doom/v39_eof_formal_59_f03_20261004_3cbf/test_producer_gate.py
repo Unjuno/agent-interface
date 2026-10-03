@@ -11,8 +11,14 @@ from runner import expected
 class ProducerGateControls(unittest.TestCase):
     def row(self):
         lines = (Path(__file__).parent / 'methods/RUNNER-CONSTRUCTION.log').read_text().splitlines()
-        return next(json.loads(line) for line in lines if line.startswith('{')
+        row = next(json.loads(line) for line in lines if line.startswith('{')
                     and json.loads(line).get('case') == 'candidate_events_eof')
+        row.update(cleanup_child_alive=False, cleanup_reader_alive=False)
+        return row
+
+    def test_live_cleanup_cannot_pass_producer(self):
+        row = self.row(); row['cleanup_reader_alive'] = True
+        self.assertFalse(expected('candidate_events_eof', row))
 
     def test_valid_handshake(self):
         self.assertTrue(expected('candidate_events_eof', self.row()))

@@ -32,12 +32,18 @@ def check_directory(directory):
     return 'VERIFIED_SAVED_PIPE_RECORD'
 
 
-def check_rows(rows):
+def check_rows(rows, *, historical=False):
     cases = ['baseline_eof', 'candidate_eof', 'candidate_events_eof', 'candidate_json']
     require([row['case'] for row in rows] == cases, 'case cardinality/order')
+    previous_cell_end = 0
     for index, row in enumerate(rows):
         require(row['pins'] == PINS, 'source pins')
         require(clock(row['start_ns']) and clock(row['end_ns']) and row['start_ns'] < row['end_ns'], 'cell clock')
+        require(row['start_ns'] > previous_cell_end, 'sequential cells')
+        previous_cell_end = row['end_ns']
+        if not historical:
+            require(row.get('cleanup_child_alive') is False
+                    and row.get('cleanup_reader_alive') is False, 'cleanup liveness')
         require(clock(row['child_pid']) and row['reader_alive'] is False and row['child_alive'] is True, 'liveness')
         require(type(row['cleanup_exit']) is int and row['cleanup_exit'] == -15
                 and row['fatal'] is None and row['cleanup_faults'] == [], 'cleanup')
@@ -56,4 +62,4 @@ def check_rows(rows):
         else:
             require(row['events'] == [], 'unexpected events')
     require(len({row['child_pid'] for row in rows}) == 4, 'fresh children')
-    return 'VERIFIED_CONSTRUCTION_ROWS'
+    return 'VERIFIED_HISTORICAL_CONSTRUCTION_ROWS' if historical else 'VERIFIED_CONSTRUCTION_ROWS'

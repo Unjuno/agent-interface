@@ -21,6 +21,8 @@ def write(path, value):
 
 
 def expected(case, row):
+    if row.get('cleanup_child_alive') is not False or row.get('cleanup_reader_alive') is not False:
+        return False
     if case == 'candidate_events_eof' and not (
             row.get('ready') == {'event': 'ready'}
             and row.get('terminal') == {'event': 'terminal'}
