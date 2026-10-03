@@ -6,6 +6,8 @@ import unittest
 from pathlib import Path
 
 from runtime.cli_v1.receipt import receipt_view
+# The existing CLI workflow names this module rather than discovering tests.
+from runtime.cli_v1.test_receipt_references import ReceiptPointerTests
 
 
 class ReceiptTests(unittest.TestCase):
