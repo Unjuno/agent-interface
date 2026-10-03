@@ -5,11 +5,14 @@ refused with zero input; NOW4/4 saved xy with decoy h. Original outcome and
 warnings: RUN.md and evidence/. This is a private instrumented Tk fixture, not
 a public focus guarantee or performance/memory benefit. Prior results unchanged.
 
-Data-only verification (no app/container/input replay):
+From the repository root, verify the saved packet; then run unit tests from
+the package directory so their child Python process can import the helpers.
+These checks do not replay the scientific GUI candidate/auditor allocation:
 
 ```powershell
 python -B research/integration/tk_focus_pipe_5260_a09_wslc_20261004/verify_packet.py
-python -B -m unittest discover -s research/integration/tk_focus_pipe_5260_a09_wslc_20261004 -p 'test_*.py' -q
+cd research/integration/tk_focus_pipe_5260_a09_wslc_20261004
+python -B -m unittest discover -s . -p 'test_*.py' -q
 ```
 
 Never invoke host_capture.py --frozen candidate/auditor again. Both commands
