@@ -1,0 +1,48 @@
+{
+  "argv": [
+    "orb",
+    "-m",
+    "research-6501-async-01a0ff52-70ab",
+    "-u",
+    "root",
+    "docker",
+    "run",
+    "--rm",
+    "--pull",
+    "never",
+    "--network",
+    "none",
+    "--read-only",
+    "--cpus",
+    "0.25",
+    "--memory",
+    "128m",
+    "--memory-swap",
+    "128m",
+    "--pids-limit",
+    "32",
+    "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "python",
+    "-B",
+    "-c",
+    "import hashlib,json,pathlib,shutil,subprocess; p=shutil.which('timeout'); r=subprocess.run([p,'--version'],capture_output=True,check=True); print(json.dumps({'path':p,'sha256':hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest(),'version':r.stdout.decode().splitlines()[0]}))"
+  ],
+  "launcher_pid": 39180,
+  "start_utc": "2026-10-03T11:48:20.891784+00:00",
+  "start_ns": 39065803148791,
+  "pid": 39181,
+  "exit_code": 0,
+  "end_utc": "2026-10-03T11:48:21.698179+00:00",
+  "end_ns": 39066609371083,
+  "source_sha256": "baaae37992def075a41f440eb59a5971db513d46ed4427a4d9a1232f5601f10b",
+  "outputs": {
+    "stdout": {
+      "bytes": 149,
+      "sha256": "e94cab15d7ad1dd733b3edd9826965b8352dc1204efbc64ec2cacaf39e56c86f"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}
