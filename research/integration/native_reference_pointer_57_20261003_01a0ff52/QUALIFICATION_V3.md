@@ -19,10 +19,13 @@ canonical JSON encoding. A declared integer reference map must have the same
 integer marker; Python Boolean/float aliases are not identical JSON markers.
 In the old alias cases the map still chose its declared event index. This is
 marker consistency, not evidence of wrong-event selection, input authority,
-native effect or performance. Pointer resolution and native decoding are
-unchanged; seven new marker regressions accompany the original ten pointer
-regressions. The generic malformed-container/Python-object boundary remains
-outside this change.
+native effect or performance. The marker-stage source is preserved exactly at
+`591898876bd0d2d6f8b96eee6cc0ab09400a86b5` and is the fixed arm of that
+separate raw comparison. A subsequent nonauthor adjacent-escape counterexample
+is repaired separately under `escape_revision/`; its final source is an
+additional revision of the pointer resolver. Seven marker and four escape
+regression methods accompany the original ten pointer methods. The generic
+malformed-container/Python-object boundary remains outside this change.
 
 The new prospective source/fixture/auditor freeze and separate raw result are
 under `event_marker_v3/`. That directory's manifest binds the v3 source/test
