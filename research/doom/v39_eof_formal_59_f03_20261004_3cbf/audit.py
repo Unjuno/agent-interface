@@ -1,4 +1,5 @@
 """Independent row semantics, not formal receipt/custody qualification yet."""
+import json
 PINS = {
     'candidate': '2b569e6697720bef1f9d0381af6bc4876770132f26e418f697f136c40fc8a1a1',
     'helper': '8359de6a8c714eabc08e88b6d22d51935be23fc3cfde5663fdc85bf44d1d1ae0',
@@ -16,6 +17,18 @@ def clock(value):
 
 
 def check_directory(directory):
+    cases = ['baseline_eof', 'candidate_eof', 'candidate_events_eof', 'candidate_json']
+    files = list(directory.iterdir())
+    require({path.name for path in files} == {'SUMMARY.json', *(case + '.json' for case in cases)},
+            'exact output inventory')
+    require(all(path.is_file() and not path.is_symlink() for path in files), 'regular files only')
+    rows = [json.loads((directory / (case + '.json')).read_text()) for case in cases]
+    check_rows(rows)
+    require(all(row.get('gate') is True for row in rows), 'producer gates')
+    summary = json.loads((directory / 'SUMMARY.json').read_text())
+    require(summary == {'cases': cases, 'retries': 0, 'model_calls': 0,
+                        'verdict': 'PASS_SCOPED_PIPE_NOTIFICATION'}, 'summary consistency')
+    require(type(summary['retries']) is int and type(summary['model_calls']) is int, 'integer counters')
     return 'VERIFIED_SAVED_PIPE_RECORD'
 
 
