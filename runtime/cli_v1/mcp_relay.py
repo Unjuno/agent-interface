@@ -25,6 +25,15 @@ def _finite_float(value):
     return number
 
 
+def _unique_object(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError('duplicate JSON object key')
+        result[key] = value
+    return result
+
+
 class Relay:
     def __init__(self, client, *, tools=PUBLIC_TOOLS):
         self.client = client
@@ -33,7 +42,7 @@ class Relay:
 
     async def request(self, line):
         try:
-            request = json.loads(line, parse_float=_finite_float,
+            request = json.loads(line, object_pairs_hook=_unique_object, parse_float=_finite_float,
                                  parse_constant=lambda value: (_ for _ in ()).throw(ValueError(value)))
             if not isinstance(request, dict) or set(request) != {'id', 'tool', 'arguments'}:
                 raise ValueError('exact id/tool/arguments envelope required')

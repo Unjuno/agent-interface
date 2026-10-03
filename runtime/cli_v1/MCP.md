@@ -452,6 +452,13 @@ Pipe stdin/stdout; terminal stdout is refused to preserve exact image JSON bytes
 
 Each line is exactly `{"id":1,"tool":"list_tools","arguments":{}}`, followed by IDs 2, 3, and so on for accepted calls. Public `interface_*` tools are forwarded unchanged, including image blocks and full/summary options. Inspect discovery to choose a tool. A refused envelope consumes no ID and reports `dispatched:false`; an accepted request consumes its ID before the SDK call, even if the outcome becomes unknown. Never resend an accepted ID or replay uncertain input. `sdk_entry_ns` and `sdk_return_ns` are execution-host monotonic boundaries, not model latency.
 
+Every JSON object must have unique decoded keys, including nested program and
+argument objects. Duplicate keys are refused before dispatch or ID consumption,
+even if their values agree or one key uses a Unicode escape. Repeated keys in
+separate objects and distinct case-sensitive keys remain valid. Numeric values
+must decode to finite numbers; an exponent that overflows the float decoder is
+also refused before dispatch. Numeric-looking strings remain strings.
+
 Call `interface_close` explicitly and inspect release/cleanup results before closing the pipe. EOF is a disconnect, not a task completion or application-cleanup guarantee. Keep stderr separate from the JSON-lines stream. This adapter does not add a model, queue, automatic retry, task policy or performance claim. The older research relay remains unchanged for frozen research callers.
 
 ### Program-local X11 target selection
