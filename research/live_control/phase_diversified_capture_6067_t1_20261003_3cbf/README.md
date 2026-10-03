@@ -11,12 +11,16 @@ Proposed allocation: `PHASE-DIVERSITY-6067-X11-A01-20261003-3CBF`.
 the dark static fixture and preserved eight real XGetImage frames. Its intended
 capture-start gate failed: two wakes exceeded 10ms (maximum10.234570ms).
 All three children exited0, private keymaps stayed neutral, all frames decoded
-unknown/no cue, and Docker recorded exit2/no OOM. Persistent construction and
-all114 scientific cells have NOT run. The original first files/source remain
+unknown/no cue, and Docker recorded exit2/no OOM. Native01 did not reach its
+persistent construction case. The original first files/source remain
 retained; no result is silently replaced.
 
-Pure construction tests10/10 pass after three red→green stages (pixel/schedule,
-independent saved audit, complete planned matrix). These are not T1 evidence.
+After excluded timer01, a prospective 15ms final-spin pacing change qualified
+both static native02 cases (exit0), including independent raw pixel/timing
+recount. See PACING_QUALIFICATION.md for CPU cost and unchanged gates.
+Pure construction tests12/12 pass after four red→green stages (pixel/schedule,
+independent saved audit, complete planned matrix, pacing). These are not T1
+scientific evidence. All114 formal phase/control cells remain unstarted.
 
 ## H / T / D / C / U
 
