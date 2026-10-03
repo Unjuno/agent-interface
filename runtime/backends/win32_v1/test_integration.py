@@ -192,7 +192,10 @@ class PureWin32HelperTests(unittest.TestCase):
 class Win32IntegrationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        cls.proc = None
+        cls.backend = None
         cls.tmp = tempfile.TemporaryDirectory()
+        cls.addClassCleanup(cls._cleanup_fixture)
         root = Path(cls.tmp.name)
         cls.meta = root / "meta.json"
         cls.effect = root / "effect.json"
@@ -213,16 +216,27 @@ class Win32IntegrationTests(unittest.TestCase):
         cls.session = Win32RuntimeSession(cls.backend)
 
     @classmethod
-    def tearDownClass(cls):
-        try:
-            cls.backend.user32.PostMessageW(cls.backend.targets["fixture"], 0x0010, 0, 0)
-        except Exception:
-            pass
-        try:
-            cls.proc.wait(timeout=2)
-        except subprocess.TimeoutExpired:
-            cls.proc.kill()
-        cls.tmp.cleanup()
+    def _cleanup_fixture(cls):
+        backend = getattr(cls, "backend", None)
+        if backend is not None:
+            try:
+                backend.user32.PostMessageW(backend.targets["fixture"], 0x0010, 0, 0)
+            except Exception:
+                pass
+        proc = getattr(cls, "proc", None)
+        if proc is not None:
+            try:
+                proc.wait(timeout=2)
+            except subprocess.TimeoutExpired:
+                proc.kill()
+                proc.wait(timeout=2)
+            finally:
+                # Leave resources intact when terminal ownership is unconfirmed.
+                if proc.poll() is not None and proc.stderr is not None:
+                    proc.stderr.close()
+        tmp = getattr(cls, "tmp", None)
+        if tmp is not None:
+            tmp.cleanup()
 
     def setUp(self):
         self.effect.unlink(missing_ok=True)
