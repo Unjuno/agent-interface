@@ -1,0 +1,57 @@
+"""Post-run saved-data reduction. Never imports or executes original actors."""
+from pathlib import Path
+import json, hashlib, copy, os, datetime
+P = Path(__file__).resolve().parent
+def sha(b): return hashlib.sha256(b).hexdigest()
+def load(n): return json.loads((P/n).read_text(encoding='utf-8'))
+def reduce(raw):
+    assert raw['unit'] == load('PLAN.json')['unit']
+    assert raw['status'] == 'FIRST_STOP' and raw['error'] == 'Error: STOP_TASK_EFFECT'
+    assert raw['actions'] == ['type title', 'Tab']
+    a,b = raw['states']
+    assert a['stage'] == 'initial' and b['stage'] == 'created'
+    assert a['dom'] == {'counter':'','input':'','rows':[]}
+    assert b['dom'] == {'counter':'','input':load('PLAN.json')['task']['title'],'rows':[]}
+    assert 'D01 owned reload witness' in b['ax'] and 'D01 owned reload witness' not in a['ax']
+    assert a['utc'] <= b['utc'] == raw['ended_utc']
+    return 'STOP_CREATE_EFFECT;RELOAD_UNREACHED;DURABILITY_UNVERIFIED'
+def main():
+    raw=load('FIRST_RAW.json')
+    verdict=reduce(raw)
+    controls=[]
+    mutations={
+      'false_pass': lambda r:r.update(status='PASS_SCOPED_RELOAD_EFFECT'),
+      'invented_reload':lambda r:r['actions'].append('reload'),
+      'invented_row':lambda r:r['states'][1]['dom']['rows'].append({'id':'1','title':'D01 owned reload witness'}),
+      'wrong_title':lambda r:r['states'][1]['dom'].update(input='different'),
+      'lost_ax':lambda r:r['states'][1].update(ax=''),
+      'lost_end':lambda r:r.update(ended_utc='missing'),
+    }
+    for name, mutate in mutations.items():
+        r=copy.deepcopy(raw); mutate(r)
+        path=P/'controls'/f'{name}.json';path.parent.mkdir(exist_ok=True)
+        path.write_text(json.dumps(r,ensure_ascii=False,indent=2),encoding='utf-8')
+        try: reduce(r)
+        except (AssertionError,ValueError): controls.append({'name':name,'rejected':True,'sha256':sha(path.read_bytes())})
+        else: raise AssertionError(name)
+    pins=load('FREEZE.json')['files']
+    for f in pins:
+        b=(P/f['path']).read_bytes(); assert len(b)==f['bytes'] and sha(b)==f['sha256']
+    for f in load('SOURCE.json')['files']:
+        b=(P/f['path']).read_bytes()
+        assert hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()==f['git_blob']
+    native=load('NATIVE_RESULT.json')
+    assert type(native['exit_code']) is int and native['exit_code']==0 and native['pipes_closed']==[True,True]
+    stdout=(P/'native-stdout.bin').read_bytes(); stderr=(P/'native-stderr.bin').read_bytes()
+    assert len(stdout)==native['stdout_bytes'] and len(stderr)==native['stderr_bytes']==0
+    start,final=[json.loads(x) for x in stdout.splitlines()]
+    requests=load('SERVER_REQUESTS.json')
+    assert start['pid']==native['child_pid'] and final['socket_fd']==-1 and final['explicit_stop'] is True and final['source_unchanged'] is True
+    assert final['requests']==len(requests)==12 and sum(r['path']=='/__stop' for r in requests)==1
+    assert native['started_utc'] < raw['started_utc'] < raw['ended_utc'] < final['utc'] < native['ended_utc']
+    missing=[n for n in ['view.js','app.js'] if not any(r['path']==f'/examples/vanillajs/js/{n}' for r in requests)]
+    assert missing==['view.js','app.js']
+    report={'authored_after_run':True,'executed_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'reader_pid':os.getpid(),'verdict':verdict,'frozen_pins_verified':len(pins),'official_git_blobs_verified':13,'states':2,'actions':2,'created_rows':0,'reloads':0,'negative_controls':controls,'missing_script_requests':missing,'missing_request_cause':'UNPROVED; response status not captured','native_exit_code':0,'explicit_stop_effect':True,'browser_cleanup':load('BROWSER_CUSTODY.json'),'screenshot_sha256':sha((P/'PROOF.jpg').read_bytes()),'limits':'Post-run typed reduction, not pre-registered independent scorer. No live replay. No physical input/restart durability/resource comparison.'}
+    (P/'SAVED_REDUCTION.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
+    print(json.dumps(report,ensure_ascii=False))
+if __name__=='__main__':main()
