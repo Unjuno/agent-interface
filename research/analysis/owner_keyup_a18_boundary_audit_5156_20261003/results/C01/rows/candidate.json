@@ -1,0 +1,131 @@
+{
+  "legacy_false_accepts": 8,
+  "pid": 8,
+  "python": "3.12.14 (main, Sep 19 2026, 01:04:57) [GCC 14.2.0]",
+  "rows": [
+    {
+      "case": "retained_control",
+      "invalid": false,
+      "legacy_errors": [],
+      "raw_file": "retained_control.json",
+      "sha256": "0db56f8f3560b2a76aec0aeffe728586533b5b95a82a19cee3c425ff99eddf2e",
+      "supplemental_errors": []
+    },
+    {
+      "case": "candidate_window_excludes_events",
+      "invalid": true,
+      "legacy_errors": [],
+      "raw_file": "candidate_window_excludes_events.json",
+      "sha256": "e6c54af9955ab1bd37112d2ac390fca60fd167ab09b63a6ce3827f4c1b2f87c4",
+      "supplemental_errors": [
+        "event_outside_candidate_window:admitted_ns",
+        "event_outside_candidate_window:input_ack_ns",
+        "event_outside_candidate_window:receipt_wait_finished_ns",
+        "event_outside_candidate_window:receipt_wait_started_ns",
+        "event_outside_candidate_window:release_call_returned_ns",
+        "event_outside_candidate_window:release_call_started_ns",
+        "event_outside_candidate_window:release_request_ns",
+        "event_outside_candidate_window:requested_ns",
+        "event_outside_candidate_window:sync_return_ns",
+        "event_outside_candidate_window:verified_ns"
+      ]
+    },
+    {
+      "case": "admission_after_explicit_release",
+      "invalid": true,
+      "legacy_errors": [],
+      "raw_file": "admission_after_explicit_release.json",
+      "sha256": "ce4ff02da38efef19ba936168657dbf2c6b1792e1545cb6eb4f4dbf7e2697d0c",
+      "supplemental_errors": [
+        "release_precedes_admission_ack:single"
+      ]
+    },
+    {
+      "case": "two_key_temporal_order_reversed",
+      "invalid": true,
+      "legacy_errors": [],
+      "raw_file": "two_key_temporal_order_reversed.json",
+      "sha256": "0b68083c505858afb9d41069e8d56685074d333d5669e42fed07def295c2f32a",
+      "supplemental_errors": [
+        "explicit_calls_not_serial"
+      ]
+    },
+    {
+      "case": "teardown_foreign_owner",
+      "invalid": true,
+      "legacy_errors": [],
+      "raw_file": "teardown_foreign_owner.json",
+      "sha256": "f6deabd91ccb0b1869fd75b397dca4b4d02109684bd50a9d07288314ed17dbd6",
+      "supplemental_errors": [
+        "teardown_foreign_owner"
+      ]
+    },
+    {
+      "case": "teardown_foreign_intent",
+      "invalid": true,
+      "legacy_errors": [],
+      "raw_file": "teardown_foreign_intent.json",
+      "sha256": "9cc6d11eefb60eadd7f29ef8f809c89cafe29c8fec20f29caee7aab9b5fead72",
+      "supplemental_errors": [
+        "teardown_foreign_intent"
+      ]
+    },
+    {
+      "case": "cancel_release_before_admission_ack",
+      "invalid": true,
+      "legacy_errors": [],
+      "raw_file": "cancel_release_before_admission_ack.json",
+      "sha256": "1aad5eeacccd90a59036c37b20bbc6f581014e4c7136417fbfa003ef7dbe5626",
+      "supplemental_errors": [
+        "cancel_release_precedes_admission_ack"
+      ]
+    },
+    {
+      "case": "external_counter_boolean",
+      "invalid": true,
+      "legacy_errors": [],
+      "raw_file": "external_counter_boolean.json",
+      "sha256": "f3eba511c19ff031cfb74c25a6ee1028a471eda962c143615bbd208f3cac2d38",
+      "supplemental_errors": [
+        "activity_counter_type:external_effects"
+      ]
+    },
+    {
+      "case": "model_counter_float",
+      "invalid": true,
+      "legacy_errors": [],
+      "raw_file": "model_counter_float.json",
+      "sha256": "495f5689f87b6143f94b0313d05aad51862445fe87cc8aeef7e57c018e28c518",
+      "supplemental_errors": [
+        "activity_counter_type:model_calls"
+      ]
+    },
+    {
+      "case": "existing_keymap_negative",
+      "invalid": true,
+      "legacy_errors": [
+        "call_0_keymap"
+      ],
+      "raw_file": "existing_keymap_negative.json",
+      "sha256": "441a7b3ae022ee1e85b6b777e427e70568b9006dc2fdd1256c810a9aa306e70d",
+      "supplemental_errors": [
+        "call_0_keymap"
+      ]
+    },
+    {
+      "case": "existing_bracket_negative",
+      "invalid": true,
+      "legacy_errors": [
+        "call_0_nested_bracket"
+      ],
+      "raw_file": "existing_bracket_negative.json",
+      "sha256": "f2a760b0a8601adf17b6f6aa98835a2af22858876366fedffb67e1e8874a9b00",
+      "supplemental_errors": [
+        "call_0_nested_bracket"
+      ]
+    }
+  ],
+  "run_id": "5156-A18-RETAINED-BOUNDARY-WSLC-C01-20261003",
+  "scope": "retained-raw mutation construction only; no X11, input, model or game",
+  "supplemental_matches": 11
+}
