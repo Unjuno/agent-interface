@@ -422,7 +422,7 @@ class Win32Backend:
     def release_all(self) -> dict[str, Any]:
         tracked_keys = dict(self.held_keys)
         tracked_buttons = set(self.held_buttons)
-        for vk in list(self.held_keys.values()):
+        for vk in sorted(set(tracked_keys.values())):
             self._send_key(vk, False)
         for button in list(self.held_buttons):
             _, up_flag, _ = BUTTON_FLAGS[button]
@@ -430,7 +430,11 @@ class Win32Backend:
             item.mi = MOUSEINPUT(0, 0, 0, up_flag, 0, 0)
             self._send(item)
         time.sleep(0.01)
-        key_states = {name: self._key_down_state(vk)
+        # Aliases share one physical state observation; repeated queries can
+        # consume the legacy low bit and create an artificial zero ambiguity.
+        states_by_vk = {vk: self._key_down_state(vk)
+                        for vk in sorted(set(tracked_keys.values()))}
+        key_states = {name: states_by_vk[vk]
                       for name, vk in tracked_keys.items()}
         button_states = {button: self._key_down_state(BUTTON_FLAGS[button][2])
                          for button in tracked_buttons}

@@ -88,5 +88,18 @@ class ReleaseCustody(unittest.TestCase):
         self.assertEqual(r['keys_down'],[]);self.assertEqual(r['keys_unknown'],['SHIFT'])
         self.assertEqual(r['buttons_unknown'],[])
         self.assertEqual(b.held_keys,{'SHIFT':16});self.assertEqual(b.held_buttons,set())
+    def test_alias_up_uses_one_state_query(self):
+        calls=[];sends=[]
+        b=self.make(lambda vk:calls.append(vk) or (1 if len(calls)==1 else 0))
+        b.held_keys={'CTRL':17,'CONTROL':17};b.held_buttons=set();b._send_key=lambda vk,down:sends.append((vk,down))
+        self.assertTrue(b.release_all()['verified']);self.assertEqual(calls,[17]);self.assertEqual(sends,[(17,False)])
+    def test_alias_unknown_retains_all_names_with_one_query(self):
+        calls=[];b=self.make(lambda vk:calls.append(vk) or 0)
+        b.held_keys={'CTRL':17,'CONTROL':17};b.held_buttons=set()
+        r=b.release_all();self.assertFalse(r['verified']);self.assertEqual(r['keys_unknown'],['CONTROL','CTRL']);self.assertEqual(calls,[17]);self.assertEqual(len(b.held_keys),2)
+    def test_alias_down_retains_all_names_with_one_query(self):
+        calls=[];b=self.make(lambda vk:calls.append(vk) or 0x8000)
+        b.held_keys={'CTRL':17,'CONTROL':17};b.held_buttons=set()
+        r=b.release_all();self.assertFalse(r['verified']);self.assertEqual(r['keys_down'],['CONTROL','CTRL']);self.assertEqual(calls,[17]);self.assertEqual(len(b.held_keys),2)
 if __name__=='__main__':
     unittest.main(verbosity=2)
