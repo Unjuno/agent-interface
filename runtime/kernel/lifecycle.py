@@ -137,6 +137,8 @@ class RequestLifecycle:
             raise ContractError("effect receipt command mismatch")
         if receipt.invariant_manifest_id != self.execution.invariant_manifest_id:
             raise ContractError("effect receipt manifest mismatch")
+        if receipt.observed_ns < self.execution.started_ns:
+            raise ContractError("effect observation precedes execution start")
         self.effect = receipt
         self.stage = {
             EffectStatus.VERIFIED: Stage.VERIFIED,
@@ -168,8 +170,9 @@ class RequestLifecycle:
             raise ContractError("outcome requested before terminal state")
         command = self.request.command_id if self.request is not None else None
         occurrence = (
-            self.execution is not None
-            and self.execution.effect_occurrence.value in {"possible", "observed"}
+            self.request is not None
+            and (self.execution is None
+                 or self.execution.effect_occurrence.value in {"possible", "observed"})
         )
         verified = self.stage is Stage.VERIFIED
         release_verified = (

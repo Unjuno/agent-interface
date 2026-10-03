@@ -1,0 +1,29 @@
+{
+  "argv": [
+    "/opt/homebrew/bin/orb",
+    "run",
+    "-m",
+    "research-6695-docker-01a0ff52",
+    "-u",
+    "root",
+    "env",
+    "DOCKER_BUILDKIT=0",
+    "docker",
+    "build",
+    "--cpu-quota",
+    "100000",
+    "--cpu-period",
+    "100000",
+    "--memory",
+    "768m",
+    "--memory-swap",
+    "768m",
+    "--rm=false",
+    "-t",
+    "native-game-b64b:construction01",
+    "{OWN_SOURCE_ROOT}/image"
+  ],
+  "utc_start": "2026-10-03T05:43:19.591102+00:00",
+  "exit_code": 0,
+  "utc_end": "2026-10-03T05:44:33.600809+00:00"
+}
