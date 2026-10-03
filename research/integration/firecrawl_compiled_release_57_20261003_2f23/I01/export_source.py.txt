@@ -1,0 +1,6 @@
+import subprocess,pathlib,hashlib,json
+p=pathlib.Path(__file__).parent;r=p.parent/'primary-stdio-bound'/'repo';ref='5feefbcafc1d5f907774462660a019f4172b0d16';path='runtime/core_v1/compiled_gui.py'
+b=subprocess.check_output(['git','show',ref+':'+path],cwd=r)
+(p/'compiled_gui.py.txt').write_bytes(b)
+meta={'main':ref,'path':path,'blob':subprocess.check_output(['git','rev-parse',ref+':'+path],cwd=r,text=True).strip(),'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()}
+(p/'source-pin.json').write_text(json.dumps(meta),encoding='utf-8');print(json.dumps(meta))

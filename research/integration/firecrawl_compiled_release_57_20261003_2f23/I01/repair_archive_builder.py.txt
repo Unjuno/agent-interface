@@ -1,0 +1,5 @@
+import pathlib
+p=pathlib.Path(__file__).parent;s=(p/'prepare_archive.py').read_text(encoding='utf-8')
+assert s.count("git(['write-tree'])")==1
+s=s.replace("git(['write-tree'])","git(['write-tree','--missing-ok'])").replace("p/'archive.index'","p/'archive-v2.index'").replace("{'prepare_archive.py'}","{'prepare_archive.py','prepare_archive_v2.py'}")
+(p/'prepare_archive_v2.py').write_text(s,encoding='utf-8')
