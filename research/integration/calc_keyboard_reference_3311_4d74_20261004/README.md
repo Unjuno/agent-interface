@@ -1,0 +1,1 @@
+G21 original HOME pre-input STOP and new G21V2 Home keyboard reference. Read both REPORT.md files and audits. V2 direct2/2 and keyboard2/2 exact, no model/native actor replay, known historical Calc route only. No speed/general qualification/runtime adoption. ROADMAP incomplete.
