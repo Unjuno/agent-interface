@@ -218,10 +218,12 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
     attempts, model_calls, phases = [], [], []
     selected = cache_update = repair_path = None
     repair_trace = []
+    returned_execution = None
 
     def emit(event): journal(copy.deepcopy(event))
 
     def local(name, payload):
+        nonlocal returned_execution
         stages[name] = {"status": "started", "reason": None}
         started = clock(); emit({"event": "stage_started", "stage": name, "started_ns": started})
         try:
@@ -233,6 +235,14 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
             emit({"event": "stage_failed", "stage": name, "ended_ns": ended,
                   "error": repr(error)})
             raise
+        if name == "execute":
+            # Detach the adapter return before auxiliary callbacks can change it.
+            value = copy.deepcopy(value)
+            try:
+                returned_execution = _execution_decision(value)
+            except ValueError:
+                # Preserve downstream validation of the original malformed value.
+                pass
         ended = clock(); stages[name] = {"status": "completed", "reason": None}
         phases.append({"stage": name, "started_ns": started, "ended_ns": ended,
                        "elapsed_ns": ended-started})
@@ -324,12 +334,30 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                   "input_authority": ("none" if execution_progress is not None and
                       execution_progress.get("status") == "safe_yield" and
                       delivery == "not_attempted" else
-                      "consumed_by_recorded_execute_stage" if stages["execute"]["status"] == "completed"
+                      "consumed_by_recorded_execute_stage" if returned_execution is not None or
+                      stages["execute"]["status"] == "completed"
                       else "none")}
         emit({"event": "adaptive_route_finished", "outcome": outcome,
               "reason": reason, "repair_path": repair_path,
               "attempted_calls": len(attempts)})
         return result
+
+    def execution_delivery(execution):
+        if execution["status"] != "safe_yield":
+            return "confirmed" if execution["status"] == "completed" else execution["status"]
+        if execution["reason"] in {"delivery_uncertain", "execution_failed"} and \
+                execution.get("input_dispatched") is not False:
+            return "delivery_uncertain"
+        if execution["completed_actions"]:
+            return "confirmed_partial"
+        return "delivery_uncertain" if execution.get("input_dispatched") is True else "not_attempted"
+
+    def failure(outcome, reason):
+        if returned_execution is None:
+            return finish(outcome, reason)
+        return finish("CALLER_FAILED", reason,
+                      delivery=execution_delivery(returned_execution),
+                      execution_progress=returned_execution)
 
     def stop(decision): return finish("SAFE_STOP", decision["status"])
 
@@ -406,12 +434,7 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
         execution = _execution_decision(local("execute", {"target": selected, "check": revalidation}))
         if execution["status"] == "safe_yield":
             return finish("EXECUTION_INCOMPLETE", execution["reason"],
-                          delivery=("delivery_uncertain" if
-                              execution["reason"] in {"delivery_uncertain", "execution_failed"} and
-                              execution.get("input_dispatched") is not False else
-                              "confirmed_partial" if execution["completed_actions"] else
-                                    "delivery_uncertain" if execution.get("input_dispatched") is True
-                                    else "not_attempted"),
+                          delivery=execution_delivery(execution),
                           execution_progress=execution)
         if execution["status"] != "completed":
             return finish("EXECUTION_INCOMPLETE", execution["status"],
@@ -423,7 +446,7 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
         return finish("TASK_SUCCEEDED", "verified_effect", task_effect="succeeded",
                       delivery="confirmed", execution_progress=execution)
     except ModelFailure as error:
-        return finish("TASK_DEFERRED" if error.typed_status == "DEFERRED_UPSTREAM"
+        return failure("TASK_DEFERRED" if error.typed_status == "DEFERRED_UPSTREAM"
                       else "CALLER_FAILED", error.typed_status.lower())
     except Exception as error:
-        return finish("CALLER_FAILED", repr(error))
+        return failure("CALLER_FAILED", repr(error))
