@@ -291,3 +291,5 @@ test('guarded primary rejects persistent target tools locally',async()=>{
 import './test_primary_request_snapshot.mjs';
 // Typed release evidence is exercised through the same local/CI entry.
 import './test_primary_typed_release.mjs';
+// Declared negative controls require a typed guard array before continuing.
+import './test_primary_control_container.mjs';
