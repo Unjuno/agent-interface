@@ -85,6 +85,8 @@ class RequestLifecycle:
     def begin_execution(self, request: ExecutionRequest, *, now_ns: int) -> None:
         if self.stage is not Stage.AUTHORIZED or self.binding is None or self.lease is None:
             raise ContractError("execution requires active authority")
+        if self.request is not None:
+            raise ContractError("execution has already begun")
         if type(now_ns) is not int or now_ns < 0:
             raise ContractError("now_ns must be nonnegative integer")
         if now_ns >= self.lease.valid_until_ns:
