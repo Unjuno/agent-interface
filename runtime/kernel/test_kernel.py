@@ -209,6 +209,36 @@ class LifecycleTests(unittest.TestCase):
         with self.assertRaises(ContractError):
             flow.record_effect(EffectReceipt("other", M, 900, EffectStatus.VERIFIED, E))
 
+    def test_stop_after_begin_without_receipt_preserves_possible_effect(self):
+        flow = self.make_authorized()
+        flow.begin_execution(request(), now_ns=300)
+        flow.stop("execution receipt unavailable", release=released())
+        result = flow.outcome()
+        self.assertEqual(result.command_id, "cmd-1")
+        self.assertTrue(result.effect_occurred)
+        self.assertFalse(result.effect_verified)
+        self.assertTrue(result.release_verified)
+
+    def test_stop_before_begin_does_not_claim_possible_effect(self):
+        flow = self.make_authorized()
+        flow.stop("cancelled before begin", release=released())
+        self.assertIsNone(flow.outcome().command_id)
+        self.assertFalse(flow.outcome().effect_occurred)
+
+    def test_rejected_begin_does_not_claim_possible_effect(self):
+        flow = self.make_authorized()
+        with self.assertRaises(ContractError):
+            flow.begin_execution(request(), now_ns=1000)
+        flow.stop("expired begin refused", release=released(1000))
+        self.assertFalse(flow.outcome().effect_occurred)
+
+    def test_explicit_no_effect_receipt_survives_stop(self):
+        flow = self.make_authorized()
+        flow.begin_execution(request(), now_ns=300)
+        flow.record_execution(execution(EffectOccurrence.NONE))
+        flow.stop("completed without effect")
+        self.assertFalse(flow.outcome().effect_occurred)
+
 
 class FakeBackend:
     def __init__(self, support=SupportLevel.EXPERIMENTAL):

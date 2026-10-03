@@ -150,8 +150,9 @@ class RequestLifecycle:
             raise ContractError("outcome requested before terminal state")
         command = self.request.command_id if self.request is not None else None
         occurrence = (
-            self.execution is not None
-            and self.execution.effect_occurrence.value in {"possible", "observed"}
+            self.request is not None
+            and (self.execution is None
+                 or self.execution.effect_occurrence.value in {"possible", "observed"})
         )
         verified = self.stage is Stage.VERIFIED
         release_verified = (

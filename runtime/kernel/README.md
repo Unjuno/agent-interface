@@ -17,5 +17,13 @@ manifest identities.  Terminal execution requires a verified empty release.  Eff
 verification is separate from effect occurrence; a contradicted effect is never rewritten
 as pre-effect/no-effect.
 
+`KernelOutcome.effect_occurred` is a conservative possible-or-observed flag,
+matching `EffectOccurrence.POSSIBLE` and `OBSERVED`. After an accepted begin,
+cancellation without an execution receipt keeps this flag true: verified input
+release cannot establish that earlier input had no effect. A rejected/no begin
+keeps it false, and an explicit `EffectOccurrence.NONE` receipt keeps it false.
+This flag is not independently verified task success and never permits replay.
+See [the cancellation regression evidence](../results/kernel-cancel-effect-01a0ff2c/README.md).
+
 This is an additive product contract, not a stable ABI.  Native backend adapters and
 cross-platform acceptance are later promotion gates.
