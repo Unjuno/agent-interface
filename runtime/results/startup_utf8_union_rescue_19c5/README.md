@@ -16,4 +16,4 @@ D: 238 exact files; 237 matching entries; saved diagnosis remains FAIL; current 
 C: historical isolated union differs from current main; manifest is consistency not original authentication.
 U: no original producer/auditor replay, fresh native relay case allocation, formal/backend/model/task/timing certificate or production fix.
 
-Local CI will be recorded in `local-ci.log`. OrbStack Docker image inspection currently fails opening a daemon blob with operation-not-supported; no reset/prune/pull or shared resource was used.
+Local CI completed with exit0 and `LOCAL_CI_SUMMARY: steps=43 failures=[]`, recorded in `local-ci.log`. OrbStack Docker image inspection currently fails opening a daemon blob with operation-not-supported; no reset/prune/pull or shared resource was used.
