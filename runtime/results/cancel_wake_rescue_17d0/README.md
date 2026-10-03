@@ -17,4 +17,8 @@ none are invented. Historical 18 cells concern owned dummy target descriptors,
 not physical input release, real task effect, contention/ABA or hard deadlines.
 Formal adoption review and fresh integration gates remain separate.
 
-Local workflow CI and main integration are pending; source is not yet retired.
+Saved-only audit normal/-O both qualified 18 rows with no reasons:
+`PASS_SCOPED_WAKE_PIPE_SATURATION`. Local workflow replay at `7cc875066b`
+exited 0, 43 steps, failures=[]; full output is `local-ci.log`. This is not
+hosted CI/full runtime/native certification. Main integration is pending;
+source is not yet retired.
