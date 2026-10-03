@@ -1,0 +1,83 @@
+[
+  {
+    "name": "controls",
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "-B",
+      "research/concurrency/singleflight_asyncio_cancel_6501_20261003_01a0ff52/repair_v2/characterize_retained.py"
+    ],
+    "started_utc": "2026-10-03T02:08:27.520523+00:00",
+    "ended_utc": "2026-10-03T02:08:27.704391+00:00",
+    "exit_code": 0,
+    "output_sha256": "42ff1d7fc9e7cae5d65e012bcb3588d68e99a9739676aaea58be6e88d01e26c8",
+    "output_bytes": 144,
+    "source_freeze_commit": "f3a992f49a4b9e6d5933c1ae141e17fea29af468"
+  },
+  {
+    "name": "audit-v2",
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "-B",
+      "research/concurrency/singleflight_asyncio_cancel_6501_20261003_01a0ff52/repair_v2/audit_v2.py",
+      "research/concurrency/singleflight_asyncio_cancel_6501_20261003_01a0ff52/execution/raw.json",
+      "--expected-raw-sha256",
+      "d3262358814f4fd724d0b36b0fc027d2b4fee70f5a7e56a090d8ee794c5c2441",
+      "--output",
+      "research/concurrency/singleflight_asyncio_cancel_6501_20261003_01a0ff52/repair_v2/execution/audit-v2.json"
+    ],
+    "started_utc": "2026-10-03T02:08:27.704984+00:00",
+    "ended_utc": "2026-10-03T02:08:27.760104+00:00",
+    "exit_code": 0,
+    "output_sha256": "7ad35f64213ad9943b3a1caac2fd6e276ceb835e28bcfdb55354cce3140c046b",
+    "output_bytes": 176,
+    "source_freeze_commit": "f3a992f49a4b9e6d5933c1ae141e17fea29af468"
+  },
+  {
+    "name": "tests",
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "research/concurrency/singleflight_asyncio_cancel_6501_20261003_01a0ff52/repair_v2",
+      "-p",
+      "test_audit_v2.py",
+      "-v"
+    ],
+    "started_utc": "2026-10-03T02:08:27.760624+00:00",
+    "ended_utc": "2026-10-03T02:08:27.969581+00:00",
+    "exit_code": 0,
+    "output_sha256": "4a4f5fb77307858b18171dd6a8757129d6fa29081f25d13e62b7363c1d61b591",
+    "output_bytes": 824,
+    "source_freeze_commit": "f3a992f49a4b9e6d5933c1ae141e17fea29af468"
+  },
+  {
+    "name": "workspace-index",
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "research/check_workspace_index.py",
+      "--git-tree"
+    ],
+    "started_utc": "2026-10-03T02:08:27.970272+00:00",
+    "ended_utc": "2026-10-03T02:08:28.117957+00:00",
+    "exit_code": 0,
+    "output_sha256": "a16d4fbee305a0ff7c625b4ffc061b97dcb6de2e1bfb3a1724d7b9448853acca",
+    "output_bytes": 65,
+    "source_freeze_commit": "f3a992f49a4b9e6d5933c1ae141e17fea29af468"
+  },
+  {
+    "name": "public-navigation",
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      ".github/check_public_navigation.py"
+    ],
+    "started_utc": "2026-10-03T02:08:28.118527+00:00",
+    "ended_utc": "2026-10-03T02:08:29.208858+00:00",
+    "exit_code": 0,
+    "output_sha256": "eb5894f8ce2ab5af16ac103b60be8de2e136cd4f8153764474e96a438794fb6f",
+    "output_bytes": 67,
+    "source_freeze_commit": "f3a992f49a4b9e6d5933c1ae141e17fea29af468"
+  }
+]
