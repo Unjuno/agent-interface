@@ -181,7 +181,8 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
 
     def emit(event):
         row = copy.deepcopy(event)
-        journal(row)
+        # The sink may format or retain its payload; keep receipt evidence private.
+        journal(copy.deepcopy(row))
         if row["event"] in {"branch_selected", "admission_refused",
                             "action_terminal", "effect_checked", "runtime_finished"}:
             critical_events.append(row)
@@ -225,7 +226,7 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
             return finish("SAFE_YIELD", "budget_exhausted")
         try:
             raw = adapters["observe"]({"state": state,
-                                        "required_predicates": interface["predicates"]})
+                                        "required_predicates": interface["predicates"].copy()})
         except ObservationAssociationChanged:
             # Preserve completed actions and pending effects, without inventing
             # a sequence, usable image, effect verdict, or permission to replay.

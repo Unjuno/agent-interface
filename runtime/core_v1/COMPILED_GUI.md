@@ -14,6 +14,12 @@ or failed effects, uncertain input and exhausted budgets yield with their
 completed prefix. Symbols do not grant authority or contain executable points.
 Raw evidence and receipt persistence remain the adapters' responsibility.
 
+Each observation request receives its own declared-predicate list. The journal
+receives a separate deep copy of each event, so callback-local formatting or
+later edits to retained payloads cannot change private declarations or returned
+critical evidence. Callbacks remain trusted synchronous code: their exceptions
+propagate and their I/O must obey the existing deadline contract.
+
 After observation, branch journaling, admission, effect verification and returned
 execution, the runtime rechecks its original method deadline. Reaching the exact
 deadline counts as exhaustion. A late observation is retained, but cannot admit
