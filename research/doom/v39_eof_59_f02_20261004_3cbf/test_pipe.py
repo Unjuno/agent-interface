@@ -10,7 +10,7 @@ from candidate import factory
 
 
 class RealPipeBoundary(unittest.TestCase):
-    def exercise(self, wire, first_event=None, waits=1):
+    def exercise(self, wire, first_event=None, waits=1, callback_fault=False):
         archive = Path(__file__).parent.parent / 'v39_native_fault_59_e05_20261004_3cbf/source-closure.tar.gz'
         with tarfile.open(archive, 'r:gz') as source:
             code = source.extractfile('research/doom/v39_reader_signal_59_e02_20261004_3cbf/source/v39-candidate.py.txt').read()
@@ -22,6 +22,12 @@ class RealPipeBoundary(unittest.TestCase):
             reader, wait, events = factory(code)(child, queue.Queue())
             thread = threading.Thread(target=reader); thread.start(); thread.join(1)
             self.assertFalse(thread.is_alive()); self.assertIsNone(child.poll())
+            if callback_fault:
+                unrelated = type('_SessionReaderFailure', (RuntimeError,), {})
+                def faulty_predicate(row):
+                    raise unrelated('callback error, not reader failure')
+                with self.assertRaises(unrelated):
+                    wait(faulty_predicate, timeout=.1)
             if first_event:
                 self.assertEqual(wait(lambda row: row['event'] == first_event, timeout=.1), {'event': first_event})
             for attempt in range(waits):
@@ -60,3 +66,6 @@ class RealPipeBoundary(unittest.TestCase):
 
     def test_repeated_wait_does_not_lose_parser_failure(self):
         self.exercise('not-json\n', waits=2)
+
+    def test_same_named_callback_error_does_not_block_queued_terminal(self):
+        self.exercise('{"event":"ready"}\n{"event":"terminal"}\n', 'terminal', callback_fault=True)

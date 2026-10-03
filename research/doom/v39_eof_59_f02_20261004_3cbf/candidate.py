@@ -21,6 +21,9 @@ def factory(source):
 
     def create_persistent(process, incoming):
         reader, wait, events = create(process, incoming)
+        closure = dict(zip(reader.__code__.co_freevars,
+                           (cell.cell_contents for cell in reader.__closure__)))
+        marker_type = closure['_SessionReaderFailure']
         failure = None
 
         def wait_persistent(*args, **kwargs):
@@ -31,7 +34,7 @@ def factory(source):
             try:
                 return wait(*args, **kwargs)
             except RuntimeError as error:
-                if type(error).__name__ == '_SessionReaderFailure':
+                if type(error) is marker_type:
                     failure = (type(error), error.args, error.__cause__)
                 raise
 
