@@ -14,9 +14,17 @@ class CodexAppServerClient:
     def __init__(self, command, cwd=None, process_factory=subprocess.Popen, journal_path=None):
         self._journal = None if journal_path is None else open(journal_path, "x", encoding="utf-8")
         self._journal_lock = threading.Lock()
-        self.process = process_factory(
-            command, cwd=cwd, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE, text=True, bufsize=1, encoding="utf-8", errors="strict")
+        try:
+            self.process = process_factory(
+                command, cwd=cwd, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE, text=True, bufsize=1, encoding="utf-8", errors="strict")
+        except BaseException as startup_error:
+            try:
+                if self._journal is not None:
+                    self._journal.close()
+            except BaseException as cleanup_error:
+                raise startup_error from cleanup_error
+            raise
         self._condition = threading.Condition()
         self._write_lock = threading.Lock()
         self._responses = {}
