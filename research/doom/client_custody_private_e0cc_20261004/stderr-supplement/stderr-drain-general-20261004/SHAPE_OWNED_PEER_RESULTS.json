@@ -1,0 +1,29 @@
+{
+  "candidate_sha256": "3a784bc3d1d68876871ac9425adc245026c208e36041a12f0eddd84e1334d1a1",
+  "cases": [
+    {
+      "case": "echo",
+      "owned_pid": 78278,
+      "exit_code": 0,
+      "journal_rows": 2,
+      "reader_retired": true,
+      "journal_and_pipe_wrappers_closed": true,
+      "utc_end": "2026-10-03T21:58:05.284192+00:00"
+    },
+    {
+      "case": "bad-json",
+      "owned_pid": 78279,
+      "exit_code": 0,
+      "journal_rows": 0,
+      "reader_retired": true,
+      "journal_and_pipe_wrappers_closed": true,
+      "utc_end": "2026-10-03T21:58:05.328366+00:00"
+    }
+  ],
+  "scope": "own finite actual Python peers, private class, OS pipes/journal/reader; ordinary regression",
+  "limits": [
+    "not real app-server/model/task/input effect",
+    "no descendant or hard total deadline",
+    "production adoption absent"
+  ]
+}

@@ -11,3 +11,5 @@ Historical files belong to earlier candidate hashes stated within their results.
 Remaining: uncertain Thread-start recovery, descendants/inherited handles, blocked I/O and whole-call deadlines, actual app-server/model/task/input effect, source-owner agreement and reviewed production integration. Current GUI/model/shared/formal allocation not acquired for this work. Broader goal ACTIVE. No main write or remote publication implied by this local packet.
 
 To run the saved ordinary regression, explicitly supply `--output-dir NEW_DIRECTORY` with a nonexistent directory whose parent already exists. The script exclusively creates this directory and writes new intents/raw/results there; it reads the candidate from the retained packet. Existing directories are refused before a peer is started. Original retained results are not replaced.
+
+A separate [stderr supplement](stderr-supplement/README.md) preserves a newly demonstrated residual and its source-qualified private repair; it does not replace the original candidate or historical results.

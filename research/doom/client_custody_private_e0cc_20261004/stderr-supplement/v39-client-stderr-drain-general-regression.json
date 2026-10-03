@@ -1,0 +1,47 @@
+{
+  "candidate_sha256": "3a784bc3d1d68876871ac9425adc245026c208e36041a12f0eddd84e1334d1a1",
+  "cases": [
+    {
+      "case": "echo",
+      "owned_pid": 78278,
+      "exit_code": 0,
+      "journal_rows": 2,
+      "reader_retired": true,
+      "journal_and_pipe_wrappers_closed": true,
+      "utc_end": "2026-10-03T21:58:05.284192+00:00"
+    },
+    {
+      "case": "bad-json",
+      "owned_pid": 78279,
+      "exit_code": 0,
+      "journal_rows": 0,
+      "reader_retired": true,
+      "journal_and_pipe_wrappers_closed": true,
+      "utc_end": "2026-10-03T21:58:05.328366+00:00"
+    }
+  ],
+  "scope": "own finite actual Python peers, private class, OS pipes/journal/reader; ordinary regression",
+  "limits": [
+    "not real app-server/model/task/input effect",
+    "no descendant or hard total deadline",
+    "production adoption absent"
+  ],
+  "stderr_reader_retirement_and_no_errors": "asserted for both own peer cases",
+  "raw_hashes": {
+    "shape-qualified-echo-journal.jsonl.txt": "4759807bdc00d9c44d1ab8fcb346653ae1174bc2c6b1b139f52ac65d2c21dd8c",
+    "shape-qualified-bad-json-journal.jsonl.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "shape-qualified-bad-json-intent.json": "d03644323e545ddbe256257f9cec294e597421c92bac7d7da195d766c3127e86",
+    "SHAPE_OWNED_PEER_RESULTS.json": "b1547eafe9179d5406825f049672be67474669d27f5bb8340a2dc014405828cb",
+    "shape-qualified-echo-intent.json": "f9e6edce9bf4101c4f2d9c235af52726aa96d54d753c2ab3a94a2c07345ceb84"
+  },
+  "ast_scope": {
+    "changed_methods": [
+      "__init__",
+      "close"
+    ],
+    "added_methods": [
+      "_drain_stderr"
+    ],
+    "unchanged_existing_methods": 14
+  }
+}

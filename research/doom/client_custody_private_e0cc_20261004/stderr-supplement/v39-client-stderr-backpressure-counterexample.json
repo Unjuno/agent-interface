@@ -1,0 +1,29 @@
+{
+  "source_sha256": "c513bf6c736a8bbaee296ebbc2551e163fd283b43245996612f949453157833f",
+  "cases": [
+    {
+      "stderr_bytes": 512,
+      "outcome": "response",
+      "peer_alive_at_outcome": true,
+      "reader_alive_at_outcome": true,
+      "owned_pid": 77754,
+      "terminal_exit": -15,
+      "reader_journal_pipes_retired": true
+    },
+    {
+      "stderr_bytes": 1048576,
+      "outcome": "timeout",
+      "peer_alive_at_outcome": true,
+      "reader_alive_at_outcome": true,
+      "owned_pid": 77755,
+      "terminal_exit": -15,
+      "reader_journal_pipes_retired": true
+    }
+  ],
+  "scope": "new ordinary owned Python peer backpressure counterexample; no formal/native/model/input run",
+  "finding": "Undrained stderr prevents response after finite 1MiB diagnostic output; 512-byte control returns. Close retires owned peers.",
+  "limits": [
+    "No hard whole-call deadline or descendant proof",
+    "No production adoption or actual app-server task effect"
+  ]
+}

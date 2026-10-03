@@ -1,5 +1,5 @@
 {
-  "scope": "inert local evidence packet; latest raw and intent included; historical result hashes retain original scopes",
+  "scope": "inert evidence packet; original and stderr candidate scopes distinct; first failures retained",
   "members": [
     {
       "path": "ENVIRONMENT.json",
@@ -8,8 +8,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 2271,
-      "sha256": "38f5ceb26fb4f0ebad427ca2e4b482b6e1b0d870421613ebbf9fae2a1b939e44"
+      "bytes": 2479,
+      "sha256": "93c23b319ed1425b87074a1bcbe2e0f621ac65874744b2fb341c4cbba3c0ead8"
     },
     {
       "path": "client-message-shape-private.py.txt",
@@ -65,6 +65,131 @@
       "path": "shape_results.json",
       "bytes": 1036,
       "sha256": "a2bf82ae11bda9ae380f936f7fceb4e5589883ece2376bc06fad10e266aada6e"
+    },
+    {
+      "path": "stderr-supplement/README.md",
+      "bytes": 1476,
+      "sha256": "cbf4d85f95af1a6a8f12a12c70e94691a1f82495e32bf866a40a0e39b9b92c9e"
+    },
+    {
+      "path": "stderr-supplement/client-stderr-drain-private.py.txt",
+      "bytes": 10600,
+      "sha256": "3a784bc3d1d68876871ac9425adc245026c208e36041a12f0eddd84e1334d1a1"
+    },
+    {
+      "path": "stderr-supplement/stderr-backpressure-20261004/1048576-intent.json",
+      "bytes": 450,
+      "sha256": "7a3deb635ea0f4551c805a7039120dbb16e56a12bb0d968e080cd66cae8493cd"
+    },
+    {
+      "path": "stderr-supplement/stderr-backpressure-20261004/1048576-journal.jsonl.txt",
+      "bytes": 91,
+      "sha256": "2272d161b66026bbeeb02d86fe4a6b3b7f1491736c8c1dcfb2986cfabe16cd10"
+    },
+    {
+      "path": "stderr-supplement/stderr-backpressure-20261004/512-intent.json",
+      "bytes": 442,
+      "sha256": "0ef1d16269b9605ba65d97c83acb5fdaff09cec4edf4330c14114e86193e02c5"
+    },
+    {
+      "path": "stderr-supplement/stderr-backpressure-20261004/512-journal.jsonl.txt",
+      "bytes": 188,
+      "sha256": "86d1dfc3a3400973f5f53f5d0f15e3f2a72b2d453e88da4c100aa44ee6f3d4ce"
+    },
+    {
+      "path": "stderr-supplement/stderr-drain-general-20261004/SHAPE_OWNED_PEER_RESULTS.json",
+      "bytes": 843,
+      "sha256": "b1547eafe9179d5406825f049672be67474669d27f5bb8340a2dc014405828cb"
+    },
+    {
+      "path": "stderr-supplement/stderr-drain-general-20261004/shape-qualified-bad-json-intent.json",
+      "bytes": 200,
+      "sha256": "d03644323e545ddbe256257f9cec294e597421c92bac7d7da195d766c3127e86"
+    },
+    {
+      "path": "stderr-supplement/stderr-drain-general-20261004/shape-qualified-bad-json-journal.jsonl.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "stderr-supplement/stderr-drain-general-20261004/shape-qualified-echo-intent.json",
+      "bytes": 315,
+      "sha256": "f9e6edce9bf4101c4f2d9c235af52726aa96d54d753c2ab3a94a2c07345ceb84"
+    },
+    {
+      "path": "stderr-supplement/stderr-drain-general-20261004/shape-qualified-echo-journal.jsonl.txt",
+      "bytes": 274,
+      "sha256": "4759807bdc00d9c44d1ab8fcb346653ae1174bc2c6b1b139f52ac65d2c21dd8c"
+    },
+    {
+      "path": "stderr-supplement/stderr-drain-regression-20261004/1048576-intent.json",
+      "bytes": 450,
+      "sha256": "1a8b9347f648fd7eddf12f55b584346f32862d1e566530d895ae4c73f607503d"
+    },
+    {
+      "path": "stderr-supplement/stderr-drain-regression-20261004/1048576-journal.jsonl.txt",
+      "bytes": 188,
+      "sha256": "c9183ce508441b22829d6cf98d89a5931a493dec0eba9bf68bee625b9baf03ff"
+    },
+    {
+      "path": "stderr-supplement/stderr-drain-regression-20261004/512-intent.json",
+      "bytes": 442,
+      "sha256": "4220b2f86f8bc21f3d205d21666f598c6867fda1792d115c67811a821116b377"
+    },
+    {
+      "path": "stderr-supplement/stderr-drain-regression-20261004/512-journal.jsonl.txt",
+      "bytes": 188,
+      "sha256": "8b775a0690828ab003f4b7b3ae2733f938ec77e2cb2538b5ff123d4e4099d8d1"
+    },
+    {
+      "path": "stderr-supplement/stderr-invalid-bytes-20261004/512-intent.json",
+      "bytes": 462,
+      "sha256": "58cc5d2326aea5805337e0469d9aaa18adc14837594ac2ee3ba280bc704ddc67"
+    },
+    {
+      "path": "stderr-supplement/stderr-invalid-bytes-20261004/512-journal.jsonl.txt",
+      "bytes": 91,
+      "sha256": "ab7ec16776d9f0f3281317ad445e642219883ecd9471050d8131a91164b2a113"
+    },
+    {
+      "path": "stderr-supplement/stderr-invalid-bytes-v2-20261004/1048576-intent.json",
+      "bytes": 471,
+      "sha256": "b72c8c9ad9e817df55b4b9358b6a81168a8ba6b85ea210800cad06db778ed2b2"
+    },
+    {
+      "path": "stderr-supplement/stderr-invalid-bytes-v2-20261004/1048576-journal.jsonl.txt",
+      "bytes": 188,
+      "sha256": "9c648a3cbdf62fa8c1244b07bc5ed8404450a38970430a0a4080d77d30565f70"
+    },
+    {
+      "path": "stderr-supplement/stderr-invalid-bytes-v2-20261004/512-intent.json",
+      "bytes": 463,
+      "sha256": "ea1742b0ef55c7e59d306cb80e5c9e3b728e8752150e3587c1c2bb0d93823b79"
+    },
+    {
+      "path": "stderr-supplement/stderr-invalid-bytes-v2-20261004/512-journal.jsonl.txt",
+      "bytes": 188,
+      "sha256": "f8ba1cf74f80718d043ffe61e145880d5134195e775a19ed35c6f031f1497ab8"
+    },
+    {
+      "path": "stderr-supplement/v39-client-stderr-backpressure-counterexample.json",
+      "bytes": 978,
+      "sha256": "182aae7199dda6142f224a3c85b6fcd14373cf4e6f79db61dec9a7646bdf6149"
+    },
+    {
+      "path": "stderr-supplement/v39-client-stderr-drain-general-regression.json",
+      "bytes": 1677,
+      "sha256": "d08fbbbdd7f846563e220489b544a1bc44244f2481d30e4231d20ed4d65e2de0"
+    },
+    {
+      "path": "stderr-supplement/v39-client-stderr-drain-regression.json",
+      "bytes": 1921,
+      "sha256": "a69372b4f0972eaded15d89c71541f57729377f26ef5a907a88d0d0c5a718fb9"
+    },
+    {
+      "path": "stderr-supplement/v39-client-stderr-invalid-bytes-regression.json",
+      "bytes": 1806,
+      "sha256": "d6c3610654a5b7d8b5b10f87ab568f0e556e7bbc6c8536576e7a1367e6543462"
     }
   ]
 }
