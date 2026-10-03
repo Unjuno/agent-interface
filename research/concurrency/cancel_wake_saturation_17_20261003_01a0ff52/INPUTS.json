@@ -1,0 +1,121 @@
+{
+  "schema": "cancel-wake-input-v1",
+  "allocation": "17-CANCEL-WAKE-SATURATION-A01-20261003-70ab",
+  "pipe_size": 4096,
+  "read_chunk": 64,
+  "spacing_seconds": 0.001,
+  "preconsumer_seconds": 0.025,
+  "primary_seconds": 0.5,
+  "thread_join_seconds": 2,
+  "case_count": 18,
+  "cases": [
+    {
+      "case_id": "wake-01",
+      "repeat": 1,
+      "policy": "blocking_byte",
+      "load": "empty"
+    },
+    {
+      "case_id": "wake-02",
+      "repeat": 1,
+      "policy": "blocking_byte",
+      "load": "full"
+    },
+    {
+      "case_id": "wake-03",
+      "repeat": 1,
+      "policy": "nonblocking_drop",
+      "load": "empty"
+    },
+    {
+      "case_id": "wake-04",
+      "repeat": 1,
+      "policy": "nonblocking_drop",
+      "load": "full"
+    },
+    {
+      "case_id": "wake-05",
+      "repeat": 1,
+      "policy": "level_flag_nonblocking",
+      "load": "empty"
+    },
+    {
+      "case_id": "wake-06",
+      "repeat": 1,
+      "policy": "level_flag_nonblocking",
+      "load": "full"
+    },
+    {
+      "case_id": "wake-07",
+      "repeat": 2,
+      "policy": "level_flag_nonblocking",
+      "load": "full"
+    },
+    {
+      "case_id": "wake-08",
+      "repeat": 2,
+      "policy": "level_flag_nonblocking",
+      "load": "empty"
+    },
+    {
+      "case_id": "wake-09",
+      "repeat": 2,
+      "policy": "nonblocking_drop",
+      "load": "full"
+    },
+    {
+      "case_id": "wake-10",
+      "repeat": 2,
+      "policy": "nonblocking_drop",
+      "load": "empty"
+    },
+    {
+      "case_id": "wake-11",
+      "repeat": 2,
+      "policy": "blocking_byte",
+      "load": "full"
+    },
+    {
+      "case_id": "wake-12",
+      "repeat": 2,
+      "policy": "blocking_byte",
+      "load": "empty"
+    },
+    {
+      "case_id": "wake-13",
+      "repeat": 3,
+      "policy": "blocking_byte",
+      "load": "empty"
+    },
+    {
+      "case_id": "wake-14",
+      "repeat": 3,
+      "policy": "blocking_byte",
+      "load": "full"
+    },
+    {
+      "case_id": "wake-15",
+      "repeat": 3,
+      "policy": "nonblocking_drop",
+      "load": "empty"
+    },
+    {
+      "case_id": "wake-16",
+      "repeat": 3,
+      "policy": "nonblocking_drop",
+      "load": "full"
+    },
+    {
+      "case_id": "wake-17",
+      "repeat": 3,
+      "policy": "level_flag_nonblocking",
+      "load": "empty"
+    },
+    {
+      "case_id": "wake-18",
+      "repeat": 3,
+      "policy": "level_flag_nonblocking",
+      "load": "full"
+    }
+  ]
+}

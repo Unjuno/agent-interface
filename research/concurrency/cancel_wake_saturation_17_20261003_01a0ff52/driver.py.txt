@@ -1,0 +1,301 @@
+"""One first Linux wake-pipe allocation; inert archive, explicit invocation only."""
+import array
+import datetime
+import errno
+import fcntl
+import hashlib
+import json
+import os
+from pathlib import Path
+import platform
+import stat
+import sys
+import termios
+import threading
+import time
+
+
+def utc():
+    return datetime.datetime.now(datetime.timezone.utc).isoformat()
+
+
+def sha(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def unread(fd):
+    a = array.array("i", [0])
+    fcntl.ioctl(fd, termios.FIONREAD, a, True)
+    return a[0]
+
+
+def image(fd):
+    s = os.fstat(fd)
+    return dict(fd=fd, dev=s.st_dev, ino=s.st_ino, mode=s.st_mode,
+                flags=fcntl.fcntl(fd, fcntl.F_GETFL), fifo=stat.S_ISFIFO(s.st_mode))
+
+
+def witness(fd):
+    try:
+        return dict(state="OPEN", image=image(fd))
+    except OSError as e:
+        return dict(state="ERROR", errno=e.errno)
+
+
+def save_first(path, value):
+    b = (json.dumps(value, sort_keys=True, indent=2) + "\n").encode()
+    if len(b) > 2 * 1024 * 1024:
+        raise RuntimeError("output ceiling")
+    with Path(path).open("xb") as f:
+        f.write(b)
+        f.flush()
+        os.fsync(f.fileno())
+
+
+def cell(case, cfg):
+    row = dict(case=case, status="STOP", pid=os.getpid(), start_utc=utc(),
+               start_ns=time.monotonic_ns(), events=[], errors=[], tids={})
+    lock = threading.Lock()
+    flag = threading.Event()
+    attempted = threading.Event()
+    done = threading.Event()
+    counts = dict(N=0, C=0)
+    outcome = {}
+    fds = {}
+    closed = set()
+    sender = consumer = None
+
+    def emit(event, **fields):
+        with lock:
+            e = dict(seq=len(row["events"]), ns=time.monotonic_ns(), utc=utc(),
+                     pid=os.getpid(), tid=threading.get_native_id(),
+                     thread=threading.current_thread().name, event=event, **fields)
+            row["events"].append(e)
+            return e
+
+    def error(where, exc):
+        row["errors"].append(dict(where=where, type=type(exc).__name__, text=str(exc),
+                                  errno=getattr(exc, "errno", None)))
+        emit("error", where=where)
+
+    def close_fd(label, phase):
+        fd = fds[label]
+        if label in closed:
+            raise RuntimeError("duplicate close " + label)
+        before = image(fd)
+        os.close(fd)
+        closed.add(label)
+        emit("fd_closed", label=label, phase=phase, before=before, after=witness(fd))
+
+    try:
+        r, w = os.pipe()
+        fds.update(wake_r=r, wake_w=w)
+        tr, tw = os.pipe()
+        fds.update(target_r=tr, target_w=tw)
+        os.set_blocking(r, False)
+        os.set_blocking(w, False)
+        fcntl.fcntl(w, fcntl.F_SETPIPE_SZ, cfg["pipe_size"])
+        row["pipe_size"] = fcntl.fcntl(w, fcntl.F_GETPIPE_SZ)
+        if row["pipe_size"] != cfg["pipe_size"]:
+            raise RuntimeError("unqualified pipe capacity")
+        row["initial_fds"] = {k: image(v) for k, v in fds.items()}
+        if case["load"] == "full":
+            n = os.write(w, b"N" * cfg["pipe_size"])
+            if n != cfg["pipe_size"]:
+                raise RuntimeError("short prefill")
+            probe_start = time.monotonic_ns()
+            try:
+                p = os.write(w, b"Q")
+                row["probe"] = dict(status="written", bytes=p, errno=None,
+                                    start_ns=probe_start, end_ns=time.monotonic_ns())
+            except BlockingIOError as e:
+                row["probe"] = dict(status="eagain", bytes=0, errno=e.errno,
+                                    start_ns=probe_start, end_ns=time.monotonic_ns())
+            if row["probe"]["status"] != "eagain" or row["probe"]["errno"] != errno.EAGAIN:
+                raise RuntimeError("saturation probe did not get EAGAIN")
+        else:
+            n = 0
+            row["probe"] = None
+        row["prefill"] = dict(bytes=n, unread=unread(r), ns=time.monotonic_ns())
+        os.set_blocking(w, case["policy"] == "blocking_byte")
+        row["writer_flags"] = fcntl.fcntl(w, fcntl.F_GETFL)
+
+        def send():
+            row["tids"]["sender"] = threading.get_native_id()
+            try:
+                emit("sender_start")
+                if case["policy"] == "level_flag_nonblocking":
+                    flag.set()
+                    emit("level_published")
+                emit("wake_attempt")
+                outcome["start_ns"] = time.monotonic_ns()
+                attempted.set()
+                try:
+                    b = os.write(w, b"C")
+                    outcome.update(status="written", bytes=b, errno=None,
+                                   end_ns=time.monotonic_ns())
+                    if b != 1:
+                        raise RuntimeError("short cancel write")
+                except BlockingIOError as e:
+                    outcome.update(status="eagain", bytes=0, errno=e.errno,
+                                   end_ns=time.monotonic_ns())
+                    if e.errno != errno.EAGAIN or case["policy"] == "blocking_byte":
+                        raise
+                emit("wake_return", **outcome)
+            except BaseException as exc:
+                error("sender", exc)
+            finally:
+                emit("sender_done")
+                done.set()
+
+        def receive():
+            row["tids"]["consumer"] = threading.get_native_id()
+            started = emit("consumer_start")
+            deadline = started["ns"] + int(cfg["primary_seconds"] * 1e9)
+            try:
+                while True:
+                    reason = "level_state" if flag.is_set() else None
+                    if reason is None and time.monotonic_ns() >= deadline:
+                        emit("primary_deadline", elapsed_ns=time.monotonic_ns()-started["ns"])
+                        return
+                    if reason is None:
+                        rs = time.monotonic_ns()
+                        try:
+                            b = os.read(r, cfg["read_chunk"])
+                        except BlockingIOError as e:
+                            if e.errno != errno.EAGAIN:
+                                raise
+                            b = None
+                        re = time.monotonic_ns()
+                        if b == b"":
+                            raise RuntimeError("unexpected wake EOF")
+                        if b is not None:
+                            if any(v not in (78, 67) for v in b):
+                                raise RuntimeError("unexpected wake bytes")
+                            counts["N"] += b.count(b"N")
+                            counts["C"] += b.count(b"C")
+                            emit("wake_read", start_ns=rs, end_ns=re, hex=b.hex(), bytes=len(b))
+                            if b"C" in b:
+                                flag.set()
+                                reason = "byte_C"
+                    if reason is not None:
+                        emit("cancel_seen", reason=reason, unread=unread(r), counts=dict(counts))
+                        close_fd("target_r", "cancel")
+                        close_fd("target_w", "cancel")
+                        emit("cancel_complete", unread=unread(r))
+                        return
+                    time.sleep(cfg["spacing_seconds"])
+            except BaseException as exc:
+                error("consumer", exc)
+            finally:
+                emit("consumer_done")
+
+        sender = threading.Thread(target=send, name="wake-sender", daemon=True)
+        sender.start()
+        if not attempted.wait(cfg["thread_join_seconds"]):
+            raise RuntimeError("sender never attempted")
+        time.sleep(cfg["preconsumer_seconds"])
+        p = emit("preconsumer", unread=unread(r), sender_done=done.is_set(), flag=flag.is_set(),
+                 write_status=outcome.get("status"), writer_flags=fcntl.fcntl(w, fcntl.F_GETFL))
+        row["preconsumer"] = dict(p)
+        if n == cfg["pipe_size"] and p["unread"] != n:
+            raise RuntimeError("full preconsumer exposure missing")
+        if case["policy"] == "blocking_byte" and n and p["sender_done"]:
+            raise RuntimeError("full blocking sender unexpectedly finished")
+        if not (case["policy"] == "blocking_byte" and n) and not p["sender_done"]:
+            raise RuntimeError("sender incomplete before consumer")
+        expected_flag = case["policy"] == "level_flag_nonblocking"
+        expected_status = None if case["policy"] == "blocking_byte" and n else ("eagain" if n else "written")
+        if p["flag"] != expected_flag or p["write_status"] != expected_status or (not n and p["unread"] != 1):
+            raise RuntimeError("preconsumer policy/exposure mismatch")
+        try:
+            row["sender_wchan"] = Path("/proc/self/task/%d/wchan" % row["tids"]["sender"]).read_text().strip()
+        except OSError as e:
+            row["sender_wchan"] = dict(unavailable_errno=e.errno)
+        consumer = threading.Thread(target=receive, name="wake-consumer", daemon=True)
+        consumer.start()
+        consumer.join(cfg["thread_join_seconds"])
+        if consumer.is_alive():
+            raise RuntimeError("consumer unjoined at primary boundary")
+        sender.join(cfg["thread_join_seconds"])
+        if sender.is_alive():
+            raise RuntimeError("sender unjoined at primary boundary")
+        row["write"] = dict(outcome)
+        q = emit("primary_checkpoint", unread=unread(r), flag=flag.is_set(), counts=dict(counts),
+                 target_r=witness(tr), target_w=witness(tw))
+        row["primary"] = dict(q)
+        if n + outcome.get("bytes", 0) != sum(counts.values()) + q["unread"]:
+            raise RuntimeError("byte conservation mismatch")
+        if row["errors"]:
+            raise RuntimeError("thread error")
+        row["status"] = "OBSERVED"
+    except BaseException as exc:
+        error("cell", exc)
+    finally:
+        emit("fixture_cleanup_start")
+        for label in ("target_r", "target_w", "wake_r"):
+            if label in fds and label not in closed:
+                try:
+                    close_fd(label, "fixture_cleanup")
+                except BaseException as exc:
+                    error("fixture_cleanup", exc)
+        if sender is not None:
+            sender.join(cfg["thread_join_seconds"])
+        if "wake_w" in fds and "wake_w" not in closed:
+            try:
+                close_fd("wake_w", "fixture_cleanup")
+            except BaseException as exc:
+                error("fixture_cleanup", exc)
+        row["joins"] = dict(sender=sender is not None and not sender.is_alive(),
+                            consumer=consumer is not None and not consumer.is_alive())
+        row["final_fds"] = {k: witness(v) for k, v in fds.items()}
+        emit("fixture_cleanup_complete")
+        row["end_ns"] = time.monotonic_ns()
+        row["end_utc"] = utc()
+        if row["errors"] or not all(row["joins"].values()):
+            row["status"] = "STOP"
+    return row
+
+
+def main():
+    src, out = map(Path, sys.argv[1:3])
+    out.mkdir(exist_ok=False)
+    start = dict(pid=os.getpid(), argv=sys.argv, start_utc=utc(), start_ns=time.monotonic_ns())
+    cfg = json.loads((src / "INPUTS.json").read_bytes())
+    freeze = json.loads((src / "FREEZE.json").read_bytes())
+    for name, digest in freeze["source_sha256"].items():
+        if sha(src / name) != digest:
+            raise RuntimeError("source mismatch " + name)
+    if sys.platform != "linux" or platform.machine() != "aarch64":
+        raise RuntimeError("unqualified native platform")
+    if sys.version != freeze["environment"]["python"] or platform.release() != freeze["environment"]["kernel"]:
+        raise RuntimeError("native environment changed after freeze")
+    cgroup = {name: Path("/sys/fs/cgroup/" + name).read_text().strip()
+              for name in ("cpu.max", "memory.max", "memory.swap.max", "pids.max")}
+    if cgroup != dict(zip(("cpu.max", "memory.max", "memory.swap.max", "pids.max"),
+                         ("25000 100000", "134217728", "0", "32"))):
+        raise RuntimeError("unqualified effective constraints " + repr(cgroup))
+    deps = {name: sha(path) for name, path in freeze["dependency_paths"].items()}
+    if deps != freeze["dependency_sha256"]:
+        raise RuntimeError("dependency mismatch")
+    result = dict(schema="cancel-wake-first-v1", allocation=cfg["allocation"], operation=start,
+                  inputs_sha256=sha(src / "INPUTS.json"), freeze_sha256=sha(src / "FREEZE.json"),
+                  environment=dict(python=sys.version, executable=sys.executable,
+                                   kernel=platform.release(), machine=platform.machine(),
+                                   cgroup=cgroup, dependency_sha256=deps), rows=[])
+    stopped = False
+    for case in cfg["cases"]:
+        row = dict(case=case, status="NOT_RUN") if stopped else cell(case, cfg)
+        result["rows"].append(row)
+        save_first(out / (case["case_id"] + ".json"), row)
+        stopped = stopped or row["status"] == "STOP"
+    result["collector_disposition"] = "STOP" if stopped else "COMPLETE_FIRST_OBSERVATIONS"
+    start.update(end_utc=utc(), end_ns=time.monotonic_ns(), exit_code=2 if stopped else 0)
+    save_first(out / "FIRST.json", result)
+    print(json.dumps(dict(disposition=result["collector_disposition"], rows=len(result["rows"]),
+                          sha256=sha(out / "FIRST.json")), sort_keys=True))
+    return start["exit_code"]
+
+
+if __name__ == "__main__":
+    sys.exit(main())
