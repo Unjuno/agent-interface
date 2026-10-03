@@ -91,3 +91,9 @@ contracts.py, backend.py, old test_kernel.py and original evidence stay unchange
 Main delivery requires this runtime proposal's own non-author committee/content
 approval and exact combined-tree check, applicable GitHub conditions and one
 history-preserving conditional application. #57/#59 remain broader open goals.
+
+Public log correction: private local workspace/home prefixes are replaced in
+public traceback text. Exact original bytes are retained privately and read back;
+`PUBLICATION.json` records original/published hashes. All test failures, raw
+matrices, source and scientific dispositions remain unchanged. The first
+published version remains in Git provenance; no history removal is claimed.
