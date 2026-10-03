@@ -1,0 +1,50 @@
+test_real_semantic_fixture_accepts (test_gate.ReleaseGateTests.test_real_semantic_fixture_accepts) ... ok
+test_rejects_failed_or_unknown_cleanup (test_gate.ReleaseGateTests.test_rejects_failed_or_unknown_cleanup) ... ok
+test_rejects_missing_or_wrong_release_custody (test_gate.ReleaseGateTests.test_rejects_missing_or_wrong_release_custody) ... ok
+test_rejects_terminal_interruption_custody_and_release_order (test_gate.ReleaseGateTests.test_rejects_terminal_interruption_custody_and_release_order) ... 
+  test_rejects_terminal_interruption_custody_and_release_order (test_gate.ReleaseGateTests.test_rejects_terminal_interruption_custody_and_release_order) (mode='token') ... FAIL
+  test_rejects_terminal_interruption_custody_and_release_order (test_gate.ReleaseGateTests.test_rejects_terminal_interruption_custody_and_release_order) (mode='record') ... FAIL
+  test_rejects_terminal_interruption_custody_and_release_order (test_gate.ReleaseGateTests.test_rejects_terminal_interruption_custody_and_release_order) (mode='reason') ... FAIL
+  test_rejects_terminal_interruption_custody_and_release_order (test_gate.ReleaseGateTests.test_rejects_terminal_interruption_custody_and_release_order) (mode='order') ... FAIL
+test_rejects_truthy_verification_and_held_release (test_gate.ReleaseGateTests.test_rejects_truthy_verification_and_held_release) ... ok
+
+======================================================================
+FAIL: test_rejects_terminal_interruption_custody_and_release_order (test_gate.ReleaseGateTests.test_rejects_terminal_interruption_custody_and_release_order) (mode='token')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/doom/v39_native_fault_59_e03_20261004_3cbf/test_gate.py", line 63, in test_rejects_terminal_interruption_custody_and_release_order
+    self.assertFalse(release_gate(row))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_rejects_terminal_interruption_custody_and_release_order (test_gate.ReleaseGateTests.test_rejects_terminal_interruption_custody_and_release_order) (mode='record')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/doom/v39_native_fault_59_e03_20261004_3cbf/test_gate.py", line 63, in test_rejects_terminal_interruption_custody_and_release_order
+    self.assertFalse(release_gate(row))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_rejects_terminal_interruption_custody_and_release_order (test_gate.ReleaseGateTests.test_rejects_terminal_interruption_custody_and_release_order) (mode='reason')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/doom/v39_native_fault_59_e03_20261004_3cbf/test_gate.py", line 63, in test_rejects_terminal_interruption_custody_and_release_order
+    self.assertFalse(release_gate(row))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_rejects_terminal_interruption_custody_and_release_order (test_gate.ReleaseGateTests.test_rejects_terminal_interruption_custody_and_release_order) (mode='order')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/doom/v39_native_fault_59_e03_20261004_3cbf/test_gate.py", line 63, in test_rejects_terminal_interruption_custody_and_release_order
+    self.assertFalse(release_gate(row))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.001s
+
+FAILED (failures=4)

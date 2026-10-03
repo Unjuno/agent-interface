@@ -1,0 +1,87 @@
+test_accepts_hand_checked_cancelled_empty_trace (test_audit.AuditControls.test_accepts_hand_checked_cancelled_empty_trace) ... ok
+test_rejects_raw_order_and_custody_controls (test_audit.AuditControls.test_rejects_raw_order_and_custody_controls) ... 
+  test_rejects_raw_order_and_custody_controls (test_audit.AuditControls.test_rejects_raw_order_and_custody_controls) (mode='duplicate') ... FAIL
+  test_rejects_raw_order_and_custody_controls (test_audit.AuditControls.test_rejects_raw_order_and_custody_controls) (mode='swapped') ... FAIL
+  test_rejects_raw_order_and_custody_controls (test_audit.AuditControls.test_rejects_raw_order_and_custody_controls) (mode='missing') ... FAIL
+  test_rejects_raw_order_and_custody_controls (test_audit.AuditControls.test_rejects_raw_order_and_custody_controls) (mode='token') ... FAIL
+  test_rejects_raw_order_and_custody_controls (test_audit.AuditControls.test_rejects_raw_order_and_custody_controls) (mode='id') ... FAIL
+  test_rejects_raw_order_and_custody_controls (test_audit.AuditControls.test_rejects_raw_order_and_custody_controls) (mode='truthy') ... FAIL
+  test_rejects_raw_order_and_custody_controls (test_audit.AuditControls.test_rejects_raw_order_and_custody_controls) (mode='held') ... FAIL
+  test_rejects_raw_order_and_custody_controls (test_audit.AuditControls.test_rejects_raw_order_and_custody_controls) (mode='completed') ... FAIL
+
+======================================================================
+FAIL: test_rejects_raw_order_and_custody_controls (test_audit.AuditControls.test_rejects_raw_order_and_custody_controls) (mode='duplicate')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/doom/v39_native_fault_59_e03_20261004_3cbf/test_audit.py", line 38, in test_rejects_raw_order_and_custody_controls
+    self.assertFalse(semantic_check(row, events))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_rejects_raw_order_and_custody_controls (test_audit.AuditControls.test_rejects_raw_order_and_custody_controls) (mode='swapped')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/doom/v39_native_fault_59_e03_20261004_3cbf/test_audit.py", line 38, in test_rejects_raw_order_and_custody_controls
+    self.assertFalse(semantic_check(row, events))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_rejects_raw_order_and_custody_controls (test_audit.AuditControls.test_rejects_raw_order_and_custody_controls) (mode='missing')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/doom/v39_native_fault_59_e03_20261004_3cbf/test_audit.py", line 38, in test_rejects_raw_order_and_custody_controls
+    self.assertFalse(semantic_check(row, events))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_rejects_raw_order_and_custody_controls (test_audit.AuditControls.test_rejects_raw_order_and_custody_controls) (mode='token')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/doom/v39_native_fault_59_e03_20261004_3cbf/test_audit.py", line 38, in test_rejects_raw_order_and_custody_controls
+    self.assertFalse(semantic_check(row, events))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_rejects_raw_order_and_custody_controls (test_audit.AuditControls.test_rejects_raw_order_and_custody_controls) (mode='id')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/doom/v39_native_fault_59_e03_20261004_3cbf/test_audit.py", line 38, in test_rejects_raw_order_and_custody_controls
+    self.assertFalse(semantic_check(row, events))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_rejects_raw_order_and_custody_controls (test_audit.AuditControls.test_rejects_raw_order_and_custody_controls) (mode='truthy')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/doom/v39_native_fault_59_e03_20261004_3cbf/test_audit.py", line 38, in test_rejects_raw_order_and_custody_controls
+    self.assertFalse(semantic_check(row, events))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_rejects_raw_order_and_custody_controls (test_audit.AuditControls.test_rejects_raw_order_and_custody_controls) (mode='held')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/doom/v39_native_fault_59_e03_20261004_3cbf/test_audit.py", line 38, in test_rejects_raw_order_and_custody_controls
+    self.assertFalse(semantic_check(row, events))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_rejects_raw_order_and_custody_controls (test_audit.AuditControls.test_rejects_raw_order_and_custody_controls) (mode='completed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/doom/v39_native_fault_59_e03_20261004_3cbf/test_audit.py", line 38, in test_rejects_raw_order_and_custody_controls
+    self.assertFalse(semantic_check(row, events))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.002s
+
+FAILED (failures=8)
