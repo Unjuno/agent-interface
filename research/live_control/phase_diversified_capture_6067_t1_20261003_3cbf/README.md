@@ -7,7 +7,13 @@ Proposed allocation: `PHASE-DIVERSITY-6067-X11-A01-20261003-3CBF`.
 
 ## Current boundary
 
-**FORMAL_NOT_STARTED.** The first excluded construction container reached
+**FORMAL_STOP_CAPTURE_TIMING_GATE.** One candidate block consumed A01,
+two dark controls started, one completed,16frames preserved; all108pulse
+comparisons unreached. Formal auditor0, no retry or scientific PASS.
+See REPORT.md / RESULT.json for the exact17.231413ms first irregular-control
+wake lateness and observed terminal state.
+
+The first excluded construction container reached
 the dark static fixture and preserved eight real XGetImage frames. Its intended
 capture-start gate failed: two wakes exceeded 10ms (maximum10.234570ms).
 All three children exited0, private keymaps stayed neutral, all frames decoded
@@ -20,7 +26,7 @@ both static native02 cases (exit0), including independent raw pixel/timing
 recount. See PACING_QUALIFICATION.md for CPU cost and unchanged gates.
 Pure construction tests12/12 pass after four red→green stages (pixel/schedule,
 independent saved audit, complete planned matrix, pacing). These are not T1
-scientific evidence. All114 formal phase/control cells remain unstarted.
+scientific evidence. These construction snapshots predate formal A01 STOP.
 
 ## H / T / D / C / U
 
@@ -82,7 +88,8 @@ Pure host checks only:
 research/live_control/phase_diversified_capture_6067_t1_20261003_3cbf
 -p 'test_*.py' -v`.
 
-Do not rerun retained native outputs. Native construction is explicitly marked
-`--construction`; formal mode requires `--formal` and an as-yet-unpublished
-FREEZE.json. Source/image/commands/gates must be published before any scientific
-cell. No launch is authorized just by this README or an open parent Issue.
+Do not rerun retained native outputs or consumed A01. Native construction is explicitly marked
+`--construction`; formal mode requires `--formal` and the prospectively pinned
+FREEZE.json, now published before A01. Source/image/commands/gates must be
+published before a separately admitted future allocation. No launch is
+authorized just by this README or an open parent Issue.

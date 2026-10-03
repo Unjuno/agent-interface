@@ -32,6 +32,12 @@ def read(name):
     return json.loads((HERE / name).read_text())
 
 def main():
+    manifest = read("MANIFEST.json")
+    actual_paths = {f.relative_to(HERE).as_posix() for f in HERE.rglob("*")
+                    if f.is_file() and f.name != "MANIFEST.json" and "__pycache__" not in f.parts}
+    need(actual_paths == set(manifest), "complete retained file set including empty logs")
+    for name, digest in manifest.items():
+        need(hashlib.sha256((HERE / name).read_bytes()).hexdigest() == digest, "retained bytes: " + name)
     freeze = read("FREEZE.json")
     pins = dict(freeze["candidate_sha256"], **{"audit.py": freeze["auditor_sha256"]})
     git = os.environ.get("PHASE6067_GIT", "git")
@@ -59,6 +65,35 @@ def main():
     need(started == planned[:len(started)] and completed == planned[:len(completed)], "no replay/substitution")
     need(raw["cgroups"] == {"cpu.max": "100000 100000", "memory.max": "536870912",
                            "memory.swap.max": "0", "pids.max": "64"}, "in-run cgroups")
+    import audit
+    frame_count = 0
+    for identity in started:
+        cell = HERE / "formal" / "cells" / identity
+        receipt = audit.read(cell / "cell.json")
+        expected_spec = fixture["cases"][planned.index(identity)]
+        audit.join(receipt["spec"], expected_spec, "retained case identity")
+        need(receipt["error"] is None, "completed children, timing gate rather than crashed acquisition")
+        need(set(receipt["files_sha256"]) == {"source.json", "capture.json", "source.jsonl", "frames.jsonl"}, "complete raw receipt")
+        for name, digest in receipt["files_sha256"].items():
+            need(hashlib.sha256((cell / name).read_bytes()).hexdigest() == digest, "in-run raw hash")
+        source, capture = audit.read(cell / "source.json"), audit.read(cell / "capture.json")
+        stream = [audit.parse_record(s) for s in (cell / "frames.jsonl").read_text().splitlines()]
+        audit.join(stream, capture["frames"], "typed partial journal")
+        frame_count += len(capture["frames"])
+        for k in ("fixture_exit", "observer_exit", "xvfb_exit"):
+            need(type(receipt["lifecycle"][k]) is int and receipt["lifecycle"][k] == 0, "saved terminal child exit")
+        if identity in completed:
+            audit.audit_cell(expected_spec, source, capture, receipt["lifecycle"])
+        else:
+            try:
+                audit.audit_cell(expected_spec, source, capture, receipt["lifecycle"])
+            except ValueError as exc:
+                need(str(exc) == "capture lateness", "postmortem independently identifies exact timing gate")
+            else:
+                raise ValueError("claimed first STOP not reproduced from saved control")
+    result = read("RESULT.json")
+    need(result["frames_retained"] == frame_count and result["started_cells"] == len(started) and
+         result["completed_controls"] == len(completed), "exact STOP report denominators")
     if code == 2:
         need(raw["status"] == "STOP" and len(started) == len(completed) + 1, "first failed cell retained")
         need(not (HERE / "audit").exists(), "no auditor after failed producer")
@@ -69,14 +104,14 @@ def main():
         need(check_runtime(auditor, freeze["image_id"]) == 0, "separate auditor terminal0")
         need(auditor["Config"]["Cmd"] == freeze["auditor_command"][freeze["auditor_command"].index("python3"):], "auditor command")
         need(run["State"]["FinishedAt"] < auditor["State"]["StartedAt"], "auditor admitted only after producer terminal")
-        import audit
         actual = audit.validate(HERE / "formal", fixture, freeze["candidate_sha256"])
         need(actual == read("audit/audit.json"), "saved-only independent recount")
         mutations = read("audit/mutations.json")
         need(len(mutations) == 8 and all(m["rejected"] is True for m in mutations), "eight corruptions refused")
         science = actual["status"]
     print(json.dumps({"custody": "VERIFIED_SAVED_ONLY", "scientific_status": science,
-                      "completed_cells": len(completed), "started_cells": len(started)}, sort_keys=True))
+                      "completed_cells": len(completed), "started_cells": len(started),
+                      "manifest_targets": len(manifest), "frames_retained": frame_count}, sort_keys=True))
 
 if __name__ == "__main__":
     main()
