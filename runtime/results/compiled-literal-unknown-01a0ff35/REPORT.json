@@ -1,0 +1,109 @@
+{
+  "base": "816724f93a7239b3ad9b5ebb2e5f79b8a103b2db",
+  "commands": [
+    {
+      "ended_utc": "2026-10-03T04:57:12.565777+00:00",
+      "exit_code": 1,
+      "failing_assertions": 4,
+      "label": "baseline-red",
+      "methods": 7,
+      "source_sha256": "ccaff4ce59cfbe7af76bfe80655c968eed7855acdb7514df64730790766cf7f7",
+      "started_utc": "2026-10-03T04:57:12.458312+00:00",
+      "test_sha256": "0de836b5cff60f0b280ab86f6787cd29d67eaebdfe9d27ce3c30643254d82fac"
+    },
+    {
+      "ended_utc": "2026-10-03T04:59:05.098150+00:00",
+      "exit_code": 1,
+      "failing_assertions": 3,
+      "label": "guarded-baseline-red",
+      "methods": 2,
+      "source_sha256": "ccaff4ce59cfbe7af76bfe80655c968eed7855acdb7514df64730790766cf7f7",
+      "started_utc": "2026-10-03T04:59:04.822083+00:00",
+      "test_sha256": "0de836b5cff60f0b280ab86f6787cd29d67eaebdfe9d27ce3c30643254d82fac"
+    },
+    {
+      "ended_utc": "2026-10-03T04:59:06.391556+00:00",
+      "exit_code": 0,
+      "failing_assertions": 0,
+      "label": "candidate-targeted",
+      "methods": 9,
+      "source_sha256": "de9af115808aef5bbafc1576e0930e3394ea0d426317cd79fd78f0c7558b48cf",
+      "started_utc": "2026-10-03T04:59:06.118808+00:00",
+      "test_sha256": "0de836b5cff60f0b280ab86f6787cd29d67eaebdfe9d27ce3c30643254d82fac"
+    },
+    {
+      "ended_utc": "2026-10-03T04:59:06.615975+00:00",
+      "exit_code": 0,
+      "failing_assertions": 0,
+      "label": "candidate-core",
+      "methods": 83,
+      "source_sha256": "de9af115808aef5bbafc1576e0930e3394ea0d426317cd79fd78f0c7558b48cf",
+      "started_utc": "2026-10-03T04:59:06.465106+00:00",
+      "test_sha256": "0de836b5cff60f0b280ab86f6787cd29d67eaebdfe9d27ce3c30643254d82fac"
+    },
+    {
+      "ended_utc": "2026-10-03T04:59:07.235728+00:00",
+      "exit_code": 0,
+      "failing_assertions": 0,
+      "label": "candidate-targeted-optimized",
+      "methods": 9,
+      "source_sha256": "de9af115808aef5bbafc1576e0930e3394ea0d426317cd79fd78f0c7558b48cf",
+      "started_utc": "2026-10-03T04:59:06.696165+00:00",
+      "test_sha256": "0de836b5cff60f0b280ab86f6787cd29d67eaebdfe9d27ce3c30643254d82fac"
+    },
+    {
+      "ended_utc": "2026-10-03T04:59:07.456011+00:00",
+      "exit_code": 0,
+      "failing_assertions": 0,
+      "label": "candidate-core-optimized",
+      "methods": 83,
+      "source_sha256": "de9af115808aef5bbafc1576e0930e3394ea0d426317cd79fd78f0c7558b48cf",
+      "started_utc": "2026-10-03T04:59:07.312442+00:00",
+      "test_sha256": "0de836b5cff60f0b280ab86f6787cd29d67eaebdfe9d27ce3c30643254d82fac"
+    },
+    {
+      "ended_utc": "2026-10-03T05:07:01.558305+00:00",
+      "exit_code": 0,
+      "failing_assertions": 0,
+      "label": "dependency-targeted",
+      "methods": 13,
+      "source_sha256": "84b00d1f5ba4243301502e3fb2a65b0284fe543b6a0826a251e664b674ddd99c",
+      "started_utc": "2026-10-03T05:07:01.287695+00:00",
+      "test_sha256": "0de836b5cff60f0b280ab86f6787cd29d67eaebdfe9d27ce3c30643254d82fac"
+    },
+    {
+      "ended_utc": "2026-10-03T05:07:02.083949+00:00",
+      "exit_code": 0,
+      "failing_assertions": 0,
+      "label": "dependency-targeted-optimized",
+      "methods": 13,
+      "source_sha256": "84b00d1f5ba4243301502e3fb2a65b0284fe543b6a0826a251e664b674ddd99c",
+      "started_utc": "2026-10-03T05:07:01.629503+00:00",
+      "test_sha256": "0de836b5cff60f0b280ab86f6787cd29d67eaebdfe9d27ce3c30643254d82fac"
+    }
+  ],
+  "formal_producer_or_allocation_replays": 0,
+  "issue": 6932,
+  "ordinary_engineering_only": true,
+  "os": "Windows-10-10.0.26300-SP0",
+  "pillow": "10.4.0",
+  "python": "3.11.9",
+  "required_dependency": {
+    "application_gate": "actual separate valid dependency delivery, same pinned semantics and fresh current combination; changed important dependency/head/conditions require renewed proposal",
+    "head": "4a3c51dd86c592892fa92df523b822e7bce548e2",
+    "pr": 6900
+  },
+  "result": "matching declared literal reaches required verifier; legacy nonmatch/missing/type/deadline/negative-verdict controls retained",
+  "unverified": [
+    "trusted callback truth",
+    "raw authentication",
+    "live X11",
+    "public MCP path efficacy",
+    "physical release",
+    "clock truth",
+    "general task effect",
+    "timing or token advantage",
+    "full native/hosted CI"
+  ],
+  "worker": "01a0ff35-50a9-7a31-9007-2caa36152d68"
+}

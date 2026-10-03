@@ -1,0 +1,55 @@
+import datetime
+import hashlib
+import json
+import subprocess
+from pathlib import Path
+
+WORK = Path(__file__).resolve().parent
+REPO = WORK / 'agent-interface'
+OUT = WORK / 'compiled-literal-unknown-01a0ff35'
+BASE = '816724f93a7239b3ad9b5ebb2e5f79b8a103b2db'
+
+def git(*args):
+    return subprocess.check_output(['git', *args], cwd=REPO)
+
+def main():
+    OUT.mkdir(exist_ok=False)
+    chosen = []
+    for raw in git('ls-tree', '-r', BASE, '--', 'runtime/core_v1').decode().splitlines():
+        meta, path = raw.split('\t')
+        mode, kind, oid = meta.split()
+        if path.endswith('.py') or path.endswith('/COMPILED_GUI.md'):
+            chosen.append((mode, kind, oid, path))
+    selected = sorted(chosen)
+    if len(selected) > 40:
+        raise RuntimeError('bounded-source-selection')
+    result = subprocess.run(['git', 'cat-file', '--batch'], input=('\n'.join(r[2] for r in selected)+'\n').encode(), cwd=REPO, capture_output=True, check=True)
+    if len(result.stdout) > 2 * 1024 * 1024:
+        raise RuntimeError('bounded-source-bytes')
+    offset = 0
+    rows = []
+    for mode, kind, oid, path in selected:
+        end = result.stdout.index(b'\n', offset)
+        header = result.stdout[offset:end].decode().split()
+        if header[:2] != [oid, 'blob']:
+            raise RuntimeError('blob-header')
+        size = int(header[2]); start = end + 1
+        data = result.stdout[start:start+size]; offset = start + size + 1
+        if hashlib.sha1(b'blob '+str(size).encode()+b'\0'+data).hexdigest() != oid:
+            raise RuntimeError('blob-identity')
+        for variant in ['baseline', 'candidate']:
+            target = OUT / variant / path
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(data)
+        rows.append({'path':path, 'mode':mode, 'git_blob':oid, 'bytes':size, 'sha256':hashlib.sha256(data).hexdigest()})
+    freeze = {'worker':'01a0ff35-50a9-7a31-9007-2caa36152d68', 'scope':'ordinary private repair; no formal allocation or source-arm producer replay',
+              'base':BASE, 'created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(), 'files':rows,
+              'hypothesis':'an explicitly matching valid scalar literal unknown reaches the existing required independent effect callback; absent/nonmatching unknown and negative callback verdicts remain finite refusal',
+              'controls':['matching literal unknown', 'matching ordinary string', 'missing predicate', 'nonmatching legacy unknown', 'type mismatch', 'unavailable verifier', 'failed verifier'],
+              'decision':'first regression against original bytes before any candidate source edit; focused controls and complete core suite must preserve prior boundaries',
+              'limits':['no raw authentication', 'no untrusted-callback sandbox', 'no GUI/backend/model/physical release or timing result']}
+    (OUT/'SOURCE_FREEZE.json').write_bytes((json.dumps(freeze,sort_keys=True,indent=2)+'\n').encode())
+    print(json.dumps({'base':BASE,'exported_files':len(rows),'freeze_sha256':hashlib.sha256((OUT/'SOURCE_FREEZE.json').read_bytes()).hexdigest()}))
+
+if __name__ == '__main__':
+    main()

@@ -14,6 +14,14 @@ or failed effects, uncertain input and exhausted budgets yield with their
 completed prefix. Symbols do not grant authority or contain executable points.
 Raw evidence and receipt persistence remain the adapters' responsibility.
 
+Expected effects compare the declared scalar type and value. An explicitly
+declared string literal `"unknown"` can match that same observed string, but
+still requires the effect verifier's verdict before continuation. A missing
+predicate, or a legacy `"unknown"` marker that does not match its declared
+expectation, remains unavailable. If the expected literal itself is `"unknown"`
+and its observation cannot be established, omit the predicate or return an
+unavailable effect verdict; the literal match alone does not certify an effect.
+
 After observation, branch journaling, admission, effect verification and returned
 execution, the runtime rechecks its original method deadline. Reaching the exact
 deadline counts as exhaustion. A late observation is retained, but cannot admit

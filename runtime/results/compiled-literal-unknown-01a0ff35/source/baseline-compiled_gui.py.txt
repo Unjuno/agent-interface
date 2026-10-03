@@ -249,12 +249,8 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
                 return finish("SAFE_YIELD", "no_progress")
             expected = pending_effect["expected_effect"]
             observed = observation["predicates"]
-            # A declared matching string literal still needs the effect verifier.
-            # Retain legacy unavailable handling when "unknown" does not match.
-            unknown = any(key not in observed or
-                          (observed[key] == "unknown" and
-                           not _matches(observed[key], value))
-                          for key, value in expected.items())
+            unknown = any(key not in observed or observed.get(key) == "unknown"
+                          for key in expected)
             mismatch = any(not _matches(observed.get(key), value)
                            for key, value in expected.items())
             if unknown or mismatch:
