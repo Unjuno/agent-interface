@@ -1,6 +1,6 @@
 {
   "schema": "cancel-release-public-path-redaction-v1",
-  "recorded_utc": "2026-10-03T01:45:21.143179+00:00",
+  "recorded_utc": "2026-10-03T01:51:39.610476+00:00",
   "records": [
     {
       "path": "logs/baseline_regressions.log",
@@ -25,6 +25,18 @@
       "original_sha256": "9ff211121f5eb39d85a09cb8f0bb212d68b72e839af58304071e8b6fc850d7ba",
       "published_sha256": "0a142eba806983da1bfbb90e471e8876fba20f1e37bec3170913e4fee6ade399",
       "transformation": "private workspace/home prefixes replaced; test/output content unchanged; exact original retained privately"
+    },
+    {
+      "path": "implementation_mutations.json",
+      "original_sha256": "0897320c9f9336e57d566432de933c2dac3a752fdc563052e81c75f05cb78d1b",
+      "published_sha256": "0c6b9194e76f56fcfcb4c44f986d41dc3728e9caf804f2cb06bb5338112e9009",
+      "transformation": "private workspace/home prefixes replaced in embedded traceback logs only; all other JSON data unchanged; exact original retained privately"
+    },
+    {
+      "path": "implementation_mutations_initial_classifier_failure.json",
+      "original_sha256": "057ecc09a183f5f2d1e50c5f1a05562e4bea5d54484e12fe240619d07663c258",
+      "published_sha256": "109b3dd1405bc256d30b556af9b9cf1a9b54037166e48b760af4e7884f4b17ae",
+      "transformation": "private workspace/home prefixes replaced in embedded traceback logs only; all other JSON data unchanged; exact original retained privately"
     }
   ],
   "originals_readback_verified": true,
