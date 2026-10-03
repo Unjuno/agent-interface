@@ -44,6 +44,8 @@ jobs:
         run: python -B -m unittest discover -s research/analysis/counterexample_guard_refinement_6645_t0b_orbstack_20261003 -p 'test_*.py' -v
       - name: Verify retained Issue 6645 A03 archive
         run: python -B -m unittest discover -s research/analysis/counterexample_guard_refinement_6645_t0c_orbstack_20261003 -p 'test_*.py' -v
+      - name: Verify retained Issue 5694 A03 scientific HOLD
+        run: python -B -m unittest discover -s research/analysis/exogenous_opportunity_5694_first_failed_boundary_a03_20261002 -p 'test_*.py' -v
       - name: Test Issue #6808 S06 photometric invariance construction
         run: python -B -m unittest discover -s research/analysis/looming_visual_assumption_gate_5905_s06_orbstack_contrast_20261003 -p 'test_*.py' -v
       - name: Test #6749 corrected prefix-stability successor construction
