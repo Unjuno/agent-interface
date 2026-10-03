@@ -1,0 +1,3839 @@
+{
+  "format": "compiled-admission-sequence-finite-v1",
+  "module_sha256": "ccaff4ce59cfbe7af76bfe80655c968eed7855acdb7514df64730790766cf7f7",
+  "platform": "Windows-10-10.0.26300-SP0",
+  "python": "3.11.9",
+  "rows": [
+    {
+      "admission_label": "equal_int",
+      "admission_repr": "0",
+      "admission_type": "int",
+      "calls": {
+        "execute": 1,
+        "observe": 2,
+        "verify_effect": 1
+      },
+      "case_id": "0:equal_int:valid",
+      "critical_events": [
+        {
+          "action": "mark",
+          "action_id": "fixture-action",
+          "event": "action_terminal",
+          "release_verified": true,
+          "status": "completed"
+        },
+        {
+          "action": "mark",
+          "event": "effect_checked",
+          "evidence_ref": "fixture-effect",
+          "status": "succeeded"
+        },
+        {
+          "completed_transitions": 1,
+          "event": "runtime_finished",
+          "outcome": "TASK_SUCCEEDED",
+          "reason": "method_complete"
+        }
+      ],
+      "dispatched": [
+        {
+          "repr": "0",
+          "type": "int"
+        }
+      ],
+      "exception": null,
+      "observation_sequence": 0.0,
+      "profile": "valid",
+      "result": {
+        "completed_transitions": 1,
+        "outcome": "TASK_SUCCEEDED",
+        "reason": "method_complete"
+      }
+    },
+    {
+      "admission_label": "equal_int",
+      "admission_repr": "0",
+      "admission_type": "int",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "0:equal_int:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 0.0,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "equal_int",
+      "admission_repr": "0",
+      "admission_type": "int",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "0:equal_int:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 0.0,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "wrong_int",
+      "admission_repr": "1",
+      "admission_type": "int",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "0:wrong_int:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 0.0,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "wrong_int",
+      "admission_repr": "1",
+      "admission_type": "int",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "0:wrong_int:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 0.0,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "wrong_int",
+      "admission_repr": "1",
+      "admission_type": "int",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "0:wrong_int:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 0.0,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "false",
+      "admission_repr": "False",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "0:false:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 0.0,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "false",
+      "admission_repr": "False",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "0:false:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 0.0,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "false",
+      "admission_repr": "False",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "0:false:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 0.0,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "true",
+      "admission_repr": "True",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "0:true:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 0.0,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "true",
+      "admission_repr": "True",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "0:true:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 0.0,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "true",
+      "admission_repr": "True",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "0:true:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 0.0,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "equal_float",
+      "admission_repr": "0.0",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "0:equal_float:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 0.0,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "equal_float",
+      "admission_repr": "0.0",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "0:equal_float:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 0.0,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "equal_float",
+      "admission_repr": "0.0",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "0:equal_float:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 0.0,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "string",
+      "admission_repr": "'0'",
+      "admission_type": "str",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "0:string:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 0.0,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "string",
+      "admission_repr": "'0'",
+      "admission_type": "str",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "0:string:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 0.0,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "string",
+      "admission_repr": "'0'",
+      "admission_type": "str",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "0:string:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 0.0,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "null",
+      "admission_repr": "None",
+      "admission_type": "NoneType",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "0:null:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 0.0,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "null",
+      "admission_repr": "None",
+      "admission_type": "NoneType",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "0:null:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 0.0,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "null",
+      "admission_repr": "None",
+      "admission_type": "NoneType",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "0:null:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 0.0,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "int_subclass",
+      "admission_repr": "0",
+      "admission_type": "IntAlias",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "0:int_subclass:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 0.0,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "int_subclass",
+      "admission_repr": "0",
+      "admission_type": "IntAlias",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "0:int_subclass:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 0.0,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "int_subclass",
+      "admission_repr": "0",
+      "admission_type": "IntAlias",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "0:int_subclass:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 0.0,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "nan",
+      "admission_repr": "nan",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "0:nan:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 0.0,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "nan",
+      "admission_repr": "nan",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "0:nan:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 0.0,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "nan",
+      "admission_repr": "nan",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "0:nan:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 0.0,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "infinity",
+      "admission_repr": "inf",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "0:infinity:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 0.0,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "infinity",
+      "admission_repr": "inf",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "0:infinity:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 0.0,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "infinity",
+      "admission_repr": "inf",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "0:infinity:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 0.0,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "equal_int",
+      "admission_repr": "1",
+      "admission_type": "int",
+      "calls": {
+        "execute": 1,
+        "observe": 2,
+        "verify_effect": 1
+      },
+      "case_id": "1:equal_int:valid",
+      "critical_events": [
+        {
+          "action": "mark",
+          "action_id": "fixture-action",
+          "event": "action_terminal",
+          "release_verified": true,
+          "status": "completed"
+        },
+        {
+          "action": "mark",
+          "event": "effect_checked",
+          "evidence_ref": "fixture-effect",
+          "status": "succeeded"
+        },
+        {
+          "completed_transitions": 1,
+          "event": "runtime_finished",
+          "outcome": "TASK_SUCCEEDED",
+          "reason": "method_complete"
+        }
+      ],
+      "dispatched": [
+        {
+          "repr": "1",
+          "type": "int"
+        }
+      ],
+      "exception": null,
+      "observation_sequence": 1,
+      "profile": "valid",
+      "result": {
+        "completed_transitions": 1,
+        "outcome": "TASK_SUCCEEDED",
+        "reason": "method_complete"
+      }
+    },
+    {
+      "admission_label": "equal_int",
+      "admission_repr": "1",
+      "admission_type": "int",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "1:equal_int:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 1,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "equal_int",
+      "admission_repr": "1",
+      "admission_type": "int",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "1:equal_int:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 1,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "wrong_int",
+      "admission_repr": "2",
+      "admission_type": "int",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "1:wrong_int:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 1,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "wrong_int",
+      "admission_repr": "2",
+      "admission_type": "int",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "1:wrong_int:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 1,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "wrong_int",
+      "admission_repr": "2",
+      "admission_type": "int",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "1:wrong_int:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 1,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "false",
+      "admission_repr": "False",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "1:false:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 1,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "false",
+      "admission_repr": "False",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "1:false:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 1,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "false",
+      "admission_repr": "False",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "1:false:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 1,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "true",
+      "admission_repr": "True",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "1:true:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 1,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "true",
+      "admission_repr": "True",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "1:true:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 1,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "true",
+      "admission_repr": "True",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "1:true:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 1,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "equal_float",
+      "admission_repr": "1.0",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "1:equal_float:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 1,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "equal_float",
+      "admission_repr": "1.0",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "1:equal_float:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 1,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "equal_float",
+      "admission_repr": "1.0",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "1:equal_float:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 1,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "string",
+      "admission_repr": "'1'",
+      "admission_type": "str",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "1:string:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 1,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "string",
+      "admission_repr": "'1'",
+      "admission_type": "str",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "1:string:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 1,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "string",
+      "admission_repr": "'1'",
+      "admission_type": "str",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "1:string:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 1,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "null",
+      "admission_repr": "None",
+      "admission_type": "NoneType",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "1:null:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 1,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "null",
+      "admission_repr": "None",
+      "admission_type": "NoneType",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "1:null:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 1,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "null",
+      "admission_repr": "None",
+      "admission_type": "NoneType",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "1:null:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 1,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "int_subclass",
+      "admission_repr": "1",
+      "admission_type": "IntAlias",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "1:int_subclass:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 1,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "int_subclass",
+      "admission_repr": "1",
+      "admission_type": "IntAlias",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "1:int_subclass:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 1,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "int_subclass",
+      "admission_repr": "1",
+      "admission_type": "IntAlias",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "1:int_subclass:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 1,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "nan",
+      "admission_repr": "nan",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "1:nan:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 1,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "nan",
+      "admission_repr": "nan",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "1:nan:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 1,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "nan",
+      "admission_repr": "nan",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "1:nan:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 1,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "infinity",
+      "admission_repr": "inf",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "1:infinity:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 1,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "infinity",
+      "admission_repr": "inf",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "1:infinity:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 1,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "infinity",
+      "admission_repr": "inf",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "1:infinity:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 1,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "equal_int",
+      "admission_repr": "2",
+      "admission_type": "int",
+      "calls": {
+        "execute": 1,
+        "observe": 2,
+        "verify_effect": 1
+      },
+      "case_id": "2:equal_int:valid",
+      "critical_events": [
+        {
+          "action": "mark",
+          "action_id": "fixture-action",
+          "event": "action_terminal",
+          "release_verified": true,
+          "status": "completed"
+        },
+        {
+          "action": "mark",
+          "event": "effect_checked",
+          "evidence_ref": "fixture-effect",
+          "status": "succeeded"
+        },
+        {
+          "completed_transitions": 1,
+          "event": "runtime_finished",
+          "outcome": "TASK_SUCCEEDED",
+          "reason": "method_complete"
+        }
+      ],
+      "dispatched": [
+        {
+          "repr": "2",
+          "type": "int"
+        }
+      ],
+      "exception": null,
+      "observation_sequence": 2,
+      "profile": "valid",
+      "result": {
+        "completed_transitions": 1,
+        "outcome": "TASK_SUCCEEDED",
+        "reason": "method_complete"
+      }
+    },
+    {
+      "admission_label": "equal_int",
+      "admission_repr": "2",
+      "admission_type": "int",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "2:equal_int:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 2,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "equal_int",
+      "admission_repr": "2",
+      "admission_type": "int",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "2:equal_int:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 2,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "wrong_int",
+      "admission_repr": "3",
+      "admission_type": "int",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "2:wrong_int:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 2,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "wrong_int",
+      "admission_repr": "3",
+      "admission_type": "int",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "2:wrong_int:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 2,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "wrong_int",
+      "admission_repr": "3",
+      "admission_type": "int",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "2:wrong_int:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 2,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "false",
+      "admission_repr": "False",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "2:false:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 2,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "false",
+      "admission_repr": "False",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "2:false:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 2,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "false",
+      "admission_repr": "False",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "2:false:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 2,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "true",
+      "admission_repr": "True",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "2:true:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 2,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "true",
+      "admission_repr": "True",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "2:true:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 2,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "true",
+      "admission_repr": "True",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "2:true:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 2,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "equal_float",
+      "admission_repr": "2.0",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "2:equal_float:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 2,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "equal_float",
+      "admission_repr": "2.0",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "2:equal_float:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 2,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "equal_float",
+      "admission_repr": "2.0",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "2:equal_float:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 2,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "string",
+      "admission_repr": "'2'",
+      "admission_type": "str",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "2:string:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 2,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "string",
+      "admission_repr": "'2'",
+      "admission_type": "str",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "2:string:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 2,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "string",
+      "admission_repr": "'2'",
+      "admission_type": "str",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "2:string:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 2,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "null",
+      "admission_repr": "None",
+      "admission_type": "NoneType",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "2:null:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 2,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "null",
+      "admission_repr": "None",
+      "admission_type": "NoneType",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "2:null:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 2,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "null",
+      "admission_repr": "None",
+      "admission_type": "NoneType",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "2:null:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 2,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "int_subclass",
+      "admission_repr": "2",
+      "admission_type": "IntAlias",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "2:int_subclass:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 2,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "int_subclass",
+      "admission_repr": "2",
+      "admission_type": "IntAlias",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "2:int_subclass:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 2,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "int_subclass",
+      "admission_repr": "2",
+      "admission_type": "IntAlias",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "2:int_subclass:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 2,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "nan",
+      "admission_repr": "nan",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "2:nan:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 2,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "nan",
+      "admission_repr": "nan",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "2:nan:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 2,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "nan",
+      "admission_repr": "nan",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "2:nan:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 2,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "infinity",
+      "admission_repr": "inf",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "2:infinity:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 2,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "infinity",
+      "admission_repr": "inf",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "2:infinity:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 2,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "infinity",
+      "admission_repr": "inf",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "2:infinity:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 2,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "equal_int",
+      "admission_repr": "7",
+      "admission_type": "int",
+      "calls": {
+        "execute": 1,
+        "observe": 2,
+        "verify_effect": 1
+      },
+      "case_id": "7:equal_int:valid",
+      "critical_events": [
+        {
+          "action": "mark",
+          "action_id": "fixture-action",
+          "event": "action_terminal",
+          "release_verified": true,
+          "status": "completed"
+        },
+        {
+          "action": "mark",
+          "event": "effect_checked",
+          "evidence_ref": "fixture-effect",
+          "status": "succeeded"
+        },
+        {
+          "completed_transitions": 1,
+          "event": "runtime_finished",
+          "outcome": "TASK_SUCCEEDED",
+          "reason": "method_complete"
+        }
+      ],
+      "dispatched": [
+        {
+          "repr": "7",
+          "type": "int"
+        }
+      ],
+      "exception": null,
+      "observation_sequence": 7,
+      "profile": "valid",
+      "result": {
+        "completed_transitions": 1,
+        "outcome": "TASK_SUCCEEDED",
+        "reason": "method_complete"
+      }
+    },
+    {
+      "admission_label": "equal_int",
+      "admission_repr": "7",
+      "admission_type": "int",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "7:equal_int:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 7,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "equal_int",
+      "admission_repr": "7",
+      "admission_type": "int",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "7:equal_int:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 7,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "wrong_int",
+      "admission_repr": "8",
+      "admission_type": "int",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "7:wrong_int:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 7,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "wrong_int",
+      "admission_repr": "8",
+      "admission_type": "int",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "7:wrong_int:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 7,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "wrong_int",
+      "admission_repr": "8",
+      "admission_type": "int",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "7:wrong_int:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 7,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "false",
+      "admission_repr": "False",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "7:false:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 7,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "false",
+      "admission_repr": "False",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "7:false:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 7,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "false",
+      "admission_repr": "False",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "7:false:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 7,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "true",
+      "admission_repr": "True",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "7:true:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 7,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "true",
+      "admission_repr": "True",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "7:true:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 7,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "true",
+      "admission_repr": "True",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "7:true:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 7,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "equal_float",
+      "admission_repr": "7.0",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "7:equal_float:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 7,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "equal_float",
+      "admission_repr": "7.0",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "7:equal_float:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 7,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "equal_float",
+      "admission_repr": "7.0",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "7:equal_float:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 7,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "string",
+      "admission_repr": "'7'",
+      "admission_type": "str",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "7:string:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 7,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "string",
+      "admission_repr": "'7'",
+      "admission_type": "str",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "7:string:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 7,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "string",
+      "admission_repr": "'7'",
+      "admission_type": "str",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "7:string:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 7,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "null",
+      "admission_repr": "None",
+      "admission_type": "NoneType",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "7:null:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 7,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "null",
+      "admission_repr": "None",
+      "admission_type": "NoneType",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "7:null:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 7,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "null",
+      "admission_repr": "None",
+      "admission_type": "NoneType",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "7:null:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 7,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "int_subclass",
+      "admission_repr": "7",
+      "admission_type": "IntAlias",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "7:int_subclass:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 7,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "int_subclass",
+      "admission_repr": "7",
+      "admission_type": "IntAlias",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "7:int_subclass:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 7,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "int_subclass",
+      "admission_repr": "7",
+      "admission_type": "IntAlias",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "7:int_subclass:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 7,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "nan",
+      "admission_repr": "nan",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "7:nan:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 7,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "nan",
+      "admission_repr": "nan",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "7:nan:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 7,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "nan",
+      "admission_repr": "nan",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "7:nan:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 7,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "infinity",
+      "admission_repr": "inf",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "7:infinity:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 7,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "infinity",
+      "admission_repr": "inf",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "7:infinity:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 7,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "infinity",
+      "admission_repr": "inf",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "7:infinity:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 7,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "equal_int",
+      "admission_repr": "9223372036854775807",
+      "admission_type": "int",
+      "calls": {
+        "execute": 1,
+        "observe": 2,
+        "verify_effect": 1
+      },
+      "case_id": "9223372036854775807:equal_int:valid",
+      "critical_events": [
+        {
+          "action": "mark",
+          "action_id": "fixture-action",
+          "event": "action_terminal",
+          "release_verified": true,
+          "status": "completed"
+        },
+        {
+          "action": "mark",
+          "event": "effect_checked",
+          "evidence_ref": "fixture-effect",
+          "status": "succeeded"
+        },
+        {
+          "completed_transitions": 1,
+          "event": "runtime_finished",
+          "outcome": "TASK_SUCCEEDED",
+          "reason": "method_complete"
+        }
+      ],
+      "dispatched": [
+        {
+          "repr": "9223372036854775807",
+          "type": "int"
+        }
+      ],
+      "exception": null,
+      "observation_sequence": 9223372036854775807,
+      "profile": "valid",
+      "result": {
+        "completed_transitions": 1,
+        "outcome": "TASK_SUCCEEDED",
+        "reason": "method_complete"
+      }
+    },
+    {
+      "admission_label": "equal_int",
+      "admission_repr": "9223372036854775807",
+      "admission_type": "int",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "9223372036854775807:equal_int:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 9223372036854775807,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "equal_int",
+      "admission_repr": "9223372036854775807",
+      "admission_type": "int",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "9223372036854775807:equal_int:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 9223372036854775807,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "wrong_int",
+      "admission_repr": "9223372036854775808",
+      "admission_type": "int",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "9223372036854775807:wrong_int:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 9223372036854775807,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "wrong_int",
+      "admission_repr": "9223372036854775808",
+      "admission_type": "int",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "9223372036854775807:wrong_int:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 9223372036854775807,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "wrong_int",
+      "admission_repr": "9223372036854775808",
+      "admission_type": "int",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "9223372036854775807:wrong_int:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 9223372036854775807,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "false",
+      "admission_repr": "False",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "9223372036854775807:false:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 9223372036854775807,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "false",
+      "admission_repr": "False",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "9223372036854775807:false:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 9223372036854775807,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "false",
+      "admission_repr": "False",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "9223372036854775807:false:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 9223372036854775807,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "true",
+      "admission_repr": "True",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "9223372036854775807:true:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 9223372036854775807,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "true",
+      "admission_repr": "True",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "9223372036854775807:true:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 9223372036854775807,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "true",
+      "admission_repr": "True",
+      "admission_type": "bool",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "9223372036854775807:true:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 9223372036854775807,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "equal_float",
+      "admission_repr": "9.223372036854776e+18",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "9223372036854775807:equal_float:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 9223372036854775807,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "equal_float",
+      "admission_repr": "9.223372036854776e+18",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "9223372036854775807:equal_float:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 9223372036854775807,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "equal_float",
+      "admission_repr": "9.223372036854776e+18",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "9223372036854775807:equal_float:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 9223372036854775807,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "string",
+      "admission_repr": "'9223372036854775807'",
+      "admission_type": "str",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "9223372036854775807:string:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 9223372036854775807,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "string",
+      "admission_repr": "'9223372036854775807'",
+      "admission_type": "str",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "9223372036854775807:string:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 9223372036854775807,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "string",
+      "admission_repr": "'9223372036854775807'",
+      "admission_type": "str",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "9223372036854775807:string:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 9223372036854775807,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "null",
+      "admission_repr": "None",
+      "admission_type": "NoneType",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "9223372036854775807:null:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 9223372036854775807,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "null",
+      "admission_repr": "None",
+      "admission_type": "NoneType",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "9223372036854775807:null:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 9223372036854775807,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "null",
+      "admission_repr": "None",
+      "admission_type": "NoneType",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "9223372036854775807:null:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 9223372036854775807,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "int_subclass",
+      "admission_repr": "9223372036854775807",
+      "admission_type": "IntAlias",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "9223372036854775807:int_subclass:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 9223372036854775807,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "int_subclass",
+      "admission_repr": "9223372036854775807",
+      "admission_type": "IntAlias",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "9223372036854775807:int_subclass:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 9223372036854775807,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "int_subclass",
+      "admission_repr": "9223372036854775807",
+      "admission_type": "IntAlias",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "9223372036854775807:int_subclass:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 9223372036854775807,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "nan",
+      "admission_repr": "nan",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "9223372036854775807:nan:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 9223372036854775807,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "nan",
+      "admission_repr": "nan",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "9223372036854775807:nan:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 9223372036854775807,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "nan",
+      "admission_repr": "nan",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "9223372036854775807:nan:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 9223372036854775807,
+      "profile": "expired",
+      "result": null
+    },
+    {
+      "admission_label": "infinity",
+      "admission_repr": "inf",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "9223372036854775807:infinity:valid",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 9223372036854775807,
+      "profile": "valid",
+      "result": null
+    },
+    {
+      "admission_label": "infinity",
+      "admission_repr": "inf",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "9223372036854775807:infinity:ineligible",
+      "critical_events": [
+        {
+          "action": "mark",
+          "event": "admission_refused",
+          "reason": "stale_symbol",
+          "status": "stale"
+        },
+        {
+          "completed_transitions": 0,
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "stale_symbol"
+        }
+      ],
+      "dispatched": [],
+      "exception": null,
+      "observation_sequence": 9223372036854775807,
+      "profile": "ineligible",
+      "result": {
+        "completed_transitions": 0,
+        "outcome": "SAFE_YIELD",
+        "reason": "stale_symbol"
+      }
+    },
+    {
+      "admission_label": "infinity",
+      "admission_repr": "inf",
+      "admission_type": "float",
+      "calls": {
+        "execute": 0,
+        "observe": 1,
+        "verify_effect": 0
+      },
+      "case_id": "9223372036854775807:infinity:expired",
+      "critical_events": [],
+      "dispatched": [],
+      "exception": {
+        "message": "fresh revalidated admission required",
+        "type": "ValueError"
+      },
+      "observation_sequence": 9223372036854775807,
+      "profile": "expired",
+      "result": null
+    }
+  ],
+  "scope": "finite analytical/engineering check; no physical input, backend, model or timing measurement"
+}

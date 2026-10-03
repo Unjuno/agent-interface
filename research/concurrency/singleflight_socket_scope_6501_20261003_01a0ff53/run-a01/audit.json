@@ -1,0 +1,163 @@
+{
+  "actual_socket_invocations": {
+    "independent": 14,
+    "predicate_inflight": 7,
+    "scope_cache": 10,
+    "scope_inflight": 11
+  },
+  "callers": 56,
+  "details": [
+    {
+      "actual_invocations": 2,
+      "callers": 2,
+      "case_id": "after_completion_same_scope",
+      "mode": "independent"
+    },
+    {
+      "actual_invocations": 2,
+      "callers": 2,
+      "case_id": "after_completion_same_scope",
+      "mode": "predicate_inflight"
+    },
+    {
+      "actual_invocations": 1,
+      "callers": 2,
+      "case_id": "after_completion_same_scope",
+      "mode": "scope_cache"
+    },
+    {
+      "actual_invocations": 2,
+      "callers": 2,
+      "case_id": "after_completion_same_scope",
+      "mode": "scope_inflight"
+    },
+    {
+      "actual_invocations": 2,
+      "callers": 2,
+      "case_id": "different_dependency",
+      "mode": "independent"
+    },
+    {
+      "actual_invocations": 1,
+      "callers": 2,
+      "case_id": "different_dependency",
+      "mode": "predicate_inflight"
+    },
+    {
+      "actual_invocations": 2,
+      "callers": 2,
+      "case_id": "different_dependency",
+      "mode": "scope_cache"
+    },
+    {
+      "actual_invocations": 2,
+      "callers": 2,
+      "case_id": "different_dependency",
+      "mode": "scope_inflight"
+    },
+    {
+      "actual_invocations": 2,
+      "callers": 2,
+      "case_id": "different_target",
+      "mode": "independent"
+    },
+    {
+      "actual_invocations": 1,
+      "callers": 2,
+      "case_id": "different_target",
+      "mode": "predicate_inflight"
+    },
+    {
+      "actual_invocations": 2,
+      "callers": 2,
+      "case_id": "different_target",
+      "mode": "scope_cache"
+    },
+    {
+      "actual_invocations": 2,
+      "callers": 2,
+      "case_id": "different_target",
+      "mode": "scope_inflight"
+    },
+    {
+      "actual_invocations": 2,
+      "callers": 2,
+      "case_id": "different_window",
+      "mode": "independent"
+    },
+    {
+      "actual_invocations": 1,
+      "callers": 2,
+      "case_id": "different_window",
+      "mode": "predicate_inflight"
+    },
+    {
+      "actual_invocations": 2,
+      "callers": 2,
+      "case_id": "different_window",
+      "mode": "scope_cache"
+    },
+    {
+      "actual_invocations": 2,
+      "callers": 2,
+      "case_id": "different_window",
+      "mode": "scope_inflight"
+    },
+    {
+      "actual_invocations": 4,
+      "callers": 4,
+      "case_id": "equivalent_four",
+      "mode": "independent"
+    },
+    {
+      "actual_invocations": 1,
+      "callers": 4,
+      "case_id": "equivalent_four",
+      "mode": "predicate_inflight"
+    },
+    {
+      "actual_invocations": 1,
+      "callers": 4,
+      "case_id": "equivalent_four",
+      "mode": "scope_cache"
+    },
+    {
+      "actual_invocations": 1,
+      "callers": 4,
+      "case_id": "equivalent_four",
+      "mode": "scope_inflight"
+    },
+    {
+      "actual_invocations": 2,
+      "callers": 2,
+      "case_id": "source_restart_aba",
+      "mode": "independent"
+    },
+    {
+      "actual_invocations": 1,
+      "callers": 2,
+      "case_id": "source_restart_aba",
+      "mode": "predicate_inflight"
+    },
+    {
+      "actual_invocations": 2,
+      "callers": 2,
+      "case_id": "source_restart_aba",
+      "mode": "scope_cache"
+    },
+    {
+      "actual_invocations": 2,
+      "callers": 2,
+      "case_id": "source_restart_aba",
+      "mode": "scope_inflight"
+    }
+  ],
+  "status": "PASS_SOCKET_SCOPE_TRANSFER_SCOPED",
+  "trials": 24,
+  "wrong_scope_descriptive_refusals": {
+    "independent": 0,
+    "predicate_inflight": 4,
+    "scope_cache": 0,
+    "scope_inflight": 0
+  }
+}

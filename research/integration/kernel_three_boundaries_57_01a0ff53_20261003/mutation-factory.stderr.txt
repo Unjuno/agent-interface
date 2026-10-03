@@ -1,0 +1,219 @@
+test_complete_backend_is_returned_without_operating_it (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_complete_backend_is_returned_without_operating_it) ... ok
+test_missing_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_missing_protocol_methods_are_rejected_before_probe) ... 
+  test_missing_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_missing_protocol_methods_are_rejected_before_probe) (absent='probe') ... ERROR
+  test_missing_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_missing_protocol_methods_are_rejected_before_probe) (absent='observe') ... FAIL
+  test_missing_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_missing_protocol_methods_are_rejected_before_probe) (absent='execute') ... FAIL
+  test_missing_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_missing_protocol_methods_are_rejected_before_probe) (absent='release_all') ... FAIL
+test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) ... 
+  test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='probe', replacement=None) ... ERROR
+  test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='probe', replacement=False) ... ERROR
+  test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='probe', replacement=0) ... ERROR
+  test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='probe', replacement='method') ... ERROR
+  test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='observe', replacement=None) ... FAIL
+  test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='observe', replacement=False) ... FAIL
+  test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='observe', replacement=0) ... FAIL
+  test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='observe', replacement='method') ... FAIL
+  test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='execute', replacement=None) ... FAIL
+  test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='execute', replacement=False) ... FAIL
+  test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='execute', replacement=0) ... FAIL
+  test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='execute', replacement='method') ... FAIL
+  test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='release_all', replacement=None) ... FAIL
+  test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='release_all', replacement=False) ... FAIL
+  test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='release_all', replacement=0) ... FAIL
+  test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='release_all', replacement='method') ... FAIL
+
+======================================================================
+ERROR: test_missing_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_missing_protocol_methods_are_rejected_before_probe) (absent='probe')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$PACKAGE/mutation-factory/runtime/kernel/test_backend_contract.py", line 42, in test_missing_protocol_methods_are_rejected_before_probe
+    registry.create("test")
+    ~~~~~~~~~~~~~~~^^^^^^^^
+  File "$PACKAGE/mutation-factory/runtime/kernel/backend.py", line 36, in create
+    info = backend.probe()
+           ^^^^^^^^^^^^^
+AttributeError: 'IncompleteBackend' object has no attribute 'probe'
+
+======================================================================
+ERROR: test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='probe', replacement=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$PACKAGE/mutation-factory/runtime/kernel/test_backend_contract.py", line 54, in test_noncallable_protocol_methods_are_rejected_before_probe
+    registry.create("test")
+    ~~~~~~~~~~~~~~~^^^^^^^^
+  File "$PACKAGE/mutation-factory/runtime/kernel/backend.py", line 36, in create
+    info = backend.probe()
+TypeError: 'NoneType' object is not callable
+
+======================================================================
+ERROR: test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='probe', replacement=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$PACKAGE/mutation-factory/runtime/kernel/test_backend_contract.py", line 54, in test_noncallable_protocol_methods_are_rejected_before_probe
+    registry.create("test")
+    ~~~~~~~~~~~~~~~^^^^^^^^
+  File "$PACKAGE/mutation-factory/runtime/kernel/backend.py", line 36, in create
+    info = backend.probe()
+TypeError: 'bool' object is not callable
+
+======================================================================
+ERROR: test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='probe', replacement=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$PACKAGE/mutation-factory/runtime/kernel/test_backend_contract.py", line 54, in test_noncallable_protocol_methods_are_rejected_before_probe
+    registry.create("test")
+    ~~~~~~~~~~~~~~~^^^^^^^^
+  File "$PACKAGE/mutation-factory/runtime/kernel/backend.py", line 36, in create
+    info = backend.probe()
+TypeError: 'int' object is not callable
+
+======================================================================
+ERROR: test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='probe', replacement='method')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$PACKAGE/mutation-factory/runtime/kernel/test_backend_contract.py", line 54, in test_noncallable_protocol_methods_are_rejected_before_probe
+    registry.create("test")
+    ~~~~~~~~~~~~~~~^^^^^^^^
+  File "$PACKAGE/mutation-factory/runtime/kernel/backend.py", line 36, in create
+    info = backend.probe()
+TypeError: 'str' object is not callable
+
+======================================================================
+FAIL: test_missing_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_missing_protocol_methods_are_rejected_before_probe) (absent='observe')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$PACKAGE/mutation-factory/runtime/kernel/test_backend_contract.py", line 41, in test_missing_protocol_methods_are_rejected_before_probe
+    with self.assertRaises(ContractError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_missing_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_missing_protocol_methods_are_rejected_before_probe) (absent='execute')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$PACKAGE/mutation-factory/runtime/kernel/test_backend_contract.py", line 41, in test_missing_protocol_methods_are_rejected_before_probe
+    with self.assertRaises(ContractError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_missing_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_missing_protocol_methods_are_rejected_before_probe) (absent='release_all')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$PACKAGE/mutation-factory/runtime/kernel/test_backend_contract.py", line 41, in test_missing_protocol_methods_are_rejected_before_probe
+    with self.assertRaises(ContractError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='observe', replacement=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$PACKAGE/mutation-factory/runtime/kernel/test_backend_contract.py", line 53, in test_noncallable_protocol_methods_are_rejected_before_probe
+    with self.assertRaises(ContractError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='observe', replacement=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$PACKAGE/mutation-factory/runtime/kernel/test_backend_contract.py", line 53, in test_noncallable_protocol_methods_are_rejected_before_probe
+    with self.assertRaises(ContractError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='observe', replacement=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$PACKAGE/mutation-factory/runtime/kernel/test_backend_contract.py", line 53, in test_noncallable_protocol_methods_are_rejected_before_probe
+    with self.assertRaises(ContractError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='observe', replacement='method')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$PACKAGE/mutation-factory/runtime/kernel/test_backend_contract.py", line 53, in test_noncallable_protocol_methods_are_rejected_before_probe
+    with self.assertRaises(ContractError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='execute', replacement=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$PACKAGE/mutation-factory/runtime/kernel/test_backend_contract.py", line 53, in test_noncallable_protocol_methods_are_rejected_before_probe
+    with self.assertRaises(ContractError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='execute', replacement=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$PACKAGE/mutation-factory/runtime/kernel/test_backend_contract.py", line 53, in test_noncallable_protocol_methods_are_rejected_before_probe
+    with self.assertRaises(ContractError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='execute', replacement=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$PACKAGE/mutation-factory/runtime/kernel/test_backend_contract.py", line 53, in test_noncallable_protocol_methods_are_rejected_before_probe
+    with self.assertRaises(ContractError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='execute', replacement='method')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$PACKAGE/mutation-factory/runtime/kernel/test_backend_contract.py", line 53, in test_noncallable_protocol_methods_are_rejected_before_probe
+    with self.assertRaises(ContractError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='release_all', replacement=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$PACKAGE/mutation-factory/runtime/kernel/test_backend_contract.py", line 53, in test_noncallable_protocol_methods_are_rejected_before_probe
+    with self.assertRaises(ContractError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='release_all', replacement=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$PACKAGE/mutation-factory/runtime/kernel/test_backend_contract.py", line 53, in test_noncallable_protocol_methods_are_rejected_before_probe
+    with self.assertRaises(ContractError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='release_all', replacement=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$PACKAGE/mutation-factory/runtime/kernel/test_backend_contract.py", line 53, in test_noncallable_protocol_methods_are_rejected_before_probe
+    with self.assertRaises(ContractError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_noncallable_protocol_methods_are_rejected_before_probe (runtime.kernel.test_backend_contract.BackendAdmissionTests.test_noncallable_protocol_methods_are_rejected_before_probe) (method='release_all', replacement='method')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$PACKAGE/mutation-factory/runtime/kernel/test_backend_contract.py", line 53, in test_noncallable_protocol_methods_are_rejected_before_probe
+    with self.assertRaises(ContractError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.003s
+
+FAILED (failures=15, errors=5)

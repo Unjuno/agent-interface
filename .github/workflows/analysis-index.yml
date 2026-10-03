@@ -26,6 +26,12 @@ jobs:
           fetch-depth: 1
           sparse-checkout: |
             research/analysis
+            research/live_control/owner_keyup_keymap_witness_5156_t3_v1
+            research/integration/core_admission_composition_57_20261003_01a0ff59
+            research/integration/pr6863_review_rescue_20261003
+            research/integration/pr6863_review_20261003_01a0ff58
+            research/integration/teardown_witness_review_rescue_20261003
+            research/integration/owner_keyup_teardown_witness_5156_01a0ff58
       - name: Restore the frozen workflow source for provenance tests
         run: |
           git fetch --no-tags --depth=1 origin e2e434dd07e1034c5c4303982a0b1ec33ea35cfd
@@ -35,8 +41,34 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Test sparse-checkout archival dependency closure
+        run: python -B -m unittest discover -s research/analysis -p 'test_analysis_checkout.py' -v
       - name: Check retained analytical results are indexed
         run: python research/analysis/check_index.py
+      - name: Test Issue #6505 A01 retained auditor construction
+        run: python -B -m unittest discover -s research/analysis/partial_order_audit_6505_orbstack_a01_20261003 -p 'test_*.py' -v
+      - name: Verify Issue 6695 retained preparation-edit deadline frontier
+        run: python -B -m unittest discover -s research/analysis/reversibility_deadline_frontier_6695_a01_20261003_01a0ff52 -p 'test_*.py' -v
+      - name: Verify retained four-arm core admission composition
+        run: python -B -m unittest discover -s research/integration/core_admission_composition_57_20261003_01a0ff59 -p 'test_archival.py' -v
+      - name: Verify historical compiled-sequence review and auditor counterexamples
+        run: python -B -m unittest discover -s research/integration/pr6863_review_rescue_20261003 -p 'test_archival.py' -v
+      - name: Verify historical teardown witness review and type counterexamples
+        run: python -B -m unittest discover -s research/integration/teardown_witness_review_rescue_20261003 -p 'test_archival.py' -v
+      - name: Verify archived S05 WSLc image-gate preparation
+        run: python -B -m unittest discover -s research/analysis/looming_visual_assumption_gate_5905_s05_wslc_20261003 -p 'test_*.py' -v
+      - name: Verify Issue 6219 hash-bound publication recovery
+        run: python -B -m unittest discover -s research/analysis/amendment_effect_6219_publication_recovery_20261003 -p 'test_*.py' -v
+      - name: Test Issue 6219 recovered original construction fixture
+        run: python -B -m unittest discover -s research/analysis/amendment_effect_6219_publication_recovery_20261003/decoded_material -p 'test_method.py' -v
+      - name: Verify Issue 6061 archived construction only
+        run: python -B -m unittest discover -s research/analysis/intermittent_control_6061_t0_20261003 -p 'test_*.py' -v
+      - name: Test retained Issue 6645 A02 construction
+        run: python -B -m unittest discover -s research/analysis/counterexample_guard_refinement_6645_t0b_orbstack_20261003 -p 'test_*.py' -v
+      - name: Verify retained Issue 6645 A03 archive
+        run: python -B -m unittest discover -s research/analysis/counterexample_guard_refinement_6645_t0c_orbstack_20261003 -p 'test_*.py' -v
+      - name: Verify retained Issue 5694 A03 scientific HOLD
+        run: python -B -m unittest discover -s research/analysis/exogenous_opportunity_5694_first_failed_boundary_a03_20261002 -p 'test_*.py' -v
       - name: Test Issue #6808 S06 photometric invariance construction
         run: python -B -m unittest discover -s research/analysis/looming_visual_assumption_gate_5905_s06_orbstack_contrast_20261003 -p 'test_*.py' -v
       - name: Test #6749 corrected prefix-stability successor construction
@@ -89,3 +121,12 @@ jobs:
         run: python -B -m unittest discover -s research/analysis/observation_intervention_6526_a02_orbstack_20261003 -p 'test_*.py' -v
       - name: Test Issue #6526 observation-intervention A03 post-hoc audit contract
         run: python -B -m unittest discover -s research/analysis/observation_intervention_6526_a03_deadline_audit_only_20261003 -p 'test_*.py' -v
+      - name: Test Issue #6503 T0b vigilance material/scorer contract
+        run: python -B -m unittest discover -s research/analysis/quiet_supervision_vigilance_6503_t0b_20261002 -p 'test_*.py' -v
+      - name: Test Issue #5352 T15 effect-qualified hysteresis construction contract
+        run: python -B -m unittest discover -s research/analysis/planner_hysteresis_5352_effect_qualified_t0_20261003 -p 'test_contract.py' -v
+      - name: Test Issue #5442 T4 mechanical-receipt boundary raw auditor
+        run: python -B -m unittest discover -s research/analysis/semantic_receipt_runtime_boundary_5442_t4 -p 'test_*.py' -v
+      - name: Test Issue #5156 T3 keymap witness construction contract
+        working-directory: research/live_control/owner_keyup_keymap_witness_5156_t3_v1
+        run: python -B -m unittest -v test_keymap_witness test_audit_formal_x11 test_serialize_release test_cli_boundary

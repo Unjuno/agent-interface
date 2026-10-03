@@ -1,0 +1,27 @@
+--- sources/retained/main_thread_scorer_polling_v1.py
++++ sources/fair/main_thread_scorer_polling_v1.py
+@@ -118,9 +118,10 @@
+                 sample_once(scheduled_ns, skipped)
+                 if max_samples is not None and sample_count >= max_samples:
+                     break
+-                continue
+ 
+-            timeout_s = (next_sample_ns - now) / 1_000_000_000
++            # Service ready input between samples, including sustained overrun.
++            now = self.clock_ns()
++            timeout_s = max(0, (next_sample_ns - now) / 1_000_000_000)
+             if not self.wait_readable(fd, timeout_s):
+                 continue
+ 
+--- sources/retained/map01_scorer_stdio_adapter_v1.py
++++ sources/fair/map01_scorer_stdio_adapter_v1.py
+@@ -48,7 +48,8 @@
+     def __next__(self):
+         if threading.get_ident()!=self.owner_thread:raise RuntimeError('scorer stdin left session main thread')
+         while True:
+-            if self._sample_due():continue
++            # A due sample cannot indefinitely outrank ready commands.
++            self._sample_due()
+             newline=self.buffer.find(b'\n')
+             if newline>=0:
+                 raw=bytes(self.buffer[:newline]);del self.buffer[:newline+1]

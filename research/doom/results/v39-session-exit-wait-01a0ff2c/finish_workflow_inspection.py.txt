@@ -1,0 +1,13 @@
+from pathlib import Path
+import datetime,json,subprocess,sys
+code=Path(__file__).parent;out=code.parents[1]/'outputs/v39-wait-repair-01a0ff2c'
+source=(code/'check_composition_workflows.py').read_text(encoding='utf-8')
+tail=source.split('cache={}\n',1)[1]
+tail=tail.replace("data=yaml.safe_load(b);events=data.get('on',data.get(True,{}))","if Path(path).suffix not in ('.yml','.yaml'):continue\n    data=yaml.safe_load(b);events=data.get('on',data.get(True,{}))")
+header=source.split("s=json.loads((code/'startup-source-mcp.json')",1)[0]
+script=header+"receipts=[json.loads((out/(name+'.receipt.json')).read_bytes()) for name in ('combined','combined-O')]\n"+'cache={}\n'+tail
+(code/'inspect_workflow_only.py').write_text(script,encoding='utf-8',newline='\n')
+(out/'WORKFLOW_FIRST_FAILURE.json').write_text(json.dumps({'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'observed_tool_exit':1,'source':'check_composition_workflows.py','error':'ParserError: workflow directory README.md treated as YAML; combined7 normal/O processes already terminal0 with original receipts','repair':'new static-only script filters YAML suffix; original helper retained; no regression/composition/native collector replay'},indent=2)+'\n',encoding='utf-8')
+p=subprocess.run([sys.executable,'-B',str(code/'inspect_workflow_only.py')],capture_output=True)
+(out/'workflow-only.stdout.log').write_bytes(p.stdout);(out/'workflow-only.stderr.log').write_bytes(p.stderr)
+print(p.stdout.decode('utf-8'));print(p.stderr.decode('utf-8'));sys.exit(p.returncode)

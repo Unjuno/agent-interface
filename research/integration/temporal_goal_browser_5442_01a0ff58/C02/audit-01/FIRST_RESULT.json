@@ -1,0 +1,24 @@
+{
+  "actual_returncode": 1,
+  "command": [
+    "python",
+    "-B",
+    "audit.py",
+    "--run",
+    "primary-C02",
+    "--cases",
+    "cases.json",
+    "--output",
+    "audit-01"
+  ],
+  "stdout": "",
+  "stderr_terminal": "ValueError: public current view matches server event history",
+  "traceback_sites": [
+    "audit.py:204 main",
+    "audit.py:200 audit(data)",
+    "audit.py:126 public-state join",
+    "audit.py:17 need"
+  ],
+  "source": "actual exec tool output; command timestamp was not separately persisted before exception",
+  "repaired_audit": "separate audit-v2.py; original source and failed output retained; primary operations not repeated"
+}

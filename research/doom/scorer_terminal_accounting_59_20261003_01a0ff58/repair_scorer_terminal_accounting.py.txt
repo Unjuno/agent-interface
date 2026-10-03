@@ -1,0 +1,76 @@
+from datetime import datetime, timezone
+from pathlib import Path
+import hashlib, json, os, subprocess, sys, unittest
+
+ROOT = Path(__file__).parent.parent
+DOOM = ROOT / 'work/agent-interface/research/doom'
+OUT = ROOT / 'outputs/scorer-service-59/terminal-accounting-v3'
+OUT.mkdir(parents=True, exist_ok=True)
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+def dump(path, data):
+    path.write_text(json.dumps(data, indent=2) + '\n', encoding='utf-8', newline='\n')
+def sources():
+    return {name: sha((DOOM / name).read_bytes().replace(b'\r\n', b'\n')) for name in (
+        'main_thread_scorer_polling_v1.py', 'map01_scorer_stdio_adapter_v1.py',
+        'test_scorer_command_service_01a0ff58.py', 'session_map01_v13.py',
+        'independent_progress_clock_v2.py', 'test_main_thread_scorer_polling_v1.py',
+        'test_map01_scorer_stdio_adapter_v1.py', 'test_independent_progress_clock_v2.py',
+        'test_map01_scorer_scheduler_replay_3270.py')}
+def run(label, argv, expected_exit):
+    target = OUT / (label + '.receipt.json')
+    if target.exists():
+        raise RuntimeError('Retained receipt already exists: ' + label)
+    before = sources()
+    start = datetime.now(timezone.utc).isoformat()
+    result = subprocess.run(argv, cwd=DOOM, capture_output=True, timeout=45)
+    end = datetime.now(timezone.utc).isoformat()
+    after = sources()
+    if before != after:
+        raise RuntimeError('Source changed during ordinary check')
+    (OUT / (label + '.stdout.log')).write_bytes(result.stdout)
+    (OUT / (label + '.stderr.log')).write_bytes(result.stderr)
+    record = {'classification': 'ordinary repair regression; no formal allocation',
+              'label': label, 'argv': argv, 'cwd': str(DOOM), 'started_utc': start, 'ended_utc': end,
+              'exit_code': result.returncode, 'expected_exit_code': expected_exit,
+              'source_sha256': before, 'source_unchanged_after': True,
+              'stdout_sha256': sha(result.stdout), 'stderr_sha256': sha(result.stderr),
+              'stdout_bytes': len(result.stdout), 'stderr_bytes': len(result.stderr)}
+    dump(target, record)
+    print(json.dumps(record))
+    if result.returncode != expected_exit:
+        raise RuntimeError('Unexpected ordinary-check exit; inspect retained logs')
+if __name__ == '__main__':
+    mode = sys.argv[1]
+    if mode == 'suite':
+        sys.path.insert(0, str(DOOM))
+        names = ('test_main_thread_scorer_polling_v1', 'test_map01_scorer_stdio_adapter_v1',
+                 'test_independent_progress_clock_v2', 'test_map01_scorer_scheduler_replay_3270',
+                 'test_scorer_command_service_01a0ff58')
+        if os.name == 'nt':
+            import test_main_thread_scorer_polling_v1 as polling
+            import test_map01_scorer_stdio_adapter_v1 as stdio
+            reason = 'Windows select.select supports sockets, not os.pipe; POSIX execution unverified for this repair'
+            polling.PollingTests.test_real_pipe_eof_and_same_thread = unittest.skip(reason)(polling.PollingTests.test_real_pipe_eof_and_same_thread)
+            stdio.Tests.test_pipe_wait_samples_and_wakes_on_command = unittest.skip(reason)(stdio.Tests.test_pipe_wait_samples_and_wakes_on_command)
+        suite = unittest.defaultTestLoader.loadTestsFromNames(names)
+        result = unittest.TextTestRunner(verbosity=2).run(suite)
+        sys.exit(0 if result.wasSuccessful() else 1)
+    if mode == 'red':
+        plan = {'worker_id': '01a0ff58-d514-7b02-a95c-2f5c86873506', 'policy': 'FINAL-v5',
+                'prior_head': '8f5872874760b671b558a7febe4e14a23261d753',
+                'feedback': 'https://github.com/Unjuno/agent-interface/pull/6913#discussion_r4171685391',
+                'H': 'Terminal snapshots include periods the unchanged next-sample accounting would mark skipped, even when FINISH/EOF/cap prevents that next sample.',
+                'T': 'Six ordinary methods: directed sample/sink three-period overruns at finish/EOF/cap, stable stdin snapshots and subsequent single accounting, existing command controls and actual fake-v13/real-sink summary.',
+                'D': 'Require directed firstRED against prior runtime, then full scoped40-method normal/-O checks preserving two explicit Windows POSIX skips. No scheduling, command, receipt, sample or source-history changes outside the repaired statistic/test.',
+                'C_U': 'Integer injected clock/fake game and real private file sink. Pending count follows existing late-sample skip semantics; no strict deadline, complete auditor/live/model/game/task/latency or OS-pipe result.',
+                'source_sha256_before_red': sources(), 'formal_replay': False}
+        if (OUT / 'PLAN.json').exists():
+            raise RuntimeError('Original plan exists')
+        dump(OUT / 'PLAN.json', plan)
+        run('first-red', [sys.executable, '-B', '-m', 'unittest', '-v', 'test_scorer_command_service_01a0ff58'], 1)
+    elif mode == 'green':
+        for label, optimized in [('combined-normal', False), ('combined-optimized', True)]:
+            run(label, [sys.executable, '-B', *(['-O'] if optimized else []), str(Path(__file__).resolve()), 'suite'], 0)
+    else:
+        raise RuntimeError('Unknown mode')

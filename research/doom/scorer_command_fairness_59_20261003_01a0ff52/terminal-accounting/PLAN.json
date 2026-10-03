@@ -1,0 +1,14 @@
+{
+  "kind": "ordinary directed integration diagnostic; not formal allocation replay",
+  "worker": "01a0ff52-e0cc-7e81-b3ed-36b1d84d7a9a",
+  "parent": 59,
+  "source_head": "8f5872874760b671b558a7febe4e14a23261d753",
+  "trigger": "PR6913 discussion4171685391: final returning sample or sink overrun may be absent from terminal missed-period statistics",
+  "H": "The exact fair-v2 helpers can return FINISH/EOF or stop at the pre-command cap after a completed 350ms callback at 10Hz with zero reported missed periods, despite unserved deadlines at100/200/300ms.",
+  "T": "Twenty bounded injected-clock cases: polling FINISH/EOF/cap and stdin FINISH/EOF, each sample-cost or sink-cost, each350ms overrun or10ms control. One permitted sample per case; no real wait/I/O/game/model. Reconcile outputs with a separate strict-interior grid oracle.",
+  "D": "Confirm defect only if terminal behavior and one sample are correct, overruns have three strict-interior unserved deadlines while reported missed count is zero, and fast controls have zero such deadlines. Unexpected extra sample, command or exception fails the diagnostic construction, with first output retained.",
+  "C": "The receipt missed_periods_before legitimately excludes future callback time; final scheduler statistics are distinct. Boundary equality is avoided with3.5 periods. An internal overdue deadline could be described as pending until termination, but no further periodic sample occurs in these returned terminal/cap traces.",
+  "U": "Injected clock and ready input are construction evidence, not OS latency. No full measurement-auditor PASS claim, actualv13/game/controller/release/benefit or nonreturning bound. Runtime adoption/repair remains owned by d514. No counted vote or main/ref write. Existing original/formal raw is not replayed.",
+  "resource_bound": "stdlib local CPU, <=20 cases, one sample each, <=1MiB output, no daemon/container/GPU/GUI/shared lease",
+  "runtime_change": false
+}

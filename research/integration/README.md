@@ -36,7 +36,25 @@ Integration work should make the composed boundary explicit: runtime + caller, a
 
 Child directory names are retained provenance, not a canonical architecture tree. Use each experiment's report for the exact composition and decision rule.
 
+- [Primary stdio busy-bound evidence rescue (#57)](primary_stdio_busy_rescue_20261003/README.md) — PR #6902's finite Windows/Node evidence and CI-selection records are preserved without integrating its unverified runtime/workflow changes; scope remains `PASS_PRIMARY_BUSY_BOUND_SCOPED`.
+
 - [Tk first-character #5260 allocation proposal and construction record](tk_firstchar_5260_a01_20261002/PREREG.md) — 96-row GUI allocation is explicitly **HOLD_NOT_AUTHORIZED**; three construction-only probes are retained, with smoke-03 passing the scoped runner/auditor gate. No formal first-character trials were run.
+
+- [Tk first-character #5260 A02 WSLc outcome](tk_firstchar_5260_a02_wslc_20261003/REPORT.md)
+  — one 96-row disposable Tk allocation, descriptive65 exact/31 nonexact;
+  frozen auditor PASS_AUDIT but stronger checker finds96 readiness-epoch
+  mismatches: overall STOP. Original sources/raw/failed checker/images
+  retained. Not a qualified scientific PASS/FAIL or production fix.
+
+- [Tk readiness #5260 A03 no-input successor](tk_firstchar_5260_a03_wslc_20261003/REPORT.md)
+  — four legacy apps wrote two readiness epochs, four corrected apps wrote
+  one; independent construction custody passed, no key/click input and no
+  first-character/public-client/migration-benefit qualification.
+
+- [Tk first-character #5260 A04 immutable-ready successor](tk_firstchar_5260_a04_wslc_20261003/REPORT.md)
+  — new48-row scoped method evidence:38 exact/10 nonexact saves, readiness
+  custody48/48; all10 initialh receipts in decoy before target FocusIn.
+  Not a public-client/default-wait/visual/performance/resource qualification.
 
 ## Preserved older Draft publications
 

@@ -1,0 +1,62 @@
+{
+  "api_calls": 5445,
+  "corruption_controls": {
+    "accepted_invalid": {
+      "rejected": true,
+      "sample_errors": [
+        "admit:4"
+      ]
+    },
+    "duplicate": {
+      "rejected": true,
+      "sample_errors": [
+        "identity:1814",
+        "validate:1814",
+        "admit:1814"
+      ]
+    },
+    "escaped_type_error": {
+      "rejected": true,
+      "sample_errors": [
+        "validate:0"
+      ]
+    },
+    "input_mutation": {
+      "rejected": true,
+      "sample_errors": [
+        "mutation:0"
+      ]
+    },
+    "integer_accepted": {
+      "rejected": true,
+      "sample_errors": [
+        "accepted_type:0"
+      ]
+    },
+    "native": {
+      "rejected": true,
+      "sample_errors": [
+        "native_backend_declaration"
+      ]
+    },
+    "omission": {
+      "rejected": true,
+      "sample_errors": [
+        "rows"
+      ]
+    },
+    "source": {
+      "rejected": true,
+      "sample_errors": [
+        "source"
+      ]
+    }
+  },
+  "errors": [],
+  "raw_sha256": "61732faf0cfa2e1b746cf7f64632faaca06aac34c29da3c7e054120a9821f22e",
+  "rows": 1815,
+  "source_sha256": "88122eab96fe907dcdaac032e8d9c82555d5d1adfe7bf8a9741274f19347d8a9",
+  "stage": "repaired",
+  "status": "PASS_FINITE_JSON_BOUNDARY",
+  "type_error_rows": 0
+}

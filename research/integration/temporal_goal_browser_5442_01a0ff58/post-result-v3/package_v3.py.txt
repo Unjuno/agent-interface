@@ -1,0 +1,110 @@
+import hashlib
+import json
+import shutil
+from datetime import datetime,timezone
+from pathlib import Path
+
+root=Path(__file__).parent; package=root.parent/'agent-interface/research/integration/temporal_goal_browser_5442_01a0ff58'
+original_manifest=(package/'MANIFEST.json').read_bytes(); original_readme=(package/'README.md').read_bytes()
+if hashlib.sha256(original_manifest).hexdigest()!='1f92892e167d698241f810db0e3b6092324dd396ac3de7f564576c044969e99f': raise ValueError('unexpected original package')
+(package/'MANIFEST_V1.json').write_bytes(original_manifest); (package/'README_V1.md').write_bytes(original_readme)
+dest=package/'post-result-v3'; dest.mkdir(exist_ok=False)
+for path in sorted(root.rglob('*')):
+    if not path.is_file() or '__pycache__' in path.parts or path.suffix=='.pyc': continue
+    relative=path.relative_to(root); name=str(relative)+('.txt' if path.suffix=='.py' else '')
+    output=dest/name; output.parent.mkdir(parents=True,exist_ok=True); shutil.copy2(path,output)
+text=(package/'C02/source/VARIABLES.md').read_text(encoding='utf-8')
+text=text.replace('# 記号・型・単位','# 記号・型・単位（v3・結果取得後の訂正）',1)
+text=text.replace('| C001..C010、一意 |','| C01: C001..C010。C02: C001..C009 と C020。各variant内で一意 |')
+text=text.replace('| 固定C01 scope、真正性の証明ではない |','| C01: temporal-goal-5442-01a0ff58-C01。C02: temporal-goal-5442-01a0ff58-C02。variant間で代用しない。真正性の証明ではない |')
+text+='''
+これは結果取得後の訂正表です。C02/source/VARIABLES.md は固定時の誤った原表として保持します。
+元のC02表にはC01のnamespaceとC001..C010の範囲が残っていました。新表を主試験前の固定記録とは扱いません。
+実際の制御・SQL・raw監査は、それぞれの固定cases.jsonのnamespace/識別子/goal_hashを使っています。
+mono_nsが等しい記録もあり、因果順序は同一の直列appのevent/request対応で検査します。
+観測された目標状態8件/上限終了2件と、元の固定表の整合性HOLDを別に報告します。
+'''
+(package/'VARIABLES.md').write_text(text,encoding='utf-8',newline='\n')
+bindings={}
+for label in ['C01','C02']:
+    cases=json.loads((package/label/'source/cases.json').read_bytes())
+    bindings[label]=dict(namespace=cases['namespace'],case_ids=[r['case_id'] for r in cases['cases']],
+                        cases_source=label+'/source/cases.json',cases_sha256=hashlib.sha256((package/label/'source/cases.json').read_bytes()).hexdigest())
+(package/'CURRENT_BINDINGS.json').write_text(json.dumps(dict(kind='post-result descriptive correction, not original freeze',variants=bindings),indent=2),encoding='utf-8')
+erratum='''# Post-result v3 erratum; originals retained
+
+Original proposal5966004617/epoch6940-20261003-v1-before-votes/digestf413c28... was withdrawn5966066068
+before any observed accepted/counted nonauthor vote. Findings4171886014/4171886022 were technically reproduced.
+No primary app/browser/fixture/observer execution, source edit/restart/resend or consumed allocation replay.
+
+V2 actually accepts a16-record copy with15 distinct disturbance IDs and a16-record copy with only one ID.
+Their full copied inputs/first reports are retained in post-result-v3, together with the unchanged test-first RED
+(11 methods,8 failures,exit1). V3 requires exactly one fixture record for each of the16 actual disturbance events,
+an exact integer-one attempt count, matching actual route and response operation ID. It incorporates complete20
+mutation groups/10 public observation groups/4 no-write skip groups. Those same two copies now reject; unchanged
+tests pass11/11 normal and11/11 optimized, and inherited10 corruptions still reject. The new post-result source was
+identified before its complete saved-raw audit. It reports PASS_RETAINED_RAW_AUDIT_V3, not a new primary outcome.
+
+The original saved fixture set was actually complete and unique (IDs11..20,23,26,29,31,33,35); the defect concerns
+what v2 could accept, not missing records in this original run. Actual observations remain10→4→8 current goals,
+two persistent YIELD_BUDGET, no repair writes for stable/ABA and unchanged siblings. They are scoped observations,
+not evidence for arbitrary-app authenticity, continuity, physical release, concurrency, durability or efficiency.
+
+The original frozen C02 human variable table is incorrect: it names C01 namespace and omits actual caseC020.
+VARIABLES.md and CURRENT_BINDINGS.json are explicit result-after corrections based on each original cases.json;
+they do not make the historical table consistent or imply a corrected pre-freeze protocol. Current disposition of
+that consistency claim is HOLD_ORIGINAL_BINDING_TABLE_INCONSISTENT. The retained historical v2 PASS text is not an
+unqualified current primary-protocol PASS. Data and frozen machine inputs are unchanged. All12 C01/13 C02 source
+pins, source maps and primary raw are preserved byte-for-byte; originals can also be read at commit1d32c173.
+
+README_V1.md/MANIFEST_V1.json preserve original package descriptions. The current manifest covers current files;
+v1 manifest applies to original commit, with old README and manifest copied here rather than silently replaced.
+Primary teardown receipts remain exit0/one launch and closed tabs. New work is CPU-only copied-data audit/doc repair.
+'''
+(package/'ERRATA_V3.md').write_text(erratum,encoding='utf-8',newline='\n')
+readme='''# #5442 Temporal goal evidence — current v3 qualification
+
+After a successful edit, a later competing write can break the current goal while preserving a historical APPLIED
+receipt. On the owned public-binding HTML/SQLite route, the saved observations are10 initial goals→4 after disturbance→
+8 final goals, with2 truthful YIELD_BUDGET outcomes at max2 repair submits. Stable/ABA-restored goals get no new writes.
+This remains a controlled serialized authored-app observation, not a novel mediator or arbitrary-app contract.
+
+**Current evidence validation:** [v3 retained-raw audit](post-result-v3/audit-03/RESULT.json) reconciles all36 events,
+148 UI stages,20 task requests,16 external requests and one unique fixture for every external event. Original fixture
+copies that v2 falsely accepted now reject. Tests retain11 methods/8 RED failures, then11/11 normal and11/11 optimized;
+the inherited10 corruption checks still reject. No primary/observer replay or source/data change.
+
+**Current primary qualification:** C01 remains HOLD_PUBLIC_BINDING_REDACTED before any mutation. C02's old frozen
+human variable table retained incorrect C01 scope/C001..C010 bounds; actual frozen machine inputs are C02/C020.
+Original-table consistency is HOLD_ORIGINAL_BINDING_TABLE_INCONSISTENT. The [current variable table](VARIABLES.md)
+and [explicit bindings](CURRENT_BINDINGS.json) are post-result corrections, not retroactive pre-freeze compliance.
+Historical PASS_TEMPORAL_GOAL_SCOPED output stays visible but is not an unqualified current primary-protocol PASS.
+
+[Erratum and limits](ERRATA_V3.md), [original description](README_V1.md),
+[original C01 freeze](C01/FREEZE.json), [original C02 freeze](C02/FREEZE.json), [cleanup](CLOSURE.json),
+[first copied reproduction](post-result-v3/V2_FIRST_REPRODUCTION.json),
+[same-copy rejection](post-result-v3/V3_SAME_COPIES_RESULT.json),
+[test-first stderr](post-result-v3/test-red/stderr.txt),
+[green stderr](post-result-v3/test-green/stderr.txt), [optimized stderr](post-result-v3/test-green-O/stderr.txt),
+[post-result source identity](post-result-v3/AUDIT_V3_SOURCE.json),
+[v3 auditor text](post-result-v3/audit-v3.py.txt), [regression text](post-result-v3/test_custody.py.txt).
+
+All original source/raw/first errors/outcomes remain;25 frozen source pins are unchanged. Script copies are inert
+.py.txt/.js.txt; no runtime/src/docs/.github/workflow/index change. Old content proposal was withdrawn before observed
+votes; current source/conditions need a fresh head/digest/committee epoch. No main authority, shared resource or new worker.
+Parent [#5442](https://github.com/Unjuno/agent-interface/issues/5442) and broad computer-control goal remain open.
+T7/T8/6914 sources/raw/allocations are unchanged. Exact object/manifest checks and scoped local tests support custody,
+not observer authentication, continuous goals, external-restoration attribution, native physical input/release,
+concurrent scheduler stress, crash/power-loss durability, latency/model/efficiency benefit, MAP01 or runtime adoption.
+'''
+(package/'README.md').write_text(readme,encoding='utf-8',newline='\n')
+publication=dict(utc=datetime.now(timezone.utc).isoformat(),original_head='1d32c173ebbeff63404edb65498f42c0265ca880',
+    withdrawn_proposal=5966004617,withdrawal_record=5966066068,current_audit='PASS_RETAINED_RAW_AUDIT_V3',
+    original_primary_table_consistency='HOLD_ORIGINAL_BINDING_TABLE_INCONSISTENT',
+    observed_current_goals=dict(initial=10,post_disturbance=4,final=8,yield_budget=2),primary_replays=0,source_pins_unchanged=25,
+    runtime_promotion=False,main_applied=False,scope='inert same-data post-result audit repair and historical-variable erratum')
+(package/'PUBLICATION_V3.json').write_text(json.dumps(publication,indent=2),encoding='utf-8')
+manifest={p.relative_to(package).as_posix():dict(bytes=p.stat().st_size,sha256=hashlib.sha256(p.read_bytes()).hexdigest())
+          for p in sorted(package.rglob('*')) if p.is_file() and p.name!='MANIFEST.json'}
+(package/'MANIFEST.json').write_text(json.dumps(dict(files=manifest),indent=2),encoding='utf-8')
+print(json.dumps(dict(manifest_entries=len(manifest),package_bytes=sum(v['bytes'] for v in manifest.values()),original_pins=25,primary_replays=0)))

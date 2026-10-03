@@ -1,0 +1,52 @@
+"""Fresh readonly SQLite connection; coherent backup and complete raw tables."""
+import argparse
+import hashlib
+import json
+import sqlite3
+from datetime import datetime, timezone
+from pathlib import Path
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--database',required=True)
+    parser.add_argument('--cases',required=True)
+    parser.add_argument('--output',required=True)
+    parser.add_argument('--phase',required=True)
+    args = parser.parse_args()
+    out = Path(args.output)
+    out.mkdir(exist_ok=False)
+    started = datetime.now(timezone.utc).isoformat()
+    source = sqlite3.connect(Path(args.database).resolve().as_uri()+'?mode=ro',uri=True,timeout=5)
+    try:
+        destination = sqlite3.connect(out/'snapshot.sqlite')
+        try:
+            source.backup(destination)
+        finally:
+            destination.close()
+    finally:
+        source.close()
+    snapshot = sqlite3.connect((out/'snapshot.sqlite').resolve().as_uri()+'?mode=ro',uri=True)
+    snapshot.row_factory = sqlite3.Row
+    try:
+        tables = {name:[dict(row) for row in snapshot.execute('SELECT * FROM '+name+' ORDER BY '+key)]
+                  for name,key in [('meta','key'),('docs','case_id,target'),('events','event_id'),('requests','request_id')]}
+    finally:
+        snapshot.close()
+    cases = json.loads(Path(args.cases).read_bytes())
+    docs = {(row['case_id'],row['target']):row for row in tables['docs']}
+    verdicts = []
+    for case in cases['cases']:
+        a,b = docs[(case['case_id'],'doc:A')],docs[(case['case_id'],'doc:B')]
+        verdicts.append(dict(case_id=case['case_id'],goal_current=type(a['value']) is str and a['value']==case['goal'],
+            sibling_preserved=b['value']==case['sibling_initial'] and type(b['version']) is int and b['version']==0))
+    raw = dict(phase=args.phase,started_utc=started,ended_utc=datetime.now(timezone.utc).isoformat(),
+               source='fresh readonly connection to owned live.sqlite',sqlite_version=sqlite3.sqlite_version,
+               tables=tables,verdicts=verdicts,snapshot_sha256=hashlib.sha256((out/'snapshot.sqlite').read_bytes()).hexdigest())
+    (out/'raw.json').write_bytes((json.dumps(raw,ensure_ascii=False,indent=2)+'\n').encode())
+    print(json.dumps(dict(phase=args.phase,cases=len(verdicts),goal_current=sum(row['goal_current'] for row in verdicts),
+                         raw_sha256=hashlib.sha256((out/'raw.json').read_bytes()).hexdigest())))
+
+
+if __name__ == '__main__':
+    main()

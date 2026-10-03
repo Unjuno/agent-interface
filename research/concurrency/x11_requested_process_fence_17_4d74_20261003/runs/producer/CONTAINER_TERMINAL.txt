@@ -1,0 +1,94 @@
+[
+  {
+    "Config": {
+      "Cmd": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=3s",
+        "35s",
+        "python3",
+        "-B",
+        "producer.py",
+        "/out"
+      ],
+      "Entrypoint": null,
+      "Env": [
+        "PYTHONDONTWRITEBYTECODE=1",
+        "PYTHONPATH=/src/sources:/src/method",
+        "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "LANG=C.UTF-8",
+        "GPG_KEY=7169605F62C751356D054A26A821E680E5FA6305",
+        "PYTHON_VERSION=3.12.15",
+        "PYTHON_SHA256=c2c4321961fab0fb999d66e0cecf521c2ab3994c7992873ea99e306c1094fd5a",
+        "PIP_DISABLE_PIP_VERSION_CHECK=1"
+      ],
+      "Healthcheck": null,
+      "Image": "sha256:865bfbcc86992769ec9b8311a2344b67c664639d96d7cf0d5c407df9c2c500ed",
+      "Labels": {
+        "org.unjuno.study": "ISSUE59-FOCUS-REPEAT-OWNER-T0-20261002-01"
+      },
+      "StopTimeout": null,
+      "User": "65534:65534",
+      "WorkingDir": "/src/method"
+    },
+    "Created": "2026-10-03T12:09:58.790369569Z",
+    "HostConfig": {
+      "Memory": 536870912,
+      "NanoCpus": 1000000000,
+      "NetworkMode": "none",
+      "Ulimits": []
+    },
+    "Id": "673522e487212280a0678481e0c55d35ecc644059ac2ea9d8906217e9f8267e7",
+    "Image": "sha256:865bfbcc86992769ec9b8311a2344b67c664639d96d7cf0d5c407df9c2c500ed",
+    "Labels": {
+      "org.unjuno.study": "ISSUE59-FOCUS-REPEAT-OWNER-T0-20261002-01"
+    },
+    "Mounts": [
+      {
+        "Destination": "/src",
+        "Name": "",
+        "ReadWrite": false,
+        "Source": "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\x11-requested-process-fence-4d74\\candidate-input",
+        "Type": "bind"
+      },
+      {
+        "Destination": "/out",
+        "Name": "",
+        "ReadWrite": true,
+        "Source": "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\x11-requested-process-fence-4d74\\runs\\producer",
+        "Type": "bind"
+      },
+      {
+        "Destination": "/tmp",
+        "Name": "",
+        "ReadWrite": true,
+        "Source": "",
+        "Type": "tmpfs"
+      }
+    ],
+    "Name": "/x11-fence-7034-4d74-a01-producer",
+    "NetworkSettings": {
+      "Networks": {
+        "none": {
+          "Aliases": [],
+          "DriverOpts": {},
+          "Gateway": "",
+          "IPAMConfig": null,
+          "IPAddress": "",
+          "IPPrefixLen": 0,
+          "Links": [],
+          "MacAddress": ""
+        }
+      }
+    },
+    "Ports": {},
+    "State": {
+      "ExitCode": 0,
+      "FinishedAt": "2026-10-03T12:10:02.017445772Z",
+      "Health": null,
+      "Running": false,
+      "StartedAt": "2026-10-03T12:09:59.021839132Z",
+      "Status": "exited"
+    }
+  }
+]

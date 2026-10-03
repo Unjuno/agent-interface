@@ -1,0 +1,93 @@
+import hashlib
+import json
+import subprocess
+from datetime import datetime,timezone
+from pathlib import Path
+
+root=Path(__file__).parent
+repo=root.parent/'agent-interface'
+def git(*args):
+    return subprocess.check_output(['git','-C',str(repo),*args])
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+intake=json.loads((root/'INTAKE.json').read_bytes())
+proposal=dict(intake['proposal']);digest=proposal.pop('proposal_digest')
+canonical=json.dumps(proposal,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode()
+if sha(canonical)!=digest:
+    raise ValueError('canonical proposal')
+if '01a0ff58-2d0b-7eb1-8b33-c8b69e63563a' in proposal['committee']:
+    raise ValueError('incorrect outside-committee scope')
+head=proposal['head_sha'];base=proposal['review_base_sha']
+if git('rev-parse','refs/remotes/origin/review6935-01a0ff58').decode().strip()!=head:
+    raise ValueError('PR source moved')
+main=git('rev-parse','refs/remotes/origin/review6935-main-01a0ff58').decode().strip()
+ag=git('ls-tree','-r','--name-only',head,'--','AGENTS.md','runtime/AGENTS.md','runtime/host_v1/AGENTS.md').decode()
+if ag:
+    raise ValueError('read applicable instructions before proceeding '+ag)
+paths=sorted(git('diff','--name-only','--no-renames',base,head).decode().splitlines())
+if len(paths)!=81:
+    raise ValueError('changed paths')
+rows=[]
+for path in paths:
+    line=git('ls-tree',head,'--',path).decode().strip()
+    mode,kind,oid,_=line.split(maxsplit=3)
+    data=git('cat-file','blob',oid)
+    target=root/'exact-head'/path;target.parent.mkdir(parents=True,exist_ok=True)
+    target.write_bytes(data)
+    rows.append(dict(path=path,mode=mode,blob=oid,bytes=len(data),sha256=sha(data)))
+portable=json.dumps(rows,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode()
+if sha(portable)!=proposal['changed_blobs_digest']:
+    raise ValueError('portable changed images')
+evidence=root/'exact-head'/proposal['evidence_path']
+manifest_path=evidence/'SHA256SUMS'
+if sha(manifest_path.read_bytes())!=proposal['manifest_sha256']:
+    raise ValueError('manifest bytes')
+entries=[]
+for line in manifest_path.read_text(encoding='utf-8').splitlines():
+    expected,name=line.split(maxsplit=1)
+    entries.append((name.lstrip('*'),expected))
+if len(entries)!=77:
+    raise ValueError('manifest shape')
+for name,expected in entries:
+    data=(evidence/name).read_bytes()
+    if sha(data)!=expected:
+        raise ValueError('manifest item '+name)
+for label,ref in [('before',base),('fixed',head)]:
+    target=root/label;target.mkdir()
+    (target/'relay_client.mjs').write_bytes(git('show',ref+':runtime/host_v1/relay_client.mjs'))
+merge=subprocess.run(['git','-C',str(repo),'merge-tree','--write-tree',main,head],capture_output=True)
+(root/'merge-tree.stdout').write_bytes(merge.stdout)
+(root/'merge-tree.stderr').write_bytes(merge.stderr)
+if merge.returncode!=0:
+    raise ValueError('merge-tree failed '+str(merge.returncode))
+tree=merge.stdout.decode().splitlines()[0]
+planned_client=git('show',tree+':runtime/host_v1/relay_client.mjs')
+if planned_client!=(root/'fixed/relay_client.mjs').read_bytes():
+    raise ValueError('changed tested client in planned tree')
+footprint=['runtime/host_v1/relay_client.mjs','runtime/host_v1/relay_host.mjs',
+           'runtime/host_v1/test_relay_client.mjs']
+drift=[]
+for path in footprint:
+    if git('show',base+':'+path)!=git('show',main+':'+path):
+        drift.append(path)
+node=Path('C:/Program Files/nodejs/node.exe')
+pins=[]
+for path in [root/'child_fixture.cjs',root/'check_late_reply.mjs',
+             root/'before/relay_client.mjs',root/'fixed/relay_client.mjs',
+             root.parent/'browser-endpoint/run_recorded.py',node]:
+    data=path.read_bytes()
+    pins.append(dict(path=str(path),bytes=len(data),sha256=sha(data)))
+record=dict(utc=datetime.now(timezone.utc).isoformat(),policy_version='FINAL-v5',
+    worker='01a0ff58-2d0b-7eb1-8b33-c8b69e63563a',scope='outside committee; no vote/apply/main authority',
+    head=head,content_base=base,current_main=main,planned_tree=tree,merge_exit=merge.returncode,
+    proposal_digest=digest,committee_epoch=proposal['committee_epoch'],portable_images_digest=sha(portable),
+    images=len(rows),manifest_entries=len(entries),existing_host_footprint_changed_in_main=drift,
+    tested_source_planned_tree_equal=True,
+    comparison='same unchanged two ordinary post-success unsolicited reply boundary checks: before vs fixed',
+    expected='before terminal evidence absent; fixed both exact new terminal receipts; no guard outcome; one request per owned child',
+    limits='private Windows Node24.13 CPU inert pipes; not hard deadline/physical input/task/durability/model/performance or formal allocation',
+    source_pins=pins,original_producer_replays=0,main_sends=0)
+(root/'CHANGED_IMAGES.canonical.json').write_bytes(portable)
+with (root/'CHECK_SOURCE.json').open('x',encoding='utf-8') as f:
+    json.dump(record,f,indent=2)
+print(json.dumps({k:v for k,v in record.items() if k!='source_pins'}))

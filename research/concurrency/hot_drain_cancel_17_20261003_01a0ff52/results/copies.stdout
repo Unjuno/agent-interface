@@ -1,0 +1,62 @@
+{
+  "classification": "copied retained records; no producer replay",
+  "baseline": {
+    "id": 6,
+    "profile": "co_ready",
+    "budget": 0,
+    "reads": 0,
+    "terminal": "CANCEL_ACK"
+  },
+  "controls": [
+    {
+      "kind": "float_spec",
+      "rejected": true,
+      "reason": "typed spec"
+    },
+    {
+      "kind": "boolean_seq",
+      "rejected": true,
+      "reason": "sequence/time type"
+    },
+    {
+      "kind": "false_ack_byte",
+      "rejected": true,
+      "reason": "read conservation"
+    },
+    {
+      "kind": "wrong_poll_fd",
+      "rejected": true,
+      "reason": "ready identity"
+    },
+    {
+      "kind": "wrong_poll_inode",
+      "rejected": true,
+      "reason": "ready identity"
+    },
+    {
+      "kind": "wrong_cancel_cause",
+      "rejected": true,
+      "reason": "write cause"
+    },
+    {
+      "kind": "missing_close",
+      "rejected": true,
+      "reason": "complete cleanup"
+    },
+    {
+      "kind": "float_closed_error",
+      "rejected": true,
+      "reason": "integer:err"
+    },
+    {
+      "kind": "false_cleanup_byte",
+      "rejected": true,
+      "reason": "cleanup byte conservation"
+    },
+    {
+      "kind": "terminal_before_ack",
+      "rejected": true,
+      "reason": "ACK custody"
+    }
+  ]
+}

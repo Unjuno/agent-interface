@@ -1,0 +1,72 @@
+{
+  "schema": "looming-visual-assumption-gate-s02-freeze-v1",
+  "issue": 6808,
+  "prior_issue": 5905,
+  "allocation_id": "LOOMING-VISUAL-ASSUMPTION-GATE-5905-S02-WSLC-20261003-01",
+  "owner": {
+    "task_id": "01a0b990-3d17-72f1-a908-9a2072104ce5",
+    "description": "this local Codex autonomous research task"
+  },
+  "main_sha_at_intake": "4d651bee9c89f0084afa6f8b9bea9cd6ac501757",
+  "main_sha_at_freeze": "1644e5ded393ea472f48729df6f7d885a92f7837",
+  "main_advance_disposition": "16 commits / 95 paths since intake; no overlap with #5905/#6808, the S02 path, ROADMAP.md, or docs/CURRENT_GOAL.md; unrelated #6616, #4972/#5752, #59, #6256, #6689, refusal-terminality and index changes.",
+  "branch": "research/5905-visual-assumption-gate-s02-wslc-20261003",
+  "artifact_path": "research/analysis/looming_visual_assumption_gate_5905_s02_wslc_20261003/",
+  "runtime": {
+    "host": "Windows AMD64",
+    "host_python": "3.11.9",
+    "container_cli": "wslc 3.0.1.0",
+    "container_image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "image_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "container_python": "3.12.15",
+    "platform": "linux/amd64",
+    "network": "none",
+    "pull": "never",
+    "cpus_requested": 1,
+    "memory_requested": "512M",
+    "source_mount": "read-only",
+    "gpu_cuda_model_provider_gui_input": false
+  },
+  "budget": {
+    "candidate_invocations_max": 1,
+    "auditor_invocations_max": 1,
+    "auditor_requires_candidate_exit_0": true,
+    "retries": 0,
+    "window_utc": {
+      "start": "2026-10-02T20:50:00Z",
+      "end": "2026-10-02T21:05:00Z"
+    },
+    "candidate_command": "python -B /src/candidate.py --fixture /src/fixture.json --out /out/candidate.raw.json",
+    "auditor_command": "python -B /src/auditor.py --fixture /src/fixture.json --oracle /src/oracle.json --raw /in/candidate.raw.json --out /out/audit.json"
+  },
+  "construction": {
+    "command": "python -B -m unittest -v",
+    "result": "PASS 5/5",
+    "compile_command": "python -B -m py_compile builder.py candidate.py auditor.py test_protocol.py",
+    "compile_result": "PASS",
+    "candidate_formal_cli_invocations": 0,
+    "auditor_formal_cli_invocations": 0
+  },
+  "source_sha256": {
+    "builder.py": "77db1dfef5fe1ea5fd2d578d0ff12e4e322fd93809af29b065ae1091daac17a6",
+    "candidate.py": "9348f8e819600d7e563ebb1ba6918abe0780c196a87f2e20747770f586da9e18",
+    "auditor.py": "23c0d7d1ba864a08c8ae1d7fde2aeb3da3cc1d68df4fac5c581ae592dddcbed4",
+    "test_protocol.py": "73163ec9be7344edf007019ef566ca54bdef7ab6e6f9a587088348bf4f92679f",
+    "fixture.json": "b7a18a08860ac04040d88670c06921801e99986bbe4fec7adde49147597f4f72",
+    "oracle.json": "617e9a2199e25895e052d02e12245854fb1c5407d9b96ad51a8e561590fb90bf"
+  },
+  "output_paths": [
+    "execution/formal-s02/candidate/candidate.raw.json",
+    "execution/formal-s02/auditor/audit.json"
+  ],
+  "decision": {
+    "positive_cases": ["k01", "k02", "k03"],
+    "control_cases": ["k04", "k05", "k06", "k07", "k08", "k09", "k10", "k11", "k12"],
+    "positive_ttc_error_fraction_max": 0.05,
+    "release_lead_ms_min": 200,
+    "release_lead_ms_max": 900,
+    "pixel_identical_pair": ["k11", "k12"],
+    "corruption_controls": ["missing row", "duplicate row", "forged frame hash", "forged geometry", "false SAFE on common-mode zoom", "fabricated release lead"]
+  },
+  "scope": "Finite synthetic raster-method result only; no live/game/GUI/controller/safety/benefit claim. S01 remains unrun and unchanged."
+}

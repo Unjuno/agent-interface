@@ -28,6 +28,16 @@ Before an evidence-bearing run, replace the illustrative image tag with the exac
 
 To smoke-check that WSLc is installed, the approved Python image is already cached, the no-network/resource options are accepted, and a read-only bind mount actually rejects writes, run `.github/scripts/test_wslc_local_runtime.ps1` from PowerShell. It uses only a GUID-named temporary directory and removes that exact directory in a `finally` block. It is an environment compatibility check, not a scientific result or a Docker parity suite.
 
+## Dockerless Dockerfile build — scoped verification, 2026-10-03
+
+[PR #7020](https://github.com/Unjuno/agent-interface/pull/7020) retains a real WSLc build/run of a tiny local Dockerfile on this Windows host: cached digest-pinned Python base, `WORKDIR`/`COPY`/`ENTRYPOINT`, exact copied-payload hash, exit 0, and verified removal of the named container. Five regression/mutation tests passed. Its separate offline auditor exited 0, but independent review found missing receipt-hash and run-record image-ID checks; read the [review qualification](../research/analysis/wslc_dockerfile_build_smoke_t0_20261003/REVIEW_QUALIFICATION.md) rather than treating that CLI output as a fully verified audit gate. This establishes a narrow Dockerless build/run capability, not an application migration or general Dockerfile parity.
+
+For an eligible new local iteration, `wslc build --file Dockerfile --tag <fresh-owned-tag> .` is the Dockerless build route. Use a digest-pinned base and a fresh owned build context/tag. Before an evidence-bearing run, resolve and freeze the resulting image identity, source hashes and full run command; use the cached-image/no-network/read-only-source invocation above where the protocol allows it. Do not reuse #7020's consumed formal allocation or silently replace the runtime of another frozen study.
+
+The tested Dockerfile had no `RUN` instruction or dependency installation. Build-level network isolation was not established; `--network none` applies to the subsequent container run. Workflows involving package installation, other Dockerfile features, signals, writable outputs or stronger isolation need their own compatibility checks. The cgroup/swap warning remains, and the accepted `--memory` request is not a proven hard cap.
+
+Keep speed and memory-benefit measurement under [#6693](https://github.com/Unjuno/agent-interface/issues/6693), including its same-host Docker and owner-release gates. [#6389](https://github.com/Unjuno/agent-interface/issues/6389) is a separate native-Ubuntu/WSL2 comparison. Do not start Docker Desktop, restart shared WSL, change global WSL settings or launch memory-pressure tests merely to complete this local route.
+
 ## Migration gates
 
 1. **Eligible now for pilot:** disposable single-container local tests that need a pinned Linux image, no network, bounded CPU/memory, read-only source bind mounts, and ordinary process exit codes.

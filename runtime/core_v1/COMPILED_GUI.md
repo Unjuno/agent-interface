@@ -14,6 +14,16 @@ or failed effects, uncertain input and exhausted budgets yield with their
 completed prefix. Symbols do not grant authority or contain executable points.
 Raw evidence and receipt persistence remain the adapters' responsibility.
 
+In the declared shared monotonic clock domain, a capture cannot be later than
+the return of its observation adapter. Evidence for a pending effect must also
+be captured at or after the preceding execution adapter returned. An inconsistent
+capture yields `stale_observation` before verification, another action or method
+completion, retaining the completed prefix and pending effect. Equal timestamps
+are allowed for clock quantization. An initial capture may precede method start;
+admission still owns its freshness/target checks. These ordering checks do not
+authenticate capture timestamps, establish clock-domain provenance, or certify
+application effects.
+
 Each returned effect-verdict dictionary is copied after exact-shape validation
 and before checking its status and successful evidence reference. A later journal
 callback cannot rebind those fields through its retained return object. This is

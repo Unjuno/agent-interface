@@ -1,0 +1,27 @@
+{"event":"cell_started","extra":{"spec":{"cell_id":"main__held_journal","condition":"held_journal","source_file":"main_client.py","variant":"main"}},"monotonic_ns":30493676281,"seq":0}
+{"event":"client_construct_begin","extra":{"peer_command":["/usr/local/bin/python","-B","/src/echo_peer.py","--directory","/out/cells/main__held_journal"]},"monotonic_ns":30496700970,"seq":1}
+{"event":"client_constructed","extra":{"child_pid":13,"reader_name":"Thread-1 (_read)"},"monotonic_ns":30501523790,"seq":2}
+{"event":"peer_ready_observed","extra":{"ready":{"monotonic_ns":30978211786,"parent_pid":12,"pid":13}},"monotonic_ns":30985550232,"seq":3}
+{"event":"holder_acquired","extra":{},"monotonic_ns":30985811780,"seq":4}
+{"event":"caller_started","extra":{"timeout_ns":50000000},"monotonic_ns":30986088070,"seq":5}
+{"event":"holder_wait","extra":{"release_target_ns":31386088070},"monotonic_ns":30986228507,"seq":6}
+{"event":"checkpoint","extra":{"caller_alive":true,"caller_finished":false,"holder_alive":true,"holder_finished":false,"journal_row_count":0,"peer_received_bytes":0,"peer_returncode":null,"reader_alive":true},"monotonic_ns":31242345760,"seq":7}
+{"event":"holder_release_begin","extra":{},"monotonic_ns":31386187868,"seq":8}
+{"event":"holder_released","extra":{},"monotonic_ns":31386646706,"seq":9}
+{"event":"holder_joined","extra":{"alive":false},"monotonic_ns":31387263211,"seq":10}
+{"event":"caller_finished","extra":{"result":{"payload":"journal-mutex-witness"},"status":"RETURN"},"monotonic_ns":31390989683,"seq":11}
+{"event":"caller_joined","extra":{"alive":false},"monotonic_ns":31391313242,"seq":12}
+{"event":"pipe_close_begin","extra":{"name":"stdin"},"monotonic_ns":31391558481,"seq":13}
+{"event":"stdin_closed_for_peer_eof","extra":{"closed":true},"monotonic_ns":31391867595,"seq":14}
+{"event":"child_reaped","extra":{"child_pid":13,"returncode":0},"monotonic_ns":31399643206,"seq":15}
+{"event":"client_close_begin","extra":{"timeout_ns":200000000},"monotonic_ns":31400108132,"seq":16}
+{"event":"client_close_returned","extra":{},"monotonic_ns":31400624385,"seq":17}
+{"event":"reader_joined","extra":{"alive":false},"monotonic_ns":31400793728,"seq":18}
+{"event":"pipe_closed","extra":{"closed":true,"name":"stdin"},"monotonic_ns":31403964580,"seq":19}
+{"event":"pipe_close_begin","extra":{"name":"stdout"},"monotonic_ns":31404147861,"seq":20}
+{"event":"pipe_closed","extra":{"closed":true,"name":"stdout"},"monotonic_ns":31404287118,"seq":21}
+{"event":"pipe_close_begin","extra":{"name":"stderr"},"monotonic_ns":31404403938,"seq":22}
+{"event":"pipe_closed","extra":{"closed":true,"name":"stderr"},"monotonic_ns":31404510199,"seq":23}
+{"event":"journal_closed","extra":{"closed":true},"monotonic_ns":31404609152,"seq":24}
+{"event":"cleanup_done","extra":{"caller_alive":false,"child_pid":13,"child_returncode":0,"cleanup_errors":[],"explicit_pipe_closed":{"stderr":true,"stdin":true,"stdout":true},"holder_alive":false,"journal_closed":true,"journal_row_count":2,"peer_received_bytes":70,"reader_alive":false,"thread_exceptions":[]},"monotonic_ns":31406580503,"seq":25}
+{"event":"cell_finished","extra":{"status":"COMPLETE","stop_reason":null},"monotonic_ns":31412101803,"seq":26}

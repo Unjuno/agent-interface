@@ -1,0 +1,44 @@
+{
+  "initial_direct_normal_check": "36 methods, exit0, tool-captured combined output; separate stream/UTC receipts were not captured for that first direct check",
+  "ordinary_post_assay": true,
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "records": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "runtime.kernel.test_kernel",
+        "runtime.kernel.test_release_epoch",
+        "runtime.kernel.test_cancel_release_epoch"
+      ],
+      "cwd": "checks",
+      "exit": 0,
+      "finished_utc": "2026-10-03T02:14:51.061155+00:00",
+      "name": "normal",
+      "started_utc": "2026-10-03T02:14:50.962237+00:00",
+      "stderr_sha256": "4b1b2a9932573e4ca1c97c5a47c7cdaeded63b53914368357f3dfae7df954710",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "python",
+        "-O",
+        "-B",
+        "-m",
+        "unittest",
+        "runtime.kernel.test_kernel",
+        "runtime.kernel.test_release_epoch",
+        "runtime.kernel.test_cancel_release_epoch"
+      ],
+      "cwd": "checks",
+      "exit": 0,
+      "finished_utc": "2026-10-03T02:14:51.161996+00:00",
+      "name": "optimized",
+      "started_utc": "2026-10-03T02:14:51.062155+00:00",
+      "stderr_sha256": "4b1b2a9932573e4ca1c97c5a47c7cdaeded63b53914368357f3dfae7df954710",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

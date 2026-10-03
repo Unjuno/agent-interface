@@ -1,0 +1,869 @@
+{
+  "schema": "edit49-native-v1",
+  "cases_sha256": "36938b365a9167cc72f08e7aee023cfedb0a2f27b0edcb95165edd13f16cb27c",
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "platform": "Linux-7.0.5-orbstack-00330-ge3df4e19b0a0-dirty-aarch64-with-glibc2.39",
+  "backend_module": "/src/vendor/runtime/backends/x11_v1/backend.py",
+  "rows": [
+    {
+      "cell_id": "P01-plain-untyped",
+      "display": ":121",
+      "cell": {
+        "id": "P01",
+        "context": "QWERTZ",
+        "current": "QWERTZ",
+        "span": [
+          2,
+          4
+        ],
+        "unit": "unicode_scalar",
+        "widget": "plain",
+        "arm": "untyped",
+        "cell_id": "P01-plain-untyped"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 10,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "QWERTZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 7,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        2,
+        4
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "QWERTZ",
+        "anchor": 2,
+        "position": 4,
+        "selected": "ER",
+        "qt_document_count": 7,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-1",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 16727642129074
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 16724642745908,
+        "ended_ns": 16724643732659,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 16724643731367
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 16724667325854
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "QWXTZ",
+        "anchor": 3,
+        "position": 3,
+        "selected": "",
+        "qt_document_count": 6,
+        "has_selection": false,
+        "changes": [
+          "QWXTZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "2c5b0cb4dce9e5b6898e6d53553f4e9f94e44d6f66f4587a34ab322743c751c5",
+        "saved.txt": "3bcf6fcc1f7dc1d5cf4e06d2c55f076897376bba0db6788d02c9f21a403cfbb6",
+        "state.json": "59d9a162f71f041ff09c4ecbbed631b841d88eacc53b6e5b2254dc4171f1f566",
+        "widget.png": "14b871df42f8073f9dfd2756195aff9e3c74795dea5e76b98a67fa9dbb20c9c2"
+      }
+    },
+    {
+      "cell_id": "P01-plain-typed",
+      "display": ":122",
+      "cell": {
+        "id": "P01",
+        "context": "QWERTZ",
+        "current": "QWERTZ",
+        "span": [
+          2,
+          4
+        ],
+        "unit": "unicode_scalar",
+        "widget": "plain",
+        "arm": "typed",
+        "cell_id": "P01-plain-typed"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 18,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "QWERTZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 7,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        2,
+        4
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "QWERTZ",
+        "anchor": 2,
+        "position": 4,
+        "selected": "ER",
+        "qt_document_count": 7,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-2",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 16727923447332
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 16724923730957,
+        "ended_ns": 16724925157126,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 16724925155667
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 16724925282459
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "QWXTZ",
+        "anchor": 3,
+        "position": 3,
+        "selected": "",
+        "qt_document_count": 6,
+        "has_selection": false,
+        "changes": [
+          "QWXTZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "f172a1b0f5cf2a0d462c51dfc335af1a1dfc8e873cb66f61d018c8b1b35fe416",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "05644ca23ea05011fbb232e14d77ba40f1e775645a5f544cf1eaa55847d600f2",
+        "saved.txt": "3bcf6fcc1f7dc1d5cf4e06d2c55f076897376bba0db6788d02c9f21a403cfbb6",
+        "state.json": "59d9a162f71f041ff09c4ecbbed631b841d88eacc53b6e5b2254dc4171f1f566",
+        "widget.png": "14b871df42f8073f9dfd2756195aff9e3c74795dea5e76b98a67fa9dbb20c9c2"
+      }
+    },
+    {
+      "cell_id": "P01-rich-untyped",
+      "display": ":123",
+      "cell": {
+        "id": "P01",
+        "context": "QWERTZ",
+        "current": "QWERTZ",
+        "span": [
+          2,
+          4
+        ],
+        "unit": "unicode_scalar",
+        "widget": "rich",
+        "arm": "untyped",
+        "cell_id": "P01-rich-untyped"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 24,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "QWERTZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 7,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        2,
+        4
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "QWERTZ",
+        "anchor": 2,
+        "position": 4,
+        "selected": "ER",
+        "qt_document_count": 7,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-3",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 16728124319784
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 16725124654784,
+        "ended_ns": 16725127401038,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 16725127399913
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 16725127513496
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "QWXTZ",
+        "anchor": 3,
+        "position": 3,
+        "selected": "",
+        "qt_document_count": 6,
+        "has_selection": false,
+        "changes": [
+          "QWXTZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "f172a1b0f5cf2a0d462c51dfc335af1a1dfc8e873cb66f61d018c8b1b35fe416",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "d99b94f70899461b7ce3c0e629e0ad59faa704e7928250a957147cfb37df0f13",
+        "saved.txt": "3bcf6fcc1f7dc1d5cf4e06d2c55f076897376bba0db6788d02c9f21a403cfbb6",
+        "state.json": "59d9a162f71f041ff09c4ecbbed631b841d88eacc53b6e5b2254dc4171f1f566",
+        "widget.png": "14b871df42f8073f9dfd2756195aff9e3c74795dea5e76b98a67fa9dbb20c9c2"
+      }
+    },
+    {
+      "cell_id": "P01-rich-typed",
+      "display": ":124",
+      "cell": {
+        "id": "P01",
+        "context": "QWERTZ",
+        "current": "QWERTZ",
+        "span": [
+          2,
+          4
+        ],
+        "unit": "unicode_scalar",
+        "widget": "rich",
+        "arm": "typed",
+        "cell_id": "P01-rich-typed"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 30,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "QWERTZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 7,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        2,
+        4
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "QWERTZ",
+        "anchor": 2,
+        "position": 4,
+        "selected": "ER",
+        "qt_document_count": 7,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-4",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 16728331367410
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 16725331590661,
+        "ended_ns": 16725334252081,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 16725334251081
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 16725334352706
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "QWXTZ",
+        "anchor": 3,
+        "position": 3,
+        "selected": "",
+        "qt_document_count": 6,
+        "has_selection": false,
+        "changes": [
+          "QWXTZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "14c950f1260da4bf8341567eb360f8c9f8c7ed95760727e4e09c5bff1f3fd855",
+        "saved.txt": "3bcf6fcc1f7dc1d5cf4e06d2c55f076897376bba0db6788d02c9f21a403cfbb6",
+        "state.json": "59d9a162f71f041ff09c4ecbbed631b841d88eacc53b6e5b2254dc4171f1f566",
+        "widget.png": "14b871df42f8073f9dfd2756195aff9e3c74795dea5e76b98a67fa9dbb20c9c2"
+      }
+    }
+  ]
+}

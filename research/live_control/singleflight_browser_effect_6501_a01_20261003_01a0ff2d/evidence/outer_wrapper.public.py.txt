@@ -1,0 +1,49 @@
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+from datetime import datetime, timezone
+
+root=Path(__file__).resolve().parent.parent
+source=root/'work/agent-interface/research/live_control/singleflight_browser_effect_6501_a01_20261003_01a0ff2d'
+private=root/'work/private-evidence/browser-effect-6501'
+out=private/'comparative-A01'
+freeze=json.loads((source/'FREEZE.json').read_bytes())
+for name,wanted in freeze['source_sha256'].items():
+    assert hashlib.sha256((source/name).read_bytes()).hexdigest()==wanted,name
+env=os.environ.copy()
+env['STUDY_NODE']=r'<bundled-node>\bin\node.exe'
+env['NODE_PATH']=r'<bundled-node>\node_modules'
+env['STUDY_CHROME']=r'<installed-chrome>\chrome.exe'
+def sha(path):
+    h=hashlib.sha256()
+    with Path(path).open('rb') as stream:
+        for data in iter(lambda:stream.read(1048576),b''):h.update(data)
+    return h.hexdigest()
+runtime_paths={'node.exe':env['STUDY_NODE'],'chrome.exe':env['STUDY_CHROME'],
+               'chrome.dll':str(Path(env['STUDY_CHROME']).parent/freeze['environment']['browser']/'chrome.dll')}
+for name,path in runtime_paths.items():assert sha(path)==freeze['environment']['binaries_sha256'][name],name
+commands=[('candidate',['python','runner.py',str(out),'formal']),
+          ('auditor',['python','audit.py',str(out),str(out/'audit.json')])]
+receipts=[]
+for stage,command in commands:
+    stdout_path=private/(stage+'-A01.stdout');stderr_path=private/(stage+'-A01.stderr')
+    with stdout_path.open('xb') as stdout,stderr_path.open('xb') as stderr:
+        started=datetime.now(timezone.utc).isoformat()
+        process=subprocess.Popen(command,cwd=source,env=env,stdout=stdout,stderr=stderr)
+        (private/(stage+'-A01-handle.json')).write_text(json.dumps({'pid':process.pid,'start_utc':started,'command':command})+'\n')
+        status=process.wait(timeout=210)
+    receipt={'stage':stage,'command':command,'start_utc':started,'end_utc':datetime.now(timezone.utc).isoformat(),'exit_code':status}
+    receipts.append(receipt)
+    (private/'A01-receipts.json').write_text(json.dumps(receipts,indent=2)+'\n',encoding='utf-8')
+    print(json.dumps({'stage':stage,'exit_code':status,'stdout_tail':stdout_path.read_text(errors='replace')[-2400:],'stderr_tail':stderr_path.read_text(errors='replace')[-800:]}),flush=True)
+    if status:break
+for name,wanted in freeze['source_sha256'].items():assert sha(source/name)==wanted,name
+for name,path in runtime_paths.items():assert sha(path)==freeze['environment']['binaries_sha256'][name],name
+files=list(out.rglob('*'))
+output_bytes=sum(p.stat().st_size for p in files if p.is_file())
+assert output_bytes<=3*1024*1024,output_bytes
+result={'source_freeze':'56ac1a105e2d73f50276b14f449c2350fd4941ef','receipts':receipts,'source_and_runtime_pins_unchanged':True,'output_bytes':output_bytes,'retries':0}
+(root/'outputs/6501-browser-execution.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')
+print(json.dumps(result))

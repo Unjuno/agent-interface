@@ -72,6 +72,8 @@ research/analysis/r133_domain_coverage_transfer_v1/** -text
 research/analysis/research_failure_detector_5531_t4/** -text
 research/analysis/needle_role_skill_lifecycle_4916_v2/lifecycle.py -text
 research/needle_role_skill_reload_3780_v1/loader.py -text
+# Preserve exact WSLc candidate, oracle, fixture, and raw result bytes for Issue #6003 A01.
+research/analysis/shared_prerequisite_falsification_6003_a01_wslc_20261003/** -text -whitespace
 # Preserve exact frozen source, output and audit bytes for the Issue #5970 T0.
 research/analysis/blackstart_causal_cut_5970_t0_20261001/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 # Preserve exact retained trace audit sources and raw outputs for Issue #5970 T1.
@@ -124,3 +126,39 @@ research/analysis/prefix_stability_6689_local_allocation01_20261002/** -text -wh
 
 # Preserve exact frozen source and runtime-reproduction evidence bytes for Issue #6001.
 research/analysis/model_api_canary_wslc_replay_6001_t0_20261003/** -text -whitespace
+
+# Preserve the exact raw bytes of Issue #6003's host-only synthetic outputs.
+research/analysis/decision_reversal_6003_t0_v1/candidate_result.json -text -whitespace
+research/analysis/decision_reversal_6003_t0_v1/independent_audit.json -text -whitespace
+
+# Preserve the exact published provenance bytes for the incomplete #6655 custody archive.
+research/analysis/incidental_state_legacy_6655_prereg_archive_226b426/** -text -whitespace
+
+# Preserve raw source and output bytes for the #6354 role-conflict probe packages.
+research/analysis/needle_role_conflict_probe_6354_a02/** -text -whitespace
+research/analysis/needle_role_conflict_probe_6354_a02_wslc_validation_20261002/** -text -whitespace
+
+# Preserve the exact source bytes of the preformal #5333 archive and its ledger.
+research/analysis/contextual_flow_disclosure_5333_t0_20261002/** -text -whitespace
+
+# Preserve the exact preformal source and synthetic material for Issue #6503 T0b.
+research/analysis/quiet_supervision_vigilance_6503_t0b_20261002/** -text -whitespace
+
+# Preserve original source and synthetic fixture bytes for the #5352 T15 archive.
+research/analysis/planner_hysteresis_5352_effect_qualified_t0_20261003/** -text -whitespace
+research/analysis/planner_hysteresis_5352_effect_qualified_t15_20261003/** -text -whitespace
+
+# Preserve the exact #5156 T3 construction package and retained synthetic outputs.
+research/live_control/owner_keyup_keymap_witness_5156_t3_v1/** -text -whitespace
+
+# Preserve exact source and raw outputs for the #5442 T4 mechanical-boundary archive.
+research/analysis/semantic_receipt_runtime_boundary_5442_t4/** -text -whitespace
+
+# Preserve the exact #5260 A02 WSLc source, images and first outcome bytes.
+research/integration/tk_firstchar_5260_a02_wslc_20261003/** -text -whitespace
+
+# Preserve the exact #5260 A03 no-input readiness construction evidence bytes.
+research/integration/tk_firstchar_5260_a03_wslc_20261003/** -text -whitespace
+
+# Preserve the exact #5260 A04 fresh immutable-ready input allocation bytes.
+research/integration/tk_firstchar_5260_a04_wslc_20261003/** -text -whitespace

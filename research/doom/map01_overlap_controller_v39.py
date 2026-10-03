@@ -496,7 +496,7 @@ def main():
                 row = incoming.get(timeout=min(.25,max(.1,end-time.monotonic())))
             except queue.Empty:
                 if process.poll() is not None:
-                    detail=process.stderr.read().strip()
+                    detail="stderr not synchronously drained"
                     raise RuntimeError(f"session exited before expected event: {detail}")
                 continue
             if row["event"] == "observation":

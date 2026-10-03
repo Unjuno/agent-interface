@@ -1,0 +1,220 @@
+{
+  "arms": {
+    "baseline": {
+      "controls": [
+        {
+          "name": "boolean-native-pid",
+          "rejected": true
+        },
+        {
+          "name": "boolean-native-exit",
+          "rejected": true
+        },
+        {
+          "name": "wrong-healthy-effect",
+          "rejected": true
+        },
+        {
+          "name": "wrong-peer-identity",
+          "rejected": true
+        },
+        {
+          "name": "unclosed-owned-pipe",
+          "rejected": true
+        },
+        {
+          "name": "wrong-diagnostic-bytes",
+          "rejected": true
+        },
+        {
+          "name": "false-stdout-EOF",
+          "rejected": true
+        },
+        {
+          "name": "missing-observed-journal",
+          "rejected": true
+        },
+        {
+          "name": "boolean-request-identity",
+          "rejected": true
+        },
+        {
+          "name": "checkpoint-pending-inversion",
+          "rejected": true
+        },
+        {
+          "name": "source-binding-change",
+          "rejected": true
+        },
+        {
+          "name": "false-natural-exit",
+          "rejected": true
+        },
+        {
+          "name": "false-clock-order",
+          "rejected": true
+        }
+      ],
+      "raw_sha256": "d58db296961a3673d73f937b5e83c1d21734d5c1dfc5607d085616c2f2be7fe7",
+      "rows": [
+        {
+          "call_ns": 397502,
+          "checkpoint_pending": false,
+          "identity": "request-healthy",
+          "return_type": "result"
+        },
+        {
+          "call_ns": 4048688,
+          "checkpoint_pending": false,
+          "identity": "request-empty",
+          "return_type": "AppServerError"
+        },
+        {
+          "call_ns": 259011677,
+          "checkpoint_pending": true,
+          "identity": "request-held",
+          "return_type": "AppServerError"
+        },
+        {
+          "call_ns": 709504,
+          "checkpoint_pending": false,
+          "identity": "request-invalid",
+          "return_type": "UnicodeDecodeError"
+        },
+        {
+          "call_ns": 4138647,
+          "checkpoint_pending": false,
+          "identity": "notification-healthy",
+          "return_type": "result"
+        },
+        {
+          "call_ns": 1431882,
+          "checkpoint_pending": false,
+          "identity": "notification-empty",
+          "return_type": "AppServerError"
+        },
+        {
+          "call_ns": 256361037,
+          "checkpoint_pending": true,
+          "identity": "notification-held",
+          "return_type": "AppServerError"
+        },
+        {
+          "call_ns": 2018803,
+          "checkpoint_pending": false,
+          "identity": "notification-invalid",
+          "return_type": "UnicodeDecodeError"
+        }
+      ]
+    },
+    "candidate": {
+      "controls": [
+        {
+          "name": "boolean-native-pid",
+          "rejected": true
+        },
+        {
+          "name": "boolean-native-exit",
+          "rejected": true
+        },
+        {
+          "name": "wrong-healthy-effect",
+          "rejected": true
+        },
+        {
+          "name": "wrong-peer-identity",
+          "rejected": true
+        },
+        {
+          "name": "unclosed-owned-pipe",
+          "rejected": true
+        },
+        {
+          "name": "wrong-diagnostic-bytes",
+          "rejected": true
+        },
+        {
+          "name": "false-stdout-EOF",
+          "rejected": true
+        },
+        {
+          "name": "missing-observed-journal",
+          "rejected": true
+        },
+        {
+          "name": "boolean-request-identity",
+          "rejected": true
+        },
+        {
+          "name": "checkpoint-pending-inversion",
+          "rejected": true
+        },
+        {
+          "name": "source-binding-change",
+          "rejected": true
+        },
+        {
+          "name": "false-natural-exit",
+          "rejected": true
+        },
+        {
+          "name": "false-clock-order",
+          "rejected": true
+        }
+      ],
+      "raw_sha256": "4b4226acf2964c003199d187d40aa05157492456c947efadce1c984a62595a3c",
+      "rows": [
+        {
+          "call_ns": 520169,
+          "checkpoint_pending": false,
+          "identity": "request-healthy",
+          "return_type": "result"
+        },
+        {
+          "call_ns": 5500321,
+          "checkpoint_pending": false,
+          "identity": "request-empty",
+          "return_type": "AppServerError"
+        },
+        {
+          "call_ns": 1461800,
+          "checkpoint_pending": false,
+          "identity": "request-held",
+          "return_type": "AppServerError"
+        },
+        {
+          "call_ns": 835212,
+          "checkpoint_pending": false,
+          "identity": "request-invalid",
+          "return_type": "AppServerError"
+        },
+        {
+          "call_ns": 3316268,
+          "checkpoint_pending": false,
+          "identity": "notification-healthy",
+          "return_type": "result"
+        },
+        {
+          "call_ns": 1846218,
+          "checkpoint_pending": false,
+          "identity": "notification-empty",
+          "return_type": "AppServerError"
+        },
+        {
+          "call_ns": 1431882,
+          "checkpoint_pending": false,
+          "identity": "notification-held",
+          "return_type": "AppServerError"
+        },
+        {
+          "call_ns": 1732676,
+          "checkpoint_pending": false,
+          "identity": "notification-invalid",
+          "return_type": "AppServerError"
+        }
+      ]
+    }
+  },
+  "scope": "saved native EOF recovery rows; no producer/import/replay",
+  "status": "PASS_EOF_STOP_SCOPED"
+}

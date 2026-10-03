@@ -1,0 +1,147 @@
+import hashlib
+import json
+import shutil
+import sqlite3
+from datetime import datetime, timezone
+from pathlib import Path
+
+work=Path(__file__).parent; repo=work/'agent-interface'; c1=work/'temporal-goal'; c2=work/'temporal-goal-C02'
+target=repo/'research/integration/temporal_goal_browser_5442_01a0ff58'
+target.mkdir(parents=True,exist_ok=False)
+source_maps={}
+for label,root,run_name in [('C01',c1,'primary-C01'),('C02',c2,'primary-C02')]:
+    freeze=json.loads((root/'FREEZE.json').read_bytes()); mapping={}; destination=target/label
+    (destination/'source').mkdir(parents=True)
+    for pin in freeze['sources']:
+        original=root/pin['path']; data=original.read_bytes()
+        if hashlib.sha256(data).hexdigest()!=pin['sha256']: raise ValueError('post-freeze drift '+str(original))
+        name=pin['path']+'.txt' if pin['path'].endswith(('.py','.js')) else pin['path']
+        (destination/'source'/name).write_bytes(data); mapping[pin['path']]='source/'+name
+    shutil.copy2(root/'FREEZE.json',destination/'FREEZE.json')
+    for folder in ['construction-01',run_name]+(['construction-preflight','audit-01','audit-02'] if label=='C02' else []):
+        shutil.copytree(root/folder,destination/folder,ignore=shutil.ignore_patterns('__pycache__','*.pyc'))
+    (destination/'SOURCE_MAP.json').write_text(json.dumps(mapping,indent=2),encoding='utf-8')
+    source_maps[label]=mapping
+for name in ['audit-v2.py','AUDIT_V2_INTENT.json']:
+    dest=target/'C02'/(name+'.txt' if name.endswith('.py') else name)
+    shutil.copy2(c2/name,dest)
+extras=target/'construction-repair'; extras.mkdir()
+for name in ['temporal-repair.py','temporal-fix-case-binding.py','temporal-audit-diagnose.py','temporal-audit-repair.py','temporal-package.py']:
+    shutil.copy2(work/name,extras/(name+'.txt'))
+# Preserve the first failed auditor result, explicitly from the actual tool response; no invented start/end time.
+(target/'C02'/'audit-01'/'FIRST_RESULT.json').write_text(json.dumps(dict(actual_returncode=1,
+    command=['python','-B','audit.py','--run','primary-C02','--cases','cases.json','--output','audit-01'],
+    stdout='',stderr_terminal='ValueError: public current view matches server event history',
+    traceback_sites=['audit.py:204 main','audit.py:200 audit(data)','audit.py:126 public-state join','audit.py:17 need'],
+    source='actual exec tool output; command timestamp was not separately persisted before exception',
+    repaired_audit='separate audit-v2.py; original source and failed output retained; primary operations not repeated'),indent=2),encoding='utf-8')
+closure={}
+for label,root,run_name,phase in [('C01',c1,'primary-C01','stop'),('C02',c2,'primary-C02','closed')]:
+    run=root/run_name; raw=json.loads((run/('observer-'+phase)/'raw.json').read_bytes())
+    empty=json.loads((run/'observer-empty'/'raw.json').read_bytes())
+    need=raw['tables']; exit_record=json.loads((run/'PROCESS_EXIT.json').read_bytes()); ready=json.loads((run/'READY.json').read_bytes())
+    if exit_record['pid']!=ready['pid'] or exit_record['returncode']!=0 or exit_record['launches']!=1: raise ValueError('owned child exit')
+    if not json.loads((run/'TAB_EXIT.json').read_bytes())['closed']: raise ValueError('owned tab')
+    db=sqlite3.connect((run/'empty-original.sqlite').resolve().as_uri()+'?mode=ro',uri=True)
+    try:
+        if db.execute('SELECT COUNT(*) FROM events').fetchone()[0] or db.execute('SELECT COUNT(*) FROM requests').fetchone()[0]: raise ValueError('original empty bytes not empty')
+        original_docs=db.execute('SELECT case_id,target,value,version FROM docs ORDER BY case_id,target').fetchall()
+    finally: db.close()
+    if original_docs!=[tuple(row[k] for k in ['case_id','target','value','version']) for row in empty['tables']['docs']]: raise ValueError('empty docs')
+    if label=='C01':
+        if need['events'] or need['docs']!=empty['tables']['docs']: raise ValueError('C01 STOP side effect')
+    else:
+        final=json.loads((run/'observer-final'/'raw.json').read_bytes())['tables']
+        if need['docs']!=final['docs'] or need['events']!=final['events'] or need['requests'][:-1]!=final['requests'] or need['requests'][-1]['path']!='/shutdown': raise ValueError('closed readback changed task state')
+    closure[label]=dict(actual_pid=ready['pid'],returncode=0,launches=1,tab_closed=True,
+        events=len(need['events']),requests=len(need['requests']),empty_original_sha256=hashlib.sha256((run/'empty-original.sqlite').read_bytes()).hexdigest(),
+        final_raw_sha256=hashlib.sha256((run/('observer-'+phase)/'raw.json').read_bytes()).hexdigest(),
+        source_pins_verified=len(source_maps[label]),retained_bytes=sum(p.stat().st_size for p in root.rglob('*') if p.is_file()))
+    if closure[label]['retained_bytes']>12*1024*1024: raise ValueError('retained output cap')
+(target/'CLOSURE.json').write_text(json.dumps(closure,indent=2),encoding='utf-8')
+(target/'.gitattributes').write_text('* -text whitespace=cr-at-eol\n',encoding='utf-8')
+result=json.loads((c2/'audit-02'/'RESULT.json').read_bytes())
+table='\n'.join('| {case_id} | {history} | {post_goal} | {repair_attempts} | {final_goal} | {status} |'.format(**r) for r in result['cases'])
+readme='''# #5442 Temporal goal receipts in an owned browser editor
+
+Past APPLIED and current goal are different predicates. C02 actual browser construction applied10 initial edits,
+then a serialized actor invalidated6 goals while preserving all10 historical receipts. Fresh public reads plus
+standard SQLite version-conditional UPDATE recovered4 of those6; the two persistent races yielded at the fixed
+two-repair bound without reporting completion. Stable and ABA-restored goals received zero repair writes.
+All10 sibling documents remained unchanged/version0. This is an authored HTML/SQLite route with explicit visible
+synthetic binding fields, not an arbitrary-app/native-input mechanism or new transaction algorithm.
+
+C01 remains HOLD_PUBLIC_BINDING_REDACTED: its documented DOM API returned <redacted> for hidden fields; binding
+validation stopped before fill/click/send. Zero task/disturbance events, original empty DB bytes, first error,
+actual UI trace/STOP image/fresh stop snapshot and graceful server exit0 are retained. No alternative hidden-value
+retrieval path was attempted. C02 changes the app to show invented metadata publicly, with a separate pre-freeze
+zero-submit visibility preflight and new source/namespace/output; it is an authorized construction repair,
+not an unchanged success-seeking formal allocation replay. C01 is never counted in the C02 result.
+
+## Frozen conditions and results
+
+[C01 PLAN](C01/source/PLAN.md), [C02 PLAN](C02/source/PLAN.md), [revision](C02/source/REVISION.md),
+[Japanese variable/type/unit table](C02/source/VARIABLES.md), [independent result](C02/audit-02/RESULT.json),
+[C01 freeze](C01/FREEZE.json), [C02 freeze](C02/FREEZE.json), [cleanup/readback](CLOSURE.json).
+
+| Case | History | Goal after disturbance | Repair submits | Final goal | Final status |
+|---|---|---|---:|---|---|
+'''+table+'''
+
+C02 has20 actual UI task POSTs (10 initial plus10 new repairs),16 serialized external actor writes,
+36 events,148 UI stages. Initial10 APPLIED, repairs4 APPLIED/6 CONFLICT; prepared HTTP200 and actual Delivery accepted
+DOM are separately joined to the committed SQL effects. Separate fresh-process backups retain empty/initial/post/final/
+closed states; the independently implemented raw oracle reconciles whole SQL tables, typed fields, request bodies,
+intent identities, public UI observations, unchanged historical event prefixes, no-extra-write and finite decisions.
+Ten copied-raw corruptions reject. No original app/browser operations or producer allocation were rerun for the audit.
+
+The frozen auditor v1 actually failed: strict mono_ns comparison omitted events whose clock value equaled their
+prepared-response timestamp (16 observed tie-boundaries). [First result](C02/audit-01/FIRST_RESULT.json) and
+[diagnosis](C02/audit-01/DIAGNOSIS.json) remain. Separate [v2 source](C02/audit-v2.py.txt) replaces only that inference
+with the committed event-to-request identities/order of this single-handler serialized app. The same raw/predicates/
+budgets/cases then pass. Equal clock values are not a total causal order; no timing/latency result is claimed.
+
+Pre-freeze setup: C02 namespace needed new goal_hash values; its original copied case file remains in preflight.
+The literal namespace revision also renamed the last stable identifier C010 to C020. The fixed C02 inputs contain
+ten distinct cases/two strings/five histories including C020; no case was dropped or relabeled after results.
+Archived prepare_cases.py is the initial template, not the executed C02 generation path: the exact repair scripts
+and copied-before-hash-repair file show its actual construction. All12 C01/13 C02 frozen source pins still match.
+
+## Scope and custody
+
+Windows11/Python3.11.9/SQLite3.45.1, CPU-only stdlib app/observer; owned hidden Codex IAB DOM control.
+Both primary servers returned0 with one launch each; all own tabs closed. Preflight server also shut down normally.
+These records are operational cleanup, not crash or power-loss durability. Retained output is below12MiB per source
+instance; request/mutation caps are in the app. The byte cap was checked at custody, not an active streaming limiter.
+Exact command/UTC/exit streams are retained where captured; v1 exception start/end were not separately persisted,
+and original shell tool outputs are qualified rather than given invented clock values.
+
+H/T/D/C/U is in the prospective plans. No authenticated observer/arbitrary-app fidelity, continuous postcondition,
+external-restoration attribution, scheduler/concurrent stress, physical input occupancy/release, crash/power-loss,
+latency/model calls/tokens/cost/efficiency, MAP01 or runtime adoption is established. No model/container/GPU allocation,
+shared desktop pointer, input lease or main write. Controlled cases are not a population estimate. The cached-history
+comparison deliberately answers the wrong temporal predicate; no advantage over a fresh-read baseline is claimed.
+
+Delta from [PR6914](https://github.com/Unjuno/agent-interface/pull/6914): later post-success changes, restored goals,
+read/write races, bounded-stop and visible-binding precondition. T7/T8/6914 source/raw/allocation/results are unchanged.
+Existing real Writer post-guard TOCTOU [#282](https://github.com/Unjuno/agent-interface/issues/282) is not superseded.
+Parent [#5442](https://github.com/Unjuno/agent-interface/issues/5442), initial claim5965728887 and prospective repair5965888567.
+Repository source reference316ac44; main observed9c26e204 before source freeze is separate and not a hidden upgrade.
+
+Standard [SQLite UPDATE](https://www.sqlite.org/lang_update.html) / [transaction](https://www.sqlite.org/lang_transaction.html)
+semantics are the strong baseline; [Saltzer/Reed/Clark](https://web.mit.edu/saltzer/www/publications/endtoend/endtoend.pdf)
+is placement background. Authored code, repository Apache2.0; no new dependency installed.
+
+All executable sources are archived as .py.txt/.js.txt, with source maps; no runtime/test discovery/workflow/index change.
+MANIFEST.json covers every other package file, excluding itself. Content votes and apply records belong outside this
+immutable tree. Scientific scope, evidence integrity, review, current-tree check and actual main application are distinct.
+'''
+(target/'README.md').write_text(readme,encoding='utf-8',newline='\n')
+(target/'PUBLICATION.json').write_text(json.dumps(dict(packaged_utc=datetime.now(timezone.utc).isoformat(),
+    worker_id='01a0ff58-2d0b-7eb1-8b33-c8b69e63563a',policy='FINAL-v5',source_base='316ac44b24d4ac29c1942d2fee51f1c0599855b1',
+    scope='one additive inert research/integration subtree; no runtime/workflow/index changes',
+    formal_replay=False,main_applied=False,C01='HOLD_PUBLIC_BINDING_REDACTED',C02=result['status']),indent=2),encoding='utf-8')
+manifest={p.relative_to(target).as_posix():dict(bytes=p.stat().st_size,sha256=hashlib.sha256(p.read_bytes()).hexdigest())
+    for p in sorted(target.rglob('*')) if p.is_file()}
+(target/'MANIFEST.json').write_text(json.dumps(dict(files=manifest),indent=2),encoding='utf-8')
+print(json.dumps(dict(package=str(target),manifest_entries=len(manifest),bytes=sum(e['bytes'] for e in manifest.values()),closure=closure)))

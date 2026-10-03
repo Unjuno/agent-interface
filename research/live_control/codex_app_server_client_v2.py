@@ -72,8 +72,7 @@ class CodexAppServerClient:
                 if remaining <= 0:
                     raise TimeoutError(f"app-server request timed out: {method}")
                 if self._closed:
-                    detail = self.process.stderr.read().strip()
-                    raise AppServerError(f"app-server closed during {method}: {detail}")
+                    raise AppServerError(f"app-server closed during {method}: stderr not drained")
                 self._condition.wait(remaining)
             response = self._responses.pop(identifier)
         if "error" in response:
@@ -98,8 +97,7 @@ class CodexAppServerClient:
                 if remaining <= 0:
                     raise TimeoutError("app-server notification timed out")
                 if self._closed:
-                    detail = self.process.stderr.read().strip()
-                    raise AppServerError(f"app-server closed while waiting: {detail}")
+                    raise AppServerError("app-server closed while waiting: stderr not drained")
                 self._condition.wait(remaining)
 
     def initialize(self, name="agent-interface", version="1"):
@@ -144,9 +142,15 @@ class CodexAppServerClient:
                 self.process.kill()
                 self.process.wait(timeout=timeout)
         self._reader.join(timeout=timeout)
+        if self._reader.is_alive():
+            raise TimeoutError("app-server reader close timed out")
         if self._journal is not None and not self._journal.closed:
-            with self._journal_lock:
+            if not self._journal_lock.acquire(timeout=-1 if timeout is None else timeout):
+                raise TimeoutError("app-server journal close timed out")
+            try:
                 self._journal.close()
+            finally:
+                self._journal_lock.release()
 
     def __enter__(self):
         return self

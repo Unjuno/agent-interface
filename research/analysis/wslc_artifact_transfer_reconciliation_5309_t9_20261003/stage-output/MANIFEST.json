@@ -1,0 +1,42 @@
+{
+  "schema": "wslc-artifact-transfer-manifest-v1",
+  "disposition": "PASS_ARTIFACT_TRANSFER_PROVENANCE_RECONCILED",
+  "scope": "Offline comparison of two frozen Git blobs only; does not revise T7 or T8.",
+  "historical_results_unchanged": {
+    "t7": "STOP_HOST_RECEIPT_SCHEMA_MISMATCH",
+    "t8": "PASS_RETAINED_RECEIPT_SCHEMA_AUDIT"
+  },
+  "formal_run": {
+    "python": "3.12.10",
+    "command": "python -B verify_artifact_transfer.py --input inputs/artifact_snapshots.json",
+    "invocations": 1,
+    "retries": 0,
+    "candidate": 0,
+    "wslc": 0,
+    "docker": 0,
+    "exit_code": 0
+  },
+  "comparison": {
+    "captured_bytes": 306,
+    "captured_sha256": "604fc18e94e80f6aa941623b8854ffad88043e16e5058db89aa45449ba97489f",
+    "captured_git_blob_sha1": "39741cbea3f705d52611d82e4f431ec9e1d5b583",
+    "t7_committed_bytes": 308,
+    "t7_committed_sha256": "4df6cbc2a680dc007a9bf837cfed8185cb6a197acc02e6d7505e355a0372b55d",
+    "t7_committed_git_blob_sha1": "588d1816282ab17790faa3a94a939f9fce8d8bc3",
+    "exact_delta": "0d0a",
+    "json_values_equal": true,
+    "cause_of_delta_identified": false
+  },
+  "files": [
+    {"path":"FREEZE.md","bytes":2709,"sha256":"d3aabd94ab96d371bcc1b1ca667c67a85014cf534996d07ef569a9237746035d"},
+    {"path":"README.md","bytes":1001,"sha256":"911407759dcaf1a21c34563623b4075f2ce30c139c3a11dd89dc73dfc10ee720"},
+    {"path":"inputs/artifact_snapshots.json","bytes":1846,"sha256":"a904ef0bdd90fc12e2cb8d7f6a267c34a17e124e35bb3028c12e0d32eb754699"},
+    {"path":"stage-output/EXEC_RESPONSE.json","bytes":1325,"sha256":"fa2cd7c740f8b1255a468f23a19a43691881ad6e444fed86f0f861c8388da783"},
+    {"path":"stage-output/RESULT.md","bytes":1291,"sha256":"d5ac53bfd024a84858cebfb510179f112deff91a8a72e9d4f9000b3eb701d576"},
+    {"path":"stage-output/RUN.json","bytes":943,"sha256":"6346263a19f33746ff64cef62f2148a6bbc61ca30ac9fdedf09ebf3312924235"},
+    {"path":"stage-output/verified_receipt.json","bytes":1287,"sha256":"21f361584b7113ad5be57706aa1887ea4e5f172425a0db910222b51d5445b71e"},
+    {"path":"test_verify_artifact_transfer.py","bytes":2885,"sha256":"245dba58e6e55415a8d6fb775502af394a870f3c516e2ebd6a97d7eacd5733ca"},
+    {"path":"verify_artifact_transfer.py","bytes":4358,"sha256":"5a7735d0bdae368f39db8c6ea3531a5a4594031c7f7add8e15012f08c1e0f61b"}
+  ],
+  "manifest_note": "This manifest intentionally does not hash itself."
+}

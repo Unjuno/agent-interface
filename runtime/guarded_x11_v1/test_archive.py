@@ -15,11 +15,12 @@ class GuardedArchiveTests(unittest.TestCase):
             build(root, archive, td/'manifest.json', td/'sum')
             code = """
 import sys
+from pathlib import Path
 sys.path.insert(0, sys.argv[1])
 from runtime.guarded_x11_v1 import bridge, handles, form, compiled
 from PIL import Image
-assert bridge.__file__.startswith(sys.argv[1] + '/')
-assert compiled.__file__.startswith(sys.argv[1] + '/')
+assert Path(bridge.__file__).is_relative_to(Path(sys.argv[1]))
+assert Path(compiled.__file__).is_relative_to(Path(sys.argv[1]))
 assert callable(compiled.run)
 assert not any(name.startswith('native_') or name.startswith('scoped_target_') for name in sys.modules)
 image = Image.new('RGB', (100, 100), 'white')

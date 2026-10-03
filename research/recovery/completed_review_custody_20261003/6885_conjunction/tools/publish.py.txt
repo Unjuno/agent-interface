@@ -1,0 +1,156 @@
+"""Publish this review's small proof packet outside the approved source tree."""
+from datetime import datetime, timezone
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+
+root = Path(__file__).resolve().parent
+workspace = root.parent.parent
+repo = workspace / "work/agent-interface"
+public = workspace / "outputs/review-6885"
+public.mkdir(exist_ok=False)
+head = "0e2d6a741f1078eda232b56cee899bb86712ac9b"
+ref = "refs/heads/research/review-conjunction-6885-45e9-20261003"
+prefix = "research/reviews/core_conjunction_6885_45e9"
+originals = []
+
+
+def add(source, relative):
+    data = source.read_bytes()
+    value = data.replace(str(workspace).encode(), b"<REVIEWER_WORKSPACE>")
+    value = value.replace(str(workspace).replace("\\", "\\\\").encode(), b"<REVIEWER_WORKSPACE>")
+    target = public / relative
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_bytes(value)
+    originals.append({"artifact": relative, "original_sha256": hashlib.sha256(data).hexdigest(),
+                      "public_sha256": hashlib.sha256(value).hexdigest(), "path_redacted": data != value,
+                      "original_retained": source.read_bytes() == data})
+
+
+for name in ("EXPORT.json", "INDEPENDENT_RESULT.json", "FETCH_INTENT_V2.json", "FETCH_RECEIPT_V2.json", "fetch-v2.stdout.txt", "fetch-v2.stderr.txt"):
+    add(root / name, name)
+for source in (root / "checks").rglob("*"):
+    if source.is_file():
+        add(source, "checks/" + source.relative_to(root / "checks").as_posix())
+for name in ("independent.py", "capture.py", "publish.py"):
+    add(root / name, "tools/" + name + ".txt")
+for name in ("export_review6885.py", "export_review6885_v2.py"):
+    add(workspace / "work" / name, "tools/" + name + ".txt")
+add(workspace / "outputs/author-proposal-6885-v2.json", "author-proposal-v2.json")
+(public / "EXPORT_STOP_V1.json").write_text(json.dumps({
+    "operation": "local Git archive metadata/source export, not a runtime experiment",
+    "command": ["git", "archive", "--format=tar", head, "research/integration/core_boundary_composition_57_20261003_01a0ff58"],
+    "outcome": "stopped after own archive child unexpectedly requested 94369 unrelated promisor blobs",
+    "ownership": "Root exporter command line and descendant process chain checked before stopping only that tree",
+    "reported_exit_code": 1, "reported_stderr": "fatal: early EOF",
+    "started_utc": None, "start_receipt_limit": "First helper's start timestamp was held in memory and not retained after interruption",
+    "repair": "Separate explicit-OID fetch requested only 101 unique blobs; completed export binds all 136 files",
+    "unfinished_temp_pack_bytes": 275349503,
+    "temp_pack_disposition": "retained; no force-delete retry or alternate deletion path",
+    "producer_or_formal_run_executed": False
+}, indent=2) + "\n", encoding="utf-8", newline="\n")
+(public / "PROVENANCE.json").write_text(json.dumps({"created_utc": datetime.now(timezone.utc).isoformat(),
+    "artifacts": originals, "author_private_originals": "Not independently inspected; their published derivative qualifications remain",
+    "reviewer_originals": "Every listed private reviewer original is retained unchanged; public copies only redact workspace prefixes",
+    "source_archive": "Author's full packet is not duplicated here; EXPORT binds its 136 exact Git blobs and both manifests"
+}, indent=2) + "\n", encoding="utf-8", newline="\n")
+(public / "README.md").write_text("""# Assigned nonauthor review of PR #6885 v2
+
+Worker `01a0ff2e-17a3-70a1-908e-0d6dd78c45e9`, FINAL-v5.
+Reviewed head `0e2d6a741f1078eda232b56cee899bb86712ac9b`, base
+`3116528f3abe0fec72cfc1b5b2b5b4b05538512e`, epoch `6885-v2-before-votes`,
+digest `9b2cf90d6fe24f6165e3e08b0eb3dccb5825355f42ef92e1021b77c79fc9bb5a`.
+
+All 136 added paths match canonical mode/full-blob/length/SHA256 identity;
+all 116 original package files remain byte-identical. Both original 115-entry
+and new 19-entry checksum manifests reconcile. The explicit Git blob export
+retrieved 101 unique objects and avoids whole-tree promisor hydration. Its
+first archive attempt was stopped and qualified separately; that setup repair
+did not rerun a candidate, implementation mutant or formal allocation.
+
+The separately written reference imports neither production, candidate nor
+author oracle. It reconstructs the complete ordered five-axis product, typed
+frozen inputs/hashes, both source-specific core refusal rules, required capability,
+every actual trace/journal/terminal and exception type. It does not assert exact
+exception wording. All 6,144 retained rows match their source-specific reference.
+Baseline: 2,164 differences from repaired semantics, 135 inert executions,
+1,152 TypeErrors, 45 ValueErrors. Combined: two valid inert executions, six
+ValueErrors, no semantic/identity mismatch. All sixteen retained changed-row
+witnesses are also rejected by this separate reconstruction.
+
+Both retained package verifier and corrected v2 verifier complete with exit 0.
+These only audit existing raw/receipts, decompress nine archived deletion results
+and inspect saved controls; no producer/runtime/control producer is invoked.
+The complete original source/raw remains unchanged after all three commands.
+Actual UTC/exit/full output receipts are in checks. The original and v2 auditor,
+producer, control/verification code and scope records were read as source.
+
+Normalized combined contract and compiled module hashes reconcile with the
+separately recorded triple composition: `1709078c...` / `ccaff4ce...`.
+Normalization qualifies LF/CRLF differences; no claim of byte-identical
+combined-to-current-production sources or new 84-method execution is made.
+
+The prior four typed terminal/effect/execute-sequence objections are resolved
+within this finite authored fixture by v2's recursive type/value comparison and
+ordered core/observation/execute/effect/journal binding. No actionable content
+defect was found in the declared scope. Arbitrary log authenticity, physical
+clocks/effects/release, public adapters, native input, concurrency, performance,
+models and hosted/foreign-platform results were not independently verified.
+The author private original log bytes were not inspected by this reviewer.
+
+This reviewer authored the separate #6866 component, not this producer/raw/audit
+package. This evidence review cannot approve the reviewer's own runtime PR or
+its custody qualifications. Component content committees remain separate.
+Actual current-base/tree check, requirements, expected-base conditional apply
+and completion readback remain separate from the content review.
+
+Tools are as-executed inert .py.txt witnesses. The independent script expects
+the author packet at `source/research/integration/core_boundary_composition_57_20261003_01a0ff58`
+relative to its parent, as in the exact private export. Reproduction uses a new
+output directory and explicit reviewed Git blobs; retained outputs are not
+overwritten. No source packet or runtime should be imported to audit the raw.
+""", encoding="utf-8", newline="\n")
+(public / ".gitattributes").write_text("* -text\n", encoding="utf-8")
+(public / ".gitignore").write_text("__pycache__/\n*.py[cod]\n", encoding="utf-8")
+for item in json.loads((root / "EXPORT.json").read_text())["blobs"]:
+    original = root / "source" / item["path"]
+    assert hashlib.sha256(original.read_bytes()).hexdigest() == item["sha256"]
+entries = [hashlib.sha256(p.read_bytes()).hexdigest() + "  " + p.relative_to(public).as_posix()
+           for p in sorted(public.rglob("*")) if p.is_file()]
+(public / "SHA256SUMS").write_text("\n".join(entries) + "\n", encoding="utf-8", newline="\n")
+index = root / "publication.index"
+assert not index.exists()
+env = dict(os.environ, GIT_INDEX_FILE=str(index))
+primary = (repo / ".git/index").read_bytes()
+
+
+def git(*args, data=None):
+    return subprocess.check_output(["git", *args], cwd=repo, env=env, input=data)
+
+
+assert subprocess.run(["git", "show-ref", "--verify", "--quiet", ref], cwd=repo).returncode == 1
+git("read-tree", head)
+paths = []
+for source in sorted(public.rglob("*")):
+    if not source.is_file():
+        continue
+    path = prefix + "/" + source.relative_to(public).as_posix()
+    data = source.read_bytes()
+    oid = git("hash-object", "-w", "--stdin", data=data).decode().strip()
+    assert git("cat-file", "blob", oid) == data
+    git("update-index", "--add", "--cacheinfo", "100644", oid, path)
+    paths.append(path)
+assert git("diff", "--cached", "--name-only", head).decode().splitlines() == paths
+git("diff", "--cached", "--check", "--", prefix + "/README.md")
+tree = git("write-tree", "--missing-ok").decode().strip()
+commit = git("commit-tree", tree, "-p", head,
+             data=b"review(#6885): retain independent raw reconstruction [skip ci]\n").decode().strip()
+git("update-ref", ref, commit, "0" * 40)
+assert (repo / ".git/index").read_bytes() == primary
+result = {"review_branch": ref, "commit_sha": commit, "tree_sha": tree, "parent_reviewed_head": head,
+          "packet": prefix, "files": len(paths), "bytes": sum(p.stat().st_size for p in public.rglob("*") if p.is_file()),
+          "primary_index_unchanged": True, "status": "local commit; push not yet attempted"}
+(workspace / "outputs/review-6885-publication.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8", newline="\n")
+print(json.dumps(result))

@@ -1,0 +1,14 @@
+import datetime,hashlib,json
+from pathlib import Path
+p=Path(__file__).resolve().parent;root=p/'repo';a=root/'research/integration/primary_stdio_busy_bound_57_20261003_01a0ff59'
+text=(a/'audit_pipe.py').read_text()
+changes=[("original.pop('attempt')==1", "same(original.pop('attempt'),1)"),("[row['sequence'] for row in events]==[1,2,3,4,5]", "same([row['sequence'] for row in events],[1,2,3,4,5])"),("rows[-1]['exit']=={'code':0,'signal':None}", "same(rows[-1]['exit'],{'code':0,'signal':None})")]
+for old,new in changes:
+    assert text.count(old)==1,old
+    text=text.replace(old,new)
+(a/'audit_pipe_v2.py').write_text(text,encoding='utf-8',newline='\n')
+pins=[{'path':x.relative_to(a).as_posix(),'bytes':len(x.read_bytes()),'sha256':hashlib.sha256(x.read_bytes()).hexdigest()} for x in sorted((a/'pipe').rglob('*')) if x.is_file()]
+freeze={'created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'retained_v1_limitation':'Original v1 passes the unmodified pipe records and rejects four controls, but accepts boolean attempt=true for integer1. Original source/audit/control outcome unchanged.','v2_changes':changes,'original_raw':pins,'auditor_v2_sha256':hashlib.sha256((a/'audit_pipe_v2.py').read_bytes()).hexdigest(),'controls_sha256':hashlib.sha256((a/'check_audit_controls.py').read_bytes()).hexdigest(),'definition':'one read-only v2 re-audit of original raw and same five fixed negative controls; no primary/relay or candidate replay'}
+(a/'AUDIT_V2_FREEZE.json').write_text(json.dumps(freeze,indent=2,sort_keys=True)+'\n',encoding='utf-8',newline='\n')
+(a/'construction'/'version_audit.py.txt').write_bytes(Path(__file__).read_bytes())
+print(json.dumps({'v2_sha256':freeze['auditor_v2_sha256'],'original_raw_files':len(pins)}))

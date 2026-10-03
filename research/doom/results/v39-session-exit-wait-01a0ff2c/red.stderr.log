@@ -1,0 +1,58 @@
+test_bad_stderr_decoding_does_not_replace_session_exit (__main__.WaitTests.test_bad_stderr_decoding_does_not_replace_session_exit) ... ERROR
+test_exited_session_does_not_enter_unbounded_stderr_read (__main__.WaitTests.test_exited_session_does_not_enter_unbounded_stderr_read) ... FAIL
+test_live_session_empty_queue_reaches_existing_timeout (__main__.WaitTests.test_live_session_empty_queue_reaches_existing_timeout) ... ok
+test_matching_queued_terminal_wins_before_closed_process_poll (__main__.WaitTests.test_matching_queued_terminal_wins_before_closed_process_poll) ... ok
+test_observation_updates_latest_before_matching_terminal (__main__.WaitTests.test_observation_updates_latest_before_matching_terminal) ... ok
+test_policy_invalidation_precedes_matching_predicate (__main__.WaitTests.test_policy_invalidation_precedes_matching_predicate) ... ok
+test_running_invalidation_retains_typed_event_and_result (__main__.WaitTests.test_running_invalidation_retains_typed_event_and_result) ... ok
+
+======================================================================
+ERROR: test_bad_stderr_decoding_does_not_replace_session_exit (__main__.WaitTests.test_bad_stderr_decoding_does_not_replace_session_exit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKSPACE>\outputs\v39-wait-repair-01a0ff2c\baseline.py.txt", line 496, in wait
+    row = incoming.get(timeout=min(.25,max(.1,end-time.monotonic())))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKSPACE>\work\v39-wait-repair-01a0ff2c\test_overlap_controller_v39_wait.py", line 41, in get
+    raise queue.Empty()
+_queue.Empty
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<WORKSPACE>\work\v39-wait-repair-01a0ff2c\test_overlap_controller_v39_wait.py", line 79, in test_bad_stderr_decoding_does_not_replace_session_exit
+    wait(lambda row: False)
+  File "<WORKSPACE>\outputs\v39-wait-repair-01a0ff2c\baseline.py.txt", line 499, in wait
+    detail=process.stderr.read().strip()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKSPACE>\work\v39-wait-repair-01a0ff2c\test_overlap_controller_v39_wait.py", line 20, in read
+    raise self.error
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xff in position 0: invalid
+
+======================================================================
+FAIL: test_exited_session_does_not_enter_unbounded_stderr_read (__main__.WaitTests.test_exited_session_does_not_enter_unbounded_stderr_read)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKSPACE>\outputs\v39-wait-repair-01a0ff2c\baseline.py.txt", line 496, in wait
+    row = incoming.get(timeout=min(.25,max(.1,end-time.monotonic())))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKSPACE>\work\v39-wait-repair-01a0ff2c\test_overlap_controller_v39_wait.py", line 41, in get
+    raise queue.Empty()
+_queue.Empty
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<WORKSPACE>\work\v39-wait-repair-01a0ff2c\test_overlap_controller_v39_wait.py", line 72, in test_exited_session_does_not_enter_unbounded_stderr_read
+    wait(lambda row: False)
+  File "<WORKSPACE>\outputs\v39-wait-repair-01a0ff2c\baseline.py.txt", line 499, in wait
+    detail=process.stderr.read().strip()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKSPACE>\work\v39-wait-repair-01a0ff2c\test_overlap_controller_v39_wait.py", line 20, in read
+    raise self.error
+AssertionError: synchronous stderr drain entered
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.286s
+
+FAILED (failures=1, errors=1)

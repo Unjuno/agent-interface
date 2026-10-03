@@ -1,0 +1,64 @@
+{
+  "utc": "2026-10-03T08:02:36.497363+00:00",
+  "guest": "research-6501-async-01a0ff52-70ab",
+  "start_exit0_tool_observed": true,
+  "containers": [
+    {
+      "Command": "\"python -B /source/d\u2026\"",
+      "CreatedAt": "2026-10-03 14:38:26 +0900 JST",
+      "ID": "8fc17c11ec8d",
+      "Image": "dddfd7e07f9d",
+      "Labels": "allocation=6501-FD-LIFETIME-ORBSTACK-A01-20261003-01a0ff52-70ab",
+      "LocalVolumes": "0",
+      "Mounts": "/root/6501-fd-\u2026,/root/6501-fd-\u2026",
+      "Names": "6501-fd-lifetime-a01-01a0ff52-70ab",
+      "Networks": "none",
+      "Platform": {
+        "architecture": "arm64",
+        "os": "linux",
+        "variant": "v8"
+      },
+      "Ports": "",
+      "RunningFor": "2 hours ago",
+      "Size": "0B (virtual 166MB)",
+      "State": "exited",
+      "Status": "Exited (0) 2 hours ago"
+    },
+    {
+      "Command": "\"python -B /source/d\u2026\"",
+      "CreatedAt": "2026-10-03 12:26:15 +0900 JST",
+      "ID": "e6697d1c5e7f",
+      "Image": "dddfd7e07f9d",
+      "Labels": "allocation=6501-OWNED-PIPE-ORBSTACK-A01-20261003-01a0ff52-70ab",
+      "LocalVolumes": "0",
+      "Mounts": "/root/6501-pip\u2026,/root/6501-pip\u2026",
+      "Names": "6501-owned-pipe-a01-01a0ff52-70ab",
+      "Networks": "none",
+      "Platform": {
+        "architecture": "arm64",
+        "os": "linux",
+        "variant": "v8"
+      },
+      "Ports": "",
+      "RunningFor": "5 hours ago",
+      "Size": "0B (virtual 166MB)",
+      "State": "exited",
+      "Status": "Exited (0) 5 hours ago"
+    }
+  ],
+  "image_id": "sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+  "image_arch": "arm64",
+  "reused_own_retained_image": true,
+  "formal_attempts": 0,
+  "command": [
+    "orb",
+    "-m",
+    "research-6501-async-01a0ff52-70ab",
+    "-u",
+    "root",
+    "docker",
+    "image",
+    "inspect",
+    "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016"
+  ]
+}

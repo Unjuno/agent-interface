@@ -1,0 +1,23 @@
+fatal: entry 'test_workspace_git_tree.py' object a35a8653bc007de588df66df3791359c5faa2671 is unavailable
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat\work\review6935-01a0ff58\publish_packet.py", line 127, in <module>
+    tree=graft(git('rev-parse',main+'^{tree}').decode().strip(),prefix.split('/'))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat\work\review6935-01a0ff58\publish_packet.py", line 125, in graft
+    values[name]=('040000','tree',graft(subtree,parts[1:]))
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat\work\review6935-01a0ff58\publish_packet.py", line 126, in graft
+    return make_tree(values)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat\work\review6935-01a0ff58\publish_packet.py", line 107, in make_tree
+    return git('mktree','-z',input=data).decode().strip()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat\work\review6935-01a0ff58\publish_packet.py", line 11, in git
+    return subprocess.check_output(['git','-C',str(repo),*args],input=input)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', '-C', 'C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat\\work\\agent-interface', 'mktree', '-z']' returned non-zero exit status 128.
