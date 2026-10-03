@@ -1,0 +1,76 @@
+{
+  "scope": "POSTHOC first p3_minimal event/observer-frame0; no rootcause or original A03 attribution",
+  "cell": "p3_minimal",
+  "source_event": 1,
+  "source_exposure_ns": 1590675,
+  "source_draw_wait_lateness_ns": 36179783,
+  "source_coarse_sleep_requested_ns": 196723499,
+  "source_coarse_sleep_elapsed_ns": 247903282,
+  "source_coarse_sleep_overshoot_ns": 51179783,
+  "source_spin_enter_ns": null,
+  "postwait_to_paint_ns": 71167,
+  "native_paint_ns": 616669,
+  "clear_start_lateness_ns": 28458294,
+  "observer_coarse_sleep_requested_ns": 188755411,
+  "observer_coarse_sleep_elapsed_ns": 246935735,
+  "observer_coarse_sleep_overshoot_ns": 58180324,
+  "observer_wait_return_lateness_ns": 43180324,
+  "observer_capture_lateness_ns": 44093787,
+  "observer_spin_enter_ns": null,
+  "source_vs_observer_sleep_return_difference_ns": 541,
+  "source_full_draw_snapshot": null,
+  "broader_source_leaf_bracket": {
+    "pre": {
+      "burst_usec": 0,
+      "nice_usec": 0,
+      "nr_bursts": 0,
+      "nr_periods": 168,
+      "nr_throttled": 2,
+      "system_usec": 410296,
+      "throttled_usec": 3799,
+      "usage_usec": 5376398,
+      "user_usec": 4966102
+    },
+    "clear_pre": {
+      "burst_usec": 0,
+      "nice_usec": 0,
+      "nr_bursts": 0,
+      "nr_periods": 171,
+      "nr_throttled": 2,
+      "system_usec": 410383,
+      "throttled_usec": 3799,
+      "usage_usec": 5379575,
+      "user_usec": 4969191
+    },
+    "note": "NOT direct draw-wait pre/post; minimal treatment has no post snapshot. Wider source pre→clear.pre covers draw wait plus paint/bookkeeping"
+  },
+  "observer_leaf_wait_bracket": {
+    "pre": {
+      "burst_usec": 0,
+      "nice_usec": 0,
+      "nr_bursts": 0,
+      "nr_periods": 168,
+      "nr_throttled": 2,
+      "system_usec": 410309,
+      "throttled_usec": 3799,
+      "usage_usec": 5376577,
+      "user_usec": 4966267
+    },
+    "post": {
+      "burst_usec": 0,
+      "nice_usec": 0,
+      "nr_bursts": 0,
+      "nr_periods": 171,
+      "nr_throttled": 2,
+      "system_usec": 410309,
+      "throttled_usec": 3799,
+      "usage_usec": 5377950,
+      "user_usec": 4967640
+    }
+  },
+  "decoded": {
+    "color": 16711680,
+    "id": 1
+  },
+  "scope_limit": "Whole native leaf counter0→3/throttled_usec0→7370; unchanged counts in these brackets are NOT absence of host/ancestor scheduling/VM/timer delay. No hard-real-time guarantee."
+}
