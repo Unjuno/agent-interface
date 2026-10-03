@@ -454,96 +454,6 @@ def temporal_sheet(sources, target):
     sheet.save(target,optimize=True)
 
 
-def _close_failed_startup(process, reader_thread, planner_client, out):
-    """Close acquired startup resources; no input-release attestation."""
-    receipt = {"schema": "map01-startup-cleanup-v1", "session_exit_code": None,
-               "reader_joined": reader_thread is None, "client_closed": False,
-               "input_release_verified": False, "errors": [], "escalations": [],
-               "stderr_complete": process is None, "stderr_bytes": 0,
-               "stderr_reader_joined": True}
-    stderr_thread = None
-    if process is not None:
-        def retain_stderr():
-            try:
-                with (out / "startup-stderr.bin").open("xb") as target:
-                    while True:
-                        chunk = process.stderr.buffer.read1(
-                            min(65536, 65537 - receipt["stderr_bytes"]))
-                        if not chunk:
-                            receipt["stderr_complete"] = True
-                            break
-                        remaining = 65536 - receipt["stderr_bytes"]
-                        target.write(chunk[:remaining])
-                        receipt["stderr_bytes"] += min(len(chunk), remaining)
-                        if len(chunk) > remaining:
-                            receipt["errors"].append(
-                                "startup stderr exceeded 65536 bytes; retained prefix")
-                            break
-            except Exception as error:
-                receipt["errors"].append("stderr retention: " + repr(error))
-        try:
-            stderr_thread = threading.Thread(target=retain_stderr, daemon=True)
-            stderr_thread.start()
-        except Exception as error:
-            receipt["errors"].append("stderr reader start: " + repr(error))
-            stderr_thread = None
-        try:
-            process.stdin.close()
-        except Exception as error:
-            receipt["errors"].append("stdin close: " + repr(error))
-        for operation in ("wait", "terminate", "kill"):
-            if process.poll() is not None:
-                break
-            try:
-                if operation != "wait":
-                    receipt["escalations"].append(operation)
-                    getattr(process, operation)()
-                process.wait(timeout=1)
-            except subprocess.TimeoutExpired:
-                continue
-            except Exception as error:
-                receipt["errors"].append(operation + ": " + repr(error))
-        receipt["session_exit_code"] = process.poll()
-        if receipt["session_exit_code"] is None:
-            receipt["errors"].append("owned session still running")
-    if reader_thread is not None:
-        try:
-            if reader_thread.ident is not None:
-                reader_thread.join(timeout=1)
-            receipt["reader_joined"] = not reader_thread.is_alive()
-        except Exception as error:
-            receipt["errors"].append("stdout reader join: " + repr(error))
-        if not receipt["reader_joined"]:
-            receipt["errors"].append("stdout reader still running")
-    if stderr_thread is not None:
-        try:
-            stderr_thread.join(timeout=1)
-            receipt["stderr_reader_joined"] = not stderr_thread.is_alive()
-        except Exception as error:
-            receipt["stderr_reader_joined"] = False
-            receipt["errors"].append("stderr reader join: " + repr(error))
-        if not receipt["stderr_reader_joined"]:
-            receipt["errors"].append("stderr reader still running")
-    if process is not None and receipt["session_exit_code"] is not None:
-        # Do not close a buffered stream concurrently with its active reader.
-        for stream, finished in ((process.stdin, True),
-                                 (process.stdout, receipt["reader_joined"]),
-                                 (process.stderr, receipt.get("stderr_reader_joined", False))):
-            if finished and not stream.closed:
-                try:
-                    stream.close()
-                except Exception as error:
-                    receipt["errors"].append("stream close: " + repr(error))
-    try:
-        planner_client.close(timeout=1)
-        receipt["client_closed"] = True
-        atexit.unregister(planner_client.close)
-    except Exception as error:
-        # Leave the existing exit-time callback registered after a failed close.
-        receipt["errors"].append("planner close: " + repr(error))
-    return receipt
-
-
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", type=Path, required=True)
@@ -558,72 +468,55 @@ def main():
     planner_client = CodexAppServerClient(
         app_server_command(), cwd=REPO,
         journal_path=args.out / "planner-protocol.jsonl")
-    process = None
-    reader_thread = None
+    atexit.register(planner_client.close)
+    planner_client.initialize()
+    planner = PersistentPlannerAdapter(
+        planner_client, model=args.model, effort=args.effort, cwd=win(REPO),
+        base_instructions=(HERE / "map01_motor_responder_v10.txt").read_text())
+    planner.start_session()
+    output_schema = json.loads((HERE / "map01_cover_policy_schema_v6.json").read_text())
+    signal_reader = DoomStatusNumberReader(WAD, signal_id="health")
+    ammo_reader = DoomStatusNumberReader(WAD, signal_id="ammo")
+    runtime = args.out / "runtime"
+    process = subprocess.Popen(session_command(args, runtime),
+        stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+        text=True, bufsize=1)
+    incoming = queue.Queue()
     all_events = []
-    try:
-        atexit.register(planner_client.close)
-        planner_client.initialize()
-        planner = PersistentPlannerAdapter(
-            planner_client, model=args.model, effort=args.effort, cwd=win(REPO),
-            base_instructions=(HERE / "map01_motor_responder_v10.txt").read_text())
-        planner.start_session()
-        output_schema = json.loads((HERE / "map01_cover_policy_schema_v6.json").read_text())
-        signal_reader = DoomStatusNumberReader(WAD, signal_id="health")
-        ammo_reader = DoomStatusNumberReader(WAD, signal_id="ammo")
-        runtime = args.out / "runtime"
-        process = subprocess.Popen(session_command(args, runtime),
-            stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            text=True, bufsize=1)
-        incoming = queue.Queue()
-        all_events = []
-        def reader():
-            for line in process.stdout:
-                row = json.loads(line); all_events.append(row); incoming.put(row)
-        reader_thread = threading.Thread(target=reader, daemon=True)
-        reader_thread.start()
-        latest = None
-        def wait(predicate, timeout=40, observation_monitor=None):
-            nonlocal latest
-            end = time.monotonic() + timeout
-            while time.monotonic() < end:
-                try:
-                    row = incoming.get(timeout=min(.25,max(.1,end-time.monotonic())))
-                except queue.Empty:
-                    if process.poll() is not None:
-                        detail=process.stderr.read().strip()
-                        raise RuntimeError(f"session exited before expected event: {detail}")
-                    continue
-                if row["event"] == "observation":
-                    latest = row
-                event_types = (getattr(observation_monitor, "event_types", {"observation"})
-                               if observation_monitor is not None else set())
-                if row["event"] in event_types:
-                    invalidation = observation_monitor.observe(row)
-                    if invalidation is not None:
-                        if invalidation.get("event") == "running_action_invalidation":
-                            return invalidation
-                        return {"event":"policy_invalidation",
-                                "invalidation":invalidation}
-                if predicate(row): return row
-            raise TimeoutError()
-        ready = wait(lambda r:r["event"] == "ready")
-        runtime_fixture = ready.get("fixture")
-        if runtime_fixture is None:
-            raise RuntimeError("v28 requires a loaded fixture receipt")
-        latest = wait(lambda r:r["event"] == "observation")
-    except BaseException as startup_error:
-        cleanup = _close_failed_startup(process, reader_thread, planner_client, args.out)
-        cleanup["startup_error"] = {"type": type(startup_error).__name__, "message": str(startup_error)}
-        cleanup["startup_events"] = list(all_events)
-        try:
-            (args.out / "startup-cleanup.json").write_text(json.dumps(cleanup, indent=2) + "\n")
-        except OSError as record_error:
-            if hasattr(startup_error, "add_note"):
-                startup_error.add_note("startup cleanup record failed: " + repr(record_error))
-        if cleanup["errors"] and hasattr(startup_error, "add_note"):
-            startup_error.add_note("startup cleanup incomplete; see startup-cleanup.json")
-        raise
+    def reader():
+        for line in process.stdout:
+            row = json.loads(line); all_events.append(row); incoming.put(row)
+    threading.Thread(target=reader, daemon=True).start()
+    latest = None
+    def wait(predicate, timeout=40, observation_monitor=None):
+        nonlocal latest
+        end = time.monotonic() + timeout
+        while time.monotonic() < end:
+            try:
+                row = incoming.get(timeout=min(.25,max(.1,end-time.monotonic())))
+            except queue.Empty:
+                if process.poll() is not None:
+                    detail=process.stderr.read().strip()
+                    raise RuntimeError(f"session exited before expected event: {detail}")
+                continue
+            if row["event"] == "observation":
+                latest = row
+            event_types = (getattr(observation_monitor, "event_types", {"observation"})
+                           if observation_monitor is not None else set())
+            if row["event"] in event_types:
+                invalidation = observation_monitor.observe(row)
+                if invalidation is not None:
+                    if invalidation.get("event") == "running_action_invalidation":
+                        return invalidation
+                    return {"event":"policy_invalidation",
+                            "invalidation":invalidation}
+            if predicate(row): return row
+        raise TimeoutError()
+    ready = wait(lambda r:r["event"] == "ready")
+    runtime_fixture = ready.get("fixture")
+    if runtime_fixture is None:
+        raise RuntimeError("v28 requires a loaded fixture receipt")
+    latest = wait(lambda r:r["event"] == "observation")
     decisions=[];model_session_id=planner.thread_id
     program_admissions=0
     for index in range(args.iterations):

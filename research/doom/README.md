@@ -10,6 +10,7 @@
 | Latest cross-project handoff | [../../docs/LOCAL_RESEARCH_HANDOFF.md](../../docs/LOCAL_RESEARCH_HANDOFF.md) |
 | Project evidence ledger | [../../RESEARCH.md](../../RESEARCH.md) |
 | Retained raw result artifacts | [results/README.md](results/README.md) |
+| v39 startup failure resource repair | [Owned startup cleanup](v39_startup_repair_59_20261003_01a0ff33/README.md) |
 | Shared-runtime transfer | [Shared runtime transfer](#shared-runtime-transfer) |
 | Reproduction notes | [Reproduce](#reproduce) |
 

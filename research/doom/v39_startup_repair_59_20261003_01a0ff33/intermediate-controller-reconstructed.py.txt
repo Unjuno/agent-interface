@@ -459,8 +459,7 @@ def _close_failed_startup(process, reader_thread, planner_client, out):
     receipt = {"schema": "map01-startup-cleanup-v1", "session_exit_code": None,
                "reader_joined": reader_thread is None, "client_closed": False,
                "input_release_verified": False, "errors": [], "escalations": [],
-               "stderr_complete": process is None, "stderr_bytes": 0,
-               "stderr_reader_joined": True}
+               "stderr_complete": process is None, "stderr_bytes": 0}
     stderr_thread = None
     if process is not None:
         def retain_stderr():
