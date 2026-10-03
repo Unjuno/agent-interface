@@ -1,0 +1,32 @@
+{
+  "cwd": "<WORKSPACE>",
+  "receipt_directory": "<WORKSPACE>/work/continuation-20261003-1250/operations/x11-key-release-resource",
+  "argv": [
+    "orb",
+    "-m",
+    "research-6501-async-01a0ff52-70ab",
+    "-u",
+    "root",
+    "bash",
+    "-c",
+    "test -z \"$(docker ps -q)\" && cat /root/17-x11-key-release-70ab/CONSTRUCTION.json && docker inspect 17-x11-key-selftest-70ab --format \"{{json .State}}\" && date -u +%FT%TZ > /root/17-x11-key-release-70ab/RELEASED"
+  ],
+  "launcher_pid": 62205,
+  "start_utc": "2026-10-03T15:59:56.343012+00:00",
+  "start_ns": 54161176761000,
+  "pid": 62206,
+  "exit_code": 0,
+  "end_utc": "2026-10-03T15:59:56.420274+00:00",
+  "end_ns": 54161253844916,
+  "source_sha256": "d63bd38401f3c366f145aada93d78d71eaf23216b896f6874d01f0741dfd15fa",
+  "outputs": {
+    "stdout": {
+      "bytes": 1317,
+      "sha256": "d31ca5ded4dd171852a894a7fa52a7ccbd807949a4ea9a079b68a373ee4651a7"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}
