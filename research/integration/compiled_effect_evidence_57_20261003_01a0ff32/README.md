@@ -1,0 +1,20 @@
+Successful effect callbacks could return null, empty or non-string evidence references and let the compiled graph dispatch its next action or claim completion. The repair reuses the existing one-to-64-character exact-string reference rule only for successful verdicts. Failed/unavailable verdicts still yield safely when a reference is absent. A valid separate witness remains allowed. Reference syntax does not establish artifact authenticity or independently verified task effects.
+
+Parent #57; worker `01a0ff32-f520-79d2-b8cd-110e05130103`; FINAL-v5; intake main `cb13a10dce358649458f5aea00947b8aa43fc5b8`. Scope and prospective decision gates are in [PROTOCOL.md](PROTOCOL.md). This is ordinary finite engineering validation, with no formal allocation, backend, GUI, model, GPU, container or physical input.
+
+The three core regressions first failed in 18 malformed-success subcases. The repaired core suite passes 68 tests normally and with Python -O. The real guarded adapter composition over inert captures/input passes 30 tests and preserves its exception/no-replay record after malformed success. Portable distribution validation passes 20 tests in a clean private Python 3.12.14 environment. Local Python 3.11.9 also passes the core suite; bundled 3.12.14 uses Pillow 12.3.0 / NumPy 2.3.5, and python-xlib 0.33 / six 1.17.0 were installed only into a private task dependency directory. No display was opened.
+
+The real graph's two exact source snapshots each produced 72 rows once: [baseline](before.json) retains 18 violations, [repaired](after.json) has zero under the declared gate. The independent raw-only [auditor](audit.py) reconstructs reachability, releases, pending effects, returned outcomes and JSON types and detects six declared corruptions. [audit.json](audit.json) / [audit_v1.py](audit_v1.py) retain the first auditor and result. A later construction test found its tuple equality accepted bool/float aliases for a returned integer transition count. Version 2 uses recursive type-sensitive comparison; [audit-v2.json](audit-v2.json) rechecks the original raw, and [test_audit.py](test_audit.py) rejects both corruptions. Neither candidate arm was rerun. The two audits report the same uncorrupted-row outcome; their source versions differ.
+
+Preserved setup limits: the initial broad sparse checkout was interrupted before source execution; its own stale index lock was removed only after that process was terminal and no Git process remained, then the checkout was narrowed. A baseline-snapshot one-liner first failed on an unmatched parenthesis before writing the snapshot. The first guarded suite had two missing-Xlib import errors, resolved privately. The bundled interpreter's distribution run failed `test_cli_remains_usable_without_optional_mcp_dependency` because its dependency directory remained discoverable under -S; the clean private interpreter passes. Initial direct guarded RED output is retained in the task transcript; captured command logs/exit receipts and later private/public hash projections are retained separately. None of these setup outcomes is a formal experiment result.
+
+Reproduction from this directory (choose new output paths):
+
+```powershell
+python -B probe.py baseline_compiled_gui.txt baseline <new-before.json>
+python -B probe.py repaired_compiled_gui.txt repaired <new-after.json>
+python -B audit.py <new-before.json> <new-after.json> <new-audit.json>
+python -B -m unittest -v test_audit.py
+```
+
+The auditor's source pins compare the retained baseline/repaired snapshots without importing them. Current-source core, guarded and distribution command definitions are unchanged; only new tests are added. The archive regression uses the normal committed-source builder and then isolates the child from the checkout/optional dependencies. A committed build and public Git-byte verification are required before PR handoff; reports below retain the actual identities. Hosted/native/platform/live qualification and FINAL-v5 review/current-base application remain outstanding. This package does not authorize retrying an action after the graph exception.
