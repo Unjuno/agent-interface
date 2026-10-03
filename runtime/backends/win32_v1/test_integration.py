@@ -58,6 +58,8 @@ class CaptureContractDLL:
 
     def SelectObject(self, dc, bitmap):
         self.events.append("select" if bitmap == 3 else "restore")
+        if bitmap == 3 and self.fault in {"select_zero", "select_error"}:
+            return 0 if self.fault == "select_zero" else ctypes.c_void_p(-1).value
         if bitmap == 9 and self.fault in {"restore_zero", "restore_error"}:
             fault, self.fault = self.fault, None
             return 0 if fault == "restore_zero" else ctypes.c_void_p(-1).value
@@ -114,6 +116,16 @@ class PureWin32HelperTests(unittest.TestCase):
         dll = CaptureContractDLL(fault)
         backend.gdi32 = backend.user32 = dll
         return backend, dll
+
+    def test_capture_initial_selection_failure_prevents_drawing(self):
+        for print_window in (True, False):
+            for fault in ("select_zero", "select_error"):
+                with self.subTest(print_window=print_window, fault=fault):
+                    backend, dll = self.capture_contract_backend(fault)
+                    with self.assertRaisesRegex(Win32BackendError, "bitmap selection failed"):
+                        backend._capture_hdc(7, 0, 0, 2, 2, print_window=print_window)
+                    self.assertEqual(dll.selected, 9)
+                    self.assertEqual(dll.events, ["select", "delete_bitmap", "delete_dc", "release_dc"])
 
     def test_capture_deselects_before_readout(self):
         for print_window in (True, False):
