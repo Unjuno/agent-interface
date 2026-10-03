@@ -1,0 +1,41 @@
+import datetime, hashlib, json, pathlib, shutil
+ROOT=pathlib.Path(__file__).resolve().parent
+OLD=ROOT/'relay-inherited-close-57-20261003'
+NEW=ROOT/'relay-inherited-close-detached-57-20261003'
+NEW.mkdir(exist_ok=False);source=NEW/'source';source.mkdir()
+original=(OLD/'source/probe.mjs').read_text(encoding='utf-8')
+changes=[("{windowsHide:true,stdio:['ignore',mode==='stdout'", "{detached:true,windowsHide:true,stdio:['ignore',mode==='stdout'"),
+         ("for(const mode of ['healthy','stdout','stderr'])", "for(const mode of ['stdout','stderr'])"),
+         ("const intent=descendant?JSON.parse(await readFile(join(directory,'descendant-exit-intent.json'),'utf8')):null;", "const intent=descendant?await ready(join(directory,'descendant-exit-intent.json'),token):null;"),
+         ("emit({stage:'done',cases:3});", "emit({stage:'done',cases:2});")]
+updated=original
+for before,after in changes:
+    if updated.count(before)!=1:raise RuntimeError('source substitution is not unique')
+    updated=updated.replace(before,after)
+(source/'probe.mjs').write_text(updated,encoding='utf-8',newline='\n')
+shutil.copyfile(OLD/'source/relay_client.mjs',source/'relay_client.mjs')
+capture=(ROOT/'capture_relay_inherited_close.py').read_text(encoding='utf-8')
+capture=capture.replace("STUDY=ROOT/'relay-inherited-close-57-20261003'","STUDY=ROOT/'relay-inherited-close-detached-57-20261003'")
+capture=capture.replace("OUT=STUDY/'first-01'","OUT=STUDY/'first-02'")
+capture=capture.replace("NONCE='relay-close-ba92-20261003-E01'","NONCE='relay-close-ba92-20261003-E02'")
+path=ROOT/'capture_relay_inherited_close_detached.py'
+with path.open('x',encoding='utf-8',newline='\n') as f:f.write(capture)
+shutil.copyfile(path,source/'capture.py.txt')
+plan=json.loads((OLD/'PLAN.json').read_text())
+sha=lambda b:hashlib.sha256(b).hexdigest()
+plan.update(recorded_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    unit='ordinary Node relay DETACHED inherited-pipe cleanup E02',producer_invocations=0,
+    source_sha256={p.name:sha(p.read_bytes()) for p in source.iterdir()},
+    capture_sha256=sha(path.read_bytes()),
+    T='Two NEW sequential detached-descendant stdout/stderr cells; exact same production Node relay source/decision/native identity/checkpoint/release conditions. Do not replay healthy or attached E01 cells.',
+    material_delta='descendant spawn detached:true makes it independent of the default libuv Windows parent-owned job; only post-release sidecar reading gains bounded readiness polling. First outcomes unchanged.',
+    first_E01='driver32844 exit1; healthy actual parent0/close/receipt PASS; attached stdout descendant9128 actual native0 already at checkpoint, so held-writer precondition false; missing intent then driver_error; stderr never started. All3 acquired handles actual0, source/raw retained.',
+    source_deltas=[{'before':a,'after':b} for a,b in changes],
+    primary_sources=['https://github.com/nodejs/node/blob/v24.19.0/deps/uv/src/win/process.c#L65',
+                     'https://github.com/nodejs/node/blob/v24.19.0/deps/uv/src/win/process.c#L1016',
+                     'https://github.com/nodejs/node/blob/v24.19.0/doc/api/child_process.md'],
+    inference_limit='First actual deaths are consistent with the documented default Windows job behavior; no actual Job-object ownership was queried, so exact causal job identity is unproved.',
+    added_scope='Hidden independent console process only for the inert fixture, existing3s selfcap and held OS handles; no daemon/runtime change or shared GUI/input acquisition')
+with (NEW/'PLAN.json').open('x',encoding='ascii') as f:json.dump(plan,f,ensure_ascii=True,indent=2)
+print(json.dumps({'probe_sha256':sha((source/'probe.mjs').read_bytes()),'capture_sha256':sha(path.read_bytes()),
+                  'plan_sha256':sha((NEW/'PLAN.json').read_bytes()),'production_source_unchanged':(source/'relay_client.mjs').read_bytes()==(OLD/'source/relay_client.mjs').read_bytes()}))
