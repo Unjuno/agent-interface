@@ -14,17 +14,79 @@ class CodexAppServerClient:
     def __init__(self, command, cwd=None, process_factory=subprocess.Popen, journal_path=None):
         self._journal = None if journal_path is None else open(journal_path, "x", encoding="utf-8")
         self._journal_lock = threading.Lock()
-        self.process = process_factory(
-            command, cwd=cwd, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE, text=True, bufsize=1)
+        try:
+            self.process = process_factory(
+                command, cwd=cwd, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE, text=True, bufsize=1)
+        except BaseException as startup_error:
+            if self._journal is not None:
+                try:
+                    self._journal.close()
+                except BaseException as cleanup_error:
+                    try:
+                        BaseException.add_note(
+                            startup_error,
+                            "journal cleanup failed: " + type(cleanup_error).__name__)
+                    except BaseException:
+                        pass
+            raise
         self._condition = threading.Condition()
         self._write_lock = threading.Lock()
         self._responses = {}
         self._notifications = deque()
         self._next_id = 1
         self._closed = False
-        self._reader = threading.Thread(target=self._read, daemon=True)
-        self._reader.start()
+        # Own the complete reader access interval, including pending bootstrap.
+        reader_access = threading.Lock()
+        reader_cancelled = False
+
+        def read_unless_cancelled():
+            with reader_access:
+                if not reader_cancelled:
+                    self._read()
+
+        self._reader = threading.Thread(target=read_unless_cancelled, daemon=True)
+        try:
+            self._reader.start()
+        except BaseException as startup_error:
+            def cleanup(action):
+                try:
+                    action()
+                    return True
+                except BaseException as cleanup_error:
+                    try:
+                        BaseException.add_note(startup_error,
+                            "thread startup cleanup failed: " + type(cleanup_error).__name__)
+                    except BaseException:
+                        pass
+                    return False
+
+            def stop_process():
+                if self.process.poll() is None:
+                    self.process.terminate()
+                    try:
+                        self.process.wait(timeout=1)
+                    except subprocess.TimeoutExpired:
+                        self.process.kill()
+                        self.process.wait(timeout=1)
+
+            def cancel_reader_access():
+                nonlocal reader_cancelled
+                if not reader_access.acquire(timeout=1):
+                    raise TimeoutError("app-server startup reader access did not finish")
+                try:
+                    # A pending reader may still run, but cannot access resources.
+                    reader_cancelled = True
+                finally:
+                    reader_access.release()
+
+            cleanup(stop_process)
+            if cleanup(cancel_reader_access):
+                for stream_name in ("stdin", "stdout", "stderr"):
+                    cleanup(lambda name=stream_name: getattr(self.process, name).close())
+                if self._journal is not None:
+                    cleanup(lambda: self._journal.close())
+            raise
 
     def _read(self):
         try:
