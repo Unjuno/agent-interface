@@ -82,3 +82,9 @@ The archive adds no runtime/workflow/import/test-discovery path. All Python
 helpers/source are .py.txt. Existing peer #6913 scorer repair and #6915 frozen
 owned-Linux-pipe cancellation remain separate and untouched. #59/R134/#57 and
 the overall computer-control goal remain open.
+
+Exact historical v39 bytes include a final CRLF blank line. Initial publication
+whitespace check reports that source-snapshot line; it is preserved unchanged.
+A path-specific archive attribute declares cr-at-eol/-blank-at-eof for only this
+inert snapshot. It does not normalize raw/source bytes or relax other paths.
+Cross-process counter ordering follows the [Python time contract](https://docs.python.org/3.14/library/time.html#time.perf_counter); these are endpoint-order checks, not latency guarantees.
