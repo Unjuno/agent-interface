@@ -21,4 +21,5 @@ physical input release, durability, performance or current runtime adoption.
 Historical PID reuse and UI counter disagreement remain explicit limitations.
 
 Run python3 runtime/results/jupyterlab_rescue_12cd/verify_saved.py (also -O).
-Full local CI gate is recorded separately after commit; no hosted CI claim here.
+Frozen local CI passed 43 steps with failures=[] and exit0 at cd75e3ef1.
+Complete output is local-ci.log; no whole-native or hosted CI claim here.
