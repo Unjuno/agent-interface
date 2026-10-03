@@ -334,6 +334,9 @@ class Win32Backend:
             if not mem_dc or not bitmap:
                 raise Win32BackendError("GDI allocation failed")
             old = self.gdi32.SelectObject(mem_dc, bitmap)
+            if not old or old == ctypes.c_void_p(-1).value:
+                old = None
+                raise Win32BackendError("GDI bitmap selection failed")
             if print_window:
                 if not self.user32.PrintWindow(source_hwnd, mem_dc, PW_CLIENTONLY):
                     raise Win32BackendError("PrintWindow failed")
