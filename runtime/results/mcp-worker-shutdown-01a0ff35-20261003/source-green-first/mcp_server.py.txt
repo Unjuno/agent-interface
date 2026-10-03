@@ -193,10 +193,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             # cancellation-based redispatch or close racing with active input.
             with anyio.CancelScope(shield=True):
                 if workers:
-                    # Teardown's waiter must not cancel the invocation's own
-                    # completion obligation if that waiter is interrupted.
-                    await asyncio.gather(*(asyncio.shield(worker) for worker in list(workers)),
-                                         return_exceptions=True)
+                    await asyncio.gather(*list(workers), return_exceptions=True)
                 if owner is not None:
                     await asyncio.to_thread(close_owner)
 
@@ -381,12 +378,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             worker = loop.run_in_executor(
                 None, context.run, invoke, admission, operation, kwargs,
                 compact, report_refs, detail, observation_refs)
-        except BaseException as error:
+        except Exception as error:
             revoked = admission.revoke_pending()
-            if not isinstance(error, Exception):
-                # Preserve cancellation/fatal exception propagation after
-                # revoking only work that has not entered the callable.
-                raise
             return content({'status': 'worker_submission_failed',
                 'failure_phase': 'worker_submission', 'error': repr(error),
                 'operation_invoked': not revoked,
