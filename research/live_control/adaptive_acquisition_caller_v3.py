@@ -6,6 +6,7 @@ reacquisition.  Every repair model result must be checked against one later
 observation before ordinary final revalidation and execution.
 """
 import copy
+import math
 import time
 import uuid
 
@@ -28,6 +29,18 @@ LOCAL_EXECUTION_YIELD_REASONS = {
     "budget_exhausted", "delivery_uncertain", "execution_failed", "execution_refused",
 }
 
+
+def _aggregate_cost(costs, attempted_calls):
+    """Return a total only when all attempts have a representable numeric sum."""
+    if len(costs) != attempted_calls:
+        return None
+    try:
+        total = sum(costs)
+    except OverflowError:
+        return None
+    if isinstance(total, float) and not math.isfinite(total):
+        return None
+    return total
 
 class ModelFailure(RuntimeError):
     def __init__(self, message, *, call_id=None, usage=None,
@@ -334,7 +347,7 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                       "model_wait_ns": (sum(row["wait_ns"] for row in attempts)
                           if wait_coverage == len(attempts) else None),
                       "model_wait_coverage": wait_coverage,
-                      "cost": sum(costs) if len(costs) == len(model_calls) else None,
+                      "cost": _aggregate_cost(costs, len(attempts)),
                       "cached_input_semantics": "subset of input_tokens; never added to input total"},
                   "phase_timings": phases,
                   "input_authority": ("none" if execution_progress is not None and
