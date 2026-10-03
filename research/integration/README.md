@@ -61,6 +61,11 @@ Child directory names are retained provenance, not a canonical architecture tree
   refusal, immediate0/4 exact, wrong-target2/2 safe refusals. Private app
   oracle only; publication/read/admission visibility remains unresolved.
 
+- [Tk receipt #5260 A06 publication/read boundary](tk_receipt_visibility_5260_a06_wslc_20261003/REPORT.md)
+  — eight new no-input writers, artificial100ms publication/read delays;
+  both produce oldstamp expiry4/4 while full trace distinguishes phases.
+  Construction only, not A05 attribution, focus freshness or performance.
+
 ## Preserved older Draft publications
 
 - [Writer selection scope #4425 / Draft PR #4446](writer_selection_scope_w4m8_v1/ARCHIVAL_QUALIFICATION.md) — seven exact published files retained; complete 401-file raw corpus missing, so this is not an independent reproduction or qualification of the reported PASS.
