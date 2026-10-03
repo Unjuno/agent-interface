@@ -1,0 +1,59 @@
+"""Nonauthor actual current-base tree preparation, no ref/main update or live replay."""
+from datetime import datetime,timezone
+import hashlib,json,os,subprocess
+from pathlib import Path
+root=Path(__file__).resolve().parent;repo=root.parent/'agent-interface';out=root/'current-application';out.mkdir(exist_ok=False)
+env=dict(os.environ,GIT_NO_LAZY_FETCH='1');started=datetime.now(timezone.utc).isoformat()
+def sha(b):return hashlib.sha256(b).hexdigest()
+def canon(v):return json.dumps(v,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode()
+def put(n,v):(out/n).write_text(json.dumps(v,sort_keys=True,indent=2)+'\n',encoding='utf-8')
+def git(*a):return subprocess.check_output(['git',*a],cwd=repo,env=env)
+old=json.loads((root/'PROPOSAL.json').read_bytes());new=json.loads((root/'PROPOSAL_V2.json').read_bytes())
+assert new['repository']=='Unjuno/agent-interface'
+assert sha(canon({k:v for k,v in new.items() if k!='proposal_digest'}))==new['proposal_digest']
+for key,value in old.items():
+ if key not in {'change_id','committee_epoch','proposal_digest'}:assert new[key]==value,key
+export=json.loads((root/'EXPORT.json').read_bytes())
+for r in export['blobs']:assert sha((root/r['side']/r['path']).read_bytes())==r['sha256']
+assert new['head_sha']==export['head'] and new['changed_blobs_digest']==old['changed_blobs_digest']
+assert new['manifest_sha256']==old['manifest_sha256']
+current=git('rev-parse','origin/main').decode().strip();head=new['head_sha'];base=new['review_base_sha']
+assert current=='fb556b3d8bf5bae54a1f23b89fe2c2b5a2685df7'
+primary=(repo/'.git/index').read_bytes()
+cmd=['git','merge-tree','--write-tree',current,head]
+p=subprocess.run(cmd,cwd=repo,env=env,capture_output=True,timeout=20)
+(out/'merge.stdout.txt').write_bytes(p.stdout);(out/'merge.stderr.txt').write_bytes(p.stderr)
+put('MERGE_RECEIPT.json',{'command':cmd,'started_utc':started,'ended_utc':datetime.now(timezone.utc).isoformat(),
+ 'exit_code':p.returncode,'stdout_sha256':sha(p.stdout),'stderr_sha256':sha(p.stderr)})
+assert p.returncode==0,p.stderr
+tree=p.stdout.decode().strip();assert len(tree)==40
+actual=git('diff','--name-only','--no-renames',current,tree).decode().splitlines()
+assert actual==export['changed_paths'] and len(actual)==81
+images=[]
+for r in export['blobs']:
+ if r['side']!='source' or r['path'] not in actual:continue
+ line=git('ls-tree',tree,'--',r['path']).decode().strip()
+ metadata,path=line.split('\t');mode,kind,oid=metadata.split()
+ assert path==r['path'] and mode==r['mode'] and oid==r['blob'] and kind=='blob'
+ images.append({k:v for k,v in r.items() if k!='side'})
+assert sha(canon(images))==new['changed_blobs_digest']
+footprint=['runtime/host_v1','research/live_control','.github/workflows/native-mcp-v1.yml','runtime/integration_checks/host_timing.py']
+delta=git('diff','--name-only',base,current,'--',*footprint).decode().splitlines();assert delta==[],delta
+closures=[{k:r[k] for k in ('path','mode','blob','bytes','sha256')} for r in export['blobs'] if r['side']=='source' and r['path'].startswith('runtime/host_v1/')]
+for r in closures:
+ line=git('ls-tree',tree,'--',r['path']).decode().strip()
+ assert line.split('\t')[0].split()[2]==r['blob']
+assert len(closures)==20
+assert all(path in new['production_paths'] or path.startswith(new['evidence_path']) for path in actual)
+evidence=[path for path in actual if path.startswith(new['evidence_path'])]
+assert len(evidence)==78 and not any(path.endswith(('.py','.mjs','.js','.cjs')) for path in evidence)
+assert primary==(repo/'.git/index').read_bytes()
+put('CURRENT_TUPLE.json',{'started_utc':started,'ended_utc':datetime.now(timezone.utc).isoformat(),
+ 'repository':new['repository'],'current_main':current,'approved_content_head':head,'planned_tree':tree,
+ 'proposal_digest':new['proposal_digest'],'committee_epoch':new['committee_epoch'],'metadata_only_v2_revalidated':True,
+ 'exact_current81_delta_and_portable_images':True,'host_source_closure':closures,'intervening_host_live_control_workflow_helper_changes':delta,
+ 'applied_local_tests':'Actual pinned-head17 affected methods +5 different owned child witnesses; same20-host-blob closure in planned tree. No live rerun for metadata/disjoint current-main changes.',
+ 'retained_data_tests':'10 original endpoint records,8 semantic controls,7 process/full-stream receipts,first failures preserved; author192/200 are retained observations, not current fresh executions.',
+ 'inert_evidence_paths':78,'primary_index_unchanged':True,'no_main_ref_or_commit_created':True,
+ 'content_votes_not_assumed':True,'send_time_conditions_separate':True,'not_future_main_approval':True})
+print(json.dumps({'current_main':current,'head':head,'planned_tree':tree,'exact_paths':81,'host_closure':20,'invariant_footprint_changes':0,'metadata_v2_verified':True}))
