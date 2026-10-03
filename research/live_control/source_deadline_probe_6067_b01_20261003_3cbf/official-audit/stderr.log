@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/src/auditor.py", line 141, in <module>
+    if __name__=='__main__': main()
+                             ^^^^^^
+  File "/src/auditor.py", line 101, in main
+    result=validate(args.raw,freeze)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/src/auditor.py", line 16, in validate
+    state=admit_launch(launch,freeze)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/src/evidence.py", line 71, in admit_launch
+    ref.join([(m['Source'],m['Destination'],m['RW']) for m in state['Mounts']],
+  File "/src/reference.py", line 59, in join
+    need(json.dumps(actual, sort_keys=True, allow_nan=False) ==
+  File "/src/reference.py", line 13, in need
+    raise ValueError(message)
+ValueError: source/output mounts
