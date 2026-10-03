@@ -73,7 +73,7 @@ class ComposedTests(unittest.TestCase):
                     progress=(COMPLETE if family in {'completed','completed_clock','verify_throws'} else
                               UNKNOWN if family in {'unknown_mutation','unknown_typed_clock'} else
                               REFUSED if family=='refused_journal' else
-                              COMPLETE if family=='effect_unavailable' and terminal!='healthy' else None)
+                              COMPLETE if family=='effect_unavailable' else None)
                     self.assertEqual(r['execution_progress'],progress)
                     effect='succeeded' if family=='completed' else 'unavailable' if family=='effect_unavailable' else None
                     self.assertEqual(r['task_effect'],effect)
