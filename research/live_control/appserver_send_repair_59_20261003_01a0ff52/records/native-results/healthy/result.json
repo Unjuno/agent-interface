@@ -1,0 +1,124 @@
+{
+  "spec": {
+    "mode": "healthy",
+    "padding": 262144,
+    "timeout": 2,
+    "checkpoint": 3
+  },
+  "factory": {
+    "argv": [
+      "/run/current-system/sw/bin/python3",
+      "/OWNED_WORK/peer.py",
+      "healthy"
+    ],
+    "kwargs": {
+      "cwd": null,
+      "stdin": -1,
+      "stdout": -1,
+      "stderr": -1,
+      "text": true,
+      "bufsize": 1
+    },
+    "pid": 29762,
+    "started_utc": "2026-10-03T08:15:31.120589+00:00"
+  },
+  "wire_bytes": 262323,
+  "wire_sha256": "dbde97346b96ff5f5c94e74498f7dea7afb5c2ceaba5efdffd195f02476cd03e",
+  "driver_pid": 29761,
+  "source_sha256": "a18cab38b5336c801da63ee8b91ea67067bda6e9b76a83ef184723a3cc69999d",
+  "host": {
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "machine": "arm64",
+    "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 21.1.8 ]"
+  },
+  "clock": "perf_counter_ns/monotonic seconds",
+  "journal": null,
+  "observed_writes": [
+    {
+      "fd": 4,
+      "bytes": 65536,
+      "sha256": "89f6dbb0b1e910dcb370781deb41b0dfdd9caf07cc52268d4f19b71ada9307a7",
+      "started_ns": 26296114698291,
+      "count": 65536,
+      "ended_ns": 26296114713125
+    },
+    {
+      "fd": 4,
+      "bytes": 65536,
+      "sha256": "156c38442089c1323d3e3ba549a6ac24341c47e8b6367bec4740c9b8c865826e",
+      "started_ns": 26296114745875,
+      "count": 65536,
+      "ended_ns": 26296114748916
+    },
+    {
+      "fd": 4,
+      "bytes": 65536,
+      "sha256": "156c38442089c1323d3e3ba549a6ac24341c47e8b6367bec4740c9b8c865826e",
+      "started_ns": 26296114777875,
+      "count": 65536,
+      "ended_ns": 26296114780166
+    },
+    {
+      "fd": 4,
+      "bytes": 65536,
+      "sha256": "156c38442089c1323d3e3ba549a6ac24341c47e8b6367bec4740c9b8c865826e",
+      "started_ns": 26296114808500,
+      "count": 65536,
+      "ended_ns": 26296114810625
+    },
+    {
+      "fd": 4,
+      "bytes": 179,
+      "sha256": "395cfdcfa2584cd45d9188f2ec532bb4fa6f18093350e0f47842c2774b9c5f32",
+      "started_ns": 26296114811750,
+      "error": "BlockingIOError",
+      "ended_ns": 26296114817583
+    },
+    {
+      "fd": 4,
+      "bytes": 179,
+      "sha256": "395cfdcfa2584cd45d9188f2ec532bb4fa6f18093350e0f47842c2774b9c5f32",
+      "started_ns": 26296114830583,
+      "count": 179,
+      "ended_ns": 26296114831625
+    }
+  ],
+  "ready": {
+    "method": "ready",
+    "params": {
+      "mode": "healthy"
+    }
+  },
+  "checkpoint_ns": 26296116008125,
+  "caller_alive_at_checkpoint": false,
+  "child_live_at_checkpoint": true,
+  "reader_live_at_checkpoint": true,
+  "send_uncertain_at_checkpoint": false,
+  "cleanup_started_ns": 26296116013708,
+  "client_close_pipe_states": {
+    "stdin": false,
+    "stdout": false,
+    "stderr": false
+  },
+  "cleanup_ended_ns": 26296117324250,
+  "final": {
+    "child_exit": -15,
+    "caller_alive": false,
+    "reader_alive": false,
+    "pipes_closed": {
+      "stdin": true,
+      "stdout": true,
+      "stderr": true
+    }
+  },
+  "outcome": {
+    "started_ns": 26296114038166,
+    "started_utc": "2026-10-03T08:15:31.145212+00:00",
+    "result": {
+      "wire_sha256": "dbde97346b96ff5f5c94e74498f7dea7afb5c2ceaba5efdffd195f02476cd03e",
+      "params_sha256": "746bc5ac13a5fa9183c170bdf6a31c79b87d82fd9647135ef97985c3b70110ba"
+    },
+    "ended_ns": 26296115989416,
+    "ended_utc": "2026-10-03T08:15:31.147159+00:00"
+  }
+}

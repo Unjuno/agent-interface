@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/OWNED_WORK/audit_native.py", line 81, in <module>
+    add('boolean_closed_pipe', 1, lambda r: r['final']['pipes_closed'].update(stdin=1))
+  File "/OWNED_WORK/audit_native.py", line 70, in add
+    require(row != rows[index], 'ineffective mutation')
+  File "/OWNED_WORK/audit_native.py", line 12, in require
+    raise ValueError(reason)
+ValueError: ineffective mutation

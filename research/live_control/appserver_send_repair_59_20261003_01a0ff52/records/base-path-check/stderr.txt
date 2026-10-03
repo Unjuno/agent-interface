@@ -1,0 +1,35 @@
+test_completed_structured_answer_is_eligible_and_usage_is_preserved (research.live_control.test_persistent_planner_adapter_v1.PersistentPlannerAdapterTests.test_completed_structured_answer_is_eligible_and_usage_is_preserved) ... FAIL
+test_completed_structured_answer_is_eligible_and_usage_is_preserved (research.live_control.test_persistent_planner_adapter_v2.PersistentPlannerAdapterTests.test_completed_structured_answer_is_eligible_and_usage_is_preserved) ... FAIL
+
+======================================================================
+FAIL: test_completed_structured_answer_is_eligible_and_usage_is_preserved (research.live_control.test_persistent_planner_adapter_v1.PersistentPlannerAdapterTests.test_completed_structured_answer_is_eligible_and_usage_is_preserved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/OWNED_WORK/base-path-check/source/research/live_control/test_persistent_planner_adapter_v1.py", line 73, in test_completed_structured_answer_is_eligible_and_usage_is_preserved
+    self.assertEqual(client.started[0][1][1], {"type": "localImage", "path": "C:\\frame.png"})
+AssertionError: {'type': 'localImage', 'path': 'C:/frame.png'} != {'type': 'localImage', 'path': 'C:\\frame.png'}
+- {'path': 'C:/frame.png', 'type': 'localImage'}
+?             ^
+
++ {'path': 'C:\\frame.png', 'type': 'localImage'}
+?             ^^
+
+
+======================================================================
+FAIL: test_completed_structured_answer_is_eligible_and_usage_is_preserved (research.live_control.test_persistent_planner_adapter_v2.PersistentPlannerAdapterTests.test_completed_structured_answer_is_eligible_and_usage_is_preserved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/OWNED_WORK/base-path-check/source/research/live_control/test_persistent_planner_adapter_v2.py", line 73, in test_completed_structured_answer_is_eligible_and_usage_is_preserved
+    self.assertEqual(client.started[0][1][1], {"type": "localImage", "path": "C:\\frame.png"})
+AssertionError: {'type': 'localImage', 'path': 'C:/frame.png'} != {'type': 'localImage', 'path': 'C:\\frame.png'}
+- {'path': 'C:/frame.png', 'type': 'localImage'}
+?             ^
+
++ {'path': 'C:\\frame.png', 'type': 'localImage'}
+?             ^^
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+FAILED (failures=2)
