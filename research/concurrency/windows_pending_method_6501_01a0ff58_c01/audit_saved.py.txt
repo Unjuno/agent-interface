@@ -1,0 +1,106 @@
+from pathlib import Path
+from datetime import datetime,timezone
+import copy,json,hashlib,os,errno
+R=Path(__file__).resolve().parents[2];O=R/'outputs/ownedwinpipe6501-c01';H=lambda b:hashlib.sha256(b).hexdigest();J=lambda name:json.loads((O/name).read_bytes());now=lambda:datetime.now(timezone.utc).isoformat()
+def exact(a,b):
+    if type(a) is not type(b):raise ValueError('exact type')
+    if isinstance(a,dict):
+        if a.keys()!=b.keys():raise ValueError('exact keys')
+        for k in a:exact(a[k],b[k])
+    elif isinstance(a,list):
+        if len(a)!=len(b):raise ValueError('exact length')
+        for x,y in zip(a,b):exact(x,y)
+    elif a!=b:raise ValueError('exact value')
+def positive(x):
+    if type(x) is not int or x<=0:raise ValueError('positive exact integer')
+def check(events,result,receipt):
+    exact(result['pid'],receipt['pid']);positive(receipt['pid']);exact(receipt['exit'],0);exact(receipt['timeout'],False);exact(receipt['owned_child_terminal'],True);exact(result['comparative_cancellation_calls'],0);exact(result['thread_alive_final'],[False,False]);exact(result['event_count'],len(events))
+    dt=datetime.fromisoformat
+    if not dt(receipt['start_utc'])<=dt(result['start_utc'])<=dt(result['end_utc'])<=dt(receipt['end_utc']):raise ValueError('child UTC boundary')
+    schema={'pipe_owned':'read_fd write_fd read_os_handle write_os_handle','thread_enter':'role tid','thread_handle_open':'role tid handle last_error','pending_query':'label tid return_nonzero pending last_error','paired_observation':'reader_pending waiter_pending reader_done writer_has_written','write_requested':'hex purpose','write_return':'count','read_return':'hex tid','thread_exit':'role tid','event_release':'','thread_join':'name alive','thread_handle_close':'handle return_nonzero','fd_closed':'fd errno'}
+    by={};last=-1
+    for seq,e in enumerate(events):
+        k=e['kind']
+        if k not in schema or set(e)!=set(('kind seq monotonic_ns '+schema[k]).split()):raise ValueError('event schema')
+        exact(e['seq'],seq)
+        if type(e['monotonic_ns']) is not int or e['monotonic_ns']<last:raise ValueError('monotonic clock')
+        last=e['monotonic_ns'];by.setdefault(k,[]).append(e)
+    def one(k):
+        if len(by.get(k,[]))!=1:raise ValueError('single '+k)
+        return by[k][0]
+    pipe=one('pipe_owned');fds=[pipe['read_fd'],pipe['write_fd']];native=[pipe['read_os_handle'],pipe['write_os_handle']]
+    for x in fds+native:positive(x)
+    if len(set(fds))!=2 or len(set(native))!=2:raise ValueError('distinct owned endpoints')
+    enters={e['role']:e for e in by['thread_enter']};handles={e['role']:e for e in by['thread_handle_open']};exits={e['role']:e for e in by['thread_exit']}
+    for group in [enters,handles,exits]:
+        if set(group)!={'reader','waiter'}:raise ValueError('complete distinct roles')
+    if len(by['thread_enter'])!=2 or len(by['thread_handle_open'])!=2 or len(by['thread_exit'])!=2:raise ValueError('unique role events')
+    tids=[e['tid'] for e in enters.values()]
+    for tid in tids:positive(tid)
+    if len(set(tids))!=2:raise ValueError('distinct thread ids')
+    for role in enters:
+        exact(handles[role]['tid'],enters[role]['tid']);positive(handles[role]['handle']);exact(handles[role]['last_error'],0);exact(exits[role]['tid'],enters[role]['tid'])
+        if not pipe['seq']<enters[role]['seq']<handles[role]['seq']<exits[role]['seq']:raise ValueError('owned thread interval')
+    req=one('write_requested');ret=one('write_return');read=one('read_return');exact(req['hex'],'44');exact(req['purpose'],'normal_method_release');exact(ret['count'],1);exact(read['hex'],'44');exact(read['tid'],enters['reader']['tid'])
+    if not req['seq']<ret['seq'] or not req['seq']<read['seq']<exits['reader']['seq']:raise ValueError('normal write/read order')
+    pairs=by['paired_observation']
+    if len(pairs)<3:raise ValueError('three positive pairs')
+    for pair in pairs:
+        for k,v in {'reader_pending':True,'waiter_pending':False,'reader_done':False,'writer_has_written':False}.items():exact(pair[k],v)
+        a,b=events[pair['seq']-2:pair['seq']]
+        for e,role,label,pending in [(a,'reader','before_data',True),(b,'waiter','event_wait_control',False)]:
+            exact(e['kind'],'pending_query');exact(e['label'],label);exact(e['tid'],enters[role]['tid']);exact(e['pending'],pending);exact(e['return_nonzero'],True);exact(e['last_error'],0)
+            if not handles[role]['seq']<e['seq']<pair['seq']<req['seq']:raise ValueError('qualified native-before-write')
+    queries=by['pending_query'];after=[e for e in queries if e['label']=='after_join']
+    if len(queries)!=2*len(pairs)+1 or len(after)!=1:raise ValueError('closed query roster')
+    after=after[0];exact(after['tid'],enters['reader']['tid']);exact(after['pending'],False);exact(after['return_nonzero'],True);exact(after['last_error'],0)
+    joins={e['name']:e for e in by['thread_join']};names={'reader':'owned-c01-pipe-reader','waiter':'owned-c01-event-waiter'}
+    if len(by['thread_join'])!=2 or set(joins)!=set(names.values()):raise ValueError('all named joins')
+    for role,name in names.items():
+        exact(joins[name]['alive'],False)
+        if not exits[role]['seq']<joins[name]['seq']<after['seq']:raise ValueError('exit/join before final query')
+    closes={e['handle']:e for e in by['thread_handle_close']}
+    if len(by['thread_handle_close'])!=2 or set(closes)!={e['handle'] for e in handles.values()}:raise ValueError('complete unique handles')
+    for e in closes.values():
+        exact(e['return_nonzero'],True)
+        if e['seq']<=after['seq']:raise ValueError('handle close after query')
+    fdclose=by['fd_closed']
+    if len(fdclose)!=2 or {e['fd'] for e in fdclose}!=set(fds):raise ValueError('owned final FD roster')
+    for e in fdclose:
+        positive(e['fd']);exact(e['errno'],errno.EBADF)
+        if e['seq']<=max(x['seq'] for x in closes.values()):raise ValueError('final FD boundary')
+    return {'native_thread_ids':tids,'paired_pending_observations':len(pairs),'events':len(events),'normal_D':True,'joined_threads':2,'closed_thread_handles':2,'closed_FDs':2,'derived_disposition':'PASS_OWNED_THREAD_PENDING_METHOD_ONLY'}
+record={'start_utc':now(),'pid':os.getpid(),'producer_calls':0}
+try:
+    events=J('events.json');result=J('RESULT.json');receipt=J('CHILD_RECEIPT.json');freeze=J('FREEZE.json');record['baseline']=check(events,result,receipt)
+    exact(result['source_sha256'],freeze['inputs']['work/ownedwinpipe6501-c01/probe.py']);exact(receipt['source_sha256'],result['source_sha256'])
+    for path,sha in freeze['inputs'].items():exact(H((R/path).read_bytes()),sha)
+    for channel in ['stdout','stderr']:exact(H((O/('child.'+channel+'.txt')).read_bytes()),receipt[channel+'_sha256'])
+    for dep in result['dependencies']:exact(H(Path(dep['path']).read_bytes()),dep['sha256'])
+    record['dependency_hash_recheck_utc']=now();record['original_private_path_dependencies_rechecked']=3
+    control=O/'audit-controls';control.mkdir(exist_ok=False);names=['wrong_native_tid','boolean_pending_alias','write_count_alias','read_before_write','missing_query','waiter_false_positive','join_still_alive','handle_close_failed','wrong_closed_fd','pid_alias'];out=[]
+    for name in names:
+        es=copy.deepcopy(events);rs=copy.deepcopy(result);rc=copy.deepcopy(receipt)
+        first=lambda k:next(e for e in es if e['kind']==k)
+        if name=='wrong_native_tid':first('pending_query')['tid']+=1
+        elif name=='boolean_pending_alias':first('pending_query')['pending']=1
+        elif name=='write_count_alias':first('write_return')['count']=True
+        elif name=='read_before_write':
+            a=first('read_return')['seq'];b=first('write_requested')['seq'];es[a],es[b]=es[b],es[a]
+            for i,e in enumerate(es):e['seq']=i
+        elif name=='missing_query':
+            es.remove(first('pending_query'));rs['event_count']=len(es)
+            for i,e in enumerate(es):e['seq']=i
+        elif name=='waiter_false_positive':next(e for e in es if e['kind']=='pending_query' and e['label']=='event_wait_control')['pending']=True
+        elif name=='join_still_alive':first('thread_join')['alive']=True
+        elif name=='handle_close_failed':first('thread_handle_close')['return_nonzero']=False
+        elif name=='wrong_closed_fd':first('fd_closed')['fd']+=3
+        else:rs['pid']=rc['pid']=True
+        packet=json.dumps({'events':es,'result':rs,'receipt':rc},sort_keys=True).encode();path=control/(name+'.json');path.write_bytes(packet)
+        try:check(es,rs,rc)
+        except (ValueError,KeyError,IndexError,TypeError) as e:out.append({'name':name,'sha256':H(packet),'rejected':True,'reason':str(e)})
+        else:raise ValueError('false admission '+name)
+    record.update({'negative_controls':out,'status':'PASS_SAVED_METHOD_AUDIT','end_utc':now(),'original_streams_and_source_unchanged':True})
+except BaseException as e:record.update({'failure':repr(e),'end_utc':now()});raise
+finally:(O/'SAVED_AUDIT.json').write_text(json.dumps(record,sort_keys=True,indent=2)+'\n',encoding='utf8',newline='\n');(O/'audit_saved.py.txt').write_bytes(Path(__file__).read_bytes())
+print(json.dumps({'status':record['status'],'baseline':record['baseline'],'controls':len(out),'pid':record['pid'],'start':record['start_utc'],'end':record['end_utc']},sort_keys=True))

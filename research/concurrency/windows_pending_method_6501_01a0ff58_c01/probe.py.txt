@@ -1,0 +1,76 @@
+from pathlib import Path
+from datetime import datetime,timezone
+import os,sys,json,time,threading,ctypes,msvcrt,hashlib,platform,errno
+from ctypes import wintypes as wt
+OUT=Path(sys.argv[1]);OUT.mkdir(exist_ok=False)
+events=[];lock=threading.Lock();now=lambda:datetime.now(timezone.utc).isoformat()
+def emit(kind,**fields):
+    with lock:events.append({'seq':len(events),'kind':kind,'monotonic_ns':time.monotonic_ns(),**fields})
+def checkpoint():
+    with lock:raw=json.dumps(events,sort_keys=True).encode()+b'\n'
+    (OUT/'events.json').write_bytes(raw)
+kernel=ctypes.WinDLL('kernel32',use_last_error=True)
+kernel.OpenThread.argtypes=[wt.DWORD,wt.BOOL,wt.DWORD];kernel.OpenThread.restype=wt.HANDLE
+kernel.GetThreadIOPendingFlag.argtypes=[wt.HANDLE,ctypes.POINTER(wt.BOOL)];kernel.GetThreadIOPendingFlag.restype=wt.BOOL
+kernel.CloseHandle.argtypes=[wt.HANDLE];kernel.CloseHandle.restype=wt.BOOL
+kernel.GetModuleHandleW.argtypes=[wt.LPCWSTR];kernel.GetModuleHandleW.restype=wt.HMODULE
+kernel.GetModuleFileNameW.argtypes=[wt.HMODULE,wt.LPWSTR,wt.DWORD];kernel.GetModuleFileNameW.restype=wt.DWORD
+def module(name):
+    h=kernel.GetModuleHandleW(name);assert h,'loaded module '+name
+    buf=ctypes.create_unicode_buffer(32768);n=kernel.GetModuleFileNameW(h,buf,len(buf));assert 0<n<len(buf)
+    p=Path(buf.value);b=p.read_bytes();return {'name':name,'path':str(p),'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()}
+def flag(h,tid,label):
+    value=wt.BOOL();ctypes.set_last_error(0);rc=kernel.GetThreadIOPendingFlag(h,ctypes.byref(value));error=ctypes.get_last_error();emit('pending_query',label=label,tid=tid,return_nonzero=bool(rc),pending=bool(value.value),last_error=error);assert rc,'GetThreadIOPendingFlag';return bool(value.value)
+record={'start_utc':now(),'pid':os.getpid(),'platform':platform.platform(),'python':sys.version,'source_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),'allocation':'6501-WINDOWS-PENDING-METHOD-C01-01a0ff58-20261003','comparative_cancellation_calls':0,'status':'STARTED'}
+(OUT/'START.json').write_text(json.dumps(record,sort_keys=True,indent=2)+'\n',encoding='utf8',newline='\n')
+rd,wr=os.pipe();read_enter=threading.Event();wait_enter=threading.Event();wait_release=threading.Event();read_done=threading.Event();ids={};read_value={};handles=[]
+emit('pipe_owned',read_fd=rd,write_fd=wr,read_os_handle=msvcrt.get_osfhandle(rd),write_os_handle=msvcrt.get_osfhandle(wr))
+def reader():
+    ids['reader']=threading.get_native_id();emit('thread_enter',role='reader',tid=ids['reader']);read_enter.set()
+    try:
+        value=os.read(rd,1);read_value['hex']=value.hex();emit('read_return',tid=ids['reader'],hex=value.hex())
+    except BaseException as e:read_value['error']=repr(e);emit('read_exception',error=repr(e))
+    finally:read_done.set();emit('thread_exit',role='reader',tid=ids['reader'])
+def waiter():
+    ids['waiter']=threading.get_native_id();emit('thread_enter',role='waiter',tid=ids['waiter']);wait_enter.set();wait_release.wait();emit('thread_exit',role='waiter',tid=ids['waiter'])
+threads=[threading.Thread(target=reader,name='owned-c01-pipe-reader',daemon=True),threading.Thread(target=waiter,name='owned-c01-event-waiter',daemon=True)]
+released=False
+try:
+    record['dependencies']=[module(x) for x in ['kernel32.dll','python312.dll','ucrtbase.dll']]
+    for t in threads:t.start()
+    assert read_enter.wait(2) and wait_enter.wait(2),'entry deadline'
+    for role in ['reader','waiter']:
+        ctypes.set_last_error(0);h=kernel.OpenThread(0x0040,False,ids[role]);emit('thread_handle_open',role=role,tid=ids[role],handle=int(h) if h else None,last_error=ctypes.get_last_error());assert h,'OpenThread';handles.append(h)
+    assert ids['reader']!=ids['waiter'],'distinct native threads';deadline=time.monotonic()+2;positive=0
+    while time.monotonic()<deadline and positive<3:
+        p=flag(handles[0],ids['reader'],'before_data');n=flag(handles[1],ids['waiter'],'event_wait_control');emit('paired_observation',reader_pending=p,waiter_pending=n,reader_done=read_done.is_set(),writer_has_written=released)
+        checkpoint()
+        if p and not n and not read_done.is_set():positive+=1
+        else:positive=0
+        time.sleep(.005)
+    assert positive==3,'three pending-positive/event-negative pairs'
+    emit('write_requested',hex='44',purpose='normal_method_release');count=os.write(wr,b'D');released=True;emit('write_return',count=count);assert count==1
+    assert read_done.wait(2),'normal read completion';wait_release.set();emit('event_release')
+    for t in threads:t.join(2);emit('thread_join',name=t.name,alive=t.is_alive());assert not t.is_alive(),'thread join'
+    assert read_value=={'hex':'44'},'normal D'
+    assert not flag(handles[0],ids['reader'],'after_join'),'no pending read after join'
+    record['status']='PASS_OWNED_THREAD_PENDING_METHOD_ONLY'
+except BaseException as e:record.update({'status':'STOP_METHOD','failure':repr(e)})
+finally:
+    if any(t.ident and t.is_alive() for t in threads):
+        if not released:
+            emit('cleanup_write_requested',hex='44');os.write(wr,b'D');released=True;emit('cleanup_write_return')
+        wait_release.set()
+        for t in threads:
+            if t.ident:t.join(2)
+    for h in handles:
+        rc=kernel.CloseHandle(h);emit('thread_handle_close',handle=int(h),return_nonzero=bool(rc))
+        if not rc:record['status']='STOP_METHOD';record['cleanup_error']='CloseHandle failure'
+    for fd in [rd,wr]:
+        os.close(fd)
+        try:os.fstat(fd)
+        except OSError as e:emit('fd_closed',fd=fd,errno=e.errno);assert e.errno==errno.EBADF
+        else:record['status']='STOP_METHOD';record['cleanup_error']='fd still open'
+    record['thread_alive_final']=[t.is_alive() for t in threads];record['end_utc']=now();record['event_count']=len(events);checkpoint();(OUT/'RESULT.json').write_text(json.dumps(record,sort_keys=True,indent=2)+'\n',encoding='utf8',newline='\n')
+print(json.dumps({'status':record['status'],'pid':record['pid'],'events':record['event_count'],'thread_alive_final':record['thread_alive_final']}))
+raise SystemExit(0 if record['status']=='PASS_OWNED_THREAD_PENDING_METHOD_ONLY' else 2)
