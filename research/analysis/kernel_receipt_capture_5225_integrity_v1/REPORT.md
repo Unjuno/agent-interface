@@ -79,6 +79,13 @@ The initial Issue claim's pre-send local operation journal was omitted and was
 recorded retrospectively; the accepted comment was not resent. These operational
 errors do not alter the original evidence or study result.
 
+The first staged diff check flagged native CRLF in captured process stdout as
+trailing whitespace. The initial local commit was made before that gate was
+correctly honored; it was not published. A follow-up byte-preservation attribute
+recognizes CR-at-EOL and retains the exact raw streams; the final diff gate passes.
+PLAN's LF output intent is narrowed explicitly: authored manifests/receipts use
+binary LF, while process stdout/stderr retain their native captured bytes.
+
 PLAN's no-shared-index-edit intent was adjusted only for the single necessary
 generated navigation row for this new retained REPORT; all prior index rows are
 preserved. No workflow is changed. Main delivery still requires FINAL-v5 fixed
