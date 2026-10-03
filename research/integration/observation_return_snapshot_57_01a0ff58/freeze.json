@@ -1,0 +1,22 @@
+{
+  "C": "Backend factory is a double, not an actual OS backend; old source does not enforce ownership of a reusable returned dict. Native implementations may already allocate fresh payloads.",
+  "D": "Baseline must expose4 failures across10methods. Candidate all10 methods pass normal/-O; all original method ASTs unchanged; one reader per observation, no retry/input/native dispatch; own cleanup still once/failure explicit, supplied session close0/recovery unchanged; old/new nested payloads detached.",
+  "H": "Normal cleanup/reused mutable backend return can rewrite a previously returned observation. Standard detached deepcopy before cleanup preserves its returned value.",
+  "T": "Exact source facade and original seven tests plus three new methods/four directed failures; inert selector factory seam. First baseline then candidate same10methods normal/-O, preserve all first outputs; no original studies rerun.",
+  "U": "Quiescent standard nested JSON returns; no concurrent modification during deepcopy, hostile deepcopy protocols, unsupported native object serialization, physical snapshot timing, emitter authentication, GUI success/input release/model/latency benefit or general thread-safety. A copy preserves returned content, not freshness at later use.",
+  "base_sha": "a216324bac278621af298d8336dd85e319cda2ef",
+  "claim": 5969235757,
+  "created_utc": "2026-10-03T12:39:28.012355+00:00",
+  "executable_sha256": "5f7b89a612c9b8af1d6456cdfcd1dbe5ca630849e79aebced9bee9a6694952ec",
+  "kind": "ordinary regression/repair, not formal",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "source_sha256": {
+    "baseline/observe.py": "1f7a27c2355955fd13708c26c68bab4f3a167578f8d24a2a19d7c87722bd052a",
+    "baseline/test_observe.py": "796b6a5cd93440c6f072e57714c1f2d82f567551bc11f74f6bbff38af66d6f8f",
+    "candidate/observe.py": "e8ca36a77fdb102221dd6449f1a74f458d420e8d71060385324648101463c197",
+    "candidate/test_observe.py": "796b6a5cd93440c6f072e57714c1f2d82f567551bc11f74f6bbff38af66d6f8f",
+    "driver.py": "3bf51e41df47234d3ed7713cd4a19ca3fcbf8e2c2c792cf5d45a9a2d47443153",
+    "prepare.py": "dffe00fe7a963edb00d5d6299b5be1592659c02ab6b37b9b22af97780636eac7"
+  },
+  "worker": "01a0ff58-8f42-73c3-857d-35a2636e7bd3"
+}
