@@ -23,3 +23,7 @@ saved checker is not a vote. Fresh exact-current tree/applicability/live rules/
 checks/rights/accepted sender remain separate. Source ref remains unchanged;
 no main merge/ref deletion/parent science closure. Full suite/native/Windows/
 GUI/model/task/latency/physical release claims are not inferred from these rows.
+
+Local Analysis Index CI at d989a3e36 exits0:43steps/failures=[]; full local-ci.log
+retained. Original package Git diff exits0. This is the scoped workflow, not
+all repository/native/hosted suites or a committee/current-tree certificate.
