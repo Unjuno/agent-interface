@@ -1,0 +1,79 @@
+"""Ordinary finite counter diagnostic; no retained producer/auditor entry point."""
+from pathlib import Path
+import dataclasses
+import hashlib
+import json
+import platform
+import sys
+import threading
+
+ROOT = Path(__file__).resolve().parent
+PINS = json.loads((ROOT / 'SOURCE.json').read_text())
+for rel, expected in PINS.items():
+    actual = hashlib.sha256((ROOT / 'source' / Path(rel).name).read_bytes()).hexdigest()
+    if actual != expected:
+        raise RuntimeError(f'source pin mismatch: {rel}')
+sys.path.insert(0, str(ROOT / 'source'))
+from main_thread_scorer_polling_v1 import MainThreadScorerPolling
+from map01_scorer_stdio_adapter_v1 import MainThreadScorerStdin
+
+PERIOD = 100_000_000
+class Stream:
+    def fileno(self): return 0
+
+def case(kind, stage, cost):
+    state = {'ns': 0, 'clock_calls': 0, 'samples': 0, 'reads': 0}
+    commands, receipts, waits = [], [], []
+    owner = threading.get_ident()
+    def now():
+        state['clock_calls'] += 1
+        if state['clock_calls'] > 40:
+            raise RuntimeError('bounded diagnostic clock-call cap')
+        return state['ns']
+    def sample():
+        state['samples'] += 1
+        if state['samples'] > 1:
+            raise RuntimeError('bounded diagnostic one-sample cap')
+        if stage == 'sample': state['ns'] += cost
+        return {'inert_scorer_only': 17}
+    def sink(row):
+        receipts.append(row)
+        if stage == 'sink': state['ns'] += cost
+    def wait(fd, timeout):
+        waits.append({'ns': state['ns'], 'timeout_s': timeout})
+        return True
+    def read(fd, size):
+        state['reads'] += 1
+        if state['reads'] > 1: raise RuntimeError('bounded diagnostic one-read cap')
+        return b'' if kind.endswith('eof') else b'FINISH\n'
+    loop = MainThreadScorerPolling(sample_hz=10, clock_ns=now,
+                                  wait_readable=wait, read_fn=read)
+    if kind.startswith('polling'):
+        def command(line):
+            commands.append(line)
+            return False
+        stats = dataclasses.asdict(loop.run(0, sample_fn=sample, scorer_sink=sink,
+            command_handler=command, max_samples=1 if kind.endswith('cap') else None))
+        endpoint = 'cap' if kind.endswith('cap') else ('eof' if stats['eof'] else 'FINISH')
+    else:
+        adapter = MainThreadScorerStdin(Stream(), sample, sink, loop=loop)
+        try:
+            commands.append(next(adapter)); endpoint = 'FINISH'
+        except StopIteration:
+            endpoint = 'eof'
+        stats = adapter.stats()
+    return {'kind': kind, 'cost_stage': stage, 'cost_ns': cost,
+        'period_ns': PERIOD, 'initial_ns': 0, 'ended_ns': state['ns'],
+        'endpoint': endpoint, 'commands': commands, 'receipts': receipts,
+        'waits': waits, 'stats': stats, 'reads': state['reads'],
+        'same_owner': stats['owner_thread_id'] == owner}
+
+rows = [case(kind, stage, cost)
+        for kind in ('polling_finish','polling_eof','polling_cap','stdin_finish','stdin_eof')
+        for stage in ('sample','sink') for cost in (350_000_000, 10_000_000)]
+result = {'schema': 'ordinary-terminal-accounting-diagnostic-v1',
+          'environment': {'platform': platform.platform(), 'python': sys.version},
+          'source_pins': PINS, 'plan_sha256': hashlib.sha256((ROOT/'PLAN.json').read_bytes()).hexdigest(),
+          'rows': rows}
+(ROOT/'raw.json').write_text(json.dumps(result,indent=2,sort_keys=True)+'\n')
+print(json.dumps({'rows':len(rows),'reported_missed': [r['stats']['missed_sample_periods'] for r in rows]}))

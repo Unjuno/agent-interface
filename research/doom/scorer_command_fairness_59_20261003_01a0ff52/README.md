@@ -79,3 +79,14 @@ unmeasured. No model/container/GPU/GUI/input/live allocation was used.
 **Adoption: HOLD pending independent review and separately frozen integration.**
 The proposal is a concrete repair candidate for #59's finish/command-service
 readiness, not a live threat-control result, release guarantee or MAP01 exit.
+
+
+## Newly confirmed terminal-accounting limitation
+
+The v2 source still underreports final missed periods after a returning sample
+or sink overrun followed by FINISH/EOF/cap. [New ordinary diagnostic evidence](terminal-accounting/README.md)
+preserves ten overrun witnesses and ten fast controls with separate saved-record
+grid reconstruction. Original A01, the first FAIL and all prior engineering
+raw/source remain unchanged. Command-service regression PASS does not establish
+accurate terminal statistics or the full measurement gate. This is a known-fault
+research archive; runtime adoption/repair remains separate at PR #6913.
