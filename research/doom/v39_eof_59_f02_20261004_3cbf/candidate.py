@@ -17,4 +17,24 @@ def factory(source):
     if not isinstance(protected, ast.Try) or len(protected.body) != 1 or not isinstance(protected.body[0], ast.For):
         raise ValueError('unexpected reader structure')
     protected.body.extend(ast.parse('raise EOFError("session stdout closed before another expected event")').body)
-    return historical_factory(ast.unparse(ast.fix_missing_locations(tree)).encode())
+    create = historical_factory(ast.unparse(ast.fix_missing_locations(tree)).encode())
+
+    def create_persistent(process, incoming):
+        reader, wait, events = create(process, incoming)
+        failure = None
+
+        def wait_persistent(*args, **kwargs):
+            nonlocal failure
+            if failure is not None:
+                failure_type, arguments, cause = failure
+                raise failure_type(*arguments) from cause
+            try:
+                return wait(*args, **kwargs)
+            except RuntimeError as error:
+                if type(error).__name__ == '_SessionReaderFailure':
+                    failure = (type(error), error.args, error.__cause__)
+                raise
+
+        return reader, wait_persistent, events
+
+    return create_persistent
