@@ -11,6 +11,7 @@ from gate_audit import gate_errors
 from effect_audit import effect_errors,worker_errors
 from ready_guard import readiness_errors
 from cache_audit import cache_errors
+from sample_custody import sample_errors
 ROOT=Path(__file__).resolve().parent
 def sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 def manifest_errors(root, lines):
@@ -43,7 +44,7 @@ def manifest_errors(root, lines):
         errors.append("incomplete_manifest")
     return errors
 def row_errors(data,row,fixture,index,frozen):
-    errors=readiness_errors(data/f'row-{index:03d}',row)+cache_errors(row)+pipe_errors(row,frozen)+gate_errors(row,fixture,frozen)+effect_errors(row,fixture)+worker_errors(row,fixture)
+    errors=readiness_errors(data/f'row-{index:03d}',row)+cache_errors(row)+pipe_errors(row,frozen)+gate_errors(row,fixture,frozen)+effect_errors(row,fixture)+worker_errors(row,fixture)+sample_errors(row)
     if type(row.get('app_pid')) is not int or row.get('app_stderr')!='' or row.get('runner_error'):errors.append('identity')
     return errors
 def corruptions(raw,data,fixture,frozen):
@@ -65,6 +66,8 @@ def corruptions(raw,data,fixture,frozen):
       'sequence_bool':(0,lambda r:r['pipe']['frames'][0]['value'].update(sequence=True)),
       'ack_bool':(ack,lambda r:r['injection']['gate']['ack'].update(sequence=True)),
       'missing_samples':(ack,lambda r:r['injection']['gate']['samples'].clear()),
+      'missing_first_poll':(ack,lambda r:r['injection']['gate']['samples'].pop(0)),
+      'duplicate_poll':(ack,lambda r:r['injection']['gate']['samples'].append(copy.deepcopy(r['injection']['gate']['samples'][-1]))),
       'early_gate':(ack,lambda r:r['injection']['gate'].update(decided_ns=1)),
       'key_replay':(ack,lambda r:r['injection']['key_requests'].append(copy.deepcopy(r['injection']['key_requests'][0]))),
       'refused_key':(wrong,lambda r:r['injection']['key_requests'].append({})),
@@ -109,6 +112,8 @@ def check_packet(root=ROOT):
         if not (datetime.fromisoformat(freeze['freeze_time_utc'])<=datetime.fromisoformat(receipts['candidate']['started_utc'])
                 <=datetime.fromisoformat(receipts['candidate']['finished_utc'])<=datetime.fromisoformat(receipts['auditor']['started_utc'])):errors.append('role_order')
         if (data/'candidate_exit.txt').read_bytes()!=b'0\n' or json.loads((root/'evidence/focus01-candidate-launch/stdout.bin').read_bytes())!={'rows':10,'exit_code':0}:errors.append('candidate_exit_stream')
+        for index,row in enumerate(raw['rows']):
+            errors.extend(f'row_{index}:'+error for error in sample_errors(row))
         rejected=corruptions(raw,data,fixture,expected['freeze_sha256'])
         if not all(rejected.values()):errors.append('corruption_controls')
         return {'status':'FAIL_RETAINED_PACKET' if errors else 'PASS_RETAINED_FINITE_FIXTURE_ONLY','errors':errors,
