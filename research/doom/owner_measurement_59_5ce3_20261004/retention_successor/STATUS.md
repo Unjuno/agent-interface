@@ -1,5 +1,11 @@
 # Additive retention preparation, not native successor completion
 
+Historical checkpoint below: recorded before A02. Current clarification:
+these files are now committed with A02; the fresh native successor has executed
+once and its post-close bitmap evidence is retained in ../native_boundary_a02.
+Do not read the earlier untracked/pending statements as current status.
+Independent audit91bd2fa5a qualifies evidence delivery, not production adoption.
+
 Addresses A01 audit retention gap without changing/replaying A01. Public PR7263
 head0eec0872290d3f9c4f9fd24458da33796b05e917 remains unchanged during review.
 These files are untracked local preparation and are not yet PR evidence.
