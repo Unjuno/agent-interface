@@ -91,3 +91,5 @@ jobs:
         run: python -B -m unittest discover -s research/analysis/observation_intervention_6526_a03_deadline_audit_only_20261003 -p 'test_*.py' -v
       - name: Test Issue #6503 T0b vigilance material/scorer contract
         run: python -B -m unittest discover -s research/analysis/quiet_supervision_vigilance_6503_t0b_20261002 -p 'test_*.py' -v
+      - name: Test Issue #5352 T15 effect-qualified hysteresis construction contract
+        run: python -B -m unittest discover -s research/analysis/planner_hysteresis_5352_effect_qualified_t0_20261003 -p 'test_contract.py' -v
