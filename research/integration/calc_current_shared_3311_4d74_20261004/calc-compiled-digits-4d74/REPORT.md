@@ -1,0 +1,13 @@
+# #3311 G08 heldout digit transfer failed
+
+Disposition: FAIL_HELDOUT_DIGIT_TRANSFER_HOLD_COMPARISON. This is a scientific failure, despite native client exit 0 and safe stopping.
+
+Fresh allocation CALC-COMPILED-DIGITS-3311-4D74-CONSTRUCTION-G08-20261004 replaced fixed whole-row templates with a known-font digit segment reader. Training used only three retained G03 image rows; hashes and public labels are in DIGIT_TEMPLATES.json. The inventory has 17 binary glyph variants labeled unambiguously as digits 1,2,3,4,5,6,7,9; 0/8 unsupported. Source and heldout values were frozen in PLAN.json before the run. Old outcomes remain unchanged.
+
+One actual guarded native save entered 23 and31 with formula result713. Original post-input PNG visibly shows these values; the separate saved-byte scorer confirms exactly six populated cells and intended formula. Nevertheless the digit reader returned null for the new row. The caller converted null to a false row_visible predicate, and the unchanged graph yielded effect_failed before second admission/input. Planned 41/43/1763 was not executed and is censored, not a success or failure observation. Actual correct application effect must not be reported as failed merely because the reader is unavailable.
+
+Both primary inspection and independent saved XML distinguish application success from predicate failure. The first auditor retains the scientific FAIL while checking raw infrastructure, one admission/program, original PNG digests/capture-time binding, four VALID native guards, verified empty releases and neutral physical state. Primary total usage UNKNOWN; additional benchmark client calls zero. No model/cost advantage or generic OCR claim follows.
+
+Root cause still requires characterization: exact binary glyph variants learned at old positions did not recognize at least one new rendered glyph. Font name or digit-class coverage alone does not establish position/render transfer. Do not retrain on this heldout image and regrade it as a success. A future prospective source must retain decoded-unavailable as unknown/effect_unavailable and separately qualify position-dependent recognition using new heldout inputs. Whole-row G06/G07 results remain limited to their known render states.
+
+Executed once in pinned WSLc image f649ccab8aec3b94e451c6b0037e60fca72d7d7559381f8cd4aa98530b786c55, source main9823419dc71eb6f7fd745bfe8249cf7f7584a3a9. Swap warning and actual limits retained in host/raw evidence. Local packet only; GitHub PR delivery pending content-creation restriction. Full same-model integrated comparison is uninvoked and remains HOLD until the effect adapter can be qualified without using hidden saved-file truth inside the controller.
