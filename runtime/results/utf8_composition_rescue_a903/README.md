@@ -13,4 +13,4 @@ D: 119 exact files; 118/118 manifest entries; 48/48 maintained tests.
 C: manifest consistency does not independently establish original source custody or replay historical controls.
 U: original Windows experiments and formal/native claims remain historical and unexecuted here.
 
-Local CI results are recorded separately in `local-ci.log`; archive preservation does not certify the historical experiment anew.
+Local CI completed with `LOCAL_CI_SUMMARY: steps=43 failures=[]` and exit 0, recorded in `local-ci.log`; archive preservation does not certify the historical experiment anew. Container STOP: `docker image inspect python:3.12-slim` failed while opening daemon blob `f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f` with `operation not supported`. No container execution, daemon reset, prune, image pull or formal allocation was attempted.
