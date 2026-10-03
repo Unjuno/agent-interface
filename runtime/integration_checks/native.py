@@ -24,6 +24,8 @@ SUITES['protocol'].append('test_app_server_utf8')
 
 SUITES['protocol'].append('test_adaptive_report_custody')
 
+SUITES['protocol'].append('test_adaptive_report_metrics')
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--protocol-python', default=sys.executable)
