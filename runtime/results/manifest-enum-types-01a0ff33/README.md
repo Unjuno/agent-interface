@@ -86,6 +86,9 @@ records the exact local source hashes used for each matrix; publication manifest
 records canonical staged Git bytes separately. The fixture was generated and
 fixed before the patch/matrices and is preserved verbatim.
 
-Public log copies replace only the private checkout prefix with `<checkout>`.
+Public log copies replace the private checkout prefix with `<checkout>` and
+the Python installation's private home prefix with `<user-home>`. The first
+branch publication still contained that home prefix; a pre-review correction
+updated only the public log copies and their manifest, with an exact-ref lease.
 Original logs remain in the author's private workspace. Every public byte hash is
 listed in PUBLIC_MANIFEST.json, excluding that manifest itself to avoid recursion.
