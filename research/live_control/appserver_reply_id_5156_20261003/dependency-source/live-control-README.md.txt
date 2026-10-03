@@ -9,7 +9,6 @@
 | Current project objective | [../../docs/CURRENT_GOAL.md](../../docs/CURRENT_GOAL.md) |
 | Latest cross-project handoff | [../../docs/LOCAL_RESEARCH_HANDOFF.md](../../docs/LOCAL_RESEARCH_HANDOFF.md) |
 | Current Linux research caller | [CURRENT_CLIENT.md](CURRENT_CLIENT.md) |
-| Boolean response-ID correlation repair (#59; native inert stdio scope) | [Result and limits](appserver_reply_id_5156_20261003/REPORT.md) |
 | Project evidence ledger | [../../RESEARCH.md](../../RESEARCH.md) |
 | Retained raw result artifacts | [results/README.md](results/README.md) |
 | Recycled-XID process-incarnation guard (Issue #3555; scoped, provenance-limited) | [XRes guard report](x11_xres_incarnation_guard_3555_v1/REPORT.md) |
