@@ -6,6 +6,15 @@ compressed raw receipt hashes reproduce. Original raw, source snapshots,
 construction scripts, test export, publication failures and custody limits are
 unchanged. This qualification and read-only tests are outside the old manifest.
 
+New local checks: four archival tests (including six corruption controls) pass,
+public navigation/workspace index pass, all 40 Analysis Index run steps pass.
+The first full local runner completed its 40 checks but exited 1 because final
+workflow restoration encountered a transient Git index lock. No lock was
+deleted. The lock was later absent, the HEAD workflow restored, and a separately
+logged second run completed all 40 checks plus restoration with exit 0. This
+was tooling cleanup, not a scientific retry; the first failure log is retained
+separately from the clean run, and no original study output was regenerated.
+
 Function-level independent oracle verification exactly reproduces the entire
 saved AUDIT.json over 9000 inputs per arm / 36000 rows. Mismatch counts remain
 main 1654, enum-only 904, scalar-only 750, combined 0. Six directed raw
