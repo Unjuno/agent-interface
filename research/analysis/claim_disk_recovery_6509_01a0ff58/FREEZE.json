@@ -1,0 +1,34 @@
+{
+  "id": "DISK-PREFIX-6509-CONSTRUCTION-01A0FF58-20261003-01",
+  "worker": "01a0ff58-6178-7ea1-a6d5-cf09260b91e3",
+  "policy": "FINAL-v5",
+  "source_base": "f1416985d4ff9ce5bbf9f0f4be1be3d0ee669549",
+  "sources": {
+    "recovery.py": "c89f792ad995890f44e564864f8af844de314a5675f87f706f54ba1926eac130",
+    "child.py": "fae5ba6a24e97629c1cb5260ce6a8c71f2a9b70944ce679fbc2df4de68a9e93b",
+    "cases.json": "bc5b7ba84ed1d0cda88a1427c3138f5cb708726dd65bc0fb941c851a3de56fc6",
+    "run_boundary.py": "461ad7fdc54774ccd328916134a9f2e2cc03b2d45443c2962bb930a574aa7f79",
+    "audit.py": "0f050c7ce988a49c4d66ae037c435843b434e95a10f09e45bbb2a621eea1d664",
+    "test_recovery.py": "5bafa89a114ef0ae770bfc6c5c50349ce3d6da45bee4c595ff8b09ea1392ccfe"
+  },
+  "case_count": 9,
+  "invocations": 27,
+  "candidate_invocations": 1,
+  "retries": 0,
+  "expected": {
+    "complete": 3,
+    "counterexamples": 1,
+    "partial_unknown": 5,
+    "cached_false_completions": 2
+  },
+  "gate": "all journal byte prefixes, source identities, three exit codes per case, both recovery outputs, missing/completed checks and six mutations must match",
+  "environment": {
+    "platform": "Windows-11-10.0.26300-SP0",
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "python_executable_sha256": "372c2eae555b344520bf147be0096e009069aeca4e7f78d6aecea6d53158056a"
+  },
+  "utc": "2026-10-03T01:40:36.503337+00:00",
+  "allocation_kind": "ordinary native Windows process/filesystem construction; no formal/shared allocation",
+  "stopping": "first unexpected child exit stops this matrix; no overwrite or candidate retry; raw-only audit repair must be versioned",
+  "scope": "process termination and serial reread only; no power loss, concurrent writer, effect, GUI/input, model, GPU, container or performance claim"
+}
