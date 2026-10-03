@@ -16,4 +16,4 @@ D: scoped19/19; packet26 exact /manifest25 matches; fullmacOSnativeFAIL with ide
 C: controlled decoder factory is not real provider, and no generic custom-factory or invalid UTF-8 behavior is established.
 U: original native peers/formal allocations unrerun; fullnative/macOS, live task/backend/model/timing remain unproven.
 
-Local CI is recorded separately in `local-ci.log`. OrbStack image inspection has daemon-blob operation-not-supported STOP; no container, reset/prune/pull or unrelated/shared allocation used.
+Local CI completed exit0 with `LOCAL_CI_SUMMARY: steps=43 failures=[]`, recorded separately in `local-ci.log`; this does not override the full native FAIL above. OrbStack image inspection has daemon-blob operation-not-supported STOP; no container, reset/prune/pull or unrelated/shared allocation used.
