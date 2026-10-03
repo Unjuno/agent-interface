@@ -1,0 +1,39 @@
+test_auditor_detects_corrupted_site_eligibility (test_geometry.GeometryFeasibilityTests.test_auditor_detects_corrupted_site_eligibility) ... ok
+test_auditor_detects_geometry_metadata_mutation (test_geometry.GeometryFeasibilityTests.test_auditor_detects_geometry_metadata_mutation) ... ok
+test_exact_quadrant_support_is_insufficient (test_geometry.GeometryFeasibilityTests.test_exact_quadrant_support_is_insufficient) ... ok
+test_freeze_sidecar_sources_and_known_result_are_bound (test_geometry.GeometryFeasibilityTests.test_freeze_sidecar_sources_and_known_result_are_bound) ... FAIL
+test_independent_auditor_reconstructs_raw_enumeration (test_geometry.GeometryFeasibilityTests.test_independent_auditor_reconstructs_raw_enumeration) ... ok
+test_allocation_01_stop_confirms_no_candidate_or_container_started (test_runner.RecoveryRunnerTests.test_allocation_01_stop_confirms_no_candidate_or_container_started) ... ok
+test_docker_command_binds_all_frozen_isolation_controls (test_runner.RecoveryRunnerTests.test_docker_command_binds_all_frozen_isolation_controls) ... ok
+test_nested_frozen_settings_are_read_without_top_level_alias (test_runner.RecoveryRunnerTests.test_nested_frozen_settings_are_read_without_top_level_alias) ... ok
+test_recovery_freeze_hashes_all_sources_and_stop_provenance (test_runner.RecoveryRunnerTests.test_recovery_freeze_hashes_all_sources_and_stop_provenance) ... FAIL
+test_freezes_bind_root_workflow_without_requiring_sparse_checkout_file (test_sparse_checkout.SparseAnalysisCheckoutTests.test_freezes_bind_root_workflow_without_requiring_sparse_checkout_file) ... ok
+
+======================================================================
+FAIL: test_freeze_sidecar_sources_and_known_result_are_bound (test_geometry.GeometryFeasibilityTests.test_freeze_sidecar_sources_and_known_result_are_bound)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/analysis/spatial_block_position_6590_t1_geometry_feasibility_v1/test_geometry.py", line 19, in test_freeze_sidecar_sources_and_known_result_are_bound
+    self.assertEqual(hashlib.sha256((root / relative).resolve().read_bytes()).hexdigest(), expected, relative)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '5804f307a60a9aab17b3c3e41bc80f0942d6c6f914555f5c8347f38f9d5c3b35' != 'b19000e027e7379ef6c0122e3f8cfd0b2faacb4c54d985ab87d27c1be914f7c2'
+- 5804f307a60a9aab17b3c3e41bc80f0942d6c6f914555f5c8347f38f9d5c3b35
++ b19000e027e7379ef6c0122e3f8cfd0b2faacb4c54d985ab87d27c1be914f7c2
+ : ../../../.github/workflows/analysis-index.yml
+
+======================================================================
+FAIL: test_recovery_freeze_hashes_all_sources_and_stop_provenance (test_runner.RecoveryRunnerTests.test_recovery_freeze_hashes_all_sources_and_stop_provenance)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/analysis/spatial_block_position_6590_t1_geometry_feasibility_v1/test_runner.py", line 22, in test_recovery_freeze_hashes_all_sources_and_stop_provenance
+    self.assertEqual(hashlib.sha256((recovery / relative).resolve().read_bytes()).hexdigest(), expected, relative)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '5804f307a60a9aab17b3c3e41bc80f0942d6c6f914555f5c8347f38f9d5c3b35' != 'b19000e027e7379ef6c0122e3f8cfd0b2faacb4c54d985ab87d27c1be914f7c2'
+- 5804f307a60a9aab17b3c3e41bc80f0942d6c6f914555f5c8347f38f9d5c3b35
++ b19000e027e7379ef6c0122e3f8cfd0b2faacb4c54d985ab87d27c1be914f7c2
+ : ../../../../.github/workflows/analysis-index.yml
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.011s
+
+FAILED (failures=2)

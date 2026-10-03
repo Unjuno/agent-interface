@@ -1,5 +1,6 @@
 # Analytical research
 
+- [`exogenous_phase_6803_derived_capture_a05_20261003_3cbf/REPORT.md`](exogenous_phase_6803_derived_capture_a05_20261003_3cbf/REPORT.md) — #6969 successor: source-derived closed-interval acquisition passes 147-row independent finite audit and 10/10 corruption controls; four onset-only original-source probes confirm snapshot-label insensitivity. Private OrbStack containers; modeled effects only, live transfer HOLD; pre-stage socket STOP preserved.
 - [`RESCUE_STATUS_6035_20261003.md`](RESCUE_STATUS_6035_20261003.md) — Issue #6035 A01/A02 frozen synthetic crossover protocols and terminal pre-candidate STOP records rescued from closed branches; zero formal invocations and no model/interface claim.
 - [`fault_exposure_6539_t0_20261002/RESCUE_STATUS.md`](fault_exposure_6539_t0_20261002/RESCUE_STATUS.md) — Issue #6539 frozen package rescued from PR #6697; paired-twin identifiability check retained, formal allocation still unassigned, and launch remains HOLD because the frozen CLI receipt path has a static `seeds` binding defect.
 - [`native_wsl2_migration_6389_t0_20261002/STOP.md`](native_wsl2_migration_6389_t0_20261002/STOP.md) — #6389 retrospective custody of #6434: original runtime-parity/contention STOP, formal measurement/auditor 0/0/0; later v2 preparation and #6618 repair remain separate, no host release or migration result.
@@ -416,6 +417,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`exception_envelope_6021_t0_20261002/`](exception_envelope_6021_t0_20261002/)
 - [`exogenous_opportunity_5694_matched_phase_a04_20261002/`](exogenous_opportunity_5694_matched_phase_a04_20261002/)
 - [`exogenous_opportunity_5694_t0_20261001/`](exogenous_opportunity_5694_t0_20261001/)
+- [`exogenous_phase_6803_derived_capture_a05_20261003_3cbf/`](exogenous_phase_6803_derived_capture_a05_20261003_3cbf/)
 - [`explanation_dependence_5916_t0_v1/`](explanation_dependence_5916_t0_v1/)
 - [`exposed_success_audit_6367_t0_20261002/`](exposed_success_audit_6367_t0_20261002/)
 - [`faded_demonstration_6600_t0_orbstack_20261002/`](faded_demonstration_6600_t0_orbstack_20261002/)
@@ -553,8 +555,6 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`multistate_stop_recovery_5593_t1_20261002_02/`](multistate_stop_recovery_5593_t1_20261002_02/)
 - [`native_wsl2_migration_6389_audit_repair_v1_20261002/`](native_wsl2_migration_6389_audit_repair_v1_20261002/)
 - [`native_wsl2_migration_6389_t0_20261002/`](native_wsl2_migration_6389_t0_20261002/)
-- [`needle_role_conflict_probe_6354_a02/`](needle_role_conflict_probe_6354_a02/)
-- [`needle_role_conflict_probe_6354_a02_wslc_validation_20261002/`](needle_role_conflict_probe_6354_a02_wslc_validation_20261002/)
 - [`needle_role_skill_lifecycle_4916_first_rung_v2/`](needle_role_skill_lifecycle_4916_first_rung_v2/)
 - [`needle_role_skill_lifecycle_4916_parity_diag_v1/`](needle_role_skill_lifecycle_4916_parity_diag_v1/)
 - [`needle_role_skill_lifecycle_4916_v2/`](needle_role_skill_lifecycle_4916_v2/)
