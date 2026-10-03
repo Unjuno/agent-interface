@@ -632,6 +632,8 @@ or human-tempo claim.
 
 - [Issue #5156 / source PR #5298 archival qualification](owner_keyup_owner_integration_5156_v1/ARCHIVAL_QUALIFICATION.md) — preserves four exact Allocation-03 owner-v11 files and the historical 14-test fake-Xlib construction record. The original baseline auditor is retained with its empty/omitted-inventory fail-open limitation; [#5415](https://github.com/Unjuno/agent-interface/pull/5415) is a separate synthetic successor. No real X11, physical key-up, MAP01, formal-gate completion, or runtime promotion is established; the source PR remains Draft and #5156 remains open.
 
+- [#5630 T3 keymap witness recovery qualification](owner_keyup_keymap_witness_5156_t3_v1/RESCUE_QUALIFICATION_20261003.md) — preserves 106 exact construction-package files; synthetic contract tests 35/35 and retained SHA256SUMS manifests 11/11 pass. Known runner-completion cardinality defect remains unresolved; no formal X11/Docker/host receipt or MAP01 claim.
+
 
 - [#2802 allocation 04 source-only qualification](app_event_obligation_keying_2802_v1/ARCHIVAL_QUALIFICATION.md): ten exact preformal source/freeze files; formal 0/18. The reported macOS/CPython 3.14.5 host policy check (4/4) is supplemental only; the frozen Linux/CPython 3.13.5 gate remains open. Original freeze and branch retained; no execution or runtime promotion.
 
