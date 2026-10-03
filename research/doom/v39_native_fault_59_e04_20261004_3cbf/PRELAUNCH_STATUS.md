@@ -1,7 +1,9 @@
 # E04 preparation status
 
 Formal native runs: **0**. Official saved-only auditor runs: **0**.
-This package is not frozen or cleared for execution yet.
+Frozen execution inputs at 96b72496f5e93937b52d1fd35513cc15f1da0426.
+Independent Curie launch review READY, Critical0/Important0. Actual launch
+still requires fresh ownership/path checks; no empirical PASS is implied.
 
 Fresh construction verification: 24 unittest methods passed on host Python
 in normal and -O mode, and 24 methods passed in own isolated CPU Docker
@@ -19,8 +21,9 @@ imported-but-unexposed STOP wording, execution manifest closure, and undeclared
 later-cell directories. All four are addressed in code; three new rejection
 tests demonstrated RED then GREEN, with 27 methods passing normal and -O on
 host. The disposition is conservatively exposure-unestablished for any failed
-imported cell. Follow-up review and container validation remain pending;
-strict semantic timestamp validation also remains to be tightened. No component test count
+imported cell. Follow-up Curie review confirmed all four fixes and strict
+integer timestamp guards; host normal/-O and own frozen-construction container
+each passed28 methods. No component test count
 substitutes for the native fault/cancel hypothesis.
 
 E03 evidence delivery remains preserved on public branch
