@@ -1,0 +1,11 @@
+--- a/research/live_control/codex_app_server_client_v2.py
++++ b/research/live_control/codex_app_server_client_v2.py
+@@ -96,7 +96,7 @@
+                 # Windows pipe support requires Python 3.12 or later.
+                 os.set_blocking(fd, False)
+                 self._stdin_fd = fd
+-            self._record("sent", message)
++            self._record("sent", json.loads(data))
+             if deadline <= time.monotonic():
+                 raise TimeoutError("app-server send budget expired; no send attempted")
+             sent = 0
