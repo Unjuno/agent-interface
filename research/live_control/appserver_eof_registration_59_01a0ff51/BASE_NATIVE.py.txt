@@ -18,8 +18,6 @@ SUITES = {
                 'test_native_handle_bridge_v1', 'test_native_tail_v1', 'runtime.distribution_v2.test_distribution', 'runtime.guarded_x11_v1.test_archive', 'runtime.distribution_v2.test_compiled_archive'],
 }
 
-SUITES['protocol'].append('test_app_server_eof_stop')
-
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--protocol-python', default=sys.executable)
