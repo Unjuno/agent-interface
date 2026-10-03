@@ -1,6 +1,14 @@
 """Saved-only mount-order adapter; no acquisition or predecessor writes."""
 import copy
 import json
+from pathlib import Path
+
+def guard_output(predecessor, output, source):
+    predecessor,output,source=Path(predecessor).resolve(),Path(output).resolve(),Path(source).resolve()
+    for protected in (predecessor,source):
+        if output==protected or protected in output.parents:
+            raise ValueError('output overlaps protected input/source tree')
+    return predecessor,output
 
 def mount_map(mounts, freeze):
     if type(mounts) is not list or len(mounts)!=2: raise ValueError('closed two-mount denominator')

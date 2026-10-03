@@ -8,6 +8,8 @@ unchanged from B01, never a new phase-efficacy or original-rootcause claim.
 T: one fresh saved-only CPU1/512MiB/swap0/PIDs64/nonroot/networknone/readonly
 cached-image container on own private research-6183-t0-20261003. No acquisition,
 Xvfb/probe/fixture/observer/model/input; physical exclusivity not claimed.
+Actual successor cpu/memory/swap/PID cgroups must match before saved validation;
+command flags alone are not resource evidence.
 Source/plan/adapter/commands/image and all60 predecessor files freeze before
 execution. Predecessor exacthead9d28d8ce... merged main b4ff90d9... via#7102.
 
@@ -36,6 +38,8 @@ separate. Optional kernel fields retained but not independently interpreted.
 
 Collision-free additive path/branch; no hostedActions/canonicaldocs/peer VM or
 predecessor file changes. Four literal method tests observed8FAIL then GREEN;
+review required a symlink-resolved output-boundary guard before any write;
+three additional output methods enforce disjointness from predecessor/source.
 strictTDD claim is limited to the new mount gate, not all adapted procedural I/O.
 Scoped command: python3 -B -m unittest discover -s THIS_DIRECTORY -v.
 No actual successor result exists before prospective FREEZE execution.

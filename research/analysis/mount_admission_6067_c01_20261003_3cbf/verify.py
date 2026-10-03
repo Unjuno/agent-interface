@@ -7,7 +7,7 @@ import json
 import sys
 import traceback
 from pathlib import Path
-from adapter import normalize_launch
+from adapter import normalize_launch, guard_output
 
 HERE=Path(__file__).resolve().parent
 MUTATIONS=('wait_bool','cpu_false','missing_wait','post_after_paint','source_wait_id','pixel_hash',
@@ -79,14 +79,18 @@ def main():
     ap.add_argument('--predecessor',type=Path,required=True)
     ap.add_argument('--out',type=Path,required=True)
     args=ap.parse_args()
+    predecessor,args.out=guard_output(args.predecessor,args.out,HERE)
     args.out.mkdir(exist_ok=False)
     controls=[]
     try:
         freeze=json.loads((HERE/'FREEZE.json').read_text())
+        cgroups={n:Path('/sys/fs/cgroup',n).read_text().strip()
+                 for n in ('cpu.max','memory.max','memory.swap.max','pids.max')}
+        if cgroups!={'cpu.max':'100000 100000','memory.max':'536870912','memory.swap.max':'0','pids.max':'64'}:
+            raise ValueError('actual successor cgroup limits')
         for name,digest in freeze['source_sha256'].items():
             if hashlib.sha256((HERE/name).read_bytes()).hexdigest()!=digest:
                 raise ValueError('successor source pin '+name)
-        predecessor=args.predecessor.resolve()
         pins(predecessor,freeze['predecessor_sha256'])
         module=baseline(predecessor)
         prior=module.ref.read(predecessor/'FREEZE.json')
@@ -102,7 +106,7 @@ def main():
                 controls.append({'mutation':name,'rejected':True,'reason':str(exc),'trial':'trials/'+name})
             else:
                 raise ValueError('ineffective full-path control '+name)
-        result.update({'allocation':'MOUNT-ADMISSION-7100-C01-20261003-3CBF',
+        result.update({'allocation':'MOUNT-ADMISSION-7100-C01-20261003-3CBF','successor_cgroups':cgroups,
                        'predecessor_status':'STOP_AUDITOR_LAUNCH_CUSTODY','predecessor_relabelled':False,
                        'native_producer_invocations':0,'successor_saved_verifier_invocations_declared':1,
                        'predecessor_official_auditor_reinvocations':0,'retry':0,'controls_rejected':len(controls),
