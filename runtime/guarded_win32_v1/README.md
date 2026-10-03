@@ -1,0 +1,17 @@
+# Caller-owned guarded Win32 move prototype
+
+This opt-in module prepares a full-client image reference and dispatches one pointer move through ordinary core admission and Win32 session cleanup. It reuses the existing `runtime.guarded_x11_v1` image-history and reference modules; importing it does not load Xlib or open a native session. Pillow is required. It depends on the accompanying private Win32 backend/session changes and is not a default runtime route.
+
+The caller supplies an exclusively owned backend, target and artifact directory to `FreshWin32Reference`. Observe the full client `[0,0,width,height]`, then mint an alias with a textured pixel box. Geometry, HWND and foreground focus are pinned. Partial-client reference creation and window handoff are unsupported. Aliases currently expire after 1000ms; there is no automatic remint or renewal.
+
+Construct `MoveBridge(observer, authorize, cancelled)`. `authorize(intent)` is an explicit trusted caller policy: it receives scope, target, operation, alias, offset and resolved point, and returns exactly `lease_id` and `expires_at_ns`, or declines. This callback is not an authentication boundary. `cancelled()` must return exactly `False` to permit movement. Reference eligibility supplies no input authority.
+
+`prepare(alias, offset)` captures fresh pixels and obtains ordinary admission. `execute(authorization)` consumes the token before live validation, checks scope/revision/sequence/deadline/focus/geometry/pixels/input ledger and dispatches one move followed by verified release. New preparation invalidates earlier tokens. Refused and uncertain operations cannot reuse tokens. Focus changes are prohibited in bound execution; this module does not activate another window.
+
+`recover_input()` uses the same operation lock, invalidates pending tokens and attempts input neutralization once through the existing session. Failed or unverified release retains quarantine. Verified recovery never reports task success or replays input. Direct access to the backend, observer or session bypasses the bridge lock and must not run concurrently.
+
+The ordinary tests control native GDI, target, move and release. Their completed result proves the scoped inert execution and cleanup path, not an application effect. Physical held inputs outside the tracked ledger are not fully checked. Guard capture and release calls are not forcibly preemptible; state can change inside native emission after the last check. Metadata/artifacts grow with session length even though decoded images are bounded. Successful test flow currently captures four times; no latency, model-call or resource saving is established.
+
+Production qualification still requires task-effect verification, hard I/O bounds, caller/resource ownership, native platform tests, further interactions and the required independent integration approval. No automatic input or default-route adoption is authorized by importing this prototype.
+
+Preflight checks binding, deadlines, cancellation and recovery without taking another image. Exact pixel comparison remains before ordinary dispatch and immediately before the pointer operation. Native capture-count reduction is not a measured latency/CPU improvement.

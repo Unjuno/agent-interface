@@ -1,0 +1,13 @@
+# Explicit post-action effects and verifier ownership
+
+`MoveBridge.execute(token, verify_effect=predicate, effect_deadline_ns=deadline)` retains a fresh full-client observation after completed movement and verified release. The trusted predicate receives copies of the program, execution receipt, observation and RGB image. Only its explicit `True` verifies task success; `False` is not verified, and missing, failed, stale or late results remain unknown. The default route supplies no semantic task-success assertion. Effect verification stays inside the operation lock; it never restores the consumed input permission.
+
+`PixelEffect(conditions, deadline)` in `worker_effect` runs the pure `pixel_worker` for caller-declared RGB point conditions. The copied image SHA and scope/sequence/revision/artifact digest must join the child result exactly. This is a repeated declared predicate, not a general visual oracle or replacement for model/caller task meaning. The request limit is 1MiB; oversized images fail rather than silently reducing resolution. Invalid conditions, child errors and expired results remain unknown.
+
+The owned-process supervisor limits its communicate wait, kills its own timed-out child, and permits one additional second to confirm exit. Process creation, scheduling, kill, native GDI capture and arbitrary callbacks are not mathematically hard bounded. Output buffering and image conversion are not total memory limits. This is not descendant containment or an arbitrary-code sandbox.
+
+If termination is unconfirmed, the effect remains unknown and the actual Popen handle is retained. Preparation and guarded operation admission remain blocked while its poll is nonterminal. Input recovery cannot clear worker occupancy. An actual terminal poll records PID/exit and frees the slot; it never replays an operation or retroactively verifies an effect. A missing usable process handle forces association review. Direct external session/backend/process access is outside bridge serialization.
+
+An observed scope, revision, focus or geometry change during effect verification latches association review, including after a predicate exception. Restoring the old binding does not resume input; input-neutrality recovery and association review are separate requirements.
+
+All supplied ordinary tests control native capture/target/move/release. Their synthetic effects and CPU child results qualify these boundaries only. Actual native application effects, hard native I/O bounds, full platform/resource ownership, latency/model/resource savings and independent source/API integration approval are still required.
