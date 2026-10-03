@@ -44,6 +44,12 @@ class PartialStopControls(unittest.TestCase):
             with self.subTest(field=field), self.assertRaises(ValueError):
                 classify_partial_stop(row, b'', STDERR, False)
 
+    def test_refuses_unrecognized_and_other_producer_exposure_fields(self):
+        for field in ['submit', 'after_notification', 'wait_start_ns', 'initial', 'future_field']:
+            row = copy.deepcopy(ROW); row[field] = None
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                classify_partial_stop(row, b'', STDERR, False)
+
     def test_refuses_missing_failure_identity_and_chronology(self):
         for field, value in [('fatal', ''), ('case', ''), ('id', ''), ('pid', True),
                 ('command', []), ('start_ns', True), ('end_ns', 99), ('end_ns', 100)]:

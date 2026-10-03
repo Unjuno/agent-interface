@@ -23,9 +23,10 @@ def classify_partial_stop(row, stdout, stderr, imports_present):
     command = row.get('command')
     if type(command) is not list or not command or any(type(x) is not str or not x for x in command):
         raise ValueError('missing child command')
-    exposed = ('ready', 'before', 'held', 'accepted', 'injected_ns', 'wait_outcome',
-               'cancel', 'released', 'terminal', 'after')
-    if any(field in row for field in exposed):
-        raise ValueError('partial record contains exposure fields')
+    allowed = {'case', 'id', 'child_exit', 'start_ns', 'end_ns', 'release_gate',
+               'outcome_gate', 'cleanup_faults', 'unhandled', 'fatal', 'pid',
+               'command', 'proc_status', 'reader_sha256', 'scope'}
+    if set(row) - allowed:
+        raise ValueError('partial record contains unknown or exposure fields')
     return {'saved_disposition': 'VERIFIED_PARTIAL_STARTUP_STOP',
             'scientific_pass': False, 'exposure': 'NOT_ESTABLISHED'}
