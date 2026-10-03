@@ -1,0 +1,17 @@
+{
+  "cwd": "<WORKSPACE>",
+  "receipt_directory": "<WORKSPACE>/work/continuation-20261003-1250/operations/gil-boundary-compiler-install",
+  "argv": [
+    "orb",
+    "-m",
+    "research-6501-async-01a0ff52-70ab",
+    "-u",
+    "root",
+    "bash",
+    "-c",
+    "test -z \"$(docker ps -q)\" && mkdir /root/17-gil-native-boundary-c02-70ab && docker run --pull never --cpus 0.5 --memory 256m --memory-swap 256m --pids-limit 64 --name 17-gil-native-build-70ab python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 bash -c \"export DEBIAN_FRONTEND=noninteractive; apt-get update -qq && apt-get install -y -qq --no-install-recommends gcc libc6-dev && gcc --version\""
+  ],
+  "launcher_pid": 35390,
+  "start_utc": "2026-10-03T15:00:43.656800+00:00",
+  "start_ns": 50608523867333
+}
