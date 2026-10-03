@@ -78,3 +78,5 @@ def main():
 
 if __name__ == '__main__':
     raise SystemExit(main())
+
+SUITES['protocol'].append('test_planner_schema_interrupt_custody_01a0ff2d')

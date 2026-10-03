@@ -4,6 +4,7 @@ import json
 import math
 from pathlib import Path
 import threading
+import copy
 
 
 class PlannerProtocolError(RuntimeError):
@@ -85,6 +86,8 @@ class PersistentPlannerAdapter:
             return thread_id
 
     def begin_turn(self, prompt, *, output_schema, image_path=None):
+        # Detach the admitted contract before any RPC; transport gets another copy.
+        admitted_schema = copy.deepcopy(output_schema)
         inputs = [{"type": "text", "text": prompt, "text_elements": []}]
         if image_path is not None:
             inputs.append({"type": "localImage", "path": str(Path(image_path))})
@@ -100,7 +103,7 @@ class PersistentPlannerAdapter:
             self._admission_pending = True
         response = self.client.start_turn(
             thread_id, inputs, model=self.model, effort=self.effort,
-            outputSchema=output_schema)
+            outputSchema=copy.deepcopy(admitted_schema))
         turn_id = response.get("turn", {}).get("id")
         if not turn_id:
             raise PlannerProtocolError("turn/start returned no turn id")
@@ -112,7 +115,7 @@ class PersistentPlannerAdapter:
             self._terminal_status = None
             self._cancellation_requested = False
             self._interrupt_response = None
-            self._output_schema = output_schema
+            self._output_schema = admitted_schema
             self._admission_pending = False
         return handle
 
@@ -134,7 +137,8 @@ class PersistentPlannerAdapter:
         else:
             outcome = "requested"
         with self._lock:
-            self._interrupt_response = response
+            if self._active == handle:
+                self._interrupt_response = response
         return {"outcome": outcome, "response": response}
 
     def await_turn(self, handle, timeout=120):
