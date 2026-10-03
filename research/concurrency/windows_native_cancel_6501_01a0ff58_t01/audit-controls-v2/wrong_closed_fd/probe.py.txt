@@ -1,0 +1,89 @@
+from pathlib import Path
+from datetime import datetime,timezone
+import os,sys,json,time,threading,ctypes,msvcrt,hashlib,asyncio,errno,platform
+from ctypes import wintypes as wt
+OUT=Path(sys.argv[1]);MODE=sys.argv[2];assert MODE in ('normal_D','wrapper_cancel','native_cancel');OUT.mkdir(exist_ok=False)
+events=[];lock=threading.Lock();now=lambda:datetime.now(timezone.utc).isoformat()
+def emit(kind,**fields):
+    with lock:events.append({'seq':len(events),'kind':kind,'monotonic_ns':time.monotonic_ns(),**fields})
+def save_events():
+    with lock:b=json.dumps(events,sort_keys=True).encode()+b'\n'
+    (OUT/'events.json').write_bytes(b)
+k=ctypes.WinDLL('kernel32',use_last_error=True)
+k.OpenThread.argtypes=[wt.DWORD,wt.BOOL,wt.DWORD];k.OpenThread.restype=wt.HANDLE
+k.GetThreadIOPendingFlag.argtypes=[wt.HANDLE,ctypes.POINTER(wt.BOOL)];k.GetThreadIOPendingFlag.restype=wt.BOOL
+k.CancelSynchronousIo.argtypes=[wt.HANDLE];k.CancelSynchronousIo.restype=wt.BOOL
+k.ReadFile.argtypes=[wt.HANDLE,wt.LPVOID,wt.DWORD,ctypes.POINTER(wt.DWORD),wt.LPVOID];k.ReadFile.restype=wt.BOOL
+k.CloseHandle.argtypes=[wt.HANDLE];k.CloseHandle.restype=wt.BOOL
+k.GetModuleHandleW.argtypes=[wt.LPCWSTR];k.GetModuleHandleW.restype=wt.HMODULE
+k.GetModuleFileNameW.argtypes=[wt.HMODULE,wt.LPWSTR,wt.DWORD];k.GetModuleFileNameW.restype=wt.DWORD
+def module(name):
+    h=k.GetModuleHandleW(name);b=ctypes.create_unicode_buffer(32768);n=k.GetModuleFileNameW(h,b,len(b));assert h and 0<n<len(b);p=Path(b.value);v=p.read_bytes();return {'name':name,'path':str(p),'bytes':len(v),'sha256':hashlib.sha256(v).hexdigest()}
+r={'mode':MODE,'start_utc':now(),'pid':os.getpid(),'python':sys.version,'platform':platform.platform(),'source_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),'dependencies':[module(x) for x in ('kernel32.dll','python312.dll','ucrtbase.dll')],'status':'STARTED'}
+(OUT/'START.json').write_text(json.dumps(r,sort_keys=True,indent=2)+'\n',encoding='utf8')
+rd,wr=os.pipe();osread=msvcrt.get_osfhandle(rd);oswrite=msvcrt.get_osfhandle(wr);emit('pipe_owned',read_fd=rd,write_fd=wr,read_os_handle=osread,write_os_handle=oswrite)
+enter=threading.Event();done=threading.Event();ids={};outcome={};h=None;t=None;wrote=False
+async def run():
+    global h,t,wrote
+    loop=asyncio.get_running_loop();future=loop.create_future()
+    def deliver():
+        if not future.done():future.set_result(dict(outcome))
+    def reader():
+        ids['tid']=threading.get_native_id();emit('reader_enter',tid=ids['tid']);enter.set()
+        buf=ctypes.create_string_buffer(1);n=wt.DWORD();ctypes.set_last_error(0);rc=k.ReadFile(osread,buf,1,ctypes.byref(n),None);error=ctypes.get_last_error()
+        outcome.update({'return_nonzero':bool(rc),'last_error':error,'count':int(n.value),'hex':buf.raw[:n.value].hex()});emit('read_return',tid=ids['tid'],**outcome);done.set();emit('reader_exit',tid=ids['tid']);loop.call_soon_threadsafe(deliver)
+    async def caller():return await future
+    task=asyncio.create_task(caller());await asyncio.sleep(0);t=threading.Thread(target=reader,name='t01-owned-'+MODE,daemon=True);t.start()
+    assert enter.wait(2),'entry deadline'
+    ctypes.set_last_error(0);h=k.OpenThread(0x0041,False,ids['tid']);emit('thread_handle_open',tid=ids['tid'],access=0x0041,handle=int(h) if h else None,last_error=ctypes.get_last_error());assert h,'OpenThread'
+    deadline=time.monotonic()+2;positive=0
+    while time.monotonic()<deadline and positive<3:
+        value=wt.BOOL();ctypes.set_last_error(0);rc=k.GetThreadIOPendingFlag(h,ctypes.byref(value));error=ctypes.get_last_error();emit('pending_query',tid=ids['tid'],handle=int(h),return_nonzero=bool(rc),last_error=error,pending=bool(value.value),worker_done=done.is_set(),data_written=wrote);save_events();assert rc,'pending API'
+        positive=positive+1 if value.value and not done.is_set() and not wrote else 0
+        await asyncio.sleep(.005)
+    assert positive==3,'three pending witnesses'
+    emit('action_requested',mode=MODE)
+    if MODE=='normal_D':
+        emit('write_requested',purpose='primary',hex='44');n=os.write(wr,b'D');wrote=True;emit('write_return',purpose='primary',count=n);assert n==1
+    elif MODE=='wrapper_cancel':
+        rc=task.cancel();emit('wrapper_cancel_return',return_true=rc)
+        try:await task
+        except asyncio.CancelledError:emit('caller_cancelled')
+        else:raise RuntimeError('wrapper cancellation absent')
+    else:
+        ctypes.set_last_error(0);rc=k.CancelSynchronousIo(h);error=ctypes.get_last_error();emit('native_cancel_return',return_nonzero=bool(rc),last_error=error)
+        r['native_cancel']={'return_nonzero':bool(rc),'last_error':error}
+        if not rc and error!=1168:raise RuntimeError('native cancellation API infrastructure failure')
+    until=time.monotonic()+.5
+    while not done.is_set() and time.monotonic()<until:await asyncio.sleep(.005)
+    await asyncio.sleep(0);primary={'worker_done':done.is_set(),'caller_done':task.done(),'caller_cancelled':task.cancelled(),'outcome':dict(outcome)};emit('primary_snapshot',**primary);r['primary']=primary
+    if not done.is_set():
+        emit('write_requested',purpose='cleanup',hex='44');n=os.write(wr,b'D');wrote=True;emit('write_return',purpose='cleanup',count=n);assert n==1
+    until=time.monotonic()+2
+    while not done.is_set() and time.monotonic()<until:await asyncio.sleep(.005)
+    assert done.is_set(),'cleanup read completion';t.join(2);emit('thread_join',tid=ids['tid'],alive=t.is_alive());assert not t.is_alive()
+    await asyncio.sleep(0)
+    if not task.done():await task
+    emit('caller_final',done=task.done(),cancelled=task.cancelled())
+    r.update({'status':'COMPLETE_OBSERVATIONS','final_outcome':dict(outcome),'native_tid':ids['tid']})
+try:asyncio.run(run())
+except BaseException as e:r.update({'status':'STOP_INFRASTRUCTURE','failure':repr(e)})
+finally:
+    if t and t.is_alive():
+        if not wrote:
+            emit('emergency_cleanup_write_requested');os.write(wr,b'D');wrote=True;emit('emergency_cleanup_write_return')
+        t.join(2);emit('emergency_join',alive=t.is_alive())
+    if h:
+        rc=k.CloseHandle(h);emit('thread_handle_close',handle=int(h),return_nonzero=bool(rc))
+        if not rc:r['status']='STOP_INFRASTRUCTURE'
+    if not t or not t.is_alive():
+        for fd in (rd,wr):
+            os.close(fd)
+            try:os.fstat(fd)
+            except OSError as e:emit('fd_closed',fd=fd,errno=e.errno);assert e.errno==errno.EBADF
+            else:r['status']='STOP_INFRASTRUCTURE'
+    else:r['status']='STOP_INFRASTRUCTURE';r['cleanup_unknown']=True
+    r.update({'end_utc':now(),'thread_alive_final':bool(t and t.is_alive()),'event_count':len(events)});save_events();(OUT/'RESULT.json').write_text(json.dumps(r,sort_keys=True,indent=2)+'\n',encoding='utf8')
+print(json.dumps({'mode':MODE,'status':r['status'],'pid':r['pid'],'primary':r.get('primary'),'final':outcome}))
+raise SystemExit(0 if r['status']=='COMPLETE_OBSERVATIONS' else 2)
+

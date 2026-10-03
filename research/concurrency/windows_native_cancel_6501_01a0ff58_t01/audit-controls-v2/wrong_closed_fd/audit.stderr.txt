@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "C:\Users\PUBLIC_USER\Documents\Codex\2026-10-03\new-chat-3\work\ownedwinpipe6501-t01\audit.py", line 21, in <module>
+    assert {e['fd'] for e in closed}=={pipe['read_fd'],pipe['write_fd']} and len(closed)==2 and all(e['errno']==9 and e['seq']>close['seq'] for e in closed)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

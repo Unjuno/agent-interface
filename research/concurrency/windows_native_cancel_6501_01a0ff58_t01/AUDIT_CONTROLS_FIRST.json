@@ -1,0 +1,106 @@
+{
+  "producer_invocations": 0,
+  "rows": [
+    {
+      "control": "wrong_read_tid",
+      "end_utc": "2026-10-03T14:28:32.482038+00:00",
+      "exit": 0,
+      "pid": 6328,
+      "rejected": false,
+      "serialized_changed": true,
+      "start_utc": "2026-10-03T14:28:32.420416+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "431e7930e89747a3ebfe29cabf58a0967d6da8828e01a5f0a5e224e5fa11d8d7"
+    },
+    {
+      "control": "sequence_bool_alias",
+      "end_utc": "2026-10-03T14:28:32.553490+00:00",
+      "exit": 0,
+      "pid": 27760,
+      "rejected": false,
+      "serialized_changed": true,
+      "start_utc": "2026-10-03T14:28:32.492221+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "a4e9f62eb2fa5ea60742230c3fd415b9f86c9fbe7d4e0ca7f79a4f06351bd38f"
+    },
+    {
+      "control": "pending_bool_alias",
+      "end_utc": "2026-10-03T14:28:32.623162+00:00",
+      "exit": 1,
+      "pid": 34508,
+      "rejected": true,
+      "serialized_changed": true,
+      "start_utc": "2026-10-03T14:28:32.563712+00:00",
+      "stderr_sha256": "5ddcbce818209fba0ee993f658b504b75a56e47331393bef38876d9464fcd824",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "control": "wrong_query_tid",
+      "end_utc": "2026-10-03T14:28:32.695702+00:00",
+      "exit": 1,
+      "pid": 30296,
+      "rejected": true,
+      "serialized_changed": true,
+      "start_utc": "2026-10-03T14:28:32.633447+00:00",
+      "stderr_sha256": "5ddcbce818209fba0ee993f658b504b75a56e47331393bef38876d9464fcd824",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "control": "read_count_bool_alias",
+      "end_utc": "2026-10-03T14:28:32.765176+00:00",
+      "exit": 1,
+      "pid": 28248,
+      "rejected": true,
+      "serialized_changed": true,
+      "start_utc": "2026-10-03T14:28:32.704943+00:00",
+      "stderr_sha256": "5ee00b50812d0c6a13f4dd9c41aaae7641f4f11911c41c4b742329fd38fb0423",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "control": "join_still_alive",
+      "end_utc": "2026-10-03T14:28:32.837376+00:00",
+      "exit": 1,
+      "pid": 25948,
+      "rejected": true,
+      "serialized_changed": true,
+      "start_utc": "2026-10-03T14:28:32.775876+00:00",
+      "stderr_sha256": "c98efa9871bd7d327bf7cc030310aa0d45a380905782dbec9b719a31a29d8a11",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "control": "wrong_closed_fd",
+      "end_utc": "2026-10-03T14:28:32.910889+00:00",
+      "exit": 1,
+      "pid": 31188,
+      "rejected": true,
+      "serialized_changed": true,
+      "start_utc": "2026-10-03T14:28:32.846527+00:00",
+      "stderr_sha256": "1a06d42799379a85df293cbd4193c748a524d44f61b8aa3527efcf6d0a282e87",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "control": "pid_bool_alias",
+      "end_utc": "2026-10-03T14:28:32.990324+00:00",
+      "exit": 1,
+      "pid": 10340,
+      "rejected": true,
+      "serialized_changed": true,
+      "start_utc": "2026-10-03T14:28:32.922586+00:00",
+      "stderr_sha256": "339eecc89d825c2318191ce0e5c4a8cad700a0c931ed4b31ae00ef6e1d5c3095",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "control": "missing_pending_query",
+      "end_utc": "2026-10-03T14:28:33.064631+00:00",
+      "exit": 1,
+      "pid": 2348,
+      "rejected": true,
+      "serialized_changed": true,
+      "start_utc": "2026-10-03T14:28:33.000435+00:00",
+      "stderr_sha256": "fa5d1d5db85bedf09e52f89d3734ff0e6f68d0c43f430352e82e4909d8e1bef4",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "source_sha256": "16188ed33ed296d9b3182a38e965430f26830ebf9c759aa4343a9b8d34143108",
+  "status": "AUDITOR_FALSE_ACCEPT"
+}
