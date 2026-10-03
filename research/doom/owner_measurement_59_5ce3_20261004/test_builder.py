@@ -1,6 +1,7 @@
 """Executable-source construction tests; no native input or game execution."""
 import ast
 import importlib.util
+import os
 from pathlib import Path
 import subprocess
 import types
@@ -20,6 +21,8 @@ class BuilderTests(unittest.TestCase):
         return module
 
     def source(self):
+        if os.environ.get('OWNER_MEASUREMENT_SOURCE_FILE'):
+            return Path(os.environ['OWNER_MEASUREMENT_SOURCE_FILE']).read_bytes()
         return subprocess.check_output(
             ['git', 'show', PIN + ':research/live_control/input_owner_v10.py'], cwd=HERE)
 
@@ -28,7 +31,7 @@ class BuilderTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             builder.instrument(self.source() + b'\n# drift\n')
 
-    def test_generated_key_branch_retains_identity_and_explicit_up_return(self):
+    def key_case(self, identity_failure=False):
         tree = ast.parse(self.builder().instrument(self.source()))
         branch = next(n for n in ast.walk(tree) if isinstance(n, ast.If)
                       and ast.unparse(n.test) == "op in ('down', 'up')")
@@ -40,7 +43,11 @@ class BuilderTests(unittest.TestCase):
             def sync(self): events.append('sync')
         class Lease:
             deadline = 100000
-            token = 'intent-one'
+            @property
+            def token(self):
+                if identity_failure:
+                    raise ValueError('injected key telemetry identity failure')
+                return 'intent-one'
             cancel = types.SimpleNamespace(is_set=lambda: False)
             def check(self): pass
         ticks = iter(range(100, 1000))
@@ -54,6 +61,10 @@ class BuilderTests(unittest.TestCase):
         helpers = [n for n in tree.body if isinstance(n, ast.FunctionDef)
                    and n.name.startswith('_measurement_')]
         exec(compile(ast.Module(body=helpers, type_ignores=[]), '<measurement-helpers>', 'exec'), env)
+        return code, env, events, owner
+
+    def test_generated_key_branch_retains_identity_and_explicit_up_return(self):
+        code, env, events, owner = self.key_case()
         exec(code, env)
         self.assertEqual(events, [(2, 38), 'sync'])
         press = owner.records[0]
@@ -69,6 +80,25 @@ class BuilderTests(unittest.TestCase):
         up = owner.records[1]
         self.assertEqual((up['event'], up['owner_id'], up['intent'], up['keycode']),
                          ('owner_explicit_key_up', 'owner-one', 'intent-one', 38))
+
+    def test_key_identity_failure_preserves_press_result_and_explicit_up(self):
+        code, env, events, owner = self.key_case(identity_failure=True)
+        errors = []
+        for op in ('down', 'up'):
+            env['op'] = op
+            try:
+                exec(code, env)
+            except Exception as error:
+                errors.append((op, type(error).__name__))
+            else:
+                if op == 'down':
+                    self.assertEqual(env['result']['event'], 'input_admission')
+                else:
+                    self.assertIsNone(env['result'])
+        self.assertEqual(errors, [], 'telemetry must not replace successful input return')
+        self.assertEqual(events, [(2, 38), 'sync', (3, 38), 'sync'])
+        self.assertEqual(env['held'], {})
+        self.assertEqual(owner.records, [])
 
     def cleanup_case(self, clock_failure=False, identity_failure=False):
         tree = ast.parse(self.builder().instrument(self.source()))

@@ -15,9 +15,12 @@ def _measurement_now(clock):
     except Exception:
         return None
 
-def _measurement_emit(owner, row):
+def _measurement_emit(owner, lease, event, code, started, clock):
     try:
-        owner.records.append(row)
+        owner.records.append(dict(event=event, owner_id=owner.owner_id,
+            intent=getattr(lease, 'token', None), keycode=code,
+            request_started_ns=started, sync_completed_ns=_measurement_now(clock),
+            grants_input_authority=False))
     except Exception:
         pass
 
@@ -50,10 +53,8 @@ def instrument(raw):
     measured_press = '''                            measurement_started = _measurement_now(time)
                             xtest.fake_input(d, X.KeyPress, code)
                             d.sync()
-                            _measurement_emit(self, dict(event='owner_key_press',
-                                owner_id=self.owner_id, intent=getattr(lease, 'token', None),
-                                keycode=code, request_started_ns=measurement_started,
-                                sync_completed_ns=_measurement_now(time), grants_input_authority=False))
+                            _measurement_emit(self, lease, 'owner_key_press', code,
+                                measurement_started, time)
 '''
     up = '''                                xtest.fake_input(d, X.KeyRelease, code)
                                 d.sync()
@@ -63,10 +64,8 @@ def instrument(raw):
                                 xtest.fake_input(d, X.KeyRelease, code)
                                 d.sync()
                                 del held[code]
-                                _measurement_emit(self, dict(event='owner_explicit_key_up',
-                                    owner_id=self.owner_id, intent=getattr(lease, 'token', None),
-                                    keycode=code, request_started_ns=measurement_started,
-                                    sync_completed_ns=_measurement_now(time), grants_input_authority=False))
+                                _measurement_emit(self, lease, 'owner_explicit_key_up', code,
+                                    measurement_started, time)
 '''
     cleanup = '''            for code in list(held):
                 xtest.fake_input(d, X.KeyRelease, code)

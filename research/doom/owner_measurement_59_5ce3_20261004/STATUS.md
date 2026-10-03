@@ -50,7 +50,23 @@ Failed measurement clocks produce null timestamps, not zero; failed identity
 lookup omits the corresponding bracket. These tests do not qualify native
 release, original physical-state queries, full-owner cancellation, or timing.
 
-Incomplete: press/up telemetry-failure controls, composed
+## Press/up correction and container construction CI
+
+New injected key identity failure reproduced two ValueErrors after the native
+request/sync sites in the extracted branch, replacing the original successful
+return (six tests, one assertion failure, exit 1). Moved record construction
+inside the best-effort helper; six host tests then passed. This correction is
+only in the generated research candidate, not canonical v10.
+
+OrbStack CI first launch failed before tests (exit 2): cached image already had
+python3 ENTRYPOINT and the command repeated python3. Preserved the exited
+container. A separately named corrected CI launch with explicit ENTRYPOINT
+passed six tests, exit 0, no OOM. Both terminal identities/times and requested
+configuration are retained in CONSTRUCTION_CI.json. No native input or game was
+started; extracted-function CI does not prove full-owner/controller behavior.
+Resource configuration is not independently measured enforcement evidence.
+
+Incomplete: press/up clock and record-sink failure controls, composed
 backend/session/controller connection and provenance, local container CI,
 independent review and fresh eligible scientific execution. Missing telemetry
 must remain UNKNOWN, never zero. Best-effort helpers are not a hard scheduling,
