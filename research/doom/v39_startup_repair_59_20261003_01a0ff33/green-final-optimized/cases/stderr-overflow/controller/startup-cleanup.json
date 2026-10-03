@@ -1,0 +1,29 @@
+{
+  "schema": "map01-startup-cleanup-v1",
+  "session_exit_code": 0,
+  "reader_joined": true,
+  "client_closed": true,
+  "input_release_verified": false,
+  "errors": [
+    "startup stderr exceeded 65536 bytes; retained prefix"
+  ],
+  "escalations": [],
+  "stderr_complete": false,
+  "stderr_bytes": 65536,
+  "stderr_reader_joined": true,
+  "startup_error": {
+    "type": "RuntimeError",
+    "message": "v28 requires a loaded fixture receipt"
+  },
+  "startup_events": [
+    {
+      "event": "ready",
+      "fixture": null
+    },
+    {
+      "event": "observation",
+      "sequence": 1,
+      "capture_to_artifact_ready_ms": 0
+    }
+  ]
+}

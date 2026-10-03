@@ -361,3 +361,5 @@ terminal close sampled an empty keymap. Neither source-boundary test is live
 input evidence. None of these results is a real X11, Docker, physical-key,
 application-effect, or gameplay result. See [`owner occurrence-binding T0`](map01_owner_occurrence_binding_59_t0_20261001/RESULT.md)
 and [`T1`](map01_owner_occurrence_binding_59_t1_20261002/RESULT.md).
+
+- [V39 startup composition V2](v39_startup_composition_b04b_v2/README.md): current EOF/reader/journal-close and no-drain dependencies, original error and callback custody evidence; V1 adoption remains withheld, prospective review required.

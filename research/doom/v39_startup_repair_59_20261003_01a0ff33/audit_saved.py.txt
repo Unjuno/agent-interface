@@ -1,0 +1,82 @@
+"""Independent stdlib-only saved-state reader; no subject, test, child or candidate execution."""
+import copy,hashlib,json,pathlib
+R=pathlib.Path(__file__).resolve().parent
+def check(v,msg):
+    if not v:raise ValueError(msg)
+def read(p):return json.loads(p.read_bytes())
+def case(root,name):
+    base=root/'cases'/name;data=read(base/'case-result.json')
+    check(data['name']==name and data['physical_input'] is False and data['model'] is False,'identity/scope')
+    for section in ['pre_external_cleanup','after_external_cleanup']:
+        s=data[section]
+        check(all(type(x) is int or x is None for x in s['process_poll']),'native exit scalar type')
+        check(all(type(x) is bool for x in s['reader_alive']),'native reader type')
+    check(all(type(x) is int for x in data['pre_external_cleanup']['client_closes']),'client scalar type')
+    check(type(data['started_ns']) is int and type(data['ended_ns']) is int and data['started_ns']<=data['pre_external_cleanup']['observed_ns']<=data['ended_ns'],'counter order')
+    events=[json.loads(x) for x in (base/'child-events.jsonl').read_text().splitlines()] if (base/'child-events.jsonl').exists() else []
+    for e in events:check(type(e['pid']) is int and type(e['ns']) is int and e['ns']>0,'child scalar')
+    check(len({e['pid'] for e in events})<=1 and all(a['ns']<=b['ns'] for a,b in zip(events,events[1:])),'child identity/order')
+    check(all(type(x) is int and x is not None for x in data['after_external_cleanup']['process_poll']) and not any(data['after_external_cleanup']['reader_alive']),'post-test cleanup')
+    return base,data,events
+def audit_case(base,data,events,name):
+    p=data['pre_external_cleanup']
+    check(p['client_closes']==[1],'client close once')
+    check(not any(p['reader_alive']),'reader terminal')
+    if name in ['normal','missing-fixture','reader-start','stderr-overflow']:check(p['process_poll']==[0],'cooperative exit')
+    elif name=='noncooperative':check(len(p['process_poll'])==1 and type(p['process_poll'][0]) is int and p['process_poll'][0]!=0,'noncooperative exit')
+    else:check(p['process_poll']==[],'no acquisition')
+    commands=[e['command'] for e in events if e['event']=='command']
+    check(commands==([{'op':'finish'}] if name=='normal' else []),'command prefix')
+    if name=='normal':
+        check(not (base/'controller/startup-cleanup.json').exists() and (base/'controller/report.json').exists(),'normal report')
+        return
+    c=read(base/'controller/startup-cleanup.json')
+    check(c['input_release_verified'] is False,'no release attestation')
+    check(c['client_closed'] is (name!='cleanup-error'),'client error status')
+    expected_types={'initialize':'ValueError','spawn':'OSError','cleanup-error':'ValueError','reader-start':'RuntimeError'}
+    check(c['startup_error']['type']==expected_types.get(name,'RuntimeError'),'original error')
+    check(c['reader_joined'] is True,'joined receipt')
+    if name=='noncooperative':check(c['escalations']==['terminate'],'escalation')
+    elif p['process_poll']:check(c['escalations']==[],'cooperative escalation')
+    if name=='stderr-overflow':
+        check(c['stderr_complete'] is False and c['stderr_bytes']==65536,'partial retained output')
+        check((base/'controller/startup-stderr.bin').read_bytes()==b'x'*65536,'literal saved prefix')
+        check(c['errors']==['startup stderr exceeded 65536 bytes; retained prefix'],'explicit overflow')
+    elif name=='cleanup-error':check(c['errors']==["planner close: RuntimeError('injected client cleanup error')"],'cleanup failure')
+    else:check(c['errors']==[],'unexpected cleanup error')
+if __name__=='__main__':
+    # This file is stored next to the private runs; public archive caller supplies its root.
+    import sys
+    root=pathlib.Path(sys.argv[1]);out=pathlib.Path(sys.argv[2])
+    check(not out.exists(),'retain first raw reader result')
+    red=case(root/'first-red','missing-fixture')
+    check(red[1]['pre_external_cleanup']['process_poll']==[None] and red[1]['pre_external_cleanup']['client_closes']==[0] and red[1]['pre_external_cleanup']['reader_alive']==[True],'actual first RED')
+    roster=['cleanup-error','initialize','missing-fixture','noncooperative','normal','reader-start','spawn','stderr-overflow']
+    rows=[]
+    for label in ['release-normal','release-optimized']:
+        receipt=read(root/label/'receipt.json');check(receipt['exit_code']==0 and type(receipt['exit_code']) is int and receipt['source_unchanged_after'] is True,'runner receipt')
+        for stream in ['stdout','stderr']:check(hashlib.sha256((root/label/(stream+'.log')).read_bytes()).hexdigest()==receipt[stream+'_sha256'],'runner stream')
+        for name in roster:
+            base,data,events=case(root/label,name);audit_case(base,data,events,name)
+            check(data['source_sha256']==receipt['source']['map01_overlap_controller_v39.py'],'source join')
+            rows.append(dict(label=label,name=name,process_poll=data['pre_external_cleanup']['process_poll'],client_closes=data['pre_external_cleanup']['client_closes'],event_count=len(events),physical_release_verified=False))
+    # Directed mutations are local in-memory copies of existing retained data.
+    original=case(root/'release-normal','missing-fixture')
+    controls={}
+    for label in ['bool_exit','float_exit','client_zero','reader_live','release_true']:
+        base,data,events=original;c=copy.deepcopy(data)
+        if label=='bool_exit':c['pre_external_cleanup']['process_poll'][0]=False
+        elif label=='float_exit':c['pre_external_cleanup']['process_poll'][0]=0.0
+        elif label=='client_zero':c['pre_external_cleanup']['client_closes'][0]=0
+        elif label=='reader_live':c['pre_external_cleanup']['reader_alive'][0]=True
+        elif label=='release_true':c['physical_input']=True
+        try:
+            check(c['physical_input'] is False,'scope mutation')
+            check(all(type(x) is int for x in c['pre_external_cleanup']['process_poll']),'exit mutation')
+            audit_case(base,c,events,'missing-fixture')
+        except ValueError as e:controls[label]=str(e)
+        else:raise ValueError('copied mutation accepted '+label)
+    actual=sum(len(read(x)['pre_external_cleanup']['process_poll']) for x in root.glob('*/cases/*/case-result.json'))
+    result=dict(rows=rows,cases=len(rows),controls=controls,total_ordinary_owned_child_invocations=actual,original_failures_retained=True,first_implement_failure=True,mislabelled_green_was_actual_baseline=True,limits='Native Windows/Python3.11.9 owned subprocess pipes and explicit model/client/dependency fakes. Parent PID was not independently recorded; owner linkage is source-qualified, not a raw parent-PID attestation. No actual game/input/model/appserver/journal/descendant/global hard-time or physical release proof.')
+    with out.open('x',encoding='utf-8',newline='\n') as f:f.write(json.dumps(result,sort_keys=True,indent=2)+'\n')
+    print(json.dumps(dict(cases=len(rows),controls=len(controls),actual_owned_children=actual,sha256=hashlib.sha256(out.read_bytes()).hexdigest())))

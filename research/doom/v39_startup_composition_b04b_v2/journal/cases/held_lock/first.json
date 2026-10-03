@@ -1,0 +1,36 @@
+{
+  "cell": "held_lock",
+  "stage": "first",
+  "receipt": {
+    "schema": "map01-startup-cleanup-v1",
+    "session_exit_code": null,
+    "reader_joined": true,
+    "client_closed": false,
+    "input_release_verified": false,
+    "errors": [
+      "planner close: TimeoutError('app-server journal close timed out')"
+    ],
+    "escalations": [],
+    "stderr_complete": true,
+    "stderr_bytes": 0,
+    "stderr_reader_joined": true
+  },
+  "callback_retained": true,
+  "journal_closed": false,
+  "journal_close_calls": 0,
+  "events": [
+    {
+      "op": "callback_register"
+    },
+    {
+      "op": "owned_lock_acquire"
+    },
+    {
+      "op": "reader_join",
+      "timeout": 1
+    }
+  ],
+  "start_ns": 42233924256800,
+  "end_ns": 42234924289900,
+  "elapsed_ns": 1000033100
+}

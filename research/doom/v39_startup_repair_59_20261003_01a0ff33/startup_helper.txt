@@ -1,0 +1,75 @@
+def _close_failed_startup(process, reader_thread, planner_client, out):
+    """Close acquired startup resources; no input-release attestation."""
+    receipt = {"schema": "map01-startup-cleanup-v1", "session_exit_code": None,
+               "reader_joined": reader_thread is None, "client_closed": False,
+               "input_release_verified": False, "errors": [], "escalations": [],
+               "stderr_complete": process is None, "stderr_bytes": 0}
+    stderr_thread = None
+    if process is not None:
+        def retain_stderr():
+            try:
+                with (out / "startup-stderr.bin").open("xb") as target:
+                    while True:
+                        chunk = process.stderr.buffer.read1(
+                            min(65536, 65537 - receipt["stderr_bytes"]))
+                        if not chunk:
+                            receipt["stderr_complete"] = True
+                            break
+                        remaining = 65536 - receipt["stderr_bytes"]
+                        target.write(chunk[:remaining])
+                        receipt["stderr_bytes"] += min(len(chunk), remaining)
+                        if len(chunk) > remaining:
+                            receipt["errors"].append(
+                                "startup stderr exceeded 65536 bytes; retained prefix")
+                            break
+            except Exception as error:
+                receipt["errors"].append("stderr retention: " + repr(error))
+        stderr_thread = threading.Thread(target=retain_stderr, daemon=True)
+        stderr_thread.start()
+        try:
+            process.stdin.close()
+        except Exception as error:
+            receipt["errors"].append("stdin close: " + repr(error))
+        for operation in ("wait", "terminate", "kill"):
+            if process.poll() is not None:
+                break
+            try:
+                if operation != "wait":
+                    receipt["escalations"].append(operation)
+                    getattr(process, operation)()
+                process.wait(timeout=1)
+            except subprocess.TimeoutExpired:
+                continue
+            except Exception as error:
+                receipt["errors"].append(operation + ": " + repr(error))
+        receipt["session_exit_code"] = process.poll()
+        if receipt["session_exit_code"] is None:
+            receipt["errors"].append("owned session still running")
+    if reader_thread is not None:
+        reader_thread.join(timeout=1)
+        receipt["reader_joined"] = not reader_thread.is_alive()
+        if not receipt["reader_joined"]:
+            receipt["errors"].append("stdout reader still running")
+    if stderr_thread is not None:
+        stderr_thread.join(timeout=1)
+        receipt["stderr_reader_joined"] = not stderr_thread.is_alive()
+        if not receipt["stderr_reader_joined"]:
+            receipt["errors"].append("stderr reader still running")
+    if process is not None and receipt["session_exit_code"] is not None:
+        # Do not close a buffered stream concurrently with its active reader.
+        for stream, finished in ((process.stdin, True),
+                                 (process.stdout, receipt["reader_joined"]),
+                                 (process.stderr, receipt.get("stderr_reader_joined", False))):
+            if finished and not stream.closed:
+                try:
+                    stream.close()
+                except Exception as error:
+                    receipt["errors"].append("stream close: " + repr(error))
+    try:
+        planner_client.close(timeout=1)
+        receipt["client_closed"] = True
+        atexit.unregister(planner_client.close)
+    except Exception as error:
+        # Leave the existing exit-time callback registered after a failed close.
+        receipt["errors"].append("planner close: " + repr(error))
+    return receipt
