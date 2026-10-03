@@ -3,15 +3,185 @@
     "before-tests.txt": {
       "original_bytes": 6375,
       "original_sha256": "8fc1ee9887696c14cf068f7cd579a88e724a905b14fa95c26afe1c44c58ef9f4",
-      "published_bytes": 5475,
-      "published_sha256": "12be7025f380726721007a3d5b9e4680249fa838fa03b8ba5ed1e395e8d9a0ff",
-      "transformation": "Twelve traceback filename strings replaced with test_type_boundary.py; every other byte, first failures and exit status preserved."
+      "pre_git_normalization_bytes": 5475,
+      "pre_git_normalization_sha256": "12be7025f380726721007a3d5b9e4680249fa838fa03b8ba5ed1e395e8d9a0ff",
+      "published_bytes": 5397,
+      "published_sha256": "e5bf7e360ccef5bbc35a2f8395450e9c740a72f33ba1d3f4102c579d9663c112",
+      "transformation": "Twelve traceback filename strings replaced with test_type_boundary.py, then CRLF replaced by LF. Original first failures/exit status and every other byte after newline normalization preserved."
     }
   },
   "history_limit": "forward branch update; earlier public commit content remains in Git history",
-  "kind": "public-path-derivative-v2",
+  "kind": "public-byte-publication-v3",
+  "manifest_semantics": "SHA256SUMS binds exact committed Git blob bytes, excluding itself",
+  "newline_derivatives": {
+    "baseline-audit-v2.exit-code.txt": {
+      "committed_bytes": 2,
+      "committed_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "pre_normalization_bytes": 3,
+      "pre_normalization_kind": "unchanged local original",
+      "pre_normalization_sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "reconstruction": "replace every LF byte in the committed file by CRLF; verify pre_normalization_sha256",
+      "transformation": "CRLF bytes replaced by LF; no other byte change"
+    },
+    "baseline-audit-v2.txt": {
+      "committed_bytes": 186,
+      "committed_sha256": "22521e508359b180de5b4a5a0132e4795b9a881c1ead147d62b15dce2e96cde8",
+      "pre_normalization_bytes": 187,
+      "pre_normalization_kind": "unchanged local original",
+      "pre_normalization_sha256": "e446135fa7f86e229c4ff563f5534eaaef9b992c0ae658c899322e58d7e3c0ec",
+      "reconstruction": "replace every LF byte in the committed file by CRLF; verify pre_normalization_sha256",
+      "transformation": "CRLF bytes replaced by LF; no other byte change"
+    },
+    "baseline-audit.exit-code.txt": {
+      "committed_bytes": 2,
+      "committed_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "pre_normalization_bytes": 3,
+      "pre_normalization_kind": "unchanged local original",
+      "pre_normalization_sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "reconstruction": "replace every LF byte in the committed file by CRLF; verify pre_normalization_sha256",
+      "transformation": "CRLF bytes replaced by LF; no other byte change"
+    },
+    "baseline-audit.txt": {
+      "committed_bytes": 186,
+      "committed_sha256": "22521e508359b180de5b4a5a0132e4795b9a881c1ead147d62b15dce2e96cde8",
+      "pre_normalization_bytes": 187,
+      "pre_normalization_kind": "unchanged local original",
+      "pre_normalization_sha256": "e446135fa7f86e229c4ff563f5534eaaef9b992c0ae658c899322e58d7e3c0ec",
+      "reconstruction": "replace every LF byte in the committed file by CRLF; verify pre_normalization_sha256",
+      "transformation": "CRLF bytes replaced by LF; no other byte change"
+    },
+    "baseline-probe.exit-code.txt": {
+      "committed_bytes": 2,
+      "committed_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "pre_normalization_bytes": 3,
+      "pre_normalization_kind": "unchanged local original",
+      "pre_normalization_sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "reconstruction": "replace every LF byte in the committed file by CRLF; verify pre_normalization_sha256",
+      "transformation": "CRLF bytes replaced by LF; no other byte change"
+    },
+    "baseline-probe.txt": {
+      "committed_bytes": 73,
+      "committed_sha256": "ce61b9d22df7c04df84b2d71033299b9c4956c247ee333d0185777f57938ca43",
+      "pre_normalization_bytes": 74,
+      "pre_normalization_kind": "unchanged local original",
+      "pre_normalization_sha256": "5c0e023ba045bd5f857c7a069bb49d332d470185cdd9d8f3c0b942009617fab8",
+      "reconstruction": "replace every LF byte in the committed file by CRLF; verify pre_normalization_sha256",
+      "transformation": "CRLF bytes replaced by LF; no other byte change"
+    },
+    "before-tests.exit-code.txt": {
+      "committed_bytes": 2,
+      "committed_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "pre_normalization_bytes": 3,
+      "pre_normalization_kind": "unchanged local original",
+      "pre_normalization_sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "reconstruction": "replace every LF byte in the committed file by CRLF; verify pre_normalization_sha256",
+      "transformation": "CRLF bytes replaced by LF; no other byte change"
+    },
+    "before-tests.txt": {
+      "committed_bytes": 5397,
+      "committed_sha256": "e5bf7e360ccef5bbc35a2f8395450e9c740a72f33ba1d3f4102c579d9663c112",
+      "pre_normalization_bytes": 5475,
+      "pre_normalization_kind": "path-sanitized public derivative",
+      "pre_normalization_sha256": "12be7025f380726721007a3d5b9e4680249fa838fa03b8ba5ed1e395e8d9a0ff",
+      "reconstruction": "replace every LF byte in the committed file by CRLF; verify pre_normalization_sha256",
+      "transformation": "CRLF bytes replaced by LF; no other byte change"
+    },
+    "candidate-audit-v2.exit-code.txt": {
+      "committed_bytes": 2,
+      "committed_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "pre_normalization_bytes": 3,
+      "pre_normalization_kind": "unchanged local original",
+      "pre_normalization_sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "reconstruction": "replace every LF byte in the committed file by CRLF; verify pre_normalization_sha256",
+      "transformation": "CRLF bytes replaced by LF; no other byte change"
+    },
+    "candidate-audit-v2.txt": {
+      "committed_bytes": 725,
+      "committed_sha256": "99fc9189de0eb206552539efa9382687197154a93a44f3d5ef28689c8935cc3e",
+      "pre_normalization_bytes": 726,
+      "pre_normalization_kind": "unchanged local original",
+      "pre_normalization_sha256": "13e44bb95af94a126978690eac6d3ac8640b9e06cebc5f9b0bd18ef037dee549",
+      "reconstruction": "replace every LF byte in the committed file by CRLF; verify pre_normalization_sha256",
+      "transformation": "CRLF bytes replaced by LF; no other byte change"
+    },
+    "candidate-audit.exit-code.txt": {
+      "committed_bytes": 2,
+      "committed_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "pre_normalization_bytes": 3,
+      "pre_normalization_kind": "unchanged local original",
+      "pre_normalization_sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "reconstruction": "replace every LF byte in the committed file by CRLF; verify pre_normalization_sha256",
+      "transformation": "CRLF bytes replaced by LF; no other byte change"
+    },
+    "candidate-audit.txt": {
+      "committed_bytes": 612,
+      "committed_sha256": "d158fd9d565ee2c15114189d40fc8dae33bca68aac6f2acac9f9e45ffa8d7b42",
+      "pre_normalization_bytes": 613,
+      "pre_normalization_kind": "unchanged local original",
+      "pre_normalization_sha256": "7be67e328a502ba91c1bb9c889d3bdbc4a91d019d5e2afc51e4d83baf9957d5a",
+      "reconstruction": "replace every LF byte in the committed file by CRLF; verify pre_normalization_sha256",
+      "transformation": "CRLF bytes replaced by LF; no other byte change"
+    },
+    "candidate-optimized-tests.exit-code.txt": {
+      "committed_bytes": 2,
+      "committed_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "pre_normalization_bytes": 3,
+      "pre_normalization_kind": "unchanged local original",
+      "pre_normalization_sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "reconstruction": "replace every LF byte in the committed file by CRLF; verify pre_normalization_sha256",
+      "transformation": "CRLF bytes replaced by LF; no other byte change"
+    },
+    "candidate-optimized-tests.txt": {
+      "committed_bytes": 3497,
+      "committed_sha256": "953f35b7d4b439893dbdc109c4ec6e42e39d85699900421b2da48e81360c6a23",
+      "pre_normalization_bytes": 3527,
+      "pre_normalization_kind": "unchanged local original",
+      "pre_normalization_sha256": "78ef3d0a02c00b009d053deba25179fc2fa0aa276b92967b8a137049a45ef4c0",
+      "reconstruction": "replace every LF byte in the committed file by CRLF; verify pre_normalization_sha256",
+      "transformation": "CRLF bytes replaced by LF; no other byte change"
+    },
+    "candidate-probe.exit-code.txt": {
+      "committed_bytes": 2,
+      "committed_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "pre_normalization_bytes": 3,
+      "pre_normalization_kind": "unchanged local original",
+      "pre_normalization_sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "reconstruction": "replace every LF byte in the committed file by CRLF; verify pre_normalization_sha256",
+      "transformation": "CRLF bytes replaced by LF; no other byte change"
+    },
+    "candidate-probe.txt": {
+      "committed_bytes": 75,
+      "committed_sha256": "6ca5a4d9237696aef1ff3ba8ba39f2a56b512cb93c9a01adf327bc6f6d695679",
+      "pre_normalization_bytes": 76,
+      "pre_normalization_kind": "unchanged local original",
+      "pre_normalization_sha256": "40b755c7a32adb82e19bf6e2dff3518a813d7b9ca7302138dcfc25c9aaf5fb3f",
+      "reconstruction": "replace every LF byte in the committed file by CRLF; verify pre_normalization_sha256",
+      "transformation": "CRLF bytes replaced by LF; no other byte change"
+    },
+    "candidate-tests.exit-code.txt": {
+      "committed_bytes": 2,
+      "committed_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "pre_normalization_bytes": 3,
+      "pre_normalization_kind": "unchanged local original",
+      "pre_normalization_sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "reconstruction": "replace every LF byte in the committed file by CRLF; verify pre_normalization_sha256",
+      "transformation": "CRLF bytes replaced by LF; no other byte change"
+    },
+    "candidate-tests.txt": {
+      "committed_bytes": 3497,
+      "committed_sha256": "1642581392db0386fba8c8af19821161a492d7b6f92d01d757207cedb1d7cfd0",
+      "pre_normalization_bytes": 3527,
+      "pre_normalization_kind": "unchanged local original",
+      "pre_normalization_sha256": "ce9426c3050682ce344d6beac9b3778f07704da9cdb4c5ee3b228acd3b0886dc",
+      "reconstruction": "replace every LF byte in the committed file by CRLF; verify pre_normalization_sha256",
+      "transformation": "CRLF bytes replaced by LF; no other byte change"
+    }
+  },
   "original_head": "51bb3e48d11e841db815fb5ce084570ecb60afc7",
   "original_retention": "unchanged local outputs and execution workspace; not newly republished",
+  "previous_readback_limit": "text-oriented comparisons normalized newlines and did not establish byte identity; v2 manifest was incorrect for the listed files",
   "raw_source_tests_reexecuted": false,
-  "scope": "path metadata only; source/raw/first outcome unchanged"
+  "scope": "public path and newline representation metadata; source/raw/outcome semantics unchanged",
+  "supersedes_publication_head": "f4494e6985e0e019e01c8a8e9ea5a542d618c154",
+  "verification": "complete package decoded through explicit base64 GitHub readback; Git blob SHA1 and SHA256 recomputed"
 }
