@@ -18,4 +18,7 @@ construction is not actual SDK/browser event delivery, native task effect,
 durability, release or efficiency. No fault cause or production repair inferred.
 
 No original content votes or current-tree adoption certificates are inferred.
-Local workflow CI and main integration pending; source retirement not yet safe.
+Local workflow replay at `037e93b1aa` exited 0: 43 steps, failures=[];
+full output is `local-ci.log`. Not hosted CI, full runtime/native/browser or
+external packet certification. Main integration pending; source retirement
+not yet safe.
