@@ -23,6 +23,7 @@ Validation on Windows/CPython 3.11.9:
 - Related receipt/review/public presentation tests: 39 pass with isolated
   `mcp==1.30.0`. First attempt without optional MCP: 32 tests, one import error,
   preserved. Transitive package versions are in ENVIRONMENT.json.
+- A portable zipapp built from the committed repaired source retains its exact source digest; nine isolated archive smoke checks pass. See ARCHIVE_CHECK.json.
 - Existing Runtime unified CLI workflow test entry: 128 tests, 122 pass and six
   Linux-only skips. Compile entry and machine-readable doctor both exit zero.
   The skips are the Linux pipe transport test, four Linux exclusive-publication
