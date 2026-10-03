@@ -141,7 +141,8 @@ class AppServerSendDeadlineTests(unittest.TestCase):
             return [], [], []
 
         with owned_client() as (client, _read_fd), patch.object(module.time, "monotonic", clock), \
-                patch.object(module.os, "write", write), patch.object(module.select, "select", wait):
+                patch.object(module.os, "write", write), patch.object(module.select, "select", wait), \
+                patch.object(module.time, "sleep", wait):
             self.assert_uncertain(lambda: client._write(message, deadline=10), 7, len(wire(message)))
             self.assertEqual(attempts, [wire(message), wire(message)[7:]])
             client._closed = False
