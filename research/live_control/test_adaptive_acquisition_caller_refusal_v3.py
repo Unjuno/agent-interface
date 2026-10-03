@@ -129,7 +129,7 @@ class CallerRefusalV3Test(unittest.TestCase):
                         "observe": observe, "cancelled": lambda: False, "execute": execute, "verify_effect": effect,
                         "admit": lambda value: {"eligible": True, "status": "revalidated",
                             "authorization": "INERT_TEST_ONLY_NO_AUTHORITY", "expected_sequence": value["observation"]["sequence"],
-                            "valid_until_ns": 999999999}}, clock=lambda: 0)
+                            "valid_until_ns": 999999999}}, clock=lambda: state["sequence"])
                     inner.append(receipt)
                     return {"status": "safe_yield", "reason": receipt["reason"],
                             "completed_actions": receipt["completed_transitions"]}
