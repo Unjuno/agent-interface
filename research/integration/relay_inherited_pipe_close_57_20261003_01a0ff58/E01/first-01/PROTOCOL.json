@@ -1,0 +1,213 @@
+[
+  {
+    "stage": "prepared",
+    "case": "healthy",
+    "parent": {
+      "role": "parent",
+      "pid": 8728,
+      "token": "relay-close-ba92-20261003-E01-healthy",
+      "mode": "healthy"
+    },
+    "descendant": null,
+    "directory": "<LOCAL_HOME>\\Documents\\Codex\\2026-10-03\\new-chat-6\\work\\relay-inherited-close-57-20261003\\first-01\\healthy",
+    "observed_ns": "41722471353500"
+  },
+  {
+    "stage": "parent_exit",
+    "case": "healthy",
+    "pid": 8728,
+    "code": 0,
+    "signal": null,
+    "observed_ns": "41722476846500"
+  },
+  {
+    "stage": "parent_close",
+    "case": "healthy",
+    "pid": 8728,
+    "code": 0,
+    "signal": null,
+    "observed_ns": "41722476961700"
+  },
+  {
+    "stage": "host_close_resolved",
+    "case": "healthy",
+    "outcome": {
+      "code": 0,
+      "signal": null
+    },
+    "observed_ns": "41722477517000"
+  },
+  {
+    "stage": "checkpoint",
+    "case": "healthy",
+    "called_ns": "41722472242200",
+    "parent_exit": {
+      "code": 0,
+      "signal": null,
+      "observed_ns": "41722476837900"
+    },
+    "parent_close": {
+      "code": 0,
+      "signal": null,
+      "observed_ns": "41722476958600"
+    },
+    "observer": {
+      "result": "original_close_resolved"
+    },
+    "close_settled": true,
+    "close_outcome": {
+      "code": 0,
+      "signal": null
+    },
+    "state": {
+      "nextId": 1,
+      "attempts": 0,
+      "pending": false,
+      "blocked": null,
+      "terminal": {
+        "code": 0,
+        "signal": null
+      },
+      "closing": true
+    },
+    "exit_receipt_exists": true,
+    "release_written": false,
+    "descendant_pid": null,
+    "token": "relay-close-ba92-20261003-E01-healthy",
+    "observed_ns": "41722477717200"
+  },
+  {
+    "stage": "result",
+    "case": "healthy",
+    "parent_pid": 8728,
+    "descendant_pid": null,
+    "parent_exit": {
+      "code": 0,
+      "signal": null,
+      "observed_ns": "41722476837900"
+    },
+    "parent_close": {
+      "code": 0,
+      "signal": null,
+      "observed_ns": "41722476958600"
+    },
+    "outcome": {
+      "code": 0,
+      "signal": null
+    },
+    "descendant_exit_intent": null,
+    "final_state": {
+      "nextId": 1,
+      "attempts": 0,
+      "pending": false,
+      "blocked": null,
+      "terminal": {
+        "code": 0,
+        "signal": null
+      },
+      "closing": true
+    },
+    "exit_receipt": {
+      "code": 0,
+      "signal": null
+    },
+    "same_original_close_promise": true,
+    "request_count": 0,
+    "token": "relay-close-ba92-20261003-E01-healthy",
+    "observed_ns": "41722478319800"
+  },
+  {
+    "stage": "prepared",
+    "case": "stdout",
+    "parent": {
+      "role": "parent",
+      "pid": 25524,
+      "token": "relay-close-ba92-20261003-E01-stdout",
+      "mode": "stdout"
+    },
+    "descendant": {
+      "role": "descendant",
+      "pid": 9128,
+      "parent_pid": 25524,
+      "token": "relay-close-ba92-20261003-E01-stdout",
+      "mode": "stdout"
+    },
+    "directory": "<LOCAL_HOME>\\Documents\\Codex\\2026-10-03\\new-chat-6\\work\\relay-inherited-close-57-20261003\\first-01\\stdout",
+    "observed_ns": "41722563204700"
+  },
+  {
+    "stage": "parent_exit",
+    "case": "stdout",
+    "pid": 25524,
+    "code": 0,
+    "signal": null,
+    "observed_ns": "41722567639600"
+  },
+  {
+    "stage": "parent_close",
+    "case": "stdout",
+    "pid": 25524,
+    "code": 0,
+    "signal": null,
+    "observed_ns": "41722567703800"
+  },
+  {
+    "stage": "host_close_resolved",
+    "case": "stdout",
+    "outcome": {
+      "code": 0,
+      "signal": null
+    },
+    "observed_ns": "41722568275200"
+  },
+  {
+    "stage": "checkpoint",
+    "case": "stdout",
+    "called_ns": "41722563502100",
+    "parent_exit": {
+      "code": 0,
+      "signal": null,
+      "observed_ns": "41722567634300"
+    },
+    "parent_close": {
+      "code": 0,
+      "signal": null,
+      "observed_ns": "41722567702100"
+    },
+    "observer": {
+      "result": "original_close_resolved"
+    },
+    "close_settled": true,
+    "close_outcome": {
+      "code": 0,
+      "signal": null
+    },
+    "state": {
+      "nextId": 1,
+      "attempts": 0,
+      "pending": false,
+      "blocked": null,
+      "terminal": {
+        "code": 0,
+        "signal": null
+      },
+      "closing": true
+    },
+    "exit_receipt_exists": true,
+    "release_written": false,
+    "descendant_pid": 9128,
+    "token": "relay-close-ba92-20261003-E01-stdout",
+    "observed_ns": "41722568439400"
+  },
+  {
+    "stage": "owned_release",
+    "case": "stdout",
+    "token": "relay-close-ba92-20261003-E01-stdout",
+    "observed_ns": "41722569174900"
+  },
+  {
+    "stage": "driver_error",
+    "error": "Error: ENOENT: no such file or directory, open '<LOCAL_HOME>\\Documents\\Codex\\2026-10-03\\new-chat-6\\work\\relay-inherited-close-57-20261003\\first-01\\stdout\\descendant-exit-intent.json'",
+    "observed_ns": "41722569346300"
+  }
+]

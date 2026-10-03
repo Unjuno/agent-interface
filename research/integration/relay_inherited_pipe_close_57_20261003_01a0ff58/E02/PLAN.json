@@ -1,0 +1,57 @@
+{
+  "worker": "01a0ff58-ba92-7fd2-9317-d75b43383005",
+  "policy": "FINAL-v5",
+  "recorded_utc": "2026-10-03T12:03:45.217766+00:00",
+  "base": "ba1c4d966bc098e8f9f7e9e6df85f1281daa1582",
+  "branch": "research/relay-inherited-close-01a0ff58-20261003",
+  "unit": "ordinary Node relay DETACHED inherited-pipe cleanup E02",
+  "H": "After an actual cooperative parent exit0, inherited stdout/stderr held by a separately owned descendant can postpone the original relay_client close promise and exit journal.",
+  "T": "Two NEW sequential detached-descendant stdout/stderr cells; exact same production Node relay source/decision/native identity/checkpoint/release conditions. Do not replay healthy or attached E01 cells.",
+  "D": "Healthy close/receipt/native0 complete; held cases are GAP only with actual parent native0, descendant nativeSTILL_ACTIVE, close pending and no exit receipt BEFORE any release, then actual native0 and original close receipt after owned release. Otherwise HOLD; no API hard-deadline contract is invented.",
+  "C": "holder setup failure or selfcap, delayed readiness, false parent ancestry, reader faults, CPU scheduling and OS inheritance behavior; exact Node module unchanged and zero request sends",
+  "U": "one observation per cell; fixtures selfcap3000ms and root driver12000ms/capture20000ms, no production hard deadline/process containment/input cleanup or performance inference",
+  "source_sha256": {
+    "capture.py.txt": "fc285b6ac52b5617676cf97bc41408ef8450206153dfb3135f9ea5f693386bb5",
+    "probe.mjs": "6d0269fb7d034a16c072a852ab2008dbac908332e4b3b3873c3a14fe192f45c4",
+    "relay_client.mjs": "0a935142a8878fb90f212e004a9e8ffe47224d1505c6cee670960db03c38312b"
+  },
+  "capture_sha256": "fc285b6ac52b5617676cf97bc41408ef8450206153dfb3135f9ea5f693386bb5",
+  "producer_invocations": 0,
+  "shared_leases": [],
+  "dedup": "323 current parent57 comments;8 descendant-related records describe separate Python appserver ownership or old native cleanup, none exact Node relay_client close/inheritance. Narrow all-state PR/issue searches retained in intake; bounded coverage not proof of unpushed absence.",
+  "distinct_predecessor": "b04b5967777892 and be6f6955 are Python reader/journal retirement; no replay or source takeover",
+  "decision_units": {
+    "checkpoint_interval_ms": "milliseconds scalar100, SI time equivalent0.1s; observer after actual parent exit, not a production deadline",
+    "native_filetime": "Windows100ns integer ticks, raw API field",
+    "exit_codes": "integer process codes, actual native handles",
+    "observed_ns": "Node driver monotonic integer nanoseconds as decimal string, same driver clock only"
+  },
+  "scope": "Evidence-only; no production changes, source-head mutation, formal/native model/game allocation or main application",
+  "material_delta": "descendant spawn detached:true makes it independent of the default libuv Windows parent-owned job; only post-release sidecar reading gains bounded readiness polling. First outcomes unchanged.",
+  "first_E01": "driver32844 exit1; healthy actual parent0/close/receipt PASS; attached stdout descendant9128 actual native0 already at checkpoint, so held-writer precondition false; missing intent then driver_error; stderr never started. All3 acquired handles actual0, source/raw retained.",
+  "source_deltas": [
+    {
+      "before": "{windowsHide:true,stdio:['ignore',mode==='stdout'",
+      "after": "{detached:true,windowsHide:true,stdio:['ignore',mode==='stdout'"
+    },
+    {
+      "before": "for(const mode of ['healthy','stdout','stderr'])",
+      "after": "for(const mode of ['stdout','stderr'])"
+    },
+    {
+      "before": "const intent=descendant?JSON.parse(await readFile(join(directory,'descendant-exit-intent.json'),'utf8')):null;",
+      "after": "const intent=descendant?await ready(join(directory,'descendant-exit-intent.json'),token):null;"
+    },
+    {
+      "before": "emit({stage:'done',cases:3});",
+      "after": "emit({stage:'done',cases:2});"
+    }
+  ],
+  "primary_sources": [
+    "https://github.com/nodejs/node/blob/v24.19.0/deps/uv/src/win/process.c#L65",
+    "https://github.com/nodejs/node/blob/v24.19.0/deps/uv/src/win/process.c#L1016",
+    "https://github.com/nodejs/node/blob/v24.19.0/doc/api/child_process.md"
+  ],
+  "inference_limit": "First actual deaths are consistent with the documented default Windows job behavior; no actual Job-object ownership was queried, so exact causal job identity is unproved.",
+  "added_scope": "Hidden independent console process only for the inert fixture, existing3s selfcap and held OS handles; no daemon/runtime change or shared GUI/input acquisition"
+}
