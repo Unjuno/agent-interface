@@ -102,6 +102,11 @@ Public logs/receipts redact private absolute host paths. Original bytes and rece
 retained privately, read back before deriving the public copies, and identified by their
 original hashes in `PUBLICATION.json` and the public receipts. Raw matrix bytes are unchanged.
 `SOURCE_SHA256.json` and `SHA256SUMS` bind source and published evidence without self-reference.
+The initial staged evidence whitespace check failed on generated metadata CRLF, but a shell
+sequence continued to local evidence commit `e6e982c68`. That unpublished attempt is retained
+in branch history. Derived metadata was normalized to LF before publication; original log
+bytes are retained with scoped binary diff attributes and explicitly added despite the
+repository's generic log ignore rule. No execution, source gate or outcome was changed.
 
 ## Disposition and handoff
 
