@@ -541,16 +541,6 @@ the original files instead of repeating a consumed command. Stream output
 failure stops accepting commands and waits for the same pending promise before
 closing the original transport. It does not prove that input was cancelled.
 
-Raw byte stdin must be valid UTF-8. Malformed byte sequences, including an
-unfinished sequence at EOF, stop intake before the affected chunk can reach
-the exchange; the CLI exits 2 after observing the same accepted command and
-closing its original transport. No replacement-character command is created.
-An otherwise valid prefix in that same unaccepted corrupted chunk is refused
-too. Already decoded text callers retain their existing behavior; the original
-bytes lost upstream cannot be validated here. Valid literal U+FFFD and split
-multibyte UTF-8 remain valid. This adds no hard I/O deadline or line-size bound,
-and transport closure still does not prove application cleanup or input release.
-
 Explicitly send `call` with `["interface_close",{}]`, inspect its release outcome,
 and then end stdin. EOF waits for the outstanding command and closes only the
 same transport; it never fabricates a public-close request or task completion.
