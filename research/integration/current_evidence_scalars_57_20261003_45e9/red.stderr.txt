@@ -1,0 +1,417 @@
+FFFFEFFEEEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF..FFFFF.
+======================================================================
+ERROR: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='now_ns', value='None')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 31, in admit
+    return admit_program(request(), manifest(), **args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<isolated-checkout>\runtime\core_v1\contract.py", line 320, in admit_program
+    if now_ns > program["authority"]["expires_at_ns"]:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '>' not supported between instances of 'NoneType' and 'int'
+
+======================================================================
+ERROR: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='now_ns', value="'1'")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 31, in admit
+    return admit_program(request(), manifest(), **args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<isolated-checkout>\runtime\core_v1\contract.py", line 320, in admit_program
+    if now_ns > program["authority"]["expires_at_ns"]:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '>' not supported between instances of 'str' and 'int'
+
+======================================================================
+ERROR: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='now_ns', value='[]')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 31, in admit
+    return admit_program(request(), manifest(), **args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<isolated-checkout>\runtime\core_v1\contract.py", line 320, in admit_program
+    if now_ns > program["authority"]["expires_at_ns"]:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '>' not supported between instances of 'list' and 'int'
+
+======================================================================
+ERROR: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='now_ns', value='{}')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 31, in admit
+    return admit_program(request(), manifest(), **args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<isolated-checkout>\runtime\core_v1\contract.py", line 320, in admit_program
+    if now_ns > program["authority"]["expires_at_ns"]:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '>' not supported between instances of 'dict' and 'int'
+
+======================================================================
+FAIL: test_bool_and_float_cannot_impersonate_current_generations (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_bool_and_float_cannot_impersonate_current_generations) (field='current_observation_seq', value=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 42, in test_bool_and_float_cannot_impersonate_current_generations
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admission(accepted=True, error=None, required_capabilities=([17 chars]l',)) != Admission(accepted=False, error='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_bool_and_float_cannot_impersonate_current_generations (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_bool_and_float_cannot_impersonate_current_generations) (field='current_observation_seq', value=1.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 42, in test_bool_and_float_cannot_impersonate_current_generations
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admission(accepted=True, error=None, required_capabilities=([17 chars]l',)) != Admission(accepted=False, error='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_bool_and_float_cannot_impersonate_current_generations (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_bool_and_float_cannot_impersonate_current_generations) (field='current_binding_revision', value=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 42, in test_bool_and_float_cannot_impersonate_current_generations
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admission(accepted=True, error=None, required_capabilities=([17 chars]l',)) != Admission(accepted=False, error='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_bool_and_float_cannot_impersonate_current_generations (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_bool_and_float_cannot_impersonate_current_generations) (field='current_binding_revision', value=1.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 42, in test_bool_and_float_cannot_impersonate_current_generations
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admission(accepted=True, error=None, required_capabilities=([17 chars]l',)) != Admission(accepted=False, error='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='now_ns', value='False')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admission(accepted=True, error=None, required_capabilities=([17 chars]l',)) != Admission(accepted=False, error='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='now_ns', value='True')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admission(accepted=True, error=None, required_capabilities=([17 chars]l',)) != Admission(accepted=False, error='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='now_ns', value='0.0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admission(accepted=True, error=None, required_capabilities=([17 chars]l',)) != Admission(accepted=False, error='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='now_ns', value='1.0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admission(accepted=True, error=None, required_capabilities=([17 chars]l',)) != Admission(accepted=False, error='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='now_ns', value='-1')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admission(accepted=True, error=None, required_capabilities=([17 chars]l',)) != Admission(accepted=False, error='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='now_ns', value='9223372036854775808')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admis[23 chars]ror='LEASE_EXPIRED', required_capabilities=('i[15 chars]l',)) != Admis[23 chars]ror='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='now_ns', value='nan')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admission(accepted=True, error=None, required_capabilities=([17 chars]l',)) != Admission(accepted=False, error='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='now_ns', value='inf')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admis[23 chars]ror='LEASE_EXPIRED', required_capabilities=('i[15 chars]l',)) != Admis[23 chars]ror='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='now_ns', value='-inf')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admission(accepted=True, error=None, required_capabilities=([17 chars]l',)) != Admission(accepted=False, error='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='current_observation_seq', value='None')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admis[23 chars]ror='STALE_OBSERVATION', required_capabilities[19 chars]l',)) != Admis[23 chars]ror='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='current_observation_seq', value='False')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admis[23 chars]ror='STALE_OBSERVATION', required_capabilities[19 chars]l',)) != Admis[23 chars]ror='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='current_observation_seq', value='True')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admission(accepted=True, error=None, required_capabilities=([17 chars]l',)) != Admission(accepted=False, error='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='current_observation_seq', value="'1'")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admis[23 chars]ror='STALE_OBSERVATION', required_capabilities[19 chars]l',)) != Admis[23 chars]ror='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='current_observation_seq', value='[]')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admis[23 chars]ror='STALE_OBSERVATION', required_capabilities[19 chars]l',)) != Admis[23 chars]ror='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='current_observation_seq', value='{}')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admis[23 chars]ror='STALE_OBSERVATION', required_capabilities[19 chars]l',)) != Admis[23 chars]ror='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='current_observation_seq', value='0.0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admis[23 chars]ror='STALE_OBSERVATION', required_capabilities[19 chars]l',)) != Admis[23 chars]ror='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='current_observation_seq', value='1.0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admission(accepted=True, error=None, required_capabilities=([17 chars]l',)) != Admission(accepted=False, error='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='current_observation_seq', value='-1')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admis[23 chars]ror='STALE_OBSERVATION', required_capabilities[19 chars]l',)) != Admis[23 chars]ror='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='current_observation_seq', value='9223372036854775808')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admis[23 chars]ror='STALE_OBSERVATION', required_capabilities[19 chars]l',)) != Admis[23 chars]ror='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='current_observation_seq', value='nan')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admis[23 chars]ror='STALE_OBSERVATION', required_capabilities[19 chars]l',)) != Admis[23 chars]ror='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='current_observation_seq', value='inf')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admis[23 chars]ror='STALE_OBSERVATION', required_capabilities[19 chars]l',)) != Admis[23 chars]ror='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='current_observation_seq', value='-inf')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admis[23 chars]ror='STALE_OBSERVATION', required_capabilities[19 chars]l',)) != Admis[23 chars]ror='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='current_binding_revision', value='None')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admis[23 chars]ror='STALE_BINDING', required_capabilities=('i[15 chars]l',)) != Admis[23 chars]ror='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='current_binding_revision', value='False')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admis[23 chars]ror='STALE_BINDING', required_capabilities=('i[15 chars]l',)) != Admis[23 chars]ror='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='current_binding_revision', value='True')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admission(accepted=True, error=None, required_capabilities=([17 chars]l',)) != Admission(accepted=False, error='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='current_binding_revision', value="'1'")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admis[23 chars]ror='STALE_BINDING', required_capabilities=('i[15 chars]l',)) != Admis[23 chars]ror='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='current_binding_revision', value='[]')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admis[23 chars]ror='STALE_BINDING', required_capabilities=('i[15 chars]l',)) != Admis[23 chars]ror='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='current_binding_revision', value='{}')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admis[23 chars]ror='STALE_BINDING', required_capabilities=('i[15 chars]l',)) != Admis[23 chars]ror='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='current_binding_revision', value='0.0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admis[23 chars]ror='STALE_BINDING', required_capabilities=('i[15 chars]l',)) != Admis[23 chars]ror='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='current_binding_revision', value='1.0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admission(accepted=True, error=None, required_capabilities=([17 chars]l',)) != Admission(accepted=False, error='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='current_binding_revision', value='-1')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admis[23 chars]ror='STALE_BINDING', required_capabilities=('i[15 chars]l',)) != Admis[23 chars]ror='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='current_binding_revision', value='9223372036854775808')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admis[23 chars]ror='STALE_BINDING', required_capabilities=('i[15 chars]l',)) != Admis[23 chars]ror='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='current_binding_revision', value='nan')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admis[23 chars]ror='STALE_BINDING', required_capabilities=('i[15 chars]l',)) != Admis[23 chars]ror='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='current_binding_revision', value='inf')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admis[23 chars]ror='STALE_BINDING', required_capabilities=('i[15 chars]l',)) != Admis[23 chars]ror='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_each_current_scalar_rejects_wrong_type_and_range (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_each_current_scalar_rejects_wrong_type_and_range) (field='current_binding_revision', value='-inf')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 50, in test_each_current_scalar_rejects_wrong_type_and_range
+    self.assertEqual(self.admit(**{field: value}), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admis[23 chars]ror='STALE_BINDING', required_capabilities=('i[15 chars]l',)) != Admis[23 chars]ror='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_invalid_context_precedes_otherwise_expired_request (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_invalid_context_precedes_otherwise_expired_request)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 78, in test_invalid_context_precedes_otherwise_expired_request
+    self.assertEqual(self.admit(now_ns=101, current_binding_revision=True),
+AssertionError: Admis[23 chars]ror='LEASE_EXPIRED', required_capabilities=('i[15 chars]l',)) != Admis[23 chars]ror='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_nonfinite_time_cannot_bypass_lease_expiry (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_nonfinite_time_cannot_bypass_lease_expiry) (value=nan)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 36, in test_nonfinite_time_cannot_bypass_lease_expiry
+    self.assertEqual(self.admit(now_ns=value), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admission(accepted=True, error=None, required_capabilities=([17 chars]l',)) != Admission(accepted=False, error='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_nonfinite_time_cannot_bypass_lease_expiry (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_nonfinite_time_cannot_bypass_lease_expiry) (value=inf)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 36, in test_nonfinite_time_cannot_bypass_lease_expiry
+    self.assertEqual(self.admit(now_ns=value), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admis[23 chars]ror='LEASE_EXPIRED', required_capabilities=('i[15 chars]l',)) != Admis[23 chars]ror='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_nonfinite_time_cannot_bypass_lease_expiry (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_nonfinite_time_cannot_bypass_lease_expiry) (value=-inf)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 36, in test_nonfinite_time_cannot_bypass_lease_expiry
+    self.assertEqual(self.admit(now_ns=value), Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admission(accepted=True, error=None, required_capabilities=([17 chars]l',)) != Admission(accepted=False, error='INVALID_PROGRAM', required_capabilities=())
+
+======================================================================
+FAIL: test_rejected_context_does_not_modify_request_or_manifest (runtime.core_v1.test_admission_current_evidence.CurrentEvidenceAdmissionTests.test_rejected_context_does_not_modify_request_or_manifest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<isolated-checkout>\runtime\core_v1\test_admission_current_evidence.py", line 86, in test_rejected_context_does_not_modify_request_or_manifest
+    self.assertEqual(result, Admission(False, 'INVALID_PROGRAM', ()))
+AssertionError: Admission(accepted=True, error=None, required_capabilities=([17 chars]l',)) != Admission(accepted=False, error='INVALID_PROGRAM', required_capabilities=())
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.012s
+
+FAILED (failures=44, errors=4)
