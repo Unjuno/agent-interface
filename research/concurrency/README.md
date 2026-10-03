@@ -33,6 +33,8 @@ The arrows show research lineage only. They do not rewrite the retained decision
 
 ## Concurrency boundary
 
+Retained hot-drain ownership audit correction: [audit-v2](hot_drain_cancel_17_20261003_01a0ff52/audit-v2/README.md). The historical v1 PASS has demonstrated negative-FD and additional-open detection gaps; v2 preserves the original15 rows/75 closure witnesses and corrects only finite copied ownership records. Original RED and publication/whitespace failures remain. Neither original PASS nor this saved-data repair grants production, new native allocation, latency, GUI/task or private-original authenticity claims. Fresh scoped rescue checks are [recorded separately](../../runtime/results/hot_drain_rescue_3115/README.md).
+
 ```mermaid
 flowchart TD
     I[Intent]
