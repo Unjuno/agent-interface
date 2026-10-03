@@ -83,6 +83,9 @@ def frame_metrics(f,due):
     counters = {k:delta(a["cpu_stat"][k],b["cpu_stat"][k]) for k in
                 ("usage_usec","nr_periods","nr_throttled","throttled_usec")}
     local,runqueue = None,None
+    if all(s["schedstat"]["available"] for s in (a,b)):
+        x,y=[list(map(int,s["schedstat"]["raw"].split())) for s in (a,b)]
+        for before,after in zip(x,y): delta(before,after)
     if all(s["cpu_stat_local"]["available"] for s in (a,b)):
         x,y = [cpu(s["cpu_stat_local"]["raw"]) for s in (a,b)]
         require(x.keys()==y.keys(),"local CPU schema")

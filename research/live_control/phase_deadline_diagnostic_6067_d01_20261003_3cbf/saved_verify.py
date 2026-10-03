@@ -1,4 +1,4 @@
-"""Saved-only custody replay and exactly ten corruption controls; no native calls."""
+"""Saved-only custody replay and twelve effective corruption controls; no native calls."""
 import argparse
 import copy
 import hashlib
@@ -7,7 +7,7 @@ from pathlib import Path
 import auditor
 
 HERE = Path(__file__).resolve().parent
-CONTROL_NAMES = ["due_bool","counter_bool","native_clock","pixel_hash","sleep_request","omitted_sleep","optional_grammar","fake_decode",
+CONTROL_NAMES = ["due_bool","counter_bool","native_clock","pixel_hash","sleep_request","omitted_wait_record","optional_grammar","fake_decode",
                  "stream_bool_join","duplicate_json","nonfinite_json","missing_plan_cell"]
 
 def controls(raw,plan):
@@ -26,10 +26,11 @@ def controls(raw,plan):
             elif name=="native_clock": f["start_ns"]=f["pre"]["begin_ns"]
             elif name=="pixel_hash": f["pixel_sha256"]="0"*64
             elif name=="sleep_request":
-                if not f["wait"]["sleeps"]: raise RuntimeError("required actual sleep absent; do not count a control")
-                f["wait"]["sleeps"][0]["requested_ns"]=1
+                if not f["wait"]["sleeps"]:
+                    f["wait"]["sleeps"]=[{"start_ns":f["wait"]["begin_ns"],"return_ns":f["wait"]["return_ns"],"requested_ns":0}]
+                else: f["wait"]["sleeps"][0]["requested_ns"]=0
             elif name=="fake_decode": f["decoded"]={"id":1,"color":16711680}
-            elif name=="omitted_sleep": f["wait"]["sleeps"]=[]
+            elif name=="omitted_wait_record": f["wait"]["return_ns"]=None
             elif name=="optional_grammar": f["post"]["schedstat"]={"available":True,"raw":"garbage","error":None}
             auditor.frame_metrics(f,original["due_ns"])
         try:

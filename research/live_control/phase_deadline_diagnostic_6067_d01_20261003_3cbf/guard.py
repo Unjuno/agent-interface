@@ -51,6 +51,12 @@ def frame_valid(f):
         require(f["post"]["cpu_stat"][k]>=f["pre"]["cpu_stat"][k],"counter regression")
     for k in ("process_cpu_ns","thread_cpu_ns","voluntary","involuntary"):
         require(f["post"][k]>=f["pre"][k],"process counter regression")
+    if all(s["cpu_stat_local"]["available"] for s in (f["pre"], f["post"])):
+        a,b=[counter(s["cpu_stat_local"]["raw"]) for s in (f["pre"], f["post"])]
+        require(a.keys()==b.keys() and all(b[k]>=a[k] for k in a),"optional local counter regression")
+    if all(s["schedstat"]["available"] for s in (f["pre"], f["post"])):
+        a,b=[list(map(int,s["schedstat"]["raw"].split())) for s in (f["pre"], f["post"])]
+        require(all(y>=x for x,y in zip(a,b)),"optional schedstat regression")
     w=f["wait"]; due=plain(f["due_ns"])
     chain=[f["pre"]["end_ns"],plain(w["begin_ns"]),plain(w["return_ns"]),f["post"]["begin_ns"],
            f["post"]["end_ns"],plain(f["start_ns"]),plain(f["native_return_ns"]),plain(f["extracted_ns"])]
