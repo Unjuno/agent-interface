@@ -189,10 +189,79 @@
       "public_sha256": "39b556307d19ea3e199550cda7bad80d0afe3460a1234e04a3f8932beb16f23a",
       "private_prefix_redacted": false,
       "original_retained": true
+    },
+    {
+      "path": "current-application-v2/CURRENT_TUPLE.json",
+      "original_sha256": "1b938294a9db16bc1f11f554baba3e80536a887a3aa4dd0ed5a4d59ed5a63106",
+      "public_sha256": "1b938294a9db16bc1f11f554baba3e80536a887a3aa4dd0ed5a4d59ed5a63106",
+      "private_prefix_redacted": false,
+      "original_retained": true
+    },
+    {
+      "path": "current-application-v2/MERGE_RECEIPT.json",
+      "original_sha256": "30dfb5657b58f2442a0ec09b3f975bf868082bcf77d425b8f3d7504bb92227ea",
+      "public_sha256": "30dfb5657b58f2442a0ec09b3f975bf868082bcf77d425b8f3d7504bb92227ea",
+      "private_prefix_redacted": false,
+      "original_retained": true
+    },
+    {
+      "path": "current-application-v2/merge.stderr.txt",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "private_prefix_redacted": false,
+      "original_retained": true
+    },
+    {
+      "path": "current-application-v2/merge.stdout.txt",
+      "original_sha256": "a3f3bb6f67788a438036078f510ad6e51e10e9322d1c30d0a5b6673320d62e75",
+      "public_sha256": "a3f3bb6f67788a438036078f510ad6e51e10e9322d1c30d0a5b6673320d62e75",
+      "private_prefix_redacted": false,
+      "original_retained": true
+    },
+    {
+      "path": "REFRESH_RECEIPT.json",
+      "original_sha256": "c7a4edd5f6252036f7e67abd3c26b66b72c5747d83aebfa99c2ae11fbebc5b98",
+      "public_sha256": "e06a09f32657678f72e586bda6bacea7681d9ff0d6f990ce1cb0b8d96338e997",
+      "private_prefix_redacted": true,
+      "original_retained": true
+    },
+    {
+      "path": "refresh.stdout.txt",
+      "original_sha256": "e954b6d88803d76fd93b2a084089310efae1dfa2508068127634fb2092c6c6d1",
+      "public_sha256": "e954b6d88803d76fd93b2a084089310efae1dfa2508068127634fb2092c6c6d1",
+      "private_prefix_redacted": false,
+      "original_retained": true
+    },
+    {
+      "path": "refresh.stderr.txt",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "private_prefix_redacted": false,
+      "original_retained": true
+    },
+    {
+      "path": "tools/prepare-current-v2.py.txt",
+      "original_sha256": "a2ff4acc861298f865549e28508dc2f0cd9bcda81fcb8187a09a14ea5122ff2d",
+      "public_sha256": "a2ff4acc861298f865549e28508dc2f0cd9bcda81fcb8187a09a14ea5122ff2d",
+      "private_prefix_redacted": false,
+      "original_retained": true
+    },
+    {
+      "path": "tools/refresh-publication.py.txt",
+      "original_sha256": "05710eab87bfda14c0679a2500a787889a2a66099fbb9233bc73b73ca84da8b5",
+      "public_sha256": "05710eab87bfda14c0679a2500a787889a2a66099fbb9233bc73b73ca84da8b5",
+      "private_prefix_redacted": false,
+      "original_retained": true
     }
   ],
   "public_derivatives": "Only reviewer private path prefixes redacted; exact original/public hashes distinguished; originals retained privately.",
   "first_reader_failure": "Counter(mapping) used outcome strings as counts. First source and diagnostic metadata retained; original tool output in conversation, no separate first process UTC/full streams captured. Corrected reader uses Counter(list(mapping)); no live tests repeated.",
   "preparation_tool_failure": "Initial apply_patch was rejected for an omitted plus in the Add File hunk; no file/reference/runtime mutation. Corrected patch then applied.",
-  "author_archive": "Exact38 changed blobs/34 artifact hashes/11 source and workflow pins verified; author private original bytes not available here.17 public-path derivatives bound to original hash claims, retention remains author attested."
+  "author_archive": "Exact38 changed blobs/34 artifact hashes/11 source and workflow pins verified; author private original bytes not available here.17 public-path derivatives bound to original hash claims, retention remains author attested.",
+  "current_tuple_refresh": {
+    "main": "636986a804a6004cd047db7e8cc5e62c02d585d8",
+    "planned_tree": "1b191177e8a1606cf3e0a805bbcc88dc4191df30",
+    "first_tuple_retained": true,
+    "live_tests_repeated": false
+  }
 }

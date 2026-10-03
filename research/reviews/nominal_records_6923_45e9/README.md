@@ -73,3 +73,9 @@ release/effect, real backend/GUI/model/task success, latency/efficiency, hosted 
 GPU/WSLc/container/resource ownership, common N/deadline or full-goal completion
 claim. Primary Git index and author source/raw remain unchanged. All published
 tools are inert .py.txt and public derivatives retain distinct original hashes.
+
+Before publication, main advanced by PR6931 outside the used kernel closure.
+Second actual named preparation at main636986a804a6004cd047db7e8cc5e62c02d585d8 yields tree1b191177e8a1606cf3e0a805bbcc88dc4191df30.
+Exact38 delta/47 images still match; kernel/package/workflow drift stays zero.
+The first tuple and all original tests remain intact. See current-application-v2.
+No fresh live test, author deck, main reference or application was performed.
