@@ -1,0 +1,32 @@
+{
+  "allocation": "CLIPBOARD-FORMATS-36-QT-T0-20261003-01",
+  "policy": "FINAL-v5",
+  "worker": "01a0ff51-d447-7cb3-bb02-36d7e1d30b28",
+  "frozen_at": "2026-10-03T01:38:22.182351+00:00",
+  "source_commit": "9cc86468601c2b68e7b9bbb595f55b5bf47d92b4",
+  "base_main": "f1416985d4ff9ce5bbf9f0f4be1be3d0ee669549",
+  "source_sha256": {
+    "candidate.py": "513ac7cdf1206fd37f1b3e0152f670ef767fe089f098775fc3efb2e1c4f86314",
+    "audit.py": "cda7697903b0cfdd9c2b83fadad0690552cfacc2ae83d08e38c2b642cb604641",
+    "gates.py": "f9687ebbb0954a9f8037b1dbe93c3e4a865c8079b5515aca691abc1806858bc6",
+    "cases.json": "bf918f3627db51b2d0ac436840243e398fabd87fbbcd86e127ceb492de8eaeb5",
+    "oracle.json": "e745a5e3ec2503cbcf91c23530c6461d2a40bc5d744bfaa18f8d34b0abf6e0cc",
+    "Dockerfile": "f1f551d239c404f8043b5e5f7060b933f70a4ebbe5c922b00013fc732ff67e89",
+    "test_gates.py": "e0f098e2271ed6f67e4c350befdf015c09f6c2afcb964212311d7ef75dc138d8",
+    "test_audit.py": "71e5a28ab7b5680217bec35cf58eb278933c363cff08d87430320eb080f794a5",
+    "PREREGISTRATION.md": "87186a73ae253e0712b009a6f16b294968451a4872331c055a0b26a3dbc273e3"
+  },
+  "image_id": "sha256:9e9b1a232f08b8c437834f8a40a5b39ca4be9c66b953833170930c70fdc66d89",
+  "guest": "research-clipboard-36-01a0ff51-docker",
+  "candidate_limit": 1,
+  "audit_limit": 1,
+  "retries": 0,
+  "output_cap_bytes": 1048576,
+  "planned_outputs": [
+    "candidate/raw.json",
+    "candidate/C01-C12/{text.txt,document.html}",
+    "audit/audit.json"
+  ],
+  "scope": "Qt offscreen diagnostic classifiers; no OS input/model/native clipboard",
+  "common_deadline": "unconfirmed; this allocation sets no fleet deadline"
+}
