@@ -1,0 +1,9 @@
+# Planner start admission custody
+
+The adapter reserves admission under its state lock before calling thread/start or turn/start. A second start or session reset is refused while that RPC is pending. Once a valid ID is recorded, the reservation becomes a tracked thread/turn. A thrown response or missing ID leaves the reservation sticky because remote effect is unknown. Reusing the same adapter must not blindly retry or reset. Reconciliation or disposal of the uncertain work is external; constructing another adapter does not prove the old work stopped.
+
+RPC calls occur outside the held state lock. Lock acquisition, transport, cleanup and whole-call duration are not bounded by this change. Cancellation semantics remain: invalidated observations are never eligible answers. Successful completed turns can still precede another turn or a new session. Borrowed grounding clients retain ownership.
+
+Own E29 eight planner boundary regressions and I30 four actual grounding caller regressions use fake RPC only; normal and optimized interpreter results are retained. Standard modules preserve all fixture/helper method ASTs while removing the private command-line/raw-output requirement. Existing ten planner regressions remain applicable under exact unchanged source methods. No provider, GUI, physical release, natural failure rate or performance claim. Grounding model.calls counts completed waits, not all start attempts; unknown sends require a separate ledger. Missing usage remains unknown.
+
+Original baseline, first fixture/audit failures and repair evidence: https://github.com/Unjuno/agent-interface/issues/57#issuecomment-5974231980 and https://github.com/Unjuno/agent-interface/issues/57#issuecomment-5974327311 (part2 5974327500). These data do not authorize actor replay. Prior fixed7283 review and suspended approval do not transfer to this successor.
