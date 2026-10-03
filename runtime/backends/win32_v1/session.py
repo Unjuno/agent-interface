@@ -33,6 +33,17 @@ class Win32RuntimeSession:
                 "required_capabilities": list(admission.required_capabilities),
                 "backend_emissions": self.backend.emissions,
             }
+        if (self.backend.held_keys or self.backend.held_buttons) and any(
+            op["op"] != "release_all" for op in program["ops"]
+        ):
+            # Pending release belongs to this backend, independent of caller
+            # lifetime. Permit cleanup without allowing further task input.
+            return {
+                "status": "refused",
+                "error": "RELEASE_UNVERIFIED",
+                "required_capabilities": list(admission.required_capabilities),
+                "backend_emissions": self.backend.emissions,
+            }
         try:
             self.backend.preflight(program)
         except Win32BackendError as error:
