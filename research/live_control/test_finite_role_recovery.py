@@ -5,6 +5,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from finite_role_recovery import StaleDocument, run_with_one_recovery
+from finite_role_recovery.role_method import apply_role
 
 ROLE = '当日の議論を議事録にまとめる担当'
 NEW_ROLE = '会議中の意見と決定を記録する係'
@@ -142,6 +143,56 @@ class FiniteRoleRecoveryTests(unittest.TestCase):
 
     def test_typed_stale_after_save_cannot_authorize_recovery(self):
         self.check_case('typed_stale_after_save')
+
+
+BOUNDARIES=('\r','\n','\v','\f','\x1c','\x1d','\x1e','\x85','\u2028','\u2029')
+DOC='題名 é🚀\r\n役割：加藤\r\n引用：加藤の旧稿を保持\r\n'
+
+class LineGuardTests(unittest.TestCase):
+    def test_all_line_boundaries_refused_in_all_parameters_and_positions(self):
+        for separator in BOUNDARIES:
+            for index in range(3):
+                for position in ('start','middle','end'):
+                    values=['役割','加藤','森']
+                    bad={'start':separator+'x','middle':'x'+separator+'y','end':'x'+separator}[position]
+                    values[index]=bad
+                    with self.subTest(codepoint=ord(separator),parameter=index,position=position):
+                        self.assertEqual(apply_role(DOC,*values),{'outcome':'REFUSE','reason':'invalid_line_parameter'})
+
+    def test_normal_unicode_space_tab_roundtrip_preserves_other_bytes(self):
+        for new in ('森 é🚀','森\t記録係','森 Unicode'):
+            with self.subTest(new=new):
+                changed=apply_role(DOC,'役割','加藤',new)
+                self.assertEqual(changed['outcome'],'READY')
+                self.assertEqual(changed['updated_text'].encode('utf-8'),DOC.replace('役割：加藤','役割：'+new).encode('utf-8'))
+                restored=apply_role(changed['updated_text'],'役割',new,'加藤')
+                self.assertEqual(restored['outcome'],'READY')
+                self.assertEqual(restored['updated_text'],DOC)
+
+    def test_malformed_new_person_cannot_reach_controller_inputs(self):
+        for separator in BOUNDARIES:
+            with self.subTest(codepoint=ord(separator)):
+                class Editor:
+                    body=DOC;replacements=0;saves=0
+                    def read_current(self):return self.body
+                    def replace_once(self,text):self.replacements+=1;self.body=text
+                    def save_once(self):self.saves+=1
+                editor=Editor();new='森'+separator+'追加'
+                task=dict(id='line-control',document=DOC,old_person='加藤',new_person=new)
+                events=[]
+                def subject(task,document):
+                    return dict(updated_text=document.replace('役割：加藤','役割：'+new),changed_role='役割',
+                        previous_person='加藤',new_person=new,untouched_title='sibling.txt')
+                with self.assertRaises(RuntimeError):
+                    run_with_one_recovery(task,editor,subject,lambda event,data:events.append(event))
+                self.assertEqual(editor.replacements,0)
+                self.assertEqual(editor.saves,0)
+                self.assertNotIn('replacement_intent',events)
+                self.assertNotIn('one_recovery_admitted',events)
+
+    def test_empty_and_colon_guard_preserved(self):
+        for bad in ('','森：係'):
+            self.assertEqual(apply_role(DOC,'役割','加藤',bad)['outcome'],'REFUSE')
 
 
 if __name__ == '__main__':
