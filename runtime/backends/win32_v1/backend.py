@@ -370,10 +370,15 @@ class Win32Backend:
         self._target(target)
         return self.capture(target, frame, *region)
 
+    def configure_capture_artifacts(self, directory) -> None:
+        from .capture_artifacts import CaptureArtifacts
+        self.capture_artifacts = CaptureArtifacts(directory)
+
     def capture(self, target: str, frame: str, x: int, y: int,
                 w: int, h: int) -> dict[str, Any]:
         if w <= 0 or h <= 0:
             raise Win32BackendError("capture dimensions must be positive")
+        capture_started_ns = time.monotonic_ns()
         if frame == "window_client":
             hwnd = self._target(target)
             g = self.geometry(target)
@@ -391,8 +396,20 @@ class Win32Backend:
             raw = self._capture_hdc(0, x, y, w, h, print_window=False)
         else:
             raise Win32BackendError(f"unsupported capture frame {frame}")
-        return {"bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest(),
-                "width": w, "height": h}
+        capture_ended_ns = time.monotonic_ns()
+        row = {"bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest(),
+               "width": w, "height": h}
+        artifacts = getattr(self, "capture_artifacts", None)
+        if artifacts is not None:
+            row.update(target=target, frame=frame, region=[x, y, w, h],
+                       capture_started_ns=capture_started_ns,
+                       capture_ended_ns=capture_ended_ns)
+            try:
+                row["artifact"] = artifacts.write(raw, w, h)
+            except Exception as error:
+                # Keep the actual captured metadata; never recapture after a write failure.
+                row["artifact_error"] = repr(error)
+        return row
 
     def preflight(self, program: dict[str, Any]) -> None:
         current_target: str | None = None
