@@ -5,3 +5,5 @@ Retained source: f4d00311a26d5b1d9859f3c4818019238fd6223c. Two synthetic cross-w
 Packets are inert DATA ONLY base64(gzip(JSON)); do not execute received readers or actor sources to inspect them. Full ordinary source/test/log/receipt records include first failures and explicit public text projections. CLI source retains repeated-identity sum 240 from one unique response; candidate refuses before output creation; healthy two unique responses retain totals 120 each and privacy suppression.
 
 No provider/model/GUI experiment or consumed allocation replay. No task efficiency or production adoption claim. Local Python 3.11 ordinary accounting checks only; applicable main/platform/combined-tree and genuine nonauthor review remain. See #57 comment5972972527.
+
+Public projection correction V2: redact remaining own home prefix in GREEN.json and CLI RECEIPTS.json interpreter paths to OWN_HOME. Original byte hashes remain separate; runtime/source/test and all scientific/ordinary outcomes unchanged. Earlier published projection omission retained privately; old fixed proposal superseded before votes.
