@@ -1,0 +1,260 @@
+{
+  "schema": "clipboard36-oracle-v1",
+  "labels": {
+    "C01": "valid rich paste",
+    "C02": "valid plain paste",
+    "C03": "same summary changed HTML",
+    "C04": "same HTML changed plain",
+    "C05": "target preference reversed",
+    "C06": "HTML consumed but bold sanitized away",
+    "C07": "chosen format invisible but saved effect correct",
+    "C08": "external generation and owner mutation",
+    "C09": "no paste control",
+    "C10": "synthetic private-like content metadata control",
+    "C11": "task permits either representation and styling",
+    "C12": "unavailable content"
+  },
+  "cases": [
+    {
+      "id": "C01",
+      "target": "rich",
+      "reference_plain": "Alex",
+      "reference_html": "<p><b>Alex</b></p>",
+      "plain": "Alex",
+      "html": "<p><b>Alex</b></p>",
+      "generation": 1,
+      "current_generation": 1,
+      "current_owner": "fixture-source",
+      "paste": true,
+      "format_visible": true,
+      "contract": {
+        "text": "Alex",
+        "bold": true,
+        "formats": [
+          "text/html"
+        ]
+      }
+    },
+    {
+      "id": "C02",
+      "target": "plain",
+      "reference_plain": "Alex",
+      "reference_html": "<p><b>Alex</b></p>",
+      "plain": "Alex",
+      "html": "<p><b>Alex</b></p>",
+      "generation": 1,
+      "current_generation": 1,
+      "current_owner": "fixture-source",
+      "paste": true,
+      "format_visible": true,
+      "contract": {
+        "text": "Alex",
+        "bold": false,
+        "formats": [
+          "text/plain"
+        ]
+      }
+    },
+    {
+      "id": "C03",
+      "target": "rich",
+      "reference_plain": "Alex",
+      "reference_html": "<p><b>Alex</b></p>",
+      "plain": "Alex",
+      "html": "<p><b>Eve</b></p>",
+      "generation": 1,
+      "current_generation": 1,
+      "current_owner": "fixture-source",
+      "paste": true,
+      "format_visible": true,
+      "contract": {
+        "text": "Alex",
+        "bold": true,
+        "formats": [
+          "text/html"
+        ]
+      }
+    },
+    {
+      "id": "C04",
+      "target": "plain",
+      "reference_plain": "Alex",
+      "reference_html": "<p><b>Alex</b></p>",
+      "plain": "Eve",
+      "html": "<p><b>Alex</b></p>",
+      "generation": 1,
+      "current_generation": 1,
+      "current_owner": "fixture-source",
+      "paste": true,
+      "format_visible": true,
+      "contract": {
+        "text": "Alex",
+        "bold": false,
+        "formats": [
+          "text/plain"
+        ]
+      }
+    },
+    {
+      "id": "C05",
+      "target": "prefer_plain",
+      "reference_plain": "Alex",
+      "reference_html": "<p><b>Alex</b></p>",
+      "plain": "Alex",
+      "html": "<p><b>Alex</b></p>",
+      "generation": 1,
+      "current_generation": 1,
+      "current_owner": "fixture-source",
+      "paste": true,
+      "format_visible": true,
+      "contract": {
+        "text": "Alex",
+        "bold": true,
+        "formats": [
+          "text/html"
+        ]
+      }
+    },
+    {
+      "id": "C06",
+      "target": "sanitize",
+      "reference_plain": "Alex",
+      "reference_html": "<p><b>Alex</b></p>",
+      "plain": "Alex",
+      "html": "<p><b>Alex</b></p>",
+      "generation": 1,
+      "current_generation": 1,
+      "current_owner": "fixture-source",
+      "paste": true,
+      "format_visible": true,
+      "contract": {
+        "text": "Alex",
+        "bold": true,
+        "formats": [
+          "text/html"
+        ]
+      }
+    },
+    {
+      "id": "C07",
+      "target": "rich",
+      "reference_plain": "Alex",
+      "reference_html": "<p><b>Alex</b></p>",
+      "plain": "Alex",
+      "html": "<p><b>Alex</b></p>",
+      "generation": 1,
+      "current_generation": 1,
+      "current_owner": "fixture-source",
+      "paste": true,
+      "format_visible": false,
+      "contract": {
+        "text": "Alex",
+        "bold": true,
+        "formats": [
+          "text/html"
+        ]
+      }
+    },
+    {
+      "id": "C08",
+      "target": "rich",
+      "reference_plain": "Alex",
+      "reference_html": "<p><b>Alex</b></p>",
+      "plain": "Eve",
+      "html": "<p><b>Eve</b></p>",
+      "generation": 1,
+      "current_generation": 2,
+      "current_owner": "external-fixture-writer",
+      "paste": true,
+      "format_visible": true,
+      "contract": {
+        "text": "Alex",
+        "bold": true,
+        "formats": [
+          "text/html"
+        ]
+      }
+    },
+    {
+      "id": "C09",
+      "target": "rich",
+      "reference_plain": "Alex",
+      "reference_html": "<p><b>Alex</b></p>",
+      "plain": "Alex",
+      "html": "<p><b>Alex</b></p>",
+      "generation": 1,
+      "current_generation": 1,
+      "current_owner": "fixture-source",
+      "paste": false,
+      "format_visible": true,
+      "contract": {
+        "text": "Alex",
+        "bold": true,
+        "formats": [
+          "text/html"
+        ]
+      }
+    },
+    {
+      "id": "C10",
+      "target": "rich",
+      "reference_plain": "SYNTHETIC_TOKEN_01",
+      "reference_html": "<p><b>SYNTHETIC_TOKEN_01</b></p>",
+      "plain": "SYNTHETIC_TOKEN_01",
+      "html": "<p><b>SYNTHETIC_TOKEN_01</b></p>",
+      "generation": 1,
+      "current_generation": 1,
+      "current_owner": "fixture-source",
+      "paste": true,
+      "format_visible": true,
+      "contract": {
+        "text": "SYNTHETIC_TOKEN_01",
+        "bold": true,
+        "formats": [
+          "text/html"
+        ]
+      }
+    },
+    {
+      "id": "C11",
+      "target": "prefer_plain",
+      "reference_plain": "Alex",
+      "reference_html": "<p><b>Alex</b></p>",
+      "plain": "Alex",
+      "html": "<p><b>Alex</b></p>",
+      "generation": 1,
+      "current_generation": 1,
+      "current_owner": "fixture-source",
+      "paste": true,
+      "format_visible": true,
+      "contract": {
+        "text": "Alex",
+        "bold": null,
+        "formats": [
+          "text/plain",
+          "text/html"
+        ]
+      }
+    },
+    {
+      "id": "C12",
+      "target": "rich",
+      "reference_plain": "Alex",
+      "reference_html": "<p><b>Alex</b></p>",
+      "plain": null,
+      "html": null,
+      "generation": 1,
+      "current_generation": 1,
+      "current_owner": "fixture-source",
+      "paste": true,
+      "format_visible": true,
+      "contract": {
+        "text": "Alex",
+        "bold": true,
+        "formats": [
+          "text/html"
+        ]
+      }
+    }
+  ]
+}

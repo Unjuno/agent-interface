@@ -1,0 +1,30 @@
+{
+  "limitation": "Public projections do not restore withheld paths/PIDs. Original digests are provenance, not proof of external access.",
+  "original_records_retained_privately": true,
+  "transforms": [
+    {
+      "original_bytes": 1429,
+      "original_sha256": "ffedce754759c9e632b14dfe95dddf8268a4b89cf1638ab4777f82efe1d9f52b",
+      "path": "RUN_PLAN.json",
+      "public_bytes": 1415,
+      "public_sha256": "f1008e0395c48ac29385014e3721d578732b3b5c6d3d864bb236f7b11b1659c0",
+      "transformation": "Replace only private executable path; preserve all fixed parameters."
+    },
+    {
+      "original_bytes": 2762,
+      "original_sha256": "7cef5b6e42c171c27adb5f96c83641d806bd10a794f5d85e09c2ad71af5a9c60",
+      "path": "RUN_RECEIPTS.json",
+      "public_bytes": 2421,
+      "public_sha256": "153d117193f02571d71caf0590b99dc1b7b707a9c80d1c0d4931a7c920228cf9",
+      "transformation": "Withhold private executable/cwd/PIDs; preserve actual UTC, options, exits, counts and original log hashes."
+    },
+    {
+      "original_bytes": 6975,
+      "original_sha256": "3e211aa135acec8a19d8c93d0643eb28e2b9e4844ab577e76942bbf61827d6ea",
+      "path": "before-normal.stderr.log",
+      "public_bytes": 6829,
+      "public_sha256": "9551ccd51e195e66f04e7eaefce83aebac04c4b521525b76590b8242ae281256",
+      "transformation": "Replace only known private output-root prefix in unittest traceback filenames; original log retained privately."
+    }
+  ]
+}

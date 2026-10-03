@@ -1,0 +1,24 @@
+{
+  "audit_run_id": "CLIPBOARD-FORMATS-36-POSTHOC-V2-20261003-01",
+  "kind": "ordinary retained-raw repair verification, not formal candidate allocation",
+  "frozen_at": "2026-10-03T01:52:33.806201+00:00",
+  "sources": {
+    "audit_v2.py": "1c69a9fefb97f08ee25bd1256b8021f55a30d7bfb18ae021edc33f6163b3fd95",
+    "audit.py": "cda7697903b0cfdd9c2b83fadad0690552cfacc2ae83d08e38c2b642cb604641",
+    "oracle.json": "e745a5e3ec2503cbcf91c23530c6461d2a40bc5d744bfaa18f8d34b0abf6e0cc"
+  },
+  "raw_sha256": "31bdfa1a06a240adb4c4c61e71562dc0eaee0fdda4eff9f07414a1dfd69b1a85",
+  "candidate_invocations": 0,
+  "expected_audit_invocations": 1,
+  "command": [
+    "python3",
+    "-B",
+    "audit_v2.py",
+    "--oracle",
+    "oracle.json",
+    "--raw",
+    "formal/01/candidate/raw.json",
+    "--output",
+    "posthoc_v2/audit.json"
+  ]
+}
