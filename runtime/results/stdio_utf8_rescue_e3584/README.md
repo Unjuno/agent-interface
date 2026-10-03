@@ -18,7 +18,8 @@ The original auditor main writes RAW_AUDIT.json and is deliberately not invoked.
 No producer/child/native/model/formal run is replayed; full original process/control
 audit is not freshly repeated. Historical helpers remain inert .txt files.
 
-Local index CI completed43 steps without failures; index registration and PR
-publication remain pending. Existing
+Local index CI completed43 steps without failures; the analysis index links this
+historical counterexample. Full local CI and fresh read-only join outputs are
+retained alongside this note. Existing
 later decoder repairs retain separate source/claim boundaries. No branch deletion
 or whole-goal completion is claimed.
