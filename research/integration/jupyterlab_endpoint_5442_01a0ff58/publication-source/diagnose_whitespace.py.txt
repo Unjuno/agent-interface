@@ -1,0 +1,8 @@
+import datetime,hashlib,json,subprocess
+from pathlib import Path
+r=Path(__file__).resolve().parent;d=r/'whitespace-diagnostic-01';d.mkdir()
+cmd=['git','-C',str(r.parent/'agent-interface'),'-c','core.whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol','diff','--check','1089e144bcde387036c613972ff3f2f0c384dae4','81ed0d0d2951adbada685a22b5521b0b552fec9f']
+start=datetime.datetime.now(datetime.timezone.utc).isoformat();result=subprocess.run(cmd,capture_output=True)
+(d/'stdout.txt').write_bytes(result.stdout);(d/'stderr.txt').write_bytes(result.stderr)
+out=dict(started_utc=start,ended_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),command=cmd,returncode=result.returncode,stdout_bytes=len(result.stdout),stdout_sha256=hashlib.sha256(result.stdout).hexdigest(),stderr_bytes=len(result.stderr),diagnostic_lines=result.stdout.decode(errors='replace').splitlines()[:12])
+(d/'RESULT.json').write_text(json.dumps(out,indent=2),encoding='utf-8');print(json.dumps(out,ensure_ascii=False,indent=2))
