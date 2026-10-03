@@ -361,3 +361,5 @@ terminal close sampled an empty keymap. Neither source-boundary test is live
 input evidence. None of these results is a real X11, Docker, physical-key,
 application-effect, or gameplay result. See [`owner occurrence-binding T0`](map01_owner_occurrence_binding_59_t0_20261001/RESULT.md)
 and [`T1`](map01_owner_occurrence_binding_59_t1_20261002/RESULT.md).
+
+- [v39 remaining queue budget repair](results/v39-queue-budget-01a0ff2c/README.md): ordinary clock/queue and extracted-caller regressions; one wait-budget change, no hard total-deadline or live-task claim.
