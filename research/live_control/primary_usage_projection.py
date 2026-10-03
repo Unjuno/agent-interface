@@ -116,9 +116,9 @@ def main():
         selection = json.load(source)
     with open(args.session, encoding='utf-8') as source:
         result = project(source, selection)
+    encoded = json.dumps(result, ensure_ascii=False, indent=2) + '\n'
     with open(args.output, 'x', encoding='utf-8') as target:
-        json.dump(result, target, ensure_ascii=False, indent=2)
-        target.write('\n')
+        target.write(encoded)
 
 
 if __name__ == '__main__':
