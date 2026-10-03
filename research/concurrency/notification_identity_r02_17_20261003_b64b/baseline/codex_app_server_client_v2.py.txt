@@ -21,7 +21,6 @@ class CodexAppServerClient:
         self._write_lock = threading.Lock()
         self._responses = {}
         self._notifications = deque()
-        self._notification_consumptions = 0
         self._next_id = 1
         self._closed = False
         self._reader = threading.Thread(target=self._read, daemon=True)
@@ -90,28 +89,13 @@ class CodexAppServerClient:
         deadline = time.monotonic() + timeout
         with self._condition:
             while True:
-                # A nested public wait may consume rows while a predicate runs.
-                snapshot = tuple(self._notifications)
-                live_ids = {id(row) for row in snapshot}
-                generation = self._notification_consumptions
-                for message in snapshot:
-                    if generation != self._notification_consumptions:
-                        live_ids = {id(row) for row in self._notifications}
-                        generation = self._notification_consumptions
-                    if id(message) not in live_ids:
-                        continue
+                for index, message in enumerate(self._notifications):
                     if predicate(message):
-                        for index, row in enumerate(self._notifications):
-                            if row is message:
-                                del self._notifications[index]
-                                self._notification_consumptions += 1
-                                return message
+                        del self._notifications[index]
+                        return message
                 remaining = deadline - time.monotonic()
                 if remaining <= 0:
                     raise TimeoutError("app-server notification timed out")
-                snapshot_ids = {id(row) for row in snapshot}
-                if any(id(row) not in snapshot_ids for row in self._notifications):
-                    continue
                 if self._closed:
                     raise AppServerError("app-server closed while waiting: stderr not drained")
                 self._condition.wait(remaining)
