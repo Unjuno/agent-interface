@@ -343,7 +343,9 @@ def run_case(plan, root, ordinal, mode):
         useful = next((row for row in client["feedback"] if row["score"]["success"]), None)
         reconciliations = [row for row in events if row.get("event") == "semantic_probe_reconciled"]
         completed_model_records = [initial_model] + [row for row in adaptive["model_call_ledger"]]
-        total_input = sum(row["usage"]["input_tokens"] for row in completed_model_records)
+        total_input = (initial_model["usage"]["input_tokens"] +
+                       adaptive["accounting"]["usage_totals"]["input_tokens"]
+                       if adaptive["accounting"]["usage_totals"]["input_tokens"] is not None else None)
         expected_path = "local" if mode == "local" else "model_reacquisition"
         checks = {
             "old_contract_invalid": old_score["success"] is False,
@@ -366,11 +368,14 @@ def run_case(plan, root, ordinal, mode):
                               adaptive["accounting"]["attempted_calls"]}
         metrics = {"mutation_capture_to_caller_return_ms":
                    (recovery_completed_ns - mutation["capture_ns"]) / 1e6,
-                   "adaptive_model_wait_ms": (adaptive["accounting"]["model_wait_ns"] or 0) / 1e6,
+                   "adaptive_model_wait_ms": (None if adaptive["accounting"]["model_wait_ns"] is None
+                       else adaptive["accounting"]["model_wait_ns"] / 1e6),
                    "total_input_tokens": total_input,
-                   "total_model_calls": len(completed_model_records),
-                   "model_visible_images": initial_outcome["visible_images_submitted"] +
-                       (adaptive["accounting"]["visible_images_submitted"] or 0),
+                   "total_model_calls": 1 + adaptive["accounting"]["attempted_calls"],
+                   "completed_model_calls": len(completed_model_records),
+                   "model_visible_images": (None if adaptive["accounting"]["visible_images_submitted"] is None
+                       else initial_outcome["visible_images_submitted"] +
+                       adaptive["accounting"]["visible_images_submitted"]),
                    "client_exchanges": len(client["exchanges"])}
         report.update(status="COMPLETED", passed=all(checks.values()), checks=checks,
             goal=goal, source_observation=source, mutation_observation=mutation,
