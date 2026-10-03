@@ -2,7 +2,6 @@
 import {createInterface} from 'node:readline';
 import {readFile} from 'node:fs/promises';
 import {pathToFileURL} from 'node:url';
-import {TextDecoder} from 'node:util';
 import {createInstrumentedRelayClient} from './relay_host.mjs';
 import {createPrimaryExchange} from './primary_exchange.mjs';
 
@@ -25,45 +24,22 @@ export function validatePrimaryConfig(config) {
 
 function emit(output,value) {
   return new Promise((resolve,reject)=>{
-    let settled=false;
-    function finish(error) {
-      if(settled)return;
-      settled=true;output.removeListener('close',closed);
-      if(error)reject(error);else resolve();
-    }
-    function closed() {
-      const error=Error('primary output closed before write completion');
-      error.code='PRIMARY_OUTPUT_CLOSED';finish(error);
-    }
-    output.once('close',closed);
-    if(output.destroyed||output.closed||output.writableEnded){closed();return;}
-    try {output.write(JSON.stringify(value)+'\n',finish);}
-    catch(error){finish(error);}
+    try {output.write(JSON.stringify(value)+'\n',error=>error?reject(error):resolve());}
+    catch(error){reject(error);}
   });
 }
 
-export async function servePrimaryLines({exchange,input,output}) {
-  return serveOwnedPrimaryLines({exchange,input,output});
+export async function servePrimaryLines(options) {
+  return serveOwnedPrimaryLines(options);
 }
 
+// The whole owner must learn an inner fault before later stream events can
+// occupy its first-failure slot while the original accepted work is pending.
 async function serveOwnedPrimaryLines({exchange,input,output},observeFailure=()=>{}) {
-  const decoder=new TextDecoder('utf-8',{fatal:true,ignoreBOM:true});
-  let lines,pending=null,failure=null;
+  const lines=createInterface({input,terminal:false});
+  let pending=null,failure=null;
   const rejectedWrites=new Set();
-  function failed(error) {failure??=error;observeFailure(failure);input.pause();lines?.close();}
-  function validateBytes(chunk) {
-    if(failure)return;
-    try {
-      if(typeof chunk==='string')decoder.decode();
-      else decoder.decode(chunk,{stream:true});
-    } catch(error){failed(error);}
-  }
-  function finishBytes() {
-    if(failure)return;
-    try {decoder.decode();}catch(error){failed(error);}
-  }
-  input.on('data',validateBytes);input.on('end',finishBytes);
-  lines=createInterface({input,terminal:false});
+  function failed(error) {failure??=error;observeFailure(failure);input.pause();lines.close();}
   lines.on('error',failed);
   output.on('error',failed);
   input.on('error',failed);
@@ -106,7 +82,6 @@ async function serveOwnedPrimaryLines({exchange,input,output},observeFailure=()=
         // Finish observing that same promise before owner transport cleanup.
         await pending;await Promise.all(rejectedWrites);
         output.removeListener('error',failed);input.removeListener('error',failed);
-        input.removeListener('data',validateBytes);input.removeListener('end',finishBytes);
         if(failure)reject(failure);else resolve();
       })().catch(reject);
     });
@@ -130,10 +105,10 @@ export async function runPrimaryStdio(config,{input=process.stdin,output=process
       if(failure)throw failure;
       await serveOwnedPrimaryLines({exchange,input,output},failed);
     } catch(error){failure??=error;}
-    // Close only the original transport after EOF/failure. A failed output must
-    // not be written again in a finally block that hides its original exception.
+    // Observe the original host after any owned stream failure, including
+    // ready/terminal writes outside the inner line transport's lifetime.
     let exit;
-    try {if(host)exit=await host.close();}
+    if(host)try {exit=await host.close();}
     catch(error){
       if(failure)throw new AggregateError([failure,error],'primary stream and transport cleanup failed');
       throw error;

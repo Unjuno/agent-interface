@@ -1,0 +1,78 @@
+{
+  "kind": "returned",
+  "setup_passed": true,
+  "before_release": {
+    "settled": 0,
+    "code": null
+  },
+  "boundary": {
+    "observed": false,
+    "settled": 0,
+    "code": null
+  },
+  "settlements": 1,
+  "error": {
+    "name": "Error",
+    "message": "Cannot call write after a stream was destroyed",
+    "code": "ERR_STREAM_DESTROYED"
+  },
+  "fixture_start": {
+    "pid": 64347,
+    "ppid": 64342
+  },
+  "fixture_exit": {
+    "pid": 64347,
+    "ppid": 64342,
+    "code": 0,
+    "requests": 1,
+    "request_bytes": 72
+  },
+  "host_exit": {
+    "code": 0,
+    "signal": null
+  },
+  "fixture_absent": true,
+  "statuses": [
+    "ready",
+    "returned"
+  ],
+  "rows": [
+    {
+      "schema": "agent-interface/primary-stdio-v1",
+      "status": "ready",
+      "state": {
+        "next_id": 1,
+        "busy": false,
+        "stopped": null,
+        "caller_state": {
+          "stopped": null
+        }
+      }
+    },
+    {
+      "schema": "agent-interface/primary-stdio-v1",
+      "status": "returned",
+      "result": {
+        "id": 1,
+        "method": "call",
+        "presented_text": [
+          "{\"schema\":\"own-inert-echo-v1\",\"label\":\"original-held\"}"
+        ],
+        "images": [],
+        "attempt": 1,
+        "original_reply_path": "<OWN_WORKSPACE>/work/current-primary-output-close-v4/owner-red/evidence/output-close-owner/returned/exchange/original-reply-1.json",
+        "caller_state": {
+          "stopped": null
+        },
+        "next_id": 2
+      }
+    }
+  ],
+  "listeners": {
+    "input_errors": 0,
+    "output_errors": 1,
+    "output_closes": 1,
+    "foreign_error": true,
+    "foreign_close": true
+  }
+}

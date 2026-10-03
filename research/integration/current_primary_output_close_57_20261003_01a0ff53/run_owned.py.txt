@@ -1,0 +1,28 @@
+from pathlib import Path
+import datetime,hashlib,json,subprocess,sys
+W=Path(__file__).resolve().parent
+N=Path('/opt/homebrew/Cellar/node/26.7.0/bin/node')
+phase=sys.argv[1]
+out=W/phase;out.mkdir(exist_ok=False)
+source=W/'source'
+modules=['runtime/host_v1/test_primary_output_close.mjs']
+if phase.startswith('owner-'):modules=['runtime/host_v1/test_primary_output_close_owner.mjs']
+if phase=='owner-red':source=W/'baseline-source'
+if phase=='affected-green':modules=['runtime/host_v1/test_primary_stdio.mjs','runtime/host_v1/test_primary_stdio_backpressure.mjs','runtime/host_v1/test_primary_stdio_failure_order.mjs','runtime/host_v1/test_relay_host.mjs']+modules
+argv=[str(N),'--test','--test-reporter=tap']+modules
+env=__import__('os').environ.copy();env['PRIMARY_FAILURE_EVIDENCE']=str(out/'evidence');(out/'evidence').mkdir()
+stamp=lambda:datetime.datetime.now(datetime.timezone.utc).isoformat()
+sha=lambda b:hashlib.sha256(b).hexdigest()
+pins=[{'path':str(p.relative_to(source)),'bytes':len(p.read_bytes()),'sha256':sha(p.read_bytes())} for p in sorted(source.rglob('*')) if p.is_file()]
+plan={'schema':'owned-output-close-ordinary-v1','unit':'primary-output-close-entry-57-0975-20261003-a01','phase':phase,'freeze_utc':stamp(),'source_head_before':'2732dafc4fed0328ff332e05621521543c747628','argv':argv,'node_version':subprocess.check_output([str(N),'--version'],text=True).strip(),'node_sha256':sha(N.read_bytes()),'source':pins,'H':'error-free real output close settles the same write once while preserving original accepted work and first error','T':'real Writable direct boundary and relevant source-owned regression modules','D':'silent close rejects by observed close plus three setImmediate turns; busy accepted promise pending until original release; original execute count one; first object and foreign listener identities retained','C':'60 second outer timeout, 8 MiB output cap, owned inert fixture only','U':'finite scheduling observation, no hard deadline, delivery, GUI, physical release, shared/native/formal replay or main authority claim','main_sends':0,'received_producer_execution':False}
+(out/'PLAN.json').write_text(json.dumps(plan,indent=2)+'\n')
+start=stamp()
+with (out/'stdout.raw.txt').open('wb') as stdout,(out/'stderr.raw.txt').open('wb') as stderr:
+ p=subprocess.Popen(argv,cwd=source,env=env,stdout=stdout,stderr=stderr)
+ (out/'START.json').write_text(json.dumps({'started_utc':start,'pid':p.pid,'argv':argv},indent=2)+'\n')
+ timed=False
+ try:code=p.wait(timeout=60)
+ except subprocess.TimeoutExpired:timed=True;p.kill();code=p.wait()
+receipt={'started_utc':start,'ended_utc':stamp(),'pid':p.pid,'exit_code':code,'timed_out':timed,'streams':{n:{'bytes':len((out/n).read_bytes()),'sha256':sha((out/n).read_bytes())} for n in ['stdout.raw.txt','stderr.raw.txt']}}
+(out/'RECEIPT.json').write_text(json.dumps(receipt,indent=2)+'\n')
+print(json.dumps(receipt));sys.exit(code)
