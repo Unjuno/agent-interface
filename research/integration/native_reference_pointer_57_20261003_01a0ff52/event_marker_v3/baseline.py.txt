@@ -227,7 +227,7 @@ def expand_receipt(view):
                 or type(number) is not int or not 0 <= number < len(result['events'])):
             raise ValueError('invalid event reference')
         parent, key = _json_pointer(result, path)
-        if _encoded(parent[key]) != _encoded({'event_ref': number}):
+        if parent[key] != {'event_ref': number}:
             raise ValueError('event reference marker mismatch')
         parent[key] = copy.deepcopy(result['events'][number])
     result['schema'] = 'agent-interface/receipt-view-v1'
