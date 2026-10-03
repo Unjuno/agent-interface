@@ -288,15 +288,13 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                            call_id=getattr(error, "call_id", None),
                            error=repr(error))
             metadata_error = None
-            try:
-                attempt.update(usage=_usage(getattr(error, "usage", None)),
-                               visible_images_submitted=_optional_count(
-                                   getattr(error, "visible_images_submitted", None),
-                                   "visible_images_submitted"),
-                               wait_ns=_optional_count(getattr(error, "wait_ns", None), "wait_ns"))
-            except ValueError as invalid_metadata:
-                metadata_error = invalid_metadata
-                attempt["error"] += "; invalid failure accounting: " + repr(invalid_metadata)
+            for field in ("usage", "visible_images_submitted", "wait_ns"):
+                try:
+                    value = getattr(error, field, None)
+                    attempt[field] = _usage(value) if field == "usage" else _optional_count(value, field)
+                except ValueError as invalid_metadata:
+                    metadata_error = invalid_metadata
+                    attempt["error"] += "; invalid failure accounting: " + repr(invalid_metadata)
             stages[name] = {"status": "failed", "reason": repr(error)}
             phases.append({"stage": name, "started_ns": started, "ended_ns": ended,
                            "elapsed_ns": ended-started})

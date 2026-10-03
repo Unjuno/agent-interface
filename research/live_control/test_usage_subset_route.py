@@ -42,3 +42,19 @@ class UsageSubsetRoute(unittest.TestCase):
         self.assertEqual(r['accounting']['attempted_calls'],1)
         self.assertEqual(r['accounting']['completed_calls'],0)
         self.assertIsNone(r['accounting']['cost'])
+    def test_one_invalid_failure_field_preserves_other_available_fields(self):
+        for invalid in ['usage','wait_ns','visible_images_submitted']:
+            with self.subTest(invalid=invalid):
+                def model(_):
+                    error=coverage.ModelFailure('mixed metadata',call_id='mixed-call',usage={'input_tokens':10},wait_ns=23,visible_images_submitted=1)
+                    setattr(error,invalid,{'input_tokens':10,'cached_input_tokens':11} if invalid=='usage' else -1)
+                    raise error
+                r=coverage.CostCoverage().route('mixed-error-usage',coarse='model',coarse_fn=model)
+                ROWS.append({'case':'mixed_failure_metadata','invalid_field':invalid,'result':r})
+                a=r['attempt_ledger'][0]
+                self.assertEqual(a['status'],'failed')
+                self.assertEqual(a['usage'],None if invalid=='usage' else {'input_tokens':10})
+                self.assertEqual(a['wait_ns'],None if invalid=='wait_ns' else 23)
+                self.assertEqual(a['visible_images_submitted'],None if invalid=='visible_images_submitted' else 1)
+                self.assertEqual(r['outcome'],'CALLER_FAILED')
+                self.assertIsNone(r['accounting']['cost'])
