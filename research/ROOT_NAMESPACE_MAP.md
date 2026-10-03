@@ -44,6 +44,7 @@ New work should normally use a category directory. Existing direct-root paths re
 - [`results/`](results/) — retained native-handle result bundles; each bundle's report defines its scope and status.
 - [`audits/`](audits/) — retained independent audit/review bundles; use the referenced source snapshot and allocation to interpret each result.
 - [`recovery/`](recovery/) — preserved source/evidence recovery capsules for interrupted or parallel research allocations; each status file records provenance and disposition without replacing the original result.
+- [`reviews/`](reviews/) — retained author preparation and review evidence; consult each packet's failure, custody and authority qualifications, not a current integration or native-effect certificate.
 
 - [`x11/`](x11/)
 
