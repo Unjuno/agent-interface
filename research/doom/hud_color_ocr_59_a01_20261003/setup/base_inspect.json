@@ -1,0 +1,19 @@
+{
+  "returncode": 0,
+  "stdout": "[\n    {\n        \"Id\": \"sha256:a853f94d226358a79c740cfc7bce0c289748f3fe3488d921d038ccd752c61b60\",\n        \"RepoTags\": [\n            \"ubuntu:24.04\"\n        ],\n        \"RepoDigests\": [\n            \"ubuntu@sha256:a853f94d226358a79c740cfc7bce0c289748f3fe3488d921d038ccd752c61b60\"\n        ],\n        \"Created\": \"2026-09-18T21:23:13.773952469Z\",\n        \"Config\": {\n            \"Env\": [\n                \"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\"\n            ],\n            \"Cmd\": [\n                \"/bin/bash\"\n            ],\n            \"Labels\": {\n                \"org.opencontainers.image.version\": \"24.04\"\n            }\n        },\n        \"Architecture\": \"arm64\",\n        \"Variant\": \"v8\",\n        \"Os\": \"linux\",\n        \"Size\": 28949266,\n        \"RootFS\": {\n            \"Type\": \"layers\",\n            \"Layers\": [\n                \"sha256:1e9178dc90058fa454a60803300219ee8c17e515be8718817ed824b96fa1207b\"\n            ]\n        },\n        \"Metadata\": {\n            \"LastTagTime\": \"2026-10-03T09:05:06.522661443Z\"\n        },\n        \"Descriptor\": {\n            \"mediaType\": \"application/vnd.oci.image.index.v1+json\",\n            \"digest\": \"sha256:a853f94d226358a79c740cfc7bce0c289748f3fe3488d921d038ccd752c61b60\",\n            \"size\": 6688\n        }\n    }\n]\n",
+  "stderr": "",
+  "command": [
+    "orbctl",
+    "run",
+    "-m",
+    "research-59-hud-ocr-5ce3-20261003",
+    "-u",
+    "root",
+    "docker",
+    "image",
+    "inspect",
+    "ubuntu:24.04"
+  ],
+  "started_utc": "2026-10-03T09:05:33.920782+00:00",
+  "elapsed_ns": 90835917
+}
