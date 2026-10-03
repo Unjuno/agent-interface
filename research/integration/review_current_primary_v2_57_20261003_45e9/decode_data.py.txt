@@ -1,0 +1,16 @@
+"""Decode retained comments as inert data. Execute no received helper."""
+from pathlib import Path
+import base64,gzip,hashlib,json,re
+r=Path(__file__).resolve().parent
+def sha(b):return hashlib.sha256(b).hexdigest()
+specs=[
+('PACKET_COMMENT.json','DECODED_PACKET.json',14493,'1acb50daea97de6c79da48133e4a512a32bc25d0b4afedde8dd0efb896a24529',97638,'c4e56996a9ed39cb65289b80b193069d2b52bc7c9aefbbaed895fcb5a269bc18'),
+('SUPPLEMENT_COMMENT.json','DECODED_SUPPLEMENT.json',2108,'369801e4c336ea73b68b2c0f8eba9e3124f5adf2b685a4c71f373e4d514a10f5',6935,'f4f284876984ceba754ed94fdc425361eb0d05f5963a5b337ee880401d7f538a')]
+for src,dst,zn,zh,bn,bh in specs:
+ c=json.loads((r/src).read_bytes())
+ m=re.search(r'```base64\+gzip\s*([\s\S]*?)```',c['body']);assert m
+ z=base64.b64decode(''.join(m[1].split()),validate=True);assert len(z)==zn and sha(z)==zh
+ b=gzip.decompress(z);assert len(b)==bn and sha(b)==bh
+ d=json.loads(b);(r/dst).write_bytes(b)
+ print(json.dumps({'packet':src,'bytes':len(b),'sha256':sha(b),'top_keys':list(d),'member_shapes':[{'keys':list(x),'path':x.get('path')} for x in d.get('files',[])]}))
+
