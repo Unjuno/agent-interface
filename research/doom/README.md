@@ -363,3 +363,5 @@ application-effect, or gameplay result. See [`owner occurrence-binding T0`](map0
 and [`T1`](map01_owner_occurrence_binding_59_t1_20261002/RESULT.md).
 
 - [V39 startup composition V2](v39_startup_composition_b04b_v2/README.md): current EOF/reader/journal-close and no-drain dependencies, original error and callback custody evidence; V1 adoption remains withheld, prospective review required.
+
+- [V39 startup diagnostics V3](v39_startup_diagnostics_b04b_v3/README.md): preserve the primary exception across diagnostic hooks and record failures; V2 adoption withheld, fresh review required.

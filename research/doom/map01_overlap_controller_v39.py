@@ -454,6 +454,31 @@ def temporal_sheet(sources, target):
     sheet.save(target,optimize=True)
 
 
+def _startup_exception_text(error, use_repr=False):
+    """Diagnostic hooks must not replace the original startup exception."""
+    try:
+        return repr(error) if use_repr else str(error)
+    except BaseException:
+        return "<exception text unavailable>"
+
+
+def _startup_exception_details(error):
+    try:
+        name = type(error).__name__
+    except BaseException:
+        name = "<exception type unavailable>"
+    return {"type": name, "message": _startup_exception_text(error)}
+
+
+def _note_startup_exception(error, note):
+    try:
+        add_note = getattr(error, "add_note", None)
+        if add_note is not None:
+            add_note(note)
+    except BaseException:
+        pass
+
+
 def _close_failed_startup(process, reader_thread, planner_client, out):
     """Close acquired startup resources; no input-release attestation."""
     receipt = {"schema": "map01-startup-cleanup-v1", "session_exit_code": None,
@@ -480,17 +505,17 @@ def _close_failed_startup(process, reader_thread, planner_client, out):
                                 "startup stderr exceeded 65536 bytes; retained prefix")
                             break
             except Exception as error:
-                receipt["errors"].append("stderr retention: " + repr(error))
+                receipt["errors"].append("stderr retention: " + _startup_exception_text(error, use_repr=True))
         try:
             stderr_thread = threading.Thread(target=retain_stderr, daemon=True)
             stderr_thread.start()
         except Exception as error:
-            receipt["errors"].append("stderr reader start: " + repr(error))
+            receipt["errors"].append("stderr reader start: " + _startup_exception_text(error, use_repr=True))
             stderr_thread = None
         try:
             process.stdin.close()
         except Exception as error:
-            receipt["errors"].append("stdin close: " + repr(error))
+            receipt["errors"].append("stdin close: " + _startup_exception_text(error, use_repr=True))
         for operation in ("wait", "terminate", "kill"):
             if process.poll() is not None:
                 break
@@ -502,7 +527,7 @@ def _close_failed_startup(process, reader_thread, planner_client, out):
             except subprocess.TimeoutExpired:
                 continue
             except Exception as error:
-                receipt["errors"].append(operation + ": " + repr(error))
+                receipt["errors"].append(operation + ": " + _startup_exception_text(error, use_repr=True))
         receipt["session_exit_code"] = process.poll()
         if receipt["session_exit_code"] is None:
             receipt["errors"].append("owned session still running")
@@ -512,7 +537,7 @@ def _close_failed_startup(process, reader_thread, planner_client, out):
                 reader_thread.join(timeout=1)
             receipt["reader_joined"] = not reader_thread.is_alive()
         except Exception as error:
-            receipt["errors"].append("stdout reader join: " + repr(error))
+            receipt["errors"].append("stdout reader join: " + _startup_exception_text(error, use_repr=True))
         if not receipt["reader_joined"]:
             receipt["errors"].append("stdout reader still running")
     if stderr_thread is not None:
@@ -521,7 +546,7 @@ def _close_failed_startup(process, reader_thread, planner_client, out):
             receipt["stderr_reader_joined"] = not stderr_thread.is_alive()
         except Exception as error:
             receipt["stderr_reader_joined"] = False
-            receipt["errors"].append("stderr reader join: " + repr(error))
+            receipt["errors"].append("stderr reader join: " + _startup_exception_text(error, use_repr=True))
         if not receipt["stderr_reader_joined"]:
             receipt["errors"].append("stderr reader still running")
     if process is not None and receipt["session_exit_code"] is not None:
@@ -533,14 +558,14 @@ def _close_failed_startup(process, reader_thread, planner_client, out):
                 try:
                     stream.close()
                 except Exception as error:
-                    receipt["errors"].append("stream close: " + repr(error))
+                    receipt["errors"].append("stream close: " + _startup_exception_text(error, use_repr=True))
     try:
         planner_client.close(timeout=1)
         receipt["client_closed"] = True
         atexit.unregister(planner_client.close)
     except Exception as error:
         # Leave the existing exit-time callback registered after a failed close.
-        receipt["errors"].append("planner close: " + repr(error))
+        receipt["errors"].append("planner close: " + _startup_exception_text(error, use_repr=True))
     return receipt
 
 
@@ -614,15 +639,15 @@ def main():
         latest = wait(lambda r:r["event"] == "observation")
     except BaseException as startup_error:
         cleanup = _close_failed_startup(process, reader_thread, planner_client, args.out)
-        cleanup["startup_error"] = {"type": type(startup_error).__name__, "message": str(startup_error)}
-        cleanup["startup_events"] = list(all_events)
+        cleanup["startup_error"] = _startup_exception_details(startup_error)
         try:
+            cleanup["startup_events"] = list(all_events)
             (args.out / "startup-cleanup.json").write_text(json.dumps(cleanup, indent=2) + "\n")
-        except OSError as record_error:
-            if hasattr(startup_error, "add_note"):
-                startup_error.add_note("startup cleanup record failed: " + repr(record_error))
-        if cleanup["errors"] and hasattr(startup_error, "add_note"):
-            startup_error.add_note("startup cleanup incomplete; see startup-cleanup.json")
+        except BaseException as record_error:
+            _note_startup_exception(startup_error, "startup cleanup record failed: " +
+                                    _startup_exception_text(record_error, use_repr=True))
+        if cleanup["errors"]:
+            _note_startup_exception(startup_error, "startup cleanup incomplete; see startup-cleanup.json")
         raise
     decisions=[];model_session_id=planner.thread_id
     program_admissions=0
