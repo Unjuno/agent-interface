@@ -102,6 +102,55 @@ class ScorerCommandService(unittest.TestCase):
         self.assertEqual(commands, [])
         self.assertEqual(io.events, [])
 
+    def test_polling_retains_trailing_misses_at_finish_eof_and_sample_cap(self):
+        for sample_cost, sink_cost in ((3*PERIOD, 0), (0, 3*PERIOD)):
+            for terminal in ("finish", "eof", "sample_cap"):
+                with self.subTest(sample_cost=sample_cost, sink_cost=sink_cost, terminal=terminal):
+                    clock, io, receipts, samples, sample, sink, loop = self.fixture(sample_cost, sink_cost)
+                    if terminal == "eof":
+                        io.chunks = [b""]
+                    stats = loop.run(0, sample_fn=sample, scorer_sink=sink,
+                        command_handler=lambda line: False,
+                        max_samples=1 if terminal == "sample_cap" else 3)
+                    self.assertEqual(stats.samples, 1)
+                    self.assertEqual(stats.missed_sample_periods, 2)
+                    self.assertEqual(stats.commands, int(terminal == "finish"))
+                    self.assertEqual(stats.eof, terminal == "eof")
+                    self.assertEqual(receipts[0]["missed_periods_before"], 0)
+
+    def test_stdin_snapshot_accounts_pending_misses_without_double_counting(self):
+        for sample_cost, sink_cost in ((3*PERIOD, 0), (0, 3*PERIOD)):
+            for terminal in ("finish", "eof"):
+                with self.subTest(sample_cost=sample_cost, sink_cost=sink_cost, terminal=terminal):
+                    clock, io, receipts, samples, sample, sink, loop = self.fixture(sample_cost, sink_cost)
+                    if terminal == "eof":
+                        io.chunks = [b""]
+                    adapter = MainThreadScorerStdin(Stream(), sample, sink, loop=loop)
+                    self.assertEqual(adapter.stats()["missed_sample_periods"], 0)
+                    if terminal == "eof":
+                        with self.assertRaises(StopIteration):
+                            next(adapter)
+                    else:
+                        self.assertEqual(next(adapter), FINISH)
+                    self.assertEqual(adapter.stats()["missed_sample_periods"], 2)
+                    self.assertEqual(adapter.stats()["missed_sample_periods"], 2)
+                    self.assertEqual(adapter.samples, 1)
+                    self.assertEqual(receipts[0]["missed_periods_before"], 0)
+            with self.subTest(sample_cost=sample_cost, sink_cost=sink_cost, continuing=True):
+                clock, io, receipts, samples, sample, sink, loop = self.fixture(sample_cost, sink_cost)
+                io.chunks = [b"continue\n"]
+                adapter = MainThreadScorerStdin(Stream(), sample, sink, loop=loop)
+                self.assertEqual(next(adapter), "continue")
+                self.assertEqual(adapter.stats()["missed_sample_periods"], 2)
+                io.chunks = [FINISH.encode() + b"\n"]
+                adapter.sample_fn = lambda: {"scorer_private": 17}
+                adapter.sink = receipts.append
+                self.assertEqual(next(adapter), FINISH)
+                self.assertEqual(adapter.stats()["missed_sample_periods"], 2)
+                self.assertEqual(adapter.stats()["missed_sample_periods"], 2)
+                self.assertEqual(adapter.samples, 2)
+                self.assertEqual(receipts[-1]["missed_periods_before"], 2)
+
     def test_v13_uses_repaired_stdin_and_real_separate_scorer_sink(self):
         clock = Clock()
         io = ReadyInput(clock)
@@ -141,7 +190,7 @@ class ScorerCommandService(unittest.TestCase):
                     raise RuntimeError("finite fake-session sample budget")
                 sample_calls.append(threading.get_ident())
                 payload = sample_fn()
-                clock.ns += loop.period_ns
+                clock.ns += 3 * loop.period_ns
                 return payload
             return real_adapter(stream, costly_sample, sink, sample_hz=sample_hz, loop=loop)
         with tempfile.TemporaryDirectory() as tmp:
@@ -159,6 +208,7 @@ class ScorerCommandService(unittest.TestCase):
             self.assertEqual(set(sample_calls + [x[1] for x in seen]), {threading.get_ident()})
             self.assertEqual(summary["scheduler"]["samples"], 1)
             self.assertEqual(summary["scheduler"]["commands"], 1)
+            self.assertEqual(summary["scheduler"]["missed_sample_periods"], 2)
             self.assertEqual(len(rows), 2)
             self.assertIs(rows[-1]["direct_final_sample"], True)
             self.assertTrue(all(row["controller_visible"] is False for row in rows))

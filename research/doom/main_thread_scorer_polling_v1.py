@@ -153,6 +153,9 @@ class MainThreadScorerPolling:
                 break
 
         ended_ns = self.clock_ns()
+        # Include skips a next due sample would account, without emitting it.
+        # Keep the current due slot, as the ordinary elapsed-period rule does.
+        missed_periods += max(0, (ended_ns - next_sample_ns) // self.period_ns)
         return PollingStats(
             owner_thread_id=owner_thread_id,
             samples=sample_count,

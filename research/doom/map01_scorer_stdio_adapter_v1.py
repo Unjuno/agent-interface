@@ -65,4 +65,6 @@ class MainThreadScorerStdin:
             self.buffer.extend(chunk)
             if len(self.buffer)>self.loop.max_buffer_bytes:raise ValueError('command buffer exceeded max_buffer_bytes')
     def stats(self):
-        return {'owner_thread_id':self.owner_thread,'samples':self.samples,'commands':self.commands,'missed_sample_periods':self.missed,'eof':self.eof,'sample_hz':1e9/self.loop.period_ns}
+        # Snapshot skips the next sample would account; do not mutate them twice.
+        pending=0 if self.next_sample_ns is None else max(0,(self.loop.clock_ns()-self.next_sample_ns)//self.loop.period_ns)
+        return {'owner_thread_id':self.owner_thread,'samples':self.samples,'commands':self.commands,'missed_sample_periods':self.missed+pending,'eof':self.eof,'sample_hz':1e9/self.loop.period_ns}
