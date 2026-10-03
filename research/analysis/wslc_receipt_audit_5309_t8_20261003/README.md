@@ -17,4 +17,3 @@ This is an offline successor to the formal `STOP_HOST_RECEIPT_SCHEMA_MISMATCH` o
 The eight mutation tests passed before the formal CLI validation. After the preregistration files are present on the draft PR, run `python -B verify_receipt.py inputs/audit.stdout.json` exactly once. Preserve stdout, stderr and exit status under `stage-output/`; do not retry, even if the validator fails.
 
 The new validator uses the actual immutable auditor schema. The original T7 verifier and its failing run remain unchanged in the predecessor evidence package.
-
