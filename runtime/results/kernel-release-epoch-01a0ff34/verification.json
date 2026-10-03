@@ -1,0 +1,123 @@
+[
+  {
+    "label": "kernel-normal",
+    "argv": [
+      "python",
+      "-m",
+      "unittest",
+      "runtime.kernel.test_kernel",
+      "runtime.kernel.test_release_epoch",
+      "-v"
+    ],
+    "cwd": "repository",
+    "started_utc": "2026-10-03T00:50:46.107089+00:00",
+    "ended_utc": "2026-10-03T00:50:46.219470+00:00",
+    "exit_code": 0
+  },
+  {
+    "label": "kernel-optimized",
+    "argv": [
+      "python",
+      "-O",
+      "-m",
+      "unittest",
+      "runtime.kernel.test_kernel",
+      "runtime.kernel.test_release_epoch",
+      "-v"
+    ],
+    "cwd": "repository",
+    "started_utc": "2026-10-03T00:50:46.219470+00:00",
+    "ended_utc": "2026-10-03T00:50:46.354959+00:00",
+    "exit_code": 0
+  },
+  {
+    "label": "audit-mutations",
+    "argv": [
+      "python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "runtime/results/kernel-release-epoch-01a0ff34",
+      "-p",
+      "test_audit.py",
+      "-v"
+    ],
+    "cwd": "repository",
+    "started_utc": "2026-10-03T00:50:46.356082+00:00",
+    "ended_utc": "2026-10-03T00:50:46.461287+00:00",
+    "exit_code": 0
+  },
+  {
+    "label": "compile",
+    "argv": [
+      "python",
+      "-m",
+      "compileall",
+      "-q",
+      "runtime/kernel",
+      "runtime/results/kernel-release-epoch-01a0ff34"
+    ],
+    "cwd": "repository",
+    "started_utc": "2026-10-03T00:50:46.463291+00:00",
+    "ended_utc": "2026-10-03T00:50:46.539814+00:00",
+    "exit_code": 0
+  },
+  {
+    "label": "diff-check",
+    "argv": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "cwd": "repository",
+    "started_utc": "2026-10-03T00:50:46.539814+00:00",
+    "ended_utc": "2026-10-03T00:50:46.621133+00:00",
+    "exit_code": 0
+  },
+  {
+    "label": "missing-guard",
+    "argv": [
+      "python",
+      "-m",
+      "unittest",
+      "runtime.kernel.test_kernel",
+      "runtime.kernel.test_release_epoch",
+      "-v"
+    ],
+    "cwd": "isolated mutation copy",
+    "started_utc": "2026-10-03T00:50:46.628331+00:00",
+    "ended_utc": "2026-10-03T00:50:46.745255+00:00",
+    "exit_code": 1
+  },
+  {
+    "label": "reversed-guard",
+    "argv": [
+      "python",
+      "-m",
+      "unittest",
+      "runtime.kernel.test_kernel",
+      "runtime.kernel.test_release_epoch",
+      "-v"
+    ],
+    "cwd": "isolated mutation copy",
+    "started_utc": "2026-10-03T00:50:46.750702+00:00",
+    "ended_utc": "2026-10-03T00:50:46.873381+00:00",
+    "exit_code": 1
+  },
+  {
+    "label": "reject-equality",
+    "argv": [
+      "python",
+      "-m",
+      "unittest",
+      "runtime.kernel.test_kernel",
+      "runtime.kernel.test_release_epoch",
+      "-v"
+    ],
+    "cwd": "isolated mutation copy",
+    "started_utc": "2026-10-03T00:50:46.882983+00:00",
+    "ended_utc": "2026-10-03T00:50:46.999482+00:00",
+    "exit_code": 1
+  }
+]
