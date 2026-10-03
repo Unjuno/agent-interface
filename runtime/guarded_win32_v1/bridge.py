@@ -87,7 +87,7 @@ class MoveBridge:
         return True
 
     def neutral(self):
-        if self.backend.held_keys or self.backend.held_buttons:
+        if self.backend.held_keys or self.backend.held_buttons or getattr(self.backend, 'pending_unicode_ups', ()):
             self.session.recovery_required = True
             return False
         return True

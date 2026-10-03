@@ -1,5 +1,7 @@
 # Caller-owned guarded Win32 move prototype
 
+Input neutrality checks tracked keys, buttons and pending Unicode UP delivery. Unicode bookkeeping follows adopted main #7253: accepted DOWN remains pending until accepted UP, with one compensation attempt per pending unit per explicit release. Failed Unicode compensation retains the unit while ordinary release continues. Pending delivery refuses preparation and guarded movement; after a completed move it keeps semantic effect unknown and requires explicit recovery. Delivery acknowledgement does not establish physical neutrality or application success. Recovery never restores a consumed movement permission.
+
 This opt-in module prepares a full-client image reference and dispatches one pointer move through ordinary core admission and Win32 session cleanup. It reuses the existing `runtime.guarded_x11_v1` image-history and reference modules; importing it does not load Xlib or open a native session. Pillow is required. It depends on the accompanying private Win32 backend/session changes and is not a default runtime route.
 
 The caller supplies an exclusively owned backend, target and artifact directory to `FreshWin32Reference`. Observe the full client `[0,0,width,height]`, then mint an alias with a textured pixel box. Geometry, HWND and foreground focus are pinned. Partial-client reference creation and window handoff are unsupported. Aliases currently expire after 1000ms; there is no automatic remint or renewal.

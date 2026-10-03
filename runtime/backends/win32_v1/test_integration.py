@@ -149,6 +149,45 @@ class PureWin32HelperTests(unittest.TestCase):
                     self.assertEqual(dll.events[-3:], ["delete_bitmap", "delete_dc", "release_dc"])
 
 
+    def _unicode_delivery_backend(self,failures=()):
+        trace=[];failures=set(failures)
+        b=Win32Backend.__new__(Win32Backend)
+        b.held_keys={};b.held_buttons=set();b.pending_unicode_ups=set()
+        def send(unit,down):
+            trace.append((unit,down))
+            if len(trace) in failures:raise Win32BackendError('injected send failure')
+        b._send_unicode_unit=send
+        return b,trace
+    def test_unicode_delivery_healthy(self):
+        b,t=self._unicode_delivery_backend();b.text('AA');self.assertEqual(t,[(65,True),(65,False)]*2);self.assertEqual(b.pending_unicode_ups,set())
+    def test_unicode_delivery_down_failure(self):
+        b,t=self._unicode_delivery_backend((1,));self.assertRaises(Win32BackendError,b.text,'A');self.assertEqual(b.pending_unicode_ups,set())
+    def test_unicode_delivery_up_failure_and_compensation(self):
+        b,t=self._unicode_delivery_backend((2,));self.assertRaises(Win32BackendError,b.text,'A');self.assertEqual(b.pending_unicode_ups,{65});b.release_all();self.assertEqual(t,[(65,True),(65,False),(65,False)]);self.assertEqual(b.pending_unicode_ups,set())
+    def test_unicode_delivery_compensation_failure_retains(self):
+        b,t=self._unicode_delivery_backend((2,3));self.assertRaises(Win32BackendError,b.text,'A');self.assertRaises(Win32BackendError,b.release_all);self.assertEqual(b.pending_unicode_ups,{65});self.assertEqual(len(t),3)
+    def test_unicode_delivery_pending_refuses_new_text(self):
+        b,t=self._unicode_delivery_backend();b.pending_unicode_ups.add(65);self.assertRaises(Win32BackendError,b.text,'B');self.assertEqual(t,[])
+    def test_unicode_delivery_surrogate_first_unit_failure_stops(self):
+        b,t=self._unicode_delivery_backend((2,));self.assertRaises(Win32BackendError,b.text,'\U0001f642');self.assertEqual(b.pending_unicode_ups,{0xd83d});self.assertEqual(t,[(0xd83d,True),(0xd83d,False)])
+
+
+    def test_unicode_delivery_failure_still_releases_regular_key(self):
+        backend, trace = self._unicode_delivery_backend((1,))
+        backend.pending_unicode_ups.add(65)
+        backend.held_keys["CTRL"] = 17
+        regular = []
+        backend._send_key = lambda vk, down: regular.append((vk, down))
+        class State:
+            def GetAsyncKeyState(self, vk):
+                return 0
+        backend.user32 = State()
+        with self.assertRaises(Win32BackendError):
+            backend.release_all()
+        self.assertEqual(regular, [(17, False)])
+        self.assertEqual(backend.pending_unicode_ups, {65})
+
+
 @unittest.skipUnless(sys.platform == "win32", "requires native Windows")
 class Win32IntegrationTests(unittest.TestCase):
     @classmethod

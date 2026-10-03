@@ -170,6 +170,7 @@ class Win32Backend:
                 raise Win32BackendError(f"invalid HWND for target {name}")
         self.held_keys: dict[str, int] = {}
         self.held_buttons: set[str] = set()
+        self.pending_unicode_ups: set[int] = set()
         self.emissions = 0
 
     def _configure_api(self) -> None:
@@ -299,9 +300,13 @@ class Win32Backend:
             self.key_state(key, False)
 
     def text(self, value: str) -> None:
+        if self.pending_unicode_ups:
+            raise Win32BackendError("unresolved Unicode UP delivery")
         for unit in utf16_units(value):
             self._send_unicode_unit(unit, True)
+            self.pending_unicode_ups.add(unit)
             self._send_unicode_unit(unit, False)
+            self.pending_unicode_ups.remove(unit)
 
     def pointer_move(self, target: str, frame: str, x: int, y: int) -> None:
         rx, ry = self._root_point(target, frame, x, y)
@@ -459,6 +464,16 @@ class Win32Backend:
                 raise Win32BackendError(f"unsupported button {op['button']}")
 
     def release_all(self) -> dict[str, Any]:
+        # Compensate unmatched Unicode delivery once; failure retains the unit.
+        # This acknowledges UP insertion, not physical or application state.
+        unicode_error = None
+        for unit in sorted(getattr(self, "pending_unicode_ups", ())):
+            try:
+                self._send_unicode_unit(unit, False)
+            except Exception as error:
+                unicode_error = unicode_error or error
+            else:
+                self.pending_unicode_ups.remove(unit)
         tracked_keys = dict(self.held_keys)
         tracked_buttons = set(self.held_buttons)
         for vk in list(self.held_keys.values()):
@@ -479,6 +494,8 @@ class Win32Backend:
             if name not in keys:
                 self.held_keys.pop(name, None)
         self.held_buttons.difference_update(tracked_buttons - set(buttons))
+        if unicode_error is not None:
+            raise unicode_error
         return {"keys_down": keys, "buttons_down": buttons,
                 "verified": not keys and not buttons,
                 "monotonic_ns": time.monotonic_ns()}
