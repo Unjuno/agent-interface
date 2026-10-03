@@ -1,0 +1,36 @@
+{
+  "checked_utc": "2026-10-03T12:09:42.856662+00:00",
+  "checks": [
+    {
+      "argv": [
+        "python",
+        "research/analysis/backpressure_5372_telemetry_cap_20261003_api/check_construction.py"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "python",
+        "research/analysis/backpressure_5372_telemetry_cap_20261003_api/verify_saved.py"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "python",
+        "research/analysis/check_index.py"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "source_git_blob_identity": true,
+  "scope": "sparse-checkout index check; absent siblings not validated, no producer/reference rerun"
+}

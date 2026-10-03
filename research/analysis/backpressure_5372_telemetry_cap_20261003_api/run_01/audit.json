@@ -1,0 +1,1219 @@
+{
+  "audit": "PASS_EXACT_FINITE_REFERENCE",
+  "comparisons": {
+    "cap_less_than_rate_cap": 0,
+    "cap_less_than_report_cap": 0,
+    "cap_more_than_rate_cap": 2601,
+    "cap_more_than_report_cap": 2535
+  },
+  "counts": {
+    "cap_only": {
+      "admitted": 22797,
+      "max_peak": 2,
+      "overflow_cases": 0,
+      "pending_cases": 0,
+      "unknown": 10008,
+      "verified": 22797
+    },
+    "rate_cap": {
+      "admitted": 19710,
+      "max_peak": 2,
+      "overflow_cases": 0,
+      "pending_cases": 0,
+      "unknown": 13095,
+      "verified": 19710
+    },
+    "report_cap": {
+      "admitted": 14841,
+      "max_peak": 2,
+      "overflow_cases": 0,
+      "pending_cases": 0,
+      "unknown": 17964,
+      "verified": 14841
+    },
+    "report_only": {
+      "admitted": 19291,
+      "max_peak": 9,
+      "overflow_cases": 2251,
+      "pending_cases": 531,
+      "unknown": 13514,
+      "verified": 18421
+    }
+  },
+  "decision": "SUBSUMED_BY_AUTHORITATIVE_CAP_SCOPED",
+  "effective_corruptions_rejected": [
+    "missing_offer",
+    "forged_verified",
+    "hidden_overflow",
+    "lost_safety",
+    "wrong_report",
+    "cross_task_completion"
+  ],
+  "raw_sha256": "469e411a3a301396a96ce7526503174d114fdb1b0108494d5c5178046e7facc8",
+  "rows": 6561,
+  "witnesses": {
+    "overflow": {
+      "arms": {
+        "cap_only": {
+          "admitted": 2,
+          "peak": 2,
+          "pending": [],
+          "safety_serviced": 8,
+          "trace": [
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:0",
+              "tick": 0
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:1",
+              "tick": 1
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:2",
+              "tick": 2
+            },
+            {
+              "actions": [
+                [
+                  "3:0",
+                  "ADMIT"
+                ]
+              ],
+              "completed": null,
+              "occupancy": 1,
+              "pending": [
+                "3:0"
+              ],
+              "report": 0,
+              "safety": "safety:3",
+              "tick": 3
+            },
+            {
+              "actions": [
+                [
+                  "4:0",
+                  "ADMIT"
+                ],
+                [
+                  "4:1",
+                  "UNKNOWN"
+                ]
+              ],
+              "completed": "3:0",
+              "occupancy": 2,
+              "pending": [
+                "4:0"
+              ],
+              "report": 0,
+              "safety": "safety:4",
+              "tick": 4
+            },
+            {
+              "actions": [],
+              "completed": "4:0",
+              "occupancy": 1,
+              "pending": [],
+              "report": 1,
+              "safety": "safety:5",
+              "tick": 5
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 1,
+              "safety": "safety:6",
+              "tick": 6
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:7",
+              "tick": 7
+            }
+          ],
+          "unknown": 1,
+          "verified": 2
+        },
+        "rate_cap": {
+          "admitted": 2,
+          "peak": 2,
+          "pending": [],
+          "safety_serviced": 8,
+          "trace": [
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:0",
+              "tick": 0
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:1",
+              "tick": 1
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:2",
+              "tick": 2
+            },
+            {
+              "actions": [
+                [
+                  "3:0",
+                  "ADMIT"
+                ]
+              ],
+              "completed": null,
+              "occupancy": 1,
+              "pending": [
+                "3:0"
+              ],
+              "report": 0,
+              "safety": "safety:3",
+              "tick": 3
+            },
+            {
+              "actions": [
+                [
+                  "4:0",
+                  "ADMIT"
+                ],
+                [
+                  "4:1",
+                  "UNKNOWN"
+                ]
+              ],
+              "completed": "3:0",
+              "occupancy": 2,
+              "pending": [
+                "4:0"
+              ],
+              "report": 0,
+              "safety": "safety:4",
+              "tick": 4
+            },
+            {
+              "actions": [],
+              "completed": "4:0",
+              "occupancy": 1,
+              "pending": [],
+              "report": 1,
+              "safety": "safety:5",
+              "tick": 5
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 1,
+              "safety": "safety:6",
+              "tick": 6
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:7",
+              "tick": 7
+            }
+          ],
+          "unknown": 1,
+          "verified": 2
+        },
+        "report_cap": {
+          "admitted": 2,
+          "peak": 2,
+          "pending": [],
+          "safety_serviced": 8,
+          "trace": [
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:0",
+              "tick": 0
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:1",
+              "tick": 1
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:2",
+              "tick": 2
+            },
+            {
+              "actions": [
+                [
+                  "3:0",
+                  "ADMIT"
+                ]
+              ],
+              "completed": null,
+              "occupancy": 1,
+              "pending": [
+                "3:0"
+              ],
+              "report": 0,
+              "safety": "safety:3",
+              "tick": 3
+            },
+            {
+              "actions": [
+                [
+                  "4:0",
+                  "ADMIT"
+                ],
+                [
+                  "4:1",
+                  "UNKNOWN"
+                ]
+              ],
+              "completed": "3:0",
+              "occupancy": 2,
+              "pending": [
+                "4:0"
+              ],
+              "report": 0,
+              "safety": "safety:4",
+              "tick": 4
+            },
+            {
+              "actions": [],
+              "completed": "4:0",
+              "occupancy": 1,
+              "pending": [],
+              "report": 1,
+              "safety": "safety:5",
+              "tick": 5
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 1,
+              "safety": "safety:6",
+              "tick": 6
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:7",
+              "tick": 7
+            }
+          ],
+          "unknown": 1,
+          "verified": 2
+        },
+        "report_only": {
+          "admitted": 3,
+          "peak": 3,
+          "pending": [],
+          "safety_serviced": 8,
+          "trace": [
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:0",
+              "tick": 0
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:1",
+              "tick": 1
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:2",
+              "tick": 2
+            },
+            {
+              "actions": [
+                [
+                  "3:0",
+                  "ADMIT"
+                ]
+              ],
+              "completed": null,
+              "occupancy": 1,
+              "pending": [
+                "3:0"
+              ],
+              "report": 0,
+              "safety": "safety:3",
+              "tick": 3
+            },
+            {
+              "actions": [
+                [
+                  "4:0",
+                  "ADMIT"
+                ],
+                [
+                  "4:1",
+                  "ADMIT"
+                ]
+              ],
+              "completed": "3:0",
+              "occupancy": 3,
+              "pending": [
+                "4:0",
+                "4:1"
+              ],
+              "report": 0,
+              "safety": "safety:4",
+              "tick": 4
+            },
+            {
+              "actions": [],
+              "completed": "4:0",
+              "occupancy": 2,
+              "pending": [
+                "4:1"
+              ],
+              "report": 1,
+              "safety": "safety:5",
+              "tick": 5
+            },
+            {
+              "actions": [],
+              "completed": "4:1",
+              "occupancy": 1,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:6",
+              "tick": 6
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 1,
+              "safety": "safety:7",
+              "tick": 7
+            }
+          ],
+          "unknown": 0,
+          "verified": 3
+        }
+      },
+      "arrivals": [
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "delay": 1,
+      "mode": "honest",
+      "service": "alternate"
+    },
+    "rate_cap": {
+      "arms": {
+        "cap_only": {
+          "admitted": 2,
+          "peak": 2,
+          "pending": [],
+          "safety_serviced": 8,
+          "trace": [
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:0",
+              "tick": 0
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:1",
+              "tick": 1
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:2",
+              "tick": 2
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:3",
+              "tick": 3
+            },
+            {
+              "actions": [
+                [
+                  "4:0",
+                  "ADMIT"
+                ],
+                [
+                  "4:1",
+                  "ADMIT"
+                ]
+              ],
+              "completed": "4:0",
+              "occupancy": 2,
+              "pending": [
+                "4:1"
+              ],
+              "report": 0,
+              "safety": "safety:4",
+              "tick": 4
+            },
+            {
+              "actions": [],
+              "completed": "4:1",
+              "occupancy": 1,
+              "pending": [],
+              "report": 1,
+              "safety": "safety:5",
+              "tick": 5
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:6",
+              "tick": 6
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:7",
+              "tick": 7
+            }
+          ],
+          "unknown": 0,
+          "verified": 2
+        },
+        "rate_cap": {
+          "admitted": 1,
+          "peak": 1,
+          "pending": [],
+          "safety_serviced": 8,
+          "trace": [
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:0",
+              "tick": 0
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:1",
+              "tick": 1
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:2",
+              "tick": 2
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:3",
+              "tick": 3
+            },
+            {
+              "actions": [
+                [
+                  "4:0",
+                  "ADMIT"
+                ],
+                [
+                  "4:1",
+                  "UNKNOWN"
+                ]
+              ],
+              "completed": "4:0",
+              "occupancy": 1,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:4",
+              "tick": 4
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:5",
+              "tick": 5
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:6",
+              "tick": 6
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:7",
+              "tick": 7
+            }
+          ],
+          "unknown": 1,
+          "verified": 1
+        },
+        "report_cap": {
+          "admitted": 2,
+          "peak": 2,
+          "pending": [],
+          "safety_serviced": 8,
+          "trace": [
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:0",
+              "tick": 0
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:1",
+              "tick": 1
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:2",
+              "tick": 2
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:3",
+              "tick": 3
+            },
+            {
+              "actions": [
+                [
+                  "4:0",
+                  "ADMIT"
+                ],
+                [
+                  "4:1",
+                  "ADMIT"
+                ]
+              ],
+              "completed": "4:0",
+              "occupancy": 2,
+              "pending": [
+                "4:1"
+              ],
+              "report": 0,
+              "safety": "safety:4",
+              "tick": 4
+            },
+            {
+              "actions": [],
+              "completed": "4:1",
+              "occupancy": 1,
+              "pending": [],
+              "report": 1,
+              "safety": "safety:5",
+              "tick": 5
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:6",
+              "tick": 6
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:7",
+              "tick": 7
+            }
+          ],
+          "unknown": 0,
+          "verified": 2
+        },
+        "report_only": {
+          "admitted": 2,
+          "peak": 2,
+          "pending": [],
+          "safety_serviced": 8,
+          "trace": [
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:0",
+              "tick": 0
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:1",
+              "tick": 1
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:2",
+              "tick": 2
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:3",
+              "tick": 3
+            },
+            {
+              "actions": [
+                [
+                  "4:0",
+                  "ADMIT"
+                ],
+                [
+                  "4:1",
+                  "ADMIT"
+                ]
+              ],
+              "completed": "4:0",
+              "occupancy": 2,
+              "pending": [
+                "4:1"
+              ],
+              "report": 0,
+              "safety": "safety:4",
+              "tick": 4
+            },
+            {
+              "actions": [],
+              "completed": "4:1",
+              "occupancy": 1,
+              "pending": [],
+              "report": 1,
+              "safety": "safety:5",
+              "tick": 5
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:6",
+              "tick": 6
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 0,
+              "safety": "safety:7",
+              "tick": 7
+            }
+          ],
+          "unknown": 0,
+          "verified": 2
+        }
+      },
+      "arrivals": [
+        0,
+        0,
+        0,
+        0,
+        2
+      ],
+      "delay": 0,
+      "mode": "honest",
+      "service": "unit"
+    },
+    "report_cap": {
+      "arms": {
+        "cap_only": {
+          "admitted": 1,
+          "peak": 1,
+          "pending": [],
+          "safety_serviced": 8,
+          "trace": [
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:0",
+              "tick": 0
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:1",
+              "tick": 1
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:2",
+              "tick": 2
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:3",
+              "tick": 3
+            },
+            {
+              "actions": [
+                [
+                  "4:0",
+                  "ADMIT"
+                ]
+              ],
+              "completed": "4:0",
+              "occupancy": 1,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:4",
+              "tick": 4
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:5",
+              "tick": 5
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:6",
+              "tick": 6
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:7",
+              "tick": 7
+            }
+          ],
+          "unknown": 0,
+          "verified": 1
+        },
+        "rate_cap": {
+          "admitted": 1,
+          "peak": 1,
+          "pending": [],
+          "safety_serviced": 8,
+          "trace": [
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:0",
+              "tick": 0
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:1",
+              "tick": 1
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:2",
+              "tick": 2
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:3",
+              "tick": 3
+            },
+            {
+              "actions": [
+                [
+                  "4:0",
+                  "ADMIT"
+                ]
+              ],
+              "completed": "4:0",
+              "occupancy": 1,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:4",
+              "tick": 4
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:5",
+              "tick": 5
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:6",
+              "tick": 6
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:7",
+              "tick": 7
+            }
+          ],
+          "unknown": 0,
+          "verified": 1
+        },
+        "report_cap": {
+          "admitted": 0,
+          "peak": 0,
+          "pending": [],
+          "safety_serviced": 8,
+          "trace": [
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:0",
+              "tick": 0
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:1",
+              "tick": 1
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:2",
+              "tick": 2
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:3",
+              "tick": 3
+            },
+            {
+              "actions": [
+                [
+                  "4:0",
+                  "UNKNOWN"
+                ]
+              ],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:4",
+              "tick": 4
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:5",
+              "tick": 5
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:6",
+              "tick": 6
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:7",
+              "tick": 7
+            }
+          ],
+          "unknown": 1,
+          "verified": 0
+        },
+        "report_only": {
+          "admitted": 0,
+          "peak": 0,
+          "pending": [],
+          "safety_serviced": 8,
+          "trace": [
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:0",
+              "tick": 0
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:1",
+              "tick": 1
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:2",
+              "tick": 2
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:3",
+              "tick": 3
+            },
+            {
+              "actions": [
+                [
+                  "4:0",
+                  "UNKNOWN"
+                ]
+              ],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:4",
+              "tick": 4
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:5",
+              "tick": 5
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:6",
+              "tick": 6
+            },
+            {
+              "actions": [],
+              "completed": null,
+              "occupancy": 0,
+              "pending": [],
+              "report": 2,
+              "safety": "safety:7",
+              "tick": 7
+            }
+          ],
+          "unknown": 1,
+          "verified": 0
+        }
+      },
+      "arrivals": [
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "delay": 0,
+      "mode": "high",
+      "service": "unit"
+    }
+  }
+}
