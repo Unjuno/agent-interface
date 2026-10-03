@@ -14,4 +14,4 @@ D: 11 exact files; unit6/6; actual saved receipt rejected; raw manifest6/6 misma
 C: unit PASS is not receipt PASS; suffix relation is not execution authentication; WSLc allocation remains consumed.
 U: no new candidate/auditor/container/formal execution, verifier repair, Windows runtime, speed/memory/backend/task or product certificate.
 
-Local CI is recorded separately in `local-ci.log`. Current macOS OrbStack image loading has an operation-not-supported daemon-blob STOP; no reset, prune, pull or shared VM was used.
+Local CI completed with exit0 and `LOCAL_CI_SUMMARY: steps=43 failures=[]`, recorded separately in `local-ci.log`. Current macOS OrbStack image loading has an operation-not-supported daemon-blob STOP; no reset, prune, pull or shared VM was used.
