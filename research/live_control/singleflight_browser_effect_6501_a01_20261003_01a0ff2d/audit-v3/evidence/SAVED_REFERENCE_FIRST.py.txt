@@ -1,0 +1,85 @@
+import copy,hashlib,json
+from pathlib import Path
+root=Path(__file__).resolve().parent.parent;out=root/'outputs/6920-audit-v3';source=root/'work/repairs/6920-audit-v3'
+def sha(data):return hashlib.sha256(data).hexdigest()
+def encoded(value):return json.dumps(value,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode()+b'\n'
+client=json.loads((source/'inputs/client.json').read_bytes());server=json.loads((source/'inputs/server.json').read_bytes())
+
+def forward_reference(s):
+    returned={};bad=[];segment=-1
+    for index,event in enumerate(s['events']):
+        kind=event['event']
+        if kind=='setup':segment+=1;returned={}
+        elif kind=='read_return':returned[event['evidence_ref']]=(index,event['ns'])
+        elif kind=='commit':
+            pair=returned.get(event['evidence_ref'])
+            if pair is None or not(type(pair[1]) is int and type(event['ns']) is int and pair[0]<index and pair[1]<=event['ns']):
+                bad.append({'segment':segment,'index':index,'evidence_ref':event['evidence_ref']})
+    return bad
+
+def validate(entry,s,expected_sha):
+    assert sha(encoded(s))==expected_sha,'exact saved copy bytes'
+    bad=forward_reference(s)
+    result=entry['result']
+    if bad:
+        assert any(v.endswith(':server_return_before_effect') for v in result['errors']),'missing causal refusal'
+        assert result['equivalent_cohort_latency_gain_observed'] is None,'benefit on invalid evidence'
+    else:
+        assert result['errors']==[],'positive causal record refused'
+        assert result['equivalent_cohort_latency_gain_observed'] is True,'original fixture result lost'
+    return len(bad)
+
+receipts=[];saved=[]
+for stage,exitcode,pid in [('red',1,28560),('final-normal',0,20176),('final-optimized',0,28640)]:
+    d=out/stage;r=json.loads((d/'RECEIPT.json').read_bytes())
+    assert type(r['pid']) is int and r['pid']==pid and type(r['exit_code']) is int and r['exit_code']==exitcode
+    assert sha((d/'executed-audit.py.txt').read_bytes())==r['audit_sha256']
+    assert sha((d/'executed-regressions.py.txt').read_bytes())==r['test_sha256']=='a0f7a023e99ee5057b6fde0a05cf29770a204baf25517aa74fe0f966cc9baf60'
+    for n,m in r['streams'].items():assert (d/n).stat().st_size==m['bytes'] and sha((d/n).read_bytes())==m['sha256']
+    rows=json.loads((d/'results/rows.json').read_bytes());assert len(rows)==125
+    negatives=[e for e in rows if e['label'].startswith('commit-before-own-return/')];assert len(negatives)==25
+    for e in negatives:
+        index=e['label'].rsplit('/',1)[1];s=json.loads((d/'results/copies'/('server-'+index+'.json')).read_bytes())
+        assert sha(encoded(s))==e['server_sha256'] and sha(encoded(client))==e['client_sha256']
+        assert len(forward_reference(s))==1
+        if stage=='red':assert e['result']['errors']==[] and e['result']['equivalent_cohort_latency_gain_observed'] is True
+        else:assert validate(e,s,e['server_sha256'])==1
+    positives=[e for e in rows if e['label'] in ('original','server-origin-plus-one','client-origin-plus-one','equal-server-clock-ordered-seq')]
+    assert len(positives)==4
+    if stage!='red':
+        for e in positives:
+            s=copy.deepcopy(server)
+            if e['label']=='server-origin-plus-one':
+                for event in s['events']:event['ns']+=1
+            elif e['label']=='equal-server-clock-ordered-seq':
+                for event in s['events']:event['ns']=1
+            validate(e,s,e['server_sha256'])
+    extras=[e for e in rows if e not in negatives and e not in positives and 'result' in e]
+    assert len(extras)==84 and all(e['result']['errors'] and e['result']['equivalent_cohort_latency_gain_observed'] is None for e in extras)
+    controls=[e for e in rows if 'control_result' in e]
+    assert len(controls)==12 and all(e['control_result']['rejected'] is True for e in controls)
+    receipts.append(r);saved.append(rows)
+assert saved[1]==saved[2]
+first=saved[1][0];assert first['label'].startswith('commit-before-own-return/')
+s=json.loads((out/'final-normal/results/copies/server-6.json').read_bytes())
+assert first['server_sha256']=='714fd93b3c26fdbfbdb7862d5ff91122308e4ac78f115b58b2e6cb563148e3b9'
+challenges=[]
+def reject(name,entry,data):
+    try:validate(entry,data,first['server_sha256'])
+    except AssertionError as error:challenges.append({'name':name,'rejected':True,'reason':str(error)})
+    else:raise AssertionError('ineffective control '+name)
+e=copy.deepcopy(first);e['result']['errors']=[];e['result']['equivalent_cohort_latency_gain_observed']=True;reject('erase-causal-refusal',e,s)
+e=copy.deepcopy(first);e['result']['equivalent_cohort_latency_gain_observed']=True;reject('false-benefit',e,s)
+changed=copy.deepcopy(s);commit=next(e for e in changed['events'] if e['event']=='commit');commit['evidence_ref']='read-2';reject('alter-actual-referenced-read',first,changed)
+positive=next(e for e in saved[1] if e['label']=='original');entry=copy.deepcopy(positive);entry['result']['errors']=['false-causal-refusal']
+try:validate(entry,server,positive['server_sha256'])
+except AssertionError as error:challenges.append({'name':'false-positive-refusal','rejected':True,'reason':str(error)})
+else:raise AssertionError('positive control ineffective')
+result={'kind':'same-author separately expressed one-pass saved-event causal reference, not nonauthor vote',
+        'commands':[{k:r[k] for k in ('stage','pid','start_utc','end_utc','exit_code','audit_sha256','test_sha256')} for r in receipts],
+        'rows_per_command':125,'total_saved_rows':375,'negative_copies_per_command':25,'old_copies_per_command':84,'existing_controls_per_command':12,
+        'causal_positive_per_command':4,'red_false_acceptance_count':25,'final_causal_false_acceptance_count':0,
+        'effective_saved_controls':challenges,'first_peer_witness_matches':True,'final_rows_normal_optimized_equal':True,
+        'producer_browser_client_server_model_formal_replay':False,'reference_native_pid_start_end_not_captured':True}
+(out/'SAVED_REFERENCE.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8',newline='\n')
+print(json.dumps(result,indent=2))
