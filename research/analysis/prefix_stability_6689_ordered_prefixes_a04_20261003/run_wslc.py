@@ -42,14 +42,17 @@ def main(mode):
 
     environment = dict(os.environ)
     environment["PYTHONDONTWRITEBYTECODE"] = "1"
+    started_at = datetime.now(timezone.utc)
     process = subprocess.run(command, cwd=str(PACKAGE), env=environment, capture_output=True, text=True)
+    completed_at = datetime.now(timezone.utc)
     (OUTPUT / "stdout.txt").write_text(process.stdout, encoding="utf-8", newline="\n")
     (OUTPUT / "stderr.txt").write_text(process.stderr, encoding="utf-8", newline="\n")
     after = frozen_hashes()
     receipt = {
         "mode": mode,
         "command": command,
-        "started_at_utc": datetime.now(timezone.utc).isoformat(),
+        "started_at_utc": started_at.isoformat(),
+        "completed_at_utc": completed_at.isoformat(),
         "exit_code": process.returncode,
         "frozen_sha256_before": before,
         "frozen_sha256_after": after,

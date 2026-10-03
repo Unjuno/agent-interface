@@ -1,7 +1,13 @@
 {
   "schema": "ordered-prefix-a04-freeze-v1",
-  "status": "FROZEN_BEFORE_FORMAL_INVOCATION",
-  "frozen_at_utc": "2026-10-03T10:12:35Z",
+  "status": "FINAL_FREEZE_BEFORE_FORMAL_INVOCATION",
+  "frozen_at_utc": "2026-10-03T10:14:59Z",
+  "preformal_corrections": [
+    {
+      "commit": "7b26a46a25210a452d263a7e34440807286b5369",
+      "reason": "Before any formal process ran, corrected the invocation receipt to capture both start and completion timestamps around the child process."
+    }
+  ],
   "issue": 6809,
   "allocation": "PREFIX-STABILITY-6689-ORDERED-PREFIXES-A04-WSLC-20261003-01",
   "base_main": "10fba1d3c9aa0a6fbf39983cdcda099a10df497c",
@@ -46,6 +52,6 @@
     "candidate.py": "25abfa8d52dae74ea17bc5931535180238fe1631989a26a7698c2019ae07c577",
     "auditor.py": "f11fae013015927e16f57beb760d705fc65cb181258ecf6e0a99953873bb75b5",
     "test_method.py": "04dcfcb1566ae7b77164a854eee8bf27b9b673ee8891643a7659d1a59f650bfc",
-    "run_wslc.py": "1f72f8b5f7e443c80f5a9a1d6212a93afe2af062fa3857b5f6fa68f93de6aa21"
+    "run_wslc.py": "d0758d79175d620b9253fcc3e946f4da34a5f439cc8044d4f8a5665c5318d88c"
   }
 }
