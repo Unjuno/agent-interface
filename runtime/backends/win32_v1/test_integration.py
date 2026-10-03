@@ -6,6 +6,7 @@ import sys
 import tempfile
 import time
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 from runtime.core_v1.contract import SCHEMA_PROGRAM, office_readiness
@@ -38,6 +39,86 @@ def make_program(pid: str, *, seq=7, revision=3, expires=None, text="office", ta
 
 
 class PureWin32HelperTests(unittest.TestCase):
+    def check_release_case(self, mode, case):
+        backend = object.__new__(Win32Backend)
+        backend.held_keys = {'A': 65} if mode != 'button' else {}
+        backend.held_buttons = {'left'} if mode != 'key' else set()
+        original_keys = dict(backend.held_keys)
+        original_buttons = set(backend.held_buttons)
+        down = set(original_keys.values()) | ({1} if original_buttons else set())
+        events = []
+        call = 0
+        faulted = False
+
+        def emit(vk):
+            nonlocal faulted
+            events.append(('up', vk))
+            if case == 'send_error' and not faulted:
+                faulted = True
+                raise RuntimeError('synthetic send failure')
+            if case != 'persistent' and not (case == 'eventual' and call == 1):
+                down.discard(vk)
+
+        def query(vk):
+            nonlocal faulted
+            events.append(('query', vk))
+            if case == 'query_error' and not faulted:
+                faulted = True
+                raise RuntimeError('synthetic query failure')
+            return 0x8000 if vk in down else 0
+
+        backend._send_key = lambda vk, pressed: emit(vk)
+        backend._send = lambda item: emit(1)
+        backend.user32 = type('State', (), {'GetAsyncKeyState': staticmethod(query)})()
+        with patch('runtime.backends.win32_v1.backend.time.sleep'), patch(
+            'runtime.backends.win32_v1.backend.time.monotonic_ns', return_value=100
+        ):
+            for call in (1, 2):
+                if call == 1 and case in ('send_error', 'query_error'):
+                    with self.assertRaisesRegex(RuntimeError, 'synthetic'):
+                        backend.release_all()
+                    self.assertEqual(backend.held_keys, original_keys)
+                    self.assertEqual(backend.held_buttons, original_buttons)
+                    continue
+                receipt = backend.release_all()
+                self.assertIs(receipt['verified'], not down)
+                self.assertEqual(set(backend.held_keys.values()), down & {65})
+                self.assertEqual(backend.held_buttons, {'left'} if 1 in down else set())
+                self.assertEqual(receipt['keys_down'], ['A'] if 65 in down else [])
+                self.assertEqual(receipt['buttons_down'], ['left'] if 1 in down else [])
+                self.assertEqual(receipt['monotonic_ns'], 100)
+                if case == 'persistent':
+                    self.assertFalse(receipt['verified'])
+                if case == 'eventual':
+                    self.assertIs(receipt['verified'], call == 2)
+        if case == 'healthy':
+            self.assertEqual(len([e for e in events if e[0] == 'up']), len(original_keys) + len(original_buttons))
+
+    def test_healthy(self):
+        for mode in ('key', 'button', 'mixed'):
+            with self.subTest(mode=mode):
+                self.check_release_case(mode, 'healthy')
+
+    def test_persistent(self):
+        for mode in ('key', 'button', 'mixed'):
+            with self.subTest(mode=mode):
+                self.check_release_case(mode, 'persistent')
+
+    def test_eventually_clear(self):
+        for mode in ('key', 'button', 'mixed'):
+            with self.subTest(mode=mode):
+                self.check_release_case(mode, 'eventual')
+
+    def test_query_exception_preserves_tracking(self):
+        for mode in ('key', 'button', 'mixed'):
+            with self.subTest(mode=mode):
+                self.check_release_case(mode, 'query_error')
+
+    def test_send_exception_preserves_tracking(self):
+        for mode in ('key', 'button', 'mixed'):
+            with self.subTest(mode=mode):
+                self.check_release_case(mode, 'send_error')
+
     def test_utf16_units(self):
         self.assertEqual(utf16_units("office"), tuple(ord(ch) for ch in "office"))
         self.assertEqual(utf16_units("😀"), (0xD83D, 0xDE00))
