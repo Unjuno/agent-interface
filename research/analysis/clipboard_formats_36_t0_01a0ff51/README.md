@@ -2,8 +2,11 @@
 
 Prospective Qt/offscreen method fixture for the multi-representation refinement
 in [Issue #36](https://github.com/Unjuno/agent-interface/issues/36).
-See [the frozen protocol](PREREGISTRATION.md). The formal outcome has not yet
-been observed at this source version. No shared runtime is modified.
+See [the frozen protocol](PREREGISTRATION.md) and [executed report](REPORT.md).
+The one-shot candidate and separate auditor returned PASS_METHOD_SCOPED:
+12 saved fixtures, ten specific-reason corruption rejections. Exact saved-effect
+checking made mandatory format-request visibility unnecessary in this fixture.
+No shared runtime is modified, and #36's native/cross-application gate stays open.
 
 The test uses actual Qt paste/document behavior and independent saved-state
 verification. It compares diagnostic metadata/effect judgments on the same
