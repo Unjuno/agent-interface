@@ -126,7 +126,7 @@ def validate_backend_manifest(manifest: dict[str, Any]) -> dict[str, Any]:
 
     platform = manifest.get("platform")
     _need(isinstance(platform, dict), "platform must be object")
-    _need(platform.get("os") in OS_NAMES, "unsupported os name")
+    _need(isinstance(platform.get("os"), str) and platform["os"] in OS_NAMES, "unsupported os name")
     _need(
         isinstance(platform.get("backend"), str) and 1 <= len(platform["backend"]) <= 48,
         "invalid platform backend",
@@ -138,12 +138,14 @@ def validate_backend_manifest(manifest: dict[str, Any]) -> dict[str, Any]:
     _need(not unknown, f"unknown capabilities: {sorted(unknown)}")
     for capability, row in capabilities.items():
         _need(isinstance(row, dict), f"capability {capability} must be object")
-        _need(row.get("state") in CAPABILITY_STATES, f"invalid state for {capability}")
+        _need(isinstance(row.get("state"), str) and row["state"] in CAPABILITY_STATES,
+              f"invalid state for {capability}")
         detail = row.get("detail", "")
         _need(isinstance(detail, str) and len(detail) <= 256, f"invalid detail for {capability}")
 
     frames = manifest.get("coordinate_frames")
     _need(isinstance(frames, list) and frames, "coordinate_frames must be non-empty list")
+    _need(all(isinstance(frame, str) for frame in frames), "coordinate_frames must contain strings")
     _need(len(frames) == len(set(frames)), "duplicate coordinate frame")
     _need(set(frames) <= COORDINATE_FRAMES, "unknown coordinate frame")
 
