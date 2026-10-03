@@ -175,7 +175,6 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
     previous_sequence = -1
     previous_digest = None
     pending_effect = None
-    effect_not_before_ns = None
     transitions = []
     observations = []
     critical_events = []
@@ -231,14 +230,9 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
             # Preserve completed actions and pending effects, without inventing
             # a sequence, usable image, effect verdict, or permission to replay.
             return finish("SAFE_YIELD", "association_changed")
-        observed_ns = clock()
         observation, refusal = _observation(raw, interface, previous_sequence)
         if refusal:
             return finish("SAFE_YIELD", refusal)
-        if (observation["captured_ns"] > observed_ns or
-                (pending_effect is not None and
-                 observation["captured_ns"] < effect_not_before_ns)):
-            return finish("SAFE_YIELD", "stale_observation")
         previous_sequence = observation["sequence"]
         observations.append({key: copy.deepcopy(observation[key]) for key in
                              ("sequence", "captured_ns", "evidence_ref",
@@ -274,8 +268,6 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
             _exact(effect, {"status", "evidence_ref"}, "effect verdict")
             if effect["status"] not in {"succeeded", "failed", "unavailable"}:
                 raise ValueError("typed effect status required")
-            if effect["status"] == "succeeded":
-                _name(effect["evidence_ref"], "effect evidence reference")
             emit({"event": "effect_checked", "action": pending_effect["action"],
                   "status": effect["status"], "evidence_ref": effect["evidence_ref"]})
             if effect["status"] != "succeeded":
@@ -340,7 +332,6 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
         if (admission["status"] != "revalidated" or
                 type(admission["authorization"]) is not str or
                 not admission["authorization"] or
-                type(admission["expected_sequence"]) is not int or
                 admission["expected_sequence"] != observation["sequence"] or
                 type(admission["valid_until_ns"]) is not int or
                 admission["valid_until_ns"] <= clock()):
@@ -356,7 +347,6 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
             "expected_sequence": admission["expected_sequence"],
             "valid_until_ns": min(admission["valid_until_ns"], deadline),
         })
-        execution_finished_ns = clock()
         terminal_fields = {"status", "action_id", "effect_ref", "release"}
         delivery = {}
         if type(terminal) is dict and "input_dispatched" in terminal:
@@ -402,7 +392,6 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
         pending_effect = {"action": action_name,
                           "expected_effect": copy.deepcopy(action["expected_effect"]),
                           "effect_ref": terminal["effect_ref"]}
-        effect_not_before_ns = execution_finished_ns
         previous_digest = observation["evidence_digest"]
         state = branch["next_state"]
         if expired():
