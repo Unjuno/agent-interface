@@ -1,0 +1,13 @@
+{
+  "kind": "ordinary post-observation data-audit parent launch failure; not A01 failure or child reader outcome",
+  "original_partial_receipt": "public-audit-launch-failure.receipt.json",
+  "observed_utc": "2026-10-03T07:38:57.151202+00:00",
+  "shell_parent_exit_code": 1,
+  "child_exit_code": null,
+  "exception": "FileNotFoundError [WinError2] from subprocess.CreateProcess before child launch",
+  "actual_parent_invocation": "python work/paired_clock_public_audit.py from work parent of checkout",
+  "cause": "relative executable resolves against the parent process working directory on this invocation, not the requested child cwd; the file exists from the checkout cwd",
+  "correction": "invoke the unchanged wrapper from the own checkout so the same relative executable path resolves",
+  "raw_child_streams": "none: no reader child was created; partial original receipt preserved unchanged",
+  "qualification": "This is a post-failure operational account of the observed Python traceback, not reconstructed child stderr bytes"
+}
