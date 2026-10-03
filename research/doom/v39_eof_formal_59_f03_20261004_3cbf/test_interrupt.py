@@ -20,9 +20,13 @@ class InterruptControl(unittest.TestCase):
                 deadline = time.monotonic() + 3
                 children = []
                 while time.monotonic() < deadline and process.poll() is None:
-                    listing = subprocess.check_output(['ps', '-axo', 'ppid=,pid='], text=True)
-                    children = [int(line.split()[1]) for line in listing.splitlines()
-                                if line.split() and int(line.split()[0]) == process.pid]
+                    proc_children = Path('/proc') / str(process.pid) / 'task' / str(process.pid) / 'children'
+                    if proc_children.exists():
+                        children = [int(value) for value in proc_children.read_text().split()]
+                    else:
+                        listing = subprocess.check_output(['ps', '-axo', 'ppid=,pid='], text=True)
+                        children = [int(line.split()[1]) for line in listing.splitlines()
+                                    if line.split() and int(line.split()[0]) == process.pid]
                     if children:
                         break
                     time.sleep(.01)
