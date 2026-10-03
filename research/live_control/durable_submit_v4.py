@@ -3,7 +3,7 @@
 Only submit, clock and command-free reads are exposed. No retry/reset escape hatch.
 Kernel flock is held through bounded transport and checkpoint commit.
 """
-import copy, fcntl, json, os, uuid
+import copy, fcntl, json, os, uuid, hashlib
 from contextlib import contextmanager
 from pathlib import Path
 from received_continuation_v1 import advance, read_request
@@ -95,7 +95,32 @@ def run(path, spec, call=exchange):
         elif state['pending'] and state['pending']['request']['command']['op'] == 'submit':
             q['action_id'] = state['pending']['request']['command']['id']
         reply = call(c['session'], q, timeout=timeout + 3)
-        updated = advance(c, c['session'], q['after'], reply)
+        try:
+            updated = advance(c, c['session'], q['after'], reply)
+        except Exception as primary:
+            # Diagnostic custody only. Never change pending or grant replay.
+            try:
+                raw = json.dumps(reply, sort_keys=True, separators=(',', ':'),
+                                 allow_nan=False).encode('utf-8')
+                receipt = {'format': 'invalid-response-diagnostic-v1',
+                           'request': q, 'authority': 'none',
+                           'replay_allowed': False, 'response_bytes': len(raw),
+                           'response_sha256': hashlib.sha256(raw).hexdigest(),
+                           'response_retained': len(raw) <= 1048576}
+                if receipt['response_retained']:
+                    receipt['response'] = reply
+                else:
+                    receipt['omission'] = 'response exceeds 1MiB diagnostic cap'
+                # Keep the first failed response; do not overwrite old evidence.
+                encoded = json.dumps(receipt, sort_keys=True, allow_nan=False).encode('utf-8')
+                if len(encoded) > 2097152:
+                    raise ValueError('diagnostic envelope exceeds 2MiB cap')
+                with Path(str(path) + '.invalid-response.json').open('xb') as stream:
+                    stream.write(encoded + b'\n'); stream.flush(); os.fsync(stream.fileno())
+            except Exception as custody_error:
+                if hasattr(primary, 'add_note'):
+                    primary.add_note('invalid response custody failed: ' + repr(custody_error))
+            raise
         pending, resolution = reconcile(state['pending'], reply['records'])
         state['continuation'] = updated
         state['pending'] = pending

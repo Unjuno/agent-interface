@@ -269,18 +269,72 @@ class RuntimeClient:
         shutil.copy2(self.journal, self.root / "journal.jsonl")
         return evaluation
 
+    def _retain_failed_response(self):
+        if self.journal is None:
+            return
+        diagnostic = Path(str(self.journal) + ".invalid-response.json")
+        if not diagnostic.exists():
+            return
+        # Local private artifacts: never infer admission or replay from these.
+        for source in (self.journal, diagnostic):
+            destination = self.root / source.name
+            if destination.exists():
+                if destination.read_bytes() != source.read_bytes():
+                    raise FileExistsError("retained evidence differs: " + str(destination))
+                continue
+            with source.open("rb") as incoming, destination.open("xb") as outgoing:
+                shutil.copyfileobj(incoming, outgoing)
+                outgoing.flush()
+                os.fsync(outgoing.fileno())
+            if destination.read_bytes() != source.read_bytes():
+                raise OSError("retained evidence readback differs")
+
     def close(self):
-        if self.process is not None and self.process.poll() is None:
-            self.process.terminate()
-        if self.process is not None:
-            self.process.wait(timeout=10)
-        if self.errors is not None:
-            self.errors.close()
+        failures = []
+        process_failed = False
+        try:
+            if self.process is not None and self.process.poll() is None:
+                self.process.terminate()
+            if self.process is not None:
+                self.process.wait(timeout=10)
+        except BaseException as error:
+            process_failed = True
+            failures.append(error)
+        try:
+            if self.errors is not None:
+                self.errors.close()
+        except BaseException as error:
+            failures.append(error)
         if self.temporary is not None:
-            self.temporary.cleanup()
+            custody_failed = False
+            try:
+                self._retain_failed_response()
+            except BaseException as error:
+                custody_failed = True
+                failures.append(error)
+            if custody_failed or process_failed:
+                # Keep the only raw, or files an unconfirmed child may use.
+                self.temporary._finalizer.detach()
+            else:
+                try:
+                    self.temporary.cleanup()
+                except BaseException as error:
+                    failures.append(error)
+        if failures:
+            primary = failures[0]
+            if hasattr(primary, "add_note"):
+                for error in failures[1:]:
+                    primary.add_note("additional client close failure: " + repr(error))
+            raise primary
 
     def __enter__(self):
         return self.start()
 
-    def __exit__(self, *_exc):
-        self.close()
+    def __exit__(self, _type, primary, _traceback):
+        try:
+            self.close()
+        except BaseException as cleanup_error:
+            if primary is None:
+                raise
+            if hasattr(primary, "add_note"):
+                primary.add_note("client close failed: " + repr(cleanup_error))
