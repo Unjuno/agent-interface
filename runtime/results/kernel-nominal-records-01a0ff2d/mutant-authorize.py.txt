@@ -74,8 +74,6 @@ class RequestLifecycle:
     def authorize(self, lease: AuthorityLease, *, now_ns: int) -> None:
         if self.stage is not Stage.BOUND or self.binding is None:
             raise ContractError("authority requires a current binding")
-        if not isinstance(lease, AuthorityLease):
-            raise ContractError("lease must be AuthorityLease")
         if type(now_ns) is not int or now_ns < 0:
             raise ContractError("now_ns must be nonnegative integer")
         if lease.observation_sequence != self.binding.observation_sequence:
