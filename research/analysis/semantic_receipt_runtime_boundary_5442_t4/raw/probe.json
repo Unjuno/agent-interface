@@ -1,0 +1,39 @@
+{
+  "effect_receipt_fields": [
+    "command_id",
+    "invariant_manifest_id",
+    "observed_ns",
+    "status",
+    "evidence_digest"
+  ],
+  "freeze_commit": "d00ffdd74cde6c7f113cb03382be853879d5cb65",
+  "outcome": {
+    "effect_verified": true,
+    "release_verified": true,
+    "stage": "verified"
+  },
+  "request_fields": [
+    "command_id",
+    "invariant_manifest_id",
+    "binding",
+    "lease",
+    "actions"
+  ],
+  "schema": "semantic_receipt_runtime_boundary_probe_v1",
+  "scope": "mechanical contract only; no application effect or semantic success asserted",
+  "semantic_fields_absent": [
+    "intent_hash",
+    "goal_predicate_hash",
+    "target_namespace",
+    "pre_state_version",
+    "post_state_version",
+    "observer_id",
+    "dependency_provenance",
+    "freshness",
+    "execution_receipt_ref"
+  ],
+  "source_blobs": {
+    "runtime/kernel/contracts.py": "3d24fb5b28ae7812c71c6c1fedd3439d1473f0b8",
+    "runtime/kernel/lifecycle.py": "0735f1b2bc4f8c8c66a16cd0687a8b631c99f0b3"
+  }
+}
