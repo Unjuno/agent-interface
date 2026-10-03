@@ -1,0 +1,150 @@
+import copy, datetime, hashlib, json, pathlib, subprocess, sys
+ROOT=pathlib.Path(__file__).resolve().parent
+FIRST=ROOT/'relay-inherited-close-57-20261003'
+SECOND=ROOT/'relay-inherited-close-detached-57-20261003'
+OUT=SECOND/'saved-review-01';OUT.mkdir(exist_ok=False)
+def sha(b):return hashlib.sha256(b).hexdigest()
+def require(condition,reason):
+    if not condition:raise ValueError(reason)
+def integer(value):return type(value) is int
+def decimal(value):return type(value) is str and value.isdecimal()
+def pack(directory,run):
+    d=directory/run
+    return {'protocol':json.loads((d/'PROTOCOL.json').read_text()),
+            'native':json.loads((d/'NATIVE_HANDLES.json').read_text()),
+            'stdout':(d/'stdout.bin').read_bytes(),'receipt':json.loads((d/'RECEIPT.json').read_text()),
+            'before':json.loads((d/'BEFORE.json').read_text()),
+            'fixtures':{p.relative_to(d).as_posix():json.loads(p.read_text()) for p in d.rglob('*.json')
+                        if p.relative_to(d).parts[0] in ('healthy','stdout','stderr')}}
+first=pack(FIRST,'first-01');second=pack(SECOND,'first-02')
+
+def check(item,held):
+    protocol=item['protocol'];native=item['native'];receipt=item['receipt'];fixtures=item['fixtures']
+    require([json.loads(line) for line in item['stdout'].splitlines()]==protocol,'raw/protocol exact semantic join')
+    require(sha(item['stdout'])==receipt['stdout_sha256'],'honest raw receipt identity')
+    require(receipt['failure'] is None and receipt['stream_faults']==[],'capture failure')
+    require(receipt['all_reader_threads_retired'] is True and receipt['all_acquired_process_handles_closed'] is True,'capture cleanup')
+    require(receipt['source_unchanged'] is True,'source mutation')
+    cases=['stdout','stderr'] if held else ['healthy','stdout']
+    require(integer(receipt['returncode']) and receipt['returncode']==(0 if held else 1),'original driver status')
+    indexed={}
+    for row in native:
+        key=(row['case'],row['role'],row['stage']);require(key not in indexed,'duplicate native witness');indexed[key]=row
+        for name in ('pid','wait_result','exit_code','creation_filetime_100ns','exit_filetime_100ns'):
+            require(integer(row[name]),'strict native integer '+name)
+        require(row['pid']>0 and row['creation_filetime_100ns']>0,'actual native identity')
+    summaries=[]
+    for case in cases:
+        groups={stage:[r for r in protocol if r.get('case')==case and r['stage']==stage]
+                for stage in ('prepared','parent_exit','parent_close','host_close_resolved','checkpoint','owned_release','result')}
+        for stage in ('prepared','parent_exit','parent_close','host_close_resolved','checkpoint'):
+            require(len(groups[stage])==1,'one original stage '+case+'/'+stage)
+        prepare=groups['prepared'][0];checkpoint=groups['checkpoint'][0]
+        parent=prepare['parent'];descendant=prepare['descendant']
+        require(integer(parent['pid']) and parent['pid']>0,'typed parent pid')
+        require(decimal(checkpoint['observed_ns']) and decimal(checkpoint['parent_exit']['observed_ns']),'monotonic integer syntax')
+        require(integer(checkpoint['parent_exit']['code']) and checkpoint['parent_exit']['code']==0,'actual parent event0')
+        require(checkpoint['parent_exit']['signal'] is None,'no parent signal')
+        p0=indexed[(case,'parent','prepared')];pc=indexed[(case,'parent','checkpoint')]
+        require(p0['pid']==pc['pid']==parent['pid'],'parent native/event join')
+        require(p0['creation_filetime_100ns']==pc['creation_filetime_100ns'],'parent handle continuity')
+        require(p0['wait_result']==258 and p0['exit_code']==259,'parent was live at acquisition')
+        require(pc['wait_result']==0 and pc['exit_code']==0 and pc['exit_filetime_100ns']>pc['creation_filetime_100ns'],'parent actually terminal0 before checkpoint')
+        roles=['parent']
+        if descendant:
+            roles.append('descendant')
+            require(integer(descendant['pid']) and descendant['pid']>0 and descendant['pid']!=parent['pid'],'separately owned descendant')
+            require(descendant['parent_pid']==parent['pid'] and descendant['token']==parent['token']==checkpoint['token'],'ancestry/owned token')
+            d0=indexed[(case,'descendant','prepared')];dc=indexed[(case,'descendant','checkpoint')]
+            require(d0['pid']==dc['pid']==descendant['pid']==checkpoint['descendant_pid'],'descendant native/event join')
+            require(d0['wait_result']==258 and d0['exit_code']==259,'descendant originally live')
+            require(dc['creation_filetime_100ns']==d0['creation_filetime_100ns'],'descendant held handle identity')
+        state=checkpoint['state']
+        require(integer(state['attempts']) and state['attempts']==0 and integer(state['nextId']) and state['nextId']==1,'zero command/ID history')
+        require(state['pending'] is False and state['closing'] is True and state['blocked'] is None,'unchanged no-action close state')
+        require(checkpoint['release_written'] is False,'checkpoint before owned release')
+        if held:
+            require(descendant is not None,'required held descendant')
+            require(dc['wait_result']==258 and dc['exit_code']==259 and dc['exit_filetime_100ns']==0,'same descendant actually still live')
+            require(checkpoint['close_settled'] is False and checkpoint['close_outcome'] is None and checkpoint['parent_close'] is None,'parent exit did not settle original host close')
+            require(state['terminal'] is None and checkpoint['exit_receipt_exists'] is False,'no fabricated transport terminal/receipt')
+            require(checkpoint['observer']=={'result':'observer_checkpoint_elapsed','interval_ms':100} and integer(checkpoint['observer']['interval_ms']),'fixed100ms observer')
+            require(len(groups['owned_release'])==1 and len(groups['result'])==1,'single release and original result')
+            release=groups['owned_release'][0];result=groups['result'][0]
+            require(int(checkpoint['observed_ns'])<int(release['observed_ns'])<int(groups['parent_close'][0]['observed_ns'])<int(result['observed_ns']),'release/pipe-close/result causal order')
+            require(int(checkpoint['parent_exit']['observed_ns'])<int(checkpoint['observed_ns']),'parent exit precedes observation')
+            intent=result['descendant_exit_intent']
+            require(intent==fixtures[case+'/descendant-exit-intent.json'],'actual intent image join')
+            require(intent['reason']=='owned_release' and integer(intent['exit_code_intended']) and intent['exit_code_intended']==0,'release did not silently hit fixture guard')
+            require(fixtures[case+'/release.json']=={'token':checkpoint['token']},'one actual owned release')
+            for role in roles:
+                end=indexed[(case,role,'result')]
+                require(end['bounded_native_wait_result']==0 and integer(end['bounded_native_wait_result']) and end['wait_result']==0 and end['exit_code']==0,'actual native termination, not intent')
+            elapsed=int(checkpoint['observed_ns'])-int(checkpoint['parent_exit']['observed_ns'])
+            summaries.append({'case':case,'decision':'SCOPED_FINITE_RECOVERY_GAP','parent_exit_to_checkpoint_ns':elapsed,
+                              'parent_pid':parent['pid'],'descendant_pid':descendant['pid']})
+        else:
+            require(checkpoint['close_settled'] is True and checkpoint['exit_receipt_exists'] is True,'original attached healthy closure')
+            require(checkpoint['close_outcome']=={'code':0,'signal':None} and state['terminal']==checkpoint['close_outcome'],'original close status')
+            if case=='healthy':require(len(groups['result'])==1 and not groups['owned_release'],'healthy case no intervention')
+            else:
+                require(dc['wait_result']==0 and dc['exit_code']==0,'first attached holder precondition was false')
+                require(not groups['result'] and len(groups['owned_release'])==1,'first incomplete result retained')
+                require(case+'/descendant-exit-intent.json' not in fixtures,'first missing sidecar not repaired retroactively')
+            summaries.append({'case':case,'decision':'HEALTHY_CONTROL' if case=='healthy' else 'HOLD_HOLDER_PRECONDITION_FALSE'})
+        for role in roles:
+            history=[r for r in native if r['case']==case and r['role']==role]
+            require(len({r['creation_filetime_100ns'] for r in history})==1 and len({r['pid'] for r in history})==1,'same OS handle across all phases')
+            final=indexed[(case,role,'final_capture')]
+            require(final['wait_result']==0 and final['exit_code']==0,'all held OS identities terminal0')
+        for name in fixtures:
+            require(not(name.startswith(case+'/client/request-') or name.startswith(case+'/client/reply-')),'no product request/reply')
+        require(fixtures[case+'/client/exit.json']=={'code':0,'signal':None},'actual exclusive terminal file')
+        if held or case=='healthy':
+            result=groups['result'][0]
+            require(integer(result['request_count']) and result['request_count']==0 and result['same_original_close_promise'] is True,'same original zero-send transport')
+            require(result['outcome']==result['exit_receipt']==fixtures[case+'/client/exit.json'],'final close/evidence join')
+    if held:require(protocol[-1]['stage']=='done' and integer(protocol[-1]['cases']) and protocol[-1]['cases']==2,'two new cells only')
+    else:require(protocol[-1]['stage']=='driver_error' and 'ENOENT' in protocol[-1]['error'],'first driver failure retained')
+    return summaries
+
+before={'started_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'reader_sha256':sha(pathlib.Path(__file__).read_bytes()),
+        'scope':'saved-data-only independent literal event/native-handle joins; no original source actor/auditor/fixture execution'}
+with (OUT/'BEFORE.json').open('x',encoding='ascii') as f:json.dump(before,f,indent=2)
+first_summary=check(first,False);second_summary=check(second,True)
+for directory in (FIRST,SECOND):
+    plan=json.loads((directory/'PLAN.json').read_text())
+    for name,pin in plan['source_sha256'].items():require(sha((directory/'source'/name).read_bytes())==pin,'actual frozen source image')
+    run='first-01' if directory==FIRST else 'first-02'
+    recorded=json.loads((directory/run/'BEFORE.json').read_text())
+    require(recorded['plan_sha256']==sha((directory/'PLAN.json').read_bytes()),'freeze/actual command join')
+    require(recorded['base']==plan['base'],'exact base join')
+require((FIRST/'source/relay_client.mjs').read_bytes()==(SECOND/'source/relay_client.mjs').read_bytes(),'production source unchanged between fixtures')
+require(sha((FIRST/'source/relay_client.mjs').read_bytes())=='0a935142a8878fb90f212e004a9e8ffe47224d1505c6cee670960db03c38312b','exact production image')
+
+controls=[]
+def control(name,mutate):
+    trial=copy.deepcopy(second);mutate(trial)
+    # Rebuild whole raw and its identity honestly, so checks must reject semantics.
+    trial['stdout']=b''.join(json.dumps(r,ensure_ascii=True,separators=(',',':')).encode('ascii')+b'\n' for r in trial['protocol'])
+    trial['receipt']['stdout_sha256']=sha(trial['stdout'])
+    try:check(trial,True)
+    except ValueError as error:controls.append({'name':name,'decision':'REJECT','reason':str(error)});return
+    raise RuntimeError('ineffective copied semantic control '+name)
+find=lambda t,stage,case='stdout':next(r for r in t['protocol'] if r.get('case')==case and r['stage']==stage)
+nfind=lambda t,stage,role='descendant':next(r for r in t['native'] if r['case']=='stdout' and r['role']==role and r['stage']==stage)
+control('holder already terminal at checkpoint',lambda t:nfind(t,'checkpoint').update(wait_result=0,exit_code=0,exit_filetime_100ns=1))
+control('boolean parent zero',lambda t:nfind(t,'checkpoint','parent').update(exit_code=False))
+control('changed held handle creation identity',lambda t:nfind(t,'final_capture').update(creation_filetime_100ns=nfind(t,'prepared')['creation_filetime_100ns']+1))
+control('premature original close settlement',lambda t:find(t,'checkpoint').update(close_settled=True))
+control('fabricated early exit receipt',lambda t:find(t,'checkpoint').update(exit_receipt_exists=True))
+control('removed single owned release',lambda t:t['protocol'].__setitem__(slice(None),[r for r in t['protocol'] if not(r.get('case')=='stdout' and r['stage']=='owned_release')]))
+control('fixture selfcap promoted as owned release',lambda t:find(t,'result')['descendant_exit_intent'].update(reason='fixture_selfcap'))
+control('late native result not retired',lambda t:nfind(t,'result').update(bounded_native_wait_result=258,wait_result=258,exit_code=259))
+control('command count invented',lambda t:find(t,'result').update(request_count=1))
+report={'decision':'PASS_SAVED_BOUNDARY_AND_NINE_EFFECTIVE_CONTROLS','first':first_summary,'second':second_summary,
+        'copied_controls':controls,'native_handles_terminal_zero':7,'original_driver_codes':[1,0],
+        'first_unstarted_stderr_cell':'NOT_RUN','producer_replays':0,
+        'limits':'recorded native observations are not authenticated execution proof; no actual Job identity, production hard deadline/input release/backend/task/efficiency/general distribution certified'}
+with (OUT/'RESULT.json').open('x',encoding='ascii') as f:json.dump(report,f,indent=2)
+print(json.dumps(report))

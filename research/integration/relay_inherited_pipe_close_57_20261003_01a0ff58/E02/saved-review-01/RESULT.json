@@ -1,0 +1,84 @@
+{
+  "decision": "PASS_SAVED_BOUNDARY_AND_NINE_EFFECTIVE_CONTROLS",
+  "first": [
+    {
+      "case": "healthy",
+      "decision": "HEALTHY_CONTROL"
+    },
+    {
+      "case": "stdout",
+      "decision": "HOLD_HOLDER_PRECONDITION_FALSE"
+    }
+  ],
+  "second": [
+    {
+      "case": "stdout",
+      "decision": "SCOPED_FINITE_RECOVERY_GAP",
+      "parent_exit_to_checkpoint_ns": 104405900,
+      "parent_pid": 32616,
+      "descendant_pid": 29360
+    },
+    {
+      "case": "stderr",
+      "decision": "SCOPED_FINITE_RECOVERY_GAP",
+      "parent_exit_to_checkpoint_ns": 108503500,
+      "parent_pid": 28288,
+      "descendant_pid": 17932
+    }
+  ],
+  "copied_controls": [
+    {
+      "name": "holder already terminal at checkpoint",
+      "decision": "REJECT",
+      "reason": "same descendant actually still live"
+    },
+    {
+      "name": "boolean parent zero",
+      "decision": "REJECT",
+      "reason": "strict native integer exit_code"
+    },
+    {
+      "name": "changed held handle creation identity",
+      "decision": "REJECT",
+      "reason": "same OS handle across all phases"
+    },
+    {
+      "name": "premature original close settlement",
+      "decision": "REJECT",
+      "reason": "parent exit did not settle original host close"
+    },
+    {
+      "name": "fabricated early exit receipt",
+      "decision": "REJECT",
+      "reason": "no fabricated transport terminal/receipt"
+    },
+    {
+      "name": "removed single owned release",
+      "decision": "REJECT",
+      "reason": "single release and original result"
+    },
+    {
+      "name": "fixture selfcap promoted as owned release",
+      "decision": "REJECT",
+      "reason": "actual intent image join"
+    },
+    {
+      "name": "late native result not retired",
+      "decision": "REJECT",
+      "reason": "actual native termination, not intent"
+    },
+    {
+      "name": "command count invented",
+      "decision": "REJECT",
+      "reason": "same original zero-send transport"
+    }
+  ],
+  "native_handles_terminal_zero": 7,
+  "original_driver_codes": [
+    1,
+    0
+  ],
+  "first_unstarted_stderr_cell": "NOT_RUN",
+  "producer_replays": 0,
+  "limits": "recorded native observations are not authenticated execution proof; no actual Job identity, production hard deadline/input release/backend/task/efficiency/general distribution certified"
+}
