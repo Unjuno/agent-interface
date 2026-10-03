@@ -4,6 +4,8 @@
 
 ## Navigate
 
+Retained [predicate Condition boundary](appserver_predicate_condition_17_20261003_01a0ff52_b64b/README.md): four original directed Linux-pipe cells, ten copied-data refusals and first failures. This is not a production repair or callback hard deadline. [Local rescue verification](../../runtime/results/predicate_condition_rescue_78ae/README.md) checks saved evidence without native experiment replay.
+
 | Need | Read |
 |---|---|
 | Current project objective | [../../docs/CURRENT_GOAL.md](../../docs/CURRENT_GOAL.md) |
