@@ -1,0 +1,29 @@
+"""Capture own CPU child PID/UTC/full streams and actual cgroups."""
+import datetime as dt
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+
+source=Path('/src');out=Path('/out');phase=sys.argv[1]
+env={k:(Path('/sys/fs/cgroup')/k).read_text() for k in ['cpu.max','memory.max','memory.swap.max','pids.max']}
+assert env['cpu.max'].strip()=='25000 100000' and int(env['memory.max'])==134217728 and int(env['memory.swap.max'])==0 and int(env['pids.max'])==32
+freeze=json.loads((source/'FREEZE.json').read_text())
+for name,pin in freeze['pins'].items():
+ b=(source/name).read_bytes();assert len(b)==pin['bytes'] and hashlib.sha256(b).hexdigest()==pin['sha256']
+start=dt.datetime.now(dt.timezone.utc).isoformat();argv=[sys.executable,'-B',str(source/('driver.py' if phase=='construction' else 'saved_check.py'))]
+p=subprocess.Popen(argv,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+timed_out=False
+try:stdout,stderr=p.communicate(timeout=12)
+except subprocess.TimeoutExpired:timed_out=True;p.kill();stdout,stderr=p.communicate()
+receipt={'phase':phase,'pid':p.pid,'supervisor_pid':os.getpid(),'started_utc':start,'ended_utc':dt.datetime.now(dt.timezone.utc).isoformat(),'argv':argv,'returncode':p.returncode,'terminal':p.poll() is not None,'timed_out':timed_out,'actual_cgroups':env,'freeze_sha256':hashlib.sha256((source/'FREEZE.json').read_bytes()).hexdigest(),'python':sys.version,'output_cap_bytes':262144}
+for suffix,b in [('stdout',stdout),('stderr',stderr)]:
+ with (out/(phase+'.'+suffix)).open('xb') as f:f.write(b)
+ receipt[suffix+'_bytes']=len(b);receipt[suffix+'_sha256']=hashlib.sha256(b).hexdigest()
+receipt['source_pins_unchanged']=all(hashlib.sha256((source/n).read_bytes()).hexdigest()==v['sha256'] for n,v in freeze['pins'].items())
+with (out/(phase+'.PROCESS.json')).open('x') as f:f.write(json.dumps(receipt,sort_keys=True,indent=2)+'\n')
+size=sum(p.stat().st_size for p in out.rglob('*') if p.is_file());assert size<=262144
+print(json.dumps({'phase':phase,'returncode':p.returncode,'timed_out':timed_out,'saved_output_bytes':size}))
+raise SystemExit(p.returncode if p.returncode else (1 if timed_out or not receipt['source_pins_unchanged'] else 0))
