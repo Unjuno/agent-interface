@@ -15,4 +15,12 @@ reader PID/end UTC/stdout capture remain unmeasured/unrecorded, not invented.
 Publication checker failures/CRLF originals remain unchanged. No task effect,
 physical release, hard deadline, efficiency or production adoption inferred.
 
-Review, local CI and main integration pending; original source ref is retained.
+Local workflow replay at `b3406729c4` exited 0: 43 steps, failures=[];
+full log is `local-ci.log`, not hosted/native/full runtime certification.
+Fresh review readback finds an explicit temporary counted-vote HOLD over the
+proposal's diff representation, not an approval:
+https://github.com/Unjuno/agent-interface/pull/7053#issuecomment-5969329365
+Reviewer reports saved-data checks but does not supply the missing author diff
+argv/config/bytes identity. That issue remains unresolved by this rescue;
+no threshold-two quorum/current-tree/sender certificate inferred.
+Main integration pending; original source ref is retained.
