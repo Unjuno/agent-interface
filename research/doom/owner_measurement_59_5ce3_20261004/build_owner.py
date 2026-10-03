@@ -126,10 +126,10 @@ def compose(sources, repo_root, destination):
     for original, derived in (('session_map01_v12.py', 'session_measured_5ce3.py'),
                               ('map01_overlap_controller_v39.py', 'controller_measured_5ce3.py')):
         text = sources[original].decode().replace('\r\n', '\n')
-        text = change(text, 'HERE = Path(__file__).resolve().parent',
-            'MEASUREMENT_HERE = Path(__file__).resolve().parent\n'
+        setup = ('MEASUREMENT_HERE = Path(__file__).resolve().parent\n'
             + 'HERE = Path(' + repr(str(doom)) + ')\n'
             + 'sys.path.insert(0, str(HERE))')
+        text = change(text, 'HERE = Path(__file__).resolve().parent', setup)
         if original.startswith('session_'):
             text = change(text, 'from doom_typed_release_backend_v1 import Backend, suite',
                           'from doom_release_measured_5ce3 import Backend, suite')
@@ -138,6 +138,9 @@ def compose(sources, repo_root, destination):
                 + '                 MEASUREMENT_HERE / "doom_release_measured_5ce3.py",\n'
                 + '                 MEASUREMENT_HERE / "controller_measured_5ce3.py",')
         else:
+            text = change(text, setup, '')
+            first_local_import = 'from map01_stagnation_v1 import descriptor, normalized_mae'
+            text = change(text, first_local_import, setup + '\n' + first_local_import)
             text = change(text, 'str(HERE / "session_map01_v12.py")',
                           'str(MEASUREMENT_HERE / "session_measured_5ce3.py")')
         result[derived] = text

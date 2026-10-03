@@ -7,6 +7,7 @@ import subprocess
 import types
 import unittest
 import sys
+import builtins
 
 HERE = Path(__file__).resolve().parent
 PIN = '12e4c1ebaf382d70760eafbe3cf2e5fda90a9d2c'
@@ -66,6 +67,39 @@ class BuilderTests(unittest.TestCase):
         sources['session_map01_v12.py'] += b'\n# changed\n'
         with self.assertRaises(ValueError):
             compose(sources, HERE.parents[2], HERE / 'generated')
+
+    def test_controller_sets_dependency_path_before_first_doom_import(self):
+        root = HERE.parents[2]
+        destination = HERE / 'generated'
+        tree = ast.parse(self.builder().compose(self.bundle_sources(), root,
+                        destination)['controller_measured_5ce3.py'])
+        prefix = []
+        for node in tree.body:
+            # Exercise actual generated setup and first local import; unrelated
+            # external imports are excluded, so this is not a full import test.
+            if isinstance(node, (ast.Assign, ast.Expr)):
+                prefix.append(node)
+            if isinstance(node, ast.ImportFrom) and node.module == 'map01_stagnation_v1':
+                prefix.append(node)
+                break
+        fake_sys = types.SimpleNamespace(path=[])
+        selected = []
+        def local_import(name, globals=None, locals=None, fromlist=(), level=0):
+            if name != 'map01_stagnation_v1':
+                raise AssertionError('unexpected import boundary')
+            if str(root / 'research/doom') not in fake_sys.path:
+                raise ModuleNotFoundError('DOOM dependency root unavailable before first import')
+            selected.append(name)
+            return types.SimpleNamespace(descriptor=object(), normalized_mae=object())
+        env = dict(Path=Path, sys=fake_sys, __file__=str(destination / 'controller_measured_5ce3.py'),
+                   __builtins__={**vars(builtins), '__import__': local_import})
+        failure = None
+        try:
+            exec(compile(ast.Module(body=prefix, type_ignores=[]), '<controller-import-prefix>', 'exec'), env)
+        except ModuleNotFoundError as error:
+            failure = str(error)
+        self.assertIsNone(failure, 'generated controller imports before dependency setup')
+        self.assertEqual(selected, ['map01_stagnation_v1'])
 
     def key_case(self, identity_failure=False):
         tree = ast.parse(self.builder().instrument(self.source()))

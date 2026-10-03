@@ -99,3 +99,22 @@ allocation-failure, BaseException or release-deadline guarantee.
 No push/PR/merge or shared resource change at this checkpoint. Existing #5156
 A17 and reader/startup/cleanup owners retain their assignments. Do not rerun A18
 or transfer a historical readiness/allocation into a fresh live grant.
+
+## Actual dependency import probe
+
+Own private OrbStack Engine, unchanged cached linux/arm64 image: real Xlib and
+Pillow imports succeeded, numpy and vizdoom imports raised ModuleNotFoundError.
+Probe exit 0 means the probe completed, NOT that dependencies or composed route
+passed. DEPENDENCY_IMPORT.json retains raw findings and terminal times.
+Disposition: STOP_FULL_SESSION_IMPORT_MISSING_DEPENDENCIES. No generated
+session/controller imported, no native input/model/game, no dependency install
+or formal allocation. Next environment work must prepare a compatible image
+with pinned necessary dependencies before claiming full import qualification.
+
+Independent review of head3c4fb0676 found two Important and two Minor findings,
+retained in REVIEW_3c4fb0676.md. No merge/live-ready vote. Parent reproduced and
+corrected the import-order defect (nine HOST tests: first one FAIL, then all
+PASS). Selected-import identity/custody is still an Important open gate. Prior
+review and six-test container CI do not transfer to this corrected nine-test
+source. Own Engine had zero running containers after dependency probe and exact
+VM was authoritatively stopped; reviewer is closed. No push/PR/native launch.
