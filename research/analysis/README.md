@@ -473,6 +473,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`justification_bound_action_safe_r1_v1/`](justification_bound_action_safe_r1_v1/)
 - [`justification_graph_invalidation_r0_v1/`](justification_graph_invalidation_r0_v1/)
 - [`justification_graph_truth_maintenance_r0_v1/`](justification_graph_truth_maintenance_r0_v1/)
+- [`kernel_receipt_capture_5225_integrity_v1/`](kernel_receipt_capture_5225_integrity_v1/)
 - [`kernel_receipt_time_5215_audit_successor_20260929/`](kernel_receipt_time_5215_audit_successor_20260929/)
 - [`label_control_ambiguity_6038_t0_v1/`](label_control_ambiguity_6038_t0_v1/)
 - [`layered_lifetime_admission_r0_v1/`](layered_lifetime_admission_r0_v1/)
