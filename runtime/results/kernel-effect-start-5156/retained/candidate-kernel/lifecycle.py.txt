@@ -62,8 +62,6 @@ class RequestLifecycle:
     def bind(self, binding: TargetBinding) -> None:
         if self.stage is not Stage.OBSERVED or self.observation is None:
             raise ContractError("binding requires one current observation")
-        if not isinstance(binding, TargetBinding):
-            raise ContractError("binding must be TargetBinding")
         if binding.observation_sequence != self.observation.sequence:
             raise ContractError("binding is stale for current observation")
         if binding.surface_id != self.observation.surface_id:
@@ -74,8 +72,6 @@ class RequestLifecycle:
     def authorize(self, lease: AuthorityLease, *, now_ns: int) -> None:
         if self.stage is not Stage.BOUND or self.binding is None:
             raise ContractError("authority requires a current binding")
-        if not isinstance(lease, AuthorityLease):
-            raise ContractError("lease must be AuthorityLease")
         if type(now_ns) is not int or now_ns < 0:
             raise ContractError("now_ns must be nonnegative integer")
         if lease.observation_sequence != self.binding.observation_sequence:
@@ -96,8 +92,6 @@ class RequestLifecycle:
             raise ContractError("now_ns must be nonnegative integer")
         if now_ns >= self.lease.valid_until_ns:
             raise ContractError("authority expired before execution")
-        if not isinstance(request, ExecutionRequest):
-            raise ContractError("request must be ExecutionRequest")
         if request.binding != self.binding or request.lease != self.lease:
             raise ContractError("execution request changed bound target or authority")
         self.request = request
@@ -106,8 +100,6 @@ class RequestLifecycle:
     def record_execution(self, receipt: ExecutionReceipt) -> None:
         if self.stage is not Stage.AUTHORIZED or self.request is None:
             raise ContractError("execution receipt requires begun execution")
-        if not isinstance(receipt, ExecutionReceipt):
-            raise ContractError("receipt must be ExecutionReceipt")
         if self.execution_started_ns is None or receipt.started_ns < self.execution_started_ns:
             raise ContractError("execution receipt starts before accepted begin")
         request = self.request
@@ -131,8 +123,6 @@ class RequestLifecycle:
     def record_effect(self, receipt: EffectReceipt) -> None:
         if self.stage is not Stage.EXECUTED or self.execution is None or self.request is None:
             raise ContractError("effect receipt requires completed released execution")
-        if not isinstance(receipt, EffectReceipt):
-            raise ContractError("receipt must be EffectReceipt")
         if receipt.command_id != self.execution.command_id:
             raise ContractError("effect receipt command mismatch")
         if receipt.invariant_manifest_id != self.execution.invariant_manifest_id:
@@ -152,8 +142,6 @@ class RequestLifecycle:
         if self.stage in {Stage.VERIFIED, Stage.CONTRADICTED, Stage.UNAVAILABLE, Stage.STOPPED}:
             raise ContractError("terminal lifecycle cannot be stopped again")
         if self.stage is Stage.AUTHORIZED:
-            if release is not None and not isinstance(release, ReleaseReceipt):
-                raise ContractError("release must be ReleaseReceipt")
             if release is None or not release.released:
                 raise ContractError("stopping active authority requires verified empty release")
             if self.execution_started_ns is not None and release.observed_ns < self.execution_started_ns:
@@ -170,9 +158,8 @@ class RequestLifecycle:
             raise ContractError("outcome requested before terminal state")
         command = self.request.command_id if self.request is not None else None
         occurrence = (
-            self.request is not None
-            and (self.execution is None
-                 or self.execution.effect_occurrence.value in {"possible", "observed"})
+            self.execution is not None
+            and self.execution.effect_occurrence.value in {"possible", "observed"}
         )
         verified = self.stage is Stage.VERIFIED
         release_verified = (
