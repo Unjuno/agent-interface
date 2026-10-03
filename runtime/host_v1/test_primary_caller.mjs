@@ -293,3 +293,4 @@ import './test_primary_request_snapshot.mjs';
 import './test_primary_typed_release.mjs';
 // Declared negative controls require a typed guard array before continuing.
 import './test_primary_control_container.mjs';
+import "./test_primary_method_snapshot.mjs";
