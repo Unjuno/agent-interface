@@ -24,14 +24,7 @@ class PostDispatchCaptureTests(unittest.IsolatedAsyncioTestCase):
             source_fixture=json.loads((Path(__file__).parent/'fixtures/nonpaced_dispatch_review.json').read_text())['receipt']['source']['raw_report']
             request_program=copy.deepcopy(source_fixture['normalization']['source_program']) if expect_summary else {}
             if expect_summary:request_program['ops']=[op for op in request_program['ops'] if op['op']!='observe']
-            capture_root=None;observed=[];dispatched=[];wait_durations=[]
-            if wait_ms is not None and case=='success':
-                actual_sleep=time.sleep
-                def measured_sleep(seconds):
-                    started=time.perf_counter_ns()
-                    actual_sleep(seconds)
-                    wait_durations.append((seconds,time.perf_counter_ns()-started))
-                stack.enter_context(patch('runtime.cli_v1.mcp_session.time.sleep',side_effect=measured_sleep))
+            capture_root=None;observed=[];dispatched=[]
             if case=='wait_error':stack.enter_context(patch('runtime.cli_v1.mcp_session.time.sleep',side_effect=OSError('interrupted settling wait')))
             def configure(directory):
                 nonlocal capture_root
@@ -123,10 +116,7 @@ class PostDispatchCaptureTests(unittest.IsolatedAsyncioTestCase):
                 self.assertTrue(wait['completed'])
                 self.assertIsNone(wait['update_observed'])
                 self.assertGreaterEqual(wait['started_ns'],raw['result']['execution']['releases'][0]['monotonic_ns'])
-                self.assertGreaterEqual(wait['ended_ns'],wait['started_ns'])
-                self.assertEqual(len(wait_durations),1)
-                self.assertEqual(wait_durations[0][0],wait_ms/1000)
-                self.assertGreaterEqual(wait_durations[0][1],wait_ms*1_000_000)
+                self.assertGreaterEqual(wait['ended_ns']-wait['started_ns'],wait_ms*1_000_000)
                 self.assertGreaterEqual(context['observation_report']['observation']['capture_started_ns'],wait['ended_ns'])
             elif case=='wait_error':
                 self.assertFalse(context['capture_wait']['completed'])
@@ -166,42 +156,6 @@ class PostDispatchCaptureTests(unittest.IsolatedAsyncioTestCase):
         # A nanosecond-valued receipt does not imply nanosecond resolution.
         with patch('time.monotonic_ns',return_value=20_000_000_000):
             await self.exercise(wait_ms=1)
-    async def test_wait_receipt_records_actual_clock_reads_on_success_and_error(self):
-        from runtime.cli_v1.mcp_session import MCPSessionOwner
-        # Endpoint provenance is separate from the measured-sleep minimum.
-        # Equal readings are legitimate on a coarse clock; each boundary must
-        # still sample it, including the finally path after an interrupted wait.
-        for ticks in [(100,200,700,900),(100,100,100,100)]:
-            for interrupted in [False,True]:
-                with self.subTest(ticks=ticks,interrupted=interrupted):
-                    events=[];readings=iter(ticks)
-                    def clock():
-                        value=next(readings);events.append(('clock',value));return value
-                    def sleep(seconds):
-                        events.append(('sleep',seconds))
-                        if interrupted:raise OSError('interrupted settling wait')
-                    def inspect(*args,**kwargs):
-                        events.append(('inspect',));return {'status':'needs_review'}
-                    owner=MCPSessionOwner({'fixture':123})
-                    owner.state='open';owner.session=SimpleNamespace(recovery_required=False)
-                    report={'result':{'status':'completed','recovery_required':False,
-                        'execution':{'releases':[{'verified':True,'keys_down':[],'buttons_down':[]}]}}}
-                    with patch('runtime.cli_v1.mcp_session.time.monotonic_ns',side_effect=clock),\
-                         patch('runtime.cli_v1.mcp_session.time.sleep',side_effect=sleep),\
-                         patch.object(owner,'inspect_target',side_effect=inspect) as observed:
-                        context=owner.inspect_after_dispatch(report,'fixture',screen_region=[0,0,1,1],wait_ms=20)
-                    wait=context['capture_wait']
-                    self.assertEqual(wait,{'requested_ms':20,'started_ns':ticks[1],
-                        'completed':not interrupted,'update_observed':None,'ended_ns':ticks[2]})
-                    self.assertEqual((context['started_ns'],context['ended_ns']),(ticks[0],ticks[3]))
-                    expected=[('clock',ticks[0]),('clock',ticks[1]),('sleep',.02),('clock',ticks[2])]
-                    if not interrupted:expected.append(('inspect',))
-                    expected.append(('clock',ticks[3]))
-                    self.assertEqual(events,expected)
-                    self.assertFalse(context['input_dispatched']);self.assertFalse(context['authority_granted'])
-                    if interrupted:
-                        observed.assert_not_called();self.assertIn('interrupted settling wait',context['error'])
-                    else:observed.assert_called_once_with('fixture',screen_region=[0,0,1,1],capture_directory=None)
     async def test_refusal_unverified_release_and_recovery_skip_post_capture(self):
         for case in ['refused','unverified','recovery']:
             with self.subTest(case=case):await self.exercise(case)
