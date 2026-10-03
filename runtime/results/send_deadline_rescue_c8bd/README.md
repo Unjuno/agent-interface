@@ -86,3 +86,7 @@ native runner. Fresh full native output still FAIL; baseline/new failure/error
 headers remain identical. This is not a full-suite or Windows result.
 First RED and complete new normal/O/native logs are retained. Original archive
 bytes/first outcomes and fixed committee conditions remain untouched.
+
+Follow-up local CI at 7fdd28c81 exits 0: 43 steps, failures=[]; complete
+highfd-local-ci.log retained. Native follow-up protocol count is 474 (29 added
+send-related methods), 4 failures/6 errors/5 skips; harness 205/31 errors.
