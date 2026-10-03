@@ -107,3 +107,9 @@ Hosted CI and mandatory main-integration gates are not claimed satisfied.
 
 The nanosecond values describe relationships in authored fixtures, not measured
 nanosecond precision or actual release latency.
+
+Public log correction: private local workspace/home prefixes are replaced in
+public traceback text. Exact original bytes are retained privately and read back;
+`PUBLICATION.json` records original/published hashes. All test failures, raw
+matrices, source and scientific dispositions remain unchanged. The first
+published version remains in Git provenance; no history removal is claimed.
