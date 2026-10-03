@@ -321,6 +321,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`censored_useful_effect_membership_successor_1838_v1/`](censored_useful_effect_membership_successor_1838_v1/)
 - [`cex_qualified_guard_refinement_6645_t0_v1/`](cex_qualified_guard_refinement_6645_t0_v1/)
 - [`change_cue_contrast_1931_v1/`](change_cue_contrast_1931_v1/)
+- [`checkpoint_delivery_6089_20261003_01a0ff59/`](checkpoint_delivery_6089_20261003_01a0ff59/)
 - [`claim_ladder_6113_t0_20261002/`](claim_ladder_6113_t0_20261002/)
 - [`claim_postdominator_6553_t0_20261002/`](claim_postdominator_6553_t0_20261002/)
 - [`claim_scoped_clip_trace_6536_t0_20261002/`](claim_scoped_clip_trace_6536_t0_20261002/)
