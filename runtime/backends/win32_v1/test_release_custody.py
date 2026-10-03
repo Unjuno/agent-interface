@@ -11,11 +11,11 @@ class ReleaseCustody(unittest.TestCase):
         self.assertFalse(b.release_all()['verified']);n=len(queries)
         self.assertFalse(b.release_all()['verified']);self.assertGreater(len(queries),n);self.assertEqual(b.held_keys,{'SHIFT':16});self.assertEqual(b.held_buttons,{'left'})
     def test_confirmed_up_retires_tracking(self):
-        down=[True];b=self.make(lambda vk:0x8000 if down[0] else 0)
+        down=[True];b=self.make(lambda vk:0x8000 if down[0] else 1)
         self.assertFalse(b.release_all()['verified']);down[0]=False
         self.assertTrue(b.release_all()['verified']);self.assertEqual(b.held_keys,{});self.assertEqual(b.held_buttons,set())
     def test_partial_confirmation_keeps_only_unresolved(self):
-        b=self.make(lambda vk:0x8000 if vk==16 else 0)
+        b=self.make(lambda vk:0x8000 if vk==16 else 1)
         self.assertFalse(b.release_all()['verified']);self.assertEqual(b.held_keys,{'SHIFT':16});self.assertEqual(b.held_buttons,set())
     def test_query_exception_preserves_custody(self):
         def bad(vk):raise OSError('state unavailable')
@@ -23,7 +23,7 @@ class ReleaseCustody(unittest.TestCase):
         with self.assertRaises(OSError):b.release_all()
         self.assertEqual(b.held_keys,{'SHIFT':16});self.assertEqual(b.held_buttons,{'left'})
     def test_send_exception_preserves_custody(self):
-        b=self.make(lambda vk:0)
+        b=self.make(lambda vk:1)
         def bad(*a):raise OSError('send unavailable')
         b._send=bad
         with self.assertRaises(OSError):b.release_all()
@@ -45,12 +45,12 @@ class ReleaseCustody(unittest.TestCase):
         self.assertFalse(b.release_all()['verified'])
         self.assertEqual(set(b.held_keys),{'CTRL','S'})
     def test_confirmed_explicit_key_up_retires_only_that_key(self):
-        b=self.make(lambda vk:0)
+        b=self.make(lambda vk:1)
         b.key_state('SHIFT',False)
         self.assertEqual(b.held_keys,{})
         self.assertEqual(b.held_buttons,{'left'})
     def test_confirmed_explicit_button_up_retires_only_that_button(self):
-        b=self.make(lambda vk:0)
+        b=self.make(lambda vk:1)
         b.pointer_button('left',False)
         self.assertEqual(b.held_buttons,set())
         self.assertEqual(b.held_keys,{'SHIFT':16})
@@ -64,5 +64,29 @@ class ReleaseCustody(unittest.TestCase):
         b=self.make(bad)
         with self.assertRaises(OSError):b.pointer_button('left',False)
         self.assertEqual(b.held_buttons,{'left'})
+    def test_zero_release_is_unknown_not_verified(self):
+        b=self.make(lambda vk:0)
+        r=b.release_all()
+        self.assertFalse(r['verified'])
+        self.assertEqual(r['keys_unknown'],['SHIFT'])
+        self.assertEqual(r['buttons_unknown'],['left'])
+        self.assertEqual(b.held_keys,{'SHIFT':16})
+        self.assertEqual(b.held_buttons,{'left'})
+    def test_repeated_zero_remains_queryable(self):
+        queries=[];b=self.make(lambda vk:queries.append(vk) or 0)
+        self.assertFalse(b.release_all()['verified']);n=len(queries)
+        self.assertFalse(b.release_all()['verified']);self.assertGreater(len(queries),n)
+    def test_zero_explicit_key_up_keeps_custody(self):
+        b=self.make(lambda vk:0);b.key_state('SHIFT',False)
+        self.assertEqual(b.held_keys,{'SHIFT':16})
+    def test_zero_explicit_button_up_keeps_custody(self):
+        b=self.make(lambda vk:0);b.pointer_button('left',False)
+        self.assertEqual(b.held_buttons,{'left'})
+    def test_mixed_up_and_unknown_retire_only_confirmed_up(self):
+        b=self.make(lambda vk:0 if vk==16 else 1)
+        r=b.release_all();self.assertFalse(r['verified'])
+        self.assertEqual(r['keys_down'],[]);self.assertEqual(r['keys_unknown'],['SHIFT'])
+        self.assertEqual(r['buttons_unknown'],[])
+        self.assertEqual(b.held_keys,{'SHIFT':16});self.assertEqual(b.held_buttons,set())
 if __name__=='__main__':
     unittest.main(verbosity=2)

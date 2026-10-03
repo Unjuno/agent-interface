@@ -281,7 +281,7 @@ class Win32Backend:
         self._send_key(vk, down)
         if down:
             self.held_keys[key] = vk
-        elif not self.user32.GetAsyncKeyState(vk) & 0x8000:
+        elif self._key_down_state(vk) is False:
             # Send completion alone cannot retire an unresolved release.
             self.held_keys.pop(key, None)
 
@@ -311,7 +311,7 @@ class Win32Backend:
         self._send(item)
         if down:
             self.held_buttons.add(button)
-        elif not self.user32.GetAsyncKeyState(BUTTON_FLAGS[button][2]) & 0x8000:
+        elif self._key_down_state(BUTTON_FLAGS[button][2]) is False:
             self.held_buttons.discard(button)
 
     def scroll(self, dx: int, dy: int) -> None:
@@ -413,6 +413,12 @@ class Win32Backend:
             elif kind == "pointer_button" and op["button"] not in BUTTON_FLAGS:
                 raise Win32BackendError(f"unsupported button {op['button']}")
 
+    def _key_down_state(self, vk: int) -> bool | None:
+        # Zero aliases healthy up and documented API failure. Without a
+        # separate availability witness it cannot discharge input custody.
+        state = self.user32.GetAsyncKeyState(vk) & 0x8001
+        return bool(state & 0x8000) if state else None
+
     def release_all(self) -> dict[str, Any]:
         tracked_keys = dict(self.held_keys)
         tracked_buttons = set(self.held_buttons)
@@ -424,17 +430,22 @@ class Win32Backend:
             item.mi = MOUSEINPUT(0, 0, 0, up_flag, 0, 0)
             self._send(item)
         time.sleep(0.01)
-        keys = sorted(name for name, vk in tracked_keys.items()
-                      if self.user32.GetAsyncKeyState(vk) & 0x8000)
-        buttons = sorted(button for button in tracked_buttons
-                         if self.user32.GetAsyncKeyState(BUTTON_FLAGS[button][2]) & 0x8000)
-        # Retain unresolved custody until every tracked input is measured up.
-        # On send/query failure the original tracking remains available.
+        key_states = {name: self._key_down_state(vk)
+                      for name, vk in tracked_keys.items()}
+        button_states = {button: self._key_down_state(BUTTON_FLAGS[button][2])
+                         for button in tracked_buttons}
+        keys = sorted(name for name, down in key_states.items() if down is True)
+        buttons = sorted(name for name, down in button_states.items() if down is True)
+        unknown_keys = sorted(name for name, down in key_states.items() if down is None)
+        unknown_buttons = sorted(name for name, down in button_states.items() if down is None)
+        # Preserve original tracking on query exceptions and retain unknowns.
         self.held_keys = {name: vk for name, vk in tracked_keys.items()
-                          if name in keys}
-        self.held_buttons = set(buttons)
+                          if key_states[name] is not False}
+        self.held_buttons = {name for name in tracked_buttons
+                             if button_states[name] is not False}
         return {"keys_down": keys, "buttons_down": buttons,
-                "verified": not keys and not buttons,
+                "keys_unknown": unknown_keys, "buttons_unknown": unknown_buttons,
+                "verified": not keys and not buttons and not unknown_keys and not unknown_buttons,
                 "monotonic_ns": time.monotonic_ns()}
 
     def execute(self, program: dict[str, Any]) -> dict[str, Any]:
