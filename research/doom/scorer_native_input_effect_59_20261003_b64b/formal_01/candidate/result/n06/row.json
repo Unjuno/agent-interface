@@ -1,0 +1,3669 @@
+{
+  "case": {
+    "adapter": "polling",
+    "arm": "original",
+    "id": "n06",
+    "input_hex": "ceb10a46494e4953480a",
+    "read_limit": 1,
+    "sample_budget": 64,
+    "sample_hz": 500,
+    "sleep_ns": 8000000
+  },
+  "commands": [],
+  "disposition": "sample_budget",
+  "end_ns": 11771783313531,
+  "error": "finite completed-sample diagnostic cap",
+  "events": [
+    {
+      "hex": "ceb10a46494e4953480a",
+      "kind": "prequeued",
+      "ns": 11771102803229,
+      "thread_id": 281473327072480,
+      "writer_closed": true,
+      "written": 10
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 86,
+      "ns": 11771102836520,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771102840437,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771102843396,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 0,
+      "kind": "sample_begin",
+      "ns": 11771102844937,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 0,
+      "kind": "sample_end",
+      "ns": 11771114281374,
+      "payload_ns": 11771114272791,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771114282749,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771114287333,
+      "receipt": {
+        "missed_periods_before": 0,
+        "sample_finished_ns": 11771114282749,
+        "sample_started_ns": 11771102843396,
+        "scheduled_ns": 11771102836520,
+        "start_lateness_ns": 6876
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 1,
+      "kind": "sink_end",
+      "ns": 11771114416416,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771114417791,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771114420333,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 1,
+      "kind": "sample_begin",
+      "ns": 11771114421500,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 1,
+      "kind": "sample_end",
+      "ns": 11771125933062,
+      "payload_ns": 11771125922270,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771125935979,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771125943229,
+      "receipt": {
+        "missed_periods_before": 4,
+        "sample_finished_ns": 11771125935979,
+        "sample_started_ns": 11771114420333,
+        "scheduled_ns": 11771104836520,
+        "start_lateness_ns": 9583813
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 2,
+      "kind": "sink_end",
+      "ns": 11771126068437,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771126069520,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771126071645,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 2,
+      "kind": "sample_begin",
+      "ns": 11771126072770,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 2,
+      "kind": "sample_end",
+      "ns": 11771134216493,
+      "payload_ns": 11771134212660,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771134217243,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771134220618,
+      "receipt": {
+        "missed_periods_before": 5,
+        "sample_finished_ns": 11771134217243,
+        "sample_started_ns": 11771126071645,
+        "scheduled_ns": 11771114836520,
+        "start_lateness_ns": 11235125
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 3,
+      "kind": "sink_end",
+      "ns": 11771134269785,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771134270368,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771134271785,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 3,
+      "kind": "sample_begin",
+      "ns": 11771134272785,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 3,
+      "kind": "sample_end",
+      "ns": 11771142680259,
+      "payload_ns": 11771142674217,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771142682425,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771142688759,
+      "receipt": {
+        "missed_periods_before": 3,
+        "sample_finished_ns": 11771142682425,
+        "sample_started_ns": 11771134271785,
+        "scheduled_ns": 11771126836520,
+        "start_lateness_ns": 7435265
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 4,
+      "kind": "sink_end",
+      "ns": 11771142778967,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771142780342,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771142782800,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 4,
+      "kind": "sample_begin",
+      "ns": 11771142784050,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 4,
+      "kind": "sample_end",
+      "ns": 11771150913607,
+      "payload_ns": 11771150900398,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771150916732,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771150924773,
+      "receipt": {
+        "missed_periods_before": 3,
+        "sample_finished_ns": 11771150916732,
+        "sample_started_ns": 11771142782800,
+        "scheduled_ns": 11771134836520,
+        "start_lateness_ns": 7946280
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 5,
+      "kind": "sink_end",
+      "ns": 11771151053399,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771151054649,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771151056982,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 5,
+      "kind": "sample_begin",
+      "ns": 11771151058107,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 5,
+      "kind": "sample_end",
+      "ns": 11771162469502,
+      "payload_ns": 11771162461461,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771162472544,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771162482669,
+      "receipt": {
+        "missed_periods_before": 4,
+        "sample_finished_ns": 11771162472544,
+        "sample_started_ns": 11771151056982,
+        "scheduled_ns": 11771142836520,
+        "start_lateness_ns": 8220462
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 6,
+      "kind": "sink_end",
+      "ns": 11771162576711,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771162577878,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771162579753,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 6,
+      "kind": "sample_begin",
+      "ns": 11771162580753,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 6,
+      "kind": "sample_end",
+      "ns": 11771174369190,
+      "payload_ns": 11771174362774,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771174370649,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771174375482,
+      "receipt": {
+        "missed_periods_before": 4,
+        "sample_finished_ns": 11771174370649,
+        "sample_started_ns": 11771162579753,
+        "scheduled_ns": 11771152836520,
+        "start_lateness_ns": 9743233
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 7,
+      "kind": "sink_end",
+      "ns": 11771174447357,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771174448232,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771174449940,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 7,
+      "kind": "sample_begin",
+      "ns": 11771174451149,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 7,
+      "kind": "sample_end",
+      "ns": 11771184264666,
+      "payload_ns": 11771184257833,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771184266583,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771184273041,
+      "receipt": {
+        "missed_periods_before": 5,
+        "sample_finished_ns": 11771184266583,
+        "sample_started_ns": 11771174449940,
+        "scheduled_ns": 11771162836520,
+        "start_lateness_ns": 11613420
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 8,
+      "kind": "sink_end",
+      "ns": 11771184354125,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771184355083,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771184357667,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 8,
+      "kind": "sample_begin",
+      "ns": 11771184359167,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 8,
+      "kind": "sample_end",
+      "ns": 11771195977479,
+      "payload_ns": 11771195971062,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771195979479,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771195983937,
+      "receipt": {
+        "missed_periods_before": 4,
+        "sample_finished_ns": 11771195979479,
+        "sample_started_ns": 11771184357667,
+        "scheduled_ns": 11771174836520,
+        "start_lateness_ns": 9521147
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 9,
+      "kind": "sink_end",
+      "ns": 11771196065979,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771196066854,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771196068396,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 9,
+      "kind": "sample_begin",
+      "ns": 11771196069438,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 9,
+      "kind": "sample_end",
+      "ns": 11771207463625,
+      "payload_ns": 11771207459083,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771207464541,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771207468041,
+      "receipt": {
+        "missed_periods_before": 5,
+        "sample_finished_ns": 11771207464541,
+        "sample_started_ns": 11771196068396,
+        "scheduled_ns": 11771184836520,
+        "start_lateness_ns": 11231876
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 10,
+      "kind": "sink_end",
+      "ns": 11771207518333,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771207518958,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771207520333,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 10,
+      "kind": "sample_begin",
+      "ns": 11771207521041,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 10,
+      "kind": "sample_end",
+      "ns": 11771217043642,
+      "payload_ns": 11771217038892,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771217044933,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771217049350,
+      "receipt": {
+        "missed_periods_before": 5,
+        "sample_finished_ns": 11771217044933,
+        "sample_started_ns": 11771207520333,
+        "scheduled_ns": 11771196836520,
+        "start_lateness_ns": 10683813
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 11,
+      "kind": "sink_end",
+      "ns": 11771217110392,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771217110975,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771217112559,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 11,
+      "kind": "sample_begin",
+      "ns": 11771217113350,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 11,
+      "kind": "sample_end",
+      "ns": 11771228551829,
+      "payload_ns": 11771228543912,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771228553829,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771228559371,
+      "receipt": {
+        "missed_periods_before": 4,
+        "sample_finished_ns": 11771228553829,
+        "sample_started_ns": 11771217112559,
+        "scheduled_ns": 11771208836520,
+        "start_lateness_ns": 8276039
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 12,
+      "kind": "sink_end",
+      "ns": 11771228732454,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771228733204,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771228734621,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 12,
+      "kind": "sample_begin",
+      "ns": 11771228735454,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 12,
+      "kind": "sample_end",
+      "ns": 11771240641767,
+      "payload_ns": 11771240636767,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771240642809,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771240646226,
+      "receipt": {
+        "missed_periods_before": 4,
+        "sample_finished_ns": 11771240642809,
+        "sample_started_ns": 11771228734621,
+        "scheduled_ns": 11771218836520,
+        "start_lateness_ns": 9898101
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 13,
+      "kind": "sink_end",
+      "ns": 11771240700018,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771240700726,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771240701893,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 13,
+      "kind": "sample_begin",
+      "ns": 11771240702601,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 13,
+      "kind": "sample_end",
+      "ns": 11771251217911,
+      "payload_ns": 11771251212578,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771251219286,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771251223620,
+      "receipt": {
+        "missed_periods_before": 5,
+        "sample_finished_ns": 11771251219286,
+        "sample_started_ns": 11771240701893,
+        "scheduled_ns": 11771228836520,
+        "start_lateness_ns": 11865373
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 14,
+      "kind": "sink_end",
+      "ns": 11771251287370,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771251287995,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771251289120,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 14,
+      "kind": "sample_begin",
+      "ns": 11771251289995,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 14,
+      "kind": "sample_end",
+      "ns": 11771262911516,
+      "payload_ns": 11771262901891,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771262914266,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771262922099,
+      "receipt": {
+        "missed_periods_before": 5,
+        "sample_finished_ns": 11771262914266,
+        "sample_started_ns": 11771251289120,
+        "scheduled_ns": 11771240836520,
+        "start_lateness_ns": 10452600
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 15,
+      "kind": "sink_end",
+      "ns": 11771263058724,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771263059933,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771263062599,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 15,
+      "kind": "sample_begin",
+      "ns": 11771263064099,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 15,
+      "kind": "sample_end",
+      "ns": 11771274249994,
+      "payload_ns": 11771274241869,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771274251953,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771274259328,
+      "receipt": {
+        "missed_periods_before": 5,
+        "sample_finished_ns": 11771274251953,
+        "sample_started_ns": 11771263062599,
+        "scheduled_ns": 11771252836520,
+        "start_lateness_ns": 10226079
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 16,
+      "kind": "sink_end",
+      "ns": 11771274362161,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771274363245,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771274365911,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 16,
+      "kind": "sample_begin",
+      "ns": 11771274367120,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 16,
+      "kind": "sample_end",
+      "ns": 11771286062557,
+      "payload_ns": 11771286038099,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771286068182,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771286087391,
+      "receipt": {
+        "missed_periods_before": 4,
+        "sample_finished_ns": 11771286068182,
+        "sample_started_ns": 11771274365911,
+        "scheduled_ns": 11771264836520,
+        "start_lateness_ns": 9529391
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 17,
+      "kind": "sink_end",
+      "ns": 11771286343808,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771286346724,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771286353099,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 17,
+      "kind": "sample_begin",
+      "ns": 11771286356183,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 17,
+      "kind": "sample_end",
+      "ns": 11771297989745,
+      "payload_ns": 11771297976287,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771297993120,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771298029162,
+      "receipt": {
+        "missed_periods_before": 5,
+        "sample_finished_ns": 11771297993120,
+        "sample_started_ns": 11771286353099,
+        "scheduled_ns": 11771274836520,
+        "start_lateness_ns": 11516579
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 18,
+      "kind": "sink_end",
+      "ns": 11771298232329,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771298235329,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771298243996,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 18,
+      "kind": "sample_begin",
+      "ns": 11771298247662,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 18,
+      "kind": "sample_end",
+      "ns": 11771309809225,
+      "payload_ns": 11771309797016,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771309812891,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771309827016,
+      "receipt": {
+        "missed_periods_before": 5,
+        "sample_finished_ns": 11771309812891,
+        "sample_started_ns": 11771298243996,
+        "scheduled_ns": 11771286836520,
+        "start_lateness_ns": 11407476
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 19,
+      "kind": "sink_end",
+      "ns": 11771310045850,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771310048892,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771310056058,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 19,
+      "kind": "sample_begin",
+      "ns": 11771310059350,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 19,
+      "kind": "sample_end",
+      "ns": 11771320528744,
+      "payload_ns": 11771320495369,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771320536994,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771320564536,
+      "receipt": {
+        "missed_periods_before": 5,
+        "sample_finished_ns": 11771320536994,
+        "sample_started_ns": 11771310056058,
+        "scheduled_ns": 11771298836520,
+        "start_lateness_ns": 11219538
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 20,
+      "kind": "sink_end",
+      "ns": 11771320936245,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771320941036,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771320951411,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 20,
+      "kind": "sample_begin",
+      "ns": 11771320956495,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 20,
+      "kind": "sample_end",
+      "ns": 11771331061388,
+      "payload_ns": 11771331051846,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771331063471,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771331072221,
+      "receipt": {
+        "missed_periods_before": 5,
+        "sample_finished_ns": 11771331063471,
+        "sample_started_ns": 11771320951411,
+        "scheduled_ns": 11771310836520,
+        "start_lateness_ns": 10114891
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 21,
+      "kind": "sink_end",
+      "ns": 11771331219221,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771331221721,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771331226180,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 21,
+      "kind": "sample_begin",
+      "ns": 11771331228513,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 21,
+      "kind": "sample_end",
+      "ns": 11771341652573,
+      "payload_ns": 11771341625115,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771341658948,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771341682365,
+      "receipt": {
+        "missed_periods_before": 4,
+        "sample_finished_ns": 11771341658948,
+        "sample_started_ns": 11771331226180,
+        "scheduled_ns": 11771322836520,
+        "start_lateness_ns": 8389660
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 22,
+      "kind": "sink_end",
+      "ns": 11771342191324,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771342197074,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771342209074,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 22,
+      "kind": "sample_begin",
+      "ns": 11771342214366,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 22,
+      "kind": "sample_end",
+      "ns": 11771353730012,
+      "payload_ns": 11771353711678,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771353734262,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771353750178,
+      "receipt": {
+        "missed_periods_before": 4,
+        "sample_finished_ns": 11771353734262,
+        "sample_started_ns": 11771342209074,
+        "scheduled_ns": 11771332836520,
+        "start_lateness_ns": 9372554
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 23,
+      "kind": "sink_end",
+      "ns": 11771354132429,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771354136846,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771354147096,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 23,
+      "kind": "sample_begin",
+      "ns": 11771354151679,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 23,
+      "kind": "sample_end",
+      "ns": 11771365037865,
+      "payload_ns": 11771364978949,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771365043324,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771365065282,
+      "receipt": {
+        "missed_periods_before": 5,
+        "sample_finished_ns": 11771365043324,
+        "sample_started_ns": 11771354147096,
+        "scheduled_ns": 11771342836520,
+        "start_lateness_ns": 11310576
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 24,
+      "kind": "sink_end",
+      "ns": 11771365566241,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771365571658,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771365583908,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 24,
+      "kind": "sample_begin",
+      "ns": 11771365589283,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 24,
+      "kind": "sample_end",
+      "ns": 11771375971885,
+      "payload_ns": 11771375959677,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771375974302,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771375984885,
+      "receipt": {
+        "missed_periods_before": 5,
+        "sample_finished_ns": 11771375974302,
+        "sample_started_ns": 11771365583908,
+        "scheduled_ns": 11771354836520,
+        "start_lateness_ns": 10747388
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 25,
+      "kind": "sink_end",
+      "ns": 11771376434177,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771376439011,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771376494053,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 25,
+      "kind": "sample_begin",
+      "ns": 11771376500011,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 25,
+      "kind": "sample_end",
+      "ns": 11771388272449,
+      "payload_ns": 11771388254574,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771388276324,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771388292199,
+      "receipt": {
+        "missed_periods_before": 4,
+        "sample_finished_ns": 11771388276324,
+        "sample_started_ns": 11771376494053,
+        "scheduled_ns": 11771366836520,
+        "start_lateness_ns": 9657533
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 26,
+      "kind": "sink_end",
+      "ns": 11771388750658,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771388755324,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771388766491,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 26,
+      "kind": "sample_begin",
+      "ns": 11771388771491,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 26,
+      "kind": "sample_end",
+      "ns": 11771400710513,
+      "payload_ns": 11771400693638,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771400714304,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771400730013,
+      "receipt": {
+        "missed_periods_before": 5,
+        "sample_finished_ns": 11771400714304,
+        "sample_started_ns": 11771388766491,
+        "scheduled_ns": 11771376836520,
+        "start_lateness_ns": 11929971
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 27,
+      "kind": "sink_end",
+      "ns": 11771400983846,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771400988055,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771400997555,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 27,
+      "kind": "sample_begin",
+      "ns": 11771401054388,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 27,
+      "kind": "sample_end",
+      "ns": 11771412472700,
+      "payload_ns": 11771412458867,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771412476159,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771412488534,
+      "receipt": {
+        "missed_periods_before": 6,
+        "sample_finished_ns": 11771412476159,
+        "sample_started_ns": 11771400997555,
+        "scheduled_ns": 11771388836520,
+        "start_lateness_ns": 12161035
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 28,
+      "kind": "sink_end",
+      "ns": 11771412699326,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771412703159,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771412712242,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 28,
+      "kind": "sample_begin",
+      "ns": 11771412716159,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 28,
+      "kind": "sample_end",
+      "ns": 11771424673389,
+      "payload_ns": 11771424656222,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771424677097,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771424692806,
+      "receipt": {
+        "missed_periods_before": 4,
+        "sample_finished_ns": 11771424677097,
+        "sample_started_ns": 11771412712242,
+        "scheduled_ns": 11771402836520,
+        "start_lateness_ns": 9875722
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 29,
+      "kind": "sink_end",
+      "ns": 11771424945848,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771424949764,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771424959431,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 29,
+      "kind": "sample_begin",
+      "ns": 11771424963848,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 29,
+      "kind": "sample_end",
+      "ns": 11771433024820,
+      "payload_ns": 11771433016820,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771433028654,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771433042154,
+      "receipt": {
+        "missed_periods_before": 6,
+        "sample_finished_ns": 11771433028654,
+        "sample_started_ns": 11771424959431,
+        "scheduled_ns": 11771412836520,
+        "start_lateness_ns": 12122911
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 30,
+      "kind": "sink_end",
+      "ns": 11771433256279,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771433260238,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771433268863,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 30,
+      "kind": "sample_begin",
+      "ns": 11771433272654,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 30,
+      "kind": "sample_end",
+      "ns": 11771443180297,
+      "payload_ns": 11771443165464,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771443183714,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771443197005,
+      "receipt": {
+        "missed_periods_before": 3,
+        "sample_finished_ns": 11771443183714,
+        "sample_started_ns": 11771433268863,
+        "scheduled_ns": 11771426836520,
+        "start_lateness_ns": 6432343
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 31,
+      "kind": "sink_end",
+      "ns": 11771443411797,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771443415464,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771443424214,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 31,
+      "kind": "sample_begin",
+      "ns": 11771443427964,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 31,
+      "kind": "sample_end",
+      "ns": 11771454971568,
+      "payload_ns": 11771454956943,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771454974901,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771454987568,
+      "receipt": {
+        "missed_periods_before": 4,
+        "sample_finished_ns": 11771454974901,
+        "sample_started_ns": 11771443424214,
+        "scheduled_ns": 11771434836520,
+        "start_lateness_ns": 8587694
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 32,
+      "kind": "sink_end",
+      "ns": 11771455461319,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771455475361,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771455484694,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 32,
+      "kind": "sample_begin",
+      "ns": 11771455488777,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 32,
+      "kind": "sample_end",
+      "ns": 11771463756834,
+      "payload_ns": 11771463742501,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771463760001,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771463875376,
+      "receipt": {
+        "missed_periods_before": 5,
+        "sample_finished_ns": 11771463760001,
+        "sample_started_ns": 11771455484694,
+        "scheduled_ns": 11771444836520,
+        "start_lateness_ns": 10648174
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 33,
+      "kind": "sink_end",
+      "ns": 11771464525085,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771464530210,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771464539252,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 33,
+      "kind": "sample_begin",
+      "ns": 11771464543460,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 33,
+      "kind": "sample_end",
+      "ns": 11771474668520,
+      "payload_ns": 11771474654228,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771474671728,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771474685228,
+      "receipt": {
+        "missed_periods_before": 3,
+        "sample_finished_ns": 11771474671728,
+        "sample_started_ns": 11771464539252,
+        "scheduled_ns": 11771456836520,
+        "start_lateness_ns": 7702732
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 34,
+      "kind": "sink_end",
+      "ns": 11771474900771,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771474904979,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771474914437,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 34,
+      "kind": "sample_begin",
+      "ns": 11771474918312,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 34,
+      "kind": "sample_end",
+      "ns": 11771486981334,
+      "payload_ns": 11771486967959,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771486984334,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771486996001,
+      "receipt": {
+        "missed_periods_before": 5,
+        "sample_finished_ns": 11771486984334,
+        "sample_started_ns": 11771474914437,
+        "scheduled_ns": 11771464836520,
+        "start_lateness_ns": 10077917
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 35,
+      "kind": "sink_end",
+      "ns": 11771487237376,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771487241334,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771487249668,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 35,
+      "kind": "sample_begin",
+      "ns": 11771487253418,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 35,
+      "kind": "sample_end",
+      "ns": 11771496474726,
+      "payload_ns": 11771496460017,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771496477851,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771496492101,
+      "receipt": {
+        "missed_periods_before": 5,
+        "sample_finished_ns": 11771496477851,
+        "sample_started_ns": 11771487249668,
+        "scheduled_ns": 11771476836520,
+        "start_lateness_ns": 10413148
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 36,
+      "kind": "sink_end",
+      "ns": 11771496705643,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771496709476,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771496717643,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 36,
+      "kind": "sample_begin",
+      "ns": 11771496721435,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 36,
+      "kind": "sample_end",
+      "ns": 11771505815159,
+      "payload_ns": 11771505801784,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771505818576,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771505831493,
+      "receipt": {
+        "missed_periods_before": 3,
+        "sample_finished_ns": 11771505818576,
+        "sample_started_ns": 11771496717643,
+        "scheduled_ns": 11771488836520,
+        "start_lateness_ns": 7881123
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 37,
+      "kind": "sink_end",
+      "ns": 11771506083201,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771506087076,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771506095868,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 37,
+      "kind": "sample_begin",
+      "ns": 11771506099910,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 37,
+      "kind": "sample_end",
+      "ns": 11771516404387,
+      "payload_ns": 11771516390387,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771516407637,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771516420470,
+      "receipt": {
+        "missed_periods_before": 4,
+        "sample_finished_ns": 11771516407637,
+        "sample_started_ns": 11771506095868,
+        "scheduled_ns": 11771496836520,
+        "start_lateness_ns": 9259348
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 38,
+      "kind": "sink_end",
+      "ns": 11771516622429,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771516626220,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771516634887,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 38,
+      "kind": "sample_begin",
+      "ns": 11771516638595,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 38,
+      "kind": "sample_end",
+      "ns": 11771528412866,
+      "payload_ns": 11771528404200,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771528414866,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771528423116,
+      "receipt": {
+        "missed_periods_before": 4,
+        "sample_finished_ns": 11771528414866,
+        "sample_started_ns": 11771516634887,
+        "scheduled_ns": 11771506836520,
+        "start_lateness_ns": 9798367
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 39,
+      "kind": "sink_end",
+      "ns": 11771528550658,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771528552533,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771528556908,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 39,
+      "kind": "sample_begin",
+      "ns": 11771528559033,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 39,
+      "kind": "sample_end",
+      "ns": 11771538048259,
+      "payload_ns": 11771538033009,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771538051967,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771538068134,
+      "receipt": {
+        "missed_periods_before": 5,
+        "sample_finished_ns": 11771538051967,
+        "sample_started_ns": 11771528556908,
+        "scheduled_ns": 11771516836520,
+        "start_lateness_ns": 11720388
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 40,
+      "kind": "sink_end",
+      "ns": 11771538457343,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771538461676,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771538471218,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 40,
+      "kind": "sample_begin",
+      "ns": 11771538475343,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 40,
+      "kind": "sample_end",
+      "ns": 11771546822108,
+      "payload_ns": 11771546808233,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771546825066,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771546837483,
+      "receipt": {
+        "missed_periods_before": 4,
+        "sample_finished_ns": 11771546825066,
+        "sample_started_ns": 11771538471218,
+        "scheduled_ns": 11771528836520,
+        "start_lateness_ns": 9634698
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 41,
+      "kind": "sink_end",
+      "ns": 11771547084067,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771547088233,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771547097275,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 41,
+      "kind": "sample_begin",
+      "ns": 11771547101483,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 41,
+      "kind": "sample_end",
+      "ns": 11771557597794,
+      "payload_ns": 11771557580627,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771557601544,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771557617544,
+      "receipt": {
+        "missed_periods_before": 4,
+        "sample_finished_ns": 11771557601544,
+        "sample_started_ns": 11771547097275,
+        "scheduled_ns": 11771538836520,
+        "start_lateness_ns": 8260755
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 42,
+      "kind": "sink_end",
+      "ns": 11771557879169,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771557882711,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771557891294,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 42,
+      "kind": "sample_begin",
+      "ns": 11771557895211,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 42,
+      "kind": "sample_end",
+      "ns": 11771568172021,
+      "payload_ns": 11771568158063,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771568175188,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771568188396,
+      "receipt": {
+        "missed_periods_before": 4,
+        "sample_finished_ns": 11771568175188,
+        "sample_started_ns": 11771557891294,
+        "scheduled_ns": 11771548836520,
+        "start_lateness_ns": 9054774
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 43,
+      "kind": "sink_end",
+      "ns": 11771568407646,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771568411105,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771568419438,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 43,
+      "kind": "sample_begin",
+      "ns": 11771568423146,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 43,
+      "kind": "sample_end",
+      "ns": 11771576916953,
+      "payload_ns": 11771576898037,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771576921537,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771576939620,
+      "receipt": {
+        "missed_periods_before": 4,
+        "sample_finished_ns": 11771576921537,
+        "sample_started_ns": 11771568419438,
+        "scheduled_ns": 11771558836520,
+        "start_lateness_ns": 9582918
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 44,
+      "kind": "sink_end",
+      "ns": 11771577265871,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771577269704,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771577278579,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 44,
+      "kind": "sample_begin",
+      "ns": 11771577283037,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 44,
+      "kind": "sample_end",
+      "ns": 11771585710344,
+      "payload_ns": 11771585696677,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771585713677,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771585726552,
+      "receipt": {
+        "missed_periods_before": 4,
+        "sample_finished_ns": 11771585713677,
+        "sample_started_ns": 11771577278579,
+        "scheduled_ns": 11771568836520,
+        "start_lateness_ns": 8442059
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 45,
+      "kind": "sink_end",
+      "ns": 11771585932844,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771585936344,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771585944761,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 45,
+      "kind": "sample_begin",
+      "ns": 11771585948761,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 45,
+      "kind": "sample_end",
+      "ns": 11771595133819,
+      "payload_ns": 11771595118236,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771595137444,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771595151444,
+      "receipt": {
+        "missed_periods_before": 3,
+        "sample_finished_ns": 11771595137444,
+        "sample_started_ns": 11771585944761,
+        "scheduled_ns": 11771578836520,
+        "start_lateness_ns": 7108241
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 46,
+      "kind": "sink_end",
+      "ns": 11771595378486,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771595382195,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771595390861,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 46,
+      "kind": "sample_begin",
+      "ns": 11771595394695,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 46,
+      "kind": "sample_end",
+      "ns": 11771607059049,
+      "payload_ns": 11771607046341,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771607062174,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771607073716,
+      "receipt": {
+        "missed_periods_before": 4,
+        "sample_finished_ns": 11771607062174,
+        "sample_started_ns": 11771595390861,
+        "scheduled_ns": 11771586836520,
+        "start_lateness_ns": 8554341
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 47,
+      "kind": "sink_end",
+      "ns": 11771607268674,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771607272008,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771607280341,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 47,
+      "kind": "sample_begin",
+      "ns": 11771607284216,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 47,
+      "kind": "sample_end",
+      "ns": 11771616405107,
+      "payload_ns": 11771616392524,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771616408441,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771616420149,
+      "receipt": {
+        "missed_periods_before": 5,
+        "sample_finished_ns": 11771616408441,
+        "sample_started_ns": 11771607280341,
+        "scheduled_ns": 11771596836520,
+        "start_lateness_ns": 10443821
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 48,
+      "kind": "sink_end",
+      "ns": 11771616608274,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771616611608,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771616619733,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 48,
+      "kind": "sample_begin",
+      "ns": 11771616623399,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 48,
+      "kind": "sample_end",
+      "ns": 11771628433296,
+      "payload_ns": 11771628416004,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771628437629,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771628455171,
+      "receipt": {
+        "missed_periods_before": 3,
+        "sample_finished_ns": 11771628437629,
+        "sample_started_ns": 11771616619733,
+        "scheduled_ns": 11771608836520,
+        "start_lateness_ns": 7783213
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 49,
+      "kind": "sink_end",
+      "ns": 11771628708046,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771628712504,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771628722838,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 49,
+      "kind": "sample_begin",
+      "ns": 11771628727129,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 49,
+      "kind": "sample_end",
+      "ns": 11771637954604,
+      "payload_ns": 11771637948313,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771637956188,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771637962146,
+      "receipt": {
+        "missed_periods_before": 5,
+        "sample_finished_ns": 11771637956188,
+        "sample_started_ns": 11771628722838,
+        "scheduled_ns": 11771616836520,
+        "start_lateness_ns": 11886318
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 50,
+      "kind": "sink_end",
+      "ns": 11771638149021,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771638152563,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771638161646,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 50,
+      "kind": "sample_begin",
+      "ns": 11771638165688,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 50,
+      "kind": "sample_end",
+      "ns": 11771649225791,
+      "payload_ns": 11771649217750,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771649227583,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771649235625,
+      "receipt": {
+        "missed_periods_before": 4,
+        "sample_finished_ns": 11771649227583,
+        "sample_started_ns": 11771638161646,
+        "scheduled_ns": 11771628836520,
+        "start_lateness_ns": 9325126
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 51,
+      "kind": "sink_end",
+      "ns": 11771649357166,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771649359041,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771649363500,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 51,
+      "kind": "sample_begin",
+      "ns": 11771649365666,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 51,
+      "kind": "sample_end",
+      "ns": 11771657739723,
+      "payload_ns": 11771657726181,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771657742973,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771657755973,
+      "receipt": {
+        "missed_periods_before": 5,
+        "sample_finished_ns": 11771657742973,
+        "sample_started_ns": 11771649363500,
+        "scheduled_ns": 11771638836520,
+        "start_lateness_ns": 10526980
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 52,
+      "kind": "sink_end",
+      "ns": 11771657954640,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771657958099,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771657966349,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 52,
+      "kind": "sample_begin",
+      "ns": 11771657970057,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 52,
+      "kind": "sample_end",
+      "ns": 11771668858535,
+      "payload_ns": 11771668829243,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771668865618,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771668890326,
+      "receipt": {
+        "missed_periods_before": 3,
+        "sample_finished_ns": 11771668865618,
+        "sample_started_ns": 11771657966349,
+        "scheduled_ns": 11771650836520,
+        "start_lateness_ns": 7129829
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 53,
+      "kind": "sink_end",
+      "ns": 11771669294369,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771669299244,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771669310202,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 53,
+      "kind": "sample_begin",
+      "ns": 11771669315536,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 53,
+      "kind": "sample_end",
+      "ns": 11771680401264,
+      "payload_ns": 11771680383180,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771680405639,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771680423805,
+      "receipt": {
+        "missed_periods_before": 5,
+        "sample_finished_ns": 11771680405639,
+        "sample_started_ns": 11771669310202,
+        "scheduled_ns": 11771658836520,
+        "start_lateness_ns": 10473682
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 54,
+      "kind": "sink_end",
+      "ns": 11771680701598,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771680706056,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771680716431,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 54,
+      "kind": "sample_begin",
+      "ns": 11771680720931,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 54,
+      "kind": "sample_end",
+      "ns": 11771689790114,
+      "payload_ns": 11771689769489,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771689795322,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771689814072,
+      "receipt": {
+        "missed_periods_before": 4,
+        "sample_finished_ns": 11771689795322,
+        "sample_started_ns": 11771680716431,
+        "scheduled_ns": 11771670836520,
+        "start_lateness_ns": 9879911
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 55,
+      "kind": "sink_end",
+      "ns": 11771690162740,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771690167323,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771690177656,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 55,
+      "kind": "sample_begin",
+      "ns": 11771690182573,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 55,
+      "kind": "sample_end",
+      "ns": 11771700265341,
+      "payload_ns": 11771700250508,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771700268883,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771700282091,
+      "receipt": {
+        "missed_periods_before": 4,
+        "sample_finished_ns": 11771700268883,
+        "sample_started_ns": 11771690177656,
+        "scheduled_ns": 11771680836520,
+        "start_lateness_ns": 9341136
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 56,
+      "kind": "sink_end",
+      "ns": 11771700505050,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771700509008,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771700517925,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 56,
+      "kind": "sample_begin",
+      "ns": 11771700521841,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 56,
+      "kind": "sample_end",
+      "ns": 11771712289571,
+      "payload_ns": 11771712276113,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771712293029,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771712305196,
+      "receipt": {
+        "missed_periods_before": 4,
+        "sample_finished_ns": 11771712293029,
+        "sample_started_ns": 11771700517925,
+        "scheduled_ns": 11771690836520,
+        "start_lateness_ns": 9681405
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 57,
+      "kind": "sink_end",
+      "ns": 11771712512238,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771712516821,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771712525821,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 57,
+      "kind": "sample_begin",
+      "ns": 11771712529821,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 57,
+      "kind": "sample_end",
+      "ns": 11771722859715,
+      "payload_ns": 11771722837340,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771722864673,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771722884840,
+      "receipt": {
+        "missed_periods_before": 5,
+        "sample_finished_ns": 11771722864673,
+        "sample_started_ns": 11771712525821,
+        "scheduled_ns": 11771700836520,
+        "start_lateness_ns": 11689301
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 58,
+      "kind": "sink_end",
+      "ns": 11771723214840,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771723219424,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771723229632,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 58,
+      "kind": "sample_begin",
+      "ns": 11771723234382,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 58,
+      "kind": "sample_end",
+      "ns": 11771732841024,
+      "payload_ns": 11771732825358,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771732844733,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771732859608,
+      "receipt": {
+        "missed_periods_before": 5,
+        "sample_finished_ns": 11771732844733,
+        "sample_started_ns": 11771723229632,
+        "scheduled_ns": 11771712836520,
+        "start_lateness_ns": 10393112
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 59,
+      "kind": "sink_end",
+      "ns": 11771733176983,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771733181442,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771733191192,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 59,
+      "kind": "sample_begin",
+      "ns": 11771733195483,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 59,
+      "kind": "sample_end",
+      "ns": 11771741585582,
+      "payload_ns": 11771741569207,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771741588998,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771741605790,
+      "receipt": {
+        "missed_periods_before": 4,
+        "sample_finished_ns": 11771741588998,
+        "sample_started_ns": 11771733191192,
+        "scheduled_ns": 11771724836520,
+        "start_lateness_ns": 8354672
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 60,
+      "kind": "sink_end",
+      "ns": 11771741853624,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771741857832,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771741867374,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 60,
+      "kind": "sample_begin",
+      "ns": 11771741871832,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 60,
+      "kind": "sample_end",
+      "ns": 11771753444478,
+      "payload_ns": 11771753418353,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771753450645,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771753474186,
+      "receipt": {
+        "missed_periods_before": 3,
+        "sample_finished_ns": 11771753450645,
+        "sample_started_ns": 11771741867374,
+        "scheduled_ns": 11771734836520,
+        "start_lateness_ns": 7030854
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 61,
+      "kind": "sink_end",
+      "ns": 11771753787604,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771753791937,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771753801395,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 61,
+      "kind": "sample_begin",
+      "ns": 11771753805729,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 61,
+      "kind": "sample_end",
+      "ns": 11771763327287,
+      "payload_ns": 11771763317579,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771763330579,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771763345579,
+      "receipt": {
+        "missed_periods_before": 5,
+        "sample_finished_ns": 11771763330579,
+        "sample_started_ns": 11771753801395,
+        "scheduled_ns": 11771742836520,
+        "start_lateness_ns": 10964875
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 62,
+      "kind": "sink_end",
+      "ns": 11771763576246,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771763580288,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771763589288,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 62,
+      "kind": "sample_begin",
+      "ns": 11771763593371,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 62,
+      "kind": "sample_end",
+      "ns": 11771774298974,
+      "payload_ns": 11771774285224,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771774301724,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771774313724,
+      "receipt": {
+        "missed_periods_before": 4,
+        "sample_finished_ns": 11771774301724,
+        "sample_started_ns": 11771763589288,
+        "scheduled_ns": 11771754836520,
+        "start_lateness_ns": 8752768
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 63,
+      "kind": "sink_end",
+      "ns": 11771774486557,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771774488516,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771774493016,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 63,
+      "kind": "sample_begin",
+      "ns": 11771774495224,
+      "thread_id": 281473327072480
+    },
+    {
+      "index": 63,
+      "kind": "sample_end",
+      "ns": 11771783060614,
+      "payload_ns": 11771783045739,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11771783063739,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11771783076239,
+      "receipt": {
+        "missed_periods_before": 4,
+        "sample_finished_ns": 11771783063739,
+        "sample_started_ns": 11771774493016,
+        "scheduled_ns": 11771764836520,
+        "start_lateness_ns": 9656496
+      },
+      "thread_id": 281473327072480
+    },
+    {
+      "count": 64,
+      "kind": "sink_end",
+      "ns": 11771783275698,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11771783277698,
+      "thread_id": 281473327072480
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11771783282490,
+      "thread_id": 281473327072480
+    },
+    {
+      "completed": 64,
+      "kind": "sample_budget",
+      "ns": 11771783285823,
+      "thread_id": 281473327072480
+    },
+    {
+      "kind": "closed",
+      "ns": 11771783326698,
+      "read_fd_closed": true,
+      "thread_id": 281473327072480
+    }
+  ],
+  "owner_thread": 281473327072480,
+  "period_ns": 2000000,
+  "pipe_inode": 107705,
+  "pipe_is_fifo": true,
+  "read_fd_closed": true,
+  "runtime": {
+    "cpu.max": "100000 100000",
+    "machine": "aarch64",
+    "memory.max": "268435456",
+    "perf_counter": {
+      "adjustable": false,
+      "implementation": "clock_gettime(CLOCK_MONOTONIC)",
+      "monotonic": true,
+      "resolution": 1e-09
+    },
+    "pid": 19,
+    "pids.max": "64",
+    "platform": "Linux-7.0.5-orbstack-00330-ge3df4e19b0a0-dirty-aarch64-with-glibc2.41",
+    "python": "3.12.15 (main, Oct  1 2026, 21:52:41) [GCC 14.2.0]"
+  },
+  "samples": [
+    {
+      "index": 0,
+      "payload_ns": 11771114272791
+    },
+    {
+      "index": 1,
+      "payload_ns": 11771125922270
+    },
+    {
+      "index": 2,
+      "payload_ns": 11771134212660
+    },
+    {
+      "index": 3,
+      "payload_ns": 11771142674217
+    },
+    {
+      "index": 4,
+      "payload_ns": 11771150900398
+    },
+    {
+      "index": 5,
+      "payload_ns": 11771162461461
+    },
+    {
+      "index": 6,
+      "payload_ns": 11771174362774
+    },
+    {
+      "index": 7,
+      "payload_ns": 11771184257833
+    },
+    {
+      "index": 8,
+      "payload_ns": 11771195971062
+    },
+    {
+      "index": 9,
+      "payload_ns": 11771207459083
+    },
+    {
+      "index": 10,
+      "payload_ns": 11771217038892
+    },
+    {
+      "index": 11,
+      "payload_ns": 11771228543912
+    },
+    {
+      "index": 12,
+      "payload_ns": 11771240636767
+    },
+    {
+      "index": 13,
+      "payload_ns": 11771251212578
+    },
+    {
+      "index": 14,
+      "payload_ns": 11771262901891
+    },
+    {
+      "index": 15,
+      "payload_ns": 11771274241869
+    },
+    {
+      "index": 16,
+      "payload_ns": 11771286038099
+    },
+    {
+      "index": 17,
+      "payload_ns": 11771297976287
+    },
+    {
+      "index": 18,
+      "payload_ns": 11771309797016
+    },
+    {
+      "index": 19,
+      "payload_ns": 11771320495369
+    },
+    {
+      "index": 20,
+      "payload_ns": 11771331051846
+    },
+    {
+      "index": 21,
+      "payload_ns": 11771341625115
+    },
+    {
+      "index": 22,
+      "payload_ns": 11771353711678
+    },
+    {
+      "index": 23,
+      "payload_ns": 11771364978949
+    },
+    {
+      "index": 24,
+      "payload_ns": 11771375959677
+    },
+    {
+      "index": 25,
+      "payload_ns": 11771388254574
+    },
+    {
+      "index": 26,
+      "payload_ns": 11771400693638
+    },
+    {
+      "index": 27,
+      "payload_ns": 11771412458867
+    },
+    {
+      "index": 28,
+      "payload_ns": 11771424656222
+    },
+    {
+      "index": 29,
+      "payload_ns": 11771433016820
+    },
+    {
+      "index": 30,
+      "payload_ns": 11771443165464
+    },
+    {
+      "index": 31,
+      "payload_ns": 11771454956943
+    },
+    {
+      "index": 32,
+      "payload_ns": 11771463742501
+    },
+    {
+      "index": 33,
+      "payload_ns": 11771474654228
+    },
+    {
+      "index": 34,
+      "payload_ns": 11771486967959
+    },
+    {
+      "index": 35,
+      "payload_ns": 11771496460017
+    },
+    {
+      "index": 36,
+      "payload_ns": 11771505801784
+    },
+    {
+      "index": 37,
+      "payload_ns": 11771516390387
+    },
+    {
+      "index": 38,
+      "payload_ns": 11771528404200
+    },
+    {
+      "index": 39,
+      "payload_ns": 11771538033009
+    },
+    {
+      "index": 40,
+      "payload_ns": 11771546808233
+    },
+    {
+      "index": 41,
+      "payload_ns": 11771557580627
+    },
+    {
+      "index": 42,
+      "payload_ns": 11771568158063
+    },
+    {
+      "index": 43,
+      "payload_ns": 11771576898037
+    },
+    {
+      "index": 44,
+      "payload_ns": 11771585696677
+    },
+    {
+      "index": 45,
+      "payload_ns": 11771595118236
+    },
+    {
+      "index": 46,
+      "payload_ns": 11771607046341
+    },
+    {
+      "index": 47,
+      "payload_ns": 11771616392524
+    },
+    {
+      "index": 48,
+      "payload_ns": 11771628416004
+    },
+    {
+      "index": 49,
+      "payload_ns": 11771637948313
+    },
+    {
+      "index": 50,
+      "payload_ns": 11771649217750
+    },
+    {
+      "index": 51,
+      "payload_ns": 11771657726181
+    },
+    {
+      "index": 52,
+      "payload_ns": 11771668829243
+    },
+    {
+      "index": 53,
+      "payload_ns": 11771680383180
+    },
+    {
+      "index": 54,
+      "payload_ns": 11771689769489
+    },
+    {
+      "index": 55,
+      "payload_ns": 11771700250508
+    },
+    {
+      "index": 56,
+      "payload_ns": 11771712276113
+    },
+    {
+      "index": 57,
+      "payload_ns": 11771722837340
+    },
+    {
+      "index": 58,
+      "payload_ns": 11771732825358
+    },
+    {
+      "index": 59,
+      "payload_ns": 11771741569207
+    },
+    {
+      "index": 60,
+      "payload_ns": 11771753418353
+    },
+    {
+      "index": 61,
+      "payload_ns": 11771763317579
+    },
+    {
+      "index": 62,
+      "payload_ns": 11771774285224
+    },
+    {
+      "index": 63,
+      "payload_ns": 11771783045739
+    }
+  ],
+  "start_ns": 11771102834729,
+  "stats": null,
+  "utc_end": "2026-10-03T04:26:00.649598+00:00",
+  "utc_start": "2026-10-03T04:25:59.967506+00:00"
+}
