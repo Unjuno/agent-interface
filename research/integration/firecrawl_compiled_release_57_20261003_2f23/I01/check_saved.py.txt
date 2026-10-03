@@ -1,0 +1,36 @@
+import pathlib,json,hashlib,base64,copy,re
+p=pathlib.Path(__file__).parent
+r=json.loads((p/'response.json').read_text(encoding='utf-8'));events=[json.loads(s) for s in r['stdout'].splitlines()]
+expected={'url':'https://todomvc.com/examples/javascript-es6/dist/','input':'','rows':[{'id':'1','title':'2f23 I01 release-boundary 東京','completed':False}]}
+def check(e):
+    def one(kind):
+        a=[x for x in e if x['kind']==kind];assert len(a)==1;return a[0]
+    o=one('observe');assert o['sequence']==1 and o['raw']=={'url':expected['url'],'input':'','rows':[]} and o['predicates']=={'surface_ok':True,'empty':True,'created':False,'completed':False}
+    a=one('admit');assert a['action']=='add' and a['fresh']==o['raw'] and a['expected_sequence']==1
+    starts=[x for x in e if x['kind']=='ui_start'];returns=[x for x in e if x['kind']=='ui_return'];assert [x['operation'] for x in starts]==[x['operation'] for x in returns]==['focus','type','commit-blur']
+    assert all(type(s['time_ns']) is int and type(t['time_ns']) is int and s['time_ns']<=t['time_ns']<a['valid_until_ns'] for s,t in zip(starts,returns))
+    assert one('post_action_dom')['raw']==expected
+    term=one('terminal')['value'];assert term['release']=={'verified':False,'keys_down':['unknown'],'buttons_down':['unknown']} and type(term['release']['verified']) is bool and term['status']=='completed'
+    c=one('receipt');v=c['value'];assert c['calls']==['observe','admit','execute'] and v['outcome']=='RUNTIME_FAILED' and v['reason']=='execution_failed' and type(v['completed_transitions']) is int and v['completed_transitions']==0 and v['transitions']==[] and len(v['observations'])==1
+    assert v['elapsed_ns']==v['ended_ns']-v['started_ns'] and v['elapsed_ns']>=0
+    ce=[x['event'] for x in e if x['kind']=='core_event'];assert [x['event'] for x in ce]==['observation_recorded','branch_selected','action_terminal','runtime_finished'] and ce[2]['release_verified'] is False and ce[3]['outcome']=='RUNTIME_FAILED'
+    assert v['critical_events']==ce[1:] and one('boundary_result')['after']==expected and one('boundary_result')['main_task_outcome']=='HOLD_RELEASE_TELEMETRY'
+    assert not any(x.get('operation')=='complete' for x in e)
+assert r['success'] is True and type(r['exitCode']) is int and r['exitCode']==0 and r['stderr']=='';check(events)
+negatives=[]
+for name in ['invented-neutral','false-core-success','extra-input','false-completion-effect','missing-terminal','false-callbacks']:
+    c=copy.deepcopy(events)
+    if name=='invented-neutral':next(x for x in c if x['kind']=='terminal')['value']['release']['verified']=True
+    if name=='false-core-success':next(x for x in c if x['kind']=='receipt')['value']['outcome']='TASK_SUCCEEDED'
+    if name=='extra-input':c.insert(-1,{'kind':'ui_start','operation':'complete','time_ns':0})
+    if name=='false-completion-effect':next(x for x in c if x['kind']=='post_action_dom')['raw']['rows'][0]['completed']=True
+    if name=='missing-terminal':c.pop(next(i for i,x in enumerate(c) if x['kind']=='terminal'))
+    if name=='false-callbacks':next(x for x in c if x['kind']=='receipt')['calls'].append('verify_effect')
+    try:check(c)
+    except AssertionError:negatives.append({'name':name,'outcome':'REFUSED'})
+    else:raise AssertionError('false acceptance '+name)
+pin=json.loads((p/'source-pin.json').read_text(encoding='utf-8'));source=(p/'compiled_gui.py.txt').read_bytes();assert hashlib.sha256(source).hexdigest()==pin['sha256']
+request=json.loads((p/'submitted-request-public.json').read_text(encoding='utf-8'));embedded=base64.b64decode(re.search(r"source=base64.b64decode\('([^']+)'\)",request['code']).group(1),validate=True);assert embedded==source
+life=json.loads((p/'lifecycle.json').read_text(encoding='utf-8'));stop=json.loads(life['stopRaw'][0]['text']);assert stop['success'] is True and stop['status']=='stopped'
+out={'outcome':'PASS_STRICT_STOP_BOUNDARY','full_task_outcome':'HOLD_RELEASE_TELEMETRY','ui_operations':3,'real_added_rows':1,'runtime_completed_transitions':0,'subsequent_inputs':0,'negative_controls':negatives,'source_sha256':pin['sha256'],'actual_submitted_code_sha256':hashlib.sha256(request['code'].encode()).hexdigest(),'submitted_trailing_whitespace':'PowerShell GetContent transport trimEnd; frozen semantic source/interface unchanged, exact submitted string retained separately','provider_runtime_elapsed_ns':next(x for x in events if x['kind']=='receipt')['value']['elapsed_ns'],'stop':stop,'scope':'Actual unchanged main compiled module/asyncio bridge/public Playwright app effect; no physical neutrality or whole task/efficiency proof','native_pid':'UNKNOWN'}
+(p/'checked.json').write_text(json.dumps(out,indent=2),encoding='utf-8');print(json.dumps(out))

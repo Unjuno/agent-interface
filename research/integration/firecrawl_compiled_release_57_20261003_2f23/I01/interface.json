@@ -1,0 +1,99 @@
+{
+  "format": "compiled-gui-interface-v1",
+  "interface_id": "remote-release-I01",
+  "session_scope": "owned-unprofiled-I01",
+  "surface": "owned-todomvc-I01",
+  "predicates": [
+    "surface_ok",
+    "empty",
+    "created",
+    "completed"
+  ],
+  "symbols": {
+    "new_input": {
+      "kind": "target_reference",
+      "target_reference": "new-todo",
+      "identity_predicate": "surface_ok",
+      "dependencies": [
+        "surface_ok",
+        "empty"
+      ]
+    },
+    "owned_row": {
+      "kind": "target_reference",
+      "target_reference": "owned-target",
+      "identity_predicate": "surface_ok",
+      "dependencies": [
+        "surface_ok",
+        "created"
+      ]
+    }
+  },
+  "actions": {
+    "add": {
+      "target_symbol": "new_input",
+      "operation": "add-unique-todo",
+      "expected_effect": {
+        "created": true
+      }
+    },
+    "complete": {
+      "target_symbol": "owned_row",
+      "operation": "complete-owned-todo",
+      "expected_effect": {
+        "completed": true
+      }
+    }
+  },
+  "method": {
+    "name": "add-and-complete",
+    "version": "I01",
+    "initial_state": "empty",
+    "max_transitions": 2,
+    "max_runtime_ms": 5000,
+    "states": {
+      "empty": {
+        "branches": [
+          {
+            "when": {
+              "surface_ok": true,
+              "empty": true
+            },
+            "outcome": "action",
+            "action": "add",
+            "next_state": "created",
+            "reason": null
+          }
+        ]
+      },
+      "created": {
+        "branches": [
+          {
+            "when": {
+              "surface_ok": true,
+              "created": true
+            },
+            "outcome": "action",
+            "action": "complete",
+            "next_state": "done",
+            "reason": null
+          }
+        ]
+      },
+      "done": {
+        "branches": [
+          {
+            "when": {
+              "surface_ok": true,
+              "completed": true
+            },
+            "outcome": "complete",
+            "action": null,
+            "next_state": null,
+            "reason": null
+          }
+        ]
+      }
+    }
+  }
+}
