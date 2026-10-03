@@ -25,6 +25,7 @@ While the container gate is unavailable, the local, no-GUI regression path was
 checked at this branch's current source:
 
 - `python3 -m unittest runtime.test_golden_desktop_demo_v3` — 2 tests passed.
+- `python3 -m unittest runtime.test_golden_desktop_demo_v2` — 1 test passed.
 - `python3 -m unittest research.live_control.test_integrated_efficiency_app_server_model_v1` — 4 tests passed.
 - `python3 -m unittest runtime.test_run_full_golden_ipc_v2` — 1 test passed.
 
