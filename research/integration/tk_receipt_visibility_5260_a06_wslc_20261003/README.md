@@ -1,7 +1,14 @@
 # #5260 A06 receipt phase construction
 
-New8writer no-GUI/no-input construction; [PLAN](PLAN.md) H/T/D/C/U.
-Source/fixture/commands/budget frozen prospectively.12 tests pass before
-execution. No A06 allocation has run at this source freeze. Artificial
-100ms pre-publish/pre-read controls are not A05 attribution or performance.
-Earlier consumed allocations remain unchanged; no default age/wait changes.
+Executed8writer no-GUI/no-input construction; [REPORT](REPORT.md),
+[PLAN](PLAN.md) H/T/D/C/U, [RUN](RUN.json), [LEDGER](LEDGER.md).
+METHOD_PASS_CONSTRUCTION_ONLY/H_PASS_BOUNDARY_CONSTRUCTION_ONLY: oldstamp
+expires4/4 in each controlled phase, while full trace distinguishes them.
+Artificial100ms controls are not A05 attribution or performance evidence.
+14 tests and14 corrupted raw copies rejected. Readonly validation:
+
+    python -B -m unittest discover -s . -p 'test_*.py'
+    python -B verify_packet.py
+
+Checks invoke zero container/writer/input commands. Earlier consumed
+allocations remain unchanged; no default age/wait or product changes.
