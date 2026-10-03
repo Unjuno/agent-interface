@@ -12,4 +12,4 @@ D: original packet unchanged; saved6/14 controls checked;7/7 methods pass.
 C: typed audit correction is not a new formal experiment or runtime suitability proof.
 U: real asyncio/OS scheduling, task effects and original execution authenticity are not established.
 
-Local CI is recorded separately in `local-ci.log`. Source commit is additionally archived under remote annotated tag `cancel-order-source-bd84f9a-20261004`; old branch retirement requires this qualification to reach main and a fresh dependency/ref check.
+Local CI completed exit0 with `LOCAL_CI_SUMMARY: steps=43 failures=[]`, recorded separately in `local-ci.log`. Source commit is additionally archived under remote annotated tag `cancel-order-source-bd84f9a-20261004`; old branch retirement requires this qualification to reach main and a fresh dependency/ref check.
