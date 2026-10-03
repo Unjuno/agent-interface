@@ -1,0 +1,70 @@
+"""One owned ordinary child invocation with retained first receipts/streams."""
+import hashlib
+import json
+import os
+from datetime import datetime, timezone
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+
+root = Path(__file__).resolve().parent
+package = root / 'agent-interface/runtime/results/kernel-authority-begin-order-01a0ff58'
+private = root / 'authority-begin-order-private'
+profiles = {
+    'baseline-boundary': ('baseline', ['check_boundaries.py', '-v'], 1),
+    'candidate-boundary': ('authorization_floor', ['check_boundaries.py', '-v'], 0),
+    'candidate-boundary-optimized': ('authorization_floor', ['-O', 'check_boundaries.py', '-v'], 0),
+    'matrix-01': ('baseline', ['fixture.py'], 0),
+    'audit-retained': ('baseline', ['audit_retained.py', 'matrix.raw.json'], 0),
+}
+label = sys.argv[1]
+arm, arguments, expected_exit = profiles[label]
+private_run = private / label
+private_run.mkdir()
+public_logs = package / 'logs'
+public_logs.mkdir(exist_ok=True)
+assert not (public_logs / (label + '.receipt.json')).exists()
+freeze_path = package / ('BEFORE_BASELINE.json' if label == 'baseline-boundary' else 'FINAL_FREEZE.json')
+freeze = json.loads(freeze_path.read_text())
+for name, identity in freeze['source'].items():
+    assert hashlib.sha256((package / 'source' / (Path(name).name + '.txt')).read_bytes()).hexdigest() == identity['sha256']
+if label != 'baseline-boundary':
+    for name, digest in freeze['final_helpers_sha256'].items():
+        assert hashlib.sha256((package / name).read_bytes()).hexdigest() == digest, name
+env = dict(os.environ)
+env['AUTHORITY_ORDER_ARM'] = arm
+command = [sys.executable, '-B', *arguments]
+started = datetime.now(timezone.utc).isoformat()
+(private_run / 'BEFORE_SEND.json').write_text(json.dumps({'utc': started, 'command': command, 'cwd': str(package), 'label': label, 'expected_exit': expected_exit, 'only_one_invocation': True}, indent=2) + '\n')
+child = subprocess.Popen(command, cwd=package, env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+(private_run / 'CHILD_STARTED.json').write_text(json.dumps({'pid': child.pid, 'started_utc': started, 'command': command}, indent=2) + '\n')
+try:
+    stdout, stderr = child.communicate(timeout=30)
+except subprocess.TimeoutExpired:
+    child.kill()
+    stdout, stderr = child.communicate()
+    (private_run / 'TIMEOUT.json').write_text(json.dumps({'owned_child_killed': child.pid, 'no_retry': True}) + '\n')
+ended = datetime.now(timezone.utc).isoformat()
+(private_run / 'stdout.original.txt').write_bytes(stdout)
+(private_run / 'stderr.original.txt').write_bytes(stderr)
+def public_bytes(raw):
+    value = raw.decode('utf-8')
+    for value_from, value_to in ((str(root / 'agent-interface'), '<REPOSITORY>'), (str(root), '<WORKSPACE>'), (tempfile.gettempdir(), '<TEMP>'), (str(Path.home()), '<HOME>')):
+        value = value.replace(value_from, value_to).replace(value_from.replace('\\', '/'), value_to)
+    return value.encode('utf-8')
+published_stdout, published_stderr = public_bytes(stdout), public_bytes(stderr)
+(public_logs / (label + '.stdout.txt')).write_bytes(published_stdout)
+(public_logs / (label + '.stderr.txt')).write_bytes(published_stderr)
+sha = lambda data: hashlib.sha256(data).hexdigest()
+receipt = {'label': label, 'command': ['python', '-B', *arguments], 'env_delta': {'AUTHORITY_ORDER_ARM': arm}, 'started_utc': started, 'ended_utc': ended, 'child_pid': child.pid, 'exit_code': child.returncode, 'expected_exit_code': expected_exit, 'original_stream_sha256': {'stdout': sha(stdout), 'stderr': sha(stderr)}, 'published_stream_sha256': {'stdout': sha(published_stdout), 'stderr': sha(published_stderr)}, 'publication': 'Only owned absolute path prefixes redacted; original streams/actual argv retained privately.', 'scope': 'ordinary host check, no formal allocation/backend/input/model/container'}
+(private_run / 'RECEIPT.json').write_text(json.dumps(receipt, indent=2) + '\n')
+(public_logs / (label + '.receipt.json')).write_text(json.dumps(receipt, indent=2) + '\n')
+if label == 'matrix-01':
+    assert published_stdout == stdout
+    destination = package / 'matrix.raw.json'
+    assert not destination.exists()
+    destination.write_bytes(stdout)
+print(json.dumps(receipt, indent=2))
+print(published_stderr.decode()[-400:])
+raise SystemExit(0 if child.returncode == expected_exit else 1)
