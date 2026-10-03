@@ -1,0 +1,71 @@
+"""Ordinary saved-report construction checks; no OS comparison or subprocess."""
+import copy
+import datetime
+import hashlib
+import importlib.util
+import json
+from pathlib import Path
+import re
+
+ROOT = Path(__file__).resolve().parent
+
+
+def load(name):
+    spec = importlib.util.spec_from_file_location(name, ROOT / (name + '.py'))
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def main():
+    reader, auditor = load('stack_reader'), load('audit')
+    raw = (ROOT / 'C01.sample.txt').read_bytes()
+    text = raw.decode()
+    receipt = json.loads((ROOT / 'C01-result.json').read_bytes())
+    pid, ppid = receipt['child_pid'], receipt['driver_pid']
+    main_id = receipt['ready']['main_native_id']
+    worker = receipt['ready']['worker']
+    positive = reader.inspect(text, pid, ppid, main_id, None)
+    negative = reader.inspect(text, pid, ppid, worker['native_id'], worker['name'])
+    if positive['qualified'] is not True or negative['qualified'] is not False:
+        raise ValueError('literal C01 main-read versus worker-wait')
+    # A labelled DATA-ONLY copy of the real main block exercises the separate
+    # auditor's named-worker parser. This is never a new native observation.
+    header = re.search(r'^    \d+ Thread_' + str(main_id) + r'[^\n]*$', text, re.M).group()
+    named = text.replace(header, header.split(' Thread_', 1)[0] + ' Thread_' + str(main_id) + ': copied-parser-control')
+    independent = auditor.native_block(named, pid, ppid, main_id, 'copied-parser-control')
+    controls = []
+
+    def reject(label, function):
+        try:
+            result = function()
+            refused = isinstance(result, dict) and result.get('qualified') is False
+            reason = 'unqualified native read block' if refused else 'FALSE_ACCEPT'
+        except (ValueError, StopIteration) as exc:
+            refused, reason = True, str(exc)
+        controls.append({'label': label, 'rejected': refused, 'reason': reason})
+
+    reject('producer-wrong-worker-block', lambda: reader.inspect(text, pid, ppid, worker['native_id'], worker['name']))
+    reject('producer-wrong-PID', lambda: reader.inspect(text, pid + 1, ppid, main_id, None))
+    reject('producer-wrong-parent', lambda: reader.inspect(text, pid, ppid + 1, main_id, None))
+    reject('producer-bool-native-ID', lambda: reader.inspect(text, pid, ppid, True, None))
+    reject('producer-wrong-name', lambda: reader.inspect(text, pid, ppid, worker['native_id'], 'copied-parser-control'))
+    reject('producer-too-high-threshold', lambda: reader.inspect(text, pid, ppid, main_id, None, 85))
+    reject('auditor-wrong-worker-despite-main-read', lambda: auditor.native_block(text, pid, ppid, worker['native_id'], worker['name']))
+    reject('auditor-wrong-PID', lambda: auditor.native_block(named, pid + 1, ppid, main_id, 'copied-parser-control'))
+    reject('auditor-wrong-name', lambda: auditor.native_block(named, pid, ppid, main_id, 'wrong'))
+    reject('auditor-no-native-read-stub', lambda: auditor.native_block(named.replace('read  (in libsystem_kernel.dylib)', 'not_read  (in libsystem_kernel.dylib)'), pid, ppid, main_id, 'copied-parser-control'))
+    result = {'status': 'PASS_SAVED_METHOD_CONTROLS' if all(c['rejected'] for c in controls) else 'FAIL_SAVED_METHOD_CONTROLS',
+              'utc': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'source_report_sha256': hashlib.sha256(raw).hexdigest(),
+              'source_report_bytes': len(raw), 'producer_main_read_positive': positive['qualified'],
+              'producer_worker_read_positive': negative['qualified'], 'independent_copied_main_block': independent,
+              'controls': controls, 'formal_runs': 0, 'OS_producer_reexecution': False,
+              'named_main_copy_is_native_evidence': False}
+    (ROOT / 'reader-controls-first.json').write_text(json.dumps(result, indent=2) + '\n')
+    print(json.dumps(result))
+    if result['status'].startswith('FAIL'):
+        raise SystemExit(1)
+
+
+if __name__ == '__main__':
+    main()
