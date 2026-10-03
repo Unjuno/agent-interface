@@ -3,6 +3,9 @@
 from __future__ import annotations
 
 import json
+import math
+import os
+import selectors
 import re
 import shutil
 import subprocess
@@ -25,6 +28,39 @@ def first(records, event):
     return next(row for row in records if row.get("event") == event)
 
 
+def read_endpoint(stream, timeout=30, max_bytes=65536):
+    """Bound the first JSON line from an owned POSIX subprocess pipe."""
+    if (isinstance(timeout, bool) or not isinstance(timeout, (int, float))
+            or not math.isfinite(timeout) or timeout <= 0):
+        raise ValueError("endpoint timeout must be positive and finite")
+    if type(max_bytes) is not int or max_bytes <= 0:
+        raise ValueError("endpoint byte limit must be a positive integer")
+    deadline = time.monotonic() + timeout
+    data = bytearray()
+    with selectors.DefaultSelector() as selector:
+        selector.register(stream.fileno(), selectors.EVENT_READ)
+        while True:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0 or not selector.select(remaining):
+                raise TimeoutError("runtime endpoint line deadline expired")
+            chunk = os.read(stream.fileno(), min(4096, max_bytes + 1 - len(data)))
+            if not chunk:
+                raise EOFError("runtime stdout closed before endpoint newline")
+            data.extend(chunk)
+            newline = data.find(b"\n")
+            if newline >= 0:
+                if newline + 1 > max_bytes:
+                    raise ValueError("runtime endpoint line exceeds byte limit")
+                endpoint = json.loads(bytes(data[:newline]).decode("utf-8"))
+                if (not isinstance(endpoint, dict)
+                        or not isinstance(endpoint.get("socket"), str)
+                        or not endpoint["socket"]):
+                    raise ValueError("runtime endpoint must contain a socket string")
+                return endpoint
+            if len(data) >= max_bytes:
+                raise ValueError("runtime endpoint line exceeds byte limit")
+
+
 class RuntimeClient:
     def __init__(self, root: Path, seed: int):
         self.root = Path(root)
@@ -39,7 +75,7 @@ class RuntimeClient:
         self.programs = []
         self.durable_calls = 0
 
-    def start(self):
+    def start(self, endpoint_timeout=30):
         self.root.mkdir(parents=True, exist_ok=False)
         self.errors = (self.root / "stderr.txt").open("w", encoding="utf-8", newline="\n")
         self.process = subprocess.Popen([
@@ -49,7 +85,34 @@ class RuntimeClient:
         ], stdout=subprocess.PIPE, stderr=self.errors, text=True)
         self.temporary = tempfile.TemporaryDirectory(prefix="integrated-efficiency-client-")
         self.journal = Path(self.temporary.name) / "journal.jsonl"
-        self.endpoint = json.loads(self.process.stdout.readline())
+        try:
+            self.endpoint = read_endpoint(self.process.stdout, timeout=endpoint_timeout)
+        except BaseException as primary:
+            # Endpoint acquisition precedes observations/input. Stop only the
+            # directly owned launcher; no descendant/global cleanup is claimed.
+            try:
+                if self.process.poll() is None:
+                    self.process.terminate()
+                    try:
+                        self.process.wait(timeout=1)
+                    except subprocess.TimeoutExpired:
+                        self.process.kill()
+                        self.process.wait(timeout=1)
+            except BaseException as cleanup_error:
+                if hasattr(primary, "add_note"):
+                    primary.add_note("endpoint cleanup failed: " + repr(cleanup_error))
+            finally:
+                for label, cleanup in (
+                    ("stdout close", self.process.stdout.close),
+                    ("stderr close", self.errors.close),
+                    ("temporary cleanup", self.temporary.cleanup),
+                ):
+                    try:
+                        cleanup()
+                    except BaseException as cleanup_error:
+                        if hasattr(primary, "add_note"):
+                            primary.add_note(label + " failed: " + repr(cleanup_error))
+            raise
         initial = request_once(self.endpoint["socket"], start(self.endpoint["socket"]),
                                {"events": ["observation"], "timeout": 30})
         self.ready = first(initial["reply"]["records"], "ready")
