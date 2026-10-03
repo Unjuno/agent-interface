@@ -1,0 +1,125 @@
+from pathlib import Path
+from datetime import datetime, timezone
+import hashlib
+import json
+import os
+import platform
+import subprocess
+import sys
+import threading
+import time
+
+ROOT = Path('/OWNED_REPOSITORY')
+WORK = Path(__file__).resolve().parent
+sys.path.insert(0, str(ROOT))
+from research.live_control import codex_app_server_client_v2 as module
+
+freeze = json.loads((WORK / 'NATIVE_PLAN.json').read_text())
+for name, digest in freeze['sources'].items():
+    path = ROOT / name if name.startswith(('research/', 'runtime/')) else WORK / name
+    assert hashlib.sha256(path.read_bytes()).hexdigest() == digest, name
+out = WORK / 'native-results'
+out.mkdir(exist_ok=False)
+rows = []
+native_os = os
+
+for spec in freeze['cells']:
+    directory = out / spec['mode']
+    directory.mkdir()
+    params = {'input': [{'type': 'text', 'text': '画面の目的を保持'},
+                        {'type': 'image', 'imageUrl': 'data:image/png;base64,' + 'A' * spec['padding']}]}
+    intended = (json.dumps({'method': 'turn/start', 'id': 1, 'params': params}, separators=(',', ':')) + '\n').encode()
+    (directory / 'intended-wire.jsonl').write_bytes(intended)
+    command = [sys.executable, str(WORK / 'peer.py'), spec['mode']]
+    factory_receipt = {}
+
+    def factory(argv, **kwargs):
+        process = subprocess.Popen(argv, **kwargs)
+        factory_receipt.update({'argv': argv, 'kwargs': kwargs, 'pid': process.pid,
+                                'started_utc': datetime.now(timezone.utc).isoformat()})
+        return process
+
+    client = module.CodexAppServerClient(command, process_factory=factory)
+    calls = []
+
+    class ObservedOS:
+        def __getattr__(self, name):
+            return getattr(native_os, name)
+
+        def write(self, fd, data):
+            entry = {'fd': fd, 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest(),
+                     'started_ns': time.perf_counter_ns()}
+            calls.append(entry)
+            try:
+                count = native_os.write(fd, data)
+                entry['count'] = count
+                return count
+            except BaseException as error:
+                entry['error'] = type(error).__name__
+                raise
+            finally:
+                entry['ended_ns'] = time.perf_counter_ns()
+
+    outcome = {}
+    row = {'spec': spec, 'factory': factory_receipt,
+           'wire_bytes': len(intended), 'wire_sha256': hashlib.sha256(intended).hexdigest(),
+           'driver_pid': os.getpid(), 'source_sha256': freeze['sources']['research/live_control/codex_app_server_client_v2.py'],
+           'host': {'platform': platform.platform(), 'machine': platform.machine(), 'python': sys.version},
+           'clock': 'perf_counter_ns/monotonic seconds', 'journal': None,
+           'observed_writes': calls}
+    caller = None
+    try:
+        row['ready'] = client.wait_notification(lambda value: value.get('method') == 'ready', timeout=1)
+        module.os = ObservedOS()
+
+        def request():
+            outcome['started_ns'] = time.perf_counter_ns()
+            outcome['started_utc'] = datetime.now(timezone.utc).isoformat()
+            try:
+                outcome['result'] = client.request('turn/start', params, timeout=spec['timeout'])
+            except BaseException as error:
+                outcome['error'] = type(error).__name__
+                outcome['message'] = str(error)
+                outcome['cause'] = None if error.__cause__ is None else type(error.__cause__).__name__
+                outcome['sent'] = getattr(error, 'sent', None)
+                outcome['total'] = getattr(error, 'total', None)
+            finally:
+                outcome['ended_ns'] = time.perf_counter_ns()
+                outcome['ended_utc'] = datetime.now(timezone.utc).isoformat()
+
+        caller = threading.Thread(target=request, daemon=True)
+        caller.start()
+        caller.join(timeout=spec['checkpoint'])
+        row['checkpoint_ns'] = time.perf_counter_ns()
+        row['caller_alive_at_checkpoint'] = caller.is_alive()
+        row['child_live_at_checkpoint'] = client.process.poll() is None
+        row['reader_live_at_checkpoint'] = client._reader.is_alive()
+        row['send_uncertain_at_checkpoint'] = client._send_uncertain
+        if spec['mode'] == 'pressure' and not caller.is_alive():
+            row['followup'] = {'writes_before': len(calls), 'errors': []}
+            for followup in (lambda: client.notify('fresh', timeout=.02), lambda: client.request('fresh', timeout=.02)):
+                try:
+                    followup()
+                    row['followup']['errors'].append({'unexpected_success': True})
+                except module.AppServerWriteUncertain as error:
+                    row['followup']['errors'].append({'error': type(error).__name__, 'sent': error.sent, 'total': error.total})
+            row['followup']['writes_after'] = len(calls)
+    finally:
+        module.os = native_os
+        row['cleanup_started_ns'] = time.perf_counter_ns()
+        client.close(timeout=.5)
+        if caller is not None:
+            caller.join(timeout=1)
+        row['client_close_pipe_states'] = {name: getattr(client.process, name).closed for name in ('stdin', 'stdout', 'stderr')}
+        for name in ('stdin', 'stdout', 'stderr'):
+            getattr(client.process, name).close()
+        row['cleanup_ended_ns'] = time.perf_counter_ns()
+        row['final'] = {'child_exit': client.process.poll(), 'caller_alive': caller is not None and caller.is_alive(),
+                        'reader_alive': client._reader.is_alive(),
+                        'pipes_closed': {name: getattr(client.process, name).closed for name in ('stdin', 'stdout', 'stderr')}}
+        row['outcome'] = outcome
+        (directory / 'result.json').write_text(json.dumps(row, indent=2) + '\n')
+    rows.append(row)
+
+(out / 'driver-result.json').write_text(json.dumps({'rows': rows, 'status': 'CAPTURED', 'formal': False}, indent=2) + '\n')
+print(json.dumps({'cells': len(rows), 'statuses': [r['outcome'].get('error', 'result') for r in rows]}))

@@ -1,0 +1,82 @@
+{
+  "summary": [
+    {
+      "mode": "healthy",
+      "wire_bytes": 262323,
+      "sent": 262323,
+      "call_ns": 1951250,
+      "write_attempts": 6
+    },
+    {
+      "mode": "pressure",
+      "wire_bytes": 524467,
+      "sent": 65536,
+      "call_ns": 55093791,
+      "write_attempts": 2
+    }
+  ],
+  "controls": [
+    {
+      "name": "wrong_wire_hash",
+      "rejected": true,
+      "reason": "wire digest"
+    },
+    {
+      "name": "wrong_wire_length",
+      "rejected": true,
+      "reason": "wire length"
+    },
+    {
+      "name": "wrong_ready_mode",
+      "rejected": true,
+      "reason": "ready mode"
+    },
+    {
+      "name": "wrong_native_result",
+      "rejected": true,
+      "reason": "whole native result"
+    },
+    {
+      "name": "boolean_partial_count",
+      "rejected": true,
+      "reason": "partial count"
+    },
+    {
+      "name": "extra_followup_write",
+      "rejected": true,
+      "reason": "no followup OS attempt"
+    },
+    {
+      "name": "wrong_native_source",
+      "rejected": true,
+      "reason": "source identity"
+    },
+    {
+      "name": "caller_still_live",
+      "rejected": true,
+      "reason": "checkpoint lifecycle"
+    },
+    {
+      "name": "peer_already_dead",
+      "rejected": true,
+      "reason": "checkpoint lifecycle"
+    },
+    {
+      "name": "boolean_closed_pipe",
+      "rejected": true,
+      "reason": "driver pipe closure"
+    },
+    {
+      "name": "wrong_OS_prefix_count",
+      "rejected": true,
+      "reason": "partial count"
+    },
+    {
+      "name": "boolean_followup_zero",
+      "rejected": true,
+      "reason": "two followup refusals"
+    }
+  ],
+  "native_replays": 0,
+  "scope": "saved bytes/transparent OS-write records; not complete producer authenticity or actual task/model proof"
+}

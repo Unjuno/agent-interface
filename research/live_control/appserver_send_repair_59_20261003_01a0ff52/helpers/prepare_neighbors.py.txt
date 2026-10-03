@@ -1,0 +1,30 @@
+from pathlib import Path
+import ast
+import hashlib
+import json
+import subprocess
+ROOT = Path('/OWNED_REPOSITORY')
+WORK = Path(__file__).resolve().parent
+BASE = 'e5270c7bfe50911225afc6c3b5273021331b2bb1'
+GIT = '/run/current-system/sw/bin/git'
+names = ['test_integrated_efficiency_app_server_model_v1.py', 'integrated_efficiency_app_server_model_v1.py',
+         'codex_app_server_command_v1.py', 'compiled_form_grounding_v1.py', 'plain_form_points_v1.py',
+         'persistent_planner_adapter_v2.py', 'test_persistent_planner_adapter_v2.py',
+         'persistent_planner_adapter_v1.py', 'test_persistent_planner_adapter_v1.py',
+         'plain_form_points_schema_v1.json', 'plain_form_points_responder_v1.txt',
+         'compiled_form_grounding_schema_v1.json', 'compiled_form_grounding_responder_v1.txt']
+pins = []
+for name in names:
+    relative = 'research/live_control/' + name
+    data = subprocess.check_output([GIT, 'show', BASE + ':' + relative], cwd=ROOT)
+    path = ROOT / relative
+    if path.exists():
+        assert path.read_bytes() == data
+    else:
+        path.write_bytes(data)
+    pins.append({'path': relative, 'sha256': hashlib.sha256(data).hexdigest()})
+tree = ast.parse((ROOT / 'runtime/integration_checks/native.py').read_text())
+suites = next(ast.literal_eval(node.value) for node in tree.body if isinstance(node, ast.Assign) and any(isinstance(t, ast.Name) and t.id == 'SUITES' for t in node.targets))
+assert suites['protocol'].count('research.live_control.test_codex_app_server_send_deadline_v1') == 1
+(WORK / 'neighbor-pins.json').write_text(json.dumps({'base': BASE, 'sources': pins, 'registered_once': True}, indent=2) + '\n')
+print('13 original neighbor files restored; new module registered once in protocol entry.')

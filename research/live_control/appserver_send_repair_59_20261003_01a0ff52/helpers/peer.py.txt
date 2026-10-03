@@ -1,0 +1,16 @@
+import hashlib
+import json
+import sys
+import time
+
+mode = sys.argv[1]
+print(json.dumps({'method': 'ready', 'params': {'mode': mode}}), flush=True)
+if mode == 'pressure':
+    time.sleep(10)
+else:
+    line = sys.stdin.buffer.readline()
+    message = json.loads(line)
+    result = {'wire_sha256': hashlib.sha256(line).hexdigest(),
+              'params_sha256': hashlib.sha256(json.dumps(message['params'], sort_keys=True, separators=(',', ':')).encode()).hexdigest()}
+    print(json.dumps({'id': message['id'], 'result': result}), flush=True)
+    time.sleep(10)

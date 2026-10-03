@@ -1,0 +1,34 @@
+{
+  "ordinary_merge": {
+    "tool_chunk": "1359d0",
+    "exit_code": 128,
+    "missing_blob": "fd7bec5992ba1f8b70136ed2102bba00b4357bcd",
+    "observed_utc_upper": "2026-10-03T10:29:54Z",
+    "individual_outer_pid_receipt": "not retained; observed tool output only"
+  },
+  "subsequent_targeted_read": {
+    "tool_chunk": "e112fc",
+    "exit_code": 1,
+    "cause": "same absent required README blob; CalledProcessError output retained, captured Git stderr not separately printed"
+  },
+  "recovery": "one exact public blob API read, Git hash verified, then private-index explicit candidate construction; no broad fetch/shared checkout rewrite",
+  "reviewer_shape_inspection": {
+    "tool_chunk": "1141aa",
+    "exit_code": 1,
+    "error": "KeyError changed_images; existing v1 schema uses package/source_pins/diff and manifest",
+    "source_or_native_failure": false
+  },
+  "fixture_diagnostic": {
+    "tool_chunk": "933bfa",
+    "first_cat_failed": "wrong relative cwd; source then read by absolute path",
+    "last_shell_exit": 0,
+    "native_or_formal_failure": false
+  },
+  "owned_checkout_after_stop": {
+    "head": "fbd804e549b589e7e7e692ab4f89183d21451ca7",
+    "clean": true,
+    "MERGE_HEAD_present": false
+  },
+  "main_sends": 0,
+  "native_or_formal_replays": 0
+}

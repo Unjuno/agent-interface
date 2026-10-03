@@ -1,0 +1,109 @@
+{
+  "spec": {
+    "mode": "pressure",
+    "padding": 524288,
+    "timeout": 0.05,
+    "checkpoint": 0.5
+  },
+  "factory": {
+    "argv": [
+      "/run/current-system/sw/bin/python3",
+      "/OWNED_WORK/peer.py",
+      "pressure"
+    ],
+    "kwargs": {
+      "cwd": null,
+      "stdin": -1,
+      "stdout": -1,
+      "stderr": -1,
+      "text": true,
+      "bufsize": 1
+    },
+    "pid": 29767,
+    "started_utc": "2026-10-03T08:15:31.151619+00:00"
+  },
+  "wire_bytes": 524467,
+  "wire_sha256": "3bb0486462c136939a542eed7e626c450608a3b54f2c57e88516394b90e8b8de",
+  "driver_pid": 29761,
+  "source_sha256": "a18cab38b5336c801da63ee8b91ea67067bda6e9b76a83ef184723a3cc69999d",
+  "host": {
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "machine": "arm64",
+    "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 21.1.8 ]"
+  },
+  "clock": "perf_counter_ns/monotonic seconds",
+  "journal": null,
+  "observed_writes": [
+    {
+      "fd": 4,
+      "bytes": 65536,
+      "sha256": "89f6dbb0b1e910dcb370781deb41b0dfdd9caf07cc52268d4f19b71ada9307a7",
+      "started_ns": 26296141179875,
+      "count": 65536,
+      "ended_ns": 26296141201666
+    },
+    {
+      "fd": 4,
+      "bytes": 65536,
+      "sha256": "156c38442089c1323d3e3ba549a6ac24341c47e8b6367bec4740c9b8c865826e",
+      "started_ns": 26296141232791,
+      "error": "BlockingIOError",
+      "ended_ns": 26296141246083
+    }
+  ],
+  "ready": {
+    "method": "ready",
+    "params": {
+      "mode": "pressure"
+    }
+  },
+  "checkpoint_ns": 26296195206291,
+  "caller_alive_at_checkpoint": false,
+  "child_live_at_checkpoint": true,
+  "reader_live_at_checkpoint": true,
+  "send_uncertain_at_checkpoint": true,
+  "followup": {
+    "writes_before": 2,
+    "errors": [
+      {
+        "error": "AppServerWriteUncertain",
+        "sent": 0,
+        "total": 0
+      },
+      {
+        "error": "AppServerWriteUncertain",
+        "sent": 0,
+        "total": 0
+      }
+    ],
+    "writes_after": 2
+  },
+  "cleanup_started_ns": 26296195271500,
+  "client_close_pipe_states": {
+    "stdin": false,
+    "stdout": false,
+    "stderr": false
+  },
+  "cleanup_ended_ns": 26296196615833,
+  "final": {
+    "child_exit": -15,
+    "caller_alive": false,
+    "reader_alive": false,
+    "pipes_closed": {
+      "stdin": 1,
+      "stdout": true,
+      "stderr": true
+    }
+  },
+  "outcome": {
+    "started_ns": 26296140075125,
+    "started_utc": "2026-10-03T08:15:31.171247+00:00",
+    "error": "AppServerWriteUncertain",
+    "message": "app-server write uncertain: 65536/524467 bytes (TimeoutError)",
+    "cause": "TimeoutError",
+    "sent": 65536,
+    "total": 524467,
+    "ended_ns": 26296195168916,
+    "ended_utc": "2026-10-03T08:15:31.226341+00:00"
+  }
+}

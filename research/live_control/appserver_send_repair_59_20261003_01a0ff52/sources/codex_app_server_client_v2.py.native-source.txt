@@ -5,26 +5,12 @@ import math
 import os
 import select
 import subprocess
-import sys
 import threading
 import time
 
 
 class AppServerError(RuntimeError):
     pass
-
-
-class AppServerUnsupportedRuntime(AppServerError):
-    """The interpreter cannot provide the required bounded pipe-send API."""
-
-
-def _require_pipe_runtime():
-    if os.name == "nt" and sys.version_info[:2] < (3, 12):
-        raise AppServerUnsupportedRuntime(
-            "app-server bounded pipe sends require Python 3.12 or later on Windows")
-    if not callable(getattr(os, "set_blocking", None)):
-        raise AppServerUnsupportedRuntime(
-            "app-server bounded pipe sends require callable os.set_blocking")
 
 
 class AppServerWriteUncertain(AppServerError):
@@ -44,7 +30,6 @@ def _deadline(timeout):
 
 class CodexAppServerClient:
     def __init__(self, command, cwd=None, process_factory=subprocess.Popen, journal_path=None):
-        _require_pipe_runtime()
         self._journal = None if journal_path is None else open(journal_path, "x", encoding="utf-8")
         self._journal_lock = threading.Lock()
         self.process = process_factory(
@@ -152,7 +137,8 @@ class CodexAppServerClient:
                 if remaining <= 0:
                     raise TimeoutError(f"app-server request timed out: {method}")
                 if self._closed:
-                    raise AppServerError(f"app-server closed during {method}: stderr not drained")
+                    detail = self.process.stderr.read().strip()
+                    raise AppServerError(f"app-server closed during {method}: {detail}")
                 self._condition.wait(remaining)
             response = self._responses.pop(identifier)
         if "error" in response:
@@ -178,7 +164,8 @@ class CodexAppServerClient:
                 if remaining <= 0:
                     raise TimeoutError("app-server notification timed out")
                 if self._closed:
-                    raise AppServerError("app-server closed while waiting: stderr not drained")
+                    detail = self.process.stderr.read().strip()
+                    raise AppServerError(f"app-server closed while waiting: {detail}")
                 self._condition.wait(remaining)
 
     def initialize(self, name="agent-interface", version="1"):

@@ -1,0 +1,32 @@
+{
+  "frozen_utc": "2026-10-03T08:15:31.012535+00:00",
+  "sources": {
+    "research/live_control/codex_app_server_client_v2.py": "a18cab38b5336c801da63ee8b91ea67067bda6e9b76a83ef184723a3cc69999d",
+    "research/live_control/test_codex_app_server_send_deadline_v1.py": "960a7b6bc63f478d2fc010b9d3dc2ac165ab1652fd26570470ef07c9fca78319",
+    "runtime/integration_checks/native.py": "831f4cd22ac7b14bc99c3d94068e23bc914e15e50d3c22e17f4f8d27d9d2024b",
+    "native_send.py": "bb32f71326ae96e660d689b1aaf9a2f53d0198e51e0890ddb347a50efad8ad6d",
+    "peer.py": "95d3b692e9b8cb6ec5822431ae1184a729c74cc33c7497205ec26d7e6ae89ddd"
+  },
+  "kind": "ordinary inert repaired-runtime construction; not formal allocation",
+  "cells": [
+    {
+      "mode": "healthy",
+      "padding": 262144,
+      "timeout": 2,
+      "checkpoint": 3
+    },
+    {
+      "mode": "pressure",
+      "padding": 524288,
+      "timeout": 0.05,
+      "checkpoint": 0.5
+    }
+  ],
+  "decision": {
+    "healthy": "exact whole wire hash and params hash returned",
+    "pressure": "positive partial prefix, WriteUncertain before checkpoint with child still live; two fresh followups no OS write",
+    "all": "caller/reader stopped, deliberate child termination recorded, all owned pipe wrappers separately closed"
+  },
+  "stop": "any missing/wrong stage/control/closure is FAIL or UNCERTAIN; no native replay",
+  "scope": "macOS Popen default text wrappers/exclusive descriptor send only; dummy image bytes, no image decode/model/GUI/task or Windows-native claim"
+}
