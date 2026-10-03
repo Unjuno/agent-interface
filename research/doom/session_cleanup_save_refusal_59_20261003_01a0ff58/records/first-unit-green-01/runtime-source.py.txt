@@ -368,8 +368,8 @@ def main():
                             shutil.copy2(session.tmp / "doom.ini", args.out / "doom.ini")
                     finally:
                         session.close()
-                    # Preserve the directory if config saving or close fails.
-                    shutil.rmtree(session.tmp)
+                        # Preserve the directory if session close itself fails.
+                        shutil.rmtree(session.tmp)
 
 
 if __name__ == "__main__":
