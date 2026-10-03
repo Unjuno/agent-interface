@@ -1,0 +1,201 @@
+{
+  "id": "A03",
+  "case": {
+    "id": "A03",
+    "target": "plain",
+    "plain": "Cedar",
+    "html": "<p>Cedar</p>",
+    "owner_state": "absent",
+    "policy": "direct"
+  },
+  "display": ":102",
+  "commands": [
+    {
+      "argv": [
+        "xdotool",
+        "windowfocus",
+        "--sync",
+        "6291462"
+      ],
+      "pid": 41,
+      "timeout_s": 3,
+      "timeout": false,
+      "exit": 0,
+      "stdout_hex": "",
+      "stderr_hex": "",
+      "start_ns": 13081273510188,
+      "end_ns": 13081276521525
+    },
+    {
+      "argv": [
+        "xdotool",
+        "key",
+        "--clearmodifiers",
+        "ctrl+v"
+      ],
+      "pid": 42,
+      "timeout_s": 3,
+      "timeout": false,
+      "exit": 0,
+      "stdout_hex": "",
+      "stderr_hex": "",
+      "start_ns": 13081289777169,
+      "end_ns": 13081328379808
+    }
+  ],
+  "signals": [],
+  "exits": {
+    "owner": 0,
+    "consumer": 0,
+    "xvfb": 0
+  },
+  "owner_ready": {
+    "role": "owner",
+    "platform": "xcb"
+  },
+  "consumer_ready": {
+    "role": "consumer",
+    "platform": "xcb",
+    "window": 6291462
+  },
+  "pids": {
+    "xvfb": 32,
+    "owner": 35,
+    "consumer": 37
+  },
+  "baseline_dump": {
+    "op": "dump",
+    "text": ""
+  },
+  "baseline": {
+    "owner": 4194308,
+    "focus": 6291462,
+    "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "at_ns": 13081279748030
+  },
+  "admission": {
+    "owner": 0,
+    "focus": 6291462,
+    "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "at_ns": 13081289756794
+  },
+  "admitted": true,
+  "before_input": {
+    "owner": 0,
+    "focus": 6291462,
+    "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "at_ns": 13081289776086
+  },
+  "paste": {
+    "argv": [
+      "xdotool",
+      "key",
+      "--clearmodifiers",
+      "ctrl+v"
+    ],
+    "pid": 42,
+    "timeout_s": 3,
+    "timeout": false,
+    "exit": 0,
+    "stdout_hex": "",
+    "stderr_hex": "",
+    "start_ns": 13081289777169,
+    "end_ns": 13081328379808
+  },
+  "reply_start_ns": 13081328411849,
+  "deadline_dump": {
+    "op": "dump",
+    "text": ""
+  },
+  "deadline_outcome": "REPLY",
+  "deadline_ns": 13081331551312,
+  "deadline_events": [
+    {
+      "kind": "ipc_command",
+      "phase": "setup",
+      "monotonic_ns": 13081276590817,
+      "op": "dump"
+    },
+    {
+      "kind": "ipc_command",
+      "phase": "setup",
+      "monotonic_ns": 13081279779280,
+      "op": "phase"
+    },
+    {
+      "kind": "key_press",
+      "phase": "paste",
+      "monotonic_ns": 13081292947965,
+      "key": 16777249,
+      "modifiers": 67108864
+    },
+    {
+      "kind": "key_press",
+      "phase": "paste",
+      "monotonic_ns": 13081299781642,
+      "key": 86,
+      "modifiers": 67108864
+    },
+    {
+      "kind": "key_release",
+      "phase": "paste",
+      "monotonic_ns": 13081308683738,
+      "key": 16777249,
+      "modifiers": 0
+    },
+    {
+      "kind": "key_release",
+      "phase": "paste",
+      "monotonic_ns": 13081317539459,
+      "key": 86,
+      "modifiers": 0
+    },
+    {
+      "kind": "ipc_command",
+      "phase": "paste",
+      "monotonic_ns": 13081328486641,
+      "op": "dump"
+    }
+  ],
+  "deadline_server": {
+    "owner": 0,
+    "focus": 6291462,
+    "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "at_ns": 13081331698479
+  },
+  "final_dump": {
+    "op": "dump",
+    "text": ""
+  },
+  "probe": {
+    "op": "probe",
+    "key_releases": [
+      16777249,
+      86
+    ]
+  },
+  "effect_server": {
+    "owner": 0,
+    "focus": 6291462,
+    "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "at_ns": 13081351680008
+  },
+  "status": "RECORDED",
+  "cleanup_server": {
+    "owner": 0,
+    "focus": 543,
+    "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "at_ns": 13081362743315
+  },
+  "artifact_sha256": {
+    "case.json": "a33656f6765bebc777da068c7c54b5bde9573569676e63f9a23c7a6dc3b1c03d",
+    "consumer.events.jsonl": "12295fca53774113f34b1be8cb44c299f1d7cc70a86c5fac5488e62bdc8f4b45",
+    "consumer.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+    "document.html": "d27b58a92cd0a242cfd54f58c577a5e915785235c5553d198fee1559113af05c",
+    "owner.events.jsonl": "f4faee85f47a64c6bcfec488c1d12b6ba882c96bf7e1c135df0278c8a649dd4b",
+    "owner.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+    "text.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "window.png": "f3ce3d7edf731b6419bec23b2dc60c48a1dac65de3f21268dfeecb1f800a7bef",
+    "xvfb.stderr": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55"
+  }
+}
