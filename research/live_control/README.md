@@ -16,6 +16,7 @@
 | Implemented live-control surface | [What is implemented](#what-is-implemented) |
 | Reproduction notes | [Reproduce](#reproduce) |
 | Issue #2221 cross-domain retained-evidence transfer T1 | [Result and scope](cross_domain_handback_transfer_2221_t1_20261002/RESULT.md) |
+| App-server send before response deadline (#59; native owned-pipe only) | [First outcomes, audit limits and existing-writer comparison](appserver_send_boundary_59_20261003_01a0ff52/README.md) |
 
 ## Track map
 
