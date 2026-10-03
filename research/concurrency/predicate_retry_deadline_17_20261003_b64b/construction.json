@@ -1,0 +1,899 @@
+{
+  "schema": "predicate-retry-source-controls-v2",
+  "source_pins": {
+    "base": "60d7734ddfe23955ab3488584a381397564cc1a8",
+    "own_original_head": "78aeda2407014c1df52f9a3ea5ef635a0f79de98",
+    "paths": {
+      "baseline.py": {
+        "bytes": 6194,
+        "sha256": "6032c0dd1d7441977afca790d08d1f1012e8f18171691249456fcfe90097617e"
+      },
+      "outside.py": {
+        "bytes": 6822,
+        "sha256": "c05855b2c1129a67789f236d194fa5ae5e1929e72f7bd5a7acb936ffdd766569"
+      },
+      "deadline_first.py": {
+        "bytes": 6989,
+        "sha256": "d938d6a630b1dd930ee1c092f7feae3f69085e5d30f094a70a56bec24548ba3a"
+      }
+    }
+  },
+  "rows": [
+    {
+      "policy": "baseline",
+      "scenario": "quiescent",
+      "outcome": "TimeoutError",
+      "detail": "app-server notification timed out",
+      "queue_methods": [
+        "noise"
+      ],
+      "A_predicate_calls": 1,
+      "B_predicate_calls": 0,
+      "A_condition_entries": 1,
+      "clock_reads": 2,
+      "clock_readings": [
+        0.0,
+        2.0
+      ],
+      "synthetic_timeout_seconds": 1,
+      "synthetic_initial_seconds": 0,
+      "synthetic_reacquisition_seconds": 2,
+      "trace": [
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 1,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        }
+      ]
+    },
+    {
+      "policy": "outside",
+      "scenario": "quiescent",
+      "outcome": "TimeoutError",
+      "detail": "app-server notification timed out",
+      "queue_methods": [
+        "noise"
+      ],
+      "A_predicate_calls": 1,
+      "B_predicate_calls": 0,
+      "A_condition_entries": 2,
+      "clock_reads": 2,
+      "clock_readings": [
+        0.0,
+        2.0
+      ],
+      "synthetic_timeout_seconds": 1,
+      "synthetic_initial_seconds": 0,
+      "synthetic_reacquisition_seconds": 2,
+      "trace": [
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 1,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 2,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        }
+      ]
+    },
+    {
+      "policy": "deadline_first",
+      "scenario": "quiescent",
+      "outcome": "TimeoutError",
+      "detail": "app-server notification timed out",
+      "queue_methods": [
+        "noise"
+      ],
+      "A_predicate_calls": 1,
+      "B_predicate_calls": 0,
+      "A_condition_entries": 2,
+      "clock_reads": 2,
+      "clock_readings": [
+        0.0,
+        2.0
+      ],
+      "synthetic_timeout_seconds": 1,
+      "synthetic_initial_seconds": 0,
+      "synthetic_reacquisition_seconds": 2,
+      "trace": [
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 1,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 2,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        }
+      ]
+    },
+    {
+      "policy": "baseline",
+      "scenario": "churn",
+      "outcome": "TimeoutError",
+      "detail": "app-server notification timed out",
+      "queue_methods": [
+        "noise"
+      ],
+      "A_predicate_calls": 1,
+      "B_predicate_calls": 0,
+      "A_condition_entries": 1,
+      "clock_reads": 2,
+      "clock_readings": [
+        0.0,
+        2.0
+      ],
+      "synthetic_timeout_seconds": 1,
+      "synthetic_initial_seconds": 0,
+      "synthetic_reacquisition_seconds": 2,
+      "trace": [
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 1,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        }
+      ]
+    },
+    {
+      "policy": "outside",
+      "scenario": "churn",
+      "outcome": "DiagnosticCutoff",
+      "detail": "8 completed false snapshot/recheck cycles; not an infinite execution claim",
+      "queue_methods": [
+        "noise"
+      ],
+      "A_predicate_calls": 8,
+      "B_predicate_calls": 8,
+      "A_condition_entries": 17,
+      "clock_reads": 9,
+      "clock_readings": [
+        0.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0
+      ],
+      "synthetic_timeout_seconds": 1,
+      "synthetic_initial_seconds": 0,
+      "synthetic_reacquisition_seconds": 2,
+      "trace": [
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 1,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_ENTER",
+          "entry": 1,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_ENTER",
+          "entry": 2,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "B_CONSUME",
+          "removed_method": "noise"
+        },
+        {
+          "actor": "R",
+          "event": "R_FRESH_APPEND",
+          "method": "noise",
+          "fresh_identity": true,
+          "logical_arrival_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 2,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 3,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_ENTER",
+          "entry": 3,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_ENTER",
+          "entry": 4,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "B_CONSUME",
+          "removed_method": "noise"
+        },
+        {
+          "actor": "R",
+          "event": "R_FRESH_APPEND",
+          "method": "noise",
+          "fresh_identity": true,
+          "logical_arrival_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 4,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 5,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_ENTER",
+          "entry": 5,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_ENTER",
+          "entry": 6,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "B_CONSUME",
+          "removed_method": "noise"
+        },
+        {
+          "actor": "R",
+          "event": "R_FRESH_APPEND",
+          "method": "noise",
+          "fresh_identity": true,
+          "logical_arrival_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 6,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 7,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_ENTER",
+          "entry": 7,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_ENTER",
+          "entry": 8,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "B_CONSUME",
+          "removed_method": "noise"
+        },
+        {
+          "actor": "R",
+          "event": "R_FRESH_APPEND",
+          "method": "noise",
+          "fresh_identity": true,
+          "logical_arrival_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 8,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 9,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_ENTER",
+          "entry": 9,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_ENTER",
+          "entry": 10,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "B_CONSUME",
+          "removed_method": "noise"
+        },
+        {
+          "actor": "R",
+          "event": "R_FRESH_APPEND",
+          "method": "noise",
+          "fresh_identity": true,
+          "logical_arrival_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 10,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 11,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_ENTER",
+          "entry": 11,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_ENTER",
+          "entry": 12,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "B_CONSUME",
+          "removed_method": "noise"
+        },
+        {
+          "actor": "R",
+          "event": "R_FRESH_APPEND",
+          "method": "noise",
+          "fresh_identity": true,
+          "logical_arrival_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 12,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 13,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_ENTER",
+          "entry": 13,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_ENTER",
+          "entry": 14,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "B_CONSUME",
+          "removed_method": "noise"
+        },
+        {
+          "actor": "R",
+          "event": "R_FRESH_APPEND",
+          "method": "noise",
+          "fresh_identity": true,
+          "logical_arrival_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 14,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 15,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_ENTER",
+          "entry": 15,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_ENTER",
+          "entry": 16,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "B_CONSUME",
+          "removed_method": "noise"
+        },
+        {
+          "actor": "R",
+          "event": "R_FRESH_APPEND",
+          "method": "noise",
+          "fresh_identity": true,
+          "logical_arrival_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 16,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        }
+      ]
+    },
+    {
+      "policy": "deadline_first",
+      "scenario": "churn",
+      "outcome": "TimeoutError",
+      "detail": "app-server notification timed out",
+      "queue_methods": [
+        "noise"
+      ],
+      "A_predicate_calls": 1,
+      "B_predicate_calls": 1,
+      "A_condition_entries": 2,
+      "clock_reads": 3,
+      "clock_readings": [
+        0.0,
+        2.0,
+        2.0
+      ],
+      "synthetic_timeout_seconds": 1,
+      "synthetic_initial_seconds": 0,
+      "synthetic_reacquisition_seconds": 2,
+      "trace": [
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 1,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_ENTER",
+          "entry": 1,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_ENTER",
+          "entry": 2,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "B_CONSUME",
+          "removed_method": "noise"
+        },
+        {
+          "actor": "R",
+          "event": "R_FRESH_APPEND",
+          "method": "noise",
+          "fresh_identity": true,
+          "logical_arrival_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 2,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        }
+      ]
+    },
+    {
+      "policy": "outside",
+      "scenario": "fresh_match",
+      "outcome": "MATCH",
+      "detail": {
+        "method": "target"
+      },
+      "queue_methods": [],
+      "A_predicate_calls": 2,
+      "B_predicate_calls": 1,
+      "A_condition_entries": 4,
+      "clock_reads": 2,
+      "clock_readings": [
+        0.0,
+        0.25
+      ],
+      "synthetic_timeout_seconds": 1,
+      "synthetic_initial_seconds": 0,
+      "synthetic_reacquisition_seconds": 2,
+      "trace": [
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 1,
+          "logical_seconds": 0.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_ENTER",
+          "entry": 1,
+          "logical_seconds": 0.25
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_ENTER",
+          "entry": 2,
+          "logical_seconds": 0.25
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "B_CONSUME",
+          "removed_method": "noise"
+        },
+        {
+          "actor": "R",
+          "event": "R_FRESH_APPEND",
+          "method": "target",
+          "fresh_identity": true,
+          "logical_arrival_seconds": 0.5
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 2,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 3,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 4,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        }
+      ]
+    },
+    {
+      "policy": "deadline_first",
+      "scenario": "fresh_match",
+      "outcome": "TimeoutError",
+      "detail": "app-server notification timed out",
+      "queue_methods": [
+        "target"
+      ],
+      "A_predicate_calls": 1,
+      "B_predicate_calls": 1,
+      "A_condition_entries": 2,
+      "clock_reads": 3,
+      "clock_readings": [
+        0.0,
+        0.25,
+        2.0
+      ],
+      "synthetic_timeout_seconds": 1,
+      "synthetic_initial_seconds": 0,
+      "synthetic_reacquisition_seconds": 2,
+      "trace": [
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 1,
+          "logical_seconds": 0.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_ENTER",
+          "entry": 1,
+          "logical_seconds": 0.25
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_ENTER",
+          "entry": 2,
+          "logical_seconds": 0.25
+        },
+        {
+          "actor": "B",
+          "event": "CONDITION_EXIT"
+        },
+        {
+          "actor": "B",
+          "event": "B_CONSUME",
+          "removed_method": "noise"
+        },
+        {
+          "actor": "R",
+          "event": "R_FRESH_APPEND",
+          "method": "target",
+          "fresh_identity": true,
+          "logical_arrival_seconds": 0.5
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 2,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        }
+      ]
+    },
+    {
+      "policy": "baseline",
+      "scenario": "match_oracle",
+      "outcome": "MATCH",
+      "detail": {
+        "method": "target"
+      },
+      "queue_methods": [],
+      "A_predicate_calls": 1,
+      "B_predicate_calls": 0,
+      "A_condition_entries": 1,
+      "clock_reads": 1,
+      "clock_readings": [
+        0.0
+      ],
+      "synthetic_timeout_seconds": 1,
+      "synthetic_initial_seconds": 0,
+      "synthetic_reacquisition_seconds": 2,
+      "trace": [
+        {
+          "actor": "A",
+          "event": "CONDITION_ENTER",
+          "entry": 1,
+          "logical_seconds": 2.0
+        },
+        {
+          "actor": "A",
+          "event": "CONDITION_EXIT"
+        }
+      ]
+    }
+  ],
+  "all_frozen_expectations": true,
+  "subject_constructors": 0,
+  "real_threads": 0,
+  "native_peers": 0,
+  "actual_A_source_method_calls": 9,
+  "actual_B_source_method_calls": 11,
+  "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "kind": "new ordinary source construction, custom deterministic coherent Condition/clock; no prior native replay"
+}

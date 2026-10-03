@@ -64,3 +64,5 @@ This is a navigation model derived from the retained studies, not a new runtime 
 - Integration studies: [`../integration/`](../integration/)
 - Measurement/concurrency handback studies: [`../measurement/`](../measurement/)
 - Research workspace map: [`../README.md`](../README.md)
+
+- [#17 notification retry/deadline finite counterexample](predicate_retry_deadline_17_20261003_b64b/README.md): one frozen equality-quotient model and independent saved oracle expose changed-queue retry beyond an expired deadline; simple deadline-first alternative changes fresh matching priority. Inert scoped evidence; no native timing, whole-call bound, input/task effect or runtime adoption.
