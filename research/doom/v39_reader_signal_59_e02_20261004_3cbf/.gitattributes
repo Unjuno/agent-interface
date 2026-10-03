@@ -1,1 +1,3 @@
 source/*.py.txt -text whitespace=cr-at-eol,-blank-at-eof
+# Retain exact first construction logs, including unittest trailing spaces.
+methods/*.log -text -whitespace
