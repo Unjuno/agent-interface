@@ -1,0 +1,23 @@
+{
+  "cwd": "<WORKSPACE>",
+  "receipt_directory": "<WORKSPACE>/work/continuation-20261003-1250/operations/x11-key-selftest-private",
+  "argv": [
+    "orb",
+    "-m",
+    "research-6501-async-01a0ff52-70ab",
+    "-u",
+    "root",
+    "bash",
+    "-c",
+    "test -z \"$(docker ps -q)\" && docker run --pull never --network none --cpus 0.25 --memory 128m --memory-swap 128m --pids-limit 32 --tmpfs /tmp:rw,size=32m -v /root/17-x11-key-release-70ab:/out --name 17-x11-key-selftest-70ab -i sha256:f9b71334f027006dd318eb947a40358f02118657641b35611fa360fcdb74637f python -"
+  ],
+  "launcher_pid": 62168,
+  "start_utc": "2026-10-03T15:59:34.842988+00:00",
+  "start_ns": 54139676870250,
+  "stdin": {
+    "path": "work/x11-key-release-17-70ab/selftest.py",
+    "bytes": 2405,
+    "sha256": "6d481685b4b7deda897c22af426b3988dd3b8ea9be62f5e69fd663fa9e40ee72"
+  },
+  "pid": 62170
+}

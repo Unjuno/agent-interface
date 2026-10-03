@@ -1,0 +1,17 @@
+{
+  "cwd": "<WORKSPACE>",
+  "receipt_directory": "<WORKSPACE>/work/continuation-20261003-1250/operations/x11-key-build-verify",
+  "argv": [
+    "orb",
+    "-m",
+    "research-6501-async-01a0ff52-70ab",
+    "-u",
+    "root",
+    "bash",
+    "-c",
+    "docker inspect 17-x11-key-build-70ab --format \"{{json .State}}\"; docker ps --format \"{{.Names}}\"; docker commit 17-x11-key-build-70ab research-17-x11-key:70ab"
+  ],
+  "launcher_pid": 60911,
+  "start_utc": "2026-10-03T15:53:47.187142+00:00",
+  "start_ns": 53792023061625
+}

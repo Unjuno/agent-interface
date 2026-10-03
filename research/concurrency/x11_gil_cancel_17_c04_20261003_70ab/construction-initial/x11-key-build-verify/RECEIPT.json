@@ -1,0 +1,32 @@
+{
+  "cwd": "<WORKSPACE>",
+  "receipt_directory": "<WORKSPACE>/work/continuation-20261003-1250/operations/x11-key-build-verify",
+  "argv": [
+    "orb",
+    "-m",
+    "research-6501-async-01a0ff52-70ab",
+    "-u",
+    "root",
+    "bash",
+    "-c",
+    "docker inspect 17-x11-key-build-70ab --format \"{{json .State}}\"; docker ps --format \"{{.Names}}\"; docker commit 17-x11-key-build-70ab research-17-x11-key:70ab"
+  ],
+  "launcher_pid": 60911,
+  "start_utc": "2026-10-03T15:53:47.187142+00:00",
+  "start_ns": 53792023061625,
+  "pid": 60912,
+  "exit_code": 0,
+  "end_utc": "2026-10-03T15:53:53.427748+00:00",
+  "end_ns": 53798263454125,
+  "source_sha256": "d63bd38401f3c366f145aada93d78d71eaf23216b896f6874d01f0741dfd15fa",
+  "outputs": {
+    "stdout": {
+      "bytes": 296,
+      "sha256": "180d315ed8d188b4c5c989cfb468e74f56d7e4b6daab23ed4e50bd3d51d2cc27"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

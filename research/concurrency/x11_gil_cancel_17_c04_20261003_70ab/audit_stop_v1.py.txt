@@ -1,0 +1,30 @@
+"""Post-outcome saved-only STOP custody checker; not the frozen six-case oracle."""
+import copy, hashlib, json, pathlib, sys
+p=pathlib.Path(sys.argv[1]); f=json.loads((p/'FREEZE.json').read_bytes()); raw=json.loads((p/'RAW.json').read_bytes())
+for n,h in f['hashes'].items(): assert hashlib.sha256((p/n).read_bytes()).hexdigest()==h
+assert raw['freeze_sha256']==hashlib.sha256((p/'FREEZE.json').read_bytes()).hexdigest()
+def check(r):
+ assert r['allocation']==f['allocation'] and r['status']=='STOP_FIRST_OUTCOME'
+ assert r['error']=="AssertionError('child result timeout')" and len(r['rows'])==1
+ a=r['rows'][0]; assert a['case']==0 and a['mode']=='thread_cdll' and a['error']==r['error']
+ assert a['observations']==[] and all(k not in a for k in ['worker_ready','send_before_ns','send_after_ns','worker'])
+ assert a['initial']['rc']==a['armed']['rc']==a['final']['rc']==1
+ assert a['initial']['hex']==a['final']['hex']=='00'*32
+ b=bytearray(32)
+ for k in r['keys'].values(): b[k//8]|=1<<(k%8)
+ assert a['armed']['hex']==b.hex() and len(a['cleanup'])==2
+ assert [(e['key'],e['held'],e['rc']) for e in a['cleanup']]==[(r['keys']['owned'],False,1),(r['keys']['bystander'],False,1)]
+ assert a['retired']==[{'pid':13,'exit':-15,'alive':False}]
+ assert r['server']['exit']==0
+check(raw)
+rejected=[]
+for name in ['invented_send','nonneutral','live_child','changed_outcome']:
+ b=copy.deepcopy(raw)
+ if name=='invented_send':b['rows'][0]['send_before_ns']=1
+ if name=='nonneutral':b['rows'][0]['final']['hex']=b['rows'][0]['armed']['hex']
+ if name=='live_child':b['rows'][0]['retired'][0]['alive']=True
+ if name=='changed_outcome':b['status']='COMPLETE_FIRST_SIX'
+ try:check(b)
+ except AssertionError:rejected.append(name)
+ else:raise AssertionError('accepted '+name)
+print(json.dumps({'result':'STOP_INVALID_EXPOSURE_PRESERVED','scientific_contrast':'UNTESTED','attempted_rows':1,'completed_comparison_rows':0,'unrun_rows':5,'formal_retries':0,'frozen_full_oracle_runs':0,'saved_stop_checker':'post-outcome separate implementation; source/raw custody only','raw_sha256':hashlib.sha256((p/'RAW.json').read_bytes()).hexdigest(),'confirmed_final_keymap_neutral':True,'child_retired':True,'server_retired':True,'corruption_rejections':rejected,'FD_counts':[raw['rows'][0]['fds_before'],raw['rows'][0]['fds_after']],'FD_interpretation':'7 to 10; no descriptor-leak freedom assertion, whole container exited'}},indent=2))
