@@ -47,6 +47,7 @@ class PersistentPlannerAdapter:
         self._terminal_status = None
         self._cancellation_requested = False
         self._interrupt_response = None
+        self._admission_pending = False
 
     @property
     def thread_id(self):
@@ -55,8 +56,11 @@ class PersistentPlannerAdapter:
 
     def start_session(self):
         with self._lock:
+            if self._admission_pending:
+                raise PlannerProtocolError("start outcome pending or unknown; reconcile before another admission")
             if self._active is not None and self._terminal_status is None:
                 raise PlannerProtocolError("cannot replace a session with an active turn")
+            self._admission_pending = True
         response = self.client.start_thread(
             model=self.model,
             cwd=self.cwd,
@@ -77,19 +81,23 @@ class PersistentPlannerAdapter:
             self._terminal_status = None
             self._cancellation_requested = False
             self._interrupt_response = None
+            self._admission_pending = False
             return thread_id
 
     def begin_turn(self, prompt, *, output_schema, image_path=None):
+        inputs = [{"type": "text", "text": prompt, "text_elements": []}]
+        if image_path is not None:
+            inputs.append({"type": "localImage", "path": str(Path(image_path))})
         with self._lock:
+            if self._admission_pending:
+                raise PlannerProtocolError("start outcome pending or unknown; reconcile before another admission")
             if self._thread_id is None:
                 raise PlannerProtocolError("start_session must be called first")
             if self._active is not None and self._terminal_status is None:
                 raise PlannerProtocolError("only one turn may be active per planner session")
             thread_id = self._thread_id
             generation = self._generation
-        inputs = [{"type": "text", "text": prompt, "text_elements": []}]
-        if image_path is not None:
-            inputs.append({"type": "localImage", "path": str(Path(image_path))})
+            self._admission_pending = True
         response = self.client.start_turn(
             thread_id, inputs, model=self.model, effort=self.effort,
             outputSchema=output_schema)
@@ -105,6 +113,7 @@ class PersistentPlannerAdapter:
             self._cancellation_requested = False
             self._interrupt_response = None
             self._output_schema = output_schema
+            self._admission_pending = False
         return handle
 
     def interrupt(self, handle):
