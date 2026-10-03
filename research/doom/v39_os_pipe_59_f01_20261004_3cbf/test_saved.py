@@ -2,10 +2,30 @@ import copy
 import json
 from pathlib import Path
 import unittest
-from verify_saved import validate
+import shutil
+import tempfile
+from verify_saved import validate, check
 
 
 class SavedBoundary(unittest.TestCase):
+    def test_check_rejects_modified_summary_missing_cell_and_changed_copy(self):
+        for mutation in ('summary', 'missing', 'copy'):
+            with self.subTest(mutation=mutation), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                shutil.copytree(Path(__file__).parent / 'raw', root / 'raw')
+                self.assertEqual(check(root), 'PASS_PARSER_NOTIFICATION_EOF_UNRESOLVED')
+                if mutation == 'missing':
+                    (root / 'raw/candidate_fault.json').unlink()
+                elif mutation == 'summary':
+                    with (root / 'raw/SUMMARY.json').open('ab') as handle:
+                        handle.write(b' ')
+                else:
+                    row = json.loads((root / 'raw/candidate_fault.json').read_text())
+                    row['child_alive'] = False
+                    (root / 'raw/candidate_fault.json').write_text(json.dumps(row))
+                with self.assertRaises(ValueError):
+                    check(root)
+
     def record(self):
         return json.loads((Path(__file__).parent / 'raw/SUMMARY.json').read_text())
 
