@@ -289,17 +289,19 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
         except Exception as error:
             ended = clock()
             attempt.update(status="failed", completed_ns=ended,
-                           call_id=getattr(error, "call_id", None),
-                           usage=_usage(getattr(error, "usage", None)),
-                           visible_images_submitted=_optional_count(
-                               getattr(error, "visible_images_submitted", None),
-                               "visible_images_submitted"),
-                           wait_ns=_optional_count(getattr(error, "wait_ns", None), "wait_ns"),
                            error=_error_text(error))
             stages[name] = {"status": "failed", "reason": _error_text(error)}
             phases.append({"stage": name, "started_ns": started, "ended_ns": ended,
                            "elapsed_ns": ended-started})
-            emit({"event": "model_attempt_finished", **copy.deepcopy(attempt)})
+            try:
+                attempt.update(call_id=getattr(error, "call_id", None),
+                               usage=_usage(getattr(error, "usage", None)),
+                               visible_images_submitted=_optional_count(
+                                   getattr(error, "visible_images_submitted", None),
+                                   "visible_images_submitted"),
+                               wait_ns=_optional_count(getattr(error, "wait_ns", None), "wait_ns"))
+            finally:
+                emit({"event": "model_attempt_finished", **copy.deepcopy(attempt)})
             raise
         ended = clock()
         attempt.update(status="completed", completed_ns=ended,
