@@ -313,6 +313,9 @@ def admit_program(
     try:
         validate_program(program)
         validate_backend_manifest(manifest)
+        _bounded_int(now_ns, "now_ns", 0, 2**63 - 1)
+        _bounded_int(current_observation_seq, "current_observation_seq", 0, 2**63 - 1)
+        _bounded_int(current_binding_revision, "current_binding_revision", 0, 2**63 - 1)
     except ContractError:
         return Admission(False, "INVALID_PROGRAM", tuple())
 
