@@ -1,0 +1,316 @@
+test_any_unverified_receipt_blocks_despite_later_verified_release (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_any_unverified_receipt_blocks_despite_later_verified_release) ... FAIL
+test_backend_failure_without_release_receipt_blocks_followup (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_backend_failure_without_release_receipt_blocks_followup) ... FAIL
+test_core_refusal_does_not_block_later_valid_dispatch (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_core_refusal_does_not_block_later_valid_dispatch) ... ok
+test_later_explicit_backend_cleanup_does_not_clear_session (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_later_explicit_backend_cleanup_does_not_clear_session) ... FAIL
+test_malformed_or_contradictory_release_cannot_complete (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_malformed_or_contradictory_release_cannot_complete) ... 
+  test_malformed_or_contradictory_release_cannot_complete (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_malformed_or_contradictory_release_cannot_complete) (releases=None) ... ERROR
+  test_malformed_or_contradictory_release_cannot_complete (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_malformed_or_contradictory_release_cannot_complete) (releases=[]) ... ERROR
+  test_malformed_or_contradictory_release_cannot_complete (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_malformed_or_contradictory_release_cannot_complete) (releases=[None]) ... ERROR
+  test_malformed_or_contradictory_release_cannot_complete (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_malformed_or_contradictory_release_cannot_complete) (releases=[{'verified': True}]) ... FAIL
+  test_malformed_or_contradictory_release_cannot_complete (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_malformed_or_contradictory_release_cannot_complete) (releases=[{'verified': 1, 'keys_down': [], 'buttons_down': []}]) ... FAIL
+  test_malformed_or_contradictory_release_cannot_complete (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_malformed_or_contradictory_release_cannot_complete) (releases=[{'verified': 'true', 'keys_down': [], 'buttons_down': []}]) ... FAIL
+  test_malformed_or_contradictory_release_cannot_complete (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_malformed_or_contradictory_release_cannot_complete) (releases=[{'verified': True, 'keys_down': [], 'buttons_down': ['left']}]) ... FAIL
+  test_malformed_or_contradictory_release_cannot_complete (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_malformed_or_contradictory_release_cannot_complete) (releases=[{'verified': True, 'keys_down': [], 'buttons_down': [], 'keys_unknown': ['A']}]) ... FAIL
+  test_malformed_or_contradictory_release_cannot_complete (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_malformed_or_contradictory_release_cannot_complete) (releases=[{'verified': True, 'keys_down': [], 'buttons_down': [], 'errors': [{'stage': 'key_release'}]}]) ... FAIL
+test_mutating_returned_receipt_does_not_clear_latch (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_mutating_returned_receipt_does_not_clear_latch) ... FAIL
+test_new_binding_and_observation_do_not_clear_session (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_new_binding_and_observation_do_not_clear_session) ... FAIL
+test_partial_execution_failure_blocks_followup (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_partial_execution_failure_blocks_followup) ... FAIL
+test_preflight_cleanup_failure_blocks_followup (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_preflight_cleanup_failure_blocks_followup) ... FAIL
+test_real_inert_sticky_input_blocks_followup_emissions (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_real_inert_sticky_input_blocks_followup_emissions) ... FAIL
+test_unexpected_execution_exception_latches_before_reraise (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_unexpected_execution_exception_latches_before_reraise) ... FAIL
+test_verified_release_allows_later_valid_dispatch (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_verified_release_allows_later_valid_dispatch) ... ok
+
+======================================================================
+ERROR: test_malformed_or_contradictory_release_cannot_complete (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_malformed_or_contradictory_release_cannot_complete) (releases=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 104, in test_malformed_or_contradictory_release_cannot_complete
+    self.assertIs(result['recovery_required'], True)
+                  ~~~~~~^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'recovery_required'
+
+======================================================================
+ERROR: test_malformed_or_contradictory_release_cannot_complete (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_malformed_or_contradictory_release_cannot_complete) (releases=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 104, in test_malformed_or_contradictory_release_cannot_complete
+    self.assertIs(result['recovery_required'], True)
+                  ~~~~~~^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'recovery_required'
+
+======================================================================
+ERROR: test_malformed_or_contradictory_release_cannot_complete (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_malformed_or_contradictory_release_cannot_complete) (releases=[None])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 101, in test_malformed_or_contradictory_release_cannot_complete
+    result = session.dispatch(self.fixture.program([]), current_observation_seq=7,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$WORKSPACE/runtime/backends/quartz_v1/session.py", line 22, in dispatch
+    releases=result.get("releases",[]); verified=bool(releases) and all(row.get("verified") for row in releases)
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$WORKSPACE/runtime/backends/quartz_v1/session.py", line 22, in <genexpr>
+    releases=result.get("releases",[]); verified=bool(releases) and all(row.get("verified") for row in releases)
+                                                                        ^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+======================================================================
+FAIL: test_any_unverified_receipt_blocks_despite_later_verified_release (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_any_unverified_receipt_blocks_despite_later_verified_release)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 140, in test_any_unverified_receipt_blocks_despite_later_verified_release
+    self.forbid_followup_access()
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 35, in forbid_followup_access
+    result = self.dispatch([{'op': 'key_state', 'key': 'CTRL', 'down': True}])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 25, in dispatch
+    return self.session.dispatch(program, current_observation_seq=sequence,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$WORKSPACE/runtime/backends/quartz_v1/session.py", line 10, in dispatch
+    admission = admit_program(program, self.backend.manifest(), now_ns=now_ns, current_observation_seq=current_observation_seq, current_binding_revision=current_binding_revision)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1198, in _execute_mock_call
+    raise effect
+AssertionError: manifest must not be read
+
+======================================================================
+FAIL: test_backend_failure_without_release_receipt_blocks_followup (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_backend_failure_without_release_receipt_blocks_followup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 80, in test_backend_failure_without_release_receipt_blocks_followup
+    self.forbid_followup_access()
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 35, in forbid_followup_access
+    result = self.dispatch([{'op': 'key_state', 'key': 'CTRL', 'down': True}])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 25, in dispatch
+    return self.session.dispatch(program, current_observation_seq=sequence,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$WORKSPACE/runtime/backends/quartz_v1/session.py", line 10, in dispatch
+    admission = admit_program(program, self.backend.manifest(), now_ns=now_ns, current_observation_seq=current_observation_seq, current_binding_revision=current_binding_revision)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1198, in _execute_mock_call
+    raise effect
+AssertionError: manifest must not be read
+
+======================================================================
+FAIL: test_later_explicit_backend_cleanup_does_not_clear_session (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_later_explicit_backend_cleanup_does_not_clear_session)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 125, in test_later_explicit_backend_cleanup_does_not_clear_session
+    self.forbid_followup_access()
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 35, in forbid_followup_access
+    result = self.dispatch([{'op': 'key_state', 'key': 'CTRL', 'down': True}])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 25, in dispatch
+    return self.session.dispatch(program, current_observation_seq=sequence,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$WORKSPACE/runtime/backends/quartz_v1/session.py", line 10, in dispatch
+    admission = admit_program(program, self.backend.manifest(), now_ns=now_ns, current_observation_seq=current_observation_seq, current_binding_revision=current_binding_revision)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1198, in _execute_mock_call
+    raise effect
+AssertionError: manifest must not be read
+
+======================================================================
+FAIL: test_malformed_or_contradictory_release_cannot_complete (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_malformed_or_contradictory_release_cannot_complete) (releases=[{'verified': True}])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 103, in test_malformed_or_contradictory_release_cannot_complete
+    self.assertEqual(result['status'], 'release_unverified')
+AssertionError: 'completed' != 'release_unverified'
+- completed
++ release_unverified
+
+
+======================================================================
+FAIL: test_malformed_or_contradictory_release_cannot_complete (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_malformed_or_contradictory_release_cannot_complete) (releases=[{'verified': 1, 'keys_down': [], 'buttons_down': []}])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 103, in test_malformed_or_contradictory_release_cannot_complete
+    self.assertEqual(result['status'], 'release_unverified')
+AssertionError: 'completed' != 'release_unverified'
+- completed
++ release_unverified
+
+
+======================================================================
+FAIL: test_malformed_or_contradictory_release_cannot_complete (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_malformed_or_contradictory_release_cannot_complete) (releases=[{'verified': 'true', 'keys_down': [], 'buttons_down': []}])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 103, in test_malformed_or_contradictory_release_cannot_complete
+    self.assertEqual(result['status'], 'release_unverified')
+AssertionError: 'completed' != 'release_unverified'
+- completed
++ release_unverified
+
+
+======================================================================
+FAIL: test_malformed_or_contradictory_release_cannot_complete (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_malformed_or_contradictory_release_cannot_complete) (releases=[{'verified': True, 'keys_down': [], 'buttons_down': ['left']}])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 103, in test_malformed_or_contradictory_release_cannot_complete
+    self.assertEqual(result['status'], 'release_unverified')
+AssertionError: 'completed' != 'release_unverified'
+- completed
++ release_unverified
+
+
+======================================================================
+FAIL: test_malformed_or_contradictory_release_cannot_complete (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_malformed_or_contradictory_release_cannot_complete) (releases=[{'verified': True, 'keys_down': [], 'buttons_down': [], 'keys_unknown': ['A']}])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 103, in test_malformed_or_contradictory_release_cannot_complete
+    self.assertEqual(result['status'], 'release_unverified')
+AssertionError: 'completed' != 'release_unverified'
+- completed
++ release_unverified
+
+
+======================================================================
+FAIL: test_malformed_or_contradictory_release_cannot_complete (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_malformed_or_contradictory_release_cannot_complete) (releases=[{'verified': True, 'keys_down': [], 'buttons_down': [], 'errors': [{'stage': 'key_release'}]}])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 103, in test_malformed_or_contradictory_release_cannot_complete
+    self.assertEqual(result['status'], 'release_unverified')
+AssertionError: 'completed' != 'release_unverified'
+- completed
++ release_unverified
+
+
+======================================================================
+FAIL: test_mutating_returned_receipt_does_not_clear_latch (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_mutating_returned_receipt_does_not_clear_latch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 147, in test_mutating_returned_receipt_does_not_clear_latch
+    self.forbid_followup_access()
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 35, in forbid_followup_access
+    result = self.dispatch([{'op': 'key_state', 'key': 'CTRL', 'down': True}])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 25, in dispatch
+    return self.session.dispatch(program, current_observation_seq=sequence,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$WORKSPACE/runtime/backends/quartz_v1/session.py", line 10, in dispatch
+    admission = admit_program(program, self.backend.manifest(), now_ns=now_ns, current_observation_seq=current_observation_seq, current_binding_revision=current_binding_revision)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1198, in _execute_mock_call
+    raise effect
+AssertionError: manifest must not be read
+
+======================================================================
+FAIL: test_new_binding_and_observation_do_not_clear_session (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_new_binding_and_observation_do_not_clear_session)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 132, in test_new_binding_and_observation_do_not_clear_session
+    self.assertEqual(second.get('error'), 'INPUT_RECOVERY_REQUIRED')
+AssertionError: None != 'INPUT_RECOVERY_REQUIRED'
+
+======================================================================
+FAIL: test_partial_execution_failure_blocks_followup (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_partial_execution_failure_blocks_followup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 64, in test_partial_execution_failure_blocks_followup
+    self.forbid_followup_access()
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 35, in forbid_followup_access
+    result = self.dispatch([{'op': 'key_state', 'key': 'CTRL', 'down': True}])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 25, in dispatch
+    return self.session.dispatch(program, current_observation_seq=sequence,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$WORKSPACE/runtime/backends/quartz_v1/session.py", line 10, in dispatch
+    admission = admit_program(program, self.backend.manifest(), now_ns=now_ns, current_observation_seq=current_observation_seq, current_binding_revision=current_binding_revision)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1198, in _execute_mock_call
+    raise effect
+AssertionError: manifest must not be read
+
+======================================================================
+FAIL: test_preflight_cleanup_failure_blocks_followup (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_preflight_cleanup_failure_blocks_followup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 73, in test_preflight_cleanup_failure_blocks_followup
+    self.forbid_followup_access()
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 35, in forbid_followup_access
+    result = self.dispatch([{'op': 'key_state', 'key': 'CTRL', 'down': True}])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 25, in dispatch
+    return self.session.dispatch(program, current_observation_seq=sequence,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$WORKSPACE/runtime/backends/quartz_v1/session.py", line 10, in dispatch
+    admission = admit_program(program, self.backend.manifest(), now_ns=now_ns, current_observation_seq=current_observation_seq, current_binding_revision=current_binding_revision)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1198, in _execute_mock_call
+    raise effect
+AssertionError: manifest must not be read
+
+======================================================================
+FAIL: test_real_inert_sticky_input_blocks_followup_emissions (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_real_inert_sticky_input_blocks_followup_emissions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 53, in test_real_inert_sticky_input_blocks_followup_emissions
+    self.assertEqual(second.get('error'), 'INPUT_RECOVERY_REQUIRED')
+AssertionError: None != 'INPUT_RECOVERY_REQUIRED'
+
+======================================================================
+FAIL: test_unexpected_execution_exception_latches_before_reraise (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_unexpected_execution_exception_latches_before_reraise)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 88, in test_unexpected_execution_exception_latches_before_reraise
+    self.forbid_followup_access()
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 35, in forbid_followup_access
+    result = self.dispatch([{'op': 'key_state', 'key': 'CTRL', 'down': True}])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$WORKSPACE/runtime/backends/quartz_v1/test_release_quarantine.py", line 25, in dispatch
+    return self.session.dispatch(program, current_observation_seq=sequence,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$WORKSPACE/runtime/backends/quartz_v1/session.py", line 10, in dispatch
+    admission = admit_program(program, self.backend.manifest(), now_ns=now_ns, current_observation_seq=current_observation_seq, current_binding_revision=current_binding_revision)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1198, in _execute_mock_call
+    raise effect
+AssertionError: manifest must not be read
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.010s
+
+FAILED (failures=15, errors=3)

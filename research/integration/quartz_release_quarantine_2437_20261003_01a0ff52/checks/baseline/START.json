@@ -1,0 +1,43 @@
+{
+  "kind": "ordinary_inert_regression_not_formal_allocation",
+  "stage": "baseline",
+  "command": [
+    "/run/current-system/sw/bin/python3",
+    "-B",
+    "-m",
+    "unittest",
+    "runtime.backends.quartz_v1.test_release_quarantine",
+    "-v"
+  ],
+  "cwd": "$WORKSPACE",
+  "source_pins": {
+    "runtime/backends/quartz_v1/session.py": {
+      "bytes": 2010,
+      "sha256": "19621618a2c93bcc843a4e8758e6518b45f312d904fdfa0f8e4656863a7d2d6a"
+    },
+    "runtime/backends/quartz_v1/backend.py": {
+      "bytes": 20013,
+      "sha256": "135c03ce9a17d581820af7f73a1e510435fdadd178c9d4f88f95401c6cbda498"
+    },
+    "runtime/backends/quartz_v1/test_release_faults.py": {
+      "bytes": 13157,
+      "sha256": "8bbcf082e656284d443118af4f455bf648350d5c79aa787e23d8331005150f54"
+    },
+    "runtime/backends/quartz_v1/test_release_quarantine.py": {
+      "bytes": 7976,
+      "sha256": "2c1fca17a596f1ae2a12b4989db23bfdc3ef7d6ef07ad00b3cd91c20086827c1"
+    },
+    "runtime/backends/x11_v1/session.py": {
+      "bytes": 5951,
+      "sha256": "b81ca9b3a2c1d692e314ed8435db481cb6cc22ff6ad974148482787545c5bb62"
+    },
+    "runtime/core_v1/contract.py": {
+      "bytes": 15001,
+      "sha256": "88122eab96fe907dcdaac032e8d9c82555d5d1adfe7bf8a9741274f19347d8a9"
+    }
+  },
+  "python": "3.12.13",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "started_utc": "2026-10-03T06:24:08.019998+00:00",
+  "timeout_seconds": 20
+}

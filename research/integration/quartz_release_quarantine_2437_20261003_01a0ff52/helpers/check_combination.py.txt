@@ -1,0 +1,49 @@
+from datetime import datetime, timezone
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+import sys
+import time
+
+WORK = Path(__file__).parent
+REPO = WORK.parent/'agent-interface'
+GIT = '/run/current-system/sw/bin/git'
+def git(*args):
+    return subprocess.check_output([GIT,*args],cwd=REPO)
+base=git('rev-parse','origin/main').decode().strip()
+head=git('rev-parse','HEAD').decode().strip()
+tree=git('merge-tree','--write-tree',base,head).decode().strip()
+folder=WORK/'combined-export'
+folder.mkdir(exist_ok=False)
+entries=[]
+raw=git('ls-tree','-r',tree,'--','runtime/core_v1','runtime/backends/quartz_v1','runtime/__init__.py','runtime/backends/__init__.py')
+for row in raw.decode().splitlines():
+    meta,path=row.split('\t');mode,kind,blob=meta.split()
+    if not path.endswith('.py'):
+        continue
+    if mode!='100644' or kind!='blob':
+        raise ValueError('unexpected source mode')
+    data=git('cat-file','blob',blob)
+    target=folder/path;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(data)
+    entries.append({'path':path,'mode':mode,'blob':blob,'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()})
+modules=['runtime.backends.quartz_v1.test_release_quarantine','runtime.backends.quartz_v1.test_release_faults',
+         'runtime.backends.quartz_v1.test_integration.PureQuartzTests','runtime.core_v1.test_contract','runtime.core_v1.test_compiled_gui']
+command=[sys.executable,'-B','-m','unittest',*modules,'-v']
+record={'kind':'author_only_exact_tree_source_combination_check_not_application',
+        'base':base,'source_head':head,'tree':tree,'entries':entries,'command':command,
+        'cwd':str(folder),'started_utc':datetime.now(timezone.utc).isoformat(),'timeout_seconds':20}
+(WORK/'combined-START.json').write_text(json.dumps(record,indent=2)+'\n')
+begin=time.monotonic_ns();child=subprocess.run(command,cwd=folder,capture_output=True,timeout=20)
+record.update(ended_utc=datetime.now(timezone.utc).isoformat(),exit_code=child.returncode,
+              child_reaped=True,elapsed_ns=time.monotonic_ns()-begin,elapsed_interpretation='custody_only_not_performance')
+for n,b in [('stdout',child.stdout),('stderr',child.stderr)]:
+    if len(b)>1_048_576:raise ValueError('output envelope exceeded')
+    (WORK/('combined-'+n+'.txt')).write_bytes(b);record[n]={'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()}
+for row in entries:
+    b=(folder/row['path']).read_bytes()
+    if hashlib.sha256(b).hexdigest()!=row['sha256']:raise ValueError('source changed')
+(WORK/'combined-END.json').write_text(json.dumps(record,indent=2)+'\n')
+print(json.dumps({k:v for k,v in record.items() if k not in ['entries','command','cwd']},indent=2))
+print(child.stderr.decode()[-600:])
+raise SystemExit(child.returncode)

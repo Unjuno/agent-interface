@@ -1,0 +1,64 @@
+"""Record ordinary regression commands and first outcomes, without native input."""
+import datetime
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+import time
+
+ROOT = Path('/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface')
+OUT = Path(__file__).parent
+PYTHON = '/run/current-system/sw/bin/python3'
+GIT = '/run/current-system/sw/bin/git'
+SOURCES = ['runtime/backends/quartz_v1/backend.py',
+           'runtime/backends/quartz_v1/session.py',
+           'runtime/backends/quartz_v1/test_release_faults.py']
+
+def hashes():
+    return {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in SOURCES}
+
+label, *modules = sys.argv[1:]
+if not label.replace('-', '').isalnum() or not modules:
+    raise SystemExit('label and module names required')
+receipt = OUT / (label + '.json')
+if receipt.exists():
+    raise SystemExit('retained outcome already exists')
+command = [PYTHON, '-B', '-m', 'unittest', '-v', *modules]
+env = dict(os.environ, PYTHONDONTWRITEBYTECODE='1')
+before = hashes()
+started = datetime.datetime.now(datetime.timezone.utc).isoformat()
+tick = time.monotonic_ns()
+child = subprocess.Popen(command, cwd=ROOT, env=env, stdin=subprocess.DEVNULL,
+                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+timed_out = False
+try:
+    stdout, stderr = child.communicate(timeout=20)
+except subprocess.TimeoutExpired:
+    timed_out = True
+    child.kill()
+    stdout, stderr = child.communicate()
+elapsed = time.monotonic_ns() - tick
+ended = datetime.datetime.now(datetime.timezone.utc).isoformat()
+if len(stdout) + len(stderr) > 1_048_576:
+    raise SystemExit('unexpected regression output exceeds declared 1MiB envelope')
+streams = {}
+for name, data in [('stdout', stdout), ('stderr', stderr)]:
+    path = OUT / (label + '-' + name + '.txt')
+    with path.open('xb') as stream:
+        stream.write(data)
+    streams[name] = {'path': path.name, 'bytes': len(data),
+                     'sha256': hashlib.sha256(data).hexdigest()}
+record = {'kind': 'ordinary_regression_not_formal_allocation', 'label': label,
+          'command': command, 'cwd': str(ROOT),
+          'git_head': subprocess.check_output([GIT, 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
+          'python_version': subprocess.check_output([PYTHON, '--version'], text=True).strip(),
+          'started_utc': started, 'ended_utc': ended, 'elapsed_ns': elapsed,
+          'exit_code': child.returncode, 'timed_out': timed_out, 'child_reaped': True,
+          'source_sha256_before': before, 'source_sha256_after': hashes(), 'streams': streams}
+with receipt.open('x') as stream:
+    json.dump(record, stream, indent=2)
+    stream.write('\n')
+print(json.dumps(record, indent=2))
+raise SystemExit(child.returncode)

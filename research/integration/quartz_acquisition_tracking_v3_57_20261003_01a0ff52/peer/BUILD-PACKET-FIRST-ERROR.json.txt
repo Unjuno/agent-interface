@@ -1,0 +1,14 @@
+{
+  "kind": "retained actual first packet builder tool failure, before packet output/publication",
+  "tool": "exec_command",
+  "chunk_id": "921d80",
+  "wall_time_seconds": 0.2491846,
+  "exit_code": 1,
+  "actual_start_end_UTC": "not captured by direct shell tool; no fabricated timestamp",
+  "output": "Traceback (most recent call last):\r\n  File \"<OWN_WORKSPACE>\\outputs\\review-6938-v2-01a0ff32\\build-public-proof.py\", line 29, in <module>\r\n    for name in names:add(name,O/name)\r\n                      ^^^^^^^^^^^^^^^^\r\n  File \"<OWN_WORKSPACE>\\outputs\\review-6938-v2-01a0ff32\\build-public-proof.py\", line 27, in add\r\n    if '<PRIVATE_USERNAME>' in public.lower():raise ValueError('private reviewer prefix remains: '+name)\r\n                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\nValueError: private reviewer prefix remains: build-public-proof.py\r\n",
+  "scope": "privacy guard detected its own literal username string while packing helper source; source/raw/gates unchanged",
+  "original_helper": "build-public-proof-v1.py retained exact local bytes",
+  "repair": "version2 constructs guard value from two fragments; exact prefix privacy guard remains effective",
+  "following_patch_attempt": "apply_patch missing shortened expected-line match failed before any edit; original intact",
+  "producer_replays": 0
+}

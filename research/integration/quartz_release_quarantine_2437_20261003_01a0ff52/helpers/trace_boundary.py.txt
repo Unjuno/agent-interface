@@ -1,0 +1,75 @@
+"""Six ordinary inert rows; source-exact session imports use type-only stubs."""
+from datetime import datetime, timezone
+import hashlib
+import json
+from pathlib import Path
+import sys
+import types
+
+WORK = Path(__file__).parent
+REPO = WORK.parent / 'agent-interface'
+sys.path.insert(0, str(REPO))
+from runtime.backends.quartz_v1 import test_release_faults as fixture_module
+from runtime.backends.quartz_v1.backend import QuartzBackend, QuartzBackendError, QuartzExecutionError
+from runtime.backends.quartz_v1.session import QuartzRuntimeSession
+
+def source_class(name, path, package, class_name):
+    blob = path.read_bytes()
+    module = types.ModuleType(name)
+    module.__package__ = package
+    exec(compile(blob, name, 'exec'), module.__dict__)
+    return getattr(module, class_name), hashlib.sha256(blob).hexdigest()
+
+# Type-only import shim: the existing X11 session still executes its exact
+# source, but no Xlib/display backend is imported, constructed or invoked.
+shim = types.ModuleType('runtime.backends.x11_v1.backend')
+shim.X11Backend = QuartzBackend
+shim.X11BackendError = QuartzBackendError
+shim.X11ExecutionError = QuartzExecutionError
+sys.modules[shim.__name__] = shim
+baseline_path = WORK/'baseline/runtime__backends__quartz_v1__session.py.txt'
+baseline, baseline_sha = source_class('runtime.backends.quartz_v1.inert_baseline', baseline_path,
+                                     'runtime.backends.quartz_v1', 'QuartzRuntimeSession')
+floor_path = REPO/'runtime/backends/x11_v1/session.py'
+floor, floor_sha = source_class('runtime.backends.x11_v1.inert_floor', floor_path,
+                               'runtime.backends.x11_v1', 'X11RuntimeSession')
+candidate_path = REPO/'runtime/backends/quartz_v1/session.py'
+candidate_sha = hashlib.sha256(candidate_path.read_bytes()).hexdigest()
+dest = WORK/'trace-six-rows.json'
+if dest.exists():
+    raise ValueError('retained ordinary trace output already exists')
+start = datetime.now(timezone.utc).isoformat()
+rows = []
+for arm, session_type in [('prior_quartz', baseline), ('existing_x11_policy', floor), ('quartz_transfer', QuartzRuntimeSession)]:
+    for sticky in [False, True]:
+        fixture = fixture_module.QuartzReleaseFaultTests()
+        fixture.setUp()
+        try:
+            backend, cg = fixture.backend, fixture.cg
+            if sticky:
+                cg.faults[('sticky', ('key', 0))] = True
+            session = session_type(backend)
+            kwargs = {'current_observation_seq': 7, 'current_binding_revision': 3, 'now_ns': 1_000_000}
+            first = session.dispatch(fixture.program([]), **kwargs)
+            emissions, offset = backend.emissions, len(cg.calls)
+            second = session.dispatch(fixture.program([{'op': 'key_state', 'key': 'CTRL', 'down': True}]), **kwargs)
+            tail_calls = cg.calls[offset:]
+            rows.append({'arm': arm, 'sticky_A': sticky, 'first': first, 'second': second,
+                         'followup_emissions': backend.emissions-emissions,
+                         'followup_api_calls': tail_calls,
+                         'ordinary_followup_key_created': ('key_create', (59, True)) in tail_calls,
+                         'remaining_physical_stub_keys': sorted(cg.keys_down),
+                         'tracked_keys': dict(backend.held_keys)})
+        finally:
+            fixture.doCleanups()
+output = {'kind': 'ordinary_inert_source_comparison_not_formal_or_native', 'rows': rows,
+          'source_sha256': {'prior_quartz_session': baseline_sha, 'existing_x11_session': floor_sha,
+                            'candidate_quartz_session': candidate_sha,
+                            'quartz_backend': hashlib.sha256((REPO/'runtime/backends/quartz_v1/backend.py').read_bytes()).hexdigest(),
+                            'inert_fixture': hashlib.sha256((REPO/'runtime/backends/quartz_v1/test_release_faults.py').read_bytes()).hexdigest()},
+          'x11_import_shim': 'backend type/exception names only, mapped to same inert Quartz objects; no Xlib import/native construction',
+          'utc_start': start, 'utc_end': datetime.now(timezone.utc).isoformat()}
+dest.write_text(json.dumps(output, sort_keys=True, indent=2)+'\n')
+print(json.dumps([{'arm':r['arm'],'sticky_A':r['sticky_A'],'first':r['first']['status'],
+                   'second':r['second']['status'],'followup_emissions':r['followup_emissions'],
+                   'ordinary_followup_key_created':r['ordinary_followup_key_created']} for r in rows],indent=2))
