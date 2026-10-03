@@ -337,9 +337,17 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                       "consumed_by_recorded_execute_stage" if returned_execution is not None or
                       stages["execute"]["status"] == "completed"
                       else "none")}
-        emit({"event": "adaptive_route_finished", "outcome": outcome,
-              "reason": reason, "repair_path": repair_path,
-              "attempted_calls": len(attempts)})
+        try:
+            emit({"event": "adaptive_route_finished", "outcome": outcome,
+                  "reason": reason, "repair_path": repair_path,
+                  "attempted_calls": len(attempts)})
+        except Exception as error:
+            result = copy.deepcopy(result)
+            if result["execution_progress"] is None and returned_execution is not None:
+                result["execution_progress"] = copy.deepcopy(returned_execution)
+            result.update(outcome="CALLER_FAILED", reason="terminal_journal_unavailable",
+                          finalized_outcome=outcome, finalized_reason=reason,
+                          terminal_journal_error=repr(error))
         return result
 
     def execution_delivery(execution):
