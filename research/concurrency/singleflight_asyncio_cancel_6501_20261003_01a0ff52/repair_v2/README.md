@@ -1,5 +1,14 @@
 # Qualified actual-asyncio trace — retained-data audit v2
 
+**PASS_RETAINED_TRACE_V2_SCOPED**: the unchanged 48-row / 120-outcome raw has
+zero v2 errors. V1 accepts all seven reviewer contradictions; v2 rejects all
+25 effective controls (seven reviewer, eight original-boundary and ten adjacent
+controls). See [control decisions](execution/controls.json), [v2 CLI result](execution/audit-v2.json)
+and [actual command/UTC/exit receipts](execution/receipts.json). All six regression
+methods pass. The original 27 manifest hashes still match. Native macOS
+CPython 3.14.5 retained-data checks, source-frozen audit/test/mutation definitions;
+the separately added characterizer is included and hashes itself in the result.
+
 This is the current entry for PR #6890. The [original first run](../README.md),
 [raw](../execution/raw.json), [frozen source](../FREEZE.json), v1 auditor and its
 first result are preserved unchanged. A nonauthor review found seven contradictions
@@ -36,3 +45,11 @@ python3 -B audit_v2.py ../execution/raw.json \
 The output must be new; do not overwrite first results. Original `../SHA256SUMS`
 still resolves every original file, including its historical README. v2 adds a
 separate source freeze, execution records and manifest; no original hash is updated.
+
+Local index reaches 156 top-level studies and public navigation checks 26 documents /
+1,631 relative links. These are retained in execution receipts; optional hosted CI
+is not claimed passed. The original guest remains stopped; no new guest/container,
+candidate, shared input/model/GPU or runtime invocation was needed. V1's eight
+successful controls are historical and do not establish full event audit coverage.
+Renewed FINAL-v5 nonauthor content quorum/current-base combination/application
+remain pending for the new head; the original proposal is held, not reused.

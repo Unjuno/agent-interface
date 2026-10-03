@@ -1,0 +1,264 @@
+{
+  "caller_outcomes": 120,
+  "candidate_invocations": 0,
+  "characterizer_sha256": "7507bfa24c00316e193cf8a194c48d962eba8fc621249366bda18ec660f81206",
+  "controls": [
+    {
+      "name": "reviewer-event-payload",
+      "v1_errors": [],
+      "v2_errors": [
+        "2/stable/independent:event/outcome identity",
+        "2/stable/independent:producer/waiter result identity"
+      ],
+      "variant_sha256": "72364011aa1d1930126b9a8777e0a74b73f78415fba8c5619545d64d462e7f48"
+    },
+    {
+      "name": "reviewer-event-generation",
+      "v1_errors": [],
+      "v2_errors": [
+        "2/generation_change/shield:event/outcome identity",
+        "2/generation_change/shield:producer/waiter result identity"
+      ],
+      "variant_sha256": "7100a7367ccafcaae93ff5816af777adf9f1c04371f60309b0b3fc36e49faeb9"
+    },
+    {
+      "name": "reviewer-detach-conservation",
+      "v1_errors": [],
+      "v2_errors": [
+        "2/stable/independent:detach conservation"
+      ],
+      "variant_sha256": "0c6f7657f68d63a7d47d128dc687c1071ee10008f48d75e338b2c5635d54ee65"
+    },
+    {
+      "name": "reviewer-task-cancelled",
+      "v1_errors": [],
+      "v2_errors": [
+        "2/stable/independent:task/terminal reconciliation p0"
+      ],
+      "variant_sha256": "66458faf49a09a6f6ab8a4187ba738a2b126b92ebad68d86abcf5d014245e2e6"
+    },
+    {
+      "name": "reviewer-missing-producer-terminal",
+      "v1_errors": [],
+      "v2_errors": [
+        "2/cancel_first/direct:producer terminal count p0",
+        "2/cancel_first/direct:producer exit before waiter terminal",
+        "2/cancel_first/direct:producer exit before waiter terminal"
+      ],
+      "variant_sha256": "c0e690b050a06770b7787b84f732411df78f509b2cb127654cd90cf4f583fa6d"
+    },
+    {
+      "name": "reviewer-waiter-error-identity",
+      "v1_errors": [],
+      "v2_errors": [
+        "2/owner_failure/shield:waiter error identity"
+      ],
+      "variant_sha256": "4319a7906197ecfa88d86a2b389db020223f7907b783474af5e03de5726e5239"
+    },
+    {
+      "name": "reviewer-producer-exit-order",
+      "v1_errors": [],
+      "v2_errors": [
+        "2/stable/independent:producer terminal/exit order p0"
+      ],
+      "variant_sha256": "34bcb015810c68a7154a6bda6a9fd817aa41a4746d863bbe460d610478ab2a9d"
+    },
+    {
+      "name": "v1-drop-row",
+      "v1_errors": [
+        "denominator"
+      ],
+      "v2_errors": [
+        "denominator"
+      ],
+      "variant_sha256": "d34c7d1746f730a939730c48056c8dc368f91ff8839ecb01ab2ae70e4e4314a3"
+    },
+    {
+      "name": "v1-duplicate-row",
+      "v1_errors": [
+        "denominator"
+      ],
+      "v2_errors": [
+        "row denominator/order"
+      ],
+      "variant_sha256": "e41d1feec8e82e91b01453a4cdb51db434cc1485fb480757f157f3900e73e79c"
+    },
+    {
+      "name": "v1-cancelled-delivery",
+      "v1_errors": [
+        "2/cancel_first/shield:terminal 0"
+      ],
+      "v2_errors": [
+        "2/cancel_first/shield:outcome status w0"
+      ],
+      "variant_sha256": "c7554b575852741f13f65f32cbfec0c848618902498e29ad1911577dae1c66aa"
+    },
+    {
+      "name": "v1-generation",
+      "v1_errors": [
+        "2/stable/independent:result identity w0"
+      ],
+      "v2_errors": [
+        "2/stable/independent:outcome result identity",
+        "2/stable/independent:event/outcome identity"
+      ],
+      "variant_sha256": "06c37ae42ec1c1b25ae9b48898550f183cea3aa1b55eb456533fa0c8eb5a6503"
+    },
+    {
+      "name": "v1-producer-start",
+      "v1_errors": [
+        "2/stable/independent:event sequence",
+        "2/stable/independent:producer start/exit"
+      ],
+      "v2_errors": [
+        "2/stable/independent:sequence",
+        "2/stable/independent:producer start identities",
+        "2/stable/independent:producer terminal count p0",
+        "2/stable/independent:producer terminal count p1",
+        "2/stable/independent:producer exit before waiter terminal",
+        "2/stable/independent:producer exit before waiter terminal"
+      ],
+      "variant_sha256": "3ff75e53b041d04fb1e903fe84246c1103fcf2fa3b6a277306460126680b2404"
+    },
+    {
+      "name": "v1-sequence-bool",
+      "v1_errors": [
+        "2/stable/independent:event sequence"
+      ],
+      "v2_errors": [
+        "2/stable/independent:event schema"
+      ],
+      "variant_sha256": "82e72e4e9dd87db37450a1b4adea9fce6d8a5b6ae76e60e2e943f223b7e5e906"
+    },
+    {
+      "name": "v1-cleanup-leak",
+      "v1_errors": [
+        "2/stable/independent:bounded cleanup"
+      ],
+      "v2_errors": [
+        "2/stable/independent:task/terminal reconciliation p0"
+      ],
+      "variant_sha256": "a1109992fff15b244b820721139afbf5be6b223977fab2670646858bc5b0476f"
+    },
+    {
+      "name": "v1-payload",
+      "v1_errors": [
+        "2/stable/independent:result identity w0"
+      ],
+      "v2_errors": [
+        "2/stable/independent:outcome result identity",
+        "2/stable/independent:event/outcome identity"
+      ],
+      "variant_sha256": "b027918a27821fe81e00682105f5cca48b3924f8b3b9e3c01fe5e03007f95c6a"
+    },
+    {
+      "name": "actor-identity",
+      "v1_errors": [
+        "2/stable/independent:waiter lifecycle"
+      ],
+      "v2_errors": [
+        "2/stable/independent:event actor",
+        "2/stable/independent:detach denominator",
+        "2/stable/independent:waiter terminal/detach count w0"
+      ],
+      "variant_sha256": "29ed00d3e2f7edc2f267150f16110ce739ff6ae7e808076cc39ab1424738cfa1"
+    },
+    {
+      "name": "detach-bool",
+      "v1_errors": [],
+      "v2_errors": [
+        "2/stable/independent:event schema"
+      ],
+      "variant_sha256": "1ca7d7e5427dd4c18c7de38d763f9fb62d0f09c516b4a81d6101b580b2720c52"
+    },
+    {
+      "name": "producer-generation-bool",
+      "v1_errors": [
+        "2/stable/independent:return-before-delivery"
+      ],
+      "v2_errors": [
+        "2/stable/independent:event schema"
+      ],
+      "variant_sha256": "23ed41303e54a41fb10f55b0b0eaffeca958225259542a0bd22b057fdfd99e27"
+    },
+    {
+      "name": "current-generation-bool",
+      "v1_errors": [
+        "2/stable/independent:current generation"
+      ],
+      "v2_errors": [
+        "2/stable/independent:event schema"
+      ],
+      "variant_sha256": "77dd1aebc87fdbbb29ac3e40bf769353974a6097d9a4043323ad9611b1d2edc7"
+    },
+    {
+      "name": "producer-error-identity",
+      "v1_errors": [],
+      "v2_errors": [
+        "2/owner_failure/shield:producer error identity"
+      ],
+      "variant_sha256": "7f3acae68068e53ff227895f5b0feac37dfc4ccb7b1994514e3b7f90ebe0f464"
+    },
+    {
+      "name": "outcome-caller-bool",
+      "v1_errors": [],
+      "v2_errors": [
+        "2/stable/independent:outcome schema"
+      ],
+      "variant_sha256": "849a63bed197c76d4644afe16feb545071c672f554421ae6ca51c18cc63d27c3"
+    },
+    {
+      "name": "cancellation-caller-bool",
+      "v1_errors": [],
+      "v2_errors": [
+        "2/cancel_first/shield:event schema"
+      ],
+      "variant_sha256": "6cf4abcf20b62b84d412b1f791427ae0f19ee713c9e67f6cf7a2c3fe205e2d8f"
+    },
+    {
+      "name": "unknown-event",
+      "v1_errors": [],
+      "v2_errors": [
+        "2/stable/independent:event schema"
+      ],
+      "variant_sha256": "4838c456c220f027ca24364dd33511b77b3bad8459b15ff4ea7add9aadc74f4a"
+    },
+    {
+      "name": "gate-before-barrier",
+      "v1_errors": [],
+      "v2_errors": [
+        "2/stable/independent:gate order"
+      ],
+      "variant_sha256": "cdd581e9b3882fd807d94026c43cdbcb777b439d3be35aae8775cfb1b962e30c"
+    },
+    {
+      "name": "duplicate-producer-terminal",
+      "v1_errors": [
+        "2/stable/independent:return-before-delivery"
+      ],
+      "v2_errors": [
+        "2/stable/independent:producer terminal count p0",
+        "2/stable/independent:producer exit before waiter terminal"
+      ],
+      "variant_sha256": "5efb174dc3f747f95484f3f15e38e2c1d4252465edc53e0cb346ac5268a42b31"
+    }
+  ],
+  "ended_utc": "2026-10-03T02:08:27.690299+00:00",
+  "original_manifest_files": 27,
+  "original_v1_errors": [],
+  "original_v2_errors": [],
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "python": "3.14.5",
+  "raw_sha256": "d3262358814f4fd724d0b36b0fc027d2b4fee70f5a7e56a090d8ee794c5c2441",
+  "rows": 48,
+  "source_freeze_commit": "f3a992f49a4b9e6d5933c1ae141e17fea29af468",
+  "source_sha256": {
+    "PLAN.md": "faa9466499cfc81a46fe7f3025625e0fbe6f302da2dfabf0b284e62832d924dc",
+    "audit_v2.py": "ce828be0e31268c2c30c9601ebc19f0eeb0a15fb695c7731bf6b91d67e2b5cda",
+    "mutations.py": "aa0f47477dac0465cfac4a351352caeccb032bc856789a111a617a793f552a70",
+    "test_audit_v2.py": "cc638eb6faad1ba6e04714db1059b485aae8471d5385b795318cd0b5b0f7f4b4"
+  },
+  "started_utc": "2026-10-03T02:08:27.559929+00:00",
+  "status": "PASS_RETAINED_TRACE_V2_SCOPED",
+  "v2_audit_kind": "ordinary-retained-data-engineering-check"
+}
