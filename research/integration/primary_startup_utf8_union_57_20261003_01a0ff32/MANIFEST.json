@@ -2841,13 +2841,21 @@
       "original_path": null,
       "original_bytes": null,
       "original_sha256": null,
-      "public_bytes": 73,
-      "public_sha256": "93f82a6c3bc2f7335ca0eea010efbe2e1d9ea3b6d01869beb189283c850e3494",
+      "public_bytes": 142,
+      "public_sha256": "703e3bc7dfef00e8019cc227f8494d1af087f3e69d48b3798b5ac25847af22a4",
       "encoding": "utf8",
       "prefix_projected": false,
       "mode": "100644",
-      "git_blob": "5b056ae0781a097099c6f760d0c400d7a170e3ab"
+      "git_blob": "d79cdccff2da015daaafcb441f1c47542c57bbda"
     }
   ],
-  "projection_policy": "Only exact own workspace/runtime prefix replacements. This is a derivative, not unchanged original byte equality. NonUTF8 hex rows decode to exact original bytes; all original files retained."
+  "projection_policy": "Only exact own workspace/runtime prefix replacements. This is a derivative, not unchanged original byte equality. NonUTF8 hex rows decode to exact original bytes; all original files retained.",
+  "publication_followup": {
+    "original_head": "82e01aebaaf7c5c89f15e6d04bb461de60296947",
+    "changes": "only explicit archive JSON/JSONL CR-at-eol/-text attributes and their manifest image; all236 source/raw/report files unchanged",
+    "first_raw_git_diff_check_exit": 2,
+    "first_v2_attributes_check_exit": 2,
+    "reason": "Raw Windows JSON copies retain actual CRLF. Existing *.txt rule did not cover JSON/JSONL. No raw/source/threshold/outcome/whitespace normalization or replay.",
+    "first_checks": "original verify-publication and verify-publication-v2 full helpers/streams/receipts retained outside fixed source; original Git head/history preserved"
+  }
 }
