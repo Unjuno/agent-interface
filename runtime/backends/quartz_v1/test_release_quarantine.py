@@ -146,6 +146,23 @@ class QuartzReleaseQuarantineTests(unittest.TestCase):
         receipt['verified'] = True
         self.forbid_followup_access()
 
+    def test_execution_failure_with_verified_release_allows_fresh_program(self):
+        self.backend.text = Mock(side_effect=QuartzBackendError('first task failed'))
+        first = self.dispatch([{'op': 'text', 'text': 'x'}])
+        self.assertEqual(first['status'], 'execution_failed')
+        self.assertIs(first['execution']['releases'][0]['verified'], True)
+        self.assertIs(first['recovery_required'], False)
+        second = self.dispatch([{'op': 'key_state', 'key': 'CTRL', 'down': True}], sequence=8, revision=4)
+        self.assertEqual(second['status'], 'completed')
+        self.assertIn(('key_create', (59, True)), self.cg.calls)
+
+    def test_missing_execution_result_is_unverified_and_blocks_followup(self):
+        self.backend.execute = Mock(return_value=None)
+        first = self.dispatch()
+        self.assertEqual(first['status'], 'release_unverified')
+        self.assertIsNone(first['execution'])
+        self.forbid_followup_access()
+
 
 if __name__ == '__main__':
     unittest.main()
