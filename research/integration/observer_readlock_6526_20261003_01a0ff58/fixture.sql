@@ -1,0 +1,2 @@
+CREATE TABLE task (task_id INTEGER PRIMARY KEY, value TEXT NOT NULL, revision INTEGER NOT NULL);
+INSERT INTO task VALUES (1, 'old', 0);
