@@ -1,0 +1,19 @@
+{
+  "returncode": 0,
+  "stdout": "[\n    {\n        \"Architecture\": \"arm64\",\n        \"Config\": {\n            \"Entrypoint\": [\n                \"python3\"\n            ],\n            \"Env\": [\n                \"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\",\n                \"PYTHONDONTWRITEBYTECODE=1\",\n                \"OMP_THREAD_LIMIT=1\"\n            ],\n            \"Labels\": {\n                \"org.opencontainers.image.version\": \"24.04\"\n            },\n            \"WorkingDir\": \"/tmp\"\n        },\n        \"Created\": \"2026-10-03T18:57:19.545820244+09:00\",\n        \"Descriptor\": {\n            \"digest\": \"sha256:b2ae049f7c500a3f6b6d162b0351297331434cff5a43f66e1bb41aff90478c96\",\n            \"mediaType\": \"application/vnd.oci.image.manifest.v1+json\",\n            \"size\": 970\n        },\n        \"Id\": \"sha256:b2ae049f7c500a3f6b6d162b0351297331434cff5a43f66e1bb41aff90478c96\",\n        \"Metadata\": {\n            \"LastTagTime\": \"2026-10-03T09:57:19.638694024Z\"\n        },\n        \"Os\": \"linux\",\n        \"Parent\": \"sha256:1e862883ad3617cfea19b8579f67092059bbdb52dace06943a380b76ff894dd2\",\n        \"RepoDigests\": [\n            \"x11-png-6999-a01@sha256:b2ae049f7c500a3f6b6d162b0351297331434cff5a43f66e1bb41aff90478c96\"\n        ],\n        \"RepoTags\": [\n            \"x11-png-6999-a01:latest\"\n        ],\n        \"RootFS\": {\n            \"Layers\": [\n                \"sha256:1e9178dc90058fa454a60803300219ee8c17e515be8718817ed824b96fa1207b\",\n                \"sha256:b521ef44aca3741644076f0ea747c22df19eb2c3d2936c2befa64a21cb2bc9a8\",\n                \"sha256:8c68cb2e01dc817eba03e102c630aa5cc802c0a5cfdd571f3572e5a5096b6abd\"\n            ],\n            \"Type\": \"layers\"\n        },\n        \"Size\": 184380293\n    }\n]\n",
+  "stderr": "",
+  "command": [
+    "orbctl",
+    "run",
+    "-m",
+    "research-59-hud-ocr-5ce3-20261003",
+    "-u",
+    "root",
+    "docker",
+    "image",
+    "inspect",
+    "x11-png-6999-a01"
+  ],
+  "started_utc": "2026-10-03T10:03:25.055848+00:00",
+  "elapsed_ns": 119819042
+}

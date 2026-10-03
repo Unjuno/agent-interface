@@ -1,0 +1,13 @@
+{
+  "returncode": 0,
+  "stdout": "{\"id\": \"01M40FX53D7A1NKSVYYKYDARRZ\", \"name\": \"research-59-hud-ocr-5ce3-20261003\", \"image\": {\"distro\": \"ubuntu\", \"version\": \"noble\", \"arch\": \"arm64\", \"variant\": \"default\"}, \"config\": {\"isolated\": false, \"forward_ssh_agent\": true, \"isolate_network\": false, \"default_username\": \"taka\", \"http_port\": 0, \"https_port\": 0, \"mounts\": [{\"source\": \"/Users/taka/Documents/Codex/2026-10-03/agent-interface-r134-feedback-audit/research/doom/hud_color_ocr_59_a01_20261003\", \"destination\": \"/study\"}, {\"source\": \"/Users/taka/Documents/Codex/2026-10-03/agent-interface-r134-feedback-audit/research/doom/results/map01-v39-coast-liveness-live-01/runtime\", \"destination\": \"/archive\"}]}, \"builtin\": false, \"state\": \"stopped\"}\n",
+  "stderr": "",
+  "command": [
+    "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-B",
+    "-c",
+    "import json,subprocess; x=json.loads(subprocess.check_output([\"orbctl\",\"list\",\"--format\",\"json\"])); own=[v for v in x if v[\"name\"]==\"research-59-hud-ocr-5ce3-20261003\"]; assert len(own)==1 and own[0][\"state\"]==\"stopped\"; print(json.dumps(own[0]))"
+  ],
+  "started_utc": "2026-10-03T10:19:32.705732+00:00",
+  "elapsed_ns": 48139375
+}
