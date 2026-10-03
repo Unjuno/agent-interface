@@ -1,0 +1,38 @@
+{
+  "cell": "healthy",
+  "stage": "first",
+  "receipt": {
+    "schema": "map01-startup-cleanup-v1",
+    "session_exit_code": null,
+    "reader_joined": true,
+    "client_closed": true,
+    "input_release_verified": false,
+    "errors": [],
+    "escalations": [],
+    "stderr_complete": true,
+    "stderr_bytes": 0,
+    "stderr_reader_joined": true
+  },
+  "callback_retained": false,
+  "journal_closed": true,
+  "journal_close_calls": 1,
+  "events": [
+    {
+      "op": "callback_register"
+    },
+    {
+      "op": "reader_join",
+      "timeout": 1
+    },
+    {
+      "op": "journal_close",
+      "fault": false
+    },
+    {
+      "op": "callback_unregister"
+    }
+  ],
+  "start_ns": 42233922868900,
+  "end_ns": 42233922944300,
+  "elapsed_ns": 75400
+}

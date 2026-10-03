@@ -1,0 +1,21 @@
+# Full startup caller preserves the original initialize failure
+
+Actual root worker01a0ff33-b04b-7b51-8194-a60b82fed8a2, FINAL-v5. New ordinary caller boundary, different from the earlier helper-only five invocations and old native allocations.
+
+H: With the exact composed full controller source and merged client.close, an initialize failure must remain the original exception object. The startup cleanup artifact must retain its literal type/message, report completion accurately, and retain its exit-time callback when journal retirement fails.
+
+T: Four prospectively declared cells: current baseline with an unobstructed journal; composed candidate with unobstructed journal; candidate with an owned journal lock held; candidate with controlled journal.close OSError. Each full controller module is compiled with explicit inert external imports and main is invoked through its actual argparse path. The client factory constructs actual current client.close state using __new__; the real constructor is not invoked. initialize raises one retained ValueError containing Japanese text. Retired process/reader doubles, actual owned file-backed journals/Lock/atexit registration calls. Execution stops at initialize failure before planner/model/session/input acquisition.
+
+D: All four must rethrow the same injected exception object. Baseline has no startup cleanup artifact and leaves journal/callback deferred until explicit external cleanup. Candidate success closes journal and unregisters callback. Candidate failures keep journal/callback, record exact cleanup error, add the original exception's incomplete-cleanup note, and preserve the original type/message. All own resources must ultimately retire. STOP any contrary result; preserve first outcome.
+
+C: An exception with equal type/message is insufficient for the identity claim; the running harness uses `caught is sentinel`. The saved checker only verifies the retained observation and full artifact consistency, not an independent live measurement of Python object identity. Baseline deferred cleanup is not labeled a permanent leak. The journal-close OSError is a controlled API proxy exception, not an observed OS failure.
+
+U: Windows CPython3.11.9. Full main runs only its controlled initialization-failure path; this is not full-success-path or native process/reader execution, actual app-server initialization, game/model/input use, task-effect, physical-release or hard whole-close deadline proof. The earlier3.12 native data remain separately qualified. No old native/formal/producer replay.
+
+First runner PID33576, 2026-10-03T13:24:31.547757Z–13:24:32.815789Z, exit0, stdout171B/SHA256ebffdddedbb19671900dac5f2cee3e8949edf00a2dc8f46c6735333e20da3a07, stderr0. All four cells preserve the original exception object. The healthy candidate retires the journal/callback; the two candidate failures annotate the original exception and retain both for recovery. All four owned journals/callbacks were externally retired. No native peer or real-client constructor invocation.
+
+Separate saved oracle PID24648, 13:26:10.368756Z–13:26:10.451888Z, exit0/stderr0. Full raw rows, typed entire startup artifacts, Japanese original-message data, callback/journal state, close count and operation order pass. Ten effective corruptions are refused. The object-identity Boolean is a retained harness observation; source inspection and the original execution support it, not the saved reader alone.
+
+Source: actual current38fadf49f4b81c7754e5d558cb01a5b5e5881124 controller/client full bytes match prior frozen composition inputs. Candidate controller67768B/SHA25631782095e0d926ea1842d47c2ce584cbccb830c2ed8fdb96cefa4697a79c91a7; current controller62270B/SHA256a0bcfa076970b7cf6d048155478952958280b7958e0bbe486c0f1f12a55e4f0e; client6508B/SHA2562290f2f8b3d2693db7358cbfe6fca4daf0553e8e2cec9ebcf88db533352c0abb. The startup helper and normal control tail preserve original startup head semantics; current wait no-drain assignment is retained.
+
+This is new evidence for a prospective V2 proposal with explicit merged dependencies. It is not a content vote, actual-current application certificate, or adoption of old V1. No main write, unknown request or shared lease.

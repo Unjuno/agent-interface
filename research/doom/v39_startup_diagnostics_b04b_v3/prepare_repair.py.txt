@@ -1,0 +1,58 @@
+import ast,hashlib,json,pathlib,datetime
+R=pathlib.Path(__file__).resolve().parent
+old=(R.parent/'startup-current-b04b-v2'/'candidate-controller-v2.py.txt').read_bytes()
+assert hashlib.sha256(old).hexdigest()=='31782095e0d926ea1842d47c2ce584cbccb830c2ed8fdb96cefa4697a79c91a7'
+s=old.decode('utf-8');start=s.index('def _close_failed_startup(');end=s.index('\ndef main(',start)
+helpers='''def _startup_exception_text(error, use_repr=False):
+    """Diagnostic hooks must not replace the original startup exception."""
+    try:
+        return repr(error) if use_repr else str(error)
+    except BaseException:
+        return "<exception text unavailable>"
+
+
+def _startup_exception_details(error):
+    try:
+        name = type(error).__name__
+    except BaseException:
+        name = "<exception type unavailable>"
+    return {"type": name, "message": _startup_exception_text(error)}
+
+
+def _note_startup_exception(error, note):
+    try:
+        add_note = getattr(error, "add_note", None)
+        if add_note is not None:
+            add_note(note)
+    except BaseException:
+        pass
+
+
+'''
+segment=s[start:end];assert segment.count('repr(error)')==8,segment.count('repr(error)')
+segment=segment.replace('repr(error)','_startup_exception_text(error, use_repr=True)')
+s=s[:start]+helpers+segment+s[end:]
+before='''        cleanup["startup_error"] = {"type": type(startup_error).__name__, "message": str(startup_error)}
+        cleanup["startup_events"] = list(all_events)
+        try:
+            (args.out / "startup-cleanup.json").write_text(json.dumps(cleanup, indent=2) + "\\n")
+        except OSError as record_error:
+            if hasattr(startup_error, "add_note"):
+                startup_error.add_note("startup cleanup record failed: " + repr(record_error))
+        if cleanup["errors"] and hasattr(startup_error, "add_note"):
+            startup_error.add_note("startup cleanup incomplete; see startup-cleanup.json")
+'''
+after='''        cleanup["startup_error"] = _startup_exception_details(startup_error)
+        try:
+            cleanup["startup_events"] = list(all_events)
+            (args.out / "startup-cleanup.json").write_text(json.dumps(cleanup, indent=2) + "\\n")
+        except BaseException as record_error:
+            _note_startup_exception(startup_error, "startup cleanup record failed: " +
+                                    _startup_exception_text(record_error, use_repr=True))
+        if cleanup["errors"]:
+            _note_startup_exception(startup_error, "startup cleanup incomplete; see startup-cleanup.json")
+'''
+assert s.count(before)==1;s=s.replace(before,after);new=s.encode('utf-8');ast.parse(new)
+tail='    decisions=[];model_session_id=planner.thread_id';assert old[old.index(tail.encode()):]==new[new.index(tail.encode()):]
+(R/'controller-v3.py.txt').write_bytes(new)
+print(json.dumps({'old_sha256':hashlib.sha256(old).hexdigest(),'new_sha256':hashlib.sha256(new).hexdigest(),'new_bytes':len(new),'normal_tail_identical':True}))

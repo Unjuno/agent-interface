@@ -1,0 +1,61 @@
+"""Full controller main startup fault composition, native peers and constructor excluded."""
+import ast,atexit,hashlib,json,pathlib,sys,threading,time,types
+from unittest.mock import patch
+R=pathlib.Path(__file__).resolve().parent;INPUT=R.parent/'startup-current-b04b-v2';rows=[]
+def sha(b):return hashlib.sha256(b).hexdigest()
+def ck(v,m):
+ if not v:raise ValueError(m)
+class Process:
+ def poll(self):return 0
+class Reader:
+ def join(self,timeout=None):pass
+ def is_alive(self):return False
+class Journal:
+ def __init__(self,path,fault):self.file=path.open('x',encoding='utf-8');self.file.write('caller journal retained\n');self.file.flush();self.fault=fault;self.attempts=0
+ @property
+ def closed(self):return self.file.closed
+ def close(self):
+  self.attempts+=1
+  if self.fault:raise OSError('injected caller journal close error')
+  self.file.close()
+def unexpected(*a,**kw):raise AssertionError('outside frozen startup fault boundary')
+def main():
+ plan=json.loads((R/'PLAN.v1.json').read_bytes());ck(sha(pathlib.Path(__file__).read_bytes())==plan['runner_sha256'],'runner freeze');client_source=(INPUT/'current-client.py.txt').read_bytes();ck(sha(client_source)==plan['client_sha256'],'client freeze');cn={'__name__':'actual_client_without_constructor'};exec(compile(client_source,'current-client.py.txt','exec'),cn);Client=cn['CodexAppServerClient'];all_closed=[]
+ for cell in plan['cells']:
+  source=(INPUT/('current-controller.py.txt' if cell=='baseline_healthy' else 'candidate-controller-v2.py.txt')).read_bytes();ck(sha(source)==plan['baseline_sha256' if cell=='baseline_healthy' else 'candidate_sha256'],'controller freeze');directory=R/'cases'/cell;directory.mkdir(parents=True,exist_ok=False);sentinel=ValueError('起動失敗 — preserve this exact exception');clients=[];callbacks=[];operations=[];held=False
+  def make_client(command,cwd,journal_path):
+   nonlocal held
+   c=Client.__new__(Client);c.process=Process();c._reader=Reader();c._journal=Journal(journal_path,cell=='candidate_close_error');c._journal_lock=threading.Lock();clients.append(c);operations.append('client_factory');
+   def initialize():operations.append('initialize');raise sentinel
+   c.initialize=initialize
+   if cell=='candidate_held_lock':c._journal_lock.acquire();held=True;operations.append('owned_lock_acquire')
+   return c
+  def register(cb):atexit.register(cb);callbacks.append(cb);operations.append('callback_register')
+  def unregister(cb):atexit.unregister(cb);callbacks.remove(cb);operations.append('callback_unregister')
+  fake={};standard={'argparse','atexit','collections','concurrent.futures','hashlib','json','queue','subprocess','sys','threading','time','pathlib'}
+  for n in ast.parse(source).body:
+   if not isinstance(n,ast.ImportFrom) or n.module in standard:continue
+   module=types.ModuleType(n.module)
+   for item in n.names:setattr(module,item.name,make_client if item.name=='CodexAppServerClient' else ('inert_'+item.name if item.name.isupper() else unexpected))
+   fake[n.module]=module
+  fake['atexit']=types.SimpleNamespace(register=register,unregister=unregister);subject=types.ModuleType('full_controller_startup_fault');subject.__file__='candidate-controller-v2.py.txt';argv=['startup-caller','--out',str(directory/'controller'),'--iterations','0','--model','not-invoked','--effort','low','--load-fixture-manifest',str(directory/'never-read.json')];caught=None;start=time.perf_counter_ns()
+  try:
+   with patch.dict(sys.modules,fake),patch.object(sys,'path',list(sys.path)),patch.object(sys,'argv',argv):
+    exec(compile(source,subject.__file__,'exec'),subject.__dict__);subject.app_server_command=lambda:[]
+    try:subject.main()
+    except BaseException as error:caught=error
+   ck(caught is sentinel,'original exception object identity');ck(len(clients)==1,'one factory');c=clients[0];artifact=directory/'controller'/'startup-cleanup.json';data=json.loads(artifact.read_bytes()) if artifact.exists() else None;baseline=cell=='baseline_healthy';success=cell=='candidate_healthy';ck(c._journal.closed is success,'journal before external cleanup');ck((c.close in callbacks) is (not success),'callback before external cleanup')
+   if baseline:ck(data is None and c._journal.attempts==0 and not hasattr(caught,'__notes__'),'baseline no startup cleanup')
+   else:
+    ck(data['client_closed'] is success and data['input_release_verified'] is False,'truthful completion');ck(data['startup_error']==dict(type='ValueError',message=str(sentinel)) and data['startup_events']==[],'full original error record');expected=[] if success else ['planner close: '+("TimeoutError('app-server journal close timed out')" if held else "OSError('injected caller journal close error')")];ck(data['errors']==expected,'literal cleanup error');ck(getattr(caught,'__notes__',[])==([] if success else ['startup cleanup incomplete; see startup-cleanup.json']),'original error annotation')
+   row=dict(cell=cell,source_sha256=sha(source),exception_is_original=True,exception_type=type(caught).__name__,exception_message=str(caught),exception_notes=getattr(caught,'__notes__',[]),journal_closed_before_cleanup=c._journal.closed,callback_retained_before_cleanup=c.close in callbacks,journal_close_attempts_before_cleanup=c._journal.attempts,startup_artifact=data,operations_before_cleanup=list(operations),start_ns=start,end_ns=time.perf_counter_ns());rows.append(row)
+  finally:
+   if clients:
+    c=clients[0]
+    if held:c._journal_lock.release();held=False
+    c._journal.fault=False;c.close()
+    if c.close in callbacks:unregister(c.close)
+    all_closed.append(c._journal.closed and not callbacks and not c._journal_lock.locked())
+  (directory/'raw.json').write_text(json.dumps(row,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+ ck(all(all_closed) and len(rows)==4,'terminal own resources');result=dict(rows=rows,all_owned_journals_and_callbacks_retired=True,subject_native_peers=0,real_client_constructor_executions=0,python=sys.version,result='PASS_FULL_STARTUP_FAULT_SCOPED');(R/'RESULT.v1.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf-8');print(json.dumps(dict(result=result['result'],rows=4,original_exception_identity=True,subject_native_peers=0,all_owned_journals_and_callbacks_retired=True)))
+if __name__=='__main__':main()

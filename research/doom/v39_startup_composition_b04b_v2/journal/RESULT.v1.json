@@ -1,0 +1,229 @@
+{
+  "rows": [
+    {
+      "cell": "healthy",
+      "stage": "first",
+      "receipt": {
+        "schema": "map01-startup-cleanup-v1",
+        "session_exit_code": null,
+        "reader_joined": true,
+        "client_closed": true,
+        "input_release_verified": false,
+        "errors": [],
+        "escalations": [],
+        "stderr_complete": true,
+        "stderr_bytes": 0,
+        "stderr_reader_joined": true
+      },
+      "callback_retained": false,
+      "journal_closed": true,
+      "journal_close_calls": 1,
+      "events": [
+        {
+          "op": "callback_register"
+        },
+        {
+          "op": "reader_join",
+          "timeout": 1
+        },
+        {
+          "op": "journal_close",
+          "fault": false
+        },
+        {
+          "op": "callback_unregister"
+        }
+      ],
+      "start_ns": 42233922868900,
+      "end_ns": 42233922944300,
+      "elapsed_ns": 75400
+    },
+    {
+      "cell": "held_lock",
+      "stage": "first",
+      "receipt": {
+        "schema": "map01-startup-cleanup-v1",
+        "session_exit_code": null,
+        "reader_joined": true,
+        "client_closed": false,
+        "input_release_verified": false,
+        "errors": [
+          "planner close: TimeoutError('app-server journal close timed out')"
+        ],
+        "escalations": [],
+        "stderr_complete": true,
+        "stderr_bytes": 0,
+        "stderr_reader_joined": true
+      },
+      "callback_retained": true,
+      "journal_closed": false,
+      "journal_close_calls": 0,
+      "events": [
+        {
+          "op": "callback_register"
+        },
+        {
+          "op": "owned_lock_acquire"
+        },
+        {
+          "op": "reader_join",
+          "timeout": 1
+        }
+      ],
+      "start_ns": 42233924256800,
+      "end_ns": 42234924289900,
+      "elapsed_ns": 1000033100
+    },
+    {
+      "cell": "held_lock",
+      "stage": "after_recovery",
+      "receipt": {
+        "schema": "map01-startup-cleanup-v1",
+        "session_exit_code": null,
+        "reader_joined": true,
+        "client_closed": true,
+        "input_release_verified": false,
+        "errors": [],
+        "escalations": [],
+        "stderr_complete": true,
+        "stderr_bytes": 0,
+        "stderr_reader_joined": true
+      },
+      "callback_retained": false,
+      "journal_closed": true,
+      "journal_close_calls": 1,
+      "events": [
+        {
+          "op": "callback_register"
+        },
+        {
+          "op": "owned_lock_acquire"
+        },
+        {
+          "op": "reader_join",
+          "timeout": 1
+        },
+        {
+          "op": "owned_lock_release"
+        },
+        {
+          "op": "fault_cleared"
+        },
+        {
+          "op": "reader_join",
+          "timeout": 1
+        },
+        {
+          "op": "journal_close",
+          "fault": false
+        },
+        {
+          "op": "callback_unregister"
+        }
+      ],
+      "start_ns": 42234924878500,
+      "end_ns": 42234924926200,
+      "elapsed_ns": 47700
+    },
+    {
+      "cell": "close_error",
+      "stage": "first",
+      "receipt": {
+        "schema": "map01-startup-cleanup-v1",
+        "session_exit_code": null,
+        "reader_joined": true,
+        "client_closed": false,
+        "input_release_verified": false,
+        "errors": [
+          "planner close: OSError('injected journal close error')"
+        ],
+        "escalations": [],
+        "stderr_complete": true,
+        "stderr_bytes": 0,
+        "stderr_reader_joined": true
+      },
+      "callback_retained": true,
+      "journal_closed": false,
+      "journal_close_calls": 1,
+      "events": [
+        {
+          "op": "callback_register"
+        },
+        {
+          "op": "reader_join",
+          "timeout": 1
+        },
+        {
+          "op": "journal_close",
+          "fault": true
+        }
+      ],
+      "start_ns": 42234925962800,
+      "end_ns": 42234925975700,
+      "elapsed_ns": 12900
+    },
+    {
+      "cell": "close_error",
+      "stage": "after_recovery",
+      "receipt": {
+        "schema": "map01-startup-cleanup-v1",
+        "session_exit_code": null,
+        "reader_joined": true,
+        "client_closed": true,
+        "input_release_verified": false,
+        "errors": [],
+        "escalations": [],
+        "stderr_complete": true,
+        "stderr_bytes": 0,
+        "stderr_reader_joined": true
+      },
+      "callback_retained": false,
+      "journal_closed": true,
+      "journal_close_calls": 2,
+      "events": [
+        {
+          "op": "callback_register"
+        },
+        {
+          "op": "reader_join",
+          "timeout": 1
+        },
+        {
+          "op": "journal_close",
+          "fault": true
+        },
+        {
+          "op": "fault_cleared"
+        },
+        {
+          "op": "reader_join",
+          "timeout": 1
+        },
+        {
+          "op": "journal_close",
+          "fault": false
+        },
+        {
+          "op": "callback_unregister"
+        }
+      ],
+      "start_ns": 42234926408000,
+      "end_ns": 42234926449500,
+      "elapsed_ns": 41500
+    }
+  ],
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.26300-SP0",
+  "clock": {
+    "implementation": "QueryPerformanceCounter()",
+    "monotonic": true,
+    "adjustable": false,
+    "resolution": 1e-07
+  },
+  "subject_native_peers": 0,
+  "callback_real_registrations": 3,
+  "callbacks_retired": true,
+  "journals_closed": true,
+  "result": "PASS_SCOPED",
+  "limits": "Selected exact helper/current whole client module; constructor not invoked; retired process/reader doubles; real owned threading.Lock and file journals, controlled close-error proxy; no actual native peer/main/game/model/input operation, no full deadline or physical-release proof; new journal custody question, not a replay of old native2 or27-child allocation."
+}

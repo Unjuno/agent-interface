@@ -39,7 +39,7 @@ from running_action_guard_v2 import RunningActionGuardV2
 from running_action_guard_v3 import RunningActionGuardV3
 from doom_action_snapshot_v1 import build_action_snapshot
 NODE = "/mnt/c/Program Files/nodejs/node.exe"
-CLI = r"C:\Users\junny\AppData\Roaming\npm\node_modules\@openai\codex\bin\codex.js"
+CLI = r"PUBLIC_OWN_PREFIX\AppData\Roaming\npm\node_modules\@openai\codex\bin\codex.js"
 DISABLED_FEATURES = [
     "apps", "plugins", "remote_plugin", "browser_use", "browser_use_external",
     "computer_use", "in_app_browser", "code_mode", "code_mode_host",
@@ -540,7 +540,7 @@ def _close_failed_startup(process, reader_thread, planner_client, out):
         except BaseException as error:
             receipt["errors"].append("stdout reader join: " + _startup_exception_text(error, use_repr=True))
         if not receipt["reader_joined"]:
-            receipt["errors"].append("stdout reader retirement unconfirmed")
+            receipt["errors"].append("stdout reader still running")
     if stderr_thread is not None:
         try:
             stderr_thread.join(timeout=1)
@@ -549,7 +549,7 @@ def _close_failed_startup(process, reader_thread, planner_client, out):
             receipt["stderr_reader_joined"] = False
             receipt["errors"].append("stderr reader join: " + _startup_exception_text(error, use_repr=True))
         if not receipt["stderr_reader_joined"]:
-            receipt["errors"].append("stderr reader retirement unconfirmed")
+            receipt["errors"].append("stderr reader still running")
     if process is not None and receipt["session_exit_code"] is not None:
         # Do not close a buffered stream concurrently with its active reader.
         for stream, finished in ((process.stdin, True),

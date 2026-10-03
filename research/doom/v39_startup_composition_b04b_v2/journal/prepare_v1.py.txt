@@ -1,0 +1,34 @@
+import ast,datetime,hashlib,json,pathlib,subprocess,sys
+R=pathlib.Path(__file__).resolve().parent;W=R.parent;REPO=W/'reader-close-01a0ff33'/'src';OLDREPO=W/'v39-startup-repair-01a0ff33'/'source';B='bb6bceb7c089112a9fe52c43a48310bf0b96bfac';H='aa0f889066834fe4c408838504b29a4cabb0fa39';O='9c26e204c0475bee30919e3d0e6681f393078ef1';P='research/doom/map01_overlap_controller_v39.py';receipts=[]
+def utc():return datetime.datetime.now(datetime.timezone.utc).isoformat()
+def sha(b):return hashlib.sha256(b).hexdigest()
+def run(argv,ok=(0,)):
+ s=utc();p=subprocess.Popen(argv,stdin=subprocess.DEVNULL,stdout=subprocess.PIPE,stderr=subprocess.PIPE);b,e=p.communicate(timeout=60);i=len(receipts);(R/f'prepare-{i}.stdout').write_bytes(b);(R/f'prepare-{i}.stderr').write_bytes(e);receipts.append(dict(argv=list(map(str,argv)),pid=p.pid,start_utc=s,end_utc=utc(),exit=p.returncode,stdout_bytes=len(b),stdout_sha256=sha(b),stderr_bytes=len(e),stderr_sha256=sha(e)));assert p.returncode in ok,(argv,p.returncode);return b
+def git(repo,*a):return run(['git','-C',str(repo),*a])
+def nodes(b):return {n.name:ast.dump(n,include_attributes=False) for n in ast.parse(b).body if isinstance(n,(ast.FunctionDef,ast.ClassDef))}
+try:
+ current=git(REPO,'show',B+':'+P);oldbase=git(OLDREPO,'show',O+':'+P);oldhead=git(OLDREPO,'show',H+':'+P)
+ for n,b in [('current-controller.py.txt',current),('old-base-controller.py.txt',oldbase),('old-head-controller.py.txt',oldhead)]:
+  with (R/n).open('xb') as f:f.write(b)
+ candidate=run(['git','merge-file','-p',str(R/'current-controller.py.txt'),str(R/'old-base-controller.py.txt'),str(R/'old-head-controller.py.txt')]);ast.parse(candidate)
+ with (R/'candidate-controller.py.txt').open('xb') as f:f.write(candidate)
+ client=git(REPO,'show',B+':research/live_control/codex_app_server_client_v2.py')
+ with (R/'current-client.py.txt').open('xb') as f:f.write(client)
+ # Preserve old startup helper AST and current nested wait AST separately.
+ assert nodes(candidate)['_close_failed_startup']==nodes(oldhead)['_close_failed_startup']
+ def wait(b):
+  main=next(n for n in ast.parse(b).body if isinstance(n,ast.FunctionDef) and n.name=='main');return next(ast.dump(n,include_attributes=False) for n in ast.walk(main) if isinstance(n,ast.FunctionDef) and n.name=='wait')
+ assert wait(candidate)==wait(current)
+ docs=['README.md','ROADMAP.md','docs/CURRENT_GOAL.md','docs/WORKER_QUICKSTART.md','docs/RESEARCH_METHOD.md','docs/ISSUE_FAILURE_CLASSIFICATION.md'];entries=git(REPO,'ls-tree','-rz',B).split(b'\0');paths=[]
+ for x in entries:
+  if x:
+   p=x.split(b'\t',1)[1].decode();
+   if pathlib.PurePosixPath(p).name=='AGENTS.md' and (p=='AGENTS.md' or p.startswith('research/')):paths.append(p)
+ docs+=paths;pins=[]
+ for p in docs:
+  b=git(REPO,'show',B+':'+p);dest=R/'context'/p;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(b);pins.append(dict(path=p,bytes=len(b),sha256=sha(b)))
+ record=dict(base=B,old_head=H,old_base=O,created_utc=utc(),current_controller=dict(bytes=len(current),sha256=sha(current)),candidate_controller=dict(bytes=len(candidate),sha256=sha(candidate)),client=dict(bytes=len(client),sha256=sha(client)),context=pins,old_startup_helper_ast_equal=True,current_wait_ast_equal=True,subject_executions=0,main_send=0,phase='LOCAL_COMPOSITION_NOT_ADOPTION')
+ with (R/'COMPOSITION.v1.json').open('x',encoding='utf-8') as f:json.dump(record,f,indent=2)
+ print(json.dumps(record))
+finally:
+ with (R/'PREPARE_RECEIPTS.v1.json').open('x',encoding='utf-8') as f:json.dump(receipts,f,indent=2)
