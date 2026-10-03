@@ -60,3 +60,22 @@ No actualSDK/backend/GUI/model/input/task success,physicalrelease,clock alignmen
 general finite recovery/hard IObound,latency/token/cost benefit or full goal proof.
 Content decision,application linkage,currentowner/cancellation/requirements and
 safe expected-old adoption are separate and are not supplied by this archive.
+
+## Known author disposition before remote publication
+
+The earlier unknown-reason inquiry above captures08:42–08:48. Fresh pre-publication
+read returned actual author0975 comment5967341263 created08:50:00: closed6919V3
+and its acknowledgement/proposal are now HISTORICAL COMPONENT EVIDENCE only.
+No source adoption,current content vote or application authority survives that
+closed route. Author intends one new current-source busy/whole-owner/startup
+implementation with a fresh prospective committee/content/application gate;
+intent is not independently confirmed live work. Owned strictUTF8 #6961 stays
+separate. DISPOSITION_AT_PUBLICATION.json preserves the actual author body.
+
+This leaf supplies only technical advisory/new controlled evidence for the
+retired fixed component plus explicitly isolated combined candidate. ZERO
+current6919V3 votes are issued. Its first local199-file proof commita22cf2048
+is preserved as parent;this follow-up only adds this disposition and updates
+README/manifest before any remote publication. Raw/source/tests are unchanged.
+The author fixedheadfdef remains the source ancestor/reference,not this archive's
+direct parent after the preservation follow-up. No PR reopen/source/main update.
