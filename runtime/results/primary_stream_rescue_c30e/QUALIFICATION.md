@@ -23,8 +23,13 @@ The implementation selectively composes old owner fault observation and silent
 Writable close settlement. Whole-file source replacement would remove current
 fatal UTF-8 admission and was explicitly rejected.
 
-STOP / pending: local CI43 not yet qualified on this checkpoint; advisory review
-pending; Node22 hosted and Windows/native applicability are not established.
+Local AnalysisIndex CI on commit 9d7c80e97 exited 0 with
+`LOCAL_CI_SUMMARY: steps=43 failures=[]`. Full log:
+`outputs/primary-c30e-local-ci-checkpoint.log` in the calling task workspace.
+This is the scoped 43-step workflow, not full repository/native qualification.
+
+STOP / pending: advisory review pending; Node22 hosted and Windows/native
+applicability are not established.
 Docker's Python image has the previously observed containerd blob access failure;
 no daemon reset/prune/shared-container reuse was performed. Native effects,
 delivery, GUI/backend authority, and original scientific results are not inferred
