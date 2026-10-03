@@ -646,3 +646,5 @@ or human-tempo claim.
 - [#5156 X11 allocation-02 preformal STOP](owner_keyup_formal_x11_5156_20260930_02/ARCHIVAL_QUALIFICATION.md): preserves the six-file source package and Xlib import STOP; formal inputs 0, raw/audit absent, retries 0. No scientific result or live key-up claim.
 
 - [Bounded journal-mutex retirement repair](appserver_journal_close_57_20261003_01a0ff2d/README.md): preserves journal custody and explicit incomplete cleanup; Windows ordinary regressions, not an overall OS-I/O deadline.
+
+- [Reader retirement and late-frame custody repair](appserver_reader_retirement_57_20261003_01a0ff2d/README.md): close reports a live reader before closing the journal; preserves earlier mutex/None semantics and all first failures.

@@ -1,0 +1,746 @@
+{
+  "adapted_test_sha256": "48c16f59db515cc6ba662260091826bac6d2ecc64bd308b914d53f320fca11e0",
+  "all_old_test_assertions_unchanged": true,
+  "controls": [
+    {
+      "copy": {
+        "actual_client_closed": true,
+        "actual_notifications": [
+          {
+            "method": "owned/late-frame",
+            "params": {
+              "marker": "reader-retirement-v2"
+            }
+          }
+        ],
+        "actual_responses": {},
+        "caller_alive_after_release": false,
+        "close_done_at_checkpoint": true,
+        "configured_close_seconds": 0.05,
+        "first_checkpoint_ns": 31785921000000,
+        "first_outcome": {
+          "end_ns": 31785921000000,
+          "error_message": "app-server reader close timed out",
+          "error_type": "TimeoutError",
+          "start_ns": 31785859000000
+        },
+        "held_writer": true,
+        "journal_before_release_base64": "",
+        "journal_closed_at_checkpoint": false,
+        "journal_enabled": true,
+        "journal_final_base64": "eyJkaXJlY3Rpb24iOiJyZWNlaXZlZCIsIm9ic2VydmVkX25zIjozMTc4NTk0Njg2MDMwMCwibWVzc2FnZSI6eyJtZXRob2QiOiJvd25lZC9sYXRlLWZyYW1lIiwicGFyYW1zIjp7Im1hcmtlciI6InJlYWRlci1yZXRpcmVtZW50LXYyIn19fQ0K",
+        "journal_final_closed": true,
+        "journal_lock_locked_at_checkpoint": false,
+        "kind": "new-owned-parent-plus-independent-writer-pipe",
+        "method": "test_live_reader_preserves_journal_and_late_frame",
+        "native_handles": [
+          {
+            "argv": [
+              "<OWN_HOME>\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "-u",
+              "-c",
+              "pass"
+            ],
+            "pid": 38320,
+            "spawn_returned_utc": "2026-10-03T09:50:36.765825+00:00",
+            "spawn_started_utc": "2026-10-03T09:50:36.761826+00:00"
+          },
+          {
+            "argv": [
+              "<OWN_HOME>\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "-u",
+              "-c",
+              "import json, os, sys\nfrom pathlib import Path\nready = Path(sys.argv[1])\nwith ready.open('xb'):\n    pass\nif sys.stdin.readline() != 'release\\n':\n    raise RuntimeError('owned writer release missing')\nprint(json.dumps({'method':'owned/late-frame','params':{'marker':'reader-retirement-v2'}}, separators=(',', ':')), flush=True)\n",
+              "<OWN_HOME>\\AppData\\Local\\Temp\\reader-retirement-owned-3nx88h5e\\writer-ready"
+            ],
+            "pid": 28804,
+            "spawn_returned_utc": "2026-10-03T09:50:36.777825+00:00",
+            "spawn_started_utc": "2026-10-03T09:50:36.765825+00:00"
+          }
+        ],
+        "observation_checkpoint_seconds": 0.5,
+        "parent_driver_closed_handles": [
+          true,
+          true,
+          true
+        ],
+        "parent_exit_before_close": 0,
+        "parent_final_exit": false,
+        "parent_stderr_base64": "",
+        "reader_alive_after_release": false,
+        "reader_alive_at_checkpoint": true,
+        "reader_errors": [],
+        "second_close": {
+          "return_value": null
+        },
+        "writer_driver_closed_handles": [
+          true,
+          true
+        ],
+        "writer_exit_before_close": null,
+        "writer_final_exit": 0,
+        "writer_ready_bytes": 0,
+        "writer_stderr_base64": ""
+      },
+      "copy_sha256": "273253d2a1dc3bdc8466c8782e91f76923a50f19b83e71b460dabf95afea54c8",
+      "label": "Boolean-exit-alias",
+      "reason": "parent_final_exit",
+      "rejected": true
+    },
+    {
+      "copy": {
+        "actual_client_closed": true,
+        "actual_notifications": [
+          {
+            "method": "owned/late-frame",
+            "params": {
+              "marker": "reader-retirement-v2"
+            }
+          }
+        ],
+        "actual_responses": {},
+        "caller_alive_after_release": false,
+        "close_done_at_checkpoint": true,
+        "configured_close_seconds": 0.05,
+        "first_checkpoint_ns": 31785921000000,
+        "first_outcome": {
+          "end_ns": 31785921000000,
+          "return_value": null,
+          "start_ns": 31785859000000
+        },
+        "held_writer": true,
+        "journal_before_release_base64": "",
+        "journal_closed_at_checkpoint": false,
+        "journal_enabled": true,
+        "journal_final_base64": "eyJkaXJlY3Rpb24iOiJyZWNlaXZlZCIsIm9ic2VydmVkX25zIjozMTc4NTk0Njg2MDMwMCwibWVzc2FnZSI6eyJtZXRob2QiOiJvd25lZC9sYXRlLWZyYW1lIiwicGFyYW1zIjp7Im1hcmtlciI6InJlYWRlci1yZXRpcmVtZW50LXYyIn19fQ0K",
+        "journal_final_closed": true,
+        "journal_lock_locked_at_checkpoint": false,
+        "kind": "new-owned-parent-plus-independent-writer-pipe",
+        "method": "test_live_reader_preserves_journal_and_late_frame",
+        "native_handles": [
+          {
+            "argv": [
+              "<OWN_HOME>\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "-u",
+              "-c",
+              "pass"
+            ],
+            "pid": 38320,
+            "spawn_returned_utc": "2026-10-03T09:50:36.765825+00:00",
+            "spawn_started_utc": "2026-10-03T09:50:36.761826+00:00"
+          },
+          {
+            "argv": [
+              "<OWN_HOME>\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "-u",
+              "-c",
+              "import json, os, sys\nfrom pathlib import Path\nready = Path(sys.argv[1])\nwith ready.open('xb'):\n    pass\nif sys.stdin.readline() != 'release\\n':\n    raise RuntimeError('owned writer release missing')\nprint(json.dumps({'method':'owned/late-frame','params':{'marker':'reader-retirement-v2'}}, separators=(',', ':')), flush=True)\n",
+              "<OWN_HOME>\\AppData\\Local\\Temp\\reader-retirement-owned-3nx88h5e\\writer-ready"
+            ],
+            "pid": 28804,
+            "spawn_returned_utc": "2026-10-03T09:50:36.777825+00:00",
+            "spawn_started_utc": "2026-10-03T09:50:36.765825+00:00"
+          }
+        ],
+        "observation_checkpoint_seconds": 0.5,
+        "parent_driver_closed_handles": [
+          true,
+          true,
+          true
+        ],
+        "parent_exit_before_close": 0,
+        "parent_final_exit": 0,
+        "parent_stderr_base64": "",
+        "reader_alive_after_release": false,
+        "reader_alive_at_checkpoint": true,
+        "reader_errors": [],
+        "second_close": {
+          "return_value": null
+        },
+        "writer_driver_closed_handles": [
+          true,
+          true
+        ],
+        "writer_exit_before_close": null,
+        "writer_final_exit": 0,
+        "writer_ready_bytes": 0,
+        "writer_stderr_base64": ""
+      },
+      "copy_sha256": "481d08544417f2571602ebc010fbc49a99a8a29edbfdbaae72926ff9f86c3ef7",
+      "label": "normal-return-relabel",
+      "reason": "outcome keys",
+      "rejected": true
+    },
+    {
+      "copy": {
+        "actual_client_closed": true,
+        "actual_notifications": [
+          {
+            "method": "owned/late-frame",
+            "params": {
+              "marker": "reader-retirement-v2"
+            }
+          }
+        ],
+        "actual_responses": {},
+        "caller_alive_after_release": false,
+        "close_done_at_checkpoint": true,
+        "configured_close_seconds": 0.05,
+        "first_checkpoint_ns": 31785921000000,
+        "first_outcome": {
+          "end_ns": 31785921000000,
+          "error_message": "app-server reader close timed out",
+          "error_type": "TimeoutError",
+          "start_ns": 31785859000000
+        },
+        "held_writer": true,
+        "journal_before_release_base64": "",
+        "journal_closed_at_checkpoint": true,
+        "journal_enabled": true,
+        "journal_final_base64": "eyJkaXJlY3Rpb24iOiJyZWNlaXZlZCIsIm9ic2VydmVkX25zIjozMTc4NTk0Njg2MDMwMCwibWVzc2FnZSI6eyJtZXRob2QiOiJvd25lZC9sYXRlLWZyYW1lIiwicGFyYW1zIjp7Im1hcmtlciI6InJlYWRlci1yZXRpcmVtZW50LXYyIn19fQ0K",
+        "journal_final_closed": true,
+        "journal_lock_locked_at_checkpoint": false,
+        "kind": "new-owned-parent-plus-independent-writer-pipe",
+        "method": "test_live_reader_preserves_journal_and_late_frame",
+        "native_handles": [
+          {
+            "argv": [
+              "<OWN_HOME>\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "-u",
+              "-c",
+              "pass"
+            ],
+            "pid": 38320,
+            "spawn_returned_utc": "2026-10-03T09:50:36.765825+00:00",
+            "spawn_started_utc": "2026-10-03T09:50:36.761826+00:00"
+          },
+          {
+            "argv": [
+              "<OWN_HOME>\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "-u",
+              "-c",
+              "import json, os, sys\nfrom pathlib import Path\nready = Path(sys.argv[1])\nwith ready.open('xb'):\n    pass\nif sys.stdin.readline() != 'release\\n':\n    raise RuntimeError('owned writer release missing')\nprint(json.dumps({'method':'owned/late-frame','params':{'marker':'reader-retirement-v2'}}, separators=(',', ':')), flush=True)\n",
+              "<OWN_HOME>\\AppData\\Local\\Temp\\reader-retirement-owned-3nx88h5e\\writer-ready"
+            ],
+            "pid": 28804,
+            "spawn_returned_utc": "2026-10-03T09:50:36.777825+00:00",
+            "spawn_started_utc": "2026-10-03T09:50:36.765825+00:00"
+          }
+        ],
+        "observation_checkpoint_seconds": 0.5,
+        "parent_driver_closed_handles": [
+          true,
+          true,
+          true
+        ],
+        "parent_exit_before_close": 0,
+        "parent_final_exit": 0,
+        "parent_stderr_base64": "",
+        "reader_alive_after_release": false,
+        "reader_alive_at_checkpoint": true,
+        "reader_errors": [],
+        "second_close": {
+          "return_value": null
+        },
+        "writer_driver_closed_handles": [
+          true,
+          true
+        ],
+        "writer_exit_before_close": null,
+        "writer_final_exit": 0,
+        "writer_ready_bytes": 0,
+        "writer_stderr_base64": ""
+      },
+      "copy_sha256": "09c56a93c860c5c894b10e93af16948616a3e9f222895f6acfaffa194a27aabd",
+      "label": "closed-live-journal",
+      "reason": "journal_closed_at_checkpoint",
+      "rejected": true
+    },
+    {
+      "copy": {
+        "actual_client_closed": true,
+        "actual_notifications": [],
+        "actual_responses": {},
+        "caller_alive_after_release": false,
+        "close_done_at_checkpoint": true,
+        "configured_close_seconds": 0.05,
+        "first_checkpoint_ns": 31785921000000,
+        "first_outcome": {
+          "end_ns": 31785921000000,
+          "error_message": "app-server reader close timed out",
+          "error_type": "TimeoutError",
+          "start_ns": 31785859000000
+        },
+        "held_writer": true,
+        "journal_before_release_base64": "",
+        "journal_closed_at_checkpoint": false,
+        "journal_enabled": true,
+        "journal_final_base64": "eyJkaXJlY3Rpb24iOiJyZWNlaXZlZCIsIm9ic2VydmVkX25zIjozMTc4NTk0Njg2MDMwMCwibWVzc2FnZSI6eyJtZXRob2QiOiJvd25lZC9sYXRlLWZyYW1lIiwicGFyYW1zIjp7Im1hcmtlciI6InJlYWRlci1yZXRpcmVtZW50LXYyIn19fQ0K",
+        "journal_final_closed": true,
+        "journal_lock_locked_at_checkpoint": false,
+        "kind": "new-owned-parent-plus-independent-writer-pipe",
+        "method": "test_live_reader_preserves_journal_and_late_frame",
+        "native_handles": [
+          {
+            "argv": [
+              "<OWN_HOME>\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "-u",
+              "-c",
+              "pass"
+            ],
+            "pid": 38320,
+            "spawn_returned_utc": "2026-10-03T09:50:36.765825+00:00",
+            "spawn_started_utc": "2026-10-03T09:50:36.761826+00:00"
+          },
+          {
+            "argv": [
+              "<OWN_HOME>\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "-u",
+              "-c",
+              "import json, os, sys\nfrom pathlib import Path\nready = Path(sys.argv[1])\nwith ready.open('xb'):\n    pass\nif sys.stdin.readline() != 'release\\n':\n    raise RuntimeError('owned writer release missing')\nprint(json.dumps({'method':'owned/late-frame','params':{'marker':'reader-retirement-v2'}}, separators=(',', ':')), flush=True)\n",
+              "<OWN_HOME>\\AppData\\Local\\Temp\\reader-retirement-owned-3nx88h5e\\writer-ready"
+            ],
+            "pid": 28804,
+            "spawn_returned_utc": "2026-10-03T09:50:36.777825+00:00",
+            "spawn_started_utc": "2026-10-03T09:50:36.765825+00:00"
+          }
+        ],
+        "observation_checkpoint_seconds": 0.5,
+        "parent_driver_closed_handles": [
+          true,
+          true,
+          true
+        ],
+        "parent_exit_before_close": 0,
+        "parent_final_exit": 0,
+        "parent_stderr_base64": "",
+        "reader_alive_after_release": false,
+        "reader_alive_at_checkpoint": true,
+        "reader_errors": [],
+        "second_close": {
+          "return_value": null
+        },
+        "writer_driver_closed_handles": [
+          true,
+          true
+        ],
+        "writer_exit_before_close": null,
+        "writer_final_exit": 0,
+        "writer_ready_bytes": 0,
+        "writer_stderr_base64": ""
+      },
+      "copy_sha256": "d19452f7de7d97b750cf4f73df3d138ec82ea22a1e99a9d5377cd7793c01e6e5",
+      "label": "late-frame-lost",
+      "reason": "late notification custody",
+      "rejected": true
+    },
+    {
+      "copy": {
+        "actual_client_closed": true,
+        "actual_notifications": [
+          {
+            "method": "owned/late-frame",
+            "params": {
+              "marker": "reader-retirement-v2"
+            }
+          }
+        ],
+        "actual_responses": {},
+        "caller_alive_after_release": false,
+        "close_done_at_checkpoint": true,
+        "configured_close_seconds": 0.05,
+        "first_checkpoint_ns": 31786296000000,
+        "first_outcome": {
+          "end_ns": 31786296000000,
+          "error_message": "app-server reader close timed out",
+          "error_type": "TimeoutError",
+          "start_ns": 31786234000000
+        },
+        "held_writer": true,
+        "journal_before_release_base64": null,
+        "journal_closed_at_checkpoint": null,
+        "journal_enabled": false,
+        "journal_final_base64": null,
+        "journal_final_closed": null,
+        "journal_lock_locked_at_checkpoint": false,
+        "kind": "new-owned-parent-plus-independent-writer-pipe",
+        "method": "test_live_reader_without_journal_reports_incomplete_and_keeps_frame",
+        "native_handles": [
+          {
+            "argv": [
+              "<OWN_HOME>\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "-u",
+              "-c",
+              "pass"
+            ],
+            "pid": 39740,
+            "spawn_returned_utc": "2026-10-03T09:50:37.251025+00:00",
+            "spawn_started_utc": "2026-10-03T09:50:37.244025+00:00"
+          },
+          {
+            "argv": [
+              "<OWN_HOME>\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+              "-B",
+              "-u",
+              "-c",
+              "import json, os, sys\nfrom pathlib import Path\nready = Path(sys.argv[1])\nwith ready.open('xb'):\n    pass\nif sys.stdin.readline() != 'release\\n':\n    raise RuntimeError('owned writer release missing')\nprint(json.dumps({'method':'owned/late-frame','params':{'marker':'reader-retirement-v2'}}, separators=(',', ':')), flush=True)\n",
+              "<OWN_HOME>\\AppData\\Local\\Temp\\reader-retirement-owned-hjim8dt0\\writer-ready"
+            ],
+            "pid": 40108,
+            "spawn_returned_utc": "2026-10-03T09:50:37.262024+00:00",
+            "spawn_started_utc": "2026-10-03T09:50:37.251025+00:00"
+          }
+        ],
+        "observation_checkpoint_seconds": 0.5,
+        "parent_driver_closed_handles": [
+          true,
+          true,
+          true
+        ],
+        "parent_exit_before_close": 0,
+        "parent_final_exit": 0,
+        "parent_stderr_base64": "",
+        "reader_alive_after_release": false,
+        "reader_alive_at_checkpoint": false,
+        "reader_errors": [],
+        "second_close": {
+          "return_value": null
+        },
+        "writer_driver_closed_handles": [
+          true,
+          true
+        ],
+        "writer_exit_before_close": null,
+        "writer_final_exit": 0,
+        "writer_ready_bytes": 0,
+        "writer_stderr_base64": ""
+      },
+      "copy_sha256": "c29109427553540771110edf82c74f9603d3ac8a1de087b3ddf500366e02e33b",
+      "label": "no-journal-reader-retired-relabel",
+      "reason": "reader_alive_at_checkpoint",
+      "rejected": true
+    },
+    {
+      "copy": {
+        "error_type": "ValueError",
+        "journal_close_calls": 1,
+        "journal_closed": false,
+        "kind": "pure-owned-objects",
+        "lock_released": true,
+        "method": "test_journal_close_exception_preserves_error_and_releases_lock",
+        "same_error_instance": 1
+      },
+      "copy_sha256": "c9dbbd936d0de973a35c2754094cdfa650023995f80bba9df81770a12b5e3d71",
+      "label": "old-error-instance-alias",
+      "reason": "exact pure old row",
+      "rejected": true
+    }
+  ],
+  "ended_utc": "2026-10-03T09:56:59.885903+00:00",
+  "exact104B_guard_only": true,
+  "exact46B_test_double_only": true,
+  "final_source_sha256": "9a1e4a31ae281e33f3e576dac4b78458e439c3b1d358afd9f9d2c64d7c1a5eb2",
+  "limits": [
+    "notification late-frame route observed; response-ID route unchanged-source inference",
+    "live-reader/already-closed-journal conditional precedence follows exact source; no new dynamic cell",
+    "None tests preserve retired-double API values; not an unbounded-wait physical measurement",
+    "saved handles/outcomes are author records, not new identity-authenticated process observations"
+  ],
+  "native_subject_process_replays": 0,
+  "new_test_sha256": "fd4d68f28ebb4b4089e5deb38d9f5b26674b4f17cf39b075a3f8f02644f19f7f",
+  "repository_client_test_or_peer_imports": 0,
+  "review_pid": 35160,
+  "role": "same-author auxiliary saved-data/source review only; not a nonauthor vote",
+  "row_images": [
+    {
+      "file": "red\\cases\\test_healthy_eof_retires_reader_and_journal.json",
+      "sha256": "a1233c7a59903b163587dc5cbd978df6116f7b47e92d56a1e1a60ec5edb78d7e",
+      "stage": "red"
+    },
+    {
+      "file": "red\\cases\\test_live_reader_preserves_journal_and_late_frame.json",
+      "sha256": "46559dfe778c8b8e6a5060b94ee1e58306d9525b1e682721e0351392f8d97937",
+      "stage": "red"
+    },
+    {
+      "file": "red\\cases\\test_live_reader_without_journal_reports_incomplete_and_keeps_frame.json",
+      "sha256": "4c1f8df3bb9f8e9c409c3f30d4a1354178ad879a5b8ecd6b7ccd1aab6e76b766",
+      "stage": "red"
+    },
+    {
+      "file": "green-normal\\cases\\test_already_closed_journal_does_not_acquire_contended_lock.json",
+      "sha256": "a3d56d1876b1f9af69ca944b32e0919802732401cfcda8abe1da51f0e99d3cb3",
+      "stage": "green-normal"
+    },
+    {
+      "file": "green-normal\\cases\\test_contended_journal_reports_incomplete_retirement.json",
+      "sha256": "1c72706656705bdcf9bfc5c63faf1780da86a216a422c18cb99723afb367993d",
+      "stage": "green-normal"
+    },
+    {
+      "file": "green-normal\\cases\\test_explicit_none_timeout_preserves_unlimited_journal_mode.json",
+      "sha256": "5a70736776a12843559f23b02343fc53eca29506d950c3f14174868a07675d4d",
+      "stage": "green-normal"
+    },
+    {
+      "file": "green-normal\\cases\\test_explicit_none_timeout_without_journal_preserves_reader_join.json",
+      "sha256": "22918ddcdb5449cc627b826a79f351f65fa570cc40057d62db94a23d88349014",
+      "stage": "green-normal"
+    },
+    {
+      "file": "green-normal\\cases\\test_healthy_eof_retires_reader_and_journal.json",
+      "sha256": "8cd3c88015b4c155346c7ef898582a782482566f46d02c34fddcd7fbd4c14a3c",
+      "stage": "green-normal"
+    },
+    {
+      "file": "green-normal\\cases\\test_journal_close_exception_preserves_error_and_releases_lock.json",
+      "sha256": "65ce6091a7dfd4f0045dad7be935a4f9c0141bf3f5fffc878b5ad797280ccf84",
+      "stage": "green-normal"
+    },
+    {
+      "file": "green-normal\\cases\\test_live_reader_preserves_journal_and_late_frame.json",
+      "sha256": "ae6c016e94fabc9bec73a510d58cb0394ea277eda86731b18e36f90e5aa72a05",
+      "stage": "green-normal"
+    },
+    {
+      "file": "green-normal\\cases\\test_live_reader_without_journal_reports_incomplete_and_keeps_frame.json",
+      "sha256": "6c481b2a625171cd816eb058027ce957194b19e4efb0388f9ffdeb53e9433bd6",
+      "stage": "green-normal"
+    },
+    {
+      "file": "green-normal\\cases\\test_no_journal_does_not_acquire_contended_lock.json",
+      "sha256": "ceefac6ca1c432b0cd4602b63617c29a9ccb547985b29ab45dff71c2028903d7",
+      "stage": "green-normal"
+    },
+    {
+      "file": "green-normal\\cases\\test_uncontended_journal_retires_without_changing_bytes.json",
+      "sha256": "41f4dc51293e848d38e519192f85637c2ef2dad7be12ac4bb7402475980ecdff",
+      "stage": "green-normal"
+    },
+    {
+      "file": "green-optimized\\cases\\test_already_closed_journal_does_not_acquire_contended_lock.json",
+      "sha256": "a3d56d1876b1f9af69ca944b32e0919802732401cfcda8abe1da51f0e99d3cb3",
+      "stage": "green-optimized"
+    },
+    {
+      "file": "green-optimized\\cases\\test_contended_journal_reports_incomplete_retirement.json",
+      "sha256": "92ba54026142ff42873b4bc003f2abe1697123195f03b534264d7d06ecbf0fa1",
+      "stage": "green-optimized"
+    },
+    {
+      "file": "green-optimized\\cases\\test_explicit_none_timeout_preserves_unlimited_journal_mode.json",
+      "sha256": "5a70736776a12843559f23b02343fc53eca29506d950c3f14174868a07675d4d",
+      "stage": "green-optimized"
+    },
+    {
+      "file": "green-optimized\\cases\\test_explicit_none_timeout_without_journal_preserves_reader_join.json",
+      "sha256": "22918ddcdb5449cc627b826a79f351f65fa570cc40057d62db94a23d88349014",
+      "stage": "green-optimized"
+    },
+    {
+      "file": "green-optimized\\cases\\test_healthy_eof_retires_reader_and_journal.json",
+      "sha256": "ca3ce603d6d0c8f9ad93f24882c078e093401ac24d144653be0b0e59374afb64",
+      "stage": "green-optimized"
+    },
+    {
+      "file": "green-optimized\\cases\\test_journal_close_exception_preserves_error_and_releases_lock.json",
+      "sha256": "65ce6091a7dfd4f0045dad7be935a4f9c0141bf3f5fffc878b5ad797280ccf84",
+      "stage": "green-optimized"
+    },
+    {
+      "file": "green-optimized\\cases\\test_live_reader_preserves_journal_and_late_frame.json",
+      "sha256": "7d93de535cc89cf5099a13b77fb087f2098f80f561d7418f40312ae050104072",
+      "stage": "green-optimized"
+    },
+    {
+      "file": "green-optimized\\cases\\test_live_reader_without_journal_reports_incomplete_and_keeps_frame.json",
+      "sha256": "93c88d4ab257f3a90481819baea56dc96d14714cab8e78d8697db29a85ac6f41",
+      "stage": "green-optimized"
+    },
+    {
+      "file": "green-optimized\\cases\\test_no_journal_does_not_acquire_contended_lock.json",
+      "sha256": "c2d3ab17b30accbd04359bdd2ff206626607300deb5ab736d8111e9cb2ccdd03",
+      "stage": "green-optimized"
+    },
+    {
+      "file": "green-optimized\\cases\\test_uncontended_journal_retires_without_changing_bytes.json",
+      "sha256": "2149bfa763fa030078f9f4456a6a6e18c8312ff47977de7d78cf5338b96c680f",
+      "stage": "green-optimized"
+    }
+  ],
+  "saved_rows": 23,
+  "source_sha256": "e6c54f8e8c7ab702a8d3a7c5a902d50305ea0a2445e94a0c0c33f9efab03eea7",
+  "started_utc": "2026-10-03T09:56:59.615487+00:00",
+  "summaries": [
+    {
+      "ended_utc": "2026-10-03T09:50:01.458259+00:00",
+      "exit_code": 1,
+      "native_command_pid": 36240,
+      "rows": 3,
+      "semantic_rows": [
+        {
+          "journal_present": true,
+          "late_notifications": 0,
+          "method": "test_healthy_eof_retires_reader_and_journal",
+          "reader_frame_lost": false,
+          "reader_refused": false,
+          "reader_retired_after_release": true
+        },
+        {
+          "journal_present": true,
+          "late_notifications": 0,
+          "method": "test_live_reader_preserves_journal_and_late_frame",
+          "reader_frame_lost": true,
+          "reader_refused": false,
+          "reader_retired_after_release": true
+        },
+        {
+          "journal_present": false,
+          "late_notifications": 1,
+          "method": "test_live_reader_without_journal_reports_incomplete_and_keeps_frame",
+          "reader_frame_lost": false,
+          "reader_refused": false,
+          "reader_retired_after_release": true
+        }
+      ],
+      "stage": "red",
+      "started_utc": "2026-10-03T09:50:00.634010+00:00",
+      "transport_process_invocations_declared_by_rows": 5
+    },
+    {
+      "ended_utc": "2026-10-03T09:50:37.632188+00:00",
+      "exit_code": 0,
+      "native_command_pid": 41988,
+      "rows": 10,
+      "semantic_rows": [
+        {
+          "method": "test_already_closed_journal_does_not_acquire_contended_lock",
+          "preserved": true
+        },
+        {
+          "method": "test_contended_journal_reports_incomplete_retirement",
+          "preserved": true
+        },
+        {
+          "method": "test_explicit_none_timeout_preserves_unlimited_journal_mode",
+          "preserved": true
+        },
+        {
+          "method": "test_explicit_none_timeout_without_journal_preserves_reader_join",
+          "preserved": true
+        },
+        {
+          "journal_present": true,
+          "late_notifications": 0,
+          "method": "test_healthy_eof_retires_reader_and_journal",
+          "reader_frame_lost": false,
+          "reader_refused": false,
+          "reader_retired_after_release": true
+        },
+        {
+          "method": "test_journal_close_exception_preserves_error_and_releases_lock",
+          "preserved": true
+        },
+        {
+          "journal_present": true,
+          "late_notifications": 1,
+          "method": "test_live_reader_preserves_journal_and_late_frame",
+          "reader_frame_lost": false,
+          "reader_refused": true,
+          "reader_retired_after_release": true
+        },
+        {
+          "journal_present": false,
+          "late_notifications": 1,
+          "method": "test_live_reader_without_journal_reports_incomplete_and_keeps_frame",
+          "reader_frame_lost": false,
+          "reader_refused": true,
+          "reader_retired_after_release": true
+        },
+        {
+          "method": "test_no_journal_does_not_acquire_contended_lock",
+          "preserved": true
+        },
+        {
+          "method": "test_uncontended_journal_retires_without_changing_bytes",
+          "preserved": true
+        }
+      ],
+      "stage": "green-normal",
+      "started_utc": "2026-10-03T09:50:36.300535+00:00",
+      "transport_process_invocations_declared_by_rows": 8
+    },
+    {
+      "ended_utc": "2026-10-03T09:50:40.068831+00:00",
+      "exit_code": 0,
+      "native_command_pid": 39076,
+      "rows": 10,
+      "semantic_rows": [
+        {
+          "method": "test_already_closed_journal_does_not_acquire_contended_lock",
+          "preserved": true
+        },
+        {
+          "method": "test_contended_journal_reports_incomplete_retirement",
+          "preserved": true
+        },
+        {
+          "method": "test_explicit_none_timeout_preserves_unlimited_journal_mode",
+          "preserved": true
+        },
+        {
+          "method": "test_explicit_none_timeout_without_journal_preserves_reader_join",
+          "preserved": true
+        },
+        {
+          "journal_present": true,
+          "late_notifications": 0,
+          "method": "test_healthy_eof_retires_reader_and_journal",
+          "reader_frame_lost": false,
+          "reader_refused": false,
+          "reader_retired_after_release": true
+        },
+        {
+          "method": "test_journal_close_exception_preserves_error_and_releases_lock",
+          "preserved": true
+        },
+        {
+          "journal_present": true,
+          "late_notifications": 1,
+          "method": "test_live_reader_preserves_journal_and_late_frame",
+          "reader_frame_lost": false,
+          "reader_refused": true,
+          "reader_retired_after_release": true
+        },
+        {
+          "journal_present": false,
+          "late_notifications": 1,
+          "method": "test_live_reader_without_journal_reports_incomplete_and_keeps_frame",
+          "reader_frame_lost": false,
+          "reader_refused": true,
+          "reader_retired_after_release": true
+        },
+        {
+          "method": "test_no_journal_does_not_acquire_contended_lock",
+          "preserved": true
+        },
+        {
+          "method": "test_uncontended_journal_retires_without_changing_bytes",
+          "preserved": true
+        }
+      ],
+      "stage": "green-optimized",
+      "started_utc": "2026-10-03T09:50:38.954431+00:00",
+      "transport_process_invocations_declared_by_rows": 8
+    }
+  ]
+}

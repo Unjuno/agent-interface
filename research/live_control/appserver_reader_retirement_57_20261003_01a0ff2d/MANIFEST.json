@@ -1,0 +1,391 @@
+{
+  "schema": "appserver-reader-retirement-v2-public-evidence",
+  "parent": "31f10e660d2e7e13d8fe05c9a56d3f3c5e71f324",
+  "review_base": "dd6f54bf540ffe10b17696b8a933ff6c92fd3bc1",
+  "client_sha256": "9a1e4a31ae281e33f3e576dac4b78458e439c3b1d358afd9f9d2c64d7c1a5eb2",
+  "methods": 10,
+  "saved_rows": 23,
+  "formal_or_peer_replay": false,
+  "files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 57,
+      "sha256": "b5f4573898d2d1ad2c2575f962bc78b7d212255307998ae8cf93cd4eb9477156"
+    },
+    {
+      "path": "evidence/FIX_BEFORE_GREEN.json",
+      "bytes": 714,
+      "sha256": "a3365f42fda0548b6e80b41a6c5052f8a4a06dfe94ad28d0bab0cf7cf8072d3f"
+    },
+    {
+      "path": "evidence/FREEZE_BEFORE_RED.json",
+      "bytes": 1988,
+      "sha256": "a41193d76b86edd8ad2205d88471042de5639c11eece4069102b0c63b7da56a6"
+    },
+    {
+      "path": "evidence/green-normal/cases/test_already_closed_journal_does_not_acquire_contended_lock.json",
+      "bytes": 226,
+      "sha256": "b9d4654e82a64291a0ac0811f4db2fd74a58d6df14ae0f7b48a725df363905cc"
+    },
+    {
+      "path": "evidence/green-normal/cases/test_contended_journal_reports_incomplete_retirement.json",
+      "bytes": 1409,
+      "sha256": "7cd33b01ce72f7743066e67b23fcb3915a723b7aec26aca26534f485f1e10f96"
+    },
+    {
+      "path": "evidence/green-normal/cases/test_explicit_none_timeout_preserves_unlimited_journal_mode.json",
+      "bytes": 244,
+      "sha256": "ecdcb69c374e9af9a992d92b949bd5dcfa557fcf8c4602b1045e7091b0d04015"
+    },
+    {
+      "path": "evidence/green-normal/cases/test_explicit_none_timeout_without_journal_preserves_reader_join.json",
+      "bytes": 195,
+      "sha256": "1262fc0c250642c6be4ce4e47150f91aa99426c5d3db9d1c63ab19507e83fc1e"
+    },
+    {
+      "path": "evidence/green-normal/cases/test_healthy_eof_retires_reader_and_journal.json",
+      "bytes": 1409,
+      "sha256": "a57367502c7e442ba74401081dcf9f6479bf06a907a92851f61bab580c933b2b"
+    },
+    {
+      "path": "evidence/green-normal/cases/test_journal_close_exception_preserves_error_and_releases_lock.json",
+      "bytes": 254,
+      "sha256": "9bd1b1cd15d35b8ab029f9392bd29b98702ab75b9d3902db407062eb7befef2d"
+    },
+    {
+      "path": "evidence/green-normal/cases/test_live_reader_preserves_journal_and_late_frame.json",
+      "bytes": 2704,
+      "sha256": "47a1cbfe4dfa10fa82cd16bd05b99023578d9a10a91db959007230008569adbe"
+    },
+    {
+      "path": "evidence/green-normal/cases/test_live_reader_without_journal_reports_incomplete_and_keeps_frame.json",
+      "bytes": 2542,
+      "sha256": "beb7ecb880bedda56f9f051e4d6cc8c775885eb4be2654e2c91a146cfa013ba8"
+    },
+    {
+      "path": "evidence/green-normal/cases/test_no_journal_does_not_acquire_contended_lock.json",
+      "bytes": 1170,
+      "sha256": "f1f743ffcab1847c0fc580464d6832fcef2a84ae20fbf1c8475422516fd3d3c8"
+    },
+    {
+      "path": "evidence/green-normal/cases/test_uncontended_journal_retires_without_changing_bytes.json",
+      "bytes": 1279,
+      "sha256": "fa07b26262fbfe2eed2fe27e48755afc794035bd2eff8773e72ea9c5da2d1e82"
+    },
+    {
+      "path": "evidence/green-normal/executed-codex_app_server_client_v2.py.txt",
+      "bytes": 6617,
+      "sha256": "9a1e4a31ae281e33f3e576dac4b78458e439c3b1d358afd9f9d2c64d7c1a5eb2"
+    },
+    {
+      "path": "evidence/green-normal/executed-test_appserver_journal_close_01a0ff2d.py.txt",
+      "bytes": 9613,
+      "sha256": "48c16f59db515cc6ba662260091826bac6d2ecc64bd308b914d53f320fca11e0"
+    },
+    {
+      "path": "evidence/green-normal/executed-test_appserver_reader_retirement_01a0ff2d.py.txt",
+      "bytes": 11534,
+      "sha256": "fd4d68f28ebb4b4089e5deb38d9f5b26674b4f17cf39b075a3f8f02644f19f7f"
+    },
+    {
+      "path": "evidence/green-normal/INTENT.json",
+      "bytes": 1087,
+      "sha256": "fb5a1eda1882a4936c7eee59ec17ed7fc7ec805c3c9df41994626e3b4410947c"
+    },
+    {
+      "path": "evidence/green-normal/receipt.json",
+      "bytes": 1444,
+      "sha256": "605c2262366ee3c4add4bcd0559b29749689ef86a66d1594d9a8b22ad18b78ad"
+    },
+    {
+      "path": "evidence/green-normal/stderr.log",
+      "bytes": 1922,
+      "sha256": "410b28e3826d4daa8bd979a8b5a6837c32404066681d892b1f0bb9944f30bed0"
+    },
+    {
+      "path": "evidence/green-normal/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence/green-optimized/cases/test_already_closed_journal_does_not_acquire_contended_lock.json",
+      "bytes": 226,
+      "sha256": "b9d4654e82a64291a0ac0811f4db2fd74a58d6df14ae0f7b48a725df363905cc"
+    },
+    {
+      "path": "evidence/green-optimized/cases/test_contended_journal_reports_incomplete_retirement.json",
+      "bytes": 1409,
+      "sha256": "39b20af9d3b1304f040c4fd52c78bb54220de46d7c35ea024ef3e9e3d2c2752e"
+    },
+    {
+      "path": "evidence/green-optimized/cases/test_explicit_none_timeout_preserves_unlimited_journal_mode.json",
+      "bytes": 244,
+      "sha256": "ecdcb69c374e9af9a992d92b949bd5dcfa557fcf8c4602b1045e7091b0d04015"
+    },
+    {
+      "path": "evidence/green-optimized/cases/test_explicit_none_timeout_without_journal_preserves_reader_join.json",
+      "bytes": 195,
+      "sha256": "1262fc0c250642c6be4ce4e47150f91aa99426c5d3db9d1c63ab19507e83fc1e"
+    },
+    {
+      "path": "evidence/green-optimized/cases/test_healthy_eof_retires_reader_and_journal.json",
+      "bytes": 1409,
+      "sha256": "b7279bce68d6858028d4dd5a46452ddc576f3e6df07ff1419f90f43bebbf009c"
+    },
+    {
+      "path": "evidence/green-optimized/cases/test_journal_close_exception_preserves_error_and_releases_lock.json",
+      "bytes": 254,
+      "sha256": "9bd1b1cd15d35b8ab029f9392bd29b98702ab75b9d3902db407062eb7befef2d"
+    },
+    {
+      "path": "evidence/green-optimized/cases/test_live_reader_preserves_journal_and_late_frame.json",
+      "bytes": 2704,
+      "sha256": "acefca0994edf08f59de05a5453212f9a5cc0f574218ff6cfc4c238c327975ec"
+    },
+    {
+      "path": "evidence/green-optimized/cases/test_live_reader_without_journal_reports_incomplete_and_keeps_frame.json",
+      "bytes": 2542,
+      "sha256": "2c24bb54aa1497239c55fcb30aa7b6a5ab101f2d7ac844d43de4686db5617a22"
+    },
+    {
+      "path": "evidence/green-optimized/cases/test_no_journal_does_not_acquire_contended_lock.json",
+      "bytes": 1170,
+      "sha256": "083591b54e7443360b08fc82ee871fda4ec0c8d1786e9e1287ba12b021ee03ea"
+    },
+    {
+      "path": "evidence/green-optimized/cases/test_uncontended_journal_retires_without_changing_bytes.json",
+      "bytes": 1279,
+      "sha256": "99d70e324e4f75e89d6e21473aa4f76545b05cd5981ccc8f5d053037a39d243c"
+    },
+    {
+      "path": "evidence/green-optimized/executed-codex_app_server_client_v2.py.txt",
+      "bytes": 6617,
+      "sha256": "9a1e4a31ae281e33f3e576dac4b78458e439c3b1d358afd9f9d2c64d7c1a5eb2"
+    },
+    {
+      "path": "evidence/green-optimized/executed-test_appserver_journal_close_01a0ff2d.py.txt",
+      "bytes": 9613,
+      "sha256": "48c16f59db515cc6ba662260091826bac6d2ecc64bd308b914d53f320fca11e0"
+    },
+    {
+      "path": "evidence/green-optimized/executed-test_appserver_reader_retirement_01a0ff2d.py.txt",
+      "bytes": 11534,
+      "sha256": "fd4d68f28ebb4b4089e5deb38d9f5b26674b4f17cf39b075a3f8f02644f19f7f"
+    },
+    {
+      "path": "evidence/green-optimized/INTENT.json",
+      "bytes": 1101,
+      "sha256": "d2c8cb40d66b6812c215310068b487cdfdeb2430bea707b7aebb2fcf54b224c4"
+    },
+    {
+      "path": "evidence/green-optimized/receipt.json",
+      "bytes": 1458,
+      "sha256": "6f29a4e193aaa98328947c16232f191df2fee6a3b3da8be6300016d014a06e53"
+    },
+    {
+      "path": "evidence/green-optimized/stderr.log",
+      "bytes": 1922,
+      "sha256": "7cbff4f74d7d5a435feb5b413533a94757f5cbb534412e3be9a67e54a6c4dabf"
+    },
+    {
+      "path": "evidence/green-optimized/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence/red/cases/test_healthy_eof_retires_reader_and_journal.json",
+      "bytes": 1409,
+      "sha256": "a7c5662300a537c6ad82b8e741f815acc5ae815022e0ae36eea8dbda6e3f82a4"
+    },
+    {
+      "path": "evidence/red/cases/test_live_reader_preserves_journal_and_late_frame.json",
+      "bytes": 2427,
+      "sha256": "438b65d779f63e004b36c5383d233a18071664b997d575771dcdccaf5ffc0ff8"
+    },
+    {
+      "path": "evidence/red/cases/test_live_reader_without_journal_reports_incomplete_and_keeps_frame.json",
+      "bytes": 2476,
+      "sha256": "4e61bb5c9f984d4335f156654472c68732a659c48ad9f4f95f07ba6e0e928ec6"
+    },
+    {
+      "path": "evidence/red/executed-codex_app_server_client_v2.py.txt",
+      "bytes": 6513,
+      "sha256": "464c770e357b664c35866e271740380307bfcd52dbaa8573e258d5600c006531"
+    },
+    {
+      "path": "evidence/red/executed-test_appserver_journal_close_01a0ff2d.py.txt",
+      "bytes": 9613,
+      "sha256": "48c16f59db515cc6ba662260091826bac6d2ecc64bd308b914d53f320fca11e0"
+    },
+    {
+      "path": "evidence/red/executed-test_appserver_reader_retirement_01a0ff2d.py.txt",
+      "bytes": 11534,
+      "sha256": "fd4d68f28ebb4b4089e5deb38d9f5b26674b4f17cf39b075a3f8f02644f19f7f"
+    },
+    {
+      "path": "evidence/red/INTENT.json",
+      "bytes": 1034,
+      "sha256": "d4a363fa83826e03904beb37edf1de396dcdea26de15f81167eb7cd55a5c6e93"
+    },
+    {
+      "path": "evidence/red/receipt.json",
+      "bytes": 1391,
+      "sha256": "6356cd57f7c3dc310180966567dc54a1f42c08ebb256fcb95520a6ae7aaa59c7"
+    },
+    {
+      "path": "evidence/red/stderr.log",
+      "bytes": 2846,
+      "sha256": "e96a30589fd490140b95292fd3164ca3be2efcd630d71f4236e2112b295b23f3"
+    },
+    {
+      "path": "evidence/red/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "first/attributes.txt",
+      "bytes": 60,
+      "sha256": "79df6cfe32a0d15e196435b958ea1c5cf5de6af08b82fea94dbc1dfd2d796cbe"
+    },
+    {
+      "path": "first/diff-check.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "first/diff-check.stdout.log",
+      "bytes": 172634,
+      "sha256": "ac3e026d2851ff319551b14a6c55f78981ddcda6a2d1406158b309519be741f9"
+    },
+    {
+      "path": "first/git-receipts.json",
+      "bytes": 45790,
+      "sha256": "e98389cbaf46d8140a58ec00ecd88bbf063f45aae9eae3a4ead716ee315cbd0b"
+    },
+    {
+      "path": "first/manifest.json",
+      "bytes": 13016,
+      "sha256": "c06312525d13ae5e3e3df7447a03830ea6e371e0ea40f41caf82dd32582e4143"
+    },
+    {
+      "path": "first/publication-helper.py.txt",
+      "bytes": 16185,
+      "sha256": "f033e8c6b32dedeeb2ffc6eb933386d2176a5a4d1631424c38a896fc25ad22be"
+    },
+    {
+      "path": "helpers/prepare_appserver_reader_retirement_v2.py.txt",
+      "bytes": 3693,
+      "sha256": "de11c96e199133dd3e0b61ecef25a0579490173a3836f111ed52e8c01747c49d"
+    },
+    {
+      "path": "helpers/repair_appserver_reader_retirement_v2.py.txt",
+      "bytes": 1924,
+      "sha256": "bea91cd338caf35c9d9549f835a6ae47db5cf0dcfd888411d4e8d5c1daf802f0"
+    },
+    {
+      "path": "helpers/run_appserver_reader_retirement_v2.py.txt",
+      "bytes": 2786,
+      "sha256": "a020a0a19550729d99a5cd90f270ddfe33055899fa717fa1e31ca5a9a2f57477"
+    },
+    {
+      "path": "MANIFEST.json",
+      "bytes": 13357,
+      "sha256": "b3df95cefcfa9df3f93f4362a70e023ea8dcb62aa6f5de042c8b1c27945b2aec"
+    },
+    {
+      "path": "OWNED_PID_STATUS.json",
+      "bytes": 2155,
+      "sha256": "0b1a607c9c0edf963f0163724e59891e7a3d265c7518aa6170ee6300e45f0f8b"
+    },
+    {
+      "path": "PROJECTIONS.json",
+      "bytes": 33957,
+      "sha256": "525aec5d4a2e42449afdd73b7e0861ddef603e0e8cf9667f179b081f2d073699"
+    },
+    {
+      "path": "PUBLICATION_FAILURES.json",
+      "bytes": 516,
+      "sha256": "5181b1abfb15edf7de93a252caa81e03a87d586b141dcaf7c4f62fe8b8766021"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3689,
+      "sha256": "5a051fdac18ba3783c61fd1e6d9e2b8ede352151f7e9537a67d37d9edac90bac"
+    },
+    {
+      "path": "same-author-assistance/ANALYSIS.md",
+      "bytes": 7940,
+      "sha256": "80a632f9ac676879c08f511f645a3603edd2c1715f78697c6085c6b5997fdf8e"
+    },
+    {
+      "path": "same-author-assistance/data-source-receipt.json",
+      "bytes": 26848,
+      "sha256": "87e3e97bc34c1534c85b42cbfad60eeb028ef26193842cd05ab637e7f827cd71"
+    },
+    {
+      "path": "same-author-assistance/decode_and_compare.py.txt",
+      "bytes": 6047,
+      "sha256": "d18ac40ad22feb497d769c6671ecd0222fefbaf765ef2484d3841405166f58b6"
+    },
+    {
+      "path": "same-author-assistance/final-review-receipt.json",
+      "bytes": 716,
+      "sha256": "0ee45481d02729516f441b708511f6498b1a267b3d69ac5f66d3c9e065fe1982"
+    },
+    {
+      "path": "same-author-assistance/final-saved-review.json",
+      "bytes": 29016,
+      "sha256": "6a9d269a9b9b4315270f51c7e5dd859b440d5c62c98fc019eb5e83a52ea38e59"
+    },
+    {
+      "path": "same-author-assistance/FINAL_REVIEW.md",
+      "bytes": 4372,
+      "sha256": "6766b1ab5dba5e8693e8aebb630b246d4a191ab30862f634bb7c2dd26d017a4d"
+    },
+    {
+      "path": "same-author-assistance/inspection-first-error.txt",
+      "bytes": 371,
+      "sha256": "7f225455b7797ed33a88f613c57c0d520cad2f9c7e9f975e593d02749980af71"
+    },
+    {
+      "path": "same-author-assistance/review_final_saved.py.txt",
+      "bytes": 17293,
+      "sha256": "e6c54f8e8c7ab702a8d3a7c5a902d50305ea0a2445e94a0c0c33f9efab03eea7"
+    },
+    {
+      "path": "source/native-after.py.txt",
+      "bytes": 4516,
+      "sha256": "1009d3e3a993600941c388ac488bf267d91d736ffdb2f9ca88de7efe2b96ee83"
+    },
+    {
+      "path": "source/native-before.py.txt",
+      "bytes": 4471,
+      "sha256": "81440f68f7cf74e11054950875ff3063c9d605d753ef2632f309d404425cbfd0"
+    },
+    {
+      "path": "source/v1-client.py.txt",
+      "bytes": 6513,
+      "sha256": "464c770e357b664c35866e271740380307bfcd52dbaa8573e258d5600c006531"
+    },
+    {
+      "path": "source/v1-test.py.txt",
+      "bytes": 9567,
+      "sha256": "c6598d088225e50d428448390f76a30e2e146a5c0b82c93c115db97e796bdc98"
+    },
+    {
+      "path": "source/v2-client.py.txt",
+      "bytes": 6617,
+      "sha256": "9a1e4a31ae281e33f3e576dac4b78458e439c3b1d358afd9f9d2c64d7c1a5eb2"
+    },
+    {
+      "path": "source/v2-mutex-test.py.txt",
+      "bytes": 9613,
+      "sha256": "48c16f59db515cc6ba662260091826bac6d2ecc64bd308b914d53f320fca11e0"
+    },
+    {
+      "path": "source/v2-reader-test.py.txt",
+      "bytes": 11534,
+      "sha256": "fd4d68f28ebb4b4089e5deb38d9f5b26674b4f17cf39b075a3f8f02644f19f7f"
+    }
+  ]
+}

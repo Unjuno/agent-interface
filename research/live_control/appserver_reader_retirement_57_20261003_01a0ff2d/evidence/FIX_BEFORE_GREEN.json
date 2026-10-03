@@ -1,0 +1,10 @@
+{
+  "created_before_green_utc": "2026-10-03T09:50:35.501368+00:00",
+  "before_sha256": "464c770e357b664c35866e271740380307bfcd52dbaa8573e258d5600c006531",
+  "after_sha256": "9a1e4a31ae281e33f3e576dac4b78458e439c3b1d358afd9f9d2c64d7c1a5eb2",
+  "after_bytes": 6617,
+  "only_changed_method": "close",
+  "exact_old": "        self._reader.join(timeout=timeout)\n",
+  "exact_new": "        self._reader.join(timeout=timeout)\n        if self._reader.is_alive():\n            raise TimeoutError(\"app-server reader close timed out\")\n",
+  "scope": "report actual live reader after join before touching journal; leave reader _closed/cache state for actual _read finally; retain earlier mutex and None/error semantics"
+}

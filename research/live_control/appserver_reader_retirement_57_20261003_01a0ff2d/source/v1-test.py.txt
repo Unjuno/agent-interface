@@ -23,9 +23,6 @@ class RetiredReader:
     def join(self, timeout):
         self.timeout = timeout
 
-    def is_alive(self):
-        return False
-
 
 class Journal:
     def __init__(self, closed=False, error=None):
