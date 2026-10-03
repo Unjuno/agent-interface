@@ -49,7 +49,7 @@ def main():
     need(run["Config"]["Cmd"] == freeze["candidate_command"][freeze["candidate_command"].index("python3"):], "candidate command")
     mounts = {m["Destination"]: m for m in run["Mounts"]}
     need(mounts["/src"]["RW"] is False and mounts["/out"]["RW"] is True, "exact mount permissions")
-    need(mounts["/src"]["Source"] == "/home/taka/inputs/phase-6067-x11-3cbf-source-fe077", "exact frozen source root")
+    need(mounts["/src"]["Source"] == "/home/taka/inputs/phase-6067-x11-3cbf-source-48ce12", "exact frozen source root")
     need(mounts["/out"]["Source"] == "/home/taka/outputs/phase-6067-x11-3cbf-formal-a01", "exact fresh output root")
     raw, fixture = read("formal/raw.json"), read("fixture.json")
     need(raw["source_sha256"] == freeze["candidate_sha256"], "in-run source hashes")
