@@ -281,6 +281,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`backward_observable_guards_6256_t2_false_stop_t5_20261002/`](backward_observable_guards_6256_t2_false_stop_t5_20261002/)
 - [`belief_auto_recommit_semantic_boundary_r3_v1/`](belief_auto_recommit_semantic_boundary_r3_v1/)
 - [`belief_external_drift_5368_t0_20261003/`](belief_external_drift_5368_t0_20261003/)
+- [`belief_external_drift_wslc_portability_20261003/`](belief_external_drift_wslc_portability_20261003/)
 - [`belief_recommit_epoch_aba_r2_v1/`](belief_recommit_epoch_aba_r2_v1/)
 - [`belief_repair_decision_lattice_r4_v1/`](belief_repair_decision_lattice_r4_v1/)
 - [`belief_stream_scheduling_6097_t0_20261001/`](belief_stream_scheduling_6097_t0_20261001/)
