@@ -1,0 +1,664 @@
+{
+  "schema": "calc-heldout-plan-v1",
+  "allocation": "CALC-HELDOUT-3700-7051-4D74-A01-20261003",
+  "issue": 7051,
+  "source_main": "e74cfc78b84d286ff3faabf2696129b988655c1b",
+  "image": "sha256:f649ccab8aec3b94e451c6b0037e60fca72d7d7559381f8cd4aa98530b786c55",
+  "model": "same current primary GPT-6; exact provider/build/reasoning config/usage/ingestion endpoints UNKNOWN",
+  "scope": "Held-out current-primary WSLc/X11 transfer; no causal/default/token/human-tempo adoption",
+  "per_character_gap_ms": 20,
+  "max_extra_observations": 1,
+  "source_hashes": {
+    "method.py": "6083ab18cb00a2e23cda6f798493854bd7699ae06623a783732adb60d3c00c21",
+    "blank.fods": "2590e38ac7d9db852dfb0eb6c1aeb80edda1f0fd68ca7c62b9f4197df7da010c",
+    "sources/runtime/core_v1/__init__.py": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0",
+    "sources/runtime/core_v1/platform_probe.py": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e",
+    "sources/runtime/core_v1/contract.py": "88122eab96fe907dcdaac032e8d9c82555d5d1adfe7bf8a9741274f19347d8a9",
+    "sources/runtime/backends/x11_v1/__init__.py": "50a6767fca7c7a81fc1a5e606de60b6660c4e8045ad0b66902d50c4a4493de6b",
+    "sources/runtime/backends/x11_v1/session.py": "b81ca9b3a2c1d692e314ed8435db481cb6cc22ff6ad974148482787545c5bb62",
+    "sources/runtime/backends/x11_v1/backend.py": "6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db",
+    "sources/runtime/backends/x11_v1/capture_artifacts.py": "965fb1f190b6f7292546d2a59f20a0ed95a4a8f4ddc6d0d1979e51312f88033a"
+  },
+  "rows": [
+    {
+      "index": 0,
+      "a": 29,
+      "b": 31,
+      "wait_ms": 50,
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "heldout-1",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-calc-1",
+          "expires_at_ns": 0
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "owned"
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "CTRL",
+              "HOME"
+            ]
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "DOWN"
+            ]
+          },
+          {
+            "op": "text",
+            "text": "2"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "9"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "TAB"
+            ]
+          },
+          {
+            "op": "text",
+            "text": "3"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "1"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "TAB"
+            ]
+          },
+          {
+            "op": "text",
+            "text": "="
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "A"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "2"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "*"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "B"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "2"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "ENTER"
+            ]
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "CTRL",
+              "s"
+            ]
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 50
+          },
+          {
+            "op": "observe",
+            "frame": "screen_physical_px",
+            "x": 0,
+            "y": 0,
+            "w": 1280,
+            "h": 800
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      }
+    },
+    {
+      "index": 1,
+      "a": 29,
+      "b": 31,
+      "wait_ms": 250,
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "heldout-2",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-calc-2",
+          "expires_at_ns": 0
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "owned"
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "CTRL",
+              "HOME"
+            ]
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "DOWN"
+            ]
+          },
+          {
+            "op": "text",
+            "text": "2"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "9"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "TAB"
+            ]
+          },
+          {
+            "op": "text",
+            "text": "3"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "1"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "TAB"
+            ]
+          },
+          {
+            "op": "text",
+            "text": "="
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "A"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "2"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "*"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "B"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "2"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "ENTER"
+            ]
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "CTRL",
+              "s"
+            ]
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 250
+          },
+          {
+            "op": "observe",
+            "frame": "screen_physical_px",
+            "x": 0,
+            "y": 0,
+            "w": 1280,
+            "h": 800
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      }
+    },
+    {
+      "index": 2,
+      "a": 37,
+      "b": 41,
+      "wait_ms": 250,
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "heldout-3",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-calc-3",
+          "expires_at_ns": 0
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "owned"
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "CTRL",
+              "HOME"
+            ]
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "DOWN"
+            ]
+          },
+          {
+            "op": "text",
+            "text": "3"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "7"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "TAB"
+            ]
+          },
+          {
+            "op": "text",
+            "text": "4"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "1"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "TAB"
+            ]
+          },
+          {
+            "op": "text",
+            "text": "="
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "A"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "2"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "*"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "B"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "2"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "ENTER"
+            ]
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "CTRL",
+              "s"
+            ]
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 250
+          },
+          {
+            "op": "observe",
+            "frame": "screen_physical_px",
+            "x": 0,
+            "y": 0,
+            "w": 1280,
+            "h": 800
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      }
+    },
+    {
+      "index": 3,
+      "a": 37,
+      "b": 41,
+      "wait_ms": 50,
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "heldout-4",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-calc-4",
+          "expires_at_ns": 0
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "owned"
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "CTRL",
+              "HOME"
+            ]
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "DOWN"
+            ]
+          },
+          {
+            "op": "text",
+            "text": "3"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "7"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "TAB"
+            ]
+          },
+          {
+            "op": "text",
+            "text": "4"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "1"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "TAB"
+            ]
+          },
+          {
+            "op": "text",
+            "text": "="
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "A"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "2"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "*"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "B"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "2"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "ENTER"
+            ]
+          },
+          {
+            "op": "key_chord",
+            "keys": [
+              "CTRL",
+              "s"
+            ]
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 50
+          },
+          {
+            "op": "observe",
+            "frame": "screen_physical_px",
+            "x": 0,
+            "y": 0,
+            "w": 1280,
+            "h": 800
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      }
+    }
+  ]
+}
