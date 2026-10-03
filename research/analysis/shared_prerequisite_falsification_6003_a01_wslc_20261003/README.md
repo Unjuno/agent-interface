@@ -1,6 +1,6 @@
 # Issue #6003 A01 — shared-prerequisite falsification leverage
 
-Status: prospective WSLc CPU allocation; no formal candidate or auditor has run yet. This is a finite synthetic method test, not a research-productivity result or an assurance proof.
+Status: PASS_METHOD_SCOPED. Candidate and independent auditor each completed once in WSLc, exit 0; 72 outcome rows were reconstructed and all eight effective corruptions rejected. See [REPORT.md](REPORT.md), [RUN.json](RUN.json), and [the retained raw results](results/). This is a finite synthetic method test, not a research-productivity result or an assurance proof.
 
 ## H / T / D / C / U
 

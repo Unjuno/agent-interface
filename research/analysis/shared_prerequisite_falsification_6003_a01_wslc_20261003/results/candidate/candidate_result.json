@@ -1,0 +1,834 @@
+{
+  "allocation_id": "SHARED-PREREQUISITE-6003-A01-WSLC-20261003-01",
+  "candidate_sha256": "de263a2c4b1d8aa9e0418e6ed5a58451c827551719a3c11ca791d7e97adcf770",
+  "controls": {
+    "disjoint_graph_aware": "E-verify-unique",
+    "disjoint_max_changed_top_claims": 1,
+    "disjoint_score_table": {
+      "E-capture-correlated-source": 0,
+      "E-cheapest-inert": 0,
+      "E-degree-decoy": 0,
+      "E-shared-prerequisite": 1,
+      "E-unvalidated-edge": 0,
+      "E-verify-unique": 1
+    },
+    "disjoint_trial_details": {
+      "E-capture-correlated-source": {
+        "eligible_before": [
+          "CAPTURE",
+          "VERIFY"
+        ],
+        "max_changed_top_claims": 0,
+        "outcomes": {
+          "FAIL": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "HOLD": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "PASS": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "STOP": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          }
+        },
+        "target": {
+          "id": "src-capture-b",
+          "kind": "source_id"
+        }
+      },
+      "E-cheapest-inert": {
+        "eligible_before": [
+          "CAPTURE",
+          "VERIFY"
+        ],
+        "max_changed_top_claims": 0,
+        "outcomes": {
+          "FAIL": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "HOLD": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "PASS": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "STOP": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          }
+        },
+        "target": {
+          "id": "P_INERT",
+          "kind": "predicate"
+        }
+      },
+      "E-degree-decoy": {
+        "eligible_before": [
+          "CAPTURE",
+          "VERIFY"
+        ],
+        "max_changed_top_claims": 0,
+        "outcomes": {
+          "FAIL": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "HOLD": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "PASS": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "STOP": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          }
+        },
+        "target": {
+          "id": "P_DECOY",
+          "kind": "predicate"
+        }
+      },
+      "E-shared-prerequisite": {
+        "eligible_before": [
+          "CAPTURE",
+          "VERIFY"
+        ],
+        "max_changed_top_claims": 1,
+        "outcomes": {
+          "FAIL": {
+            "changed_top_claims": [
+              "CAPTURE"
+            ],
+            "eligible_after": [
+              "VERIFY"
+            ]
+          },
+          "HOLD": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "PASS": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "STOP": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          }
+        },
+        "target": {
+          "id": "P_SHARED",
+          "kind": "predicate"
+        }
+      },
+      "E-unvalidated-edge": {
+        "eligible_before": [
+          "CAPTURE",
+          "VERIFY"
+        ],
+        "max_changed_top_claims": 0,
+        "outcomes": {
+          "FAIL": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "HOLD": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "PASS": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "STOP": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          }
+        },
+        "target": {
+          "id": "P_FALSE_EDGE",
+          "kind": "predicate"
+        }
+      },
+      "E-verify-unique": {
+        "eligible_before": [
+          "CAPTURE",
+          "VERIFY"
+        ],
+        "max_changed_top_claims": 1,
+        "outcomes": {
+          "FAIL": {
+            "changed_top_claims": [
+              "VERIFY"
+            ],
+            "eligible_after": [
+              "CAPTURE"
+            ]
+          },
+          "HOLD": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "PASS": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "STOP": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          }
+        },
+        "target": {
+          "id": "P_VERIFY",
+          "kind": "predicate"
+        }
+      }
+    },
+    "null_graph_aware": "UNRANKABLE",
+    "null_max_changed_top_claims": 0,
+    "null_trial_count": 6,
+    "null_trial_details": {
+      "E-capture-correlated-source": {
+        "eligible_before": [
+          "CAPTURE",
+          "VERIFY"
+        ],
+        "max_changed_top_claims": 0,
+        "outcomes": {
+          "FAIL": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "HOLD": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "PASS": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "STOP": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          }
+        },
+        "target": {
+          "id": "src-capture-b",
+          "kind": "source_id"
+        }
+      },
+      "E-cheapest-inert": {
+        "eligible_before": [
+          "CAPTURE",
+          "VERIFY"
+        ],
+        "max_changed_top_claims": 0,
+        "outcomes": {
+          "FAIL": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "HOLD": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "PASS": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "STOP": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          }
+        },
+        "target": {
+          "id": "P_INERT",
+          "kind": "predicate"
+        }
+      },
+      "E-degree-decoy": {
+        "eligible_before": [
+          "CAPTURE",
+          "VERIFY"
+        ],
+        "max_changed_top_claims": 0,
+        "outcomes": {
+          "FAIL": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "HOLD": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "PASS": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "STOP": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          }
+        },
+        "target": {
+          "id": "P_DECOY",
+          "kind": "predicate"
+        }
+      },
+      "E-shared-prerequisite": {
+        "eligible_before": [
+          "CAPTURE",
+          "VERIFY"
+        ],
+        "max_changed_top_claims": 0,
+        "outcomes": {
+          "FAIL": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "HOLD": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "PASS": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "STOP": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          }
+        },
+        "target": {
+          "id": "P_SHARED",
+          "kind": "predicate"
+        }
+      },
+      "E-unvalidated-edge": {
+        "eligible_before": [
+          "CAPTURE",
+          "VERIFY"
+        ],
+        "max_changed_top_claims": 0,
+        "outcomes": {
+          "FAIL": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "HOLD": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "PASS": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "STOP": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          }
+        },
+        "target": {
+          "id": "P_FALSE_EDGE",
+          "kind": "predicate"
+        }
+      },
+      "E-verify-unique": {
+        "eligible_before": [
+          "CAPTURE",
+          "VERIFY"
+        ],
+        "max_changed_top_claims": 0,
+        "outcomes": {
+          "FAIL": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "HOLD": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "PASS": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "STOP": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          }
+        },
+        "target": {
+          "id": "P_VERIFY",
+          "kind": "predicate"
+        }
+      }
+    },
+    "unknown_coverage_graph_aware": "UNRANKABLE",
+    "unknown_coverage_reason": "UNKNOWN_GRAPH_COVERAGE"
+  },
+  "fixture_sha256": "eb8bb699ddae44dd3bdd7622ca10c6fc04346c67ea20d304603b7757c7eed70a",
+  "freeze_sha256": "254e315ecc63ecfe13da5cfa1e40d52863446823191ea5af354bc1251c886d9f",
+  "graph_audit": {
+    "baseline_eligible": [
+      "CAPTURE",
+      "VERIFY"
+    ],
+    "correlated_source_groups_collapsed": {
+      "src-capture-b": [
+        "P_CAPTURE_B",
+        "P_CAPTURE_B_DUP"
+      ]
+    },
+    "coverage_complete": true,
+    "trial_details": {
+      "E-capture-correlated-source": {
+        "eligible_before": [
+          "CAPTURE",
+          "VERIFY"
+        ],
+        "max_changed_top_claims": 0,
+        "outcomes": {
+          "FAIL": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "HOLD": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "PASS": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "STOP": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          }
+        },
+        "target": {
+          "id": "src-capture-b",
+          "kind": "source_id"
+        }
+      },
+      "E-cheapest-inert": {
+        "eligible_before": [
+          "CAPTURE",
+          "VERIFY"
+        ],
+        "max_changed_top_claims": 0,
+        "outcomes": {
+          "FAIL": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "HOLD": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "PASS": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "STOP": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          }
+        },
+        "target": {
+          "id": "P_INERT",
+          "kind": "predicate"
+        }
+      },
+      "E-degree-decoy": {
+        "eligible_before": [
+          "CAPTURE",
+          "VERIFY"
+        ],
+        "max_changed_top_claims": 0,
+        "outcomes": {
+          "FAIL": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "HOLD": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "PASS": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "STOP": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          }
+        },
+        "target": {
+          "id": "P_DECOY",
+          "kind": "predicate"
+        }
+      },
+      "E-shared-prerequisite": {
+        "eligible_before": [
+          "CAPTURE",
+          "VERIFY"
+        ],
+        "max_changed_top_claims": 2,
+        "outcomes": {
+          "FAIL": {
+            "changed_top_claims": [
+              "CAPTURE",
+              "VERIFY"
+            ],
+            "eligible_after": []
+          },
+          "HOLD": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "PASS": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "STOP": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          }
+        },
+        "target": {
+          "id": "P_SHARED",
+          "kind": "predicate"
+        }
+      },
+      "E-unvalidated-edge": {
+        "eligible_before": [
+          "CAPTURE",
+          "VERIFY"
+        ],
+        "max_changed_top_claims": 0,
+        "outcomes": {
+          "FAIL": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "HOLD": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "PASS": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "STOP": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          }
+        },
+        "target": {
+          "id": "P_FALSE_EDGE",
+          "kind": "predicate"
+        }
+      },
+      "E-verify-unique": {
+        "eligible_before": [
+          "CAPTURE",
+          "VERIFY"
+        ],
+        "max_changed_top_claims": 1,
+        "outcomes": {
+          "FAIL": {
+            "changed_top_claims": [
+              "VERIFY"
+            ],
+            "eligible_after": [
+              "CAPTURE"
+            ]
+          },
+          "HOLD": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "PASS": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          },
+          "STOP": {
+            "changed_top_claims": [],
+            "eligible_after": [
+              "CAPTURE",
+              "VERIFY"
+            ]
+          }
+        },
+        "target": {
+          "id": "P_VERIFY",
+          "kind": "predicate"
+        }
+      }
+    },
+    "unvalidated_edges_ignored": [
+      "e-false-verify"
+    ]
+  },
+  "issue": 6003,
+  "main_sha": "165575f4e7c4baf5433f8a36d6a452fd6caefb3c",
+  "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.41",
+  "python_version": "3.12.14",
+  "run_started_utc": "2026-10-03T11:34:38.645007+00:00",
+  "scientific_support_events": 0,
+  "scope": "one authored finite graph; no empirical prior, interface effect, runtime safety, or productivity result",
+  "score_tables": {
+    "graph_max_changed_top_claims": {
+      "E-capture-correlated-source": 0,
+      "E-cheapest-inert": 0,
+      "E-degree-decoy": 0,
+      "E-shared-prerequisite": 2,
+      "E-unvalidated-edge": 0,
+      "E-verify-unique": 1
+    },
+    "legacy_worst_case_reversal_mass": {
+      "E-capture-correlated-source": 0.3,
+      "E-cheapest-inert": 0,
+      "E-degree-decoy": 0.2,
+      "E-shared-prerequisite": 0.45,
+      "E-unvalidated-edge": 0.2,
+      "E-verify-unique": 0.75
+    },
+    "raw_declared_outdegree": {
+      "E-capture-correlated-source": 2,
+      "E-cheapest-inert": 0,
+      "E-degree-decoy": 12,
+      "E-shared-prerequisite": 2,
+      "E-unvalidated-edge": 1,
+      "E-verify-unique": 1
+    }
+  },
+  "selectors": {
+    "cheapest_first": "E-cheapest-inert",
+    "graph_aware": "E-shared-prerequisite",
+    "legacy_robust_reversal": "E-verify-unique",
+    "raw_node_degree": "E-degree-decoy"
+  },
+  "sentinel": {
+    "all_feasible_tests_retain_sentinel": true,
+    "cost": 1,
+    "experiment_cost_cap": 3,
+    "id": "S-HARD-SAFETY",
+    "mandatory": true,
+    "total_budget": 4
+  },
+  "status": "SYNTHETIC_METHOD_CONSTRUCTION_ONLY"
+}
