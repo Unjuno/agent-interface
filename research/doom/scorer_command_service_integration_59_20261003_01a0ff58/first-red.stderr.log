@@ -1,0 +1,131 @@
+test_polling_max_samples_still_terminates_before_command_dispatch (test_scorer_command_service_01a0ff58.ScorerCommandService.test_polling_max_samples_still_terminates_before_command_dispatch) ... ok
+test_polling_serves_ready_finish_despite_repeated_sample_or_sink_overrun (test_scorer_command_service_01a0ff58.ScorerCommandService.test_polling_serves_ready_finish_despite_repeated_sample_or_sink_overrun) ... 
+  test_polling_serves_ready_finish_despite_repeated_sample_or_sink_overrun (test_scorer_command_service_01a0ff58.ScorerCommandService.test_polling_serves_ready_finish_despite_repeated_sample_or_sink_overrun) (sample_cost=100000000, sink_cost=0) ... FAIL
+  test_polling_serves_ready_finish_despite_repeated_sample_or_sink_overrun (test_scorer_command_service_01a0ff58.ScorerCommandService.test_polling_serves_ready_finish_despite_repeated_sample_or_sink_overrun) (sample_cost=300000000, sink_cost=0) ... FAIL
+  test_polling_serves_ready_finish_despite_repeated_sample_or_sink_overrun (test_scorer_command_service_01a0ff58.ScorerCommandService.test_polling_serves_ready_finish_despite_repeated_sample_or_sink_overrun) (sample_cost=0, sink_cost=100000000) ... FAIL
+  test_polling_serves_ready_finish_despite_repeated_sample_or_sink_overrun (test_scorer_command_service_01a0ff58.ScorerCommandService.test_polling_serves_ready_finish_despite_repeated_sample_or_sink_overrun) (sample_cost=0, sink_cost=300000000) ... FAIL
+test_stdin_returns_ready_finish_before_another_sample (test_scorer_command_service_01a0ff58.ScorerCommandService.test_stdin_returns_ready_finish_before_another_sample) ... 
+  test_stdin_returns_ready_finish_before_another_sample (test_scorer_command_service_01a0ff58.ScorerCommandService.test_stdin_returns_ready_finish_before_another_sample) (sample_cost=100000000, sink_cost=0) ... FAIL
+  test_stdin_returns_ready_finish_before_another_sample (test_scorer_command_service_01a0ff58.ScorerCommandService.test_stdin_returns_ready_finish_before_another_sample) (sample_cost=300000000, sink_cost=0) ... FAIL
+  test_stdin_returns_ready_finish_before_another_sample (test_scorer_command_service_01a0ff58.ScorerCommandService.test_stdin_returns_ready_finish_before_another_sample) (sample_cost=0, sink_cost=100000000) ... FAIL
+  test_stdin_returns_ready_finish_before_another_sample (test_scorer_command_service_01a0ff58.ScorerCommandService.test_stdin_returns_ready_finish_before_another_sample) (sample_cost=0, sink_cost=300000000) ... FAIL
+test_v13_uses_repaired_stdin_and_real_separate_scorer_sink (test_scorer_command_service_01a0ff58.ScorerCommandService.test_v13_uses_repaired_stdin_and_real_separate_scorer_sink) ... ERROR
+
+======================================================================
+ERROR: test_v13_uses_repaired_stdin_and_real_separate_scorer_sink (test_scorer_command_service_01a0ff58.ScorerCommandService.test_v13_uses_repaired_stdin_and_real_separate_scorer_sink)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-worker-workspace>\work\scorer-service-59\baseline\research\doom\test_scorer_command_service_01a0ff58.py", line 153, in test_v13_uses_repaired_stdin_and_real_separate_scorer_sink
+    session.main()
+  File "<private-worker-workspace>\work\scorer-service-59\baseline\research\doom\session_map01_v13.py", line 67, in main
+    try:base.main()
+        ^^^^^^^^^^^
+  File "<private-worker-workspace>\work\scorer-service-59\baseline\research\doom\test_scorer_command_service_01a0ff58.py", line 130, in base_main
+    line = next(base.sys.stdin)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "<private-worker-workspace>\work\scorer-service-59\baseline\research\doom\map01_scorer_stdio_adapter_v1.py", line 51, in __next__
+    if self._sample_due():continue
+       ^^^^^^^^^^^^^^^^^^
+  File "<private-worker-workspace>\work\scorer-service-59\baseline\research\doom\map01_scorer_stdio_adapter_v1.py", line 45, in _sample_due
+    started=self.loop.clock_ns();payload=self.sample_fn();finished=self.loop.clock_ns()
+                                         ^^^^^^^^^^^^^^^^
+  File "<private-worker-workspace>\work\scorer-service-59\baseline\research\doom\test_scorer_command_service_01a0ff58.py", line 141, in costly_sample
+    raise RuntimeError("finite fake-session sample budget")
+RuntimeError: finite fake-session sample budget
+
+======================================================================
+FAIL: test_polling_serves_ready_finish_despite_repeated_sample_or_sink_overrun (test_scorer_command_service_01a0ff58.ScorerCommandService.test_polling_serves_ready_finish_despite_repeated_sample_or_sink_overrun) (sample_cost=100000000, sink_cost=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-worker-workspace>\work\scorer-service-59\baseline\research\doom\test_scorer_command_service_01a0ff58.py", line 67, in test_polling_serves_ready_finish_despite_repeated_sample_or_sink_overrun
+    self.assertEqual(commands, [FINISH])
+AssertionError: Lists differ: [] != ['{"op":"finish"}']
+
+Second list contains 1 additional elements.
+First extra element 0:
+'{"op":"finish"}'
+
+- []
++ ['{"op":"finish"}']
+
+======================================================================
+FAIL: test_polling_serves_ready_finish_despite_repeated_sample_or_sink_overrun (test_scorer_command_service_01a0ff58.ScorerCommandService.test_polling_serves_ready_finish_despite_repeated_sample_or_sink_overrun) (sample_cost=300000000, sink_cost=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-worker-workspace>\work\scorer-service-59\baseline\research\doom\test_scorer_command_service_01a0ff58.py", line 67, in test_polling_serves_ready_finish_despite_repeated_sample_or_sink_overrun
+    self.assertEqual(commands, [FINISH])
+AssertionError: Lists differ: [] != ['{"op":"finish"}']
+
+Second list contains 1 additional elements.
+First extra element 0:
+'{"op":"finish"}'
+
+- []
++ ['{"op":"finish"}']
+
+======================================================================
+FAIL: test_polling_serves_ready_finish_despite_repeated_sample_or_sink_overrun (test_scorer_command_service_01a0ff58.ScorerCommandService.test_polling_serves_ready_finish_despite_repeated_sample_or_sink_overrun) (sample_cost=0, sink_cost=100000000)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-worker-workspace>\work\scorer-service-59\baseline\research\doom\test_scorer_command_service_01a0ff58.py", line 67, in test_polling_serves_ready_finish_despite_repeated_sample_or_sink_overrun
+    self.assertEqual(commands, [FINISH])
+AssertionError: Lists differ: [] != ['{"op":"finish"}']
+
+Second list contains 1 additional elements.
+First extra element 0:
+'{"op":"finish"}'
+
+- []
++ ['{"op":"finish"}']
+
+======================================================================
+FAIL: test_polling_serves_ready_finish_despite_repeated_sample_or_sink_overrun (test_scorer_command_service_01a0ff58.ScorerCommandService.test_polling_serves_ready_finish_despite_repeated_sample_or_sink_overrun) (sample_cost=0, sink_cost=300000000)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-worker-workspace>\work\scorer-service-59\baseline\research\doom\test_scorer_command_service_01a0ff58.py", line 67, in test_polling_serves_ready_finish_despite_repeated_sample_or_sink_overrun
+    self.assertEqual(commands, [FINISH])
+AssertionError: Lists differ: [] != ['{"op":"finish"}']
+
+Second list contains 1 additional elements.
+First extra element 0:
+'{"op":"finish"}'
+
+- []
++ ['{"op":"finish"}']
+
+======================================================================
+FAIL: test_stdin_returns_ready_finish_before_another_sample (test_scorer_command_service_01a0ff58.ScorerCommandService.test_stdin_returns_ready_finish_before_another_sample) (sample_cost=100000000, sink_cost=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-worker-workspace>\work\scorer-service-59\baseline\research\doom\test_scorer_command_service_01a0ff58.py", line 88, in test_stdin_returns_ready_finish_before_another_sample
+    self.assertEqual(command, FINISH, diagnostic)
+AssertionError: None != '{"op":"finish"}' : finite diagnostic sample budget
+
+======================================================================
+FAIL: test_stdin_returns_ready_finish_before_another_sample (test_scorer_command_service_01a0ff58.ScorerCommandService.test_stdin_returns_ready_finish_before_another_sample) (sample_cost=300000000, sink_cost=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-worker-workspace>\work\scorer-service-59\baseline\research\doom\test_scorer_command_service_01a0ff58.py", line 88, in test_stdin_returns_ready_finish_before_another_sample
+    self.assertEqual(command, FINISH, diagnostic)
+AssertionError: None != '{"op":"finish"}' : finite diagnostic sample budget
+
+======================================================================
+FAIL: test_stdin_returns_ready_finish_before_another_sample (test_scorer_command_service_01a0ff58.ScorerCommandService.test_stdin_returns_ready_finish_before_another_sample) (sample_cost=0, sink_cost=100000000)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-worker-workspace>\work\scorer-service-59\baseline\research\doom\test_scorer_command_service_01a0ff58.py", line 88, in test_stdin_returns_ready_finish_before_another_sample
+    self.assertEqual(command, FINISH, diagnostic)
+AssertionError: None != '{"op":"finish"}' : finite diagnostic sample budget
+
+======================================================================
+FAIL: test_stdin_returns_ready_finish_before_another_sample (test_scorer_command_service_01a0ff58.ScorerCommandService.test_stdin_returns_ready_finish_before_another_sample) (sample_cost=0, sink_cost=300000000)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-worker-workspace>\work\scorer-service-59\baseline\research\doom\test_scorer_command_service_01a0ff58.py", line 88, in test_stdin_returns_ready_finish_before_another_sample
+    self.assertEqual(command, FINISH, diagnostic)
+AssertionError: None != '{"op":"finish"}' : finite diagnostic sample budget
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.005s
+
+FAILED (failures=8, errors=1)

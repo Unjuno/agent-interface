@@ -1,0 +1,13 @@
+# Scorer command-service integration for Issue #59
+
+The existing scorer loops can skip ready command input forever while each returning sample or sink takes at least one sampling period. This adopts exactly the two-module engineering-v2 repair retained in [PR #6896](https://github.com/Unjuno/agent-interface/pull/6896), head6a82a3ee5be8b4a0c0929ea26a882b00ac28fd4f, into the deployed scheduler/stdin modules. Original source, formal first FAIL and raw are preserved there. No original producer/mutation/live allocation was replayed.
+
+The new active four-method regression first failed on main332da58: eight overrun subcases fail and the actual v13 fake-session composition reaches its finite diagnostic budget. The max-sample cap control passes. After the exact v2 repair, four methods pass normally and optimized. The inherited/current focused suite runs38 methods in each mode,36 pass and two POSIX-pipe methods are explicitly skipped on Windows; these are not Linux-container or hosted-CI results.
+
+Polling probes ready input after each sample, using a fresh clock and nonnegative wait. The stdin iterator delivers complete buffered commands before another due sample. Both preserve synchronous owner-thread execution, scorer-only sink, skipped-period/no-catch-up accounting, existing buffer/EOF/UTF-8 errors and the polling max-sample cap. The current session_map01_v13 main function is actually invoked with fake v12/game/backend, the repaired real stdin adapter, and real ScorerFileSink writing independent sample/summary files. It processes FINISH, preserves restoration, and writes one scheduled plus one final sample with controller_visible=False.
+
+Nonreturning callbacks remain blocking. Buffered bursts/synchronous command costs can suppress scorer service: [PR #6907](https://github.com/Unjuno/agent-interface/pull/6907) retains that separate tradeoff; its one-command comparator is not adopted. This is no real game/GUI/model/input/release/useful-feedback or latency benefit result and does not close #59/R134 or #57.
+
+PLAN.json and SOURCE.json bind conditions and actual source/test closure. RESULT.json summarizes actual executions. Receipts/logs and executed helpers as .txt are retained; PUBLICATION.json identifies each private-original/public-derivative hash. Private paths in public receipts/tracebacks are redacted while original bytes remain retained. No archived Python code or test is automatically executable/discovered in this evidence package; the sole new active regression is outside this package.
+
+FINAL-v5 nonauthor fixed-content agreement, current-main composition, actual required checks and one history-preserving expected-old update remain pending. This worker holds no shared input/resource/apply lock and has not written main.

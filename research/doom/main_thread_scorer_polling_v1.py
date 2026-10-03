@@ -118,9 +118,10 @@ class MainThreadScorerPolling:
                 sample_once(scheduled_ns, skipped)
                 if max_samples is not None and sample_count >= max_samples:
                     break
-                continue
 
-            timeout_s = (next_sample_ns - now) / 1_000_000_000
+            # Service ready input between samples, including sustained overrun.
+            now = self.clock_ns()
+            timeout_s = max(0, (next_sample_ns - now) / 1_000_000_000)
             if not self.wait_readable(fd, timeout_s):
                 continue
 
@@ -152,6 +153,9 @@ class MainThreadScorerPolling:
                 break
 
         ended_ns = self.clock_ns()
+        # Include skips a next due sample would account, without emitting it.
+        # Keep the current due slot, as the ordinary elapsed-period rule does.
+        missed_periods += max(0, (ended_ns - next_sample_ns) // self.period_ns)
         return PollingStats(
             owner_thread_id=owner_thread_id,
             samples=sample_count,
