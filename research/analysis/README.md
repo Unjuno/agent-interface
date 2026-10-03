@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Archived S05-WSLC image-gate preparation](looming_visual_assumption_gate_5905_s05_wslc_20261003/ARCHIVAL_QUALIFICATION.md) — #6808/#5905 frozen source and 24 images preserved; no published formal result. Distinct from the cancelled native S05 and executed S06; archival checks do not authorize a run.
+
 - [Issue #6061 archived T0 preparation](intermittent_control_6061_t0_20261003/README.md) — Original construction raw and freezes preserved; formal candidate/auditor 0/0. Offline construction replay/mutations are not a formal result or runtime clearance.
 
 - [`semantic_receipt_runtime_boundary_5442_t4/RESCUE_QUALIFICATION_20261003.md`](semantic_receipt_runtime_boundary_5442_t4/RESCUE_QUALIFICATION_20261003.md) — #5442 T4 host-only mechanical-boundary archive; package raw-audit tests 2/2, six source/artifact checksums, frozen-kernel tests 18/18. No containerized simulator, application effect, or semantic-success claim.
