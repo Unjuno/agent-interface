@@ -1,0 +1,27 @@
+EE
+======================================================================
+ERROR: test_large_record_is_preserved_across_partial_pipe_writes (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_large_record_is_preserved_across_partial_pipe_writes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/research/live_control/test_codex_app_server_send_deadline_v1.py", line 100, in test_large_record_is_preserved_across_partial_pipe_writes
+    client._write(message, deadline=time.monotonic() + 2)
+TypeError: CodexAppServerClient._write() got an unexpected keyword argument 'deadline'
+
+======================================================================
+ERROR: test_full_owned_pipe_times_out_and_quarantines_followup (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_full_owned_pipe_times_out_and_quarantines_followup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/research/live_control/test_codex_app_server_send_deadline_v1.py", line 119, in test_full_owned_pipe_times_out_and_quarantines_followup
+    error = self.assert_uncertain(
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/research/live_control/test_codex_app_server_send_deadline_v1.py", line 78, in assert_uncertain
+    operation()
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/research/live_control/test_codex_app_server_send_deadline_v1.py", line 120, in <lambda>
+    lambda: client._write(message, deadline=time.monotonic() + .02),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: CodexAppServerClient._write() got an unexpected keyword argument 'deadline'
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.002s
+
+FAILED (errors=2)

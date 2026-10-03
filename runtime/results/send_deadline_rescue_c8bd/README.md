@@ -27,3 +27,9 @@ of `[0.05]`. Full `red-budget.log` retained. This controlled-clock/mocked-send
 test establishes missing budget propagation, not a native pipe deadline bound.
 No production implementation has changed yet. Real-pipe and composed existing
 UTF-8/ID/close regressions remain necessary before integration.
+
+Fresh archive checksum checks PASS: V1 159, V2 35, V3 52 targets (246 total),
+zero mismatches. This verifies original public bytes, not historical execution.
+Two owned-pipe tests also fail against unchanged main due to unsupported
+`deadline` keyword; full `red-pipes.log` retains both errors. They do not yet
+demonstrate actual saturation timing because the call is refused before writing.
