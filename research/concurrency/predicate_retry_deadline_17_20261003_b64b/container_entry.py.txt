@@ -1,0 +1,11 @@
+"""Frozen environment recorder; one analytical command only per invocation."""
+import pathlib,sys,platform,json,hashlib,subprocess
+root=pathlib.Path('/src');out=pathlib.Path('/out')
+kind=sys.argv[1];assert kind in ('model','audit')
+env={'python':sys.version,'platform':platform.platform(),'cpu_max':pathlib.Path('/sys/fs/cgroup/cpu.max').read_text().strip(),'memory_max':pathlib.Path('/sys/fs/cgroup/memory.max').read_text().strip(),'pids_max':pathlib.Path('/sys/fs/cgroup/pids.max').read_text().strip()}
+assert env['cpu_max']=='25000 100000' and env['memory_max']=='134217728' and env['pids_max']=='32'
+for name,pin in json.loads((root/'FREEZE.json').read_text())['frozen_inputs'].items():
+    data=(root/name).read_bytes();assert len(data)==pin['bytes'] and hashlib.sha256(data).hexdigest()==pin['sha256'],name
+with (out/(kind+'-runtime.json')).open('x') as f:f.write(json.dumps(env,indent=2)+'\n')
+args=[sys.executable,'-B',str(root/'model.py'),str(out/'MODEL.json')] if kind=='model' else [sys.executable,'-B',str(root/'audit_saved.py'),str(out),'--source-root',str(root),'--construction',str(root/'construction.json'),'--output',str(out/'AUDIT.json')]
+raise SystemExit(subprocess.call(args))
