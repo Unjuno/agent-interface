@@ -1,0 +1,33 @@
+{
+  "argv": [
+    "orb",
+    "-m",
+    "research-6501-async-01a0ff52-70ab",
+    "-u",
+    "root",
+    "docker",
+    "run",
+    "--rm",
+    "--pull",
+    "never",
+    "--network",
+    "none",
+    "--read-only",
+    "--cpus",
+    "0.25",
+    "--memory",
+    "128m",
+    "--memory-swap",
+    "128m",
+    "--pids-limit",
+    "32",
+    "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "python",
+    "-B",
+    "-c",
+    "import hashlib,json,pathlib,shutil,subprocess; p=shutil.which('timeout'); r=subprocess.run([p,'--version'],capture_output=True,check=True); print(json.dumps({'path':p,'sha256':hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest(),'version':r.stdout.decode().splitlines()[0]}))"
+  ],
+  "launcher_pid": 39180,
+  "start_utc": "2026-10-03T11:48:20.891784+00:00",
+  "start_ns": 39065803148791
+}

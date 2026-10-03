@@ -1,0 +1,371 @@
+"""Own synthetic construction controls ONLY. Never import or execute driver.
+
+Construct one synthetic18 FIRST; each mutation is reconstructible from that
+baseline and saved JSON-pointer edits. Temporary full inputs are removed after
+child completion; first unexpected input/source is preserved. All native child
+PIDs/argv/UTC/exits are actual auditor construction invocations.
+"""
+import copy
+import datetime
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+import traceback
+
+ROOT = Path(__file__).resolve().parent
+SOURCE = ROOT / "audit.py.txt"
+INPUT = ROOT / "INPUTS.json"
+DRIVER = INPUT.parent / "driver.py.txt"
+PROTOCOL = INPUT.parent / "PROTOCOL.md"
+UTC = "2026-10-03T11:00:00+00:00"
+PID = 4242
+
+
+def now():
+    return datetime.datetime.now(datetime.timezone.utc).isoformat()
+
+
+def sha(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+
+def encode(value):
+    return (json.dumps(value, sort_keys=True, indent=2) + "\n").encode()
+
+
+def save(path, raw):
+    with path.open("xb") as stream:
+        stream.write(raw)
+
+
+def synthetic_row(case, index, level_read=False, late_return=False, late_done=False):
+    """Timestamp/order fixture, no native-run claim or target-code use."""
+    start = 1000000000 + index * 1000000000
+    cursor = start + 1000
+    policy, full = case["policy"], case["load"] == "full"
+    initial = {}
+    for label, fd in zip(("wake_r", "wake_w", "target_r", "target_w"), range(4, 8)):
+        initial[label] = dict(fd=fd, dev=0, ino=10000 + index * 2 + (0 if label.startswith("wake") else 1),
+                              mode=4480, flags=(1 if label.endswith("_w") else 0) + (2048 if label.startswith("wake") else 0), fifo=True)
+    writer_flags = 1 if policy == "blocking_byte" else 2049
+    expected_images = copy.deepcopy(initial)
+    expected_images["wake_w"]["flags"] = writer_flags
+    row = dict(case=copy.deepcopy(case), status="OBSERVED", pid=PID,
+               start_utc=UTC, end_utc=UTC, start_ns=start, errors=[], events=[],
+               tids=dict(sender=5000 + index * 2, consumer=5001 + index * 2),
+               pipe_size=4096, initial_fds=initial, writer_flags=writer_flags,
+               joins=dict(sender=True, consumer=True), sender_wchan={"unavailable_errno":2},
+               probe=dict(status="eagain", bytes=0, errno=11, start_ns=start + 100, end_ns=start + 200) if full else None,
+               prefill=dict(bytes=4096 if full else 0, unread=4096 if full else 0, ns=start + 300))
+    def emit(kind, role="main", **fields):
+        nonlocal cursor
+        cursor += 1000
+        tid = PID if role == "main" else row["tids"][role]
+        thread = "MainThread" if role == "main" else "wake-" + role
+        value = dict(seq=len(row["events"]), ns=cursor, utc=UTC, pid=PID, tid=tid, thread=thread, event=kind, **fields)
+        row["events"].append(value)
+        return value
+    emit("sender_start", "sender")
+    if policy == "level_flag_nonblocking":
+        emit("level_published", "sender")
+    emit("wake_attempt", "sender")
+    write_start = cursor + 100
+    write = dict(status="eagain" if full and policy != "blocking_byte" else "written",
+                 bytes=0 if full and policy != "blocking_byte" else 1,
+                 errno=11 if full and policy != "blocking_byte" else None,
+                 start_ns=write_start, end_ns=write_start + 100)
+    def returned():
+        write["end_ns"] = cursor + 100
+        emit("wake_return", "sender", **write)
+        if not late_done:
+            emit("sender_done", "sender")
+    blocking_full = policy == "blocking_byte" and full
+    if not blocking_full:
+        returned()
+    cursor = start + 26000000
+    row["preconsumer"] = emit("preconsumer", unread=4096 if full else 1,
+                             sender_done=not blocking_full, flag=policy == "level_flag_nonblocking",
+                             write_status=None if blocking_full else write["status"], writer_flags=writer_flags)
+    cursor = start + 27000000
+    cs = emit("consumer_start", "consumer")
+    consumed = b""
+    def read(data):
+        nonlocal cursor, consumed
+        cursor += 1000000
+        rs = cursor + 100
+        re = cursor + 200
+        emit("wake_read", "consumer", start_ns=rs, end_ns=re, hex=data.hex(), bytes=len(data))
+        consumed += data
+    cancel = not (full and policy == "nonblocking_drop")
+    if policy == "level_flag_nonblocking":
+        if level_read and full:
+            read(b"N" * 64)
+    elif full:
+        for unused in range(64):
+            read(b"N" * 64)
+        if blocking_full:
+            if not late_return:
+                returned()
+            read(b"C")
+    else:
+        read(b"C")
+    pending = (4096 if full else 0) + write["bytes"] - len(consumed)
+    counts = dict(N=consumed.count(b"N"), C=consumed.count(b"C"))
+    closed = set()
+    def close(label, phase):
+        emit("fd_closed", "consumer" if phase == "cancel" else "main", label=label, phase=phase,
+             before=copy.deepcopy(expected_images[label]), after=dict(state="ERROR", errno=9))
+        closed.add(label)
+    if cancel:
+        emit("cancel_seen", "consumer", reason="byte_C" if counts["C"] else "level_state", unread=pending, counts=dict(counts))
+        close("target_r", "cancel")
+        close("target_w", "cancel")
+        emit("cancel_complete", "consumer", unread=pending)
+    else:
+        cursor = cs["ns"] + 500000000
+        emit("primary_deadline", "consumer", elapsed_ns=500000000)
+    emit("consumer_done", "consumer")
+    if blocking_full and late_return:
+        returned()
+    if late_done:
+        emit("sender_done", "sender")
+    row["write"] = dict(write)
+    row["primary"] = emit("primary_checkpoint", unread=pending, counts=counts,
+                          flag=cancel, **{k:dict(state="ERROR", errno=9) if cancel else dict(state="OPEN", image=copy.deepcopy(initial[k])) for k in ("target_r", "target_w")})
+    emit("fixture_cleanup_start")
+    for label in ("target_r", "target_w", "wake_r", "wake_w"):
+        if label not in closed:
+            close(label, "fixture_cleanup")
+    emit("fixture_cleanup_complete")
+    row["final_fds"] = {k:dict(state="ERROR", errno=9) for k in initial}
+    row["end_ns"] = cursor + 1000
+    return row
+
+
+def synthetic(cfg, input_raw):
+    rows = [synthetic_row(case, i) for i, case in enumerate(cfg["cases"])]
+    return dict(schema="cancel-wake-first-v1", allocation=cfg["allocation"],
+                inputs_sha256=sha(input_raw), freeze_sha256="a"*64,
+                operation=dict(pid=PID, argv=["SYNTHETIC_driver_NOT_EXECUTED", "SYNTHETIC_source", "SYNTHETIC_output"],
+                               start_utc=UTC, end_utc=UTC, start_ns=1, end_ns=rows[-1]["end_ns"] + 1000, exit_code=0),
+                environment=dict(python="SYNTHETIC Python 3.12 fixture", executable="SYNTHETIC", kernel="SYNTHETIC", machine="aarch64",
+                                 cgroup={"cpu.max":"25000 100000", "memory.max":"134217728", "memory.swap.max":"0", "pids.max":"32"},
+                                 dependency_sha256={"SYNTHETIC_not_native":"b"*64}),
+                rows=rows, collector_disposition="COMPLETE_FIRST_OBSERVATIONS")
+
+
+def events(row, kind):
+    return [event for event in row["events"] if event["event"] == kind]
+
+
+def event(row, kind):
+    return events(row, kind)[0]
+
+
+def projections(row):
+    row["preconsumer"] = copy.deepcopy(event(row, "preconsumer"))
+    row["primary"] = copy.deepcopy(event(row, "primary_checkpoint"))
+
+
+def renumber(row):
+    previous = row["start_ns"]
+    for i, value in enumerate(row["events"]):
+        value["seq"] = i
+        value["ns"] = max(value["ns"], previous + 1000)
+        previous = value["ns"]
+    row["end_ns"] = max(row["end_ns"], previous + 1000)
+    projections(row)
+
+
+def identities(row, field, old, new):
+    def walk(value):
+        if type(value) is dict:
+            if set(("fd", "dev", "ino", "mode", "flags", "fifo")) == set(value) and value[field] == old:
+                value[field] = new
+            else:
+                for child in value.values():
+                    walk(child)
+        elif type(value) is list:
+            for child in value:
+                walk(child)
+    walk(row)
+
+
+def edits(before, after, path=""):
+    if type(before) is not type(after):
+        return [dict(path=path, before=before, after=after)]
+    if type(before) is dict and set(before) == set(after):
+        result = []
+        for key in sorted(before):
+            result += edits(before[key], after[key], path + "/" + key.replace("~", "~0").replace("/", "~1"))
+        return result
+    if type(before) is list and len(before) == len(after):
+        result = []
+        for i, (left, right) in enumerate(zip(before, after)):
+            result += edits(left, right, path + "/" + str(i))
+        return result
+    return [] if before == after else [dict(path=path, before=before, after=after)]
+
+
+def child(argv, stdout_path, stderr_path):
+    start = now()
+    with stdout_path.open("xb") as stdout, stderr_path.open("xb") as stderr:
+        process = subprocess.Popen(argv, stdout=stdout, stderr=stderr)
+        child_pid = process.pid
+        exit_code = process.wait(timeout=30)
+    return dict(pid=child_pid, argv=argv, start_utc=start, end_utc=now(), exit_code=exit_code,
+                stdout_sha256=sha(stdout_path.read_bytes()), stderr_sha256=sha(stderr_path.read_bytes()))
+
+
+def run():
+    out = ROOT / "construction-v4"
+    out.mkdir(exist_ok=False)
+    input_raw = INPUT.read_bytes()
+    cfg = json.loads(input_raw)
+    save(out / "INPUTS.json", input_raw)
+    save(out / "audit-source.py.txt", SOURCE.read_bytes())
+    save(out / "controls-source.py.txt", Path(__file__).read_bytes())
+    source_images = {str(path):dict(bytes=path.stat().st_size, sha256=sha(path.read_bytes())) for path in (SOURCE, INPUT, DRIVER, PROTOCOL, Path(__file__))}
+    save(out / "SOURCES.json", encode(source_images))
+    baseline = synthetic(cfg, input_raw)
+    save(out / "SYNTHETIC_FIRST.json", encode(baseline))
+    syntax = child([sys.executable, "-c", "import pathlib,sys; compile(pathlib.Path(sys.argv[1]).read_bytes(),sys.argv[1],'exec')", str(SOURCE)], out / "syntax.stdout", out / "syntax.stderr")
+    save(out / "SYNTAX_RECEIPT.json", encode(syntax))
+    cases = [("synthetic18", 0, lambda f: None)]
+    def add(name, change, expected=2):
+        cases.append((name, expected, change))
+    add("coherent_FD0", lambda f: identities(f["rows"][0], "fd", 6, 0), 0)
+    add("late_sender_postreturn", lambda f: f["rows"].__setitem__(1, synthetic_row(cfg["cases"][1], 1, late_return=True)), 0)
+    add("late_sender_done_log", lambda f: f["rows"].__setitem__(0, synthetic_row(cfg["cases"][0], 0, late_done=True)), 2)
+    add("coherent_level_drains_HOLD", lambda f: f["rows"].__setitem__(5, synthetic_row(cfg["cases"][5], 5, level_read=True)), 1)
+    def stopped(f):
+        f["rows"][0] = dict(case=copy.deepcopy(cfg["cases"][0]), status="STOP", pid=PID,
+                            errors=[dict(where="synthetic_exposure", type="RuntimeError", text="SYNTHETIC first failure", errno=None)])
+        f["rows"][1:] = [dict(case=copy.deepcopy(case), status="NOT_RUN") for case in cfg["cases"][1:]]
+        f["operation"]["exit_code"] = 2
+        f["collector_disposition"] = "STOP"
+    add("preserved_first_STOP", stopped)
+    add("negative_FD", lambda f: identities(f["rows"][0], "fd", 6, -1))
+    add("bool_FD", lambda f: identities(f["rows"][0], "fd", 6, True))
+    add("negative_dev", lambda f: identities(f["rows"][0], "dev", 0, -1))
+    add("zero_pipe_inode", lambda f: identities(f["rows"][0], "ino", 10001, 0))
+    add("wrong_close_inode", lambda f: event(f["rows"][0], "fd_closed")["before"].__setitem__("ino", 99999))
+    add("worker_main_TID", lambda f: f["rows"][0]["tids"].__setitem__("consumer", PID))
+    add("zero_native_TID", lambda f: f["rows"][0]["tids"].__setitem__("sender", 0))
+    add("nonpositive_PID", lambda f: f["operation"].__setitem__("pid", 0))
+    add("event_wrong_PID", lambda f: event(f["rows"][0], "wake_read").__setitem__("pid", PID+1))
+    add("event_wrong_owner", lambda f: event(f["rows"][0], "wake_read").__setitem__("tid", PID))
+    add("case_order", lambda f: f["rows"].__setitem__(slice(0, 2), [f["rows"][1], f["rows"][0]]))
+    add("missing_18th", lambda f: f["rows"].pop())
+    add("bool_repeat", lambda f: f["rows"][0]["case"].__setitem__("repeat", True))
+    add("wrong_inputs_hash", lambda f: f.__setitem__("inputs_sha256", "c"*64))
+    add("unjoined", lambda f: f["rows"][0]["joins"].__setitem__("consumer", False))
+    add("OBSERVED_errors", lambda f: f["rows"][0]["errors"].append({"where":"synthetic", "type":"Error", "text":"synthetic", "errno":None}))
+    add("probe_not_EAGAIN", lambda f: f["rows"][1]["probe"].update(status="written", bytes=1, errno=None))
+    add("probe_unexpected_errno", lambda f: f["rows"][1]["probe"].__setitem__("errno", 5))
+    add("probe_after_prefill", lambda f: f["rows"][1]["probe"].__setitem__("end_ns", f["rows"][1]["prefill"]["ns"]+1))
+    add("FIONREAD_not_full", lambda f: f["rows"][1]["prefill"].__setitem__("unread", 4095))
+    def checkpoint_change(f, row_index, kind, field, value):
+        row = f["rows"][row_index]
+        event(row, kind)[field] = value
+        projections(row)
+    add("preconsumer_not_full", lambda f: checkpoint_change(f, 1, "preconsumer", "unread", 4095))
+    add("preconsumer_too_early", lambda f: checkpoint_change(f, 0, "preconsumer", "ns", event(f["rows"][0], "wake_attempt")["ns"]+24999999))
+    def late_write_start(f):
+        row = f["rows"][1]
+        row["write"]["start_ns"] = row["preconsumer"]["ns"] + 1
+        event(row, "wake_return")["start_ns"] = row["write"]["start_ns"]
+    add("write_start_after_preconsumer", late_write_start)
+    add("retained_flag_absent", lambda f: checkpoint_change(f, 5, "preconsumer", "flag", False))
+    def swap_publish(f):
+        row = f["rows"][5]
+        a, b = event(row, "level_published"), event(row, "wake_attempt")
+        a["event"], b["event"] = b["event"], a["event"]
+    add("publish_after_wake", swap_publish)
+    add("short_cancel_write", lambda f: f["rows"][0]["write"].__setitem__("bytes", 0))
+    add("write_wrong_errno", lambda f: f["rows"][3]["write"].__setitem__("errno", 5))
+    add("writer_blocking_drop", lambda f: f["rows"][3].__setitem__("writer_flags", 1))
+    add("read_unexpected_Q", lambda f: event(f["rows"][0], "wake_read").__setitem__("hex", "51"))
+    add("read_over_64", lambda f: event(f["rows"][1], "wake_read").update(hex="4e"*65, bytes=65))
+    add("C_before_all_N", lambda f: event(f["rows"][1], "wake_read").__setitem__("hex", "43"+"4e"*63))
+    add("read_before_consumer", lambda f: event(f["rows"][0], "wake_read").__setitem__("start_ns", event(f["rows"][0], "consumer_start")["ns"]-1))
+    add("event_time_regression", lambda f: event(f["rows"][0], "wake_read").__setitem__("ns", f["rows"][0]["start_ns"]))
+    add("false_primary_conservation", lambda f: checkpoint_change(f, 5, "primary_checkpoint", "unread", 4095))
+    add("cancel_wrong_reason", lambda f: event(f["rows"][0], "cancel_seen").__setitem__("reason", "fixture_cleanup"))
+    add("primary_OPEN_after_cancel", lambda f: checkpoint_change(f, 0, "primary_checkpoint", "target_r", {"state":"OPEN","image":copy.deepcopy(f["rows"][0]["initial_fds"]["target_r"])}))
+    add("drop_primary_EBADF", lambda f: checkpoint_change(f, 3, "primary_checkpoint", "target_r", {"state":"ERROR","errno":9}))
+    add("drop_499ms", lambda f: event(f["rows"][3], "primary_deadline").__setitem__("elapsed_ns", 499999999))
+    add("cancel_close_called_cleanup", lambda f: event(f["rows"][0], "fd_closed").__setitem__("phase", "fixture_cleanup"))
+    add("close_errno_not_EBADF", lambda f: event(f["rows"][0], "fd_closed")["after"].__setitem__("errno", 5))
+    add("final_leaked_FD", lambda f: f["rows"][0]["final_fds"].__setitem__("wake_w", {"state":"OPEN","image":copy.deepcopy(f["rows"][0]["initial_fds"]["wake_w"])}))
+    def duplicate(f, kind):
+        row = f["rows"][0]
+        index = event(row, kind)["seq"]
+        row["events"].insert(index+1, copy.deepcopy(row["events"][index]))
+        renumber(row)
+    add("duplicate_cancel", lambda f: duplicate(f, "cancel_seen"))
+    add("extra_close", lambda f: duplicate(f, "fd_closed"))
+    add("missing_close", lambda f: (f["rows"][0]["events"].remove(events(f["rows"][0], "fd_closed")[-1]), renumber(f["rows"][0])))
+    add("extra_open_event", lambda f: event(f["rows"][0], "fixture_cleanup_complete").__setitem__("event", "fd_opened"))
+    add("no_collector_exit0", lambda f: f["operation"].__setitem__("exit_code", 1))
+    add("wrong_cgroup", lambda f: f["environment"]["cgroup"].__setitem__("pids.max", "64"))
+    add("checkpoint_projection", lambda f: f["rows"][0]["primary"].__setitem__("unread", 1))
+    receipts, results, witnesses, failures = [], [], [], []
+    with tempfile.TemporaryDirectory(prefix="synthetic-only-", dir=ROOT) as temporary:
+        temporary = Path(temporary)
+        for index, (name, expected, change) in enumerate(cases):
+            fixture = copy.deepcopy(baseline)
+            change(fixture)
+            fixture_raw = encode(fixture)
+            witnesses.append(dict(name=name, expected_exit=expected, first_sha256=sha(fixture_raw), edits=edits(baseline, fixture)))
+            fixture_path = temporary / (name + ".json")
+            fixture_path.write_bytes(fixture_raw)
+            for mode in ("normal", "optimized"):
+                argv = [sys.executable] + (["-O"] if mode == "optimized" else []) + [str(SOURCE), str(fixture_path), str(out/"INPUTS.json"), str(temporary/(name+"-"+mode+"-output.json"))]
+                stdout_path, stderr_path = temporary/(name+"-"+mode+".stdout"), temporary/(name+"-"+mode+".stderr")
+                receipt = child(argv, stdout_path, stderr_path)
+                receipt.update(control=name, mode=mode, auditor_sha256=source_images[str(SOURCE)]["sha256"], first_sha256=sha(fixture_raw))
+                receipts.append(receipt)
+                result_path = Path(argv[-1])
+                result = json.loads(result_path.read_bytes()) if result_path.exists() else {}
+                result_record = dict(control=name, mode=mode, expected_exit=expected, actual_exit=receipt["exit_code"],
+                                     disposition=result.get("disposition"), reasons=result.get("reasons"), qualified_count=len(result.get("qualified_rows", [])),
+                                     output_sha256=sha(result_path.read_bytes()) if result_path.exists() else None)
+                results.append(result_record)
+                if receipt["exit_code"] != expected:
+                    failures.append(result_record)
+                    stem = "FIRST_FAILURE_%02d_%s_%s" % (index, name, mode)
+                    save(out/(stem+".json"), fixture_raw)
+                    if result_path.exists():
+                        save(out/(stem+"-output.json"), result_path.read_bytes())
+                    save(out/(stem+".stdout"), stdout_path.read_bytes())
+                    save(out/(stem+".stderr"), stderr_path.read_bytes())
+    save(out/"CONTROL_WITNESSES.json", encode(witnesses))
+    save(out/"CHILD_RECEIPTS.json", encode(receipts))
+    save(out/"RESULTS.json", encode(results))
+    summary = dict(status="PASS_CONSTRUCTION_ONLY" if syntax["exit_code"] == 0 and not failures else "FAIL_CONSTRUCTION",
+                   synthetic_cases=18, control_families=len(cases), native_auditor_construction_invocations=len(receipts),
+                   failures=failures, syntax_exit=syntax["exit_code"], source_images=source_images,
+                   scope="Synthetic saved JSON only; native collector0, native allocation0, formal auditor0, no vote; no dependency/source authenticity established by fixture.")
+    save(out/"SUMMARY.json", encode(summary))
+    print(json.dumps({k:summary[k] for k in ("status", "control_families", "native_auditor_construction_invocations", "failures")}, sort_keys=True))
+    return 0 if summary["status"].startswith("PASS") else 2
+
+
+if __name__ == "__main__":
+    start = now()
+    receipt = dict(pid=os.getpid(), argv=sys.argv, start_utc=start, source_sha256=sha(Path(__file__).read_bytes()))
+    exit_code = 2
+    try:
+        exit_code = run()
+    except BaseException as exc:
+        receipt["error"] = dict(type=type(exc).__name__, text=str(exc), traceback=traceback.format_exc())
+        print(traceback.format_exc(), file=sys.stderr)
+    finally:
+        receipt.update(end_utc=now(), exit_code=exit_code)
+        save(ROOT/"EXECUTION_RECEIPT-v4.json", encode(receipt))
+    sys.exit(exit_code)
