@@ -9,6 +9,7 @@ from pathlib import Path
 from urllib.parse import parse_qs
 
 from PIL import Image
+from report_publication import publish_report, cleanup_guard
 
 from adaptive_acquisition_caller_v3 import ModelFailure, run as run_adaptive
 
@@ -336,6 +337,7 @@ def run_case(plan, root, ordinal, mode):
             "post_model_revalidate": post_model_revalidate,
             "final_revalidate": final_revalidate, "execute": execute,
             "verify_effect": verify_effect})
+        report["adaptive"] = adaptive
         recovery_completed_ns = time.perf_counter_ns()
         actual = parse_qs(output.read_text()) if output.exists() else {}
         useful = next((row for row in client["feedback"] if row["score"]["success"]), None)
@@ -384,26 +386,45 @@ def run_case(plan, root, ordinal, mode):
         return report
     finally:
         for thread in threads:
-            if thread.is_alive(): thread.join(1)
-        if executor is not None: executor.close()
-        if controller is not None and original_geometry is not None:
-            try:
-                binding = backend.binding()
-                window = controller.create_resource_object("window", binding["surface"])
-                window.configure(x=original_geometry[0], y=original_geometry[1],
-                    width=original_geometry[2], height=original_geometry[3]); controller.sync()
-            except Exception: pass
-            controller.close()
+            with cleanup_guard(report, "thread_join"):
+                if thread.is_alive(): thread.join(1)
+        if executor is not None:
+            with cleanup_guard(report, "executor_close"):
+                executor.close()
+        if controller is not None:
+            if original_geometry is not None:
+                with cleanup_guard(report, "controller_restore"):
+                    binding = backend.binding()
+                    window = controller.create_resource_object("window", binding["surface"])
+                    window.configure(x=original_geometry[0], y=original_geometry[1],
+                        width=original_geometry[2], height=original_geometry[3]); controller.sync()
+            with cleanup_guard(report, "controller_close"):
+                controller.close()
         if backend is not None:
-            try: backend.close()
-            finally: (case / "owner-events.json").write_text(
-                json.dumps(backend.owner.records, indent=2) + "\n")
-        if output is not None and output.exists(): shutil.copy2(output, case / output.name)
-        if app_server is not None: app_server.shutdown(); app_server.server_close()
-        if session is not None: session.close(); shutil.rmtree(session.tmp)
-        delivery.close()
-        (case / "events.json").write_text(json.dumps(events, indent=2) + "\n")
-        (case / "report.json").write_text(json.dumps(report, indent=2) + "\n")
+            with cleanup_guard(report, "backend_close"):
+                backend.close()
+            with cleanup_guard(report, "owner_events_write"):
+                (case / "owner-events.json").write_text(
+                    json.dumps(backend.owner.records, indent=2) + "\n")
+        with cleanup_guard(report, "output_copy"):
+            if output is not None and output.exists():
+                shutil.copy2(output, case / output.name)
+        if app_server is not None:
+            with cleanup_guard(report, "app_server_shutdown"):
+                app_server.shutdown()
+            with cleanup_guard(report, "app_server_close"):
+                app_server.server_close()
+        if session is not None:
+            with cleanup_guard(report, "session_close"):
+                session.close()
+            if not any(row["stage"] == "session_close" for row in report.get("cleanup_errors", [])):
+                with cleanup_guard(report, "session_tmp_remove"):
+                    shutil.rmtree(session.tmp)
+        with cleanup_guard(report, "delivery_close"):
+            delivery.close()
+        with cleanup_guard(report, "events_write"):
+            (case / "events.json").write_text(json.dumps(events, indent=2) + "\n")
+        report["report_retention"] = publish_report(report, case)
 
 
 def main():
@@ -413,13 +434,15 @@ def main():
     results = []
     for ordinal, mode in enumerate(plan["order"]):
         result = run_case(plan, OUT, ordinal, mode); results.append(result)
-        if result.get("status") != "COMPLETED" or result.get("passed") is not True: break
+        if (result.get("status") != "COMPLETED" or result.get("passed") is not True
+                or result["report_retention"]["status"] != "RETAINED"): break
     report = {"schema": "adaptive-semantic-repair-live-report-v2",
-              "passed": len(results) == len(plan["order"]) and all(r["passed"] for r in results),
+              "passed": len(results) == len(plan["order"]) and all(r["passed"] and r["report_retention"]["status"] == "RETAINED" for r in results),
               "results": results,
               "scope": plan["scope"]}
-    (OUT / "report.json").write_text(json.dumps(report, indent=2) + "\n")
-    print(json.dumps({"passed": report["passed"],
+    report["report_retention"] = publish_report(report, OUT)
+    print(json.dumps({"passed": report["passed"] and report["report_retention"]["status"] == "RETAINED",
+        "report_retention": report["report_retention"],
         "cases": [(row["mode"], row["status"], row.get("passed")) for row in results]}, indent=2))
 
 
