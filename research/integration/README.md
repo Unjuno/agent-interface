@@ -40,6 +40,12 @@ Child directory names are retained provenance, not a canonical architecture tree
 
 - [Tk first-character #5260 allocation proposal and construction record](tk_firstchar_5260_a01_20261002/PREREG.md) — 96-row GUI allocation is explicitly **HOLD_NOT_AUTHORIZED**; three construction-only probes are retained, with smoke-03 passing the scoped runner/auditor gate. No formal first-character trials were run.
 
+- [Tk first-character #5260 A02 WSLc outcome](tk_firstchar_5260_a02_wslc_20261003/REPORT.md)
+  — one 96-row disposable Tk allocation, descriptive65 exact/31 nonexact;
+  frozen auditor PASS_AUDIT but stronger checker finds96 readiness-epoch
+  mismatches: overall STOP. Original sources/raw/failed checker/images
+  retained. Not a qualified scientific PASS/FAIL or production fix.
+
 ## Preserved older Draft publications
 
 - [Writer selection scope #4425 / Draft PR #4446](writer_selection_scope_w4m8_v1/ARCHIVAL_QUALIFICATION.md) — seven exact published files retained; complete 401-file raw corpus missing, so this is not an independent reproduction or qualification of the reported PASS.
