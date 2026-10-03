@@ -16,4 +16,4 @@ D:93/93 hashes;1536 saved methods; unchanged reduction;27 old admissions/27 corr
 C: pure saved-data replay is not original measurement authentication or real scheduling/clock transfer.
 U: original measurement/native/formal allocation unrerun; CPU_SECONDS_UNRESOLVED and practical benefit remain unresolved.
 
-Local CI is recorded separately in `local-ci.log`. The macOS OrbStack daemon-blob operation-not-supported STOP remains; no container reset/prune/pull or shared allocation used.
+Local CI completed exit0 with `LOCAL_CI_SUMMARY: steps=43 failures=[]`, recorded separately in `local-ci.log`. Fresh `docker image inspect python:3.12-slim` exits1: daemon blob `f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f` cannot open with `operation not supported`. No container execution/reset/prune/pull or shared allocation used.
