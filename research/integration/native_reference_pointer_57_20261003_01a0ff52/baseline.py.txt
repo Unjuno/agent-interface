@@ -95,7 +95,11 @@ def expand_native_receipt(view):
         if (not isinstance(path, str) or not path.startswith('/native_result/')
                 or path == '/native_result/observation' or path.startswith('/native_result/observation/')):
             raise ValueError('invalid native observation reference')
-        parent, key = _native_pointer(result, path)
+        parts = [part.replace('~1', '/').replace('~0', '~') for part in path.split('/')[1:]]
+        parent = result
+        for part in parts[:-1]:
+            parent = parent[int(part)] if isinstance(parent, list) else parent[part]
+        key = int(parts[-1]) if isinstance(parent, list) else parts[-1]
         if parent[key] != {'observation_ref': '/native_result/observation'}:
             raise ValueError('native reference marker mismatch')
         parent[key] = copy.deepcopy(observation)
@@ -105,21 +109,11 @@ def expand_native_receipt(view):
 def _native_pointer(root, path):
     if not isinstance(path, str) or not path.startswith('/native_result/'):
         raise ValueError('native JSON pointer required')
-    return _json_pointer(root, path)
-
-
-def _json_pointer(root, path):
-    """Resolve a declared receipt location without Python indexing aliases."""
     parts = path.split('/')[1:]
     for part in parts:
-        offset = 0
-        while offset < len(part):
-            if part[offset] == '~':
-                if offset + 1 == len(part) or part[offset + 1] not in '01':
-                    raise ValueError('invalid JSON pointer escape')
-                offset += 2
-            else:
-                offset += 1
+        remaining = part.replace('~0', '').replace('~1', '')
+        if '~' in remaining:
+            raise ValueError('invalid JSON pointer escape')
     parts = [part.replace('~1', '/').replace('~0', '~') for part in parts]
     parent = root
     for index, part in enumerate(parts):
@@ -231,8 +225,12 @@ def expand_receipt(view):
         if (not isinstance(path, str) or not (path == '/report' or path.startswith('/report/'))
                 or type(number) is not int or not 0 <= number < len(result['events'])):
             raise ValueError('invalid event reference')
-        parent, key = _json_pointer(result, path)
-        if _encoded(parent[key]) != _encoded({'event_ref': number}):
+        parts = [part.replace('~1', '/').replace('~0', '~') for part in path.split('/')[1:]]
+        parent = result
+        for part in parts[:-1]:
+            parent = parent[int(part)] if isinstance(parent, list) else parent[part]
+        key = int(parts[-1]) if isinstance(parent, list) else parts[-1]
+        if parent[key] != {'event_ref': number}:
             raise ValueError('event reference marker mismatch')
         parent[key] = copy.deepcopy(result['events'][number])
     result['schema'] = 'agent-interface/receipt-view-v1'
