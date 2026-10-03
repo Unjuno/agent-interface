@@ -17,6 +17,11 @@ manifest identities.  Terminal execution requires a verified empty release.  Eff
 verification is separate from effect occurrence; a contradicted effect is never rewritten
 as pre-effect/no-effect.
 
+Once execution has begun, stopping before a receipt arrives retains possible
+occurrence, without claiming verified effect. Recorded cleanup does not undo
+that uncertainty. Stops before an accepted begin and explicit no-effect receipts
+remain no-effect. Release metadata is not physical input-release proof.
+
 An execution receipt refuses a release observation from before its execution start.
 These timestamps must use a comparable clock. Equal timestamps remain representable;
 the lower bound does not prove release after the final action or physical input state.
