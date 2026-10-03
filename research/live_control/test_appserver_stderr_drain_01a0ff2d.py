@@ -66,6 +66,9 @@ class StderrDrainTests(unittest.TestCase):
                 client._journal_lock.acquire()
                 # Bypass only sent journaling to place a request in the real pipe
                 # while received journaling is deliberately held at its boundary.
+                # The directed input is issued here, so declare its owned ID.
+                with client._condition:
+                    client._pending.add(1)
                 client.process.stdin.write('{"id":1,"method":"echo"}\n');client.process.stdin.flush()
                 try:
                     deadline=time.monotonic()+2
@@ -79,6 +82,7 @@ class StderrDrainTests(unittest.TestCase):
                     while 1 not in client._responses and time.monotonic()<deadline:
                         client._condition.wait(max(0,deadline-time.monotonic()))
                     self.assertEqual(client._responses.pop(1)['result'],'ok')
+                    client._pending.discard(1)
 
     def test_stream_read_error_is_retained_without_claiming_eof(self):
         class Broken:

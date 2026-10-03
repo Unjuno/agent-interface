@@ -20,6 +20,7 @@ class CodexAppServerClient:
         self._condition = threading.Condition()
         self._write_lock = threading.Lock()
         self._responses = {}
+        self._pending = set()
         self._notifications = deque()
         self._next_id = 1
         self._closed = False
@@ -65,7 +66,8 @@ class CodexAppServerClient:
                 message = json.loads(line)
                 self._record("received", message)
                 with self._condition:
-                    if "id" in message:
+                    if ("id" in message and "method" not in message and
+                            type(message["id"]) is int and message["id"] in self._pending):
                         self._responses[message["id"]] = message
                     else:
                         self._notifications.append(message)
@@ -97,20 +99,27 @@ class CodexAppServerClient:
         message = {"method": method, "id": identifier}
         if params is not None:
             message["params"] = params
-        self._write(message)
-        deadline = time.monotonic() + timeout
         with self._condition:
-            while identifier not in self._responses:
-                remaining = deadline - time.monotonic()
-                if remaining <= 0:
-                    raise TimeoutError(f"app-server request timed out: {method}")
-                if self._closed:
-                    raise AppServerError(f"app-server closed during {method}: stderr diagnostics captured separately")
-                self._condition.wait(remaining)
-            response = self._responses.pop(identifier)
-        if "error" in response:
-            raise AppServerError(f"{method}: {json.dumps(response['error'], sort_keys=True)}")
-        return response["result"]
+            self._pending.add(identifier)
+        try:
+            self._write(message)
+            deadline = time.monotonic() + timeout
+            with self._condition:
+                while identifier not in self._responses:
+                    remaining = deadline - time.monotonic()
+                    if remaining <= 0:
+                        raise TimeoutError(f"app-server request timed out: {method}")
+                    if self._closed:
+                        raise AppServerError(f"app-server closed during {method}: stderr diagnostics captured separately")
+                    self._condition.wait(remaining)
+                response = self._responses.pop(identifier)
+            if "error" in response:
+                raise AppServerError(f"{method}: {json.dumps(response['error'], sort_keys=True)}")
+            return response["result"]
+        finally:
+            with self._condition:
+                self._pending.discard(identifier)
+                self._responses.pop(identifier, None)
 
     def notify(self, method, params=None):
         message = {"method": method}

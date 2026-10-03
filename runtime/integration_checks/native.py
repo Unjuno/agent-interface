@@ -20,6 +20,7 @@ SUITES = {
 
 SUITES['protocol'].append('test_app_server_eof_stop')
 SUITES['protocol'].append('test_appserver_stderr_drain_01a0ff2d')
+SUITES['protocol'].append('test_appserver_response_ownership_01a0ff2d')
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
