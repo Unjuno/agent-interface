@@ -235,8 +235,9 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
             # Preserve completed actions and pending effects, without inventing
             # a sequence, usable image, effect verdict, or permission to replay.
             return finish("SAFE_YIELD", "association_changed")
-        observed_ns = clock()
         observation, refusal = _observation(raw, interface, previous_sequence)
+        # Retain validated observation fields before the supplied clock callback.
+        observed_ns = clock()
         if refusal:
             return finish("SAFE_YIELD", refusal)
         if (observation["captured_ns"] > observed_ns or
@@ -365,7 +366,6 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
             "expected_sequence": admission["expected_sequence"],
             "valid_until_ns": min(admission["valid_until_ns"], deadline),
         })
-        execution_finished_ns = clock()
         terminal_fields = {"status", "action_id", "effect_ref", "release"}
         delivery = {}
         if type(terminal) is dict and "input_dispatched" in terminal:
@@ -404,6 +404,10 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
         preinput_refusal = (terminal.get("input_dispatched") is False and
                             terminal["status"] == "refused" and
                             release["keys_down"] == [] and release["buttons_down"] == [])
+        # Retain terminal scalars and release decisions before another supplied
+        # callback can mutate the adapter's returned dictionaries or lists.
+        # Sampling after local validation is a conservative effect lower bound.
+        execution_finished_ns = clock()
         emit({"event": "action_terminal", "action": action_name,
               "status": terminal["status"], "action_id": terminal["action_id"],
               "release_verified": released, **delivery})

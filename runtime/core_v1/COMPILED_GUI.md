@@ -32,6 +32,7 @@ expectation, remains unavailable. If the expected literal itself is `"unknown"`
 and its observation cannot be established, omit the predicate or return an
 unavailable effect verdict; the literal match alone does not certify an effect.
 
+
 Each returned effect-verdict dictionary is copied after exact-shape validation
 and before checking its status and successful evidence reference. A later journal
 callback cannot rebind those fields through its retained return object. This is
@@ -141,3 +142,21 @@ recovery. Existing pending_effect semantics are unchanged. Other malformed
 terminal fields retain their original validation behavior; arbitrary objects
 and concurrent callback mutation remain outside the qualified scope. Exact
 built-in-list paths keep their prior receipt shape and behavior.
+
+The execution-finished clock sample occurs after local terminal validation and
+the retained release/pre-input-refusal decisions, before the journal callback.
+Thus a supplied synchronous clock callback cannot rewrite the execution return
+used for those decisions. The later sample is a conservative lower bound for
+subsequent effect observations in the declared monotonic clock domain: an older
+capture may be rejected even if the physical effect had already happened.
+This does not authenticate the clock, impose a hard deadline, or make callback
+execution concurrent or durable. Malformed returns that stop or raise during
+local validation do not require an execution-finished clock sample.
+
+Returned observations are validated and copied before the supplied observation
+clock callback. Later callback edits cannot rebind the retained predicates or
+capture metadata used for branch selection and effect verification. The upper
+capture bound is sampled after local validation, so it is a consistency check
+against that sample rather than an authenticated instant of adapter return.
+Malformed observations keep their existing refusal/validation semantics; a
+validation exception can occur before the clock callback is invoked.
