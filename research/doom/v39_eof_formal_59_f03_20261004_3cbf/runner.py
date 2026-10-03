@@ -42,14 +42,21 @@ def run(output):
         'helper': PACKAGES / 'v39_os_pipe_59_f01_20261004_3cbf/probe.py',
         'archive': archive,
     }
-    hashes = {name: hashlib.sha256(path.read_bytes()).hexdigest() for name, path in pins.items()}
     require = {'candidate': '2b569e6697720bef1f9d0381af6bc4876770132f26e418f697f136c40fc8a1a1',
                'helper': '8359de6a8c714eabc08e88b6d22d51935be23fc3cfde5663fdc85bf44d1d1ae0',
                'archive': 'd1ad6dcb8720b27766702361b4898d13259d2efe0b173e7d0fbc970fe3d988db'}
-    if hashes != require:
-        raise ValueError('source pins')
-    with tarfile.open(archive, 'r:gz') as source:
-        code = source.extractfile('research/doom/v39_reader_signal_59_e02_20261004_3cbf/source/v39-candidate.py.txt').read()
+    try:
+        hashes = {name: hashlib.sha256(path.read_bytes()).hexdigest() for name, path in pins.items()}
+        if hashes != require:
+            raise ValueError('source pins')
+        with tarfile.open(archive, 'r:gz') as source:
+            code = source.extractfile('research/doom/v39_reader_signal_59_e02_20261004_3cbf/source/v39-candidate.py.txt').read()
+    except Exception as error:
+        write(output / 'SUMMARY.json', {
+            'cases': [], 'retries': 0, 'model_calls': 0,
+            'verdict': 'STOP_PREFLIGHT_SOURCE', 'error_type': type(error).__name__,
+            'error': repr(error)})
+        return 1
     rows = []
     for case in CASES:
         row = {'case': case, 'start_ns': time.perf_counter_ns(), 'pins': hashes,
