@@ -1,0 +1,24 @@
+{
+  "started_utc": "2026-10-03T05:08:48.321395+00:00",
+  "ended_utc": "2026-10-03T05:08:48.338406+00:00",
+  "checks": [
+    "fresh version applies",
+    "stale guarded write has zero target change",
+    "bool version rejected",
+    "wrong namespace rejected",
+    "duplicate opid rejected",
+    "duplicate nonce rejected",
+    "extra field rejected",
+    "unknown target rejected",
+    "independent SQL target and sibling exact",
+    "rejections add no events",
+    "finite stable",
+    "finite overwrite",
+    "finite one_race",
+    "finite persistent_race",
+    "finite aba_restore"
+  ],
+  "status": "PASS",
+  "database": "guard.sqlite",
+  "scope": "ordinary separate construction, no C01 allocation"
+}

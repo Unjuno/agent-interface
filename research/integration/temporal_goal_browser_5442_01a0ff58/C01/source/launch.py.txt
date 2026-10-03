@@ -1,0 +1,28 @@
+"""Owned hidden server, one launch, exact actual child exit retained."""
+import hashlib
+import json
+import os
+import subprocess
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+root=Path(__file__).resolve().parent
+run=root/'primary-C01'
+freeze=json.loads((root/'FREEZE.json').read_bytes())
+for pin in freeze['sources']:
+    if hashlib.sha256((root/pin['path']).read_bytes()).hexdigest()!=pin['sha256']:
+        raise ValueError('source changed before launch: '+pin['path'])
+argv=[sys.executable,'-B',str(root/'app.py'),'--output',str(run),'--cases',str(root/'cases.json')]
+with (run/'LAUNCH_INTENT.json').open('x',encoding='utf-8') as handle:
+    json.dump(dict(utc=datetime.now(timezone.utc).isoformat(),argv=argv,launcher_pid=os.getpid(),
+                  attempts=1,windows_hidden=True,output=str(run)),handle,indent=2)
+with (run/'server.stdout.txt').open('xb') as stdout,(run/'server.stderr.txt').open('xb') as stderr:
+    child=subprocess.Popen(argv,stdout=stdout,stderr=stderr,
+        creationflags=subprocess.CREATE_NO_WINDOW if os.name=='nt' else 0)
+    (run/'CHILD.json').write_text(json.dumps(dict(pid=child.pid,utc=datetime.now(timezone.utc).isoformat())),encoding='utf-8')
+    code=child.wait()
+(run/'PROCESS_EXIT.json').write_text(json.dumps(dict(utc=datetime.now(timezone.utc).isoformat(),pid=child.pid,
+    returncode=code,launches=1)),encoding='utf-8')
+print(json.dumps(dict(child_pid=child.pid,returncode=code,launches=1)),flush=True)
+sys.exit(code)

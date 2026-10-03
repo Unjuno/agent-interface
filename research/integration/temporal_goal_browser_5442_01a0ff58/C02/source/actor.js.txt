@@ -1,0 +1,91 @@
+function makeTemporalActor(tab, origin, inputs, save) {
+  const log = [];
+  const attempts = new Map();
+  const decisions = new Map();
+  let pending = null;
+  async function record(kind, item) {
+    const row = {index:log.length,utc:new Date().toISOString(),kind,...item};
+    log.push(row); await save(row); return row;
+  }
+  async function read(kind, caseId, phase) {
+    const ax = await tab.getAXState({emit:false});
+    const dom = await tab.playwright.evaluate(() => ({
+      url:location.href,title:document.title,body:document.body.innerText,
+      state_text:document.querySelector('#state-json') ? document.querySelector('#state-json').textContent : null,
+      receipt_text:document.querySelector('#receipt-json') ? document.querySelector('#receipt-json').textContent : null,
+      fields:Array.from(document.querySelectorAll('form input')).map(e => ({name:e.name,value:e.value}))
+    }));
+    const state = dom.state_text ? JSON.parse(dom.state_text) : null;
+    const receipt = dom.receipt_text ? JSON.parse(dom.receipt_text) : null;
+    if (state && (state.namespace!==inputs.namespace || state.case_id!==caseId ||
+        state.target.case_id!==caseId || state.target.target!=='doc:A' ||
+        state.sibling.case_id!==caseId || state.sibling.target!=='doc:B' ||
+        !Number.isInteger(state.target.version) || state.target.version<0 || typeof state.target.value!=='string')) {
+      await record('STOP_BAD_BINDING',{case_id:caseId,phase,ax,dom,state,receipt});
+      throw new Error('public UI binding/type rejected');
+    }
+    return await record(kind,{case_id:caseId,phase,ax,dom,state,receipt});
+  }
+  function selected(caseId) {
+    const item=inputs.cases.find(c=>c.case_id===caseId);
+    if (!item) throw new Error('unknown task case');
+    return item;
+  }
+  async function observe(caseId, phase) {
+    if (pending) throw new Error('pending task cannot be replaced');
+    const c=selected(caseId);
+    await tab.goto(origin+'/view/'+caseId);
+    const row=await read('observe',caseId,phase);
+    if (!row.state) throw new Error('public state absent');
+    const goal_current=row.state.target.value===c.goal;
+    await record('goal_observation',{case_id:caseId,phase,goal_current,version:row.state.target.version});
+    return {case_id:caseId,goal_current,version:row.state.target.version};
+  }
+  async function prepare(caseId, phase) {
+    if (pending) throw new Error('previous operation outcome pending');
+    const c=selected(caseId);
+    const k=attempts.get(caseId)||0;
+    if (phase!=='initial' && (decisions.has(caseId)||k>=inputs.max_repair_attempts)) throw new Error('finite repair is closed');
+    const operation=c.operations[phase];
+    if (!operation) throw new Error('unknown phase');
+    await tab.goto(origin+'/edit/'+caseId+'?'+new URLSearchParams({...operation,goal_hash:c.goal_hash}));
+    const before=await read('form',caseId,phase);
+    if (!before.state) throw new Error('public state absent');
+    if (before.state.target.value===c.goal) {
+      if (phase==='initial') throw new Error('unexpected preexisting initial goal');
+      decisions.set(caseId,'CONFIRMED');
+      await record('decision',{case_id:caseId,phase,status:'CONFIRMED',attempts:k,goal_current:true,reason:'fresh public goal already holds; no new task write'});
+      return {case_id:caseId,prepared:false,status:'CONFIRMED',attempts:k};
+    }
+    const fields=Object.fromEntries(before.dom.fields.map(f=>[f.name,f.value]));
+    if (fields.namespace!==inputs.namespace||fields.case_id!==caseId||fields.target!=='doc:A'||
+        fields.expected_version!==String(before.state.target.version)||fields.opid!==operation.opid||
+        fields.nonce!==operation.nonce||fields.goal_hash!==c.goal_hash) throw new Error('form identity rejected');
+    await tab.playwright.getByLabel('Desired value',{exact:true}).fill(c.goal);
+    const filled=await read('filled',caseId,phase);
+    const afterFields=Object.fromEntries(filled.dom.fields.map(f=>[f.name,f.value]));
+    if (afterFields.value!==c.goal||afterFields.expected_version!==fields.expected_version) throw new Error('filled form mismatch');
+    pending={case_id:caseId,phase,fields:{...fields,value:c.goal},attempts:phase==='initial'?0:k+1};
+    await record('intent',{...pending});
+    return {case_id:caseId,prepared:true,opid:operation.opid,expected_version:Number(fields.expected_version)};
+  }
+  async function submit() {
+    if (!pending) throw new Error('no prepared operation');
+    const item=pending;
+    await record('send_started',item);
+    await tab.playwright.getByRole('button',{name:'Apply guarded edit',exact:true}).click();
+    const after=await read('response',item.case_id,item.phase);
+    if (!after.receipt || after.dom.title!=='Delivery accepted' || after.receipt.opid!==item.fields.opid ||
+        after.receipt.nonce!==item.fields.nonce || !['APPLIED','CONFLICT'].includes(after.receipt.outcome)) {
+      throw new Error('effect or response unknown; do not resend');
+    }
+    if (item.phase!=='initial') attempts.set(item.case_id,item.attempts);
+    pending=null;
+    const goal_current=after.state.target.value===selected(item.case_id).goal;
+    let status=goal_current?'CONFIRMED':item.attempts>=inputs.max_repair_attempts?'YIELD_BUDGET':'NEED_REPAIR';
+    if (item.phase!=='initial' && status!=='NEED_REPAIR') decisions.set(item.case_id,status);
+    await record('decision',{case_id:item.case_id,phase:item.phase,status,attempts:item.attempts,goal_current,outcome:after.receipt.outcome});
+    return {case_id:item.case_id,phase:item.phase,status,attempts:item.attempts,goal_current,outcome:after.receipt.outcome};
+  }
+  return {observe,prepare,submit,log,decisions,attempts};
+}
