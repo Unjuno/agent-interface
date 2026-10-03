@@ -12,6 +12,43 @@ import runtime.guarded_win32_v1.test_late_state as fixtures
 
 
 class KillFailureCase(unittest.TestCase):
+    def test_timeout_cleanup_communication_error_retains_owned_child(self):
+        children = []
+        launch = subprocess.Popen
+        kill = subprocess.Popen.kill
+        communicate = subprocess.Popen.communicate
+        calls = []
+
+        def tracked_launch(*args, **kwargs):
+            child = launch(*args, **kwargs)
+            children.append(child)
+            return child
+
+        def fail_cleanup(child, *args, **kwargs):
+            calls.append(child.pid)
+            if len(calls) == 2:
+                raise OSError('injected cleanup pipe failure')
+            return communicate(child, *args, **kwargs)
+
+        wrapped = SimpleNamespace(Popen=tracked_launch, PIPE=subprocess.PIPE,
+                                  TimeoutExpired=subprocess.TimeoutExpired)
+        try:
+            with patch.object(supervisor, 'subprocess', wrapped):
+                with patch.object(subprocess.Popen, 'communicate', fail_cleanup):
+                    receipt = supervisor.run(
+                        [sys.executable, '-B', '-c', 'import time;time.sleep(60)'],
+                        b'', time.monotonic_ns() + 100_000_000)
+            self.assertEqual(len(calls), 2)
+            self.assertEqual(receipt['status'], 'unknown')
+            self.assertEqual(receipt['reason'], 'termination_unconfirmed')
+            self.assertIs(receipt['process'], children[0])
+            self.assertEqual(receipt['communication_error']['type'], 'OSError')
+        finally:
+            for child in children:
+                if child.poll() is None:
+                    kill(child)
+                communicate(child, timeout=3)
+
     def test_communication_error_retains_owned_child(self):
         children = []
         launch = subprocess.Popen
