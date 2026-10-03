@@ -121,10 +121,27 @@ class RuntimeClient:
 
     def call(self, spec):
         started = time.perf_counter_ns()
+        timeout = spec.get("timeout", 2)
+        if (type(timeout) not in (int, float) or not math.isfinite(timeout)
+                or not 0 <= timeout <= 30):
+            raise ValueError("call timeout must be finite and within 0..30")
+        deadline = time.monotonic() + timeout
         result = run(self.journal, spec)
-        ended = time.perf_counter_ns()
         self.durable_calls += 1
-        assert result["state"]["pending"] is None
+        records = list(result["reply"]["records"])
+        reads = 0
+        while result["state"]["pending"] is not None:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0 or reads >= 32:
+                raise TimeoutError("runtime command unresolved; journal retained; no resend")
+            # Durable run carries the original action identity and current cursor.
+            # A command-free read cannot mint or resend an input request.
+            result = run(self.journal, {"timeout": min(remaining, 30)})
+            self.durable_calls += 1
+            reads += 1
+            records.extend(result["reply"]["records"])
+        result["records"] = records
+        ended = time.perf_counter_ns()
         return result, started, ended
 
     def clock(self):
@@ -137,7 +154,7 @@ class RuntimeClient:
             "expected_sequence": current["sequence"],
             "valid_until_ns": current["runtime_ns"] + 10_000_000_000,
             "steps": steps}, "timeout": timeout})
-        records = result["reply"]["records"]
+        records = result["records"]
         terminal = first(records, "terminal")
         record = {"label": label, "started_ns": started, "ended_ns": ended,
                   "terminal": terminal,
