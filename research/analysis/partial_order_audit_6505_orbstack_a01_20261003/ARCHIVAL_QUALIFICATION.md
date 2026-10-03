@@ -39,3 +39,10 @@ The separately frozen A02 result is already on main through PR #6777 and
 reports `PASS_INDEPENDENT_AUDIT_SCOPED`. A01 keeps its setup STOP and frozen
 pre-run documents. This recovery does not change A02, the predecessor #4889
 HOLD, or the open status of Issue #6505.
+
+The recovery replayed all 31 executable check/test steps of the current
+Analysis Index workflow locally on macOS with Python 3.14.5: zero failed
+steps. The frozen workflow provenance input was restored and its declared
+SHA-256 checked during the tests; the delivery workflow was restored afterward.
+The index's separate 17 tests also passed. This is a local construction/CI
+check, not the Ubuntu/Python 3.12 GitHub job or another A01 formal invocation.
