@@ -1,0 +1,63 @@
+{
+  "schema": "unjuno.issue6645.counterexample-guard-refinement.run-record.v1",
+  "allocation_id": "CGREF-6645-T0C-ORB-20261003-03",
+  "execution_window_utc": ["2026-10-02T19:07:44Z", "2026-10-02T19:08:34Z"],
+  "base_sha": "c33380b3b08792a331ee11f7aee05e3d41437e3e",
+  "source_path": "research/analysis/counterexample_guard_refinement_6645_t0b_orbstack_20261003/",
+  "freeze_path": "research/analysis/counterexample_guard_refinement_6645_t0c_orbstack_20261003/FREEZE.json",
+  "runtime": {
+    "engine": "OrbStack Docker",
+    "engine_identity": "orbstack linux aarch64",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "platform": "linux/arm64",
+    "python": "3.12.14",
+    "network": "none",
+    "cpus_requested": 1,
+    "memory_requested_bytes": 536870912,
+    "memory_swap_configured_bytes": 1073741824,
+    "pids_limit": 64,
+    "rootfs_readonly": true,
+    "capabilities_dropped": ["ALL"],
+    "no_new_privileges": true,
+    "oom_killed_candidate": false,
+    "oom_killed_auditor": false,
+    "resource_limit_caveat": "Docker inspect records requested/configured limits only. No host/cgroup swap enforcement or hard-limit effectiveness claim is made. No pressure test was performed."
+  },
+  "construction_gate": {
+    "allocation": "CGREF-6645-T0B-ORB-20261003-02",
+    "command": "docker run --rm --pull=never --network none --cpus=1 --memory=512m --pids-limit=64 --read-only --cap-drop=ALL --security-opt=no-new-privileges --mount type=bind,src=<A02-source>,dst=/work,readonly --workdir /work python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B -m unittest -v",
+    "tests": 13,
+    "passed": 13,
+    "exit_code": 0,
+    "source_sha256": "dcc64a35a00a4f6f19f2ceade9c7266f7f19fabff9de93ccb50231b3a6655557"
+  },
+  "formal": {
+    "candidate_invocations": 1,
+    "auditor_invocations": 1,
+    "retries": 0,
+    "candidate_exit_code": 0,
+    "auditor_exit_code": 0,
+    "candidate_container": "unjuno-6645-t0c-candidate-20261003",
+    "auditor_container": "unjuno-6645-t0c-auditor-20261003",
+    "candidate_command": "python -B /protocol/run_candidate_a03.py /source/fixture.json /out/raw.json",
+    "auditor_command": "python -B /protocol/run_audit_a03.py /source/fixture.json /candidate/raw.json /out/audit.json",
+    "rows": 10,
+    "auditor_status": "PASS",
+    "auditor_errors": [],
+    "metrics": {
+      "harmful_cases": 7,
+      "false_admissions": {"candidate": 0, "exact_blacklist": 6, "invalidate_all": 0, "unchanged": 7},
+      "valid_common_admitted": true,
+      "valid_rare_unknown_due_observational_equivalence": true,
+      "heldout_harms_refused": true,
+      "no_task_input_replay": true,
+      "no_new_authority": true,
+      "cache_invalidation": {"shared": true, "sibling_a": true, "sibling_b": true, "sibling_c": false}
+    },
+    "decision": "PASS_METHOD_SCOPED"
+  },
+  "predecessor_stops": [
+    {"allocation":"CGREF-6645-T0-ORB-20261003-01","status":"STOP_PRE_FORMAL","formal_candidate_invocations":0,"formal_auditor_invocations":0},
+    {"allocation":"CGREF-6645-T0B-ORB-20261003-02","status":"STOP_PRE_FORMAL_LAUNCH","formal_candidate_invocations":0,"formal_auditor_invocations":0}
+  ]
+}
