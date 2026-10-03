@@ -16,7 +16,7 @@ class CodexAppServerClient:
         self._journal_lock = threading.Lock()
         self.process = process_factory(
             command, cwd=cwd, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE, text=True, bufsize=1)
+            stderr=subprocess.PIPE, text=True, bufsize=1, encoding="utf-8", errors="strict")
         self._condition = threading.Condition()
         self._write_lock = threading.Lock()
         self._responses = {}
