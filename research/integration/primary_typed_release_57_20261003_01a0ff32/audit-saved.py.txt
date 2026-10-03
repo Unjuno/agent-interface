@@ -1,0 +1,47 @@
+import pathlib,json,hashlib,copy,gzip,re,datetime
+O=pathlib.Path(__file__).resolve().parent;W=O.parents[1]/'work'/'primary-request-snapshot-01a0ff32';sha=lambda b:hashlib.sha256(b).hexdigest()
+labels=['RED_A01','GREEN_A01','REGISTERED_A01'];packet={}
+for label in labels:
+ D=O/label;receipt=json.loads((D/'receipt.json').read_bytes());freeze=json.loads((D/'FREEZE.json').read_bytes());out=(D/'stdout.log').read_bytes();err=(D/'stderr.log').read_bytes();rows=[json.loads(s) for s in (D/'rows.jsonl').read_bytes().decode().splitlines()];packet[label]={'receipt':receipt,'freeze':freeze,'stdout':out.decode(),'stderr':err.decode(),'rows':rows}
+names={'neutral','two-neutral','empty-releases','string-releases','object-releases','string-keys','string-buttons','object-keys','object-buttons','missing-keys','missing-buttons','null-keys','null-buttons','held-key','held-button','numeric-verified','false-verified','mixed-unknown'}
+expected={(m,n) for m in ['guarded-raw','direct-raw','direct-summary'] for n in names}
+def require(c,why):
+ if not c:raise ValueError(why)
+def check(p):
+ maps={}
+ for label in labels:
+  v=p[label];r=v['receipt'];require(type(r['pid']) is int and r['pid']>0,'typed actual PID');require(type(r['exit_code']) is int and r['exit_code']==(1 if label=='RED_A01' else 0),'first exit unchanged');require(r['timeout'] is False and r['reaped'] is True and r['source_unchanged'] is True,'terminal custody');require(sha(v['stdout'].encode())==r['stdout_sha256'] and sha(v['stderr'].encode())==r['stderr_sha256'],'complete terminal stream hashes');require(v['stderr']=='','stderr empty');require(len(v['rows'])==54,'all54rows');mp={(x['mode'],x['name']):x for x in v['rows']};require(set(mp)==expected and len(mp)==54,'literal54conditions');maps[label]=mp
+  count=54 if label!='REGISTERED_A01' else 63;wantfail=21 if label=='RED_A01' else 0
+  require(re.search(r'ℹ tests '+str(count)+r'\r?\n',v['stdout']) is not None and re.search(r'ℹ fail '+str(wantfail)+r'\r?\n',v['stdout']) is not None,'literal test/failure counts')
+  pins={x['path']:x for x in v['freeze']['source_pins']};require(pins['runtime/host_v1/test_primary_typed_release.mjs']['sha256']==p['RED_A01']['freeze']['source_pins'][next(i for i,x in enumerate(p['RED_A01']['freeze']['source_pins']) if x['path']=='runtime/host_v1/test_primary_typed_release.mjs')]['sha256'],'same new test definitions')
+ for k in sorted(expected):
+  a=maps['RED_A01'][k];b=maps['GREEN_A01'][k];c=maps['REGISTERED_A01'][k];require(a['original']==b['original']==c['original'],'same full original response');require(b==c,'registered typed histories exact')
+  for x in [a,b,c]:
+   require(x['firstShown']==[{'type':'text','value':x['original']['result']['content'][0]['text']},{'type':'image','value':x['original']['result']['content'][1]}],'first text-image evidence exact');require(x['closeReturnSame'] is True,'explicit close still forwarded')
+  healthy=k[1] in {'neutral','two-neutral'};require(b['wantContinue'] is healthy,'literal expected continuation');meta=json.loads(b['original']['result']['content'][0]['text']);rels=meta['receipt']['execution_summary']['releases'] if k[0]=='direct-summary' else meta['result']['execution']['releases'];oracle=type(rels) is list and len(rels)>0 and all(type(x) is dict and x.get('verified') is True and type(x.get('keys_down')) is list and x['keys_down']==[] and type(x.get('buttons_down')) is list and x['buttons_down']==[] for x in rels);require(oracle is healthy,'independent typed-neutral wire oracle');tool='interface_guarded_input' if k[0]=='guarded-raw' else 'interface_dispatch';require(b['firstReturnSame'] is True and b['firstError'] is None,'candidate original return')
+  if healthy:
+   require(a==b,'six healthy whole histories exact');require(b['firstStop'] is None and b['nextError'] is None and b['nextReturnSame'] is True,'healthy continuation');want=[tool,'interface_clock','interface_close']
+  else:
+   require(type(b['firstStop']) is str and bool(b['firstStop']) and type(b['nextError']) is dict and b['nextError']['message'].startswith('trial stopped: ') and b['nextReturnSame'] is False,'unknown release sticky STOP');want=[tool,'interface_close']
+  require([x['tool'] for x in b['submitted']]==want,'no hidden later dispatch');require(b['finalStop']==b['firstStop'],'close preserves STOP')
+ # Separate original incidental extraction errors from false continuations.
+ badcontinue=[k for k,a in maps['RED_A01'].items() if k[1] not in {'neutral','two-neutral'} and a['firstStop'] is None];errors=[k for k,a in maps['RED_A01'].items() if a['firstError'] is not None];require(len(badcontinue)==15 and len(errors)==6,'first RED15 false continuations and6 extraction errors retained');return {'first_false_continuations':15,'first_extraction_errors':6,'first_failed_methods':21,'first_passed_methods':33,'candidate54':True,'registered63':True,'healthy6wholehistories_exact':True}
+result=check(packet);C=O/'semantic-controls';C.mkdir(exist_ok=False);controls=[]
+for name in ['bool-exit','washed-red','drop-row','typed-unknown-continued','hidden-later-dispatch','changed-first-image','washed-original-failure','changed-healthy-wire']:
+ p=copy.deepcopy(packet)
+ if name=='bool-exit':p['GREEN_A01']['receipt']['exit_code']=False
+ elif name=='washed-red':p['RED_A01']['receipt']['exit_code']=0
+ elif name=='drop-row':p['GREEN_A01']['rows'].pop()
+ elif name=='typed-unknown-continued':p['GREEN_A01']['rows'][5]['firstStop']=None;p['REGISTERED_A01']['rows'][5]['firstStop']=None
+ elif name=='hidden-later-dispatch':
+  for label in ['GREEN_A01','REGISTERED_A01']:p[label]['rows'][5]['submitted'].insert(1,{'tool':'interface_clock','args':{}})
+ elif name=='changed-first-image':
+  for label in ['GREEN_A01','REGISTERED_A01']:p[label]['rows'][0]['firstShown'][1]['value']['data']='wrong'
+ elif name=='washed-original-failure':p['RED_A01']['rows'][5]['firstStop']='painted STOP'
+ else:
+  for label in ['GREEN_A01','REGISTERED_A01']:p[label]['rows'][0]['original']['result']['content'][0]['text']='{}'
+ raw=json.dumps(p,sort_keys=True,separators=(',',':')).encode();gz=gzip.compress(raw,mtime=0);(C/(name+'.json.gz')).write_bytes(gz)
+ try:check(p)
+ except ValueError as error:controls.append({'name':name,'rejected':str(error),'bytes':len(raw),'sha256':sha(raw),'gzip_bytes':len(gz),'gzip_sha256':sha(gz)})
+ else:raise ValueError('accepted negative '+name)
+result.update({'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'full_copied_controls':controls,'original_received_producer_auditor_executions':0,'main_sends':0});(O/'AUDIT-RESULT.json').write_text(json.dumps(result,indent=2),encoding='utf8');print(json.dumps(result,sort_keys=True))
