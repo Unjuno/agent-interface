@@ -1,0 +1,67 @@
+"""Read-only custody and boundary checks; never invokes Node or a producer."""
+from pathlib import Path
+import json,hashlib,re,copy
+W=Path(__file__).resolve().parent
+sha=lambda b:hashlib.sha256(b).hexdigest()
+read=lambda p:json.loads(p.read_bytes())
+def require(condition,message):
+ if not condition:raise ValueError(message)
+def integer(value,expected):return type(value) is int and value==expected
+def owner_check(d):
+ w=d['witness'];kind=w['kind'];end=w['fixture_exit'];start=w['fixture_start']
+ require(kind in ['returned','busy'],'kind')
+ require(w['setup_passed'] is True,'setup')
+ require(w['boundary']['observed'] is True and integer(w['boundary']['settled'],1),'observed settlement')
+ require(w['boundary']['code']=='PRIMARY_OUTPUT_CLOSED' and w['error']['code']=='PRIMARY_OUTPUT_CLOSED','close diagnosis')
+ require(integer(w['settlements'],1),'one settlement')
+ if kind=='busy':require(integer(w['before_release']['settled'],0),'original accepted custody')
+ require(type(start['pid']) is int and start['pid']>0 and start['pid']==end['pid'] and start['ppid']==end['ppid'],'fixture identity')
+ require(integer(end['code'],0) and integer(end['requests'],1) and integer(end['request_bytes'],72),'fixture outcome')
+ require(w['host_exit']=={'code':0,'signal':None} and type(w['host_exit']['code']) is int,'host exit')
+ require(w['fixture_absent'] is True,'sampled absence')
+ require(w['listeners']=={'input_errors':0,'output_errors':1,'output_closes':1,'foreign_error':True,'foreign_close':True},'listener ownership')
+ require(w['statuses']==(['ready','busy'] if kind=='busy' else ['ready','returned']),'output history')
+ require(d['request']=={'id':1,'tool':'interface_clock','arguments':{'label':'original-held'}},'exact wire request')
+ require(d['exchange_request']=={'id':1,'method':'call','args':['interface_clock',{'label':'original-held'}]},'accepted exchange')
+ original=copy.deepcopy(d['original']);require(integer(original.pop('attempt'),1),'original attempt')
+ require(original==d['reply'],'original reply join')
+ require(d['reply']['status']=='returned' and integer(d['reply']['id'],1) and integer(d['reply']['next_id'],2),'reply identity')
+ events=d['events'];require(len(events)==5,'five events')
+ require([e['sequence'] for e in events]==[1,2,3,4,5] and all(type(e['sequence']) is int for e in events),'ordered events')
+ require([e['kind'] for e in events]==['send_requested','reply_available','presentation_started','presentation_callbacks_completed','transport_closed'],'event kinds')
+ require(all(integer(e['attempt'],1) for e in events[:4]),'one original attempt')
+ require(all(e['reply_sha256']==d['reply_sha256'] for e in events[1:4]),'raw reply digest')
+ require(integer(events[-1]['code'],0) and events[-1]['signal'] is None,'observed transport exit')
+ require(d['presentation']['attempt']==1 and d['presentation']['id']==1,'presentation identity')
+for phase,count,exit_code,fail in [('red',5,1,3),('green',5,0,0),('affected-green',46,0,0),('owner-red',2,1,2),('owner-green',2,0,0)]:
+ out=W/phase;r=read(out/'RECEIPT.json');plan=read(out/'PLAN.json')
+ require(integer(r['exit_code'],exit_code) and r['timed_out'] is False,'actual runner outcome '+phase)
+ require(plan['freeze_utc']<r['started_utc']<r['ended_utc'],'prospective freeze '+phase)
+ for n,pin in r['streams'].items():
+  b=(out/n).read_bytes();require(len(b)==pin['bytes'] and sha(b)==pin['sha256'],'stream '+phase+'/'+n)
+ tap=(out/'stdout.raw.txt').read_text()
+ for key,value in [('tests',count),('pass',count-fail),('fail',fail),('cancelled',0),('skipped',0),('todo',0)]:
+  require(re.search(r'^# '+key+' '+str(value)+r'$',tap,re.M) is not None,'TAP '+phase+'/'+key)
+ if phase in ['red','owner-red']:require('withheld callback' in tap,'correct original symptom '+phase)
+for module in ['test_primary_output_close','test_primary_output_close_owner']:
+ require((W/(module+'.frozen.mjs.txt')).read_bytes()==(W/'source/runtime/host_v1'/(module+'.mjs')).read_bytes(),'frozen definition '+module)
+records=[]
+for kind in ['returned','busy']:
+ p=W/'owner-green/evidence/output-close-owner'/kind
+ d={'witness':read(p/'WITNESS.json'),'request':read(p/'host/request-1.json'),'exchange_request':read(p/'exchange/request-1.json'),
+ 'reply':read(p/'host/reply-1.json'),'original':read(p/'exchange/original-reply-1.json'),'presentation':read(p/'exchange/presentation-1.json'),
+ 'events':[json.loads(x) for x in (p/'host/host-events.jsonl').read_text().splitlines()], 'reply_sha256':sha((p/'host/reply-1.json').read_bytes())}
+ owner_check(d);records.append(d)
+mutations=[('late-settle',lambda d:d['witness']['boundary'].update(observed=False)),('second-attempt',lambda d:d['original'].update(attempt=2)),
+ ('second-request',lambda d:d['witness']['fixture_exit'].update(requests=2)),('boolean-count',lambda d:d['witness']['fixture_exit'].update(requests=True)),
+ ('early-busy',lambda d:d['witness']['before_release'].update(settled=1)),('masked-first',lambda d:d['witness']['error'].update(code='ERR_STREAM_DESTROYED')),
+ ('foreign-close-removed',lambda d:d['witness']['listeners'].update(foreign_close=False)),('fixture-failed',lambda d:d['witness']['fixture_exit'].update(code=77)),
+ ('reply-corruption',lambda d:d['reply'].update(next_id=3)),('missing-event',lambda d:d['events'].pop())]
+rejected=[]
+for name,mutate in mutations:
+ d=copy.deepcopy(records[1]);mutate(d)
+ try:owner_check(d)
+ except ValueError:rejected.append(name)
+ else:raise ValueError('ineffective negative '+name)
+result={'status':'PASS_SAVED_OUTPUT_CLOSE_BOUNDARY_AND_CUSTODY','new_direct':5,'new_real_owner':2,'affected_existing':41,'runner_receipts':5,'owner_custody_joins':2,'effective_semantic_mutations_rejected':rejected,'runtime_replays':0,'main_sends':0,'U':'saved own evidence, finite observed close; not host-independent harddeadline/physical-input/goal proof'}
+(W/'AUDIT.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result))

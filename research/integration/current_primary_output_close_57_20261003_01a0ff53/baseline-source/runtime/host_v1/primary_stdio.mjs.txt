@@ -24,22 +24,8 @@ export function validatePrimaryConfig(config) {
 
 function emit(output,value) {
   return new Promise((resolve,reject)=>{
-    let settled=false;
-    function finish(error) {
-      if(settled)return;
-      settled=true;output.removeListener('close',closed);
-      if(error)reject(error);else resolve();
-    }
-    function closed() {
-      const error=Error('primary output closed before write completion');
-      error.code='PRIMARY_OUTPUT_CLOSED';finish(error);
-    }
-    // A Writable may close without an error and without completing a queued
-    // write callback. Observe that boundary without replaying accepted work.
-    output.once('close',closed);
-    if(output.destroyed||output.closed||output.writableEnded){closed();return;}
-    try {output.write(JSON.stringify(value)+'\n',finish);}
-    catch(error){finish(error);}
+    try {output.write(JSON.stringify(value)+'\n',error=>error?reject(error):resolve());}
+    catch(error){reject(error);}
   });
 }
 
