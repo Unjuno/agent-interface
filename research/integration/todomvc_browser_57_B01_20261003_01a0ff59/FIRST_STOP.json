@@ -1,0 +1,82 @@
+{
+  "first_result": {
+    "result": "FIRST_STOP_OR_UNKNOWN",
+    "failure": {
+      "type": "AssertionError",
+      "message": "STOP_CREATE_EFFECT",
+      "utc": "2026-10-03T16:01:10.837605+00:00"
+    },
+    "states": 2,
+    "commands": 8,
+    "close": {
+      "exit": 0,
+      "timeout": false,
+      "stdout": "{\"success\":true,\"data\":{\"closed\":true,\"lifecycle\":{\"effectiveLaunch\":{\"browserLaunched\":false,\"engine\":\"chrome\",\"launchHash\":null},\"launched\":false,\"relaunchedBrowser\":false,\"restartedBackground\":false,\"restoreStatus\":\"not_configured\",\"reused\":false,\"saveStatus\":\"not_configured\"},\"restoreStatus\":\"not_configured\",\"saveStatus\":\"not_configured\"},\"error\":null}\n"
+    },
+    "original_source_pins_unchanged": true,
+    "missing_successful_asset_responses": [
+      "view.js"
+    ],
+    "unit_bytes": 273946,
+    "unit_bytes_limit": 4194304,
+    "native_OS_input_release_certificate": false,
+    "actual_provider_calls": 0,
+    "whole_agent_model_usage": "unknown",
+    "main_sends": 0,
+    "no_retries_or_resends": true,
+    "ended_utc": "2026-10-03T16:01:10.997417+00:00"
+  },
+  "audit": {
+    "first_outcome": "STOP_CREATE_EFFECT",
+    "task_rows": 0,
+    "stored_entries": 0,
+    "reload_reached": false,
+    "completion_reached": false,
+    "missing_view_asset_request": true,
+    "actual_page_errors_observed": false,
+    "errors_empty_field_is_literal_placeholder_not_page_error_readback": true,
+    "asset_missing_cause": "UNKNOWN",
+    "prior_D01_exact_cause": "UNKNOWN",
+    "durability": "UNVERIFIED",
+    "physical_input_release": "UNVERIFIED",
+    "separate_saved_oracle": "PASS_FIRST_STOP_CUSTODY",
+    "complete_copied_semantic_controls": [
+      {
+        "name": "invented-created-task",
+        "bytes": 12518,
+        "sha256": "0e1346d41f6a0e1e8a7e7914a9e110e9a39dbac4dc5e5747096ed871f00111c2",
+        "rejected": "first create STOP"
+      },
+      {
+        "name": "invented-success-result",
+        "bytes": 12392,
+        "sha256": "6a497a45ab2cdf65800f6b20513f71095dbeb0251bb07de5704596d8099e9cf4",
+        "rejected": "no success relabel"
+      },
+      {
+        "name": "invented-view-GET",
+        "bytes": 12440,
+        "sha256": "135165151c9ec559262c70c56709b617d9547360dc0291ee6e60b2395171e09d",
+        "rejected": "no view request observed"
+      },
+      {
+        "name": "lost-close-return",
+        "bytes": 12382,
+        "sha256": "c0d3188b97d1ffac658397db4882bb8e32cf54c8a41b00fe4dfb87aac5dffbc9",
+        "rejected": "actual own close response"
+      },
+      {
+        "name": "bool-native-exit",
+        "bytes": 12385,
+        "sha256": "833126dbf47c62e8c3b2482a23f6b8a8b9548ae261a3a95e0c2583e3323bf15f",
+        "rejected": "actual own native receipts"
+      }
+    ],
+    "original_source_Gitblob_bytes_joined": 13,
+    "native_streams_joined": 16,
+    "own_received_or_old_source_producer_replays": 0,
+    "main_writes": 0,
+    "unit_failure_not_success": true
+  },
+  "limits": "No reload/completion/task success/durability/nativephysical release/economic claim; first aggregate native wrapper PID/time/streams uncaptured; errors[] is literal placeholder, not page error reading"
+}
