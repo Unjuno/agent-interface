@@ -19,4 +19,5 @@ native-candidate.log preserve every failure name and trace. This is no full PASS
 No actual Windows state/physical neutral release, concurrency, task effect or
 strict-core committee vote is claimed. Original historical votes do not transfer.
 Original64artifact hash targets match and both66file packets remain byte-exact.
-Pending: localCI43, current-main coupling review and PR integration.
+Fresh localCI43 exits0 failures=[] ata48ac403c1; full transcript local-ci.log.
+Pending: current-main coupling review and PR integration.
