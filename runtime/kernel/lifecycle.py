@@ -100,6 +100,8 @@ class RequestLifecycle:
     def record_execution(self, receipt: ExecutionReceipt) -> None:
         if self.stage is not Stage.AUTHORIZED or self.request is None:
             raise ContractError("execution receipt requires begun execution")
+        if self.execution_started_ns is None or receipt.started_ns < self.execution_started_ns:
+            raise ContractError("execution receipt starts before accepted begin")
         request = self.request
         if receipt.command_id != request.command_id:
             raise ContractError("execution receipt command mismatch")

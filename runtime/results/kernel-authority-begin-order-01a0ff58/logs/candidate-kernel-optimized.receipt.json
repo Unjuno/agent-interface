@@ -1,0 +1,41 @@
+{
+  "label": "candidate-kernel-optimized",
+  "command": [
+    "python",
+    "-B",
+    "-O",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "runtime/kernel",
+    "-p",
+    "test_*.py",
+    "-v"
+  ],
+  "cwd": "<ISOLATED_SUITE>",
+  "started_utc": "2026-10-03T04:44:37.253662+00:00",
+  "ended_utc": "2026-10-03T04:44:37.363717+00:00",
+  "child_pid": 5012,
+  "exit_code": 0,
+  "original_stream_sha256": {
+    "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "f95396b74087db957106afe6274e8d97abcf133e2050ec5194bb9911d3c2e4e0"
+  },
+  "published_stream_sha256": {
+    "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "f95396b74087db957106afe6274e8d97abcf133e2050ec5194bb9911d3c2e4e0"
+  },
+  "source_sha256": {
+    "runtime/kernel/__init__.py": "442574155c148cd8f6851e164f8d9362c816a0a09bfd31b8f896e96a55553813",
+    "runtime/kernel/backend.py": "50fbc6fe5700cdda809054b4dc744e90ec35b4892978a9990d47ecfd7d9eb08b",
+    "runtime/kernel/contracts.py": "884331ccfc5d4694bf88c1086c09ec435963848c44d76c591c27fe38b3b42969",
+    "runtime/kernel/lifecycle.py": "d1c120ea357a14aa9c145ce363f69c8183ef52d7d25ff55ffb88c3dc21aad499",
+    "runtime/kernel/test_backend_contract.py": "9cad9eed0f698253484ba532ffe60754a41eb58ed687607b5fca80116e334fad",
+    "runtime/kernel/test_cancel_release_epoch.py": "4abd13dc39d9e9eaf0a3ae3d6acbac85ec9b4121fb5e262349d74a313c30cc21",
+    "runtime/kernel/test_execution_begin_epoch.py": "aea2d812dc9c9d36823f8532f985e0730906737baafa1482641656a5b993647a",
+    "runtime/kernel/test_kernel.py": "e49d3260e84edc9e95eb0690a92d6ca5ee87681e8dde854d5058ac75e37118e0",
+    "runtime/kernel/test_release_epoch.py": "2fc5025733afbf030d388b8f271f3e3bfb5baa6725e0de2e7afa18c130906bf6"
+  },
+  "scope": "ordinary isolated authorization-memory candidate against original43 pinned kernel tests; not original baseline replay or real backend evidence"
+}

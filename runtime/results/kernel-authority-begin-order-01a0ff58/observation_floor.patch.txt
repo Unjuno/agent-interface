@@ -1,0 +1,11 @@
+--- a/runtime/kernel/lifecycle.py
++++ b/isolated/observation_floor/lifecycle.py
+@@ -90,6 +90,8 @@
+             raise ContractError("execution has already begun")
+         if type(now_ns) is not int or now_ns < 0:
+             raise ContractError("now_ns must be nonnegative integer")
++        if self.observation is None or now_ns < self.observation.captured_ns:
++            raise ContractError("execution precedes observation capture")
+         if now_ns >= self.lease.valid_until_ns:
+             raise ContractError("authority expired before execution")
+         if request.binding != self.binding or request.lease != self.lease:
