@@ -1,0 +1,59 @@
+{
+  "allocation": "6501-CANCEL-ORDER-HOST-20261003-01a0ff2d",
+  "ended_at": "2026-10-03T00:46:13.368943+00:00",
+  "files": {
+    "audit.json": "f9d763715b9b4c1f85b9b25f42f9c73868a50f4ec116530a3681dc15bf4c873a",
+    "audit.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "audit.stdout.txt": "4fdb969f53b5eb39aa3e3dfd0b8c0437c1e879fd8491a3e83d360f1b5a45110a",
+    "candidate-raw.json": "60759e1b49d03a7d83bb3968b892c2c349f7e89842f17aa645043785421a580b",
+    "candidate.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "candidate.stdout.txt": "99db2f9b26ecde2f7673591530a7451def36d835d367c662ee609595ba4c75e1"
+  },
+  "output_bound_passed": true,
+  "output_bytes_before_receipt": 131971,
+  "phases": [
+    {
+      "argv": [
+        "C:\\Users\\junny\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-B",
+        "run_candidate.py",
+        "C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\goa\\work\\boundary-study\\run01\\candidate-raw.json"
+      ],
+      "elapsed_ns": 110510300,
+      "ended_at": "2026-10-03T00:46:13.214112+00:00",
+      "exit_code": 0,
+      "name": "candidate",
+      "started_at": "2026-10-03T00:46:13.103596+00:00",
+      "timed_out": false
+    },
+    {
+      "argv": [
+        "C:\\Users\\junny\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-B",
+        "auditor.py",
+        "C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\goa\\work\\boundary-study\\run01\\candidate-raw.json",
+        "9f389bf99882f7107ff41902474e9e2d6699667b65eabcd5cd5b7f97f1e158ba",
+        "C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\goa\\work\\boundary-study\\run01\\audit.json"
+      ],
+      "elapsed_ns": 152710900,
+      "ended_at": "2026-10-03T00:46:13.367942+00:00",
+      "exit_code": 0,
+      "name": "audit",
+      "started_at": "2026-10-03T00:46:13.215111+00:00",
+      "timed_out": false
+    }
+  ],
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "sources": {
+    "PREREGISTRATION.md": "763e7253d9107f0587e43de8ce78809263d595f079e24b82d6ff721d38fa3133",
+    "auditor.py": "8e04d90c3a1c1f73686df644842cb38ce5d574f0aed06f128bdf05ca7c2c1502",
+    "boundary.py": "9d2f60d8d23805680e192ea67b152422d812bc923aede511be51aa7981a93d51",
+    "retained_candidate.py": "9f389bf99882f7107ff41902474e9e2d6699667b65eabcd5cd5b7f97f1e158ba",
+    "run_candidate.py": "af2400cdd04e6c410319ed8a6886c542226f74f5fde8421fca80c7657dcbd825",
+    "run_once.py": "9c73ae90577ad4484168caca5e472c2bf8544049ea57ad9821e91c60a8f75112",
+    "test_auditor.py": "5e7b9f2aad24d5ed1c8ee261abbca66a2ae486128e828e4d9e32d58ef2a3a0f3",
+    "test_boundary.py": "671deca2bb809698ef8fa8998cd29ee6ee0e3e3509aaa0f21596cbc415d42817"
+  },
+  "started_at": "2026-10-03T00:46:13.013080+00:00"
+}
