@@ -1,0 +1,1 @@
+Ordinary Win32 session recovery repair. First failed and normal/optimized outcomes preserved. Sources/helpers are inert .py.txt; do not execute retained snapshots. See RESULT.json for exact limitations. Original private and public projected path hashes are separate. No formal/native/physical performance claim.

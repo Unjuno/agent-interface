@@ -1,0 +1,13 @@
+from pathlib import Path
+import datetime,hashlib,json,subprocess,sys
+R=Path(__file__).resolve().parent;OUT=R.parents[1]/'outputs/win32-session-recovery-01';source=R/sys.argv[1];label=sys.argv[2];target=OUT/label;target.mkdir(exist_ok=False)
+def pins():return {p.relative_to(source).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in source.rglob('*.py')}
+argv=[sys.executable,'-X','utf8','-B']+(['-O'] if label.endswith('-O') else [])+['-m','unittest','-v','runtime.backends.win32_v1.test_session_recovery']
+r=dict(argv=argv,cwd=str(source),source_pins=pins(),start_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),plan_sha256=hashlib.sha256((OUT/'PLAN.json').read_bytes()).hexdigest())
+(target/'START.json').write_text(json.dumps(r,indent=2)+'\n',encoding='utf-8')
+with (target/'stdout.txt').open('wb') as out,(target/'stderr.txt').open('wb') as err:
+ p=subprocess.Popen(argv,cwd=source,stdout=out,stderr=err);r['pid']=p.pid
+ try:r['exit']=p.wait(timeout=30)
+ except subprocess.TimeoutExpired:p.kill();r['exit']=p.wait();r['killed_only_own_child_on_timeout']=True
+r.update(end_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),source_unchanged=pins()==r['source_pins'],streams={name:{'bytes':(target/name).stat().st_size,'sha256':hashlib.sha256((target/name).read_bytes()).hexdigest()} for name in ['stdout.txt','stderr.txt']})
+r['output_gate']=all(s['bytes']<=524288 for s in r['streams'].values());(target/'RESULT.json').write_text(json.dumps(r,indent=2)+'\n',encoding='utf-8');print(json.dumps(r));print((target/'stderr.txt').read_text(encoding='utf-8'));sys.exit(r['exit'])

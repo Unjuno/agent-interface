@@ -1,0 +1,42 @@
+{
+  "argv": [
+    "<python311-install>\\python.exe",
+    "-X",
+    "utf8",
+    "-B",
+    "-O",
+    "-m",
+    "unittest",
+    "-v",
+    "runtime.backends.win32_v1.test_session_backend_coupling"
+  ],
+  "cwd": "<worker-workspace>\\work\\win32-session-recovery-01\\candidate",
+  "source_pins": {
+    "runtime/backends/win32_v1/backend.py": "916fac81b586acd1c7ee1c47b4d905ce902a50c5b25a952a9650f6b3b74f840a",
+    "runtime/backends/win32_v1/inert_input.py": "2e2f6e575fc3166a5ca56312040bfc0c239d6c636ff7691b4974a2ba6d81ffb5",
+    "runtime/backends/win32_v1/session.py": "6984e33c4b0a79406a0a9f7206e005a3bbc574d41aa20a64337d48a128b930f2",
+    "runtime/backends/win32_v1/test_session_backend_coupling.py": "588fe820cd34de1ac9b3540f1d5e3c4360183fa640ca648c4f63c155a585ddf1",
+    "runtime/backends/win32_v1/test_session_recovery.py": "aec155db806d26b4f3904da31e3d60e32e86f72f768126748350ee898a39e808",
+    "runtime/backends/win32_v1/__init__.py": "0a21627e9fd4e50a9418335422d45d9ae89f598678ca0ddccc1edc7a4ef5a12b",
+    "runtime/core_v1/contract.py": "88122eab96fe907dcdaac032e8d9c82555d5d1adfe7bf8a9741274f19347d8a9",
+    "runtime/core_v1/platform_probe.py": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e",
+    "runtime/core_v1/__init__.py": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0"
+  },
+  "start_utc": "2026-10-03T12:54:38.342797+00:00",
+  "plan_sha256": "bcdd494d335561ccdda53b1591be63e921f38de4153e167554371fb857b8f279",
+  "pid": 35404,
+  "exit": 0,
+  "end_utc": "2026-10-03T12:54:38.510837+00:00",
+  "source_unchanged": true,
+  "streams": {
+    "stdout.txt": {
+      "bytes": 3667,
+      "sha256": "8951c45e51db9077426332c66bd39cc60be76767e49073d6909db58886670bca"
+    },
+    "stderr.txt": {
+      "bytes": 557,
+      "sha256": "c8505922686b3f4549d0e7a97335b606003b0ac4b7d9d219c88ad71f74729989"
+    }
+  },
+  "output_gate": true
+}
