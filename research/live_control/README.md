@@ -4,6 +4,8 @@
 
 ## Navigate
 
+Retained [reader-close precursor](reader_close_59_b04b/README.md): original RED, first checker/packaging STOPs and two qualified construction cells. Current main already includes its reader guard plus newer journal-lock repair; this archive grants no cancelled #6944 adoption. [Fresh rescue checks](../../runtime/results/reader_close_rescue_fb80/README.md) distinguish saved public data from current component tests and do not replay the original producer.
+
 Retained [predicate Condition boundary](appserver_predicate_condition_17_20261003_01a0ff52_b64b/README.md): four original directed Linux-pipe cells, ten copied-data refusals and first failures. This is not a production repair or callback hard deadline. [Local rescue verification](../../runtime/results/predicate_condition_rescue_78ae/README.md) checks saved evidence without native experiment replay.
 
 | Need | Read |
