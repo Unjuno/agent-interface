@@ -1,0 +1,34 @@
+import pathlib,tarfile,json,copy,collections
+w=pathlib.Path(__file__).resolve().parent
+with tarfile.open(w/'linux-collect.stdout','r:gz') as t:rows={m.name:t.extractfile(m).read() for m in t if m.isfile()}
+e=[json.loads(x) for x in rows['actual/client/runtime/events.jsonl'].splitlines()];p=json.loads(rows['actual/programs.json']);h=[json.loads(x) for x in rows['actual/client/runtime/submission-history.jsonl'].splitlines()];tasks=json.loads(rows['actual/ready.json'])['goal']['tasks'];owners=json.loads(rows['actual/client/runtime/owner-events.json'])
+def audit(events,history,owners):
+ commands={x['command']['id']:x for x in events if x['event']=='command' and x['command'].get('op')=='submit'}
+ terminals={x['id']:x for x in events if x['event']=='terminal'}
+ if len(commands)!=18 or len(terminals)!=18:return False
+ for row in p:
+  terminal=row['terminal'];i=terminal['id'];cmd=commands[i]
+  if terminal!=terminals[i] or terminal['status']!='completed':return False
+  steps=cmd['command']['steps'];done=[x['step'] for x in events if x['event']=='step_completed' and x['id']==i];started=[x['step'] for x in events if x['event']=='step_started' and x['id']==i]
+  if done!=list(range(len(steps))) or started!=done or terminal['steps_completed']!=len(steps):return False
+  release=terminal['release']
+  if release not in owners or release['verified'] is not True or release['keys_down'] or release['buttons_down']:return False
+ for task in tasks:
+  row=next(x for x in p if x['label']=='keyboard-'+task['task_id']);i=row['terminal']['id'];cmd=commands[i]
+  expected=[{'op':'key','key':'Tab'},{'op':'chord','modifier':'Control_L','key':'a'},{'op':'text','text':task['token']},{'op':'key','key':'Return'},{'op':'settle','quiet_ms':80,'timeout_ms':500}]
+  if cmd['command']['steps']!=expected:return False
+  posts=[x for x in history if x['task_id']==task['task_id']]
+  if len(posts)!=1 or posts[0]['submitted_values']!=[task['token']] or posts[0]['exact'] is not True:return False
+  if not cmd['received_ns']<=posts[0]['received_ns']<=row['terminal']['terminal_ns']:return False
+ return True
+assert audit(e,h,owners)
+controls=[]
+for name in ['wrong-command-token','missing-step-completion','unverified-owner','post-before-command']:
+ ce,ch,co=copy.deepcopy(e),copy.deepcopy(h),copy.deepcopy(owners)
+ if name=='wrong-command-token':
+  c=next(x for x in ce if x['event']=='command' and x['command'].get('op')=='submit' and any(s.get('text')==tasks[0]['token'] for s in x['command']['steps']));c['command']['steps'][2]['text']='wrong'
+ if name=='missing-step-completion':ce.pop(next(i for i,x in enumerate(ce) if x['event']=='step_completed'))
+ if name=='unverified-owner':co[0]['verified']=False
+ if name=='post-before-command':ch[0]['received_ns']=0
+ assert not audit(ce,ch,co),name;controls.append(name)
+print(json.dumps({'version':'R02-join-v2','pass':True,'programs_joined':18,'effects_joined':6,'events':len(e),'delivery_exact':rows['actual/client/runtime/events.jsonl']==rows['actual/client/runtime/delivered.jsonl'],'rejected_controls':controls,'scope':'recorded command/completion/release/POST causality interval; not physical-global proof or causal performance comparison'},indent=2))
