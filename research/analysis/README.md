@@ -4,6 +4,10 @@
 - [`conditional_parallax_6079_layer_identity_a02_audit_20261003/FORMAL_FAILURE.md`](conditional_parallax_6079_layer_identity_a02_audit_20261003/FORMAL_FAILURE.md) — #6841 A02 audit-only attempt: HOLD at the mutation-control gate because one layer relabel was a no-op; no output or retry.
 - [`conditional_parallax_6079_layer_identity_a03_controls_20261003/REPORT.md`](conditional_parallax_6079_layer_identity_a03_controls_20261003/REPORT.md) — #6843 A03 supplemental raw-only audit: 8/8 rows and truth labels reconciled; five actual mutations rejected; finite synthetic 2-D scope only.
 
+- [`observation_intervention_6526_a03_deadline_audit_only_20261003/REPORT.md`](observation_intervention_6526_a03_deadline_audit_only_20261003/REPORT.md) — #6526 post-hoc audit-only successor finds all A02 deadline snapshots late and one post-deadline effect seen only by a 12.428 ms late sample; current disposition `HOLD_AUDIT_TIMING`, no candidate rerun or H classification.
+- [`observation_intervention_6526_a02_orbstack_20261003/REPORT.md`](observation_intervention_6526_a02_orbstack_20261003/REPORT.md) — Historical first-auditor A02 output `H_FAIL_SCOPED` is preserved; subsequent audit-only #6526 A03 review supersedes its scientific interpretation as `HOLD_AUDIT_TIMING` because deadline sampling was unbounded.
+- [`observation_intervention_6526_a01_orbstack_20261003/FORMAL_FAILURE.md`](observation_intervention_6526_a01_orbstack_20261003/FORMAL_FAILURE.md) — Issue #6526 A01 OrbStack formal allocation: 180 trials completed, but the independent auditor stopped on the frozen exact 90 ms action-origin gate; no hypothesis statistics or conclusion. Raw evidence and prospective freeze retained; successor must use a fresh allocation.
+
 - [`adoption_conditioned_recourse_6358_host_a02_20261003/REPORT.md`](adoption_conditioned_recourse_6358_host_a02_20261003/REPORT.md) — #6358 Mac-host T0 A02: shared/high-adoption recipient-specific routing resolved 4/4 versus 2/4 for generic, witness, public-stagger, and wording-placebo arms; independent audit passed 56/56 synthetic ledgers. No human, GUI, production, or causal claim; both earlier pre-candidate STOPs remain preserved.
 
 - [`model_api_canary_wslc_replay_6001_t0_20261003/REPORT.md`](model_api_canary_wslc_replay_6001_t0_20261003/REPORT.md) — #6001 exact PR #6104 frozen source rerun in WSLc; raw byte-identical, auditor PASS_METHOD_SCOPED, tests 9/9; runtime reproducibility only, earlier STOPs unchanged.
@@ -548,6 +552,9 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`observable_predictive_tests_6258_t0_host_20261002/`](observable_predictive_tests_6258_t0_host_20261002/)
 - [`observable_quiescence_6664_t0_v1/`](observable_quiescence_6664_t0_v1/)
 - [`observation_bisimulation_branch_readiness_5516_t12/`](observation_bisimulation_branch_readiness_5516_t12/)
+- [`observation_intervention_6526_a01_orbstack_20261003/`](observation_intervention_6526_a01_orbstack_20261003/)
+- [`observation_intervention_6526_a02_orbstack_20261003/`](observation_intervention_6526_a02_orbstack_20261003/)
+- [`observation_intervention_6526_a03_deadline_audit_only_20261003/`](observation_intervention_6526_a03_deadline_audit_only_20261003/)
 - [`observation_intervention_6526_t0_20261002/`](observation_intervention_6526_t0_20261002/)
 - [`observation_loss_robust_tube_6089_t0b_20261002/`](observation_loss_robust_tube_6089_t0b_20261002/)
 - [`observation_manipulate_dynamic_certificate_v1/`](observation_manipulate_dynamic_certificate_v1/)
