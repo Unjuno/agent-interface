@@ -33,8 +33,12 @@ admissions. These are **two explicitly authored controls**, not evidence that
 the repository deploys an unsafe consumer, and they neither grant authority
 nor invoke input. A shared answer is not independent verification.
 
-The independent reducer imports no candidate, runtime, asyncio or copy
-implementation under test. It reconstructs each policy/schedule's expected
+The separate reducer imports no candidate, runtime or asyncio. It uses the
+same standard-library copy.deepcopy to prepare expected JSON values and
+copied-raw corruptions; its independently written symbolic policy/mutation
+table does not rerun producer Tasks. This is procedural separation, not an
+implementation-independent test of deepcopy, and shared-library defects can
+be a common-mode limitation. It reconstructs each policy/schedule's expected
 JSON/type-preserving value, complete caller/source coverage, actual read count,
 source/payload identity, transfer order, object-identity flags and terminal
 cleanup from frozen inputs and recorded events. Eight effective copied-raw
