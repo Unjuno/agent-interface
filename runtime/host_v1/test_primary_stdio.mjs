@@ -4,6 +4,8 @@ import {PassThrough,Writable} from 'node:stream';
 import {mkdtemp,readFile} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
+import {spawnSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
 import {createPrimaryExchange} from './primary_exchange.mjs';
 import {servePrimaryLines,validatePrimaryConfig,runPrimaryStdio} from './primary_stdio.mjs';
 
@@ -114,4 +116,48 @@ test('malformed command identity stays bounded and does not become a valid corre
   s.input.end(JSON.stringify({id:{not:'number'},method:'x'.repeat(1000)})+'\n');await pending;
   const row=s.rows()[0];assert.equal(row.status,'command_error');
   assert.equal(row.command_id,null);assert.equal(row.command_method,null);assert.equal(row.replay_allowed,false);
+});
+
+function inputReadFailureProbe(duringCommand) {
+  const source=`(async()=>{
+    const {PassThrough}=require('node:stream');
+    const {servePrimaryLines}=await import('./runtime/host_v1/primary_stdio.mjs');
+    const input=new PassThrough(),output=new PassThrough();
+    let finish,calls=0,completed=0,settled=false,bytes='';
+    output.on('data',chunk=>{bytes+=chunk;});
+    const exchange={state:()=>({next_id:calls+1}),execute:async()=>{
+      calls++;await new Promise(resolve=>{finish=resolve;});completed++;return {id:1};
+    }};
+    const pending=servePrimaryLines({exchange,input,output}).then(
+      ()=>{throw Error('read failure unexpectedly resolved');},
+      error=>{settled=true;if(error.message!=='injected input read failure')throw error;}
+    );
+    if(${duringCommand}){
+      input.write('{"id":1}\\n');
+      await new Promise(resolve=>setImmediate(resolve));
+    }
+    input.destroy(Error('injected input read failure'));
+    await new Promise(resolve=>setImmediate(resolve));
+    if(${duringCommand}){
+      if(settled||completed||calls!==1)throw Error('abandoned committed command');
+      finish();
+    }
+    await pending;
+    console.log(JSON.stringify({calls,completed,settled,rows:bytes.trim()?bytes.trim().split('\\n').map(JSON.parse):[]}));
+  })().catch(error=>{console.error(String(error));process.exitCode=3;});`;
+  const child=spawnSync(process.execPath,['--eval',source],{
+    cwd:fileURLToPath(new URL('../../',import.meta.url)),encoding:'utf8',timeout:3000
+  });
+  assert.equal(child.status,0,child.stderr||String(child.error));
+  return JSON.parse(child.stdout.trim());
+}
+
+test('input read failure waits for an accepted command and preserves its result',()=>{
+  const result=inputReadFailureProbe(true);
+  assert.equal(result.calls,1);assert.equal(result.completed,1);assert.equal(result.settled,true);
+  assert.deepEqual(result.rows,[{schema:'agent-interface/primary-stdio-v1',status:'returned',result:{id:1}}]);
+});
+
+test('input read failure before a command rejects through the owned transport path',()=>{
+  assert.deepEqual(inputReadFailureProbe(false),{calls:0,completed:0,settled:true,rows:[]});
 });

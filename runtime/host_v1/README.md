@@ -541,6 +541,11 @@ the original files instead of repeating a consumed command. Stream output
 failure stops accepting commands and waits for the same pending promise before
 closing the original transport. It does not prove that input was cancelled.
 
+Input read errors follow that same path, including the error
+forwarded by Readline. A read failure does not cancel or replay an accepted
+command; inspect its retained result before deciding how to continue. The CLI
+reports stream failure with exit 2 after attempting original-relay cleanup.
+
 Explicitly send `call` with `["interface_close",{}]`, inspect its release outcome,
 and then end stdin. EOF waits for the outstanding command and closes only the
 same transport; it never fabricates a public-close request or task completion.

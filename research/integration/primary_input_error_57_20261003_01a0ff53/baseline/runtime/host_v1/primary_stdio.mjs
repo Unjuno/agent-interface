@@ -34,7 +34,6 @@ export async function servePrimaryLines({exchange,input,output}) {
   let pending=null,failure=null;
   const rejectedWrites=new Set();
   function failed(error) {failure??=error;input.pause();lines.close();}
-  lines.on('error',failed);
   output.on('error',failed);
   input.on('error',failed);
   async function perform(line) {
