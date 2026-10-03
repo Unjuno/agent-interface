@@ -37,7 +37,43 @@ class CodexAppServerClient:
         self._next_id = 1
         self._closed = False
         self._reader = threading.Thread(target=self._read, daemon=True)
-        self._reader.start()
+        try:
+            self._reader.start()
+        except BaseException as startup_error:
+            def cleanup(action):
+                try:
+                    action()
+                    return True
+                except BaseException as cleanup_error:
+                    try:
+                        BaseException.add_note(startup_error,
+                            "thread startup cleanup failed: " + type(cleanup_error).__name__)
+                    except BaseException:
+                        pass
+                    return False
+
+            def stop_process():
+                if self.process.poll() is None:
+                    self.process.terminate()
+                    try:
+                        self.process.wait(timeout=1)
+                    except subprocess.TimeoutExpired:
+                        self.process.kill()
+                        self.process.wait(timeout=1)
+
+            def retire_reader():
+                if self._reader.ident is not None:
+                    self._reader.join(timeout=1)
+                    if self._reader.is_alive():
+                        raise TimeoutError("app-server startup reader did not retire")
+
+            cleanup(stop_process)
+            if cleanup(retire_reader):
+                for stream_name in ("stdin", "stdout", "stderr"):
+                    cleanup(lambda name=stream_name: getattr(self.process, name).close())
+                if self._journal is not None:
+                    cleanup(lambda: self._journal.close())
+            raise
 
     def _read(self):
         try:
