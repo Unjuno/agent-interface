@@ -1,0 +1,94 @@
+[
+  {
+    "label": "negative-no-runner-temp",
+    "argv": [
+      "/bin/bash",
+      "-c",
+      "set -euo pipefail\n: \"${RUNNER_TEMP:?}\" \"${GITHUB_ENV:?}\"\nPRIMARY_FAILURE_EVIDENCE=\"$(mktemp -d \"$RUNNER_TEMP/primary-failure-order.XXXXXX\")\"\nexport PRIMARY_FAILURE_EVIDENCE\nprintf 'PRIMARY_FAILURE_EVIDENCE=%s\\n' \"$PRIMARY_FAILURE_EVIDENCE\" >> \"$GITHUB_ENV\"\n"
+    ],
+    "cwd": "<OWN_WORKSPACE>/work/current-primary-ci-entry-v3/source",
+    "pid": 8137,
+    "started_utc": "2026-10-03T11:05:09.975872+00:00",
+    "ended_utc": "2026-10-03T11:05:09.979666+00:00",
+    "actual_exit": 1,
+    "environment_delta": {
+      "RUNNER_TEMP": null,
+      "GITHUB_ENV": "<OWN_WORKSPACE>/work/current-primary-ci-entry-v3/github-env.txt",
+      "PRIMARY_FAILURE_EVIDENCE": null,
+      "PATH": "<PRIVATE_PATH_WITH_PINNED_NODE_FIRST>"
+    },
+    "stdout_bytes": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_bytes": 58,
+    "stderr_sha256": "7d3cdc4f75d0f6f023bc004c6ecac5e9f880b9e7880e1cfe5e0698b06b87f4f4"
+  },
+  {
+    "label": "negative-empty-runner-temp",
+    "argv": [
+      "/bin/bash",
+      "-c",
+      "set -euo pipefail\n: \"${RUNNER_TEMP:?}\" \"${GITHUB_ENV:?}\"\nPRIMARY_FAILURE_EVIDENCE=\"$(mktemp -d \"$RUNNER_TEMP/primary-failure-order.XXXXXX\")\"\nexport PRIMARY_FAILURE_EVIDENCE\nprintf 'PRIMARY_FAILURE_EVIDENCE=%s\\n' \"$PRIMARY_FAILURE_EVIDENCE\" >> \"$GITHUB_ENV\"\n"
+    ],
+    "cwd": "<OWN_WORKSPACE>/work/current-primary-ci-entry-v3/source",
+    "pid": 8139,
+    "started_utc": "2026-10-03T11:05:09.980318+00:00",
+    "ended_utc": "2026-10-03T11:05:09.983551+00:00",
+    "actual_exit": 1,
+    "environment_delta": {
+      "RUNNER_TEMP": "",
+      "GITHUB_ENV": "<OWN_WORKSPACE>/work/current-primary-ci-entry-v3/github-env.txt",
+      "PRIMARY_FAILURE_EVIDENCE": null,
+      "PATH": "<PRIVATE_PATH_WITH_PINNED_NODE_FIRST>"
+    },
+    "stdout_bytes": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_bytes": 58,
+    "stderr_sha256": "7d3cdc4f75d0f6f023bc004c6ecac5e9f880b9e7880e1cfe5e0698b06b87f4f4"
+  },
+  {
+    "label": "negative-no-github-env",
+    "argv": [
+      "/bin/bash",
+      "-c",
+      "set -euo pipefail\n: \"${RUNNER_TEMP:?}\" \"${GITHUB_ENV:?}\"\nPRIMARY_FAILURE_EVIDENCE=\"$(mktemp -d \"$RUNNER_TEMP/primary-failure-order.XXXXXX\")\"\nexport PRIMARY_FAILURE_EVIDENCE\nprintf 'PRIMARY_FAILURE_EVIDENCE=%s\\n' \"$PRIMARY_FAILURE_EVIDENCE\" >> \"$GITHUB_ENV\"\n"
+    ],
+    "cwd": "<OWN_WORKSPACE>/work/current-primary-ci-entry-v3/source",
+    "pid": 8141,
+    "started_utc": "2026-10-03T11:05:09.986620+00:00",
+    "ended_utc": "2026-10-03T11:05:09.990088+00:00",
+    "actual_exit": 1,
+    "environment_delta": {
+      "RUNNER_TEMP": "<OWN_WORKSPACE>/work/current-primary-ci-entry-v3/runner-temp",
+      "GITHUB_ENV": null,
+      "PRIMARY_FAILURE_EVIDENCE": null,
+      "PATH": "<PRIVATE_PATH_WITH_PINNED_NODE_FIRST>"
+    },
+    "stdout_bytes": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_bytes": 57,
+    "stderr_sha256": "5138218fb024bdae9ebd33ea223eff34e7c9049202bf76e69b6405e35cf73268"
+  },
+  {
+    "label": "selected-entry-first",
+    "argv": [
+      "/bin/bash",
+      "-c",
+      "set -euo pipefail\n: \"${RUNNER_TEMP:?}\" \"${GITHUB_ENV:?}\"\nPRIMARY_FAILURE_EVIDENCE=\"$(mktemp -d \"$RUNNER_TEMP/primary-failure-order.XXXXXX\")\"\nexport PRIMARY_FAILURE_EVIDENCE\nprintf 'PRIMARY_FAILURE_EVIDENCE=%s\\n' \"$PRIMARY_FAILURE_EVIDENCE\" >> \"$GITHUB_ENV\"\nnode --test runtime/host_v1/test_primary_stdio_failure_order.mjs\n"
+    ],
+    "cwd": "<OWN_WORKSPACE>/work/current-primary-ci-entry-v3/source",
+    "pid": 8142,
+    "started_utc": "2026-10-03T11:05:09.990819+00:00",
+    "ended_utc": "2026-10-03T11:05:10.233249+00:00",
+    "actual_exit": 0,
+    "environment_delta": {
+      "RUNNER_TEMP": "<OWN_WORKSPACE>/work/current-primary-ci-entry-v3/runner-temp",
+      "GITHUB_ENV": "<OWN_WORKSPACE>/work/current-primary-ci-entry-v3/github-env.txt",
+      "PRIMARY_FAILURE_EVIDENCE": null,
+      "PATH": "<PRIVATE_PATH_WITH_PINNED_NODE_FIRST>"
+    },
+    "stdout_bytes": 243,
+    "stdout_sha256": "a17c02b5cd3026673c80a560cf0396752a731a58d55991dff98c4b9c341b640f",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]
