@@ -1,0 +1,13 @@
+# Windows pre-I/O cancellation T03
+
+Evidence-only archive for Issue6501, allocation6501-WINDOWS-PREIO-T03-20261004-6178. Four one-shot native anonymous-pipe cells run once after prospective freeze5971448324. First result/full public32-image packet5971502827; original85events, source, freezes, streams and seven complete saved corruptions remain exact. No runtime adoption or producer replay.
+
+Native-only pre-I/O and post-admission intent-gate controls return CancelSynchronousIo FALSE/ERROR_NOT_FOUND1168 after three negative native pending samples. After releasing the read barrier, three positive pending samples precede a500ms primary observation with no completion. Separate cleanupD completes TRUE/count1/44. Holding intent until three positive pending witnesses returns cancellation TRUE and actual ReadFile FALSE/995/count0, primarydone. Cancellation before admission refuses read with no ReadFile/cancel API. All workers join, thread handles close and two CRTfds per row return EBADF9 after close.
+
+Native child PIDs29548/25852/35444/18948; supervisor13612 2026-10-03T17:07:40.003709–17:07:41.313353UTC. Four naturalexit0/no timeout/reaped/drained. Frozen saved auditor25760 PASS record is retained; its original separate exit code was not captured by the combined shell and remains UNKNOWN. Seven effective full corruptions REFUSED by separate saved-checker28584/directexit0. Original raw and producer have not been rerun.
+
+Decode strict base64, verify gzip/JSON sizes and hashes from CUSTODY, decompress JSON and restore each safe unique relative member name with complete size/SHA checks. All32 original byte joins are direct, no projections. Keep .py.txt inert; received evidence code must not execute as intake. SHA256SUMS covers five targets and excludes itself.
+
+Scope: one native Windows host, barrier-directed exclusive one-shot ReadFile. Intent/generation check alone leaves a pre-I/O gap. Pending-ack succeeds in this schedule, not a general pooled-worker/driver cancellation or recovery guarantee. .5seconds is a finite observation window, not a statistical latency measurement. No GUI/task/input release/model/performance/economic evidence. M01 finite model is separate and is not physical completion evidence. Historical T01/T02 remain unchanged. Source reviewbase may be newer than frozen science intake; no implication of native replay.
+
+Official context: https://learn.microsoft.com/en-us/windows/win32/api/ioapiset/nf-ioapiset-cancelsynchronousio . Scientific result, archive integrity, content agreement and current-main application are separate. Broad goal remains open.
