@@ -1,0 +1,97 @@
+import copy
+import hashlib
+import json
+from datetime import datetime,timezone
+from pathlib import Path
+
+root=Path(__file__).parent
+def sha(data):return hashlib.sha256(data).hexdigest()
+source=json.loads((root/'CHECK_SOURCE.json').read_bytes())
+for pin in source['source_pins']:
+    data=Path(pin['path']).read_bytes()
+    if len(data)!=pin['bytes'] or sha(data)!=pin['sha256']:
+        raise ValueError('tested source changed')
+source['audit_source_sha256']=sha(Path(__file__).read_bytes())
+saved={}
+for label in ['before','fixed']:
+    saved[label]=[]
+    command=json.loads((root/(label+'-command')/'RESULT.json').read_bytes())
+    if command['returncode']!=(1 if label=='before' else 0):
+        raise ValueError('actual runner exit')
+    for mode in ['line','fragment']:
+        data=json.loads((root/(label+'-cases')/mode/'RESULT.json').read_bytes())
+        if data.get('setupError'):
+            raise ValueError('unexpected setup error')
+        for name,entry in data['files'].items():
+            actual=(root/(label+'-cases')/mode/'evidence'/name).read_bytes()
+            if actual.decode('utf-8')!=entry['utf8'] or len(actual)!=entry['bytes'] or sha(actual)!=entry['sha256']:
+                raise ValueError('actual endpoint bytes')
+        child=json.loads((root/(label+'-cases')/mode/'child-exit.json').read_bytes())
+        if child!=data['child']:
+            raise ValueError('actual child receipt')
+        saved[label].append(data)
+def strict_int(value,expected):
+    return type(value) is int and value==expected
+def contract(row,terminal_required):
+    mode=row['mode'];expected_code=29 if mode=='line' else 31
+    child=row['child'];close=row['close'];state=row['state']
+    if not strict_int(child['requests'],1) or not strict_int(state['attempts'],1):
+        raise ValueError('typed exact request attempts')
+    if not strict_int(child['code'],expected_code) or not strict_int(close['code'],expected_code):
+        raise ValueError('actual child/close code')
+    if close['signal'] is not None or child['reason']!='stdin-eof' or row['pidProbe']!='ESRCH':
+        raise ValueError('actual terminal/control release')
+    if type(child['pid']) is not int or child['pid']<=0:
+        raise ValueError('child identity')
+    files=row['files']
+    if sorted(n for n in files if n.startswith('request-'))!=['request-1.json']:
+        raise ValueError('one request file')
+    if sorted(n for n in files if n.startswith('reply-'))!=['reply-1.json']:
+        raise ValueError('first reply only')
+    request=json.loads(files['request-1.json']['utf8']);reply=json.loads(files['reply-1.json']['utf8'])
+    if request!={'id':1,'tool':'owned-review-only','arguments':{'literal':'入力の同一性'}}:
+        raise ValueError('exact original request')
+    expected_reply={'id':1,'tool':'owned-review-only','status':'returned','next_id':2,
+        'result':{'content':[{'type':'text','text':'保全された正常返答'}]}}
+    if reply!=expected_reply or row['firstReply']!=expected_reply:
+        raise ValueError('first completed reply unchanged')
+    if state['pending'] is not False or state['closing'] is not True:
+        raise ValueError('terminal state')
+    if 'unsolicited relay response' not in state['blocked'] or 'unsolicited relay response' not in close.get('journal_error',''):
+        raise ValueError('same first journal failure')
+    if 'exit_journal_error' in close or row['repeatedClose']!=close:
+        raise ValueError('healthy new terminal write/repeated close')
+    if terminal_required:
+        if 'exit.json' not in files or json.loads(files['exit.json']['utf8'])!=close:
+            raise ValueError('new exclusive terminal receipt')
+    elif 'exit.json' in files:
+        raise ValueError('baseline missing endpoint must remain')
+    start=datetime.fromisoformat(row['startedUTC'].replace('Z','+00:00'))
+    end=datetime.fromisoformat(row['endedUTC'].replace('Z','+00:00'))
+    child_end=datetime.fromisoformat(child['utc'].replace('Z','+00:00'))
+    if not start<=child_end<=end:
+        raise ValueError('execution boundaries')
+for row in saved['before']:contract(row,False)
+for row in saved['fixed']:contract(row,True)
+controls=[]
+for name,mutate in [
+    ('bool request count',lambda r:r['child'].__setitem__('requests',True)),
+    ('false exit zero',lambda r:r['close'].__setitem__('code',0)),
+    ('erase original journal failure',lambda r:r['close'].__setitem__('journal_error','')),
+    ('missing terminal receipt',lambda r:r['files'].pop('exit.json')),
+    ('overwrite successful reply',lambda r:r['files']['reply-1.json'].__setitem__('utf8','{"id":2}')),
+]:
+    row=copy.deepcopy(saved['fixed'][0]);mutate(row)
+    try:contract(row,True)
+    except ValueError as e:controls.append(dict(name=name,rejected=True,reason=str(e)))
+    else:raise ValueError('accepted semantic copied control '+name)
+result=dict(utc=datetime.now(timezone.utc).isoformat(),source=source,
+    status='PASS_SCOPED_SAVED_BOUNDARY_AUDIT',rows=4,
+    baseline_missing_terminal_receipts=2,fixed_new_terminal_receipts=2,
+    actual_child_codes=[r['child']['code'] for label in ['before','fixed'] for r in saved[label]],
+    child_requests=[r['child']['requests'] for label in ['before','fixed'] for r in saved[label]],
+    owned_pids=[r['child']['pid'] for label in ['before','fixed'] for r in saved[label]],
+    semantic_copied_controls=controls,producer_replays=0,main_sends=0,
+    limits='raw reconstruction verifies endpoint/state/error/code/time/requests, not runtime object identity or OS PID absence independently; those are source-pinned actual caller/probe observations')
+with (root/'AUDIT_RESULT.json').open('x',encoding='utf-8') as f:json.dump(result,f,indent=2)
+print(json.dumps({k:v for k,v in result.items() if k!='source'}))

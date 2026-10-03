@@ -1,0 +1,157 @@
+"""Separate literal/source-derived reconstruction; no producer/oracle imports."""
+from collections import Counter
+import hashlib
+import itertools
+import json
+from pathlib import Path
+
+root = Path(__file__).resolve().parent
+packet = root / "source/research/integration/core_boundary_composition_57_20261003_01a0ff58"
+axes = [("manifest", ["valid", "os-list", "state-dict", "frame-list", "unsupported", "permission", "os-unknown", "frame-unknown"]),
+        ("now", ["zero", "equality", "expired", "nan", "bool", "float"]),
+        ("observation", ["match", "stale", "bool", "float"]),
+        ("binding", ["match", "stale", "bool", "float"]),
+        ("compiled_sequence", ["match", "mismatch", "bool", "float"])]
+cases = [{"case_id": f"c{i:04d}", **dict(zip((key for key, values in axes), values))}
+         for i, values in enumerate(itertools.product(*(values for key, values in axes)))]
+
+
+def require(value, reason):
+    if not value:
+        raise ValueError(reason)
+
+
+def same(a, b):
+    if type(a) is not type(b):
+        return False
+    if type(a) is dict:
+        return a.keys() == b.keys() and all(same(a[key], b[key]) for key in a)
+    if type(a) is list:
+        return len(a) == len(b) and all(same(x, y) for x, y in zip(a, b))
+    return a == b
+
+
+def fingerprint(value):
+    return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()).hexdigest()
+
+
+def inputs(case):
+    profile = case["manifest"]
+    generation = {"match": {"type": "int", "value": 1}, "stale": {"type": "int", "value": 2},
+                  "mismatch": {"type": "int", "value": 2}, "bool": {"type": "bool", "value": True},
+                  "float": {"type": "float", "repr": "1.0"}}
+    times = {"zero": {"type": "int", "value": 0}, "equality": {"type": "int", "value": 100},
+             "expired": {"type": "int", "value": 101}, "nan": {"type": "float", "repr": "nan"},
+             "bool": {"type": "bool", "value": True}, "float": {"type": "float", "repr": "100.0"}}
+    return {"program": {"schema": "agent-interface/program-v1", "program_id": "inert-one",
+                        "source": {"observation_seq": 1, "binding_revision": 1},
+                        "authority": {"lease_id": "inert", "expires_at_ns": 100},
+                        "terminal": {"release_all_required": True}, "ops": [{"op": "release_all"}]},
+            "manifest": {"schema": "agent-interface/backend-v1", "backend_id": "inert",
+                         "platform": {"os": [] if profile == "os-list" else "other" if profile == "os-unknown" else "linux", "backend": "metadata-only"},
+                         "capabilities": {"input.release_all": {"state": {} if profile == "state-dict" else "unsupported" if profile == "unsupported" else "permission_required" if profile == "permission" else "supported"}},
+                         "coordinate_frames": [[] if profile == "frame-list" else "other" if profile == "frame-unknown" else "screen_physical_px"],
+                         "clock": {"unit": "ns", "monotonic": True}, "permissions": []},
+            "context": {"now_ns": times[case["now"]], "current_observation_seq": generation[case["observation"]],
+                        "current_binding_revision": generation[case["binding"]]},
+            "compiled_sequence": generation[case["compiled_sequence"]]}
+
+
+def core(case, repaired):
+    profile = case["manifest"]
+    if not repaired and profile in ("os-list", "state-dict", "frame-list"):
+        return None
+    invalid_metadata = profile in ("os-list", "state-dict", "frame-list", "os-unknown", "frame-unknown")
+    invalid_scalars = case["now"] in ("nan", "bool", "float") or case["observation"] in ("bool", "float") or case["binding"] in ("bool", "float")
+    rules = [(invalid_metadata or (repaired and invalid_scalars), "INVALID_PROGRAM"),
+             (case["now"] == "expired", "LEASE_EXPIRED"),
+             (case["observation"] == "stale", "STALE_OBSERVATION"),
+             (case["binding"] == "stale", "STALE_BINDING"),
+             (profile == "unsupported", "UNSUPPORTED_CAPABILITY"),
+             (profile == "permission", "PERMISSION_DENIED")]
+    error = next((reason for matches, reason in rules if matches), None)
+    return {"accepted": error is None, "error": error,
+            "required_capabilities": [] if error == "INVALID_PROGRAM" else ["input.release_all"]}
+
+
+def outcome(case, repaired):
+    admission = core(case, repaired)
+    execute = bool(admission and admission["accepted"] and case["compiled_sequence"] != "mismatch"
+                   and (not repaired or case["compiled_sequence"] == "match"))
+    exception_type = "TypeError" if admission is None else "ValueError" if admission["accepted"] and not execute else None
+    trace = [{"call": "observe", "sequence": 1}, {"call": "admit"}]
+    journal = [{"event": "observation_recorded", "evidence_ref": "e1", "sequence": 1, "state": "ready"},
+               {"action": "once", "event": "branch_selected", "evidence_ref": "e1",
+                "matched_conditions": {"phase": 0}, "outcome": "action", "state": "ready"}]
+    terminal = None
+    if admission is None:
+        trace.append({"call": "core_exception", "type": "TypeError"})
+    else:
+        trace.append({"call": "core_result", **admission})
+        if exception_type is None:
+            terminal = {"outcome": "TASK_SUCCEEDED" if execute else "SAFE_YIELD",
+                        "reason": "method_complete" if execute else "authority_unavailable",
+                        "completed_transitions": int(execute), "pending_effect": None, "frontier_model_resumptions": 0}
+        if execute:
+            trace.extend([{"call": "execute", "expected_sequence": inputs(case)["compiled_sequence"]},
+                          {"call": "observe", "sequence": 2}, {"call": "verify_effect", "sequence": 2}])
+            journal.extend([{"action": "once", "action_id": "inert-action", "event": "action_terminal", "release_verified": True, "status": "completed"},
+                            {"event": "observation_recorded", "evidence_ref": "e2", "sequence": 2, "state": "done"},
+                            {"action": "once", "event": "effect_checked", "evidence_ref": "e2", "status": "succeeded"},
+                            {"action": None, "event": "branch_selected", "evidence_ref": "e2", "matched_conditions": {"phase": 1}, "outcome": "complete", "state": "done"}])
+        elif not admission["accepted"]:
+            journal.append({"action": "once", "event": "admission_refused", "reason": "authority_unavailable", "status": admission["error"]})
+    if terminal is not None:
+        journal.append({"event": "runtime_finished", **{key: terminal[key] for key in ("completed_transitions", "outcome", "reason")}})
+    return admission, trace, journal, terminal, exception_type
+
+
+def check(row, case, arm):
+    expected_input = inputs(case)
+    require(set(row) == {"arm", "case", "input_before", "input_after", "input_before_sha256", "input_after_sha256", "core_admission", "trace", "journal", "terminal", "exception"}, "row keys")
+    require(row["arm"] == arm and same(row["case"], case), "complete case/order")
+    for side in ("before", "after"):
+        require(same(row["input_" + side], expected_input) and row["input_" + side + "_sha256"] == fingerprint(expected_input), "typed frozen input/hash")
+    admission, trace, journal, terminal, exception_type = outcome(case, arm == "combined")
+    for name, expected in (("core_admission", admission), ("trace", trace), ("journal", journal), ("terminal", terminal)):
+        require(same(row[name], expected), name)
+    exception = row["exception"]
+    require(exception is None if exception_type is None else type(exception) is dict and set(exception) == {"type", "message"} and exception["type"] == exception_type and type(exception["message"]) is str and bool(exception["message"]), "exception type/schema")
+
+
+report = {}
+frozen_cases = [json.loads(line) for line in (packet / "cases.jsonl").read_text().splitlines()]
+require(same(frozen_cases, cases), "frozen product definition")
+for arm in ("baseline", "combined"):
+    raw = (packet / "evidence" / (arm + ".jsonl")).read_bytes()
+    rows = [json.loads(line) for line in raw.splitlines()]
+    require(len(rows) == 3072, "complete denominator")
+    counts = Counter()
+    differences = 0
+    for row, case in zip(rows, cases):
+        check(row, case, arm)
+        counts["executions"] += sum(item["call"] == "execute" for item in row["trace"])
+        counts["successes"] += bool(row["terminal"] and row["terminal"]["outcome"] == "TASK_SUCCEEDED")
+        counts["terminals"] += row["terminal"] is not None
+        if row["exception"]:
+            counts[row["exception"]["type"]] += 1
+        differences += not all(same(a, b) for a, b in zip(outcome(case, False), outcome(case, True))) if arm == "baseline" else 0
+    report[arm] = {"rows": len(rows), "raw_sha256": hashlib.sha256(raw).hexdigest(),
+                   "literal_source_reconstruction_errors": 0, "repaired_semantic_difference_rows": differences, **counts}
+controls = json.loads((packet / "audit_v2/controls-result.json").read_text())
+for control in controls["controls"]:
+    ordinal = control["ordinal"]
+    require(control["original_row"]["case"]["case_id"] == cases[ordinal]["case_id"], "control case")
+    check(control["original_row"], cases[ordinal], "combined")
+    rejected = False
+    try:
+        check(control["changed_row"], cases[ordinal], "combined")
+    except ValueError:
+        rejected = True
+    require(rejected, "independent copied-control refusal")
+report["retained_controls_independently_refused"] = len(controls["controls"])
+require(report["baseline"]["repaired_semantic_difference_rows"] == 2164 and report["baseline"]["executions"] == 135 and report["combined"]["executions"] == 2, "aggregate reconciliation")
+require(not same(True, 1) and not same(2, 2.0) and not same({"nested": [False]}, {"nested": [0]}), "reference type sensitivity")
+with (root / "INDEPENDENT_RESULT.json").open("x", encoding="utf-8", newline="\n") as stream:
+    json.dump(report, stream, indent=2); stream.write("\n")
+print(json.dumps(report))
