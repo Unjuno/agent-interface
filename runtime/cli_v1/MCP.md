@@ -455,7 +455,14 @@ binary stream and decodes each line strictly as UTF-8 before JSON admission,
 independently of the standard stream's locale encoding. Invalid UTF-8 and
 UTF-16/32 byte inputs are refused without consuming an ID or entering the SDK.
 Valid Unicode keys and values retain their decoded meaning, including equality
-between a literal character and its JSON escape. Already decoded text inputs
+between a literal character and its JSON escape. Decoded strings undergo an
+additional check: lone surrogate code points in object
+keys or values are refused before SDK entry and ID consumption. Valid escaped
+surrogate pairs decode to their Unicode character; literal backslash-u text
+remains text. This prevents those non-scalar strings from reaching SDK JSON
+serialization. It does not promise a response after arbitrary SDK cancellation
+or task-group failure; an already accepted ID remains consumed and must not be
+replayed even if no response is received. Already decoded text inputs
 used by source callers retain their existing text contract. An error after SDK
 entry still consumes the accepted ID and requires reconciliation without replay.
 
