@@ -1,0 +1,139 @@
+diff --git a/runtime/core_v1/contract.py b/runtime/core_v1/contract.py
+index 10786d3..9227350 100644
+--- a/runtime/core_v1/contract.py
++++ b/runtime/core_v1/contract.py
+@@ -126,7 +126,7 @@ def validate_backend_manifest(manifest: dict[str, Any]) -> dict[str, Any]:
+ 
+     platform = manifest.get("platform")
+     _need(isinstance(platform, dict), "platform must be object")
+-    _need(platform.get("os") in OS_NAMES, "unsupported os name")
++    _need(isinstance(platform.get("os"), str) and platform["os"] in OS_NAMES, "unsupported os name")
+     _need(
+         isinstance(platform.get("backend"), str) and 1 <= len(platform["backend"]) <= 48,
+         "invalid platform backend",
+@@ -138,12 +138,14 @@ def validate_backend_manifest(manifest: dict[str, Any]) -> dict[str, Any]:
+     _need(not unknown, f"unknown capabilities: {sorted(unknown)}")
+     for capability, row in capabilities.items():
+         _need(isinstance(row, dict), f"capability {capability} must be object")
+-        _need(row.get("state") in CAPABILITY_STATES, f"invalid state for {capability}")
++        _need(isinstance(row.get("state"), str) and row["state"] in CAPABILITY_STATES,
++              f"invalid state for {capability}")
+         detail = row.get("detail", "")
+         _need(isinstance(detail, str) and len(detail) <= 256, f"invalid detail for {capability}")
+ 
+     frames = manifest.get("coordinate_frames")
+     _need(isinstance(frames, list) and frames, "coordinate_frames must be non-empty list")
++    _need(all(isinstance(frame, str) for frame in frames), "coordinate_frames must contain strings")
+     _need(len(frames) == len(set(frames)), "duplicate coordinate frame")
+     _need(set(frames) <= COORDINATE_FRAMES, "unknown coordinate frame")
+ 
+diff --git a/runtime/core_v1/test_manifest_enum_types.py b/runtime/core_v1/test_manifest_enum_types.py
+new file mode 100644
+index 0000000..b7ddde9
+--- /dev/null
++++ b/runtime/core_v1/test_manifest_enum_types.py
+@@ -0,0 +1,104 @@
++"""Manifest mistakes must become contract refusals, never hashing errors."""
++from copy import deepcopy
++import unittest
++
++from runtime.core_v1 import contract as c
++
++
++def manifest():
++    return {
++        'schema': 'agent-interface/backend-v1',
++        'backend_id': 'manifest-boundary',
++        'platform': {'os': 'linux', 'backend': 'no-device'},
++        'capabilities': {'input.release_all': {'state': 'supported'}},
++        'coordinate_frames': ['screen_physical_px'],
++        'clock': {'unit': 'ns', 'monotonic': True},
++        'permissions': [],
++    }
++
++
++def program():
++    return {
++        'schema': 'agent-interface/program-v1', 'program_id': 'manifest-test',
++        'source': {'observation_seq': 1, 'binding_revision': 1},
++        'authority': {'lease_id': 'test-only', 'expires_at_ns': 100},
++        'terminal': {'release_all_required': True},
++        'ops': [{'op': 'release_all'}],
++    }
++
++
++BAD = [None, False, True, 0, 1.5, '', 'not-a-member', [], {},
++       ['supported'], {'state': 'supported'}]
++
++
++def invalid_manifests():
++    for field in ('os', 'state', 'frame'):
++        for index, value in enumerate(BAD):
++            row = manifest()
++            if field == 'os':
++                row['platform']['os'] = deepcopy(value)
++            elif field == 'state':
++                row['capabilities']['input.release_all']['state'] = deepcopy(value)
++            else:
++                row['coordinate_frames'] = [deepcopy(value)]
++            yield f'{field}-{index}', row
++
++
++class ManifestEnumTypesTests(unittest.TestCase):
++    def test_invalid_json_enums_raise_contract_error_without_mutation(self):
++        for name, row in invalid_manifests():
++            with self.subTest(name=name):
++                before = deepcopy(row)
++                with self.assertRaises(c.ContractError):
++                    c.validate_backend_manifest(row)
++                self.assertEqual(row, before)
++
++    def test_admission_returns_invalid_program_for_bad_manifest(self):
++        for name, row in invalid_manifests():
++            with self.subTest(name=name):
++                result = c.admit_program(program(), row, now_ns=1,
++                                         current_observation_seq=1,
++                                         current_binding_revision=1)
++                self.assertEqual(result, c.Admission(False, 'INVALID_PROGRAM', ()))
++
++    def test_readiness_rejects_bad_manifest_as_contract_error(self):
++        for name, row in invalid_manifests():
++            with self.subTest(name=name), self.assertRaises(c.ContractError):
++                c.office_readiness(row)
++
++    def test_valid_enums_preserve_validation_and_admission(self):
++        for os_name in ('linux', 'windows', 'macos'):
++            for frame in ('screen_physical_px', 'screen_logical', 'window_client'):
++                for state, error in (('supported', None),
++                                     ('unsupported', 'UNSUPPORTED_CAPABILITY'),
++                                     ('unknown', 'UNSUPPORTED_CAPABILITY'),
++                                     ('permission_required', 'PERMISSION_DENIED')):
++                    with self.subTest(os=os_name, frame=frame, state=state):
++                        row = manifest()
++                        row['platform']['os'] = os_name
++                        row['coordinate_frames'] = [frame]
++                        row['capabilities']['input.release_all']['state'] = state
++                        before = deepcopy(row)
++                        self.assertIs(c.validate_backend_manifest(row), row)
++                        result = c.admit_program(program(), row, now_ns=1,
++                                                 current_observation_seq=1,
++                                                 current_binding_revision=1)
++                        self.assertEqual((result.accepted, result.error), (error is None, error))
++                        self.assertEqual(row, before)
++
++    def test_frame_list_must_be_nonempty_unique_known_strings(self):
++        for frames in ([], None, 'screen_physical_px',
++                       ['screen_physical_px', 'screen_physical_px'],
++                       ['screen_physical_px', []], ['screen_physical_px', {}],
++                       ['screen_physical_px', 'unknown']):
++            with self.subTest(frames=frames), self.assertRaises(c.ContractError):
++                row = manifest()
++                row['coordinate_frames'] = frames
++                c.validate_backend_manifest(row)
++        row = manifest()
++        row['coordinate_frames'] = ['screen_physical_px', 'window_client', 'screen_logical']
++        self.assertIs(c.validate_backend_manifest(row), row)
++
++
++if __name__ == '__main__':
++    unittest.main()
