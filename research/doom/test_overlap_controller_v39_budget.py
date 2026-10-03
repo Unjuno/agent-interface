@@ -29,7 +29,9 @@ class Events:
 def harness(rows, done_at=None, invalidation=False):
     tree = ast.parse(SOURCE.read_bytes())
     main = next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='main')
-    wait = next(n for n in main.body if isinstance(n,ast.FunctionDef) and n.name=='wait')
+    waits = [n for n in ast.walk(main) if isinstance(n,ast.FunctionDef) and n.name=='wait']
+    if len(waits) != 1: raise RuntimeError('expected exactly one nested wait')
+    wait = waits[0]
     loop = next(n for n in ast.walk(main) if isinstance(n,ast.While) and ast.unparse(n.test)=='not future.done()')
     post = next(n for n in main.body if isinstance(n,ast.For))
     post = next(n for n in ast.walk(post) if isinstance(n,ast.If) and ast.unparse(n.test)=='current_terminal is None')
