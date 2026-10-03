@@ -47,3 +47,9 @@ this change offers no recovery operation. Native/host/re-admission gates stay op
 Original private byte streams remain unchanged. PUBLICATION_MAP.json identifies
 owned-path-only public derivatives and both hashes; this does not authenticate
 the host. Votes/final proposal/apply records remain outside this source tree.
+
+The first archive whitespace check failed on unittest subtest output ending in a
+space, but the shell sequence still created its local commit. The diagnostic is
+retained in PUBLICATION_FIRST_WHITESPACE_STOP.json. Raw streams stay unchanged;
+only checks/*/stderr.txt has a package-local whitespace attribute exception.
+Production source, explanation and all other files retain whitespace checking.
