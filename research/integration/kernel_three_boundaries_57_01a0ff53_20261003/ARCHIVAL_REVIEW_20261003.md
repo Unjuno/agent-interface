@@ -5,6 +5,9 @@ contains 58 retained files and a 57-entry SHA-256 manifest. Every original file
 is copied byte-identically; all 57 hashes match. Original README, freeze,
 execution receipts, publication/redaction limits and mutation failures remain
 unchanged. This qualification is additive and is not in the historical manifest.
+The repository ignore rule initially excluded the two historical workspace
+`.log` files from staging; the committed-tree inventory caught this before merge,
+and both original blobs were explicitly added without changing their contents.
 
 Independent local rescue checks on main
 `30cd9cd27e75ceed6f1cfd6d5b518b87581478f6`:
