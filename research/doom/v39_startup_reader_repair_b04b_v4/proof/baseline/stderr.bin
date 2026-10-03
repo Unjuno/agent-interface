@@ -1,0 +1,83 @@
+test_stderr_pending (__main__.Regression.test_stderr_pending) ... ERROR
+test_stderr_refused (__main__.Regression.test_stderr_refused) ... FAIL
+test_stdout_join_interrupted (__main__.Regression.test_stdout_join_interrupted) ... FAIL
+test_stdout_live (__main__.Regression.test_stdout_live) ... ok
+test_stdout_pending (__main__.Regression.test_stdout_pending) ... Exception in thread Thread-2 (reader):
+Traceback (most recent call last):
+  File "PUBLIC_OWN_PREFIX\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+ERROR
+test_stdout_refused (__main__.Regression.test_stdout_refused) ... FAIL
+test_stdout_retired (__main__.Regression.test_stdout_retired) ...     self.run()
+  File "PUBLIC_OWN_PREFIX\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 982, in run
+ok
+
+======================================================================
+ERROR: test_stderr_pending (__main__.Regression.test_stderr_pending)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "PUBLIC_OWN_PREFIX\work\startup-reader-repair-b04b-v4\regression.py", line 142, in <lambda>
+    setattr(Regression, 'test_' + case, lambda self, c=case: self.run_case(c))
+                                                             ^^^^^^^^^^^^^^^^
+  File "PUBLIC_OWN_PREFIX\work\startup-reader-repair-b04b-v4\regression.py", line 120, in run_case
+    t.join(2)
+  File "PUBLIC_OWN_PREFIX\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1114, in join
+    raise RuntimeError("cannot join thread before it is started")
+RuntimeError: cannot join thread before it is started
+
+======================================================================
+ERROR: test_stdout_pending (__main__.Regression.test_stdout_pending)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "PUBLIC_OWN_PREFIX\work\startup-reader-repair-b04b-v4\regression.py", line 142, in <lambda>
+    setattr(Regression, 'test_' + case, lambda self, c=case: self.run_case(c))
+                                                             ^^^^^^^^^^^^^^^^
+  File "PUBLIC_OWN_PREFIX\work\startup-reader-repair-b04b-v4\regression.py", line 120, in run_case
+    t.join(2)
+  File "PUBLIC_OWN_PREFIX\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1114, in join
+    raise RuntimeError("cannot join thread before it is started")
+RuntimeError: cannot join thread before it is started
+
+======================================================================
+FAIL: test_stderr_refused (__main__.Regression.test_stderr_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "PUBLIC_OWN_PREFIX\work\startup-reader-repair-b04b-v4\regression.py", line 142, in <lambda>
+    setattr(Regression, 'test_' + case, lambda self, c=case: self.run_case(c))
+                                                             ^^^^^^^^^^^^^^^^
+  File "PUBLIC_OWN_PREFIX\work\startup-reader-repair-b04b-v4\regression.py", line 135, in run_case
+    self.assertIs(cleanup['stderr_reader_joined'], False)
+AssertionError: True is not False
+
+======================================================================
+FAIL: test_stdout_join_interrupted (__main__.Regression.test_stdout_join_interrupted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "PUBLIC_OWN_PREFIX\work\startup-reader-repair-b04b-v4\regression.py", line 142, in <lambda>
+    setattr(Regression, 'test_' + case, lambda self, c=case: self.run_case(c))
+                                                             ^^^^^^^^^^^^^^^^
+  File "PUBLIC_OWN_PREFIX\work\startup-reader-repair-b04b-v4\regression.py", line 128, in run_case
+    self.assertTrue(row['same_primary'])
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_stdout_refused (__main__.Regression.test_stdout_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "PUBLIC_OWN_PREFIX\work\startup-reader-repair-b04b-v4\regression.py", line 142, in <lambda>
+    setattr(Regression, 'test_' + case, lambda self, c=case: self.run_case(c))
+                                                             ^^^^^^^^^^^^^^^^
+  File "PUBLIC_OWN_PREFIX\work\startup-reader-repair-b04b-v4\regression.py", line 132, in run_case
+    self.assertIs(cleanup['reader_joined'], completed)
+AssertionError: True is not False
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.011s
+
+FAILED (failures=3, errors=2)
+    self._target(*self._args, **self._kwargs)
+  File "PUBLIC_OWN_PREFIX\work\startup-reader-repair-b04b-v4\regression.py", line 46, in reader
+    for line in stdout: pass
+  File "PUBLIC_OWN_PREFIX\work\startup-reader-repair-b04b-v4\regression.py", line 19, in __iter__
+    return super().__iter__()
+           ^^^^^^^^^^^^^^^^^^
+ValueError: I/O operation on closed file.

@@ -150,9 +150,8 @@ class StartupOwnershipTests(unittest.TestCase):
             self.assertEqual(s['owned'][0].poll(),0)
             self.assertEqual(s['clients'][0].closes,1)
             data=json.loads((s['out']/'controller'/'startup-cleanup.json').read_text())
-            self.assertFalse(data['reader_joined'])
-            self.assertTrue(data['errors'])
-            self.assertFalse(s['owned'][0].stdout.closed)
+            self.assertTrue(data['reader_joined'])
+            self.assertFalse(data['errors'])
     def test_stderr_overflow_retains_prefix_and_reports_partial_evidence(self):
         with fixture('stderr-overflow',mode='stderr-overflow') as s:
             with self.assertRaisesRegex(RuntimeError,'loaded fixture'):s['subject'].main()

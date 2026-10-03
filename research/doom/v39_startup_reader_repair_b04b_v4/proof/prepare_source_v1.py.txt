@@ -1,0 +1,18 @@
+import hashlib, json, pathlib
+R = pathlib.Path(__file__).resolve().parent
+source = (R.parent / 'startup-native-main-b04b-A01/controller.py.txt').read_bytes()
+assert hashlib.sha256(source).hexdigest() == 'ec095c3911fd3e3172aff1a95b3ceea58547affb38f1e1740e7322cca1ffd288'
+changes = [
+ (b'"stderr_reader_joined": True}', b'"stderr_reader_joined": process is None}'),
+ (b'        except Exception as error:\r\n            receipt["errors"].append("stderr reader start: " + _startup_exception_text(error, use_repr=True))\r\n            stderr_thread = None', b'        except BaseException as error:\r\n            # A failed start acknowledgement does not prove no worker admission.\r\n            receipt["errors"].append("stderr reader start: " + _startup_exception_text(error, use_repr=True))'),
+ (b'            if reader_thread.ident is not None:\r\n                reader_thread.join(timeout=1)\r\n            receipt["reader_joined"] = not reader_thread.is_alive()\r\n        except Exception as error:', b'            # join refuses pre-acknowledgement workers; retain uncertainty on failure.\r\n            reader_thread.join(timeout=1)\r\n            receipt["reader_joined"] = not reader_thread.is_alive()\r\n        except BaseException as error:'),
+ (b'        except Exception as error:\r\n            receipt["stderr_reader_joined"] = False', b'        except BaseException as error:\r\n            receipt["stderr_reader_joined"] = False')
+]
+candidate = source
+for old, new in changes:
+ assert candidate.count(old) == 1
+ candidate = candidate.replace(old, new, 1)
+assert candidate[candidate.index(b'    decisions=[]'):] == source[source.index(b'    decisions=[]'):]
+(R / 'controller-v4.py.txt').write_bytes(candidate)
+(R / 'SOURCE_CHANGE.json').write_text(json.dumps({'baseline_sha256': hashlib.sha256(source).hexdigest(), 'candidate_sha256': hashlib.sha256(candidate).hexdigest(), 'candidate_bytes': len(candidate), 'literal_replacements': len(changes), 'normal_tail_byte_identical': True}, indent=2) + '\n', encoding='utf-8')
+print((R / 'SOURCE_CHANGE.json').read_text())

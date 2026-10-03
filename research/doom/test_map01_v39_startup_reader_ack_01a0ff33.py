@@ -1,0 +1,148 @@
+"""Ordinary repair regression: standard Thread.start pre-ack interval, no server/model/native peer."""
+import ast, datetime, hashlib, io, json, os, pathlib, subprocess, sys, threading, types, unittest
+R = pathlib.Path(__file__).resolve().parent
+SOURCE = R / 'map01_overlap_controller_v39.py'
+source = SOURCE.read_bytes(); tree = ast.parse(source); rows = []
+names = {'_startup_exception_text', '_startup_exception_details', '_note_startup_exception', '_close_failed_startup'}
+functions = [n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name in names]
+main = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'main')
+handler = next(n for n in ast.walk(main) if isinstance(n, ast.ExceptHandler) and n.name == 'startup_error')
+invoke = ast.parse('def invoke(primary):\n try:\n  raise primary\n except BaseException as startup_error:\n  pass\n').body[0]
+invoke.body[0].handlers = [handler]
+literal = ast.fix_missing_locations(ast.Module(body=functions + [invoke], type_ignores=[]))
+
+class Stream(io.StringIO):
+ def __init__(self):
+  super().__init__(''); self.access = []; self.buffer = io.BytesIO()
+ def __iter__(self):
+  self.access.append({'closed_at_access': self.closed})
+  return super().__iter__()
+
+class Retired:
+ def join(self, timeout): pass
+ def is_alive(self): return False
+
+class Live:
+ ident = 1
+ def join(self, timeout): pass
+ def is_alive(self): return True
+
+class JoinInterrupted:
+ ident = 1
+ def join(self, timeout): raise KeyboardInterrupt('join interrupted')
+ def is_alive(self): return False
+
+class Regression(unittest.TestCase):
+ def run_case(self, case):
+  admitted = threading.Event(); release = threading.Event(); threads = []
+  class Pending(threading.Thread):
+   def _bootstrap_inner(self):
+    admitted.set()
+    if not release.wait(5): raise RuntimeError('bounded bootstrap gate expired')
+    super()._bootstrap_inner()
+  stdout = Stream(); stderr = Stream(); stdin = Stream()
+  process = types.SimpleNamespace(stdin=stdin, stdout=stdout, stderr=stderr, poll=lambda: 0)
+  def reader():
+   try:
+    for line in stdout: pass
+   except ValueError:
+    if not stdout.closed: raise
+  def pending(target):
+   t = Pending(target=target, daemon=True); threads.append(t)
+   ordinary_wait = t._started.wait
+   def interrupted_ack(*args, **kwargs):
+    if not admitted.wait(2): raise RuntimeError('native admission not observed')
+    raise KeyboardInterrupt('start acknowledgement interrupted')
+   t._started.wait = interrupted_ack
+   try:
+    t.start()
+   except KeyboardInterrupt:
+    pass
+   finally:
+    t._started.wait = ordinary_wait
+   self.assertIsNone(t.ident); self.assertFalse(t.is_alive())
+   return t
+  reader_thread = None
+  if case == 'stdout_pending': reader_thread = pending(reader)
+  elif case == 'stdout_refused':
+   reader_thread = threading.Thread(target=reader, daemon=True)
+   original = threading._start_new_thread
+   def refuse(*args): raise RuntimeError('controlled pre-spawn refusal')
+   threading._start_new_thread = refuse
+   try:
+    with self.assertRaises(RuntimeError): reader_thread.start()
+   finally: threading._start_new_thread = original
+  elif case == 'stdout_retired':
+   reader_thread = threading.Thread(target=reader, daemon=True); threads.append(reader_thread)
+   reader_thread.start(); reader_thread.join(2)
+  elif case == 'stdout_live': reader_thread = Live()
+  elif case == 'stdout_join_interrupted': reader_thread = JoinInterrupted()
+  def stderr_factory(target, daemon):
+   if case == 'stderr_pending':
+    t = Pending(target=target, daemon=daemon); threads.append(t)
+    ordinary_wait = t._started.wait
+    def interrupted_ack(*args, **kwargs):
+     if not admitted.wait(2): raise RuntimeError('stderr native admission absent')
+     raise KeyboardInterrupt('stderr start acknowledgement interrupted')
+    t._started.wait = interrupted_ack
+    # Restoration occurs in finally after source cleanup, before controlled teardown.
+    t.restore_wait = ordinary_wait
+    return t
+   if case == 'stderr_refused':
+    class Refused:
+     def start(self): raise RuntimeError('controlled no-admission stderr refusal')
+     def join(self, timeout): raise RuntimeError('cannot join before start')
+     def is_alive(self): return False
+    return Refused()
+   class Finished(Retired):
+    def start(self): target()
+   return Finished()
+  callbacks = []; records = []
+  class Client:
+   def close(self, timeout): pass
+  class Record:
+   def write_text(self, text): records.append(json.loads(text))
+  class Out:
+   def __truediv__(self, name):
+    if name == 'startup-stderr.bin': return types.SimpleNamespace(open=lambda mode: io.BytesIO())
+    return Record()
+  out = Out(); primary = ValueError('original startup failure')
+  scope = {'process': process, 'reader_thread': reader_thread, 'planner_client': Client(), 'args': types.SimpleNamespace(out=out), 'all_events': [], 'json': json, 'atexit': types.SimpleNamespace(unregister=lambda x: callbacks.append(True)), 'threading': types.SimpleNamespace(Thread=stderr_factory), 'subprocess': subprocess}
+  exec(compile(literal, 'literal-startup-reader-repair', 'exec'), scope)
+  escaped = None; cleanup = None
+  try:
+   try: scope['invoke'](primary)
+   except BaseException as error: escaped = error
+   cleanup = records[0] if records else None
+   row = {'case': case, 'same_primary': escaped is primary, 'cleanup': cleanup, 'stdout_closed_before_release': stdout.closed, 'stderr_closed_before_release': stderr.closed, 'admitted_before_release': admitted.is_set(), 'callback_removed': bool(callbacks)}
+  finally:
+   for t in threads:
+    if hasattr(t, 'restore_wait'): t._started.wait = t.restore_wait
+   release.set()
+   for t in threads:
+    self.assertTrue(t._started.wait(2), 'controlled native worker did not acknowledge')
+    t.join(2)
+    self.assertFalse(t.is_alive(), 'controlled worker not retired')
+   for s in (stdin, stdout, stderr):
+    if not s.closed: s.close()
+   row['stdout_accesses'] = stdout.access
+   row['all_controlled_workers_retired'] = all(not t.is_alive() for t in threads)
+   row['all_streams_closed_after_teardown'] = all(s.closed for s in (stdin, stdout, stderr))
+   rows.append(row)
+  self.assertTrue(row['same_primary'])
+  self.assertIsNotNone(cleanup)
+  if case.startswith('stdout_'):
+   completed = case == 'stdout_retired'
+   self.assertIs(cleanup['reader_joined'], completed)
+   self.assertIs(row['stdout_closed_before_release'], completed)
+  if case in {'stderr_pending', 'stderr_refused'}:
+   self.assertIs(cleanup['stderr_reader_joined'], False)
+   self.assertIs(row['stderr_closed_before_release'], False)
+  if case == 'stdout_pending':
+   self.assertTrue(row['admitted_before_release'])
+   self.assertEqual(row['stdout_accesses'], [{'closed_at_access': False}])
+
+for case in ('stdout_pending', 'stdout_refused', 'stdout_retired', 'stdout_live', 'stdout_join_interrupted', 'stderr_pending', 'stderr_refused'):
+ setattr(Regression, 'test_' + case, lambda self, c=case: self.run_case(c))
+if __name__ == '__main__':
+ unittest.main()

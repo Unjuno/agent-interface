@@ -39,7 +39,7 @@ from running_action_guard_v2 import RunningActionGuardV2
 from running_action_guard_v3 import RunningActionGuardV3
 from doom_action_snapshot_v1 import build_action_snapshot
 NODE = "/mnt/c/Program Files/nodejs/node.exe"
-CLI = r"C:\Users\junny\AppData\Roaming\npm\node_modules\@openai\codex\bin\codex.js"
+CLI = r"PUBLIC_OWN_PREFIX\AppData\Roaming\npm\node_modules\@openai\codex\bin\codex.js"
 DISABLED_FEATURES = [
     "apps", "plugins", "remote_plugin", "browser_use", "browser_use_external",
     "computer_use", "in_app_browser", "code_mode", "code_mode_host",
@@ -486,7 +486,7 @@ def _close_failed_startup(process, reader_thread, planner_client, out):
                "reader_joined": reader_thread is None, "client_closed": False,
                "input_release_verified": False, "errors": [], "escalations": [],
                "stderr_complete": process is None, "stderr_bytes": 0,
-               "stderr_reader_joined": process is None}
+               "stderr_reader_joined": True}
     stderr_thread = None
     if process is not None:
         def retain_stderr():
@@ -510,9 +510,9 @@ def _close_failed_startup(process, reader_thread, planner_client, out):
         try:
             stderr_thread = threading.Thread(target=retain_stderr, daemon=True)
             stderr_thread.start()
-        except BaseException as error:
-            # A failed start acknowledgement does not prove no worker admission.
+        except Exception as error:
             receipt["errors"].append("stderr reader start: " + _startup_exception_text(error, use_repr=True))
+            stderr_thread = None
         try:
             process.stdin.close()
         except Exception as error:
@@ -534,22 +534,22 @@ def _close_failed_startup(process, reader_thread, planner_client, out):
             receipt["errors"].append("owned session still running")
     if reader_thread is not None:
         try:
-            # join refuses pre-acknowledgement workers; retain uncertainty on failure.
-            reader_thread.join(timeout=1)
+            if reader_thread.ident is not None:
+                reader_thread.join(timeout=1)
             receipt["reader_joined"] = not reader_thread.is_alive()
-        except BaseException as error:
+        except Exception as error:
             receipt["errors"].append("stdout reader join: " + _startup_exception_text(error, use_repr=True))
         if not receipt["reader_joined"]:
-            receipt["errors"].append("stdout reader retirement unconfirmed")
+            receipt["errors"].append("stdout reader still running")
     if stderr_thread is not None:
         try:
             stderr_thread.join(timeout=1)
             receipt["stderr_reader_joined"] = not stderr_thread.is_alive()
-        except BaseException as error:
+        except Exception as error:
             receipt["stderr_reader_joined"] = False
             receipt["errors"].append("stderr reader join: " + _startup_exception_text(error, use_repr=True))
         if not receipt["stderr_reader_joined"]:
-            receipt["errors"].append("stderr reader retirement unconfirmed")
+            receipt["errors"].append("stderr reader still running")
     if process is not None and receipt["session_exit_code"] is not None:
         # Do not close a buffered stream concurrently with its active reader.
         for stream, finished in ((process.stdin, True),
