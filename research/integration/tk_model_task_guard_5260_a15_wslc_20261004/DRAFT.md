@@ -30,8 +30,10 @@ input/file-effect tests, and a once-only host subprocess custody primitive.
 Current continuation also includes the real standalone file exchange and a
 Windows-host/WSLc-live-app construction run; see FILE_EXCHANGE_CONSTRUCTION.md.
 Fixed review fixtures and synthetic subprocess event streams are not real
-model answers. The complete conditional paired driver, paired comparison, conditional model
-recovery and independent formal raw audit are still absent. No A15 source
+model answers. The actual conditional paired driver and four-case synthetic
+cross-host comparison now exist; see PAIRED_CONSTRUCTION.md. Actual provider
+comparison, full independent method audit and prospective allocation remain
+uncompleted. No A15 source
 freeze/allocation or actual model request has occurred.
 No H_PASS/STOP/PASS_RESEARCH conclusion may be inferred from these tests.
 Full #57/#59 roadmap stays open; other-owner native measurement is untouched.
