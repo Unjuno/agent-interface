@@ -250,12 +250,9 @@ class QuartzBackend:
 
     def key_state(self, key: str, down: bool) -> None:
         code = key_code(key)
-        event = self.cg.CGEventCreateKeyboardEvent(None, code, down)
-        # Post/disposal may raise after input took effect. Keep ownership until
-        # release/readback resolves it; event creation alone emits no input.
-        if down and event: self.held_keys[key] = code
-        self._post(event)
-        if not down: self.held_keys.pop(key, None)
+        self._post(self.cg.CGEventCreateKeyboardEvent(None, code, down))
+        if down: self.held_keys[key] = code
+        else: self.held_keys.pop(key, None)
 
     def key_chord(self, keys: list[str]) -> None:
         for key in keys: self.key_state(key, True)
@@ -285,10 +282,9 @@ class QuartzBackend:
     def pointer_button(self, button: str, down: bool) -> None:
         if button not in BUTTONS: raise QuartzBackendError(f"unsupported button {button}")
         number, down_type, up_type = BUTTONS[button]; x, y = self.pointer_position()
-        event = self.cg.CGEventCreateMouseEvent(None, down_type if down else up_type, CGPoint(x, y), number)
-        if down and event: self.held_buttons.add(button)
-        self._post(event)
-        if not down: self.held_buttons.discard(button)
+        self._post(self.cg.CGEventCreateMouseEvent(None, down_type if down else up_type, CGPoint(x, y), number))
+        if down: self.held_buttons.add(button)
+        else: self.held_buttons.discard(button)
 
     def scroll(self, dx: int, dy: int) -> None:
         self._post(self.cg.CGEventCreateScrollWheelEvent(None, KCG_SCROLL_EVENT_UNIT_LINE, 2, int(dy), int(dx)))

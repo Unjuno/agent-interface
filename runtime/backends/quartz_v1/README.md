@@ -9,3 +9,20 @@ Candidate capabilities: AX frontmost focus, Quartz keyboard/text, pointer/button
 The native integration fixture launches the system `osascript` `display dialog` command. The backend types into that native dialog; the wrapper independently retains the returned text as the task effect. Promotion requires that native app effect, actual screen capture, physical cursor readback, verified release, and all frozen zero-event controls pass on macOS.
 
 This v1 evidence does not establish signed/notarized packaging, sandbox/TCC persistence, secure input, IME, multiple displays/Spaces, privileged applications, or natural focus contention.
+
+Persistent `QuartzRuntimeSession` owners must retain `recovery_required` after
+an unverified/missing release or an execution exception without a verified
+release receipt. Ordinary follow-up dispatch then returns
+`INPUT_RECOVERY_REQUIRED` before admission or backend access. Updated images,
+binding revisions, direct backend cleanup and edits to returned receipts do not
+clear the session latch. A verified receipt requires literal `verified: true`,
+empty down-state lists and no reported unknown controls or cleanup errors.
+
+This session has no automatic reset or program replay. It does not expose a
+verified recovery operation; new session construction or direct latch mutation
+is not proof of physical neutrality. Cross-session/backend ownership, native
+failure observation, process/host restart and fresh verified re-admission remain
+open under #2437. The latch transfers the existing X11 fail-closed policy;
+inert regression tests do not establish physical release or task effects.
+
+Acquiring key/button events are tracked before posting once event creation succeeds. Post or disposal errors may follow an input effect; cleanup therefore releases and probes the possibly held owned control. Unknown or still-held cleanup keeps the session quarantine. Creation failure installs no new ownership. Inert regressions do not establish actual macOS/TCC/physical release.
