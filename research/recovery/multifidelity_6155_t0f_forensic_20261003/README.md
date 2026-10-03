@@ -53,6 +53,12 @@ The discrepancy was reported as two bytes per file and consistent with
 line-ending drift; its cause is not established by this archive. The committed
 files are not proof of the exact local bytes executed.
 
+The unchanged historical `invalid_local_run/SHA256SUMS` is not the archive's
+custody manifest. It also disagrees with the archived `FREEZE.json`,
+`raw/candidate.jsonl.summary.json` and `raw/audit.json`; these retained
+discrepancies are not evidence of copying damage. Use `SOURCE_BLOBS.tsv` to
+verify the actual archived Git bytes rather than repairing the historical sums.
+
 ## Custody checks, not scientific revalidation
 
 A read-only check of original Git blobs verified all 17 entries and reproduced
