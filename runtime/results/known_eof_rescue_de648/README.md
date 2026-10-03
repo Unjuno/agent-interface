@@ -20,4 +20,5 @@ and its separate send-deadline proposal are untouched. No consumed allocation,
 original driver/client/peer, installation or live PID probe is replayed.
 
 Run python3 runtime/results/known_eof_rescue_de648/verify_saved.py (also -O).
-Full local CI will be recorded after committing; no full native PASS implied.
+Local CI43 exits0 failures=[] at b5a65fa24; full transcript is local-ci.log.
+No whole native/runtime PASS is implied.
