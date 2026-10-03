@@ -67,7 +67,7 @@ class ComposedTests(unittest.TestCase):
                                   'SAFE_STOP' if family=='pre_stop' else 'TASK_NOT_VERIFIED' if family=='effect_unavailable' else 'CALLER_FAILED')
                     self.assertEqual(r['outcome'],base_outcome if terminal=='healthy' else 'CALLER_FAILED')
                     delivery=('confirmed' if family in {'completed','completed_clock','verify_throws','effect_unavailable'} else
-                              'delivery_uncertain' if family in {'unknown_mutation','unknown_typed_clock'} else
+                              'delivery_uncertain' if family in {'unknown_mutation','unknown_typed_clock','invalid','execute_throws'} else
                               'not_attempted' if family=='refused_journal' else None)
                     self.assertEqual(r['delivery'],delivery)
                     progress=(COMPLETE if family in {'completed','completed_clock','verify_throws'} else
@@ -77,7 +77,7 @@ class ComposedTests(unittest.TestCase):
                     self.assertEqual(r['execution_progress'],progress)
                     effect='succeeded' if family=='completed' else 'unavailable' if family=='effect_unavailable' else None
                     self.assertEqual(r['task_effect'],effect)
-                    authority='none' if family in {'refused_journal','execute_throws','pre_stop'} else 'consumed_by_recorded_execute_stage'
+                    authority='none' if family in {'refused_journal','pre_stop'} else 'consumed_by_recorded_execute_stage'
                     self.assertEqual(r['input_authority'],authority)
                     self.assertEqual(r['accounting']['attempted_calls'],0)
                     execute_stage=('skipped' if family=='pre_stop' else 'started' if family in {'completed_clock','unknown_typed_clock'} else

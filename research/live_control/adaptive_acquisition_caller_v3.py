@@ -219,15 +219,21 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
     selected = cache_update = repair_path = None
     repair_trace = []
     returned_execution = None
+    execute_invoked = False
 
     def emit(event): journal(copy.deepcopy(event))
 
     def local(name, payload):
-        nonlocal returned_execution
+        nonlocal returned_execution, execute_invoked
         stages[name] = {"status": "started", "reason": None}
         started = clock(); emit({"event": "stage_started", "stage": name, "started_ns": started})
         try:
-            value = _require_callable(adapters, name)(copy.deepcopy(payload))
+            callback = _require_callable(adapters, name)
+            detached_payload = copy.deepcopy(payload)
+            if name == "execute":
+                # No returned receipt does not establish that input was never dispatched.
+                execute_invoked = True
+            value = callback(detached_payload)
         except Exception as error:
             ended = clock(); stages[name] = {"status": "failed", "reason": repr(error)}
             phases.append({"stage": name, "started_ns": started, "ended_ns": ended,
@@ -334,7 +340,7 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                   "input_authority": ("none" if execution_progress is not None and
                       execution_progress.get("status") == "safe_yield" and
                       delivery == "not_attempted" else
-                      "consumed_by_recorded_execute_stage" if returned_execution is not None or
+                      "consumed_by_recorded_execute_stage" if execute_invoked or returned_execution is not None or
                       stages["execute"]["status"] == "completed"
                       else "none")}
         try:
@@ -362,6 +368,8 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
 
     def failure(outcome, reason):
         if returned_execution is None:
+            if execute_invoked:
+                return finish("CALLER_FAILED", reason, delivery="delivery_uncertain")
             return finish(outcome, reason)
         return finish("CALLER_FAILED", reason,
                       delivery=execution_delivery(returned_execution),

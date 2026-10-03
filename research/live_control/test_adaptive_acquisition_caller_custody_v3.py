@@ -86,7 +86,7 @@ class CustodyTests(unittest.TestCase):
                 result, state = cell(invalid, fault, {'status': 'completed'})
                 self.assertEqual(result['outcome'], 'CALLER_FAILED')
                 self.assertIsNone(result['execution_progress'])
-                self.assertIsNone(result['delivery'])
+                self.assertEqual(result['delivery'], 'delivery_uncertain')
                 self.assertEqual((state['execute'], state['verify']), (1, 0))
 
     def test_effect_verifier_failure_preserves_delivery_without_success(self):
@@ -109,7 +109,7 @@ class CustodyTests(unittest.TestCase):
         result, state = cell(UNCERTAIN, 'execute_raise')
         self.assertEqual(result['outcome'], 'CALLER_FAILED')
         self.assertIsNone(result['execution_progress'])
-        self.assertIsNone(result['delivery'])
+        self.assertEqual(result['delivery'], 'delivery_uncertain')
         self.assertEqual((state['execute'], state['verify']), (1, 0))
 
 if __name__ == '__main__':
