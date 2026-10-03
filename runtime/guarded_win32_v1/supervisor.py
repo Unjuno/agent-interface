@@ -13,7 +13,14 @@ def run(argv, payload, deadline_ns):
             raise subprocess.TimeoutExpired(argv, 0)
         out, err = p.communicate(payload, timeout=remaining)
     except subprocess.TimeoutExpired:
-        p.kill()
+        try:
+            p.kill()
+        except Exception as error:
+            # Failed termination must not lose ownership of a live child.
+            return {'status': 'unknown', 'reason': 'termination_unconfirmed',
+                    'started': True, 'pid': p.pid, 'exit': p.poll(), 'process': p,
+                    'termination_error': {'type': type(error).__name__,
+                                          'detail': str(error)}}
         try:
             out, err = p.communicate(timeout=1)
         except subprocess.TimeoutExpired:
