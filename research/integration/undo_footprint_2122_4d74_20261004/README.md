@@ -1,0 +1,1 @@
+Read undo-footprint-2122-4d74-r02/REPORT.md. Real LibreOffice visible-history/compensation contrast; original R01 HOLD and R02 first audit FAIL retained. Separate read-only saved-document reopen supports scoped distinction, not model policy/safe compensation/task value.
