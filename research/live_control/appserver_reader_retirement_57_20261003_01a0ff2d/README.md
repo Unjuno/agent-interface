@@ -25,7 +25,8 @@ Actual Windows11 build26200 / CPython3.12.10, three necessary commands:
 Full actual argv/source/test/native PID/UTC/exits/raw streams and23 case rows are
 retained. Five new-fixture transport invocations in RED and eight per final command
 (21 total, max2 simultaneous) are ordinary repair phases, not independent formal
-trials. All recorded transport process waits ended0, readers/callers retired, and
+trials. All15 new parent/writer waits ended0; six retained silent controls were intentionally
+terminated and recorded exit1. All21 transports are terminal, readers/callers retired, and
 driver pipes closed. A late targeted PID-number check found20 absent and one later
 pwsh.exe generation; the recorded Python child had already exited. There was no
 termination of the unrelated generation. Thread error metadata and original test
