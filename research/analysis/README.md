@@ -1,5 +1,7 @@
 # Analytical research
 
+- [`planner_hysteresis_5352_effect_qualified_t0_20261003/CONSTRUCTION_REPORT.md`](planner_hysteresis_5352_effect_qualified_t0_20261003/CONSTRUCTION_REPORT.md) — #5352 T15 finite synthetic discriminator construction contract 5/5 and current repository index tests 17/17; preformal HOLD, formal WSLc candidate/auditor 0/0; no efficacy claim.
+
 - [`exogenous_phase_6803_derived_capture_a05_20261003_3cbf/REPORT.md`](exogenous_phase_6803_derived_capture_a05_20261003_3cbf/REPORT.md) — #6969 successor: source-derived closed-interval acquisition passes 147-row independent finite audit and 10/10 corruption controls; four onset-only original-source probes confirm snapshot-label insensitivity. Private OrbStack containers; modeled effects only, live transfer HOLD; pre-stage socket STOP preserved.
 - [`RESCUE_STATUS_6035_20261003.md`](RESCUE_STATUS_6035_20261003.md) — Issue #6035 A01/A02 frozen synthetic crossover protocols and terminal pre-candidate STOP records rescued from closed branches; zero formal invocations and no model/interface claim.
 - [`fault_exposure_6539_t0_20261002/RESCUE_STATUS.md`](fault_exposure_6539_t0_20261002/RESCUE_STATUS.md) — Issue #6539 frozen package rescued from PR #6697; paired-twin identifiability check retained, formal allocation still unassigned, and launch remains HOLD because the frozen CLI receipt path has a static `seeds` binding defect.
