@@ -539,15 +539,40 @@ image base64. An outer tool/agent must actually view those unchanged images and
 record the original attempt's explicit review. Original data remains in the
 exchange/host files; a successful stdout write is not model comprehension.
 
-Await that result and inspect it before issuing the next command. Additional
-lines while a command is outstanding receive `busy` with operation_invoked=false
-for that rejected line; they are not queued or given a new ID. The existing
-pending input may still execute. Do not pipe a whole future action script at
-once. Malformed JSON receives `refused` without an exchange call. Exchange
+Await that result and inspect it before issuing the next command. An additional
+line while a command is outstanding receives `busy` with operation_invoked=false
+for that rejected line; it is not queued or given a new ID. The transport retains
+at most one unfinished `busy` response write. Another line before that write is
+observed stops the stream with `primary busy response backlog`, including lines
+already arriving in the same input chunk. No reply is promised for the overload
+line or later lines. The owner still observes the original pending command and
+its result before closing the same relay; the CLI reports the stream failure
+with exit 2 and does not emit a normal `terminal` line. Reconcile the original
+exchange/host files before further action. This bounds additional response work,
+but does not impose a deadline on a permanently stalled output or command.
+The existing pending input may still execute. Do not pipe a whole future action
+script at once. Malformed JSON receives `refused` without an exchange call. Exchange
 errors receive `command_error`, current state and replay_allowed=false; inspect
 the original files instead of repeating a consumed command. Stream output
 failure stops accepting commands and waits for the same pending promise before
 closing the original transport. It does not prove that input was cancelled.
+
+Input read errors follow that same path, including the error
+forwarded by Readline. A read failure does not cancel or replay an accepted
+command; inspect its retained result before deciding how to continue. The CLI
+reports stream failure with exit 2 after attempting original-relay cleanup.
+
+The owner observes input/output errors during relay startup and the `ready` and
+`terminal` writes too. A startup failure admits no command; after a channel
+failure it observes the same relay's transport exit and preserves the original
+error. Its temporary error listeners are removed after ownership ends. These
+checks supply no deadline for a permanently stalled write or relay.
+
+If an input/output error is already captured while the fresh exchange directory
+is being created, the owner closes its original relay without publishing
+`ready`. A successful readiness line therefore does not follow that known
+startup failure. An error first observed after readiness still stops intake and
+preserves already accepted work through the existing cleanup path.
 
 Explicitly send `call` with `["interface_close",{}]`, inspect its release outcome,
 and then end stdin. EOF waits for the outstanding command and closes only the

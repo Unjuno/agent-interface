@@ -34,7 +34,6 @@ export async function servePrimaryLines({exchange,input,output}) {
   let pending=null,failure=null;
   const rejectedWrites=new Set();
   function failed(error) {failure??=error;input.pause();lines.close();}
-  lines.on('error',failed);
   output.on('error',failed);
   input.on('error',failed);
   async function perform(line) {
@@ -85,34 +84,24 @@ export async function servePrimaryLines({exchange,input,output}) {
 export async function runPrimaryStdio(config,{input=process.stdin,output=process.stdout}={}) {
   validatePrimaryConfig(config);
   if(output.isTTY)throw TypeError('primary stdout must be a pipe or file; terminal rendering is not a JSON-lines transport');
-  let host,exchange,failure=null;
-  function failed(error) {failure??=error;input.pause();}
-  input.on('error',failed);output.on('error',failed);
+  const host=await createInstrumentedRelayClient(config.host);
+  let exchange,failure=null;
   try {
-    try {
-      host=await createInstrumentedRelayClient(config.host);
-      if(failure)throw failure;
-      exchange=await createPrimaryExchange({host,route:config.route,directory:config.exchangeDirectory,
-        expectations:config.expectations??[],options:config.primaryOptions??{}});
-      if(failure)throw failure;
-      await emit(output,{schema,status:'ready',state:exchange.state()});
-      if(failure)throw failure;
-      await servePrimaryLines({exchange,input,output});
-    } catch(error){failure??=error;}
-    // Observe the original host after any owned stream failure, including
-    // ready/terminal writes outside the inner line transport's lifetime.
-    let exit;
-    if(host)try {exit=await host.close();}
-    catch(error){
-      if(failure)throw new AggregateError([failure,error],'primary stream and transport cleanup failed');
-      throw error;
-    }
-    if(failure)throw failure;
-    await emit(output,{schema,status:'terminal',exit,state:exchange.state()});
-    if(failure)throw failure;
-  } finally {
-    output.removeListener('error',failed);input.removeListener('error',failed);
+    exchange=await createPrimaryExchange({host,route:config.route,directory:config.exchangeDirectory,
+      expectations:config.expectations??[],options:config.primaryOptions??{}});
+    await emit(output,{schema,status:'ready',state:exchange.state()});
+    await servePrimaryLines({exchange,input,output});
+  } catch(error){failure=error;}
+  // Close only the original transport after EOF/failure. A failed output must
+  // not be written again in a finally block that hides its original exception.
+  let exit;
+  try {exit=await host.close();}
+  catch(error){
+    if(failure)throw new AggregateError([failure,error],'primary stream and transport cleanup failed');
+    throw error;
   }
+  if(failure)throw failure;
+  await emit(output,{schema,status:'terminal',exit,state:exchange.state()});
 }
 
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href) {

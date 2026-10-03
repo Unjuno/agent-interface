@@ -60,9 +60,6 @@ export async function servePrimaryLines({exchange,input,output}) {
     lines.on('line',line=>{
       if(failure)return;
       if(pending){
-        // One unobserved busy write is enough. A synchronous line burst can
-        // continue even after input.pause(), so stop before retaining another.
-        if(rejectedWrites.size){failed(Error('primary busy response backlog'));return;}
         // Refuse this line now. It is never retained as a future action.
         const write=emit(output,{schema,status:'busy',operation_invoked:false,
           pending:true,next_id:exchange.state().next_id}).catch(failed);
