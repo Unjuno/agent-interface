@@ -1,0 +1,37 @@
+import pathlib,json,copy,collections,hashlib,tarfile,sys
+w=pathlib.Path(__file__).resolve().parent;r=pathlib.Path(sys.argv[1]) if len(sys.argv)>1 else w/'saved/actual'
+e=[json.loads(x) for x in (r/'client/runtime/events.jsonl').read_text().splitlines()]
+h=[json.loads(x) for x in (r/'fixture-evidence/submission-history.jsonl').read_text().splitlines()]
+o=json.loads((r/'outcome.json').read_text())
+def check(events,history,outcome):
+ goals=next(x['goal']['tasks'] for x in events if x['event']=='ready');assert len(goals)==6 and len(history)==6
+ terms={x['id']:x for x in events if x['event']=='terminal'};commands=[x for x in events if x['event']=='command' and x['command']['op']=='submit'];assert len(commands)==18 and len(terms)==18
+ for row in commands:
+  identifier=row['command']['id'];steps=row['command']['steps'];term=terms[identifier]
+  assert term['status']=='completed' and term['steps_completed']==len(steps)
+  release=term['release'];assert release['verified'] is True and release['keys_down']==[] and release['buttons_down']==[]
+  assert [x['step'] for x in events if x['event']=='step_started' and x['id']==identifier]==list(range(len(steps)))
+  assert [x['step'] for x in events if x['event']=='step_completed' and x['id']==identifier]==list(range(len(steps)))
+ for task in goals:
+  post=[x for x in history if x['task_id']==task['task_id']];assert len(post)==1;post=post[0]
+  assert post['exact'] is True and post['expected_token']==task['token'] and post['submitted_values']==[task['token']] and post['layout']==task['layout']
+  action=[x for x in commands if len(x['command']['steps'])==11 and x['command']['steps'][8].get('text')==task['token']];assert len(action)==1;action=action[0];steps=action['command']['steps']
+  assert steps[2]=={'op':'text','text':'value'} and steps[6]=={'op':'key','key':'Tab'} and steps[9]=={'op':'key','key':'Return'}
+  assert action['received_ns']<=post['received_ns']<=terms[action['command']['id']]['terminal_ns']
+ oracle=[x for x in events if x['event']=='independent_evaluation'];assert len(oracle)==1 and oracle[0]==outcome['independent']
+ assert oracle[0]['success'] is True and oracle[0]['record_count']==6 and all(x==1 for x in oracle[0]['exact_counts'].values()) and not oracle[0]['unexpected'] and not oracle[0]['duplicates'] and not oracle[0]['missing']
+ assert outcome['natural_exit']==0 and outcome['model_calls']==0 and outcome['images_to_model']==0
+ return {'correct_original_posts':6,'programs':18,'original_oracle_success':True,'recorded_releases_verified':18,'natural_exit':0}
+result=check(e,h,o);controls=[]
+for label in ['wrong-token','duplicate-post','missing-step','unverified-release','post-outside-command']:
+ a=copy.deepcopy(e);b=copy.deepcopy(h);c=copy.deepcopy(o)
+ if label=='wrong-token':b[0]['submitted_values']=['wrong']
+ elif label=='duplicate-post':b.append(b[0])
+ elif label=='missing-step':a.remove(next(x for x in a if x['event']=='step_completed'))
+ elif label=='unverified-release':next(x for x in a if x['event']=='terminal')['release']['verified']=False
+ else:b[0]['received_ns']=0
+ try:check(a,b,c)
+ except AssertionError:controls.append(label)
+ else:raise AssertionError('bad control accepted')
+result.update(controls_rejected=controls,scope='original effect/program/release/oracle only; transport/checkpoint private and not inspected here')
+print(json.dumps(result,indent=2))
