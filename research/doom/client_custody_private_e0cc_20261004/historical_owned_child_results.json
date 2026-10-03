@@ -1,0 +1,32 @@
+{
+  "candidate_sha256": "f27ffe56f84206424ba51b4673a857844c4adbf25fa2d611a8281b4b57b5068a",
+  "cases": [
+    {
+      "case": "natural-exit",
+      "owned_pid": 55598,
+      "observed_exit_code": 0,
+      "reader_retired": true,
+      "journal_closed": true,
+      "three_pipe_descriptors_EBADF": true,
+      "response_rows": 1,
+      "utc_end": "2026-10-03T21:27:32.199593+00:00"
+    },
+    {
+      "case": "close-terminates",
+      "owned_pid": 55599,
+      "observed_exit_code": -15,
+      "reader_retired": true,
+      "journal_closed": true,
+      "three_pipe_descriptors_EBADF": true,
+      "response_rows": 1,
+      "utc_end": "2026-10-03T21:27:32.228283+00:00"
+    }
+  ],
+  "scope": "new own ordinary finite Python child, real Popen/reader/journal/OS pipes on this host; no received actor/native/formal allocation replay",
+  "limits": [
+    "no descendant or inherited-handle case",
+    "child termination simple cooperative OS signal path; no kill-escalation proof",
+    "no input/model/game/task-effect proof",
+    "hard whole-call deadline and production adoption absent"
+  ]
+}
