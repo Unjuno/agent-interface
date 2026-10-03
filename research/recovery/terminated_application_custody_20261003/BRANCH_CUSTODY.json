@@ -1,0 +1,81 @@
+{
+  "schema": "terminated-application-custody-v1",
+  "inspected_main": "a5365d29b3996bb1d856ed7ea125b4ebb3d1860e",
+  "disposition": "NEVER_SENT_PREVIEW_HISTORY_CUSTODY_ONLY",
+  "original_programs_invoked": 0,
+  "path_inventory": "SOURCE_ENTRIES.tsv",
+  "branch_records": [
+    {
+      "branch": "apply/cancel57-01a0ff52-preview-01",
+      "tip": "fc874bbc1daed7e85e1d6796a742939cac91495d",
+      "related_pr": 6870,
+      "merge_base": "6da2b492b9c2a9d76e5c54d35a0ae50b7b49edde",
+      "changed_entries": 42,
+      "exact_entries": 42,
+      "unique_unmerged_commits": 1,
+      "commit_time": "2026-10-03T11:53:17+09:00"
+    },
+    {
+      "branch": "apply/cancel57-01a0ff52-preview-02",
+      "tip": "8f651c55ac931acd5d4dc1bf12479e8876a2d41b",
+      "related_pr": 6870,
+      "merge_base": "391789d9f7a1014e441cc360eaae9360ab034e85",
+      "changed_entries": 42,
+      "exact_entries": 42,
+      "unique_unmerged_commits": 1,
+      "commit_time": "2026-10-03T12:02:00+09:00"
+    },
+    {
+      "branch": "apply/6907-v2-636986a-A06-8f42",
+      "tip": "8dd06c666b5a108e042d2f51d1cabe117639cede",
+      "related_pr": 6907,
+      "merge_base": "636986a804a6004cd047db7e8cc5e62c02d585d8",
+      "changed_entries": 69,
+      "exact_entries": 69,
+      "unique_unmerged_commits": 1,
+      "commit_time": "2026-10-03T15:38:21+09:00"
+    },
+    {
+      "branch": "apply/6907-v2-4ada7f5-A07-8f42",
+      "tip": "4d3c685163c53da68c2aef2ee74c3fe66e5700db",
+      "related_pr": 6907,
+      "merge_base": "4ada7f511ce451caa4050c78b7fa4b3afe6b6f72",
+      "changed_entries": 69,
+      "exact_entries": 69,
+      "unique_unmerged_commits": 1,
+      "commit_time": "2026-10-03T15:50:13+09:00"
+    },
+    {
+      "branch": "apply/6907-v2-9c0692d-A08-8f42",
+      "tip": "5f48981f38f1a5ba668b66fb9a5290bdf1330d5f",
+      "related_pr": 6907,
+      "merge_base": "9c0692dabbfc7fc2fa5bd111b6de4baee578800d",
+      "changed_entries": 69,
+      "exact_entries": 69,
+      "unique_unmerged_commits": 1,
+      "commit_time": "2026-10-03T16:40:22+09:00"
+    }
+  ],
+  "completed_pr_evidence": [
+    {
+      "pr": 6870,
+      "head": "f394fd0f95ae7f1939abb04216d74ea56c03a725",
+      "merge": "403a21a6951662401925835fbc70670bab84b457",
+      "terminal_record": "https://github.com/Unjuno/agent-interface/pull/6870#issuecomment-5965150364",
+      "qualification": "additive evidence archive only; weak v1 audit remains qualified; old preview routes were never sent"
+    },
+    {
+      "pr": 6907,
+      "head": "1510553308d1d3488a41122533c49e70e5a22f40",
+      "merge": "e5270c7bfe50911225afc6c3b5273021331b2bb1",
+      "terminal_record": "https://github.com/Unjuno/agent-interface/pull/6907#issuecomment-5966907163",
+      "first_loss_qualification": "https://github.com/Unjuno/agent-interface/pull/6907#issuecomment-5966501697",
+      "renewed_stale_candidate_qualification": "https://github.com/Unjuno/agent-interface/pull/6907#issuecomment-5966852769",
+      "qualification": "known-fault inert history only; A06/A07/A08 never sent, A06 private original-JSON custody loss remains missing; missing stats/censors/first failures retained"
+    }
+  ],
+  "externally_absent_source_refs_not_targeted": [
+    "research/57-boundary-01a0ff52",
+    "research/59-scorer-burst-01a0ff59"
+  ]
+}
