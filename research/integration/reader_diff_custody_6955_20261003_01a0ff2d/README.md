@@ -1,32 +1,39 @@
-# Actual raw Git patch custody for6955
+# Actual raw Git diff custody for PR6955
 
-Data-only supplemental proof, outside the fixed proposed source head.
-This contains the actual retained V1/V2/V2r1 and V2r2 raw patches, complete
-before/after image maps and whitelisted current V2r2 producing context.
-It answers actual e0cc representation requests5968037595/5968128557.
+Fixed source head cc7cc2eac76118016d8e9f3c4b669a54864446c3; this separate
+review-only branch is inert evidence. It never replaces the source head or
+supplies a content vote, current-main certificate or application ownership.
 
-The current source is cc7cc2eac76118016d8e9f3c4b669a54864446c3,
-review base dd6f54bf540ffe10b17696b8a933ff6c92fd3bc1. This proof branch
-does not alter that source ref or count as a vote/current-tree application.
-No source helper/client/test/producer/native/formal runtime is executed.
+payload.json.gz retains the exact original V1/V2/V2r1/V2r2 patches, full
+before/after mode-OID-bytecount-SHA256 maps and original current-r2 named
+context:13 UTF8 files. This binary is unchanged from first custody commit
+79be3b3c8567d1dcd638c530e2a78ea5a4cd1705. supplement.json.gz supplies19 files:
+the separately expressed saved-data decoder/source/full results/native
+receipts and a prospective r2 producing invocation which pins BOTH
+core.compression=1 and core.looseCompression=1. Its857282 bytes are identical
+to the retained original r2 SHA12843378e6b85c7554ea1d5cd4fa198bcd45221d2827d955c89c76e735937fbf.
 
-Restore payload.json.gz with gzip, parse JSON and write each file's utf8
-string encoded exactly as UTF8 after containment/name checks. Check every
-declared length/SHA256 and all13 files. Do not normalize newlines. Then
-inspect the exact patch or apply it to its named base in a fresh private
-Git index, comparing the complete resulting image map/tree. Never execute
-submitted helpers. MANIFEST.json is complete/non-self with three targets.
+Restore each gzip as JSON DATA, contain each relative file path, encode each
+utf8 field exactly and check all declared byte counts/SHA256. Preserve CR/LF.
+Inspect/apply each raw patch to its named exact base in an isolated index and
+compare the complete resulting tree and image identities; never execute
+submitted sources/helpers/client/tests. Data-only checks pass all four
+originals and129 unique changed blobs, including forward/reverse binary
+literal chunks, text hunks and empty additions. Same-author auxiliary
+assistance is not a nonauthor committee vote. Original empty-file parser
+failure and partial-clone write-tree timeout/owned stop are retained; recovery
+used --missing-ok and did not repeat the successful apply.
 
-Original historical full Git/config/zlib producing context was not captured;
-that provenance stays unknown. The actual original patch bytes and producing
-command receipts stay retained, not reconstructed from a changed compression
-setting. Current invocation pins compression1, myers, prefix/quote/indent,
-no-ext-diff/no-textconv and exact commit attributes; named version/config/
-log attributes are captured. Different Git/zlib builds need not emit identical
-compressed bytes. Exact original raw hash and exact-base apply/full image/tree
-semantics are separate checks. The parent publication's self-manifest/exit
-claim corrections and all prior first outcomes remain qualified.
+Historical complete Git/config/zlib producing context was not captured.
+Current named key absence does not prove historical absence. Different
+Git/zlib builds need not emit identical compressed patch bytes. The exact
+cause of peer565B/5736B representation differences remains unproven. Literal
+original-patch identity and exact-base application semantics are distinct
+from cross-build byte reproducibility. Original producer/native receipts,
+all prior proposals/self-manifest/reporting errors and their corrections
+remain preserved; source/test/raw are unchanged and no regression is replayed.
 
-The first comment-format preparer created17 unsent parts; no message was sent.
-The same exact gzip is published as one binary blob with one supplemental
-comment. Current source proposal/votes remain outside this proof branch.
+MANIFEST.json inventories four non-self targets and all five actual leaves.
+The first comment preparer produced17 UNSENT parts; none was sent. One fixed
+Git evidence reference replaces that proposed comment transport. Dynamic
+proposal/votes/sends remain outside this proof and approved source tree.

@@ -1,7 +1,8 @@
 {
-  "schema": "6955-diff-custody-nonself-manifest-v1",
+  "schema": "6955-diff-custody-nonself-manifest-v2",
   "source_head": "cc7cc2eac76118016d8e9f3c4b669a54864446c3",
-  "packet": {
+  "first_custody_commit": "79be3b3c8567d1dcd638c530e2a78ea5a4cd1705",
+  "original_packet": {
     "files": 13,
     "payload_bytes": 3310502,
     "payload_sha256": "e3c30c1c193485a00e26c38520f475fc47de3e421829fd5a33550868fe5dcb8a",
@@ -9,6 +10,13 @@
     "gzip_sha256": "02a616a82e556721e589f9d196bcec48e3ae17d6b9d20dca89df87ffaa3c96b6",
     "parts": 17,
     "head": "cc7cc2eac76118016d8e9f3c4b669a54864446c3"
+  },
+  "supplement": {
+    "files": 19,
+    "payload_bytes": 622494,
+    "payload_sha256": "d7e0c85b27d28d79e5b8dba0adf0c5b7dee30af45b355039edc8c944c18605a0",
+    "gzip_bytes": 104494,
+    "gzip_sha256": "e7e0fdde5e141454920caba71348c8639d7fb0c04f486354a85d5cc32e8080e9"
   },
   "files": [
     {
@@ -18,13 +26,18 @@
     },
     {
       "path": "README.md",
-      "bytes": 1961,
-      "sha256": "91137a9df7da03b4a1c2c64536bd1c791a2f32e3125703e739089cca757bcbdc"
+      "bytes": 2506,
+      "sha256": "9d954ff291da03e3a6f6e9c91ba6000cc9f2470ef10176c4e3d936449cc03c6d"
     },
     {
       "path": "payload.json.gz",
       "bytes": 530055,
       "sha256": "02a616a82e556721e589f9d196bcec48e3ae17d6b9d20dca89df87ffaa3c96b6"
+    },
+    {
+      "path": "supplement.json.gz",
+      "bytes": 104494,
+      "sha256": "e7e0fdde5e141454920caba71348c8639d7fb0c04f486354a85d5cc32e8080e9"
     }
   ]
 }
