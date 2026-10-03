@@ -246,6 +246,8 @@ class ExecutionReceipt:
             raise ContractError("effect_occurrence must be EffectOccurrence")
         if not isinstance(self.release, ReleaseReceipt):
             raise ContractError("release must be ReleaseReceipt")
+        if self.release.observed_ns < self.started_ns:
+            raise ContractError("release observation must not precede execution start")
 
 
 @dataclass(frozen=True, slots=True)
