@@ -10,9 +10,6 @@ import threading
 import time
 
 PACKAGES = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(PACKAGES / 'v39_eof_59_f02_20261004_3cbf'))
-from candidate import factory as candidate_factory
-from probe import factory as baseline_factory
 CASES = ('baseline_eof', 'candidate_eof', 'candidate_events_eof', 'candidate_json')
 
 
@@ -51,9 +48,13 @@ def run(output):
         hashes = {name: hashlib.sha256(path.read_bytes()).hexdigest() for name, path in pins.items()}
         if hashes != require:
             raise ValueError('source pins')
+        # Never execute dependency imports before source validation and STOP retention.
+        sys.path.insert(0, str(PACKAGES / 'v39_eof_59_f02_20261004_3cbf'))
+        from candidate import factory as candidate_factory
+        from probe import factory as baseline_factory
         with tarfile.open(archive, 'r:gz') as source:
             code = source.extractfile('research/doom/v39_reader_signal_59_e02_20261004_3cbf/source/v39-candidate.py.txt').read()
-    except Exception as error:
+    except (Exception, KeyboardInterrupt) as error:
         write(output / 'SUMMARY.json', {
             'cases': [], 'retries': 0, 'model_calls': 0,
             'verdict': 'STOP_PREFLIGHT_SOURCE', 'error_type': type(error).__name__,
@@ -92,8 +93,9 @@ def run(output):
                 result['end_ns'] = time.perf_counter_ns(); row['waits'].append(result)
             thread.join(1)
             row.update(reader_alive=thread.is_alive(), child_alive=child.poll() is None, events=events)
-        except Exception as error:
+        except (Exception, KeyboardInterrupt) as error:
             row['fatal'] = repr(error)
+            row['fatal_type'] = type(error).__name__
         finally:
             if child is not None:
                 row.setdefault('child_alive', child.poll() is None)
@@ -127,6 +129,8 @@ def run(output):
             break
     summary = {'cases': [row['case'] for row in rows], 'retries': 0, 'model_calls': 0,
                'verdict': 'PASS_SCOPED_PIPE_NOTIFICATION' if len(rows) == 4 and all(row['gate'] for row in rows) else 'STOP_FIRST_UNEXPECTED_CELL'}
+    if rows and rows[-1].get('fatal_type'):
+        summary['stop_reason'] = rows[-1]['fatal_type']
     write(output / 'SUMMARY.json', summary)
     return 0 if summary['verdict'] == 'PASS_SCOPED_PIPE_NOTIFICATION' else 1
 
