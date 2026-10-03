@@ -131,8 +131,6 @@ class RequestLifecycle:
     def record_effect(self, receipt: EffectReceipt) -> None:
         if self.stage is not Stage.EXECUTED or self.execution is None or self.request is None:
             raise ContractError("effect receipt requires completed released execution")
-        if not isinstance(receipt, EffectReceipt):
-            raise ContractError("receipt must be EffectReceipt")
         if receipt.command_id != self.execution.command_id:
             raise ContractError("effect receipt command mismatch")
         if receipt.invariant_manifest_id != self.execution.invariant_manifest_id:

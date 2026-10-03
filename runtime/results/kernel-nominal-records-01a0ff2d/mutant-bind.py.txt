@@ -62,8 +62,6 @@ class RequestLifecycle:
     def bind(self, binding: TargetBinding) -> None:
         if self.stage is not Stage.OBSERVED or self.observation is None:
             raise ContractError("binding requires one current observation")
-        if not isinstance(binding, TargetBinding):
-            raise ContractError("binding must be TargetBinding")
         if binding.observation_sequence != self.observation.sequence:
             raise ContractError("binding is stale for current observation")
         if binding.surface_id != self.observation.surface_id:
