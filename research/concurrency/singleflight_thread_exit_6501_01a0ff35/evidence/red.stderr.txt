@@ -1,0 +1,28 @@
+test_closing_rejoin_cannot_overlap_blocking_callable (test_mechanism.WorkerLifetimeTests.test_closing_rejoin_cannot_overlap_blocking_callable) ... FAIL
+test_post_exit_rejoin_starts_fresh_and_cleanup_is_complete (test_mechanism.WorkerLifetimeTests.test_post_exit_rejoin_starts_fresh_and_cleanup_is_complete) ... ok
+test_unaffected_waiter_progress_survives_one_detach (test_mechanism.WorkerLifetimeTests.test_unaffected_waiter_progress_survives_one_detach) ... ok
+
+======================================================================
+FAIL: test_closing_rejoin_cannot_overlap_blocking_callable (test_mechanism.WorkerLifetimeTests.test_closing_rejoin_cannot_overlap_blocking_callable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<PRIVATE_HOME>\AppData\Local\Programs\Python\Python311\Lib\unittest\async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PRIVATE_HOME>\AppData\Local\Programs\Python\Python311\Lib\unittest\async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PRIVATE_HOME>\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PRIVATE_HOME>\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "<PRIVATE_WORKSPACE>\work\thread-exit-repo\research\concurrency\singleflight_thread_exit_6501_01a0ff35\test_mechanism.py", line 9, in test_closing_rejoin_cannot_overlap_blocking_callable
+    self.assertEqual(len(entries), 1)
+AssertionError: 2 != 1
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.188s
+
+FAILED (failures=1)
