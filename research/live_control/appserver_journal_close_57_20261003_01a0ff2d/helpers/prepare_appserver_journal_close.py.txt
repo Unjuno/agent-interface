@@ -1,0 +1,40 @@
+import hashlib, json, subprocess
+from datetime import datetime, timezone
+from pathlib import Path
+
+root = Path(__file__).resolve().parent.parent
+repo = root / 'work/agent-interface'
+private = root / 'work/repairs/appserver-journal-close-01'
+out = root / 'outputs/appserver-journal-close-01'
+private.mkdir(parents=True, exist_ok=False)
+out.mkdir(parents=True, exist_ok=False)
+base = 'dd6f54bf540ffe10b17696b8a933ff6c92fd3bc1'
+paths = ['research/live_control/codex_app_server_client_v2.py', 'runtime/integration_checks/native.py']
+sources = []
+for path in paths:
+    started = datetime.now(timezone.utc).isoformat()
+    p = subprocess.Popen(['git', 'show', base + ':' + path], cwd=repo, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    data, error = p.communicate(timeout=60)
+    assert p.returncode == 0, error
+    sources.append({'path': path, 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest(),
+                    'git_oid': hashlib.sha1(b'blob ' + str(len(data)).encode() + b'\0' + data).hexdigest(),
+                    'read_pid': p.pid, 'read_start_utc': started, 'read_end_utc': datetime.now(timezone.utc).isoformat(),
+                    'read_exit': p.returncode})
+    (private / Path(path).name).write_bytes(data)
+assert sources[0]['bytes'] == 6303 and sources[0]['sha256'] == '8ed4e3496ef8154d3c4573fb1386efe6e036292a3809e43aa37fc22aecc5b42b'
+tests = (root / 'work/test_appserver_journal_close_01a0ff2d.py').read_bytes()
+(private / 'test_appserver_journal_close_01a0ff2d.py').write_bytes(tests)
+(private / 'baseline-client.py.txt').write_bytes((private / 'codex_app_server_client_v2.py').read_bytes())
+(private / 'baseline-test.py.txt').write_bytes(tests)
+freeze = {'worker': '01a0ff2d-be6f-78d3-ad7c-497514c9079f', 'claim_comment': 5966666888,
+          'kind': 'ordinary-test-first-local-repair', 'base': base, 'sources': sources,
+          'test_sha256': hashlib.sha256(tests).hexdigest(), 'test_bytes': len(tests), 'methods': 5,
+          'native_children_per_command': 3, 'max_simultaneous_owned_children': 1,
+          'before_red_utc': datetime.now(timezone.utc).isoformat(),
+          'inputs': 'silent Python child; retained owned journal seed; lock held/unheld/disabled; pure already-closed and raising journal controls',
+          'decision': 'held journal lock must yield TimeoutError by fixed0.25s checkpoint for timeout0.05; preserve raw/holder ownership; controls retire or preserve same journal close exception; all driver-owned children/readers/callers/pipes closed afterward',
+          'limits': 'ordinary mutex-retirement regressions, not original b04b producer replay, physical input/model/task/full-close OS I/O/pipe ownership/hard real-time bound'}
+with (out / 'FREEZE_BEFORE_RED.json').open('x', encoding='utf-8') as f:
+    json.dump(freeze, f, indent=2)
+    f.write('\n')
+print(json.dumps(freeze, indent=2))

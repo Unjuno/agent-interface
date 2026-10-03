@@ -1,0 +1,43 @@
+{
+  "worker": "01a0ff2d-be6f-78d3-ad7c-497514c9079f",
+  "claim_comment": 5966666888,
+  "kind": "ordinary-test-first-local-repair",
+  "base": "dd6f54bf540ffe10b17696b8a933ff6c92fd3bc1",
+  "sources": [
+    {
+      "path": "research/live_control/codex_app_server_client_v2.py",
+      "bytes": 6303,
+      "sha256": "8ed4e3496ef8154d3c4573fb1386efe6e036292a3809e43aa37fc22aecc5b42b",
+      "git_oid": "bbfad463d7428dd80b7dca533d518a77604e69f1",
+      "read_pid": 15984,
+      "read_start_utc": "2026-10-03T07:16:22.872986+00:00",
+      "read_end_utc": "2026-10-03T07:16:23.012171+00:00",
+      "read_exit": 0
+    },
+    {
+      "path": "runtime/integration_checks/native.py",
+      "bytes": 4430,
+      "sha256": "2203a185f2ba01ff1271c61f9f843efa180b0ec1192fbb195c9452fe0aa430ae",
+      "git_oid": "b8f7b217f6df89220fc82a9d6ac497bfefa30287",
+      "read_pid": 7548,
+      "read_start_utc": "2026-10-03T07:16:23.013172+00:00",
+      "read_end_utc": "2026-10-03T07:16:23.135738+00:00",
+      "read_exit": 0
+    }
+  ],
+  "test_sha256": "c6598d088225e50d428448390f76a30e2e146a5c0b82c93c115db97e796bdc98",
+  "test_bytes": 9567,
+  "methods": 7,
+  "native_children_per_command": 3,
+  "max_simultaneous_owned_children": 1,
+  "before_red_utc": "2026-10-03T07:16:23.138739+00:00",
+  "inputs": "silent Python child; retained owned journal seed; lock held/unheld/disabled; pure already-closed and raising journal controls",
+  "decision": "held journal lock must yield TimeoutError by fixed0.25s checkpoint for timeout0.05; preserve raw/holder ownership; controls retire or preserve same journal close exception; all driver-owned children/readers/callers/pipes closed afterward",
+  "limits": "ordinary mutex-retirement regressions, not original b04b producer replay, physical input/model/task/full-close OS I/O/pipe ownership/hard real-time bound",
+  "before_red_v2_utc": "2026-10-03T07:17:53.377606+00:00",
+  "first_red": "red/receipt.json and executed source/test/cases retained unchanged:5methods/2failures; production held mutex and LF-vs-Windows-CRLF fixture error",
+  "correction": "Snapshot actual journal bytes immediately after fixed fixture text flush; compare unchanged actual bytes, preserve all thresholds/source/cases. Add literal base64 first/final journal readback to new records.",
+  "first_journal_raw_qualification": "Initial RED saved booleans, not original temporary journal bytes; Windows TextIO newline explanation is source/platform qualified, not authentication of inaccessible first journal bytes.",
+  "before_compatibility_command_utc": "2026-10-03T07:22:16.456371+00:00",
+  "additional_condition": "Preserve accepted explicit timeout=None mode for unheld journal and disabled journal. Two pure-object cases; no new transport child for compatibility RED."
+}
