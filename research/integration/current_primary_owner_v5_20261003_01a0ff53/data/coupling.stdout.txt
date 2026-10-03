@@ -1,0 +1,42 @@
+✔ whole owner reconciles original request on silent returned close (67.770917ms)
+✔ whole owner reconciles original request on silent busy close (60.740292ms)
+✔ numbered commands return exact file/text descriptors with no image encoding (2.828625ms)
+✔ commands arriving while outstanding are rejected rather than queued (1.263667ms)
+✔ EOF waits for the already committed command without replaying it (0.559666ms)
+✔ malformed JSON is refused without invoking exchange or consuming a command (0.748625ms)
+✔ command error reports uncertainty and state without retry (0.487584ms)
+✔ output failure rejects the stream owner after one completed command (0.826209ms)
+✔ config refuses unknown routes and fields before starting a host (0.178167ms)
+✔ terminal output refuses before starting a relay or allocating its evidence (0.148ms)
+✔ startup output failure keeps original exception, closes one relay and never writes again (52.021333ms)
+✔ failed review is correlated to its consumed command without a host call or replay (2.504875ms)
+✔ pre-admission envelope error keeps requested id distinct from unconsumed next id (0.511625ms)
+✔ malformed command identity stays bounded and does not become a valid correlation (0.287625ms)
+✔ blocked busy output bounds response work for a batch of rejected commands (3.06275ms)
+✔ overload preserves the committed result before rejecting the stream owner (1.192167ms)
+✔ separately observed busy replies remain available during one committed command (0.949958ms)
+✔ first busy failure survives later input error (64.73325ms)
+✔ first busy failure survives later output error (62.33ms)
+✔ illegal-ff (3.365583ms)
+✔ incomplete-e3-in-string (0.469292ms)
+✔ lone-continuation (0.472625ms)
+✔ overlong-slash (0.488417ms)
+✔ utf8-surrogate (0.477542ms)
+✔ incomplete-byte-at-EOF (0.69475ms)
+✔ ordinary-ascii-is-unchanged (0.683917ms)
+✔ split-valid-multibyte-survives-byte-boundaries (0.688833ms)
+✔ literal-replacement-character-is-valid (0.587792ms)
+✔ already-decoded-text-caller-is-preserved (0.737125ms)
+✔ existing-malformed-JSON-is-refused-without-consuming (0.474166ms)
+✔ accepted-same-promise-finishes-before-malformed-byte-rejection (1.159167ms)
+✔ unaccepted-valid-prefix-in-corrupted-chunk-is-refused (0.336125ms)
+✔ existing-BOM-JSON-refusal-is-preserved (0.343ms)
+✔ owned-validation-listeners-retire-and-foreign-observers-stay (0.334958ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 34
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 632.680709

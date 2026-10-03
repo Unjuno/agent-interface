@@ -1,0 +1,67 @@
+{
+  "kind": "busy",
+  "setup_passed": true,
+  "before_release": {
+    "settled": 0,
+    "code": null
+  },
+  "boundary": {
+    "observed": true,
+    "settled": 1,
+    "code": "PRIMARY_OUTPUT_CLOSED"
+  },
+  "settlements": 1,
+  "error": {
+    "name": "Error",
+    "message": "primary output closed before write completion",
+    "code": "PRIMARY_OUTPUT_CLOSED"
+  },
+  "fixture_start": {
+    "pid": 96007,
+    "ppid": 96004
+  },
+  "fixture_exit": {
+    "pid": 96007,
+    "ppid": 96004,
+    "code": 0,
+    "requests": 1,
+    "request_bytes": 72
+  },
+  "host_exit": {
+    "code": 0,
+    "signal": null
+  },
+  "fixture_absent": true,
+  "statuses": [
+    "ready",
+    "busy"
+  ],
+  "rows": [
+    {
+      "schema": "agent-interface/primary-stdio-v1",
+      "status": "ready",
+      "state": {
+        "next_id": 1,
+        "busy": false,
+        "stopped": null,
+        "caller_state": {
+          "stopped": null
+        }
+      }
+    },
+    {
+      "schema": "agent-interface/primary-stdio-v1",
+      "status": "busy",
+      "operation_invoked": false,
+      "pending": true,
+      "next_id": 2
+    }
+  ],
+  "listeners": {
+    "input_errors": 0,
+    "output_errors": 1,
+    "output_closes": 1,
+    "foreign_error": true,
+    "foreign_close": true
+  }
+}

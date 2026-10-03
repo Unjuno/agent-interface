@@ -1,0 +1,70 @@
+✖ silent close rejects returned write and retains accepted work (5.844917ms)
+✖ silent close rejects busy write and retains accepted work (1.942ms)
+✔ completed write remains successful after later close (1.143166ms)
+✔ callback error remains the same first object after close (1.158541ms)
+✖ already destroyed output rejects without another write call (1.109958ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 2
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 75.48875
+
+✖ failing tests:
+
+test at runtime/host_v1/test_primary_output_close.mjs:17:39
+✖ silent close rejects returned write and retains accepted work (5.844917ms)
+  AssertionError [ERR_ASSERTION]: closed write must settle before its withheld callback is released
+  + actual - expected
+  
+  + 'pending'
+  - 'rejected'
+  
+      at TestContext.<anonymous> (file://<OWN_WORKSPACE>/work/current-primary-v5-current-main-01/baseline/runtime/host_v1/test_primary_output_close.mjs:46:10)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'pending',
+    expected: 'rejected',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at runtime/host_v1/test_primary_output_close.mjs:17:39
+✖ silent close rejects busy write and retains accepted work (1.942ms)
+  AssertionError [ERR_ASSERTION]: closed write must settle before its withheld callback is released
+  + actual - expected
+  
+  + 'pending'
+  - 'rejected'
+  
+      at TestContext.<anonymous> (file://<OWN_WORKSPACE>/work/current-primary-v5-current-main-01/baseline/runtime/host_v1/test_primary_output_close.mjs:46:10)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'pending',
+    expected: 'rejected',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at runtime/host_v1/test_primary_output_close.mjs:70:1
+✖ already destroyed output rejects without another write call (1.109958ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file://<OWN_WORKSPACE>/work/current-primary-v5-current-main-01/baseline/runtime/host_v1/test_primary_output_close.mjs:78:10)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

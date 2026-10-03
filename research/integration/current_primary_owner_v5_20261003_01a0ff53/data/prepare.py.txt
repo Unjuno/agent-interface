@@ -1,0 +1,9 @@
+import pathlib,subprocess,json,hashlib,datetime
+R=pathlib.Path('<OWN_WORKSPACE>');G=R/'work/agent-interface';O=R/'work/current-primary-v5-current-main-01';S=O/'baseline';S.mkdir(exist_ok=False);base='20db889c66f306585aacc41f45c763b6bb157e2c';v4='c30e354acd6ca267ace6e3f0ba6c28612091aade';rows=[]
+def g(*a):return subprocess.check_output(['git',*a],cwd=G)
+paths=g('ls-tree','--name-only',base,'runtime/host_v1/').decode().splitlines()
+for p in paths:
+ if p.endswith('.mjs') and not pathlib.Path(p).name.startswith('test_'):
+  b=g('show',base+':'+p);q=S/p;q.parent.mkdir(parents=True,exist_ok=True);q.write_bytes(b);rows.append(dict(path=p,ref=base,bytes=len(b),sha256=hashlib.sha256(b).hexdigest()))
+p='runtime/host_v1/test_primary_output_close.mjs';b=g('show',v4+':'+p);(S/p).write_bytes(b);rows.append(dict(path=p,ref=v4,bytes=len(b),sha256=hashlib.sha256(b).hexdigest()))
+(O/'SOURCE.json').write_text(json.dumps(rows,indent=2)+'\n');(O/'PLAN.json').write_text(json.dumps(dict(recorded_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),base=base,old_proposal_not_applied=True,scope='Own ordinary five output-close regressions on materially changed current main, not received UTF8 helper/producer replay',mutate='If direct original bug remains, compose original V4 output-close/owner handling into current UTF8+busy product; no wholesale old-file substitution',main_sends=0),indent=2)+'\n');print(len(rows))
