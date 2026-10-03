@@ -1,0 +1,112 @@
+[
+  {
+    "label": "affected",
+    "argv": [
+      "<PRIVATE_RUNTIME>\\node\\bin\\node.exe",
+      "--test",
+      "--test-concurrency=1",
+      "runtime/host_v1/test_primary_stdio.mjs",
+      "runtime/host_v1/test_primary_stdio_utf8.mjs",
+      "runtime/host_v1/test_relay_client.mjs"
+    ],
+    "cwd": "<PRIVATE_ROOT>\\work\\primary-startup-utf8-union-01a0ff32",
+    "pid": 27484,
+    "started_utc": "2026-10-03T08:56:03.013462+00:00",
+    "ended_utc": "2026-10-03T08:56:06.330525+00:00",
+    "exit": 0,
+    "timeout": false,
+    "stdout_bytes": 5308,
+    "stdout_sha256": "9346f680354b40efe1c23c41a82957e1441986bb4b7905b9d4211feabdf424d3",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "freeze_sha256": "b4868ea7206ab9d7a2e4691b4d83e578165e9f9f5b80739eaa5e9b97635cc2b3"
+  },
+  {
+    "label": "case-healthy_split",
+    "argv": [
+      "<PRIVATE_RUNTIME>\\node\\bin\\node.exe",
+      "<PRIVATE_ROOT>\\outputs\\primary-startup-utf8-union-01a0ff32-a01\\probe.cjs",
+      "<PRIVATE_ROOT>\\outputs\\primary-startup-utf8-union-01a0ff32-a01\\cases\\healthy_split",
+      "healthy_split",
+      "<PRIVATE_ROOT>\\work\\primary-startup-utf8-union-01a0ff32",
+      "<PRIVATE_ROOT>\\outputs\\primary-startup-utf8-union-01a0ff32-a01\\fixture.cjs"
+    ],
+    "cwd": "<PRIVATE_ROOT>\\work\\primary-startup-utf8-union-01a0ff32",
+    "pid": 33232,
+    "started_utc": "2026-10-03T08:56:06.333525+00:00",
+    "ended_utc": "2026-10-03T08:56:06.506571+00:00",
+    "exit": 0,
+    "timeout": false,
+    "stdout_bytes": 1686,
+    "stdout_sha256": "fc7b622cd42480215882c094e8e712e4d1466cef3fadb912277174eda2dd3417",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "freeze_sha256": "b4868ea7206ab9d7a2e4691b4d83e578165e9f9f5b80739eaa5e9b97635cc2b3"
+  },
+  {
+    "label": "case-malformed_pending",
+    "argv": [
+      "<PRIVATE_RUNTIME>\\node\\bin\\node.exe",
+      "<PRIVATE_ROOT>\\outputs\\primary-startup-utf8-union-01a0ff32-a01\\probe.cjs",
+      "<PRIVATE_ROOT>\\outputs\\primary-startup-utf8-union-01a0ff32-a01\\cases\\malformed_pending",
+      "malformed_pending",
+      "<PRIVATE_ROOT>\\work\\primary-startup-utf8-union-01a0ff32",
+      "<PRIVATE_ROOT>\\outputs\\primary-startup-utf8-union-01a0ff32-a01\\fixture.cjs"
+    ],
+    "cwd": "<PRIVATE_ROOT>\\work\\primary-startup-utf8-union-01a0ff32",
+    "pid": 3148,
+    "started_utc": "2026-10-03T08:56:06.510572+00:00",
+    "ended_utc": "2026-10-03T08:56:06.678989+00:00",
+    "exit": 0,
+    "timeout": false,
+    "stdout_bytes": 2186,
+    "stdout_sha256": "618d3143e33a3842bf4406508a99ed8e159113f6a1cabb4a7aeed9fc33237ec5",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "freeze_sha256": "b4868ea7206ab9d7a2e4691b4d83e578165e9f9f5b80739eaa5e9b97635cc2b3"
+  },
+  {
+    "label": "case-malformed_then_stream",
+    "argv": [
+      "<PRIVATE_RUNTIME>\\node\\bin\\node.exe",
+      "<PRIVATE_ROOT>\\outputs\\primary-startup-utf8-union-01a0ff32-a01\\probe.cjs",
+      "<PRIVATE_ROOT>\\outputs\\primary-startup-utf8-union-01a0ff32-a01\\cases\\malformed_then_stream",
+      "malformed_then_stream",
+      "<PRIVATE_ROOT>\\work\\primary-startup-utf8-union-01a0ff32",
+      "<PRIVATE_ROOT>\\outputs\\primary-startup-utf8-union-01a0ff32-a01\\fixture.cjs"
+    ],
+    "cwd": "<PRIVATE_ROOT>\\work\\primary-startup-utf8-union-01a0ff32",
+    "pid": 34580,
+    "started_utc": "2026-10-03T08:56:06.682989+00:00",
+    "ended_utc": "2026-10-03T08:56:06.865566+00:00",
+    "exit": 0,
+    "timeout": false,
+    "stdout_bytes": 2236,
+    "stdout_sha256": "81f98e590c261b1e7c32e5bfd86751b4c62fbccf4ddf3775fda528421460632a",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "freeze_sha256": "b4868ea7206ab9d7a2e4691b4d83e578165e9f9f5b80739eaa5e9b97635cc2b3"
+  },
+  {
+    "label": "case-stream_then_malformed",
+    "argv": [
+      "<PRIVATE_RUNTIME>\\node\\bin\\node.exe",
+      "<PRIVATE_ROOT>\\outputs\\primary-startup-utf8-union-01a0ff32-a01\\probe.cjs",
+      "<PRIVATE_ROOT>\\outputs\\primary-startup-utf8-union-01a0ff32-a01\\cases\\stream_then_malformed",
+      "stream_then_malformed",
+      "<PRIVATE_ROOT>\\work\\primary-startup-utf8-union-01a0ff32",
+      "<PRIVATE_ROOT>\\outputs\\primary-startup-utf8-union-01a0ff32-a01\\fixture.cjs"
+    ],
+    "cwd": "<PRIVATE_ROOT>\\work\\primary-startup-utf8-union-01a0ff32",
+    "pid": 34152,
+    "started_utc": "2026-10-03T08:56:06.867564+00:00",
+    "ended_utc": "2026-10-03T08:56:07.036987+00:00",
+    "exit": 0,
+    "timeout": false,
+    "stdout_bytes": 1913,
+    "stdout_sha256": "5b8fc30ea29a4ce398dd091374ba6337667599f4c384773cb0f4b3fe0d0088d9",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "freeze_sha256": "b4868ea7206ab9d7a2e4691b4d83e578165e9f9f5b80739eaa5e9b97635cc2b3"
+  }
+]
