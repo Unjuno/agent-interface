@@ -340,6 +340,11 @@ class Win32Backend:
             elif not self.gdi32.BitBlt(mem_dc, 0, 0, w, h,
                                        source_dc, sx, sy, SRCCOPY):
                 raise Win32BackendError("BitBlt failed")
+            # GetDIBits requires the bitmap to be deselected from every DC.
+            restored = self.gdi32.SelectObject(mem_dc, old)
+            if not restored or restored == ctypes.c_void_p(-1).value:
+                raise Win32BackendError("GDI bitmap deselection failed")
+            old = None
             info = BITMAPINFO()
             info.bmiHeader = BITMAPINFOHEADER(
                 ctypes.sizeof(BITMAPINFOHEADER), w, -h, 1, 32, BI_RGB,
