@@ -52,3 +52,11 @@ test ASTs. Runtime implementation unchanged by this follow-up.
 Intake local Analysis Index CI at a2890452b exits0:43steps/failures=[];
 full intake-local-ci.log retained. Not every repository workflow or full native
 suite PASS. Technical advisory contributes zero E3 approval/application votes.
+
+Final code/test492c5af85: native449protocoltests/4failures/6errors/5skips,
+205harness/31errors. All41FAIL/ERROR headers still identical to pinned main.
+Final local CI exits0:43steps/failures=[]; complete final-local-ci.log and
+native-final-full.log retained. Follow-up read-only nonvoting review confirms
+copy-failure Minor resolved, no outstanding Critical/Important/Minor finding;
+excluded concurrency/custom-copy/physical/native/economic/adoption scopes stay
+unproved. Fresh original archive git diff exits0. No blanket full-suite PASS.
