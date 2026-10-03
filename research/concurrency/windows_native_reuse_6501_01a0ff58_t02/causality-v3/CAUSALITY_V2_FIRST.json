@@ -1,0 +1,12 @@
+{
+  "pid": 23332,
+  "start_utc": "2026-10-03T16:28:05.135082+00:00",
+  "end_utc": "2026-10-03T16:28:05.142587+00:00",
+  "source_sha256": "54f838f0c4cd93dfa605fa98c5ebc29e26fa2a148a166ea6e445d816d1d47e0c",
+  "name": "A_write_after_read",
+  "mutation_sha256": "6c606fca5aebaf873e429353f39ac06b227662202702ceb8633955c92c67af1a",
+  "mutation_bytes": 5655,
+  "accepted": true,
+  "native_replay": 0,
+  "definition": "Move complete generation1 write-request/return payload after actual read-return1, reindex events and assign original nondecreasing clock sample vector to preserve clock admissibility; original/result bytes not changed."
+}

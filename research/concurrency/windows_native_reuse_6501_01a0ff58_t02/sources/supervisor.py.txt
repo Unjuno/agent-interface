@@ -1,0 +1,17 @@
+from pathlib import Path
+from datetime import datetime,timezone
+import subprocess,json,hashlib,sys,os,time
+R=Path(__file__).resolve().parents[2];O=R/'outputs/ownedwinpipe6501-t02';W=R/'work/ownedwinpipe6501-t02';now=lambda:datetime.now(timezone.utc).isoformat();H=lambda b:hashlib.sha256(b).hexdigest();assert not (O/'SUPERVISOR.json').exists();freeze=json.loads((O/'FREEZE.json').read_bytes())
+for n,pin in freeze['sources'].items():b=(R/n).read_bytes();assert len(b)==pin['bytes'] and H(b)==pin['sha256']
+rec={'start_utc':now(),'pid':os.getpid(),'children':[],'status':'RUNNING','freeze_sha256':H((O/'FREEZE.json').read_bytes())}
+def save(): (O/'SUPERVISOR.json').write_text(json.dumps(rec,sort_keys=True,indent=2)+'\n',encoding='utf8',newline='\n')
+save()
+for mode in ('normal_B_D','stale_handle','check_then_call','locked_gate'):
+    target=O/mode;assert not target.exists();argv=[sys.executable,'-B',str(W/'probe.py'),str(target),mode];start=now();p=subprocess.Popen(argv,stdout=subprocess.PIPE,stderr=subprocess.PIPE);child={'mode':mode,'pid':p.pid,'argv':argv,'start_utc':start,'timeout':False};rec['children'].append(child);save()
+    try:out,err=p.communicate(timeout=10)
+    except subprocess.TimeoutExpired:p.kill();out,err=p.communicate(timeout=3);child['timeout']=True
+    target.mkdir(exist_ok=True);(target/'stdout.txt').write_bytes(out);(target/'stderr.txt').write_bytes(err);child.update(end_utc=now(),exit=p.returncode,stdout_sha256=H(out),stderr_sha256=H(err));save()
+    assert len(out)+len(err)<1024*1024
+    if child['timeout'] or p.returncode:rec['status']='STOP_FIRST_INFRASTRUCTURE_FAILURE';save();break
+else:rec['status']='COMPLETE_FOUR_ONCE_ONLY'
+rec['end_utc']=now();save();print(json.dumps(rec));raise SystemExit(0 if rec['status']=='COMPLETE_FOUR_ONCE_ONLY' else 2)
