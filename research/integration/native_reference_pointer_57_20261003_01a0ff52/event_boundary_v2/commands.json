@@ -1,0 +1,55 @@
+[
+  {
+    "command": [
+      "/run/current-system/sw/bin/python3",
+      "research/integration/native_reference_pointer_57_20261003_01a0ff52/event_boundary_v2/matrix.py",
+      "research/integration/native_reference_pointer_57_20261003_01a0ff52/baseline.py.txt",
+      "research/integration/native_reference_pointer_57_20261003_01a0ff52/event_boundary_v2/fixtures.json",
+      "research/integration/native_reference_pointer_57_20261003_01a0ff52/event_boundary_v2/baseline-raw.json"
+    ],
+    "started_utc_ns": 1790990912073892000,
+    "ended_utc_ns": 1790990912135986000,
+    "exit_code": 0,
+    "log": "research/integration/native_reference_pointer_57_20261003_01a0ff52/event_boundary_v2/baseline-run.log"
+  },
+  {
+    "command": [
+      "/run/current-system/sw/bin/python3",
+      "research/integration/native_reference_pointer_57_20261003_01a0ff52/event_boundary_v2/audit_event.py",
+      "research/integration/native_reference_pointer_57_20261003_01a0ff52/event_boundary_v2/baseline-raw.json",
+      "research/integration/native_reference_pointer_57_20261003_01a0ff52/event_boundary_v2/fixtures.json",
+      "research/integration/native_reference_pointer_57_20261003_01a0ff52/baseline.py.txt"
+    ],
+    "started_utc_ns": 1790990912135992000,
+    "ended_utc_ns": 1790990912174782000,
+    "exit_code": 0,
+    "log": "research/integration/native_reference_pointer_57_20261003_01a0ff52/event_boundary_v2/baseline-audit.json"
+  },
+  {
+    "command": [
+      "/run/current-system/sw/bin/python3",
+      "research/integration/native_reference_pointer_57_20261003_01a0ff52/event_boundary_v2/matrix.py",
+      "runtime/cli_v1/receipt_references.py",
+      "research/integration/native_reference_pointer_57_20261003_01a0ff52/event_boundary_v2/fixtures.json",
+      "research/integration/native_reference_pointer_57_20261003_01a0ff52/event_boundary_v2/fixed-raw.json"
+    ],
+    "started_utc_ns": 1790990912174839000,
+    "ended_utc_ns": 1790990912235620000,
+    "exit_code": 0,
+    "log": "research/integration/native_reference_pointer_57_20261003_01a0ff52/event_boundary_v2/fixed-run.log"
+  },
+  {
+    "command": [
+      "/run/current-system/sw/bin/python3",
+      "research/integration/native_reference_pointer_57_20261003_01a0ff52/event_boundary_v2/audit_event.py",
+      "research/integration/native_reference_pointer_57_20261003_01a0ff52/event_boundary_v2/fixed-raw.json",
+      "research/integration/native_reference_pointer_57_20261003_01a0ff52/event_boundary_v2/fixtures.json",
+      "runtime/cli_v1/receipt_references.py",
+      "--require-clean"
+    ],
+    "started_utc_ns": 1790990912235627000,
+    "ended_utc_ns": 1790990912272741000,
+    "exit_code": 0,
+    "log": "research/integration/native_reference_pointer_57_20261003_01a0ff52/event_boundary_v2/fixed-audit.json"
+  }
+]
