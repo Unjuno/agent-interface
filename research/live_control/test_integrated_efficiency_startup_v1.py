@@ -16,10 +16,12 @@ class EndpointTests(unittest.TestCase):
   def reader():
    try:result.append(('ok',read_endpoint(stream,timeout=.04,max_bytes=max_bytes)))
    except Exception as e:result.append(('error',type(e).__name__))
+  # Classification data is ready before the reader's short deadline starts.
+  # Silent/partial-line deadline cases keep their original timeout unchanged.
+  if data:os.write(wr,data)
+  if not keep_open:os.close(wr);wr=None
   t=threading.Thread(target=reader);t.start()
   try:
-   if data:os.write(wr,data)
-   if not keep_open:os.close(wr);wr=None
    t.join(.3);finished=not t.is_alive()
   finally:
    if wr is not None:os.close(wr)

@@ -282,12 +282,23 @@ class RuntimeClient:
                 if destination.read_bytes() != source.read_bytes():
                     raise FileExistsError("retained evidence differs: " + str(destination))
                 continue
-            with source.open("rb") as incoming, destination.open("xb") as outgoing:
-                shutil.copyfileobj(incoming, outgoing)
-                outgoing.flush()
-                os.fsync(outgoing.fileno())
-            if destination.read_bytes() != source.read_bytes():
-                raise OSError("retained evidence readback differs")
+            # Publish only a fully copied/read-back file. An interrupted copy
+            # must not leave a conflicting partial destination on retry.
+            with tempfile.TemporaryDirectory(dir=self.root, prefix=".custody-") as staging:
+                staged = Path(staging) / "receipt"
+                with source.open("rb") as incoming, staged.open("xb") as outgoing:
+                    shutil.copyfileobj(incoming, outgoing)
+                    outgoing.flush()
+                    os.fsync(outgoing.fileno())
+                if staged.read_bytes() != source.read_bytes():
+                    raise OSError("retained evidence staging readback differs")
+                try:
+                    os.link(staged, destination)
+                except FileExistsError:
+                    if destination.read_bytes() != source.read_bytes():
+                        raise FileExistsError("retained evidence differs: " + str(destination))
+                if destination.read_bytes() != source.read_bytes():
+                    raise OSError("retained evidence readback differs")
 
     def close(self):
         failures = []
