@@ -3,11 +3,13 @@ name: Issue 5260 A02 retained evidence
 on:
   pull_request:
     paths:
+      - '.gitattributes'
       - 'research/integration/tk_firstchar_5260_a02_wslc_20261003/**'
       - '.github/workflows/tk-firstchar-5260-a02-retained.yml'
   push:
     branches: [main]
     paths:
+      - '.gitattributes'
       - 'research/integration/tk_firstchar_5260_a02_wslc_20261003/**'
       - '.github/workflows/tk-firstchar-5260-a02-retained.yml'
   workflow_dispatch:
