@@ -89,16 +89,10 @@ class CodexAppServerClient:
         deadline = time.monotonic() + timeout
         with self._condition:
             while True:
-                # Predicates may reenter this client and consume queued rows.
-                # Iterate stable references, then remove only the live identity.
-                for message in tuple(self._notifications):
-                    if not any(row is message for row in self._notifications):
-                        continue
+                for index, message in enumerate(self._notifications):
                     if predicate(message):
-                        for index, row in enumerate(self._notifications):
-                            if row is message:
-                                del self._notifications[index]
-                                return message
+                        del self._notifications[index]
+                        return message
                 remaining = deadline - time.monotonic()
                 if remaining <= 0:
                     raise TimeoutError("app-server notification timed out")
