@@ -1,11 +1,11 @@
 """Zero-target-invocation construction gate for the terminality probe."""
-import hashlib
 import json
 import os
 import platform
-import subprocess
 import sys
 from pathlib import Path
+
+from freeze_provenance import verify_frozen_sources
 
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -13,28 +13,13 @@ PACKAGE = Path(__file__).resolve().parent
 T3 = ROOT / "research/live_control/owner_keyup_keymap_witness_5156_t3_v1"
 
 
-def git(*args):
-    return subprocess.check_output(["git", *args], cwd=ROOT, text=True).strip()
-
-
-def sha(data):
-    return hashlib.sha256(data).hexdigest()
-
-
 def main():
     freeze = json.loads((PACKAGE / "FREEZE.json").read_text(encoding="utf-8"))
     problems = []
-    if git("rev-parse", "HEAD") != freeze["main_commit"]:
-        problems.append("main commit mismatch")
     if platform.python_version() != "3.14.5":
         problems.append("Python version mismatch")
-    source_check = {}
-    for relpath, identity in freeze["source_files"].items():
-        blob = git("rev-parse", f"{freeze['main_commit']}:{relpath}")
-        actual_sha = sha((ROOT / relpath).read_bytes())
-        source_check[relpath] = {"git_blob": blob, "sha256": actual_sha}
-        if blob != identity["git_blob"] or actual_sha != identity["sha256"]:
-            problems.append(f"source identity mismatch: {relpath}")
+    source_check, source_problems = verify_frozen_sources(ROOT, freeze)
+    problems.extend(source_problems)
 
     sys.path.insert(0, str(T3))
     old_cwd = Path.cwd()

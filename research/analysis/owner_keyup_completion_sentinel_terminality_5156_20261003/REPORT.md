@@ -33,3 +33,9 @@ The positive control was built from the retained T3 fixture rows, with its singl
 - A shell redirection setup error occurred before the zero-invocation preflight. It and its correction are retained in results/formal-01/SETUP_ATTEMPT_00.md.
 
 The frozen preregistration used broader “evidence-integrity gap” wording than this synthetic result supports. The [scope correction](SCOPE_CORRECTION.md) records that formal host-receipt validation was not tested and no tamper-bypass claim is made.
+
+## Delivery-rebase verification repair
+
+After the delivery branch advanced beyond the frozen source commit, a new regression exposed that both preflight and raw-only audit required `HEAD` to equal the original freeze. That made the verification tools fail on a later delivery commit even when the frozen dependencies were unchanged. The shared provenance check now requires the frozen commit to be an ancestor and verifies each dependency's blob at the frozen commit and current `HEAD`, plus its worktree SHA-256. The original freeze and formal-01 raw/audit outputs remain unchanged.
+
+Two temporary-repository regressions pass: an unchanged descendant delivery commit is accepted, and a descendant that changes one frozen dependency is rejected. These are verifier construction checks; they invoke no candidate CLI and do not rerun the terminality experiment.

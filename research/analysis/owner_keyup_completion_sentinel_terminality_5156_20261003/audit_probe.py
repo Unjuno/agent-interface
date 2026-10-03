@@ -3,10 +3,11 @@ from __future__ import annotations
 
 import hashlib
 import json
-import subprocess
 import sys
 from collections import Counter
 from pathlib import Path
+
+from freeze_provenance import verify_frozen_sources
 
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -27,21 +28,12 @@ def canonical(row: dict) -> str:
     return json.dumps(row, sort_keys=True, separators=(",", ":"))
 
 
-def git(*args: str) -> str:
-    return subprocess.check_output(["git", *args], cwd=ROOT, text=True).strip()
-
-
 def main() -> int:
     freeze = json.loads((PACKAGE / "FREEZE.json").read_text(encoding="utf-8"))
     candidate = json.loads((OUT / "CANDIDATE.json").read_text(encoding="utf-8"))
     errors = []
-    if git("rev-parse", "HEAD") != freeze["main_commit"]:
-        errors.append("source HEAD changed from frozen main")
-    for relpath, identity in freeze["source_files"].items():
-        if git("rev-parse", f"{freeze['main_commit']}:{relpath}") != identity["git_blob"]:
-            errors.append(f"source Git blob changed: {relpath}")
-        if sha256((ROOT / relpath).read_bytes()) != identity["sha256"]:
-            errors.append(f"source bytes changed: {relpath}")
+    source_check, source_errors = verify_frozen_sources(ROOT, freeze)
+    errors.extend(source_errors)
 
     raw_rows = {
         name: read_jsonl(OUT / name / "raw.jsonl")
@@ -112,10 +104,12 @@ def main() -> int:
         "status": status,
         "errors": errors,
         "source_commit": freeze["main_commit"],
+        "source_check": source_check,
         "control": target_results.get("control"),
         "nonterminal": target_results.get("nonterminal"),
         "independent_checks": [
-            "exact source commit, Git blobs, and SHA-256 values",
+            "frozen source commit is an ancestor of checkout",
+            "frozen commit blobs, checkout blobs, and worktree SHA-256 values match",
             "control completion row is final",
             "treatment completion row is first",
             "same completion object in both cases",
