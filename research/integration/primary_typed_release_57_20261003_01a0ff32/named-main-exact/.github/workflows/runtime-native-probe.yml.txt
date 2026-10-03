@@ -1,0 +1,50 @@
+name: Runtime Native Probe Matrix
+
+on:
+  push:
+    branches:
+      - integration/runtime-interface-v1-20260917
+  pull_request:
+    paths:
+      - 'runtime/interface_v1/**'
+      - '.github/workflows/runtime-native-probe.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  native-probe:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            runtime/core_v1
+            runtime/interface_v1
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile interface facade
+        run: python -m compileall -q runtime/core_v1 runtime/interface_v1
+      - name: Run deterministic and native probe tests
+        run: python -m unittest -v runtime.interface_v1.test_native_probe
+      - name: Run native doctor
+        run: python -m runtime.interface_v1
+      - name: Assert doctor grants no side-effect authority
+        shell: python
+        run: |
+          import json, subprocess, sys
+          data = json.loads(subprocess.check_output([sys.executable, '-m', 'runtime.interface_v1'], text=True))
+          assert data['support_claim'] is False
+          assert data['ready_for_side_effects'] is False
+          assert data['native_probe']['input_authority'] == 'none'
+          assert data['native_probe']['capture_authority'] == 'none'
+          assert data['native_probe']['applicable'] is True
+          print(json.dumps(data['native_probe'], sort_keys=True))

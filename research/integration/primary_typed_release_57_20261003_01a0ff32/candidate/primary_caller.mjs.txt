@@ -156,7 +156,6 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
           meta.session?.recovery_required === false && (expected.kind === 'source'
             ? meta.input_dispatched === false && meta.error === expected.error
             : meta.result?.input_dispatched === false && !meta.result.execution &&
-              Array.isArray(meta.result.guard_checks) &&
               meta.result.guard_checks?.length === 1 && meta.result.guard_checks[0].stage === 'before_admission' &&
               meta.result.guard_checks[0].status === 'MISSING' && meta.result.guard_checks[0].reason === expected.reason &&
               meta.result.guard_checks[0].handle === expected.alias);
