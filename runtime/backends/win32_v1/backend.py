@@ -422,13 +422,16 @@ class Win32Backend:
             item = INPUT(type=INPUT_MOUSE)
             item.mi = MOUSEINPUT(0, 0, 0, up_flag, 0, 0)
             self._send(item)
-        self.held_keys.clear()
-        self.held_buttons.clear()
         time.sleep(0.01)
         keys = sorted(name for name, vk in tracked_keys.items()
                       if self.user32.GetAsyncKeyState(vk) & 0x8000)
         buttons = sorted(button for button in tracked_buttons
                          if self.user32.GetAsyncKeyState(BUTTON_FLAGS[button][2]) & 0x8000)
+        # Retain unresolved custody until every tracked input is measured up.
+        # On send/query failure the original tracking remains available.
+        self.held_keys = {name: vk for name, vk in tracked_keys.items()
+                          if name in keys}
+        self.held_buttons = set(buttons)
         return {"keys_down": keys, "buttons_down": buttons,
                 "verified": not keys and not buttons,
                 "monotonic_ns": time.monotonic_ns()}
