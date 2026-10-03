@@ -1,13 +1,12 @@
 import hashlib,json
 from pathlib import Path
 root=Path(__file__).resolve().parent;prefix='research/integration/caller_refusal_57_20261003_5156/'
-private=str(root.parent.parent.resolve());profile=str(Path.home());public=[];manifest=[]
+private=str(root.parent.parent.resolve());public=[];manifest=[]
 for p in sorted(root.iterdir()):
-    if not p.is_file() or (p.name.startswith('PUBLIC_') and p.name!='PUBLIC_PROJECTION_V1_ERROR.txt') or p.name=='PUBLICATION.json':continue
+    if not p.is_file() or p.name.startswith('PUBLIC_') or p.name=='PUBLICATION.json':continue
     if p.name=='test_adaptive_acquisition_caller_refusal_v3.py':continue
     original=p.read_bytes();text=original.decode('utf-8-sig')
     text=text.replace(private,'<owned-workspace>').replace(private.replace('\\','\\\\'),'<owned-workspace>')
-    text=text.replace(profile,'<owned-user-profile>').replace(profile.replace('\\','\\\\'),'<owned-user-profile>')
     name=p.name+'.txt' if p.suffix=='.py' else p.name
     data=text.encode('utf-8');path=prefix+name
     public.append({'path':path,'content':text})
