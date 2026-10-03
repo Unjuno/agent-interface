@@ -1,0 +1,43 @@
+{
+  "utc": "2026-10-03T03:42:10.1904178Z",
+  "processes": [
+    {
+      "ProcessId": 8596,
+      "ParentProcessId": 24436,
+      "CreationDate": "2026-10-03T12:39:23.956676+09:00",
+      "CommandLine": "\"<PRIVATE_USER>\\AppData\\Local\\Programs\\Python\\Python311\\python.exe\" -B work/prepare_interval_6526.py"
+    },
+    {
+      "ProcessId": 6260,
+      "ParentProcessId": 8596,
+      "CreationDate": "2026-10-03T12:39:24.140323+09:00",
+      "CommandLine": "git cat-file --batch"
+    },
+    {
+      "ProcessId": 12560,
+      "ParentProcessId": 6260,
+      "CreationDate": "2026-10-03T12:39:24.154351+09:00",
+      "CommandLine": "git.exe cat-file --batch"
+    },
+    {
+      "ProcessId": 20532,
+      "ParentProcessId": 12560,
+      "CreationDate": "2026-10-03T12:42:09.28136+09:00",
+      "CommandLine": null
+    },
+    {
+      "ProcessId": 13168,
+      "ParentProcessId": 20532,
+      "CreationDate": "2026-10-03T12:42:09.892471+09:00",
+      "CommandLine": null
+    },
+    {
+      "ProcessId": 4544,
+      "ParentProcessId": 13168,
+      "CreationDate": "2026-10-03T12:42:09.951469+09:00",
+      "CommandLine": null
+    }
+  ],
+  "reason": "Bounded selected-blob export was fetching sequentially; stop only this private helper and its verified descendants, then prefetch the exact selected blob set in one request",
+  "raw_trials_parsed": false
+}
