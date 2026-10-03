@@ -54,7 +54,28 @@ export async function createInstrumentedRelayClient(options) {
     if (reply_sha256 !== delivered.get(attempt)) throw new Error('retained bytes differ from original delivered reply');
     return { replyPath, reply: JSON.parse(bytes), reply_sha256 };
   }
-  function send(tool, args = {}, reservationToken = null) {
+  function snapshotAttribution(value) {
+    if (value === null) return null;
+    const required = ['evaluation_id', 'phase', 'model_stage_id'];
+    const allowed = [...required, 'primary_call_id'];
+    if (!value || Array.isArray(value) || typeof value !== 'object' ||
+        Object.keys(value).some(key => !allowed.includes(key))) throw new TypeError('bounded caller attribution required');
+    const row = {};
+    for (const key of allowed) {
+      if (!Object.hasOwn(value, key)) {
+        if (required.includes(key)) throw new TypeError('missing caller attribution');
+        continue;
+      }
+      const field = value[key];
+      if (typeof field !== 'string' || !field.trim() || field.length > 128) throw new TypeError('bounded attribution string required');
+      row[key] = field;
+    }
+    if (!['setup', 'preflight', 'cold_acquisition', 'warm_reuse', 'invalidation',
+          'bounded_repair', 'subsequent_reuse', 'termination'].includes(row.phase)) throw new TypeError('known evaluation phase required');
+    return row;
+  }
+  function send(tool, args = {}, reservationToken = null, attribution = null) {
+      const attributionSnapshot = snapshotAttribution(attribution);
       begin('send', reservationToken);
       // Snapshot synchronously, before the instrumentation's asynchronous write.
       let snapshot;
@@ -69,11 +90,12 @@ export async function createInstrumentedRelayClient(options) {
       const attempt = client.state().attempts + 1;
       pending = (async () => {
         try {
-          await event('send_requested', { attempt, tool });
+          await event('send_requested', { attempt, tool, ...(attributionSnapshot ? { caller_attribution: attributionSnapshot } : {}) });
           const reply = await client.send(tool, snapshot);
           const bytes = await readFile(join(evidenceDirectory, `reply-${attempt}.json`));
           await event('reply_available', { attempt, tool, relay_id: reply.id ?? null,
-            reply_sha256: createHash('sha256').update(bytes).digest('hex') });
+            reply_sha256: createHash('sha256').update(bytes).digest('hex'),
+            ...(attributionSnapshot ? { caller_attribution: attributionSnapshot } : {}) });
           delivered.set(attempt, createHash('sha256').update(bytes).digest('hex'));
           // Host-only identity; persisted relay bytes and protocol IDs stay unchanged.
           return { ...reply, attempt };
@@ -115,18 +137,19 @@ export async function createInstrumentedRelayClient(options) {
       finally { busy = null; }
     }
   return {
-    send(tool, args = {}) { return send(tool, args); },
-    sendPresented(tool, args, callbacks) {
+    send(tool, args = {}, attribution = null) { return send(tool, args, null, attribution); },
+    sendPresented(tool, args, callbacks, attribution = null) {
       const sinks = { text: callbacks?.text, image: callbacks?.image };
       if (typeof sinks.text !== 'function' || typeof sinks.image !== 'function') {
         throw new TypeError('text and image callbacks required before dispatch');
       }
+      const attributionSnapshot = snapshotAttribution(attribution);
       begin('send_presented');
       const token = Symbol('send_presented');
       busy = null; reservation = token;
       const combined = (async () => {
         try {
-          const reply = await send(tool, args, token);
+          const reply = await send(tool, args, token, attributionSnapshot);
           await present(reply.attempt, sinks, {}, token);
           return reply;
         } finally { reservation = null; }
