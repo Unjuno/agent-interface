@@ -1,0 +1,82 @@
+{
+  "copied_controls": [
+    {
+      "control": "goal",
+      "error": "goal or collateral loss",
+      "error_type": "ValueError",
+      "rejected": true
+    },
+    {
+      "control": "note",
+      "error": "goal or collateral loss",
+      "error_type": "ValueError",
+      "rejected": true
+    },
+    {
+      "control": "sibling",
+      "error": "sibling changed",
+      "error_type": "ValueError",
+      "rejected": true
+    },
+    {
+      "control": "duplicate",
+      "error": "duplicate/unstable disk",
+      "error_type": "ValueError",
+      "rejected": true
+    },
+    {
+      "control": "bytehash",
+      "error": "byte custody",
+      "error_type": "ValueError",
+      "rejected": true
+    },
+    {
+      "control": "boolwrites",
+      "error": "actor binding/mtime",
+      "error_type": "ValueError",
+      "rejected": true
+    },
+    {
+      "control": "actor_mtime_join",
+      "error": "actor time join",
+      "error_type": "ValueError",
+      "rejected": true
+    },
+    {
+      "control": "missing_conflict",
+      "error": "conflict witness",
+      "error_type": "ValueError",
+      "rejected": true
+    }
+  ],
+  "manifest_targets": 275,
+  "new_app_runs": 0,
+  "primary_saved_audit": {
+    "cases": [
+      {
+        "concurrent_note_preserved": true,
+        "conflict": false,
+        "goal": true,
+        "id": "J001",
+        "manual_save_intents": 1
+      },
+      {
+        "concurrent_note_preserved": true,
+        "conflict": true,
+        "goal": true,
+        "id": "J002",
+        "manual_save_intents": 2
+      },
+      {
+        "concurrent_note_preserved": true,
+        "conflict": true,
+        "goal": true,
+        "id": "J003",
+        "manual_save_intents": 2
+      }
+    ],
+    "decision": "PASS_STOCK_FILE_CONFLICT_SCOPED",
+    "scope": "three serialized owned standard-app point observations, not arbitrary-app authenticity/physical input/continuous validity/performance"
+  },
+  "scope": "retained public bytes only; installed assets/private runtime not replayed"
+}
