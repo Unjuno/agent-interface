@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Retained analytical source rescue — #6857/#6862/#6884](../recovery/analytical_source_rescue_20261004/README.md) — Exact original packets/history preserved; cancellation auditor v1 six false accepts and separately versioned v2 correction, LF/CRLF serialization-only evidence, and all historical temporal-contract HOLDs remain distinct. Archival integration is not original content-quorum/application approval, scientific/runtime adoption or a replay.
+
 - [Archived S05-WSLC image-gate preparation](looming_visual_assumption_gate_5905_s05_wslc_20261003/ARCHIVAL_QUALIFICATION.md) — #6808/#5905 frozen source and 24 images preserved; no published formal result. Distinct from the cancelled native S05 and executed S06; archival checks do not authorize a run.
 
 - [Issue #6061 archived T0 preparation](intermittent_control_6061_t0_20261003/README.md) — Original construction raw and freezes preserved; formal candidate/auditor 0/0. Offline construction replay/mutations are not a formal result or runtime clearance.
@@ -506,6 +508,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`justification_bound_action_safe_r1_v1/`](justification_bound_action_safe_r1_v1/)
 - [`justification_graph_invalidation_r0_v1/`](justification_graph_invalidation_r0_v1/)
 - [`justification_graph_truth_maintenance_r0_v1/`](justification_graph_truth_maintenance_r0_v1/)
+- [`kernel_receipt_capture_5225_integrity_v1/`](kernel_receipt_capture_5225_integrity_v1/)
 - [`kernel_receipt_time_5215_audit_successor_20260929/`](kernel_receipt_time_5215_audit_successor_20260929/)
 - [`label_control_ambiguity_6038_t0_v1/`](label_control_ambiguity_6038_t0_v1/)
 - [`layered_lifetime_admission_r0_v1/`](layered_lifetime_admission_r0_v1/)
@@ -695,6 +698,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`resident_reactive_rung0_successor_2110_r1_v1/`](resident_reactive_rung0_successor_2110_r1_v1/)
 - [`residual_dependence_6096_t0_20261001/`](residual_dependence_6096_t0_20261001/)
 - [`response_capacity_5771_successor_v1/`](response_capacity_5771_successor_v1/)
+- [`retained_row_adjudication_5229_v1/`](retained_row_adjudication_5229_v1/)
 - [`reusable_receipt_session_binding_v1/`](reusable_receipt_session_binding_v1/)
 - [`reusable_receipt_session_binding_v2/`](reusable_receipt_session_binding_v2/)
 - [`reversibility_deadline_frontier_6695_a01_20261003_01a0ff52/`](reversibility_deadline_frontier_6695_a01_20261003_01a0ff52/)
@@ -754,6 +758,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`service_fairness_6613_t0_20261002/`](service_fairness_6613_t0_20261002/)
 - [`shared_prerequisite_falsification_6003_a01_wslc_20261003/`](shared_prerequisite_falsification_6003_a01_wslc_20261003/)
 - [`shared_referent_6558_t0_orbstack_20261002/`](shared_referent_6558_t0_orbstack_20261002/)
+- [`singleflight_cancel_order_6501_boundary_20261003/`](singleflight_cancel_order_6501_boundary_20261003/)
 - [`singleflight_raw_types_6501_01a0ff35/`](singleflight_raw_types_6501_01a0ff35/)
 - [`siphon_5410_t0/`](siphon_5410_t0/)
 - [`skill_applicability_6262_gpu_t0_v1/`](skill_applicability_6262_gpu_t0_v1/)
