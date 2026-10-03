@@ -1,0 +1,33 @@
+{
+  "allocation": "SAFETY-BACKPRESSURE-PRIORITY-FAIRNESS-5372-A02-WSLC-20261003",
+  "frozen_at_utc": "2026-10-02T19:28:02Z",
+  "base_main_sha": "adfb333264ed323a142170778f121a00b3970448",
+  "branch": "research/backpressure-priority-fairness-5372-a02-wslc-20261003",
+  "source_sha256": {
+    "candidate.py": "5b9f9d1320d096c29370e329840399864e4b13bf635f542d73c490620a8e5974",
+    "audit.py": "cee1671745b482b8a4b6ca87edab1d55a5cec6bbe42dcc9ee0ff48066827b16f",
+    "fixture.json": "356d501f16afb4ccdbb894bb26b922836ec636974d2b581d320bbcb06c062829",
+    "test_protocol.py": "ac8aaf047d7d34e8941a7c9091199b5b673a7e8ac45d2d76d5c72b22d3404976",
+    "PREREGISTRATION.md": "a9b44cac5c3f4cb114890bfddf730bdad1b8c36b9ae243cd6a731219a7bcd4c5"
+  },
+  "container": {
+    "runtime": "Microsoft WSL Containers (WSLc) 3.0.1.0",
+    "kernel": "6.18.40.1-1",
+    "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "local_image_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "cpu": 1,
+    "memory_mb_requested": 256,
+    "memory_enforcement_claim": false,
+    "network": "none",
+    "pull": "never",
+    "formal_candidate_runs": 1,
+    "formal_auditor_runs": 1,
+    "retries": 0
+  },
+  "resource_gate": {
+    "running_containers_observed": 0,
+    "shared_pressure_test_6669": "terminal; its containers are stopped",
+    "outputs_absent_before_run": true
+  }
+}
+
