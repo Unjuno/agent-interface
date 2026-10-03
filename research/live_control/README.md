@@ -657,3 +657,4 @@ or human-tempo claim.
 
 - [Reader retirement and late-frame custody repair](appserver_reader_retirement_57_20261003_01a0ff2d/README.md): close reports a live reader before closing the journal; preserves earlier mutex/None semantics and all first failures.
 - [Boolean reply-ID correlation regression](appserver_reply_id_5156_20261003/REPORT.md): Boolean IDs cannot correlate to numeric requests; numeric float replies and server errors retained, no genuine-provider or general protocol-conformance claim.
+- [Send before response deadline: original comparison and audit qualification](appserver_send_boundary_59_20261003_01a0ff52/README.md): six historical Mac cells, response-only timeout and finite uncertain writer; original9/12 control refusals and later12/12 correction, no transport adoption or hard deadline claim.
