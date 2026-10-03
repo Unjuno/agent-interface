@@ -104,20 +104,31 @@ def run(output):
             if child is not None:
                 try:
                     child.terminate()
+                except (Exception, KeyboardInterrupt) as error:
+                    row['cleanup_faults'].append(repr(error))
+                try:
+                    child.wait(timeout=2)
+                except (subprocess.TimeoutExpired, KeyboardInterrupt) as error:
+                    if isinstance(error, KeyboardInterrupt):
+                        row['cleanup_faults'].append(repr(error))
                     try:
-                        child.wait(timeout=2)
-                    except subprocess.TimeoutExpired:
                         child.kill(); child.wait(timeout=2)
-                    row['cleanup_exit'] = child.returncode
+                    except (Exception, KeyboardInterrupt) as error:
+                        row['cleanup_faults'].append(repr(error))
                 except Exception as error:
                     row['cleanup_faults'].append(repr(error))
+                row['cleanup_exit'] = child.returncode
                 for handle in (child.stdin, child.stdout, child.stderr):
                     try:
                         handle.close()
-                    except Exception as error:
+                    except (Exception, KeyboardInterrupt) as error:
                         row['cleanup_faults'].append(repr(error))
             if thread is not None:
-                thread.join(1)
+                if thread.ident is not None:
+                    try:
+                        thread.join(1)
+                    except (Exception, KeyboardInterrupt) as error:
+                        row['cleanup_faults'].append(repr(error))
                 if thread.is_alive():
                     row['cleanup_faults'].append('reader still alive')
             row['cleanup_child_alive'] = child.poll() is None if child is not None else None
@@ -131,6 +142,8 @@ def run(output):
                'verdict': 'PASS_SCOPED_PIPE_NOTIFICATION' if len(rows) == 4 and all(row['gate'] for row in rows) else 'STOP_FIRST_UNEXPECTED_CELL'}
     if rows and rows[-1].get('fatal_type'):
         summary['stop_reason'] = rows[-1]['fatal_type']
+    elif rows and rows[-1]['cleanup_faults']:
+        summary['stop_reason'] = 'cleanup_fault'
     write(output / 'SUMMARY.json', summary)
     return 0 if summary['verdict'] == 'PASS_SCOPED_PIPE_NOTIFICATION' else 1
 
