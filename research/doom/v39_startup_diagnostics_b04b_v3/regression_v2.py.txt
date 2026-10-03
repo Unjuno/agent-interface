@@ -1,7 +1,7 @@
 """Ordinary repair regression; literal handler and cleanup, no native subjects."""
 import ast,hashlib,json,os,pathlib,sys,types,unittest
 R=pathlib.Path(__file__).resolve().parent
-SOURCE=R/'map01_overlap_controller_v39.py';ROWS=[]
+SOURCE=pathlib.Path(sys.argv.pop(1));RAW=pathlib.Path(sys.argv.pop(1));ROWS=[]
 source=SOURCE.read_bytes();module=ast.parse(source)
 functions=[n for n in module.body if isinstance(n,ast.FunctionDef) and n.name in {'_startup_exception_text','_startup_exception_details','_note_startup_exception','_close_failed_startup'}]
 main=next(n for n in module.body if isinstance(n,ast.FunctionDef) and n.name=='main')
@@ -84,4 +84,6 @@ class Regression(unittest.TestCase):
 for case in ('combined_baseexception_hooks','note_lookup_fault','type_name_fault','non_string_str','record_non_oserror','record_keyboardinterrupt','event_copy_fault','json_serialization_fault','ordinary_cleanup_error','unicode_control','repr_string_subclass'):
  setattr(Regression,'test_'+case,lambda self,c=case:self.check_case(c))
 if __name__=='__main__':
- unittest.main()
+ suite=unittest.defaultTestLoader.loadTestsFromTestCase(Regression);result=unittest.TextTestRunner(verbosity=2).run(suite)
+ RAW.write_text(json.dumps({'schema':'b04b-diagnostic-ordinary-regression-v1','pid':os.getpid(),'source_sha256':hashlib.sha256(source).hexdigest(),'python':sys.version,'rows':ROWS,'tests_run':result.testsRun,'failures':len(result.failures),'errors':len(result.errors),'native_subjects':0,'result':'PASS' if result.wasSuccessful() else 'FAIL'},ensure_ascii=True,indent=2)+'\n',encoding='utf-8')
+ sys.exit(0 if result.wasSuccessful() else 1)

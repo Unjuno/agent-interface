@@ -1,0 +1,22 @@
+{
+  "unit": "ordinary-exact-byte-repair-v3c",
+  "argv": [
+    "C:\\Users\\junny\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "-X",
+    "utf8",
+    "PUBLIC_WORKSPACE\\work\\startup-diagnostics-b04b-v3\\regression_v2.py",
+    "PUBLIC_WORKSPACE\\work\\startup-diagnostics-b04b-v3\\controller-v3c.py.txt",
+    "PUBLIC_WORKSPACE\\work\\startup-diagnostics-b04b-v3\\exact\\RAW.json"
+  ],
+  "utc": "2026-10-03T14:45:19.762368+00:00",
+  "source": {
+    "bytes": 68760,
+    "sha256": "ec095c3911fd3e3172aff1a95b3ceea58547affb38f1e1740e7322cca1ffd288"
+  },
+  "runner": {
+    "bytes": 6995,
+    "sha256": "c814891ea6a086ba0d1a26b200a16cd801c45f932a118e16c71d68a37ac6c4a2"
+  },
+  "reason": "Restore unchanged normal-tail line endings after local source-builder caught v3b newline normalization; original v3b result retained, no formal replay.",
+  "D": "All11 ordinary regressions pass on exact final source; no other-source result transferred."
+}
