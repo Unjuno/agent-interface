@@ -98,3 +98,5 @@ Exact active/runtime source snapshots, native wire bytes and source hashes retai
 Do not replay the native producer from this historical archive.
 
 Publication first whitespace exit2 and sparse navigation exit1 are preserved in PUBLICATION_STOP.md. After exact six-doc restore and single-frozen-stderr trailing-space attribute, staged whitespace exit0, workspace156 exit0 and navigation26/1641 exit0. The newly added live-control row is separately verified against its staged target. Active tests/source were not changed by publication repair. Apple M1 Max/64GiB was observed in a later host sysctl snapshot, not an original load measurement.
+
+Final publication correction: [FINAL_PUBLICATION_GATE_CORRECTION.md](FINAL_PUBLICATION_GATE_CORRECTION.md) retains the prematurely created local commit and nested first-whitespace-log issue. Final attributes apply blank-at-eol exceptions to exactly two immutable log files, no source/docs. Remote publication remains unsent until actual final verifier success.
