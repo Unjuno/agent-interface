@@ -422,17 +422,13 @@ class Win32Backend:
             item = INPUT(type=INPUT_MOUSE)
             item.mi = MOUSEINPUT(0, 0, 0, up_flag, 0, 0)
             self._send(item)
+        self.held_keys.clear()
+        self.held_buttons.clear()
         time.sleep(0.01)
         keys = sorted(name for name, vk in tracked_keys.items()
                       if self.user32.GetAsyncKeyState(vk) & 0x8000)
         buttons = sorted(button for button in tracked_buttons
-                          if self.user32.GetAsyncKeyState(BUTTON_FLAGS[button][2]) & 0x8000)
-        # A sent UP is not neutral-state evidence. Keep unverified obligations;
-        # an incomplete state read leaves the entire previous ledger intact.
-        for name in tracked_keys:
-            if name not in keys:
-                self.held_keys.pop(name, None)
-        self.held_buttons.difference_update(tracked_buttons - set(buttons))
+                         if self.user32.GetAsyncKeyState(BUTTON_FLAGS[button][2]) & 0x8000)
         return {"keys_down": keys, "buttons_down": buttons,
                 "verified": not keys and not buttons,
                 "monotonic_ns": time.monotonic_ns()}
