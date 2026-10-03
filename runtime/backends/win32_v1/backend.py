@@ -281,7 +281,8 @@ class Win32Backend:
         self._send_key(vk, down)
         if down:
             self.held_keys[key] = vk
-        else:
+        elif not self.user32.GetAsyncKeyState(vk) & 0x8000:
+            # Send completion alone cannot retire an unresolved release.
             self.held_keys.pop(key, None)
 
     def key_chord(self, keys: list[str]) -> None:
@@ -310,7 +311,7 @@ class Win32Backend:
         self._send(item)
         if down:
             self.held_buttons.add(button)
-        else:
+        elif not self.user32.GetAsyncKeyState(BUTTON_FLAGS[button][2]) & 0x8000:
             self.held_buttons.discard(button)
 
     def scroll(self, dx: int, dy: int) -> None:
