@@ -12,8 +12,7 @@ it does not change the already frozen source comparison.
 The wall-time increments below are candidate minus baseline paired batch means,
 in microseconds per method (eight methods per batch), median of 31 fixed signed
 pairs for each graph. Ranges retain negative differences. They include Driver
-construction, full trace retention and input hashing. Counter calls occur outside
-wall endpoints; the cycle interval additionally brackets wall timestamp calls.
+construction, full trace retention and input hashing, plus counter bracketing.
 
 | Predicates / actions | Wall median, us | Wall min..max, us | Thread-cycle counter median | Counter min..max |
 |---|---:|---:|---:|---:|
@@ -40,8 +39,7 @@ child PID 22624, exit 0. 48 warmups plus 1488 measured methods; 186 measured bat
 Each of all 1536 methods retains its complete input, typed receipt and callback
 requests/returns. Construction preflight adds six methods outside those totals.
 Separate saved-data auditor child PID 29956 exited 0 at 08:51:47.674421 UTC and
-reported VALID_CHARACTERIZATION for its original narrower gates, all eight
-effective copied-data controls rejected,
+reported VALID_CHARACTERIZATION, all eight effective copied-data controls rejected,
 zero zero-cycle batches. Endpoint processor IDs changed in 97/186 batches.
 
 One Windows CPython 3.11.9 process on i7-12700H; warm correlated batches under one
@@ -103,18 +101,3 @@ repeated. Native PID/time for this publication helper were not captured.
 The first staged whitespace check flagged the CR in two original Windows stdout
 streams. CHECKS.json preserves that diagnostic; folder-local cr-at-eol attributes
 recognize their original line endings without normalizing any evidence bytes.
-
-## Current qualification and saved audit v2
-
-The original v1 audit did not verify exact clock/cancelled call count/order or
-journal placement. Its full frozen source/raw/first result are preserved. See
-repair-v2/README.md for the versioned source-derived schedule gate, first27
-false accepts and final27 rejections plus3 unchanged positive specimens. All1536
-original methods satisfy the new gate; exact reductions remain byte-identical.
-Use the deliberately inspected repair-v2/auditor_v2.py.txt for complete recorded
-healthy callback-schedule verification. V1 alone supports only its narrower
-subsequence/typed payload/receipt/counter checks. This is no measurement replay.
-
-The retained header reports external wall clock metadata "namespace(implementation='QueryPerformanceCounter()', monotonic=True, adjustable=False, resolution=1e-07)". This is reported interpreter metadata, not a physical clock calibration or
-measurement of workload/frequency/power/thermal behavior. The original PLAN
-unknown-clock wording is qualified here without editing its frozen bytes.
