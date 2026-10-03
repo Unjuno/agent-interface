@@ -1,0 +1,42 @@
+"""One-shot owned process supervisor; no native execution on import."""
+from pathlib import Path
+from datetime import datetime,timezone
+import subprocess,time,json,hashlib,sys,os
+H=lambda b:hashlib.sha256(b).hexdigest()
+
+def execute(argv,cwd,output,*,timeout=10,stream_limit=1048576):
+    output=Path(output);output.mkdir(exist_ok=False)
+    if not 0<timeout<=10 or type(stream_limit) is not int or stream_limit<=0:raise ValueError('invalid limits')
+    start=datetime.now(timezone.utc).isoformat();deadline=time.monotonic()+timeout
+    stdout=output/'stdout';stderr=output/'stderr';reason=None
+    with stdout.open('wb') as out,stderr.open('wb') as err:
+        child=subprocess.Popen(argv,cwd=cwd,stdout=out,stderr=err)
+        (output/'START.json').write_text(json.dumps(dict(pid=child.pid,argv=argv,start=start,supervisor_pid=os.getpid()))+'\n',encoding='utf8')
+        while child.poll() is None:
+            if time.monotonic()>=deadline:reason='TIMEOUT';break
+            if stdout.stat().st_size+stderr.stat().st_size>stream_limit:reason='STREAM_LIMIT';break
+            time.sleep(.01)
+        if reason is not None:child.kill()
+        child.wait(timeout=3)
+    streams={k:dict(bytes=p.stat().st_size,sha256=H(p.read_bytes())) for k,p in [('stdout',stdout),('stderr',stderr)]}
+    receipt=dict(argv=argv,pid=child.pid,start=start,end=datetime.now(timezone.utc).isoformat(),exit=child.returncode,supervisor_pid=os.getpid(),stop_reason=reason,child_reaped=True,streams=streams,scope='Owned direct child, thread-only producer; no descendant containment claim')
+    (output/'RECEIPT.json').write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf8');return receipt
+
+def run_frozen(directory,freeze):
+    """Require a locally retained prospective-public freeze reference, once only."""
+    directory=Path(directory);freeze=json.loads(Path(freeze).read_text(encoding='utf8'))
+    if type(freeze.get('public_freeze_comment')) is not int or freeze['public_freeze_comment']<=0:raise ValueError('public freeze unconfirmed')
+    for row in freeze['sources']:
+        image=directory/row['name'];b=image.read_bytes()
+        if len(b)!=row['bytes'] or H(b)!=row['sha256']:raise ValueError('source image changed')
+    root=Path(freeze['output']);root.mkdir(exist_ok=False)
+    # Creating root once is the consumed-allocation marker; never resume/retry it.
+    (root/'CONSUMED.json').write_text(json.dumps(dict(time=datetime.now(timezone.utc).isoformat(),public_freeze_comment=freeze['public_freeze_comment']))+'\n',encoding='utf8')
+    receipts=[]
+    for mode in ('precancel','pending_cancel'):
+        argv=[sys.executable,'-B',str(directory/'native_driver_p02.py'),str(root/(mode+'-native')),mode,'6501-P02-OWNED-ADAPTER-6178']
+        receipt=execute(argv,directory,root/(mode+'-supervisor'));receipts.append(receipt)
+        if receipt['stop_reason'] is not None or receipt['exit']!=0:break
+    (root/'SUPERVISOR_RESULT.json').write_text(json.dumps(receipts,indent=2)+'\n',encoding='utf8');return receipts
+
+if __name__=='__main__':print(json.dumps(run_frozen(*sys.argv[1:3])))

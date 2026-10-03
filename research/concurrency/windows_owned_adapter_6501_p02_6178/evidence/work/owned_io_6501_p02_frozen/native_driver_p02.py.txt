@@ -1,0 +1,92 @@
+"""P02 construction source. Execute only after a distinct prospective freeze.
+
+No calls at import time. Own one pipe and one nonpooled one-read thread.
+"""
+from pathlib import Path
+from datetime import datetime,timezone
+import json,hashlib,os,sys,time,threading,concurrent.futures
+from controller import Controller,Context
+from pending_adapter import PendingAdapter,win32_pending_query
+
+def run(output,mode,allocation):
+    if mode not in ('precancel','pending_cancel') or allocation!='6501-P02-OWNED-ADAPTER-6178':raise ValueError('fixed P02 arguments required')
+    import ctypes,msvcrt
+    from ctypes import wintypes as wt
+    output=Path(output);output.mkdir(exist_ok=False)
+    import controller,pending_adapter
+    loaded_sources=[]
+    for module in (controller,pending_adapter):
+        source=Path(module.__file__);image=source.read_bytes();(output/(module.__name__+'.loaded-source.py.txt')).write_bytes(image)
+        loaded_sources.append(dict(module=module.__name__,path=str(source),bytes=len(image),sha256=hashlib.sha256(image).hexdigest(),attestation='module path plus adjacent source bytes; not Python bytecode attestation'))
+    events=[];guard=threading.Lock();start=datetime.now(timezone.utc).isoformat()
+    def emit(kind,**data):
+        with guard:events.append(dict(seq=len(events),kind=kind,monotonic_ns=time.monotonic_ns(),**data))
+    kernel=ctypes.WinDLL('kernel32',use_last_error=True)
+    for name,args,ret in [('OpenThread',[wt.DWORD,wt.BOOL,wt.DWORD],wt.HANDLE),('ReadFile',[wt.HANDLE,wt.LPVOID,wt.DWORD,ctypes.POINTER(wt.DWORD),wt.LPVOID],wt.BOOL),('CancelSynchronousIo',[wt.HANDLE],wt.BOOL),('CloseHandle',[wt.HANDLE],wt.BOOL)]:
+        fn=getattr(kernel,name);fn.argtypes=args;fn.restype=ret
+    ctx=Context(allocation+':'+mode,'exclusive-single-read',1);c=Controller(ctx,max_observations=64)
+    caller=concurrent.futures.Future();rfd,wfd=os.pipe();h=None;t=None;wrote=False
+    ready=threading.Event();go=threading.Event();done=threading.Event();worker={};terminal=None;status='STARTED';failure=None
+    if mode=='precancel':
+        assert caller.cancel();c.request_cancel(ctx);c.caller_terminal(ctx,'CANCELLED');emit('caller_cancel_receipt',cancelled=caller.cancelled())
+    allowed=c.admit(ctx);emit('admission',allowed=allowed)
+    def reader():
+        worker['tid']=threading.get_native_id();emit('worker_enter',tid=worker['tid']);ready.set()
+        try:
+            if not go.wait(2):raise RuntimeError('worker start timeout')
+            if not allowed:worker['not_issued']=True;emit('read_not_issued');return
+            buf=ctypes.create_string_buffer(1);count=wt.DWORD();emit('read_enter',tid=worker['tid'])
+            ctypes.set_last_error(0);rc=kernel.ReadFile(msvcrt.get_osfhandle(rfd),buf,1,ctypes.byref(count),None);error=ctypes.get_last_error()
+            worker['result']=(bool(rc),int(error),int(count.value),buf.raw[:count.value].hex());emit('read_return',result=worker['result'])
+        except BaseException as exc:worker['exception']=repr(exc);emit('worker_exception',error=repr(exc))
+        finally:emit('worker_exit');done.set()
+    def cleanup_write():
+        nonlocal wrote
+        if not wrote:
+            emit('cleanup_write_started');wrote=True;count=os.write(wfd,b'D');emit('cleanup_write_return',count=count)
+    def accept_terminal():
+        nonlocal terminal
+        if terminal is None:
+            if worker.get('not_issued'):c.worker_not_issued(ctx)
+            elif 'result' in worker:c.worker_terminal(ctx,*worker['result'])
+            else:raise RuntimeError('worker terminal receipt unavailable')
+            terminal=c.snapshot()['worker_completion'];emit('controller_terminal',result=terminal)
+    try:
+        t=threading.Thread(target=reader,name='P02-exclusive-single-read');t.start();assert ready.wait(2)
+        h=kernel.OpenThread(0x0041,False,worker['tid']);emit('thread_handle_open',handle=int(h or 0),tid=worker['tid']);assert h
+        adapter=PendingAdapter(c,ctx,int(h),win32_pending_query());go.set()
+        if allowed:
+            assert caller.cancel();c.request_cancel(ctx);c.caller_terminal(ctx,'CANCELLED');emit('caller_cancel_receipt',cancelled=caller.cancelled())
+            limit=time.monotonic()+1
+            while time.monotonic()<limit:
+                observation=adapter.sample(ctx);emit('pending_observation',**observation)
+                action=observation['action']
+                if action.startswith('cancel:'):
+                    c.begin_cancel(ctx,action);emit('cancel_started',ticket=action)
+                    ctypes.set_last_error(0);rc=kernel.CancelSynchronousIo(h);error=ctypes.get_last_error();c.cancel_reply(ctx,action,bool(rc),int(error));emit('cancel_reply',success=bool(rc),error=int(error));break
+                if action!='WAIT':raise RuntimeError('pending observation ended: '+action)
+                time.sleep(.005)
+            else:raise RuntimeError('pending deadline')
+        assert done.wait(1),'primary completion deadline'
+        accept_terminal();t.join(1);assert not t.is_alive();c.thread_joined(ctx);emit('thread_join',alive=False)
+        status='PRIMARY_COMPLETE'
+    except BaseException as exc:status='STOP_OR_PRIMARY_FAIL';failure=repr(exc);emit('primary_failure',error=failure)
+    finally:
+        go.set()
+        if t and t.is_alive():cleanup_write();t.join(2);emit('cleanup_join',alive=t.is_alive())
+        live=bool(t and t.is_alive())
+        if not live:
+            try:
+                if t:accept_terminal();c.thread_joined(ctx)
+                if h:
+                    ticket=c.prepare_retirement(ctx,'thread_handle');success=bool(kernel.CloseHandle(h));c.retirement_reply(ctx,ticket,success);emit('close_handle',success=success)
+                for role,fd in [('read_fd',rfd),('write_fd',wfd)]:
+                    ticket=c.prepare_retirement(ctx,role);os.close(fd);c.retirement_reply(ctx,ticket,True);emit('close_fd',role=role,fd=fd)
+            except BaseException as exc:emit('cleanup_failure',error=repr(exc));status='STOP_CLEANUP_UNCERTAIN'
+        else:status='STOP_WORKER_LIVE'
+        result=dict(allocation=allocation,mode=mode,pid=os.getpid(),start=start,end=datetime.now(timezone.utc).isoformat(),status=status,failure=failure,cleanup_write=wrote,thread_alive=live,caller_cancelled=caller.cancelled(),controller=c.snapshot(),events=events,loaded_sources=loaded_sources,source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest())
+        (output/'RESULT.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf8',newline='\n')
+    return result
+
+if __name__=='__main__':
+    result=run(*sys.argv[1:4]);print(json.dumps(dict(status=result['status'],pid=result['pid'])));raise SystemExit(0 if result['status']=='PRIMARY_COMPLETE' else 2)

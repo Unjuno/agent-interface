@@ -1,0 +1,171 @@
+{
+  "allocation": "6501-P02-OWNED-ADAPTER-6178",
+  "mode": "pending_cancel",
+  "pid": 28484,
+  "start": "2026-10-03T19:17:51.416449+00:00",
+  "end": "2026-10-03T19:17:51.423382+00:00",
+  "status": "PRIMARY_COMPLETE",
+  "failure": null,
+  "cleanup_write": false,
+  "thread_alive": false,
+  "caller_cancelled": true,
+  "controller": {
+    "context": {
+      "operation": "6501-P02-OWNED-ADAPTER-6178:pending_cancel",
+      "worker": "exclusive-single-read",
+      "generation": 1
+    },
+    "cancel_intent": true,
+    "admission": "ADMITTED",
+    "cancel_phase": "ACCEPTED",
+    "cancel_requests": 1,
+    "observations": 2,
+    "worker_completion": {
+      "success": false,
+      "error": 995,
+      "count": 0,
+      "hex": "",
+      "kind": "ABORTED"
+    },
+    "thread_joined": true,
+    "caller_terminal": "CANCELLED",
+    "resources": {
+      "thread_handle": "RETIRED",
+      "read_fd": "RETIRED",
+      "write_fd": "RETIRED"
+    },
+    "resources_released": true,
+    "settled": true
+  },
+  "events": [
+    {
+      "seq": 0,
+      "kind": "admission",
+      "monotonic_ns": 68095750000000,
+      "allowed": true
+    },
+    {
+      "seq": 1,
+      "kind": "worker_enter",
+      "monotonic_ns": 68095750000000,
+      "tid": 28184
+    },
+    {
+      "seq": 2,
+      "kind": "thread_handle_open",
+      "monotonic_ns": 68095750000000,
+      "handle": 388,
+      "tid": 28184
+    },
+    {
+      "seq": 3,
+      "kind": "pending_observation",
+      "monotonic_ns": 68095750000000,
+      "api_success": true,
+      "pending": false,
+      "last_error": 0,
+      "action": "WAIT",
+      "scope": "advisory pending sample, not atomic request identity"
+    },
+    {
+      "seq": 4,
+      "kind": "read_enter",
+      "monotonic_ns": 68095750000000,
+      "tid": 28184
+    },
+    {
+      "seq": 5,
+      "kind": "pending_observation",
+      "monotonic_ns": 68095765000000,
+      "api_success": true,
+      "pending": true,
+      "last_error": 0,
+      "action": "cancel:6501-P02-OWNED-ADAPTER-6178:pending_cancel",
+      "scope": "advisory pending sample, not atomic request identity"
+    },
+    {
+      "seq": 6,
+      "kind": "cancel_started",
+      "monotonic_ns": 68095765000000,
+      "ticket": "cancel:6501-P02-OWNED-ADAPTER-6178:pending_cancel"
+    },
+    {
+      "seq": 7,
+      "kind": "read_return",
+      "monotonic_ns": 68095765000000,
+      "result": [
+        false,
+        995,
+        0,
+        ""
+      ]
+    },
+    {
+      "seq": 8,
+      "kind": "worker_exit",
+      "monotonic_ns": 68095765000000
+    },
+    {
+      "seq": 9,
+      "kind": "cancel_reply",
+      "monotonic_ns": 68095765000000,
+      "success": true,
+      "error": 0
+    },
+    {
+      "seq": 10,
+      "kind": "controller_terminal",
+      "monotonic_ns": 68095765000000,
+      "result": {
+        "success": false,
+        "error": 995,
+        "count": 0,
+        "hex": "",
+        "kind": "ABORTED"
+      }
+    },
+    {
+      "seq": 11,
+      "kind": "thread_join",
+      "monotonic_ns": 68095765000000,
+      "alive": false
+    },
+    {
+      "seq": 12,
+      "kind": "close_handle",
+      "monotonic_ns": 68095765000000,
+      "success": true
+    },
+    {
+      "seq": 13,
+      "kind": "close_fd",
+      "monotonic_ns": 68095765000000,
+      "role": "read_fd",
+      "fd": 3
+    },
+    {
+      "seq": 14,
+      "kind": "close_fd",
+      "monotonic_ns": 68095765000000,
+      "role": "write_fd",
+      "fd": 4
+    }
+  ],
+  "loaded_sources": [
+    {
+      "module": "controller",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-3\\work\\owned_io_6501_p02_frozen\\controller.py",
+      "bytes": 7782,
+      "sha256": "8d2fa097add799bd3dc9d50a9e2954ce2320080e5681f98a04bbfb975180416d",
+      "attestation": "module path plus adjacent source bytes; not Python bytecode attestation"
+    },
+    {
+      "module": "pending_adapter",
+      "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-3\\work\\owned_io_6501_p02_frozen\\pending_adapter.py",
+      "bytes": 2878,
+      "sha256": "3171f7fc8c8c2ba629193222ca8b8d5b4345b919f6b39c29363af6d26defd836",
+      "attestation": "module path plus adjacent source bytes; not Python bytecode attestation"
+    }
+  ],
+  "source_sha256": "02499409db56069cc4763ddd379d0b4f0a82989e6160c60972baa126f10ebda2"
+}
