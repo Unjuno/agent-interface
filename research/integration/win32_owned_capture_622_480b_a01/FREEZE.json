@@ -1,0 +1,33 @@
+{
+  "allocation": "win32-owned-capture-622-480b-A01",
+  "worker": "01a0ff58-480b-7d50-9eee-0bce12250476",
+  "policy": "FINAL-v5",
+  "created_utc": "2026-10-03T14:29:52.650092+00:00",
+  "source_base": "5feefbcafc1d5f907774462660a019f4172b0d16",
+  "source_pins": [
+    {
+      "path": "runtime/backends/win32_v1/backend.py",
+      "blob": "e90a08b35c040038cee3de755c1b365e4f0f5f47",
+      "bytes": 20448,
+      "sha256": "4cf87d6cecab9a84c4e9cdce83adbe8b58f93227eb64526740c029342bbdd6dd"
+    },
+    {
+      "path": "runtime/core_v1/contract.py",
+      "blob": "231ab75625e7d88bbf440b90d7e15cb64cd13f44",
+      "bytes": 15230,
+      "sha256": "1709078c2a144d78ab61a9bc59fbb9973c120b9a58101c079d69db65d43a66b1"
+    }
+  ],
+  "runner_sha256": "d118de7d2a7b26839e1800a85a31752698dc803b8339fb613b63f32adb293268",
+  "launcher_sha256": "3abebecc1a46dea589be6d0a77939e6c8b9f61a8cb503dad9ad080e0a014bb83",
+  "attempts": 1,
+  "timeout_seconds": 12,
+  "output_bound_bytes": 262144,
+  "H": "Literal Win32 window_client capture preserves known BGR quadrant pixels and requested crop/hash/length for one owned invisible 16x16 HWND.",
+  "T": "Ordered full/top_left/bottom_right/cross_quadrants/outside_right/zero_width. Four native PrintWindow/GetDIBits positives; two expected native-typed pre-capture refusals. Independent saved-only pixel/crop oracle.",
+  "D": "PASS only all6 coverage/type/raw/region/hash/native call joins and explicit own HWND/brush/class cleanup; FAIL for pixel/hash/control mismatch; STOP for setup exception, timeout, missing raw or cleanup receipt; never rerun this allocation. Alpha uninterpreted; original BGRA bytes bind hashes, BGR channels bind known raster.",
+  "C": "Synthetic owner implements WM_PRINT/WM_PRINTCLIENT explicitly; no assumption arbitrary applications support them. Constructor/geometry-only helper setup differs from native input/session studies.",
+  "U": "No keyboard/mouse/focus/screen capture, model or task effects; no physical release/GUI population/mixedDPI/latency claim. Twelve-second parent termination is bounded harness cleanup, not proof PrintWindow itself is bounded.",
+  "resources": "Exclusive newly allocated hidden HWND, four own brushes/one per-call bitmap/DC in one child; no global input or other-app handle. Shared GPU/container/model leases0; other windows forbidden by runtime guard.",
+  "branch": "No sourcebranch/main edits; isolated immutable byte export in own output directory; any later inert publication uses separate branch."
+}
