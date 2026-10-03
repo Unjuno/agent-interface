@@ -22,19 +22,11 @@ These timestamps must use a comparable clock. Equal timestamps remain representa
 the lower bound does not prove release after the final action or physical input state.
 See the [retained regression evidence](../results/kernel-release-epoch-01a0ff34/README.md).
 
-Run all kernel contract and boundary regressions with:
+Run the kernel and release-boundary regressions with:
 
 ```text
-python -m unittest discover -s runtime/kernel -p "test_*.py" -v
+python -m unittest runtime.kernel.test_kernel runtime.kernel.test_release_epoch -v
 ```
-
-`KernelOutcome.effect_occurred` is a conservative possible-or-observed flag,
-matching `EffectOccurrence.POSSIBLE` and `OBSERVED`. After an accepted begin,
-cancellation without an execution receipt keeps this flag true: verified input
-release cannot establish that earlier input had no effect. A rejected/no begin
-keeps it false, and an explicit `EffectOccurrence.NONE` receipt keeps it false.
-This flag is not independently verified task success and never permits replay.
-See [the cancellation regression evidence](../results/kernel-cancel-effect-01a0ff2c/README.md).
 
 This is an additive product contract, not a stable ABI.  Native backend adapters and
 cross-platform acceptance are later promotion gates.

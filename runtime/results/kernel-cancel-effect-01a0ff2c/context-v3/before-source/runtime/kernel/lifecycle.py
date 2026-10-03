@@ -100,8 +100,6 @@ class RequestLifecycle:
     def record_execution(self, receipt: ExecutionReceipt) -> None:
         if self.stage is not Stage.AUTHORIZED or self.request is None:
             raise ContractError("execution receipt requires begun execution")
-        if self.execution_started_ns is None or receipt.started_ns < self.execution_started_ns:
-            raise ContractError("execution receipt starts before accepted begin")
         request = self.request
         if receipt.command_id != request.command_id:
             raise ContractError("execution receipt command mismatch")
@@ -156,9 +154,8 @@ class RequestLifecycle:
             raise ContractError("outcome requested before terminal state")
         command = self.request.command_id if self.request is not None else None
         occurrence = (
-            self.request is not None
-            and (self.execution is None
-                 or self.execution.effect_occurrence.value in {"possible", "observed"})
+            self.execution is not None
+            and self.execution.effect_occurrence.value in {"possible", "observed"}
         )
         verified = self.stage is Stage.VERIFIED
         release_verified = (
