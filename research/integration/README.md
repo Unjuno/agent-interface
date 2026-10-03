@@ -56,6 +56,11 @@ Child directory names are retained provenance, not a canonical architecture tree
   custody48/48; all10 initialh receipts in decoy before target FocusIn.
   Not a public-client/default-wait/visual/performance/resource qualification.
 
+- [Tk first-character #5260 A05 focus-ack construction](tk_firstchar_5260_a05_wslc_20261003/REPORT.md)
+  — ten fresh apps, method audit passed but H_FAIL:ACK3/4 exact plus1busy
+  refusal, immediate0/4 exact, wrong-target2/2 safe refusals. Private app
+  oracle only; publication/read/admission visibility remains unresolved.
+
 ## Preserved older Draft publications
 
 - [Writer selection scope #4425 / Draft PR #4446](writer_selection_scope_w4m8_v1/ARCHIVAL_QUALIFICATION.md) — seven exact published files retained; complete 401-file raw corpus missing, so this is not an independent reproduction or qualification of the reported PASS.
