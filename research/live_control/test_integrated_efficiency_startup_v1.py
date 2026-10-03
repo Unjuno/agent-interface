@@ -69,6 +69,7 @@ class CleanupTests(unittest.TestCase):
 
 import subprocess
 import sys
+import pathlib
 class StartupFailures(unittest.TestCase):
  def exercise(self,stage):
   original=subprocess.Popen
