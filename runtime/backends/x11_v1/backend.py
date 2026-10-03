@@ -9,7 +9,7 @@ import hashlib
 import time
 from typing import Any
 from Xlib import X, XK, display, protocol
-from Xlib.ext import xtest
+from Xlib.ext import xtest, xinput
 
 from runtime.core_v1.contract import OFFICE_FLOOR, WINDOW_ACTIVATE, capability_manifest, validate_backend_manifest
 
@@ -380,9 +380,37 @@ class X11Backend:
         return sorted(rows)
 
     def _physical_buttons_down(self) -> list[str]:
-        mask = self.root.query_pointer().mask
-        reverse = {1: "left", 2: "middle", 3: "right", **SCROLL_BUTTON_NAMES}
-        return sorted(reverse[n] for n, bit in BUTTON_MASKS.items() if mask & bit)
+        # Core QueryPointer has only button 1-5 state bits.
+        mask=self.root.query_pointer().mask
+        reverse={1:'left',2:'middle',3:'right',**SCROLL_BUTTON_NAMES}
+        down={reverse[n] for n,bit in BUTTON_MASKS.items() if mask&bit}
+        owned={name:BUTTON_MAP[name] for name in self.held_buttons if BUTTON_MAP[name] not in BUTTON_MASKS}
+        if not owned:return sorted(down)
+        if not self.d.has_extension('XInputExtension'):raise X11BackendError('XI2 side-button readback unavailable')
+        version=self.d.xinput_query_version()
+        if type(version.major_version) is not int or version.major_version<2:raise X11BackendError('XI2 version unavailable')
+        # Union all master pointers conservatively. Native ClientPointer association,
+        # topology changes, and physical input remain separate qualification needs.
+        devices=self.d.xinput_query_device(xinput.AllMasterDevices).devices
+        if not isinstance(devices,list) or not 1<=len(devices)<=64:raise X11BackendError('XI2 device inventory incomplete')
+        pointers=0;seen=set()
+        for device in devices:
+            if type(device.deviceid) is not int or device.deviceid<=1 or device.deviceid in seen:raise X11BackendError('XI2 device identity invalid')
+            seen.add(device.deviceid)
+            if device.use!=xinput.MasterPointer:continue
+            pointers+=1
+            if type(device.enabled) not in (int,bool) or device.enabled!=1:raise X11BackendError('XI2 master pointer disabled or malformed')
+            if not isinstance(device.classes,list) or len(device.classes)>64:raise X11BackendError('XI2 classes incomplete')
+            buttons=[cls for cls in device.classes if cls['type']==xinput.ButtonClass]
+            if len(buttons)!=1:raise X11BackendError('XI2 button class incomplete')
+            state=buttons[0]['state']
+            if type(state) is not xinput.ButtonMask or not max(owned.values())<=len(state)<=256:raise X11BackendError('XI2 side-button coverage incomplete')
+            if type(state._value) is not int or not 0<=state._value<(1<<len(state)):raise X11BackendError('XI2 button state invalid')
+            for name,number in owned.items():
+                # Python-Xlib shifts off protocol bit zero during decoding.
+                if state[number-1]:down.add(name)
+        if not pointers:raise X11BackendError('XI2 master pointer missing')
+        return sorted(down)
 
     def release_all(self) -> dict[str, Any]:
         tracked = dict(self.held_keycodes)
