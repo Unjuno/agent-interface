@@ -1,0 +1,26 @@
+test_request_rejects_action_outside_lease (runtime.kernel.test_kernel.ContractTests.test_request_rejects_action_outside_lease) ... ok
+test_request_rejects_binding_lease_sequence_mismatch (runtime.kernel.test_kernel.ContractTests.test_request_rejects_binding_lease_sequence_mismatch) ... ok
+test_unavailable_backend_cannot_advertise_capability (runtime.kernel.test_kernel.ContractTests.test_unavailable_backend_cannot_advertise_capability) ... ok
+test_verified_release_requires_empty_input (runtime.kernel.test_kernel.ContractTests.test_verified_release_requires_empty_input) ... ok
+test_authority_can_expire_between_authorize_and_execute (runtime.kernel.test_kernel.LifecycleTests.test_authority_can_expire_between_authorize_and_execute) ... ok
+test_contradiction_preserves_effect_occurrence (runtime.kernel.test_kernel.LifecycleTests.test_contradiction_preserves_effect_occurrence) ... ok
+test_duplicate_begin_preserves_first_request_and_receipt (runtime.kernel.test_kernel.LifecycleTests.test_duplicate_begin_preserves_first_request_and_receipt) ... ok
+test_duplicate_begin_refusal_preserves_release_required_stop (runtime.kernel.test_kernel.LifecycleTests.test_duplicate_begin_refusal_preserves_release_required_stop) ... ok
+test_effect_receipt_cross_command_refused (runtime.kernel.test_kernel.LifecycleTests.test_effect_receipt_cross_command_refused) ... ok
+test_expired_lease_refused (runtime.kernel.test_kernel.LifecycleTests.test_expired_lease_refused) ... ok
+test_happy_path (runtime.kernel.test_kernel.LifecycleTests.test_happy_path) ... ok
+test_other_surface_binding_refused (runtime.kernel.test_kernel.LifecycleTests.test_other_surface_binding_refused) ... ok
+test_receipt_manifest_mismatch_refused (runtime.kernel.test_kernel.LifecycleTests.test_receipt_manifest_mismatch_refused) ... ok
+test_rejected_begin_does_not_consume_execution (runtime.kernel.test_kernel.LifecycleTests.test_rejected_begin_does_not_consume_execution) ... ok
+test_stale_binding_refused (runtime.kernel.test_kernel.LifecycleTests.test_stale_binding_refused) ... ok
+test_stop_with_active_authority_requires_release (runtime.kernel.test_kernel.LifecycleTests.test_stop_with_active_authority_requires_release) ... ok
+test_terminal_execution_requires_release (runtime.kernel.test_kernel.LifecycleTests.test_terminal_execution_requires_release) ... ok
+test_duplicate_registration_refused (runtime.kernel.test_kernel.RegistryTests.test_duplicate_registration_refused) ... ok
+test_missing_backend_is_explicit (runtime.kernel.test_kernel.RegistryTests.test_missing_backend_is_explicit) ... ok
+test_registry_selects_without_importing_platform_code (runtime.kernel.test_kernel.RegistryTests.test_registry_selects_without_importing_platform_code) ... ok
+test_unavailable_backend_refuses_creation (runtime.kernel.test_kernel.RegistryTests.test_unavailable_backend_refuses_creation) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 0.002s
+
+OK
