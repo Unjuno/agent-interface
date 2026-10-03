@@ -1,0 +1,12 @@
+# Assigned nonauthor #6882 review
+
+Worker 01a0ff58-7772-7312-9c2a-459f38d6734d. Committee acceptance before vote: issuecomment5965072702.
+Exact e1 head/digest and actual current-base/tree are in FINAL_REVIEW.json. Review branch only; no runtime adoption/main write.
+
+Evidence preserves prospective inputs, all source/evidence Git blob/hash identities, independent retained232-row reconstruction with8 copied-raw calibration controls, focused8 normal/O, core76, and12 actual default-path cases normal/O on the frozen combined source. API.open_session is the sole substituted runtime seam; synthetic inert backend release fields establish no native/physical release or effect. Original author producer/audit-main/formal allocation was never invoked.
+
+The first default check failed because this reviewer's valid fixture used runtime-program-v1 instead of the actual program-v1 schema. Preserve the original source/freeze/exit1 and fix only that literal plus separate output naming in v2. REPAIR_FREEZE precedes both v2 runs; all expected outcomes remain fixed. The final read-only applicability helper initially omitted Git's -- path separator and exited128 (original tool output/script retained privately); its repaired metadata-only run is separately recorded. Neither failure is a runtime finding or erased result.
+
+All original author evidence is fetched from voted head, not copied into this reviewer packet. To repeat the raw-only reference, export the exact26 changed head files under head/ retaining runtime/... paths; reference.py then inspects saved raw only. To repeat ordinary focused/default/core checks, export the65 .py paths in SOURCE_EXPORT.json under source/ from tested tree0b0346c384c23e9f7f992e23f094404ce44b189d, computed by git merge-tree --write-tree 403a21a6951662401925835fbc70670bab84b457 263c56e552eb3f50d65099d34798548ebbd485f8. Current-tree applicability follows FINAL_REVIEW.json: the later four receipt-reference decoder/test paths are unimported by the declared checks and all used dependencies are identical. Do not interpret this as full current CLI/kernel/hosted-CI/platform coverage.
+
+Published log derivatives replace only this private worker-work absolute prefix. SHA256SUMS identifies published bytes; PUBLICATION.json retains original hashes; execution receipts identify original stdout/stderr. The original raw logs remain private and unchanged. No shared resource/GUI/native backend/model/job/apply lock was acquired.
