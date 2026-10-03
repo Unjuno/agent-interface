@@ -2,12 +2,12 @@
 
 An unsolicited well-shaped response for future ID 2 could be cached while
 request 1 was active, then consumed by request 2 before its own response.
-Boolean true and float 1.0 could also alias a minted integer request ID,
+Boolean true could alias a minted integer request ID,
 and an id+method server request could be consumed as a reply. Retained C01
 and C02 evidence remains separate from this ordinary source repair.
 
 The client now reserves each minted ID under its existing condition before
-writing, admits only exact Python integer/no-method responses whose ID is
+writing, admits Python int/float JSON Number/no-method responses whose numeric ID is
 currently reserved, and removes the reservation and leftover response in
 finally on success, protocol error, timeout, EOF or write failure. Existing
 integer IDs, error handling and one-send behavior remain. Concurrent active
@@ -44,3 +44,5 @@ handling and bounded notification/quarantine storage are not resolved.
 Request timeout still excludes time spent writing/journaling. Sensitive
 diagnostics, physical release, actual task effect and resource savings
 retain all #7094 limits. No live readiness or broad reliability claim.
+
+I13 compatibility revision: current main accepts equal integral JSON Number echo (1.0 for issued1). Boolean remains excluded; pending ownership excludes unequal/fractional/unissued numbers and method-bearing packets. This changes earlier exact-int-only policy and its float-alias regression; original7237 source and first contradictory results are retained. Fresh content review required, no old-vote transfer. General JSON-RPC2 Number typing supports this local compatibility interpretation; this is not full Codex schema validation.

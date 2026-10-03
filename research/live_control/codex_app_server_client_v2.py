@@ -129,7 +129,7 @@ class CodexAppServerClient:
                 self._record("received", message)
                 with self._condition:
                     if ("id" in message and "method" not in message and
-                            type(message["id"]) is int and message["id"] in self._pending):
+                            type(message["id"]) in (int, float) and message["id"] in self._pending):
                         self._responses[message["id"]] = message
                     else:
                         self._notifications.append(message)

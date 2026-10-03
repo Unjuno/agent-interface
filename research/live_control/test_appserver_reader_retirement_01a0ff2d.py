@@ -150,7 +150,18 @@ class ReaderRetirementTests(unittest.TestCase):
                         parent.wait(timeout=2)
                         record['driver_parent_kill_required'] = True
                     record['parent_final_exit'] = parent.returncode
-                    record['parent_stderr_base64'] = base64.b64encode(parent.stderr.read().encode()).decode()
+                    if parent.stderr.closed:
+                        snapshot = client.stderr_snapshot()
+                        record['parent_stderr_capture'] = {k:v for k,v in snapshot.items() if k != 'tail'}
+                        record['parent_stderr_capture']['source'] = 'client bounded drain snapshot after owned close'
+                        record['parent_stderr_base64'] = base64.b64encode(snapshot['tail']).decode()
+                        # This inert parent emits zero diagnostics; authenticate complete empty capture.
+                        self.assertTrue(snapshot['complete'])
+                        self.assertIsNone(snapshot['error'])
+                        self.assertEqual(snapshot['bytes_received'], 0)
+                        self.assertEqual(snapshot['tail'], b'')
+                    else:
+                        record['parent_stderr_base64'] = base64.b64encode(parent.stderr.read().encode()).decode()
                     for name in ('stdin', 'stdout', 'stderr'):
                         getattr(parent, name).close()
                     record['parent_driver_closed_handles'] = [getattr(parent, p).closed for p in ('stdin', 'stdout', 'stderr')]

@@ -43,7 +43,9 @@ class ResponseOwnershipTests(unittest.TestCase):
         self.assertEqual(c.request('fixture',timeout=1),'proper')
         self.assertEqual(list(c._notifications),[{'id':identifier,'result':'poison'}]);self.assertEqual(len(p.sent),1);self.assert_empty_pending(c)
     def test_boolean_id_does_not_alias_active_integer(self):self.alias(True)
-    def test_float_id_does_not_alias_active_integer(self):self.alias(1.0)
+    def test_integral_number_id_correlates_active_integer(self):
+        c,p=self.client(lambda row:p.stdout.emit({'id':float(row['id']),'result':'proper'}))
+        self.assertEqual(c.request('fixture',timeout=1),'proper');self.assertEqual(list(c._notifications),[]);self.assert_empty_pending(c)
     def test_request_envelope_remains_notification(self):
         packet={'id':1,'method':'fixture/serverRequest'}
         c,p=self.client(lambda row:(p.stdout.emit(packet),p.stdout.emit({'id':row['id'],'result':'proper'})))
