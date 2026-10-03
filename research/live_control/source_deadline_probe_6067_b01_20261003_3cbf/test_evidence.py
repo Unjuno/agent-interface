@@ -57,6 +57,15 @@ class Evidence(unittest.TestCase):
             t=trace(); t['due_ns']=due; t['wait']['return_ns']=due; t['wait']['spin_enter_ns']=spin
             t['post']=snapshot(due+1,2)
             with self.subTest(due=due), self.assertRaises(ValueError): check_trace(t,due+5,due+6)
+    def test_no_spin_return_is_exact_final_sample(self):
+        t=trace(); t['wait'].update(begin_ns=1000,return_ns=1001,spin_enter_ns=None)
+        t['post']=snapshot(1002,2)
+        with self.assertRaises(ValueError): check_trace(t,1006,1007)
+        t={'due_ns':120_000_000,'pre':snapshot(99_999_996,1),
+           'wait':{'begin_ns':100_000_000,'return_ns':122_000_000,'spin_enter_ns':None,
+                   'sleeps':[{'start_ns':100_000_000,'return_ns':121_000_000,'requested_ns':5_000_000}]},
+           'post':snapshot(122_000_001,2)}
+        with self.assertRaises(ValueError): check_trace(t,122_000_005,122_000_006)
     def test_post_snapshot_must_finish_before_native_call(self):
         with self.assertRaises(ValueError): check_trace(trace(),1002,1006)
     def test_false_cpu_count_is_not_zero(self):

@@ -42,7 +42,7 @@ def check_trace(t, paint_start, paint_end):
     if spin is not None:
         ref.need(last==ref.integer(spin)<due and 0<due-spin<=15_000_000 and spin<=returned,'final-spin grammar')
     else:
-        ref.need(begin>=due or (w['sleeps'] and last>=due),'missing wait mechanism')
+        ref.need(returned==last and (begin>=due or (w['sleeps'] and last>=due)),'exact no-spin final sample')
     return {'wait_lateness_ns':returned-due,'post_wait_to_native_ns':start-returned,
             'nr_throttled_delta':after['nr_throttled']-before['nr_throttled'],
             'coarse_past_due':bool(past_due),'sleep_overshoot_ns':overshoots}

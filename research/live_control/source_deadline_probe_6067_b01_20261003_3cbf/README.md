@@ -69,7 +69,9 @@ mutations produced seven FAIL and transport/continuity mutations twelve FAIL
 before correction. Effective runtime, frozen transport commands/host-clock
 order, per-process continuity and disjoint shared cgroup reads now are checked.
 Host monotonic times are never compared with guest monotonic times.
-Pure method suite22tests; native and I/O wrappers are adapted procedural
+Followup review required no-spin return to equal the final recorded sample;
+the additional regression was observed failing before that final correction.
+Pure method suite23tests; native and I/O wrappers are adapted procedural
 code, not claimed strict TDD coverage of every I/O path or full-repository tests.
 Use python3 -B -m unittest discover -v for scoped method checks.
 
