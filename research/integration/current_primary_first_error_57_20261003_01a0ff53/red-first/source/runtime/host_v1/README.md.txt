@@ -574,11 +574,6 @@ is being created, the owner closes its original relay without publishing
 startup failure. An error first observed after readiness still stops intake and
 preserves already accepted work through the existing cleanup path.
 
-The whole stream owner observes an inner transport failure immediately, before
-waiting for already accepted work to finish. A later input or output error
-cannot replace that first diagnosis. This preserves one original accepted
-result and transport close; it adds no cancellation or I/O deadline.
-
 Explicitly send `call` with `["interface_close",{}]`, inspect its release outcome,
 and then end stdin. EOF waits for the outstanding command and closes only the
 same transport; it never fabricates a public-close request or task completion.

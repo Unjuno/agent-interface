@@ -29,17 +29,11 @@ function emit(output,value) {
   });
 }
 
-export async function servePrimaryLines(options) {
-  return serveOwnedPrimaryLines(options);
-}
-
-// The whole owner must learn an inner fault before later stream events can
-// occupy its first-failure slot while the original accepted work is pending.
-async function serveOwnedPrimaryLines({exchange,input,output},observeFailure=()=>{}) {
+export async function servePrimaryLines({exchange,input,output}) {
   const lines=createInterface({input,terminal:false});
   let pending=null,failure=null;
   const rejectedWrites=new Set();
-  function failed(error) {failure??=error;observeFailure(failure);input.pause();lines.close();}
+  function failed(error) {failure??=error;input.pause();lines.close();}
   lines.on('error',failed);
   output.on('error',failed);
   input.on('error',failed);
@@ -103,7 +97,7 @@ export async function runPrimaryStdio(config,{input=process.stdin,output=process
       if(failure)throw failure;
       await emit(output,{schema,status:'ready',state:exchange.state()});
       if(failure)throw failure;
-      await serveOwnedPrimaryLines({exchange,input,output},failed);
+      await servePrimaryLines({exchange,input,output});
     } catch(error){failure??=error;}
     // Observe the original host after any owned stream failure, including
     // ready/terminal writes outside the inner line transport's lifetime.
