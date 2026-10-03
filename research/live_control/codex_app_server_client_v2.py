@@ -1,7 +1,11 @@
 """Journaled synchronous client for the Codex app-server JSONL protocol."""
 from collections import deque
 import json
+import math
+import os
+import select
 import subprocess
+import sys
 import threading
 import time
 
@@ -10,8 +14,37 @@ class AppServerError(RuntimeError):
     pass
 
 
+class AppServerUnsupportedRuntime(AppServerError):
+    """The interpreter cannot provide the required bounded pipe-send API."""
+
+
+def _require_pipe_runtime():
+    if os.name == "nt" and sys.version_info[:2] < (3, 12):
+        raise AppServerUnsupportedRuntime(
+            "app-server bounded pipe sends require Python 3.12 or later on Windows")
+    if not callable(getattr(os, "set_blocking", None)):
+        raise AppServerUnsupportedRuntime(
+            "app-server bounded pipe sends require callable os.set_blocking")
+
+
+class AppServerWriteUncertain(AppServerError):
+    """A pipe send failed; sent bytes are not proof of server acceptance."""
+
+    def __init__(self, sent, total, reason):
+        self.sent, self.total, self.reason = sent, total, reason
+        super().__init__(f"app-server write uncertain: {sent}/{total} bytes ({reason})")
+
+
+def _deadline(timeout):
+    if (type(timeout) not in (int, float) or not 0 <= timeout <= threading.TIMEOUT_MAX
+            or not math.isfinite(timeout)):
+        raise ValueError("timeout must be finite, nonnegative and within the lock wait range")
+    return time.monotonic() + timeout
+
+
 class CodexAppServerClient:
     def __init__(self, command, cwd=None, process_factory=subprocess.Popen, journal_path=None):
+        _require_pipe_runtime()
         self._journal = None if journal_path is None else open(journal_path, "x", encoding="utf-8")
         self._journal_lock = threading.Lock()
         self.process = process_factory(
@@ -19,6 +52,8 @@ class CodexAppServerClient:
             stderr=subprocess.PIPE, text=True, encoding="utf-8", bufsize=1)
         self._condition = threading.Condition()
         self._write_lock = threading.Lock()
+        self._send_uncertain = False
+        self._stdin_fd = None
         self._responses = {}
         self._notifications = deque()
         self._next_id = 1
@@ -44,11 +79,59 @@ class CodexAppServerClient:
                 self._closed = True
                 self._condition.notify_all()
 
-    def _write(self, message):
-        with self._write_lock:
-            self._record("sent", message)
-            self.process.stdin.write(json.dumps(message, separators=(",", ":")) + "\n")
-            self.process.stdin.flush()
+    def _write(self, message, *, deadline=None):
+        # This client exclusively owns stdin. Never mix buffered TextIO writes
+        # with these direct descriptor writes; retain the wrapper only for close.
+        deadline = _deadline(30) if deadline is None else deadline
+        data = (json.dumps(message, separators=(",", ":")) + "\n").encode("utf-8")
+        remaining = max(0, deadline - time.monotonic())
+        if not self._write_lock.acquire(timeout=remaining):
+            raise TimeoutError("app-server write lock timed out; no send attempted")
+        try:
+            if self._send_uncertain:
+                raise AppServerWriteUncertain(0, 0, "previous send failure")
+            if deadline <= time.monotonic():
+                raise TimeoutError("app-server send budget expired; no send attempted")
+            with self._condition:
+                if self._closed:
+                    raise AppServerError("app-server closed before send: stderr not drained")
+            if self._stdin_fd is None:
+                fd = self.process.stdin.fileno()
+                # Unsupported pipe modes fail before journaling or sending.
+                # Windows pipe support requires Python 3.12 or later.
+                os.set_blocking(fd, False)
+                self._stdin_fd = fd
+            self._record("sent", json.loads(data))
+            if deadline <= time.monotonic():
+                raise TimeoutError("app-server send budget expired; no send attempted")
+            sent = 0
+            view = memoryview(data)
+            try:
+                while sent < len(data):
+                    if deadline <= time.monotonic():
+                        raise TimeoutError("app-server pipe send timed out")
+                    try:
+                        # Bound each syscall, not the size of the JSON record.
+                        count = os.write(self._stdin_fd, view[sent:sent + 65536])
+                        if count <= 0:
+                            raise OSError("app-server pipe write made no progress")
+                        sent += count
+                    except BlockingIOError:
+                        remaining = deadline - time.monotonic()
+                        if remaining <= 0:
+                            raise TimeoutError("app-server pipe send timed out")
+                        if os.name == "nt":
+                            # Windows select accepts sockets, not pipe handles.
+                            time.sleep(min(.01, remaining))
+                        else:
+                            select.select([], [self._stdin_fd], [], remaining)
+            except BaseException as error:
+                self._send_uncertain = True
+                if not isinstance(error, Exception):
+                    raise
+                raise AppServerWriteUncertain(sent, len(data), type(error).__name__) from error
+        finally:
+            self._write_lock.release()
 
     def _record(self, direction, message):
         if self._journal is None:
@@ -60,14 +143,14 @@ class CodexAppServerClient:
             self._journal.flush()
 
     def request(self, method, params=None, timeout=30):
+        deadline = _deadline(timeout)
         with self._condition:
             identifier = self._next_id
             self._next_id += 1
         message = {"method": method, "id": identifier}
         if params is not None:
             message["params"] = params
-        self._write(message)
-        deadline = time.monotonic() + timeout
+        self._write(message, deadline=deadline)
         with self._condition:
             while identifier not in self._responses:
                 remaining = deadline - time.monotonic()
@@ -81,11 +164,12 @@ class CodexAppServerClient:
             raise AppServerError(f"{method}: {json.dumps(response['error'], sort_keys=True)}")
         return response["result"]
 
-    def notify(self, method, params=None):
+    def notify(self, method, params=None, timeout=30):
+        deadline = _deadline(timeout)
         message = {"method": method}
         if params is not None:
             message["params"] = params
-        self._write(message)
+        self._write(message, deadline=deadline)
 
     def wait_notification(self, predicate, timeout=120):
         deadline = time.monotonic() + timeout
