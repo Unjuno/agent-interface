@@ -95,11 +95,7 @@ def expand_native_receipt(view):
         if (not isinstance(path, str) or not path.startswith('/native_result/')
                 or path == '/native_result/observation' or path.startswith('/native_result/observation/')):
             raise ValueError('invalid native observation reference')
-        parts = [part.replace('~1', '/').replace('~0', '~') for part in path.split('/')[1:]]
-        parent = result
-        for part in parts[:-1]:
-            parent = parent[int(part)] if isinstance(parent, list) else parent[part]
-        key = int(parts[-1]) if isinstance(parent, list) else parts[-1]
+        parent, key = _native_pointer(result, path)
         if parent[key] != {'observation_ref': '/native_result/observation'}:
             raise ValueError('native reference marker mismatch')
         parent[key] = copy.deepcopy(observation)
@@ -109,6 +105,11 @@ def expand_native_receipt(view):
 def _native_pointer(root, path):
     if not isinstance(path, str) or not path.startswith('/native_result/'):
         raise ValueError('native JSON pointer required')
+    return _json_pointer(root, path)
+
+
+def _json_pointer(root, path):
+    """Resolve a declared receipt location without Python indexing aliases."""
     parts = path.split('/')[1:]
     for part in parts:
         remaining = part.replace('~0', '').replace('~1', '')
@@ -225,11 +226,7 @@ def expand_receipt(view):
         if (not isinstance(path, str) or not (path == '/report' or path.startswith('/report/'))
                 or type(number) is not int or not 0 <= number < len(result['events'])):
             raise ValueError('invalid event reference')
-        parts = [part.replace('~1', '/').replace('~0', '~') for part in path.split('/')[1:]]
-        parent = result
-        for part in parts[:-1]:
-            parent = parent[int(part)] if isinstance(parent, list) else parent[part]
-        key = int(parts[-1]) if isinstance(parent, list) else parts[-1]
+        parent, key = _json_pointer(result, path)
         if parent[key] != {'event_ref': number}:
             raise ValueError('event reference marker mismatch')
         parent[key] = copy.deepcopy(result['events'][number])
