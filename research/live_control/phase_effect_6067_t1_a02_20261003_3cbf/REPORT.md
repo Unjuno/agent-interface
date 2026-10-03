@@ -46,3 +46,5 @@ Saved-only `python3 -B verify_construction.py` checks executed source pins,
 original raw byte hashes, typed frame journal joins, native image/runtime,
 dark/persistent gates and independently reconstructs the exact pulse failure.
 This delivery verification does not count as the unadmitted scientific auditor.
+The printed zero formal invocation counts are explicitly declared operator
+history, not independently reconstructed global invocation counts.

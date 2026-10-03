@@ -49,6 +49,7 @@ def main():
     audit.need(captures == 24, 'actual saved denominator24')
     print(json.dumps({'retention':'PASS','construction_status':'STOP_READINESS_SOURCE_EXPOSURE',
                       'started_cells':3,'qualified_cells':2,'captures':24,
-                      'formal_producer_invocations':0,'official_scientific_auditor_invocations':0},sort_keys=True))
+                      'declared_history': {'formal_producer_invocations':0,
+                                           'official_scientific_auditor_invocations':0}},sort_keys=True))
 
 if __name__ == '__main__': main()
