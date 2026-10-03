@@ -24,6 +24,16 @@ class AuditControls(unittest.TestCase):
     def test_accepts_hand_checked_cancelled_empty_trace(self):
         row, events = self.fixture(); self.assertTrue(semantic_check(row, events))
 
+    def test_rejects_non_integer_or_nonpositive_clocks(self):
+        for value in (True, 10.0, -10, 0):
+            with self.subTest(value=value):
+                row, events = self.fixture()
+                row['accepted']['emit_ns'] = value
+                events[0]['emit_ns'] = value
+                self.assertFalse(semantic_check(row, events))
+        row, events = self.fixture(); row['after_ns'] = 50.0
+        self.assertFalse(semantic_check(row, events))
+
     def test_rejects_raw_order_and_custody_controls(self):
         for mode in ('duplicate', 'swapped', 'missing', 'token', 'id', 'truthy', 'held', 'completed', 'truthy_interruption'):
             with self.subTest(mode=mode):

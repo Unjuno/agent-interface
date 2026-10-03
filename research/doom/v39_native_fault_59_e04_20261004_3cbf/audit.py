@@ -25,6 +25,10 @@ def semantic_check(row, events):
             selected.append(found[0])
         positions = [index for index, r in selected]
         clocks = [r['emit_ns'] for index, r in selected]
+        if any(type(clock) is not int or clock <= 0 for clock in clocks):
+            return False
+        if type(row['after_ns']) is not int or row['after_ns'] <= 0:
+            return False
         if positions != sorted(set(positions)) or clocks != sorted(set(clocks)):
             return False
         if row['accepted']['intent_token'] != token or row['released']['intent_token'] != token:
