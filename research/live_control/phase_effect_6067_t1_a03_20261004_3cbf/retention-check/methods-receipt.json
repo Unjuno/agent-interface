@@ -1,0 +1,5 @@
+{
+  "command": "orbctl run -m research-6183-t0-20261003 -u root docker run --pull=never --name phase-effect-6067-a03-retention-3cbf --user 501:501 --cpus 1 --memory 512m --memory-swap 512m --pids-limit 64 --network none --read-only --cap-drop ALL --security-opt no-new-privileges --tmpfs /tmp:rw,nosuid,size=64m --mount type=bind,src=/mnt/mac/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0,dst=/repo,readonly --workdir /repo/research/live_control/phase_effect_6067_t1_a03_20261004_3cbf sha256:c4839671ed0625dd38a53d8ed542bab16407c2b4c88a5ac84431695438c2b816 python3 -B -m unittest discover -v",
+  "exit_code": 0,
+  "scope": "retention-only36methodtests; no acquisition/formal/re-audit invocation"
+}
