@@ -1,0 +1,87 @@
+{
+  "created_utc": "2026-10-03T03:34:36.737704+00:00",
+  "classification": "ordinary native Node input-owner comparison; not consumed formal/live allocation",
+  "worker": "01a0ff53-0975-79e2-8d4e-d28683bc4f8e",
+  "source_base": "332da58a9b6b825c384a142dfb59d7ed2b8b774e",
+  "node_version": "v26.7.0",
+  "node_binary_sha256": "1ef99ea25fe70c9b67e7efe768ef8ee22148d3cabc703db6131b57aeb617d040",
+  "files": {
+    "SOURCE_PINS.json": {
+      "bytes": 1714,
+      "sha256": "330246a81d3f8e48dd6271595860924dacb369595a52e551f1d3b71ca2591291"
+    },
+    "audit.py": {
+      "bytes": 6958,
+      "sha256": "6ef5164654e75a24dfcb2fc961c5b9bf4ad244360523ce40d6faf16a7c69fae0"
+    },
+    "run_once.py": {
+      "bytes": 2956,
+      "sha256": "c62c20a069b47d9212230ab01d2c85f602a101e0b159615d919c475992124cf7"
+    },
+    "child_probe.cjs": {
+      "bytes": 1917,
+      "sha256": "fcfd1550f0c4df193b3d3a137940cf2174f35176d6afdcaf638c3ce411b6e5e0"
+    },
+    "PLAN.md": {
+      "bytes": 2951,
+      "sha256": "18391ffdd803f0a6811d74df5f5dd46080f69ea79dbd83831cefaec985dd0f06"
+    },
+    "baseline/runtime/host_v1/primary_exchange.mjs": {
+      "bytes": 4236,
+      "sha256": "e3bbaa6cb79beede5882f47c42d46ae4c405b5392575b8a62a48de3177353420"
+    },
+    "baseline/runtime/host_v1/primary_stdio.mjs": {
+      "bytes": 5500,
+      "sha256": "e9bc1b407882e0a59c6d5e1b8398afc3c1f298096dba2c01fedc652ade860911"
+    },
+    "baseline/runtime/host_v1/primary_caller.mjs": {
+      "bytes": 13596,
+      "sha256": "dcc12e72a43b5ec04b320db7eba026aab8a39b78b98bb7a0f8ae0e6b26f4971e"
+    },
+    "baseline/runtime/host_v1/relay_host.mjs": {
+      "bytes": 11930,
+      "sha256": "7c83f07126f90761a1d74abf92681a6d1441b0f9320025956c7b025fdbca3984"
+    },
+    "baseline/runtime/host_v1/relay_client.mjs": {
+      "bytes": 12382,
+      "sha256": "34201c4655f8d0db0e463f840772af27333949d19e117293759271e71856d3e8"
+    },
+    "candidate/runtime/host_v1/primary_exchange.mjs": {
+      "bytes": 4236,
+      "sha256": "e3bbaa6cb79beede5882f47c42d46ae4c405b5392575b8a62a48de3177353420"
+    },
+    "candidate/runtime/host_v1/primary_stdio.mjs": {
+      "bytes": 5528,
+      "sha256": "9fb51f4cc78ea7c079f26cc418d30a8d57244b9a48736d3765acead53313d961"
+    },
+    "candidate/runtime/host_v1/primary_caller.mjs": {
+      "bytes": 13596,
+      "sha256": "dcc12e72a43b5ec04b320db7eba026aab8a39b78b98bb7a0f8ae0e6b26f4971e"
+    },
+    "candidate/runtime/host_v1/relay_host.mjs": {
+      "bytes": 11930,
+      "sha256": "7c83f07126f90761a1d74abf92681a6d1441b0f9320025956c7b025fdbca3984"
+    },
+    "candidate/runtime/host_v1/relay_client.mjs": {
+      "bytes": 12382,
+      "sha256": "34201c4655f8d0db0e463f840772af27333949d19e117293759271e71856d3e8"
+    }
+  },
+  "scenarios": [
+    "before_request",
+    "pending_success",
+    "pending_failure",
+    "eof_pending"
+  ],
+  "rows": 8,
+  "candidate_invocation_cap": 1,
+  "auditor_invocation_cap": 1,
+  "retries": 0,
+  "comparative_invocations_so_far": {
+    "candidate": 0,
+    "auditor": 0
+  },
+  "child_timeout_seconds": 5,
+  "outer_timeout_seconds": 30,
+  "output_limit_bytes": 1048576
+}

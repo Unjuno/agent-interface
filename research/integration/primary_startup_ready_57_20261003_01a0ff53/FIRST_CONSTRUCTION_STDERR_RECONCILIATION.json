@@ -1,0 +1,32 @@
+{
+  "classification": "CORRECTION_RETAINED_STDERR_WAS_PRESENT",
+  "first_description": "FIRST_CONSTRUCTION_ERROR.json and original README claimed child stderr not separately retained; that claim was an author inspection omission.",
+  "actual_record": "The original transport saved both full stderr.log files; initial source string has actual SyntaxError, each fixture exit1/no start/exit marker remains unchanged.",
+  "first_local_commit": "bf12b4e39e21cfe88ca71e6b3d426c6f1ac25035",
+  "first_incomplete_Git_leaf": {
+    "physical": 153,
+    "tracked": 151,
+    "reason": ".gitignore:6 *.log excludes2 actual first-error streams"
+  },
+  "stream_records": [
+    {
+      "phase": "healthy",
+      "original_bytes": 579,
+      "original_sha256": "bd5d66cde34fe2bb9909179cd9f56acb865aaa63c9b042ea32cb888fa53b5d10",
+      "public_relative_path": "red-new-boundary/cases/healthy/host/stderr.log",
+      "public_bytes": 579,
+      "public_sha256": "bd5d66cde34fe2bb9909179cd9f56acb865aaa63c9b042ea32cb888fa53b5d10",
+      "actual_SyntaxError_present": true
+    },
+    {
+      "phase": "fault",
+      "original_bytes": 579,
+      "original_sha256": "bd5d66cde34fe2bb9909179cd9f56acb865aaa63c9b042ea32cb888fa53b5d10",
+      "public_relative_path": "red-new-boundary/cases/fault/host/stderr.log",
+      "public_bytes": 579,
+      "public_sha256": "bd5d66cde34fe2bb9909179cd9f56acb865aaa63c9b042ea32cb888fa53b5d10",
+      "actual_SyntaxError_present": true
+    }
+  ],
+  "fix": "Add only the2 actual retained stderr logs with exact byte identities, keep original false metadata/first commit as historical and publish this correction. No source producer/runtime/native replay or raw rewrite."
+}
