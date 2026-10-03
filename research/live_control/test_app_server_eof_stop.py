@@ -1,6 +1,7 @@
 """EOF must not synchronously drain another transport diagnostic stream."""
 import io
 import json
+import threading
 import unittest
 
 from codex_app_server_client_v2 import AppServerError, CodexAppServerClient
@@ -41,8 +42,28 @@ class EofStopRegression(unittest.TestCase):
             client.wait_notification(lambda row: True, timeout=1)
 
     def test_queued_reply_survives_stdout_eof(self):
-        client = self.client([{'id': 1, 'result': {'usable': True}}])
+        # A reply may precede the wait phase, but only after its request exists.
+        sent = threading.Event()
+        class IssuedInput(io.StringIO):
+            def write(self, text):
+                result = super().write(text)
+                sent.set()
+                client._reader.join(timeout=1)
+                if client._reader.is_alive():
+                    raise TimeoutError('issued-reply fixture reader did not retire')
+                return result
+        def reply_after_issued():
+            if not sent.wait(1):
+                raise TimeoutError('fixture request was not issued')
+            yield json.dumps({'id': 1, 'result': {'usable': True}}) + '\n'
+        process = InertProcess([])
+        process.stdin = IssuedInput()
+        process.stdout = reply_after_issued()
+        client = CodexAppServerClient([], process_factory=lambda *args, **kwargs: process)
+        self.addCleanup(client.close)
         self.assertEqual(client.request('fixture/request'), {'usable': True})
+        self.assertFalse(client._reader.is_alive())
+        self.assertTrue(client._closed)
         self.assertEqual(client._responses, {})
 
     def test_queued_notification_survives_stdout_eof(self):
