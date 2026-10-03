@@ -1,0 +1,34 @@
+"""Data-only native user-space stack qualification; never a kernel trace."""
+import re
+
+
+def inspect(text, pid, ppid, native_id, name, minimum=20):
+    for value in (pid, ppid, native_id, minimum):
+        if type(value) is not int or value <= 0:
+            raise ValueError('strict positive native identity/count')
+    if not re.search(r'^Process:\s+Python \[' + str(pid) + r'\]$', text, re.M):
+        raise ValueError('exact sample target PID')
+    if not re.search(r'^Parent Process:\s+Python \[' + str(ppid) + r'\]$', text, re.M):
+        raise ValueError('exact sample parent PID')
+    if 'Call graph:\n' not in text or '\nTotal number in stack' not in text:
+        raise ValueError('complete selected call graph')
+    graph = text.split('Call graph:\n', 1)[1].split('\nTotal number in stack', 1)[0]
+    headers = list(re.finditer(r'^    (\d+) Thread_(\d+)([^\n]*)$', graph, re.M))
+    selected = [(index, match) for index, match in enumerate(headers) if int(match[2]) == native_id]
+    if len(selected) != 1:
+        raise ValueError('one exact native thread block')
+    index, match = selected[0]
+    if name is not None and match[3].strip() != ': ' + name:
+        raise ValueError('native thread name')
+    end = headers[index + 1].start() if index + 1 < len(headers) else len(graph)
+    block = graph[match.start():end]
+    root_count = int(match[1])
+    py = [int(x) for x in re.findall(r'^\s*(?:\+\s*)?(\d+) _Py_read\s+\(in Python\)', block, re.M)]
+    native = [int(x) for x in re.findall(r'^\s*(?:\+\s*)?(\d+) (?:read|__read_nocancel)\s+\(in libsystem_kernel\.dylib\)', block, re.M)]
+    if any(value > root_count for value in py + native):
+        raise ValueError('frame count exceeds thread root')
+    return {'qualified': bool(root_count >= minimum and py and native and
+                              min(py) >= minimum and min(native) >= minimum),
+            'pid': pid, 'ppid': ppid, 'native_id': native_id, 'name': name,
+            'root_samples': root_count, 'python_read_samples': py, 'native_read_samples': native,
+            'block': block, 'kernel_trace': False}
