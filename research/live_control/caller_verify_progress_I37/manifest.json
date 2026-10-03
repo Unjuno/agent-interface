@@ -1,0 +1,208 @@
+{
+  "CI": "Optional push/PR skip ci; prior create5716 head-ref guard excludes new branch. No mandatory-check certificate.",
+  "application_certificate": false,
+  "audit": {
+    "full_new_rows": 4,
+    "full_terminal_rows": 30,
+    "limits": "Private7182 repair, no current-main/cost/invocation composition, no physical actor, no application certificate.",
+    "normal_O_equal": true,
+    "only_expected_progress_changes": true,
+    "result": "PASS",
+    "source_sha256": "77cf5905c48ff4302d32007eeff5e75fcdbd5b2c5d88b00ec8d3def51b529130",
+    "utc": "2026-10-03T19:54:15.194006+00:00"
+  },
+  "evidence": "https://github.com/Unjuno/agent-interface/pull/7182#issuecomment-5972921697",
+  "inputs": {
+    "adaptive_acquisition_caller_v3.py": "77cf5905c48ff4302d32007eeff5e75fcdbd5b2c5d88b00ec8d3def51b529130",
+    "caller_uncertain_tail_I13/LIVE_CALLER.json": "a5870aa54c27d0f6129c766e2eab92392bb813bc111fd3236e21efa61beb2200",
+    "caller_uncertain_tail_I13/RESPONSE3.json": "a420d208c7dad112cc53c442ee057f61fc709c9a0748b7299f99dc4734d52f44",
+    "runtime/core_v1/__init__.py": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0",
+    "runtime/core_v1/backend.py": "5f5959de391dee682c740baf1007f8bf8c74308d379efed2021fba660b5e9d68",
+    "runtime/core_v1/compiled_gui.py": "419535945ae81eba8b08b1e231923b1b0cdc2253dfae36cdb861b528c1f36de1",
+    "runtime/core_v1/contract.py": "88122eab96fe907dcdaac032e8d9c82555d5d1adfe7bf8a9741274f19347d8a9",
+    "runtime/core_v1/doctor.py": "e27852838e13d5bc8317fc0dbad7255b4deb6db209cf75ab981441f0f64b4098",
+    "runtime/core_v1/platform_probe.py": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e",
+    "runtime/core_v1/sequence.py": "9a4aac391a961c8832199bf414c58d885afdcb2bcf013074cd4dbb3ca6a1a40d",
+    "test_adaptive_acquisition_caller_custody_v3.py": "c4af326f645d71a34056a877886b29f9062282725b44f8a63e1a3e699203261b",
+    "test_adaptive_acquisition_caller_dispatch_v3.py": "8315c916dec2706761d48cefd1b732e636c87a494fa9c74dad1cf2046b644997",
+    "test_adaptive_acquisition_caller_refusal_v3.py": "bc87728f154bb422f3db229c7f3fd2535b554fa7179b553ea96f5ac59967ac0b",
+    "test_adaptive_acquisition_caller_terminal_v3.py": "014c79a5e6d9ce717196439a754c4e5cf76a347a77cd6cd9dd7a1109f21915cb",
+    "test_adaptive_acquisition_caller_uncertain_tail_v3.py": "7a0fd705761cea5313349588ebf74117397acf45f9405d3e8817695ac45d9638",
+    "test_adaptive_acquisition_caller_v3.py": "99e231fe9ed1c16b278785900213ec7e6272040df1a84df0ae8062f9860da693",
+    "test_verify_progress.py": "e1db4b4c76481c4b53f221a607ed0cfcd1ec7d0ad5e56c510a936bed4155634e"
+  },
+  "kind": "CALLER_VERIFY_PROGRESS_I37",
+  "records": {
+    "green": {
+      "argv": [
+        "OWNED_PYTHON312",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-v"
+      ],
+      "end": "2026-10-03T19:53:20.741863+00:00",
+      "exit_code": 0,
+      "pid": 42616,
+      "pins": {
+        "adaptive_acquisition_caller_v3.py": "77cf5905c48ff4302d32007eeff5e75fcdbd5b2c5d88b00ec8d3def51b529130",
+        "caller_uncertain_tail_I13/LIVE_CALLER.json": "a5870aa54c27d0f6129c766e2eab92392bb813bc111fd3236e21efa61beb2200",
+        "caller_uncertain_tail_I13/RESPONSE3.json": "a420d208c7dad112cc53c442ee057f61fc709c9a0748b7299f99dc4734d52f44",
+        "runtime/core_v1/__init__.py": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0",
+        "runtime/core_v1/backend.py": "5f5959de391dee682c740baf1007f8bf8c74308d379efed2021fba660b5e9d68",
+        "runtime/core_v1/compiled_gui.py": "419535945ae81eba8b08b1e231923b1b0cdc2253dfae36cdb861b528c1f36de1",
+        "runtime/core_v1/contract.py": "88122eab96fe907dcdaac032e8d9c82555d5d1adfe7bf8a9741274f19347d8a9",
+        "runtime/core_v1/doctor.py": "e27852838e13d5bc8317fc0dbad7255b4deb6db209cf75ab981441f0f64b4098",
+        "runtime/core_v1/platform_probe.py": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e",
+        "runtime/core_v1/sequence.py": "9a4aac391a961c8832199bf414c58d885afdcb2bcf013074cd4dbb3ca6a1a40d",
+        "test_adaptive_acquisition_caller_custody_v3.py": "c4af326f645d71a34056a877886b29f9062282725b44f8a63e1a3e699203261b",
+        "test_adaptive_acquisition_caller_dispatch_v3.py": "8315c916dec2706761d48cefd1b732e636c87a494fa9c74dad1cf2046b644997",
+        "test_adaptive_acquisition_caller_refusal_v3.py": "bc87728f154bb422f3db229c7f3fd2535b554fa7179b553ea96f5ac59967ac0b",
+        "test_adaptive_acquisition_caller_terminal_v3.py": "014c79a5e6d9ce717196439a754c4e5cf76a347a77cd6cd9dd7a1109f21915cb",
+        "test_adaptive_acquisition_caller_uncertain_tail_v3.py": "7a0fd705761cea5313349588ebf74117397acf45f9405d3e8817695ac45d9638",
+        "test_adaptive_acquisition_caller_v3.py": "99e231fe9ed1c16b278785900213ec7e6272040df1a84df0ae8062f9860da693",
+        "test_verify_progress.py": "e1db4b4c76481c4b53f221a607ed0cfcd1ec7d0ad5e56c510a936bed4155634e"
+      },
+      "start": "2026-10-03T19:53:20.520553+00:00",
+      "stderr_sha256": "9e41a5cd1c858c28dccb50336c8660c6e39a3d3afa8de22456af60433fdfaa14",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "timeout": false
+    },
+    "red": {
+      "argv": [
+        "OWNED_PYTHON312",
+        "-B",
+        "test_verify_progress.py"
+      ],
+      "end": "2026-10-03T19:53:00.842573+00:00",
+      "exit_code": 1,
+      "pid": 8172,
+      "pins": {
+        "adaptive_acquisition_caller_v3.py": "a59d47a06825ec06f42cf0530cd1e78ba760f3766853a14b82a6617fb5e295e3",
+        "caller_uncertain_tail_I13/LIVE_CALLER.json": "a5870aa54c27d0f6129c766e2eab92392bb813bc111fd3236e21efa61beb2200",
+        "caller_uncertain_tail_I13/RESPONSE3.json": "a420d208c7dad112cc53c442ee057f61fc709c9a0748b7299f99dc4734d52f44",
+        "runtime/core_v1/__init__.py": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0",
+        "runtime/core_v1/backend.py": "5f5959de391dee682c740baf1007f8bf8c74308d379efed2021fba660b5e9d68",
+        "runtime/core_v1/compiled_gui.py": "419535945ae81eba8b08b1e231923b1b0cdc2253dfae36cdb861b528c1f36de1",
+        "runtime/core_v1/contract.py": "88122eab96fe907dcdaac032e8d9c82555d5d1adfe7bf8a9741274f19347d8a9",
+        "runtime/core_v1/doctor.py": "e27852838e13d5bc8317fc0dbad7255b4deb6db209cf75ab981441f0f64b4098",
+        "runtime/core_v1/platform_probe.py": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e",
+        "runtime/core_v1/sequence.py": "9a4aac391a961c8832199bf414c58d885afdcb2bcf013074cd4dbb3ca6a1a40d",
+        "test_adaptive_acquisition_caller_custody_v3.py": "c4af326f645d71a34056a877886b29f9062282725b44f8a63e1a3e699203261b",
+        "test_adaptive_acquisition_caller_dispatch_v3.py": "8315c916dec2706761d48cefd1b732e636c87a494fa9c74dad1cf2046b644997",
+        "test_adaptive_acquisition_caller_refusal_v3.py": "bc87728f154bb422f3db229c7f3fd2535b554fa7179b553ea96f5ac59967ac0b",
+        "test_adaptive_acquisition_caller_terminal_v3.py": "17402894130122f32800afbae1cb95efb10aba7c610538193908b817526f39ac",
+        "test_adaptive_acquisition_caller_uncertain_tail_v3.py": "7a0fd705761cea5313349588ebf74117397acf45f9405d3e8817695ac45d9638",
+        "test_adaptive_acquisition_caller_v3.py": "99e231fe9ed1c16b278785900213ec7e6272040df1a84df0ae8062f9860da693",
+        "test_verify_progress.py": "e1db4b4c76481c4b53f221a607ed0cfcd1ec7d0ad5e56c510a936bed4155634e"
+      },
+      "start": "2026-10-03T19:53:00.669886+00:00",
+      "stderr_sha256": "4c000414af8ac9286fa819ec2041a72809ea0d9f7032a77edf19092a2f946c75",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "timeout": false
+    },
+    "rows": {
+      "argv": [
+        "OWNED_PYTHON312",
+        "-B",
+        "suite.py"
+      ],
+      "end": "2026-10-03T19:53:49.337847+00:00",
+      "exit_code": 0,
+      "pid": 26508,
+      "pins": {
+        "adaptive_acquisition_caller_v3.py": "77cf5905c48ff4302d32007eeff5e75fcdbd5b2c5d88b00ec8d3def51b529130",
+        "caller_uncertain_tail_I13/LIVE_CALLER.json": "a5870aa54c27d0f6129c766e2eab92392bb813bc111fd3236e21efa61beb2200",
+        "caller_uncertain_tail_I13/RESPONSE3.json": "a420d208c7dad112cc53c442ee057f61fc709c9a0748b7299f99dc4734d52f44",
+        "runtime/core_v1/__init__.py": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0",
+        "runtime/core_v1/backend.py": "5f5959de391dee682c740baf1007f8bf8c74308d379efed2021fba660b5e9d68",
+        "runtime/core_v1/compiled_gui.py": "419535945ae81eba8b08b1e231923b1b0cdc2253dfae36cdb861b528c1f36de1",
+        "runtime/core_v1/contract.py": "88122eab96fe907dcdaac032e8d9c82555d5d1adfe7bf8a9741274f19347d8a9",
+        "runtime/core_v1/doctor.py": "e27852838e13d5bc8317fc0dbad7255b4deb6db209cf75ab981441f0f64b4098",
+        "runtime/core_v1/platform_probe.py": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e",
+        "runtime/core_v1/sequence.py": "9a4aac391a961c8832199bf414c58d885afdcb2bcf013074cd4dbb3ca6a1a40d",
+        "suite.py": "7630b19ca13991ac6fa5c7e4ae151c0acd55eeec38d0fe37e8faa9e4f606631f",
+        "test_adaptive_acquisition_caller_custody_v3.py": "c4af326f645d71a34056a877886b29f9062282725b44f8a63e1a3e699203261b",
+        "test_adaptive_acquisition_caller_dispatch_v3.py": "8315c916dec2706761d48cefd1b732e636c87a494fa9c74dad1cf2046b644997",
+        "test_adaptive_acquisition_caller_refusal_v3.py": "bc87728f154bb422f3db229c7f3fd2535b554fa7179b553ea96f5ac59967ac0b",
+        "test_adaptive_acquisition_caller_terminal_v3.py": "014c79a5e6d9ce717196439a754c4e5cf76a347a77cd6cd9dd7a1109f21915cb",
+        "test_adaptive_acquisition_caller_uncertain_tail_v3.py": "7a0fd705761cea5313349588ebf74117397acf45f9405d3e8817695ac45d9638",
+        "test_adaptive_acquisition_caller_v3.py": "99e231fe9ed1c16b278785900213ec7e6272040df1a84df0ae8062f9860da693",
+        "test_verify_progress.py": "e1db4b4c76481c4b53f221a607ed0cfcd1ec7d0ad5e56c510a936bed4155634e"
+      },
+      "start": "2026-10-03T19:53:49.121919+00:00",
+      "stderr_sha256": "9e41a5cd1c858c28dccb50336c8660c6e39a3d3afa8de22456af60433fdfaa14",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "timeout": false
+    },
+    "rowsO": {
+      "argv": [
+        "OWNED_PYTHON312",
+        "-B",
+        "-O",
+        "suite.py"
+      ],
+      "end": "2026-10-03T19:53:50.354992+00:00",
+      "exit_code": 0,
+      "pid": 40380,
+      "pins": {
+        "adaptive_acquisition_caller_v3.py": "77cf5905c48ff4302d32007eeff5e75fcdbd5b2c5d88b00ec8d3def51b529130",
+        "caller_uncertain_tail_I13/LIVE_CALLER.json": "a5870aa54c27d0f6129c766e2eab92392bb813bc111fd3236e21efa61beb2200",
+        "caller_uncertain_tail_I13/RESPONSE3.json": "a420d208c7dad112cc53c442ee057f61fc709c9a0748b7299f99dc4734d52f44",
+        "runtime/core_v1/__init__.py": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0",
+        "runtime/core_v1/backend.py": "5f5959de391dee682c740baf1007f8bf8c74308d379efed2021fba660b5e9d68",
+        "runtime/core_v1/compiled_gui.py": "419535945ae81eba8b08b1e231923b1b0cdc2253dfae36cdb861b528c1f36de1",
+        "runtime/core_v1/contract.py": "88122eab96fe907dcdaac032e8d9c82555d5d1adfe7bf8a9741274f19347d8a9",
+        "runtime/core_v1/doctor.py": "e27852838e13d5bc8317fc0dbad7255b4deb6db209cf75ab981441f0f64b4098",
+        "runtime/core_v1/platform_probe.py": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e",
+        "runtime/core_v1/sequence.py": "9a4aac391a961c8832199bf414c58d885afdcb2bcf013074cd4dbb3ca6a1a40d",
+        "suite.py": "7630b19ca13991ac6fa5c7e4ae151c0acd55eeec38d0fe37e8faa9e4f606631f",
+        "test_adaptive_acquisition_caller_custody_v3.py": "c4af326f645d71a34056a877886b29f9062282725b44f8a63e1a3e699203261b",
+        "test_adaptive_acquisition_caller_dispatch_v3.py": "8315c916dec2706761d48cefd1b732e636c87a494fa9c74dad1cf2046b644997",
+        "test_adaptive_acquisition_caller_refusal_v3.py": "bc87728f154bb422f3db229c7f3fd2535b554fa7179b553ea96f5ac59967ac0b",
+        "test_adaptive_acquisition_caller_terminal_v3.py": "014c79a5e6d9ce717196439a754c4e5cf76a347a77cd6cd9dd7a1109f21915cb",
+        "test_adaptive_acquisition_caller_uncertain_tail_v3.py": "7a0fd705761cea5313349588ebf74117397acf45f9405d3e8817695ac45d9638",
+        "test_adaptive_acquisition_caller_v3.py": "99e231fe9ed1c16b278785900213ec7e6272040df1a84df0ae8062f9860da693",
+        "test_verify_progress.py": "e1db4b4c76481c4b53f221a607ed0cfcd1ec7d0ad5e56c510a936bed4155634e"
+      },
+      "start": "2026-10-03T19:53:50.115090+00:00",
+      "stderr_sha256": "5f4c8acd8e8633c04efcfafdc972d73d8d213da329e5a2921a60a4f15520f170",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "timeout": false
+    }
+  },
+  "review_base": "4db6a7ff1aa822de645ecabd6637feaa1e76706e",
+  "source_files": [
+    {
+      "identity": {
+        "bytes": 26115,
+        "git_blob": "adcad32b1cb01b2a9b9a51e5c7af836674df0349",
+        "sha256": "77cf5905c48ff4302d32007eeff5e75fcdbd5b2c5d88b00ec8d3def51b529130"
+      },
+      "old_blob": "319c35db42503af62a67fb7de8814ca570edc242",
+      "path": "research/live_control/adaptive_acquisition_caller_v3.py"
+    },
+    {
+      "identity": {
+        "bytes": 6411,
+        "git_blob": "f629a03bcf4aec739c60a3f77f4f73b61bfa8a16",
+        "sha256": "014c79a5e6d9ce717196439a754c4e5cf76a347a77cd6cd9dd7a1109f21915cb"
+      },
+      "old_blob": "d6518c33362a8c98aa2518f77eed22f5d29e5fd4",
+      "path": "research/live_control/test_adaptive_acquisition_caller_terminal_v3.py"
+    },
+    {
+      "identity": {
+        "bytes": 2405,
+        "git_blob": "273cfd93a76469903d38b6a6f8f3b8dfae808bcc",
+        "sha256": "e1db4b4c76481c4b53f221a607ed0cfcd1ec7d0ad5e56c510a936bed4155634e"
+      },
+      "path": "research/live_control/test_adaptive_acquisition_caller_verify_progress_v3.py"
+    }
+  ],
+  "sourceowner": "actual222f",
+  "votes_transferred": 0,
+  "workflow232_exact_prior": true,
+  "workflow_tree": "d66f4be536bdafb94fb6cb2af7a2ce2bfc84c524"
+}
