@@ -1,0 +1,77 @@
+{
+  "decision": "LOCAL_SESSION_RECOVERY_REPAIR_PASS_PENDING_REVIEW",
+  "source_parent": "4fa6fb6408cf9e0ec66e1890b7460d34c6f71b53",
+  "runs": [
+    {
+      "label": "first-RED",
+      "methods": 16,
+      "pid": 27328,
+      "start_utc": "2026-10-03T12:51:51.424143+00:00",
+      "end_utc": "2026-10-03T12:51:51.605997+00:00",
+      "exit": 1,
+      "stdout_rows": 37,
+      "raw_receipt_sha256": "2a3333e5b92263918c8c86f283320de55efb189c1a79c391dcc401403d3e6ea5"
+    },
+    {
+      "label": "first-GREEN",
+      "methods": 16,
+      "pid": 23064,
+      "start_utc": "2026-10-03T12:52:32.123011+00:00",
+      "end_utc": "2026-10-03T12:52:32.288547+00:00",
+      "exit": 0,
+      "stdout_rows": 56,
+      "raw_receipt_sha256": "ad86d18f4894cdb84753ff79498c77800e5fd62fa6ac75a4c008ee72bacd5c5b"
+    },
+    {
+      "label": "optimized-GREEN-O",
+      "methods": 16,
+      "pid": 30680,
+      "start_utc": "2026-10-03T12:52:32.374953+00:00",
+      "end_utc": "2026-10-03T12:52:32.543156+00:00",
+      "exit": 0,
+      "stdout_rows": 56,
+      "raw_receipt_sha256": "67a8ba4ec324b3886fa47474499a499d8896de126e7653e9003c1102e4a21608"
+    },
+    {
+      "label": "coupling-RED",
+      "methods": 2,
+      "pid": 11300,
+      "start_utc": "2026-10-03T12:54:24.551390+00:00",
+      "end_utc": "2026-10-03T12:54:24.716263+00:00",
+      "exit": 1,
+      "stdout_rows": 3,
+      "raw_receipt_sha256": "5c9a4cc38c63efc8f36745807505ea492a6c583dcba6193dcead841bcad2b22c"
+    },
+    {
+      "label": "coupling-GREEN",
+      "methods": 2,
+      "pid": 3516,
+      "start_utc": "2026-10-03T12:54:38.098130+00:00",
+      "end_utc": "2026-10-03T12:54:38.265315+00:00",
+      "exit": 0,
+      "stdout_rows": 6,
+      "raw_receipt_sha256": "0358e62354ccfc57c16d39c4c59eab9a9deee9ff006438e5169962bf76233b3a"
+    },
+    {
+      "label": "coupling-GREEN-O",
+      "methods": 2,
+      "pid": 35404,
+      "start_utc": "2026-10-03T12:54:38.342797+00:00",
+      "end_utc": "2026-10-03T12:54:38.510837+00:00",
+      "exit": 0,
+      "stdout_rows": 6,
+      "raw_receipt_sha256": "70e2cf748d4bbd55919da22abc4f166b27aa62202f8d0299ba1b1a33c3dc095b"
+    }
+  ],
+  "baseline": "16methods failures18/errors4; supplementary2methods failure1/error1. Original runtime result/exception/assertion failures retained, no setup failure.",
+  "candidate": "16 plus supplementary2 methods pass normal and optimized; same respective definitions/closure. Actual backend connection uses inert APIs, no native constructor or WinDLL.",
+  "implementation": "Sticky same-session recovery state before backend clock/manifest/preflight access; strict reported-neutral release list; known/unexpected execute error and failed preflight cleanup gate; explicit single release_all recovery never replays task.",
+  "limits": "OS-state observation assumption/API-zero ambiguity/durable neutrality/actor authentication/interleaving/general cancellation/deadline/task/token/latency unproved. Direct backend cleanup/new binding do not clear. No native/formal allocation. CLI/MCP Win32 integration not supplied by this source-method repair.",
+  "environment": {
+    "os": "Windows-10-10.0.26300-SP0",
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "machine": "AMD64"
+  },
+  "main_sends": 0,
+  "existing6951V2_unchanged": true
+}

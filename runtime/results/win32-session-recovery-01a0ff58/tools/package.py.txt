@@ -1,0 +1,58 @@
+from pathlib import Path
+import datetime,difflib,hashlib,json,platform,subprocess,sys
+R=Path(__file__).resolve().parent;W=R.parents[1];OUT=W/'outputs/win32-session-recovery-01';PUB=R/'public';PUB.mkdir(exist_ok=False);REPO=R.parent/'agent-interface'
+def sha(b):return hashlib.sha256(b).hexdigest()
+mapping=[]
+def preserve(path,name):
+ raw=path.read_bytes();b=raw
+ for original,replacement in [(str(W),'<worker-workspace>'),(str(Path(sys.executable).parent),'<python311-install>')]:
+  for variant in [original,original.replace('\\','\\\\'),original.replace('\\','/')]:b=b.replace(variant.encode(),replacement.encode())
+ dest=PUB/name;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(b)
+ mapping.append(dict(path=name,original_bytes=len(raw),original_sha256=sha(raw),published_bytes=len(b),published_sha256=sha(b),derivative=raw!=b))
+for name in ['PLAN.json','COUPLING_PLAN.md']:preserve(OUT/name,name)
+runs=[]
+for label,expected,methods in [('first-RED',1,16),('first-GREEN',0,16),('optimized-GREEN-O',0,16),('coupling-RED',1,2),('coupling-GREEN',0,2),('coupling-GREEN-O',0,2)]:
+ p=OUT/label;r=json.loads((p/'RESULT.json').read_bytes())
+ if r['exit']!=expected or not r['source_unchanged'] or not r['output_gate']:raise ValueError('endpoint '+label)
+ for name in ['START.json','RESULT.json','stdout.txt','stderr.txt']:preserve(p/name,'runs/'+label+'/'+name)
+ for name,v in r['streams'].items():
+  raw=(p/name).read_bytes()
+  if len(raw)!=v['bytes'] or sha(raw)!=v['sha256']:raise ValueError('raw join '+label)
+ runs.append(dict(label=label,methods=methods,pid=r['pid'],start_utc=r['start_utc'],end_utc=r['end_utc'],exit=r['exit'],stdout_rows=len((p/'stdout.txt').read_text(encoding='utf-8').splitlines()),raw_receipt_sha256=sha((p/'RESULT.json').read_bytes())))
+for p in sorted((R/'baseline').rglob('*.py')):preserve(p,'baseline-source/'+p.relative_to(R/'baseline').as_posix()+'.txt')
+for name in ['test_session_recovery.py','test_session_backend_coupling.py','prepare.py','run.py','run_coupling.py','package.py']:preserve(R/name,'tools/'+name+'.txt')
+preserve(R/'candidate/runtime/backends/win32_v1/session.py','candidate-session.py.txt')
+for p in (R/'baseline').rglob('*.py'):
+ other=R/'candidate'/p.relative_to(R/'baseline')
+ if p.name!='session.py' and p.read_bytes()!=other.read_bytes():raise ValueError('only session source changed')
+result=dict(decision='LOCAL_SESSION_RECOVERY_REPAIR_PASS_PENDING_REVIEW',source_parent='4fa6fb6408cf9e0ec66e1890b7460d34c6f71b53',runs=runs,baseline='16methods failures18/errors4; supplementary2methods failure1/error1. Original runtime result/exception/assertion failures retained, no setup failure.',candidate='16 plus supplementary2 methods pass normal and optimized; same respective definitions/closure. Actual backend connection uses inert APIs, no native constructor or WinDLL.',implementation='Sticky same-session recovery state before backend clock/manifest/preflight access; strict reported-neutral release list; known/unexpected execute error and failed preflight cleanup gate; explicit single release_all recovery never replays task.',limits='OS-state observation assumption/API-zero ambiguity/durable neutrality/actor authentication/interleaving/general cancellation/deadline/task/token/latency unproved. Direct backend cleanup/new binding do not clear. No native/formal allocation. CLI/MCP Win32 integration not supplied by this source-method repair.',environment=dict(os=platform.platform(),python=sys.version,machine=platform.machine()),main_sends=0,existing6951V2_unchanged=True)
+(OUT/'RESULT.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8');preserve(OUT/'RESULT.json','RESULT.json')
+publication=dict(schema='ordinary-original-public-joins-v1',archive='runtime/results/win32-session-recovery-01a0ff58',joins=mapping)
+(PUB/'PUBLICATION.json').write_bytes((json.dumps(publication,indent=2)+'\n').encode());(OUT/'PUBLICATION.json').write_bytes((PUB/'PUBLICATION.json').read_bytes())
+(PUB/'README.md').write_bytes(b'Ordinary Win32 session recovery repair. First failed and normal/optimized outcomes preserved. Sources/helpers are inert .py.txt; do not execute retained snapshots. See RESULT.json for exact limitations. Original private and public projected path hashes are separate. No formal/native/physical performance claim.\n')
+(PUB/'SHA256SUMS').write_bytes(''.join(sha(p.read_bytes())+'  '+p.relative_to(PUB).as_posix()+'\n' for p in sorted(PUB.rglob('*')) if p.is_file()).encode())
+changes=[]
+for p in sorted(PUB.rglob('*')):
+ if p.is_file():changes.append(dict(path='runtime/results/win32-session-recovery-01a0ff58/'+p.relative_to(PUB).as_posix(),mode='100644',type='blob',content=p.read_bytes().decode()))
+for name in ['session.py','test_session_recovery.py','test_session_backend_coupling.py','inert_input.py']:
+ p=R/'candidate/runtime/backends/win32_v1'/name;changes.append(dict(path='runtime/backends/win32_v1/'+name,mode='100644',type='blob',content=p.read_bytes().decode()))
+(R/'TREE_REQUEST.json').write_bytes((json.dumps(dict(repository_full_name='Unjuno/agent-interface',base_tree_sha='1ded0cc776fd91a8032c19176d41b39bf5edfc5a',tree_elements=changes),indent=2)+'\n').encode())
+diff=''.join(difflib.unified_diff((R/'baseline/runtime/backends/win32_v1/session.py').read_text().splitlines(True),(R/'candidate/runtime/backends/win32_v1/session.py').read_text().splitlines(True),fromfile='baseline/session.py',tofile='candidate/session.py'));(OUT/'SOURCE_DELTA.patch').write_bytes(diff.encode())
+def g(*args,data=None):return subprocess.check_output(['git','--no-lazy-fetch','-C',str(REPO),*args],input=data)
+entries={x['path']:('100644','blob',g('hash-object','-w','--stdin',data=x['content'].encode()).decode().strip()) for x in changes}
+def build(prefix,base):
+ items={}
+ if base:
+  for record in g('ls-tree','-z',base).split(b'\0'):
+   if not record:continue
+   meta,name=record.split(b'\t');mode,typ,oid=meta.decode().split();items[name.decode()]=(mode,typ,oid)
+ direct={k[len(prefix):]:v for k,v in entries.items() if k.startswith(prefix)}
+ for name in {k.split('/')[0] for k in direct}:
+  children=[k for k in direct if k.startswith(name+'/')]
+  if children:items[name]=('040000','tree',build(prefix+name+'/',items.get(name,(None,None,None))[2]))
+  else:items[name]=direct[name]
+ payload=b''.join((' '.join(v)+'\t'+name+'\0').encode() for name,v in items.items())
+ return g('mktree','-z','--missing',data=payload).decode().strip()
+tree=build('','1ded0cc776fd91a8032c19176d41b39bf5edfc5a')
+(OUT/'LOCAL_TREE.json').write_bytes((json.dumps(dict(tree_sha=tree,changed_paths=len(entries),archive_files=len(entries)-4,public_joins=len(mapping),public_bytes=sum(len(x['content'].encode()) for x in changes),source_ref_changes=0),indent=2)+'\n').encode())
+print((OUT/'LOCAL_TREE.json').read_text())

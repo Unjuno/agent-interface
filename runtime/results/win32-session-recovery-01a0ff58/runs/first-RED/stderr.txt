@@ -1,0 +1,359 @@
+test_backend_execution_error_requires_recovery (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_backend_execution_error_requires_recovery) ... FAIL
+test_binding_change_does_not_clear_uncertainty (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_binding_change_does_not_clear_uncertainty) ... FAIL
+test_core_refusal_keeps_no_input_and_later_valid_admission (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_core_refusal_keeps_no_input_and_later_valid_admission) ... ok
+test_direct_cleanup_does_not_clear_session_gate (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_direct_cleanup_does_not_clear_session_gate) ... FAIL
+test_explicit_recovery_neutralizes_once_without_replay (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_explicit_recovery_neutralizes_once_without_replay) ... FAIL
+test_failed_recovery_stays_gated_until_explicit_reported_neutral (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_failed_recovery_stays_gated_until_explicit_reported_neutral) ... FAIL
+test_healthy_repeated_dispatch_remains_available (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_healthy_repeated_dispatch_remains_available) ... ok
+test_malformed_or_nonempty_release_never_completes (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_malformed_or_nonempty_release_never_completes) ... 
+  test_malformed_or_nonempty_release_never_completes (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_malformed_or_nonempty_release_never_completes) (releases=None) ... FAIL
+  test_malformed_or_nonempty_release_never_completes (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_malformed_or_nonempty_release_never_completes) (releases={}) ... FAIL
+  test_malformed_or_nonempty_release_never_completes (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_malformed_or_nonempty_release_never_completes) (releases=[{'verified': 1, 'keys_down': [], 'buttons_down': []}]) ... FAIL
+  test_malformed_or_nonempty_release_never_completes (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_malformed_or_nonempty_release_never_completes) (releases=[{'verified': 'yes', 'keys_down': [], 'buttons_down': []}]) ... FAIL
+  test_malformed_or_nonempty_release_never_completes (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_malformed_or_nonempty_release_never_completes) (releases=[{'verified': True, 'keys_down': ['Q'], 'buttons_down': []}]) ... FAIL
+  test_malformed_or_nonempty_release_never_completes (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_malformed_or_nonempty_release_never_completes) (releases=[{'verified': True, 'keys_down': [], 'buttons_down': ['left']}]) ... FAIL
+  test_malformed_or_nonempty_release_never_completes (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_malformed_or_nonempty_release_never_completes) (releases=[{'verified': True, 'keys_down': []}]) ... FAIL
+  test_malformed_or_nonempty_release_never_completes (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_malformed_or_nonempty_release_never_completes) (releases=[{'verified': True, 'keys_down': [], 'buttons_down': None}]) ... FAIL
+  test_malformed_or_nonempty_release_never_completes (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_malformed_or_nonempty_release_never_completes) (releases=[None]) ... ERROR
+  test_malformed_or_nonempty_release_never_completes (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_malformed_or_nonempty_release_never_completes) (releases=({'verified': True, 'keys_down': [], 'buttons_down': []},)) ... FAIL
+test_missing_release_stops_before_backend_access (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_missing_release_stops_before_backend_access) ... FAIL
+test_non_mapping_execution_result_is_uncertain_and_gated (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_non_mapping_execution_result_is_uncertain_and_gated) ... ERROR
+test_preflight_cleanup_exception_requires_recovery (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_preflight_cleanup_exception_requires_recovery) ... ERROR
+test_preflight_unverified_cleanup_requires_recovery (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_preflight_unverified_cleanup_requires_recovery) ... FAIL
+test_recovery_not_required_does_not_call_backend (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_recovery_not_required_does_not_call_backend) ... FAIL
+test_unexpected_execution_error_remains_original_exception_and_gated (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_unexpected_execution_error_remains_original_exception_and_gated) ... ERROR
+test_unverified_release_stops_before_backend_access (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_unverified_release_stops_before_backend_access) ... FAIL
+test_verified_preflight_cleanup_does_not_disable_healthy_session (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_verified_preflight_cleanup_does_not_disable_healthy_session) ... ok
+
+======================================================================
+ERROR: test_malformed_or_nonempty_release_never_completes (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_malformed_or_nonempty_release_never_completes) (releases=[None])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 52, in test_malformed_or_nonempty_release_never_completes
+    self.b=Endpoint();self.s=Win32RuntimeSession(self.b);self.b.reply={'releases':releases};self.assertEqual(self.dispatch()['status'],'release_unverified');self.gated()
+                                                                                                             ^^^^^^^^^^^^^^^
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 32, in dispatch
+    try:r=self.s.dispatch(p,current_observation_seq=7,current_binding_revision=revision,now_ns=1)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\session.py", line 58, in dispatch
+    verified = bool(releases) and all(row.get("verified") for row in releases)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\session.py", line 58, in <genexpr>
+    verified = bool(releases) and all(row.get("verified") for row in releases)
+                                      ^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+======================================================================
+ERROR: test_non_mapping_execution_result_is_uncertain_and_gated (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_non_mapping_execution_result_is_uncertain_and_gated)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 83, in test_non_mapping_execution_result_is_uncertain_and_gated
+    self.b.reply=None;self.assertEqual(self.dispatch()['status'],'release_unverified');self.gated()
+                                       ^^^^^^^^^^^^^^^
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 32, in dispatch
+    try:r=self.s.dispatch(p,current_observation_seq=7,current_binding_revision=revision,now_ns=1)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\session.py", line 57, in dispatch
+    releases = result.get("releases", [])
+               ^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+======================================================================
+ERROR: test_preflight_cleanup_exception_requires_recovery (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_preflight_cleanup_exception_requires_recovery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\session.py", line 37, in dispatch
+    self.backend.preflight(program)
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 15, in preflight
+    if self.pre_error:raise self.pre_error
+                      ^^^^^^^^^^^^^^^^^^^^
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\session.py", line 37, in dispatch
+    self.backend.preflight(program)
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 15, in preflight
+    if self.pre_error:raise self.pre_error
+                      ^^^^^^^^^^^^^^^^^^^^
+runtime.backends.win32_v1.backend.Win32BackendError: inert pre-input refusal
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 64, in test_preflight_cleanup_exception_requires_recovery
+    self.gated()
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 37, in gated
+    before=list(self.b.calls);count=self.b.emissions;r=self.dispatch(revision)
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 32, in dispatch
+    try:r=self.s.dispatch(p,current_observation_seq=7,current_binding_revision=revision,now_ns=1)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\session.py", line 39, in dispatch
+    release = self.backend.release_all()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 22, in release_all
+    if isinstance(self.cleanup,Exception):raise self.cleanup
+                                          ^^^^^^^^^^^^^^^^^^
+RuntimeError: inert cleanup unavailable
+
+======================================================================
+ERROR: test_unexpected_execution_error_remains_original_exception_and_gated (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_unexpected_execution_error_remains_original_exception_and_gated)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 58, in test_unexpected_execution_error_remains_original_exception_and_gated
+    self.gated()
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 37, in gated
+    before=list(self.b.calls);count=self.b.emissions;r=self.dispatch(revision)
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 32, in dispatch
+    try:r=self.s.dispatch(p,current_observation_seq=7,current_binding_revision=revision,now_ns=1)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\session.py", line 49, in dispatch
+    result = self.backend.execute(program)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 18, in execute
+    if self.execute_error:raise self.execute_error
+                          ^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: inert uncertain failure
+
+======================================================================
+FAIL: test_backend_execution_error_requires_recovery (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_backend_execution_error_requires_recovery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 54, in test_backend_execution_error_requires_recovery
+    self.b.execute_error=native.Win32BackendError('inert failure');self.assertEqual(self.dispatch()['status'],'execution_failed');self.gated()
+                                                                                                                                  ^^^^^^^^^^^^
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 38, in gated
+    self.assertEqual(r['status'],'refused');self.assertEqual(r['error'],'INPUT_RECOVERY_REQUIRED');self.assertEqual(self.b.calls,before);self.assertEqual(self.b.emissions,count)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'execution_failed' != 'refused'
+- execution_failed
++ refused
+
+
+======================================================================
+FAIL: test_binding_change_does_not_clear_uncertainty (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_binding_change_does_not_clear_uncertainty)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 67, in test_binding_change_does_not_clear_uncertainty
+    def test_binding_change_does_not_clear_uncertainty(self):self.uncertain();self.gated(revision=4)
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 38, in gated
+    self.assertEqual(r['status'],'refused');self.assertEqual(r['error'],'INPUT_RECOVERY_REQUIRED');self.assertEqual(self.b.calls,before);self.assertEqual(self.b.emissions,count)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'release_unverified' != 'refused'
+- release_unverified
++ refused
+
+
+======================================================================
+FAIL: test_direct_cleanup_does_not_clear_session_gate (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_direct_cleanup_does_not_clear_session_gate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 69, in test_direct_cleanup_does_not_clear_session_gate
+    self.uncertain();self.assertEqual(self.b.release_all(),NEUTRAL);self.gated()
+                                                                    ^^^^^^^^^^^^
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 38, in gated
+    self.assertEqual(r['status'],'refused');self.assertEqual(r['error'],'INPUT_RECOVERY_REQUIRED');self.assertEqual(self.b.calls,before);self.assertEqual(self.b.emissions,count)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'release_unverified' != 'refused'
+- release_unverified
++ refused
+
+
+======================================================================
+FAIL: test_explicit_recovery_neutralizes_once_without_replay (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_explicit_recovery_neutralizes_once_without_replay)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 73, in test_explicit_recovery_neutralizes_once_without_replay
+    self.uncertain();before=list(self.b.calls);emissions=self.b.emissions;r=self.recover();self.assertEqual(r['status'],'input_recovered');self.assertIs(r['replay_allowed'],False);self.assertIsNone(r['task_success']);self.assertEqual(self.b.calls,before+['release']);self.assertEqual(self.b.emissions,emissions)
+                                                                            ^^^^^^^^^^^^^^
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 40, in recover
+    f=getattr(self.s,'recover_input',None);self.assertTrue(callable(f),'missing explicit recovery endpoint')
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : missing explicit recovery endpoint
+
+======================================================================
+FAIL: test_failed_recovery_stays_gated_until_explicit_reported_neutral (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_failed_recovery_stays_gated_until_explicit_reported_neutral)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 78, in test_failed_recovery_stays_gated_until_explicit_reported_neutral
+    self.b.cleanup=cleanup;before=len(self.b.calls);r=self.recover();self.assertEqual(r['status'],'recovery_failed');self.assertEqual(self.b.calls[before:],['release']);self.gated()
+                                                      ^^^^^^^^^^^^^^
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 40, in recover
+    f=getattr(self.s,'recover_input',None);self.assertTrue(callable(f),'missing explicit recovery endpoint')
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : missing explicit recovery endpoint
+
+======================================================================
+FAIL: test_malformed_or_nonempty_release_never_completes (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_malformed_or_nonempty_release_never_completes) (releases=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 52, in test_malformed_or_nonempty_release_never_completes
+    self.b=Endpoint();self.s=Win32RuntimeSession(self.b);self.b.reply={'releases':releases};self.assertEqual(self.dispatch()['status'],'release_unverified');self.gated()
+                                                                                                                                                             ^^^^^^^^^^^^
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 38, in gated
+    self.assertEqual(r['status'],'refused');self.assertEqual(r['error'],'INPUT_RECOVERY_REQUIRED');self.assertEqual(self.b.calls,before);self.assertEqual(self.b.emissions,count)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'release_unverified' != 'refused'
+- release_unverified
++ refused
+
+
+======================================================================
+FAIL: test_malformed_or_nonempty_release_never_completes (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_malformed_or_nonempty_release_never_completes) (releases={})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 52, in test_malformed_or_nonempty_release_never_completes
+    self.b=Endpoint();self.s=Win32RuntimeSession(self.b);self.b.reply={'releases':releases};self.assertEqual(self.dispatch()['status'],'release_unverified');self.gated()
+                                                                                                                                                             ^^^^^^^^^^^^
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 38, in gated
+    self.assertEqual(r['status'],'refused');self.assertEqual(r['error'],'INPUT_RECOVERY_REQUIRED');self.assertEqual(self.b.calls,before);self.assertEqual(self.b.emissions,count)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'release_unverified' != 'refused'
+- release_unverified
++ refused
+
+
+======================================================================
+FAIL: test_malformed_or_nonempty_release_never_completes (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_malformed_or_nonempty_release_never_completes) (releases=[{'verified': 1, 'keys_down': [], 'buttons_down': []}])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 52, in test_malformed_or_nonempty_release_never_completes
+    self.b=Endpoint();self.s=Win32RuntimeSession(self.b);self.b.reply={'releases':releases};self.assertEqual(self.dispatch()['status'],'release_unverified');self.gated()
+                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'completed' != 'release_unverified'
+- completed
++ release_unverified
+
+
+======================================================================
+FAIL: test_malformed_or_nonempty_release_never_completes (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_malformed_or_nonempty_release_never_completes) (releases=[{'verified': 'yes', 'keys_down': [], 'buttons_down': []}])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 52, in test_malformed_or_nonempty_release_never_completes
+    self.b=Endpoint();self.s=Win32RuntimeSession(self.b);self.b.reply={'releases':releases};self.assertEqual(self.dispatch()['status'],'release_unverified');self.gated()
+                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'completed' != 'release_unverified'
+- completed
++ release_unverified
+
+
+======================================================================
+FAIL: test_malformed_or_nonempty_release_never_completes (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_malformed_or_nonempty_release_never_completes) (releases=[{'verified': True, 'keys_down': ['Q'], 'buttons_down': []}])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 52, in test_malformed_or_nonempty_release_never_completes
+    self.b=Endpoint();self.s=Win32RuntimeSession(self.b);self.b.reply={'releases':releases};self.assertEqual(self.dispatch()['status'],'release_unverified');self.gated()
+                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'completed' != 'release_unverified'
+- completed
++ release_unverified
+
+
+======================================================================
+FAIL: test_malformed_or_nonempty_release_never_completes (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_malformed_or_nonempty_release_never_completes) (releases=[{'verified': True, 'keys_down': [], 'buttons_down': ['left']}])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 52, in test_malformed_or_nonempty_release_never_completes
+    self.b=Endpoint();self.s=Win32RuntimeSession(self.b);self.b.reply={'releases':releases};self.assertEqual(self.dispatch()['status'],'release_unverified');self.gated()
+                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'completed' != 'release_unverified'
+- completed
++ release_unverified
+
+
+======================================================================
+FAIL: test_malformed_or_nonempty_release_never_completes (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_malformed_or_nonempty_release_never_completes) (releases=[{'verified': True, 'keys_down': []}])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 52, in test_malformed_or_nonempty_release_never_completes
+    self.b=Endpoint();self.s=Win32RuntimeSession(self.b);self.b.reply={'releases':releases};self.assertEqual(self.dispatch()['status'],'release_unverified');self.gated()
+                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'completed' != 'release_unverified'
+- completed
++ release_unverified
+
+
+======================================================================
+FAIL: test_malformed_or_nonempty_release_never_completes (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_malformed_or_nonempty_release_never_completes) (releases=[{'verified': True, 'keys_down': [], 'buttons_down': None}])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 52, in test_malformed_or_nonempty_release_never_completes
+    self.b=Endpoint();self.s=Win32RuntimeSession(self.b);self.b.reply={'releases':releases};self.assertEqual(self.dispatch()['status'],'release_unverified');self.gated()
+                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'completed' != 'release_unverified'
+- completed
++ release_unverified
+
+
+======================================================================
+FAIL: test_malformed_or_nonempty_release_never_completes (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_malformed_or_nonempty_release_never_completes) (releases=({'verified': True, 'keys_down': [], 'buttons_down': []},))
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 52, in test_malformed_or_nonempty_release_never_completes
+    self.b=Endpoint();self.s=Win32RuntimeSession(self.b);self.b.reply={'releases':releases};self.assertEqual(self.dispatch()['status'],'release_unverified');self.gated()
+                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'completed' != 'release_unverified'
+- completed
++ release_unverified
+
+
+======================================================================
+FAIL: test_missing_release_stops_before_backend_access (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_missing_release_stops_before_backend_access)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 47, in test_missing_release_stops_before_backend_access
+    def test_missing_release_stops_before_backend_access(self):self.b.reply={'releases':[]};self.assertEqual(self.dispatch()['status'],'release_unverified');self.gated()
+                                                                                                                                                             ^^^^^^^^^^^^
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 38, in gated
+    self.assertEqual(r['status'],'refused');self.assertEqual(r['error'],'INPUT_RECOVERY_REQUIRED');self.assertEqual(self.b.calls,before);self.assertEqual(self.b.emissions,count)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'release_unverified' != 'refused'
+- release_unverified
++ refused
+
+
+======================================================================
+FAIL: test_preflight_unverified_cleanup_requires_recovery (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_preflight_unverified_cleanup_requires_recovery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 60, in test_preflight_unverified_cleanup_requires_recovery
+    self.b.pre_error=native.Win32BackendError('inert pre-input refusal');self.b.cleanup={'verified':False,'keys_down':['Q'],'buttons_down':[]};self.assertEqual(self.dispatch()['error'],'BACKEND_CONSTRAINT');self.gated()
+                                                                                                                                                                                                               ^^^^^^^^^^^^
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 38, in gated
+    self.assertEqual(r['status'],'refused');self.assertEqual(r['error'],'INPUT_RECOVERY_REQUIRED');self.assertEqual(self.b.calls,before);self.assertEqual(self.b.emissions,count)
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'BACKEND_CONSTRAINT' != 'INPUT_RECOVERY_REQUIRED'
+- BACKEND_CONSTRAINT
++ INPUT_RECOVERY_REQUIRED
+
+
+======================================================================
+FAIL: test_recovery_not_required_does_not_call_backend (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_recovery_not_required_does_not_call_backend)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 71, in test_recovery_not_required_does_not_call_backend
+    r=self.recover();self.assertEqual(r['error'],'INPUT_RECOVERY_NOT_REQUIRED');self.assertIs(r['release_attempted'],False);self.assertEqual(self.b.calls,[])
+      ^^^^^^^^^^^^^^
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 40, in recover
+    f=getattr(self.s,'recover_input',None);self.assertTrue(callable(f),'missing explicit recovery endpoint')
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : missing explicit recovery endpoint
+
+======================================================================
+FAIL: test_unverified_release_stops_before_backend_access (runtime.backends.win32_v1.test_session_recovery.SessionRecoveryTests.test_unverified_release_stops_before_backend_access)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 46, in test_unverified_release_stops_before_backend_access
+    def test_unverified_release_stops_before_backend_access(self):self.uncertain();self.gated()
+                                                                                   ^^^^^^^^^^^^
+  File "<worker-workspace>\work\win32-session-recovery-01\baseline\runtime\backends\win32_v1\test_session_recovery.py", line 38, in gated
+    self.assertEqual(r['status'],'refused');self.assertEqual(r['error'],'INPUT_RECOVERY_REQUIRED');self.assertEqual(self.b.calls,before);self.assertEqual(self.b.emissions,count)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'release_unverified' != 'refused'
+- release_unverified
++ refused
+
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.012s
+
+FAILED (failures=18, errors=4)
