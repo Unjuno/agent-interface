@@ -142,8 +142,6 @@ class CodexAppServerClient:
                 self.process.kill()
                 self.process.wait(timeout=timeout)
         self._reader.join(timeout=timeout)
-        if self._reader.is_alive():
-            raise TimeoutError("app-server reader close timed out")
         if self._journal is not None and not self._journal.closed:
             with self._journal_lock:
                 self._journal.close()

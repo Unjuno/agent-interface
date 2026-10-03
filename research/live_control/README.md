@@ -646,3 +646,5 @@ or human-tempo claim.
 - [#5604 invocation-boundary T0 STOP archive](invocation_boundary_5156_t0_20261001_01/ARCHIVAL_QUALIFICATION.md): 11 exact originals; no-op mutation, 5/6 controls and unbound historical count preserved. Separate merged T1 does not overwrite T0 STOP or authorize a rerun.
 - [#5156 X11 allocation-03 expired-window archive](owner_keyup_formal_x11_5156_20260930_03/ARCHIVAL_QUALIFICATION.md): eight exact frozen source/STOP files; window ended before container inspection, candidate or scientific rows (all 0). Host construction receipts only; allocation-04 remains separate.
 - [#5156 X11 allocation-02 preformal STOP](owner_keyup_formal_x11_5156_20260930_02/ARCHIVAL_QUALIFICATION.md): preserves the six-file source package and Xlib import STOP; formal inputs 0, raw/audit absent, retries 0. No scientific result or live key-up claim.
+
+- [Issue #59 reader retirement before journal close](reader_close_59_b04b/README.md): two-line close guard; first RED3 retained, normal/optimized8+8 and EOF4 pass, two native helper/callback composition cells. Separate mutex/EOF/UTF8/send scopes and incomplete-cleanup limits remain.
