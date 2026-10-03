@@ -1,0 +1,33 @@
+{
+  "schema": "x11-cancel-atomicity-local-validation-v1",
+  "source_freeze": "5b281ea2c4cb785d529605d859b26242052c8559",
+  "commands": [
+    {
+      "role": "ordinary construction01",
+      "exit": 0,
+      "test_methods": 11,
+      "receipt": "runs/construction/HOST_RECEIPT.json",
+      "scope": "fake-native gate and hand-oracle auditor; actual-raw schema defect found afterward"
+    },
+    {
+      "role": "ordinary construction02",
+      "exit": 0,
+      "test_methods": 12,
+      "receipt": "runs/construction-02/HOST_RECEIPT.json",
+      "scope": "repaired raw field/retirement joins;17 copied hand-oracle semantic controls"
+    },
+    {
+      "role": "first actual native producer",
+      "exit": 0,
+      "cells": 4,
+      "receipt": "runs/producer/HOST_RECEIPT.json"
+    },
+    {
+      "role": "first frozen saved-only auditor",
+      "exit": 0,
+      "receipt": "runs/auditor/HOST_RECEIPT.json"
+    }
+  ],
+  "applicable_local_checks": "Study source construction and raw audit, already executed once at each recorded stage. Inert research-only archive; no production/workflow/default-discovery edits. Runtime X11/analysis-index workflow paths do not match this new concurrency archive; research archive is manual only. No hosted or full-repository CI PASS claimed.",
+  "retained_warnings": "All four WSLc stages report unsupported swap-limit capabilities. Requested resource values are not enforcement proof."
+}
