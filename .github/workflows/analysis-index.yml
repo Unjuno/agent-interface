@@ -27,6 +27,11 @@ jobs:
           sparse-checkout: |
             research/analysis
             research/live_control/owner_keyup_keymap_witness_5156_t3_v1
+            research/integration/core_admission_composition_57_20261003_01a0ff59
+            research/integration/pr6863_review_rescue_20261003
+            research/integration/pr6863_review_20261003_01a0ff58
+            research/integration/teardown_witness_review_rescue_20261003
+            research/integration/owner_keyup_teardown_witness_5156_01a0ff58
       - name: Restore the frozen workflow source for provenance tests
         run: |
           git fetch --no-tags --depth=1 origin e2e434dd07e1034c5c4303982a0b1ec33ea35cfd
@@ -36,6 +41,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Test sparse-checkout archival dependency closure
+        run: python -B -m unittest discover -s research/analysis -p 'test_analysis_checkout.py' -v
       - name: Check retained analytical results are indexed
         run: python research/analysis/check_index.py
       - name: Test Issue #6505 A01 retained auditor construction
