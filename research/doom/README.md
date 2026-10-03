@@ -367,3 +367,6 @@ and [`T1`](map01_owner_occurrence_binding_59_t1_20261002/RESULT.md).
 - [V39 startup diagnostics V3](v39_startup_diagnostics_b04b_v3/README.md): preserve the primary exception across diagnostic hooks and record failures; V2 adoption withheld, fresh review required.
 
 V39 interrupted reader acknowledgement repair evidence: [v39_startup_reader_repair_b04b_v4](v39_startup_reader_repair_b04b_v4/README.md). Conservative unconfirmed cleanup; not whole-resource/input/task proof.
+
+- [v39 startup-fault ownership construction](v39_startup_cleanup_59_20261003_01a0ff52/README.md): exact caller retains a private session after missing-fixture rejection; ordinary fake-boundary evidence, no physical release/runtime repair claim.
+- [Native Linux game construction: writable-CWD repair and getter-clock STOP](native_game_readiness_59_20261003_b64b/REPORT.md) — first exit139 preserved, repaired no-input STOP2; attack NOT_RUN, no useful-feedback/release/R134 claim.
