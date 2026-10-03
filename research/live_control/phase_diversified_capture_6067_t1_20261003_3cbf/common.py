@@ -11,11 +11,15 @@ def write(path, value):
 
 
 def until(ns):
+    # Excluded timer01 selected a 15ms final spin before any formal cell.
+    # Same source/capture pacing, additional CPU cost, no hard-real-time claim.
+    final_spin_ns = 15_000_000
     while True:
         remain = ns - time.monotonic_ns()
         if remain <= 0:
             return
-        time.sleep(remain / 1e9)
+        if remain > final_spin_ns:
+            time.sleep((remain - final_spin_ns) / 1e9)
 
 
 def await_file(path, seconds=4):
