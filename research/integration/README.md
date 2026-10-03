@@ -7,6 +7,8 @@ Child directories are retained integration studies. Their existence does not imp
 
 ## Composition path
 
+Retained C01 callback-custody profile and versioned audit correction: [compiled custody v4 cycles](compiled_custody_v4_cycles_C01_20261003_01a0ff35/README.md). Original v1 missed27 complete callback-schedule corruptions; v2 preserves all original timing/raw/results and rejects those copies. `CPU_SECONDS_UNRESOLVED` remains, and counter reads outside wall endpoints are not subtracted or converted. Fresh [saved-data rescue checks](../../runtime/results/compiled_custody_rescue_5775/README.md) are not a measurement replay, clock calibration, practical efficiency or adoption certificate.
+
 ```mermaid
 flowchart LR
     C[Scoped component evidence]
