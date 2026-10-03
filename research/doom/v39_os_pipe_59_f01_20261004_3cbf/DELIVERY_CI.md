@@ -15,6 +15,8 @@ This is delivery verification, not new formal experiment or independent review.
 
 Docker State:
 ```
+{"Status":"exited","Running":false,"Paused":false,"Restarting":false,"OOMKilled":false,"Dead":false,"Pid":0,"ExitCode":0,"Error":"","StartedAt":"2026-10-03T22:48:42.771170491Z","FinishedAt":"2026-10-03T22:48:43.030145926Z"}
+```
 
 ## Revised delivery check coverage at1cc011100
 
@@ -25,5 +27,3 @@ Own f01-delivery-check-v2, samefrozenimage/configuredlimits asv1,
 22:53:04.08558563–22:53:04.352211516Z, exit0/noOOM/Pid0/Runningfalse.
 Command unchanged:4tests-O-Werror,0.003s,OK, savedverifier
 PASS_PARSER_NOTIFICATION_EOF_UNRESOLVED. No consumed experiment replay.
-{"Status":"exited","Running":false,"Paused":false,"Restarting":false,"OOMKilled":false,"Dead":false,"Pid":0,"ExitCode":0,"Error":"","StartedAt":"2026-10-03T22:48:42.771170491Z","FinishedAt":"2026-10-03T22:48:43.030145926Z"}
-```
