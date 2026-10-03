@@ -493,7 +493,7 @@ def main():
         end = time.monotonic() + timeout
         while time.monotonic() < end:
             try:
-                row = incoming.get(timeout=min(.25,max(.1,end-time.monotonic())))
+                row = incoming.get(timeout=min(.25,max(0.,end-time.monotonic())))
             except queue.Empty:
                 if process.poll() is not None:
                     detail="stderr not synchronously drained"
