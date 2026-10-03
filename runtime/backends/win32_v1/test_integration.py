@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import ctypes
 import json
 import subprocess
 import sys
@@ -37,6 +38,62 @@ def make_program(pid: str, *, seq=7, revision=3, expires=None, text="office", ta
     }
 
 
+
+class CaptureContractDLL:
+    """Fake GDI enforces the documented deselection and deletion preconditions."""
+
+    def __init__(self, fault=None):
+        self.fault = fault
+        self.selected = 9
+        self.events = []
+
+    def GetDC(self, hwnd):
+        return 1
+
+    def CreateCompatibleDC(self, dc):
+        return 2
+
+    def CreateCompatibleBitmap(self, dc, width, height):
+        return 3
+
+    def SelectObject(self, dc, bitmap):
+        self.events.append("select" if bitmap == 3 else "restore")
+        if bitmap == 9 and self.fault in {"restore_zero", "restore_error"}:
+            fault, self.fault = self.fault, None
+            return 0 if fault == "restore_zero" else ctypes.c_void_p(-1).value
+        previous, self.selected = self.selected, bitmap
+        return previous
+
+    def PrintWindow(self, hwnd, dc, flags):
+        assert self.selected == 3
+        return self.fault != "draw"
+
+    def BitBlt(self, *args):
+        assert self.selected == 3
+        return self.fault != "draw"
+
+    def GetDIBits(self, dc, bitmap, start, height, buffer, info, usage):
+        self.events.append("read")
+        assert self.selected != bitmap, "GetDIBits bitmap is still selected"
+        if self.fault == "rows":
+            return height - 1
+        buffer.raw = bytes(range(len(buffer)))
+        return height
+
+    def DeleteObject(self, bitmap):
+        assert self.selected != bitmap, "deleting selected bitmap"
+        self.events.append("delete_bitmap")
+        return 1
+
+    def DeleteDC(self, dc):
+        self.events.append("delete_dc")
+        return 1
+
+    def ReleaseDC(self, hwnd, dc):
+        self.events.append("release_dc")
+        return 1
+
+
 class PureWin32HelperTests(unittest.TestCase):
     def test_utf16_units(self):
         self.assertEqual(utf16_units("office"), tuple(ord(ch) for ch in "office"))
@@ -49,6 +106,47 @@ class PureWin32HelperTests(unittest.TestCase):
         self.assertEqual(virtual_key("s"), ord("S"))
         with self.assertRaises(Win32BackendError):
             virtual_key("F13")
+
+
+
+    def capture_contract_backend(self, fault=None):
+        backend = object.__new__(Win32Backend)
+        dll = CaptureContractDLL(fault)
+        backend.gdi32 = backend.user32 = dll
+        return backend, dll
+
+    def test_capture_deselects_before_readout(self):
+        for print_window in (True, False):
+            with self.subTest(print_window=print_window):
+                backend, dll = self.capture_contract_backend()
+                raw = backend._capture_hdc(7, 0, 0, 2, 2, print_window=print_window)
+                self.assertEqual(raw, bytes(range(16)))
+                self.assertLess(dll.events.index("restore"), dll.events.index("read"))
+                self.assertEqual(dll.events.count("restore"), 1)
+                self.assertEqual(dll.selected, 9)
+                self.assertEqual(dll.events[-3:], ["delete_bitmap", "delete_dc", "release_dc"])
+
+    def test_capture_failures_release_resources(self):
+        for print_window in (True, False):
+            for fault in ("draw", "rows"):
+                with self.subTest(print_window=print_window, fault=fault):
+                    backend, dll = self.capture_contract_backend(fault)
+                    with self.assertRaises(Win32BackendError):
+                        backend._capture_hdc(7, 0, 0, 2, 2, print_window=print_window)
+                    self.assertEqual(dll.selected, 9)
+                    self.assertEqual(dll.events[-3:], ["delete_bitmap", "delete_dc", "release_dc"])
+
+    def test_capture_failed_deselection_prevents_readout(self):
+        for print_window in (True, False):
+            for fault in ("restore_zero", "restore_error"):
+                with self.subTest(print_window=print_window, fault=fault):
+                    backend, dll = self.capture_contract_backend(fault)
+                    with self.assertRaisesRegex(Win32BackendError, "deselection failed"):
+                        backend._capture_hdc(7, 0, 0, 2, 2, print_window=print_window)
+                    self.assertNotIn("read", dll.events)
+                    self.assertEqual(dll.events.count("restore"), 2)
+                    self.assertEqual(dll.selected, 9)
+                    self.assertEqual(dll.events[-3:], ["delete_bitmap", "delete_dc", "release_dc"])
 
 
 @unittest.skipUnless(sys.platform == "win32", "requires native Windows")
