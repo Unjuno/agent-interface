@@ -1,0 +1,177 @@
+test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) ... 
+  test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_1_appended_owner_id') ... FAIL
+  test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_1_appended_intent_token') ... FAIL
+  test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_1_appended_verified_ns') ... FAIL
+  test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_5_appended_owner_id') ... FAIL
+  test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_5_appended_intent_token') ... FAIL
+  test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_5_appended_verified_ns') ... FAIL
+  test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_1_before_call') ... FAIL
+  test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_1_after_call') ... FAIL
+  test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_1_within_call_disagrees') ... FAIL
+  test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_5_before_call') ... FAIL
+  test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_5_after_call') ... FAIL
+  test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_5_within_call_disagrees') ... FAIL
+  test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_8_before_call') ... FAIL
+  test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_8_after_call') ... FAIL
+  test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_8_within_call_disagrees') ... FAIL
+  test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_missing_appended') ... FAIL
+  test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_duplicate_final') ... FAIL
+  test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_final_disagrees') ... FAIL
+  test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_appended_extra_field') ... FAIL
+
+======================================================================
+FAIL: test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_1_appended_owner_id')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<package>\repair_v2\test_teardown_audit.py", line 53, in test_retained_control_and_corruption_matrix
+    self.assertEqual(bool(audit(item)), invalid)
+AssertionError: False != True
+
+======================================================================
+FAIL: test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_1_appended_intent_token')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<package>\repair_v2\test_teardown_audit.py", line 53, in test_retained_control_and_corruption_matrix
+    self.assertEqual(bool(audit(item)), invalid)
+AssertionError: False != True
+
+======================================================================
+FAIL: test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_1_appended_verified_ns')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<package>\repair_v2\test_teardown_audit.py", line 53, in test_retained_control_and_corruption_matrix
+    self.assertEqual(bool(audit(item)), invalid)
+AssertionError: False != True
+
+======================================================================
+FAIL: test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_5_appended_owner_id')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<package>\repair_v2\test_teardown_audit.py", line 53, in test_retained_control_and_corruption_matrix
+    self.assertEqual(bool(audit(item)), invalid)
+AssertionError: False != True
+
+======================================================================
+FAIL: test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_5_appended_intent_token')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<package>\repair_v2\test_teardown_audit.py", line 53, in test_retained_control_and_corruption_matrix
+    self.assertEqual(bool(audit(item)), invalid)
+AssertionError: False != True
+
+======================================================================
+FAIL: test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_5_appended_verified_ns')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<package>\repair_v2\test_teardown_audit.py", line 53, in test_retained_control_and_corruption_matrix
+    self.assertEqual(bool(audit(item)), invalid)
+AssertionError: False != True
+
+======================================================================
+FAIL: test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_1_before_call')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<package>\repair_v2\test_teardown_audit.py", line 53, in test_retained_control_and_corruption_matrix
+    self.assertEqual(bool(audit(item)), invalid)
+AssertionError: False != True
+
+======================================================================
+FAIL: test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_1_after_call')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<package>\repair_v2\test_teardown_audit.py", line 53, in test_retained_control_and_corruption_matrix
+    self.assertEqual(bool(audit(item)), invalid)
+AssertionError: False != True
+
+======================================================================
+FAIL: test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_1_within_call_disagrees')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<package>\repair_v2\test_teardown_audit.py", line 53, in test_retained_control_and_corruption_matrix
+    self.assertEqual(bool(audit(item)), invalid)
+AssertionError: False != True
+
+======================================================================
+FAIL: test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_5_before_call')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<package>\repair_v2\test_teardown_audit.py", line 53, in test_retained_control_and_corruption_matrix
+    self.assertEqual(bool(audit(item)), invalid)
+AssertionError: False != True
+
+======================================================================
+FAIL: test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_5_after_call')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<package>\repair_v2\test_teardown_audit.py", line 53, in test_retained_control_and_corruption_matrix
+    self.assertEqual(bool(audit(item)), invalid)
+AssertionError: False != True
+
+======================================================================
+FAIL: test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_5_within_call_disagrees')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<package>\repair_v2\test_teardown_audit.py", line 53, in test_retained_control_and_corruption_matrix
+    self.assertEqual(bool(audit(item)), invalid)
+AssertionError: False != True
+
+======================================================================
+FAIL: test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_8_before_call')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<package>\repair_v2\test_teardown_audit.py", line 53, in test_retained_control_and_corruption_matrix
+    self.assertEqual(bool(audit(item)), invalid)
+AssertionError: False != True
+
+======================================================================
+FAIL: test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_8_after_call')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<package>\repair_v2\test_teardown_audit.py", line 53, in test_retained_control_and_corruption_matrix
+    self.assertEqual(bool(audit(item)), invalid)
+AssertionError: False != True
+
+======================================================================
+FAIL: test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_8_within_call_disagrees')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<package>\repair_v2\test_teardown_audit.py", line 53, in test_retained_control_and_corruption_matrix
+    self.assertEqual(bool(audit(item)), invalid)
+AssertionError: False != True
+
+======================================================================
+FAIL: test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_missing_appended')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<package>\repair_v2\test_teardown_audit.py", line 53, in test_retained_control_and_corruption_matrix
+    self.assertEqual(bool(audit(item)), invalid)
+AssertionError: False != True
+
+======================================================================
+FAIL: test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_duplicate_final')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<package>\repair_v2\test_teardown_audit.py", line 53, in test_retained_control_and_corruption_matrix
+    self.assertEqual(bool(audit(item)), invalid)
+AssertionError: False != True
+
+======================================================================
+FAIL: test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_final_disagrees')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<package>\repair_v2\test_teardown_audit.py", line 53, in test_retained_control_and_corruption_matrix
+    self.assertEqual(bool(audit(item)), invalid)
+AssertionError: False != True
+
+======================================================================
+FAIL: test_retained_control_and_corruption_matrix (repair_v2.test_teardown_audit.TeardownTests.test_retained_control_and_corruption_matrix) (case='teardown_appended_extra_field')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<package>\repair_v2\test_teardown_audit.py", line 53, in test_retained_control_and_corruption_matrix
+    self.assertEqual(bool(audit(item)), invalid)
+AssertionError: False != True
+
+----------------------------------------------------------------------
+Ran 1 test in 0.012s
+
+FAILED (failures=19)

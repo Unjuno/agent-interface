@@ -1,0 +1,34 @@
+[
+  {
+    "name": "fixed-regression",
+    "command": [
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/validation-venv/bin/python",
+      "-m",
+      "unittest",
+      "-v",
+      "runtime.cli_v1.test_event_reference_marker",
+      "runtime.cli_v1.test_native_reference_pointer"
+    ],
+    "cwd": "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface",
+    "started_utc_ns": 1790993777228857000,
+    "ended_utc_ns": 1790993777284594000,
+    "exit_code": 0,
+    "log_sha256": "7c2865e0f92a9d19078f813e775f6af0824a727dd61bd5339b9b5988fe68fa3b"
+  },
+  {
+    "name": "optimized-regression",
+    "command": [
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/validation-venv/bin/python",
+      "-O",
+      "-m",
+      "unittest",
+      "runtime.cli_v1.test_event_reference_marker",
+      "runtime.cli_v1.test_native_reference_pointer"
+    ],
+    "cwd": "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface",
+    "started_utc_ns": 1790993777284650000,
+    "ended_utc_ns": 1790993777345101000,
+    "exit_code": 0,
+    "log_sha256": "42e0f8db8968a646d85a7742f25969a30a439788af0b1b66c4cf035b2123532b"
+  }
+]
