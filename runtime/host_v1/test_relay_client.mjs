@@ -175,3 +175,64 @@ test('copied public host modules run outside the checkout using only Node built-
   assert.deepEqual([...images[0].bytes], [0, 1, 2, 3]);
   assert.equal((await client.close()).code, 0);
 });
+
+
+const replyReaderProbe = "import cp from 'node:child_process';\nimport { syncBuiltinESMExports } from 'node:module';\nimport { readdir } from 'node:fs/promises';\nimport { once } from 'node:events';\n\nconst [moduleUrl, scenario, evidenceDirectory] = process.argv.slice(1);\nconst originalSpawn = cp.spawn;\nlet child;\ncp.spawn = (...args) => {\n  child = originalSpawn(...args);\n  return child;\n};\nsyncBuiltinESMExports();\nconst { createRelayClient } = await import(moduleUrl);\nconst fixture = `\nconst readline=require('node:readline');\nconst timer=setTimeout(()=>process.exit(31),2000);\nconst input=readline.createInterface({input:process.stdin});\ninput.on('close',()=>{clearTimeout(timer);process.exit(0);});\ninput.on('line',async line=>{\n  const r=JSON.parse(line);\n  process.stderr.write('COMMITTED '+r.id+'\\\\n');\n  if(r.tool==='pending')return;\n  const row={id:r.id,tool:r.tool,status:'returned',next_id:r.id+1,\n    result:{content:[{type:'text',text:r.arguments.literal}]}};\n  const bytes=Buffer.from(JSON.stringify(row)+'\\\\n','utf8');\n  for(const byte of bytes){process.stdout.write(Buffer.from([byte]));\n    await new Promise(resolve=>setImmediate(resolve));}\n});`;\nconst client = await createRelayClient({ command: process.execPath,\n  args: ['-e', fixture], evidenceDirectory });\nconsole.log(JSON.stringify({ stage: 'created', child_pid: child.pid, scenario }));\nconst fault = () => child.stdout.destroy(new Error('injected relay reply read fault'));\nlet pending, outcome, samePromise = null, committed = false;\nconst literal = '\\u685c\\u306e\\u8a18\\u9332\\ud83d\\ude00';\nif (scenario === 'idle') {\n  const closed = once(child.stdout, 'close').catch(() => {});\n  fault();\n  await closed;\n} else {\n  let stderr = '';\n  const commitment = new Promise(resolve => child.stderr.on('data', chunk => {\n    stderr += chunk.toString('utf8');\n    if (stderr.includes('COMMITTED 1\\n')) resolve();\n  }));\n  pending = client.send(scenario === 'pending' ? 'pending' : 'unicode', { literal });\n  await commitment;\n  committed = true;\n  console.log(JSON.stringify({ stage: 'committed', scenario, state: client.state() }));\n  samePromise = client.wait() === pending;\n  if (scenario === 'pending') {\n    fault();\n    try { await pending; outcome = 'unexpected-return'; }\n    catch (error) { outcome = String(error); }\n  } else {\n    outcome = await pending;\n    if (scenario === 'settled') {\n      const closed = once(child.stdout, 'close').catch(() => {});\n      fault();\n      await closed;\n      samePromise = samePromise && client.wait() === pending && await client.wait() === outcome;\n    }\n  }\n}\nlet newSendBlocked = null;\nif (scenario !== 'unicode') {\n  try { client.send('unicode', { literal }); newSendBlocked = false; }\n  catch (error) { newSendBlocked = String(error).includes('injected relay reply read fault'); }\n}\nconst beforeClose = client.state();\nconst exit = await client.close();\nconst entries = await readdir(evidenceDirectory);\nconsole.log(JSON.stringify({ stage: 'result', scenario, committed, outcome,\n  samePromise, newSendBlocked, beforeClose, exit,\n  requestFiles: entries.filter(name => name.startsWith('request-')).sort(),\n  replyFiles: entries.filter(name => name.startsWith('reply-')).sort(),\n  literal, fixture: 'real inert Node child; injected real stdout stream destroy; responsive private files; child self-exit cap2000ms' }));\n";
+
+async function runReplyReaderCase(scenario) {
+  const { spawnSync } = await import('node:child_process');
+  const root = await mkdtemp(join(tmpdir(), 'relay-reply-reader-'));
+  const evidenceDirectory = join(root, 'evidence');
+  const result = spawnSync(process.execPath,
+    ['--input-type=module', '--eval', replyReaderProbe,
+     new URL('./relay_client.mjs', import.meta.url).href, scenario, evidenceDirectory],
+    { encoding: 'utf8', timeout: 5000, maxBuffer: 128 * 1024, windowsHide: true });
+  assert.equal(result.status, 0, JSON.stringify({error: String(result.error),
+    signal: result.signal, stdout: result.stdout, stderr: result.stderr}));
+  const rows = result.stdout.trim().split('\n').map(line => JSON.parse(line));
+  const outcome = rows.at(-1);
+  assert.equal(outcome.stage, 'result');
+  assert.equal(outcome.exit.code, 0);
+  assert.equal(outcome.beforeClose.pending, false);
+  return outcome;
+}
+test('reply reader failure before a request blocks delivery without consuming an ID', async () => {
+  const row = await runReplyReaderCase('idle');
+  assert.equal(row.newSendBlocked, true);
+  assert.equal(row.beforeClose.nextId, 1);
+  assert.equal(row.beforeClose.attempts, 0);
+  assert.match(row.beforeClose.blocked, /injected relay reply read fault/);
+  assert.deepEqual(row.requestFiles, []);
+  assert.deepEqual(row.replyFiles, []);
+});
+test('reply reader failure rejects the same outstanding promise and forbids replay', async () => {
+  const row = await runReplyReaderCase('pending');
+  assert.equal(row.committed, true);
+  assert.equal(row.samePromise, true);
+  assert.match(row.outcome, /delivery is uncertain.*never replay/);
+  assert.equal(row.newSendBlocked, true);
+  assert.equal(row.beforeClose.nextId, 1);
+  assert.equal(row.beforeClose.attempts, 1);
+  assert.deepEqual(row.requestFiles, ['request-1.json']);
+  assert.deepEqual(row.replyFiles, []);
+});
+test('reply reader failure preserves an already settled result and blocks future delivery', async () => {
+  const row = await runReplyReaderCase('settled');
+  assert.equal(row.samePromise, true);
+  assert.equal(row.outcome.status, 'returned');
+  assert.equal(row.outcome.result.content[0].text, row.literal);
+  assert.equal(row.newSendBlocked, true);
+  assert.equal(row.beforeClose.nextId, 2);
+  assert.equal(row.beforeClose.attempts, 1);
+  assert.deepEqual(row.requestFiles, ['request-1.json']);
+  assert.deepEqual(row.replyFiles, ['reply-1.json']);
+});
+test('reply reader retains fragmented multilingual responses and normal EOF', async () => {
+  const row = await runReplyReaderCase('unicode');
+  assert.equal(row.samePromise, true);
+  assert.equal(row.outcome.result.content[0].text, row.literal);
+  assert.equal(row.beforeClose.blocked, null);
+  assert.equal(row.beforeClose.nextId, 2);
+  assert.deepEqual(row.requestFiles, ['request-1.json']);
+  assert.deepEqual(row.replyFiles, ['reply-1.json']);
+});
