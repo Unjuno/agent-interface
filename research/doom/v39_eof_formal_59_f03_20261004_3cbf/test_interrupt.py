@@ -48,3 +48,22 @@ class InterruptControl(unittest.TestCase):
                 if process.poll() is None:
                     process.kill(); process.wait(timeout=3)
                 process.stdout.close(); process.stderr.close()
+
+    def test_sigint_during_cell_write_still_retains_row_and_stop_summary(self):
+        with tempfile.TemporaryDirectory() as name:
+            output = Path(name) / 'output'
+            code = (
+                'import os,signal,sys; import runner; original=runner.write\n'
+                'def write(path,value):\n'
+                ' original(path,value)\n'
+                ' if path.name=="baseline_eof.json": os.kill(os.getpid(),signal.SIGINT)\n'
+                'runner.write=write\n'
+                'runner.run(__import__("pathlib").Path(sys.argv[1]))\n')
+            process = subprocess.run([sys.executable, '-B', '-c', code, str(output)],
+                                     capture_output=True, text=True)
+            self.assertNotEqual(process.returncode, 0)
+            self.assertTrue((output / 'baseline_eof.json').exists(), process.stderr)
+            self.assertTrue((output / 'SUMMARY.json').exists(), process.stderr)
+            summary = json.loads((output / 'SUMMARY.json').read_text())
+            self.assertEqual(summary['cases'], ['baseline_eof'])
+            self.assertIn('STOP', summary['verdict'])

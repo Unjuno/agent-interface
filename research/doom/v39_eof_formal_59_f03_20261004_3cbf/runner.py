@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import queue
 import subprocess
+import signal
 import sys
 import tarfile
 import threading
@@ -61,6 +62,61 @@ def expected(case, row):
             and row['reader_alive'] is False and row['child_alive'] is True
             and row['cleanup_exit'] == -15 and row['fatal'] is None and row['cleanup_faults'] == []
             and row['events'] == ([{'event': 'ready'}, {'event': 'terminal'}] if case == 'candidate_events_eof' else []))
+
+
+def finalize_cell(output, rows, case, row, child, thread):
+    """Defer SIGINT only across owned cleanup and durable row/STOP writes."""
+    old_mask = signal.pthread_sigmask(signal.SIG_BLOCK, {signal.SIGINT})
+    try:
+        if child is not None:
+            row.setdefault('child_alive', child.poll() is None)
+        if thread is not None:
+            row.setdefault('reader_alive', thread.is_alive())
+        if child is not None:
+            try:
+                child.terminate()
+            except (Exception, KeyboardInterrupt) as error:
+                row['cleanup_faults'].append(repr(error))
+            try:
+                child.wait(timeout=2)
+            except (subprocess.TimeoutExpired, KeyboardInterrupt) as error:
+                if isinstance(error, KeyboardInterrupt):
+                    row['cleanup_faults'].append(repr(error))
+                try:
+                    child.kill(); child.wait(timeout=2)
+                except (Exception, KeyboardInterrupt) as error:
+                    row['cleanup_faults'].append(repr(error))
+            except Exception as error:
+                row['cleanup_faults'].append(repr(error))
+            row['cleanup_exit'] = child.returncode
+            for handle in (child.stdin, child.stdout, child.stderr):
+                try:
+                    handle.close()
+                except (Exception, KeyboardInterrupt) as error:
+                    row['cleanup_faults'].append(repr(error))
+        if thread is not None:
+            if thread.ident is not None:
+                try:
+                    thread.join(1)
+                except (Exception, KeyboardInterrupt) as error:
+                    row['cleanup_faults'].append(repr(error))
+            if thread.is_alive():
+                row['cleanup_faults'].append('reader still alive')
+        row['cleanup_child_alive'] = child.poll() is None if child is not None else None
+        row['cleanup_reader_alive'] = thread.is_alive() if thread is not None else None
+        row['end_ns'] = time.perf_counter_ns()
+        row['gate'] = expected(case, row) if row['fatal'] is None else False
+        write(output / (case + '.json'), row)
+        rows.append(row)
+        # A checkpoint protects the first STOP if SIGINT is pending when the
+        # mask is restored. A final scientific PASS is written only afterward.
+        checkpoint = {
+            'cases': [saved['case'] for saved in rows], 'retries': 0, 'model_calls': 0,
+            'verdict': 'STOP_CELL_SEQUENCE_INCOMPLETE',
+            'stop_reason': row.get('fatal_type') or ('cleanup_fault' if row['cleanup_faults'] else 'next_cell_or_final_audit_pending')}
+        write(output / 'SUMMARY.json', checkpoint)
+    finally:
+        signal.pthread_sigmask(signal.SIG_SETMASK, old_mask)
 
 
 def run(output):
@@ -126,45 +182,7 @@ def run(output):
             row['fatal'] = repr(error)
             row['fatal_type'] = type(error).__name__
         finally:
-            if child is not None:
-                row.setdefault('child_alive', child.poll() is None)
-            if thread is not None:
-                row.setdefault('reader_alive', thread.is_alive())
-            if child is not None:
-                try:
-                    child.terminate()
-                except (Exception, KeyboardInterrupt) as error:
-                    row['cleanup_faults'].append(repr(error))
-                try:
-                    child.wait(timeout=2)
-                except (subprocess.TimeoutExpired, KeyboardInterrupt) as error:
-                    if isinstance(error, KeyboardInterrupt):
-                        row['cleanup_faults'].append(repr(error))
-                    try:
-                        child.kill(); child.wait(timeout=2)
-                    except (Exception, KeyboardInterrupt) as error:
-                        row['cleanup_faults'].append(repr(error))
-                except Exception as error:
-                    row['cleanup_faults'].append(repr(error))
-                row['cleanup_exit'] = child.returncode
-                for handle in (child.stdin, child.stdout, child.stderr):
-                    try:
-                        handle.close()
-                    except (Exception, KeyboardInterrupt) as error:
-                        row['cleanup_faults'].append(repr(error))
-            if thread is not None:
-                if thread.ident is not None:
-                    try:
-                        thread.join(1)
-                    except (Exception, KeyboardInterrupt) as error:
-                        row['cleanup_faults'].append(repr(error))
-                if thread.is_alive():
-                    row['cleanup_faults'].append('reader still alive')
-            row['cleanup_child_alive'] = child.poll() is None if child is not None else None
-            row['cleanup_reader_alive'] = thread.is_alive() if thread is not None else None
-            row['end_ns'] = time.perf_counter_ns()
-            row['gate'] = expected(case, row) if row['fatal'] is None else False
-            write(output / (case + '.json'), row); rows.append(row)
+            finalize_cell(output, rows, case, row, child, thread)
         if row['gate'] is not True:
             break
     summary = {'cases': [row['case'] for row in rows], 'retries': 0, 'model_calls': 0,
@@ -173,7 +191,11 @@ def run(output):
         summary['stop_reason'] = rows[-1]['fatal_type']
     elif rows and rows[-1]['cleanup_faults']:
         summary['stop_reason'] = 'cleanup_fault'
-    write(output / 'SUMMARY.json', summary)
+    old_mask = signal.pthread_sigmask(signal.SIG_BLOCK, {signal.SIGINT})
+    try:
+        write(output / 'SUMMARY.json', summary)
+    finally:
+        signal.pthread_sigmask(signal.SIG_SETMASK, old_mask)
     return 0 if summary['verdict'] == 'PASS_SCOPED_PIPE_NOTIFICATION' else 1
 
 
