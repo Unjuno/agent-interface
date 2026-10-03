@@ -4,6 +4,8 @@ This directory contains experiments that compose previously isolated mechanisms 
 
 Child directories are retained integration studies. Their existence does not imply that the composed mechanism is globally promoted or production-ready.
 
+- [Primary input-error ownership](primary_input_error_57_20261003_01a0ff53/README.md) — one Interface listener repair; eight native Node stream histories and independent audit, preserving pending results and normal EOF. Inert exchange only, with no native input/release, task or efficiency claim.
+
 
 ## Composition path
 
