@@ -34,14 +34,6 @@ await client.close();
 
 The host creates `evidenceDirectory` exclusively. Supply a path that does not exist; do not create that directory before constructing the client. Keep the returned client in a durable caller binding before starting subsequent presentation work.
 
-Transport exit is recorded separately even when reply persistence or validation
-has already failed. In that case `exit.json` and `close()` retain `journal_error`
-with the actual child code/signal. If this new exclusive exit write also fails,
-`close()` retains the first `journal_error` and reports `exit_journal_error`;
-existing exit bytes are never overwritten. A healthy journal's exit-write failure
-continues to use `journal_error`. These are transport/evidence outcomes, not task
-success, physical input release or permission to retry an uncertain request.
-
 [The main integration record](../results/presented-host-main-01/README.md)
 retains the missing-API stop, the source-frozen personal recovery trial, and
 original replies/images. Its extra clock request and image preview are counted;
@@ -548,16 +540,6 @@ errors receive `command_error`, current state and replay_allowed=false; inspect
 the original files instead of repeating a consumed command. Stream output
 failure stops accepting commands and waits for the same pending promise before
 closing the original transport. It does not prove that input was cancelled.
-
-Raw byte stdin must be valid UTF-8. Malformed byte sequences, including an
-unfinished sequence at EOF, stop intake before the affected chunk can reach
-the exchange; the CLI exits 2 after observing the same accepted command and
-closing its original transport. No replacement-character command is created.
-An otherwise valid prefix in that same unaccepted corrupted chunk is refused
-too. Already decoded text callers retain their existing behavior; the original
-bytes lost upstream cannot be validated here. Valid literal U+FFFD and split
-multibyte UTF-8 remain valid. This adds no hard I/O deadline or line-size bound,
-and transport closure still does not prove application cleanup or input release.
 
 Explicitly send `call` with `["interface_close",{}]`, inspect its release outcome,
 and then end stdin. EOF waits for the outstanding command and closes only the
