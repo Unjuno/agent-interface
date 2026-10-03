@@ -1,0 +1,49 @@
+"""Constructor-free AST methods, mocked Condition and monotonic clock. Not OS timing."""
+import ast,pathlib,json,hashlib,types,collections,datetime,sys
+ROOT=pathlib.Path(__file__).resolve().parent
+class DiagnosticCutoff(RuntimeError):pass
+def method(path):
+    tree=ast.parse(path.read_bytes());cls=next(n for n in tree.body if isinstance(n,ast.ClassDef) and n.name=='CodexAppServerClient');f=next(n for n in cls.body if isinstance(n,ast.FunctionDef) and n.name=='wait_notification')
+    return ast.Module(body=[f],type_ignores=[])
+class Clock:
+    def __init__(self):self.reads=0;self.now=0.0;self.readings=[]
+    def monotonic(self):self.reads+=1;self.readings.append(self.now);return self.now
+def cell(policy,scenario):
+    clock=Clock();ns={'time':clock,'AppServerError':RuntimeError};exec(compile(method(ROOT/(policy+'.py')),'<pinned-AST-wait_notification>','exec'),ns);fn=ns['wait_notification']
+    c=types.SimpleNamespace(_notifications=collections.deque([{'method':'target' if scenario=='match_oracle' else 'noise'}]),_closed=False);trace=[];counts={'A':0,'B':0};owner=['A'];entries={'A':0,'B':0};injected=[0]
+    def pa(row):counts['A']+=1;return row.get('method')=='target' if scenario in ['fresh_match','match_oracle'] else False
+    def pb(row):counts['B']+=1;return True
+    class Condition:
+        def __enter__(self):
+            role=owner[0];entries[role]+=1
+            if role=='A' and entries['A']>16:raise DiagnosticCutoff('8 completed false snapshot/recheck cycles; not an infinite execution claim')
+            if role=='A' and entries['A']==1 and scenario!='fresh_match':clock.now=2.0
+            if role=='A' and entries['A']%2==0 and policy!='baseline' and scenario in ['churn','fresh_match'] and (scenario=='churn' or injected[0]==0):
+                before=tuple(c._notifications);assert len(before)==1;clock.now=0.25 if scenario=='fresh_match' else 2.0;owner[0]='B'
+                try:got=fn(c,pb,timeout=1)
+                finally:owner[0]='A'
+                assert got is before[0] and not c._notifications
+                trace.append({'actor':'B','event':'B_CONSUME','removed_method':got['method']})
+                fresh=json.loads('{"method":"target"}' if scenario=='fresh_match' else '{"method":"noise"}');assert fresh is not got;clock.now=0.5 if scenario=='fresh_match' else 2.0;c._notifications.append(fresh);injected[0]+=1
+                trace.append({'actor':'R','event':'R_FRESH_APPEND','method':fresh['method'],'fresh_identity':True,'logical_arrival_seconds':clock.now})
+                clock.now=2.0
+            trace.append({'actor':role,'event':'CONDITION_ENTER','entry':entries[role],'logical_seconds':clock.now});return self
+        def __exit__(self,*args):trace.append({'actor':owner[0],'event':'CONDITION_EXIT'});return False
+        def wait(self,*args):raise AssertionError('unexpected unexpired wait in expired construction')
+    c._condition=Condition();outcome=None;detail=None
+    try:result=fn(c,pa,timeout=1);outcome='MATCH';detail={'method':result['method']}
+    except (TimeoutError,DiagnosticCutoff) as e:outcome=type(e).__name__;detail=str(e)
+    expected='DiagnosticCutoff' if policy=='outside' and scenario=='churn' else 'MATCH' if (policy=='outside' and scenario=='fresh_match') or scenario=='match_oracle' else 'TimeoutError'
+    assert outcome==expected,(policy,scenario,outcome,expected)
+    if scenario=='fresh_match':assert [x['method'] for x in c._notifications]==([] if policy=='outside' else ['target'])
+    if outcome=='DiagnosticCutoff':assert counts['A']==8 and counts['B']==8 and injected[0]==8
+    return {'policy':policy,'scenario':scenario,'outcome':outcome,'detail':detail,'queue_methods':[x['method'] for x in c._notifications],'A_predicate_calls':counts['A'],'B_predicate_calls':counts['B'],'A_condition_entries':entries['A'],'clock_reads':clock.reads,'clock_readings':clock.readings,'synthetic_timeout_seconds':1,'synthetic_initial_seconds':0,'synthetic_reacquisition_seconds':2,'trace':trace}
+def main():
+    pins=json.loads((ROOT/'source-pins.json').read_text());rows=[]
+    for scenario in ['quiescent','churn']:
+        for policy in ['baseline','outside','deadline_first']:rows.append(cell(policy,scenario))
+    for policy in ['outside','deadline_first']:rows.append(cell(policy,'fresh_match'))
+    rows.append(cell('baseline','match_oracle'))
+    result={'schema':'predicate-retry-source-controls-v2','source_pins':pins,'rows':rows,'all_frozen_expectations':True,'subject_constructors':0,'real_threads':0,'native_peers':0,'actual_A_source_method_calls':len(rows),'actual_B_source_method_calls':sum(x['B_predicate_calls'] for x in rows),'python':sys.version,'kind':'new ordinary source construction, custom deterministic coherent Condition/clock; no prior native replay'}
+    (ROOT/'construction.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({'rows':len(rows),'outcomes':[(x['policy'],x['scenario'],x['outcome']) for x in rows],'A_calls':result['actual_A_source_method_calls'],'B_calls':result['actual_B_source_method_calls'],'native':0}))
+if __name__=='__main__':main()
