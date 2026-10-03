@@ -1,0 +1,73 @@
+{
+  "rows": [
+    {
+      "events": 17,
+      "events_sha256": "b0a0fff924c92d53a0ede4b37ddc1c6f818e129f9864891cc5d35b0ffffdcf60",
+      "final": {
+        "count": 1,
+        "hex": "44",
+        "last_error": 0,
+        "return_nonzero": true
+      },
+      "mode": "normal_D",
+      "native_cancel": null,
+      "primary": {
+        "caller_cancelled": false,
+        "caller_done": true,
+        "outcome": {
+          "count": 1,
+          "hex": "44",
+          "last_error": 0,
+          "return_nonzero": true
+        },
+        "worker_done": true
+      }
+    },
+    {
+      "events": 19,
+      "events_sha256": "5a02cfcd6680696032a34f5721b701b6b789b98cb7b91eb2f7a8f3f0b6ff8e80",
+      "final": {
+        "count": 1,
+        "hex": "44",
+        "last_error": 0,
+        "return_nonzero": true
+      },
+      "mode": "wrapper_cancel",
+      "native_cancel": null,
+      "primary": {
+        "caller_cancelled": true,
+        "caller_done": true,
+        "outcome": {},
+        "worker_done": false
+      }
+    },
+    {
+      "events": 16,
+      "events_sha256": "a00b55a7f2d46ddc9f00ad046bcd834f39686b22c52dfe6d26d241f1ef60fe10",
+      "final": {
+        "count": 0,
+        "hex": "",
+        "last_error": 995,
+        "return_nonzero": false
+      },
+      "mode": "native_cancel",
+      "native_cancel": {
+        "last_error": 0,
+        "return_nonzero": true
+      },
+      "primary": {
+        "caller_cancelled": false,
+        "caller_done": false,
+        "outcome": {
+          "count": 0,
+          "hex": "",
+          "last_error": 995,
+          "return_nonzero": false
+        },
+        "worker_done": true
+      }
+    }
+  ],
+  "scope": "synthetic owned one-shot ReadFile only; no pooled-thread, task, performance or runtime claim",
+  "status": "PASS_H"
+}

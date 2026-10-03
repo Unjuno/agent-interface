@@ -1,0 +1,30 @@
+from pathlib import Path
+from datetime import datetime,timezone
+import json,subprocess,sys,hashlib,shutil,os
+R=Path(__file__).resolve().parents[1];O=R/'outputs/ownedwinpipe6501-t01';W=R/'work/ownedwinpipe6501-t01';C=W/'audit-controls';C.mkdir(exist_ok=False);H=lambda b:hashlib.sha256(b).hexdigest();now=lambda:datetime.now(timezone.utc).isoformat()
+names=['wrong_read_tid','sequence_bool_alias','pending_bool_alias','wrong_query_tid','read_count_bool_alias','join_still_alive','wrong_closed_fd','pid_bool_alias','missing_pending_query']
+rows=[]
+for name in names:
+    d=C/name;d.mkdir()
+    for mode in ('normal_D','wrapper_cancel','native_cancel'):
+        (d/mode).mkdir()
+        for f in ('RESULT.json','events.json','RECEIPT.json'):shutil.copyfile(O/mode/f,d/mode/f)
+    mode='native_cancel';ev=json.loads((d/mode/'events.json').read_bytes());r=json.loads((d/mode/'RESULT.json').read_bytes())
+    if name=='wrong_read_tid':next(e for e in ev if e['kind']=='read_return')['tid']+=1
+    elif name=='sequence_bool_alias':ev[0]['seq']=False
+    elif name=='pending_bool_alias':next(e for e in ev if e['kind']=='pending_query')['pending']=1
+    elif name=='wrong_query_tid':next(e for e in ev if e['kind']=='pending_query')['tid']+=1
+    elif name=='read_count_bool_alias':next(e for e in ev if e['kind']=='read_return')['count']=False
+    elif name=='join_still_alive':next(e for e in ev if e['kind']=='thread_join')['alive']=True
+    elif name=='wrong_closed_fd':next(e for e in ev if e['kind']=='fd_closed')['fd']+=100
+    elif name=='pid_bool_alias':r['pid']=True
+    else:
+        ev.pop(next(i for i,e in enumerate(ev) if e['kind']=='pending_query'))
+        for i,e in enumerate(ev):e['seq']=i
+        r['event_count']=len(ev)
+    (d/mode/'events.json').write_text(json.dumps(ev,sort_keys=True)+'\n',encoding='utf8');(d/mode/'RESULT.json').write_text(json.dumps(r,sort_keys=True,indent=2)+'\n',encoding='utf8')
+    start=now();p=subprocess.Popen([sys.executable,'-B',str(W/'audit.py'),str(d)],stdout=subprocess.PIPE,stderr=subprocess.PIPE);out,err=p.communicate(timeout=8);(d/'audit.stdout.txt').write_bytes(out);(d/'audit.stderr.txt').write_bytes(err)
+    rows.append({'control':name,'start_utc':start,'pid':p.pid,'end_utc':now(),'exit':p.returncode,'rejected':p.returncode!=0,'serialized_changed':(d/mode/'events.json').read_bytes()!=(O/mode/'events.json').read_bytes() or (d/mode/'RESULT.json').read_bytes()!=(O/mode/'RESULT.json').read_bytes(),'stdout_sha256':H(out),'stderr_sha256':H(err)})
+rec={'status':'PASS_NEGATIVE_CENSUS' if all(x['rejected'] for x in rows) else 'AUDITOR_FALSE_ACCEPT','rows':rows,'source_sha256':H((W/'audit.py').read_bytes()),'producer_invocations':0}
+(O/'AUDIT_CONTROLS_FIRST.json').write_text(json.dumps(rec,sort_keys=True,indent=2)+'\n',encoding='utf8');print(json.dumps(rec));raise SystemExit(0 if rec['status']=='PASS_NEGATIVE_CENSUS' else 1)
+
