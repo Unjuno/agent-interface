@@ -64,3 +64,5 @@ This is a navigation model derived from the retained studies, not a new runtime 
 - Integration studies: [`../integration/`](../integration/)
 - Measurement/concurrency handback studies: [`../measurement/`](../measurement/)
 - Research workspace map: [`../README.md`](../README.md)
+
+- [#17 selected-missing matching retry](selected_missing_17_20261003_e0cc/README.md): prospective inert source-projected pure-True matching-churn quotient; new matching-witness gate, no runtime/native/task adoption.
