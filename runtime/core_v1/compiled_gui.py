@@ -323,6 +323,8 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
             return finish("SAFE_YIELD", "budget_exhausted")
         _exact(admission, {"eligible", "status", "authorization",
                            "expected_sequence", "valid_until_ns"}, "admission")
+        # Keep returned fields private before validating and calling adapters.
+        admission = admission.copy()
         if type(admission["eligible"]) is not bool:
             raise ValueError("boolean admission eligibility required")
         if not admission["eligible"]:

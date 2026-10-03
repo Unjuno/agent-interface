@@ -14,6 +14,13 @@ or failed effects, uncertain input and exhausted budgets yield with their
 completed prefix. Symbols do not grant authority or contain executable points.
 Raw evidence and receipt persistence remain the adapters' responsibility.
 
+An admission return is copied after exact builtin-dictionary field validation
+and before eligibility/freshness checks. Accepted fields are builtin scalars;
+later callback-local edits to the returned dictionary cannot rebind the checked
+authorization, sequence or deadline sent to the executor. Actual cancellation
+and downstream authorization checks remain required. This snapshot does not
+provide live revocation, custom-object or concurrent-callback safety.
+
 Each observation request receives its own declared-predicate list. The journal
 receives a separate deep copy of each event, so callback-local formatting or
 later edits to retained payloads cannot change private declarations or returned
