@@ -1,5 +1,10 @@
 # Receipt audit v2 rescue
 
+Fresh138manifest hashes match. First CI43 failed only the missing analytical
+index row; original sorted row restored without changing packet data.
+CI43 then exits0 failures=[] at741cfb87ec. Both full transcripts retained as
+first-local-ci.log and local-ci.log; first failure is not overwritten.
+
 Original source fbafca9b7c8cf9e124b8ea7bd7eb958ebb8a4b3e, delivery7037.
 Original package restored without changes; predecessor qualified T0/T0A bytes
 remain current main's original package, with DECLARED_AUDIT_GATE_NOT_ESTABLISHED
