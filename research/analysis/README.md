@@ -708,7 +708,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`service_debt_deadline_6613_a01/`](service_debt_deadline_6613_a01/)
 - [`service_fairness_6613_edf_a01_20261003/`](service_fairness_6613_edf_a01_20261003/)
 - [`shared_referent_6558_t0_orbstack_20261002/`](shared_referent_6558_t0_orbstack_20261002/)
-- [`singleflight_cancel_order_6501_boundary_20261003/`](singleflight_cancel_order_6501_boundary_20261003/)
+- [singleflight_cancel_order_6501_boundary_20261003/repair_v2/README.md](singleflight_cancel_order_6501_boundary_20261003/repair_v2/README.md) — #6501 finite cancellation/delivery boundary: unchanged192 assignments/384 decisions,48 strict-clock wrong admissions,48 conservative wrong refusals,0 explicit-order discrepancies; frozen v1 audit accepted six typed/schema corruptions, separately retained v2 audit rejects all14 effective controls. Original source/raw/first results preserved; no formal replay or runtime promotion.
 - [`siphon_5410_t0/`](siphon_5410_t0/)
 - [`skill_applicability_6262_gpu_t0_v1/`](skill_applicability_6262_gpu_t0_v1/)
 - [`skill_applicability_6262_wslc_t0b_v1/`](skill_applicability_6262_wslc_t0b_v1/)
