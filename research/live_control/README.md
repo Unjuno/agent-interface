@@ -21,6 +21,7 @@
 | #59 closed app-server stdout diagnostic timeout | [Native pipe counterexample](appserver_closed_diagnostic_59_20261003_01a0ff52/README.md) |
 | #6067 A03 native phase-effect first STOP (no efficacy promotion) | [Readiness and formal STOP](phase_effect_6067_t1_a03_20261004_3cbf/REPORT.md) |
 | #6067 D02 post-wait snapshot-cost diagnostic (HOLD, no efficacy promotion) | [Actual result and custody](postwait_cost_6067_d02_20261004_3cbf/REPORT.md) |
+| #6067 D03 imposed sibling-load pure-sleep experiment (HOLD, no cause promotion) | [Actual result and custody](sleep_load_6067_d03_20261004_3cbf/REPORT.md) |
 
 ## Track map
 
