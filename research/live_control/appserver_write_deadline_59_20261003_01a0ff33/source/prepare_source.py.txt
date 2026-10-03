@@ -1,0 +1,23 @@
+from pathlib import Path
+import ast,copy,hashlib,json,platform,subprocess,sys
+from datetime import datetime,timezone
+ROOT=Path(__file__).resolve().parent;REPO=ROOT.parent/'agent-interface'
+BASE='dd6f54bf540ffe10b17696b8a933ff6c92fd3bc1'
+PATH='research/live_control/codex_app_server_client_v2.py'
+def sha(data):return hashlib.sha256(data).hexdigest()
+def need(ok,label):
+    if not ok:raise RuntimeError(label)
+def git(*args):return subprocess.check_output(['git','-C',str(REPO),*args],stderr=subprocess.PIPE)
+need(git('rev-parse','origin/main').decode().strip()==BASE,'named fetched main')
+source=git('show',BASE+':'+PATH);oid=git('rev-parse',BASE+':'+PATH).decode().strip()
+need(oid=='bbfad463d7428dd80b7dca533d518a77604e69f1' and len(source)==6303 and sha(source)=='8ed4e3496ef8154d3c4573fb1386efe6e036292a3809e43aa37fc22aecc5b42b','exact selected source')
+(ROOT/'client.py.txt').write_bytes(source)
+tree=ast.parse(source);cls=next(n for n in tree.body if isinstance(n,ast.ClassDef) and n.name=='CodexAppServerClient')
+methods={n.name:n for n in cls.body if isinstance(n,ast.FunctionDef)}
+write=methods['_write'];request=methods['request']
+write_lines=[n.lineno for n in ast.walk(write) if isinstance(n,ast.Expr) and isinstance(n.value,ast.Call) and isinstance(n.value.func,ast.Attribute) and n.value.func.attr in ('write','flush')]
+deadline_line=next(n.lineno for n in request.body if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='deadline' for t in n.targets))
+request_write_line=next(n.lineno for n in request.body if isinstance(n,ast.Expr) and isinstance(n.value,ast.Call) and isinstance(n.value.func,ast.Attribute) and n.value.func.attr=='_write')
+need(request_write_line<deadline_line and len(write_lines)==2,'write before request deadline AST')
+receipt={'status':'PASS_SOURCE_ONLY_PREPARATION','utc':datetime.now(timezone.utc).isoformat(),'base_sha':BASE,'source_path':PATH,'source_blob':oid,'source_bytes':len(source),'source_sha256':sha(source),'write_or_flush_lines':sorted(write_lines),'request_write_line':request_write_line,'request_deadline_line':deadline_line,'python':sys.version,'python_executable_sha256':sha(Path(sys.executable).read_bytes()),'copy_sha256':sha(Path(copy.__file__).read_bytes()),'platform':platform.platform(),'utf8_mode':sys.flags.utf8_mode,'child_invocations_before_preparation':0,'source_runtime_modified':False,'formal_allocation':False,'main_request_sent':False}
+(ROOT/'SOURCE.json').write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8');print(json.dumps(receipt))

@@ -1,0 +1,22 @@
+{
+  "returncode": 1,
+  "stdout": "Sending build context to Docker daemon  3.072kB\r\r\nStep 1/6 : ARG BASE_IMAGE\nStep 2/6 : FROM ${BASE_IMAGE}\n ---> a853f94d2263\nStep 3/6 : RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends python3 python3-pil tesseract-ocr tesseract-ocr-eng && apt-get clean && dpkg-query -W\n ---> Running in e518f4a73841\n",
+  "stderr": "DEPRECATED: The legacy builder is deprecated and will be removed in a future release.\n            Install the buildx component to build images with BuildKit:\n            https://docs.docker.com/go/buildx/\n\nfailed to create task for container: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: error during container init: error setting cgroup config for procHooks process: bpf_prog_query(BPF_CGROUP_DEVICE) failed: operation not permitted\n",
+  "command": [
+    "orbctl",
+    "run",
+    "-m",
+    "research-59-hud-ocr-5ce3-20261003",
+    "-u",
+    "root",
+    "docker",
+    "build",
+    "--build-arg",
+    "BASE_IMAGE=ubuntu@sha256:a853f94d226358a79c740cfc7bce0c289748f3fe3488d921d038ccd752c61b60",
+    "--tag",
+    "hud59-color-a01",
+    "/study"
+  ],
+  "started_utc": "2026-10-03T09:05:46.318712+00:00",
+  "elapsed_ns": 356585583
+}
