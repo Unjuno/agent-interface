@@ -51,18 +51,8 @@ export async function createRelayClient({ command, args, evidenceDirectory,
   const child = spawn(command, args, { windowsHide: true, stdio: ['pipe', 'pipe', 'pipe'] });
   const exit = new Promise(resolve => child.once('close', (code, signal) => {
     terminal = { code, signal };
-    // A failed reply write/validation still needs a separate terminal receipt.
-    // Observe that same journal; never retry its failed write or clear STOP.
-    journal = journal.then(async () => {
-      await record('exit.json', terminal);
-      return terminal;
-    }, async error => {
-      const outcome = { ...terminal, journal_error: String(error) };
-      try { await record('exit.json', outcome); }
-      catch (exitError) { return { ...outcome, exit_journal_error: String(exitError) }; }
-      return outcome;
-    });
-    journal.then(resolve, error => resolve({ ...terminal, journal_error: String(error) }));
+    journal = journal.then(() => record('exit.json', terminal));
+    journal.then(() => resolve(terminal), error => resolve({ ...terminal, journal_error: String(error) }));
   }));
   function fail(error) {
     blocked = String(error);
