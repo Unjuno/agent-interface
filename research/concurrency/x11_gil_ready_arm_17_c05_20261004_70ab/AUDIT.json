@@ -1,0 +1,64 @@
+{
+  "result": "PASS_FINITE_X11_GIL_BOUNDARY",
+  "rows": [
+    {
+      "case": 0,
+      "mode": "thread_cdll",
+      "contrast": true,
+      "cancel_after_to_first_neutral_ns": 2989600,
+      "native_end_ns": 57578207872824,
+      "observer_neutral_after_ns": 57577968787726
+    },
+    {
+      "case": 1,
+      "mode": "thread_pydll",
+      "contrast": true,
+      "cancel_after_to_first_neutral_ns": 252422171,
+      "native_end_ns": 57580990844365,
+      "observer_neutral_after_ns": 57580994145883
+    },
+    {
+      "case": 2,
+      "mode": "process_pydll",
+      "contrast": true,
+      "cancel_after_to_first_neutral_ns": 4041522,
+      "native_end_ns": 57586000664033,
+      "observer_neutral_after_ns": 57585761208725
+    },
+    {
+      "case": 3,
+      "mode": "process_pydll",
+      "contrast": true,
+      "cancel_after_to_first_neutral_ns": 478170,
+      "native_end_ns": 57591211125589,
+      "observer_neutral_after_ns": 57590982641466
+    },
+    {
+      "case": 4,
+      "mode": "thread_pydll",
+      "contrast": true,
+      "cancel_after_to_first_neutral_ns": 243836749,
+      "native_end_ns": 57593809188161,
+      "observer_neutral_after_ns": 57593811717342
+    },
+    {
+      "case": 5,
+      "mode": "thread_cdll",
+      "contrast": true,
+      "cancel_after_to_first_neutral_ns": 12641278,
+      "native_end_ns": 57596914369796,
+      "observer_neutral_after_ns": 57596683396368
+    }
+  ],
+  "raw_sha256": "e1cf715e69f3fb119ddad8f3c58f9fa6e5981e58306d4cce727695cd2fd139e3",
+  "corruption_rejections": [
+    "missing_row",
+    "bystander_lost",
+    "cancel_outside",
+    "child_live",
+    "nonneutral_final",
+    "false_release",
+    "lost_arm_ack"
+  ],
+  "scope": "six first private X11 observations; no hard deadline or production defect claim"
+}
