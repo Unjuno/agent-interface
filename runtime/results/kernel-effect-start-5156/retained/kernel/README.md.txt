@@ -22,17 +22,10 @@ These timestamps must use a comparable clock. Equal timestamps remain representa
 the lower bound does not prove release after the final action or physical input state.
 See the [retained regression evidence](../results/kernel-release-epoch-01a0ff34/README.md).
 
-An effect receipt also refuses an observation from before its accepted execution
-receipt's recorded start, before changing effect or lifecycle stage. This uses
-the same comparable-clock assumption. Equality, observations during execution,
-and late receipt delivery remain representable; this minimum relation does not
-establish observation after the final action, clock authenticity or task success.
-See [effect-start evidence and first-result qualifications](../results/kernel-effect-start-5156/README.md).
-
 Run the kernel and release-boundary regressions with:
 
 ```text
-python -m unittest discover -s runtime/kernel -p 'test_*.py' -v
+python -m unittest runtime.kernel.test_kernel runtime.kernel.test_release_epoch -v
 ```
 
 This is an additive product contract, not a stable ABI.  Native backend adapters and

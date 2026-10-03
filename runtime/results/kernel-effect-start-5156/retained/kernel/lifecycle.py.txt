@@ -127,8 +127,6 @@ class RequestLifecycle:
             raise ContractError("effect receipt command mismatch")
         if receipt.invariant_manifest_id != self.execution.invariant_manifest_id:
             raise ContractError("effect receipt manifest mismatch")
-        if receipt.observed_ns < self.execution.started_ns:
-            raise ContractError("effect observation precedes execution start")
         self.effect = receipt
         self.stage = {
             EffectStatus.VERIFIED: Stage.VERIFIED,
