@@ -20,6 +20,10 @@
 - Stronger readonly route check binds mounted receipt/read bytes and unique
   private/tmp paths, without claiming container-local files survive deletion.
 - PR review/CI/main byte verification follow; no production/default change.
+- A later main merge added the reviews namespace without an index link,
+  causing CI37134985648/job111237589096 to fail only that inventory gate
+  after22 namespace tests passed. Added its root-map link only; peer review
+  payloads and owners unchanged. Refreshed committed-tree index157 passes.
 
 Ruling: artificial100ms phase delays test an observability boundary, not
 WSLc filesystem performance or A05 causality. Cost if wrong: no promotion.

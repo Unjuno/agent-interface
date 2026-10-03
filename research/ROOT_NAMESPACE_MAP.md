@@ -280,3 +280,7 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 ### Security evidence
 
 - [`security/`](security/) — retained X11 UI-redress evidence, including Issue #5692 formal-01 `STOP`; see [its result record](security/ui_redress_5692_x11_a02_20261001/FORMAL-01-STOP.md).
+
+### Source-bound peer reviews
+
+- [`reviews/`](reviews/) — retained peer-review records; scoped reviews are not current-tree integration certificates or live experiment results.
