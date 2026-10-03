@@ -8,6 +8,14 @@ all10 copied-raw corruptions reject for the named independent reason. This is
 an author-written separate oracle; nonauthor content/combination reviews remain
 necessary for integration and are not claimed here.
 
+Delivery-time branch review found the earlier concurrent macOS private-pipe
+assay [#6924](https://github.com/Unjuno/agent-interface/pull/6924). The common
+real-pipe returning-overrun question overlaps. Retain this result specifically
+as the already frozen Linux/actual-file-sink/one-byte UTF8/exact-effect transfer;
+do not call the common comparison a second novel or independent result or pool
+the studies. The intake miss, peer source distinctions and unchanged first
+outcomes are disclosed in [COLLISION_NOTE.md](COLLISION_NOTE.md).
+
 | Source and authored cost | Exact FINISH effects | Diagnostic stops | Completed samples |
 |---|---:|---:|---|
 | Original, zero sleep | 4/4 | 0 | 1 each |
