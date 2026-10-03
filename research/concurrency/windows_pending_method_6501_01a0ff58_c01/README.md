@@ -1,0 +1,3 @@
+# Owned Windows pending-I/O observation method
+
+Read [REPORT.md](REPORT.md) and the prospective [PLAN.md](PLAN.md).27 first events, actual child6648/exit0, normal data/control observation only, ZERO cancellation comparisons. First audit lookup failure and separate v2 raw-only correction are preserved. All source is inert .py.txt; no initializer/test/workflow/runtime integration. CUSTODY.json separates local-original from username-projected public identities; SHA256SUMS covers the complete packet except itself. Do not replay probe.py.txt to verify this consumed method. This is no cancellation, task-effect, authority, portability or performance result.
