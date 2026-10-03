@@ -40,6 +40,8 @@ jobs:
         run: python research/analysis/check_index.py
       - name: Test Issue #6505 A01 retained auditor construction
         run: python -B -m unittest discover -s research/analysis/partial_order_audit_6505_orbstack_a01_20261003 -p 'test_*.py' -v
+      - name: Verify Issue 6061 archived construction only
+        run: python -B -m unittest discover -s research/analysis/intermittent_control_6061_t0_20261003 -p 'test_*.py' -v
       - name: Test retained Issue 6645 A02 construction
         run: python -B -m unittest discover -s research/analysis/counterexample_guard_refinement_6645_t0b_orbstack_20261003 -p 'test_*.py' -v
       - name: Verify retained Issue 6645 A03 archive
