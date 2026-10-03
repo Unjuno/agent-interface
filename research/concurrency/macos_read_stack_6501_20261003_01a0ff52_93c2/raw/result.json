@@ -1,0 +1,1393 @@
+{
+  "allocation": "6501-MACOS-NATIVE-READ-STACK-A01-20261003-01a0ff52-93c2",
+  "cases": [
+    {
+      "actor_send_ns": 28352363173625,
+      "actor_send_utc": "2026-10-03T08:49:47.399547+00:00",
+      "actor_sent": true,
+      "case": "reader_close",
+      "driver_pid": 51192,
+      "ended_utc": "2026-10-03T08:49:47.665560+00:00",
+      "error": null,
+      "final": {
+        "case": "reader_close",
+        "events": [
+          {
+            "event": "read_about_to_call",
+            "fd": 3,
+            "lifetime": "data-reader-0",
+            "mono_ns": 28351082595166,
+            "native_id": 1288671,
+            "ordinal": 0,
+            "pid": 51193,
+            "thread_name": "owned-pipe-read_0"
+          },
+          {
+            "case": "reader_close",
+            "event": "actor_requested",
+            "mono_ns": 28352363209541,
+            "native_id": 1288664,
+            "ordinal": 1,
+            "pid": 51193
+          },
+          {
+            "event": "reader_close_call_start",
+            "fd": 3,
+            "lifetime": "data-reader-0",
+            "mono_ns": 28352363303833,
+            "native_id": 1288706,
+            "ordinal": 2,
+            "pid": 51193
+          },
+          {
+            "event": "read_return",
+            "mono_ns": 28352363324958,
+            "native_id": 1288671,
+            "ordinal": 3,
+            "pid": 51193,
+            "value": {
+              "errno": null,
+              "hex": "",
+              "kind": "READ_EOF"
+            }
+          },
+          {
+            "event": "reader_close_return",
+            "mono_ns": 28352363369208,
+            "native_id": 1288706,
+            "ordinal": 4,
+            "pid": 51193,
+            "result": {
+              "errno": null,
+              "returned": true
+            }
+          },
+          {
+            "event": "primary_snapshot",
+            "mono_ns": 28352617297333,
+            "native_id": 1288664,
+            "ordinal": 5,
+            "pid": 51193
+          },
+          {
+            "event": "harness_cleanup_start",
+            "mono_ns": 28352617549791,
+            "native_id": 1288664,
+            "ordinal": 6,
+            "pid": 51193
+          },
+          {
+            "event": "harness_writer_closed",
+            "fd": 4,
+            "lifetime": "data-writer-0",
+            "mono_ns": 28352617626375,
+            "native_id": 1288664,
+            "ordinal": 7,
+            "pid": 51193
+          },
+          {
+            "event": "executor_joined_and_loop_closed",
+            "mono_ns": 28352617731291,
+            "native_id": 1288664,
+            "ordinal": 8,
+            "pid": 51193
+          }
+        ],
+        "final": {
+          "close_actor_alive": false,
+          "close_result": {
+            "errno": null,
+            "returned": true
+          },
+          "executor_threads_alive": [
+            false
+          ],
+          "future_cancelled": false,
+          "future_done": true,
+          "future_running": false,
+          "mono_ns": 28352617737166,
+          "reader_fd": 3,
+          "reader_lifetime": "data-reader-0",
+          "reader_probe": {
+            "errno": 9,
+            "state": "EBADF"
+          },
+          "stage": "final",
+          "task_cancelled": false,
+          "task_done": true,
+          "value": {
+            "errno": null,
+            "hex": "",
+            "kind": "READ_EOF"
+          },
+          "writer_fd": 4,
+          "writer_lifetime": "data-writer-0",
+          "writer_probe": {
+            "errno": 9,
+            "state": "EBADF"
+          }
+        },
+        "loop_closed": true,
+        "message": "FINAL",
+        "native_value": {
+          "errno": null,
+          "hex": "",
+          "kind": "READ_EOF"
+        },
+        "pid": 51193,
+        "ppid": 51192
+      },
+      "owned_peer_terminated_on_stop": false,
+      "peer_argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-u",
+        "@WORKSPACE@/work/agent-interface-macos-stack/research/concurrency/macos_read_stack_6501_20261003_01a0ff52_93c2/peer.py.txt",
+        "reader_close"
+      ],
+      "peer_exit": 0,
+      "peer_pid": 51193,
+      "peer_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "peer_stdout_bytes": 4757,
+      "peer_stdout_sha256": "84ec6b9a7eac09f8d6a139ee8518d4689ad9ffff89e9eaad559798d4d6fb51bf",
+      "physical_input": false,
+      "pipes_closed": true,
+      "pre_actor": {
+        "before": {
+          "close_actor_alive": false,
+          "close_result": null,
+          "executor_threads_alive": [
+            true
+          ],
+          "future_cancelled": false,
+          "future_done": false,
+          "future_running": true,
+          "mono_ns": 28352363080875,
+          "reader_fd": 3,
+          "reader_lifetime": "data-reader-0",
+          "reader_probe": {
+            "errno": null,
+            "state": "OPEN"
+          },
+          "stage": "pre_actor",
+          "task_cancelled": false,
+          "task_done": false,
+          "value": null,
+          "writer_fd": 4,
+          "writer_lifetime": "data-writer-0",
+          "writer_probe": {
+            "errno": null,
+            "state": "OPEN"
+          }
+        },
+        "case": "reader_close",
+        "message": "PRE_ACT",
+        "pid": 51193,
+        "ppid": 51192
+      },
+      "primary": {
+        "actor_start_ns": 28352363211250,
+        "case": "reader_close",
+        "events": [
+          {
+            "event": "read_about_to_call",
+            "fd": 3,
+            "lifetime": "data-reader-0",
+            "mono_ns": 28351082595166,
+            "native_id": 1288671,
+            "ordinal": 0,
+            "pid": 51193,
+            "thread_name": "owned-pipe-read_0"
+          },
+          {
+            "case": "reader_close",
+            "event": "actor_requested",
+            "mono_ns": 28352363209541,
+            "native_id": 1288664,
+            "ordinal": 1,
+            "pid": 51193
+          },
+          {
+            "event": "reader_close_call_start",
+            "fd": 3,
+            "lifetime": "data-reader-0",
+            "mono_ns": 28352363303833,
+            "native_id": 1288706,
+            "ordinal": 2,
+            "pid": 51193
+          },
+          {
+            "event": "read_return",
+            "mono_ns": 28352363324958,
+            "native_id": 1288671,
+            "ordinal": 3,
+            "pid": 51193,
+            "value": {
+              "errno": null,
+              "hex": "",
+              "kind": "READ_EOF"
+            }
+          },
+          {
+            "event": "reader_close_return",
+            "mono_ns": 28352363369208,
+            "native_id": 1288706,
+            "ordinal": 4,
+            "pid": 51193,
+            "result": {
+              "errno": null,
+              "returned": true
+            }
+          },
+          {
+            "event": "primary_snapshot",
+            "mono_ns": 28352617297333,
+            "native_id": 1288664,
+            "ordinal": 5,
+            "pid": 51193
+          }
+        ],
+        "message": "PRIMARY",
+        "pid": 51193,
+        "ppid": 51192,
+        "primary": {
+          "close_actor_alive": false,
+          "close_result": {
+            "errno": null,
+            "returned": true
+          },
+          "executor_threads_alive": [
+            true
+          ],
+          "future_cancelled": false,
+          "future_done": true,
+          "future_running": false,
+          "mono_ns": 28352617303166,
+          "reader_fd": 3,
+          "reader_lifetime": "data-reader-0",
+          "reader_probe": {
+            "errno": 9,
+            "state": "EBADF"
+          },
+          "stage": "primary",
+          "task_cancelled": false,
+          "task_done": true,
+          "value": {
+            "errno": null,
+            "hex": "",
+            "kind": "READ_EOF"
+          },
+          "writer_fd": 4,
+          "writer_lifetime": "data-writer-0",
+          "writer_probe": {
+            "errno": null,
+            "state": "OPEN"
+          }
+        }
+      },
+      "ready": {
+        "before": {
+          "close_actor_alive": false,
+          "close_result": null,
+          "executor_threads_alive": [
+            true
+          ],
+          "future_cancelled": false,
+          "future_done": false,
+          "future_running": true,
+          "mono_ns": 28351082749291,
+          "reader_fd": 3,
+          "reader_lifetime": "data-reader-0",
+          "reader_probe": {
+            "errno": null,
+            "state": "OPEN"
+          },
+          "stage": "ready",
+          "task_cancelled": false,
+          "task_done": false,
+          "value": null,
+          "writer_fd": 4,
+          "writer_lifetime": "data-writer-0",
+          "writer_probe": {
+            "errno": null,
+            "state": "OPEN"
+          }
+        },
+        "case": "reader_close",
+        "main_native_id": 1288664,
+        "message": "READY",
+        "pid": 51193,
+        "ppid": 51192,
+        "reader": {
+          "name": "owned-pipe-read_0",
+          "native_id": 1288671
+        }
+      },
+      "sample": {
+        "argv": [
+          "/usr/bin/sample",
+          "51193",
+          "1",
+          "10",
+          "-file",
+          "@WORKSPACE@/work/macos-read-stack-formal-A01/reader_close.sample.txt"
+        ],
+        "bytes": 77498,
+        "ended_ns": 28352362160041,
+        "ended_utc": "2026-10-03T08:49:47.398503+00:00",
+        "exit_code": 0,
+        "gate": {
+          "block": "    92 Thread_1288671: owned-pipe-read_0\n      92 thread_start  (in libsystem_pthread.dylib) + 8  [0x18e034cec]\n        92 _pthread_start  (in libsystem_pthread.dylib) + 136  [0x18e039d00]\n          92 pythread_wrapper  (in Python) + 48  [0x1052bb834]\n            92 thread_run  (in Python) + 152  [0x105339168]\n              92 _PyObject_VectorcallPrepend  (in Python) + 300  [0x1050fd214]\n                92 _PyEval_Vector  (in Python) + 264  [0x105227b24]\n                  92 _PyEval_EvalFrameDefault  (in Python) + 9988  [0x10522a568]\n                    92 PyObject_Vectorcall  (in Python) + 88  [0x1050fbe18]\n                      92 context_run  (in Python) + 136  [0x105256a94]\n                        92 _PyObject_VectorcallPrepend  (in Python) + 300  [0x1050fd214]\n                          92 _PyEval_Vector  (in Python) + 264  [0x105227b24]\n                            92 _PyEval_EvalFrameDefault  (in Python) + 9988  [0x10522a568]\n                              92 PyObject_Vectorcall  (in Python) + 88  [0x1050fbe18]\n                                92 os_read  (in Python) + 356  [0x1052d654c]\n                                  92 _Py_read  (in Python) + 108  [0x1052c95fc]\n                                    92 read  (in libsystem_kernel.dylib) + 8  [0x18dff5910]\n",
+          "kernel_trace": false,
+          "name": "owned-pipe-read_0",
+          "native_id": 1288671,
+          "native_read_samples": [
+            92
+          ],
+          "pid": 51193,
+          "ppid": 51192,
+          "python_read_samples": [
+            92
+          ],
+          "qualified": true,
+          "root_samples": 92
+        },
+        "pid": 51198,
+        "sha256": "81a2cdc4ef81f424234deeb2459b59940297573fe7fe5ed522e9c8cd0752b0f0",
+        "started_ns": 28351082968541,
+        "started_utc": "2026-10-03T08:49:46.119315+00:00",
+        "stderr_sha256": "4b086826b30c791a02f0f85714b35bbbedc98d9327118494800ac2ae5225cbd1",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "target_pid": 51193,
+        "watchdog_fired": false
+      },
+      "sampler_terminal": true,
+      "started_utc": "2026-10-03T08:49:46.043863+00:00",
+      "status": "COMPLETE_FIRST_CELL"
+    },
+    {
+      "actor_send_ns": 28353916635208,
+      "actor_send_utc": "2026-10-03T08:49:48.953012+00:00",
+      "actor_sent": true,
+      "case": "normal_D",
+      "driver_pid": 51192,
+      "ended_utc": "2026-10-03T08:49:49.219164+00:00",
+      "error": null,
+      "final": {
+        "case": "normal_D",
+        "events": [
+          {
+            "event": "read_about_to_call",
+            "fd": 3,
+            "lifetime": "data-reader-0",
+            "mono_ns": 28352697798708,
+            "native_id": 1288713,
+            "ordinal": 0,
+            "pid": 51201,
+            "thread_name": "owned-pipe-read_0"
+          },
+          {
+            "case": "normal_D",
+            "event": "actor_requested",
+            "mono_ns": 28353916651583,
+            "native_id": 1288712,
+            "ordinal": 1,
+            "pid": 51201
+          },
+          {
+            "count": 1,
+            "event": "actor_write_D",
+            "mono_ns": 28353916656625,
+            "native_id": 1288712,
+            "ordinal": 2,
+            "pid": 51201
+          },
+          {
+            "event": "read_return",
+            "mono_ns": 28353916667041,
+            "native_id": 1288713,
+            "ordinal": 3,
+            "pid": 51201,
+            "value": {
+              "errno": null,
+              "hex": "44",
+              "kind": "READ_DATA"
+            }
+          },
+          {
+            "event": "primary_snapshot",
+            "mono_ns": 28354171762250,
+            "native_id": 1288712,
+            "ordinal": 4,
+            "pid": 51201
+          },
+          {
+            "event": "harness_cleanup_start",
+            "mono_ns": 28354171958666,
+            "native_id": 1288712,
+            "ordinal": 5,
+            "pid": 51201
+          },
+          {
+            "event": "harness_reader_closed",
+            "fd": 3,
+            "lifetime": "data-reader-0",
+            "mono_ns": 28354172230750,
+            "native_id": 1288712,
+            "ordinal": 6,
+            "pid": 51201
+          },
+          {
+            "event": "harness_writer_closed",
+            "fd": 4,
+            "lifetime": "data-writer-0",
+            "mono_ns": 28354172235875,
+            "native_id": 1288712,
+            "ordinal": 7,
+            "pid": 51201
+          },
+          {
+            "event": "executor_joined_and_loop_closed",
+            "mono_ns": 28354172357125,
+            "native_id": 1288712,
+            "ordinal": 8,
+            "pid": 51201
+          }
+        ],
+        "final": {
+          "close_actor_alive": false,
+          "close_result": null,
+          "executor_threads_alive": [
+            false
+          ],
+          "future_cancelled": false,
+          "future_done": true,
+          "future_running": false,
+          "mono_ns": 28354172360583,
+          "reader_fd": 3,
+          "reader_lifetime": "data-reader-0",
+          "reader_probe": {
+            "errno": 9,
+            "state": "EBADF"
+          },
+          "stage": "final",
+          "task_cancelled": false,
+          "task_done": true,
+          "value": {
+            "errno": null,
+            "hex": "44",
+            "kind": "READ_DATA"
+          },
+          "writer_fd": 4,
+          "writer_lifetime": "data-writer-0",
+          "writer_probe": {
+            "errno": 9,
+            "state": "EBADF"
+          }
+        },
+        "loop_closed": true,
+        "message": "FINAL",
+        "native_value": {
+          "errno": null,
+          "hex": "44",
+          "kind": "READ_DATA"
+        },
+        "pid": 51201,
+        "ppid": 51192
+      },
+      "owned_peer_terminated_on_stop": false,
+      "peer_argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-u",
+        "@WORKSPACE@/work/agent-interface-macos-stack/research/concurrency/macos_read_stack_6501_20261003_01a0ff52_93c2/peer.py.txt",
+        "normal_D"
+      ],
+      "peer_exit": 0,
+      "peer_pid": 51201,
+      "peer_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "peer_stdout_bytes": 4459,
+      "peer_stdout_sha256": "484332774ba565b57e57a951001621548c5abc00ef7a18f0e2a1faa2a4e0934d",
+      "physical_input": false,
+      "pipes_closed": true,
+      "pre_actor": {
+        "before": {
+          "close_actor_alive": false,
+          "close_result": null,
+          "executor_threads_alive": [
+            true
+          ],
+          "future_cancelled": false,
+          "future_done": false,
+          "future_running": true,
+          "mono_ns": 28353916533875,
+          "reader_fd": 3,
+          "reader_lifetime": "data-reader-0",
+          "reader_probe": {
+            "errno": null,
+            "state": "OPEN"
+          },
+          "stage": "pre_actor",
+          "task_cancelled": false,
+          "task_done": false,
+          "value": null,
+          "writer_fd": 4,
+          "writer_lifetime": "data-writer-0",
+          "writer_probe": {
+            "errno": null,
+            "state": "OPEN"
+          }
+        },
+        "case": "normal_D",
+        "message": "PRE_ACT",
+        "pid": 51201,
+        "ppid": 51192
+      },
+      "primary": {
+        "actor_start_ns": 28353916652875,
+        "case": "normal_D",
+        "events": [
+          {
+            "event": "read_about_to_call",
+            "fd": 3,
+            "lifetime": "data-reader-0",
+            "mono_ns": 28352697798708,
+            "native_id": 1288713,
+            "ordinal": 0,
+            "pid": 51201,
+            "thread_name": "owned-pipe-read_0"
+          },
+          {
+            "case": "normal_D",
+            "event": "actor_requested",
+            "mono_ns": 28353916651583,
+            "native_id": 1288712,
+            "ordinal": 1,
+            "pid": 51201
+          },
+          {
+            "count": 1,
+            "event": "actor_write_D",
+            "mono_ns": 28353916656625,
+            "native_id": 1288712,
+            "ordinal": 2,
+            "pid": 51201
+          },
+          {
+            "event": "read_return",
+            "mono_ns": 28353916667041,
+            "native_id": 1288713,
+            "ordinal": 3,
+            "pid": 51201,
+            "value": {
+              "errno": null,
+              "hex": "44",
+              "kind": "READ_DATA"
+            }
+          },
+          {
+            "event": "primary_snapshot",
+            "mono_ns": 28354171762250,
+            "native_id": 1288712,
+            "ordinal": 4,
+            "pid": 51201
+          }
+        ],
+        "message": "PRIMARY",
+        "pid": 51201,
+        "ppid": 51192,
+        "primary": {
+          "close_actor_alive": false,
+          "close_result": null,
+          "executor_threads_alive": [
+            true
+          ],
+          "future_cancelled": false,
+          "future_done": true,
+          "future_running": false,
+          "mono_ns": 28354171767000,
+          "reader_fd": 3,
+          "reader_lifetime": "data-reader-0",
+          "reader_probe": {
+            "errno": null,
+            "state": "OPEN"
+          },
+          "stage": "primary",
+          "task_cancelled": false,
+          "task_done": true,
+          "value": {
+            "errno": null,
+            "hex": "44",
+            "kind": "READ_DATA"
+          },
+          "writer_fd": 4,
+          "writer_lifetime": "data-writer-0",
+          "writer_probe": {
+            "errno": null,
+            "state": "OPEN"
+          }
+        }
+      },
+      "ready": {
+        "before": {
+          "close_actor_alive": false,
+          "close_result": null,
+          "executor_threads_alive": [
+            true
+          ],
+          "future_cancelled": false,
+          "future_done": false,
+          "future_running": true,
+          "mono_ns": 28352697941291,
+          "reader_fd": 3,
+          "reader_lifetime": "data-reader-0",
+          "reader_probe": {
+            "errno": null,
+            "state": "OPEN"
+          },
+          "stage": "ready",
+          "task_cancelled": false,
+          "task_done": false,
+          "value": null,
+          "writer_fd": 4,
+          "writer_lifetime": "data-writer-0",
+          "writer_probe": {
+            "errno": null,
+            "state": "OPEN"
+          }
+        },
+        "case": "normal_D",
+        "main_native_id": 1288712,
+        "message": "READY",
+        "pid": 51201,
+        "ppid": 51192,
+        "reader": {
+          "name": "owned-pipe-read_0",
+          "native_id": 1288713
+        }
+      },
+      "sample": {
+        "argv": [
+          "/usr/bin/sample",
+          "51201",
+          "1",
+          "10",
+          "-file",
+          "@WORKSPACE@/work/macos-read-stack-formal-A01/normal_D.sample.txt"
+        ],
+        "bytes": 77498,
+        "ended_ns": 28353915713000,
+        "ended_utc": "2026-10-03T08:49:48.952048+00:00",
+        "exit_code": 0,
+        "gate": {
+          "block": "    92 Thread_1288713: owned-pipe-read_0\n      92 thread_start  (in libsystem_pthread.dylib) + 8  [0x18e034cec]\n        92 _pthread_start  (in libsystem_pthread.dylib) + 136  [0x18e039d00]\n          92 pythread_wrapper  (in Python) + 48  [0x1036d3834]\n            92 thread_run  (in Python) + 152  [0x103751168]\n              92 _PyObject_VectorcallPrepend  (in Python) + 300  [0x103515214]\n                92 _PyEval_Vector  (in Python) + 264  [0x10363fb24]\n                  92 _PyEval_EvalFrameDefault  (in Python) + 9988  [0x103642568]\n                    92 PyObject_Vectorcall  (in Python) + 88  [0x103513e18]\n                      92 context_run  (in Python) + 136  [0x10366ea94]\n                        92 _PyObject_VectorcallPrepend  (in Python) + 300  [0x103515214]\n                          92 _PyEval_Vector  (in Python) + 264  [0x10363fb24]\n                            92 _PyEval_EvalFrameDefault  (in Python) + 9988  [0x103642568]\n                              92 PyObject_Vectorcall  (in Python) + 88  [0x103513e18]\n                                92 os_read  (in Python) + 356  [0x1036ee54c]\n                                  92 _Py_read  (in Python) + 108  [0x1036e15fc]\n                                    92 read  (in libsystem_kernel.dylib) + 8  [0x18dff5910]\n",
+          "kernel_trace": false,
+          "name": "owned-pipe-read_0",
+          "native_id": 1288713,
+          "native_read_samples": [
+            92
+          ],
+          "pid": 51201,
+          "ppid": 51192,
+          "python_read_samples": [
+            92
+          ],
+          "qualified": true,
+          "root_samples": 92
+        },
+        "pid": 51202,
+        "sha256": "1dbd8e70812f3106d2aed7c1959ce710ba9ee3366ddb3eda8817638b0c0554f4",
+        "started_ns": 28352698230416,
+        "started_utc": "2026-10-03T08:49:47.734571+00:00",
+        "stderr_sha256": "d11c89bc7d0a973dc9b295f2cc2260abb28a88a412a04026a5d158ccc5b59638",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "target_pid": 51201,
+        "watchdog_fired": false
+      },
+      "sampler_terminal": true,
+      "started_utc": "2026-10-03T08:49:47.666038+00:00",
+      "status": "COMPLETE_FIRST_CELL"
+    },
+    {
+      "actor_send_ns": 28355473805458,
+      "actor_send_utc": "2026-10-03T08:49:50.510187+00:00",
+      "actor_sent": true,
+      "case": "writer_EOF",
+      "driver_pid": 51192,
+      "ended_utc": "2026-10-03T08:49:50.775204+00:00",
+      "error": null,
+      "final": {
+        "case": "writer_EOF",
+        "events": [
+          {
+            "event": "read_about_to_call",
+            "fd": 3,
+            "lifetime": "data-reader-0",
+            "mono_ns": 28354246381791,
+            "native_id": 1288769,
+            "ordinal": 0,
+            "pid": 51208,
+            "thread_name": "owned-pipe-read_0"
+          },
+          {
+            "case": "writer_EOF",
+            "event": "actor_requested",
+            "mono_ns": 28355473831500,
+            "native_id": 1288768,
+            "ordinal": 1,
+            "pid": 51208
+          },
+          {
+            "event": "actor_writer_closed",
+            "fd": 4,
+            "lifetime": "data-writer-0",
+            "mono_ns": 28355473837916,
+            "native_id": 1288768,
+            "ordinal": 2,
+            "pid": 51208
+          },
+          {
+            "event": "read_return",
+            "mono_ns": 28355473849708,
+            "native_id": 1288769,
+            "ordinal": 3,
+            "pid": 51208,
+            "value": {
+              "errno": null,
+              "hex": "",
+              "kind": "READ_EOF"
+            }
+          },
+          {
+            "event": "primary_snapshot",
+            "mono_ns": 28355725571750,
+            "native_id": 1288768,
+            "ordinal": 4,
+            "pid": 51208
+          },
+          {
+            "event": "harness_cleanup_start",
+            "mono_ns": 28355725907500,
+            "native_id": 1288768,
+            "ordinal": 5,
+            "pid": 51208
+          },
+          {
+            "event": "harness_reader_closed",
+            "fd": 3,
+            "lifetime": "data-reader-0",
+            "mono_ns": 28355725987416,
+            "native_id": 1288768,
+            "ordinal": 6,
+            "pid": 51208
+          },
+          {
+            "event": "executor_joined_and_loop_closed",
+            "mono_ns": 28355726166958,
+            "native_id": 1288768,
+            "ordinal": 7,
+            "pid": 51208
+          }
+        ],
+        "final": {
+          "close_actor_alive": false,
+          "close_result": null,
+          "executor_threads_alive": [
+            false
+          ],
+          "future_cancelled": false,
+          "future_done": true,
+          "future_running": false,
+          "mono_ns": 28355726170791,
+          "reader_fd": 3,
+          "reader_lifetime": "data-reader-0",
+          "reader_probe": {
+            "errno": 9,
+            "state": "EBADF"
+          },
+          "stage": "final",
+          "task_cancelled": false,
+          "task_done": true,
+          "value": {
+            "errno": null,
+            "hex": "",
+            "kind": "READ_EOF"
+          },
+          "writer_fd": 4,
+          "writer_lifetime": "data-writer-0",
+          "writer_probe": {
+            "errno": 9,
+            "state": "EBADF"
+          }
+        },
+        "loop_closed": true,
+        "message": "FINAL",
+        "native_value": {
+          "errno": null,
+          "hex": "",
+          "kind": "READ_EOF"
+        },
+        "pid": 51208,
+        "ppid": 51192
+      },
+      "owned_peer_terminated_on_stop": false,
+      "peer_argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-u",
+        "@WORKSPACE@/work/agent-interface-macos-stack/research/concurrency/macos_read_stack_6501_20261003_01a0ff52_93c2/peer.py.txt",
+        "writer_EOF"
+      ],
+      "peer_exit": 0,
+      "peer_pid": 51208,
+      "peer_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "peer_stdout_bytes": 4367,
+      "peer_stdout_sha256": "df17d9c7ea5ddf49860277264ead02ac34102d6a64209cce78281e3786f5ed84",
+      "physical_input": false,
+      "pipes_closed": true,
+      "pre_actor": {
+        "before": {
+          "close_actor_alive": false,
+          "close_result": null,
+          "executor_threads_alive": [
+            true
+          ],
+          "future_cancelled": false,
+          "future_done": false,
+          "future_running": true,
+          "mono_ns": 28355473698875,
+          "reader_fd": 3,
+          "reader_lifetime": "data-reader-0",
+          "reader_probe": {
+            "errno": null,
+            "state": "OPEN"
+          },
+          "stage": "pre_actor",
+          "task_cancelled": false,
+          "task_done": false,
+          "value": null,
+          "writer_fd": 4,
+          "writer_lifetime": "data-writer-0",
+          "writer_probe": {
+            "errno": null,
+            "state": "OPEN"
+          }
+        },
+        "case": "writer_EOF",
+        "message": "PRE_ACT",
+        "pid": 51208,
+        "ppid": 51192
+      },
+      "primary": {
+        "actor_start_ns": 28355473832708,
+        "case": "writer_EOF",
+        "events": [
+          {
+            "event": "read_about_to_call",
+            "fd": 3,
+            "lifetime": "data-reader-0",
+            "mono_ns": 28354246381791,
+            "native_id": 1288769,
+            "ordinal": 0,
+            "pid": 51208,
+            "thread_name": "owned-pipe-read_0"
+          },
+          {
+            "case": "writer_EOF",
+            "event": "actor_requested",
+            "mono_ns": 28355473831500,
+            "native_id": 1288768,
+            "ordinal": 1,
+            "pid": 51208
+          },
+          {
+            "event": "actor_writer_closed",
+            "fd": 4,
+            "lifetime": "data-writer-0",
+            "mono_ns": 28355473837916,
+            "native_id": 1288768,
+            "ordinal": 2,
+            "pid": 51208
+          },
+          {
+            "event": "read_return",
+            "mono_ns": 28355473849708,
+            "native_id": 1288769,
+            "ordinal": 3,
+            "pid": 51208,
+            "value": {
+              "errno": null,
+              "hex": "",
+              "kind": "READ_EOF"
+            }
+          },
+          {
+            "event": "primary_snapshot",
+            "mono_ns": 28355725571750,
+            "native_id": 1288768,
+            "ordinal": 4,
+            "pid": 51208
+          }
+        ],
+        "message": "PRIMARY",
+        "pid": 51208,
+        "ppid": 51192,
+        "primary": {
+          "close_actor_alive": false,
+          "close_result": null,
+          "executor_threads_alive": [
+            true
+          ],
+          "future_cancelled": false,
+          "future_done": true,
+          "future_running": false,
+          "mono_ns": 28355725582166,
+          "reader_fd": 3,
+          "reader_lifetime": "data-reader-0",
+          "reader_probe": {
+            "errno": null,
+            "state": "OPEN"
+          },
+          "stage": "primary",
+          "task_cancelled": false,
+          "task_done": true,
+          "value": {
+            "errno": null,
+            "hex": "",
+            "kind": "READ_EOF"
+          },
+          "writer_fd": 4,
+          "writer_lifetime": "data-writer-0",
+          "writer_probe": {
+            "errno": 9,
+            "state": "EBADF"
+          }
+        }
+      },
+      "ready": {
+        "before": {
+          "close_actor_alive": false,
+          "close_result": null,
+          "executor_threads_alive": [
+            true
+          ],
+          "future_cancelled": false,
+          "future_done": false,
+          "future_running": true,
+          "mono_ns": 28354246514583,
+          "reader_fd": 3,
+          "reader_lifetime": "data-reader-0",
+          "reader_probe": {
+            "errno": null,
+            "state": "OPEN"
+          },
+          "stage": "ready",
+          "task_cancelled": false,
+          "task_done": false,
+          "value": null,
+          "writer_fd": 4,
+          "writer_lifetime": "data-writer-0",
+          "writer_probe": {
+            "errno": null,
+            "state": "OPEN"
+          }
+        },
+        "case": "writer_EOF",
+        "main_native_id": 1288768,
+        "message": "READY",
+        "pid": 51208,
+        "ppid": 51192,
+        "reader": {
+          "name": "owned-pipe-read_0",
+          "native_id": 1288769
+        }
+      },
+      "sample": {
+        "argv": [
+          "/usr/bin/sample",
+          "51208",
+          "1",
+          "10",
+          "-file",
+          "@WORKSPACE@/work/macos-read-stack-formal-A01/writer_EOF.sample.txt"
+        ],
+        "bytes": 77498,
+        "ended_ns": 28355472794791,
+        "ended_utc": "2026-10-03T08:49:50.509119+00:00",
+        "exit_code": 0,
+        "gate": {
+          "block": "    92 Thread_1288769: owned-pipe-read_0\n      92 thread_start  (in libsystem_pthread.dylib) + 8  [0x18e034cec]\n        92 _pthread_start  (in libsystem_pthread.dylib) + 136  [0x18e039d00]\n          92 pythread_wrapper  (in Python) + 48  [0x1014c7834]\n            92 thread_run  (in Python) + 152  [0x101545168]\n              92 _PyObject_VectorcallPrepend  (in Python) + 300  [0x101309214]\n                92 _PyEval_Vector  (in Python) + 264  [0x101433b24]\n                  92 _PyEval_EvalFrameDefault  (in Python) + 9988  [0x101436568]\n                    92 PyObject_Vectorcall  (in Python) + 88  [0x101307e18]\n                      92 context_run  (in Python) + 136  [0x101462a94]\n                        92 _PyObject_VectorcallPrepend  (in Python) + 300  [0x101309214]\n                          92 _PyEval_Vector  (in Python) + 264  [0x101433b24]\n                            92 _PyEval_EvalFrameDefault  (in Python) + 9988  [0x101436568]\n                              92 PyObject_Vectorcall  (in Python) + 88  [0x101307e18]\n                                92 os_read  (in Python) + 356  [0x1014e254c]\n                                  92 _Py_read  (in Python) + 108  [0x1014d55fc]\n                                    92 read  (in libsystem_kernel.dylib) + 8  [0x18dff5910]\n",
+          "kernel_trace": false,
+          "name": "owned-pipe-read_0",
+          "native_id": 1288769,
+          "native_read_samples": [
+            92
+          ],
+          "pid": 51208,
+          "ppid": 51192,
+          "python_read_samples": [
+            92
+          ],
+          "qualified": true,
+          "root_samples": 92
+        },
+        "pid": 51209,
+        "sha256": "f4caf946f51f4a0a1d8aa40ebc70ea4c6605663e543af454c47cdb79ab34c6ef",
+        "started_ns": 28354246824750,
+        "started_utc": "2026-10-03T08:49:49.283159+00:00",
+        "stderr_sha256": "9680212f3a839b0dca56cd0d69d2df4167fe51662411ab87d719698790cefb2e",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "target_pid": 51208,
+        "watchdog_fired": false
+      },
+      "sampler_terminal": true,
+      "started_utc": "2026-10-03T08:49:49.219835+00:00",
+      "status": "COMPLETE_FIRST_CELL"
+    },
+    {
+      "actor_send_ns": 28357019644958,
+      "actor_send_utc": "2026-10-03T08:49:52.056030+00:00",
+      "actor_sent": true,
+      "case": "wrapper_cancel",
+      "driver_pid": 51192,
+      "ended_utc": "2026-10-03T08:49:52.328659+00:00",
+      "error": null,
+      "final": {
+        "case": "wrapper_cancel",
+        "events": [
+          {
+            "event": "read_about_to_call",
+            "fd": 3,
+            "lifetime": "data-reader-0",
+            "mono_ns": 28355802282333,
+            "native_id": 1288810,
+            "ordinal": 0,
+            "pid": 51214,
+            "thread_name": "owned-pipe-read_0"
+          },
+          {
+            "case": "wrapper_cancel",
+            "event": "actor_requested",
+            "mono_ns": 28357019682833,
+            "native_id": 1288808,
+            "ordinal": 1,
+            "pid": 51214
+          },
+          {
+            "event": "actor_wrapper_cancelled",
+            "mono_ns": 28357019778375,
+            "native_id": 1288808,
+            "ordinal": 2,
+            "pid": 51214,
+            "task_cancelled": true,
+            "task_done": true
+          },
+          {
+            "event": "primary_snapshot",
+            "mono_ns": 28357271720791,
+            "native_id": 1288808,
+            "ordinal": 3,
+            "pid": 51214
+          },
+          {
+            "event": "harness_cleanup_start",
+            "mono_ns": 28357272172666,
+            "native_id": 1288808,
+            "ordinal": 4,
+            "pid": 51214
+          },
+          {
+            "count": 1,
+            "event": "harness_release_D",
+            "mono_ns": 28357272184375,
+            "native_id": 1288808,
+            "ordinal": 5,
+            "pid": 51214
+          },
+          {
+            "event": "read_return",
+            "mono_ns": 28357272210375,
+            "native_id": 1288810,
+            "ordinal": 6,
+            "pid": 51214,
+            "value": {
+              "errno": null,
+              "hex": "44",
+              "kind": "READ_DATA"
+            }
+          },
+          {
+            "event": "harness_reader_closed",
+            "fd": 3,
+            "lifetime": "data-reader-0",
+            "mono_ns": 28357272499125,
+            "native_id": 1288808,
+            "ordinal": 7,
+            "pid": 51214
+          },
+          {
+            "event": "harness_writer_closed",
+            "fd": 4,
+            "lifetime": "data-writer-0",
+            "mono_ns": 28357272509541,
+            "native_id": 1288808,
+            "ordinal": 8,
+            "pid": 51214
+          },
+          {
+            "event": "executor_joined_and_loop_closed",
+            "mono_ns": 28357272752500,
+            "native_id": 1288808,
+            "ordinal": 9,
+            "pid": 51214
+          }
+        ],
+        "final": {
+          "close_actor_alive": false,
+          "close_result": null,
+          "executor_threads_alive": [
+            false
+          ],
+          "future_cancelled": false,
+          "future_done": true,
+          "future_running": false,
+          "mono_ns": 28357272761250,
+          "reader_fd": 3,
+          "reader_lifetime": "data-reader-0",
+          "reader_probe": {
+            "errno": 9,
+            "state": "EBADF"
+          },
+          "stage": "final",
+          "task_cancelled": true,
+          "task_done": true,
+          "value": {
+            "errno": null,
+            "hex": "44",
+            "kind": "READ_DATA"
+          },
+          "writer_fd": 4,
+          "writer_lifetime": "data-writer-0",
+          "writer_probe": {
+            "errno": 9,
+            "state": "EBADF"
+          }
+        },
+        "loop_closed": true,
+        "message": "FINAL",
+        "native_value": {
+          "errno": null,
+          "hex": "44",
+          "kind": "READ_DATA"
+        },
+        "pid": 51214,
+        "ppid": 51192
+      },
+      "owned_peer_terminated_on_stop": false,
+      "peer_argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-u",
+        "@WORKSPACE@/work/agent-interface-macos-stack/research/concurrency/macos_read_stack_6501_20261003_01a0ff52_93c2/peer.py.txt",
+        "wrapper_cancel"
+      ],
+      "peer_exit": 0,
+      "peer_pid": 51214,
+      "peer_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "peer_stdout_bytes": 4488,
+      "peer_stdout_sha256": "4ce1f981e3670ce2710d80cf9b7c825537edae2a2662e1169c33d89868228d18",
+      "physical_input": false,
+      "pipes_closed": true,
+      "pre_actor": {
+        "before": {
+          "close_actor_alive": false,
+          "close_result": null,
+          "executor_threads_alive": [
+            true
+          ],
+          "future_cancelled": false,
+          "future_done": false,
+          "future_running": true,
+          "mono_ns": 28357019500875,
+          "reader_fd": 3,
+          "reader_lifetime": "data-reader-0",
+          "reader_probe": {
+            "errno": null,
+            "state": "OPEN"
+          },
+          "stage": "pre_actor",
+          "task_cancelled": false,
+          "task_done": false,
+          "value": null,
+          "writer_fd": 4,
+          "writer_lifetime": "data-writer-0",
+          "writer_probe": {
+            "errno": null,
+            "state": "OPEN"
+          }
+        },
+        "case": "wrapper_cancel",
+        "message": "PRE_ACT",
+        "pid": 51214,
+        "ppid": 51192
+      },
+      "primary": {
+        "actor_start_ns": 28357019684000,
+        "case": "wrapper_cancel",
+        "events": [
+          {
+            "event": "read_about_to_call",
+            "fd": 3,
+            "lifetime": "data-reader-0",
+            "mono_ns": 28355802282333,
+            "native_id": 1288810,
+            "ordinal": 0,
+            "pid": 51214,
+            "thread_name": "owned-pipe-read_0"
+          },
+          {
+            "case": "wrapper_cancel",
+            "event": "actor_requested",
+            "mono_ns": 28357019682833,
+            "native_id": 1288808,
+            "ordinal": 1,
+            "pid": 51214
+          },
+          {
+            "event": "actor_wrapper_cancelled",
+            "mono_ns": 28357019778375,
+            "native_id": 1288808,
+            "ordinal": 2,
+            "pid": 51214,
+            "task_cancelled": true,
+            "task_done": true
+          },
+          {
+            "event": "primary_snapshot",
+            "mono_ns": 28357271720791,
+            "native_id": 1288808,
+            "ordinal": 3,
+            "pid": 51214
+          }
+        ],
+        "message": "PRIMARY",
+        "pid": 51214,
+        "ppid": 51192,
+        "primary": {
+          "close_actor_alive": false,
+          "close_result": null,
+          "executor_threads_alive": [
+            true
+          ],
+          "future_cancelled": false,
+          "future_done": false,
+          "future_running": true,
+          "mono_ns": 28357271735708,
+          "reader_fd": 3,
+          "reader_lifetime": "data-reader-0",
+          "reader_probe": {
+            "errno": null,
+            "state": "OPEN"
+          },
+          "stage": "primary",
+          "task_cancelled": true,
+          "task_done": true,
+          "value": null,
+          "writer_fd": 4,
+          "writer_lifetime": "data-writer-0",
+          "writer_probe": {
+            "errno": null,
+            "state": "OPEN"
+          }
+        }
+      },
+      "ready": {
+        "before": {
+          "close_actor_alive": false,
+          "close_result": null,
+          "executor_threads_alive": [
+            true
+          ],
+          "future_cancelled": false,
+          "future_done": false,
+          "future_running": true,
+          "mono_ns": 28355802401375,
+          "reader_fd": 3,
+          "reader_lifetime": "data-reader-0",
+          "reader_probe": {
+            "errno": null,
+            "state": "OPEN"
+          },
+          "stage": "ready",
+          "task_cancelled": false,
+          "task_done": false,
+          "value": null,
+          "writer_fd": 4,
+          "writer_lifetime": "data-writer-0",
+          "writer_probe": {
+            "errno": null,
+            "state": "OPEN"
+          }
+        },
+        "case": "wrapper_cancel",
+        "main_native_id": 1288808,
+        "message": "READY",
+        "pid": 51214,
+        "ppid": 51192,
+        "reader": {
+          "name": "owned-pipe-read_0",
+          "native_id": 1288810
+        }
+      },
+      "sample": {
+        "argv": [
+          "/usr/bin/sample",
+          "51214",
+          "1",
+          "10",
+          "-file",
+          "@WORKSPACE@/work/macos-read-stack-formal-A01/wrapper_cancel.sample.txt"
+        ],
+        "bytes": 77498,
+        "ended_ns": 28357018581458,
+        "ended_utc": "2026-10-03T08:49:52.054916+00:00",
+        "exit_code": 0,
+        "gate": {
+          "block": "    92 Thread_1288810: owned-pipe-read_0\n      92 thread_start  (in libsystem_pthread.dylib) + 8  [0x18e034cec]\n        92 _pthread_start  (in libsystem_pthread.dylib) + 136  [0x18e039d00]\n          92 pythread_wrapper  (in Python) + 48  [0x1016c3834]\n            92 thread_run  (in Python) + 152  [0x101741168]\n              92 _PyObject_VectorcallPrepend  (in Python) + 300  [0x101505214]\n                92 _PyEval_Vector  (in Python) + 264  [0x10162fb24]\n                  92 _PyEval_EvalFrameDefault  (in Python) + 9988  [0x101632568]\n                    92 PyObject_Vectorcall  (in Python) + 88  [0x101503e18]\n                      92 context_run  (in Python) + 136  [0x10165ea94]\n                        92 _PyObject_VectorcallPrepend  (in Python) + 300  [0x101505214]\n                          92 _PyEval_Vector  (in Python) + 264  [0x10162fb24]\n                            92 _PyEval_EvalFrameDefault  (in Python) + 9988  [0x101632568]\n                              92 PyObject_Vectorcall  (in Python) + 88  [0x101503e18]\n                                92 os_read  (in Python) + 356  [0x1016de54c]\n                                  92 _Py_read  (in Python) + 108  [0x1016d15fc]\n                                    92 read  (in libsystem_kernel.dylib) + 8  [0x18dff5910]\n",
+          "kernel_trace": false,
+          "name": "owned-pipe-read_0",
+          "native_id": 1288810,
+          "native_read_samples": [
+            92
+          ],
+          "pid": 51214,
+          "ppid": 51192,
+          "python_read_samples": [
+            92
+          ],
+          "qualified": true,
+          "root_samples": 92
+        },
+        "pid": 51215,
+        "sha256": "557d0ab4294716eddafbcadcfb76cd51635b076e34f543ff8ade110fb2112ff8",
+        "started_ns": 28355802641583,
+        "started_utc": "2026-10-03T08:49:50.838986+00:00",
+        "stderr_sha256": "a7e61b7e01ae2332e1c7d47c9375fddbe250cc0f0d86a4ac33a2efa5fedcf657",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "target_pid": 51214,
+        "watchdog_fired": false
+      },
+      "sampler_terminal": true,
+      "started_utc": "2026-10-03T08:49:50.775870+00:00",
+      "status": "COMPLETE_FIRST_CELL"
+    }
+  ],
+  "ended_utc": "2026-10-03T08:49:52.329424+00:00",
+  "formal_producer_invocations": 1,
+  "formal_retries": 0,
+  "freeze_sha256": "201910d7dc9fa334884c0a486485379c82115adece964823fa365cdb58dd78e9",
+  "kernel_trace": false,
+  "physical_input": false,
+  "started_utc": "2026-10-03T08:49:46.043352+00:00",
+  "status": "COMPLETE_FIRST_COMPARISON"
+}

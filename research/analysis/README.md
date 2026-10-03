@@ -554,6 +554,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`multistate_stop_recovery_5593_t1_20261002_02/`](multistate_stop_recovery_5593_t1_20261002_02/)
 - [`native_wsl2_migration_6389_audit_repair_v1_20261002/`](native_wsl2_migration_6389_audit_repair_v1_20261002/)
 - [`native_wsl2_migration_6389_t0_20261002/`](native_wsl2_migration_6389_t0_20261002/)
+- [`needle_role_conflict_probe_6354_a02/`](needle_role_conflict_probe_6354_a02/)
+- [`needle_role_conflict_probe_6354_a02_wslc_validation_20261002/`](needle_role_conflict_probe_6354_a02_wslc_validation_20261002/)
 - [`needle_role_skill_lifecycle_4916_first_rung_v2/`](needle_role_skill_lifecycle_4916_first_rung_v2/)
 - [`needle_role_skill_lifecycle_4916_parity_diag_v1/`](needle_role_skill_lifecycle_4916_parity_diag_v1/)
 - [`needle_role_skill_lifecycle_4916_v2/`](needle_role_skill_lifecycle_4916_v2/)
