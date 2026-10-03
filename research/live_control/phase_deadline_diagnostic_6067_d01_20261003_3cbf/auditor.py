@@ -51,6 +51,12 @@ def snap(v):
         require(type(x["available"]) is bool, "availability type")
         require((type(x["raw"]) is str and x["error"] is None) if x["available"] else
                 (x["raw"] is None and type(x["error"]) is dict), "optional custody")
+        if x["available"]:
+            if k == "cpu_stat_local": cpu(x["raw"])
+            elif k == "schedstats_enabled": require(x["raw"].strip() in ("0", "1"), "enabled grammar")
+            else:
+                fields = x["raw"].split()
+                require(len(fields) == 3 and all(s.isdigit() for s in fields), "available schedstat grammar")
 
 def frame_metrics(f,due):
     integer(due); integer(f["index"]); join(f["due_ns"],due,"deadline")
@@ -62,11 +68,13 @@ def frame_metrics(f,due):
     previous = w["begin_ns"]
     for s in w["sleeps"]:
         start,end,requested = [integer(s[k]) for k in ("start_ns","return_ns","requested_ns")]
-        require(previous<=start<=end<=w["return_ns"],"sleep chronology")
+        require(previous==start<=end<=w["return_ns"],"complete sleep chronology")
         require(requested==due-start-15_000_000 and requested>0,"prospective sleep")
         previous = end
     if w["spin_enter_ns"] is not None:
-        require(previous<=integer(w["spin_enter_ns"])<=w["return_ns"],"spin chronology")
+        require(previous==integer(w["spin_enter_ns"])<=w["return_ns"] and 0<due-previous<=15_000_000,"complete spin chronology")
+    else:
+        require(previous>=due and w["return_ns"]==previous,"missing sleep/spin trace")
     require(w["return_ns"]>=due,"early pacing")
     try: raw = base64.b64decode(f["pixels_b64"],validate=True)
     except Exception as e: raise ValueError("pixel encoding") from e

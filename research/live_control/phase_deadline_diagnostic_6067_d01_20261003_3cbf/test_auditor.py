@@ -25,6 +25,14 @@ def frame():
             "decoded": None}
 
 class AuditorTests(unittest.TestCase):
+    def test_omitted_sleep_and_malformed_optional_are_refused(self):
+        for kind in ("sleep", "schedstat"):
+            f = frame()
+            if kind == "sleep": f["wait"]["sleeps"] = []
+            else: f["post"]["schedstat"] = {"available": True, "raw": "garbage", "error": None}
+            with self.subTest(kind=kind):
+                with self.assertRaises(ValueError): auditor.frame_metrics(f, f["due_ns"])
+
     def test_late_sleep_without_leaf_throttle_is_not_declared_quota_causal(self):
         r = auditor.frame_metrics(frame(), 2_100_000_000)
         self.assertEqual(r["wait_lateness_ns"], 17_000_000)

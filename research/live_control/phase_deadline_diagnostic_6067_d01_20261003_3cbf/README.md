@@ -1,7 +1,7 @@
 # #6067 D01: deadline/resource diagnosis, not A01 replay
 
 ## Status and scope
-Pre-execution construction; diagnostic allocation PHASE-DEADLINE-6067-D01-20261003-3CBF.
+Prospective design for diagnostic allocation PHASE-DEADLINE-6067-D01-20261003-3CBF. See audit/RESULT.json and REPORT.md for subsequently executed outcomes.
 Intake main ba1c4d966bc098e8f9f7e9e6df85f1281daa1582. Canonical docs/CURRENT_GOAL.md r134 and #57/#59 remain unfinished.
 Predecessor A01 (PR #7021) STOP_CAPTURE_TIMING_GATE is immutable: irregular first capture was 17.231413 ms late. It did not collect per-deadline CPU/sleep telemetry, so no cause can be backfilled.
 D01 retains that result and investigates a resource-qualification question under the still-open #6067. It does not create a wrapper-only research Issue.
@@ -10,7 +10,7 @@ D01 retains that result and investigates a resource-qualification question under
 - H: Is throttling by the container's own leaf CPU quota necessary for instrumented late waits? This narrow necessity hypothesis is not a claim about host scheduling.
 - T: 16 fresh serial private-Xvfb dark cells / 128 acquisitions. Four cyclic Latin rows contrast CPU quotas 1 and 2 within fixed and irregular schedules. See exact plan.json. No frame/cell replacement, rerun, quota escalation outside that plan, threshold relaxation, live input or model call.
 - D: Prospective raw before/after cpu.stat, optional cpu.stat.local, process/thread CPU, context switches, optional schedstat/enabled state; coarse-sleep request/return and spin-entry; actual XGetImage/extraction timestamps; all 1024 uint32 pixels, separate source/observer PIDs, epoch/window/journals, cgroups, full terminal Docker inspect, logs and hashes.
-- C: Independent stdlib-only saved-byte auditor; 11 construction unit methods include type, duplicate/nonfinite JSON, pixel, counter, clock, sleep and plan corruptions. Further saved-actual-raw corruptions are run separately. Original fixture/Xlib/policy/common are copied byte-for-byte from 48ce12d529c1a9127e46eda4b33bcaaa278129a2.
+- C: Independent stdlib-only saved-byte auditor; 15 construction unit methods include type, duplicate/nonfinite JSON, pixel, counter, clock, sleep completeness, optional grammar, command preflight and plan corruptions. Twelve saved-actual-raw corruption controls are run separately. Original fixture/Xlib/policy/common are copied byte-for-byte from 48ce12d529c1a9127e46eda4b33bcaaa278129a2.
 - U: Linux/macOS host/ancestor scheduling is uncontrolled; 16 serial cells cannot identify a cause or prove general tail absence. Post-wait snapshot and flushed trace precede acquisition; their measured cost makes this an instrumented variant, not an exact A01 replay. Dark cells cannot establish pulse detection, useful feedback/recovery, latency benefit, normal key-up, human tempo or end-to-end GUI/model performance.
 
 ## Frozen decisions
@@ -27,6 +27,7 @@ No host-exclusivity claim. Cached immutable arm64 image sha256:c4839671ed0625dd3
 Native containers: CPU quota 1 or 2, 512 MiB memory, zero swap, PIDs64, network none, user501, read-only root/source, dropped ALL capabilities, no-new-privileges. Fresh owned Xvfb/window per cell; no input API called.
 Source SHA-256 set, exact native and independent auditor commands, gates and one-shot budget are published in FREEZE.json before diagnostic execution. Construction uses separately named outputs and is excluded from the 128 frames.
 No automatic scientific phase-matrix admission or A02: that requires a separately named prospective allocation and review. Review/CI may replay saved-byte auditing only, never the native allocation.
+The runner checks every frozen command before output creation, then a separate producer-only guard validates retained telemetry and actual resource/terminal settings before advancing to the next cell. It never imports or invokes the official auditor. The official independent audit is admitted only after producer completion.
 
 ## Sources
 Linux official cgroup v2 CPU counter/quota definitions: https://docs.kernel.org/admin-guide/cgroup-v2.html

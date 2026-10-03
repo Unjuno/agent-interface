@@ -7,6 +7,7 @@ import sys
 import time
 import traceback
 from pathlib import Path
+import guard
 
 HERE = Path(__file__).resolve().parent
 VM = "research-6183-t0-20261003"
@@ -62,6 +63,7 @@ def main():
         for name, digest in freeze["source_sha256"].items():
             if hashlib.sha256((HERE / name).read_bytes()).hexdigest() != digest:
                 raise ValueError("published source bytes differ: " + name)
+        guard.preflight(plan, freeze, a.guest_source, a.guest_output_prefix, command)
     a.out.mkdir(exist_ok=False)
     cells = plan["cells"] if a.mode == "diagnostic" else [dict(plan["cells"][1], id="construction-01")]
     summary = {"allocation": plan["allocation"], "mode": a.mode, "status": "STOP",
@@ -98,6 +100,7 @@ def main():
                                       "stdout": copied.stdout, "stderr": copied.stderr})
             if run.returncode != 0 or copied.returncode != 0 or inspected.returncode != 0:
                 raise RuntimeError("first native/retention/inspection STOP, no replay")
+            guard.check_cell(cell, c, plan)
             summary["completed_cells"].append(c["id"])
             print(json.dumps({"completed": len(summary["completed_cells"]), "planned": len(cells),
                               "id": c["id"], "cpu": c["cpu"], "schedule": c["schedule"]}), flush=True)
