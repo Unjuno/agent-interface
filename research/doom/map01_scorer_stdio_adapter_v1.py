@@ -48,12 +48,13 @@ class MainThreadScorerStdin:
     def __next__(self):
         if threading.get_ident()!=self.owner_thread:raise RuntimeError('scorer stdin left session main thread')
         while True:
-            if self._sample_due():continue
+            # Deliver an already buffered command before another due sample.
             newline=self.buffer.find(b'\n')
             if newline>=0:
                 raw=bytes(self.buffer[:newline]);del self.buffer[:newline+1]
                 if not raw:continue
                 self.commands+=1;return raw.decode('utf-8',errors='strict')
+            self._sample_due()
             now=self.loop.clock_ns();timeout=max(0,(self.next_sample_ns-now)/1e9)
             if not self.loop.wait_readable(self.fd,timeout):continue
             chunk=self.loop.read_fn(self.fd,65536)

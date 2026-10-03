@@ -1,0 +1,55 @@
+{
+  "disposition": "PASS_ENGINEERING_SCOPED",
+  "worker_id": "01a0ff58-d514-7b02-a95c-2f5c86873506",
+  "utc": "2026-10-03T03:24:52.115584+00:00",
+  "parent_issue": 59,
+  "first_red_preserved": true,
+  "runs": [
+    {
+      "label": "first-red",
+      "exit_code": 1,
+      "methods": 4,
+      "summary": "FAILED (failures=8, errors=1)",
+      "original_receipt_sha256": "d7dee670e5366bb23260bf90bccd092fbb7cd25bde952ba530e8b5cc9b0847ab"
+    },
+    {
+      "label": "focused-green",
+      "exit_code": 0,
+      "methods": 4,
+      "summary": "OK",
+      "original_receipt_sha256": "ad79e03edfd134b89cc36399027e06b78e62396bd3e16eaaaf95a053793a2f62"
+    },
+    {
+      "label": "focused-optimized",
+      "exit_code": 0,
+      "methods": 4,
+      "summary": "OK",
+      "original_receipt_sha256": "0a5af582bf5e9ce34234bcf6a453c597f2fed32a7dfdcfccab2fcf52315ab3f3"
+    },
+    {
+      "label": "portable-suite",
+      "exit_code": 0,
+      "methods": 38,
+      "summary": "OK (skipped=2)",
+      "original_receipt_sha256": "21d5ec01b4285bf1aa25d3e8d3865fdb507ec4de236dad65f6ded9a116bd685f"
+    },
+    {
+      "label": "portable-suite-optimized",
+      "exit_code": 0,
+      "methods": 38,
+      "summary": "OK (skipped=2)",
+      "original_receipt_sha256": "f77e5966bdd22f9e8c72ec3afcef9fd990d6216ee39269de5e866a8162bde76e"
+    }
+  ],
+  "inherited_windows_pipe_skips": 2,
+  "formal_producer_or_live_allocations": 0,
+  "exact_upstream_v2_adoption": true,
+  "limitations": [
+    "No nonreturning-callback bound",
+    "No command-burst fairness or real clock-cost distribution",
+    "No game/model/GUI/input/physical release/useful task feedback/speedup",
+    "Windows POSIX pipe checks skipped, not passed",
+    "Fake-session base/game/backend are stubs; actual v13 caller/adapter/scorer sink executed"
+  ],
+  "no_main_apply": true
+}
