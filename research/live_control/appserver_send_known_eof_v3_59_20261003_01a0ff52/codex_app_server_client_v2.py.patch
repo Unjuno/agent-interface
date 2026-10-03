@@ -1,0 +1,12 @@
+--- V2/codex_app_server_client_v2.py
++++ V3/codex_app_server_client_v2.py
+@@ -90,6 +90,9 @@
+                 raise AppServerWriteUncertain(0, 0, "previous send failure")
+             if deadline <= time.monotonic():
+                 raise TimeoutError("app-server send budget expired; no send attempted")
++            with self._condition:
++                if self._closed:
++                    raise AppServerError("app-server closed before send: stderr not drained")
+             if self._stdin_fd is None:
+                 fd = self.process.stdin.fileno()
+                 # Unsupported pipe modes fail before journaling or sending.

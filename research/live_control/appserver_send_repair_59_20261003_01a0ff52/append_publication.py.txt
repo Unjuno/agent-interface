@@ -1,0 +1,57 @@
+from pathlib import Path
+import ast
+import hashlib
+import json
+ROOT = Path('/OWNED_REPOSITORY')
+WORK = Path(__file__).resolve().parent
+LEAF = ROOT / 'research/live_control/appserver_send_repair_59_20261003_01a0ff52'
+manifest = json.loads((LEAF / 'MANIFEST.json').read_text())
+entries = {item['path']: item for item in manifest['files']}
+
+def append(source, relative):
+    original = source.read_bytes()
+    data = original.decode()
+    for old, new in [(str(WORK), '/OWNED_WORK'), (str(ROOT), '/OWNED_REPOSITORY'), (str(ROOT.parent.parent), '/OWNED_PROJECT')]:
+        data = data.replace(old, new)
+    data = data.encode()
+    target = LEAF / relative
+    target.parent.mkdir(parents=True, exist_ok=True)
+    with target.open('xb') as stream:
+        stream.write(data)
+    entries[relative] = {'path': relative, 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest(),
+                         'private_original_bytes': len(original), 'private_original_sha256': hashlib.sha256(original).hexdigest(),
+                         'projection': 'byte-identical' if data == original else 'owned path substitution only'}
+
+for name in ['publication-whitespace', 'publication-index', 'publication-navigation',
+             'publication-whitespace-fixed', 'publication-navigation-fixed']:
+    for source in sorted((WORK / name).iterdir()):
+        if source.is_file():
+            append(source, 'records/' + name + '/' + source.name)
+for name in ['PUBLICATION_STOP.md', 'restored-public-docs.json', 'repair_publication.py', 'append_publication.py']:
+    append(WORK / name, name + ('.txt' if name.endswith('.py') else ''))
+report = LEAF / 'REPORT.md'
+report.write_text(report.read_text() + '\nPublication first whitespace exit2 and sparse navigation exit1 are preserved in PUBLICATION_STOP.md. '
+                  'After exact six-doc restore and single-frozen-stderr trailing-space attribute, staged whitespace exit0, '
+                  'workspace156 exit0 and navigation26/1641 exit0. The newly added live-control row is separately verified '
+                  'against its staged target. Active tests/source were not changed by publication repair. '
+                  'Apple M1 Max/64GiB was observed in a later host sysctl snapshot, not an original load measurement.\n')
+for relative in ['REPORT.md', '.gitattributes']:
+    data = (LEAF / relative).read_bytes()
+    entries[relative] = {'path': relative, 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest(), 'projection': 'authored publication note or narrow frozen-log attribute'}
+manifest['files'] = sorted(entries.values(), key=lambda x: x['path'])
+(LEAF / 'MANIFEST.json').write_text(json.dumps(manifest, indent=2) + '\n')
+actual = {p.relative_to(LEAF).as_posix() for p in LEAF.rglob('*') if p.is_file()}
+assert actual == set(entries) | {'MANIFEST.json'}
+for relative, entry in entries.items():
+    data = (LEAF / relative).read_bytes()
+    assert len(data) == entry['bytes'] and hashlib.sha256(data).hexdigest() == entry['sha256']
+    if relative.endswith('.py.txt') or relative.endswith('.py.source.txt') or relative.endswith('.py.reconstructed.txt') or relative.endswith('.py.original.txt') or relative.endswith('.py.native-source.txt'):
+        ast.parse(data, filename=relative)
+for relative in ['research/live_control/codex_app_server_client_v2.py', 'runtime/integration_checks/native.py', 'research/live_control/test_codex_app_server_send_deadline_v1.py']:
+    compile((ROOT / relative).read_bytes(), relative, 'exec')
+assert '/Users/' not in '\n'.join(p.read_text() for p in LEAF.rglob('*') if p.is_file())
+index = (ROOT / 'research/live_control/README.md').read_text()
+assert index.count('appserver_send_repair_59_20261003_01a0ff52/REPORT.md') == 1
+(WORK / 'final-package-check.json').write_text(json.dumps({'archive_files': len(actual), 'manifest_targets': len(entries), 'all_bytes_hashes': True,
+                                                       'new_index_target_exists': True, 'changed_python_compile': True, 'private_user_paths_in_public': 0}, indent=2) + '\n')
+print((WORK / 'final-package-check.json').read_text())

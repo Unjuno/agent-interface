@@ -1,0 +1,35 @@
+test_invalid_and_expired_budget_retains_precedence (research.live_control.test_app_server_known_eof.KnownEofTests.test_invalid_and_expired_budget_retains_precedence) ... ok
+test_known_eof_notify_has_no_send_or_journal (research.live_control.test_app_server_known_eof.KnownEofTests.test_known_eof_notify_has_no_send_or_journal) ... FAIL
+test_known_eof_request_has_no_send_or_journal (research.live_control.test_app_server_known_eof.KnownEofTests.test_known_eof_request_has_no_send_or_journal) ... FAIL
+test_live_notify_preserves_wire (research.live_control.test_app_server_known_eof.KnownEofTests.test_live_notify_preserves_wire) ... ok
+test_solicited_reply_then_eof_remains_consumable (research.live_control.test_app_server_known_eof.KnownEofTests.test_solicited_reply_then_eof_remains_consumable) ... ok
+test_uncertain_state_retains_precedence (research.live_control.test_app_server_known_eof.KnownEofTests.test_uncertain_state_retains_precedence) ... ok
+
+======================================================================
+FAIL: test_known_eof_notify_has_no_send_or_journal (research.live_control.test_app_server_known_eof.KnownEofTests.test_known_eof_notify_has_no_send_or_journal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<OWNED_V3_TASK>/source/research/live_control/test_app_server_known_eof.py", line 86, in test_known_eof_notify_has_no_send_or_journal
+    self.refuse(lambda c: c.notify('closed/notify', timeout=.1))
+  File "<OWNED_V3_TASK>/source/research/live_control/test_app_server_known_eof.py", line 72, in refuse
+    with self.assertRaises(module.AppServerError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AppServerError not raised
+
+======================================================================
+FAIL: test_known_eof_request_has_no_send_or_journal (research.live_control.test_app_server_known_eof.KnownEofTests.test_known_eof_request_has_no_send_or_journal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<OWNED_V3_TASK>/source/research/live_control/test_app_server_known_eof.py", line 83, in test_known_eof_request_has_no_send_or_journal
+    self.refuse(lambda c: c.request('closed/request', timeout=.1))
+  File "<OWNED_V3_TASK>/source/research/live_control/test_app_server_known_eof.py", line 74, in refuse
+    record.assert_not_called()
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected '_record' to not have been called. Called 1 times.
+Calls: [call('sent', {'method': 'closed/request', 'id': 1})].
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.003s
+
+FAILED (failures=2)

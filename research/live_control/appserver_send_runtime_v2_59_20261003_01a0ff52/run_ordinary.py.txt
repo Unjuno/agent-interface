@@ -1,0 +1,37 @@
+"""Bounded ordinary regression receipt; never launches archived native helpers."""
+import datetime
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+
+here = Path(__file__).resolve().parent
+phase = sys.argv[1]
+modules = ['test_app_server_runtime_eligibility'] if phase == 'RED-eligibility' else [
+    'test_app_server_runtime_eligibility', 'research.live_control.test_codex_app_server_send_deadline_v1', 'test_app_server_eof_stop']
+argv = [sys.executable, *(['-O'] if phase == 'GREEN-optimized' else []), '-m', 'unittest', '-v', *modules]
+env = dict(os.environ, PYTHONDONTWRITEBYTECODE='1', PYTHONPATH=os.pathsep.join([str(here/'source'), str(here/'source/research/live_control'), str(here)]))
+record = {'phase': phase, 'argv': argv, 'cwd': str(here), 'PYTHONPATH': env['PYTHONPATH'], 'source_sha256': hashlib.sha256((here/'source/research/live_control/codex_app_server_client_v2.py').read_bytes()).hexdigest(), 'test_sha256': hashlib.sha256((here/'test_app_server_runtime_eligibility.py').read_bytes()).hexdigest(), 'scope': 'ordinary affected regression; no native peer/formal replay'}
+out = here / phase
+out.mkdir(exist_ok=False)
+(out/'PLAN.json').write_text(json.dumps(record, indent=2)+'\n')
+record['started_utc'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+child = subprocess.Popen(argv, cwd=here, env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+record['pid'] = child.pid
+try:
+    stdout, stderr = child.communicate(timeout=15)
+except subprocess.TimeoutExpired:
+    child.kill()
+    stdout, stderr = child.communicate()
+    record['killed_after_timeout'] = True
+record['ended_utc'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+record['exit_code'] = child.returncode
+for name, data in [('stdout', stdout), ('stderr', stderr)]:
+    (out/(name+'.bin')).write_bytes(data)
+    record[name] = {'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()}
+(out/'RECEIPT.json').write_text(json.dumps(record, indent=2)+'\n')
+print(json.dumps(record))
+print(stderr.decode('utf-8'))
+raise SystemExit(child.returncode)

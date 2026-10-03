@@ -1,0 +1,52 @@
+{
+  "input_pins": {
+    "source/research/live_control/test_app_server_runtime_eligibility.py": {
+      "bytes": 3438,
+      "sha256": "99db6a74f49962dc041ce3dd384fdead60ce1233d97a835f1bf387000c482c11"
+    },
+    "source/research/live_control/codex_app_server_client_v2.py": {
+      "bytes": 10234,
+      "sha256": "db64df9fa2e70f0f91b0c434f705d4ce44ac62fc328049223ee08d408e340795"
+    },
+    "source/research/live_control/test_codex_app_server_send_deadline_v1.py": {
+      "bytes": 12810,
+      "sha256": "4845d52ee02e23e6fa271a8afd3e6196b0b9a8eaf61a38f8ef97b947a72ebeeb"
+    },
+    "source/research/live_control/test_app_server_eof_stop.py": {
+      "bytes": 3128,
+      "sha256": "57b009bb6ae0944e769e7c18eae753c0709f6bb9544ef5f9b0f8b2397943370b"
+    },
+    "source/research/live_control/test_app_server_known_eof.py": {
+      "bytes": 4317,
+      "sha256": "ae65c23420aefe86fe4431a69b29b38dcc64c5701efeb3d0d1ad8db59f8d00d9"
+    }
+  },
+  "phase": "GREEN-normal",
+  "argv": [
+    "/run/current-system/sw/bin/python3",
+    "-m",
+    "unittest",
+    "-v",
+    "test_app_server_runtime_eligibility",
+    "research.live_control.test_codex_app_server_send_deadline_v1",
+    "test_app_server_eof_stop",
+    "research.live_control.test_app_server_known_eof"
+  ],
+  "cwd": "<OWNED_V3_TASK>",
+  "PYTHONPATH": "<OWNED_V3_TASK>/source:<OWNED_V3_TASK>/source/research/live_control:<OWNED_V3_TASK>",
+  "source_sha256": "db64df9fa2e70f0f91b0c434f705d4ce44ac62fc328049223ee08d408e340795",
+  "test_sha256": "99db6a74f49962dc041ce3dd384fdead60ce1233d97a835f1bf387000c482c11",
+  "scope": "ordinary affected regression; no native peer/formal replay",
+  "started_utc": "2026-10-03T12:25:44.921891+00:00",
+  "pid": 55974,
+  "ended_utc": "2026-10-03T12:25:45.044384+00:00",
+  "exit_code": 0,
+  "stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stderr": {
+    "bytes": 5328,
+    "sha256": "05e0c952fde207b2b3b4a24cb9f4d5c8776d1df68f6d9db46bb815147bf4d634"
+  }
+}

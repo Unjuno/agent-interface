@@ -1,0 +1,95 @@
+test_eligible_environments_reach_factory_and_preserve_call (test_app_server_runtime_eligibility.RuntimeEligibilityTests.test_eligible_environments_reach_factory_and_preserve_call) ... ok
+test_posix_without_callable_api_refused (test_app_server_runtime_eligibility.RuntimeEligibilityTests.test_posix_without_callable_api_refused) ... FAIL
+test_windows_311_refused_even_if_api_is_injected (test_app_server_runtime_eligibility.RuntimeEligibilityTests.test_windows_311_refused_even_if_api_is_injected) ... 
+  test_windows_311_refused_even_if_api_is_injected (test_app_server_runtime_eligibility.RuntimeEligibilityTests.test_windows_311_refused_even_if_api_is_injected) (capability=False) ... FAIL
+  test_windows_311_refused_even_if_api_is_injected (test_app_server_runtime_eligibility.RuntimeEligibilityTests.test_windows_311_refused_even_if_api_is_injected) (capability=True) ... FAIL
+test_windows_312_without_callable_api_refused (test_app_server_runtime_eligibility.RuntimeEligibilityTests.test_windows_312_without_callable_api_refused) ... FAIL
+
+======================================================================
+FAIL: test_posix_without_callable_api_refused (test_app_server_runtime_eligibility.RuntimeEligibilityTests.test_posix_without_callable_api_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<OWNED_TASK>/test_app_server_runtime_eligibility.py", line 37, in test_posix_without_callable_api_refused
+    self.refuse_before_side_effects('posix', (3, 11), False, 'os.set_blocking')
+  File "<OWNED_TASK>/test_app_server_runtime_eligibility.py", line 21, in refuse_before_side_effects
+    module.CodexAppServerClient(['inert'], journal_path='must-not-open', process_factory=factory)
+  File "<OWNED_TASK>/source/research/live_control/codex_app_server_client_v2.py", line 33, in __init__
+    self._journal = None if journal_path is None else open(journal_path, "x", encoding="utf-8")
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1198, in _execute_mock_call
+    raise effect
+AssertionError: journal opened before eligibility
+
+======================================================================
+FAIL: test_windows_311_refused_even_if_api_is_injected (test_app_server_runtime_eligibility.RuntimeEligibilityTests.test_windows_311_refused_even_if_api_is_injected) (capability=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<OWNED_TASK>/test_app_server_runtime_eligibility.py", line 31, in test_windows_311_refused_even_if_api_is_injected
+    self.refuse_before_side_effects('nt', (3, 11), capability, 'Python 3.12 or later on Windows')
+  File "<OWNED_TASK>/test_app_server_runtime_eligibility.py", line 21, in refuse_before_side_effects
+    module.CodexAppServerClient(['inert'], journal_path='must-not-open', process_factory=factory)
+  File "<OWNED_TASK>/source/research/live_control/codex_app_server_client_v2.py", line 33, in __init__
+    self._journal = None if journal_path is None else open(journal_path, "x", encoding="utf-8")
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1198, in _execute_mock_call
+    raise effect
+AssertionError: journal opened before eligibility
+
+======================================================================
+FAIL: test_windows_311_refused_even_if_api_is_injected (test_app_server_runtime_eligibility.RuntimeEligibilityTests.test_windows_311_refused_even_if_api_is_injected) (capability=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<OWNED_TASK>/test_app_server_runtime_eligibility.py", line 31, in test_windows_311_refused_even_if_api_is_injected
+    self.refuse_before_side_effects('nt', (3, 11), capability, 'Python 3.12 or later on Windows')
+  File "<OWNED_TASK>/test_app_server_runtime_eligibility.py", line 21, in refuse_before_side_effects
+    module.CodexAppServerClient(['inert'], journal_path='must-not-open', process_factory=factory)
+  File "<OWNED_TASK>/source/research/live_control/codex_app_server_client_v2.py", line 33, in __init__
+    self._journal = None if journal_path is None else open(journal_path, "x", encoding="utf-8")
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1198, in _execute_mock_call
+    raise effect
+AssertionError: journal opened before eligibility
+
+======================================================================
+FAIL: test_windows_312_without_callable_api_refused (test_app_server_runtime_eligibility.RuntimeEligibilityTests.test_windows_312_without_callable_api_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<OWNED_TASK>/test_app_server_runtime_eligibility.py", line 34, in test_windows_312_without_callable_api_refused
+    self.refuse_before_side_effects('nt', (3, 12), False, 'os.set_blocking')
+  File "<OWNED_TASK>/test_app_server_runtime_eligibility.py", line 21, in refuse_before_side_effects
+    module.CodexAppServerClient(['inert'], journal_path='must-not-open', process_factory=factory)
+  File "<OWNED_TASK>/source/research/live_control/codex_app_server_client_v2.py", line 33, in __init__
+    self._journal = None if journal_path is None else open(journal_path, "x", encoding="utf-8")
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1198, in _execute_mock_call
+    raise effect
+AssertionError: journal opened before eligibility
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.003s
+
+FAILED (failures=4)

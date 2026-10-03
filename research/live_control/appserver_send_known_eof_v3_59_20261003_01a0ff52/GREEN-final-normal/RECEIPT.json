@@ -1,0 +1,57 @@
+{
+  "input_pins": {
+    "source/research/live_control/test_app_server_runtime_eligibility.py": {
+      "bytes": 3438,
+      "sha256": "99db6a74f49962dc041ce3dd384fdead60ce1233d97a835f1bf387000c482c11"
+    },
+    "source/research/live_control/codex_app_server_client_v2.py": {
+      "bytes": 10243,
+      "sha256": "e397837acb2ec89e3ebf4eb0e91660d4b306dfa8e503f2da00a5ba897dd9baca"
+    },
+    "source/research/live_control/test_codex_app_server_send_deadline_v1.py": {
+      "bytes": 12810,
+      "sha256": "4845d52ee02e23e6fa271a8afd3e6196b0b9a8eaf61a38f8ef97b947a72ebeeb"
+    },
+    "source/research/live_control/test_app_server_eof_stop.py": {
+      "bytes": 3128,
+      "sha256": "57b009bb6ae0944e769e7c18eae753c0709f6bb9544ef5f9b0f8b2397943370b"
+    },
+    "source/research/live_control/test_app_server_known_eof.py": {
+      "bytes": 4317,
+      "sha256": "ae65c23420aefe86fe4431a69b29b38dcc64c5701efeb3d0d1ad8db59f8d00d9"
+    },
+    "source/research/live_control/test_app_server_send_snapshot.py": {
+      "bytes": 1625,
+      "sha256": "a779d7b1868c77196337d9a6644e9f04c599e7293de0d3c9f041a98c88e3ebc3"
+    }
+  },
+  "phase": "GREEN-final-normal",
+  "argv": [
+    "/run/current-system/sw/bin/python3",
+    "-m",
+    "unittest",
+    "-v",
+    "test_app_server_runtime_eligibility",
+    "research.live_control.test_codex_app_server_send_deadline_v1",
+    "test_app_server_eof_stop",
+    "research.live_control.test_app_server_known_eof",
+    "research.live_control.test_app_server_send_snapshot"
+  ],
+  "cwd": "<OWNED_V3_TASK>",
+  "PYTHONPATH": "<OWNED_V3_TASK>/source:<OWNED_V3_TASK>/source/research/live_control:<OWNED_V3_TASK>",
+  "source_sha256": "e397837acb2ec89e3ebf4eb0e91660d4b306dfa8e503f2da00a5ba897dd9baca",
+  "test_sha256": "99db6a74f49962dc041ce3dd384fdead60ce1233d97a835f1bf387000c482c11",
+  "scope": "ordinary affected regression; no native peer/formal replay",
+  "started_utc": "2026-10-03T12:32:22.291528+00:00",
+  "pid": 58918,
+  "ended_utc": "2026-10-03T12:32:22.417868+00:00",
+  "exit_code": 0,
+  "stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stderr": {
+    "bytes": 5883,
+    "sha256": "89adcaf4741f002c56f5d7678a1c9a42c207b673ea2158e72ece86b58ebb6f10"
+  }
+}

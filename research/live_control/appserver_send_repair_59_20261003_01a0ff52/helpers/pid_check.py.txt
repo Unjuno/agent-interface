@@ -1,0 +1,15 @@
+from pathlib import Path
+from datetime import datetime, timezone
+import json
+import subprocess
+WORK = Path(__file__).resolve().parent
+rows = json.loads((WORK / 'native-results/driver-result.json').read_text())['rows']
+pids = sorted({r['factory']['pid'] for r in rows} | {r['driver_pid'] for r in rows})
+command = ['/bin/ps', '-p', ','.join(map(str, pids)), '-o', 'pid=,comm=']
+result = subprocess.run(command, capture_output=True, text=True)
+receipt = {'utc': datetime.now(timezone.utc).isoformat(), 'argv': command, 'exit_code': result.returncode,
+           'stdout': result.stdout, 'stderr': result.stderr, 'owned_pids': pids,
+           'all_absent_in_this_snapshot': result.returncode == 1 and not result.stdout.strip()}
+(WORK / 'owned-pid-check.json').write_text(json.dumps(receipt, indent=2) + '\n')
+assert receipt['all_absent_in_this_snapshot']
+print(json.dumps(receipt))
