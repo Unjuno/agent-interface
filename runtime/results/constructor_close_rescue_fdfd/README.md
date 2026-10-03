@@ -17,4 +17,12 @@ Historical cleanup is not current FD/PID absence. No hostile close/add_note hang
 partial process acquisition, task/model/GUI/recovery efficiency is certified.
 Original #7018 evidence and votes remain unchanged. No production patch applied.
 
-Local CI, review and main integration are pending. Source ref remains preserved.
+Local workflow replay at `9d578d2f04` exited 0: 43 steps, failures=[];
+full log retained in `local-ci.log`. Not hosted CI/full runtime/native proof.
+Fresh PR readback found one explicit assigned content approval, not quorum two:
+https://github.com/Unjuno/agent-interface/pull/7052#issuecomment-5969472293
+The outside-committee supplemental review is explicitly nonvoting:
+https://github.com/Unjuno/agent-interface/pull/7052#issuecomment-5969372310
+No vote transfers to this rescue/current-tree composition; original proposal
+and sender/application conditions remain separate. Main integration pending.
+Source ref remains preserved.
