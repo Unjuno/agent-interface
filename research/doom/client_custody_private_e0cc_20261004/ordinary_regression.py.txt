@@ -1,7 +1,12 @@
 from pathlib import Path
 import ast,subprocess,threading,collections,json,time,tempfile,sys,hashlib,datetime
-p=Path(__file__).resolve().parent
-raw=(p/'client-message-shape-private.py.txt').read_bytes()
+source_dir=Path(__file__).resolve().parent
+if len(sys.argv)!=3 or sys.argv[1]!="--output-dir":
+ raise SystemExit("usage: python ordinary_regression.py.txt --output-dir NEW_DIRECTORY")
+p=Path(sys.argv[2]).resolve()
+# Exclusive creation refuses existing directories, including this retained packet.
+p.mkdir(parents=False,exist_ok=False)
+raw=(source_dir/'client-message-shape-private.py.txt').read_bytes()
 assert hashlib.sha256(raw).hexdigest()=='c513bf6c736a8bbaee296ebbc2551e163fd283b43245996612f949453157833f'
 t=ast.parse(raw);ns={'subprocess':subprocess,'threading':threading,'deque':collections.deque,'json':json,'time':time}
 exec(compile(ast.Module(body=[n for n in t.body if isinstance(n,ast.ClassDef)],type_ignores=[]),'private-latest-owned-peer','exec'),ns)
