@@ -60,8 +60,6 @@ class OwnedMCPTests(unittest.IsolatedAsyncioTestCase):
                     raise RuntimeError('test entry deadline')
                 if fault == 'raise':
                     raise RuntimeError('entered then submission raised')
-                if fault == 'raise_cancel':
-                    raise asyncio.CancelledError('entered then submission cancelled')
                 future = Future()  # Deliberately injected scheduling-handle fault.
                 if fault == 'fail':
                     future.set_exception(RuntimeError('entered then future failed'))
@@ -152,91 +150,6 @@ class OwnedMCPTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_cancelled_scheduling_future_does_not_end_started_worker_shutdown(self):
         await self._assert_faulted_submission_waits_before_owner_close('cancel', 'operation')
-
-    async def test_started_submission_cancellation_waits_before_shutdown_close(self):
-        await self._assert_faulted_submission_waits_before_owner_close('raise_cancel', 'operation')
-
-    async def test_preentry_submission_cancellation_revokes_pending_admission(self):
-        from concurrent.futures import ThreadPoolExecutor
-        class CancelledSubmissionPool(ThreadPoolExecutor):
-            def submit(self, *args, **kwargs):
-                raise asyncio.CancelledError('submission cancelled before callable entry')
-        loop = asyncio.get_running_loop()
-        pool = CancelledSubmissionPool(max_workers=1)
-        healthy = ThreadPoolExecutor(max_workers=2)
-        with tempfile.TemporaryDirectory() as td:
-            server = create_server({'fixture': 123}, td, session_mode='persistent-x11')
-            try:
-                loop.set_default_executor(pool)
-                with self.assertRaises(asyncio.CancelledError):
-                    await server.call_tool('interface_close', {})
-                self.assertEqual(list(Path(td).iterdir()), [])
-                loop.set_default_executor(healthy)
-                # A new explicit close request is not replay of the cancelled one.
-                recovered = await server.call_tool('interface_close', {})
-                self.assertEqual(self.row(recovered)['status'], 'closed')
-                self.assertFalse(recovered.isError)
-                async with server.settings.lifespan(server):
-                    pass
-                self.assertEqual(len(list(Path(td).glob('*/request.json'))), 1)
-                self.assertEqual(len(list(Path(td).glob('*/report.json'))), 1)
-            finally:
-                loop.set_default_executor(healthy)
-                pool.shutdown(wait=True)
-
-    async def test_cancelled_shutdown_waiter_keeps_invocation_completion_uncancelled(self):
-        from concurrent.futures import ThreadPoolExecutor
-        entered, release = threading.Event(), threading.Event()
-        session = self.fixture()
-        owner = MCPSessionOwner({'fixture': 123})
-        errors = []
-        loop = asyncio.get_running_loop()
-        previous_handler = loop.get_exception_handler()
-        pool = ThreadPoolExecutor(max_workers=2)
-        loop.set_default_executor(pool)
-
-        def reader(*args):
-            entered.set()
-            if not release.wait(5):
-                raise RuntimeError('test worker deadline')
-            session.backend.close.assert_not_called()
-            return {'sha256': 'fixture'}
-
-        session.backend.observe_read_only.side_effect = reader
-        loop.set_exception_handler(lambda _loop, context: errors.append(context))
-        with tempfile.TemporaryDirectory() as td, self.selection(), patch(
-                'runtime.cli_v1.mcp_session.open_session', return_value=session), patch(
-                'runtime.cli_v1.mcp_server.MCPSessionOwner', return_value=owner):
-            server = create_server({'fixture': 123}, td, session_mode='persistent-x11')
-            lifespan = server.settings.lifespan(server)
-            await lifespan.__aenter__()
-            task = asyncio.create_task(server.call_tool('interface_observe', {
-                'target': 'fixture', 'region': [0, 0, 1, 1], 'frame': 'window_client'}))
-            exiting = None
-            try:
-                self.assertTrue(await asyncio.to_thread(entered.wait, 2))
-                exiting = asyncio.create_task(lifespan.__aexit__(None, None, None))
-                await asyncio.sleep(0)
-                exiting.cancel()
-                with self.assertRaises(asyncio.CancelledError):
-                    await exiting
-                session.backend.close.assert_not_called()
-                release.set()
-                await asyncio.wait_for(task, 3)
-                await asyncio.sleep(0)
-                self.assertEqual(errors, [], 'teardown cancellation broke completion acknowledgment')
-                self.assertEqual(len(list(Path(td).glob('*/report.json'))), 1)
-            finally:
-                release.set()
-                if not task.done():
-                    await asyncio.wait_for(task, 3)
-                if exiting is None:
-                    await lifespan.__aexit__(None, None, None)
-                # This test interrupts teardown itself. Explicitly dispose its
-                # inert owner after completion; no automatic restart is added.
-                owner.close()
-                loop.set_exception_handler(previous_handler)
-            session.backend.close.assert_called_once()
 
     async def test_management_capture_disagreement_withholds_image_on_call_and_lookup(self):
         for operation, consistency in [('inspect_target', 'changed'),

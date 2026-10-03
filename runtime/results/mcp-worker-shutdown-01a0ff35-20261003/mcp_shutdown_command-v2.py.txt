@@ -1,0 +1,71 @@
+"""Retain ordinary engineering command outputs; never a formal runner."""
+import argparse
+from datetime import datetime, timezone
+import hashlib
+import json
+import os
+from pathlib import Path
+import platform
+import subprocess
+import sys
+
+ROOT = Path(__file__).resolve().parent
+OUT = ROOT / 'mcp-shutdown-evidence'
+REPO = ROOT / 'mcp-shutdown-repo'
+
+def digest(data):
+    return hashlib.sha256(data).hexdigest()
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--name', required=True)
+    parser.add_argument('--expect', type=int, default=0)
+    parser.add_argument('--timeout', type=int, default=60)
+    parser.add_argument('command', nargs=argparse.REMAINDER)
+    args = parser.parse_args()
+    command = args.command
+    if command and command[0] == '--':
+        command = command[1:]
+    if not command or not args.name.replace('-', '').replace('_', '').isalnum():
+        raise ValueError('bounded explicit command/name required')
+    OUT.mkdir(exist_ok=True)
+    receipt_path = OUT / (args.name + '.receipt.json')
+    if receipt_path.exists():
+        raise FileExistsError('preserve previous ordinary outcome')
+    source = {}
+    for path in sorted((REPO / 'runtime').rglob('*.py')):
+        if 'results' not in path.relative_to(REPO).parts:
+            source[path.relative_to(REPO).as_posix()] = digest(path.read_bytes())
+    for path in sorted((REPO / 'research/live_control').glob('*.py')):
+        source[path.relative_to(REPO).as_posix()] = digest(path.read_bytes())
+    env = dict(os.environ, PYTHONIOENCODING='utf-8', PYTHONDONTWRITEBYTECODE='1',
+               GIT_TERMINAL_PROMPT='0', GCM_INTERACTIVE='never',
+               OPENBLAS_NUM_THREADS='1', OMP_NUM_THREADS='1')
+    started = datetime.now(timezone.utc).isoformat()
+    try:
+        result = subprocess.run(command, cwd=REPO, env=env, capture_output=True,
+                                timeout=args.timeout)
+        code, stdout, stderr, timed_out = result.returncode, result.stdout, result.stderr, False
+    except subprocess.TimeoutExpired as error:
+        code, stdout, stderr, timed_out = None, error.stdout or b'', error.stderr or b'', True
+    ended = datetime.now(timezone.utc).isoformat()
+    (OUT / (args.name + '.stdout.txt')).write_bytes(stdout)
+    (OUT / (args.name + '.stderr.txt')).write_bytes(stderr)
+    receipt = dict(classification='ordinary engineering command, not formal allocation',
+                   argv=command, cwd=str(REPO), started_utc=started, ended_utc=ended,
+                   exit_code=code, expected_exit=args.expect, timeout_seconds=args.timeout,
+                   timed_out=timed_out, stdout_sha256=digest(stdout), stderr_sha256=digest(stderr),
+                   source_sha256=source, host_platform=platform.platform(),
+                   command_orchestrator_sha256=digest(Path(__file__).read_bytes()),
+                   orchestrator_python=sys.version, orchestrator_executable=sys.executable)
+    receipt_path.write_text(json.dumps(receipt, indent=2) + '\n', encoding='utf-8')
+    print(json.dumps(dict(name=args.name, exit_code=code, expected_exit=args.expect,
+                         timed_out=timed_out, source_files=len(source),
+                         stdout_bytes=len(stdout), stderr_bytes=len(stderr))))
+    if code != args.expect or timed_out:
+        print(stderr.decode('utf-8', errors='replace')[-10000:])
+        return 1
+    return 0
+
+if __name__ == '__main__':
+    raise SystemExit(main())

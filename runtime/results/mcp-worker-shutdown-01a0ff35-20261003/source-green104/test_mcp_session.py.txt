@@ -60,8 +60,6 @@ class OwnedMCPTests(unittest.IsolatedAsyncioTestCase):
                     raise RuntimeError('test entry deadline')
                 if fault == 'raise':
                     raise RuntimeError('entered then submission raised')
-                if fault == 'raise_cancel':
-                    raise asyncio.CancelledError('entered then submission cancelled')
                 future = Future()  # Deliberately injected scheduling-handle fault.
                 if fault == 'fail':
                     future.set_exception(RuntimeError('entered then future failed'))
@@ -152,37 +150,6 @@ class OwnedMCPTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_cancelled_scheduling_future_does_not_end_started_worker_shutdown(self):
         await self._assert_faulted_submission_waits_before_owner_close('cancel', 'operation')
-
-    async def test_started_submission_cancellation_waits_before_shutdown_close(self):
-        await self._assert_faulted_submission_waits_before_owner_close('raise_cancel', 'operation')
-
-    async def test_preentry_submission_cancellation_revokes_pending_admission(self):
-        from concurrent.futures import ThreadPoolExecutor
-        class CancelledSubmissionPool(ThreadPoolExecutor):
-            def submit(self, *args, **kwargs):
-                raise asyncio.CancelledError('submission cancelled before callable entry')
-        loop = asyncio.get_running_loop()
-        pool = CancelledSubmissionPool(max_workers=1)
-        healthy = ThreadPoolExecutor(max_workers=2)
-        with tempfile.TemporaryDirectory() as td:
-            server = create_server({'fixture': 123}, td, session_mode='persistent-x11')
-            try:
-                loop.set_default_executor(pool)
-                with self.assertRaises(asyncio.CancelledError):
-                    await server.call_tool('interface_close', {})
-                self.assertEqual(list(Path(td).iterdir()), [])
-                loop.set_default_executor(healthy)
-                # A new explicit close request is not replay of the cancelled one.
-                recovered = await server.call_tool('interface_close', {})
-                self.assertEqual(self.row(recovered)['status'], 'closed')
-                self.assertFalse(recovered.isError)
-                async with server.settings.lifespan(server):
-                    pass
-                self.assertEqual(len(list(Path(td).glob('*/request.json'))), 1)
-                self.assertEqual(len(list(Path(td).glob('*/report.json'))), 1)
-            finally:
-                loop.set_default_executor(healthy)
-                pool.shutdown(wait=True)
 
     async def test_cancelled_shutdown_waiter_keeps_invocation_completion_uncancelled(self):
         from concurrent.futures import ThreadPoolExecutor

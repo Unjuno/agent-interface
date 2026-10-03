@@ -126,9 +126,8 @@ def present_management_report(report, call_root, *, include_image=True):
 
 class _WorkerAdmission:
     """Transfer a slot to one worker, or revoke it before any invocation."""
-    def __init__(self, slot, completed):
+    def __init__(self, slot):
         self.slot = slot
-        self.completed = completed
         self.guard = threading.Lock()
         self.state = 'pending'
 
@@ -145,14 +144,12 @@ class _WorkerAdmission:
                 return False
             self.state = 'revoked'
             self.slot.release()
-        self.completed()
-        return True
+            return True
 
     def finish(self):
         with self.guard:
             self.state = 'finished'
             self.slot.release()
-        self.completed()
 
 
 def create_server(targets, output_directory, *, display_name=None, session_mode="one-shot"):
@@ -193,10 +190,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             # cancellation-based redispatch or close racing with active input.
             with anyio.CancelScope(shield=True):
                 if workers:
-                    # Teardown's waiter must not cancel the invocation's own
-                    # completion obligation if that waiter is interrupted.
-                    await asyncio.gather(*(asyncio.shield(worker) for worker in list(workers)),
-                                         return_exceptions=True)
+                    await asyncio.gather(*list(workers), return_exceptions=True)
                 if owner is not None:
                     await asyncio.to_thread(close_owner)
 
@@ -365,35 +359,25 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         # Decide busy before scheduling a worker; thread-pool contention must not queue input.
         if not lock.acquire(blocking=False):
             return content({'status': 'busy', 'operation_invoked': False}, error=True)
-        # Register invocation custody before asking the executor. It can raise
-        # after callable entry or return a failed handle while input still runs.
-        loop = asyncio.get_running_loop()
-        completion = loop.create_future()
-        workers.add(completion)
-        completion.add_done_callback(workers.discard)
-        def completed():
-            loop.call_soon_threadsafe(completion.set_result, None)
-        admission = _WorkerAdmission(lock, completed)
+        admission = _WorkerAdmission(lock)
         try:
             # Submit synchronously so pre-worker rejection is handled here. Keep
             # to_thread's context propagation and shield accepted work below.
             context = contextvars.copy_context()
-            worker = loop.run_in_executor(
+            worker = asyncio.get_running_loop().run_in_executor(
                 None, context.run, invoke, admission, operation, kwargs,
                 compact, report_refs, detail, observation_refs)
-        except BaseException as error:
+        except Exception as error:
             revoked = admission.revoke_pending()
-            if not isinstance(error, Exception):
-                # Preserve cancellation/fatal exception propagation after
-                # revoking only work that has not entered the callable.
-                raise
             return content({'status': 'worker_submission_failed',
                 'failure_phase': 'worker_submission', 'error': repr(error),
                 'operation_invoked': not revoked,
                 'input_dispatched': False if revoked else None,
                 'effect_status': 'none' if revoked else 'unknown',
                 'replay_allowed': False}, error=True)
+        workers.add(worker)
         def finished(task):
+            workers.discard(task)
             # A terminal future can fail/cancel before callable entry. Revoke
             # only pending work; a running worker still owns its slot.
             admission.revoke_pending()
