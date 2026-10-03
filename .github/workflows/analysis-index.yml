@@ -40,6 +40,10 @@ jobs:
         run: python research/analysis/check_index.py
       - name: Test Issue #6505 A01 retained auditor construction
         run: python -B -m unittest discover -s research/analysis/partial_order_audit_6505_orbstack_a01_20261003 -p 'test_*.py' -v
+      - name: Verify Issue 6219 hash-bound publication recovery
+        run: python -B -m unittest discover -s research/analysis/amendment_effect_6219_publication_recovery_20261003 -p 'test_*.py' -v
+      - name: Test Issue 6219 recovered original construction fixture
+        run: python -B -m unittest discover -s research/analysis/amendment_effect_6219_publication_recovery_20261003/decoded_material -p 'test_method.py' -v
       - name: Verify Issue 6061 archived construction only
         run: python -B -m unittest discover -s research/analysis/intermittent_control_6061_t0_20261003 -p 'test_*.py' -v
       - name: Test retained Issue 6645 A02 construction

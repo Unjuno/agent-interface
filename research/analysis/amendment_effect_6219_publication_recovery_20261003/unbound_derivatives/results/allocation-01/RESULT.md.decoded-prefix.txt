@@ -1,0 +1,15 @@
+# Allocation-01 result — terminal METHOD_FAIL
+
+- Allocation: `AMENDMENT-EFFECT-LEDGER-6219-T0-CPU-20261002-01`
+- Base main: `460f09c465a2ff0347917bc2a2805f78bcb5cdab`
+- Candidate: one WSLc invocation, exit 0, 36 policy rows.
+- Independent raw-only auditor: one separate WSLc invocation, exit 1, `METHOD_FAIL`, 36 rows, error `ORACLE_CONTRACT:case_addition`.
+- Retries: 0. No rerun, input correction, or source repair is permitted for this allocation.
+- Candidate raw SHA-256: `23012f286e31b6e96d1b7ad5167d0ef36dba2bb050c80efc2bff8e38986ba376` (12,582 bytes).
+- Audit SHA-256: `8fde90b8353467faacd89e5407611d6bceafcdd9c1da26aa0c2ccaf4485c3023` (4,814 bytes).
+- The auditor’s independent reconstruction agreed with candidate for the ledger rows (9/9 exact), but the public expected-disposition table disagreed with its own independent reconstruction for `case_addition`; therefore the preregistered oracle-consistency gate failed. The candidate row was `IMPOSSIBLE_TO_FULLY_SATISFY`; the oracle expected `CONTINUE_NEW_GENERATION`.
+- Cause visible in frozen input: `case_addition` declares prior goal `download`, amendment kind `addition`, new clause list only `archive`, while retaining a confirmed irreversible `download` effect. The fixture does not say whether the post-amendment clause list is cumulative or replacement, so the independent rule treats removal of the old irreversible effect as an impossible conflict while the expected table treats it as compatible addition. This is an identifiability/specification defect; it is not evidence that the underlying hypothesis passed.
+- All other eight oracle dispositions matched the independent rule. The three baselines had 0/9 exact ledger-oracle matches; this does not rescue the failed input contract.
+- No human, GUI, model, GPU, CUDA or user effect was tested. No claim of safety/product benefit.
+- WSLc emitted the same kernel/cgroup warning on both formal calls: memory without swap limit support; effective memory enforcement is not claimed.
+- Preserve the frozen candidate, auditor, input, oracle and raw outputs unchanged. Any later study requires an independently justified new question/allocation, not a retry of this one.
