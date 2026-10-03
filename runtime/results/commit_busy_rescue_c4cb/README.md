@@ -18,4 +18,8 @@ Original COMMIT-only versus repeated-UPDATE result remains limited to known
 reader-caused SQLITE_BUSY with an active transaction. Lost responses, arbitrary
 errors, real task effects, GUI/model and parent #6526 H_PASS remain unproved.
 Original FINAL-v5 adoption gate is unchanged; no approvals are invented.
-Local CI and main integration are pending. Source retirement is not yet safe.
+Saved checks exited 0: 19 manifest targets, zero mismatches; six rows and six
+decoded capsule hashes agree. Local workflow replay at `dd8eaabd31` exited 0:
+43 steps, failures=[]; full output is `local-ci.log`. This is not hosted CI,
+full runtime or native compatibility certification. Main integration remains
+pending. Source retirement is not yet safe.
