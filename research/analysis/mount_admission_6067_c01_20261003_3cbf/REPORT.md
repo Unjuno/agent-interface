@@ -23,7 +23,7 @@ its first auditor exit1 and original controls0/6; no predecessor result is relab
   Unique closed /src read-only, /predecessor read-only, /out writable bind map
   verified. Actual four cgroups checked inside the saved verifier before import.
 - Host preflight69 source/predecessor/FREEZE hashes, idle/command/inspection/
-  native result-directory copy/posthash receipts retained; copy exit0 and
+  C01 saved-verifier result-directory copy/posthash receipts retained; copy exit0 and
   pre/post staged bytes identical. Host and guest monotonic clocks not joined.
 - Native producer0, C01saved-verifier1/retry0; predecessor official CLI/main/
   auditor invocation0. Immutable legacy validation functions are reused ONLY
@@ -34,8 +34,9 @@ its first auditor exit1 and original controls0/6; no predecessor result is relab
 Eight source pulses, sixteen source waits and eight actual saved native captures
 reconstructed. All13 complete copied-data controls reject through the same
 successor full validation path: six semantic and seven mount mutations.
-Their complete input wrappers, repaired semantic raw pins/journals, reasons and
-outputs are retained under executed/result/trials.
+Complete input wrappers and repaired semantic raw pins/journals are retained
+under executed/result/trials. Rejection reasons are in executed/result/controls.json;
+the baseline output is executed/result/RESULT.json.
 
 No exposure shortfall >5ms in this finite instrumented profile:
 stable exposures16.946030..19.582291ms, maximum shortfall3.053970ms.
