@@ -22,4 +22,15 @@ The captured program releases the A2 click at operation 3, sends the first chara
 
 This establishes a missing pre-input selection acknowledgement in the captured path and independently reproduces the saved effect mismatch. It does not establish that a click-processing race caused the mismatch, which native key event reached which cell, or that adding a delay would repair it. The appropriate next live diagnostic must observe the target selection before the first character and record input/observation clocks under a fresh, isolated, model-free allocation. No wait/default change is proposed here.
 
+
+## Independent check of the later D01 diagnostic
+
+`reaudit_d01.py` reads only the D01 Git objects pinned at commit `f89e59c33a5ca18e9b0a917a596a55b9a99467a6`. Its separate XML reader re-scores all eight prime/trial FODS pairs, checks the frozen 0/50 ms row schedule against the saved operations, and verifies the recorded no-model and neutral-cleanup receipts. Run it with:
+
+```sh
+python3 research/integration/calc3311_click_text_boundary_20261004_01a0ff51/reaudit_d01.py
+```
+
+The independent check matches all eight rows: prime 11/13/143 and trial 73/79/5767 with the required product formula and no other populated cells; 0 ms is 4/4 and 50 ms is 4/4. This corroborates the saved effect result only. It does not establish why A01 failed, prove a timing benefit, or qualify a wait default. The D01 producer and allocation were not rerun. The full row-by-row output is in `D01_REAUDIT.json`.
+
 Disposition: `HOLD_CLICKTEXT_CAUSALITY_UNOBSERVED`. The formal A01 first-failure STOP and its remaining censored sessions remain unchanged.
