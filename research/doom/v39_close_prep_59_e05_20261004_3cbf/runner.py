@@ -231,13 +231,24 @@ def run_cell(root, source, output, case):
                         result['cleanup_faults'].append(repr(exc))
                 try:
                     process.wait(timeout=8)
-                except subprocess.TimeoutExpired:
-                    result['cleanup_faults'].append('owned session did not exit; terminate fallback')
-                    process.terminate()
+                except Exception as exc:
+                    result['cleanup_faults'].append('owned session wait: ' + repr(exc))
+                    try:
+                        process.terminate()
+                    except Exception as exc:
+                        result['cleanup_faults'].append('terminate: ' + repr(exc))
                     try:
                         process.wait(timeout=2)
-                    except subprocess.TimeoutExpired:
-                        process.kill(); process.wait(timeout=2)
+                    except Exception as exc:
+                        result['cleanup_faults'].append('post-terminate wait: ' + repr(exc))
+                        try:
+                            process.kill()
+                        except Exception as exc:
+                            result['cleanup_faults'].append('kill: ' + repr(exc))
+                        try:
+                            process.wait(timeout=2)
+                        except Exception as exc:
+                            result['cleanup_faults'].append('post-kill wait: ' + repr(exc))
             result['child_exit'] = process.poll()
             for handle in (process.stdin, process.stdout):
                 try:
@@ -252,8 +263,7 @@ def run_cell(root, source, output, case):
                     result['cleanup_faults'].append('thread not retired: ' + thread.name)
         close_resources([handle for handle in (observer, injection_observer)
                          if handle is not None], result)
-        for handle in threads:
-            handle.close()
+        close_resources(threads, result)
         threading.excepthook = hook
         result['unhandled'] = unhandled
         result['end_ns'] = time.perf_counter_ns()
