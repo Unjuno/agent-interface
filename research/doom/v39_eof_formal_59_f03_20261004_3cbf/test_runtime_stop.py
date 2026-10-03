@@ -12,8 +12,8 @@ class RuntimeStopControl(unittest.TestCase):
         with tempfile.TemporaryDirectory() as name:
             output = Path(name) / 'output'
             try:
-                # /bin/false is a real process, not a mocked Popen or wait.
-                runner.sys.executable = '/bin/false'
+                # /usr/bin/false exists on both this macOS host and Ubuntu.
+                runner.sys.executable = '/usr/bin/false'
                 result = runner.run(output)
             finally:
                 runner.sys.executable = original
@@ -24,8 +24,8 @@ class RuntimeStopControl(unittest.TestCase):
             self.assertEqual(summary['cases'], ['baseline_eof'])
             row = json.loads((output / 'baseline_eof.json').read_text())
             self.assertIs(row['gate'], False)
-            self.assertIs(row.get('child_alive'), False)
-            self.assertIs(row.get('reader_alive'), False)
+            self.assertIs(row.get('cleanup_child_alive'), False)
+            self.assertIs(row.get('cleanup_reader_alive'), False)
             self.assertEqual(row['cleanup_exit'], 1)
             self.assertEqual(row['cleanup_faults'], [])
             self.assertGreater(row['child_pid'], 0)

@@ -94,6 +94,10 @@ def run(output):
             row['fatal'] = repr(error)
         finally:
             if child is not None:
+                row.setdefault('child_alive', child.poll() is None)
+            if thread is not None:
+                row.setdefault('reader_alive', thread.is_alive())
+            if child is not None:
                 try:
                     child.terminate()
                     try:
@@ -112,6 +116,8 @@ def run(output):
                 thread.join(1)
                 if thread.is_alive():
                     row['cleanup_faults'].append('reader still alive')
+            row['cleanup_child_alive'] = child.poll() is None if child is not None else None
+            row['cleanup_reader_alive'] = thread.is_alive() if thread is not None else None
             row['end_ns'] = time.perf_counter_ns()
             row['gate'] = expected(case, row) if row['fatal'] is None else False
             write(output / (case + '.json'), row); rows.append(row)
