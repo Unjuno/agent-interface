@@ -26,7 +26,7 @@ All4freshcells executed once/model0/retry0; raw fiveJSONfiles retained.
 | candidate_eof_alive | TimeoutError | none | false | true | none |
 
 Each child used actual stdout PIPE with UTF8 TextIO, emitted the frozen literal,
-flushed, closed FD1 and stayed alive3s; measurement observed childalive before
+flushed, closed FD1 and scheduled a3s sleep; measurement observed childalive before
 owned cleanup terminate, cleanup exit-15 each. Healthy exactready event delivered
 despite subsequent EOF. Original malformed pipe silently kills reader relative
 to wait; candidate surfaces parsercause. PASS_SCOPED_OS_PIPE_PARSER_NOTIFICATION.
@@ -40,4 +40,7 @@ separate pipe-byte tee; exception document/OS scheduling are not independently
 recorded. No GUI/input/cancel/game/controller/model/task-effect evidence.
 E05 native result is unchanged and not repeated. F01 only extends transport
 boundary evidence and exposes a live-child EOF gap. Independent result review
-and integration checks pending; whole #59/roadmap remains open.
+and integration checks are distinct; whole #59/roadmap remains open.
+
+Independent Hilbert review READY for scoped saved parser notification, not
+complete lifecycle recovery. See RESULT_REVIEW.md; EOF remains HOLD.
