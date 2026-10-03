@@ -1,5 +1,9 @@
 # Analytical research
 
+- [`conditional_parallax_6079_layer_identity_a01_20261003/FORMAL_FAILURE.md`](conditional_parallax_6079_layer_identity_a01_20261003/FORMAL_FAILURE.md) — #6838 A01: eight candidate rows retained, original auditor stopped with recursion failure; supplemental A03 raw-only audit later reconciled, without erasing this execution HOLD.
+- [`conditional_parallax_6079_layer_identity_a02_audit_20261003/FORMAL_FAILURE.md`](conditional_parallax_6079_layer_identity_a02_audit_20261003/FORMAL_FAILURE.md) — #6841 A02 audit-only attempt: HOLD at the mutation-control gate because one layer relabel was a no-op; no output or retry.
+- [`conditional_parallax_6079_layer_identity_a03_controls_20261003/REPORT.md`](conditional_parallax_6079_layer_identity_a03_controls_20261003/REPORT.md) — #6843 A03 supplemental raw-only audit: 8/8 rows and truth labels reconciled; five actual mutations rejected; finite synthetic 2-D scope only.
+
 - [`observation_intervention_6526_a03_deadline_audit_only_20261003/REPORT.md`](observation_intervention_6526_a03_deadline_audit_only_20261003/REPORT.md) — #6526 post-hoc audit-only successor finds all A02 deadline snapshots late and one post-deadline effect seen only by a 12.428 ms late sample; current disposition `HOLD_AUDIT_TIMING`, no candidate rerun or H classification.
 - [`observation_intervention_6526_a02_orbstack_20261003/REPORT.md`](observation_intervention_6526_a02_orbstack_20261003/REPORT.md) — Historical first-auditor A02 output `H_FAIL_SCOPED` is preserved; subsequent audit-only #6526 A03 review supersedes its scientific interpretation as `HOLD_AUDIT_TIMING` because deadline sampling was unbounded.
 - [`observation_intervention_6526_a01_orbstack_20261003/FORMAL_FAILURE.md`](observation_intervention_6526_a01_orbstack_20261003/FORMAL_FAILURE.md) — Issue #6526 A01 OrbStack formal allocation: 180 trials completed, but the independent auditor stopped on the frozen exact 90 ms action-origin gate; no hypothesis statistics or conclusion. Raw evidence and prospective freeze retained; successor must use a fresh allocation.
@@ -328,6 +332,9 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`conditional_deadline_certificate_6059_t0_20261001/`](conditional_deadline_certificate_6059_t0_20261001/)
 - [`conditional_parallax_6079_foreground_control_a01_20261003/`](conditional_parallax_6079_foreground_control_a01_20261003/)
 - [`conditional_parallax_6079_integrity_adjudication_a01_20261003/`](conditional_parallax_6079_integrity_adjudication_a01_20261003/)
+- [`conditional_parallax_6079_layer_identity_a01_20261003/`](conditional_parallax_6079_layer_identity_a01_20261003/)
+- [`conditional_parallax_6079_layer_identity_a02_audit_20261003/`](conditional_parallax_6079_layer_identity_a02_audit_20261003/)
+- [`conditional_parallax_6079_layer_identity_a03_controls_20261003/`](conditional_parallax_6079_layer_identity_a03_controls_20261003/)
 - [`conditional_parallax_6079_t0_v1_20261003/`](conditional_parallax_6079_t0_v1_20261003/)
 - [`conditional_route_rescue_5598_t0_20261001/`](conditional_route_rescue_5598_t0_20261001/)
 - [`conflict_aware_evidence_ledger_5305_t0/`](conflict_aware_evidence_ledger_5305_t0/)
