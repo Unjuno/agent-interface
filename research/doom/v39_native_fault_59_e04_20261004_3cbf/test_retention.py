@@ -8,6 +8,20 @@ from verify_retention import check_retention
 
 
 class RetentionControls(unittest.TestCase):
+    def test_rejects_same_missing_or_modified_trace_in_both_copies(self):
+        for mode in ('missing', 'modified'):
+            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary) / 'root'
+                shutil.copytree(Path(__file__).resolve().parent, root)
+                for name in ('native', 'export'):
+                    path = root / f'raw/{name}/original_fault/native-stdout.jsonl'
+                    if mode == 'missing':
+                        path.unlink()
+                    else:
+                        path.write_text('{}\n')
+                with self.assertRaisesRegex(ValueError, 'committed native inventory'):
+                    check_retention(root)
+
     def test_rejects_success_alias_and_export_difference(self):
         for mode in ('exit', 'export', 'later', 'summary'):
             with self.subTest(mode=mode), tempfile.TemporaryDirectory() as temporary:

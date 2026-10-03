@@ -19,6 +19,16 @@ def check_retention(root):
     require(inventory(native) == inventory(exported) and bool(inventory(native)), 'export custody')
     require({p.name for p in native.iterdir() if p.is_dir()} == {'original_fault'}, 'later cells')
     require(not (native / 'SUMMARY.json').exists() and not (native / 'original_fault/RESULT.json').exists(), 'missing result boundary changed')
+    manifest = root / 'NATIVE_MANIFEST.sha256'
+    require(hashlib.sha256(manifest.read_bytes()).hexdigest() ==
+            '37f0ded4ae7dec8ae7e1944144f26954eea5dbc600c392e8b3f760faca7332e9', 'committed native inventory anchor')
+    expected = {}
+    for line in manifest.read_text().splitlines():
+        digest, name = line.split('  ', 1)
+        name = name.removeprefix('./')
+        require(name not in expected, 'committed native inventory duplicate')
+        expected[name] = digest
+    require(len(expected) == 25 and inventory(native) == expected, 'committed native inventory')
     freeze = json.loads((root / 'FREEZE.json').read_text())
     runtime = json.loads((native / 'RUNTIME.json').read_text())
     require(runtime['freeze'] == freeze and runtime['uid'] == 501
@@ -48,7 +58,7 @@ def check_retention(root):
     return {'disposition': 'STOP_RESULT_RETENTION_X11_CLOSE', 'scientific_pass': False,
             'formal_runs': 1, 'official_auditor_runs': 1, 'later_cells': 0,
             'producer_reruns': 0, 'retained_native_files': len(inventory(native)),
-            'scope': 'saved failure/custody only; no physical snapshot or reader outcome recovery'}
+            'scope': 'saved failure/custody only; run counts describe retained protocol receipts, not all external execution history; no physical snapshot or reader outcome recovery'}
 
 
 if __name__ == '__main__':
