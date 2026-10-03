@@ -23,3 +23,12 @@ decoded capsule hashes agree. Local workflow replay at `dd8eaabd31` exited 0:
 43 steps, failures=[]; full output is `local-ci.log`. This is not hosted CI,
 full runtime or native compatibility certification. Main integration remains
 pending. Source retirement is not yet safe.
+
+Fresh PR review readback found the prospective threshold-two committee
+descriptor, but no acceptances/approvals:
+https://github.com/Unjuno/agent-interface/pull/7044#issuecomment-5969081888
+The outside-committee supplement is explicitly zero votes and cautions against
+generalizing BUSY recovery to SQLITE_INTERRUPT or broad error-family membership:
+https://github.com/Unjuno/agent-interface/pull/7044#issuecomment-5969229938
+These links preserve interpretation and publication failure qualifications;
+neither a committee nomination nor this rescue supplies an application certificate.
