@@ -708,6 +708,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`service_debt_deadline_6613_a01/`](service_debt_deadline_6613_a01/)
 - [`service_fairness_6613_edf_a01_20261003/`](service_fairness_6613_edf_a01_20261003/)
 - [`shared_referent_6558_t0_orbstack_20261002/`](shared_referent_6558_t0_orbstack_20261002/)
+- [`singleflight_raw_types_6501_01a0ff35/`](singleflight_raw_types_6501_01a0ff35/)
 - [`siphon_5410_t0/`](siphon_5410_t0/)
 - [`skill_applicability_6262_gpu_t0_v1/`](skill_applicability_6262_gpu_t0_v1/)
 - [`skill_applicability_6262_wslc_t0b_v1/`](skill_applicability_6262_wslc_t0b_v1/)
