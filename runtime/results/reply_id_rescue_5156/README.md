@@ -21,7 +21,9 @@ tests,31 errors. Error test rosters compare equal. All36 errors trace to Linux
 not suppressed and no substitute process identity is introduced.
 Existing Docker image inspection fails with daemon blob operation not supported;
 no container launched/reset/pruned/pulled. Linux hosted validation is still needed.
-Full native baseline/candidate outputs remain in local outputs/replyid-native*
-logs; transfer to this packet remains pending because the first read was truncated.
+Full native baseline/candidate outputs and analysis-index CI transcript are
+retained here as native-baseline.log, native-candidate.log and local-ci.log.
+After the first full-log read was truncated, bounded reads recovered every line;
+all three copies compare byte-identical to the original local outputs (cmp exit0).
 Red/green and combined logs remain here. This is not a whole-suite PASS, merge-ready
 delivery or genuine-provider/GUI/native-input/formal scientific execution evidence.
