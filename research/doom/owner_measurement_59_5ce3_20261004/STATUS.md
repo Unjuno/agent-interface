@@ -237,3 +237,11 @@ side effects and narrow Python guards limit the claim. Original closure/runtime
 qualification and independent re-review still required. Host15 construction
 tests PASS is separate from real container import. Dedicated Engine0running,
 exactVMstopped after probe; no formal/shared allocation or push/PR/main change.
+
+Post-probe fresh main96d39ca3855351b2501aab1da919941011190ac3 changes inherited
+codex_app_server_client_v2.py (and its UTF8 test) relative to frozen f6db lineage.
+All four direct owner/backend/session/controller pins remain unchanged, but
+probe03 DID import this client: its46-module result does not qualify latest-main
+dependency bytes. Preserve the scoped historical PASS; next qualification must
+explicitly freeze/review the updated imported-client dependency. Do not silently
+overlay it onto probe03 or transfer the PASS to current main.
