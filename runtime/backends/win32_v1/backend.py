@@ -365,6 +365,11 @@ class Win32Backend:
                 self.gdi32.DeleteDC(mem_dc)
             self.user32.ReleaseDC(source_hwnd, source_dc)
 
+    def observe_read_only(self, target: str, frame: str, region) -> dict[str, Any]:
+        # Validate binding without changing caller-owned input or recovery state.
+        self._target(target)
+        return self.capture(target, frame, *region)
+
     def capture(self, target: str, frame: str, x: int, y: int,
                 w: int, h: int) -> dict[str, Any]:
         if w <= 0 or h <= 0:
