@@ -9,8 +9,8 @@ import subprocess
 ROOT = Path(__file__).resolve().parent
 ORB = "/opt/homebrew/bin/orbctl"
 VM = "research-6183-t0-20261003"
-ALLOCATION = "PHASE-6803-A05-ORBSTACK-20261003-3CBF-01"
-NAME = "phase-6969-a05-3cbf"
+ALLOCATION = "PHASE-6803-A05-ORBSTACK-20261003-3CBF-02"
+NAME = "phase-6969-a05-3cbf-02"
 INPUT = "/home/taka/inputs/" + NAME
 OUTPUT = "/home/taka/outputs/" + NAME
 IMAGE = "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016"
@@ -24,11 +24,14 @@ def dump(path, value):
 
 
 def remote(*args):
-    return subprocess.run([ORB, "run", "-m", VM, *args], capture_output=True, text=True, check=True).stdout
+    prefix = [ORB, "run", "-m", VM]
+    if args[0] == "docker":
+        prefix += ["-u", "root"]
+    return subprocess.run([*prefix, *args], capture_output=True, text=True, check=True).stdout
 
 
 def verify_sources():
-    freeze = json.loads((ROOT / "FREEZE.json").read_text())
+    freeze = json.loads((ROOT / "FREEZE_02.json").read_text())
     for name, wanted in freeze["source_sha256"].items():
         if hashlib.sha256((ROOT / name).read_bytes()).hexdigest() != wanted:
             raise ValueError("frozen source changed: " + name)
@@ -74,7 +77,7 @@ def stage():
         if sorted(listing) != sorted(p.name for p in files):
             raise ValueError("source mount has unexpected files")
         custody[role] = {"path": destination, "contains_only": sorted(listing), "sha256sum": observed}
-    dump(ROOT / "STAGING.json", {"allocation": ALLOCATION, "image": image,
+    dump(ROOT / "STAGING_02.json", {"allocation": ALLOCATION, "image": image,
          "custody": custody, "docker_info": json.loads(remote("docker", "info", "--format", "{{json .}}")),
          "vm_cgroup": remote("sh", "-c", "cat /sys/fs/cgroup/memory.max /sys/fs/cgroup/cpu.max"),
          "output_ownership": remote("stat", "-c", "%u:%g %a %n", OUTPUT + "/candidate", OUTPUT + "/legacy", OUTPUT + "/auditor"),
@@ -106,10 +109,10 @@ def execute(source_commit):
                                     cwd=ROOT, capture_output=True, text=True, check=True).stdout.strip()
     if current_commit != source_commit:
         raise ValueError("checkout HEAD does not match published source freeze commit")
-    staging = json.loads((ROOT / "STAGING.json").read_text())
+    staging = json.loads((ROOT / "STAGING_02.json").read_text())
     if staging["allocation"] != ALLOCATION:
         raise ValueError("staging identity mismatch")
-    evidence = ROOT / "formal"
+    evidence = ROOT / "formal_02"
     evidence.mkdir()  # Refuse a second allocation, including after a partial failure.
     dump(evidence / "CONSUMED.json", {"allocation": ALLOCATION, "source_commit": source_commit,
                                    "started_at_utc": datetime.now(timezone.utc).isoformat()})
@@ -121,7 +124,7 @@ def execute(source_commit):
             wanted, path = item.split("  ", 1)
             if remote("sha256sum", path).strip() != wanted + "  " + path:
                 raise ValueError("guest source changed")
-        cmd = [ORB, "run", "-m", VM, *command(role)]
+        cmd = [ORB, "run", "-m", VM, "-u", "root", *command(role)]
         before = datetime.now(timezone.utc).isoformat()
         result = subprocess.run(cmd, capture_output=True, text=True)
         dump(evidence / (role + ".receipt.json"), {"command": cmd, "started_at_utc": before,
