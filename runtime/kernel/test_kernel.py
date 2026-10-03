@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import unittest
+from dataclasses import replace
 
 from runtime.kernel import (
     Action, ActionKind, AuthorityLease, BackendInfo, BackendRegistry, Capability,
@@ -94,6 +95,41 @@ class LifecycleTests(unittest.TestCase):
         self.assertEqual(result.stage, Stage.VERIFIED)
         self.assertTrue(result.effect_occurred)
         self.assertTrue(result.effect_verified)
+        self.assertTrue(result.release_verified)
+
+    def test_duplicate_begin_preserves_first_request_and_receipt(self):
+        first = request()
+        for second in (first, replace(first, command_id="cmd-2")):
+            with self.subTest(second_command=second.command_id):
+                flow = self.make_authorized()
+                flow.begin_execution(first, now_ns=300)
+                with self.assertRaises(ContractError):
+                    flow.begin_execution(second, now_ns=400)
+                self.assertIs(flow.request, first)
+                flow.record_execution(execution())
+                flow.record_effect(EffectReceipt("cmd-1", M, 900, EffectStatus.VERIFIED, E))
+                self.assertEqual(flow.outcome().command_id, "cmd-1")
+
+    def test_rejected_begin_does_not_consume_execution(self):
+        flow = self.make_authorized()
+        with self.assertRaises(ContractError):
+            flow.begin_execution(request(surface="surface-b"), now_ns=300)
+        self.assertIsNone(flow.request)
+        first = request()
+        flow.begin_execution(first, now_ns=400)
+        self.assertIs(flow.request, first)
+
+    def test_duplicate_begin_refusal_preserves_release_required_stop(self):
+        flow = self.make_authorized()
+        first = request()
+        flow.begin_execution(first, now_ns=300)
+        with self.assertRaises(ContractError):
+            flow.begin_execution(first, now_ns=400)
+        with self.assertRaises(ContractError):
+            flow.stop("cancelled")
+        flow.stop("cancelled", release=released())
+        result = flow.outcome()
+        self.assertEqual(result.command_id, "cmd-1")
         self.assertTrue(result.release_verified)
 
     def test_contradiction_preserves_effect_occurrence(self):
