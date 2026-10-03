@@ -487,6 +487,14 @@ def _close_failed_startup(process, reader_thread, planner_client, out):
                "input_release_verified": False, "errors": [], "escalations": [],
                "stderr_complete": process is None, "stderr_bytes": 0,
                "stderr_reader_joined": process is None}
+    def poll_owned_session():
+        try:
+            return process.poll()
+        except Exception as error:
+            # Failed status observation does not establish process retirement.
+            receipt["errors"].append(
+                "session poll: " + _startup_exception_text(error, use_repr=True))
+            return None
     stderr_thread = None
     if process is not None:
         def retain_stderr():
@@ -518,7 +526,7 @@ def _close_failed_startup(process, reader_thread, planner_client, out):
         except Exception as error:
             receipt["errors"].append("stdin close: " + _startup_exception_text(error, use_repr=True))
         for operation in ("wait", "terminate", "kill"):
-            if process.poll() is not None:
+            if poll_owned_session() is not None:
                 break
             try:
                 if operation != "wait":
@@ -529,9 +537,9 @@ def _close_failed_startup(process, reader_thread, planner_client, out):
                 continue
             except Exception as error:
                 receipt["errors"].append(operation + ": " + _startup_exception_text(error, use_repr=True))
-        receipt["session_exit_code"] = process.poll()
+        receipt["session_exit_code"] = poll_owned_session()
         if receipt["session_exit_code"] is None:
-            receipt["errors"].append("owned session still running")
+            receipt["errors"].append("owned session retirement unconfirmed")
     if reader_thread is not None:
         try:
             # join refuses pre-acknowledgement workers; retain uncertainty on failure.
@@ -639,7 +647,18 @@ def main():
             raise RuntimeError("v28 requires a loaded fixture receipt")
         latest = wait(lambda r:r["event"] == "observation")
     except BaseException as startup_error:
-        cleanup = _close_failed_startup(process, reader_thread, planner_client, args.out)
+        try:
+            cleanup = _close_failed_startup(process, reader_thread, planner_client, args.out)
+        except BaseException as cleanup_error:
+            # An aborted helper cannot attest which resources actually retired.
+            cleanup = {"schema": "map01-startup-cleanup-v1",
+                       "session_exit_code": None, "reader_joined": False,
+                       "client_closed": False, "input_release_verified": False,
+                       "errors": ["startup cleanup helper failed: " +
+                                  _startup_exception_text(cleanup_error, use_repr=True)],
+                       "escalations": [], "stderr_complete": False,
+                       "stderr_bytes": None, "stderr_reader_joined": False,
+                       "cleanup_error": _startup_exception_details(cleanup_error)}
         cleanup["startup_error"] = _startup_exception_details(startup_error)
         try:
             cleanup["startup_events"] = list(all_events)

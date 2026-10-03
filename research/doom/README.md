@@ -370,3 +370,5 @@ V39 interrupted reader acknowledgement repair evidence: [v39_startup_reader_repa
 
 - [v39 startup-fault ownership construction](v39_startup_cleanup_59_20261003_01a0ff52/README.md): exact caller retains a private session after missing-fixture rejection; ordinary fake-boundary evidence, no physical release/runtime repair claim.
 - [Native Linux game construction: writable-CWD repair and getter-clock STOP](native_game_readiness_59_20261003_b64b/REPORT.md) — first exit139 preserved, repaired no-input STOP2; attack NOT_RUN, no useful-feedback/release/R134 claim.
+
+- [Startup poll and helper exception custody V6](v39_startup_poll_custody_b04b_v6/README.md): preserve original startup error when cleanup aborts; unknown retirement remains unconfirmed. Ordinary scoped regressions and first failures retained; no input-release or whole-runtime recovery claim.
