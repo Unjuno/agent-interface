@@ -32,6 +32,11 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
     }
     return meta;
   }
+  function snapshotMethodArguments(values) {
+    if (stopped) throw Error('trial stopped: ' + stopped);
+    try { return structuredClone(values); }
+    catch (error) { stop('primary method argument snapshot failure'); throw error; }
+  }
   function inputArguments(values) {
     const [alias, offset, interaction, tail] = values;
     if (route !== 'guarded-local' || values.length !== 4 ||
@@ -51,9 +56,11 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
   const caller = {
     state: () => ({ stopped }),
     async input(...values) {
+      values = snapshotMethodArguments(values);
       return caller.call('interface_guarded_input', inputArguments(values));
     },
     async inputWithFeedback(...values) {
+      values = snapshotMethodArguments(values);
       let policy;
       try { policy = structuredClone(values[4]); }
       catch (error) { stop('invalid primary feedback policy'); throw error; }
@@ -80,9 +87,10 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
       return caller.call('interface_guarded_review_window', { window_id: reviewWindowId });
     },
     async mint(...values) {
+      values = snapshotMethodArguments(values);
       const [alias, sourceSequence, point, regionSize] = values;
       const pair = value => Array.isArray(value) && value.length === 2 &&
-        value.every(Number.isSafeInteger);
+        Array.from(value).every(Number.isSafeInteger);
       if (route !== 'guarded-local' || values.length !== 4 ||
           typeof alias !== 'string' || !alias.trim() ||
           !Number.isSafeInteger(sourceSequence) || sourceSequence < 1 ||
@@ -96,6 +104,7 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
       });
     },
     async mintMany(...values) {
+      values = snapshotMethodArguments(values);
       const [sourceSequence, references] = values;
       const pair = value => Array.isArray(value) && value.length === 2 &&
         Array.from(value).every(Number.isSafeInteger);
