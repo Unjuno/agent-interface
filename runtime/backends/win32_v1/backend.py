@@ -430,9 +430,14 @@ class Win32Backend:
     def release_all(self) -> dict[str, Any]:
         # Compensate unmatched Unicode delivery once; failure retains the unit.
         # This acknowledges UP insertion, not physical or application state.
+        unicode_error = None
         for unit in sorted(getattr(self, "pending_unicode_ups", ())):
-            self._send_unicode_unit(unit, False)
-            self.pending_unicode_ups.remove(unit)
+            try:
+                self._send_unicode_unit(unit, False)
+            except Exception as error:
+                unicode_error = unicode_error or error
+            else:
+                self.pending_unicode_ups.remove(unit)
         tracked_keys = dict(self.held_keys)
         tracked_buttons = set(self.held_buttons)
         for vk in list(self.held_keys.values()):
@@ -449,6 +454,8 @@ class Win32Backend:
                       if self.user32.GetAsyncKeyState(vk) & 0x8000)
         buttons = sorted(button for button in tracked_buttons
                          if self.user32.GetAsyncKeyState(BUTTON_FLAGS[button][2]) & 0x8000)
+        if unicode_error is not None:
+            raise unicode_error
         return {"keys_down": keys, "buttons_down": buttons,
                 "verified": not keys and not buttons,
                 "monotonic_ns": time.monotonic_ns()}

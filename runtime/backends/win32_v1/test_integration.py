@@ -172,6 +172,22 @@ class PureWin32HelperTests(unittest.TestCase):
         b,t=self._unicode_delivery_backend((2,));self.assertRaises(Win32BackendError,b.text,'\U0001f642');self.assertEqual(b.pending_unicode_ups,{0xd83d});self.assertEqual(t,[(0xd83d,True),(0xd83d,False)])
 
 
+    def test_unicode_delivery_failure_still_releases_regular_key(self):
+        backend, trace = self._unicode_delivery_backend((1,))
+        backend.pending_unicode_ups.add(65)
+        backend.held_keys["CTRL"] = 17
+        regular = []
+        backend._send_key = lambda vk, down: regular.append((vk, down))
+        class State:
+            def GetAsyncKeyState(self, vk):
+                return 0
+        backend.user32 = State()
+        with self.assertRaises(Win32BackendError):
+            backend.release_all()
+        self.assertEqual(regular, [(17, False)])
+        self.assertEqual(backend.pending_unicode_ups, {65})
+
+
 @unittest.skipUnless(sys.platform == "win32", "requires native Windows")
 class Win32IntegrationTests(unittest.TestCase):
     @classmethod
