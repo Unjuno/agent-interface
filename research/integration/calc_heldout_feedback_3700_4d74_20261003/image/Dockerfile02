@@ -1,0 +1,3 @@
+FROM focus-repeat-59-t0:20261002
+RUN apt-get update && apt-get install -y --no-install-recommends libreoffice-calc openbox fonts-liberation && pip install --no-cache-dir Pillow==11.3.0 && dpkg-query -W > /opt/calc-package-pins.tsv
+ENV SAL_USE_VCLPLUGIN=gen
