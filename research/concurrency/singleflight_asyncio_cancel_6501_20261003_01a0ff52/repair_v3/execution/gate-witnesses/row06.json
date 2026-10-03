@@ -1,0 +1,5985 @@
+{
+  "event_loop": "_UnixSelectorEventLoop",
+  "platform": "Linux-7.0.5-orbstack-00330-ge3df4e19b0a0-dirty-aarch64-with-glibc2.41",
+  "python": "3.12.15 (main, Oct  1 2026, 21:52:41) [GCC 14.2.0]",
+  "rows": [
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        },
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p1"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        },
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p1"
+        }
+      ],
+      "callers": 2,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "p1",
+          "kind": "producer_start",
+          "seq": 2
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 6
+        },
+        {
+          "actor": "p0",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 7
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 8
+        },
+        {
+          "actor": "p1",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 9
+        },
+        {
+          "actor": "p1",
+          "kind": "producer_exit",
+          "seq": 10
+        },
+        {
+          "actor": "w0",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 11,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 12
+        },
+        {
+          "actor": "w1",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 13,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 14
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        },
+        {
+          "caller": 1,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        }
+      ],
+      "policy": "independent",
+      "scenario": "stable"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 2,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 5
+        },
+        {
+          "actor": "p0",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 6
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 7
+        },
+        {
+          "actor": "w0",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 8,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 9
+        },
+        {
+          "actor": "w1",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 10,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 11
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        },
+        {
+          "caller": 1,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        }
+      ],
+      "policy": "direct",
+      "scenario": "stable"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 2,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 5
+        },
+        {
+          "actor": "p0",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 6
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 7
+        },
+        {
+          "actor": "w0",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 8,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 9
+        },
+        {
+          "actor": "w1",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 10,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 11
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        },
+        {
+          "caller": 1,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        }
+      ],
+      "policy": "shield",
+      "scenario": "stable"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 2,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 5
+        },
+        {
+          "actor": "p0",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 6
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 7
+        },
+        {
+          "actor": "w0",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 8,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 9
+        },
+        {
+          "actor": "w1",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 10,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 11
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        },
+        {
+          "caller": 1,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        }
+      ],
+      "policy": "shield_refcount",
+      "scenario": "stable"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p0"
+        },
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p1"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p0"
+        },
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p1"
+        }
+      ],
+      "callers": 2,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "p1",
+          "kind": "producer_start",
+          "seq": 2
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "caller": 0,
+          "kind": "cancel_request",
+          "seq": 6
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_cancelled",
+          "seq": 7
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 8
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_cancelled",
+          "seq": 9
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 10
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 11
+        },
+        {
+          "actor": "p1",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 12
+        },
+        {
+          "actor": "p1",
+          "kind": "producer_exit",
+          "seq": 13
+        },
+        {
+          "actor": "w1",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 14,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 15
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        },
+        {
+          "caller": 1,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        }
+      ],
+      "policy": "independent",
+      "scenario": "cancel_first"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 2,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "caller": 0,
+          "kind": "cancel_request",
+          "seq": 5
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_cancelled",
+          "seq": 6
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 7
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_cancelled",
+          "seq": 8
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 9
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_cancelled",
+          "seq": 10
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 11
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 12
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        },
+        {
+          "caller": 1,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        }
+      ],
+      "policy": "direct",
+      "scenario": "cancel_first"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 2,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "caller": 0,
+          "kind": "cancel_request",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 6
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_cancelled",
+          "seq": 7
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 8
+        },
+        {
+          "actor": "p0",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 9
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 10
+        },
+        {
+          "actor": "w1",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 11,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 12
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        },
+        {
+          "caller": 1,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        }
+      ],
+      "policy": "shield",
+      "scenario": "cancel_first"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 2,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "caller": 0,
+          "kind": "cancel_request",
+          "seq": 5
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_cancelled",
+          "seq": 6
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 7
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 8
+        },
+        {
+          "actor": "p0",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 9
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 10
+        },
+        {
+          "actor": "w1",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 11,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 12
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        },
+        {
+          "caller": 1,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        }
+      ],
+      "policy": "shield_refcount",
+      "scenario": "cancel_first"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        },
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p1"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        },
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p1"
+        }
+      ],
+      "callers": 2,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "p1",
+          "kind": "producer_start",
+          "seq": 2
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "caller": 1,
+          "kind": "cancel_request",
+          "seq": 6
+        },
+        {
+          "actor": "p1",
+          "kind": "producer_cancelled",
+          "seq": 7
+        },
+        {
+          "actor": "p1",
+          "kind": "producer_exit",
+          "seq": 8
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_cancelled",
+          "seq": 9
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 10
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 11
+        },
+        {
+          "actor": "p0",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 12
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 13
+        },
+        {
+          "actor": "w0",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 14,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 15
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        },
+        {
+          "caller": 1,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        }
+      ],
+      "policy": "independent",
+      "scenario": "cancel_last"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 2,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "caller": 1,
+          "kind": "cancel_request",
+          "seq": 5
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_cancelled",
+          "seq": 6
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 7
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_cancelled",
+          "seq": 8
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 9
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_cancelled",
+          "seq": 10
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 11
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 12
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        },
+        {
+          "caller": 1,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        }
+      ],
+      "policy": "direct",
+      "scenario": "cancel_last"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 2,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "caller": 1,
+          "kind": "cancel_request",
+          "seq": 5
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_cancelled",
+          "seq": 6
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 7
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 8
+        },
+        {
+          "actor": "p0",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 9
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 10
+        },
+        {
+          "actor": "w0",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 11,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 12
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        },
+        {
+          "caller": 1,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        }
+      ],
+      "policy": "shield",
+      "scenario": "cancel_last"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 2,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "caller": 1,
+          "kind": "cancel_request",
+          "seq": 5
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_cancelled",
+          "seq": 6
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 7
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 8
+        },
+        {
+          "actor": "p0",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 9
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 10
+        },
+        {
+          "actor": "w0",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 11,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 12
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        },
+        {
+          "caller": 1,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        }
+      ],
+      "policy": "shield_refcount",
+      "scenario": "cancel_last"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p0"
+        },
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p1"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p0"
+        },
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p1"
+        }
+      ],
+      "callers": 2,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "p1",
+          "kind": "producer_start",
+          "seq": 2
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "caller": 0,
+          "kind": "cancel_request",
+          "seq": 6
+        },
+        {
+          "actor": "coordinator",
+          "caller": 1,
+          "kind": "cancel_request",
+          "seq": 7
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_cancelled",
+          "seq": 8
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 9
+        },
+        {
+          "actor": "p1",
+          "kind": "producer_cancelled",
+          "seq": 10
+        },
+        {
+          "actor": "p1",
+          "kind": "producer_exit",
+          "seq": 11
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_cancelled",
+          "seq": 12
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 13
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_cancelled",
+          "seq": 14
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 15
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        },
+        {
+          "caller": 1,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        }
+      ],
+      "policy": "independent",
+      "scenario": "cancel_all"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 2,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "caller": 0,
+          "kind": "cancel_request",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "caller": 1,
+          "kind": "cancel_request",
+          "seq": 6
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_cancelled",
+          "seq": 7
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 8
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_cancelled",
+          "seq": 9
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 10
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_cancelled",
+          "seq": 11
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 12
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        },
+        {
+          "caller": 1,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        }
+      ],
+      "policy": "direct",
+      "scenario": "cancel_all"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": false,
+          "producer": "p0"
+        }
+      ],
+      "callers": 2,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "caller": 0,
+          "kind": "cancel_request",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "caller": 1,
+          "kind": "cancel_request",
+          "seq": 6
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_cancelled",
+          "seq": 7
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 8
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_cancelled",
+          "seq": 9
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 10
+        },
+        {
+          "actor": "coordinator",
+          "kind": "cleanup_cancel",
+          "producer": "p0",
+          "seq": 11
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_cancelled",
+          "seq": 12
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 13
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        },
+        {
+          "caller": 1,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        }
+      ],
+      "policy": "shield",
+      "scenario": "cancel_all"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 2,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "caller": 0,
+          "kind": "cancel_request",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "caller": 1,
+          "kind": "cancel_request",
+          "seq": 6
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_cancelled",
+          "seq": 7
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 8
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_cancelled",
+          "seq": 9
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 10
+        },
+        {
+          "actor": "coordinator",
+          "kind": "last_waiter_cancel",
+          "producer": "p0",
+          "seq": 11
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_cancelled",
+          "seq": 12
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 13
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        },
+        {
+          "caller": 1,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        }
+      ],
+      "policy": "shield_refcount",
+      "scenario": "cancel_all"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        },
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p1"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        },
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p1"
+        }
+      ],
+      "callers": 2,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "p1",
+          "kind": "producer_start",
+          "seq": 2
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "generation": 2,
+          "kind": "generation_change",
+          "seq": 6
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 7
+        },
+        {
+          "actor": "p0",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 8
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 9
+        },
+        {
+          "actor": "p1",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 10
+        },
+        {
+          "actor": "p1",
+          "kind": "producer_exit",
+          "seq": 11
+        },
+        {
+          "actor": "w0",
+          "current_generation": 2,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 12,
+          "status": "STALE"
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 13
+        },
+        {
+          "actor": "w1",
+          "current_generation": 2,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 14,
+          "status": "STALE"
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 15
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "STALE"
+        },
+        {
+          "caller": 1,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "STALE"
+        }
+      ],
+      "policy": "independent",
+      "scenario": "generation_change"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 2,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "generation": 2,
+          "kind": "generation_change",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 6
+        },
+        {
+          "actor": "p0",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 7
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 8
+        },
+        {
+          "actor": "w0",
+          "current_generation": 2,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 9,
+          "status": "STALE"
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 10
+        },
+        {
+          "actor": "w1",
+          "current_generation": 2,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 11,
+          "status": "STALE"
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 12
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "STALE"
+        },
+        {
+          "caller": 1,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "STALE"
+        }
+      ],
+      "policy": "direct",
+      "scenario": "generation_change"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 2,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "generation": 2,
+          "kind": "generation_change",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 6
+        },
+        {
+          "actor": "p0",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 7
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 8
+        },
+        {
+          "actor": "w0",
+          "current_generation": 2,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 9,
+          "status": "STALE"
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 10
+        },
+        {
+          "actor": "w1",
+          "current_generation": 2,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 11,
+          "status": "STALE"
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 12
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "STALE"
+        },
+        {
+          "caller": 1,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "STALE"
+        }
+      ],
+      "policy": "shield",
+      "scenario": "generation_change"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 2,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "generation": 2,
+          "kind": "generation_change",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 6
+        },
+        {
+          "actor": "p0",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 7
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 8
+        },
+        {
+          "actor": "w0",
+          "current_generation": 2,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 9,
+          "status": "STALE"
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 10
+        },
+        {
+          "actor": "w1",
+          "current_generation": 2,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 11,
+          "status": "STALE"
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 12
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "STALE"
+        },
+        {
+          "caller": 1,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "STALE"
+        }
+      ],
+      "policy": "shield_refcount",
+      "scenario": "generation_change"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        },
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p1"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        },
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p1"
+        }
+      ],
+      "callers": 2,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "p1",
+          "kind": "producer_start",
+          "seq": 2
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 6
+        },
+        {
+          "actor": "p0",
+          "error": "RuntimeError",
+          "kind": "producer_error",
+          "seq": 7
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 8
+        },
+        {
+          "actor": "p1",
+          "error": "RuntimeError",
+          "kind": "producer_error",
+          "seq": 9
+        },
+        {
+          "actor": "p1",
+          "kind": "producer_exit",
+          "seq": 10
+        },
+        {
+          "actor": "w0",
+          "error": "RuntimeError",
+          "kind": "waiter_error",
+          "seq": 11
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 12
+        },
+        {
+          "actor": "w1",
+          "error": "RuntimeError",
+          "kind": "waiter_error",
+          "seq": 13
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 14
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "OWNER_FAILED"
+        },
+        {
+          "caller": 1,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "OWNER_FAILED"
+        }
+      ],
+      "policy": "independent",
+      "scenario": "owner_failure"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 2,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 5
+        },
+        {
+          "actor": "p0",
+          "error": "RuntimeError",
+          "kind": "producer_error",
+          "seq": 6
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 7
+        },
+        {
+          "actor": "w0",
+          "error": "RuntimeError",
+          "kind": "waiter_error",
+          "seq": 8
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 9
+        },
+        {
+          "actor": "w1",
+          "error": "RuntimeError",
+          "kind": "waiter_error",
+          "seq": 10
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 11
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "OWNER_FAILED"
+        },
+        {
+          "caller": 1,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "OWNER_FAILED"
+        }
+      ],
+      "policy": "direct",
+      "scenario": "owner_failure"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 2,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 5
+        },
+        {
+          "actor": "p0",
+          "error": "RuntimeError",
+          "kind": "producer_error",
+          "seq": 6
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 7
+        },
+        {
+          "actor": "w0",
+          "error": "RuntimeError",
+          "kind": "waiter_error",
+          "seq": 8
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 9
+        },
+        {
+          "actor": "w1",
+          "error": "RuntimeError",
+          "kind": "waiter_error",
+          "seq": 10
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 11
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "OWNER_FAILED"
+        },
+        {
+          "caller": 1,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "OWNER_FAILED"
+        }
+      ],
+      "policy": "shield",
+      "scenario": "owner_failure"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 2,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 5
+        },
+        {
+          "actor": "p0",
+          "error": "RuntimeError",
+          "kind": "producer_error",
+          "seq": 6
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 7
+        },
+        {
+          "actor": "w0",
+          "error": "RuntimeError",
+          "kind": "waiter_error",
+          "seq": 8
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 9
+        },
+        {
+          "actor": "w1",
+          "error": "RuntimeError",
+          "kind": "waiter_error",
+          "seq": 10
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 11
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "OWNER_FAILED"
+        },
+        {
+          "caller": 1,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "OWNER_FAILED"
+        }
+      ],
+      "policy": "shield_refcount",
+      "scenario": "owner_failure"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        },
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p1"
+        },
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p2"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        },
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p1"
+        },
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p2"
+        }
+      ],
+      "callers": 3,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "p1",
+          "kind": "producer_start",
+          "seq": 2
+        },
+        {
+          "actor": "p2",
+          "kind": "producer_start",
+          "seq": 3
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 5
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_start",
+          "seq": 6
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 7
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 8
+        },
+        {
+          "actor": "p0",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 9
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 10
+        },
+        {
+          "actor": "p1",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 11
+        },
+        {
+          "actor": "p1",
+          "kind": "producer_exit",
+          "seq": 12
+        },
+        {
+          "actor": "p2",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 13
+        },
+        {
+          "actor": "p2",
+          "kind": "producer_exit",
+          "seq": 14
+        },
+        {
+          "actor": "w0",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 15,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 2,
+          "seq": 16
+        },
+        {
+          "actor": "w1",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 17,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 18
+        },
+        {
+          "actor": "w2",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 19,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 20
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        },
+        {
+          "caller": 1,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        },
+        {
+          "caller": 2,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        }
+      ],
+      "policy": "independent",
+      "scenario": "stable"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 3,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 6
+        },
+        {
+          "actor": "p0",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 7
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 8
+        },
+        {
+          "actor": "w0",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 9,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 2,
+          "seq": 10
+        },
+        {
+          "actor": "w1",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 11,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 12
+        },
+        {
+          "actor": "w2",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 13,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 14
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        },
+        {
+          "caller": 1,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        },
+        {
+          "caller": 2,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        }
+      ],
+      "policy": "direct",
+      "scenario": "stable"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 3,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 6
+        },
+        {
+          "actor": "p0",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 7
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 8
+        },
+        {
+          "actor": "w0",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 9,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 2,
+          "seq": 10
+        },
+        {
+          "actor": "w1",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 11,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 12
+        },
+        {
+          "actor": "w2",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 13,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 14
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        },
+        {
+          "caller": 1,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        },
+        {
+          "caller": 2,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        }
+      ],
+      "policy": "shield",
+      "scenario": "stable"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 3,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 6
+        },
+        {
+          "actor": "p0",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 7
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 8
+        },
+        {
+          "actor": "w0",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 9,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 2,
+          "seq": 10
+        },
+        {
+          "actor": "w1",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 11,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 12
+        },
+        {
+          "actor": "w2",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 13,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 14
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        },
+        {
+          "caller": 1,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        },
+        {
+          "caller": 2,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        }
+      ],
+      "policy": "shield_refcount",
+      "scenario": "stable"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p0"
+        },
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p1"
+        },
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p2"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p0"
+        },
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p1"
+        },
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p2"
+        }
+      ],
+      "callers": 3,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "p1",
+          "kind": "producer_start",
+          "seq": 2
+        },
+        {
+          "actor": "p2",
+          "kind": "producer_start",
+          "seq": 3
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 5
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_start",
+          "seq": 6
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 7
+        },
+        {
+          "actor": "coordinator",
+          "caller": 0,
+          "kind": "cancel_request",
+          "seq": 8
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_cancelled",
+          "seq": 9
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 10
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_cancelled",
+          "seq": 11
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 2,
+          "seq": 12
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 13
+        },
+        {
+          "actor": "p1",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 14
+        },
+        {
+          "actor": "p1",
+          "kind": "producer_exit",
+          "seq": 15
+        },
+        {
+          "actor": "p2",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 16
+        },
+        {
+          "actor": "p2",
+          "kind": "producer_exit",
+          "seq": 17
+        },
+        {
+          "actor": "w1",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 18,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 19
+        },
+        {
+          "actor": "w2",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 20,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 21
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        },
+        {
+          "caller": 1,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        },
+        {
+          "caller": 2,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        }
+      ],
+      "policy": "independent",
+      "scenario": "cancel_first"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 3,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "caller": 0,
+          "kind": "cancel_request",
+          "seq": 6
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_cancelled",
+          "seq": 7
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 8
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_cancelled",
+          "seq": 9
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 2,
+          "seq": 10
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_cancelled",
+          "seq": 11
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 12
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_cancelled",
+          "seq": 13
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 14
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 15
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        },
+        {
+          "caller": 1,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        },
+        {
+          "caller": 2,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        }
+      ],
+      "policy": "direct",
+      "scenario": "cancel_first"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 3,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "caller": 0,
+          "kind": "cancel_request",
+          "seq": 6
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_cancelled",
+          "seq": 7
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 2,
+          "seq": 8
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 9
+        },
+        {
+          "actor": "p0",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 10
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 11
+        },
+        {
+          "actor": "w1",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 12,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 13
+        },
+        {
+          "actor": "w2",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 14,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 15
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        },
+        {
+          "caller": 1,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        },
+        {
+          "caller": 2,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        }
+      ],
+      "policy": "shield",
+      "scenario": "cancel_first"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 3,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "caller": 0,
+          "kind": "cancel_request",
+          "seq": 6
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_cancelled",
+          "seq": 7
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 2,
+          "seq": 8
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 9
+        },
+        {
+          "actor": "p0",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 10
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 11
+        },
+        {
+          "actor": "w1",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 12,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 13
+        },
+        {
+          "actor": "w2",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 14,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 15
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        },
+        {
+          "caller": 1,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        },
+        {
+          "caller": 2,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        }
+      ],
+      "policy": "shield_refcount",
+      "scenario": "cancel_first"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        },
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p1"
+        },
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p2"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        },
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p1"
+        },
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p2"
+        }
+      ],
+      "callers": 3,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "p1",
+          "kind": "producer_start",
+          "seq": 2
+        },
+        {
+          "actor": "p2",
+          "kind": "producer_start",
+          "seq": 3
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 5
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_start",
+          "seq": 6
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 7
+        },
+        {
+          "actor": "coordinator",
+          "caller": 2,
+          "kind": "cancel_request",
+          "seq": 8
+        },
+        {
+          "actor": "p2",
+          "kind": "producer_cancelled",
+          "seq": 9
+        },
+        {
+          "actor": "p2",
+          "kind": "producer_exit",
+          "seq": 10
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_cancelled",
+          "seq": 11
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_detach",
+          "remaining": 2,
+          "seq": 12
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 13
+        },
+        {
+          "actor": "p0",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 14
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 15
+        },
+        {
+          "actor": "p1",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 16
+        },
+        {
+          "actor": "p1",
+          "kind": "producer_exit",
+          "seq": 17
+        },
+        {
+          "actor": "w0",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 18,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 19
+        },
+        {
+          "actor": "w1",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 20,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 21
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        },
+        {
+          "caller": 1,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        },
+        {
+          "caller": 2,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        }
+      ],
+      "policy": "independent",
+      "scenario": "cancel_last"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 3,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "caller": 2,
+          "kind": "cancel_request",
+          "seq": 6
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_cancelled",
+          "seq": 7
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 8
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_cancelled",
+          "seq": 9
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 2,
+          "seq": 10
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_cancelled",
+          "seq": 11
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 12
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_cancelled",
+          "seq": 13
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 14
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 15
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        },
+        {
+          "caller": 1,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        },
+        {
+          "caller": 2,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        }
+      ],
+      "policy": "direct",
+      "scenario": "cancel_last"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 3,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "caller": 2,
+          "kind": "cancel_request",
+          "seq": 6
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_cancelled",
+          "seq": 7
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_detach",
+          "remaining": 2,
+          "seq": 8
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 9
+        },
+        {
+          "actor": "p0",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 10
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 11
+        },
+        {
+          "actor": "w0",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 12,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 13
+        },
+        {
+          "actor": "w1",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 14,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 15
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        },
+        {
+          "caller": 1,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        },
+        {
+          "caller": 2,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        }
+      ],
+      "policy": "shield",
+      "scenario": "cancel_last"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 3,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "caller": 2,
+          "kind": "cancel_request",
+          "seq": 6
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_cancelled",
+          "seq": 7
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_detach",
+          "remaining": 2,
+          "seq": 8
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 9
+        },
+        {
+          "actor": "p0",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 10
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 11
+        },
+        {
+          "actor": "w0",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 12,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 13
+        },
+        {
+          "actor": "w1",
+          "current_generation": 1,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 14,
+          "status": "DELIVERED"
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 15
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        },
+        {
+          "caller": 1,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "DELIVERED"
+        },
+        {
+          "caller": 2,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        }
+      ],
+      "policy": "shield_refcount",
+      "scenario": "cancel_last"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p0"
+        },
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p1"
+        },
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p2"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p0"
+        },
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p1"
+        },
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p2"
+        }
+      ],
+      "callers": 3,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "p1",
+          "kind": "producer_start",
+          "seq": 2
+        },
+        {
+          "actor": "p2",
+          "kind": "producer_start",
+          "seq": 3
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 5
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_start",
+          "seq": 6
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 7
+        },
+        {
+          "actor": "coordinator",
+          "caller": 0,
+          "kind": "cancel_request",
+          "seq": 8
+        },
+        {
+          "actor": "coordinator",
+          "caller": 1,
+          "kind": "cancel_request",
+          "seq": 9
+        },
+        {
+          "actor": "coordinator",
+          "caller": 2,
+          "kind": "cancel_request",
+          "seq": 10
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_cancelled",
+          "seq": 11
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 12
+        },
+        {
+          "actor": "p1",
+          "kind": "producer_cancelled",
+          "seq": 13
+        },
+        {
+          "actor": "p1",
+          "kind": "producer_exit",
+          "seq": 14
+        },
+        {
+          "actor": "p2",
+          "kind": "producer_cancelled",
+          "seq": 15
+        },
+        {
+          "actor": "p2",
+          "kind": "producer_exit",
+          "seq": 16
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_cancelled",
+          "seq": 17
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 2,
+          "seq": 18
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_cancelled",
+          "seq": 19
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 20
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_cancelled",
+          "seq": 21
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 22
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        },
+        {
+          "caller": 1,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        },
+        {
+          "caller": 2,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        }
+      ],
+      "policy": "independent",
+      "scenario": "cancel_all"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 3,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "caller": 0,
+          "kind": "cancel_request",
+          "seq": 6
+        },
+        {
+          "actor": "coordinator",
+          "caller": 1,
+          "kind": "cancel_request",
+          "seq": 7
+        },
+        {
+          "actor": "coordinator",
+          "caller": 2,
+          "kind": "cancel_request",
+          "seq": 8
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_cancelled",
+          "seq": 9
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 10
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_cancelled",
+          "seq": 11
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 2,
+          "seq": 12
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_cancelled",
+          "seq": 13
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 14
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_cancelled",
+          "seq": 15
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 16
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        },
+        {
+          "caller": 1,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        },
+        {
+          "caller": 2,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        }
+      ],
+      "policy": "direct",
+      "scenario": "cancel_all"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": false,
+          "producer": "p0"
+        }
+      ],
+      "callers": 3,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "caller": 0,
+          "kind": "cancel_request",
+          "seq": 6
+        },
+        {
+          "actor": "coordinator",
+          "caller": 1,
+          "kind": "cancel_request",
+          "seq": 7
+        },
+        {
+          "actor": "coordinator",
+          "caller": 2,
+          "kind": "cancel_request",
+          "seq": 8
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_cancelled",
+          "seq": 9
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 2,
+          "seq": 10
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_cancelled",
+          "seq": 11
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 12
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_cancelled",
+          "seq": 13
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 14
+        },
+        {
+          "actor": "coordinator",
+          "kind": "cleanup_cancel",
+          "producer": "p0",
+          "seq": 15
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_cancelled",
+          "seq": 16
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 17
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        },
+        {
+          "caller": 1,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        },
+        {
+          "caller": 2,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        }
+      ],
+      "policy": "shield",
+      "scenario": "cancel_all"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": true,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 3,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "caller": 0,
+          "kind": "cancel_request",
+          "seq": 6
+        },
+        {
+          "actor": "coordinator",
+          "caller": 1,
+          "kind": "cancel_request",
+          "seq": 7
+        },
+        {
+          "actor": "coordinator",
+          "caller": 2,
+          "kind": "cancel_request",
+          "seq": 8
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_cancelled",
+          "seq": 9
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 2,
+          "seq": 10
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_cancelled",
+          "seq": 11
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 12
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_cancelled",
+          "seq": 13
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 14
+        },
+        {
+          "actor": "coordinator",
+          "kind": "last_waiter_cancel",
+          "producer": "p0",
+          "seq": 15
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_cancelled",
+          "seq": 16
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 17
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        },
+        {
+          "caller": 1,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        },
+        {
+          "caller": 2,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "CANCELLED"
+        }
+      ],
+      "policy": "shield_refcount",
+      "scenario": "cancel_all"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        },
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p1"
+        },
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p2"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        },
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p1"
+        },
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p2"
+        }
+      ],
+      "callers": 3,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "p1",
+          "kind": "producer_start",
+          "seq": 2
+        },
+        {
+          "actor": "p2",
+          "kind": "producer_start",
+          "seq": 3
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 5
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_start",
+          "seq": 6
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 7
+        },
+        {
+          "actor": "coordinator",
+          "generation": 2,
+          "kind": "generation_change",
+          "seq": 8
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 9
+        },
+        {
+          "actor": "p0",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 10
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 11
+        },
+        {
+          "actor": "p1",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 12
+        },
+        {
+          "actor": "p1",
+          "kind": "producer_exit",
+          "seq": 13
+        },
+        {
+          "actor": "p2",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 14
+        },
+        {
+          "actor": "p2",
+          "kind": "producer_exit",
+          "seq": 15
+        },
+        {
+          "actor": "w0",
+          "current_generation": 2,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 16,
+          "status": "STALE"
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 2,
+          "seq": 17
+        },
+        {
+          "actor": "w1",
+          "current_generation": 2,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 18,
+          "status": "STALE"
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 19
+        },
+        {
+          "actor": "w2",
+          "current_generation": 2,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 20,
+          "status": "STALE"
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 21
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "STALE"
+        },
+        {
+          "caller": 1,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "STALE"
+        },
+        {
+          "caller": 2,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "STALE"
+        }
+      ],
+      "policy": "independent",
+      "scenario": "generation_change"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 3,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "generation": 2,
+          "kind": "generation_change",
+          "seq": 6
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 7
+        },
+        {
+          "actor": "p0",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 8
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 9
+        },
+        {
+          "actor": "w0",
+          "current_generation": 2,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 10,
+          "status": "STALE"
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 2,
+          "seq": 11
+        },
+        {
+          "actor": "w1",
+          "current_generation": 2,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 12,
+          "status": "STALE"
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 13
+        },
+        {
+          "actor": "w2",
+          "current_generation": 2,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 14,
+          "status": "STALE"
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 15
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "STALE"
+        },
+        {
+          "caller": 1,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "STALE"
+        },
+        {
+          "caller": 2,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "STALE"
+        }
+      ],
+      "policy": "direct",
+      "scenario": "generation_change"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 3,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "generation": 2,
+          "kind": "generation_change",
+          "seq": 6
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 7
+        },
+        {
+          "actor": "p0",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 8
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 9
+        },
+        {
+          "actor": "w0",
+          "current_generation": 2,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 10,
+          "status": "STALE"
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 2,
+          "seq": 11
+        },
+        {
+          "actor": "w1",
+          "current_generation": 2,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 12,
+          "status": "STALE"
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 13
+        },
+        {
+          "actor": "w2",
+          "current_generation": 2,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 14,
+          "status": "STALE"
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 15
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "STALE"
+        },
+        {
+          "caller": 1,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "STALE"
+        },
+        {
+          "caller": 2,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "STALE"
+        }
+      ],
+      "policy": "shield",
+      "scenario": "generation_change"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 3,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "generation": 2,
+          "kind": "generation_change",
+          "seq": 6
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 7
+        },
+        {
+          "actor": "p0",
+          "generation": 1,
+          "kind": "producer_return",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 8
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 9
+        },
+        {
+          "actor": "w0",
+          "current_generation": 2,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 10,
+          "status": "STALE"
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 2,
+          "seq": 11
+        },
+        {
+          "actor": "w1",
+          "current_generation": 2,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 12,
+          "status": "STALE"
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 13
+        },
+        {
+          "actor": "w2",
+          "current_generation": 2,
+          "generation": 1,
+          "kind": "waiter_result",
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "seq": 14,
+          "status": "STALE"
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 15
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "STALE"
+        },
+        {
+          "caller": 1,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "STALE"
+        },
+        {
+          "caller": 2,
+          "generation": 1,
+          "payload_sha256": "227f73a81e744d191a3b955f47ab3d3328457e6421255558d5991734d0a57e23",
+          "status": "STALE"
+        }
+      ],
+      "policy": "shield_refcount",
+      "scenario": "generation_change"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        },
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p1"
+        },
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p2"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        },
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p1"
+        },
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p2"
+        }
+      ],
+      "callers": 3,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "p1",
+          "kind": "producer_start",
+          "seq": 2
+        },
+        {
+          "actor": "p2",
+          "kind": "producer_start",
+          "seq": 3
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 5
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_start",
+          "seq": 6
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 7
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 8
+        },
+        {
+          "actor": "p0",
+          "error": "RuntimeError",
+          "kind": "producer_error",
+          "seq": 9
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 10
+        },
+        {
+          "actor": "p1",
+          "error": "RuntimeError",
+          "kind": "producer_error",
+          "seq": 11
+        },
+        {
+          "actor": "p1",
+          "kind": "producer_exit",
+          "seq": 12
+        },
+        {
+          "actor": "p2",
+          "error": "RuntimeError",
+          "kind": "producer_error",
+          "seq": 13
+        },
+        {
+          "actor": "p2",
+          "kind": "producer_exit",
+          "seq": 14
+        },
+        {
+          "actor": "w0",
+          "error": "RuntimeError",
+          "kind": "waiter_error",
+          "seq": 15
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 2,
+          "seq": 16
+        },
+        {
+          "actor": "w1",
+          "error": "RuntimeError",
+          "kind": "waiter_error",
+          "seq": 17
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 18
+        },
+        {
+          "actor": "w2",
+          "error": "RuntimeError",
+          "kind": "waiter_error",
+          "seq": 19
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 20
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "OWNER_FAILED"
+        },
+        {
+          "caller": 1,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "OWNER_FAILED"
+        },
+        {
+          "caller": 2,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "OWNER_FAILED"
+        }
+      ],
+      "policy": "independent",
+      "scenario": "owner_failure"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 3,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 6
+        },
+        {
+          "actor": "p0",
+          "error": "RuntimeError",
+          "kind": "producer_error",
+          "seq": 7
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 8
+        },
+        {
+          "actor": "w0",
+          "error": "RuntimeError",
+          "kind": "waiter_error",
+          "seq": 9
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 2,
+          "seq": 10
+        },
+        {
+          "actor": "w1",
+          "error": "RuntimeError",
+          "kind": "waiter_error",
+          "seq": 11
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 12
+        },
+        {
+          "actor": "w2",
+          "error": "RuntimeError",
+          "kind": "waiter_error",
+          "seq": 13
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 14
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "OWNER_FAILED"
+        },
+        {
+          "caller": 1,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "OWNER_FAILED"
+        },
+        {
+          "caller": 2,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "OWNER_FAILED"
+        }
+      ],
+      "policy": "direct",
+      "scenario": "owner_failure"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 3,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 6
+        },
+        {
+          "actor": "p0",
+          "error": "RuntimeError",
+          "kind": "producer_error",
+          "seq": 7
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 8
+        },
+        {
+          "actor": "w0",
+          "error": "RuntimeError",
+          "kind": "waiter_error",
+          "seq": 9
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 2,
+          "seq": 10
+        },
+        {
+          "actor": "w1",
+          "error": "RuntimeError",
+          "kind": "waiter_error",
+          "seq": 11
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 12
+        },
+        {
+          "actor": "w2",
+          "error": "RuntimeError",
+          "kind": "waiter_error",
+          "seq": 13
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 14
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "OWNER_FAILED"
+        },
+        {
+          "caller": 1,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "OWNER_FAILED"
+        },
+        {
+          "caller": 2,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "OWNER_FAILED"
+        }
+      ],
+      "policy": "shield",
+      "scenario": "owner_failure"
+    },
+    {
+      "after_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "before_cleanup": [
+        {
+          "cancelled": false,
+          "done": true,
+          "producer": "p0"
+        }
+      ],
+      "callers": 3,
+      "events": [
+        {
+          "actor": "p0",
+          "kind": "producer_start",
+          "seq": 1
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_start",
+          "seq": 2
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_start",
+          "seq": 3
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_start",
+          "seq": 4
+        },
+        {
+          "actor": "coordinator",
+          "kind": "barrier_ready",
+          "seq": 5
+        },
+        {
+          "actor": "coordinator",
+          "kind": "gate_open",
+          "seq": 6
+        },
+        {
+          "actor": "p0",
+          "error": "RuntimeError",
+          "kind": "producer_error",
+          "seq": 7
+        },
+        {
+          "actor": "p0",
+          "kind": "producer_exit",
+          "seq": 8
+        },
+        {
+          "actor": "w0",
+          "error": "RuntimeError",
+          "kind": "waiter_error",
+          "seq": 9
+        },
+        {
+          "actor": "w0",
+          "kind": "waiter_detach",
+          "remaining": 2,
+          "seq": 10
+        },
+        {
+          "actor": "w1",
+          "error": "RuntimeError",
+          "kind": "waiter_error",
+          "seq": 11
+        },
+        {
+          "actor": "w1",
+          "kind": "waiter_detach",
+          "remaining": 1,
+          "seq": 12
+        },
+        {
+          "actor": "w2",
+          "error": "RuntimeError",
+          "kind": "waiter_error",
+          "seq": 13
+        },
+        {
+          "actor": "w2",
+          "kind": "waiter_detach",
+          "remaining": 0,
+          "seq": 14
+        }
+      ],
+      "outcomes": [
+        {
+          "caller": 0,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "OWNER_FAILED"
+        },
+        {
+          "caller": 1,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "OWNER_FAILED"
+        },
+        {
+          "caller": 2,
+          "generation": null,
+          "payload_sha256": null,
+          "status": "OWNER_FAILED"
+        }
+      ],
+      "policy": "shield_refcount",
+      "scenario": "owner_failure"
+    }
+  ],
+  "schema": "asyncio-singleflight-cancellation-v1"
+}
