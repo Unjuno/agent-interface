@@ -1,0 +1,34 @@
+{
+  "allocation": "MULTIFIDELITY-6155-T0F-ANYTIME-CPU-20261003-01",
+  "corruption_controls_rejected": 4,
+  "corruption_controls_total": 4,
+  "disposition": "PASS_METHOD_SCOPED",
+  "errors": [],
+  "expected_rows": 20000,
+  "frozen_gate_pass": true,
+  "metrics": {
+    "null": {
+      "cs_stop_rate": 0.0,
+      "cs_stops": 0,
+      "leaky_max_abs_mean": 0.0,
+      "leaky_stop_rate": 0.0,
+      "leaky_stops": 0,
+      "naive_stop_rate": 0.1436,
+      "naive_stops": 1436,
+      "streams": 10000
+    },
+    "positive": {
+      "cs_stop_rate": 1.0,
+      "cs_stops": 10000,
+      "leaky_max_abs_mean": 0.0,
+      "leaky_stop_rate": 0.0,
+      "leaky_stops": 0,
+      "naive_stop_rate": 1.0,
+      "naive_stops": 10000,
+      "streams": 10000
+    }
+  },
+  "raw_rows": 20000,
+  "replay_mismatches": 0
+}
+
