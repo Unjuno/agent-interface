@@ -25,6 +25,8 @@ SUITES['protocol'].append('test_app_server_reply_id_5156')
 SUITES['protocol'].append('test_appserver_write_admission_e0cc')
 SUITES['protocol'].append('test_app_server_utf8')
 SUITES['protocol'].append('test_appserver_process_tree_cleanup_20261004')
+SUITES['protocol'].append('test_grounding_constructor_01a0ff2d')
+SUITES['protocol'].append('test_grounding_borrowed_client_01a0ff2d')
 
 SUITES['protocol'].extend(['test_adaptive_acquisition_caller_v3', 'test_adaptive_acquisition_caller_custody_v3', 'test_adaptive_acquisition_caller_terminal_v3', 'test_adaptive_acquisition_invocation_93c2'])
 

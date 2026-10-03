@@ -74,18 +74,31 @@ class PersistentGroundingModel:
         self.path_converter = path_converter
         self.session_root.mkdir(parents=True, exist_ok=False)
         self._owns_client = client is None
-        self.client = client or CodexAppServerClient(
+        self.client = client if client is not None else CodexAppServerClient(
             app_server_command(node, cli), cwd=self.workspace,
             journal_path=self.session_root / "protocol.jsonl")
-        if self._owns_client:
-            self.client.initialize()
-        _schema, instructions, _validator = CONTRACTS[contract]
-        self.planner = PersistentPlannerAdapter(
-            self.client, model=model, effort=effort,
-            cwd=self.path_converter(self.workspace),
-            base_instructions=Path(instructions).read_text(encoding="utf-8"))
-        self.thread_id = self.planner.start_session()
-        self.calls = 0
+        try:
+            if self._owns_client:
+                self.client.initialize()
+            _schema, instructions, _validator = CONTRACTS[contract]
+            self.planner = PersistentPlannerAdapter(
+                self.client, model=model, effort=effort,
+                cwd=self.path_converter(self.workspace),
+                base_instructions=Path(instructions).read_text(encoding="utf-8"))
+            self.thread_id = self.planner.start_session()
+            self.calls = 0
+        except BaseException as startup_error:
+            if self._owns_client:
+                try:
+                    self.client.close()
+                except BaseException as cleanup_error:
+                    try:
+                        BaseException.add_note(startup_error,
+                            "persistent grounding startup cleanup failed: "
+                            + type(cleanup_error).__name__)
+                    except BaseException:
+                        pass
+            raise
 
     def call(self, root: Path, prompt: str, image: Path, contract: str, workspace: Path):
         if contract != self.contract:
