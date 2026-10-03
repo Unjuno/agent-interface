@@ -1,0 +1,57 @@
+{
+  "allocation": "SCORER-COMMAND-FAIRNESS-59-CONSTRUCTION-A01-20261003-01A0FF52",
+  "candidate_invocations": 1,
+  "components": [
+    "loop",
+    "stdin"
+  ],
+  "expected_rows": 36,
+  "frozen_utc": "2026-10-03T01:51:48.270088+00:00",
+  "host": {
+    "machine": "arm64",
+    "os": "Darwin",
+    "python": "3.14.5",
+    "release": "27.0.0"
+  },
+  "main_sha": "cb13a10dce358649458f5aea00947b8aa43fc5b8",
+  "main_update_scope": "kernel lifecycle and retained evidence only; selected scorer source bytes unchanged",
+  "prior_base": "f1416985d4ff9ce5bbf9f0f4be1be3d0ee669549",
+  "raw_only_auditor_invocations": 1,
+  "resources": "stdlib host construction with injected clock/inert command I/O; no shared container/GPU/GUI/input/model/live slot",
+  "retry": 0,
+  "scenarios": [
+    "zero",
+    "half_sample",
+    "period_sample",
+    "double_sample",
+    "ten_sample",
+    "half_sink",
+    "period_sink",
+    "double_sink",
+    "ten_sink"
+  ],
+  "source_sha256": {
+    "PLAN.md": "ea9b7c1f1b346e3d74b9be414f27414f306975bc2d7506186c39d30e3a704b37",
+    "assay.py": "26e2ee97b2e8d8eab9f639dfd45734768577cd12cc1219d478ff5d7067cc60c0",
+    "audit.py": "7aaf734e22e4e21300d2d8d5e341d14c47d4c4774b54e86e9236fd7849cd565a",
+    "candidate.py": "7fac149246573c3f91e972e24427b1aa7f8afda2ec480fb8efa95b3e03254d7a",
+    "repair.patch": "2356aa191958329c5a255c1f92443d2091b7b40be4fdf56315cfe4a5fffdb307",
+    "sources/fair/independent_progress_clock_v2.py": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613",
+    "sources/fair/main_thread_scorer_polling_v1.py": "d58b9a1a52d5d537e5c2e692b3705736c2b16d537ec7948169cd57f27774691c",
+    "sources/fair/map01_scorer_stdio_adapter_v1.py": "088dc0e0a3245ec15081f2097706a8989c0ef885010969d7d26fb70a6aa7791d",
+    "sources/regressions/independent_progress_clock_v2.py": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613",
+    "sources/regressions/test_independent_progress_clock_v2.py": "39c6b8eac67c4be3e5acc0cb7ed94f17cfc6cc5d5a2fa536e28d327877152cb4",
+    "sources/regressions/test_main_thread_scorer_polling_v1.py": "ab9b19a055253f10de409864d17dc86e25c71a227af375398ea4c1c1a7a4f4e3",
+    "sources/regressions/test_map01_scorer_stdio_adapter_v1.py": "4b91297b9693752e605aa36bdbc641ea93154417e6e4b66285b990dce4849e3b",
+    "sources/retained/independent_progress_clock_v2.py": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613",
+    "sources/retained/main_thread_scorer_polling_v1.py": "0a82819748603b77726d3d7053da7f6cba5cf0a0d5bcd9a79f4272554cf6af0a",
+    "sources/retained/map01_scorer_stdio_adapter_v1.py": "0ba57b240b37d04042915d243d149a1bb65ac689732dfc8e48fb60e880f0198a",
+    "sources/source-map.json": "d4cd00943a6c38459b59d50b5a3bdcb57f890f188c76da5a84aca39f09f0d262",
+    "test_fairness.py": "b60c9478be8c42a8625372575648d1bd975ea141b1fb1ecf613ca77e44441636"
+  },
+  "variants": [
+    "retained",
+    "fair"
+  ],
+  "worker": "01a0ff52-e0cc-7e81-b3ed-36b1d84d7a9a"
+}
