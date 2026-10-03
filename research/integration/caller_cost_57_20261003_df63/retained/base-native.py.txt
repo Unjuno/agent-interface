@@ -19,7 +19,6 @@ SUITES = {
 }
 
 SUITES['protocol'].append('test_app_server_eof_stop')
-SUITES['protocol'].append('test_adaptive_acquisition_cost_coverage')
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
@@ -61,4 +60,3 @@ def main():
 
 if __name__ == '__main__':
     raise SystemExit(main())
-SUITES['protocol'].append('test_adaptive_acquisition_aggregate_cost')

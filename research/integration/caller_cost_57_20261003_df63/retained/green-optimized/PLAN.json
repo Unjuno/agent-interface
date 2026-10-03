@@ -1,0 +1,32 @@
+{
+  "utc_before_spawn": "2026-10-03T14:52:38.903946+00:00",
+  "phase": "green-optimized",
+  "supervisor_pid": 43252,
+  "command": [
+    "<PYTHON_RUNTIME>\\python.exe",
+    "-O",
+    "-m",
+    "unittest",
+    "-v",
+    "test_caller_cost_coverage",
+    "test_adaptive_acquisition_caller_v3"
+  ],
+  "cwd": "<TASK_ROOT>\\candidate",
+  "freeze": {
+    "adaptive_acquisition_caller_v3.py": {
+      "bytes": 23911,
+      "sha256": "2d30e8294086d1a2b4833088a4db7e589abad876992f893024ace0a089fbf6eb"
+    },
+    "test_adaptive_acquisition_caller_v3.py": {
+      "bytes": 13351,
+      "sha256": "99e231fe9ed1c16b278785900213ec7e6272040df1a84df0ae8062f9860da693"
+    },
+    "test_caller_cost_coverage.py": {
+      "bytes": 4474,
+      "sha256": "28f94e109e37b468670548d1cf8b306ca61a23d0154c721fd04470de521c3778"
+    }
+  },
+  "guard_seconds": 10,
+  "resource": "inert synthetic adapters/virtual clock; no model/GUI/native peers",
+  "tests": 21
+}

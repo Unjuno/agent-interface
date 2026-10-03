@@ -1,0 +1,54 @@
+import ast,copy,hashlib,json,sys
+from fractions import Fraction
+from pathlib import Path
+r=Path(__file__).resolve().parent
+load=lambda phase:{x['case']:x for x in (json.loads(line) for line in (r/phase/'rows.jsonl').read_text(encoding='utf-8').splitlines())}
+old=load('first-red');new=load('green-normal');opt=load('green-optimized');names={'positive_overflow','max_overflow','huge_mixed','finite_sum','finite_credit','unknown','zero_cost'}
+def need(ok,m):
+    if not ok:raise ValueError(m)
+def typed(a,b):return json.dumps(a,sort_keys=True)==json.dumps(b,sort_keys=True)
+def expected(inputs):
+    if None in inputs:return None
+    exact=sum((Fraction.from_float(x) if type(x) is float else Fraction(x) for x in inputs),Fraction(0))
+    if abs(exact)>Fraction.from_float(sys.float_info.max):return None
+    return float(exact)
+def oracle(rows):
+    need(set(rows)==names,'exact7domain')
+    for name,row in rows.items():
+        need(row['exception'] is None and row['strict_json_error'] is None,'completewireavailable')
+        rec=row['receipt'];cost=rec['accounting']['cost'];exp=expected(row['inputs'])
+        need(cost is None if exp is None else type(cost) in (int,float) and cost==exp,'exactrational totalavailability')
+        need(rec['outcome']=='TASK_SUCCEEDED' and rec['delivery']=='confirmed','declaredinert outcome')
+        need(type(rec['accounting']['attempted_calls']) is int and rec['accounting']['attempted_calls']==2 and rec['accounting']['completed_calls']==2,'attemptcoverage')
+        need([x['stage'] for x in row['events']]==['observe_source','coarse_model','acquire_anchor','anchor_model','final_revalidate','execute','verify_effect'],'callback order')
+        need(len(rec['attempt_ledger'])==len(rec['model_call_ledger'])==2,'retainedledgers')
+oracle(new);oracle(opt);need(typed(new,opt),'whole normal optimizedrows')
+need(set(old)==names,'source7domain')
+need(old['huge_mixed']['exception']['type']=='OverflowError' and old['huge_mixed']['receipt'] is None,'originalunreturnedreceipt')
+for name in names:
+    need(typed(old[name]['events'],new[name]['events']),'all7events preserved')
+    if old[name]['receipt'] is not None:
+        a=copy.deepcopy(old[name]['receipt']);b=copy.deepcopy(new[name]['receipt']);a['accounting'].pop('cost');b['accounting'].pop('cost');need(typed(a,b),'every noncost field exact')
+for name in ['positive_overflow','max_overflow']:
+    need(old[name]['receipt']['accounting']['cost']=={'$numeric':'inf'} and old[name]['strict_json_error']=='ValueError','originalstrictJSONfailure')
+base=ast.parse((r/'baseline/adaptive_acquisition_caller_v3.py').read_bytes());t=ast.parse((r/'candidate/adaptive_acquisition_caller_v3.py').read_bytes())
+t.body=[n for n in t.body if not (isinstance(n,ast.Import) and any(a.name=='math' for a in n.names)) and not(isinstance(n,ast.FunctionDef) and n.name=='_aggregate_cost')]
+for n in ast.walk(t):
+    if isinstance(n,ast.Dict):
+        for i,k in enumerate(n.keys):
+            if isinstance(k,ast.Constant) and k.value=='cost' and isinstance(n.values[i],ast.Call) and ast.unparse(n.values[i].func)=='_aggregate_cost':
+                n.values[i]=ast.parse('sum(costs) if len(costs) == len(attempts) else None',mode='eval').body
+need(ast.dump(base,include_attributes=False)==ast.dump(t,include_attributes=False),'wholeoriginalASTinverse')
+bad=[]
+x=copy.deepcopy(new);x['positive_overflow']['receipt']['accounting']['cost']=0;bad.append(('false_zero',x))
+x=copy.deepcopy(new);x['max_overflow']['receipt']['accounting']['cost']={'$numeric':'inf'};bad.append(('promoted_infinite',x))
+x=copy.deepcopy(new);x['huge_mixed']['events'].pop();bad.append(('lost_verified_callback',x))
+x=copy.deepcopy(new);x['finite_credit']['receipt']['attempt_ledger'].pop();bad.append(('lost_attempt',x))
+refused=[]
+for name,x in bad:
+    p=r/(name+'.json');p.write_text(json.dumps(x,sort_keys=True,indent=2)+'\n',encoding='utf-8')
+    try:oracle(x)
+    except ValueError as e:refused.append(dict(case=name,reason=str(e),bytes=p.stat().st_size,sha256=hashlib.sha256(p.read_bytes()).hexdigest()))
+    else:raise ValueError('ineffective control')
+report=dict(records=21,source_first_failures=3,source_receipts=6,whole_noncost_receipts_exact=6,all7callback_sequences_exact=True,normal_optimized_whole_records_equal=True,whole_original_ast_inverse=True,reference='exact Fraction arithmetic; finite representability bound for these7new inputs, not general individual measurement policy',refused=refused,source_producer_replayed=False,received_peer_producer_replayed=False,limitations=['per-call measurement acceptance remains legacy; no end-to-end arbitrary-value strictJSON claim','OverflowError/nonfinite aggregate null is conservative unavailable, not actual price/currency or numeric-domain contract','inert task metadata only; no physical effects/input release/recovery/model/performance'])
+(r/'AUDIT.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8');print(json.dumps(report))

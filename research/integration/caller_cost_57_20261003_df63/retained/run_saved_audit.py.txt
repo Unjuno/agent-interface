@@ -1,0 +1,14 @@
+import datetime,hashlib,json,os,subprocess,sys
+from pathlib import Path
+root=Path(__file__).resolve().parent;out=root/'audit-run';out.mkdir(exist_ok=False)
+utc=lambda:datetime.datetime.now(datetime.timezone.utc).isoformat()
+pin=lambda p:{'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()}
+(out/'PLAN.json').write_text(json.dumps({'utc':utc(),'supervisor_pid':os.getpid(),'command':[sys.executable,str(root/'check_saved.py')],'checker_pin':pin(root/'check_saved.py'),'guard_seconds':10,'mode':'data-only retained evidence; no source/native/peer replay'},indent=2)+'\n',encoding='utf-8')
+started=utc();p=subprocess.Popen([sys.executable,str(root/'check_saved.py')],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+timed_out=False
+try:stdout,stderr=p.communicate(timeout=10)
+except subprocess.TimeoutExpired:
+    timed_out=True;p.kill();stdout,stderr=p.communicate(timeout=3)
+(out/'stdout.bin').write_bytes(stdout);(out/'stderr.bin').write_bytes(stderr)
+r={'pid':p.pid,'supervisor_pid':os.getpid(),'start_utc':started,'end_utc':utc(),'exit_code':p.returncode,'guard_expired':timed_out,'stdout':pin(out/'stdout.bin'),'stderr':pin(out/'stderr.bin')}
+(out/'RESULT.json').write_text(json.dumps(r,indent=2)+'\n',encoding='utf-8');print(json.dumps(r));print(stdout.decode('utf-8'));print(stderr.decode('utf-8'))

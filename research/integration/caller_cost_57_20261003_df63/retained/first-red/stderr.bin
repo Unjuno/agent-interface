@@ -1,0 +1,50 @@
+test_first_upstream_failure_cost_unavailable (test_caller_cost_coverage.CostCoverage.test_first_upstream_failure_cost_unavailable) ... FAIL
+test_malformed_result_cost_unavailable (test_caller_cost_coverage.CostCoverage.test_malformed_result_cost_unavailable) ... FAIL
+test_missing_adapter_cost_unavailable (test_caller_cost_coverage.CostCoverage.test_missing_adapter_cost_unavailable) ... FAIL
+test_one_known_success_exact_cost (test_caller_cost_coverage.CostCoverage.test_one_known_success_exact_cost) ... ok
+test_one_unknown_success_cost_unavailable (test_caller_cost_coverage.CostCoverage.test_one_unknown_success_cost_unavailable) ... ok
+test_success_then_failure_cost_unavailable (test_caller_cost_coverage.CostCoverage.test_success_then_failure_cost_unavailable) ... FAIL
+test_two_known_successes_exact_total (test_caller_cost_coverage.CostCoverage.test_two_known_successes_exact_total) ... ok
+test_zero_attempt_warm_cost_zero (test_caller_cost_coverage.CostCoverage.test_zero_attempt_warm_cost_zero) ... ok
+test_zero_cost_safe_stop_is_preserved (test_caller_cost_coverage.CostCoverage.test_zero_cost_safe_stop_is_preserved) ... ok
+
+======================================================================
+FAIL: test_first_upstream_failure_cost_unavailable (test_caller_cost_coverage.CostCoverage.test_first_upstream_failure_cost_unavailable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<TASK_ROOT>\baseline\test_caller_cost_coverage.py", line 30, in test_first_upstream_failure_cost_unavailable
+    r=self.route('first_upstream_failure',coarse='model',coarse_fn=failure);self.assertEqual(r['outcome'],'CALLER_FAILED');self.assertEqual(r['accounting']['attempted_calls'],1);self.assertEqual(r['accounting']['completed_calls'],0);self.assertIsNone(r['accounting']['cost'])
+                                                                                                                                                                                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 is not None
+
+======================================================================
+FAIL: test_malformed_result_cost_unavailable (test_caller_cost_coverage.CostCoverage.test_malformed_result_cost_unavailable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<TASK_ROOT>\baseline\test_caller_cost_coverage.py", line 34, in test_malformed_result_cost_unavailable
+    r=self.route('malformed_result',coarse='model',coarse_fn=lambda _:{'cost':9});self.assertEqual(r['outcome'],'CALLER_FAILED');self.assertEqual(r['accounting']['attempted_calls'],1);self.assertIsNone(r['accounting']['cost'])
+                                                                                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 is not None
+
+======================================================================
+FAIL: test_missing_adapter_cost_unavailable (test_caller_cost_coverage.CostCoverage.test_missing_adapter_cost_unavailable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<TASK_ROOT>\baseline\test_caller_cost_coverage.py", line 36, in test_missing_adapter_cost_unavailable
+    r=self.route('missing_adapter',coarse='model',missing=True);self.assertEqual(r['outcome'],'CALLER_FAILED');self.assertEqual(r['accounting']['attempted_calls'],1);self.assertIsNone(r['accounting']['cost'])
+                                                                                                                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 is not None
+
+======================================================================
+FAIL: test_success_then_failure_cost_unavailable (test_caller_cost_coverage.CostCoverage.test_success_then_failure_cost_unavailable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<TASK_ROOT>\baseline\test_caller_cost_coverage.py", line 32, in test_success_then_failure_cost_unavailable
+    r=self.route('success_then_failure',coarse='model',anchor_fn=failure);self.assertEqual(r['outcome'],'CALLER_FAILED');self.assertEqual(r['accounting']['attempted_calls'],2);self.assertEqual(r['accounting']['completed_calls'],1);self.assertIsNone(r['accounting']['cost'])
+                                                                                                                                                                                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 5 is not None
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.005s
+
+FAILED (failures=4)
