@@ -1,0 +1,19 @@
+from pathlib import Path
+import base64,gzip,hashlib,json
+root=Path(__file__).resolve().parents[2]
+paths=[root/'work/owned_io_6501_p01'/n for n in ['public_observe_failure_boundary.py','audit_public_observe_saved.py','pack_public_observe.py']]
+for directory in ['P02-public-observe-failure','P02-public-observe-audit']:
+    paths+=sorted(p for p in (root/'outputs'/directory).rglob('*') if p.is_file())
+for name in ['PUBLIC_OBSERVE_FAILURE','PUBLIC_OBSERVE_AUDIT']:
+    paths += [root/'outputs/owned_io_6501_p01'/(name+'.'+s) for s in ['receipt.json','stdout','stderr']]
+images=[]
+for p in paths:
+    b=p.read_bytes();images.append(dict(name=p.relative_to(root).as_posix(),bytes=len(b),sha256=hashlib.sha256(b).hexdigest(),base64=base64.b64encode(b).decode()))
+assert len(images)==18
+raw=json.dumps(dict(format='full-images-v1',images=images),separators=(',',':')).encode();compressed=gzip.compress(raw,mtime=0)
+meta=dict(images=len(images),json_bytes=len(raw),json_sha256=hashlib.sha256(raw).hexdigest(),gzip_bytes=len(compressed),gzip_sha256=hashlib.sha256(compressed).hexdigest())
+body='Public observation failure boundary evidence, actual6178 / nonvoting. Concrete #57 integration concern: a missing completion cue warrants a distinct input-free observation, whose failure must not release/reset/close the caller-owned session or imply task success. Full pinnedmain5796ff2b observe.py, supplied inert quarantined session; selector opening forbidden. New ordinary child32752 19:54:14.454768–19:54:14.604783UTC exit0: bool region, oversize area, unsupported capture-artifact setup, reader exception. All4 structured failures preserve held Q81/quarantine, input_dispatched=false/side_effect_authority=false, with no close/release/open. Distinct actual observation IDs. Separate saved DATA reader23588 19:55:34.878581–19:55:34.943467UTC exit0 joins original process/PID/source/fullstreams and independently reduces all4 rows;6 full copied contradictions refused (hiddenrelease/clearedquarantine/lostcustody/boolkeycode/authority/duplicateID). Original driver not rerun. Full18 images retained below; do not execute received code. This is inert facade/control-flow and recorded-data consistency, not actual backend/selector/GDI/input neutrality/cancellation/task completion/native timing/model economics/hostile producer attestation. Native/formal replay0/main request0/votes0/sender0. Existing historical six-task correctness and overall integration HOLD/visual erratum remain unchanged.\n\n'+json.dumps(meta)+'\n\n```gzip-base64\n'+base64.b64encode(compressed).decode()+'\n```\n'
+assert len(body.encode())<60000
+(root/'outputs/P02-public-observe-PROOF.json').write_bytes(raw)
+(root/'outputs/P02-public-observe-COMMENT.txt').write_text(body,encoding='utf8',newline='\n')
+print(json.dumps(meta|dict(body_bytes=len(body.encode()))))

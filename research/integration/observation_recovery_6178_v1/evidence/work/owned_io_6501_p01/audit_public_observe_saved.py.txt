@@ -1,0 +1,53 @@
+from pathlib import Path
+from datetime import datetime,timezone
+import copy,hashlib,json,os,re
+
+root=Path(__file__).resolve().parents[2];out=root/'outputs/P02-public-observe-audit';out.mkdir(exist_ok=False)
+start=datetime.now(timezone.utc).isoformat()
+raw=json.loads((root/'outputs/P02-public-observe-failure/RESULT.json').read_bytes())
+def audit(data):
+    expected={'bool_region':('invalid_request','INVALID_OBSERVATION_REGION',[]),
+              'oversize_region':('invalid_request','INVALID_OBSERVATION_REGION',[]),
+              'unsupported_artifacts':('observation_failed',"ValueError('CAPTURE_ARTIFACTS_UNSUPPORTED')",[]),
+              'reader_failure':('observation_failed',"RuntimeError('inert capture failed')",[['observe',['owned','screen_physical_px',[0,0,1,1]]]])}
+    assert type(data['pid']) is int and data['pid']>0
+    assert len(data['rows'])==4 and {r['case'] for r in data['rows']}==set(expected)
+    identities=[]
+    for row in data['rows']:
+        reply=row['reply'];status,error,calls=expected[row['case']]
+        assert reply['schema']=='agent-interface/runtime-observation-v1'
+        assert reply['status']==status and reply['error']==error
+        assert reply['input_dispatched'] is False and reply['side_effect_authority'] is False
+        assert row['recovery_required'] is True and row['held']=={'Q':81} and type(row['held']['Q']) is int
+        assert row['calls']==calls
+        assert type(reply['observation_id']) is str and re.fullmatch('[0-9a-f]{32}',reply['observation_id'])
+        identities.append(reply['observation_id'])
+    assert len(set(identities))==4
+    for key in ['native_executions','formal_replays','main_requests']:assert type(data[key]) is int and data[key]==0
+audit(raw)
+receipt=json.loads((root/'outputs/owned_io_6501_p01/PUBLIC_OBSERVE_FAILURE.receipt.json').read_bytes())
+assert receipt['pid']==raw['pid'] and receipt['exit']==0 and receipt['child_reaped'] is True
+assert not receipt['timed_out']
+for suffix in ['stdout','stderr']:
+    data=(root/('outputs/owned_io_6501_p01/PUBLIC_OBSERVE_FAILURE.'+suffix)).read_bytes()
+    assert hashlib.sha256(data).hexdigest()==receipt[suffix+'_sha256']
+    if suffix=='stdout':assert json.loads(data)==raw
+source=(root/'outputs/P02-public-observe-failure/observe.py.txt').read_bytes()
+assert hashlib.sha256(source).hexdigest()==raw['source_sha256']
+driver=(root/'work/owned_io_6501_p01/public_observe_failure_boundary.py').read_bytes()
+assert hashlib.sha256(driver).hexdigest()==receipt['source_sha256']
+changes=[('hidden_release',lambda x:x['rows'][0]['calls'].append(['release'])),
+         ('cleared_quarantine',lambda x:x['rows'][1].update(recovery_required=False)),
+         ('lost_custody',lambda x:x['rows'][2].update(held={})),
+         ('bool_keycode',lambda x:x['rows'][2].update(held={'Q':True})),
+         ('authority_granted',lambda x:x['rows'][3]['reply'].update(side_effect_authority=True)),
+         ('duplicate_capture_id',lambda x:x['rows'][1]['reply'].update(observation_id=x['rows'][0]['reply']['observation_id']))]
+controls=[]
+for name,change in changes:
+    candidate=copy.deepcopy(raw);change(candidate)
+    (out/(name+'.json')).write_text(json.dumps(candidate,indent=2)+'\n',encoding='utf8')
+    try:audit(candidate)
+    except AssertionError:controls.append(dict(name=name,rejected=True))
+    else:raise AssertionError('control accepted: '+name)
+result=dict(pid=os.getpid(),start=start,end=datetime.now(timezone.utc).isoformat(),original_rows=4,controls=controls,receipt_join=True,source_join=True,decision='PASS_SAVED_DATA_CONSISTENCY',scope='Independent raw reducer/negative controls; recorded fake endpoint calls and state are producer observations, not hostile-producer/native truth attestation.',native_executions=0,formal_replays=0,main_requests=0)
+(out/'RESULT.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf8');print(json.dumps(result))

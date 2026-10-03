@@ -1,0 +1,78 @@
+from pathlib import Path
+from datetime import datetime, timezone
+import ctypes, hashlib, importlib, json, os, subprocess, sys
+from unittest.mock import patch
+
+root=Path(__file__).resolve().parents[2]
+repo=root/'work/agent-interface'
+out=root/'outputs/P02-recovery-observation'
+out.mkdir(exist_ok=False)
+tree='47ad65aa3559e5680ec688971e490b3218ddfb61'
+start=datetime.now(timezone.utc).isoformat()
+paths=['runtime/core_v1/__init__.py','runtime/core_v1/contract.py',
+       'runtime/core_v1/platform_probe.py','runtime/backends/win32_v1/__init__.py',
+       'runtime/backends/win32_v1/backend.py','runtime/backends/win32_v1/session.py']
+pins=[]
+for path in paths:
+    p=subprocess.run(['git','-C',str(repo),'show',tree+':'+path],capture_output=True,timeout=15)
+    assert p.returncode==0,p.stderr
+    target=out/'source'/path;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(p.stdout)
+    pins.append(dict(path=path,bytes=len(p.stdout),sha256=hashlib.sha256(p.stdout).hexdigest()))
+sys.path.insert(0,str(out/'source'))
+def forbidden(*args,**kwargs): raise AssertionError('native DLL/constructor forbidden')
+rows=[]
+with patch.object(ctypes,'WinDLL',forbidden,create=True):
+    native=importlib.import_module('runtime.backends.win32_v1.backend')
+    Session=importlib.import_module('runtime.backends.win32_v1.session').Win32RuntimeSession
+    schema=importlib.import_module('runtime.core_v1.contract').SCHEMA_PROGRAM
+    class User:
+        def __init__(self): self.down=set();self.stubborn=True;self.live=True;self.events=[]
+        def IsWindow(self, hwnd): self.events.append(['IsWindow',hwnd]);return self.live
+        def SendInput(self,count,items,size):
+            assert count==1 and items[0].type==native.INPUT_KEYBOARD
+            vk=int(items[0].ki.wVk);down=not bool(items[0].ki.dwFlags & native.KEYEVENTF_KEYUP)
+            self.events.append(['SendInput',vk,down])
+            if down:self.down.add(vk)
+            elif not self.stubborn:self.down.discard(vk)
+            return 1
+        def GetAsyncKeyState(self,vk): self.events.append(['GetAsyncKeyState',vk]);return 0x8000 if vk in self.down else 0
+    def program():
+        return dict(schema=schema,program_id='new-observe-recovery-coupling',source=dict(observation_seq=7,binding_revision=3),authority=dict(lease_id='private-inert',expires_at_ns=100),terminal=dict(release_all_required=True),ops=[dict(op='key_state',key='Q',down=True),dict(op='release_all')])
+    with patch.object(native.Win32Backend,'__init__',forbidden),patch.object(native.time,'sleep',lambda _:None),patch.object(native.time,'monotonic_ns',lambda:1):
+        for mode in ['live_target','stale_target','missing_target']:
+            b=native.Win32Backend.__new__(native.Win32Backend)
+            b.held_keys={};b.held_buttons=set();b.emissions=0;b.targets={'owned':17};b.user32=User()
+            captures=[]
+            b.capture=lambda *args: captures.append(list(args)) or {'bytes':4,'sha256':'inert-pixels'}
+            s=Session(b)
+            dispatch=lambda:s.dispatch(program(),current_observation_seq=7,current_binding_revision=3,now_ns=1)
+            first=dispatch();assert first['status']=='release_unverified' and s.recovery_required
+            before=list(b.user32.events);held=dict(b.held_keys);emissions=b.emissions
+            if mode=='stale_target':b.user32.live=False
+            target='missing' if mode=='missing_target' else 'owned'
+            try:
+                observation=b.observe_read_only(target,'screen_physical_px',(0,0,1,1))
+                assert mode=='live_target'
+                observe_error=None
+            except native.Win32BackendError as e:
+                assert mode!='live_target';observation=None;observe_error=str(e)
+            assert s.recovery_required and b.held_keys==held and b.emissions==emissions
+            assert all(event[0]=='IsWindow' for event in b.user32.events[len(before):])
+            assert len(captures)==(1 if mode=='live_target' else 0)
+            before_block=list(b.user32.events)
+            refused=dispatch();assert refused['error']=='INPUT_RECOVERY_REQUIRED' and b.user32.events==before_block
+            failed=s.recover_input();assert failed['status']=='recovery_failed' and b.held_keys==held
+            b.user32.stubborn=False
+            released=s.recover_input();assert released['status']=='input_recovered' and not s.recovery_required
+            assert not b.held_keys and not b.user32.down and released['replay_allowed'] is False
+            rows.append(dict(mode=mode,first=first,observation=observation,observe_error=observe_error,captures=captures,refused=refused,failed_recovery=failed,successful_recovery=released,events=b.user32.events))
+    loaded=[]
+    for pin in pins:
+        path=out/'source'/pin['path'];assert hashlib.sha256(path.read_bytes()).hexdigest()==pin['sha256']
+        module=pin['path'].removesuffix('.py').replace('/','.')
+        if module.endswith('.__init__'):module=module[:-9]
+        loaded.append(dict(module=module,file=getattr(sys.modules.get(module),'__file__',None)))
+result=dict(pid=os.getpid(),start=start,end=datetime.now(timezone.utc).isoformat(),tree=tree,pins=pins,loaded=loaded,rows=rows,
+            decision='PASS_INERT_OBSERVATION_DOES_NOT_CLEAR_RECOVERY',
+            scope='New combined dependency behavior. Full runtime modules; constructor/DLL forbidden; SendInput/state/IsWindow/capture/time endpoints inert. Not GDI pixels, physical release, native cancellation, concurrency, general caller authority, performance or formal replay.',native_executions=0,formal_replays=0,main_requests=0)
+(out/'RESULT.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf8');print(json.dumps(result))
