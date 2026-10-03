@@ -1,7 +1,7 @@
 import json,math,os,sys,unittest
 from pathlib import Path
 from adaptive_acquisition_caller_v3 import run
-CASES={'positive_overflow':([1e308,1e308],None),'max_overflow':([sys.float_info.max,sys.float_info.max],None),'huge_mixed':([2**4096,0.5],None),'finite_sum':([0.125,0.375],0.5),'finite_credit':([sys.float_info.max,-sys.float_info.max],0.0),'unknown':([None,0.375],None),'zero_cost':([0.0,0.0],0.0)}
+CASES={'positive_overflow':([1e308,1e308],None),'max_overflow':([sys.float_info.max,sys.float_info.max],None),'huge_mixed':([2**4096,0.5],None),'finite_sum':([0.125,0.375],0.5),'finite_credit':([sys.float_info.max,-sys.float_info.max],0.0),'unknown':([None,0.375],None),'zero_cost':([0.0,0.0],0.0),'individual_nan':([float('nan'),0.375],None),'individual_inf':([float('inf'),0.375],None),'individual_negative_inf':([-float('inf'),0.375],None)}
 def wire(value):
     if type(value) is float and not math.isfinite(value):return {'$numeric':repr(value)}
     if type(value) is dict:return {k:wire(v) for k,v in value.items()}
@@ -32,6 +32,7 @@ class Aggregate(unittest.TestCase):
         if expected is None:self.assertIsNone(receipt['accounting']['cost'])
         else:self.assertEqual(receipt['accounting']['cost'],expected)
         self.assertIsNone(strict_error)
+        if name.startswith("individual_"):self.assertIsNone(receipt["model_call_ledger"][0]["cost"])
 for name in CASES:
     def test(self,name=name):self.check_case(name)
     setattr(Aggregate,'test_'+name,test)
