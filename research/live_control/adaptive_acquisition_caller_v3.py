@@ -30,6 +30,14 @@ LOCAL_EXECUTION_YIELD_REASONS = {
 }
 
 
+def _error_text(error):
+    """Diagnostics must not replace a finalized failure or execution receipt."""
+    try:
+        return str.__str__(repr(error))
+    except BaseException:
+        return "<exception repr unavailable>"
+
+
 def _aggregate_cost(costs, attempted_calls):
     """Return a total only when all attempts have a representable numeric sum."""
     if len(costs) != attempted_calls:
@@ -248,11 +256,11 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                 execute_invoked = True
             value = callback(detached_payload)
         except Exception as error:
-            ended = clock(); stages[name] = {"status": "failed", "reason": repr(error)}
+            ended = clock(); stages[name] = {"status": "failed", "reason": _error_text(error)}
             phases.append({"stage": name, "started_ns": started, "ended_ns": ended,
                            "elapsed_ns": ended-started})
             emit({"event": "stage_failed", "stage": name, "ended_ns": ended,
-                  "error": repr(error)})
+                  "error": _error_text(error)})
             raise
         if name == "execute":
             # Detach the adapter return before auxiliary callbacks can change it.
@@ -287,8 +295,8 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                                getattr(error, "visible_images_submitted", None),
                                "visible_images_submitted"),
                            wait_ns=_optional_count(getattr(error, "wait_ns", None), "wait_ns"),
-                           error=repr(error))
-            stages[name] = {"status": "failed", "reason": repr(error)}
+                           error=_error_text(error))
+            stages[name] = {"status": "failed", "reason": _error_text(error)}
             phases.append({"stage": name, "started_ns": started, "ended_ns": ended,
                            "elapsed_ns": ended-started})
             emit({"event": "model_attempt_finished", **copy.deepcopy(attempt)})
@@ -366,7 +374,7 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                 result["execution_progress"] = copy.deepcopy(returned_execution)
             result.update(outcome="CALLER_FAILED", reason="terminal_journal_unavailable",
                           finalized_outcome=outcome, finalized_reason=reason,
-                          terminal_journal_error=repr(error))
+                          terminal_journal_error=_error_text(error))
         return result
 
     def execution_delivery(execution):
@@ -478,4 +486,4 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
         return failure("TASK_DEFERRED" if error.typed_status == "DEFERRED_UPSTREAM"
                       else "CALLER_FAILED", error.typed_status.lower())
     except Exception as error:
-        return failure("CALLER_FAILED", repr(error))
+        return failure("CALLER_FAILED", _error_text(error))

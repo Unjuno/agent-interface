@@ -24,6 +24,8 @@ SUITES['protocol'].extend(['test_adaptive_acquisition_caller_v3', 'test_adaptive
 
 SUITES['protocol'].extend(['test_adaptive_acquisition_cost_coverage', 'test_adaptive_acquisition_aggregate_cost', 'runtime.integration_checks.test_native_catalogue', 'test_cost_invocation_composition_93c2'])
 
+SUITES['protocol'].append('test_adaptive_acquisition_diagnostics_93c2')
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--protocol-python', default=sys.executable)
