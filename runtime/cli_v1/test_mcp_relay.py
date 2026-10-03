@@ -94,6 +94,51 @@ class PublicRelayTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(row['status'],'returned')
         client.call_tool.assert_awaited_once_with('interface_dispatch',arguments)
 
+    async def test_excessive_json_nesting_refuses_without_dispatch_or_id_consumption(self):
+        for value in ('['*4096+'0'+']'*4096,
+                      '{"key":'*4096+'0'+'}'*4096):
+            with self.subTest(container=value[0]):
+                client=AsyncMock();relay=Relay(client)
+                client.call_tool.return_value=CallToolResult(content=[])
+                line='{"id":1,"tool":"interface_dispatch","arguments":{"value":'+value+'}}'
+                row=await relay.request(line)
+                self.assertEqual(row['status'],'refused')
+                self.assertFalse(row['dispatched'])
+                self.assertEqual(row['next_id'],1)
+                client.call_tool.assert_not_awaited();client.list_tools.assert_not_awaited()
+                valid=await relay.request('{"id":1,"tool":"interface_dispatch","arguments":{}}')
+                self.assertEqual(valid['status'],'returned')
+                self.assertEqual(valid['next_id'],2)
+                client.call_tool.assert_awaited_once_with('interface_dispatch',{})
+
+    async def test_decoder_recursion_after_acceptance_preserves_current_id(self):
+        client=AsyncMock();relay=Relay(client)
+        client.call_tool.return_value=CallToolResult(content=[])
+        accepted=await relay.request('{"id":1,"tool":"interface_dispatch","arguments":{}}')
+        self.assertEqual(accepted['status'],'returned')
+        value='['*4096+'0'+']'*4096
+        row=await relay.request('{"id":2,"tool":"interface_dispatch","arguments":{"value":'+value+'}}')
+        self.assertEqual(row['status'],'refused')
+        self.assertFalse(row['dispatched'])
+        self.assertEqual(row['next_id'],2)
+        self.assertEqual(client.call_tool.await_count,1)
+        valid=await relay.request('{"id":2,"tool":"interface_dispatch","arguments":{}}')
+        self.assertEqual(valid['status'],'returned')
+        self.assertEqual(valid['next_id'],3)
+        self.assertEqual(client.call_tool.await_count,2)
+
+    async def test_moderately_nested_json_preserves_forwarded_values(self):
+        client=AsyncMock();relay=Relay(client)
+        client.call_tool.return_value=CallToolResult(content=[])
+        array=0;obj=0
+        for _ in range(32):
+            array=[array];obj={'key':obj}
+        arguments={'array':array,'object':obj}
+        row=await relay.request(json.dumps({'id':1,'tool':'interface_dispatch',
+                                           'arguments':arguments}))
+        self.assertEqual(row['status'],'returned')
+        client.call_tool.assert_awaited_once_with('interface_dispatch',arguments)
+
     async def test_legacy_public_protocol_parity_without_changing_research(self):
         from research.live_control.native_mcp_relay_v1 import Relay as Legacy,PUBLIC_TOOLS as LEGACY_TOOLS
         self.assertEqual(tuple(t for t in PUBLIC_TOOLS if t not in {'interface_clock', 'interface_guarded_activate_window'}),LEGACY_TOOLS)
@@ -127,23 +172,27 @@ class PublicRelayTests(unittest.IsolatedAsyncioTestCase):
                       {'id':3,'tool':'interface_close','arguments':{}}]
             overflow='{"id":1,"tool":"interface_validate","arguments":{"program":{"value":1e400}}}\n'
             duplicate='{"id":1,"id":1,"tool":"list_tools","arguments":{}}\n'
-            lines=json.dumps(requests[0])+'\n'+overflow+duplicate+''.join(json.dumps(r)+'\n' for r in requests[1:])
+            deep_value='['*4096+'0'+']'*4096
+            deep='{"id":1,"tool":"interface_validate","arguments":{"program":{"value":'+deep_value+'}}}\n'
+            lines=json.dumps(requests[0])+'\n'+overflow+duplicate+deep+''.join(json.dumps(r)+'\n' for r in requests[1:])
             stdout,stderr=await asyncio.wait_for(process.communicate(lines.encode()),30)
             self.assertEqual(process.returncode,0,stderr.decode())
             rows=[json.loads(line) for line in stdout.splitlines()]
-            self.assertEqual(len(rows),6)
+            self.assertEqual(len(rows),7)
             self.assertEqual(rows[0]['status'],'refused');self.assertFalse(rows[0]['dispatched'])
             self.assertEqual(rows[1]['status'],'refused');self.assertFalse(rows[1]['dispatched'])
             self.assertEqual(rows[1]['next_id'],1)
             self.assertEqual(rows[2]['status'],'refused');self.assertFalse(rows[2]['dispatched'])
             self.assertEqual(rows[2]['next_id'],1)
-            names={t['name'] for t in rows[3]['result']['tools']}
+            self.assertEqual(rows[3]['status'],'refused');self.assertFalse(rows[3]['dispatched'])
+            self.assertEqual(rows[3]['next_id'],1)
+            names={t['name'] for t in rows[4]['result']['tools']}
             self.assertIn('interface_dispatch',names);self.assertFalse(any(n.startswith('native_') for n in names))
             self.assertLessEqual(names,set(PUBLIC_TOOLS))
             self.assertEqual(rows[4]['status'],'returned')
-            validation=json.loads(rows[4]['result']['content'][0]['text'])
+            validation=json.loads(rows[5]['result']['content'][0]['text'])
             self.assertFalse(validation['static_valid'])
-            close=json.loads(rows[5]['result']['content'][0]['text'])
+            close=json.loads(rows[6]['result']['content'][0]['text'])
             self.assertEqual(close['status'],'closed');self.assertFalse(close['connection_close_attempted'])
 
 if __name__=='__main__':unittest.main()

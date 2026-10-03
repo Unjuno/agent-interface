@@ -54,7 +54,7 @@ class Relay:
                 raise ValueError('arguments object required')
             if request['tool'] == 'list_tools' and request['arguments']:
                 raise ValueError('list_tools takes empty arguments')
-        except (ValueError, TypeError) as error:
+        except (ValueError, TypeError, RecursionError) as error:
             return {'status':'refused', 'dispatched':False, 'next_id':self.next_id, 'error':str(error)}
         self.next_id += 1  # Consume before dispatch, including ambiguous failures.
         response = {'id':request['id'], 'tool':request['tool'], 'sdk_entry_ns':time.monotonic_ns()}

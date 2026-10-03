@@ -458,6 +458,9 @@ even if their values agree or one key uses a Unicode escape. Repeated keys in
 separate objects and distinct case-sensitive keys remain valid. Numeric values
 must decode to finite numbers; an exponent that overflows the float decoder is
 also refused before dispatch. Numeric-looking strings remain strings.
+If JSON decoding exceeds the interpreter's recursion limit, the line is refused
+without consuming an ID; the relay remains available for the next request.
+This does not promise support for arbitrarily deep JSON.
 
 Call `interface_close` explicitly and inspect release/cleanup results before closing the pipe. EOF is a disconnect, not a task completion or application-cleanup guarantee. Keep stderr separate from the JSON-lines stream. This adapter does not add a model, queue, automatic retry, task policy or performance claim. The older research relay remains unchanged for frozen research callers.
 
