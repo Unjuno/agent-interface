@@ -16,9 +16,21 @@ originals and native input/effect evidence are not authenticated by this check.
 
 No production code is replaced. Main already retains the possible-effect repair
 and accepted-begin floor, plus newer nominal and effect-start guards absent from
-the old lifecycle. The older branch's five in-module tests and V4 joint reviewer
-tests still require an overlap review before claiming all unique regressions are
-integrated. This packet rescue is not whole-branch completion or deletion authority.
+the old lifecycle. The older branch's five in-module tests are covered by main's
+`runtime/kernel/test_nominal_cancel_effect.py`. The three V4 joint reviewer tests
+remain executable in their exact historical `.py.txt` source: fresh normal and
+optimized executions against this integration tree both pass 3/3, with explicit
+source-origin checks. They cover stale NONE rejection, refused cleanup then
+lost-receipt cancellation, accepted explicit occurrences, and rejected expired
+begin at origins 0, 2**53+17 and 10**24+17. They are not added to automatic test
+discovery; their original source and invocation remain available below.
+This packet rescue is not deletion authority without ref/dependency checks.
 
-Local analysis-index CI and current-tree kernel regression verification remain
-pending. Formal experiments and native cancellation are not executed here.
+Current-tree kernel discovery passes 62/62. Local analysis-index CI runs 43 steps
+with no failures. Formal experiments and native cancellation are not executed here.
+
+```sh
+REVIEW6894_SOURCE_ROOT="$PWD" python runtime/results/kernel-cancel-effect-01a0ff2c/context-v4/reviewer-test_review6894_joint.py.txt -v
+REVIEW6894_SOURCE_ROOT="$PWD" python -O runtime/results/kernel-cancel-effect-01a0ff2c/context-v4/reviewer-test_review6894_joint.py.txt -v
+python -m unittest discover -s runtime/kernel -t . -v
+```
