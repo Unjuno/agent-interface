@@ -149,6 +149,7 @@ class JournalCloseTests(unittest.TestCase):
         client = object.__new__(CodexAppServerClient)
         client.process = DeadProcess()
         client._reader = RetiredReader()
+        client._stderr_reader = RetiredReader()
         client._journal = journal
         client._journal_lock = threading.Lock()
         return client
