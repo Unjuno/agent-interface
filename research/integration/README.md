@@ -122,3 +122,5 @@ Historical and superseded integration paths remain in place when their exact nam
 - [Retired primary stream source #6919 and independent reviews](../recovery/retired_primary_stream_source_20261004/README.md) — 649 exact archive files plus full source/review histories; failed constructions and V2 CONTENT_HOLD retained, current runtime unchanged, no adoption or transfer of #6979 application authority.
 
 - [Retired primary review supplements #6919](../recovery/retired_primary_review_supplements_20261004/README.md) — 324 exact review files and two source histories; Windows output-pipe witnesses and the original accepted-transport FAIL retained, no old vote transfer or current runtime adoption.
+
+- [Retired checkpoint and nominal-record reviews #6918 / #6923](../recovery/retired_record_review_custody_20261004/README.md) — 64 exact review files and two source histories; first reviewer failures and old preparation tuples retained, no current runtime adoption or historical vote transfer.
