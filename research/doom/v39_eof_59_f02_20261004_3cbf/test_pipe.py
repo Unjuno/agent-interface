@@ -69,3 +69,43 @@ class RealPipeBoundary(unittest.TestCase):
 
     def test_same_named_callback_error_does_not_block_queued_terminal(self):
         self.exercise('{"event":"ready"}\n{"event":"terminal"}\n', 'terminal', callback_fault=True)
+
+    def test_live_reader_ready_then_terminal_then_persistent_eof(self):
+        archive = Path(__file__).parent.parent / 'v39_native_fault_59_e05_20261004_3cbf/source-closure.tar.gz'
+        with tarfile.open(archive, 'r:gz') as source:
+            code = source.extractfile('research/doom/v39_reader_signal_59_e02_20261004_3cbf/source/v39-candidate.py.txt').read()
+        script = ('import os,sys,time;print(\'{"event":"ready"}\',flush=True);'
+                  'sys.stdin.readline();print(\'{"event":"terminal"}\',flush=True);'
+                  'os.close(1);time.sleep(3)')
+        child = subprocess.Popen([sys.executable, '-u', '-c', script], stdin=subprocess.PIPE,
+                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        thread = None
+        try:
+            reader, wait, events = factory(code)(child, queue.Queue())
+            thread = threading.Thread(target=reader); thread.start()
+            self.assertEqual(wait(lambda row: row['event'] == 'ready', timeout=1), {'event': 'ready'})
+            self.assertTrue(thread.is_alive()); self.assertIsNone(child.poll())
+            child.stdin.write('continue\n'); child.stdin.flush()
+            self.assertEqual(wait(lambda row: row['event'] == 'terminal', timeout=1), {'event': 'terminal'})
+            previous = None
+            for attempt in range(3):
+                with self.assertRaises(RuntimeError) as caught:
+                    wait(lambda row: False, timeout=1)
+                error = caught.exception
+                self.assertEqual(type(error).__name__, '_SessionReaderFailure')
+                self.assertIsInstance(error.__cause__, EOFError)
+                if previous is not None:
+                    self.assertIsNot(error, previous)
+                    self.assertEqual(error.args, previous.args)
+                    self.assertIs(error.__cause__, previous.__cause__)
+                previous = error
+            self.assertEqual(events, [{'event': 'ready'}, {'event': 'terminal'}])
+        finally:
+            child.terminate()
+            try:
+                child.wait(timeout=2)
+            except subprocess.TimeoutExpired:
+                child.kill(); child.wait(timeout=2)
+            child.stdin.close(); child.stdout.close(); child.stderr.close()
+            if thread is not None:
+                thread.join(1); self.assertFalse(thread.is_alive())
