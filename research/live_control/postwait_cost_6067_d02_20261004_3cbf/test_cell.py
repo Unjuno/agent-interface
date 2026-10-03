@@ -5,7 +5,7 @@ import hashlib
 import struct
 import unittest
 from test_validation import example
-from validation import validate_cell,snapshot_valid
+from validation import validate_cell,snapshot_valid,shared_cpu_valid
 
 def full_snapshot(s,cpu=1000):
     s.update(process_cpu_ns=cpu,thread_cpu_ns=cpu,voluntary=0,involuntary=0,
@@ -112,5 +112,36 @@ class CellTests(unittest.TestCase):
     def test_optional_thread_cpu_corruption(self):
         s=full_snapshot(copy.deepcopy(example()[1]['pre'])); s['thread_cpu_ns']=-1
         with self.assertRaises(ValueError): snapshot_valid(s)
+
+    def test_minimal_trial_cpu_reset_rejected(self):
+        spec,data=fixture(); spec['treatment']='minimal'; data['source']['treatment']='minimal'
+        for key in ('source','source_waits'):
+            ws=data[key]['wait_traces'] if key=='source' else data[key]
+            for w in ws[::2]:
+                w['post']=None
+                for name in ('process_cpu_before_ns','process_cpu_after_ns','thread_cpu_before_ns','thread_cpu_after_ns'):
+                    w['trial'][name]=0
+        with self.assertRaises(ValueError): validate_cell(spec,data)
+
+    def test_full_trial_cpu_beyond_later_source_counter(self):
+        spec,data=fixture()
+        for key in ('source','source_waits'):
+            ws=data[key]['wait_traces'] if key=='source' else data[key]
+            # Leave snapshots unchanged/nondecreasing. The forged trial endpoint
+            # alone exceeds later clear.pre while preserving plausible delta.
+            for name in ('process_cpu_after_ns','thread_cpu_after_ns'):
+                ws[0]['trial'][name]+=10000
+        with self.assertRaises(ValueError): validate_cell(spec,data)
+
+    def test_authoritative_receipt_float_not_integer(self):
+        spec,data=fixture(); data['epoch']['epoch_ns']=float(data['epoch']['epoch_ns'])
+        with self.assertRaises(ValueError): validate_cell(spec,data)
+
+    def test_overlapping_read_does_not_hide_disjoint_regression(self):
+        values=[]
+        for begin,end,usage in [(10,20,100),(15,25,90),(30,40,95)]:
+            values.append({'cpu_read_begin_ns':begin,'cpu_read_end_ns':end,
+                           'cpu_stat':{'usage_usec':usage,'nr_periods':1,'nr_throttled':0,'throttled_usec':0}})
+        with self.assertRaises(ValueError): shared_cpu_valid(values)
 
 if __name__=='__main__': unittest.main()

@@ -82,6 +82,7 @@ def validate_event(event,draw,clear,treatment):
     wall=t['end_ns']-t['begin_ns']
     for cpu in ('process','thread'):
         ordered(t[cpu+'_cpu_before_ns'],t[cpu+'_cpu_after_ns'])
+        ordered(draw['pre'][cpu+'_cpu_ns'],t[cpu+'_cpu_before_ns'],t[cpu+'_cpu_after_ns'],clear['pre'][cpu+'_cpu_ns'])
         if t[cpu+'_cpu_after_ns']-t[cpu+'_cpu_before_ns']>wall:
             raise ValueError('CPU within wall bracket')
     if draw['post'] is not None:
@@ -95,6 +96,14 @@ def validate_event(event,draw,clear,treatment):
             'snapshot_wall_ns':0 if draw['post'] is None else draw['post']['end_ns']-draw['post']['begin_ns'],
             'paint_ns':event['draw_end_ns']-event['draw_start_ns'],
             'exposure_ns':event['clear_start_ns']-event['draw_end_ns']}
+
+def shared_cpu_valid(snapshots):
+    snapshots=sorted(snapshots,key=lambda s:s['cpu_read_end_ns'])
+    for i,after in enumerate(snapshots):
+        candidates=[s for s in snapshots[:i] if s['cpu_read_end_ns']<=after['cpu_read_begin_ns']]
+        for before in candidates:
+            for name in ('usage_usec','nr_periods','nr_throttled','throttled_usec'):
+                ordered(before['cpu_stat'][name],after['cpu_stat'][name])
 
 def validate_cell(spec,data):
     source,capture,life=data['source'],data['capture'],data['lifecycle']
@@ -112,6 +121,10 @@ def validate_cell(spec,data):
         raise ValueError('native PID/window/epoch join')
     if any(type(obj[key]) is not int or obj[key]<=0 for obj in (source,capture) for key in ('pid','window','epoch_ns')):
         raise ValueError('typed native PID/window/epoch')
+    for obj,keys in [(data['epoch'],('epoch_ns',)),(data['fixture_ready'],('pid','window')),
+                     (data['observer_ready'],('pid',))]:
+        if any(type(obj[k]) is not int or obj[k]<=0 for k in keys):
+            raise ValueError('typed authoritative epoch/readiness receipt')
     if (data['epoch']!={'epoch_ns':source['epoch_ns']} or
         data['fixture_ready']!={'pid':source['pid'],'window':source['window']} or
         data['observer_ready']!={'pid':capture['pid'],'initial_keymap':'00'*32}):
@@ -198,13 +211,7 @@ def validate_cell(spec,data):
                         if set(bd)!=set(ad): raise ValueError('local counter key continuity')
                         bv,av=list(bd.values()),[ad[k] for k in bd]
                     if any(y<x for x,y in zip(bv,av)): raise ValueError('optional counter regression')
-    snapshots=sorted(source_snapshots+observer_snapshots,key=lambda s:s['cpu_read_end_ns'])
-    for i,after in enumerate(snapshots):
-        candidates=[s for s in snapshots[:i] if s['cpu_read_end_ns']<=after['cpu_read_begin_ns']]
-        if candidates:
-            before=candidates[-1]
-            for name in ('usage_usec','nr_periods','nr_throttled','throttled_usec'):
-                ordered(before['cpu_stat'][name],after['cpu_stat'][name])
+    shared_cpu_valid(source_snapshots+observer_snapshots)
     # Timing quality is an outcome; never truncate/censor the matched diagnostic.
     gaps=[b-a for a,b in zip([epoch]+starts,starts+[epoch+960_000_000])]
     return {'id':spec['id'],'kind':spec['kind'],'pair':spec['pair'],'treatment':spec['treatment'],

@@ -8,6 +8,10 @@ import statistics
 from pathlib import Path
 from validation import validate_cell
 
+CELL_FILES={'spec.json','display-ready.json','fixture-ready.json','observer-ready.json',
+            'epoch.json','source.json','capture.json','source.jsonl','source-waits.jsonl','frames.jsonl','waits.jsonl'} | {
+            child+'.'+stream+'.log' for child in ('xvfb','fixture','observer') for stream in ('stdout','stderr')}
+
 def unique(pairs):
     result={}
     for k,v in pairs:
@@ -49,6 +53,9 @@ def check_cell(root,spec,native_root=None):
     saved=read(root/'cell.json')
     if saved['error'] is not None or saved['spec']!=spec or read(root/'spec.json')!=spec:
         raise ValueError('frozen cell specification/error')
+    if (set(saved['files_sha256'])!=CELL_FILES or set(p.name for p in root.iterdir())!=CELL_FILES|{'cell.json'} or
+        any(p.is_symlink() or not p.is_file() for p in root.iterdir())):
+        raise ValueError('fixed complete cell file schema')
     hashes={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in root.iterdir()
             if p.is_file() and p.name!='cell.json'}
     if hashes!=saved['files_sha256']: raise ValueError('closed cell file hash identity')
@@ -141,7 +148,7 @@ def main():
         raise ValueError('complete diagnostic allocation/runtime boundary')
     if sorted(p.name for p in (a.raw/'cells').iterdir())!=sorted(ids): raise ValueError('closed cells')
     if set(before)!={'consumed.json','raw.json'} | {'cells/'+s['id']+'/'+name
-            for s in plan for name in list(read(a.raw/'cells'/s['id']/'cell.json')['files_sha256'])+['cell.json']}:
+            for s in plan for name in CELL_FILES|{'cell.json'}}:
         raise ValueError('closed raw file set')
     if freeze['native_output']!='/out/record': raise ValueError('frozen native output path')
     metrics=[check_cell(a.raw/'cells'/s['id'],s,Path(freeze['native_output'])/'cells'/s['id']) for s in plan]

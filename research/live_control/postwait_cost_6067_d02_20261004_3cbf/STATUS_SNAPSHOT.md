@@ -23,4 +23,9 @@ reason to remove telemetry, widen gates, retry A03 or call rare-tail root cause.
 
 One cached-image methods container passed36checks (own children/IPC and saved
 data only); does not count as native diagnostic collection or official audit.
-Exact source/freeze review and publication still precede the one new finite run.
+Subsequent review found trial CPU bracket continuity, disjoint read predecessor
+coverage and self-declared file-schema gaps. They were fixed after observed RED;
+fresh immutable methods-v2 container passed43checks, including nine real retained
+semantic variants on a complete HAND fixture (still not native raw). Original
+36methods receipt preserved. Exact source/freeze review and publication still
+precede the one new finite run.

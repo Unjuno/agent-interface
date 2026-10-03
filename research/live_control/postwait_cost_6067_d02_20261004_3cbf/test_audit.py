@@ -5,7 +5,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
-from audit import check_cell
+from audit import check_cell,negative_controls
 from test_cell import fixture
 
 def saved_cell(root):
@@ -25,6 +25,8 @@ def saved_cell(root):
         'observer':['/usr/local/bin/python3','-B','/source/observer.py','--display',':0',
                     '--window','7','--offsets',json.dumps([0,3,6,9]),'--out',str(root),
                     '--epoch-file',str(root/'epoch.json')]}
+    for child in ('xvfb','fixture','observer'):
+        for stream in ('stdout','stderr'): (root/(child+'.'+stream+'.log')).write_bytes(b'')
     hashes={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in root.iterdir()}
     receipt={'error':None,'spec':spec,'lifecycle':data['lifecycle'],'commands':commands,'files_sha256':hashes}
     (root/'cell.json').write_text(json.dumps(receipt)); return spec,receipt
@@ -60,5 +62,28 @@ class AuditTests(unittest.TestCase):
             receipt['commands']['fixture'][2]='/different/fixture.py'
             (root/'cell.json').write_text(json.dumps(receipt))
             with self.assertRaises(ValueError): check_cell(root,spec)
+
+    def test_extra_file_manifested_still_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp); spec,receipt=saved_cell(root)
+            (root/'extra.txt').write_text('extra')
+            receipt['files_sha256']['extra.txt']=hashlib.sha256(b'extra').hexdigest()
+            (root/'cell.json').write_text(json.dumps(receipt))
+            with self.assertRaises(ValueError): check_cell(root,spec)
+
+    def test_missing_log_removed_from_manifest_still_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp); spec,receipt=saved_cell(root)
+            (root/'observer.stderr.log').unlink(); del receipt['files_sha256']['observer.stderr.log']
+            (root/'cell.json').write_text(json.dumps(receipt))
+            with self.assertRaises(ValueError): check_cell(root,spec)
+
+    def test_retained_semantic_controls_reject_complete_fixture(self):
+        spec,data=fixture()
+        with tempfile.TemporaryDirectory() as tmp:
+            controls=negative_controls(Path(tmp),spec,data)
+            self.assertEqual(len(controls),9)
+            self.assertTrue(all(c['status']=='REJECTED' for c in controls))
+            self.assertEqual(len(list(Path(tmp).glob('*.json'))),9)
 
 if __name__=='__main__': unittest.main()
