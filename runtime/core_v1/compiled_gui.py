@@ -178,6 +178,7 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
     transitions = []
     observations = []
     critical_events = []
+    unresolved_execution = None
 
     def emit(event):
         row = copy.deepcopy(event)
@@ -214,6 +215,8 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
                        "reason": reason, "completed_transitions": len(transitions)}
         emit(final_event)
         receipt["critical_events"] = critical_events
+        if unresolved_execution is not None:
+            receipt["unresolved_execution"] = unresolved_execution.copy()
         return receipt
 
     def expired():
@@ -367,6 +370,26 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
         terminal = terminal.copy()
         release = terminal["release"]
         _exact(release, {"verified", "keys_down", "buttons_down"}, "release")
+        if (type(release["keys_down"]) is not list or
+                type(release["buttons_down"]) is not list):
+            # Execution already occurred. Do not call user container hooks or
+            # turn malformed evidence into a no-input assertion/completion.
+            # Retain only bounded scalar references for external reconciliation;
+            # this receipt does not perform input cleanup or authorize replay.
+            unresolved_execution = {
+                "action": action_name,
+                "reason": "malformed_release_container",
+                "release_verified": False,
+                "input_dispatched": delivery.get("input_dispatched"),
+            }
+            for key in ("action_id", "effect_ref"):
+                value = terminal[key]
+                unresolved_execution[key] = (
+                    value if type(value) is str and 0 < len(value) <= 64 else None)
+            emit({"event": "action_terminal", "action": action_name,
+                  "status": "invalid_release", "action_id": unresolved_execution["action_id"],
+                  "release_verified": False, **delivery})
+            return finish("RUNTIME_FAILED", "execution_failed")
         released = (release["verified"] is True and release["keys_down"] == [] and
                     release["buttons_down"] == [])
         preinput_refusal = (terminal.get("input_dispatched") is False and

@@ -102,3 +102,24 @@ The copy preserves original field types; it does not invoke terminal-member
 copy hooks to convert malformed release or reference objects into valid values.
 These retained declarations do not authenticate executor truth or physical input
 release. Actual cancellation remains the separate cooperative callback check.
+
+
+Nested release containers must be exact built-in lists. After execute returns,
+any other container stops with RUNTIME_FAILED/execution_failed without invoking
+its equality, length, iteration or copy hooks. Verified completed transitions
+are preserved; the malformed return does not become a completed transition or
+a pre-input refusal. An action_terminal event records invalid_release with
+release_verified=false. The receipt additionally carries unresolved_execution
+only for this rejection: action, malformed_release_container reason, false
+release_verified, the returned strict input_dispatched flag or null, and bounded
+exact-string action/effect references or null. Opaque references are omitted.
+
+Those fields preserve adapter declarations for external reconciliation. They
+do not prove input delivery, physical neutrality or effect authenticity. The
+caller must stop, establish input safety using an authorized backend and check
+actual effects before choosing a new operation; RUNTIME_FAILED grants no replay
+permission. This path does not clean up input, retry, resume or provide durable
+recovery. Existing pending_effect semantics are unchanged. Other malformed
+terminal fields retain their original validation behavior; arbitrary objects
+and concurrent callback mutation remain outside the qualified scope. Exact
+built-in-list paths keep their prior receipt shape and behavior.
