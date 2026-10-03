@@ -26,6 +26,7 @@ jobs:
           fetch-depth: 1
           sparse-checkout: |
             research/analysis
+            research/live_control/owner_keyup_keymap_witness_5156_t3_v1
       - name: Restore the frozen workflow source for provenance tests
         run: |
           git fetch --no-tags --depth=1 origin e2e434dd07e1034c5c4303982a0b1ec33ea35cfd
@@ -93,3 +94,6 @@ jobs:
         run: python -B -m unittest discover -s research/analysis/quiet_supervision_vigilance_6503_t0b_20261002 -p 'test_*.py' -v
       - name: Test Issue #5352 T15 effect-qualified hysteresis construction contract
         run: python -B -m unittest discover -s research/analysis/planner_hysteresis_5352_effect_qualified_t0_20261003 -p 'test_contract.py' -v
+      - name: Test Issue #5156 T3 keymap witness construction contract
+        working-directory: research/live_control/owner_keyup_keymap_witness_5156_t3_v1
+        run: python -B -m unittest -v test_keymap_witness test_audit_formal_x11 test_serialize_release test_cli_boundary
