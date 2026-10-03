@@ -1,0 +1,58 @@
+"""Advance only the clean author branch, preserving both input histories."""
+from pathlib import Path
+import datetime, hashlib, json, os, subprocess
+
+here = Path(__file__).resolve().parent
+root = here.parent/'agent-interface-compiled-custody'
+git = r'C:\Program Files\Git\cmd\git.exe'
+branch = 'refs/heads/fix/compiled-callback-custody-01a0ff35-20261003'
+old = 'd3fa17987f89365cb20dbe096ad52ca0506420ce'
+base = '636986a804a6004cd047db7e8cc5e62c02d585d8'
+combined = '2b38495ffc960f09806309f1d0a62025a73a7559'
+path = 'runtime/core_v1/test_compiled_custody_effect_join_01a0ff35.py'
+
+def run(*args, data=None, env=None):
+    p = subprocess.run([git,'-C',str(root),*args],input=data,capture_output=True,env=env,timeout=120)
+    if p.returncode: raise RuntimeError((args,p.returncode,p.stderr.decode('utf-8','replace')))
+    return p.stdout
+
+assert run('status','--porcelain') == b''
+assert run('symbolic-ref','HEAD').decode().strip() == branch
+assert run('rev-parse','HEAD').decode().strip() == old
+assert run('ls-remote','origin',branch).decode().split()[0] == old
+tests = (here/Path(path).name).read_bytes()
+assert hashlib.sha256(tests).hexdigest() == 'e5da6777efd48f8771c07d8dc8f9257b6fc41b303e818c5b61b193d0eda82336'
+assert run('merge-tree','--write-tree',base,old).decode().strip() == combined
+for stage in ['existing-join-01','combined-join-02','combined-optimized-01']:
+    receipt = json.loads((here/(stage+'.receipt.json')).read_text())
+    assert receipt['exit_code'] == 0 and receipt['compiled_sha256'] == '1c210ee9bbd727ba32c18630d0e0a80088c8fa9cbafe233010f7186235c95f3f'
+index = here/'source.index'
+assert not index.exists()
+env = os.environ.copy(); env['GIT_INDEX_FILE'] = str(index)
+run('read-tree',combined,env=env)
+blob = run('hash-object','-w','--stdin',data=tests).decode().strip()
+run('update-index','--add','--cacheinfo',f'100644,{blob},{path}',env=env)
+tree = run('write-tree',env=env).decode().strip()
+assert run('diff-tree','--no-commit-id','--name-only','-r',combined,tree).decode().strip() == path
+intent = dict(observed_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+              operation='local author-only source merge commit and expected-old branch advance',
+              branch=branch,expected_old_sha=old,current_main_parent=base,combined_tree=combined,
+              new_tree=tree,new_test_path=path,new_test_blob=blob,
+              scope='same two custody lines plus two joint regression methods; no main write')
+with (here/'source-commit.intent.json').open('x',encoding='utf-8') as f:
+    json.dump(intent,f,sort_keys=True,indent=2); f.write('\n')
+source = run('commit-tree',tree,'-p',old,'-p',base,
+             data=b'fix(compiled): combine custody with effect witness admission\n').decode().strip()
+assert run('rev-list','--parents','-n','1',source).decode().split() == [source,old,base]
+assert run('rev-parse',source+'^{tree}').decode().strip() == tree
+# The worktree is author-owned and verified clean; do not touch any other checkout.
+run('read-tree','-m','-u',old,source)
+run('update-ref',branch,source,old)
+assert run('status','--porcelain') == b''
+assert (root/path).read_bytes().replace(b'\r\n',b'\n') == tests
+result = dict(intent,source_commit=source,clean_readback=True,
+              historical_first_join_failure='Wrong expected observation count, preserved; post-action observation makes stage+1.',
+              canonical_compiled_sha256='1c210ee9bbd727ba32c18630d0e0a80088c8fa9cbafe233010f7186235c95f3f')
+with (here/'source-commit.readback.json').open('x',encoding='utf-8') as f:
+    json.dump(result,f,sort_keys=True,indent=2); f.write('\n')
+print(json.dumps(result))

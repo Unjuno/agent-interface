@@ -1,0 +1,44 @@
+import datetime
+import hashlib
+import json
+import shutil
+import subprocess
+from pathlib import Path
+
+WORK = Path(__file__).resolve().parent
+REPO = WORK/'agent-interface'
+OUT = WORK/'compiled-literal-unknown-01a0ff35'
+BASE = json.loads((OUT/'SOURCE_FREEZE.json').read_bytes())['base']
+DEPENDENCY = '4a3c51dd86c592892fa92df523b822e7bce548e2'
+DEST = OUT/'dependency-composition'
+shutil.copytree(OUT/'candidate',DEST)
+tree=subprocess.check_output(['git','merge-tree','--write-tree',BASE,DEPENDENCY],cwd=REPO).decode().splitlines()[0]
+path='runtime/core_v1/compiled_gui.py'
+original=subprocess.check_output(['git','show',tree+':'+path],cwd=REPO)
+effect_guard=b'            if effect["status"] == "succeeded":\n                _name(effect["evidence_ref"], "effect evidence reference")\n'
+baseline=(OUT/'baseline'/path).read_bytes()
+if original.count(effect_guard)!=1 or original.replace(effect_guard,b'')!=baseline:
+    raise RuntimeError('dependency-delta-not-exact-success-reference-guard')
+old=b'            unknown = any(key not in observed or observed.get(key) == "unknown"\n                          for key in expected)\n'
+new=b'            # A declared matching string literal still needs the effect verifier.\n            # Retain legacy unavailable handling when "unknown" does not match.\n            unknown = any(key not in observed or\n                          (observed[key] == "unknown" and\n                           not _matches(observed[key], value))\n                          for key, value in expected.items())\n'
+if baseline.count(old)!=1 or baseline.replace(old,new)!=(OUT/'candidate'/path).read_bytes():
+    raise RuntimeError('literal-delta')
+(DEST/path).write_bytes(original.replace(old,new))
+rows=[]
+for p in ['runtime/core_v1/test_compiled_effect_evidence_01a0ff32.py','runtime/guarded_x11_v1/test_compiled_effect_evidence_01a0ff32.py']:
+    data=subprocess.check_output(['git','show',DEPENDENCY+':'+p],cwd=REPO)
+    oid=subprocess.check_output(['git','rev-parse',DEPENDENCY+':'+p],cwd=REPO).decode().strip()
+    if hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()!=oid:
+        raise RuntimeError('dependency-test-object')
+    (DEST/p).write_bytes(data)
+    rows.append({'path':p,'git_blob':oid,'sha256':hashlib.sha256(data).hexdigest()})
+record={'base':BASE,'dependency_head':DEPENDENCY,'dependency_projected_tree':tree,
+        'created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        'dependency_original_module_sha256':hashlib.sha256(original).hexdigest(),
+        'literal_candidate_module_sha256':hashlib.sha256((OUT/'candidate'/path).read_bytes()).hexdigest(),
+        'composed_module_sha256':hashlib.sha256((DEST/path).read_bytes()).hexdigest(),
+        'dependency_tests':rows,'scope':'private pinned dependency composition only, not dependency adoption or a content vote',
+        'main_application_requires':'actual separately valid #6900 delivery and new actual-current dependency/tree confirmation; changed dependency/head or material semantics require renewed proposal',
+        'producer_or_formal_replay':False}
+(OUT/'DEPENDENCY_COMPOSITION.json').write_bytes((json.dumps(record,sort_keys=True,indent=2)+'\n').encode())
+print(json.dumps(record))

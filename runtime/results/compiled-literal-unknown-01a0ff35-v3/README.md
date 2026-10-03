@@ -1,0 +1,9 @@
+# Literal effect classification with retained return verdicts
+
+This v3 depends on the exact #6934 v6 source aabf685b619273592b109fbdbafaabdc0216dbdb and proposal f4563d0e1372ce0e05b25b3047d0ac31a7590e64ee3fa1bb882f1a0d9a3faa8a. That source keeps its author, separate content quorum and application conditions. This package cannot apply through an unapproved dependency.
+
+The literal classifier is unchanged from historical #6939. The callback-custody documentation is retained in full; its explicit literal paragraph is inserted beside the effect contract. Original 54-file v1 evidence remains byte-identical and keeps its original source/time conditions. Old v2 HOLD and old votes do not transfer.
+
+New ordinary private composition evidence, full first errors and all original streams: https://github.com/Unjuno/agent-interface/pull/6934#issuecomment-5969123202 . Four recoverable parts on #6939: 5969111631,5969111936,5969112304,5969112627. Forty-eight retained rows contain 46 distinct source-condition pairs; the legacy marker pair resolves to the same actual value. Sixteen original main-plus-literal mismatches remain; all 24 new-composition rows (23 distinct conditions) agree. Fifty-five selected regressions pass normally and optimized. These selected-source results are not a whole-tree application or physical task/input/model-efficiency certificate.
+
+New fixed source/dependency/test conditions require a new proposal/epoch and genuine assigned reviews. Future application also needs an approved dependency delivered with unchanged conditions, the complete actual-main impact mapping and fresh nonauthor tuple, effective platform/live sole-owner/cancellation checks and one expected-old forward main update. Journal exceptions still propagate under the explicit trusted synchronous adapter contract; independent task effects and recovery remain unresolved.

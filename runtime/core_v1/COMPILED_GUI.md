@@ -24,6 +24,42 @@ admission still owns its freshness/target checks. These ordering checks do not
 authenticate capture timestamps, establish clock-domain provenance, or certify
 application effects.
 
+Expected effects compare the declared scalar type and value. An explicitly
+declared string literal `"unknown"` can match that same observed string, but
+still requires the effect verifier's verdict before continuation. A missing
+predicate, or a legacy `"unknown"` marker that does not match its declared
+expectation, remains unavailable. If the expected literal itself is `"unknown"`
+and its observation cannot be established, omit the predicate or return an
+unavailable effect verdict; the literal match alone does not certify an effect.
+
+
+Each returned effect-verdict dictionary is copied after exact-shape validation
+and before checking its status and successful evidence reference. A later journal
+callback cannot rebind those fields through its retained return object. This is
+dictionary custody; failed/unavailable references are not generally scalar-type
+validated, and copying does not authenticate a witness or physical task effect.
+
+Cancellation is cooperative: the runtime consults the adapter at loop entry and
+before admitting or dispatching another action. The final completion branch does
+not poll again after its observation, effect verification or branch journal.
+Cancellation latched there can therefore coexist with `TASK_SUCCEEDED` when no
+further input is required. This is the existing policy for checking cancellation,
+not a guarantee that cancellation wins until the terminal receipt. A caller needing that stronger
+termination policy must qualify it separately; completed effects are not undone.
+
+An admission return is copied after exact builtin-dictionary field validation
+and before eligibility/freshness checks. Accepted fields are builtin scalars;
+later callback-local edits to the returned dictionary cannot rebind the checked
+authorization, sequence or deadline sent to the executor. Actual cancellation
+and downstream authorization checks remain required. This snapshot does not
+provide live revocation, custom-object or concurrent-callback safety.
+
+Each observation request receives its own declared-predicate list. The journal
+receives a separate deep copy of each event, so callback-local formatting or
+later edits to retained payloads cannot change private declarations or returned
+critical evidence. Callbacks remain trusted synchronous code: their exceptions
+propagate and their I/O must obey the existing deadline contract.
+
 After observation, branch journaling, admission, effect verification and returned
 execution, the runtime rechecks its original method deadline. Reaching the exact
 deadline counts as exhaustion. A late observation is retained, but cannot admit
@@ -74,3 +110,53 @@ It uses the existing graph with fresh bridge captures, boolean target prerequisi
 caller-owned perception/effect callbacks, per-action revalidation, one-use
 admission tokens and retained raw receipts. Its application-specific primary
 live trial does not establish general text verification or efficiency gains.
+
+An execution-terminal dictionary is copied after its exact outer shape and
+optional dispatch flag are checked. Release neutrality and an explicitly
+attested pre-input refusal are evaluated before the `action_terminal` journal
+callback. Later edits to an executor-retained dictionary or held-input lists
+cannot promote uncertain delivery, erase a completed prefix, replace action or
+effect references, or downgrade originally reported input to a pre-input refusal.
+The copy preserves original field types; it does not invoke terminal-member
+copy hooks to convert malformed release or reference objects into valid values.
+These retained declarations do not authenticate executor truth or physical input
+release. Actual cancellation remains the separate cooperative callback check.
+
+
+Nested release containers must be exact built-in lists. After execute returns,
+any other container stops with RUNTIME_FAILED/execution_failed without invoking
+its equality, length, iteration or copy hooks. Verified completed transitions
+are preserved; the malformed return does not become a completed transition or
+a pre-input refusal. An action_terminal event records invalid_release with
+release_verified=false. The receipt additionally carries unresolved_execution
+only for this rejection: action, malformed_release_container reason, false
+release_verified, the returned strict input_dispatched flag or null, and bounded
+exact-string action/effect references or null. Opaque references are omitted.
+
+Those fields preserve adapter declarations for external reconciliation. They
+do not prove input delivery, physical neutrality or effect authenticity. The
+caller must stop, establish input safety using an authorized backend and check
+actual effects before choosing a new operation; RUNTIME_FAILED grants no replay
+permission. This path does not clean up input, retry, resume or provide durable
+recovery. Existing pending_effect semantics are unchanged. Other malformed
+terminal fields retain their original validation behavior; arbitrary objects
+and concurrent callback mutation remain outside the qualified scope. Exact
+built-in-list paths keep their prior receipt shape and behavior.
+
+The execution-finished clock sample occurs after local terminal validation and
+the retained release/pre-input-refusal decisions, before the journal callback.
+Thus a supplied synchronous clock callback cannot rewrite the execution return
+used for those decisions. The later sample is a conservative lower bound for
+subsequent effect observations in the declared monotonic clock domain: an older
+capture may be rejected even if the physical effect had already happened.
+This does not authenticate the clock, impose a hard deadline, or make callback
+execution concurrent or durable. Malformed returns that stop or raise during
+local validation do not require an execution-finished clock sample.
+
+Returned observations are validated and copied before the supplied observation
+clock callback. Later callback edits cannot rebind the retained predicates or
+capture metadata used for branch selection and effect verification. The upper
+capture bound is sampled after local validation, so it is a consistency check
+against that sample rather than an authenticated instant of adapter return.
+Malformed observations keep their existing refusal/validation semantics; a
+validation exception can occur before the clock callback is invoked.
