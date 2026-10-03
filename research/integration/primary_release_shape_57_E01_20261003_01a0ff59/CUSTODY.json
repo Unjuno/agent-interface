@@ -1,0 +1,138 @@
+{
+  "unit": "57-primary-release-shape-E01-0820-20261003",
+  "archive_base": "b9544628b5dfa14ffa1c131b8f8de84a60496d9f",
+  "packets": {
+    "source-first": {
+      "metadata": {
+        "members": 28,
+        "json_bytes": 1756825,
+        "json_sha256": "bf5fa13f25b71a24fb53781dc4e424fd95a046dcb103af9a686d5069dad5ba32",
+        "gzip_bytes": 98818,
+        "gzip_sha256": "8e1241651288a395b7225147513f416fddd163afa8649d1d5712e84afb9e264e",
+        "projected_members": 2
+      },
+      "public_comments": [
+        {
+          "id": 5969862994,
+          "url": "https://github.com/Unjuno/agent-interface/issues/57#issuecomment-5969862994",
+          "created_at": "2026-10-03T13:58:18Z"
+        },
+        {
+          "id": 5969863258,
+          "url": "https://github.com/Unjuno/agent-interface/issues/57#issuecomment-5969863258",
+          "created_at": "2026-10-03T13:58:20Z"
+        },
+        {
+          "id": 5969863506,
+          "url": "https://github.com/Unjuno/agent-interface/issues/57#issuecomment-5969863506",
+          "created_at": "2026-10-03T13:58:22Z"
+        }
+      ]
+    },
+    "private-candidate": {
+      "metadata": {
+        "members": 14,
+        "json_bytes": 639166,
+        "json_sha256": "1b8cea8ec66951682f37d5511b0228e4f619c78b313794e0561d6da281991fc8",
+        "gzip_bytes": 40802,
+        "gzip_sha256": "82131542009a61de502ba1046cab8584f30edd83d6053267ef1ee572527fccc1"
+      },
+      "public_comments": [
+        {
+          "id": 5969917897,
+          "url": "https://github.com/Unjuno/agent-interface/pull/7071#issuecomment-5969917897",
+          "created_at": "2026-10-03T14:05:17Z"
+        }
+      ]
+    }
+  },
+  "archive_reconstruction_utc": "2026-10-03T14:20:29.377116+00:00",
+  "members": 42,
+  "direct_original_byte_joins": 40,
+  "explicit_own_path_projections": 2,
+  "saved_data_reference_results": {
+    "source": {
+      "rows": 48,
+      "invalid_continuations": 8,
+      "healthy_continuations": 8
+    },
+    "private_candidate": {
+      "rows": 48,
+      "invalid_continuations": 0,
+      "healthy_continuations": 8
+    }
+  },
+  "healthy_entire_candidate_rows_unchanged": 8,
+  "changed_candidate_alias_rows": 16,
+  "full_negative_controls": [
+    {
+      "packet": "source-first",
+      "path": "controls/bool_physical_input_alias.json",
+      "rejected": true
+    },
+    {
+      "packet": "source-first",
+      "path": "controls/bool_request_id_alias.json",
+      "rejected": true
+    },
+    {
+      "packet": "source-first",
+      "path": "controls/duplicate_identity.json",
+      "rejected": true
+    },
+    {
+      "packet": "source-first",
+      "path": "controls/false_original_identity.json",
+      "rejected": true
+    },
+    {
+      "packet": "source-first",
+      "path": "controls/guard_false_continuation.json",
+      "rejected": true
+    },
+    {
+      "packet": "source-first",
+      "path": "controls/invented_stop_on_alias.json",
+      "rejected": true
+    },
+    {
+      "packet": "source-first",
+      "path": "controls/lost_image_delivery.json",
+      "rejected": true
+    },
+    {
+      "packet": "source-first",
+      "path": "controls/lost_raw_neutral_type.json",
+      "rejected": true
+    },
+    {
+      "packet": "source-first",
+      "path": "controls/lost_row.json",
+      "rejected": true
+    },
+    {
+      "packet": "source-first",
+      "path": "controls/second_input_instead_clock.json",
+      "rejected": true
+    },
+    {
+      "packet": "private-candidate",
+      "path": "private-candidate/controls/invented_followup.json",
+      "rejected": true
+    },
+    {
+      "packet": "private-candidate",
+      "path": "private-candidate/controls/lost_original_image.json",
+      "rejected": true
+    },
+    {
+      "packet": "private-candidate",
+      "path": "private-candidate/controls/bool_request_alias.json",
+      "rejected": true
+    }
+  ],
+  "source_helpers_imported_or_executed": false,
+  "physical_inputs": 0,
+  "source_production_patch": false,
+  "candidate_audit_native_pid_start_streams": "uncaptured in original execution; no retrospective fabrication"
+}
