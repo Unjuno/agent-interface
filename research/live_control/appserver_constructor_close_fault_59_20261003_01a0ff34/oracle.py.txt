@@ -1,0 +1,26 @@
+from pathlib import Path
+import copy, hashlib, itertools, json, os
+p=Path(__file__).resolve().parent
+def check(rows):
+    keys=[v+'-'+t+'-'+c for v,t,c in itertools.product(['current','naive','protected'],['OSError','KeyboardInterrupt'],['healthy','before','after'])]
+    if len(rows)!=18 or [r['cell'] for r in rows]!=keys: raise ValueError('ordered case coverage')
+    for r in rows:
+        v,t,c=r['variant'],r['primary'],r['close_mode']
+        masked=v=='naive' and c!='healthy'
+        closed=v!='current' and c!='before'
+        expected={'raised_type':'CleanupFault' if masked else t,'primary_identity':not masked,'cleanup_identity':masked,'context_is_primary':masked,'notes':['journal cleanup failed: CleanupFault'] if v=='protected' and c!='healthy' else [],'close_attempts':0 if v=='current' else 1,'fd_open_at_exception':not closed,'textio_closed_at_exception':closed,'fd_open_after_driver_cleanup':False,'textio_closed_after_driver_cleanup':True,'factory_calls':1,'processes_started':0,'journal_bytes':0}
+        for name,value in expected.items():
+            if type(r.get(name)) is not type(value) or r[name]!=value: raise ValueError(r['cell']+' '+name)
+        if not r['frames'] or not r['started_utc']<=r['finished_utc']: raise ValueError('trace/time')
+rows=[json.loads(x) for x in (p/'RAW.jsonl').read_bytes().splitlines()]
+check(rows)
+mutations=[(0,'fd_open_at_exception',False),(0,'close_attempts',1),(4,'raised_type','CleanupFault'),(7,'primary_identity',True),(7,'cleanup_identity',False),(7,'context_is_primary',False),(8,'fd_open_at_exception',True),(13,'notes',[]),(13,'fd_open_at_exception',False),(14,'textio_closed_at_exception',False),(17,'fd_open_after_driver_cleanup',True),(0,'factory_calls',True)]
+refused=[]
+for i,k,v in mutations:
+    altered=copy.deepcopy(rows); altered[i][k]=v
+    try: check(altered)
+    except ValueError as error: refused.append({'index':i,'field':k,'reason':str(error)})
+    else: raise RuntimeError('ineffective corruption '+k)
+result={'status':'PRIMARY_MASKING_COUNTEREXAMPLE_WITH_SEPARATE_RESOURCE_OUTCOME','cells':18,'primary_preserved_protected':6,'naive_cleanup_masks_primary':4,'current_no_cleanup':6,'source_closes_fd':8,'driver_final_open_fds':0,'copied_controls_rejected':refused,'raw_sha256':hashlib.sha256((p/'RAW.jsonl').read_bytes()).hexdigest(),'pid':os.getpid(),'scope':'Injected cooperative fault/reference only; notes are diagnosis, not resource release or finite recovery.'}
+(p/'AUDIT.json').write_bytes(json.dumps(result,sort_keys=True,indent=2).encode()+b'\n')
+print(json.dumps(result))
