@@ -1,0 +1,48 @@
+✖ blocked busy output bounds response work for a batch of rejected commands (5.5895ms)
+✖ overload preserves the committed result before rejecting the stream owner (2.053875ms)
+✔ separately observed busy replies remain available during one committed command (1.263959ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 1
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 76.568042
+
+✖ failing tests:
+
+test at runtime/host_v1/test_primary_stdio_backpressure.mjs:31:1
+✖ blocked busy output bounds response work for a batch of rejected commands (5.5895ms)
+  AssertionError [ERR_ASSERTION]: busy replies accumulated behind the stalled sink
+      at TestContext.<anonymous> (file:///Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/host_v1/test_primary_stdio_backpressure.mjs:37:12)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at runtime/host_v1/test_primary_stdio_backpressure.mjs:45:1
+✖ overload preserves the committed result before rejecting the stream owner (2.053875ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'resolved'
+  - 'rejected'
+       ^
+  
+      at TestContext.<anonymous> (file:///Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/host_v1/test_primary_stdio_backpressure.mjs:53:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'resolved',
+    expected: 'rejected',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
