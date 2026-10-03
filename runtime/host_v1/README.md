@@ -546,6 +546,12 @@ forwarded by Readline. A read failure does not cancel or replay an accepted
 command; inspect its retained result before deciding how to continue. The CLI
 reports stream failure with exit 2 after attempting original-relay cleanup.
 
+The owner observes input/output errors during relay startup and the `ready` and
+`terminal` writes too. A startup failure admits no command; after a channel
+failure it observes the same relay's transport exit and preserves the original
+error. Its temporary error listeners are removed after ownership ends. These
+checks supply no deadline for a permanently stalled write or relay.
+
 Explicitly send `call` with `["interface_close",{}]`, inspect its release outcome,
 and then end stdin. EOF waits for the outstanding command and closes only the
 same transport; it never fabricates a public-close request or task completion.

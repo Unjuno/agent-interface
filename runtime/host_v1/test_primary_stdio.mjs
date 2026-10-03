@@ -161,3 +161,59 @@ test('input read failure waits for an accepted command and preserves its result'
 test('input read failure before a command rejects through the owned transport path',()=>{
   assert.deepEqual(inputReadFailureProbe(false),{calls:0,completed:0,settled:true,rows:[]});
 });
+
+function ownerChannelFailureProbe(phase) {
+  const fixture=[
+    "const fs=require('node:fs');",
+    "let bytes=0;process.stdin.on('data',chunk=>{bytes+=chunk.length;});",
+    "process.on('exit',code=>fs.writeFileSync(process.argv[1],JSON.stringify({code,bytes})+'\\n',{flag:'wx'}));",
+    'process.stdin.resume();',
+  ].join('\n');
+  const source=`(async()=>{
+    const {PassThrough,Writable}=require('node:stream');
+    const {mkdtemp,readFile}=require('node:fs/promises');
+    const {tmpdir}=require('node:os');const {join}=require('node:path');
+    const {runPrimaryStdio}=await import('./runtime/host_v1/primary_stdio.mjs');
+    const phase=${JSON.stringify(phase)},fault=Error('original '+phase+' failure');
+    const root=await mkdtemp(join(tmpdir(),'primary-owner-channel-'));
+    const input=new PassThrough();let readyResolve,releaseReady,settled=false;
+    const ready=new Promise(resolve=>{readyResolve=resolve;});const writes=[];
+    const output=new Writable({write(chunk,encoding,callback){
+      const value=JSON.parse(chunk.toString());writes.push(value.status);
+      if(value.status==='ready'){
+        if(phase==='ready_input')releaseReady=callback;
+        else callback(phase==='ready_output'?fault:undefined);
+        readyResolve();
+      }else callback(fault);
+    }});
+    const config={host:{command:process.execPath,args:['-e',${JSON.stringify(fixture)},join(root,'fixture-exit.json')],evidenceDirectory:join(root,'host')},route:'guarded-local',exchangeDirectory:join(root,'exchange')};
+    const owner=runPrimaryStdio(config,{input,output}).then(
+      ()=>{throw Error('channel failure unexpectedly resolved');},
+      error=>{settled=true;if(error!==fault)throw error;}
+    );
+    await ready;
+    if(phase==='ready_input'){
+      input.destroy(fault);await new Promise(resolve=>setImmediate(resolve));
+      if(settled)throw Error('owner settled before ready-write observation');releaseReady();
+    }else if(phase==='terminal_output')input.end();
+    await owner;await new Promise(resolve=>setImmediate(resolve));
+    const exit=JSON.parse(await readFile(join(root,'host/exit.json')));
+    const fixtureExit=JSON.parse(await readFile(join(root,'fixture-exit.json')));
+    console.log(JSON.stringify({settled,writes,exit,fixtureExit,listeners:{input:input.listenerCount('error'),output:output.listenerCount('error')}}));
+  })().catch(error=>{console.error(String(error));process.exitCode=3;});`;
+  const child=spawnSync(process.execPath,['--eval',source],{
+    cwd:fileURLToPath(new URL('../../',import.meta.url)),encoding:'utf8',timeout:5000
+  });
+  assert.equal(child.status,0,child.stderr||String(child.error));
+  return JSON.parse(child.stdout.trim());
+}
+
+for(const phase of ['ready_input','ready_output','terminal_output'])
+test('whole owner retains '+phase+' failure and observes its original relay exit',()=>{
+  const result=ownerChannelFailureProbe(phase);
+  assert.equal(result.settled,true);
+  assert.deepEqual(result.exit,{code:0,signal:null});
+  assert.deepEqual(result.fixtureExit,{code:0,bytes:0});
+  assert.deepEqual(result.writes,phase==='terminal_output'?['ready','terminal']:['ready']);
+  assert.deepEqual(result.listeners,{input:0,output:0});
+});
