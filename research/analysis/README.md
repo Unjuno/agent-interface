@@ -827,6 +827,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`worker_aging_6133_t1c_20261002/`](worker_aging_6133_t1c_20261002/)
 - [`wslc_control_plane_6669_t1_20261003/`](wslc_control_plane_6669_t1_20261003/)
 - [`wslc_control_plane_survivability_6669_t0_20261002/`](wslc_control_plane_survivability_6669_t0_20261002/)
+- [`wslc_receipt_schema_5309_t8_20261003/`](wslc_receipt_schema_5309_t8_20261003/)
 - [`x11_adaptation_multiseed_2459_v1/`](x11_adaptation_multiseed_2459_v1/)
 - [`x11_augmentation_fail_2394_v1/`](x11_augmentation_fail_2394_v1/)
 - [`x11_backend_process_restart_2437_v3/`](x11_backend_process_restart_2437_v3/)
