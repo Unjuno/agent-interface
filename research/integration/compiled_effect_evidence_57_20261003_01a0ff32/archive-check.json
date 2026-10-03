@@ -1,0 +1,130 @@
+{
+  "archive_sha256": "a3156b6a0c8f27e0a31a2516f3d2c0266868ecf203be2ca97a9f8a4bfc11105b",
+  "pass": true,
+  "rows": [
+    {
+      "actual": {
+        "count": {
+          "execute": 1,
+          "observe": 2,
+          "verify": 1
+        },
+        "exception": "ValueError",
+        "outcome": null,
+        "reason": null,
+        "research_imported": false
+      },
+      "exit_code": 0,
+      "expected": {
+        "count": {
+          "execute": 1,
+          "observe": 2,
+          "verify": 1
+        },
+        "exception": "ValueError",
+        "outcome": null,
+        "reason": null,
+        "research_imported": false
+      },
+      "pass": true,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "verdict": {
+        "evidence_ref": null,
+        "status": "succeeded"
+      }
+    },
+    {
+      "actual": {
+        "count": {
+          "execute": 2,
+          "observe": 3,
+          "verify": 2
+        },
+        "exception": null,
+        "outcome": "TASK_SUCCEEDED",
+        "reason": "method_complete",
+        "research_imported": false
+      },
+      "exit_code": 0,
+      "expected": {
+        "count": {
+          "execute": 2,
+          "observe": 3,
+          "verify": 2
+        },
+        "exception": null,
+        "outcome": "TASK_SUCCEEDED",
+        "reason": "method_complete",
+        "research_imported": false
+      },
+      "pass": true,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "verdict": {
+        "evidence_ref": "witness",
+        "status": "succeeded"
+      }
+    },
+    {
+      "actual": {
+        "count": {
+          "execute": 1,
+          "observe": 2,
+          "verify": 1
+        },
+        "exception": null,
+        "outcome": "SAFE_YIELD",
+        "reason": "effect_failed",
+        "research_imported": false
+      },
+      "exit_code": 0,
+      "expected": {
+        "count": {
+          "execute": 1,
+          "observe": 2,
+          "verify": 1
+        },
+        "exception": null,
+        "outcome": "SAFE_YIELD",
+        "reason": "effect_failed",
+        "research_imported": false
+      },
+      "pass": true,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "verdict": {
+        "evidence_ref": null,
+        "status": "failed"
+      }
+    },
+    {
+      "actual": {
+        "count": {
+          "execute": 1,
+          "observe": 2,
+          "verify": 1
+        },
+        "exception": null,
+        "outcome": "SAFE_YIELD",
+        "reason": "effect_unavailable",
+        "research_imported": false
+      },
+      "exit_code": 0,
+      "expected": {
+        "count": {
+          "execute": 1,
+          "observe": 2,
+          "verify": 1
+        },
+        "exception": null,
+        "outcome": "SAFE_YIELD",
+        "reason": "effect_unavailable",
+        "research_imported": false
+      },
+      "pass": true,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "verdict": {
+        "evidence_ref": null,
+        "status": "unavailable"
+      }
+    }
+  ]
+}

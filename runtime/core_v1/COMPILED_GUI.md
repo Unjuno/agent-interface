@@ -28,6 +28,15 @@ operate when a synchronous call returns; they cannot preempt a blocked adapter,
 undo emitted input, guarantee physical release by a deadline, or implement hard
 real-time control. No automatic replay, repair, grounding or local model exists.
 
+Successful effect verdicts require an exact-string, nonempty `evidence_ref`
+of at most 64 characters, matching the existing reference bound. A separate
+verifier witness is permitted; the reference need not equal the observation's
+reference. Malformed success metadata raises `ValueError` before the next
+branch or final completion, with prior action/journal evidence retained.
+Failed or unavailable verdicts keep their safe-yield behavior when the
+reference is absent. This syntax check does not verify the witness's existence
+or authenticity.
+
 `TASK_SUCCEEDED` is the graph's adapter/predicate verdict, not an independent
 application effect certificate. A form's changed pixels do not verify its text.
 Independent task/collateral scoring and primary image review remain required
