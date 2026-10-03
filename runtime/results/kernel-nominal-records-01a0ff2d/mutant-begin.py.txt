@@ -96,8 +96,6 @@ class RequestLifecycle:
             raise ContractError("now_ns must be nonnegative integer")
         if now_ns >= self.lease.valid_until_ns:
             raise ContractError("authority expired before execution")
-        if not isinstance(request, ExecutionRequest):
-            raise ContractError("request must be ExecutionRequest")
         if request.binding != self.binding or request.lease != self.lease:
             raise ContractError("execution request changed bound target or authority")
         self.request = request
