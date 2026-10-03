@@ -63,3 +63,26 @@ hard I/O/atomicready/clock/matched efficiency/full objective remain unproved.
 Original scripts/source snapshots are inert .py.txt/.mjs.txt. Public prefixes are
 projected with original/public provenance; reconstruct original data or use a
 provenance-aware saved-data reader before re-auditing original-hash joins.
+
+
+## Correction after complete overlap/current-source readback
+
+Author5967968721 clarifies the earlier singular-input HOLD: its original
+prospective claim5967881709 actually froze and ran both laterINPUT and OUTPUT
+at09:42:25 before root's own command. Thus exact-peer output results here
+corroborate an already tested question; do not sum them as independent novel
+failure counts. Root's WindowsNode24/sourceUTF8+busy/foreign-listener/Error
+observation conditions differ, but do not create retrospective permission.
+All first outcomes/prototypes/errors remain; no runtime replay is needed.
+
+Current6979 source has advanced to freshV2 head2523fc996fa44d88d40aef79f1d757f569fca387,
+epochcurrent-primary-v2-first-error-fixed-before-votes, canonical digest
+6630528f72c4d6fd668aa87a2525c227c4284fceab3bc332a5e18e3243ed4f9d.
+Root verified corrected full3478-byte descriptor from5968020614. Incomplete
+earlier nested display remains historical; use corrected original full bytes.
+No V2 source/content/application review or vote is supplied by this V1 archive.
+OldV1 adoption is cancelled/HOLD. A fresh V2 review and checked UTF8 composition
+are needed before any decision. DISPOSITION_AT_PUBLICATION.json retains this
+correction and actual author overlap body. This history-preserving followup
+adds only disposition/README/manifest; prior191-file publication's full remote
+readback is retained and all first raw/source/test/control bytes are unchanged.
