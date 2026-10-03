@@ -1,5 +1,7 @@
 # Analytical research
 
+- [`semantic_receipt_runtime_boundary_5442_t4/RESCUE_QUALIFICATION_20261003.md`](semantic_receipt_runtime_boundary_5442_t4/RESCUE_QUALIFICATION_20261003.md) — #5442 T4 host-only mechanical-boundary archive; package raw-audit tests 2/2, six source/artifact checksums, frozen-kernel tests 18/18. No containerized simulator, application effect, or semantic-success claim.
+
 - [`planner_hysteresis_5352_effect_qualified_t0_20261003/CONSTRUCTION_REPORT.md`](planner_hysteresis_5352_effect_qualified_t0_20261003/CONSTRUCTION_REPORT.md) — #5352 T15 finite synthetic discriminator construction contract 5/5 and current repository index tests 17/17; preformal HOLD, formal WSLc candidate/auditor 0/0; no efficacy claim.
 
 - [`exogenous_phase_6803_derived_capture_a05_20261003_3cbf/REPORT.md`](exogenous_phase_6803_derived_capture_a05_20261003_3cbf/REPORT.md) — #6969 successor: source-derived closed-interval acquisition passes 147-row independent finite audit and 10/10 corruption controls; four onset-only original-source probes confirm snapshot-label insensitivity. Private OrbStack containers; modeled effects only, live transfer HOLD; pre-stage socket STOP preserved.
@@ -727,6 +729,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`semantic_predicate_fabric_4215_v1/`](semantic_predicate_fabric_4215_v1/)
 - [`semantic_receipt_container_replay_5442_t7/`](semantic_receipt_container_replay_5442_t7/)
 - [`semantic_receipt_dependency_cuts_5442_t3/`](semantic_receipt_dependency_cuts_5442_t3/)
+- [`semantic_receipt_runtime_boundary_5442_t4/`](semantic_receipt_runtime_boundary_5442_t4/)
 - [`semantic_receipt_target_binding_5442_t8/`](semantic_receipt_target_binding_5442_t8/)
 - [`semantic_selection_identity_successor_341_v1/`](semantic_selection_identity_successor_341_v1/)
 - [`semantic_serializability_5318_audit_t3_20261002/`](semantic_serializability_5318_audit_t3_20261002/)
