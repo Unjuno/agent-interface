@@ -21,6 +21,11 @@ def write(path, value):
 
 
 def expected(case, row):
+    if case == 'candidate_events_eof' and not (
+            row.get('ready') == {'event': 'ready'}
+            and row.get('terminal') == {'event': 'terminal'}
+            and row.get('reader_alive_after_ready') is True):
+        return False
     outcome = 'TimeoutError' if case == 'baseline_eof' else '_SessionReaderFailure'
     cause = None if case == 'baseline_eof' else ('JSONDecodeError' if case == 'candidate_json' else 'EOFError')
     return (len(row['waits']) == 2 and all(wait['outcome'] == outcome and wait['cause'] == cause for wait in row['waits'])
