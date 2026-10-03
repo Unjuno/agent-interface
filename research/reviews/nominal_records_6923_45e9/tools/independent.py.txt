@@ -1,0 +1,80 @@
+"""Own literal sequential record witnesses, independent of author test helpers."""
+import json, sys
+from pathlib import Path
+sys.path.insert(0,str(Path(__file__).resolve().parent/'source'))
+from runtime.kernel import (Action,ActionKind,AuthorityLease,ContractError,EffectOccurrence,
+ EffectReceipt,EffectStatus,ExecutionReceipt,ExecutionRequest,Observation,ReleaseReceipt,
+ RequestLifecycle,Stage,TargetBinding)
+
+def require(value,label):
+ if not value:raise AssertionError(label)
+types=(Observation,TargetBinding,AuthorityLease,ExecutionRequest,ExecutionReceipt,EffectReceipt,ReleaseReceipt)
+def records(subclass=False):
+ classes=[type('Trusted'+c.__name__,(c,),{}) if subclass else c for c in types]
+ O,B,L,Q,X,E,R=classes
+ obs=O(11,10,'surface-review','1'*64,2,3,'literal-inert')
+ binding=B('target-review',11,'surface-review','2'*64)
+ lease=L('lease-review',11,'surface-review',100,frozenset({ActionKind.TEXT}))
+ req=Q('cmd-review','3'*64,binding,lease,(Action('action-review',ActionKind.TEXT,'inert'),))
+ release=R(60,True)
+ execution=X('cmd-review','backend-inert','3'*64,'lease-review',11,'surface-review',40,50,1,EffectOccurrence.NONE,release)
+ effect=E('cmd-review','3'*64,70,EffectStatus.VERIFIED,'4'*64)
+ return obs,binding,lease,req,execution,effect,release
+def flow(level,subclass=False):
+ f=RequestLifecycle();o,b,l,q,x,e,r=records(subclass)
+ if level>=1:f.record_observation(o)
+ if level>=2:f.bind(b)
+ if level>=3:f.authorize(l,now_ns=20)
+ if level>=4:f.begin_execution(q,now_ns=30)
+ if level>=5:f.record_execution(x)
+ return f,(o,b,l,q,x,e,r)
+def refuse(f,callback,reason):
+ before=vars(f).copy()
+ try:callback()
+ except ContractError as e:require(str(e)==reason,('unexpected reason',str(e),reason))
+ else:raise AssertionError('accepted rejected witness')
+ require(vars(f)==before,'state value changed')
+ require(all(vars(f)[k] is v for k,v in before.items()),'state identity changed')
+ return reason
+class FieldTrap:
+ def __init__(self):object.__setattr__(self,'_reads',[])
+ def __getattribute__(self,name):
+  if name in {'_reads','__class__'}:return object.__getattribute__(self,name)
+  object.__getattribute__(self,'_reads').append(name)
+  raise RuntimeError('untyped record field accessed: '+name)
+
+rows=[]
+for name,level,method,reason in [
+ ('observation',0,lambda f,t:f.record_observation(t),'observation must be Observation'),
+ ('binding',1,lambda f,t:f.bind(t),'binding must be TargetBinding'),
+ ('authority',2,lambda f,t:f.authorize(t,now_ns=20),'lease must be AuthorityLease'),
+ ('begin',3,lambda f,t:f.begin_execution(t,now_ns=30),'request must be ExecutionRequest'),
+ ('execution',4,lambda f,t:f.record_execution(t),'receipt must be ExecutionReceipt'),
+ ('effect',5,lambda f,t:f.record_effect(t),'receipt must be EffectReceipt'),
+ ('stop',4,lambda f,t:f.stop('cancel-review',release=t),'release must be ReleaseReceipt')]:
+ f,_=flow(level);trap=FieldTrap();refuse(f,lambda:method(f,trap),reason)
+ require(trap._reads==[],(name,trap._reads))
+ rows.append({'case':name+'-untyped-field-trap','contract_error':reason,'field_reads':trap._reads,'state_identity_preserved':True})
+for sub in (False,True):
+ f,r=flow(5,sub);f.record_effect(r[5]);result=f.outcome()
+ require(result.stage is Stage.VERIFIED and result.release_verified and result.effect_verified and not result.effect_occurred,'typed positive outcome')
+ rows.append({'case':'trusted-subclass-positive' if sub else 'nominal-positive','stage':result.stage.value,'command':result.command_id})
+f,r=flow(1)
+refuse(f,lambda:f.bind(TargetBinding('target-review',12,'surface-review','2'*64)),'binding is stale for current observation')
+rows.append({'case':'typed-stale-binding','state_identity_preserved':True})
+f,r=flow(2)
+refuse(f,lambda:f.authorize(r[2],now_ns=100),'lease is already expired')
+rows.append({'case':'typed-expiry-equality','state_identity_preserved':True})
+f,r=flow(4)
+x=ExecutionReceipt('cmd-review','backend-inert','3'*64,'lease-review',11,'surface-review',29,50,1,EffectOccurrence.NONE,r[6])
+refuse(f,lambda:f.record_execution(x),'execution receipt starts before accepted begin')
+rows.append({'case':'typed-prebegin-receipt','state_identity_preserved':True})
+f,r=flow(4)
+refuse(f,lambda:f.stop('cancel-review',release=ReleaseReceipt(29,True)),'cancellation release predates execution begin')
+rows.append({'case':'typed-prebegin-release','state_identity_preserved':True})
+f,r=flow(4,True);f.stop('cancel-review',release=r[6]);result=f.outcome()
+require(result.stage is Stage.STOPPED and result.release_verified and not result.effect_verified,'typed cancel positive')
+rows.append({'case':'trusted-subclass-cancellation','stage':result.stage.value})
+require(len(rows)==14,'bounded witness count')
+print(json.dumps({'status':'PASS_SCOPED','cases':rows,'actual_cases':14,
+ 'author_helpers_imported':False,'native_backend_or_effect_calls':0,'formal_or_historical_producer_replays':0},sort_keys=True))
