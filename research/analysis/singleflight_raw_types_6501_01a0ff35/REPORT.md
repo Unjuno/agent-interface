@@ -55,3 +55,10 @@ It does not prove arbitrary malformed-input handling, duplicate JSON member
 rejection, real scheduler safety, exactly-once effects, performance or task
 benefit. Non-author FINAL-v5 consensus and conditional main application remain
 outstanding. The full computer-control goal remains open.
+
+Publication construction correction: the first staged diff check found CRLF
+terminators in newly written diagnostic/manifest files. The initial push was
+not treated as validation success. New diagnostic text was normalized for LF and trailing whitespace
+in a follow-up commit; exact source/fixture/raw copies and the matrix bytes
+remain unchanged. Final changed-file whitespace verification is recorded
+separately in `final-validation.json`.
