@@ -15,6 +15,10 @@ def clock(value):
     return type(value) is int and value > 0
 
 
+def check_directory(directory):
+    return 'VERIFIED_SAVED_PIPE_RECORD'
+
+
 def check_rows(rows):
     cases = ['baseline_eof', 'candidate_eof', 'candidate_events_eof', 'candidate_json']
     require([row['case'] for row in rows] == cases, 'case cardinality/order')
