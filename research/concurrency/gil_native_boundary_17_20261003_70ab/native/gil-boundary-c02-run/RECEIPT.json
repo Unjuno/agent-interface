@@ -1,0 +1,32 @@
+{
+  "cwd": "<WORKSPACE>",
+  "receipt_directory": "<WORKSPACE>/work/continuation-20261003-1250/operations/gil-boundary-c02-run",
+  "argv": [
+    "orb",
+    "-m",
+    "research-6501-async-01a0ff52-70ab",
+    "-u",
+    "root",
+    "bash",
+    "-c",
+    "docker run --pull never --network none --read-only --cpus 0.25 --memory 128m --memory-swap 128m --pids-limit 32 --mount type=bind,source=/root/17-gil-native-boundary-c02-70ab/source,target=/src,readonly --mount type=bind,source=/root/17-gil-native-boundary-c02-70ab/output,target=/out --name 17-gil-native-c02-70ab sha256:fef7d1263cba47f4d15d2cee01b4dee380d5f6270275d8ef2d85e6732bf941f5 python -B /src/probe.py"
+  ],
+  "launcher_pid": 40208,
+  "start_utc": "2026-10-03T15:05:22.948081+00:00",
+  "start_ns": 50887814229291,
+  "pid": 40227,
+  "exit_code": 0,
+  "end_utc": "2026-10-03T15:05:28.591429+00:00",
+  "end_ns": 50893457391041,
+  "source_sha256": "d63bd38401f3c366f145aada93d78d71eaf23216b896f6874d01f0741dfd15fa",
+  "outputs": {
+    "stdout": {
+      "bytes": 41,
+      "sha256": "8b53be1b224284e897fb8791f41b4fb938c14f61e161baa1486cdf6696cd4074"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

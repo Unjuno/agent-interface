@@ -1,0 +1,37 @@
+{
+  "cwd": "<WORKSPACE>",
+  "receipt_directory": "<WORKSPACE>/work/continuation-20261003-1250/operations/gil-boundary-c02-source",
+  "argv": [
+    "orb",
+    "-m",
+    "research-6501-async-01a0ff52-70ab",
+    "-u",
+    "root",
+    "bash",
+    "-c",
+    "tar -xf - -C /root/17-gil-native-boundary-c02-70ab/source && sha256sum /root/17-gil-native-boundary-c02-70ab/source/FREEZE.json && test -z \"$(docker ps -q)\""
+  ],
+  "launcher_pid": 40210,
+  "start_utc": "2026-10-03T15:05:22.769100+00:00",
+  "start_ns": 50887635262458,
+  "stdin": {
+    "path": "work/gil-native-boundary-17-70ab/C02_INPUT.tar",
+    "bytes": 20480,
+    "sha256": "f12dd559eb01f7637fc3b1462e4b8a878b59d282fe7d92052067827d809c71cd"
+  },
+  "pid": 40213,
+  "exit_code": 0,
+  "end_utc": "2026-10-03T15:05:22.909250+00:00",
+  "end_ns": 50887775228041,
+  "source_sha256": "d63bd38401f3c366f145aada93d78d71eaf23216b896f6874d01f0741dfd15fa",
+  "outputs": {
+    "stdout": {
+      "bytes": 123,
+      "sha256": "81c53950d16d54608791d663fdb452ad5eb826fd5975267e3fa5aec0465e0f62"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "name": "/17-gil-native-c02-70ab",
+  "id": "e19cdb2f16dec56e206461b2be50088a00e450976ef17d6f244411cfb89af19c",
+  "state": {
+    "Status": "exited",
+    "Running": false,
+    "Paused": false,
+    "Restarting": false,
+    "OOMKilled": false,
+    "Dead": false,
+    "Pid": 0,
+    "ExitCode": 0,
+    "Error": "",
+    "StartedAt": "2026-10-03T15:05:23.085706037Z",
+    "FinishedAt": "2026-10-03T15:05:28.515341996Z"
+  },
+  "configured_limits": {
+    "NetworkMode": "none",
+    "Memory": 134217728,
+    "MemorySwap": 134217728,
+    "NanoCpus": 250000000,
+    "PidsLimit": 32,
+    "ReadonlyRootfs": true
+  },
+  "mounts": [
+    {
+      "Type": "bind",
+      "Source": "/root/17-gil-native-boundary-c02-70ab/source",
+      "Destination": "/src",
+      "Mode": "",
+      "RW": false,
+      "Propagation": "rprivate"
+    },
+    {
+      "Type": "bind",
+      "Source": "/root/17-gil-native-boundary-c02-70ab/output",
+      "Destination": "/out",
+      "Mode": "",
+      "RW": true,
+      "Propagation": "rprivate"
+    }
+  ],
+  "image": "sha256:fef7d1263cba47f4d15d2cee01b4dee380d5f6270275d8ef2d85e6732bf941f5",
+  "vm_stopped": true,
+  "stopped_container_retained": true,
+  "image_retained": true,
+  "marker_release": "RELEASED file; evidence directory retained"
+}

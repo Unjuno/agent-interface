@@ -1,0 +1,17 @@
+{
+  "cwd": "<WORKSPACE>",
+  "receipt_directory": "<WORKSPACE>/work/continuation-20261003-1250/operations/gil-boundary-helper-build",
+  "argv": [
+    "orb",
+    "-m",
+    "research-6501-async-01a0ff52-70ab",
+    "-u",
+    "root",
+    "bash",
+    "-c",
+    "docker run --pull never --network none --read-only --cpus 0.25 --memory 128m --memory-swap 128m --pids-limit 32 --tmpfs /tmp:rw,size=16m --mount type=bind,source=/root/17-gil-native-boundary-c02-70ab/source,target=/src,readonly --mount type=bind,source=/root/17-gil-native-boundary-c02-70ab/output,target=/out --name 17-gil-helper-build-70ab sha256:fef7d1263cba47f4d15d2cee01b4dee380d5f6270275d8ef2d85e6732bf941f5 bash -c \"gcc -std=c11 -Wall -Wextra -Werror -O2 -shared -fPIC /src/helper.c -o /out/helper.so && python -B /src/selftest.py\""
+  ],
+  "launcher_pid": 36740,
+  "start_utc": "2026-10-03T15:02:18.314325+00:00",
+  "start_ns": 50703181064083
+}
