@@ -1,0 +1,30 @@
+[
+  {
+    "mutation": "reader-before-writer-exit",
+    "mutated_raw_sha256": "62d4623353273ad47377bb73e51e355a8f549ae0b394f7851d9a6304007e7f69",
+    "v1_status": "PASS_PROCESS_EXIT_BOUNDARY_SCOPED",
+    "v2_result": "HOLD",
+    "v2_reason": "serial child chronology"
+  },
+  {
+    "mutation": "argv-mode-mismatch",
+    "mutated_raw_sha256": "39265479912455563668be47159efa45de355ad4b8dc1c79b621e99bba5baeba",
+    "v1_status": "PASS_PROCESS_EXIT_BOUNDARY_SCOPED",
+    "v2_result": "HOLD",
+    "v2_reason": "child argv/mode/case"
+  },
+  {
+    "mutation": "unfrozen-interpreter",
+    "mutated_raw_sha256": "6bdcf724c3f748525959db9316d3fd947e796abad04f8b51f9fdb60602f4edb7",
+    "v1_status": "PASS_PROCESS_EXIT_BOUNDARY_SCOPED",
+    "v2_result": "HOLD",
+    "v2_reason": "frozen environment"
+  },
+  {
+    "mutation": "contradictory-complete-reason",
+    "mutated_raw_sha256": "dc4ad7cf07917016c9f29e0cf50dcc03a20aba3eb5b291a40f4c966bbd271186",
+    "v1_status": "PASS_PROCESS_EXIT_BOUNDARY_SCOPED",
+    "v2_result": "HOLD",
+    "v2_reason": "complete result oracle"
+  }
+]
