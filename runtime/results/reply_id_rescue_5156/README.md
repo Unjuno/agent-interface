@@ -12,7 +12,16 @@ are not cached. Current stderr/reader/journal retirement logic is not replaced
 with the older source. Shared protocol suite gains only the reply-ID module;
 all existing registration is retained.
 
-Combined reply-ID/journal/reader/EOF tests pass 16/16. Complete native contract
-runner and analysis-index CI results remain pending; this is not merge-ready
-or proof of genuine provider, GUI, native input or formal scientific execution.
-Red/green and combined logs remain beside this note.
+Combined reply-ID/journal/reader/EOF tests pass 16/16. Local analysis-index CI
+completes 43 steps with no failures. Full native runner is FAIL: candidate
+protocol435 tests,5 errors/5 skips; harness205 tests,31 errors. Exact parent
+c45eb3631 baseline also FAIL: protocol433 tests,5 errors/5 skips and harness205
+tests,31 errors. Error test rosters compare equal. All36 errors trace to Linux
+`/proc/self/ns/pid` access through current_owner_identity on macOS. Tests are
+not suppressed and no substitute process identity is introduced.
+Existing Docker image inspection fails with daemon blob operation not supported;
+no container launched/reset/pruned/pulled. Linux hosted validation is still needed.
+Full native baseline/candidate outputs remain in local outputs/replyid-native*
+logs; transfer to this packet remains pending because the first read was truncated.
+Red/green and combined logs remain here. This is not a whole-suite PASS, merge-ready
+delivery or genuine-provider/GUI/native-input/formal scientific execution evidence.
