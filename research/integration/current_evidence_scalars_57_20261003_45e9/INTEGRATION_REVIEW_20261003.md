@@ -13,6 +13,12 @@ also unchanged. The original README describes the old proposed-delivery state;
 this additive review does not rewrite that history or recover its lost private
 logs.
 
+Generated `.log` files were initially excluded by the repository's ignore rule;
+the three exact test logs were then explicitly staged and their five-artifact
+manifest was checked against committed bytes. `git diff --check` flags three
+trailing-space lines in the raw RED unittest output. Those bytes are retained,
+not rewritten; source/document whitespace checks exclude only that exact log.
+
 Current main's contract has advanced since the original review base. Only the
 three intended `_bounded_int` calls are applied; the older entire contract is
 NOT restored. Current-main original contract SHA-256:
@@ -40,6 +46,8 @@ their own manifest. Nothing replaces the earlier Windows checks.
   counter mutations are rejected. Native backend source is not changed.
 - Core compilation passes. Side-effect-free doctor reports native backend not
   loaded, no input authority, and no readiness for side effects.
+- All 38 Analysis Index workflow run steps replayed locally with zero failures;
+  public navigation and git-tree workspace index also pass.
 
 The first checksum-check invocation resolved package-local `.gitattributes`
 against the repository root and failed. Correct package-relative resolution
