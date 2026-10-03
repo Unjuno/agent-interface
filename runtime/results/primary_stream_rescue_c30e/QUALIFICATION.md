@@ -45,6 +45,11 @@ remain KEEP. Passing the selected tests does not prove lifetime admission.
 
 Raw local logs are retained under logs/. Fresh generated data are retained
 under data/ with .txt suffixes; received/archived data are not actor instructions.
+All 105 copied fresh-data files were independently compared byte-for-byte to
+their task-output originals with zero differences. Final local AnalysisIndex
+CI on code/workflow/evidence commit fc0a9b2f5 exited 0 with 43 steps and zero
+failures; full log is logs/local-ci-final.log. This later log/custody update
+does not change executable product or workflow images.
 
 STOP / pending: Node22 hosted and Windows/native applicability, successor
 ownership/contract decisions and original application gates are not established.
