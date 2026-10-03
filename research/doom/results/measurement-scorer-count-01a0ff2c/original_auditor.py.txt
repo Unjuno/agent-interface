@@ -72,10 +72,7 @@ def audit(root,research_root=None):
         if e.get('observed_ns') not in sample_set:fail.append('scorer event not bound to sample');break
     summary_path=root/'scorer-summary.json';summary=json.loads(summary_path.read_text(encoding='utf-8')) if summary_path.exists() else None
     if not isinstance(summary,dict) or summary.get('controller_visible') is not False:fail.append('scorer summary missing/visible')
-    else:
-        scheduler=summary.get('scheduler')
-        missed=scheduler.get('missed_sample_periods') if isinstance(scheduler,dict) else None
-        if type(missed) is not int or missed!=0:fail.append('scorer scheduler missed sample periods')
+    elif (summary.get('scheduler') or {}).get('missed_sample_periods')!=0:fail.append('scorer scheduler missed sample periods')
     result={'schema':'map01-measurement-integration-audit-v3','pass':not fail,'failures':fail,'controller_scorer_leak_count':len(leak),'completed_hold_count':len(completed),'interrupted_hold_count':len(interrupted),'direct_retained_input':direct,'release_transition_count':sum(len(h['transitions']) for h in completed),'release_batch_window_us':({'min':min(windows)/1e3,'median':statistics.median(windows)/1e3,'max':max(windows)/1e3} if windows else None),'scorer_sample_count':len(samples),'scorer_event_count':len(score_events),'positive_useful_event_count':sum(e.get('useful') is True for e in score_events),'zero_positive_events_allowed':True,'decision':'PASS measurement integration' if not fail else 'FAIL measurement integration'}
     return result
 def main():
