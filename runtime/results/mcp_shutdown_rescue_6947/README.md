@@ -26,3 +26,16 @@ in a reviewable successor before final delivery. No full local CI PASS or
 main integration is claimed. Do not skip or weaken the two remaining tests.
 Compare against unchanged baseline and investigate actual path normalization.
 Keep original branch until adopted, source tagged, and dependencies checked.
+
+## Subsequent diagnosis and qualified GREEN
+
+The two remaining path assertions also fail with the unchanged server
+(baseline-path-fail.log). macOS default `/var/folders/.../T` resolves to
+`/private/var/folders/.../T`; the application resolves saved paths while these
+tests compare against the unresolved temporary root. No production or test
+change was made to suppress the assertions. With canonical `TMPDIR=/private/tmp`,
+all106 pass normally. With the **same original temporary directory** specified
+using its canonical `/private/var/folders/.../T` spelling, all106 pass under `-O`.
+Both settings and first failures are recorded in separate raw logs here.
+This establishes a path-spelling fixture limitation, not a GUI/native-input result.
+Shared native integration remains a separate gate; no blanket suite claim follows.
