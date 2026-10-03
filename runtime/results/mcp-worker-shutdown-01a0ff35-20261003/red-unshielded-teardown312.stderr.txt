@@ -1,0 +1,26 @@
+test_cancelled_shutdown_waiter_keeps_invocation_completion_uncancelled (runtime.cli_v1.test_mcp_session.OwnedMCPTests.test_cancelled_shutdown_waiter_keeps_invocation_completion_uncancelled) ... FAIL
+
+======================================================================
+FAIL: test_cancelled_shutdown_waiter_keeps_invocation_completion_uncancelled (runtime.cli_v1.test_mcp_session.OwnedMCPTests.test_cancelled_shutdown_waiter_keeps_invocation_completion_uncancelled)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<python312-bundle>\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<python312-bundle>\Lib\asyncio\base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "<private-workspace>\work\mcp-shutdown-repo\runtime\cli_v1\test_mcp_session.py", line 194, in test_cancelled_shutdown_waiter_keeps_invocation_completion_uncancelled
+    self.assertEqual(errors, [], 'teardown cancellation broke completion acknowledgment')
+AssertionError: Lists differ: [{'message': 'Exception in callback Future[1418 chars]d>]}] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+{'message': 'Exception in callback Future.set_result(None)', 'exception': InvalidStateError('invalid state'), 'handle': <Handle Future.set_result(None) created at <private-workspace>\work\mcp-shutdown-repo\runtime\cli_v1\mcp_server.py:372>, 'source_traceback': [<FrameSummary file <python312-bundle>\Lib\threading.py, line 1032 in _bootstrap>, <FrameSummary file <python312-bundle>\Lib\threading.py, line 1075 in _bootstrap_inner>, <FrameSummary file <python312-bundle>\Lib\threading.py, line 1012 in run>, <FrameSummary file <python312-bundle>\Lib\concurrent\futures\thread.py, line 93 in _worker>, <FrameSummary file <python312-bundle>\Lib\concurrent\futures\thread.py, line 59 in run>, <FrameSummary file <private-workspace>\work\mcp-shutdown-repo\runtime\cli_v1\mcp_server.py, line 352 in invoke>, <FrameSummary file <private-workspace>\work\mcp-shutdown-repo\runtime\cli_v1\mcp_server.py, line 155 in finish>, <FrameSummary file <private-workspace>\work\mcp-shutdown-repo\runtime\cli_v1\mcp_server.py, line 372 in completed>]}
+
+Diff is 1660 characters long. Set self.maxDiff to None to see it. : teardown cancellation broke completion acknowledgment
+
+----------------------------------------------------------------------
+Ran 1 test in 0.050s
+
+FAILED (failures=1)

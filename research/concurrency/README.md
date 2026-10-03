@@ -60,6 +60,8 @@ This is a navigation model derived from the retained studies, not a new runtime 
 
 ## Read next
 
+- [FD lifetime and late cleanup](fd_lifetime_6501_20261003_01a0ff52/REPORT.md): six retained Linux pipe rows distinguish unsafe integer-only closure from shared one-time ownership; harness release is cleanup, not cancellation success.
+
 - Owned Linux pipe read cancellation evidence: [`owned_pipe_cancel_6501_20261003_01a0ff52/REPORT.md`](owned_pipe_cancel_6501_20261003_01a0ff52/REPORT.md) distinguishes wrapper cancellation, caller descriptor close and actual owned callable/resource completion in six frozen conditions; this is scoped construction, with no production/runtime or GUI claim.
 
 - Current research method: [`../../docs/RESEARCH_METHOD.md`](../../docs/RESEARCH_METHOD.md)
