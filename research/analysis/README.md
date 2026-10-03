@@ -559,6 +559,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`model_api_canary_wslc_replay_6001_t0_20261003/`](model_api_canary_wslc_replay_6001_t0_20261003/)
 - [`model_interface_crossover_6035_t0_a03_20261002/`](model_interface_crossover_6035_t0_a03_20261002/)
 - [`model_localization_2031_gemma3gpu_t1_v1/`](model_localization_2031_gemma3gpu_t1_v1/)
+- [`mount_admission_6067_c01_20261003_3cbf/`](mount_admission_6067_c01_20261003_3cbf/)
 - [`multi_actuator_state_domain_independence_r0_v1/`](multi_actuator_state_domain_independence_r0_v1/)
 - [`multi_app_transition_retained_audit_r0_v1/`](multi_app_transition_retained_audit_r0_v1/)
 - [`multi_principal_effect_auth_5805_t0_v1/`](multi_principal_effect_auth_5805_t0_v1/)
