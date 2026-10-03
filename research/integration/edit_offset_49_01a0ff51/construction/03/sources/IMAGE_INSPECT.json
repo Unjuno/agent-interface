@@ -1,0 +1,49 @@
+[
+    {
+        "Architecture": "arm64",
+        "Config": {
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "DEBIAN_FRONTEND=noninteractive",
+                "QT_QPA_PLATFORM=xcb",
+                "QT_LOGGING_RULES=qt.qpa.*=false",
+                "PYTHONDONTWRITEBYTECODE=1",
+                "OMP_NUM_THREADS=1",
+                "QT_XCB_GL_INTEGRATION=none"
+            ],
+            "Labels": {
+                "org.opencontainers.image.version": "24.04"
+            },
+            "WorkingDir": "/src"
+        },
+        "Created": "2026-10-03T14:43:40.0716757+09:00",
+        "Descriptor": {
+            "digest": "sha256:65ae56ebdddc2742bc1441ee9eca0fcca7e232cb611a09ea8b177b36fc23c291",
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "size": 1402
+        },
+        "Id": "sha256:65ae56ebdddc2742bc1441ee9eca0fcca7e232cb611a09ea8b177b36fc23c291",
+        "Metadata": {
+            "LastTagTime": "2026-10-03T05:43:40.163317071Z"
+        },
+        "Os": "linux",
+        "Parent": "sha256:658589d0a7c39af2ae42111e13ee59b5d12d7706f43a7917bfdf8f5f0db7b310",
+        "RepoDigests": [
+            "edit49-01a0ff51@sha256:65ae56ebdddc2742bc1441ee9eca0fcca7e232cb611a09ea8b177b36fc23c291"
+        ],
+        "RepoTags": [
+            "edit49-01a0ff51:v1"
+        ],
+        "RootFS": {
+            "Layers": [
+                "sha256:1e9178dc90058fa454a60803300219ee8c17e515be8718817ed824b96fa1207b",
+                "sha256:e4c9c54b1e53f534f9c785e9988f5e5d1210bcc83da255bea92b30c9c489edb3",
+                "sha256:932b13de1b6ad5cfff8702834a24c08a86d2c7c52b92efd329c212d40b4c3786",
+                "sha256:88c68745260bdcae026bfa6c5c92ca374a005aed3d338e0020cd715df11e6353",
+                "sha256:06a4b02d8e1846e04e414cb18559d8bda8fdafd1a2e4a901c950d03cf771fc7e"
+            ],
+            "Type": "layers"
+        },
+        "Size": 197836363
+    }
+]

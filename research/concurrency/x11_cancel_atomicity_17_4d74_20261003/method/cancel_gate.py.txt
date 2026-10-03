@@ -1,0 +1,89 @@
+"""Two scoped cancellation compositions around the exact public key_state path.
+Research instrumentation only; not an exported production cancellation API.
+"""
+from __future__ import annotations
+import threading
+import time
+from runtime.backends.x11_v1.backend import X11Backend, X11BackendError
+
+class CancelRaceBackend(X11Backend):
+    def __init__(self, display_name, targets, *, arm, paused):
+        super().__init__(display_name, targets)
+        if arm not in ("precheck", "atomic") or type(paused) is not bool:
+            raise ValueError("invalid scoped composition")
+        self.arm, self.paused = arm, paused
+        self.owner_lock = threading.RLock()
+        self.cancelled = threading.Event()
+        self.pause_entered = threading.Event()
+        self.resume = threading.Event()
+        self.checks, self.native_calls = [], []
+        self.pause_row = None
+        self.cancel_row = None
+        self.program_id = None
+
+    def preflight(self, program):
+        if any(op["op"] not in {"focus", "key_state", "wait_update", "release_all"}
+               for op in program["ops"]):
+            raise X11BackendError("scoped key-state composition only")
+        return super().preflight(program)
+
+    def execute(self, program):
+        if self.program_id is not None:
+            raise X11BackendError("one program per owned research backend")
+        self.program_id = program["program_id"]
+        return super().execute(program)
+
+    def _checked(self, key):
+        row = {"key": key, "checked_ns": time.monotonic_ns(),
+               "allowed": not self.cancelled.is_set(),
+               "lock_held": self.arm == "atomic"}
+        self.checks.append(row)
+        if not row["allowed"]:
+            raise X11BackendError("owned program cancellation already accepted")
+        if key == "F9" and self.paused:
+            self.pause_row = {"entered_ns": time.monotonic_ns(), "resumed_ns": None}
+            self.pause_entered.set()
+            if not self.resume.wait(6):
+                raise X11BackendError("frozen pause watchdog expired")
+            self.pause_row["resumed_ns"] = time.monotonic_ns()
+
+    def _native(self, key, down):
+        row = {"kind": "key_state", "key": key, "down": down,
+               "started_ns": time.monotonic_ns(), "ended_ns": None,
+               "thread_id": threading.get_ident()}
+        self.native_calls.append(row)
+        try:
+            # Literal current-public implementation: tracked state, XTEST, XSync.
+            return super().key_state(key, down)
+        finally:
+            row["ended_ns"] = time.monotonic_ns()
+
+    def key_state(self, key, down):
+        if self.arm == "atomic":
+            with self.owner_lock:
+                if down:
+                    self._checked(key)
+                return self._native(key, down)
+        if down:
+            # Separate check deliberately has no common mutation-lock coverage.
+            self._checked(key)
+        with self.owner_lock:
+            return self._native(key, down)
+
+    def release_all(self):
+        with self.owner_lock:
+            return super().release_all()
+
+    def cancel_program(self, program_id):
+        if program_id != self.program_id:
+            raise X11BackendError("cancel owner/program mismatch")
+        row = {"request_ns": time.monotonic_ns(), "lock_acquired_ns": None,
+               "accepted_ns": None, "ended_ns": None, "receipt": None}
+        self.cancel_row = row
+        with self.owner_lock:
+            row["lock_acquired_ns"] = time.monotonic_ns()
+            self.cancelled.set()
+            row["accepted_ns"] = time.monotonic_ns()
+            row["receipt"] = self.release_all()
+            row["ended_ns"] = time.monotonic_ns()
+        return row

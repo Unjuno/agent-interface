@@ -1,0 +1,57 @@
+{
+  "commands": [
+    {
+      "command": [
+        "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_reference"
+      ],
+      "started_utc": "2026-10-03T02:34:31.321538+00:00",
+      "ended_utc": "2026-10-03T02:34:31.512737+00:00",
+      "exit_code": 0,
+      "expected_exit_codes": [
+        0
+      ],
+      "disposition": "ordinary reference tests",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "937cc96f86c17adff01b2df13a12ecb92eb506fded02d1bded5f87cb51fc9768"
+    },
+    {
+      "command": [
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-8\\work\\venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "pytest",
+        "--collect-only",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-8\\work\\agent-interface\\research\\doom\\scorer_burst_service_59_20261003_01a0ff59"
+      ],
+      "started_utc": "2026-10-03T02:34:31.512737+00:00",
+      "ended_utc": "2026-10-03T02:34:31.977342+00:00",
+      "exit_code": 5,
+      "expected_exit_codes": [
+        5
+      ],
+      "disposition": "zero collection evidence",
+      "stdout_sha256": "3fac587e95688cd7622be87c3c03f37d118a35da3a48335f70c525cb2996ca84",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "syntax_compiled_files": [
+    "sources/one_command/independent_progress_clock_v2.py",
+    "sources/one_command/main_thread_scorer_polling_v1.py",
+    "sources/one_command/map01_scorer_stdio_adapter_v1.py",
+    "sources/original/independent_progress_clock_v2.py",
+    "sources/original/main_thread_scorer_polling_v1.py",
+    "sources/original/map01_scorer_stdio_adapter_v1.py",
+    "sources/repair_v2/independent_progress_clock_v2.py",
+    "sources/repair_v2/main_thread_scorer_polling_v1.py",
+    "sources/repair_v2/map01_scorer_stdio_adapter_v1.py"
+  ],
+  "test_only_dependency": "pytest==9.1.1 in private venv; absent from stdlib scientific run"
+}

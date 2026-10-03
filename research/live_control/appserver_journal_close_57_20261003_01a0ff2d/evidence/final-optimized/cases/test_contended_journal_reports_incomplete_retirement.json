@@ -1,0 +1,46 @@
+{
+  "kind": "owned-native-silent-transport",
+  "child_pid": 2940,
+  "completed_at_checkpoint": true,
+  "checkpoint_ns": 22919187000000,
+  "caller_alive_at_checkpoint": false,
+  "child_exit_at_checkpoint": 1,
+  "reader_alive_at_checkpoint": false,
+  "journal_enabled": true,
+  "fixture_held_lock": true,
+  "journal_lock_still_locked": true,
+  "journal_closed_at_checkpoint": false,
+  "journal_bytes_equal_seed_at_checkpoint": true,
+  "client_pipes_closed_at_checkpoint": [
+    false,
+    false,
+    false
+  ],
+  "checkpoint_outcome": {
+    "start_ns": 22919140000000,
+    "error_type": "TimeoutError",
+    "error_message": "app-server journal close timed out",
+    "end_ns": 22919187000000
+  },
+  "configured_wait_seconds": 0.05,
+  "fixed_checkpoint_seconds": 0.25,
+  "final_child_exit": 1,
+  "final_reader_alive": false,
+  "final_caller_alive": false,
+  "final_journal_closed": true,
+  "final_journal_bytes_equal_seed": true,
+  "journal_seed_base64": "eyJmaXh0dXJlIjoicmV0YWluZWQtb3duZWQtam91cm5hbCJ9DQo=",
+  "journal_final_base64": "eyJmaXh0dXJlIjoicmV0YWluZWQtb3duZWQtam91cm5hbCJ9DQo=",
+  "driver_closed_pipe_handles": [
+    true,
+    true,
+    true
+  ],
+  "cleanup_outcome": {
+    "start_ns": 22919140000000,
+    "error_type": "TimeoutError",
+    "error_message": "app-server journal close timed out",
+    "end_ns": 22919187000000
+  },
+  "method": "test_contended_journal_reports_incomplete_retirement"
+}

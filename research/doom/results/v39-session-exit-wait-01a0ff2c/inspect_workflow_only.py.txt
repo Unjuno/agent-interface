@@ -1,0 +1,44 @@
+from pathlib import Path
+import ast,base64,datetime,fnmatch,hashlib,json,os,subprocess,sys,yaml
+code=Path(__file__).parent;root=code.parents[1];out=root/'outputs/v39-wait-repair-01a0ff2c';repo=root/'work/agent-interface'
+base='7c40e6023ac7e89d3cc0f1d4c222a331102b60eb';branch='fix/v39-session-exit-wait-01a0ff2c'
+prefix='research/doom/results/v39-session-exit-wait-01a0ff2c/'
+def sha(b):return hashlib.sha256(b).hexdigest()
+def oid(b):return hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()
+def now():return datetime.datetime.now(datetime.timezone.utc).isoformat()
+receipts=[json.loads((out/(name+'.receipt.json')).read_bytes()) for name in ('combined','combined-O')]
+cache={}
+locations=[root/'work/workflow-headers',root/'outputs/measurement-count-01a0ff2c/workflow-missing',root/'outputs/integrate-measurement-01a0ff2c/workflows']
+for directory in locations:
+    if directory.exists():
+        for path in directory.rglob('*'):
+            if path.is_file():cache[oid(path.read_bytes())]=path.read_bytes()
+delta=json.loads((code/'workflow-current-delta.json').read_bytes())
+for r in delta:
+    s=r['structuredContent'];b=s['content'].encode();
+    if oid(b)!=s['sha']:raise ValueError('current workflow Git byte mismatch')
+    cache[s['sha']]=b
+rows=subprocess.check_output(['git','ls-tree','-r',base,'.github/workflows'],cwd=repo).decode().splitlines();missing=[];inventory=[];matches=[]
+paths=['research/doom/map01_overlap_controller_v39.py','research/doom/test_overlap_controller_v39_wait.py',prefix+'README.md',prefix+'MANIFEST.json',prefix+'native-witness.json.gz']
+for row in rows:
+    identity,path=row.split('\t');blob=identity.split()[2];b=cache.get(blob)
+    if b is None:missing.append({'path':path,'blob':blob});continue
+    inventory.append({'path':path,'blob':blob,'bytes':len(b),'sha256':sha(b)})
+    if Path(path).suffix not in ('.yml','.yaml'):continue
+    data=yaml.safe_load(b);events=data.get('on',data.get(True,{}))
+    if isinstance(events,str):events={events:{}}
+    if isinstance(events,list):events={e:{} for e in events}
+    if not isinstance(events,dict):continue
+    for event in ('create','push','pull_request','pull_request_target'):
+        if event not in events:continue
+        filt=events[event] or {};selected=branch if event=='push' else 'main'
+        if 'branches' in filt and not any(fnmatch.fnmatchcase(selected,p) for p in filt['branches']):continue
+        if 'branches-ignore' in filt and any(fnmatch.fnmatchcase(selected,p) for p in filt['branches-ignore']):continue
+        if 'paths' in filt and not any(fnmatch.fnmatchcase(path,p) for path in paths for p in filt['paths'] if not p.startswith('!')):continue
+        if 'paths-ignore' in filt and all(any(fnmatch.fnmatchcase(path,p) for p in filt['paths-ignore']) for path in paths):continue
+        matches.append({'path':path,'event':event,'filter':filt,'jobs':[{ 'name':name,'if':j.get('if'),'step_names':[s.get('name') for s in j.get('steps',[])]} for name,j in data.get('jobs',{}).items()]})
+result={'utc':now(),'base':base,'branch':branch,'paths':paths,'inventory':inventory,'missing':missing,'matching_events':matches,'limits':'exact workflow Git blobs; conservative Python glob screen, no dispatch; all archive descendants must stay within prefix; code archive has only .txt images and gzip packet, no import/default test entry'}
+(out/'WORKFLOW_INSPECTION.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')
+(out/'COMPOSITION_RESULT.json').write_text(json.dumps({'utc':now(),'selected_source_combination_only':True,'every_other_startup_byte_unchanged':True,'receipts':receipts,'startup_module_imported':False,'peer_startup_tests_or_formal_runs_replayed':0},indent=2)+'\n',encoding='utf-8')
+print(json.dumps({'combined_pids':[r['pid'] for r in receipts],'combined_exits':[r['exit'] for r in receipts],'methods_per_arm':7,'workflows':len(rows),'exact_workflow_images':len(inventory),'missing':missing,'matching_events':[{'path':m['path'],'event':m['event'],'jobs':[j['name'] for j in m['jobs']]} for m in matches]}))
+if missing:raise ValueError('unknown workflow images inspect before publishing')

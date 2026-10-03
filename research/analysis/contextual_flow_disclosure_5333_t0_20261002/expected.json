@@ -1,0 +1,71 @@
+{
+  "schema": "contextual-flow-oracle-v1",
+  "expected": {
+    "F01_ALLOWED_SCHEDULER": {
+      "ACTOR_ONLY": "ALLOWED",
+      "LABEL_ONLY": "BLOCKED_FLOW",
+      "CONTEXT_BOUND": "ALLOWED"
+    },
+    "F02_WRONG_RECIPIENT": {
+      "ACTOR_ONLY": "ALLOWED",
+      "LABEL_ONLY": "BLOCKED_FLOW",
+      "CONTEXT_BOUND": "BLOCKED_FLOW"
+    },
+    "F03_WRONG_PURPOSE": {
+      "ACTOR_ONLY": "ALLOWED",
+      "LABEL_ONLY": "BLOCKED_FLOW",
+      "CONTEXT_BOUND": "BLOCKED_FLOW"
+    },
+    "F04_EXPLICIT_SCOPED_RELEASE": {
+      "ACTOR_ONLY": "ALLOWED",
+      "LABEL_ONLY": "BLOCKED_FLOW",
+      "CONTEXT_BOUND": "DECLASSIFIED"
+    },
+    "F05_MISSING_RECIPIENT": {
+      "ACTOR_ONLY": "ALLOWED",
+      "LABEL_ONLY": "BLOCKED_FLOW",
+      "CONTEXT_BOUND": "UNKNOWN_FLOW"
+    },
+    "F06_MISSING_PURPOSE": {
+      "ACTOR_ONLY": "ALLOWED",
+      "LABEL_ONLY": "BLOCKED_FLOW",
+      "CONTEXT_BOUND": "UNKNOWN_FLOW"
+    },
+    "F07_OVERSCOPED_FIELDS": {
+      "ACTOR_ONLY": "ALLOWED",
+      "LABEL_ONLY": "BLOCKED_FLOW",
+      "CONTEXT_BOUND": "BLOCKED_FLOW"
+    },
+    "F08_LOW_INTEGRITY_SOURCE": {
+      "ACTOR_ONLY": "ALLOWED",
+      "LABEL_ONLY": "BLOCKED_FLOW",
+      "CONTEXT_BOUND": "BLOCKED_FLOW"
+    },
+    "F09_STALE_RELEASE": {
+      "ACTOR_ONLY": "ALLOWED",
+      "LABEL_ONLY": "BLOCKED_FLOW",
+      "CONTEXT_BOUND": "BLOCKED_FLOW"
+    },
+    "F10_KNOWN_PUBLIC": {
+      "ACTOR_ONLY": "ALLOWED",
+      "LABEL_ONLY": "ALLOWED",
+      "CONTEXT_BOUND": "ALLOWED"
+    },
+    "F11_OPAQUE_SOURCE": {
+      "ACTOR_ONLY": "ALLOWED",
+      "LABEL_ONLY": "ALLOWED",
+      "CONTEXT_BOUND": "UNKNOWN_FLOW"
+    }
+  },
+  "released_fields": {
+    "F01_ALLOWED_SCHEDULER": [
+      "availability"
+    ],
+    "F04_EXPLICIT_SCOPED_RELEASE": [
+      "availability"
+    ],
+    "F10_KNOWN_PUBLIC": [
+      "status"
+    ]
+  }
+}

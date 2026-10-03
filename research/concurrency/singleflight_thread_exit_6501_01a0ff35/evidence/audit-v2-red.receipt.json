@@ -1,0 +1,24 @@
+{
+  "label": "audit-v2-red",
+  "argv": [
+    "python",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "test_audit_v2"
+  ],
+  "start_utc": "2026-10-03T02:52:56.247959+00:00",
+  "end_utc": "2026-10-03T02:52:56.363524+00:00",
+  "exit_code": 1,
+  "stdout": {
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "redaction": "local path prefixes only"
+  },
+  "stderr": {
+    "original_sha256": "52c868679fc1c258cafd3d55472a4d892a64155623c75b862d6c6cfcfcdcd1a0",
+    "public_sha256": "aa8ed0767cf7aca8dc74e2c560a50314ba62c8457e7213571178e52b82bd4dfc",
+    "redaction": "local path prefixes only"
+  }
+}

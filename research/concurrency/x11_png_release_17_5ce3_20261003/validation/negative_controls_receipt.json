@@ -1,0 +1,12 @@
+{
+  "returncode": 0,
+  "stdout": "{\"n\": 12, \"rejected_or_nonpass\": 12, \"raw_sha256\": \"f94c0fbb2fcd28ad01978b7366a7495c3d3ba33a08a122e64b7b4e7679daa9f2\", \"scientific_invocations\": 0, \"mutations\": [{\"mutation\": \"duplicate_cell\", \"outcome\": \"REJECT\", \"detail\": \"cell membership\"}, {\"mutation\": \"wrong_policy\", \"outcome\": \"REJECT\", \"detail\": \"cell assignment\"}, {\"mutation\": \"checkpoint_label\", \"outcome\": \"REJECT\", \"detail\": \"checkpoint physical sample join\"}, {\"mutation\": \"terminal_button\", \"outcome\": \"REJECT\", \"detail\": \"terminal physical sample join\"}, {\"mutation\": \"false_release\", \"outcome\": \"REJECT\", \"detail\": \"false release receipt\"}, {\"mutation\": \"late_press\", \"outcome\": \"REJECT\", \"detail\": \"app press/release/late input\"}, {\"mutation\": \"short_fault\", \"outcome\": \"REJECT\", \"detail\": \"fault exposure too short\"}, {\"mutation\": \"wrong_program\", \"outcome\": \"REJECT\", \"detail\": \"public program identity\"}, {\"mutation\": \"wrong_raw_capture\", \"outcome\": \"REJECT\", \"detail\": \"source capture identity/times\"}, {\"mutation\": \"wrong_png_payload\", \"outcome\": \"REJECT\", \"detail\": \"writer payload identity\"}, {\"mutation\": \"false_cleanup\", \"outcome\": \"REJECT\", \"detail\": \"cleanup-only release verified\"}, {\"mutation\": \"missing_physical_up\", \"outcome\": \"REJECT\", \"detail\": \"checkpoint physical sample join\"}]}\n",
+  "stderr": "",
+  "command": [
+    "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-B",
+    "negative_controls.py"
+  ],
+  "started_utc": "2026-10-03T10:14:40.128861+00:00",
+  "elapsed_ns": 68299458
+}

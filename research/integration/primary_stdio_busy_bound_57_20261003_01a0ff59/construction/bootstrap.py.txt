@@ -1,0 +1,22 @@
+import hashlib, json, subprocess
+from pathlib import Path
+
+root = Path(__file__).resolve().parent / 'repo'
+base = 'cb13a10dce358649458f5aea00947b8aa43fc5b8'
+artifact = root / 'research/integration/primary_stdio_busy_bound_57_20261003_01a0ff59'
+artifact.mkdir(parents=True, exist_ok=False)
+pins = []
+paths = subprocess.check_output(['git', '-C', str(root), 'ls-tree', '-r', '--name-only', base, 'runtime/host_v1']).decode().splitlines()
+for path in paths:
+    data = subprocess.check_output(['git', '-C', str(root), 'show', f'{base}:{path}'])
+    dest = root / path
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_bytes(data)
+    if path.endswith('.mjs'):
+        copy = artifact / 'baseline' / path
+        copy.parent.mkdir(parents=True, exist_ok=True)
+        copy.write_bytes(data)
+        pins.append({'path':path, 'blob_oid':subprocess.check_output(['git','-C',str(root),'rev-parse',f'{base}:{path}']).decode().strip(), 'bytes':len(data), 'sha256':hashlib.sha256(data).hexdigest()})
+(artifact / 'BASELINE.json').write_text(json.dumps({'base_sha':base, 'sources':pins}, indent=2, sort_keys=True)+'\n', encoding='utf-8', newline='\n')
+(artifact / '.gitattributes').write_text('* -text\n', encoding='utf-8', newline='\n')
+print(json.dumps({'base':base, 'exported':len(paths), 'frozen_mjs':len(pins), 'artifact':str(artifact)}))

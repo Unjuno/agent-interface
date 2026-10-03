@@ -1,0 +1,1245 @@
+{
+  "status": "SUPPORTS_FINITE_BURST_SERVICE_TRADEOFF",
+  "summary": {
+    "original": {
+      "complete": 122,
+      "diagnostic_budget_stop": 134,
+      "maximum_command_sample_age_periods": 64.5
+    },
+    "repair_v2": {
+      "complete": 256,
+      "diagnostic_budget_stop": 0,
+      "maximum_command_sample_age_periods": 65.5
+    },
+    "one_command": {
+      "complete": 256,
+      "diagnostic_budget_stop": 0,
+      "maximum_command_sample_age_periods": 1.5
+    }
+  },
+  "age_improved_matched_conditions": 90,
+  "contrasts": [
+    {
+      "case": [
+        "polling",
+        0,
+        25000000,
+        8,
+        "one_chunk"
+      ],
+      "prior_age_ns": 200000000,
+      "one_command_age_ns": 75000000,
+      "prior_finish_ns": 200000000,
+      "one_command_finish_ns": 200000000
+    },
+    {
+      "case": [
+        "polling",
+        0,
+        25000000,
+        32,
+        "one_chunk"
+      ],
+      "prior_age_ns": 800000000,
+      "one_command_age_ns": 75000000,
+      "prior_finish_ns": 800000000,
+      "one_command_finish_ns": 800000000
+    },
+    {
+      "case": [
+        "polling",
+        0,
+        100000000,
+        1,
+        "one_chunk"
+      ],
+      "prior_age_ns": 100000000,
+      "one_command_age_ns": 0,
+      "prior_finish_ns": 100000000,
+      "one_command_finish_ns": 100000000
+    },
+    {
+      "case": [
+        "polling",
+        0,
+        100000000,
+        2,
+        "one_chunk"
+      ],
+      "prior_age_ns": 200000000,
+      "one_command_age_ns": 0,
+      "prior_finish_ns": 200000000,
+      "one_command_finish_ns": 200000000
+    },
+    {
+      "case": [
+        "polling",
+        0,
+        100000000,
+        8,
+        "one_chunk"
+      ],
+      "prior_age_ns": 800000000,
+      "one_command_age_ns": 0,
+      "prior_finish_ns": 800000000,
+      "one_command_finish_ns": 800000000
+    },
+    {
+      "case": [
+        "polling",
+        0,
+        100000000,
+        32,
+        "one_chunk"
+      ],
+      "prior_age_ns": 3200000000,
+      "one_command_age_ns": 0,
+      "prior_finish_ns": 3200000000,
+      "one_command_finish_ns": 3200000000
+    },
+    {
+      "case": [
+        "polling",
+        0,
+        200000000,
+        1,
+        "one_chunk"
+      ],
+      "prior_age_ns": 200000000,
+      "one_command_age_ns": 0,
+      "prior_finish_ns": 200000000,
+      "one_command_finish_ns": 200000000
+    },
+    {
+      "case": [
+        "polling",
+        0,
+        200000000,
+        2,
+        "one_chunk"
+      ],
+      "prior_age_ns": 400000000,
+      "one_command_age_ns": 0,
+      "prior_finish_ns": 400000000,
+      "one_command_finish_ns": 400000000
+    },
+    {
+      "case": [
+        "polling",
+        0,
+        200000000,
+        8,
+        "one_chunk"
+      ],
+      "prior_age_ns": 1600000000,
+      "one_command_age_ns": 0,
+      "prior_finish_ns": 1600000000,
+      "one_command_finish_ns": 1600000000
+    },
+    {
+      "case": [
+        "polling",
+        0,
+        200000000,
+        32,
+        "one_chunk"
+      ],
+      "prior_age_ns": 6400000000,
+      "one_command_age_ns": 0,
+      "prior_finish_ns": 6400000000,
+      "one_command_finish_ns": 6400000000
+    },
+    {
+      "case": [
+        "polling",
+        50000000,
+        25000000,
+        2,
+        "one_chunk"
+      ],
+      "prior_age_ns": 100000000,
+      "one_command_age_ns": 75000000,
+      "prior_finish_ns": 100000000,
+      "one_command_finish_ns": 150000000
+    },
+    {
+      "case": [
+        "polling",
+        50000000,
+        25000000,
+        8,
+        "one_chunk"
+      ],
+      "prior_age_ns": 250000000,
+      "one_command_age_ns": 75000000,
+      "prior_finish_ns": 250000000,
+      "one_command_finish_ns": 450000000
+    },
+    {
+      "case": [
+        "polling",
+        50000000,
+        25000000,
+        32,
+        "one_chunk"
+      ],
+      "prior_age_ns": 850000000,
+      "one_command_age_ns": 75000000,
+      "prior_finish_ns": 850000000,
+      "one_command_finish_ns": 1650000000
+    },
+    {
+      "case": [
+        "polling",
+        50000000,
+        100000000,
+        1,
+        "one_chunk"
+      ],
+      "prior_age_ns": 150000000,
+      "one_command_age_ns": 50000000,
+      "prior_finish_ns": 150000000,
+      "one_command_finish_ns": 200000000
+    },
+    {
+      "case": [
+        "polling",
+        50000000,
+        100000000,
+        2,
+        "one_chunk"
+      ],
+      "prior_age_ns": 250000000,
+      "one_command_age_ns": 50000000,
+      "prior_finish_ns": 250000000,
+      "one_command_finish_ns": 350000000
+    },
+    {
+      "case": [
+        "polling",
+        50000000,
+        100000000,
+        8,
+        "one_chunk"
+      ],
+      "prior_age_ns": 850000000,
+      "one_command_age_ns": 50000000,
+      "prior_finish_ns": 850000000,
+      "one_command_finish_ns": 1250000000
+    },
+    {
+      "case": [
+        "polling",
+        50000000,
+        100000000,
+        32,
+        "one_chunk"
+      ],
+      "prior_age_ns": 3250000000,
+      "one_command_age_ns": 50000000,
+      "prior_finish_ns": 3250000000,
+      "one_command_finish_ns": 4850000000
+    },
+    {
+      "case": [
+        "polling",
+        50000000,
+        200000000,
+        1,
+        "one_chunk"
+      ],
+      "prior_age_ns": 250000000,
+      "one_command_age_ns": 50000000,
+      "prior_finish_ns": 250000000,
+      "one_command_finish_ns": 300000000
+    },
+    {
+      "case": [
+        "polling",
+        50000000,
+        200000000,
+        2,
+        "one_chunk"
+      ],
+      "prior_age_ns": 450000000,
+      "one_command_age_ns": 50000000,
+      "prior_finish_ns": 450000000,
+      "one_command_finish_ns": 550000000
+    },
+    {
+      "case": [
+        "polling",
+        50000000,
+        200000000,
+        8,
+        "one_chunk"
+      ],
+      "prior_age_ns": 1650000000,
+      "one_command_age_ns": 50000000,
+      "prior_finish_ns": 1650000000,
+      "one_command_finish_ns": 2050000000
+    },
+    {
+      "case": [
+        "polling",
+        50000000,
+        200000000,
+        32,
+        "one_chunk"
+      ],
+      "prior_age_ns": 6450000000,
+      "one_command_age_ns": 50000000,
+      "prior_finish_ns": 6450000000,
+      "one_command_finish_ns": 8050000000
+    },
+    {
+      "case": [
+        "polling",
+        100000000,
+        25000000,
+        1,
+        "one_chunk"
+      ],
+      "prior_age_ns": 125000000,
+      "one_command_age_ns": 100000000,
+      "prior_finish_ns": 125000000,
+      "one_command_finish_ns": 225000000
+    },
+    {
+      "case": [
+        "polling",
+        100000000,
+        25000000,
+        2,
+        "one_chunk"
+      ],
+      "prior_age_ns": 150000000,
+      "one_command_age_ns": 100000000,
+      "prior_finish_ns": 150000000,
+      "one_command_finish_ns": 350000000
+    },
+    {
+      "case": [
+        "polling",
+        100000000,
+        25000000,
+        8,
+        "one_chunk"
+      ],
+      "prior_age_ns": 300000000,
+      "one_command_age_ns": 100000000,
+      "prior_finish_ns": 300000000,
+      "one_command_finish_ns": 1100000000
+    },
+    {
+      "case": [
+        "polling",
+        100000000,
+        25000000,
+        32,
+        "one_chunk"
+      ],
+      "prior_age_ns": 900000000,
+      "one_command_age_ns": 100000000,
+      "prior_finish_ns": 900000000,
+      "one_command_finish_ns": 4100000000
+    },
+    {
+      "case": [
+        "polling",
+        100000000,
+        100000000,
+        1,
+        "one_chunk"
+      ],
+      "prior_age_ns": 200000000,
+      "one_command_age_ns": 100000000,
+      "prior_finish_ns": 200000000,
+      "one_command_finish_ns": 300000000
+    },
+    {
+      "case": [
+        "polling",
+        100000000,
+        100000000,
+        2,
+        "one_chunk"
+      ],
+      "prior_age_ns": 300000000,
+      "one_command_age_ns": 100000000,
+      "prior_finish_ns": 300000000,
+      "one_command_finish_ns": 500000000
+    },
+    {
+      "case": [
+        "polling",
+        100000000,
+        100000000,
+        8,
+        "one_chunk"
+      ],
+      "prior_age_ns": 900000000,
+      "one_command_age_ns": 100000000,
+      "prior_finish_ns": 900000000,
+      "one_command_finish_ns": 1700000000
+    },
+    {
+      "case": [
+        "polling",
+        100000000,
+        100000000,
+        32,
+        "one_chunk"
+      ],
+      "prior_age_ns": 3300000000,
+      "one_command_age_ns": 100000000,
+      "prior_finish_ns": 3300000000,
+      "one_command_finish_ns": 6500000000
+    },
+    {
+      "case": [
+        "polling",
+        100000000,
+        200000000,
+        1,
+        "one_chunk"
+      ],
+      "prior_age_ns": 300000000,
+      "one_command_age_ns": 100000000,
+      "prior_finish_ns": 300000000,
+      "one_command_finish_ns": 400000000
+    },
+    {
+      "case": [
+        "polling",
+        100000000,
+        200000000,
+        2,
+        "one_chunk"
+      ],
+      "prior_age_ns": 500000000,
+      "one_command_age_ns": 100000000,
+      "prior_finish_ns": 500000000,
+      "one_command_finish_ns": 700000000
+    },
+    {
+      "case": [
+        "polling",
+        100000000,
+        200000000,
+        8,
+        "one_chunk"
+      ],
+      "prior_age_ns": 1700000000,
+      "one_command_age_ns": 100000000,
+      "prior_finish_ns": 1700000000,
+      "one_command_finish_ns": 2500000000
+    },
+    {
+      "case": [
+        "polling",
+        100000000,
+        200000000,
+        32,
+        "one_chunk"
+      ],
+      "prior_age_ns": 6500000000,
+      "one_command_age_ns": 100000000,
+      "prior_finish_ns": 6500000000,
+      "one_command_finish_ns": 9700000000
+    },
+    {
+      "case": [
+        "polling",
+        150000000,
+        25000000,
+        1,
+        "one_chunk"
+      ],
+      "prior_age_ns": 175000000,
+      "one_command_age_ns": 150000000,
+      "prior_finish_ns": 175000000,
+      "one_command_finish_ns": 325000000
+    },
+    {
+      "case": [
+        "polling",
+        150000000,
+        25000000,
+        2,
+        "one_chunk"
+      ],
+      "prior_age_ns": 200000000,
+      "one_command_age_ns": 150000000,
+      "prior_finish_ns": 200000000,
+      "one_command_finish_ns": 500000000
+    },
+    {
+      "case": [
+        "polling",
+        150000000,
+        25000000,
+        8,
+        "one_chunk"
+      ],
+      "prior_age_ns": 350000000,
+      "one_command_age_ns": 150000000,
+      "prior_finish_ns": 350000000,
+      "one_command_finish_ns": 1550000000
+    },
+    {
+      "case": [
+        "polling",
+        150000000,
+        25000000,
+        32,
+        "one_chunk"
+      ],
+      "prior_age_ns": 950000000,
+      "one_command_age_ns": 150000000,
+      "prior_finish_ns": 950000000,
+      "one_command_finish_ns": 5750000000
+    },
+    {
+      "case": [
+        "polling",
+        150000000,
+        100000000,
+        1,
+        "one_chunk"
+      ],
+      "prior_age_ns": 250000000,
+      "one_command_age_ns": 150000000,
+      "prior_finish_ns": 250000000,
+      "one_command_finish_ns": 400000000
+    },
+    {
+      "case": [
+        "polling",
+        150000000,
+        100000000,
+        2,
+        "one_chunk"
+      ],
+      "prior_age_ns": 350000000,
+      "one_command_age_ns": 150000000,
+      "prior_finish_ns": 350000000,
+      "one_command_finish_ns": 650000000
+    },
+    {
+      "case": [
+        "polling",
+        150000000,
+        100000000,
+        8,
+        "one_chunk"
+      ],
+      "prior_age_ns": 950000000,
+      "one_command_age_ns": 150000000,
+      "prior_finish_ns": 950000000,
+      "one_command_finish_ns": 2150000000
+    },
+    {
+      "case": [
+        "polling",
+        150000000,
+        100000000,
+        32,
+        "one_chunk"
+      ],
+      "prior_age_ns": 3350000000,
+      "one_command_age_ns": 150000000,
+      "prior_finish_ns": 3350000000,
+      "one_command_finish_ns": 8150000000
+    },
+    {
+      "case": [
+        "polling",
+        150000000,
+        200000000,
+        1,
+        "one_chunk"
+      ],
+      "prior_age_ns": 350000000,
+      "one_command_age_ns": 150000000,
+      "prior_finish_ns": 350000000,
+      "one_command_finish_ns": 500000000
+    },
+    {
+      "case": [
+        "polling",
+        150000000,
+        200000000,
+        2,
+        "one_chunk"
+      ],
+      "prior_age_ns": 550000000,
+      "one_command_age_ns": 150000000,
+      "prior_finish_ns": 550000000,
+      "one_command_finish_ns": 850000000
+    },
+    {
+      "case": [
+        "polling",
+        150000000,
+        200000000,
+        8,
+        "one_chunk"
+      ],
+      "prior_age_ns": 1750000000,
+      "one_command_age_ns": 150000000,
+      "prior_finish_ns": 1750000000,
+      "one_command_finish_ns": 2950000000
+    },
+    {
+      "case": [
+        "polling",
+        150000000,
+        200000000,
+        32,
+        "one_chunk"
+      ],
+      "prior_age_ns": 6550000000,
+      "one_command_age_ns": 150000000,
+      "prior_finish_ns": 6550000000,
+      "one_command_finish_ns": 11350000000
+    },
+    {
+      "case": [
+        "stdin",
+        0,
+        25000000,
+        8,
+        "one_chunk"
+      ],
+      "prior_age_ns": 200000000,
+      "one_command_age_ns": 75000000,
+      "prior_finish_ns": 200000000,
+      "one_command_finish_ns": 200000000
+    },
+    {
+      "case": [
+        "stdin",
+        0,
+        25000000,
+        32,
+        "one_chunk"
+      ],
+      "prior_age_ns": 800000000,
+      "one_command_age_ns": 75000000,
+      "prior_finish_ns": 800000000,
+      "one_command_finish_ns": 800000000
+    },
+    {
+      "case": [
+        "stdin",
+        0,
+        100000000,
+        1,
+        "one_chunk"
+      ],
+      "prior_age_ns": 100000000,
+      "one_command_age_ns": 0,
+      "prior_finish_ns": 100000000,
+      "one_command_finish_ns": 100000000
+    },
+    {
+      "case": [
+        "stdin",
+        0,
+        100000000,
+        2,
+        "one_chunk"
+      ],
+      "prior_age_ns": 200000000,
+      "one_command_age_ns": 0,
+      "prior_finish_ns": 200000000,
+      "one_command_finish_ns": 200000000
+    },
+    {
+      "case": [
+        "stdin",
+        0,
+        100000000,
+        8,
+        "one_chunk"
+      ],
+      "prior_age_ns": 800000000,
+      "one_command_age_ns": 0,
+      "prior_finish_ns": 800000000,
+      "one_command_finish_ns": 800000000
+    },
+    {
+      "case": [
+        "stdin",
+        0,
+        100000000,
+        32,
+        "one_chunk"
+      ],
+      "prior_age_ns": 3200000000,
+      "one_command_age_ns": 0,
+      "prior_finish_ns": 3200000000,
+      "one_command_finish_ns": 3200000000
+    },
+    {
+      "case": [
+        "stdin",
+        0,
+        200000000,
+        1,
+        "one_chunk"
+      ],
+      "prior_age_ns": 200000000,
+      "one_command_age_ns": 0,
+      "prior_finish_ns": 200000000,
+      "one_command_finish_ns": 200000000
+    },
+    {
+      "case": [
+        "stdin",
+        0,
+        200000000,
+        2,
+        "one_chunk"
+      ],
+      "prior_age_ns": 400000000,
+      "one_command_age_ns": 0,
+      "prior_finish_ns": 400000000,
+      "one_command_finish_ns": 400000000
+    },
+    {
+      "case": [
+        "stdin",
+        0,
+        200000000,
+        8,
+        "one_chunk"
+      ],
+      "prior_age_ns": 1600000000,
+      "one_command_age_ns": 0,
+      "prior_finish_ns": 1600000000,
+      "one_command_finish_ns": 1600000000
+    },
+    {
+      "case": [
+        "stdin",
+        0,
+        200000000,
+        32,
+        "one_chunk"
+      ],
+      "prior_age_ns": 6400000000,
+      "one_command_age_ns": 0,
+      "prior_finish_ns": 6400000000,
+      "one_command_finish_ns": 6400000000
+    },
+    {
+      "case": [
+        "stdin",
+        50000000,
+        25000000,
+        2,
+        "one_chunk"
+      ],
+      "prior_age_ns": 100000000,
+      "one_command_age_ns": 75000000,
+      "prior_finish_ns": 100000000,
+      "one_command_finish_ns": 150000000
+    },
+    {
+      "case": [
+        "stdin",
+        50000000,
+        25000000,
+        8,
+        "one_chunk"
+      ],
+      "prior_age_ns": 250000000,
+      "one_command_age_ns": 75000000,
+      "prior_finish_ns": 250000000,
+      "one_command_finish_ns": 450000000
+    },
+    {
+      "case": [
+        "stdin",
+        50000000,
+        25000000,
+        32,
+        "one_chunk"
+      ],
+      "prior_age_ns": 850000000,
+      "one_command_age_ns": 75000000,
+      "prior_finish_ns": 850000000,
+      "one_command_finish_ns": 1650000000
+    },
+    {
+      "case": [
+        "stdin",
+        50000000,
+        100000000,
+        1,
+        "one_chunk"
+      ],
+      "prior_age_ns": 150000000,
+      "one_command_age_ns": 50000000,
+      "prior_finish_ns": 150000000,
+      "one_command_finish_ns": 200000000
+    },
+    {
+      "case": [
+        "stdin",
+        50000000,
+        100000000,
+        2,
+        "one_chunk"
+      ],
+      "prior_age_ns": 250000000,
+      "one_command_age_ns": 50000000,
+      "prior_finish_ns": 250000000,
+      "one_command_finish_ns": 350000000
+    },
+    {
+      "case": [
+        "stdin",
+        50000000,
+        100000000,
+        8,
+        "one_chunk"
+      ],
+      "prior_age_ns": 850000000,
+      "one_command_age_ns": 50000000,
+      "prior_finish_ns": 850000000,
+      "one_command_finish_ns": 1250000000
+    },
+    {
+      "case": [
+        "stdin",
+        50000000,
+        100000000,
+        32,
+        "one_chunk"
+      ],
+      "prior_age_ns": 3250000000,
+      "one_command_age_ns": 50000000,
+      "prior_finish_ns": 3250000000,
+      "one_command_finish_ns": 4850000000
+    },
+    {
+      "case": [
+        "stdin",
+        50000000,
+        200000000,
+        1,
+        "one_chunk"
+      ],
+      "prior_age_ns": 250000000,
+      "one_command_age_ns": 50000000,
+      "prior_finish_ns": 250000000,
+      "one_command_finish_ns": 300000000
+    },
+    {
+      "case": [
+        "stdin",
+        50000000,
+        200000000,
+        2,
+        "one_chunk"
+      ],
+      "prior_age_ns": 450000000,
+      "one_command_age_ns": 50000000,
+      "prior_finish_ns": 450000000,
+      "one_command_finish_ns": 550000000
+    },
+    {
+      "case": [
+        "stdin",
+        50000000,
+        200000000,
+        8,
+        "one_chunk"
+      ],
+      "prior_age_ns": 1650000000,
+      "one_command_age_ns": 50000000,
+      "prior_finish_ns": 1650000000,
+      "one_command_finish_ns": 2050000000
+    },
+    {
+      "case": [
+        "stdin",
+        50000000,
+        200000000,
+        32,
+        "one_chunk"
+      ],
+      "prior_age_ns": 6450000000,
+      "one_command_age_ns": 50000000,
+      "prior_finish_ns": 6450000000,
+      "one_command_finish_ns": 8050000000
+    },
+    {
+      "case": [
+        "stdin",
+        100000000,
+        25000000,
+        1,
+        "one_chunk"
+      ],
+      "prior_age_ns": 125000000,
+      "one_command_age_ns": 100000000,
+      "prior_finish_ns": 125000000,
+      "one_command_finish_ns": 225000000
+    },
+    {
+      "case": [
+        "stdin",
+        100000000,
+        25000000,
+        2,
+        "one_chunk"
+      ],
+      "prior_age_ns": 150000000,
+      "one_command_age_ns": 100000000,
+      "prior_finish_ns": 150000000,
+      "one_command_finish_ns": 350000000
+    },
+    {
+      "case": [
+        "stdin",
+        100000000,
+        25000000,
+        8,
+        "one_chunk"
+      ],
+      "prior_age_ns": 300000000,
+      "one_command_age_ns": 100000000,
+      "prior_finish_ns": 300000000,
+      "one_command_finish_ns": 1100000000
+    },
+    {
+      "case": [
+        "stdin",
+        100000000,
+        25000000,
+        32,
+        "one_chunk"
+      ],
+      "prior_age_ns": 900000000,
+      "one_command_age_ns": 100000000,
+      "prior_finish_ns": 900000000,
+      "one_command_finish_ns": 4100000000
+    },
+    {
+      "case": [
+        "stdin",
+        100000000,
+        100000000,
+        1,
+        "one_chunk"
+      ],
+      "prior_age_ns": 200000000,
+      "one_command_age_ns": 100000000,
+      "prior_finish_ns": 200000000,
+      "one_command_finish_ns": 300000000
+    },
+    {
+      "case": [
+        "stdin",
+        100000000,
+        100000000,
+        2,
+        "one_chunk"
+      ],
+      "prior_age_ns": 300000000,
+      "one_command_age_ns": 100000000,
+      "prior_finish_ns": 300000000,
+      "one_command_finish_ns": 500000000
+    },
+    {
+      "case": [
+        "stdin",
+        100000000,
+        100000000,
+        8,
+        "one_chunk"
+      ],
+      "prior_age_ns": 900000000,
+      "one_command_age_ns": 100000000,
+      "prior_finish_ns": 900000000,
+      "one_command_finish_ns": 1700000000
+    },
+    {
+      "case": [
+        "stdin",
+        100000000,
+        100000000,
+        32,
+        "one_chunk"
+      ],
+      "prior_age_ns": 3300000000,
+      "one_command_age_ns": 100000000,
+      "prior_finish_ns": 3300000000,
+      "one_command_finish_ns": 6500000000
+    },
+    {
+      "case": [
+        "stdin",
+        100000000,
+        200000000,
+        1,
+        "one_chunk"
+      ],
+      "prior_age_ns": 300000000,
+      "one_command_age_ns": 100000000,
+      "prior_finish_ns": 300000000,
+      "one_command_finish_ns": 400000000
+    },
+    {
+      "case": [
+        "stdin",
+        100000000,
+        200000000,
+        2,
+        "one_chunk"
+      ],
+      "prior_age_ns": 500000000,
+      "one_command_age_ns": 100000000,
+      "prior_finish_ns": 500000000,
+      "one_command_finish_ns": 700000000
+    },
+    {
+      "case": [
+        "stdin",
+        100000000,
+        200000000,
+        8,
+        "one_chunk"
+      ],
+      "prior_age_ns": 1700000000,
+      "one_command_age_ns": 100000000,
+      "prior_finish_ns": 1700000000,
+      "one_command_finish_ns": 2500000000
+    },
+    {
+      "case": [
+        "stdin",
+        100000000,
+        200000000,
+        32,
+        "one_chunk"
+      ],
+      "prior_age_ns": 6500000000,
+      "one_command_age_ns": 100000000,
+      "prior_finish_ns": 6500000000,
+      "one_command_finish_ns": 9700000000
+    },
+    {
+      "case": [
+        "stdin",
+        150000000,
+        25000000,
+        1,
+        "one_chunk"
+      ],
+      "prior_age_ns": 175000000,
+      "one_command_age_ns": 150000000,
+      "prior_finish_ns": 175000000,
+      "one_command_finish_ns": 325000000
+    },
+    {
+      "case": [
+        "stdin",
+        150000000,
+        25000000,
+        2,
+        "one_chunk"
+      ],
+      "prior_age_ns": 200000000,
+      "one_command_age_ns": 150000000,
+      "prior_finish_ns": 200000000,
+      "one_command_finish_ns": 500000000
+    },
+    {
+      "case": [
+        "stdin",
+        150000000,
+        25000000,
+        8,
+        "one_chunk"
+      ],
+      "prior_age_ns": 350000000,
+      "one_command_age_ns": 150000000,
+      "prior_finish_ns": 350000000,
+      "one_command_finish_ns": 1550000000
+    },
+    {
+      "case": [
+        "stdin",
+        150000000,
+        25000000,
+        32,
+        "one_chunk"
+      ],
+      "prior_age_ns": 950000000,
+      "one_command_age_ns": 150000000,
+      "prior_finish_ns": 950000000,
+      "one_command_finish_ns": 5750000000
+    },
+    {
+      "case": [
+        "stdin",
+        150000000,
+        100000000,
+        1,
+        "one_chunk"
+      ],
+      "prior_age_ns": 250000000,
+      "one_command_age_ns": 150000000,
+      "prior_finish_ns": 250000000,
+      "one_command_finish_ns": 400000000
+    },
+    {
+      "case": [
+        "stdin",
+        150000000,
+        100000000,
+        2,
+        "one_chunk"
+      ],
+      "prior_age_ns": 350000000,
+      "one_command_age_ns": 150000000,
+      "prior_finish_ns": 350000000,
+      "one_command_finish_ns": 650000000
+    },
+    {
+      "case": [
+        "stdin",
+        150000000,
+        100000000,
+        8,
+        "one_chunk"
+      ],
+      "prior_age_ns": 950000000,
+      "one_command_age_ns": 150000000,
+      "prior_finish_ns": 950000000,
+      "one_command_finish_ns": 2150000000
+    },
+    {
+      "case": [
+        "stdin",
+        150000000,
+        100000000,
+        32,
+        "one_chunk"
+      ],
+      "prior_age_ns": 3350000000,
+      "one_command_age_ns": 150000000,
+      "prior_finish_ns": 3350000000,
+      "one_command_finish_ns": 8150000000
+    },
+    {
+      "case": [
+        "stdin",
+        150000000,
+        200000000,
+        1,
+        "one_chunk"
+      ],
+      "prior_age_ns": 350000000,
+      "one_command_age_ns": 150000000,
+      "prior_finish_ns": 350000000,
+      "one_command_finish_ns": 500000000
+    },
+    {
+      "case": [
+        "stdin",
+        150000000,
+        200000000,
+        2,
+        "one_chunk"
+      ],
+      "prior_age_ns": 550000000,
+      "one_command_age_ns": 150000000,
+      "prior_finish_ns": 550000000,
+      "one_command_finish_ns": 850000000
+    },
+    {
+      "case": [
+        "stdin",
+        150000000,
+        200000000,
+        8,
+        "one_chunk"
+      ],
+      "prior_age_ns": 1750000000,
+      "one_command_age_ns": 150000000,
+      "prior_finish_ns": 1750000000,
+      "one_command_finish_ns": 2950000000
+    },
+    {
+      "case": [
+        "stdin",
+        150000000,
+        200000000,
+        32,
+        "one_chunk"
+      ],
+      "prior_age_ns": 6550000000,
+      "one_command_age_ns": 150000000,
+      "prior_finish_ns": 6550000000,
+      "one_command_finish_ns": 11350000000
+    }
+  ],
+  "short_callback_diagnostic_censor_cases": [
+    {
+      "arm": "original",
+      "path": "polling",
+      "sample_cost_ns": 50000000,
+      "command_cost_ns": 100000000,
+      "length": 32,
+      "layout": "one_per_chunk"
+    },
+    {
+      "arm": "original",
+      "path": "polling",
+      "sample_cost_ns": 50000000,
+      "command_cost_ns": 200000000,
+      "length": 32,
+      "layout": "one_per_chunk"
+    },
+    {
+      "arm": "original",
+      "path": "stdin",
+      "sample_cost_ns": 50000000,
+      "command_cost_ns": 100000000,
+      "length": 32,
+      "layout": "one_chunk"
+    },
+    {
+      "arm": "original",
+      "path": "stdin",
+      "sample_cost_ns": 50000000,
+      "command_cost_ns": 100000000,
+      "length": 32,
+      "layout": "one_per_chunk"
+    },
+    {
+      "arm": "original",
+      "path": "stdin",
+      "sample_cost_ns": 50000000,
+      "command_cost_ns": 200000000,
+      "length": 32,
+      "layout": "one_chunk"
+    },
+    {
+      "arm": "original",
+      "path": "stdin",
+      "sample_cost_ns": 50000000,
+      "command_cost_ns": 200000000,
+      "length": 32,
+      "layout": "one_per_chunk"
+    }
+  ],
+  "qualification": "Original 134 budget stops comprise 128 sustained-overrun recurrence cases and six short-callback long-stream cases censored by the declared 64-sample budget. Do not call all budget stops infinite starvation. Source/inputs/frozen raw/auditor unchanged; no extension or replay.",
+  "virtual_finish_cost_can_increase": true
+}

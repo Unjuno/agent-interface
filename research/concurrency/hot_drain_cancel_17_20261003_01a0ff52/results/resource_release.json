@@ -1,0 +1,52 @@
+{
+  "receipts": [
+    {
+      "command": [
+        "orb",
+        "-m",
+        "research-6501-async-01a0ff52-70ab",
+        "-u",
+        "root",
+        "docker",
+        "ps",
+        "--format",
+        "{{json .}}"
+      ],
+      "started_utc": "2026-10-03T08:17:05.108639+00:00",
+      "ended_utc": "2026-10-03T08:17:05.159882+00:00",
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "orbctl",
+        "stop",
+        "research-6501-async-01a0ff52-70ab"
+      ],
+      "started_utc": "2026-10-03T08:17:05.160341+00:00",
+      "ended_utc": "2026-10-03T08:17:05.401030+00:00",
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "orbctl",
+        "list",
+        "-f",
+        "json"
+      ],
+      "started_utc": "2026-10-03T08:17:05.401453+00:00",
+      "ended_utc": "2026-10-03T08:17:05.417103+00:00",
+      "exit_code": 0,
+      "stdout_sha256": "895494c21f34444084c48b4eb656ef22f032e985444c67681cbd1a01fab483ce",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "own_guest_state": "stopped",
+  "own_container_state": "exited",
+  "source_output_image_container_retained": true,
+  "others_not_acquired": true,
+  "scope": "container pipe FD cleanup; no physical input release"
+}

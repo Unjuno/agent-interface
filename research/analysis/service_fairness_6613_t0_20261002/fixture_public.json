@@ -1,0 +1,47 @@
+{
+  "schema": "service-fairness-public-v1",
+  "allocation": "LONG-HORIZON-SERVICE-DEBT-6613-T0-HOSTCPU-20261002-01",
+  "policies": ["fifo", "fastest", "batch2", "service_debt"],
+  "batch_window": 3,
+  "max_time": 80,
+  "cases": [
+    {"id":"fresh_bal_07","requests":[
+      {"id":"freshq_a701","principal":"A","arrival":0,"service":2,"deadline":14,"authority":true,"joint_grant":true,"conflict_free":true},
+      {"id":"freshq_b702","principal":"B","arrival":0,"service":1,"deadline":14,"authority":true,"joint_grant":true,"conflict_free":true},
+      {"id":"freshq_c703","principal":"C","arrival":1,"service":3,"deadline":16,"authority":true,"joint_grant":true,"conflict_free":true},
+      {"id":"freshq_a704","principal":"A","arrival":4,"service":1,"deadline":17,"authority":true,"joint_grant":true,"conflict_free":true},
+      {"id":"freshq_b705","principal":"B","arrival":5,"service":2,"deadline":19,"authority":true,"joint_grant":true,"conflict_free":true},
+      {"id":"freshq_c706","principal":"C","arrival":6,"service":1,"deadline":20,"authority":true,"joint_grant":true,"conflict_free":true}
+    ],"revocations":[],"safety_release_times":[]},
+    {"id":"fresh_asym_07","requests":[
+      {"id":"freshq_a711","principal":"A","arrival":0,"service":1,"deadline":40,"authority":true,"joint_grant":true,"conflict_free":true},
+      {"id":"freshq_a712","principal":"A","arrival":0,"service":1,"deadline":40,"authority":true,"joint_grant":true,"conflict_free":true},
+      {"id":"freshq_a713","principal":"A","arrival":1,"service":1,"deadline":40,"authority":true,"joint_grant":true,"conflict_free":true},
+      {"id":"freshq_a714","principal":"A","arrival":2,"service":1,"deadline":40,"authority":true,"joint_grant":true,"conflict_free":true},
+      {"id":"freshq_a715","principal":"A","arrival":3,"service":1,"deadline":40,"authority":true,"joint_grant":true,"conflict_free":true},
+      {"id":"freshq_b716","principal":"B","arrival":0,"service":2,"deadline":40,"authority":true,"joint_grant":true,"conflict_free":true},
+      {"id":"freshq_b717","principal":"B","arrival":2,"service":1,"deadline":40,"authority":true,"joint_grant":true,"conflict_free":true},
+      {"id":"freshq_c718","principal":"C","arrival":1,"service":3,"deadline":40,"authority":true,"joint_grant":true,"conflict_free":true}
+    ],"revocations":[],"safety_release_times":[]},
+    {"id":"fresh_burst_07","requests":[
+      {"id":"freshq_a721","principal":"A","arrival":0,"service":4,"deadline":15,"authority":true,"joint_grant":true,"conflict_free":true},
+      {"id":"freshq_b722","principal":"B","arrival":0,"service":1,"deadline":12,"authority":true,"joint_grant":true,"conflict_free":true},
+      {"id":"freshq_c723","principal":"C","arrival":2,"service":2,"deadline":16,"authority":true,"joint_grant":true,"conflict_free":true},
+      {"id":"freshq_b724","principal":"B","arrival":3,"service":1,"deadline":13,"authority":true,"joint_grant":true,"conflict_free":true},
+      {"id":"freshq_a725","principal":"A","arrival":5,"service":2,"deadline":20,"authority":true,"joint_grant":true,"conflict_free":true},
+      {"id":"freshq_c726","principal":"C","arrival":6,"service":3,"deadline":22,"authority":true,"joint_grant":true,"conflict_free":true}
+    ],"revocations":[],"safety_release_times":[]},
+    {"id":"fresh_controls_07","requests":[
+      {"id":"freshq_a731","principal":"A","arrival":0,"service":2,"deadline":14,"authority":true,"joint_grant":true,"conflict_free":true},
+      {"id":"freshq_b732","principal":"B","arrival":0,"service":1,"deadline":14,"authority":true,"joint_grant":true,"conflict_free":true,"revoked_at":2},
+      {"id":"freshq_c733","principal":"C","arrival":0,"service":1,"deadline":14,"authority":true,"joint_grant":false,"conflict_free":true},
+      {"id":"freshq_d734","principal":"D","arrival":0,"service":1,"deadline":14,"authority":false,"joint_grant":true,"conflict_free":true},
+      {"id":"freshq_e735","principal":"E","arrival":0,"service":1,"deadline":14,"authority":true,"joint_grant":true,"conflict_free":false}
+    ],"revocations":[{"principal":"B","at":2}],"safety_release_times":[3]},
+    {"id":"fresh_none_07","requests":[
+      {"id":"freshq_x741","principal":"X","arrival":0,"service":1,"deadline":8,"authority":false,"joint_grant":true,"conflict_free":true},
+      {"id":"freshq_y742","principal":"Y","arrival":0,"service":1,"deadline":8,"authority":true,"joint_grant":false,"conflict_free":true},
+      {"id":"freshq_z743","principal":"Z","arrival":1,"service":1,"deadline":8,"authority":true,"joint_grant":true,"conflict_free":false}
+    ],"revocations":[],"safety_release_times":[]}
+  ]
+}

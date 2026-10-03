@@ -1,0 +1,27 @@
+{"event":"cell_started","extra":{"spec":{"cell_id":"bounded_journal__held_journal","condition":"held_journal","source_file":"bounded_journal_client.py","variant":"bounded_journal"}},"monotonic_ns":35899507586,"seq":0}
+{"event":"client_construct_begin","extra":{"peer_command":["/usr/local/bin/python","-B","/src/echo_peer.py","--directory","/out/cells/bounded_journal__held_journal"]},"monotonic_ns":35902634671,"seq":1}
+{"event":"client_constructed","extra":{"child_pid":31,"reader_name":"Thread-1 (_read)"},"monotonic_ns":35974311749,"seq":2}
+{"event":"peer_ready_observed","extra":{"ready":{"monotonic_ns":36385844902,"parent_pid":30,"pid":31}},"monotonic_ns":36394534214,"seq":3}
+{"event":"holder_acquired","extra":{},"monotonic_ns":36394884493,"seq":4}
+{"event":"caller_started","extra":{"timeout_ns":50000000},"monotonic_ns":36395204533,"seq":5}
+{"event":"holder_wait","extra":{"release_target_ns":36795204533},"monotonic_ns":36395540322,"seq":6}
+{"event":"caller_finished","extra":{"exception_type":"TimeoutError","message":"app-server sent journal lock timed out; no send attempted","status":"EXCEPTION"},"monotonic_ns":36445676632,"seq":7}
+{"event":"checkpoint","extra":{"caller_alive":false,"caller_finished":true,"holder_alive":true,"holder_finished":false,"journal_row_count":0,"peer_received_bytes":0,"peer_returncode":null,"reader_alive":true},"monotonic_ns":36650963779,"seq":8}
+{"event":"holder_release_begin","extra":{},"monotonic_ns":36795352856,"seq":9}
+{"event":"holder_released","extra":{},"monotonic_ns":36795724136,"seq":10}
+{"event":"holder_joined","extra":{"alive":false},"monotonic_ns":36796105811,"seq":11}
+{"event":"caller_joined","extra":{"alive":false},"monotonic_ns":36796391037,"seq":12}
+{"event":"pipe_close_begin","extra":{"name":"stdin"},"monotonic_ns":36796591588,"seq":13}
+{"event":"stdin_closed_for_peer_eof","extra":{"closed":true},"monotonic_ns":36796819616,"seq":14}
+{"event":"child_reaped","extra":{"child_pid":31,"returncode":0},"monotonic_ns":36804340407,"seq":15}
+{"event":"client_close_begin","extra":{"timeout_ns":200000000},"monotonic_ns":36804668916,"seq":16}
+{"event":"client_close_returned","extra":{},"monotonic_ns":36805452012,"seq":17}
+{"event":"reader_joined","extra":{"alive":false},"monotonic_ns":36805721993,"seq":18}
+{"event":"pipe_closed","extra":{"closed":true,"name":"stdin"},"monotonic_ns":36808211396,"seq":19}
+{"event":"pipe_close_begin","extra":{"name":"stdout"},"monotonic_ns":36808469294,"seq":20}
+{"event":"pipe_closed","extra":{"closed":true,"name":"stdout"},"monotonic_ns":36808673385,"seq":21}
+{"event":"pipe_close_begin","extra":{"name":"stderr"},"monotonic_ns":36808863874,"seq":22}
+{"event":"pipe_closed","extra":{"closed":true,"name":"stderr"},"monotonic_ns":36809066272,"seq":23}
+{"event":"journal_closed","extra":{"closed":true},"monotonic_ns":36809375734,"seq":24}
+{"event":"cleanup_done","extra":{"caller_alive":false,"child_pid":31,"child_returncode":0,"cleanup_errors":[],"explicit_pipe_closed":{"stderr":true,"stdin":true,"stdout":true},"holder_alive":false,"journal_closed":true,"journal_row_count":0,"peer_received_bytes":0,"reader_alive":false,"thread_exceptions":[]},"monotonic_ns":36814152137,"seq":25}
+{"event":"cell_finished","extra":{"status":"COMPLETE","stop_reason":null},"monotonic_ns":36823784214,"seq":26}

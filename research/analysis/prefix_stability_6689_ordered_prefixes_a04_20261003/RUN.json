@@ -1,0 +1,76 @@
+{
+  "schema": "ordered-prefix-a04-run-v1",
+  "allocation": "PREFIX-STABILITY-6689-ORDERED-PREFIXES-A04-WSLC-20261003-01",
+  "issue": 6809,
+  "final_freeze_commit": "5220f420f0a21f500e4a96bb63004bc740ace951",
+  "base_main": "10fba1d3c9aa0a6fbf39983cdcda099a10df497c",
+  "current_main_observed_during_run_setup": "4f1cbe2b6801b12b9219ef883faa9654b0d91905",
+  "runtime": {
+    "name": "Microsoft WSLc",
+    "version": "3.0.1.0",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "local_image_id": "sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4",
+    "platform": "linux/amd64",
+    "network": "none",
+    "cpus_requested": 1,
+    "memory_requested": "512M",
+    "effective_memory_limit_verified": false,
+    "runtime_warning": "wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.",
+    "runtime_warning_occurrences": 2
+  },
+  "commands": {
+    "candidate": "wslc.exe run --rm --pull never --network none --cpus 1 --memory 512M --volume <package>:/pkg:ro --volume <formal/candidate>:/out:rw --workdir /pkg python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B /pkg/run_wslc.py candidate",
+    "auditor": "wslc.exe run --rm --pull never --network none --cpus 1 --memory 512M --volume <package>:/pkg:ro --volume <formal/candidate>:/input:ro --volume <formal/audit>:/out:rw --workdir /pkg python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B /pkg/run_wslc.py audit"
+  },
+  "candidate": {
+    "invocations": 1,
+    "exit_code": 0,
+    "started_at_utc": "2026-10-03T10:17:12.193449+00:00",
+    "completed_at_utc": "2026-10-03T10:17:12.315213+00:00",
+    "stdout": "formal/candidate/stdout.txt",
+    "stderr": "formal/candidate/stderr.txt",
+    "invocation_receipt": "formal/candidate/invocation.json",
+    "raw": "formal/candidate/candidate.jsonl",
+    "raw_sha256": "e7fef9bd44be327f4eb2b518be50f78df08d1fa304fda101c962285fea208c6f",
+    "jsonl_line_count": 97,
+    "prefix_row_count": 96,
+    "unique_trace_count": 24,
+    "source_unchanged": true
+  },
+  "auditor": {
+    "invocations": 1,
+    "exit_code": 0,
+    "started_at_utc": "2026-10-03T10:18:19.368554+00:00",
+    "completed_at_utc": "2026-10-03T10:18:19.500264+00:00",
+    "stdout": "formal/audit/stdout.txt",
+    "stderr": "formal/audit/stderr.txt",
+    "invocation_receipt": "formal/audit/invocation.json",
+    "audit": "formal/audit/audit.json",
+    "audit_sha256": "0cc426b159160210faad498ea9e52208bc27f76b50dcaeb3d74a8d561f9b6416",
+    "input_sha256": "d2a371e7c0cd5d9dd427bca88c32fb0abdede445a9e57cdf0fcaeff3f3de84b3",
+    "rows_checked": 96,
+    "errors": 0,
+    "mutation_controls_rejected": 6,
+    "verdict": "PASS_METHOD_SCOPED",
+    "source_unchanged": true
+  },
+  "disposition_counts": {
+    "UNRESOLVED": 66,
+    "FINAL_FAIL": 24,
+    "FINAL_PASS": 6
+  },
+  "prefix_metrics": {
+    "stable_prefixes": 30,
+    "unresolved_prefixes": 66
+  },
+  "retries": 0,
+  "candidate_replay_after_formal": false,
+  "auditor_replay_after_formal": false,
+  "readback_note": "An initial post-candidate PowerShell readback targeted the parent workspace and failed to resolve the nested checkout paths. It was read-only; the correct path was then verified successfully. Neither formal invocation was repeated.",
+  "post_integration_construction_probe": "One construction-test discovery command was issued from the repository root rather than this package directory and therefore imported no tests (ModuleNotFoundError: test_method). It was immediately rerun from the package directory and passed 9/9. No formal candidate or auditor was rerun.",
+  "delivery": {
+    "main_head_merged": "02f3ebcc8d721343dc8c503ac3c9553200facc74",
+    "local_merge_commit": "ac521cf63d5ffb33c56a13dc8c451ae68005d46d",
+    "analysis_index_entry_added": true
+  }
+}

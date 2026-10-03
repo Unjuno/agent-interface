@@ -1,0 +1,19 @@
+{
+  "stage": "after",
+  "pid": 14820,
+  "command": [
+    "<AUTHOR_PYTHON312>",
+    "-B",
+    "<OWNED_REPAIR>\\regressions.py"
+  ],
+  "start_utc": "2026-10-03T05:09:59.527317+00:00",
+  "end_utc": "2026-10-03T05:10:00.203670+00:00",
+  "exit_code": 1,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "ebf9400ad3389749755c05a62a008a487dc9df82e892a61d0fde8c9af9c4b024",
+  "candidate_source_sha256": "34afa7aa269d3ba2495a00263d6a76f660e35ca58f9fca203363045781992754",
+  "tests_source_sha256": "5b88d97428920c7fc2b5a7ee7fcd0f2ae82582ca2ca7ce09728461ca0af22693",
+  "stderr_tail": "sions.test_original_still_reconciles_all_effects_and_reads) ... FAIL\r\n\r\n======================================================================\r\nFAIL: test_original_still_reconciles_all_effects_and_reads (__main__.ReviewRegressions.test_original_still_reconciles_all_effects_and_reads)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"<OWNED_REPAIR>\\regressions.py\", line 55, in test_original_still_reconciles_all_effects_and_reads\r\n    self.assertEqual(result['errors'],[])\r\nAssertionError: Lists differ: ['mixed_targets/predicate:requested_scope'[2473 chars]ack'] != []\r\n\r\nFirst list contains 60 additional elements.\r\nFirst extra element 0:\r\n'mixed_targets/predicate:requested_scope'\r\n\r\nDiff is 2705 characters long. Set self.maxDiff to None to see it.\r\n\r\n----------------------------------------------------------------------\r\nRan 4 tests in 0.510s\r\n\r\nFAILED (failures=1)\r\n",
+  "formal_allocation": null,
+  "browser_candidate_replayed": false
+}

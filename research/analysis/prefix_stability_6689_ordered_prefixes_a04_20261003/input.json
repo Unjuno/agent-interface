@@ -1,0 +1,22 @@
+{
+  "schema": "prefix-stability-ordered-input-v1",
+  "mandatory_obligations": ["A", "B"],
+  "outcome_values": ["fail", "pass"],
+  "outcome_combinations": [
+    {"A": "fail", "B": "fail"},
+    {"A": "fail", "B": "pass"},
+    {"A": "pass", "B": "fail"},
+    {"A": "pass", "B": "pass"}
+  ],
+  "event_tokens": ["result_A", "result_B", "generation_sealed"],
+  "event_orders": [
+    ["result_A", "result_B", "generation_sealed"],
+    ["result_A", "generation_sealed", "result_B"],
+    ["result_B", "result_A", "generation_sealed"],
+    ["result_B", "generation_sealed", "result_A"],
+    ["generation_sealed", "result_A", "result_B"],
+    ["generation_sealed", "result_B", "result_A"]
+  ],
+  "prefix_lengths": [0, 1, 2, 3],
+  "unrelated_optional_sources_open": ["optional_metrics"]
+}

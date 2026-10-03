@@ -1,0 +1,92 @@
+{
+  "allocation": "belief-external-drift-5368-wslc-portability-20261003-a01",
+  "disposition": "PASS_PORTABILITY_SCOPED",
+  "parent_issue": 5368,
+  "parent_result": "research/analysis/belief_external_drift_5368_t0_20261003/RESULT.md",
+  "parent_source_commit": "537e673240169a0703aaad273ae7ac37949e8766",
+  "preregistration_commit": "2b9587860fe3ccc6d852350fbf5281a034915d4d",
+  "runtime": {
+    "cli": "wslc 3.0.1.0",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "local_image_id": "sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4",
+    "os": "linux",
+    "architecture": "amd64",
+    "python": "3.12.14",
+    "pull_policy": "never",
+    "network": "none",
+    "requested_cpus": 1,
+    "requested_memory": "512M",
+    "memory_limit_enforcement_claim": false
+  },
+  "environment_warning": "wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.",
+  "candidate": {
+    "invocations": 1,
+    "wslc_exit_code": 0,
+    "wrapper_mode": "candidate",
+    "child_return_code": 0,
+    "child_stdout": "",
+    "child_stderr": "",
+    "staged_source_sha256": {
+      "candidate.py": "51646ed62c3eb47c7bb38b8023ebe1fcc3cdf809002e09ee201427bfe6364a4b",
+      "fixture.json": "cbdcf96771291e4889fbb1d8b4777f0210ddc9f64457ee48e5fec31aeb8b2420",
+      "runner.py": "72b9424e267514cf2f1e4f6fbe91a0b73e92dca8af694bd22c813c1006c22aea"
+    },
+    "outputs": {
+      "formal_raw.jsonl": {
+        "bytes": 1192,
+        "sha256": "6030a0b9e2e1607a824cc1815e4e92a4c4047715aeaa4fcbe11cb0de3a15d532"
+      },
+      "sticky_baseline.jsonl": {
+        "bytes": 550,
+        "sha256": "1307417697b3e20e7b49be1872f08fe75943feaf00253a796b5d1805ae8eba07"
+      },
+      "age_baseline.jsonl": {
+        "bytes": 550,
+        "sha256": "5f39a2e4a914c8e6a65f177fbc20f857285d0bbfbae0c730820223548ee75716"
+      }
+    }
+  },
+  "auditor": {
+    "invocations": 1,
+    "wslc_exit_code": 0,
+    "wrapper_mode": "audit",
+    "child_return_code": 0,
+    "child_stdout": "",
+    "child_stderr": "",
+    "audit_status": "PASS_METHOD_SCOPED",
+    "staged_source_sha256": {
+      "audit.py": "eede51ff282657cea78569d70cbf2f1efa29f0add6500ab046b15b289aa7c77d",
+      "fixture.json": "cbdcf96771291e4889fbb1d8b4777f0210ddc9f64457ee48e5fec31aeb8b2420"
+    },
+    "input_sha256": {
+      "formal_raw.jsonl": "6030a0b9e2e1607a824cc1815e4e92a4c4047715aeaa4fcbe11cb0de3a15d532",
+      "sticky_baseline.jsonl": "1307417697b3e20e7b49be1872f08fe75943feaf00253a796b5d1805ae8eba07",
+      "age_baseline.jsonl": "5f39a2e4a914c8e6a65f177fbc20f857285d0bbfbae0c730820223548ee75716"
+    },
+    "output": {
+      "name": "audit.json",
+      "bytes": 2257,
+      "sha256": "86fd66f63b012b7eed8387d0ef7f4e8c5406215a612d45d9817b74f875c43be6"
+    },
+    "audit_counts": {
+      "rows_expected": 9,
+      "rows_received": 9,
+      "errors": [],
+      "candidate_admissions": 2,
+      "unsafe_admissions": 0,
+      "admitted_safe_controls": 2,
+      "sticky_false_admissions": 7,
+      "age_safe_control_refusals": 2,
+      "mutation_controls_detected": 4,
+      "authority_or_effect_emitted": false
+    }
+  },
+  "measurements": {
+    "timing": false,
+    "rss": false,
+    "memory_pressure": false,
+    "docker_comparison": false,
+    "hard_resource_limit_claim": false
+  },
+  "retry_count": 0
+}

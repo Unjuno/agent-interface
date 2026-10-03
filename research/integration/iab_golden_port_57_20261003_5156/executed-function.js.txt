@@ -1,0 +1,52 @@
+async function runGoldenPort(tab, goals) {
+  const raw = {id: "iab-golden-port-57-C01-5156-20261003", tab_id: tab.id,
+    utc_start: new Date().toISOString(), rows: [], negative: null};
+  for (const goal of goals) {
+    const row = {task_id: goal.task_id, url: goal.url, token: goal.token,
+      utc_start: new Date().toISOString(), before: null, after: null, error: null};
+    raw.rows.push(row);
+    try {
+      if ((await tab.url()) !== goal.url) await tab.goto(goal.url);
+      row.before = await tab.getAXState({emit:false});
+      row.field_count = await tab.playwright.getByRole("textbox", {name:"Value",exact:true}).count();
+      row.save_count = await tab.playwright.getByRole("button", {name:"Save",exact:true}).count();
+      if (row.field_count !== 1 || row.save_count !== 1) throw new Error("NON_UNIQUE_CURRENT_FORM");
+      await tab.playwright.getByRole("textbox", {name:"Value",exact:true}).fill(goal.token,{timeoutMs:1500});
+      await tab.playwright.getByRole("button", {name:"Save",exact:true}).click({timeoutMs:1500});
+      row.after = await tab.getAXState({emit:false});
+      row.final_url = await tab.url();
+      row.saved_heading_count = await tab.playwright.getByRole("heading", {name:"AI INTEGRATED SAVED",exact:true}).count();
+      if (row.saved_heading_count !== 1) throw new Error("NO_SAVED_UI_CONFIRMATION");
+      row.status = "UI_SAVED";
+    } catch (error) {
+      row.error = {name:error.name, message:String(error.message)};
+      row.status = "STOP_FIRST_HEALTHY_OUTCOME";
+    } finally {
+      row.utc_end = new Date().toISOString();
+    }
+    if (row.error) break;
+  }
+  if (raw.rows.length === 6 && raw.rows.every(row=>row.status === "UI_SAVED")) {
+    const base = goals[0].url.split("/task/")[0];
+    const negative = {url:base+"/task/7", utc_start:new Date().toISOString()};
+    raw.negative = negative;
+    await tab.goto(negative.url);
+    negative.before = await tab.getAXState({emit:false});
+    negative.page_title = await tab.title();
+    negative.field_count = await tab.playwright.getByRole("textbox", {name:"Value",exact:true}).count();
+    negative.save_count = await tab.playwright.getByRole("button", {name:"Save",exact:true}).count();
+    negative.click_start = new Date().toISOString();
+    try {
+      await tab.playwright.getByRole("button", {name:"Save",exact:true}).click({timeoutMs:800});
+      negative.status = "UNEXPECTED_CLICK_RETURN";
+    } catch (error) {
+      negative.status = "MISSING_CONTROL_ERROR_RETURN";
+      negative.error = {name:error.name, message:String(error.message)};
+    }
+    negative.click_end = new Date().toISOString();
+    negative.after = await tab.getAXState({emit:false});
+    negative.utc_end = new Date().toISOString();
+  }
+  raw.utc_end = new Date().toISOString();
+  return raw;
+}

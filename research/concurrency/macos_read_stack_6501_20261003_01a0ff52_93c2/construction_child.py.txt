@@ -1,0 +1,27 @@
+"""Excluded capability construction: owned condition-sleep thread, no pipe study."""
+import json
+import os
+import queue
+import sys
+import threading
+
+identities = queue.Queue()
+stop = threading.Event()
+
+
+def worker():
+    identities.put({'native_id': threading.get_native_id(), 'python_ident': threading.get_ident(),
+                    'name': threading.current_thread().name})
+    stop.wait(30)
+
+
+thread = threading.Thread(target=worker, name='owned-sample-sleep')
+thread.start()
+worker_identity = identities.get(timeout=1)
+print(json.dumps({'event': 'ready', 'pid': os.getpid(), 'ppid': os.getppid(),
+                  'main_native_id': threading.get_native_id(), 'worker': worker_identity}), flush=True)
+command = sys.stdin.readline()
+stop.set()
+thread.join(timeout=1)
+print(json.dumps({'event': 'final', 'command': command.strip(), 'thread_alive': thread.is_alive()}), flush=True)
+raise SystemExit(1 if thread.is_alive() else 0)

@@ -1,0 +1,18 @@
+{
+  "container_name": "issue6505-audit-orbstack-a01-20261003",
+  "container_id": "f5a288d3a8af28ca5d4b81d80ce27e70e5164df5c709c865535ff9b7b14fc920",
+  "image_reference": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+  "image_id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+  "platform": "linux/arm64",
+  "user": "1000:1000",
+  "read_only_rootfs": true,
+  "network_mode": "none",
+  "nano_cpus": 1000000000,
+  "configured_memory_bytes": 536870912,
+  "pids_limit": 64,
+  "cap_drop": ["ALL"],
+  "security_options": ["no-new-privileges"],
+  "mounts": {"/repo": "read-only", "/evidence": "read-write"},
+  "engine": "OrbStack Docker Engine 29.4.0",
+  "effective_limit_claim": false
+}

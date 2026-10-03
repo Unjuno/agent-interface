@@ -1,0 +1,110 @@
+"""Fetch an explicit blob allowlist, avoiding archive's whole-tree prefetch."""
+from datetime import datetime, timezone
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+
+workspace = Path(__file__).resolve().parent.parent
+repo = workspace / "work/agent-interface"
+root = workspace / "work/review6885"
+assert root.exists() and not (root / "source").exists()
+proposal = json.loads((workspace / "outputs/author-proposal-6885-v2.json").read_text(encoding="utf-8"))
+digest = proposal.pop("proposal_digest")
+canonical = lambda value: json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode()
+assert hashlib.sha256(canonical(proposal)).hexdigest() == digest
+head, base, old = proposal["head_sha"], proposal["review_base_sha"], proposal["original_head_sha"]
+prefix = "research/integration/core_boundary_composition_57_20261003_01a0ff58"
+
+
+def git(*args, data=None):
+    return subprocess.check_output(["git", *args], cwd=repo, input=data)
+
+
+assert git("rev-parse", "origin/review-6885").decode().strip() == head
+delta = git("diff", "--name-status", base, head).decode().splitlines()
+paths = []
+for line in delta:
+    status, path = line.split("\t")
+    assert status == "A" and path.startswith(prefix + "/")
+    paths.append(path)
+assert len(paths) == 136
+objects = {}
+for line in git("ls-tree", "-r", head, "--", prefix).decode().splitlines():
+    metadata, path = line.split("\t")
+    mode, kind, oid = metadata.split()
+    assert kind == "blob" and mode == "100644"
+    objects[path] = (mode, oid)
+assert set(objects) == set(paths)
+oids = sorted({oid for mode, oid in objects.values()})
+started = datetime.now(timezone.utc).isoformat()
+command = ["git", "-c", "fetch.negotiationAlgorithm=noop", "fetch", "origin", "--no-tags",
+           "--no-write-fetch-head", "--recurse-submodules=no", "--filter=blob:none", "--stdin"]
+intent = {"operation": "read-only explicit blob fetch", "head_sha": head, "started_utc": started,
+          "command": command, "requested_blob_oids": oids, "source_output_limit_bytes": 41943040}
+(root / "FETCH_INTENT_V2.json").write_text(json.dumps(intent, indent=2) + "\n", encoding="utf-8", newline="\n")
+request = ("\n".join(oids) + "\n").encode()
+result = subprocess.run(command, cwd=repo, input=request, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+ended = datetime.now(timezone.utc).isoformat()
+(root / "fetch-v2.stdout.txt").write_bytes(result.stdout)
+(root / "fetch-v2.stderr.txt").write_bytes(result.stderr)
+(root / "FETCH_RECEIPT_V2.json").write_text(json.dumps({**intent, "ended_utc": ended, "exit_code": result.returncode,
+     "stdout_sha256": hashlib.sha256(result.stdout).hexdigest(), "stderr_sha256": hashlib.sha256(result.stderr).hexdigest()}, indent=2) + "\n", encoding="utf-8", newline="\n")
+assert result.returncode == 0
+batch = git("cat-file", "--batch", data=request)
+assert len(batch) < 41943040
+values = {}
+position = 0
+for expected_oid in oids:
+    end = batch.index(b"\n", position)
+    oid, kind, size_text = batch[position:end].decode().split()
+    assert oid == expected_oid and kind == "blob"
+    size = int(size_text)
+    start = end + 1
+    data = batch[start:start + size]
+    assert len(data) == size and batch[start + size:start + size + 1] == b"\n"
+    assert hashlib.sha1(f"blob {size}\0".encode() + data).hexdigest() == oid
+    values[oid] = data
+    position = start + size + 1
+assert position == len(batch)
+source = root / "source"
+source.mkdir()
+records = []
+for path, (mode, oid) in sorted(objects.items()):
+    target = (source / path).resolve()
+    assert target.is_relative_to(source.resolve())
+    data = values[oid]
+    target.parent.mkdir(parents=True, exist_ok=True)
+    with target.open("xb") as stream:
+        stream.write(data)
+    records.append({"path": path, "mode": mode, "blob_oid": oid,
+                    "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()})
+assert hashlib.sha256(canonical(records)).hexdigest() == proposal["content_blobs_sha256"]
+original_count = 0
+for line in git("ls-tree", "-r", old, "--", prefix).decode().splitlines():
+    metadata, path = line.split("\t")
+    mode, kind, oid = metadata.split()
+    assert kind == "blob" and objects[path] == (mode, oid)
+    original_count += 1
+assert original_count == 116
+packet = source / prefix
+manifest_counts = {}
+for relative, expected in (("SHA256SUMS", proposal["original_manifest_sha256"]),
+                           ("audit_v2/SHA256SUMS", proposal["audit_v2_manifest_sha256"])):
+    manifest = packet / relative
+    assert hashlib.sha256(manifest.read_bytes()).hexdigest() == expected
+    lines = manifest.read_text(encoding="utf-8").splitlines()
+    for line in lines:
+        expected_hash, path = line.split("  ", 1)
+        target = (manifest.parent / path).resolve()
+        assert target.is_relative_to(packet.resolve())
+        assert hashlib.sha256(target.read_bytes()).hexdigest() == expected_hash
+    manifest_counts[relative] = len(lines)
+final = {"proposal_digest": digest, "head_sha": head, "review_base_sha": base,
+         "source_files": len(records), "bytes": sum(item["bytes"] for item in records),
+         "unchanged_original_files": original_count, "manifest_counts": manifest_counts,
+         "portable_blob_digest": proposal["content_blobs_sha256"], "explicit_fetch_oids": len(oids),
+         "fetch_exit_code": result.returncode, "blobs": records}
+(root / "EXPORT.json").write_text(json.dumps(final, indent=2) + "\n", encoding="utf-8", newline="\n")
+print(json.dumps({key: value for key, value in final.items() if key != "blobs"}))

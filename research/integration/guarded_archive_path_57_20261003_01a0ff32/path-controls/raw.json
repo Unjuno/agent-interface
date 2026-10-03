@@ -1,0 +1,214 @@
+{
+  "schema": "archive-origin-probe-v1",
+  "platform": "win32",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "base_sha": "6da2b492b9c2a9d76e5c54d35a0ae50b7b49edde",
+  "test_sha256": "14e25bba59d16dfebac311337ac41f0af4bc7388f5dbcbf3ccf8fd006e4aaede",
+  "archive_sha256": "99225099575489d8c74bef622bb07666287a944ae6cdadc19f351ba646ec29e1",
+  "rows": [
+    {
+      "module": "bridge",
+      "case": "actual",
+      "started_utc": "2026-10-03T03:01:19.957611+00:00",
+      "ended_utc": "2026-10-03T03:01:20.106107+00:00",
+      "argv": [
+        "<PRIVATE_PYTHON312>",
+        "-I",
+        "-c",
+        "import sys\nfrom pathlib import Path\nsys.path.insert(0, sys.argv[1])\nfrom runtime.guarded_x11_v1 import bridge, handles, form, compiled\nfrom PIL import Image\nimport json\nfrom pathlib import Path\nmodule = bridge\noriginal = module.__file__\ncase = 'actual'\narchive = sys.argv[1]\nmember = \"runtime/guarded_x11_v1/bridge.py\"\nif case == 'alternate_separator':\n    module.__file__ = original.replace('\\\\', '/')\nelif case == 'inside_subdirectory':\n    module.__file__ = str(Path(archive) / 'nested' / member)\nelif case == 'sibling_archive':\n    module.__file__ = str(Path(archive + '.evil') / member)\nelif case == 'prefix_adjacent':\n    module.__file__ = str(Path(archive + '-neighbor') / member)\nelif case == 'external':\n    module.__file__ = str(Path(archive).parent / 'outside' / member)\nprint(json.dumps({'archive': archive, 'original': original, 'candidate': module.__file__}), flush=True)\nassert Path(bridge.__file__).is_relative_to(Path(sys.argv[1]))\nprint('origin accepted')\n",
+        "<OWNED_ROOT>\\outputs\\guarded-archive-path\\path-controls\\runtime.pyz"
+      ],
+      "cwd": "<OWNED_ROOT>\\outputs\\guarded-archive-path\\path-controls",
+      "exit_code": 0,
+      "stdout": "{\"archive\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz\", \"original\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz\\\\runtime\\\\guarded_x11_v1\\\\bridge.py\", \"candidate\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz\\\\runtime\\\\guarded_x11_v1\\\\bridge.py\"}\norigin accepted\n",
+      "stderr": ""
+    },
+    {
+      "module": "bridge",
+      "case": "alternate_separator",
+      "started_utc": "2026-10-03T03:01:20.106107+00:00",
+      "ended_utc": "2026-10-03T03:01:20.277454+00:00",
+      "argv": [
+        "<PRIVATE_PYTHON312>",
+        "-I",
+        "-c",
+        "import sys\nfrom pathlib import Path\nsys.path.insert(0, sys.argv[1])\nfrom runtime.guarded_x11_v1 import bridge, handles, form, compiled\nfrom PIL import Image\nimport json\nfrom pathlib import Path\nmodule = bridge\noriginal = module.__file__\ncase = 'alternate_separator'\narchive = sys.argv[1]\nmember = \"runtime/guarded_x11_v1/bridge.py\"\nif case == 'alternate_separator':\n    module.__file__ = original.replace('\\\\', '/')\nelif case == 'inside_subdirectory':\n    module.__file__ = str(Path(archive) / 'nested' / member)\nelif case == 'sibling_archive':\n    module.__file__ = str(Path(archive + '.evil') / member)\nelif case == 'prefix_adjacent':\n    module.__file__ = str(Path(archive + '-neighbor') / member)\nelif case == 'external':\n    module.__file__ = str(Path(archive).parent / 'outside' / member)\nprint(json.dumps({'archive': archive, 'original': original, 'candidate': module.__file__}), flush=True)\nassert Path(bridge.__file__).is_relative_to(Path(sys.argv[1]))\nprint('origin accepted')\n",
+        "<OWNED_ROOT>\\outputs\\guarded-archive-path\\path-controls\\runtime.pyz"
+      ],
+      "cwd": "<OWNED_ROOT>\\outputs\\guarded-archive-path\\path-controls",
+      "exit_code": 0,
+      "stdout": "{\"archive\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz\", \"original\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz\\\\runtime\\\\guarded_x11_v1\\\\bridge.py\", \"candidate\": \"<OWNED_ROOT>/outputs/guarded-archive-path/path-controls/runtime.pyz/runtime/guarded_x11_v1/bridge.py\"}\norigin accepted\n",
+      "stderr": ""
+    },
+    {
+      "module": "bridge",
+      "case": "inside_subdirectory",
+      "started_utc": "2026-10-03T03:01:20.277454+00:00",
+      "ended_utc": "2026-10-03T03:01:20.449073+00:00",
+      "argv": [
+        "<PRIVATE_PYTHON312>",
+        "-I",
+        "-c",
+        "import sys\nfrom pathlib import Path\nsys.path.insert(0, sys.argv[1])\nfrom runtime.guarded_x11_v1 import bridge, handles, form, compiled\nfrom PIL import Image\nimport json\nfrom pathlib import Path\nmodule = bridge\noriginal = module.__file__\ncase = 'inside_subdirectory'\narchive = sys.argv[1]\nmember = \"runtime/guarded_x11_v1/bridge.py\"\nif case == 'alternate_separator':\n    module.__file__ = original.replace('\\\\', '/')\nelif case == 'inside_subdirectory':\n    module.__file__ = str(Path(archive) / 'nested' / member)\nelif case == 'sibling_archive':\n    module.__file__ = str(Path(archive + '.evil') / member)\nelif case == 'prefix_adjacent':\n    module.__file__ = str(Path(archive + '-neighbor') / member)\nelif case == 'external':\n    module.__file__ = str(Path(archive).parent / 'outside' / member)\nprint(json.dumps({'archive': archive, 'original': original, 'candidate': module.__file__}), flush=True)\nassert Path(bridge.__file__).is_relative_to(Path(sys.argv[1]))\nprint('origin accepted')\n",
+        "<OWNED_ROOT>\\outputs\\guarded-archive-path\\path-controls\\runtime.pyz"
+      ],
+      "cwd": "<OWNED_ROOT>\\outputs\\guarded-archive-path\\path-controls",
+      "exit_code": 0,
+      "stdout": "{\"archive\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz\", \"original\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz\\\\runtime\\\\guarded_x11_v1\\\\bridge.py\", \"candidate\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz\\\\nested\\\\runtime\\\\guarded_x11_v1\\\\bridge.py\"}\norigin accepted\n",
+      "stderr": ""
+    },
+    {
+      "module": "bridge",
+      "case": "sibling_archive",
+      "started_utc": "2026-10-03T03:01:20.449073+00:00",
+      "ended_utc": "2026-10-03T03:01:20.618697+00:00",
+      "argv": [
+        "<PRIVATE_PYTHON312>",
+        "-I",
+        "-c",
+        "import sys\nfrom pathlib import Path\nsys.path.insert(0, sys.argv[1])\nfrom runtime.guarded_x11_v1 import bridge, handles, form, compiled\nfrom PIL import Image\nimport json\nfrom pathlib import Path\nmodule = bridge\noriginal = module.__file__\ncase = 'sibling_archive'\narchive = sys.argv[1]\nmember = \"runtime/guarded_x11_v1/bridge.py\"\nif case == 'alternate_separator':\n    module.__file__ = original.replace('\\\\', '/')\nelif case == 'inside_subdirectory':\n    module.__file__ = str(Path(archive) / 'nested' / member)\nelif case == 'sibling_archive':\n    module.__file__ = str(Path(archive + '.evil') / member)\nelif case == 'prefix_adjacent':\n    module.__file__ = str(Path(archive + '-neighbor') / member)\nelif case == 'external':\n    module.__file__ = str(Path(archive).parent / 'outside' / member)\nprint(json.dumps({'archive': archive, 'original': original, 'candidate': module.__file__}), flush=True)\nassert Path(bridge.__file__).is_relative_to(Path(sys.argv[1]))\nprint('origin accepted')\n",
+        "<OWNED_ROOT>\\outputs\\guarded-archive-path\\path-controls\\runtime.pyz"
+      ],
+      "cwd": "<OWNED_ROOT>\\outputs\\guarded-archive-path\\path-controls",
+      "exit_code": 1,
+      "stdout": "{\"archive\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz\", \"original\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz\\\\runtime\\\\guarded_x11_v1\\\\bridge.py\", \"candidate\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz.evil\\\\runtime\\\\guarded_x11_v1\\\\bridge.py\"}\n",
+      "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 24, in <module>\nAssertionError\n"
+    },
+    {
+      "module": "bridge",
+      "case": "prefix_adjacent",
+      "started_utc": "2026-10-03T03:01:20.618697+00:00",
+      "ended_utc": "2026-10-03T03:01:20.772626+00:00",
+      "argv": [
+        "<PRIVATE_PYTHON312>",
+        "-I",
+        "-c",
+        "import sys\nfrom pathlib import Path\nsys.path.insert(0, sys.argv[1])\nfrom runtime.guarded_x11_v1 import bridge, handles, form, compiled\nfrom PIL import Image\nimport json\nfrom pathlib import Path\nmodule = bridge\noriginal = module.__file__\ncase = 'prefix_adjacent'\narchive = sys.argv[1]\nmember = \"runtime/guarded_x11_v1/bridge.py\"\nif case == 'alternate_separator':\n    module.__file__ = original.replace('\\\\', '/')\nelif case == 'inside_subdirectory':\n    module.__file__ = str(Path(archive) / 'nested' / member)\nelif case == 'sibling_archive':\n    module.__file__ = str(Path(archive + '.evil') / member)\nelif case == 'prefix_adjacent':\n    module.__file__ = str(Path(archive + '-neighbor') / member)\nelif case == 'external':\n    module.__file__ = str(Path(archive).parent / 'outside' / member)\nprint(json.dumps({'archive': archive, 'original': original, 'candidate': module.__file__}), flush=True)\nassert Path(bridge.__file__).is_relative_to(Path(sys.argv[1]))\nprint('origin accepted')\n",
+        "<OWNED_ROOT>\\outputs\\guarded-archive-path\\path-controls\\runtime.pyz"
+      ],
+      "cwd": "<OWNED_ROOT>\\outputs\\guarded-archive-path\\path-controls",
+      "exit_code": 1,
+      "stdout": "{\"archive\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz\", \"original\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz\\\\runtime\\\\guarded_x11_v1\\\\bridge.py\", \"candidate\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz-neighbor\\\\runtime\\\\guarded_x11_v1\\\\bridge.py\"}\n",
+      "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 24, in <module>\nAssertionError\n"
+    },
+    {
+      "module": "bridge",
+      "case": "external",
+      "started_utc": "2026-10-03T03:01:20.772626+00:00",
+      "ended_utc": "2026-10-03T03:01:20.940557+00:00",
+      "argv": [
+        "<PRIVATE_PYTHON312>",
+        "-I",
+        "-c",
+        "import sys\nfrom pathlib import Path\nsys.path.insert(0, sys.argv[1])\nfrom runtime.guarded_x11_v1 import bridge, handles, form, compiled\nfrom PIL import Image\nimport json\nfrom pathlib import Path\nmodule = bridge\noriginal = module.__file__\ncase = 'external'\narchive = sys.argv[1]\nmember = \"runtime/guarded_x11_v1/bridge.py\"\nif case == 'alternate_separator':\n    module.__file__ = original.replace('\\\\', '/')\nelif case == 'inside_subdirectory':\n    module.__file__ = str(Path(archive) / 'nested' / member)\nelif case == 'sibling_archive':\n    module.__file__ = str(Path(archive + '.evil') / member)\nelif case == 'prefix_adjacent':\n    module.__file__ = str(Path(archive + '-neighbor') / member)\nelif case == 'external':\n    module.__file__ = str(Path(archive).parent / 'outside' / member)\nprint(json.dumps({'archive': archive, 'original': original, 'candidate': module.__file__}), flush=True)\nassert Path(bridge.__file__).is_relative_to(Path(sys.argv[1]))\nprint('origin accepted')\n",
+        "<OWNED_ROOT>\\outputs\\guarded-archive-path\\path-controls\\runtime.pyz"
+      ],
+      "cwd": "<OWNED_ROOT>\\outputs\\guarded-archive-path\\path-controls",
+      "exit_code": 1,
+      "stdout": "{\"archive\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz\", \"original\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz\\\\runtime\\\\guarded_x11_v1\\\\bridge.py\", \"candidate\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\outside\\\\runtime\\\\guarded_x11_v1\\\\bridge.py\"}\n",
+      "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 24, in <module>\nAssertionError\n"
+    },
+    {
+      "module": "compiled",
+      "case": "actual",
+      "started_utc": "2026-10-03T03:01:20.940557+00:00",
+      "ended_utc": "2026-10-03T03:01:21.102952+00:00",
+      "argv": [
+        "<PRIVATE_PYTHON312>",
+        "-I",
+        "-c",
+        "import sys\nfrom pathlib import Path\nsys.path.insert(0, sys.argv[1])\nfrom runtime.guarded_x11_v1 import bridge, handles, form, compiled\nfrom PIL import Image\nimport json\nfrom pathlib import Path\nmodule = compiled\noriginal = module.__file__\ncase = 'actual'\narchive = sys.argv[1]\nmember = \"runtime/guarded_x11_v1/compiled.py\"\nif case == 'alternate_separator':\n    module.__file__ = original.replace('\\\\', '/')\nelif case == 'inside_subdirectory':\n    module.__file__ = str(Path(archive) / 'nested' / member)\nelif case == 'sibling_archive':\n    module.__file__ = str(Path(archive + '.evil') / member)\nelif case == 'prefix_adjacent':\n    module.__file__ = str(Path(archive + '-neighbor') / member)\nelif case == 'external':\n    module.__file__ = str(Path(archive).parent / 'outside' / member)\nprint(json.dumps({'archive': archive, 'original': original, 'candidate': module.__file__}), flush=True)\nassert Path(compiled.__file__).is_relative_to(Path(sys.argv[1]))\nprint('origin accepted')\n",
+        "<OWNED_ROOT>\\outputs\\guarded-archive-path\\path-controls\\runtime.pyz"
+      ],
+      "cwd": "<OWNED_ROOT>\\outputs\\guarded-archive-path\\path-controls",
+      "exit_code": 0,
+      "stdout": "{\"archive\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz\", \"original\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz\\\\runtime\\\\guarded_x11_v1\\\\compiled.py\", \"candidate\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz\\\\runtime\\\\guarded_x11_v1\\\\compiled.py\"}\norigin accepted\n",
+      "stderr": ""
+    },
+    {
+      "module": "compiled",
+      "case": "alternate_separator",
+      "started_utc": "2026-10-03T03:01:21.102952+00:00",
+      "ended_utc": "2026-10-03T03:01:21.265927+00:00",
+      "argv": [
+        "<PRIVATE_PYTHON312>",
+        "-I",
+        "-c",
+        "import sys\nfrom pathlib import Path\nsys.path.insert(0, sys.argv[1])\nfrom runtime.guarded_x11_v1 import bridge, handles, form, compiled\nfrom PIL import Image\nimport json\nfrom pathlib import Path\nmodule = compiled\noriginal = module.__file__\ncase = 'alternate_separator'\narchive = sys.argv[1]\nmember = \"runtime/guarded_x11_v1/compiled.py\"\nif case == 'alternate_separator':\n    module.__file__ = original.replace('\\\\', '/')\nelif case == 'inside_subdirectory':\n    module.__file__ = str(Path(archive) / 'nested' / member)\nelif case == 'sibling_archive':\n    module.__file__ = str(Path(archive + '.evil') / member)\nelif case == 'prefix_adjacent':\n    module.__file__ = str(Path(archive + '-neighbor') / member)\nelif case == 'external':\n    module.__file__ = str(Path(archive).parent / 'outside' / member)\nprint(json.dumps({'archive': archive, 'original': original, 'candidate': module.__file__}), flush=True)\nassert Path(compiled.__file__).is_relative_to(Path(sys.argv[1]))\nprint('origin accepted')\n",
+        "<OWNED_ROOT>\\outputs\\guarded-archive-path\\path-controls\\runtime.pyz"
+      ],
+      "cwd": "<OWNED_ROOT>\\outputs\\guarded-archive-path\\path-controls",
+      "exit_code": 0,
+      "stdout": "{\"archive\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz\", \"original\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz\\\\runtime\\\\guarded_x11_v1\\\\compiled.py\", \"candidate\": \"<OWNED_ROOT>/outputs/guarded-archive-path/path-controls/runtime.pyz/runtime/guarded_x11_v1/compiled.py\"}\norigin accepted\n",
+      "stderr": ""
+    },
+    {
+      "module": "compiled",
+      "case": "inside_subdirectory",
+      "started_utc": "2026-10-03T03:01:21.265927+00:00",
+      "ended_utc": "2026-10-03T03:01:21.425468+00:00",
+      "argv": [
+        "<PRIVATE_PYTHON312>",
+        "-I",
+        "-c",
+        "import sys\nfrom pathlib import Path\nsys.path.insert(0, sys.argv[1])\nfrom runtime.guarded_x11_v1 import bridge, handles, form, compiled\nfrom PIL import Image\nimport json\nfrom pathlib import Path\nmodule = compiled\noriginal = module.__file__\ncase = 'inside_subdirectory'\narchive = sys.argv[1]\nmember = \"runtime/guarded_x11_v1/compiled.py\"\nif case == 'alternate_separator':\n    module.__file__ = original.replace('\\\\', '/')\nelif case == 'inside_subdirectory':\n    module.__file__ = str(Path(archive) / 'nested' / member)\nelif case == 'sibling_archive':\n    module.__file__ = str(Path(archive + '.evil') / member)\nelif case == 'prefix_adjacent':\n    module.__file__ = str(Path(archive + '-neighbor') / member)\nelif case == 'external':\n    module.__file__ = str(Path(archive).parent / 'outside' / member)\nprint(json.dumps({'archive': archive, 'original': original, 'candidate': module.__file__}), flush=True)\nassert Path(compiled.__file__).is_relative_to(Path(sys.argv[1]))\nprint('origin accepted')\n",
+        "<OWNED_ROOT>\\outputs\\guarded-archive-path\\path-controls\\runtime.pyz"
+      ],
+      "cwd": "<OWNED_ROOT>\\outputs\\guarded-archive-path\\path-controls",
+      "exit_code": 0,
+      "stdout": "{\"archive\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz\", \"original\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz\\\\runtime\\\\guarded_x11_v1\\\\compiled.py\", \"candidate\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz\\\\nested\\\\runtime\\\\guarded_x11_v1\\\\compiled.py\"}\norigin accepted\n",
+      "stderr": ""
+    },
+    {
+      "module": "compiled",
+      "case": "sibling_archive",
+      "started_utc": "2026-10-03T03:01:21.425468+00:00",
+      "ended_utc": "2026-10-03T03:01:21.587913+00:00",
+      "argv": [
+        "<PRIVATE_PYTHON312>",
+        "-I",
+        "-c",
+        "import sys\nfrom pathlib import Path\nsys.path.insert(0, sys.argv[1])\nfrom runtime.guarded_x11_v1 import bridge, handles, form, compiled\nfrom PIL import Image\nimport json\nfrom pathlib import Path\nmodule = compiled\noriginal = module.__file__\ncase = 'sibling_archive'\narchive = sys.argv[1]\nmember = \"runtime/guarded_x11_v1/compiled.py\"\nif case == 'alternate_separator':\n    module.__file__ = original.replace('\\\\', '/')\nelif case == 'inside_subdirectory':\n    module.__file__ = str(Path(archive) / 'nested' / member)\nelif case == 'sibling_archive':\n    module.__file__ = str(Path(archive + '.evil') / member)\nelif case == 'prefix_adjacent':\n    module.__file__ = str(Path(archive + '-neighbor') / member)\nelif case == 'external':\n    module.__file__ = str(Path(archive).parent / 'outside' / member)\nprint(json.dumps({'archive': archive, 'original': original, 'candidate': module.__file__}), flush=True)\nassert Path(compiled.__file__).is_relative_to(Path(sys.argv[1]))\nprint('origin accepted')\n",
+        "<OWNED_ROOT>\\outputs\\guarded-archive-path\\path-controls\\runtime.pyz"
+      ],
+      "cwd": "<OWNED_ROOT>\\outputs\\guarded-archive-path\\path-controls",
+      "exit_code": 1,
+      "stdout": "{\"archive\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz\", \"original\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz\\\\runtime\\\\guarded_x11_v1\\\\compiled.py\", \"candidate\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz.evil\\\\runtime\\\\guarded_x11_v1\\\\compiled.py\"}\n",
+      "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 24, in <module>\nAssertionError\n"
+    },
+    {
+      "module": "compiled",
+      "case": "prefix_adjacent",
+      "started_utc": "2026-10-03T03:01:21.587913+00:00",
+      "ended_utc": "2026-10-03T03:01:21.748063+00:00",
+      "argv": [
+        "<PRIVATE_PYTHON312>",
+        "-I",
+        "-c",
+        "import sys\nfrom pathlib import Path\nsys.path.insert(0, sys.argv[1])\nfrom runtime.guarded_x11_v1 import bridge, handles, form, compiled\nfrom PIL import Image\nimport json\nfrom pathlib import Path\nmodule = compiled\noriginal = module.__file__\ncase = 'prefix_adjacent'\narchive = sys.argv[1]\nmember = \"runtime/guarded_x11_v1/compiled.py\"\nif case == 'alternate_separator':\n    module.__file__ = original.replace('\\\\', '/')\nelif case == 'inside_subdirectory':\n    module.__file__ = str(Path(archive) / 'nested' / member)\nelif case == 'sibling_archive':\n    module.__file__ = str(Path(archive + '.evil') / member)\nelif case == 'prefix_adjacent':\n    module.__file__ = str(Path(archive + '-neighbor') / member)\nelif case == 'external':\n    module.__file__ = str(Path(archive).parent / 'outside' / member)\nprint(json.dumps({'archive': archive, 'original': original, 'candidate': module.__file__}), flush=True)\nassert Path(compiled.__file__).is_relative_to(Path(sys.argv[1]))\nprint('origin accepted')\n",
+        "<OWNED_ROOT>\\outputs\\guarded-archive-path\\path-controls\\runtime.pyz"
+      ],
+      "cwd": "<OWNED_ROOT>\\outputs\\guarded-archive-path\\path-controls",
+      "exit_code": 1,
+      "stdout": "{\"archive\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz\", \"original\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz\\\\runtime\\\\guarded_x11_v1\\\\compiled.py\", \"candidate\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz-neighbor\\\\runtime\\\\guarded_x11_v1\\\\compiled.py\"}\n",
+      "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 24, in <module>\nAssertionError\n"
+    },
+    {
+      "module": "compiled",
+      "case": "external",
+      "started_utc": "2026-10-03T03:01:21.748063+00:00",
+      "ended_utc": "2026-10-03T03:01:21.905641+00:00",
+      "argv": [
+        "<PRIVATE_PYTHON312>",
+        "-I",
+        "-c",
+        "import sys\nfrom pathlib import Path\nsys.path.insert(0, sys.argv[1])\nfrom runtime.guarded_x11_v1 import bridge, handles, form, compiled\nfrom PIL import Image\nimport json\nfrom pathlib import Path\nmodule = compiled\noriginal = module.__file__\ncase = 'external'\narchive = sys.argv[1]\nmember = \"runtime/guarded_x11_v1/compiled.py\"\nif case == 'alternate_separator':\n    module.__file__ = original.replace('\\\\', '/')\nelif case == 'inside_subdirectory':\n    module.__file__ = str(Path(archive) / 'nested' / member)\nelif case == 'sibling_archive':\n    module.__file__ = str(Path(archive + '.evil') / member)\nelif case == 'prefix_adjacent':\n    module.__file__ = str(Path(archive + '-neighbor') / member)\nelif case == 'external':\n    module.__file__ = str(Path(archive).parent / 'outside' / member)\nprint(json.dumps({'archive': archive, 'original': original, 'candidate': module.__file__}), flush=True)\nassert Path(compiled.__file__).is_relative_to(Path(sys.argv[1]))\nprint('origin accepted')\n",
+        "<OWNED_ROOT>\\outputs\\guarded-archive-path\\path-controls\\runtime.pyz"
+      ],
+      "cwd": "<OWNED_ROOT>\\outputs\\guarded-archive-path\\path-controls",
+      "exit_code": 1,
+      "stdout": "{\"archive\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz\", \"original\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\runtime.pyz\\\\runtime\\\\guarded_x11_v1\\\\compiled.py\", \"candidate\": \"<OWNED_ROOT>\\\\outputs\\\\guarded-archive-path\\\\path-controls\\\\outside\\\\runtime\\\\guarded_x11_v1\\\\compiled.py\"}\n",
+      "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 24, in <module>\nAssertionError\n"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "tested_head_prefix": "c5d7543047",
+  "platform": "macOS arm64 CPython 3.14.5",
+  "scope": "host execution of applicable repository entrypoints; not the Linux/Python 3.12 Docker CI environment",
+  "checks": [
+    {"command": "python3 -B -m unittest discover -s research -p 'test_*workspace*.py' -v", "exit_code": 0, "tests": 21},
+    {"command": "python3 research/check_workspace_index.py --git-tree", "exit_code": 0, "namespaces": 156},
+    {"command": "python3 -B -m unittest -v research/doom/test_map01_scorer_scheduler_replay_3270.py", "exit_code": 0, "tests": 2},
+    {"command": "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -B -m pytest --collect-only -q -p no:cacheprovider PACKAGE", "exit_code": 5, "collected_tests": 0, "interpretation": "expected pytest no-tests code; archive automatic-collection guard verified"},
+    {"command": "python3 .github/check_public_navigation.py", "first_exit_code": 1, "first_result": "sparse checkout omitted six public documents", "repair": "git restore exact same HEAD documents with --ignore-skip-worktree-bits", "repaired_exit_code": 0, "documents": 26, "relative_links": 1636}
+  ],
+  "source_changes_after_checks": false,
+  "later_commit_scope": "verification summary and refreshed artifact manifest only",
+  "hosted_ci_claim": false
+}

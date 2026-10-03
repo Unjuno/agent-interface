@@ -1,0 +1,30 @@
+{
+  "utc": "2026-10-03T08:34:53.159870+00:00",
+  "id": "v39-normal-wait-repair-regression-01a0ff2c-v1",
+  "kind": "ordinary RED/repair/regression, not formal",
+  "base": "7c40e6023ac7e89d3cc0f1d4c222a331102b60eb",
+  "source_path": "research/doom/map01_overlap_controller_v39.py",
+  "baseline_git_blob": "321ec02e5c3c8bd87c6370e4a5e90bb3013d4241",
+  "repair": "replace sole detail=process.stderr.read().strip() assignment with constant stderr not synchronously drained; all other bytes remain",
+  "expected_tests": 7,
+  "expected_red_failures": 2,
+  "arms": [
+    "baseline normal",
+    "candidate normal",
+    "candidate -O"
+  ],
+  "source_sha256": "cbc44c171f9d83417380af4fb5c06ef7dbf9bb2862c2c40a997bd66f3a985e5e",
+  "test_sha256": "efe87ade28fea5130fe53dc3bd8d5416b92a1fbd74f52ba7d9063a07d15be618",
+  "runner_sha256": "5928ca879464b5d786c52dacf092c298c9fca22d7470714fdc52bd6a59f96798",
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "python_sha256": "4d6f5f81a4bca11191c4c7c6b43632694d0a4ce74e068619d8fdc161d469859a",
+  "os": "Windows-11-10.0.26200-SP0",
+  "native_game_or_pipe_children": 0,
+  "invariants": [
+    "queued terminal priority",
+    "latest observation update",
+    "policy and typed running invalidation priority/identity",
+    "live parent timeout"
+  ],
+  "decision": "candidate all7 normal/O plus exact one-line byte diff and prior witness AST/source equivalence; no replay of immutable native6-cell allocation"
+}

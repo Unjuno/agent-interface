@@ -1,0 +1,3 @@
+# Initial construction STOP
+
+Exit2 at document title/readiness gate20s; zero task input/formal rows/model calls. Calc remained running and was group-TERM closed255; Openbox/Xvfb0. First source/logs/FODS/profile remain unchanged. Exact title gate included .fods, but producer did not retain last window tree before STOP, so the cause is not established from this receipt. No image was captured. Separate diagnostic01 will omit the title-gated waiting condition and capture one private whole-screen image plus all window titles after fixed5s, with fresh profile/document and no task inputs. It is a different setup observation, not replay/rescue or completion of the four-row comparison.

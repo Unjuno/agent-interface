@@ -1,0 +1,34 @@
+{
+  "classification": "ordinary repair verification; this records corrected source/fixtures before execution-verified, not a new preregistered experiment",
+  "files": {
+    "PACKAGING-REPAIR.json": "30c9b5109df3b64980919494a702b6cea766a69cf281a99c4dc33b5bab9fedef",
+    "auditor_v2.py": "1060c54b48da9cd6469b547c0a1f90be26d9cb3a131bf92a3b8e2ab190a3fff4",
+    "controls/event-clock-to-float.json.gz.b64": "3fd9878c52d9aa1543aa4a66da6fca2ec12bd307a9ba523f3be041d002167d07",
+    "controls/event-rank-to-float.json.gz.b64": "5d9a4f8e6f420f03eac0b9a42f5ea48a8c2f7b333542bddd56950b21b3ed7f88",
+    "controls/extra-foreign-caller.json.gz.b64": "d8333a5e2caf6fa1fb778709eca4ab0d006a28b807b40f0326af5ef8f00a6fc6",
+    "controls/extra-row-field.json.gz.b64": "eea10d1d90a02345fc7eb8040314c3be3e59c91598643aeb426db45ae9dfa087",
+    "controls/id-one-to-true.json.gz.b64": "119e3e0a2d419bf9d248f1376f6df133b43e844a53ab5e06725a3934c2229e5f",
+    "controls/id-zero-to-false.json.gz.b64": "5a4aed516f1d040ddd1afa41e02bf8561deb0b23964a9212afe01cf3577434e1",
+    "controls_v2.py": "31a738a0d2d4c58b82e817f33037c3f47b44edd048c116bce75adb15382340e7",
+    "execution/audit-v2.json": "b26d0102e49ddcdf6b4b96f2fbf2d7156d405bdfe28fa73d9068d22c75dbcd5b",
+    "execution/audit.txt": "f0987443958d0b84b06c3e872eb1859fd66253d9e0fdc5eb93b5cf718a45d6b3",
+    "execution/controls.json": "3c215e433addbad89d215dbe4e73e6954d3465cf323654f14741eebfe930a34d",
+    "execution/receipts.json": "98ce9ac727d9b045817b6a6e799565e07fc0a294eeb3d8b9f858768d3f15c84f",
+    "execution/tests.txt": "48f1f0eafe38105397f867e61448100bd4ab3df362c4c58bb97eb9d4f70b106c",
+    "first-characterization.json": "4c438d87e2af0fe9364ef4cdcafe4479f2fc78d08d4445efc4488328129308ec",
+    "test_auditor_v2.py": "590e1762889788499980b9a73fd63dbc4486c1886213fb45a0c1d3a544f91ed0"
+  },
+  "formal_replayed": false,
+  "original_raw_sha256": "60759e1b49d03a7d83bb3968b892c2c349f7e89842f17aa645043785421a580b",
+  "pass_conditions": [
+    "seven corrected portable unit methods exit0",
+    "all14 serialized-effective controls refuse; old auditor accepts exactly six",
+    "all six saved fixture hashes and names match first characterization",
+    "original20 package files unchanged",
+    "retained-data CLI exit0:192 assignments/384 decisions, counts48/48/0"
+  ],
+  "recorded_utc": "2026-10-03T03:35:56.843149+00:00",
+  "stop_conditions": [
+    "any assertion/exit mismatch preserves logs and blocks publication"
+  ]
+}

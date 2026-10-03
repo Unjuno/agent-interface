@@ -1,0 +1,9 @@
+{
+  "allocation": "MAP01-OWNER-KEYMAP-WITNESS-5156-T3-20261001-01",
+  "frozen_main": "7c44e41934a62b6f90227b0dc74231cf897ab898",
+  "cases": {
+    "single_explicit": {"admit": ["a"], "release": [{"key": "a", "class": "explicit_up"}]},
+    "two_key_explicit": {"admit": ["a", "b"], "release": [{"key": "a", "class": "explicit_up"}, {"key": "b", "class": "explicit_up"}]},
+    "partial_cancel": {"admit": ["a"], "release": [{"key": "a", "class": "owner_lease_cleanup", "reason": "cancelled"}]}
+  }
+}
