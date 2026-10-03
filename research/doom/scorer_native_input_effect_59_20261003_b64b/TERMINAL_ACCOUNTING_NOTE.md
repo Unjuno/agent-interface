@@ -67,3 +67,8 @@ old scheduler as measurement-ready. New content votes must bind this known-fault
 qualification and a new head/digest/epoch; old v1/v2 dispositions cannot carry.
 Current tree/requirements/conditional application are separate gates. #59/R134,
 useful game feedback, physical release and matched recovery remain open.
+
+The first published v3 commit had one ignored local log missing from Git.
+[PUBLICATION_FIRST_STOP.json](supplement_v3/PUBLICATION_FIRST_STOP.json) retains
+that binding STOP and the first v3 manifest is preserved. The one owned log was
+explicitly added before a v3 proposal; no old source/raw/manifest was changed.
