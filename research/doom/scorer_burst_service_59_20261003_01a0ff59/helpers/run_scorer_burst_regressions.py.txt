@@ -1,0 +1,37 @@
+"""Repair only the private test import closure; no scientific execution."""
+import hashlib
+import importlib.util
+import json
+import shutil
+import sys
+import unittest
+from datetime import datetime, timezone
+from pathlib import Path
+
+OUT = Path(__file__).resolve().parent / 'agent-interface/research/doom/scorer_burst_service_59_20261003_01a0ff59'
+folder = OUT / 'regression_sources'
+shutil.copyfile(OUT / 'sources/one_command/independent_progress_clock_v2.py', folder / 'independent_progress_clock_v2.py')
+sys.path.insert(0, str(OUT / 'sources/one_command'))
+suite = unittest.TestSuite()
+for path in sorted(folder.glob('test_*.py')):
+    spec = importlib.util.spec_from_file_location(path.stem, path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    for obj in list(vars(module).values()):
+        if isinstance(obj, type) and issubclass(obj, unittest.TestCase):
+            for name in ('test_real_pipe_eof_and_same_thread', 'test_pipe_wait_samples_and_wakes_on_command'):
+                if hasattr(obj, name):
+                    setattr(obj, name, unittest.skip('Windows select does not support this preserved POSIX-pipe fixture')(getattr(obj, name)))
+    suite.addTests(unittest.defaultTestLoader.loadTestsFromModule(module))
+started = datetime.now(timezone.utc).isoformat()
+with (OUT / 'execution/regressions.stderr.txt').open('x', encoding='utf-8') as stream:
+    check = unittest.TextTestRunner(stream=stream, verbosity=2).run(suite)
+receipt = {'command': ['python', '-B', 'work/run_scorer_burst_regressions.py'],
+           'started_utc': started, 'ended_utc': datetime.now(timezone.utc).isoformat(),
+           'tests_run': check.testsRun, 'skips': len(check.skipped), 'failures': len(check.failures),
+           'errors': len(check.errors), 'exit_code': 0 if check.wasSuccessful() else 1,
+           'source_sha256': {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in folder.iterdir()}}
+with (OUT / 'execution/regressions.json').open('x', encoding='utf-8') as stream:
+    json.dump(receipt, stream, indent=2)
+print(json.dumps(receipt))
+sys.exit(receipt['exit_code'])

@@ -1,0 +1,60 @@
+{
+  "ended_utc": "2026-10-03T05:15:32.529269+00:00",
+  "literal_negatives": [
+    {
+      "diagnostic": "sample integer fields",
+      "name": "boolean_skip",
+      "refused": true
+    },
+    {
+      "diagnostic": "receipt selects current due slot",
+      "name": "wrong_receipt_slot",
+      "refused": true
+    },
+    {
+      "diagnostic": "cutoff matches final retained event",
+      "name": "false_cutoff",
+      "refused": true
+    }
+  ],
+  "ordinary_literal_checks": [
+    {
+      "expected_unrepresented_grid_ns": [],
+      "name": "zero_cutoff",
+      "result": "PASS"
+    },
+    {
+      "expected_unrepresented_grid_ns": [],
+      "name": "fast_finish",
+      "result": "PASS"
+    },
+    {
+      "expected_unrepresented_grid_ns": [
+        100000000,
+        200000000,
+        300000000
+      ],
+      "name": "long_final_sample",
+      "result": "PASS"
+    },
+    {
+      "expected_unrepresented_grid_ns": [
+        100000000
+      ],
+      "name": "long_final_command",
+      "result": "PASS"
+    },
+    {
+      "expected_unrepresented_grid_ns": [],
+      "name": "later_receipt_represents_skip",
+      "result": "PASS"
+    },
+    {
+      "expected_unrepresented_grid_ns": [],
+      "name": "exact_stop_endpoint_excluded",
+      "result": "PASS"
+    }
+  ],
+  "original_source_runtime_or_oracle_executed": false,
+  "started_utc": "2026-10-03T05:15:32.529269+00:00"
+}

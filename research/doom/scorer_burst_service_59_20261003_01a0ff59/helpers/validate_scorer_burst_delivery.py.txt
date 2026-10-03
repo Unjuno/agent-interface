@@ -1,0 +1,38 @@
+"""Only ordinary delivery checks, with exact diagnostics retained."""
+import hashlib
+import json
+import subprocess
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+OUT = ROOT / 'agent-interface/research/doom/scorer_burst_service_59_20261003_01a0ff59'
+PYTEST_PYTHON = ROOT / 'venv/Scripts/python.exe'
+receipts = []
+commands = [('reference-post', [sys.executable, '-B', '-m', 'unittest', '-v', 'test_reference'], [0]),
+            ('collection', [str(PYTEST_PYTHON), '-B', '-m', 'pytest', '--collect-only', '-q', '-p', 'no:cacheprovider', str(OUT)], [5])]
+for name, command, expected in commands:
+    started = datetime.now(timezone.utc).isoformat()
+    run = subprocess.run(command, cwd=OUT, capture_output=True)
+    item = {'command': command, 'started_utc': started, 'ended_utc': datetime.now(timezone.utc).isoformat(),
+            'exit_code': run.returncode, 'expected_exit_codes': expected,
+            'disposition': 'zero collection evidence' if name == 'collection' else 'ordinary reference tests'}
+    for stream, data in (('stdout', run.stdout), ('stderr', run.stderr)):
+        with (OUT / 'execution' / (name + '.' + stream + '.txt')).open('xb') as handle:
+            handle.write(data)
+        item[stream + '_sha256'] = hashlib.sha256(data).hexdigest()
+    receipts.append(item)
+    print(json.dumps(item))
+    print(run.stdout.decode(errors='replace')[-600:])
+    print(run.stderr.decode(errors='replace')[-600:])
+    if run.returncode not in expected:
+        break
+compiled = []
+for path in sorted((OUT / 'sources').rglob('*.py')):
+    compile(path.read_bytes(), str(path), 'exec')
+    compiled.append(path.relative_to(OUT).as_posix())
+with (OUT / 'execution/DELIVERY_CHECKS.json').open('x', encoding='utf-8') as handle:
+    json.dump({'commands': receipts, 'syntax_compiled_files': compiled,
+               'test_only_dependency': 'pytest==9.1.1 in private venv; absent from stdlib scientific run'}, handle, indent=2)
+sys.exit(0 if all(r['exit_code'] in r['expected_exit_codes'] for r in receipts) else 1)
