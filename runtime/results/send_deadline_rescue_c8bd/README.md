@@ -44,3 +44,26 @@ owned child process which observes the actual JSONL request before replying,
 with the process factory's CP932 default retained to detect encoding regressions.
 First package-import errors, subsequent 19-test failures, and initial composed
 47-test run's three encoding-call expectation failures are retained, not erased.
+
+Fresh composed relevant tests: 47 normal and 47 optimized PASS on local macOS
+Python 3.12. The send test's wait context now advances the fake clock for both
+select and sleep, addressing concrete CONTENT_CHANGES 5969663539/5971267227.
+This does not transfer prior Windows results or count as Windows qualification.
+
+Full native contract runner remains FAIL on both pinned main e14246bcb and
+candidate 4b93f4194: protocol 445 tests, 4 failures, 6 errors, 5 skips; harness
+205 tests, 31 errors. All 41 ordered FAIL/ERROR headers are identical. Both full
+logs are retained with every failing test name and traceback. This comparison
+shows no additional failing header, not full-suite PASS or equivalent behavior.
+The clock-context-only follow-up is f6ba64192 and has fresh normal/optimized
+47-test checks. No GUI/model/formal producer replay is represented here.
+
+Adoption HOLD remains: original fixed committee's two V3 CONTENT_CHANGES are not
+approval; exact new composition needs fresh review/current-tree applicability,
+live platform/checks/rights and authorized sender disposition. No main merge or
+source-ref deletion has happened in this rescue. Original first outcomes and
+the 249 inert source files remain unchanged.
+
+Local Analysis Index CI at f6ba64192 exits 0: 43 run steps, failures=[];
+full local-ci.log retained. This is the scoped workflow, not all repository
+workflows, full native-suite PASS, actual Windows or live GUI qualification.
