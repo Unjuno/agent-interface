@@ -1,0 +1,49 @@
+"""Repair archive attributes only, preserve first publishing failure and every raw byte."""
+from pathlib import Path
+from datetime import datetime,timezone
+import hashlib,json,os,subprocess
+ROOT=Path(__file__).resolve().parent;WS=ROOT.parent.parent;REPO=ROOT.parent/'agent-interface';OUT=WS/'outputs/stdio-utf8-45e9'
+BASE='dd6f54bf540ffe10b17696b8a933ff6c92fd3bc1';FIRST='8e1a36e40d00c8e8cab96192bce95efe6f5e9866'
+PREFIX='research/analysis/stdio_utf8_57_20261003_45e9';REF='refs/heads/research/stdio-utf8-45e9-20261003'
+ENV=dict(os.environ,GIT_NO_LAZY_FETCH='1',GIT_INDEX_FILE=str(ROOT/'publication.index'))
+def sha(b):return hashlib.sha256(b).hexdigest()
+def put(p,v):p.write_text(json.dumps(v,indent=2,sort_keys=True)+'\n',encoding='utf-8',newline='\n')
+def git(*a,**kw):return subprocess.run(['git',*a],cwd=REPO,env=ENV,capture_output=True,check=True,**kw).stdout
+prior=json.loads((OUT/'MANIFEST.json').read_bytes())
+for row in prior['files']:assert sha((OUT/row['path']).read_bytes())==row['sha256']
+diag=OUT/'publication-failure';diag.mkdir(exist_ok=False)
+(diag/'first-MANIFEST.json').write_bytes((OUT/'MANIFEST.json').read_bytes());(diag/'first-gitattributes.txt').write_bytes((OUT/'.gitattributes').read_bytes())
+for name in ['publish.py','finalize_publication.py']:
+ b=(ROOT/name).read_bytes();(diag/(name+'.txt')).write_bytes(b)
+start=datetime.now(timezone.utc).isoformat();cmd=['git','diff','--check',BASE,FIRST]
+r=subprocess.run(cmd,cwd=REPO,env=ENV,capture_output=True)
+(diag/'reconstructed-check.stdout.txt').write_bytes(r.stdout);(diag/'reconstructed-check.stderr.txt').write_bytes(r.stderr)
+put(diag/'DIAGNOSTIC.json',{'first_publisher':'publish.py first invocation ended1 at git diff --check status2; exception stack retained in conversation040f78/b70cee; no ref/commit was created',
+ 'first_full_stream_limit':'Original checked subprocess stdout/stderr were captured in memory but not written before exception. This new read-only reconstruction is separately timed; it does not recover missing first streams.',
+ 'reconstruction':{'argv':cmd,'started_utc':start,'ended_utc':datetime.now(timezone.utc).isoformat(),'exit_code':r.returncode,'stdout_bytes':len(r.stdout),'stdout_sha256':sha(r.stdout),'stderr_sha256':sha(r.stderr)},
+ 'repair':'Archive-local * -text whitespace=cr-at-eol; only five empty stderr hex files disable blank-line whitespace diagnostics. Original data/source/log bytes preserved.',
+ 'scientific_collector_or_auditor_replays':0,'first_tree':FIRST})
+assert r.returncode==2
+(OUT/'.gitattributes').write_text('* -text whitespace=cr-at-eol\nfirst/*/cli.stderr.hex.txt -whitespace\n',encoding='utf-8',newline='\n')
+for row in prior['files']:
+ if row['path']!='.gitattributes':assert sha((OUT/row['path']).read_bytes())==row['sha256']
+files=sorted((x for x in OUT.rglob('*') if x.is_file() and x.name!='MANIFEST.json'),key=lambda x:x.relative_to(OUT).as_posix())
+# Include retained first manifest, excluding only the root's new manifest from self-reference.
+files=sorted((x for x in OUT.rglob('*') if x.is_file() and x!=OUT/'MANIFEST.json'),key=lambda x:x.relative_to(OUT).as_posix())
+put(OUT/'MANIFEST.json',{'files':[{'path':p.relative_to(OUT).as_posix(),'bytes':p.stat().st_size,'sha256':sha(p.read_bytes())} for p in files]})
+files=sorted((x for x in OUT.rglob('*') if x.is_file()),key=lambda x:x.relative_to(OUT).as_posix())
+primary=(REPO/'.git/index').read_bytes();git('read-tree',BASE);entries=[];expected=[]
+for p in files:
+ b=p.read_bytes();oid=git('hash-object','-w','--stdin',input=b).decode().strip();path=PREFIX+'/'+p.relative_to(OUT).as_posix()
+ entries.append('100644 '+oid+'\t'+path+'\n');expected.append({'path':path,'mode':'100644','blob_oid':oid,'bytes':len(b),'sha256':sha(b)})
+git('update-index','--index-info',input=''.join(entries).encode());tree=git('write-tree','--missing-ok').decode().strip()
+assert git('diff','--name-only','--no-renames',BASE,tree).decode().splitlines()==[x['path'] for x in expected]
+cmd=['git','diff','--check',BASE,tree];r=subprocess.run(cmd,cwd=REPO,env=ENV,capture_output=True)
+put(WS/'outputs/stdio-utf8-final-publication-check.json',{'argv':cmd,'exit_code':r.returncode,'stdout_sha256':sha(r.stdout),'stderr_sha256':sha(r.stderr),'stdout_bytes':len(r.stdout),'stderr_bytes':len(r.stderr)})
+assert r.returncode==0,(r.returncode,r.stdout[:3000])
+assert primary==(REPO/'.git/index').read_bytes()
+commit=git('commit-tree',tree,'-p',BASE,input=b'research(57): retain public stdio UTF-8 byte collapse [skip ci]\n').decode().strip()
+git('update-ref',REF,commit,'0'*40)
+metadata={'ref':REF,'base':BASE,'commit':commit,'tree':tree,'prefix':PREFIX,'files':expected,'primary_index_unchanged':True,'main_unchanged_by_this_action':True,'published_yet':False}
+put(WS/'outputs/stdio-utf8-publication.json',metadata)
+print(json.dumps({'ref':REF,'commit':commit,'tree':tree,'files':len(expected),'bytes':sum(x['bytes'] for x in expected),'main_write':False}))
