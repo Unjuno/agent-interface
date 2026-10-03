@@ -1,0 +1,28 @@
+{
+  "argv": [
+    "/opt/homebrew/bin/orbctl",
+    "run",
+    "-m",
+    "unjuno-57-5884-debian-a02-20261003",
+    "-u",
+    "root",
+    "/bin/bash",
+    "-c",
+    "systemctl is-active unjuno-57-existing-b01-5884.service unjuno-57-existing-b02-5884.service unjuno-57-existing-b03-5884.service; ps -p 194,483,486,490,509 -o pid=,ppid=,stat=,comm=; test ! -e /tmp/.X120-lock && test ! -e /tmp/.X11-unix/X120"
+  ],
+  "timeout_seconds": 30,
+  "stdin_sha256": null,
+  "started_utc": "2026-10-03T14:06:43.858016+00:00",
+  "pid": 11006,
+  "exit_code": 0,
+  "timed_out": false,
+  "ended_utc": "2026-10-03T14:06:43.935446+00:00",
+  "stdout": {
+    "bytes": 27,
+    "sha256": "e755dfbd5e5361ce516759bb06a02986d4c7fef2831d2b6d1bcea340d3d3e423"
+  },
+  "stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "argv": [
+    "/opt/homebrew/bin/orbctl",
+    "run",
+    "-m",
+    "unjuno-57-5884-debian-a02-20261003",
+    "-u",
+    "root",
+    "/bin/bash",
+    "-c",
+    "test ! -e /home/study/57-existing-b01 && mkdir -m 700 /home/study/57-existing-b01 && tar -xf - -C /home/study/57-existing-b01 && chown -R study:study /home/study/57-existing-b01 && chmod -R a-w /home/study/57-existing-b01/source"
+  ],
+  "timeout_seconds": 30,
+  "stdin_sha256": "e114bbc85f463119016fdd3c5cde5aa39028d613a7ab2c272fff61b6ffa750d1",
+  "started_utc": "2026-10-03T14:03:58.896070+00:00",
+  "pid": 9617,
+  "exit_code": 0,
+  "timed_out": false,
+  "ended_utc": "2026-10-03T14:03:58.949175+00:00",
+  "stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}
