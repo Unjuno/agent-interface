@@ -65,6 +65,7 @@ This is a navigation model derived from the retained studies, not a new runtime 
 - Owned Linux pipe read cancellation evidence: [`owned_pipe_cancel_6501_20261003_01a0ff52/REPORT.md`](owned_pipe_cancel_6501_20261003_01a0ff52/REPORT.md) distinguishes wrapper cancellation, caller descriptor close and actual owned callable/resource completion in six frozen conditions; this is scoped construction, with no production/runtime or GUI claim.
 
 - Current research method: [`../../docs/RESEARCH_METHOD.md`](../../docs/RESEARCH_METHOD.md)
+- [Native Mac read completion and reader-close boundary](macos_read_cancel_6501_20261003_01a0ff52_93c2/REPORT.md) — eight saved native rows; wrapper cancellation is not native completion, no general portability or physical-release claim.
 - Evidence ledger: [`../../RESEARCH.md`](../../RESEARCH.md)
 - Integration studies: [`../integration/`](../integration/)
 - Measurement/concurrency handback studies: [`../measurement/`](../measurement/)
