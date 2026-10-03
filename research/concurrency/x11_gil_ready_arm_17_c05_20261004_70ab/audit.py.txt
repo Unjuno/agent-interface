@@ -1,0 +1,111 @@
+"""Saved-only independent oracle; never imports producer or contacts X11."""
+import copy
+import hashlib
+import json
+import pathlib
+import sys
+
+
+def verify(raw, freeze):
+    assert raw['allocation'] == freeze['allocation']
+    assert raw['status'] == 'COMPLETE_FIRST_SIX' and len(raw['rows']) == 6
+    key, other = raw['keys']['owned'], raw['keys']['bystander']
+    assert key != other
+    armed = bytearray(32)
+    armed[key // 8] |= 1 << (key % 8)
+    armed[other // 8] |= 1 << (other % 8)
+    released = bytearray(32)
+    released[other // 8] |= 1 << (other % 8)
+    def q(v):
+        assert v['rc'] == 1 and 0 < v['before_ns'] <= v['after_ns']
+        b = bytes.fromhex(v['hex'])
+        assert len(b) == 32
+        return b
+    outcomes = []
+    for i, r in enumerate(raw['rows']):
+        assert r['case'] == i and r['mode'] == freeze['modes'][i] and 'error' not in r
+        assert q(r['initial']) == bytes(32) and q(r['final']) == bytes(32)
+        assert q(r['armed']) == armed and q(r['before_cancel']) == armed and q(r['post']) == released
+        assert q(r['prearm_neutral']) == bytes(32)
+        ack = r['worker_arm_ack']
+        assert ack['armed'] is True and ack['pid'] == r['worker_ready']['pid']
+        assert r['all_ready_ns'] <= ack['armed_ns'] <= r['all_armed_ns'] <= r['prearm_neutral']['before_ns'] <= r['prearm_neutral']['after_ns'] <= r['arm'][0]['before_ns']
+        if r['mode'] == 'process_pydll':
+            wa = r['watchdog_arm_ack']
+            assert wa['armed'] is True and wa['pid'] == r['watchdog_ready']['pid']
+            assert r['all_ready_ns'] <= wa['armed_ns'] <= r['all_armed_ns']
+        assert all(v['rc'] == 1 for v in r['arm'] + r['cleanup'])
+        w = r['worker']
+        begin, end = w['bounds']
+        assert begin > 0 and end - begin >= 300000000 and w['rc'] == 0
+        assert begin <= r['before_cancel']['before_ns'] <= r['before_cancel']['after_ns'] <= r['send_before_ns'] <= r['send_after_ns'] < end
+        assert w['after_ns'] >= end and w['thread_joined']
+        assert w['pid'] == r['worker_ready']['pid'] and r['worker_ready']['ready'] is True
+        expected = 2 if r['mode'] == 'process_pydll' else 1
+        assert len(r['children']) == expected and r['children'] == r['retired']
+        assert len({c['pid'] for c in r['children']}) == expected
+        assert all(c['exit'] == 0 and not c['alive'] for c in r['children'])
+        assert w['pid'] in {c['pid'] for c in r['children']}
+        if expected == 2:
+            s = r['watchdog']
+            assert not w['safety'] and s['pid'] == r['watchdog_ready']['pid'] != w['pid']
+            assert s['pid'] in {c['pid'] for c in r['children']}
+        else:
+            assert len(w['safety']) == 1
+            s = w['safety'][0]
+            assert s['pid'] == w['pid']
+        e = s['release']
+        assert r['send_before_ns'] <= s['received_ns'] <= e['before_ns'] <= e['after_sync_ns'] <= s['confirmed']['before_ns']
+        assert e['key'] == key and e['held'] is False and e['rc'] == 1
+        assert q(s['confirmed']) == released
+        assert len(r['observations']) > 0
+        previous = r['send_after_ns']
+        first_neutral = None
+        for o in r['observations']:
+            assert previous <= o['before_ns']
+            b = q(o)
+            assert b in (armed, released)
+            if b == released and first_neutral is None:
+                first_neutral = o
+            assert first_neutral is None or b == released
+            previous = o['after_ns']
+        assert first_neutral is not None
+        # Scheduling contrast is scientific, distinct from completeness gates.
+        if r['mode'] == 'thread_pydll':
+            contrast = e['before_ns'] >= end and first_neutral['before_ns'] >= end
+        else:
+            contrast = s['confirmed']['after_ns'] < end and first_neutral['after_ns'] < end
+        outcomes.append({'case': i, 'mode': r['mode'], 'contrast': contrast, 'cancel_after_to_first_neutral_ns': first_neutral['after_ns'] - r['send_after_ns'], 'native_end_ns': end, 'observer_neutral_after_ns': first_neutral['after_ns']})
+    assert raw['server']['exit'] == 0
+    assert raw['cgroup'] == {'cpu.max':'25000 100000','memory.max':'134217728','memory.swap.max':'0','pids.max':'32'}
+    return {'result': 'PASS_FINITE_X11_GIL_BOUNDARY' if all(r['contrast'] for r in outcomes) else 'HOLD_ORDER_OR_CONTRAST', 'rows': outcomes}
+
+
+def main():
+    root = pathlib.Path(sys.argv[1])
+    freeze_bytes = (root / 'FREEZE.json').read_bytes()
+    freeze = json.loads(freeze_bytes)
+    data = (root / 'RAW.json').read_bytes()
+    raw = json.loads(data)
+    assert raw['freeze_sha256'] == hashlib.sha256(freeze_bytes).hexdigest()
+    for name, digest in freeze['hashes'].items():
+        assert hashlib.sha256((root / name).read_bytes()).hexdigest() == digest
+    result = verify(raw, freeze)
+    rejected = []
+    for name in ['missing_row', 'bystander_lost', 'cancel_outside', 'child_live', 'nonneutral_final', 'false_release', 'lost_arm_ack']:
+        bad = copy.deepcopy(raw)
+        if name == 'lost_arm_ack': bad['rows'][0]['worker_arm_ack']['armed'] = False
+        if name == 'missing_row': bad['rows'].pop()
+        if name == 'bystander_lost': bad['rows'][0]['post']['hex'] = '00'*32
+        if name == 'cancel_outside': bad['rows'][0]['send_after_ns'] = bad['rows'][0]['worker']['bounds'][1]
+        if name == 'child_live': bad['rows'][0]['children'][0]['alive'] = True
+        if name == 'nonneutral_final': bad['rows'][0]['final']['hex'] = bad['rows'][0]['armed']['hex']
+        if name == 'false_release': bad['rows'][0]['worker']['safety'][0]['release']['rc'] = 0
+        try: verify(bad, freeze)
+        except (AssertionError, KeyError, ValueError): rejected.append(name)
+        else: raise AssertionError('accepted corruption '+name)
+    result.update({'raw_sha256':hashlib.sha256(data).hexdigest(), 'corruption_rejections':rejected, 'scope':'six first private X11 observations; no hard deadline or production defect claim'})
+    print(json.dumps(result, indent=2))
+
+
+if __name__ == '__main__': main()

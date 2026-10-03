@@ -1,0 +1,32 @@
+{
+  "cwd": "<WORKSPACE>",
+  "receipt_directory": "<WORKSPACE>/work/continuation-20261003-1250/operations/x11-c04-terminal-readback",
+  "argv": [
+    "orb",
+    "-m",
+    "research-6501-async-01a0ff52-70ab",
+    "-u",
+    "root",
+    "bash",
+    "-c",
+    "docker inspect 17-x11-c04-first-six-70ab --format \"{{json .State}}\" && docker ps --format \"{{.Names}}\" && cat /root/17-x11-c04-70ab/out/RAW.json"
+  ],
+  "launcher_pid": 65350,
+  "start_utc": "2026-10-03T16:09:38.045881+00:00",
+  "start_ns": 54742874572625,
+  "pid": 65351,
+  "exit_code": 0,
+  "end_utc": "2026-10-03T16:09:38.126703+00:00",
+  "end_ns": 54742955198791,
+  "source_sha256": "d63bd38401f3c366f145aada93d78d71eaf23216b896f6874d01f0741dfd15fa",
+  "outputs": {
+    "stdout": {
+      "bytes": 2461,
+      "sha256": "ce5437edf03779fcbc0bcd45823bae36dbb936ec3b17449ae7270d3190f7cae6"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+"""C02 first Linux cases; native internal boundaries replace C01 Python markers."""
+import ctypes,datetime,hashlib,json,os,pathlib,select,subprocess,sys,threading,time
+src=pathlib.Path(__file__).resolve().parent;p=pathlib.Path('/out')
+lib=ctypes.CDLL(str(p/'helper.so')); now=lib.native_now_ns;now.restype=ctypes.c_uint64
+if len(sys.argv)>1:
+    mode=sys.argv[1];r=int(os.environ['PROBE_CANCEL_FD']);fd=os.open(os.devnull,os.O_WRONLY);state={};ready=threading.Event()
+    def safety():
+        ready.set();b=os.read(r,1);state['received_ns']=now();os.close(fd);state['closed_ns']=now();state['cancel_byte']=b.hex()
+    t=threading.Thread(target=safety);t.start();ready.wait()
+    calllib=(ctypes.CDLL if mode=='released' else ctypes.PyDLL)(str(p/'helper.so'));fn=calllib.marked_wait;fn.argtypes=[ctypes.c_uint,ctypes.POINTER(ctypes.c_uint64)];fn.restype=ctypes.c_int;bounds=(ctypes.c_uint64*2)()
+    print(json.dumps({'ready':True,'pid':os.getpid()}),flush=True);assert sys.stdin.buffer.read(1)==b'G'
+    state['return_code']=fn(300000,bounds);state['native_start_ns']=bounds[0];state['native_end_ns']=bounds[1];state['python_after_ns']=now()
+    t.join(timeout=1);assert not t.is_alive();os.close(r)
+    state['fd_closed']=False
+    try:os.fstat(fd)
+    except OSError:state['fd_closed']=True
+    print(json.dumps(state),flush=True);sys.exit(0)
+freeze=json.loads((src/'FREEZE.json').read_bytes())
+for n,h in freeze['hashes'].items():
+    f=p/n if n=='helper.so' else src/n
+    assert hashlib.sha256(f.read_bytes()).hexdigest()==h
+assert not (p/'RAW.json').exists()
+rows=[]
+for i,mode in enumerate(freeze['modes']):
+    r,w=os.pipe();env=dict(os.environ,PROBE_CANCEL_FD=str(r));start=datetime.datetime.now(datetime.timezone.utc).isoformat()
+    q=subprocess.Popen([sys.executable,'-B',str(pathlib.Path(__file__).resolve()),mode],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE,pass_fds=(r,),env=env);os.close(r)
+    assert select.select([q.stdout],[],[],2)[0];line=q.stdout.readline();ready=json.loads(line);assert ready['pid']==q.pid
+    q.stdin.write(b'G');q.stdin.flush();time.sleep(.05);a=now();os.write(w,b'C');b=now();os.close(w)
+    tail,error=q.communicate(timeout=2);row={'case':i,'mode':mode,'pid':q.pid,'start_utc':start,'end_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'exit':q.returncode,'send_before_ns':a,'send_after_ns':b,'ready':ready,'raw':json.loads(tail),'stderr_bytes':len(error)}
+    (p/f'case-{i}.stdout').open('xb').write(line+tail);(p/f'case-{i}.stderr').open('xb').write(error);rows.append(row)
+    (p/'RAW.json').write_text(json.dumps({'freeze':freeze,'rows':rows},indent=2)+'\n')
+print(json.dumps({'rows':len(rows),'pid':os.getpid(),'raw_saved':True}))

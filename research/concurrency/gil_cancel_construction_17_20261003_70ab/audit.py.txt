@@ -1,0 +1,13 @@
+import json,pathlib,hashlib
+p=pathlib.Path(__file__).resolve().parent;x=json.loads((p/'RAW.json').read_bytes());f=json.loads((p/'FREEZE.json').read_bytes());assert x['freeze']==f
+assert hashlib.sha256((p/'probe.py').read_bytes()).hexdigest()==f['probe_sha256']
+assert len(x['rows'])==4;rows=[]
+for i,r in enumerate(x['rows']):
+    assert r['case']==i and r['mode']==['released','held','held','released'][i] and r['exit']==0 and r['stderr_bytes']==0
+    raw=[json.loads(z) for z in (p/f'case-{i}.stdout').read_bytes().splitlines()];assert raw==[r['ready'],r['raw']]
+    a=r['raw'];assert a['fd_closed'] and a['cancel_byte']=='43' and a['return_code']==0 and a['received_ns']<=a['closed_ns']
+    bracket=a['call_start_ns']<r['send_before_ns']<=r['send_after_ns']<a['call_end_ns']
+    before=a['closed_ns']<a['call_end_ns'];rows.append({'case':i,'mode':r['mode'],'cancel_sent_inside_call':bracket,'dummy_fd_closed_during_call':before,'close_after_send_ns':a['closed_ns']-r['send_after_ns']})
+status='PASS_SCOPED_NATIVE_CONSTRUCTION' if all(r['cancel_sent_inside_call'] and r['dummy_fd_closed_during_call']==(r['mode']=='released') for r in rows) else 'HOLD_ORDER_OR_CONTRAST'
+result={'status':status,'rows':rows,'scope':'macOS CPython ctypes intentional held-GIL contrast, dummy FD only; no production defect, hard deadline, physical input release, process-safety comparator or Linux/container claim; formally gated allocations untouched'}
+(p/'AUDIT.json').open('x').write(json.dumps(result,indent=2)+'\n');print(json.dumps(result))
