@@ -1,0 +1,12 @@
+"""Capture first ordinary own raw-only audit, distinct from author allocations."""
+from datetime import datetime,timezone
+import hashlib,json,subprocess,sys
+from pathlib import Path
+root=Path(__file__).resolve().parent;out=root/'data-checks';out.mkdir(exist_ok=False)
+cmd=[sys.executable,'-B',str(root/'audit_retained.py')];start=datetime.now(timezone.utc).isoformat()
+p=subprocess.run(cmd,capture_output=True,timeout=25)
+(out/'stdout.txt').write_bytes(p.stdout);(out/'stderr.txt').write_bytes(p.stderr)
+sha=lambda b:hashlib.sha256(b).hexdigest()
+(out/'receipt.json').write_text(json.dumps({'command':cmd,'started_utc':start,'ended_utc':datetime.now(timezone.utc).isoformat(),'exit_code':p.returncode,
+ 'stdout_sha256':sha(p.stdout),'stderr_sha256':sha(p.stderr),'source_sha256':sha((root/'audit_retained.py').read_bytes()),'no_original_author_audit_or_producer_invocation':True},indent=2)+'\n',encoding='utf-8')
+print(p.stdout.decode('utf-8'));print(p.stderr.decode('utf-8'));sys.exit(p.returncode)
