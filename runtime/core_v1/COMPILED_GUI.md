@@ -133,3 +133,13 @@ recovery. Existing pending_effect semantics are unchanged. Other malformed
 terminal fields retain their original validation behavior; arbitrary objects
 and concurrent callback mutation remain outside the qualified scope. Exact
 built-in-list paths keep their prior receipt shape and behavior.
+
+The execution-finished clock sample occurs after local terminal validation and
+the retained release/pre-input-refusal decisions, before the journal callback.
+Thus a supplied synchronous clock callback cannot rewrite the execution return
+used for those decisions. The later sample is a conservative lower bound for
+subsequent effect observations in the declared monotonic clock domain: an older
+capture may be rejected even if the physical effect had already happened.
+This does not authenticate the clock, impose a hard deadline, or make callback
+execution concurrent or durable. Malformed returns that stop or raise during
+local validation do not require an execution-finished clock sample.
