@@ -1,0 +1,9 @@
+import hashlib,json,subprocess
+from pathlib import Path
+r=Path(__file__).resolve().parent;repo=r.parent/'agent-interface';head='2f40ad76f41f65fbaa82324af3a7d87051e6a145';pin=lambda b:dict(bytes=len(b),sha256=hashlib.sha256(b).hexdigest())
+paths=['runtime/integration_checks/native.py','.github/workflows/native-mcp-v1.yml','research/live_control/adaptive_acquisition_caller_v3.py','research/live_control/test_adaptive_acquisition_aggregate_cost.py']
+pins={}
+for path in paths:
+    b=subprocess.check_output(['git','-C',str(repo),'show',head+':'+path]);p=r/'baseline'/path;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(b);pins[path]=pin(b)
+(r/'SOURCE_PINS.json').write_text(json.dumps(dict(head=head,images=pins,sourceownership='own df63 PR7120; e0cc objection5971702500 retained',scope='Ordinary nonactor native catalogue CLI selection capture. Real main runs only to subprocess.run boundary; launch intercepted by BaseException before any unittest actors start. No fabricated suite PASS.'),indent=2)+'\n',encoding='utf-8')
+print(json.dumps(dict(head=head,source_images=len(paths))))

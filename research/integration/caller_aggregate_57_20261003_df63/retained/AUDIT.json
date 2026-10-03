@@ -1,0 +1,43 @@
+{
+  "records": 21,
+  "source_first_failures": 3,
+  "source_receipts": 6,
+  "whole_noncost_receipts_exact": 6,
+  "all7callback_sequences_exact": true,
+  "normal_optimized_whole_records_equal": true,
+  "whole_original_ast_inverse": true,
+  "reference": "exact Fraction arithmetic; finite representability bound for these7new inputs, not general individual measurement policy",
+  "refused": [
+    {
+      "case": "false_zero",
+      "reason": "exactrational totalavailability",
+      "bytes": 51595,
+      "sha256": "c4b554046290bdac70e5bdcea79ae8c64ca82d299a7defdc5771c77a4f386f45"
+    },
+    {
+      "case": "promoted_infinite",
+      "reason": "exactrational totalavailability",
+      "bytes": 51635,
+      "sha256": "7bb553b7c63d5f584ee1f3ee8af411f8240224d94629bbbf050e954ee0b0c6c7"
+    },
+    {
+      "case": "lost_verified_callback",
+      "reason": "callback order",
+      "bytes": 51478,
+      "sha256": "a1e6fdafba0325f6f2c0832572f67441fefc0300a249a12e8f5030c4bfb24195"
+    },
+    {
+      "case": "lost_attempt",
+      "reason": "retainedledgers",
+      "bytes": 51186,
+      "sha256": "2a5770611498a2a81878bbb53dfe775b7ef2ac59eab540ef66909a9379d0f4cf"
+    }
+  ],
+  "source_producer_replayed": false,
+  "received_peer_producer_replayed": false,
+  "limitations": [
+    "per-call measurement acceptance remains legacy; no end-to-end arbitrary-value strictJSON claim",
+    "OverflowError/nonfinite aggregate null is conservative unavailable, not actual price/currency or numeric-domain contract",
+    "inert task metadata only; no physical effects/input release/recovery/model/performance"
+  ]
+}

@@ -1,0 +1,20 @@
+import hashlib,json
+from pathlib import Path
+r=Path(__file__).resolve().parent;p=r/'candidate/runtime/integration_checks';src=(r/'test_catalogue.py').read_text(encoding='utf-8')
+src=src.replace('import json,os,runpy,subprocess,sys,unittest,uuid','import json,os,runpy,subprocess,sys,tempfile,unittest,uuid')
+src=src.replace("source=Path(os.environ['CATALOGUE_SOURCE']);out=Path(os.environ['COLLECTOR_OUTPUT'])", "source=Path(os.environ.get('CATALOGUE_SOURCE', str(Path(__file__).with_name('native.py'))));out=Path(os.environ['COLLECTOR_OUTPUT']) if 'COLLECTOR_OUTPUT' in os.environ else None")
+src=src.replace("subprocess.run=stop_before_actor;sys.argv=[str(source),'--output',str(out/uuid.uuid4().hex)]", "scratch=tempfile.TemporaryDirectory(prefix='native-catalogue-');output=out/uuid.uuid4().hex if out is not None else Path(scratch.name)/'capture'\n    subprocess.run=stop_before_actor;sys.argv=[str(source),'--output',str(output)]")
+src=src.replace('finally:subprocess.run=original_run;sys.argv=original_argv','finally:subprocess.run=original_run;sys.argv=original_argv;scratch.cleanup()')
+src=src.replace("    def record(self,name,script,loaded):\n        with", "    def record(self,name,script,loaded):\n        if out is None:return\n        with")
+(p/'test_native_catalogue.py').write_bytes(src.encode('utf-8'))
+native=(p/'native.py').read_bytes();append=b"SUITES['protocol'].append('runtime.integration_checks.test_native_catalogue')\n";anchor=b"SUITES['protocol'].append('test_adaptive_acquisition_aggregate_cost')\n"
+if native.count(anchor)!=1 or append in native:raise ValueError('new portable gate registration')
+native=native.replace(anchor,anchor+append,1);(p/'native.py').write_bytes(native)
+pin=lambda b:dict(bytes=len(b),sha256=hashlib.sha256(b).hexdigest());(r/'PORTABLE_PLAN.json').write_text(json.dumps(dict(native=pin(native),test=pin(src.encode()),change='Optional captured-row sink/default actual adjacent native.py, own temporary output, same four assertions. Gate module registered once before main so future CLI/import disagreement is caught by ordinary protocol tests.',original_first_conditions_preserved=True,actor_processes_started=0),indent=2)+'\n',encoding='utf-8')
+runner=(r/'run_phase.py').read_text(encoding='utf-8').replace("+['-B','-m','unittest','-v','test_catalogue']", "+['-B','-m','unittest','-v','test_native_catalogue']")
+runner=runner.replace("source=folder/'runtime/integration_checks/native.py'", "source=folder/'runtime/integration_checks/native.py'")
+runner=runner.replace("(r/'test_catalogue.py')", "(folder/'runtime/integration_checks/test_native_catalogue.py')")
+runner=runner.replace("env['CATALOGUE_SOURCE']=str(source);env['COLLECTOR_OUTPUT']=str(out)", "env.pop('CATALOGUE_SOURCE',None);env.pop('COLLECTOR_OUTPUT',None)")
+runner=runner.replace("cwd=str(r)", "cwd=str(folder/'runtime/integration_checks')").replace("cwd=r,env=env", "cwd=folder/'runtime/integration_checks',env=env")
+(r/'run_portable.py').write_text(runner,encoding='utf-8')
+print(json.dumps(dict(native=pin(native),test=pin(src.encode()),new_active_gate_module='runtime.integration_checks.test_native_catalogue')))

@@ -21,7 +21,6 @@ SUITES = {
 SUITES['protocol'].append('test_app_server_eof_stop')
 SUITES['protocol'].append('test_adaptive_acquisition_cost_coverage')
 SUITES['protocol'].append('test_adaptive_acquisition_aggregate_cost')
-SUITES['protocol'].append('runtime.integration_checks.test_native_catalogue')
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)

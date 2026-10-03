@@ -1,0 +1,1898 @@
+{
+  "finite_credit": {
+    "case": "finite_credit",
+    "events": [
+      {
+        "payload": {
+          "target": "Save"
+        },
+        "stage": "observe_source"
+      },
+      {
+        "payload": {},
+        "stage": "coarse_model"
+      },
+      {
+        "payload": {
+          "status": "candidate"
+        },
+        "stage": "acquire_anchor"
+      },
+      {
+        "payload": {},
+        "stage": "anchor_model"
+      },
+      {
+        "payload": {
+          "handle": "aggregate-i16"
+        },
+        "stage": "final_revalidate"
+      },
+      {
+        "payload": {
+          "check": {
+            "status": "revalidated"
+          },
+          "target": {
+            "handle": "aggregate-i16"
+          }
+        },
+        "stage": "execute"
+      },
+      {
+        "payload": {
+          "status": "completed"
+        },
+        "stage": "verify_effect"
+      }
+    ],
+    "exception": null,
+    "inputs": [
+      1.7976931348623157e+308,
+      -1.7976931348623157e+308
+    ],
+    "receipt": {
+      "accounting": {
+        "attempted_calls": 2,
+        "cached_input_semantics": "subset of input_tokens; never added to input total",
+        "completed_calls": 2,
+        "cost": 0.0,
+        "duplicate_call_ids": [],
+        "model_wait_coverage": 2,
+        "model_wait_ns": 4,
+        "usage_coverage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 2,
+          "output_tokens": 2,
+          "reasoning_output_tokens": 0
+        },
+        "usage_totals": {
+          "cache_write_input_tokens": null,
+          "cached_input_tokens": null,
+          "input_tokens": 4,
+          "output_tokens": 2,
+          "reasoning_output_tokens": null
+        },
+        "visible_image_coverage": 2,
+        "visible_images_submitted": 0
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "a1",
+          "call_id": "coarse_model",
+          "completed_ns": 0,
+          "error": null,
+          "stage": "coarse_model",
+          "started_ns": 0,
+          "status": "completed",
+          "usage": {
+            "input_tokens": 2,
+            "output_tokens": 1
+          },
+          "visible_images_submitted": 0,
+          "wait_ns": 2
+        }
+      ],
+      "cache_update": {
+        "handle": "aggregate-i16"
+      },
+      "coarse_origin": "model_produced",
+      "comparison": {
+        "class": "full_cold",
+        "comparable_to_full_cold": true,
+        "omitted_stages": []
+      },
+      "delivery": "confirmed",
+      "execution_progress": {
+        "status": "completed"
+      },
+      "input_authority": "consumed_by_recorded_execute_stage",
+      "model_call_ledger": [
+        {
+          "attempt_id": "a1",
+          "call_id": "coarse_model",
+          "cost": 1.7976931348623157e+308,
+          "output": {
+            "status": "candidate"
+          },
+          "requested_effort": "synthetic",
+          "requested_model": "synthetic-no-provider",
+          "stage": "coarse_model",
+          "usage": {
+            "input_tokens": 2,
+            "output_tokens": 1
+          },
+          "visible_images_submitted": 0,
+          "wait_ns": 2
+        },
+        {
+          "attempt_id": "a2",
+          "call_id": "anchor_model",
+          "cost": -1.7976931348623157e+308,
+          "output": {
+            "status": "target_reference",
+            "target": {
+              "handle": "aggregate-i16"
+            }
+          },
+          "requested_effort": "synthetic",
+          "requested_model": "synthetic-no-provider",
+          "stage": "anchor_model",
+          "usage": {
+            "input_tokens": 2,
+            "output_tokens": 1
+          },
+          "visible_images_submitted": 0,
+          "wait_ns": 2
+        }
+      ],
+      "outcome": "TASK_SUCCEEDED",
+      "phase_timings": [
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "observe_source",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "coarse_model",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "acquire_anchor",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "anchor_model",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "final_revalidate",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "execute",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "verify_effect",
+          "started_ns": 0
+        }
+      ],
+      "reason": "verified_effect",
+      "repair_path": null,
+      "repair_trace": [],
+      "route": "cold",
+      "selected_target": {
+        "handle": "aggregate-i16"
+      },
+      "stages": {
+        "acquire_anchor": {
+          "reason": null,
+          "status": "completed"
+        },
+        "acquire_expansion": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "anchor_model": {
+          "reason": null,
+          "status": "completed"
+        },
+        "coarse_model": {
+          "reason": null,
+          "status": "completed"
+        },
+        "execute": {
+          "reason": null,
+          "status": "completed"
+        },
+        "expanded_model": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "final_revalidate": {
+          "reason": null,
+          "status": "completed"
+        },
+        "local_repair": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "observe_source": {
+          "reason": null,
+          "status": "completed"
+        },
+        "post_model_observe": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "post_model_revalidate": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "reuse_revalidate": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "verify_effect": {
+          "reason": null,
+          "status": "completed"
+        }
+      },
+      "task_effect": "succeeded"
+    },
+    "strict_json_error": null
+  },
+  "finite_sum": {
+    "case": "finite_sum",
+    "events": [
+      {
+        "payload": {
+          "target": "Save"
+        },
+        "stage": "observe_source"
+      },
+      {
+        "payload": {},
+        "stage": "coarse_model"
+      },
+      {
+        "payload": {
+          "status": "candidate"
+        },
+        "stage": "acquire_anchor"
+      },
+      {
+        "payload": {},
+        "stage": "anchor_model"
+      },
+      {
+        "payload": {
+          "handle": "aggregate-i16"
+        },
+        "stage": "final_revalidate"
+      },
+      {
+        "payload": {
+          "check": {
+            "status": "revalidated"
+          },
+          "target": {
+            "handle": "aggregate-i16"
+          }
+        },
+        "stage": "execute"
+      },
+      {
+        "payload": {
+          "status": "completed"
+        },
+        "stage": "verify_effect"
+      }
+    ],
+    "exception": null,
+    "inputs": [
+      0.125,
+      0.375
+    ],
+    "receipt": {
+      "accounting": {
+        "attempted_calls": 2,
+        "cached_input_semantics": "subset of input_tokens; never added to input total",
+        "completed_calls": 2,
+        "cost": 0.5,
+        "duplicate_call_ids": [],
+        "model_wait_coverage": 2,
+        "model_wait_ns": 4,
+        "usage_coverage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 2,
+          "output_tokens": 2,
+          "reasoning_output_tokens": 0
+        },
+        "usage_totals": {
+          "cache_write_input_tokens": null,
+          "cached_input_tokens": null,
+          "input_tokens": 4,
+          "output_tokens": 2,
+          "reasoning_output_tokens": null
+        },
+        "visible_image_coverage": 2,
+        "visible_images_submitted": 0
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "a1",
+          "call_id": "coarse_model",
+          "completed_ns": 0,
+          "error": null,
+          "stage": "coarse_model",
+          "started_ns": 0,
+          "status": "completed",
+          "usage": {
+            "input_tokens": 2,
+            "output_tokens": 1
+          },
+          "visible_images_submitted": 0,
+          "wait_ns": 2
+        },
+        {
+          "attempt_id": "a2",
+          "call_id": "anchor_model",
+          "completed_ns": 0,
+          "error": null,
+          "stage": "anchor_model",
+          "started_ns": 0,
+          "status": "completed",
+          "usage": {
+            "input_tokens": 2,
+            "output_tokens": 1
+          },
+          "visible_images_submitted": 0,
+          "wait_ns": 2
+        }
+      ],
+      "cache_update": {
+        "handle": "aggregate-i16"
+      },
+      "coarse_origin": "model_produced",
+      "comparison": {
+        "class": "full_cold",
+        "comparable_to_full_cold": true,
+        "omitted_stages": []
+      },
+      "delivery": "confirmed",
+      "execution_progress": {
+        "status": "completed"
+      },
+      "input_authority": "consumed_by_recorded_execute_stage",
+      "model_call_ledger": [
+        {
+          "attempt_id": "a1",
+          "call_id": "coarse_model",
+          "cost": 0.125,
+          "output": {
+            "status": "candidate"
+          },
+          "requested_effort": "synthetic",
+          "requested_model": "synthetic-no-provider",
+          "stage": "coarse_model",
+          "usage": {
+            "input_tokens": 2,
+            "output_tokens": 1
+          },
+          "visible_images_submitted": 0,
+          "wait_ns": 2
+        },
+        {
+          "attempt_id": "a2",
+          "call_id": "anchor_model",
+          "cost": 0.375,
+          "output": {
+            "status": "target_reference",
+            "target": {
+              "handle": "aggregate-i16"
+            }
+          },
+          "requested_effort": "synthetic",
+          "requested_model": "synthetic-no-provider",
+          "stage": "anchor_model",
+          "usage": {
+            "input_tokens": 2,
+            "output_tokens": 1
+          },
+          "visible_images_submitted": 0,
+          "wait_ns": 2
+        }
+      ],
+      "outcome": "TASK_SUCCEEDED",
+      "phase_timings": [
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "observe_source",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "coarse_model",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "acquire_anchor",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "anchor_model",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "final_revalidate",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "execute",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "verify_effect",
+          "started_ns": 0
+        }
+      ],
+      "reason": "verified_effect",
+      "repair_path": null,
+      "repair_trace": [],
+      "route": "cold",
+      "selected_target": {
+        "handle": "aggregate-i16"
+      },
+      "stages": {
+        "acquire_anchor": {
+          "reason": null,
+          "status": "completed"
+        },
+        "acquire_expansion": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "anchor_model": {
+          "reason": null,
+          "status": "completed"
+        },
+        "coarse_model": {
+          "reason": null,
+          "status": "completed"
+        },
+        "execute": {
+          "reason": null,
+          "status": "completed"
+        },
+        "expanded_model": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "final_revalidate": {
+          "reason": null,
+          "status": "completed"
+        },
+        "local_repair": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "observe_source": {
+          "reason": null,
+          "status": "completed"
+        },
+        "post_model_observe": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "post_model_revalidate": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "reuse_revalidate": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "verify_effect": {
+          "reason": null,
+          "status": "completed"
+        }
+      },
+      "task_effect": "succeeded"
+    },
+    "strict_json_error": null
+  },
+  "huge_mixed": {
+    "case": "huge_mixed",
+    "events": [
+      {
+        "payload": {
+          "target": "Save"
+        },
+        "stage": "observe_source"
+      },
+      {
+        "payload": {},
+        "stage": "coarse_model"
+      },
+      {
+        "payload": {
+          "status": "candidate"
+        },
+        "stage": "acquire_anchor"
+      },
+      {
+        "payload": {},
+        "stage": "anchor_model"
+      },
+      {
+        "payload": {
+          "handle": "aggregate-i16"
+        },
+        "stage": "final_revalidate"
+      },
+      {
+        "payload": {
+          "check": {
+            "status": "revalidated"
+          },
+          "target": {
+            "handle": "aggregate-i16"
+          }
+        },
+        "stage": "execute"
+      },
+      {
+        "payload": {
+          "status": "completed"
+        },
+        "stage": "verify_effect"
+      }
+    ],
+    "exception": null,
+    "inputs": [
+      1044388881413152506691752710716624382579964249047383780384233483283953907971557456848826811934997558340890106714439262837987573438185793607263236087851365277945956976543709998340361590134383718314428070011855946226376318839397712745672334684344586617496807908705803704071284048740118609114467977783598029006686938976881787785946905630190260940599579453432823469303026696443059025015972399867714215541693835559885291486318237914434496734087811872639496475100189041349008417061675093668333850551032972088269550769983616369411933015213796825837188091833656751221318492846368125550225998300412344784862595674492194617023806505913245610825731835380087608622102834270197698202313169017678006675195485079921636419370285375124784014907159135459982790513399611551794271106831134090584272884279791554849782954323534517065223269061394905987693002122963395687782878948440616007412945674919823050571642377154816321380631045902916136926708342856440730447899971901781465763473223850267253059899795996090799469201774624817718449867455659250178329070473119433165550807568221846571746373296884912819520317457002440926616910874148385078411929804522981857338977648103126085903001302413467189726673216491511131602920781738033436090243804708340403154190336,
+      0.5
+    ],
+    "receipt": {
+      "accounting": {
+        "attempted_calls": 2,
+        "cached_input_semantics": "subset of input_tokens; never added to input total",
+        "completed_calls": 2,
+        "cost": null,
+        "duplicate_call_ids": [],
+        "model_wait_coverage": 2,
+        "model_wait_ns": 4,
+        "usage_coverage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 2,
+          "output_tokens": 2,
+          "reasoning_output_tokens": 0
+        },
+        "usage_totals": {
+          "cache_write_input_tokens": null,
+          "cached_input_tokens": null,
+          "input_tokens": 4,
+          "output_tokens": 2,
+          "reasoning_output_tokens": null
+        },
+        "visible_image_coverage": 2,
+        "visible_images_submitted": 0
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "a1",
+          "call_id": "coarse_model",
+          "completed_ns": 0,
+          "error": null,
+          "stage": "coarse_model",
+          "started_ns": 0,
+          "status": "completed",
+          "usage": {
+            "input_tokens": 2,
+            "output_tokens": 1
+          },
+          "visible_images_submitted": 0,
+          "wait_ns": 2
+        },
+        {
+          "attempt_id": "a2",
+          "call_id": "anchor_model",
+          "completed_ns": 0,
+          "error": null,
+          "stage": "anchor_model",
+          "started_ns": 0,
+          "status": "completed",
+          "usage": {
+            "input_tokens": 2,
+            "output_tokens": 1
+          },
+          "visible_images_submitted": 0,
+          "wait_ns": 2
+        }
+      ],
+      "cache_update": {
+        "handle": "aggregate-i16"
+      },
+      "coarse_origin": "model_produced",
+      "comparison": {
+        "class": "full_cold",
+        "comparable_to_full_cold": true,
+        "omitted_stages": []
+      },
+      "delivery": "confirmed",
+      "execution_progress": {
+        "status": "completed"
+      },
+      "input_authority": "consumed_by_recorded_execute_stage",
+      "model_call_ledger": [
+        {
+          "attempt_id": "a1",
+          "call_id": "coarse_model",
+          "cost": 1044388881413152506691752710716624382579964249047383780384233483283953907971557456848826811934997558340890106714439262837987573438185793607263236087851365277945956976543709998340361590134383718314428070011855946226376318839397712745672334684344586617496807908705803704071284048740118609114467977783598029006686938976881787785946905630190260940599579453432823469303026696443059025015972399867714215541693835559885291486318237914434496734087811872639496475100189041349008417061675093668333850551032972088269550769983616369411933015213796825837188091833656751221318492846368125550225998300412344784862595674492194617023806505913245610825731835380087608622102834270197698202313169017678006675195485079921636419370285375124784014907159135459982790513399611551794271106831134090584272884279791554849782954323534517065223269061394905987693002122963395687782878948440616007412945674919823050571642377154816321380631045902916136926708342856440730447899971901781465763473223850267253059899795996090799469201774624817718449867455659250178329070473119433165550807568221846571746373296884912819520317457002440926616910874148385078411929804522981857338977648103126085903001302413467189726673216491511131602920781738033436090243804708340403154190336,
+          "output": {
+            "status": "candidate"
+          },
+          "requested_effort": "synthetic",
+          "requested_model": "synthetic-no-provider",
+          "stage": "coarse_model",
+          "usage": {
+            "input_tokens": 2,
+            "output_tokens": 1
+          },
+          "visible_images_submitted": 0,
+          "wait_ns": 2
+        },
+        {
+          "attempt_id": "a2",
+          "call_id": "anchor_model",
+          "cost": 0.5,
+          "output": {
+            "status": "target_reference",
+            "target": {
+              "handle": "aggregate-i16"
+            }
+          },
+          "requested_effort": "synthetic",
+          "requested_model": "synthetic-no-provider",
+          "stage": "anchor_model",
+          "usage": {
+            "input_tokens": 2,
+            "output_tokens": 1
+          },
+          "visible_images_submitted": 0,
+          "wait_ns": 2
+        }
+      ],
+      "outcome": "TASK_SUCCEEDED",
+      "phase_timings": [
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "observe_source",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "coarse_model",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "acquire_anchor",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "anchor_model",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "final_revalidate",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "execute",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "verify_effect",
+          "started_ns": 0
+        }
+      ],
+      "reason": "verified_effect",
+      "repair_path": null,
+      "repair_trace": [],
+      "route": "cold",
+      "selected_target": {
+        "handle": "aggregate-i16"
+      },
+      "stages": {
+        "acquire_anchor": {
+          "reason": null,
+          "status": "completed"
+        },
+        "acquire_expansion": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "anchor_model": {
+          "reason": null,
+          "status": "completed"
+        },
+        "coarse_model": {
+          "reason": null,
+          "status": "completed"
+        },
+        "execute": {
+          "reason": null,
+          "status": "completed"
+        },
+        "expanded_model": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "final_revalidate": {
+          "reason": null,
+          "status": "completed"
+        },
+        "local_repair": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "observe_source": {
+          "reason": null,
+          "status": "completed"
+        },
+        "post_model_observe": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "post_model_revalidate": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "reuse_revalidate": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "verify_effect": {
+          "reason": null,
+          "status": "completed"
+        }
+      },
+      "task_effect": "succeeded"
+    },
+    "strict_json_error": null
+  },
+  "max_overflow": {
+    "case": "max_overflow",
+    "events": [
+      {
+        "payload": {
+          "target": "Save"
+        },
+        "stage": "observe_source"
+      },
+      {
+        "payload": {},
+        "stage": "coarse_model"
+      },
+      {
+        "payload": {
+          "status": "candidate"
+        },
+        "stage": "acquire_anchor"
+      },
+      {
+        "payload": {},
+        "stage": "anchor_model"
+      },
+      {
+        "payload": {
+          "handle": "aggregate-i16"
+        },
+        "stage": "final_revalidate"
+      },
+      {
+        "payload": {
+          "check": {
+            "status": "revalidated"
+          },
+          "target": {
+            "handle": "aggregate-i16"
+          }
+        },
+        "stage": "execute"
+      },
+      {
+        "payload": {
+          "status": "completed"
+        },
+        "stage": "verify_effect"
+      }
+    ],
+    "exception": null,
+    "inputs": [
+      1.7976931348623157e+308,
+      1.7976931348623157e+308
+    ],
+    "receipt": {
+      "accounting": {
+        "attempted_calls": 2,
+        "cached_input_semantics": "subset of input_tokens; never added to input total",
+        "completed_calls": 2,
+        "cost": null,
+        "duplicate_call_ids": [],
+        "model_wait_coverage": 2,
+        "model_wait_ns": 4,
+        "usage_coverage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 2,
+          "output_tokens": 2,
+          "reasoning_output_tokens": 0
+        },
+        "usage_totals": {
+          "cache_write_input_tokens": null,
+          "cached_input_tokens": null,
+          "input_tokens": 4,
+          "output_tokens": 2,
+          "reasoning_output_tokens": null
+        },
+        "visible_image_coverage": 2,
+        "visible_images_submitted": 0
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "a1",
+          "call_id": "coarse_model",
+          "completed_ns": 0,
+          "error": null,
+          "stage": "coarse_model",
+          "started_ns": 0,
+          "status": "completed",
+          "usage": {
+            "input_tokens": 2,
+            "output_tokens": 1
+          },
+          "visible_images_submitted": 0,
+          "wait_ns": 2
+        },
+        {
+          "attempt_id": "a2",
+          "call_id": "anchor_model",
+          "completed_ns": 0,
+          "error": null,
+          "stage": "anchor_model",
+          "started_ns": 0,
+          "status": "completed",
+          "usage": {
+            "input_tokens": 2,
+            "output_tokens": 1
+          },
+          "visible_images_submitted": 0,
+          "wait_ns": 2
+        }
+      ],
+      "cache_update": {
+        "handle": "aggregate-i16"
+      },
+      "coarse_origin": "model_produced",
+      "comparison": {
+        "class": "full_cold",
+        "comparable_to_full_cold": true,
+        "omitted_stages": []
+      },
+      "delivery": "confirmed",
+      "execution_progress": {
+        "status": "completed"
+      },
+      "input_authority": "consumed_by_recorded_execute_stage",
+      "model_call_ledger": [
+        {
+          "attempt_id": "a1",
+          "call_id": "coarse_model",
+          "cost": 1.7976931348623157e+308,
+          "output": {
+            "status": "candidate"
+          },
+          "requested_effort": "synthetic",
+          "requested_model": "synthetic-no-provider",
+          "stage": "coarse_model",
+          "usage": {
+            "input_tokens": 2,
+            "output_tokens": 1
+          },
+          "visible_images_submitted": 0,
+          "wait_ns": 2
+        },
+        {
+          "attempt_id": "a2",
+          "call_id": "anchor_model",
+          "cost": 1.7976931348623157e+308,
+          "output": {
+            "status": "target_reference",
+            "target": {
+              "handle": "aggregate-i16"
+            }
+          },
+          "requested_effort": "synthetic",
+          "requested_model": "synthetic-no-provider",
+          "stage": "anchor_model",
+          "usage": {
+            "input_tokens": 2,
+            "output_tokens": 1
+          },
+          "visible_images_submitted": 0,
+          "wait_ns": 2
+        }
+      ],
+      "outcome": "TASK_SUCCEEDED",
+      "phase_timings": [
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "observe_source",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "coarse_model",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "acquire_anchor",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "anchor_model",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "final_revalidate",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "execute",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "verify_effect",
+          "started_ns": 0
+        }
+      ],
+      "reason": "verified_effect",
+      "repair_path": null,
+      "repair_trace": [],
+      "route": "cold",
+      "selected_target": {
+        "handle": "aggregate-i16"
+      },
+      "stages": {
+        "acquire_anchor": {
+          "reason": null,
+          "status": "completed"
+        },
+        "acquire_expansion": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "anchor_model": {
+          "reason": null,
+          "status": "completed"
+        },
+        "coarse_model": {
+          "reason": null,
+          "status": "completed"
+        },
+        "execute": {
+          "reason": null,
+          "status": "completed"
+        },
+        "expanded_model": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "final_revalidate": {
+          "reason": null,
+          "status": "completed"
+        },
+        "local_repair": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "observe_source": {
+          "reason": null,
+          "status": "completed"
+        },
+        "post_model_observe": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "post_model_revalidate": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "reuse_revalidate": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "verify_effect": {
+          "reason": null,
+          "status": "completed"
+        }
+      },
+      "task_effect": "succeeded"
+    },
+    "strict_json_error": null
+  },
+  "positive_overflow": {
+    "case": "positive_overflow",
+    "events": [
+      {
+        "payload": {
+          "target": "Save"
+        },
+        "stage": "observe_source"
+      },
+      {
+        "payload": {},
+        "stage": "coarse_model"
+      },
+      {
+        "payload": {
+          "status": "candidate"
+        },
+        "stage": "acquire_anchor"
+      },
+      {
+        "payload": {},
+        "stage": "anchor_model"
+      },
+      {
+        "payload": {
+          "handle": "aggregate-i16"
+        },
+        "stage": "final_revalidate"
+      },
+      {
+        "payload": {
+          "check": {
+            "status": "revalidated"
+          },
+          "target": {
+            "handle": "aggregate-i16"
+          }
+        },
+        "stage": "execute"
+      },
+      {
+        "payload": {
+          "status": "completed"
+        },
+        "stage": "verify_effect"
+      }
+    ],
+    "exception": null,
+    "inputs": [
+      1e+308,
+      1e+308
+    ],
+    "receipt": {
+      "accounting": {
+        "attempted_calls": 2,
+        "cached_input_semantics": "subset of input_tokens; never added to input total",
+        "completed_calls": 2,
+        "cost": null,
+        "duplicate_call_ids": [],
+        "model_wait_coverage": 2,
+        "model_wait_ns": 4,
+        "usage_coverage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 2,
+          "output_tokens": 2,
+          "reasoning_output_tokens": 0
+        },
+        "usage_totals": {
+          "cache_write_input_tokens": null,
+          "cached_input_tokens": null,
+          "input_tokens": 4,
+          "output_tokens": 2,
+          "reasoning_output_tokens": null
+        },
+        "visible_image_coverage": 2,
+        "visible_images_submitted": 0
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "a1",
+          "call_id": "coarse_model",
+          "completed_ns": 0,
+          "error": null,
+          "stage": "coarse_model",
+          "started_ns": 0,
+          "status": "completed",
+          "usage": {
+            "input_tokens": 2,
+            "output_tokens": 1
+          },
+          "visible_images_submitted": 0,
+          "wait_ns": 2
+        },
+        {
+          "attempt_id": "a2",
+          "call_id": "anchor_model",
+          "completed_ns": 0,
+          "error": null,
+          "stage": "anchor_model",
+          "started_ns": 0,
+          "status": "completed",
+          "usage": {
+            "input_tokens": 2,
+            "output_tokens": 1
+          },
+          "visible_images_submitted": 0,
+          "wait_ns": 2
+        }
+      ],
+      "cache_update": {
+        "handle": "aggregate-i16"
+      },
+      "coarse_origin": "model_produced",
+      "comparison": {
+        "class": "full_cold",
+        "comparable_to_full_cold": true,
+        "omitted_stages": []
+      },
+      "delivery": "confirmed",
+      "execution_progress": {
+        "status": "completed"
+      },
+      "input_authority": "consumed_by_recorded_execute_stage",
+      "model_call_ledger": [
+        {
+          "attempt_id": "a1",
+          "call_id": "coarse_model",
+          "cost": 1e+308,
+          "output": {
+            "status": "candidate"
+          },
+          "requested_effort": "synthetic",
+          "requested_model": "synthetic-no-provider",
+          "stage": "coarse_model",
+          "usage": {
+            "input_tokens": 2,
+            "output_tokens": 1
+          },
+          "visible_images_submitted": 0,
+          "wait_ns": 2
+        },
+        {
+          "attempt_id": "a2",
+          "call_id": "anchor_model",
+          "cost": 1e+308,
+          "output": {
+            "status": "target_reference",
+            "target": {
+              "handle": "aggregate-i16"
+            }
+          },
+          "requested_effort": "synthetic",
+          "requested_model": "synthetic-no-provider",
+          "stage": "anchor_model",
+          "usage": {
+            "input_tokens": 2,
+            "output_tokens": 1
+          },
+          "visible_images_submitted": 0,
+          "wait_ns": 2
+        }
+      ],
+      "outcome": "TASK_SUCCEEDED",
+      "phase_timings": [
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "observe_source",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "coarse_model",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "acquire_anchor",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "anchor_model",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "final_revalidate",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "execute",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "verify_effect",
+          "started_ns": 0
+        }
+      ],
+      "reason": "verified_effect",
+      "repair_path": null,
+      "repair_trace": [],
+      "route": "cold",
+      "selected_target": {
+        "handle": "aggregate-i16"
+      },
+      "stages": {
+        "acquire_anchor": {
+          "reason": null,
+          "status": "completed"
+        },
+        "acquire_expansion": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "anchor_model": {
+          "reason": null,
+          "status": "completed"
+        },
+        "coarse_model": {
+          "reason": null,
+          "status": "completed"
+        },
+        "execute": {
+          "reason": null,
+          "status": "completed"
+        },
+        "expanded_model": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "final_revalidate": {
+          "reason": null,
+          "status": "completed"
+        },
+        "local_repair": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "observe_source": {
+          "reason": null,
+          "status": "completed"
+        },
+        "post_model_observe": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "post_model_revalidate": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "reuse_revalidate": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "verify_effect": {
+          "reason": null,
+          "status": "completed"
+        }
+      },
+      "task_effect": "succeeded"
+    },
+    "strict_json_error": null
+  },
+  "unknown": {
+    "case": "unknown",
+    "events": [
+      {
+        "payload": {
+          "target": "Save"
+        },
+        "stage": "observe_source"
+      },
+      {
+        "payload": {},
+        "stage": "coarse_model"
+      },
+      {
+        "payload": {
+          "status": "candidate"
+        },
+        "stage": "acquire_anchor"
+      },
+      {
+        "payload": {},
+        "stage": "anchor_model"
+      },
+      {
+        "payload": {
+          "handle": "aggregate-i16"
+        },
+        "stage": "final_revalidate"
+      },
+      {
+        "payload": {
+          "check": {
+            "status": "revalidated"
+          },
+          "target": {
+            "handle": "aggregate-i16"
+          }
+        },
+        "stage": "execute"
+      },
+      {
+        "payload": {
+          "status": "completed"
+        },
+        "stage": "verify_effect"
+      }
+    ],
+    "exception": null,
+    "inputs": [
+      null,
+      0.375
+    ],
+    "receipt": {
+      "accounting": {
+        "attempted_calls": 2,
+        "cached_input_semantics": "subset of input_tokens; never added to input total",
+        "completed_calls": 2,
+        "cost": null,
+        "duplicate_call_ids": [],
+        "model_wait_coverage": 2,
+        "model_wait_ns": 4,
+        "usage_coverage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 2,
+          "output_tokens": 2,
+          "reasoning_output_tokens": 0
+        },
+        "usage_totals": {
+          "cache_write_input_tokens": null,
+          "cached_input_tokens": null,
+          "input_tokens": 4,
+          "output_tokens": 2,
+          "reasoning_output_tokens": null
+        },
+        "visible_image_coverage": 2,
+        "visible_images_submitted": 0
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "a1",
+          "call_id": "coarse_model",
+          "completed_ns": 0,
+          "error": null,
+          "stage": "coarse_model",
+          "started_ns": 0,
+          "status": "completed",
+          "usage": {
+            "input_tokens": 2,
+            "output_tokens": 1
+          },
+          "visible_images_submitted": 0,
+          "wait_ns": 2
+        },
+        {
+          "attempt_id": "a2",
+          "call_id": "anchor_model",
+          "completed_ns": 0,
+          "error": null,
+          "stage": "anchor_model",
+          "started_ns": 0,
+          "status": "completed",
+          "usage": {
+            "input_tokens": 2,
+            "output_tokens": 1
+          },
+          "visible_images_submitted": 0,
+          "wait_ns": 2
+        }
+      ],
+      "cache_update": {
+        "handle": "aggregate-i16"
+      },
+      "coarse_origin": "model_produced",
+      "comparison": {
+        "class": "full_cold",
+        "comparable_to_full_cold": true,
+        "omitted_stages": []
+      },
+      "delivery": "confirmed",
+      "execution_progress": {
+        "status": "completed"
+      },
+      "input_authority": "consumed_by_recorded_execute_stage",
+      "model_call_ledger": [
+        {
+          "attempt_id": "a1",
+          "call_id": "coarse_model",
+          "cost": null,
+          "output": {
+            "status": "candidate"
+          },
+          "requested_effort": "synthetic",
+          "requested_model": "synthetic-no-provider",
+          "stage": "coarse_model",
+          "usage": {
+            "input_tokens": 2,
+            "output_tokens": 1
+          },
+          "visible_images_submitted": 0,
+          "wait_ns": 2
+        },
+        {
+          "attempt_id": "a2",
+          "call_id": "anchor_model",
+          "cost": 0.375,
+          "output": {
+            "status": "target_reference",
+            "target": {
+              "handle": "aggregate-i16"
+            }
+          },
+          "requested_effort": "synthetic",
+          "requested_model": "synthetic-no-provider",
+          "stage": "anchor_model",
+          "usage": {
+            "input_tokens": 2,
+            "output_tokens": 1
+          },
+          "visible_images_submitted": 0,
+          "wait_ns": 2
+        }
+      ],
+      "outcome": "TASK_SUCCEEDED",
+      "phase_timings": [
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "observe_source",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "coarse_model",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "acquire_anchor",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "anchor_model",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "final_revalidate",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "execute",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "verify_effect",
+          "started_ns": 0
+        }
+      ],
+      "reason": "verified_effect",
+      "repair_path": null,
+      "repair_trace": [],
+      "route": "cold",
+      "selected_target": {
+        "handle": "aggregate-i16"
+      },
+      "stages": {
+        "acquire_anchor": {
+          "reason": null,
+          "status": "completed"
+        },
+        "acquire_expansion": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "anchor_model": {
+          "reason": null,
+          "status": "completed"
+        },
+        "coarse_model": {
+          "reason": null,
+          "status": "completed"
+        },
+        "execute": {
+          "reason": null,
+          "status": "completed"
+        },
+        "expanded_model": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "final_revalidate": {
+          "reason": null,
+          "status": "completed"
+        },
+        "local_repair": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "observe_source": {
+          "reason": null,
+          "status": "completed"
+        },
+        "post_model_observe": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "post_model_revalidate": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "reuse_revalidate": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "verify_effect": {
+          "reason": null,
+          "status": "completed"
+        }
+      },
+      "task_effect": "succeeded"
+    },
+    "strict_json_error": null
+  },
+  "zero_cost": {
+    "case": "zero_cost",
+    "events": [
+      {
+        "payload": {
+          "target": "Save"
+        },
+        "stage": "observe_source"
+      },
+      {
+        "payload": {},
+        "stage": "coarse_model"
+      },
+      {
+        "payload": {
+          "status": "candidate"
+        },
+        "stage": "acquire_anchor"
+      },
+      {
+        "payload": {},
+        "stage": "anchor_model"
+      },
+      {
+        "payload": {
+          "handle": "aggregate-i16"
+        },
+        "stage": "final_revalidate"
+      },
+      {
+        "payload": {
+          "check": {
+            "status": "revalidated"
+          },
+          "target": {
+            "handle": "aggregate-i16"
+          }
+        },
+        "stage": "execute"
+      },
+      {
+        "payload": {
+          "status": "completed"
+        },
+        "stage": "verify_effect"
+      }
+    ],
+    "exception": null,
+    "inputs": [
+      0.0,
+      0.0
+    ],
+    "receipt": {
+      "accounting": {
+        "attempted_calls": 2,
+        "cached_input_semantics": "subset of input_tokens; never added to input total",
+        "completed_calls": 2,
+        "cost": 0.0,
+        "duplicate_call_ids": [],
+        "model_wait_coverage": 2,
+        "model_wait_ns": 4,
+        "usage_coverage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 2,
+          "output_tokens": 2,
+          "reasoning_output_tokens": 0
+        },
+        "usage_totals": {
+          "cache_write_input_tokens": null,
+          "cached_input_tokens": null,
+          "input_tokens": 4,
+          "output_tokens": 2,
+          "reasoning_output_tokens": null
+        },
+        "visible_image_coverage": 2,
+        "visible_images_submitted": 0
+      },
+      "attempt_ledger": [
+        {
+          "attempt_id": "a1",
+          "call_id": "coarse_model",
+          "completed_ns": 0,
+          "error": null,
+          "stage": "coarse_model",
+          "started_ns": 0,
+          "status": "completed",
+          "usage": {
+            "input_tokens": 2,
+            "output_tokens": 1
+          },
+          "visible_images_submitted": 0,
+          "wait_ns": 2
+        },
+        {
+          "attempt_id": "a2",
+          "call_id": "anchor_model",
+          "completed_ns": 0,
+          "error": null,
+          "stage": "anchor_model",
+          "started_ns": 0,
+          "status": "completed",
+          "usage": {
+            "input_tokens": 2,
+            "output_tokens": 1
+          },
+          "visible_images_submitted": 0,
+          "wait_ns": 2
+        }
+      ],
+      "cache_update": {
+        "handle": "aggregate-i16"
+      },
+      "coarse_origin": "model_produced",
+      "comparison": {
+        "class": "full_cold",
+        "comparable_to_full_cold": true,
+        "omitted_stages": []
+      },
+      "delivery": "confirmed",
+      "execution_progress": {
+        "status": "completed"
+      },
+      "input_authority": "consumed_by_recorded_execute_stage",
+      "model_call_ledger": [
+        {
+          "attempt_id": "a1",
+          "call_id": "coarse_model",
+          "cost": 0.0,
+          "output": {
+            "status": "candidate"
+          },
+          "requested_effort": "synthetic",
+          "requested_model": "synthetic-no-provider",
+          "stage": "coarse_model",
+          "usage": {
+            "input_tokens": 2,
+            "output_tokens": 1
+          },
+          "visible_images_submitted": 0,
+          "wait_ns": 2
+        },
+        {
+          "attempt_id": "a2",
+          "call_id": "anchor_model",
+          "cost": 0.0,
+          "output": {
+            "status": "target_reference",
+            "target": {
+              "handle": "aggregate-i16"
+            }
+          },
+          "requested_effort": "synthetic",
+          "requested_model": "synthetic-no-provider",
+          "stage": "anchor_model",
+          "usage": {
+            "input_tokens": 2,
+            "output_tokens": 1
+          },
+          "visible_images_submitted": 0,
+          "wait_ns": 2
+        }
+      ],
+      "outcome": "TASK_SUCCEEDED",
+      "phase_timings": [
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "observe_source",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "coarse_model",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "acquire_anchor",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "anchor_model",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "final_revalidate",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "execute",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 0,
+          "ended_ns": 0,
+          "stage": "verify_effect",
+          "started_ns": 0
+        }
+      ],
+      "reason": "verified_effect",
+      "repair_path": null,
+      "repair_trace": [],
+      "route": "cold",
+      "selected_target": {
+        "handle": "aggregate-i16"
+      },
+      "stages": {
+        "acquire_anchor": {
+          "reason": null,
+          "status": "completed"
+        },
+        "acquire_expansion": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "anchor_model": {
+          "reason": null,
+          "status": "completed"
+        },
+        "coarse_model": {
+          "reason": null,
+          "status": "completed"
+        },
+        "execute": {
+          "reason": null,
+          "status": "completed"
+        },
+        "expanded_model": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "final_revalidate": {
+          "reason": null,
+          "status": "completed"
+        },
+        "local_repair": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "observe_source": {
+          "reason": null,
+          "status": "completed"
+        },
+        "post_model_observe": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "post_model_revalidate": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "reuse_revalidate": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "verify_effect": {
+          "reason": null,
+          "status": "completed"
+        }
+      },
+      "task_effect": "succeeded"
+    },
+    "strict_json_error": null
+  }
+}
