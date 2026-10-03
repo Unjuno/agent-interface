@@ -90,3 +90,12 @@ bytes/first outcomes and fixed committee conditions remain untouched.
 Follow-up local CI at 7fdd28c81 exits 0: 43 steps, failures=[]; complete
 highfd-local-ci.log retained. Native follow-up protocol count is 474 (29 added
 send-related methods), 4 failures/6 errors/5 skips; harness 205/31 errors.
+
+Read-only nonvoting follow-up technical review at 7fdd28c81 found the prior
+high-FD Important blocker and two minor coverage gaps resolved; no new Critical
+or Important issue found. It does not confer committee/current-tree adoption
+approval. Minor fixture capability concern is addressed by skipping only when
+the actual POSIX soft RLIMIT_NOFILE cannot allocate FD>=2048; unexpected
+allocation failures remain errors. Fresh local normal/O runs both48 PASS with
+zero skips; a separate owned interpreter capped to1024 records exactly one
+explicit capability skip. No host/global resource limit is changed.

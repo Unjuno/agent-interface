@@ -130,6 +130,10 @@ class AppServerSendDeadlineTests(unittest.TestCase):
         # A usable high FD must retain the same timeout contract as a low FD.
         # F_DUPFD allocates one owned descriptor; it does not overwrite any FD.
         import fcntl
+        import resource
+        soft_limit, _hard_limit = resource.getrlimit(resource.RLIMIT_NOFILE)
+        if soft_limit != resource.RLIM_INFINITY and soft_limit <= 2048:
+            self.skipTest(f"FD >=2048 unavailable: RLIMIT_NOFILE={soft_limit}")
         with owned_client() as (client, _read_fd):
             high_fd = fcntl.fcntl(client.process.stdin.fileno(), fcntl.F_DUPFD, 2048)
             client.process.stdin.close()
