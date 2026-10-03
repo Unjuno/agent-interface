@@ -3,6 +3,8 @@ import copy
 import json
 from pathlib import Path
 import unittest
+import tempfile
+import runner
 from runner import expected
 
 
@@ -14,6 +16,26 @@ class ProducerGateControls(unittest.TestCase):
 
     def test_valid_handshake(self):
         self.assertTrue(expected('candidate_events_eof', self.row()))
+
+    def test_missing_source_records_stop_without_cells(self):
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name)
+            original = runner.PACKAGES
+            try:
+                runner.PACKAGES = root
+                try:
+                    result = runner.run(root / 'output')
+                except FileNotFoundError:
+                    self.fail('preflight source failure escaped without a saved STOP')
+                self.assertEqual(result, 1)
+            finally:
+                runner.PACKAGES = original
+            files = list((root / 'output').iterdir())
+            self.assertEqual([path.name for path in files], ['SUMMARY.json'])
+            summary = json.loads(files[0].read_text())
+            self.assertEqual(summary['verdict'], 'STOP_PREFLIGHT_SOURCE')
+            self.assertEqual(summary['cases'], [])
+            self.assertEqual(summary['error_type'], 'FileNotFoundError')
 
     def test_missing_live_handshake_stops(self):
         for field, value in [('reader_alive_after_ready', False),
