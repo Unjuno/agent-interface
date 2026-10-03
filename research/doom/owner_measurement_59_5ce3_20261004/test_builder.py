@@ -6,6 +6,7 @@ from pathlib import Path
 import subprocess
 import types
 import unittest
+import sys
 
 HERE = Path(__file__).resolve().parent
 PIN = '12e4c1ebaf382d70760eafbe3cf2e5fda90a9d2c'
@@ -30,6 +31,41 @@ class BuilderTests(unittest.TestCase):
         builder = self.builder()
         with self.assertRaises(ValueError):
             builder.instrument(self.source() + b'\n# drift\n')
+
+    def bundle_sources(self):
+        names = ('input_owner_v10.py', 'doom_typed_release_backend_v1.py',
+                 'session_map01_v12.py', 'map01_overlap_controller_v39.py')
+        return {name: subprocess.check_output(['git', 'show', PIN + ':research/' +
+            ('live_control/' if name == 'input_owner_v10.py' else 'doom/') + name],
+            cwd=HERE) for name in names}
+
+    def test_composed_controller_selects_only_the_measured_session(self):
+        compose = getattr(self.builder(), 'compose', None)
+        self.assertTrue(callable(compose), 'missing selected-path composition builder')
+        root = HERE.parents[2]
+        destination = HERE / 'generated'
+        bundle = compose(self.bundle_sources(), root, destination)
+        self.assertEqual(set(bundle), {'input_owner_measured_5ce3.py',
+            'doom_release_measured_5ce3.py', 'session_measured_5ce3.py', 'controller_measured_5ce3.py'})
+        for text in bundle.values():
+            compile(text, '<derived-source>', 'exec')
+        tree = ast.parse(bundle['controller_measured_5ce3.py'])
+        command = next(n for n in tree.body if isinstance(n, ast.FunctionDef)
+                       and n.name == 'session_command')
+        env = dict(sys=sys, HERE=root / 'research/doom', MEASUREMENT_HERE=destination)
+        exec(compile(ast.Module(body=[command], type_ignores=[]), '<session-command>', 'exec'), env)
+        args = types.SimpleNamespace(seed=59, load_fixture_manifest=Path('/fixtures/frozen.json'))
+        self.assertEqual(env['session_command'](args, Path('/out')), [sys.executable,
+            str(destination / 'session_measured_5ce3.py'), '--out', '/out', '--seed', '59',
+            '--timeout-seconds', '600', '--skill', '1', '--load-fixture-manifest', '/fixtures/frozen.json'])
+
+    def test_composition_refuses_changed_session(self):
+        compose = getattr(self.builder(), 'compose', None)
+        self.assertTrue(callable(compose), 'missing selected-path composition builder')
+        sources = self.bundle_sources()
+        sources['session_map01_v12.py'] += b'\n# changed\n'
+        with self.assertRaises(ValueError):
+            compose(sources, HERE.parents[2], HERE / 'generated')
 
     def key_case(self, identity_failure=False):
         tree = ast.parse(self.builder().instrument(self.source()))

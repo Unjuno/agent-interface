@@ -5,6 +5,7 @@ backend. Its output is not a native result or a qualified game integration.
 """
 import ast
 import hashlib
+from pathlib import Path
 
 SOURCE_SHA256 = 'ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b'
 
@@ -92,3 +93,54 @@ def instrument(raw):
     source += HELPERS
     ast.parse(source)
     return source
+
+
+def compose(sources, repo_root, destination):
+    """Return four derived modules; never import/run/write the game route."""
+    pins = {
+        'input_owner_v10.py': SOURCE_SHA256,
+        'doom_typed_release_backend_v1.py': 'ceef50881dc0619ffee5b7ef551ce0851f2650c7371fc37775a80755f077d12f',
+        'session_map01_v12.py': '97d60f64ae6dc075fd7b18a452813c90d7c5d366d71e324905c17d74604585b2',
+        'map01_overlap_controller_v39.py': 'a0bcfa076970b7cf6d048155478952958280b7958e0bbe486c0f1f12a55e4f0e',
+    }
+    if set(sources) != set(pins):
+        raise ValueError('complete exact selected-path source set required')
+    for name, digest in pins.items():
+        if hashlib.sha256(sources[name]).hexdigest() != digest:
+            raise ValueError('source drift: ' + name)
+    doom = Path(repo_root).resolve() / 'research/doom'
+    destination = Path(destination).resolve()
+    if not destination.is_relative_to(doom) or destination == doom:
+        raise ValueError('candidate destination must be a separate path under research/doom')
+
+    def change(text, old, new):
+        if text.count(old) != 1:
+            raise ValueError('ambiguous connection site: ' + old)
+        return text.replace(old, new, 1)
+
+    owner = instrument(sources['input_owner_v10.py'])
+    backend = sources['doom_typed_release_backend_v1.py'].decode().replace('\r\n', '\n')
+    backend = change(backend, 'from input_owner_v10 import InputOwner',
+                     'from input_owner_measured_5ce3 import InputOwner')
+    result = {'input_owner_measured_5ce3.py': owner, 'doom_release_measured_5ce3.py': backend}
+    for original, derived in (('session_map01_v12.py', 'session_measured_5ce3.py'),
+                              ('map01_overlap_controller_v39.py', 'controller_measured_5ce3.py')):
+        text = sources[original].decode().replace('\r\n', '\n')
+        text = change(text, 'HERE = Path(__file__).resolve().parent',
+            'MEASUREMENT_HERE = Path(__file__).resolve().parent\n'
+            + 'HERE = Path(' + repr(str(doom)) + ')\n'
+            + 'sys.path.insert(0, str(HERE))')
+        if original.startswith('session_'):
+            text = change(text, 'from doom_typed_release_backend_v1 import Backend, suite',
+                          'from doom_release_measured_5ce3 import Backend, suite')
+            text = change(text, 'for path in (Path(__file__),',
+                'for path in (Path(__file__), MEASUREMENT_HERE / "input_owner_measured_5ce3.py",\n'
+                + '                 MEASUREMENT_HERE / "doom_release_measured_5ce3.py",\n'
+                + '                 MEASUREMENT_HERE / "controller_measured_5ce3.py",')
+        else:
+            text = change(text, 'str(HERE / "session_map01_v12.py")',
+                          'str(MEASUREMENT_HERE / "session_measured_5ce3.py")')
+        result[derived] = text
+    for text in result.values():
+        compile(text, '<research-candidate>', 'exec')
+    return result

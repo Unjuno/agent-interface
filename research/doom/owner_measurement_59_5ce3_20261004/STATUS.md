@@ -66,7 +66,31 @@ configuration are retained in CONSTRUCTION_CI.json. No native input or game was
 started; extracted-function CI does not prove full-owner/controller behavior.
 Resource configuration is not independently measured enforcement evidence.
 
-Incomplete: press/up clock and record-sink failure controls, composed
+## Selected-path composition checkpoint
+
+The pure compose builder validates all four exact original source digests and
+returns derived owner/backend/session/controller text without imports, writes,
+or launching any runtime. The selected session imports the unique measured
+backend; that backend imports the unique measured owner. The derived controller
+selects the derived session, retaining seed/timeout/skill/fixture arguments.
+The derived session's existing source-custody loop additionally includes all
+derived modules. Default paths and original evidence remain unchanged.
+
+Two new tests first failed because compose was missing (eight tests, two FAIL,
+exit 1); after implementation all eight pass on host. They compile every
+derived module, execute the generated session_command function and reject a
+changed session byte stream. They DO NOT execute the imports, backend
+constructor, custody loop or complete controller. Thus compilation and command
+selection are not full connection qualification or useful task-feedback proof.
+
+Derived HERE pins an absolute research/doom dependency root while
+MEASUREMENT_HERE uses the actual script directory. Generate separately for the
+final container root; host-derived strings must not be assumed relocatable.
+Destination is constrained to a separate descendant of research/doom. Existing
+controller reader/exceptional-cleanup defects are inherited, NOT repaired or
+qualified by this connection candidate. Their source owners retain scope.
+
+Incomplete: press/up clock and record-sink failure controls, actual composed
 backend/session/controller connection and provenance, local container CI,
 independent review and fresh eligible scientific execution. Missing telemetry
 must remain UNKNOWN, never zero. Best-effort helpers are not a hard scheduling,
