@@ -25,5 +25,23 @@ def run(argv, payload, deadline_ns):
             out, err = p.communicate(timeout=1)
         except subprocess.TimeoutExpired:
             return {'status': 'unknown', 'reason': 'termination_unconfirmed', 'started': True, 'pid': p.pid, 'exit': p.poll(), 'process': p}
+        except Exception as error:
+            return {'status': 'unknown', 'reason': 'termination_unconfirmed',
+                    'started': True, 'pid': p.pid, 'exit': p.poll(), 'process': p,
+                    'communication_error': {'type': type(error).__name__,
+                                            'detail': str(error)}}
         return {'status': 'unknown', 'reason': 'deadline', 'started': True, 'pid': p.pid, 'exit': p.returncode, 'stdout': out, 'stderr': err, 'terminated': p.returncode is not None}
+    except Exception as error:
+        receipt = {'status': 'unknown', 'reason': 'termination_unconfirmed',
+                   'started': True, 'pid': p.pid, 'process': p,
+                   'communication_error': {'type': type(error).__name__,
+                                           'detail': str(error)}}
+        try:
+            p.kill()
+        except Exception as termination_error:
+            receipt['termination_error'] = {
+                'type': type(termination_error).__name__,
+                'detail': str(termination_error)}
+        receipt['exit'] = p.poll()
+        return receipt
     return {'status': 'returned' if p.returncode == 0 and time.monotonic_ns() < deadline_ns else 'unknown', 'reason': 'child_exit_or_deadline', 'started': True, 'pid': p.pid, 'exit': p.returncode, 'stdout': out, 'stderr': err, 'terminated': True}

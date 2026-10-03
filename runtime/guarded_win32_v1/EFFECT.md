@@ -1,5 +1,7 @@
 # Explicit post-action effects and verifier ownership
 
+Communication exceptions after child creation also return unknown with the actual owned handle and communication error. Initial communication failure attempts owned-child termination; a failed termination is retained separately. Failed communication during timeout cleanup keeps the handle for terminal polling. A retained handle may already be terminal; bridge polling records that exit before freeing occupancy. Child creation errors occur before a handle is available and remain ordinary callback errors.
+
 A timeout whose kill attempt raises returns unknown with the actual owned process handle and termination error. The bridge retains occupancy until actual terminal polling, even after input recovery. The regression injects a kill-method error against a real owned CPU child and always kills/reaps that child afterward; it does not demonstrate a real OS termination failure.
 
 `MoveBridge.execute(token, verify_effect=predicate, effect_deadline_ns=deadline)` retains a fresh full-client observation after completed movement and verified release. The trusted predicate receives copies of the program, execution receipt, observation and RGB image. Only its explicit `True` verifies task success; `False` is not verified, and missing, failed, stale or late results remain unknown. The default route supplies no semantic task-success assertion. Effect verification stays inside the operation lock; it never restores the consumed input permission.
