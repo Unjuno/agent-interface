@@ -49,7 +49,7 @@ selected Docker context is `orbstack`, the shell's first `docker` is the Nix
 app-bundled client at `/usr/local/bin/docker` is 29.4.0 and matches the
 29.4.0 server. OrbStack is version 2.1.3. Its doctor also reported stale CLI
 plugin/path configuration. No PATH, symlink, plugin, or OrbStack setting was
-changed. The old failed image-store reads were not repeated with another client.
+changed. A later read-only probe with the app-bundled client is recorded below.
 
 `orbctl list` showed other running Linux machines on this shared OrbStack host;
 their ownership and release state were not established. No Docker container was
@@ -63,3 +63,24 @@ runtime.test_docker_schema_preflight_v1` then passed all 18 tests. This includes
 synthetic response/schema cases and acceptance of the current plain and
 compiled schemas. It does not exercise the host IPC runner, a live model turn,
 container provenance, or the gated one-shot endpoint allocation.
+
+## Matching OrbStack client image-store probe — 2026-10-04
+
+To test whether the initial storage failure was caused by the Nix Docker client,
+one read-only inspection of the same pre-existing image digest was issued via
+`/usr/local/bin/docker --context orbstack`, the OrbStack-bundled 29.4.0 client
+that matches the 29.4.0 server:
+
+```text
+docker image inspect sha256:e47cbddc70722a816758a4a1c27cf2a38071c889670be98bf3eacdc9fff17916
+Error response from daemon: rpc error: code = Unknown desc = blob sha256:e47cbddc70722a816758a4a1c27cf2a38071c889670be98bf3eacdc9fff17916 expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/e47cbddc70722a816758a4a1c27cf2a38071c889670be98bf3eacdc9fff17916: open ...: operation not supported
+```
+
+The same daemon-side content-store failure with the matching client falsifies
+client-version mismatch as a sufficient cause. It does not distinguish an
+unreadable or missing blob from a backing-store or daemon defect. This
+diagnostic line is closed; do not repeat image inspection or alter the store
+while other OrbStack machines are running without an owner-confirmed
+maintenance window. No container, pull, build, restart, reset, host Codex
+request, model turn, GUI, or task input occurred. The frozen #3489 allocation
+remains unspent.
