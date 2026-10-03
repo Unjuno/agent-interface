@@ -1,0 +1,72 @@
+"""Separate saved-only SQL/state/capsule reference. Never runs the producer."""
+import base64,copy,datetime,hashlib,json,pathlib,sqlite3
+BASE=pathlib.Path(__file__).resolve().parent/'sqlite-interrupt-7772-c01'
+def canonical(x):return json.dumps(x,sort_keys=True,separators=(',',':'))
+def pin(b):return dict(bytes=len(b),sha256=hashlib.sha256(b).hexdigest())
+def check(rows):
+    expected_names=['READ_INTERRUPT','WRITE_INTERRUPT','HEALTHY_WRITE']
+    assert [r['case'] for r in rows]==expected_names
+    receipt=json.loads((BASE/'PRODUCER_RECEIPT.json').read_text())
+    for i,r in enumerate(rows):
+        active=[True,False,True][i];stage_revision=[1,0,2][i];final_revision=stage_revision
+        expected_snapshots=[]
+        for label,tx,owner,observer in [('staged',True,1,0),('after_target',active,stage_revision,0),('after_diagnostic_commit',False,final_revision,final_revision)]:
+            expected_snapshots.append(dict(label=label,in_transaction=tx,owner_revision=owner,fresh_observer=dict(revision=observer,rows=64,sum=2016)))
+        assert canonical(r['snapshots'])==canonical(expected_snapshots)
+        target_sql='SELECT sum(value) FROM data' if i==0 else 'UPDATE counter SET revision=revision+1'
+        target_error={'code':9,'name':'SQLITE_INTERRUPT','type':'OperationalError','message':'interrupted'}
+        commit_error={'code':1,'name':'SQLITE_ERROR','type':'OperationalError','message':'cannot commit - no transaction is active'}
+        assert canonical(r['target'])==canonical(dict(error=None if i==2 else target_error,returned=[] if i==2 else None))
+        assert canonical(r['diagnostic_commit'])==canonical(dict(error=commit_error if i==1 else None))
+        assert canonical(r['progress_calls'])==canonical([] if i==2 else [1])
+        assert canonical(r['progress_interval'])==canonical(None if i==2 else 1)
+        assert r['target_sql']==target_sql and canonical(r['connection_closed'])=='true'
+        assert canonical(r['seed'])==canonical(dict(revision=0,rows=64,sum=2016))
+        expected_sql=['PRAGMA journal_mode=DELETE','PRAGMA synchronous=FULL','CREATE TABLE counter(revision INTEGER NOT NULL)','INSERT INTO counter VALUES(0)','CREATE TABLE data(value INTEGER NOT NULL)']+[f'INSERT INTO data VALUES({j})' for j in range(64)]+['BEGIN IMMEDIATE','UPDATE counter SET revision=revision+1','SELECT revision FROM counter',target_sql,'SELECT revision FROM counter','COMMIT','SELECT revision FROM counter']
+        assert r['sql']==expected_sql
+        ep=r['endpoint'];assert type(ep['exit']) is int and ep['exit']==0 and type(ep['pid']) is int and ep['pid']>0
+        assert ep['stdout']==pin(ep['stdout_utf8'].encode()) and ep['stderr']==pin(ep['stderr_utf8'].encode()) and ep['stderr_utf8']==''
+        value=json.loads(ep['stdout_utf8']);assert value['pid']==ep['pid']
+        image=base64.b64decode(r['closed_db']['base64'],validate=True)
+        image_pin=pin(image);assert {k:r['closed_db'][k] for k in ['bytes','sha256']}==image_pin
+        assert value['db_before']==value['db_after']==image_pin
+        assert canonical(value['view'])==canonical(dict(revision=final_revision,rows=64,sum=2016))
+        t=[datetime.datetime.fromisoformat(x) for x in [receipt['start_utc'],r['start_utc'],r['end_utc'],ep['start_utc'],ep['end_utc'],receipt['end_utc']]]
+        assert t==sorted(t) and all(x.tzinfo is not None for x in t)
+    return True
+def main():
+    rows=[json.loads(s) for s in (BASE/'RAW.jsonl').read_text().splitlines()]
+    check(rows)
+    databases=[]
+    for i,r in enumerate(rows):
+        path=BASE/r['db'];before=path.read_bytes();image=base64.b64decode(r['closed_db']['base64'],validate=True);assert before==image
+        c=sqlite3.connect(path.as_uri()+'?mode=ro&immutable=1',uri=True,isolation_level=None)
+        try:
+            assert c.execute('PRAGMA integrity_check').fetchall()==[('ok',)]
+            assert c.execute('SELECT name,type FROM sqlite_schema ORDER BY name').fetchall()==[('counter','table'),('data','table')]
+            assert c.execute('SELECT revision FROM counter').fetchall()==[([1,0,2][i],)]
+            assert c.execute('SELECT value FROM data ORDER BY value').fetchall()==[(j,) for j in range(64)]
+        finally:c.close()
+        assert path.read_bytes()==before
+        databases.append({'case':r['case'],'pin':pin(before),'read_only_unchanged':True})
+    controls=[]
+    for kind in ['boolean_transaction','masked_rollback','extra_update','false_commit_success','endpoint_failure','foreign_endpoint_view']:
+        altered=copy.deepcopy(rows)
+        if kind=='boolean_transaction':altered[0]['snapshots'][1]['in_transaction']=1
+        if kind=='masked_rollback':altered[1]['snapshots'][1]['owner_revision']=1
+        if kind=='extra_update':altered[0]['sql'].insert(-1,'UPDATE counter SET revision=revision+1')
+        if kind=='false_commit_success':altered[1]['diagnostic_commit']['error']=None
+        if kind=='endpoint_failure':altered[1]['endpoint']['exit']=1
+        if kind=='foreign_endpoint_view':
+            p=json.loads(altered[2]['endpoint']['stdout_utf8']);p['view']['revision']=1
+            altered[2]['endpoint']['stdout_utf8']=json.dumps(p,sort_keys=True)+'\r\n'
+            altered[2]['endpoint']['stdout']=pin(altered[2]['endpoint']['stdout_utf8'].encode())
+        assert canonical(altered)!=canonical(rows)
+        with (BASE/f'negative-{kind}.json').open('x',encoding='utf-8') as f:json.dump(altered,f,sort_keys=True)
+        try:check(altered)
+        except AssertionError:controls.append({'kind':kind,'effective':True,'rejected':True})
+        else:raise AssertionError(kind)
+    result={'status':'SAVED_REFERENCE_PASS','complete_cases':3,'full_sql_records':228,'databases':databases,'six_effective_controls':controls,'producer_replays':0,'new_side_effects':0,'scope':'saved historical claims/capsule readback, not emitter authentication or task success'}
+    with (BASE/'AUDIT_RESULT.json').open('x',encoding='utf-8') as f:json.dump(result,f,sort_keys=True,indent=2)
+    print(json.dumps(result,sort_keys=True))
+if __name__=='__main__':main()

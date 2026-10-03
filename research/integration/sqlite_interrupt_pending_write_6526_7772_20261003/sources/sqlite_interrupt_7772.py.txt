@@ -1,0 +1,68 @@
+"""Three new invented-DB compatibility cells; no original allocation replay."""
+import base64, datetime, hashlib, json, os, pathlib, sqlite3, subprocess, sys
+BASE=pathlib.Path(__file__).resolve().parent/'sqlite-interrupt-7772-c01'
+def utc():return datetime.datetime.now(datetime.timezone.utc).isoformat()
+def pin(b):return dict(bytes=len(b),sha256=hashlib.sha256(b).hexdigest())
+def error(e):return dict(type=type(e).__name__,code=e.sqlite_errorcode,name=e.sqlite_errorname,message=str(e))
+def view(path):
+    c=sqlite3.connect(path.as_uri()+'?mode=ro',uri=True,isolation_level=None,timeout=0)
+    try:return {'revision':c.execute('SELECT revision FROM counter').fetchone()[0],'rows':c.execute('SELECT count(*) FROM data').fetchone()[0],'sum':c.execute('SELECT sum(value) FROM data').fetchone()[0]}
+    finally:c.close()
+def cell(name):
+    path=BASE/(name+'.sqlite');assert not path.exists()
+    c=sqlite3.connect(path,isolation_level=None,timeout=0)
+    sql=[];c.set_trace_callback(sql.append)
+    start=utc();row={'case':name,'start_utc':start,'db':path.name,'sql':sql,'snapshots':[]}
+    try:
+        c.execute('PRAGMA journal_mode=DELETE');c.execute('PRAGMA synchronous=FULL')
+        c.execute('CREATE TABLE counter(revision INTEGER NOT NULL)');c.execute('INSERT INTO counter VALUES(0)')
+        c.execute('CREATE TABLE data(value INTEGER NOT NULL)')
+        c.executemany('INSERT INTO data VALUES(?)',[(i,) for i in range(64)])
+        row['seed']=view(path)
+        c.execute('BEGIN IMMEDIATE');c.execute('UPDATE counter SET revision=revision+1')
+        def snapshot(label):
+            s={'label':label,'in_transaction':c.in_transaction,'owner_revision':c.execute('SELECT revision FROM counter').fetchone()[0],'fresh_observer':view(path)}
+            row['snapshots'].append(s)
+        snapshot('staged')
+        calls=[]
+        def cancel():calls.append(len(calls)+1);return 1
+        query='SELECT sum(value) FROM data' if name=='READ_INTERRUPT' else 'UPDATE counter SET revision=revision+1'
+        row['target_sql']=query;row['progress_interval']=1 if name!='HEALTHY_WRITE' else None
+        if name!='HEALTHY_WRITE':c.set_progress_handler(cancel,1)
+        cursor=c.cursor()
+        try:
+            cursor.execute(query);row['target']={'returned':cursor.fetchall(),'error':None}
+        except sqlite3.Error as e:row['target']={'returned':None,'error':error(e)}
+        finally:
+            c.set_progress_handler(None,0);cursor.close()
+        row['progress_calls']=calls;snapshot('after_target')
+        try:c.execute('COMMIT');row['diagnostic_commit']={'error':None}
+        except sqlite3.Error as e:row['diagnostic_commit']={'error':error(e)}
+        snapshot('after_diagnostic_commit')
+    finally:c.close()
+    row['connection_closed']=True;row['end_utc']=utc()
+    raw=path.read_bytes();row['closed_db']={**pin(raw),'base64':base64.b64encode(raw).decode()}
+    start=utc()
+    process=subprocess.Popen([sys.executable,str(pathlib.Path(__file__).resolve()),'endpoint',str(path)],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    stdout,stderr=process.communicate(timeout=10)
+    row['endpoint']={'pid':process.pid,'start_utc':start,'end_utc':utc(),'exit':process.returncode,'stdout_utf8':stdout.decode(),'stderr_utf8':stderr.decode(),'stdout':pin(stdout),'stderr':pin(stderr)}
+    return row
+def main():
+    rows=[]
+    with (BASE/'RAW.jsonl').open('x',encoding='utf-8',newline='\n') as f:
+        for name in ['READ_INTERRUPT','WRITE_INTERRUPT','HEALTHY_WRITE']:
+            row=cell(name);rows.append(row);f.write(json.dumps(row,sort_keys=True,separators=(',',':'))+'\n');f.flush()
+    expected={'READ_INTERRUPT':(True,1,1,None),'WRITE_INTERRUPT':(False,0,0,1),'HEALTHY_WRITE':(True,2,2,None)}
+    for row in rows:
+        tx,rev,end,code=expected[row['case']]
+        after=row['snapshots'][1]
+        assert (after['in_transaction'],after['owner_revision'])==(tx,rev)
+        assert json.loads(row['endpoint']['stdout_utf8'])['view']['revision']==end and row['endpoint']['exit']==0
+        actual=row['diagnostic_commit']['error'];assert (actual['code'] if actual else None)==code
+        assert row['target']['error'] is None if row['case']=='HEALTHY_WRITE' else row['target']['error']['code']==9
+    print(json.dumps({'status':'SCOPED_COMPATIBILITY_PASS','cases':3,'producer_pid':os.getpid(),'sqlite_version':sqlite3.sqlite_version,'no_statement_resend':True}))
+if __name__=='__main__':
+    if len(sys.argv)>1 and sys.argv[1]=='endpoint':
+        p=pathlib.Path(sys.argv[2]);before=pin(p.read_bytes());v=view(p);after=pin(p.read_bytes());assert before==after
+        print(json.dumps({'pid':os.getpid(),'view':v,'db_before':before,'db_after':after},sort_keys=True))
+    else:main()

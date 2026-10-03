@@ -1,0 +1,46 @@
+{
+  "frozen_utc": "2026-10-03T12:32:27.852267+00:00",
+  "source": {
+    "bytes": 6066,
+    "sha256": "66b651a45c356b09ae01b0b97f6ab998c28e30d553cbe2db18f15eb0d913e073"
+  },
+  "runner": {
+    "bytes": 1436,
+    "sha256": "893acd25691274440f6e8f24dd17ed31b5db1f64ccf3c1fd9faadb563e128983"
+  },
+  "inputs": {
+    "FREEZE.json": {
+      "bytes": 1242,
+      "sha256": "13c1f3909b5ca049e5aea2ddffd3b3c84953846e856f3514c85a412f9b5c04af"
+    },
+    "HEALTHY_WRITE.sqlite": {
+      "bytes": 12288,
+      "sha256": "619833acd2fee98b0f0d4717861cd136a5fb98243bf06baf3e8f8e184c10b48c"
+    },
+    "producer.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "producer.stdout.txt": {
+      "bytes": 132,
+      "sha256": "83f3de146f56b0b4499a8c5251ad3c8705ab361075c5e003c62528612ff58464"
+    },
+    "PRODUCER_RECEIPT.json": {
+      "bytes": 406,
+      "sha256": "34c83c222f7bc50486d0a02616b29b843368d520d9fe1afae4a1fcf0c0a0dbac"
+    },
+    "RAW.jsonl": {
+      "bytes": 60944,
+      "sha256": "408d87f6d639c52b0896ffdc6bb7a02767d2810f43b95000f4d135bbb96505a1"
+    },
+    "READ_INTERRUPT.sqlite": {
+      "bytes": 12288,
+      "sha256": "1f7b73c6629773843c064656d67c7c9084d8f7261630970344613410a471dc3e"
+    },
+    "WRITE_INTERRUPT.sqlite": {
+      "bytes": 12288,
+      "sha256": "e7bdc1a4aac5a15b7aca78ada97153f4d092335fce5648f8da95d5136d239b5c"
+    }
+  },
+  "D": "all three complete SQL/state/error/receipt/capsule sequences, immutable DB images and six effective controls must agree. Otherwise preserve first failure; producer0."
+}

@@ -1,0 +1,66 @@
+{
+  "complete_cases": 3,
+  "databases": [
+    {
+      "case": "READ_INTERRUPT",
+      "pin": {
+        "bytes": 12288,
+        "sha256": "1f7b73c6629773843c064656d67c7c9084d8f7261630970344613410a471dc3e"
+      },
+      "read_only_unchanged": true
+    },
+    {
+      "case": "WRITE_INTERRUPT",
+      "pin": {
+        "bytes": 12288,
+        "sha256": "e7bdc1a4aac5a15b7aca78ada97153f4d092335fce5648f8da95d5136d239b5c"
+      },
+      "read_only_unchanged": true
+    },
+    {
+      "case": "HEALTHY_WRITE",
+      "pin": {
+        "bytes": 12288,
+        "sha256": "619833acd2fee98b0f0d4717861cd136a5fb98243bf06baf3e8f8e184c10b48c"
+      },
+      "read_only_unchanged": true
+    }
+  ],
+  "full_sql_records": 228,
+  "new_side_effects": 0,
+  "producer_replays": 0,
+  "scope": "saved historical claims/capsule readback, not emitter authentication or task success",
+  "six_effective_controls": [
+    {
+      "effective": true,
+      "kind": "boolean_transaction",
+      "rejected": true
+    },
+    {
+      "effective": true,
+      "kind": "masked_rollback",
+      "rejected": true
+    },
+    {
+      "effective": true,
+      "kind": "extra_update",
+      "rejected": true
+    },
+    {
+      "effective": true,
+      "kind": "false_commit_success",
+      "rejected": true
+    },
+    {
+      "effective": true,
+      "kind": "endpoint_failure",
+      "rejected": true
+    },
+    {
+      "effective": true,
+      "kind": "foreign_endpoint_view",
+      "rejected": true
+    }
+  ],
+  "status": "SAVED_REFERENCE_PASS"
+}
