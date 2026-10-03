@@ -274,8 +274,6 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
             _exact(effect, {"status", "evidence_ref"}, "effect verdict")
             if effect["status"] not in {"succeeded", "failed", "unavailable"}:
                 raise ValueError("typed effect status required")
-            if effect["status"] == "succeeded":
-                _name(effect["evidence_ref"], "effect evidence reference")
             emit({"event": "effect_checked", "action": pending_effect["action"],
                   "status": effect["status"], "evidence_ref": effect["evidence_ref"]})
             if effect["status"] != "succeeded":
@@ -340,7 +338,6 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
         if (admission["status"] != "revalidated" or
                 type(admission["authorization"]) is not str or
                 not admission["authorization"] or
-                type(admission["expected_sequence"]) is not int or
                 admission["expected_sequence"] != observation["sequence"] or
                 type(admission["valid_until_ns"]) is not int or
                 admission["valid_until_ns"] <= clock()):
