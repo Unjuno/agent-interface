@@ -58,3 +58,23 @@ class UsageSubsetRoute(unittest.TestCase):
                 self.assertEqual(a['visible_images_submitted'],None if invalid=='visible_images_submitted' else 1)
                 self.assertEqual(r['outcome'],'CALLER_FAILED')
                 self.assertIsNone(r['accounting']['cost'])
+
+    def test_nonstring_failure_usage_keys_preserve_siblings_and_close_stage(self):
+        for usage in [{1:0},{1:0,'unknown':0},{None:0},{False:0},{(1,):0},{'unknown':0}]:
+            with self.subTest(usage=repr(usage)):
+                def model(_):
+                    raise coverage.ModelFailure('invalid keys',call_id='known-call',usage=usage,wait_ns=23,visible_images_submitted=1)
+                r=coverage.CostCoverage().route('usage-keys',coarse='model',coarse_fn=model)
+                ROWS.append({'case':'invalid_usage_keys','input_repr':repr(usage),'result':r})
+                a=r['attempt_ledger'][0]
+                self.assertEqual(a['status'],'failed')
+                self.assertEqual(a['call_id'],'known-call')
+                self.assertIsNotNone(a['completed_ns'])
+                self.assertIsNone(a['usage'])
+                self.assertEqual(a['wait_ns'],23)
+                self.assertEqual(a['visible_images_submitted'],1)
+                self.assertEqual(r['outcome'],'CALLER_FAILED')
+                self.assertIsNone(r['accounting']['cost'])
+                self.assertIsNone(r['task_effect'])
+                self.assertEqual(r['stages']['coarse_model']['status'],'failed')
+                json.dumps(r,allow_nan=False)

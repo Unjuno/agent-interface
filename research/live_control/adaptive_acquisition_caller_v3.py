@@ -69,6 +69,8 @@ def _usage(value):
         return None
     if type(value) is not dict:
         raise ValueError("usage must be an object or unavailable")
+    if any(type(key) is not str for key in value):
+        raise ValueError("usage field names must be strings")
     unknown = set(value) - set(USAGE_FIELDS)
     if unknown:
         raise ValueError("unknown usage fields: " + ",".join(sorted(unknown)))
