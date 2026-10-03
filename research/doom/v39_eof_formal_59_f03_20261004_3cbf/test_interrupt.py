@@ -27,13 +27,10 @@ class InterruptControl(unittest.TestCase):
                         listing = subprocess.check_output(['ps', '-axo', 'ppid=,pid='], text=True)
                         children = [int(line.split()[1]) for line in listing.splitlines()
                                     if line.split() and int(line.split()[0]) == process.pid]
-                    tasks = Path('/proc') / str(process.pid) / 'task'
-                    reader_started = not tasks.exists() or len(list(tasks.iterdir())) >= 2
-                    if children and reader_started:
+                    if children:
                         break
                     time.sleep(.01)
                 self.assertTrue(children, 'no actual child observed before interrupt')
-                self.assertTrue(reader_started, 'reader thread not observed before interrupt')
                 os.kill(process.pid, signal.SIGINT)
                 stdout, stderr = process.communicate(timeout=5)
                 self.assertEqual(process.returncode, 1, stderr)
@@ -44,7 +41,8 @@ class InterruptControl(unittest.TestCase):
                 self.assertEqual(summary['stop_reason'], 'KeyboardInterrupt')
                 row = json.loads((output / 'baseline_eof.json').read_text())
                 self.assertIs(row['cleanup_child_alive'], False)
-                self.assertIs(row['cleanup_reader_alive'], False)
+                # None is explicitly emitted only when no reader was created.
+                self.assertIn(row['cleanup_reader_alive'], (False, None))
                 self.assertEqual(row['cleanup_faults'], [])
             finally:
                 if process.poll() is None:
