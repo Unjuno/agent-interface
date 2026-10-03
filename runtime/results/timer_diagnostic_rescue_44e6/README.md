@@ -1,5 +1,8 @@
 # Linux timer diagnostic rescue
 
+Fresh localCI43 exits0 failures=[] atd259143baf; full transcript local-ci.log.
+Fresh -O wrapper check exits1 with explicit assertion-safety STOP as intended.
+
 Source44e6c67e07de63ea5d0892e5b6a93e4713b287bc, original delivery7035.
 All16 original files retained byte-identically, including D01 source-access STOP,
 D02 first raw192rows, auditor-v1 output failure and separate v2 output repair.
