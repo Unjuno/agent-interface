@@ -1,0 +1,24 @@
+"""Retain each ordinary RED/GREEN phase with source freeze and complete actual receipts."""
+from pathlib import Path
+from datetime import datetime,timezone
+import hashlib,json,platform,shutil,subprocess,sys
+root=Path(__file__).resolve().parent;label=sys.argv[1];out=root/label;out.mkdir(exist_ok=False)
+node=Path(shutil.which('node'));paths=sorted((root/'source/runtime/host_v1').glob('*.mjs'),key=lambda p:p.name)
+def sha(b):return hashlib.sha256(b).hexdigest()
+def put(p,v):p.write_text(json.dumps(v,indent=2,sort_keys=True)+'\n',encoding='utf-8',newline='\n')
+for p in paths:(out/(p.name+'.txt')).write_bytes(p.read_bytes())
+command=[str(node),'--test','--test-concurrency=1','--test-reporter=tap','runtime/host_v1/test_primary_stdio_utf8.mjs']
+put(out/'FREEZE.json',{'frozen_utc':datetime.now(timezone.utc).isoformat(),'label':label,'source':[{'path':p.relative_to(root/'source').as_posix(),'sha256':sha(p.read_bytes()),'bytes':p.stat().st_size} for p in paths],
+ 'phase_source_sha256':sha(Path(__file__).read_bytes()),'node_version':subprocess.check_output([str(node),'--version']).decode().strip(),'node_binary_sha256':sha(node.read_bytes()),
+ 'python':sys.version,'platform':platform.platform(),'argv':command,'cwd':str(root/'source'),
+ 'H':'strict original byte admission before existing readline/exchange preserves valid input and observes same accepted promise on later malformed bytes',
+ 'T':'15 literal methods:5 malformed-byte forms,EOF truncation,ASCII/split multibyte/U+FFFD/text/JSON/BOM/owned listeners/accepted promise/corrupted chunk prefix',
+ 'D':'RED expected contract assertions retain first failures; fixed same15 pass,malformed neverexecute/consume,validvalues and acceptedwork preserved',
+ 'C':'validator aborts the malformed raw chunk before unaccepted valid prefix in that chunk; caller already-decoded text cannot reconstruct upstream original bytes',
+ 'U':'ordinary in-process controlled streams/inert exchange; no real backend/SDK/native/input/task/performance/formal allocation'})
+started=datetime.now(timezone.utc).isoformat();r=subprocess.run(command,cwd=root/'source',capture_output=True,timeout=20)
+(out/'stdout.txt').write_bytes(r.stdout);(out/'stderr.txt').write_bytes(r.stderr)
+put(out/'RECEIPT.json',{'argv':command,'started_utc':started,'ended_utc':datetime.now(timezone.utc).isoformat(),'exit_code':r.returncode,'stdout_sha256':sha(r.stdout),'stderr_sha256':sha(r.stderr),'stdout_bytes':len(r.stdout),'stderr_bytes':len(r.stderr)})
+for p in paths:assert sha(p.read_bytes())==next(x['sha256'] for x in json.loads((out/'FREEZE.json').read_bytes())['source'] if x['path']==p.relative_to(root/'source').as_posix())
+print(json.dumps({'phase':label,'exit_code':r.returncode,'summary':[x for x in r.stdout.decode('utf-8',errors='replace').splitlines() if x.startswith('# tests') or x.startswith('# pass') or x.startswith('# fail')]}))
+sys.exit(0 if (label=='red-first' and r.returncode==1) or (label=='green-first' and r.returncode==0) else 1)

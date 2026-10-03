@@ -1,0 +1,45 @@
+{
+  "C": "writer chunks need not map to OS read chunks;explicit fixture-request endpoint precedes malformed writer and owned reply release, but exact internal validation/reply scheduling is not directly timestamped",
+  "D": "CLI0/2/2;fixture counts1/0/1 and all original host/fixture exits0;no repeated request/guard/owned PID;original-held success retained once before byte fault;first outcomes retained",
+  "H": "strict byte admission must prevent a malformed raw command while preserving valid multibyte and the same already accepted original request",
+  "T": "three new ordinary public --config controls;split Japanese+emoji,malformed first request,one fixture-held accepted request then malformed next bytes;all initial/later bytes and config frozen",
+  "U": "own inert echo children/controlled streams,zero SDK/backend/native/input/model/task/performance/formal producer invocation;no hard deadline/line cap added",
+  "cells": [
+    {
+      "config_sha256": "b6d3f11ed22fa15ac2c350a34197ca785179ca5c39009e45b048edfafb916f35",
+      "expected_cli_code": 0,
+      "expected_fixture_requests": 1,
+      "initial_hex": [
+        "7b226964223a312c226d6574686f64223a2263616c6c222c2261726773223a5b22696e746572666163655f636c6f636b222c7b226c6162656c223a22e3",
+        "8182f09f9880227d5d7d0a"
+      ],
+      "later_hex": [],
+      "name": "split-valid-japanese-emoji",
+      "nonce": "e0210cb2-7dce-4f99-b9cb-95572a9479ae"
+    },
+    {
+      "config_sha256": "5645efc2a596a39cfc12b48bff77e2b78ee4d252abce8055735d5aeea2ec2e27",
+      "expected_cli_code": 2,
+      "expected_fixture_requests": 0,
+      "initial_hex": [
+        "7b226964223a312c226d6574686f64223a2263616c6c222c2261726773223a5b22696e746572666163655f636c6f636b222c7b226c6162656c223a22ff227d5d7d0a"
+      ],
+      "later_hex": [],
+      "name": "malformed-before-admission",
+      "nonce": "44ee062d-7426-4d4c-ac6a-75f21dece435"
+    },
+    {
+      "config_sha256": "7f3bafdfd28eff38b152f95caf476aae00a185b0056ad4d57ab6180f51f5889a",
+      "expected_cli_code": 2,
+      "expected_fixture_requests": 1,
+      "initial_hex": [
+        "7b226964223a312c226d6574686f64223a2263616c6c222c2261726773223a5b22696e746572666163655f636c6f636b222c7b226c6162656c223a226f726967696e616c2d68656c64227d5d7d0a"
+      ],
+      "later_hex": [
+        "7b226964223a322c226d6574686f64223a2263616c6c222c2261726773223a5b22696e746572666163655f636c6f636b222c7b226c6162656c223a22ff227d5d7d0a"
+      ],
+      "name": "accepted-before-byte-stop",
+      "nonce": "8f6ac600-1072-4e22-a08a-4f2404590ac8"
+    }
+  ]
+}
