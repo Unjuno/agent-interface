@@ -167,3 +167,29 @@ independently verify that environment for future work rather than rerunning the
 unlocked script and assuming identical bytes. No image/branch push/PR/merge.
 One local metadata patch failed on an absent context line before application;
 the corrected evidence-only patch was then applied, with no experiment replay.
+
+## First guarded real route import — STOP preserved
+
+Frozen HEADf6db757c0a9e9a3234a76f7f09de30c8fc8134c9 flat .py sources from doom,
+live_control and observation_gating were extracted via Git archive to own local
+import_sources_01 (1901 files, 14MiB; retained locally, not batch-published).
+Derived modules add four files in container tmpfs. No sparse-absence inference.
+Two new real loader tests first FAIL (missing probe), then host14PASS. These
+test non-main import, cached-module refusal and partial-registration removal.
+
+Actual offline guarded import of generated session from exact prepared image
+ended STOP_IMPORT_ERROR/ModuleNotFoundError: No module named research. Inherited
+live_control/tile_transport.py imports research.observation_tiles.tile_transport;
+that package is outside this first freeze and repository-root resolution is
+missing. Source/import custody gate was not reached. No blind retry or relabel.
+Raw RESULT.json/traceback, exact executed COMMAND.py.txt and TERMINAL.json are
+retained under import_probe_01. Exited1/noOOM, zero guard attempts. The stdout
+summary's default imported_repo_sources=0 means the failure collector did not
+populate that field, NOT that no dependency had loaded before the exception.
+
+Guarded entry points: Xlib.display.Display, vizdoom.DoomGame, subprocess.Popen;
+no session/controller main called. These are a scoped probe guard, not complete
+sandbox/safety validation. Own Engine0running and exactVM stopped after probe.
+Next preparation must freeze the actual inherited dependency closure including
+observation_tiles and correctly establish repository package resolution, while
+preserving this first result. No scientific/native/game allocation or PR/main.
