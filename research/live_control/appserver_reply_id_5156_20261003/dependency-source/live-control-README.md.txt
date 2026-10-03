@@ -9,8 +9,6 @@
 | Current project objective | [../../docs/CURRENT_GOAL.md](../../docs/CURRENT_GOAL.md) |
 | Latest cross-project handoff | [../../docs/LOCAL_RESEARCH_HANDOFF.md](../../docs/LOCAL_RESEARCH_HANDOFF.md) |
 | Current Linux research caller | [CURRENT_CLIENT.md](CURRENT_CLIENT.md) |
-| EOF regression protocol registration (#59/#6953 follow-up) | [Selected-module verification and limits](appserver_eof_registration_59_01a0ff51/REPORT.md) |
-| App-server stdout-EOF stop repair (#59; native inert child scope) | [Comparison and limits](appserver_eof_stop_59_01a0ff51/REPORT.md) |
 | Project evidence ledger | [../../RESEARCH.md](../../RESEARCH.md) |
 | Retained raw result artifacts | [results/README.md](results/README.md) |
 | Recycled-XID process-incarnation guard (Issue #3555; scoped, provenance-limited) | [XRes guard report](x11_xres_incarnation_guard_3555_v1/REPORT.md) |
@@ -18,10 +16,6 @@
 | Implemented live-control surface | [What is implemented](#what-is-implemented) |
 | Reproduction notes | [Reproduce](#reproduce) |
 | Issue #2221 cross-domain retained-evidence transfer T1 | [Result and scope](cross_domain_handback_transfer_2221_t1_20261002/RESULT.md) |
-| #59 closed app-server stdout diagnostic timeout | [Native pipe counterexample](appserver_closed_diagnostic_59_20261003_01a0ff52/README.md) |
-| #6067 A03 native phase-effect first STOP (no efficacy promotion) | [Readiness and formal STOP](phase_effect_6067_t1_a03_20261004_3cbf/REPORT.md) |
-| #6067 D02 post-wait snapshot-cost diagnostic (HOLD, no efficacy promotion) | [Actual result and custody](postwait_cost_6067_d02_20261004_3cbf/REPORT.md) |
-| #6067 D03 imposed sibling-load pure-sleep experiment (HOLD, no cause promotion) | [Actual result and custody](sleep_load_6067_d03_20261004_3cbf/REPORT.md) |
 
 ## Track map
 
@@ -636,8 +630,6 @@ or human-tempo claim.
 
 - [Issue #5156 / source PR #5298 archival qualification](owner_keyup_owner_integration_5156_v1/ARCHIVAL_QUALIFICATION.md) — preserves four exact Allocation-03 owner-v11 files and the historical 14-test fake-Xlib construction record. The original baseline auditor is retained with its empty/omitted-inventory fail-open limitation; [#5415](https://github.com/Unjuno/agent-interface/pull/5415) is a separate synthetic successor. No real X11, physical key-up, MAP01, formal-gate completion, or runtime promotion is established; the source PR remains Draft and #5156 remains open.
 
-- [#5630 T3 keymap witness recovery qualification](owner_keyup_keymap_witness_5156_t3_v1/RESCUE_QUALIFICATION_20261003.md) — preserves 106 exact construction-package files; synthetic contract tests 35/35 and retained SHA256SUMS manifests 11/11 pass. Known runner-completion cardinality defect remains unresolved; no formal X11/Docker/host receipt or MAP01 claim.
-
 
 - [#2802 allocation 04 source-only qualification](app_event_obligation_keying_2802_v1/ARCHIVAL_QUALIFICATION.md): ten exact preformal source/freeze files; formal 0/18. The reported macOS/CPython 3.14.5 host policy check (4/4) is supplemental only; the frozen Linux/CPython 3.13.5 gate remains open. Original freeze and branch retained; no execution or runtime promotion.
 
@@ -652,8 +644,3 @@ or human-tempo claim.
 - [#5604 invocation-boundary T0 STOP archive](invocation_boundary_5156_t0_20261001_01/ARCHIVAL_QUALIFICATION.md): 11 exact originals; no-op mutation, 5/6 controls and unbound historical count preserved. Separate merged T1 does not overwrite T0 STOP or authorize a rerun.
 - [#5156 X11 allocation-03 expired-window archive](owner_keyup_formal_x11_5156_20260930_03/ARCHIVAL_QUALIFICATION.md): eight exact frozen source/STOP files; window ended before container inspection, candidate or scientific rows (all 0). Host construction receipts only; allocation-04 remains separate.
 - [#5156 X11 allocation-02 preformal STOP](owner_keyup_formal_x11_5156_20260930_02/ARCHIVAL_QUALIFICATION.md): preserves the six-file source package and Xlib import STOP; formal inputs 0, raw/audit absent, retries 0. No scientific result or live key-up claim.
-
-- [Bounded journal-mutex retirement repair](appserver_journal_close_57_20261003_01a0ff2d/README.md): preserves journal custody and explicit incomplete cleanup; Windows ordinary regressions, not an overall OS-I/O deadline.
-
-- [Reader retirement and late-frame custody repair](appserver_reader_retirement_57_20261003_01a0ff2d/README.md): close reports a live reader before closing the journal; preserves earlier mutex/None semantics and all first failures.
-- [Boolean reply-ID correlation regression](appserver_reply_id_5156_20261003/REPORT.md): Boolean IDs cannot correlate to numeric requests; numeric float replies and server errors retained, no genuine-provider or general protocol-conformance claim.
