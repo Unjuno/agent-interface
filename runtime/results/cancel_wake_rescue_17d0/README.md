@@ -22,3 +22,10 @@ Saved-only audit normal/-O both qualified 18 rows with no reasons:
 exited 0, 43 steps, failures=[]; full output is `local-ci.log`. This is not
 hosted CI/full runtime/native certification. Main integration is pending;
 source is not yet retired.
+
+Fresh review readback found a prospective threshold-two content committee,
+but no explicit approvals or verified exclusive sender handoff:
+https://github.com/Unjuno/agent-interface/pull/7049#issuecomment-5969210663
+Assignment/silence and old votes count zero. The original descriptor requires
+fresh current-tree nonauthor combination qualification after quorum. Neither
+this rescue nor local CI supplies those approvals or application authority.
