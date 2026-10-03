@@ -19,6 +19,8 @@
 | Issue #2221 cross-domain retained-evidence transfer T1 | [Result and scope](cross_domain_handback_transfer_2221_t1_20261002/RESULT.md) |
 | #59 closed app-server stdout diagnostic timeout | [Native pipe counterexample](appserver_closed_diagnostic_59_20261003_01a0ff52/README.md) |
 
+| #59 late/unowned app-server response lifetime (controlled FIFO) | [First ten cells and limits](appserver_late_reply_59_20261003_df63/README.md) |
+
 ## Track map
 
 ```mermaid
