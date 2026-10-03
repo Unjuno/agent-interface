@@ -1,0 +1,23 @@
+{
+  "label": "audit-v2-retained",
+  "argv": [
+    "python",
+    "-B",
+    "audit_v2.py",
+    "evidence/raw.json",
+    "evidence/audit-v2.json"
+  ],
+  "start_utc": "2026-10-03T02:59:01.499558+00:00",
+  "end_utc": "2026-10-03T02:59:01.588290+00:00",
+  "exit_code": 0,
+  "stdout": {
+    "original_sha256": "053872e32f1f41df39f596cd845280f481127617c8df224500c93ef868b371cd",
+    "public_sha256": "053872e32f1f41df39f596cd845280f481127617c8df224500c93ef868b371cd",
+    "redaction": "local path prefixes only"
+  },
+  "stderr": {
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "redaction": "local path prefixes only"
+  }
+}
