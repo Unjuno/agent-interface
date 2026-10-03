@@ -23,6 +23,8 @@ SUITES['protocol'].append('test_appserver_stderr_drain_01a0ff2d')
 SUITES['protocol'].append('test_appserver_response_ownership_01a0ff2d')
 SUITES['protocol'].append('test_appserver_utf8_stdio_01a0ff2d')
 SUITES['protocol'].append('test_appserver_startup_journal_01a0ff2d')
+SUITES['protocol'].append('test_appserver_reader_startup_01a0ff2d')
+SUITES['protocol'].append('test_appserver_pipe_close_01a0ff2d')
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)

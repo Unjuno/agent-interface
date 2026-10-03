@@ -18,6 +18,7 @@ class Lines:
         done=threading.Event();self.rows.put((value,done))
         if not done.wait(2):raise TimeoutError('fixture reader did not consume row')
     def finish(self):self.rows.put((None,None))
+    def close(self):self.closed=True
 
 class Sink:
     def __init__(self,process):self.process=process
@@ -25,6 +26,7 @@ class Sink:
         row=json.loads(text);self.process.sent.append(row)
         self.process.reply(row)
     def flush(self):pass
+    def close(self):self.closed=True
 
 class Process:
     def __init__(self,reply):self.sent=[];self.stdout=Lines();self.stdin=Sink(self);self.stderr=io.StringIO();self.reply=reply

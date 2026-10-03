@@ -1,5 +1,6 @@
 """Owned journal-retirement regressions; no Codex server or native input."""
 import base64
+import io
 import hashlib
 import json
 import os
@@ -15,6 +16,11 @@ from codex_app_server_client_v2 import CodexAppServerClient
 
 
 class DeadProcess:
+    def __init__(self):
+        self.stdin = io.StringIO()
+        self.stdout = io.StringIO()
+        self.stderr = io.StringIO()
+
     def poll(self):
         return 0
 

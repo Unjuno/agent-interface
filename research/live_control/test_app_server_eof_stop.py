@@ -8,6 +8,11 @@ from codex_app_server_client_v2 import AppServerError, CodexAppServerClient
 
 
 class NoDiagnosticRead:
+    closed = False
+
+    def close(self):
+        self.closed = True
+
     def read(self, *_):
         raise AssertionError('EOF caller attempted a diagnostic read')
 

@@ -32,15 +32,69 @@ class CodexAppServerClient:
         self._notifications = deque()
         self._next_id = 1
         self._closed = False
-        self._reader = threading.Thread(target=self._read, daemon=True)
-        self._reader.start()
         self._stderr_lock = threading.Lock()
         self._stderr_tail = b""
         self._stderr_bytes = 0
         self._stderr_error = None
         self._stderr_complete = False
-        self._stderr_reader = threading.Thread(target=self._read_stderr, daemon=True)
-        self._stderr_reader.start()
+        # Each independently blocking reader owns its full resource interval.
+        access = [threading.Lock(), threading.Lock()]
+        cancelled = [False, False]
+
+        def guarded_read(index, action):
+            with access[index]:
+                if not cancelled[index]:
+                    action()
+
+        try:
+            self._reader = threading.Thread(
+                target=lambda: guarded_read(0, self._read), daemon=True)
+            self._reader.start()
+            self._stderr_reader = threading.Thread(
+                target=lambda: guarded_read(1, self._read_stderr), daemon=True)
+            self._stderr_reader.start()
+        except BaseException as startup_error:
+            def cleanup(action):
+                try:
+                    action()
+                    return True
+                except BaseException as cleanup_error:
+                    try:
+                        BaseException.add_note(startup_error,
+                            "reader startup cleanup failed: " + type(cleanup_error).__name__)
+                    except BaseException:
+                        pass
+                    return False
+
+            def stop_process():
+                if self.process.poll() is None:
+                    self.process.terminate()
+                    try:
+                        self.process.wait(timeout=1)
+                    except subprocess.TimeoutExpired:
+                        self.process.kill()
+                        self.process.wait(timeout=1)
+
+            def cancel_access(index):
+                if not access[index].acquire(timeout=1):
+                    raise TimeoutError("app-server startup reader access did not finish")
+                try:
+                    # Pending native bootstrap may continue, but skips resource access.
+                    cancelled[index] = True
+                finally:
+                    access[index].release()
+
+            cleanup(stop_process)
+            safe = True
+            for index in range(2):
+                if not cleanup(lambda i=index: cancel_access(i)):
+                    safe = False
+            if safe:
+                for name in ("stdin", "stdout", "stderr"):
+                    cleanup(lambda n=name: getattr(self.process, n).close())
+                if self._journal is not None:
+                    cleanup(self._journal.close)
+            raise
 
     def _read_stderr(self):
         # Drain raw diagnostic bytes independently of protocol/journal locks.
@@ -197,13 +251,37 @@ class CodexAppServerClient:
         self._stderr_reader.join(timeout=timeout)
         if self._stderr_reader.is_alive():
             raise TimeoutError("app-server stderr close timed out")
-        if self._journal is not None and not self._journal.closed:
-            if not self._journal_lock.acquire(timeout=-1 if timeout is None else timeout):
-                raise TimeoutError("app-server journal close timed out")
+        # Sequential close owns these Popen streams after both readers retire.
+        first_error = None
+
+        def cleanup(action):
+            nonlocal first_error
             try:
-                self._journal.close()
-            finally:
-                self._journal_lock.release()
+                action()
+            except BaseException as error:
+                if first_error is None:
+                    first_error = error
+                else:
+                    try:
+                        BaseException.add_note(first_error,
+                            "additional client close failure: " + type(error).__name__)
+                    except BaseException:
+                        pass
+
+        def close_journal():
+            if self._journal is not None and not self._journal.closed:
+                if not self._journal_lock.acquire(timeout=-1 if timeout is None else timeout):
+                    raise TimeoutError("app-server journal close timed out")
+                try:
+                    cleanup(self._journal.close)
+                finally:
+                    cleanup(self._journal_lock.release)
+
+        cleanup(close_journal)
+        for stream_name in ("stdin", "stdout", "stderr"):
+            cleanup(lambda name=stream_name: getattr(self.process, name).close())
+        if first_error is not None:
+            raise first_error
 
     def __enter__(self):
         return self
