@@ -36,4 +36,4 @@ jobs:
       - name: Compile kernel
         run: python -m compileall -q runtime/kernel
       - name: Run kernel contract tests
-        run: python -m unittest -v runtime.kernel.test_kernel
+        run: python -m unittest discover -s runtime/kernel -p 'test_*.py' -v
