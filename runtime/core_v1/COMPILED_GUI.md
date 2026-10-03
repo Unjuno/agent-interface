@@ -22,6 +22,33 @@ expectation, remains unavailable. If the expected literal itself is `"unknown"`
 and its observation cannot be established, omit the predicate or return an
 unavailable effect verdict; the literal match alone does not certify an effect.
 
+Each returned effect-verdict dictionary is copied after exact-shape validation
+and before checking its status and successful evidence reference. A later journal
+callback cannot rebind those fields through its retained return object. This is
+dictionary custody; failed/unavailable references are not generally scalar-type
+validated, and copying does not authenticate a witness or physical task effect.
+
+Cancellation is cooperative: the runtime consults the adapter at loop entry and
+before admitting or dispatching another action. The final completion branch does
+not poll again after its observation, effect verification or branch journal.
+Cancellation latched there can therefore coexist with `TASK_SUCCEEDED` when no
+further input is required. This is the existing policy for checking cancellation,
+not a guarantee that cancellation wins until the terminal receipt. A caller needing that stronger
+termination policy must qualify it separately; completed effects are not undone.
+
+An admission return is copied after exact builtin-dictionary field validation
+and before eligibility/freshness checks. Accepted fields are builtin scalars;
+later callback-local edits to the returned dictionary cannot rebind the checked
+authorization, sequence or deadline sent to the executor. Actual cancellation
+and downstream authorization checks remain required. This snapshot does not
+provide live revocation, custom-object or concurrent-callback safety.
+
+Each observation request receives its own declared-predicate list. The journal
+receives a separate deep copy of each event, so callback-local formatting or
+later edits to retained payloads cannot change private declarations or returned
+critical evidence. Callbacks remain trusted synchronous code: their exceptions
+propagate and their I/O must obey the existing deadline contract.
+
 After observation, branch journaling, admission, effect verification and returned
 execution, the runtime rechecks its original method deadline. Reaching the exact
 deadline counts as exhaustion. A late observation is retained, but cannot admit
@@ -35,6 +62,15 @@ Adapters must honor that deadline for I/O and each new input. These checks only
 operate when a synchronous call returns; they cannot preempt a blocked adapter,
 undo emitted input, guarantee physical release by a deadline, or implement hard
 real-time control. No automatic replay, repair, grounding or local model exists.
+
+Successful effect verdicts require an exact-string, nonempty `evidence_ref`
+of at most 64 characters, matching the existing reference bound. A separate
+verifier witness is permitted; the reference need not equal the observation's
+reference. Malformed success metadata raises `ValueError` before the next
+branch or final completion, with prior action/journal evidence retained.
+Failed or unavailable verdicts keep their safe-yield behavior when the
+reference is absent. This syntax check does not verify the witness's existence
+or authenticity.
 
 `TASK_SUCCEEDED` is the graph's adapter/predicate verdict, not an independent
 application effect certificate. A form's changed pixels do not verify its text.
@@ -63,3 +99,14 @@ It uses the existing graph with fresh bridge captures, boolean target prerequisi
 caller-owned perception/effect callbacks, per-action revalidation, one-use
 admission tokens and retained raw receipts. Its application-specific primary
 live trial does not establish general text verification or efficiency gains.
+
+An execution-terminal dictionary is copied after its exact outer shape and
+optional dispatch flag are checked. Release neutrality and an explicitly
+attested pre-input refusal are evaluated before the `action_terminal` journal
+callback. Later edits to an executor-retained dictionary or held-input lists
+cannot promote uncertain delivery, erase a completed prefix, replace action or
+effect references, or downgrade originally reported input to a pre-input refusal.
+The copy preserves original field types; it does not invoke terminal-member
+copy hooks to convert malformed release or reference objects into valid values.
+These retained declarations do not authenticate executor truth or physical input
+release. Actual cancellation remains the separate cooperative callback check.

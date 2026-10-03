@@ -1,0 +1,45 @@
+"""Actual committed archive import with external inert callback fixtures."""
+from pathlib import Path
+import hashlib
+import importlib.util
+import json
+import subprocess
+import sys
+import unittest
+import zipfile
+
+here = Path(__file__).resolve().parent
+root = here.parent / "agent-interface-compiled-custody"
+archive = here / "runtime-v4.pyz"
+manifest = json.loads((here / "build-v4.json").read_text())
+source = json.loads((here / "source-commit.readback.json").read_text())["source_commit"]
+def check(value, detail):
+    if not value:
+        raise RuntimeError(detail)
+check(manifest["source_revision"] == source, "archive revision mismatch")
+check(manifest["sha256"] == hashlib.sha256(archive.read_bytes()).hexdigest(), "archive digest mismatch")
+with zipfile.ZipFile(archive) as bundle:
+    check(sorted(bundle.namelist()) == manifest["entries"], "archive entry roster")
+    check(len(manifest["source_files"]) == 51 and len(manifest["entries"]) == 56, "archive source count")
+    for row in manifest["source_files"]:
+        raw = bundle.read(row["path"])
+        committed = subprocess.check_output([r"C:\Program Files\Git\cmd\git.exe", "-C", str(root), "show", source + ":" + row["path"]])
+        check(raw == committed and len(raw) == row["bytes"] and hashlib.sha256(raw).hexdigest() == row["sha256"], "shipped Git source mismatch")
+sys.path.insert(0, str(archive))
+from runtime.core_v1 import compiled_gui
+check(str(archive) in compiled_gui.__file__, "source imported outside archive")
+def load(name, filename):
+    spec = importlib.util.spec_from_file_location(name, here / "green/runtime/core_v1" / filename)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[name] = module
+    spec.loader.exec_module(module)
+    return module
+load("runtime.core_v1.test_compiled_gui", "test_compiled_gui.py")
+suite = unittest.TestSuite()
+for filename in ("test_compiled_callback_custody_01a0ff35.py", "test_compiled_effect_evidence_01a0ff32.py", "test_compiled_custody_effect_join_01a0ff35.py", "test_compiled_admission_custody_01a0ff35.py"):
+    suite.addTests(unittest.defaultTestLoader.loadTestsFromModule(load("archive_" + filename[:-3], filename)))
+check(suite.countTestCases() == 18, "archive related method roster")
+print(json.dumps({"source_revision": source, "archive_sha256": manifest["sha256"], "archive_bytes": manifest["bytes"],
+                  "source_entries_verified": 51, "entries": 56, "related_methods": 18, "loaded_source": compiled_gui.__file__}))
+result = unittest.TextTestRunner(verbosity=2).run(suite)
+sys.exit(0 if result.wasSuccessful() else 1)

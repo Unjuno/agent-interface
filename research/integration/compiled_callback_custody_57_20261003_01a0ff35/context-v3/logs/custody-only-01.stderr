@@ -1,0 +1,187 @@
+test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) ... 
+  test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value=None, stage=1) ... FAIL
+  test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value=None, stage=2) ... FAIL
+  test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value='', stage=1) ... FAIL
+  test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value='', stage=2) ... FAIL
+  test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value=0, stage=1) ... FAIL
+  test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value=0, stage=2) ... FAIL
+  test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value=True, stage=1) ... FAIL
+  test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value=True, stage=2) ... FAIL
+  test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value=False, stage=1) ... FAIL
+  test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value=False, stage=2) ... FAIL
+  test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value=1.0, stage=1) ... FAIL
+  test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value=1.0, stage=2) ... FAIL
+  test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value=[], stage=1) ... FAIL
+  test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value=[], stage=2) ... FAIL
+  test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value={}, stage=1) ... FAIL
+  test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value={}, stage=2) ... FAIL
+  test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value='xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', stage=1) ... FAIL
+  test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value='xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', stage=2) ... FAIL
+test_valid_witness_and_returned_prefix_survive_immediate_and_retained_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_valid_witness_and_returned_prefix_survive_immediate_and_retained_edits) ... ok
+
+======================================================================
+FAIL: test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value=None, stage=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<user-home>\Documents\Codex\2026-10-03\new-chat-6\work\combined6934-6900\test_compiled_custody_effect_join_01a0ff35.py", line 48, in test_invalid_success_witness_stops_at_its_action_despite_callback_edits
+    with self.assertRaisesRegex(ValueError, 'effect evidence reference'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value=None, stage=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<user-home>\Documents\Codex\2026-10-03\new-chat-6\work\combined6934-6900\test_compiled_custody_effect_join_01a0ff35.py", line 48, in test_invalid_success_witness_stops_at_its_action_despite_callback_edits
+    with self.assertRaisesRegex(ValueError, 'effect evidence reference'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value='', stage=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<user-home>\Documents\Codex\2026-10-03\new-chat-6\work\combined6934-6900\test_compiled_custody_effect_join_01a0ff35.py", line 48, in test_invalid_success_witness_stops_at_its_action_despite_callback_edits
+    with self.assertRaisesRegex(ValueError, 'effect evidence reference'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value='', stage=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<user-home>\Documents\Codex\2026-10-03\new-chat-6\work\combined6934-6900\test_compiled_custody_effect_join_01a0ff35.py", line 48, in test_invalid_success_witness_stops_at_its_action_despite_callback_edits
+    with self.assertRaisesRegex(ValueError, 'effect evidence reference'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value=0, stage=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<user-home>\Documents\Codex\2026-10-03\new-chat-6\work\combined6934-6900\test_compiled_custody_effect_join_01a0ff35.py", line 48, in test_invalid_success_witness_stops_at_its_action_despite_callback_edits
+    with self.assertRaisesRegex(ValueError, 'effect evidence reference'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value=0, stage=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<user-home>\Documents\Codex\2026-10-03\new-chat-6\work\combined6934-6900\test_compiled_custody_effect_join_01a0ff35.py", line 48, in test_invalid_success_witness_stops_at_its_action_despite_callback_edits
+    with self.assertRaisesRegex(ValueError, 'effect evidence reference'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value=True, stage=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<user-home>\Documents\Codex\2026-10-03\new-chat-6\work\combined6934-6900\test_compiled_custody_effect_join_01a0ff35.py", line 48, in test_invalid_success_witness_stops_at_its_action_despite_callback_edits
+    with self.assertRaisesRegex(ValueError, 'effect evidence reference'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value=True, stage=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<user-home>\Documents\Codex\2026-10-03\new-chat-6\work\combined6934-6900\test_compiled_custody_effect_join_01a0ff35.py", line 48, in test_invalid_success_witness_stops_at_its_action_despite_callback_edits
+    with self.assertRaisesRegex(ValueError, 'effect evidence reference'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value=False, stage=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<user-home>\Documents\Codex\2026-10-03\new-chat-6\work\combined6934-6900\test_compiled_custody_effect_join_01a0ff35.py", line 48, in test_invalid_success_witness_stops_at_its_action_despite_callback_edits
+    with self.assertRaisesRegex(ValueError, 'effect evidence reference'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value=False, stage=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<user-home>\Documents\Codex\2026-10-03\new-chat-6\work\combined6934-6900\test_compiled_custody_effect_join_01a0ff35.py", line 48, in test_invalid_success_witness_stops_at_its_action_despite_callback_edits
+    with self.assertRaisesRegex(ValueError, 'effect evidence reference'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value=1.0, stage=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<user-home>\Documents\Codex\2026-10-03\new-chat-6\work\combined6934-6900\test_compiled_custody_effect_join_01a0ff35.py", line 48, in test_invalid_success_witness_stops_at_its_action_despite_callback_edits
+    with self.assertRaisesRegex(ValueError, 'effect evidence reference'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value=1.0, stage=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<user-home>\Documents\Codex\2026-10-03\new-chat-6\work\combined6934-6900\test_compiled_custody_effect_join_01a0ff35.py", line 48, in test_invalid_success_witness_stops_at_its_action_despite_callback_edits
+    with self.assertRaisesRegex(ValueError, 'effect evidence reference'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value=[], stage=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<user-home>\Documents\Codex\2026-10-03\new-chat-6\work\combined6934-6900\test_compiled_custody_effect_join_01a0ff35.py", line 48, in test_invalid_success_witness_stops_at_its_action_despite_callback_edits
+    with self.assertRaisesRegex(ValueError, 'effect evidence reference'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value=[], stage=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<user-home>\Documents\Codex\2026-10-03\new-chat-6\work\combined6934-6900\test_compiled_custody_effect_join_01a0ff35.py", line 48, in test_invalid_success_witness_stops_at_its_action_despite_callback_edits
+    with self.assertRaisesRegex(ValueError, 'effect evidence reference'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value={}, stage=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<user-home>\Documents\Codex\2026-10-03\new-chat-6\work\combined6934-6900\test_compiled_custody_effect_join_01a0ff35.py", line 48, in test_invalid_success_witness_stops_at_its_action_despite_callback_edits
+    with self.assertRaisesRegex(ValueError, 'effect evidence reference'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value={}, stage=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<user-home>\Documents\Codex\2026-10-03\new-chat-6\work\combined6934-6900\test_compiled_custody_effect_join_01a0ff35.py", line 48, in test_invalid_success_witness_stops_at_its_action_despite_callback_edits
+    with self.assertRaisesRegex(ValueError, 'effect evidence reference'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value='xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', stage=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<user-home>\Documents\Codex\2026-10-03\new-chat-6\work\combined6934-6900\test_compiled_custody_effect_join_01a0ff35.py", line 48, in test_invalid_success_witness_stops_at_its_action_despite_callback_edits
+    with self.assertRaisesRegex(ValueError, 'effect evidence reference'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_success_witness_stops_at_its_action_despite_callback_edits (test_compiled_custody_effect_join_01a0ff35.CallbackEffectJoinTests.test_invalid_success_witness_stops_at_its_action_despite_callback_edits) (value='xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', stage=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<user-home>\Documents\Codex\2026-10-03\new-chat-6\work\combined6934-6900\test_compiled_custody_effect_join_01a0ff35.py", line 48, in test_invalid_success_witness_stops_at_its_action_despite_callback_edits
+    with self.assertRaisesRegex(ValueError, 'effect evidence reference'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.008s
+
+FAILED (failures=18)

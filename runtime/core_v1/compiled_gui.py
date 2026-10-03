@@ -181,7 +181,8 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
 
     def emit(event):
         row = copy.deepcopy(event)
-        journal(row)
+        # The sink may format or retain its payload; keep receipt evidence private.
+        journal(copy.deepcopy(row))
         if row["event"] in {"branch_selected", "admission_refused",
                             "action_terminal", "effect_checked", "runtime_finished"}:
             critical_events.append(row)
@@ -225,7 +226,7 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
             return finish("SAFE_YIELD", "budget_exhausted")
         try:
             raw = adapters["observe"]({"state": state,
-                                        "required_predicates": interface["predicates"]})
+                                        "required_predicates": interface["predicates"].copy()})
         except ObservationAssociationChanged:
             # Preserve completed actions and pending effects, without inventing
             # a sequence, usable image, effect verdict, or permission to replay.
@@ -249,8 +250,6 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
                 return finish("SAFE_YIELD", "no_progress")
             expected = pending_effect["expected_effect"]
             observed = observation["predicates"]
-            # A declared matching string literal still needs the effect verifier.
-            # Retain legacy unavailable handling when "unknown" does not match.
             unknown = any(key not in observed or
                           (observed[key] == "unknown" and
                            not _matches(observed[key], value))
@@ -270,8 +269,11 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
                 "observation": copy.deepcopy(observation),
             })
             _exact(effect, {"status", "evidence_ref"}, "effect verdict")
+            effect = effect.copy()
             if effect["status"] not in {"succeeded", "failed", "unavailable"}:
                 raise ValueError("typed effect status required")
+            if effect["status"] == "succeeded":
+                _name(effect["evidence_ref"], "effect evidence reference")
             emit({"event": "effect_checked", "action": pending_effect["action"],
                   "status": effect["status"], "evidence_ref": effect["evidence_ref"]})
             if effect["status"] != "succeeded":
@@ -324,6 +326,8 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
             return finish("SAFE_YIELD", "budget_exhausted")
         _exact(admission, {"eligible", "status", "authorization",
                            "expected_sequence", "valid_until_ns"}, "admission")
+        # Keep returned fields private before validating and calling adapters.
+        admission = admission.copy()
         if type(admission["eligible"]) is not bool:
             raise ValueError("boolean admission eligibility required")
         if not admission["eligible"]:
@@ -362,18 +366,21 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
                 raise ValueError("no-input terminal must be an explicit refusal")
             delivery["input_dispatched"] = terminal["input_dispatched"]
         _exact(terminal, terminal_fields, "execution terminal")
+        terminal = terminal.copy()
         release = terminal["release"]
         _exact(release, {"verified", "keys_down", "buttons_down"}, "release")
         released = (release["verified"] is True and release["keys_down"] == [] and
                     release["buttons_down"] == [])
+        preinput_refusal = (terminal.get("input_dispatched") is False and
+                            terminal["status"] == "refused" and
+                            release["keys_down"] == [] and release["buttons_down"] == [])
         emit({"event": "action_terminal", "action": action_name,
               "status": terminal["status"], "action_id": terminal["action_id"],
               "release_verified": released, **delivery})
         # An explicitly attested pre-input refusal has no new release receipt.
         # Stop without inventing neutrality, a completed action or a replay.
         # Unknown delivery and reported held input keep the stricter failure path.
-        if (terminal.get("input_dispatched") is False and terminal["status"] == "refused"
-                and release["keys_down"] == [] and release["buttons_down"] == []):
+        if preinput_refusal:
             return finish("SAFE_YIELD", "execution_refused")
         if not released:
             return finish("RUNTIME_FAILED", "execution_failed")

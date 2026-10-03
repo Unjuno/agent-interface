@@ -1,0 +1,117 @@
+{
+  "recorded_utc": "2026-10-03T05:28:02.932575+00:00",
+  "decision": "PASS_ORDER_MEMORY_SCOPED",
+  "audit_version": "refusal-cause-v2",
+  "original_raw_sha256": "41da4525999a2514b093b0c1114bc42736c4119466baaabef4b5990fe4edf479",
+  "original_raw_rows": 108,
+  "captured_refusal_causes_joined": 75,
+  "accepted": {
+    "baseline": 16,
+    "observation_floor": 12,
+    "authorization_floor": 5
+  },
+  "before_grant_accepted": {
+    "baseline": 11,
+    "observation_floor": 7,
+    "authorization_floor": 0
+  },
+  "effective_controls": 19,
+  "eight_regressions_normal_exit": 0,
+  "eight_regressions_optimized_exit": 0,
+  "first_red_expected_assertion_failures": 6,
+  "first_red_exit": 1,
+  "old_exact_two_copy_exits": [
+    0,
+    0
+  ],
+  "new_exact_two_copy_exits": [
+    1,
+    1
+  ],
+  "new_exact_two_copy_errors": [
+    "1:error_message",
+    "100:error_message"
+  ],
+  "v2_audit_sha256": "5c981af900c8eb5e5b296f6e39f96e93b119617dffff17d5705b25616339d781",
+  "actual_children": {
+    "RED": {
+      "pid": 5460,
+      "started_utc": "2026-10-03T05:24:01.892682+00:00",
+      "ended_utc": "2026-10-03T05:24:02.031190+00:00",
+      "actual_child_exit": 1,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "c17441f90917fe421d09f6b8c637943b2abc81bf0797dce7315b49eecb8964d0"
+    },
+    "OLD_ROW1": {
+      "pid": 5048,
+      "started_utc": "2026-10-03T05:24:28.811891+00:00",
+      "ended_utc": "2026-10-03T05:24:28.955500+00:00",
+      "actual_child_exit": 0,
+      "stdout_sha256": "a520b41eba0517058c214185ca41c5500d649760ecb2065066230ccf2e1dad7d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "OLD_ROW100": {
+      "pid": 35136,
+      "started_utc": "2026-10-03T05:24:29.543453+00:00",
+      "ended_utc": "2026-10-03T05:24:29.688391+00:00",
+      "actual_child_exit": 0,
+      "stdout_sha256": "a520b41eba0517058c214185ca41c5500d649760ecb2065066230ccf2e1dad7d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "GREEN": {
+      "pid": 30076,
+      "started_utc": "2026-10-03T05:26:05.292477+00:00",
+      "ended_utc": "2026-10-03T05:26:05.423420+00:00",
+      "actual_child_exit": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "0651cf3d5d1b06d1bcaed6325de639579c628921b38e9a001fa7b76909ae35cd"
+    },
+    "OPTIMIZED": {
+      "pid": 33128,
+      "started_utc": "2026-10-03T05:26:05.989118+00:00",
+      "ended_utc": "2026-10-03T05:26:06.134296+00:00",
+      "actual_child_exit": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "0651cf3d5d1b06d1bcaed6325de639579c628921b38e9a001fa7b76909ae35cd"
+    },
+    "AUDIT_V2": {
+      "pid": 29336,
+      "started_utc": "2026-10-03T05:26:06.706214+00:00",
+      "ended_utc": "2026-10-03T05:26:06.910685+00:00",
+      "actual_child_exit": 0,
+      "stdout_sha256": "5c981af900c8eb5e5b296f6e39f96e93b119617dffff17d5705b25616339d781",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "V2_ROW1": {
+      "pid": 11916,
+      "started_utc": "2026-10-03T05:26:07.467476+00:00",
+      "ended_utc": "2026-10-03T05:26:07.664728+00:00",
+      "actual_child_exit": 1,
+      "stdout_sha256": "020282c5d615d50eee75cb0537dbb0948a88068c464bd94d353b4764880eddec",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "V2_ROW100": {
+      "pid": 4984,
+      "started_utc": "2026-10-03T05:26:08.218659+00:00",
+      "ended_utc": "2026-10-03T05:26:08.418216+00:00",
+      "actual_child_exit": 1,
+      "stdout_sha256": "426019c50da68d93f5a32aba08f88eb94480e8f1e709ab3bbbc897b98a212d77",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "all_original_56_files_unchanged": true,
+  "all_final_frozen_sources_unchanged": true,
+  "environment": {
+    "python": "3.11.9",
+    "implementation": "CPython",
+    "os": "Windows",
+    "machine": "AMD64",
+    "dependencies": "stdlib only"
+  },
+  "qualification": "Original unchanged AUDIT.json/RESULT.json are first historical outputs; original auditor did not verify captured refusal cause. V2 completes the limited finite source-reason gate, not native authority/clock/task proof. The original108-row information contrast remains supported.",
+  "publication_state": "private v2 finalized; new commit/proposal/content votes not yet obtained",
+  "formal_allocations": 0,
+  "producer_or_kernel_replays": 0,
+  "main_sends": 0,
+  "new_workers": 0
+}

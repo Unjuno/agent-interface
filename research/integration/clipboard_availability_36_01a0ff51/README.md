@@ -1,0 +1,3 @@
+# Clipboard availability / delayed native effect — #36 / #57
+
+Prospective six-cell native X11/Qt experiment; see PREREGISTRATION.md, formal/01/FREEZE.json, REPORT.md and audit.py. No production/runtime auto-import or workflow changes. Candidate and auditor are one-shot, require the dedicated Engine and fresh output directories; never rerun a consumed allocation. Raw-only audit reproduction: `python3 -B audit.py --cases cases.json --raw formal/01/run/raw.json --output /tmp/clipboard36-availability-audit.json`. Tests: `python3 -B -m unittest test_audit test_lines -v` in the pinned image; test_lines needs Linux libX11.
