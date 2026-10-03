@@ -1,0 +1,13 @@
+import datetime,hashlib,json,pathlib,platform,sqlite3,subprocess,sys
+P=pathlib.Path(__file__).resolve().parent;sha=lambda b:hashlib.sha256(b).hexdigest();utc=lambda:datetime.datetime.now(datetime.timezone.utc).isoformat()
+pins=[{'path':n,'bytes':len((P/n).read_bytes()),'sha256':sha((P/n).read_bytes())} for n in ('PLAN.md','producer.py','run.py','audit.py')]
+freeze={'utc':utc(),'base':'317b8b792ce1ab67f8bf3dd9e71a9f40dfd9817f','pins':pins,'python':sys.version,'platform':platform.platform(),'sqlite':sqlite3.sqlite_version,'python_exe_sha256':sha(pathlib.Path(sys.executable).read_bytes()),'producer_limit':1,'audit_limit':1,'retries':0,'scope':'ordinary private native integration boundary; not old formal allocation'}
+(P/'FREEZE.json').write_text(json.dumps(freeze,indent=2)+'\n',encoding='utf-8')
+def run(name):
+    start=utc();c=subprocess.Popen([sys.executable,'-X','utf8','-B',str(P/(name+'.py'))],stdout=subprocess.PIPE,stderr=subprocess.PIPE);o,e=c.communicate(timeout=45);end=utc()
+    (P/(name+'.stdout.txt')).write_bytes(o);(P/(name+'.stderr.txt')).write_bytes(e)
+    r={'command':['python','-X','utf8','-B',name+'.py'],'started_utc':start,'ended_utc':end,'pid':c.pid,'exit_code':c.returncode,'stdout_bytes':len(o),'stdout_sha256':sha(o),'stderr_bytes':len(e),'stderr_sha256':sha(e)}
+    (P/(name+'.receipt.json')).write_text(json.dumps(r,indent=2)+'\n',encoding='utf-8');print(json.dumps(r));print(o.decode());print(e.decode());return c.returncode
+code=run('producer')
+if code==0:code=run('audit')
+sys.exit(code)
