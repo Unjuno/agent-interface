@@ -17,6 +17,8 @@ class AuditControls(unittest.TestCase):
     def directory(self, root):
         rows = self.rows()
         for row in rows:
+            # New-schema synthetic fixture; never change retained old raw rows.
+            row.update(cleanup_child_alive=False, cleanup_reader_alive=False)
             (root / (row['case'] + '.json')).write_text(json.dumps(row))
         (root / 'SUMMARY.json').write_text(json.dumps({
             'cases': [row['case'] for row in rows], 'retries': 0, 'model_calls': 0,
@@ -59,3 +61,23 @@ class AuditControls(unittest.TestCase):
         for changed in (rows[:3], rows[::-1], [rows[0], rows[0], rows[2], rows[3]]):
             with self.assertRaises(ValueError):
                 check_rows(changed)
+
+    def test_rejects_missing_or_live_cleanup_state(self):
+        for value in (True, None):
+            rows = self.rows()
+            for row in rows:
+                row.update(cleanup_child_alive=False, cleanup_reader_alive=False)
+            rows[2]['cleanup_child_alive'] = value
+            with self.assertRaises(ValueError):
+                check_rows(rows)
+
+    def test_rejects_overlapping_cells(self):
+        rows = self.rows()
+        for row in rows:
+            row.update(cleanup_child_alive=False, cleanup_reader_alive=False)
+            shift = row['start_ns'] - rows[0]['start_ns']
+            row['start_ns'] -= shift; row['end_ns'] -= shift
+            for wait in row['waits']:
+                wait['start_ns'] -= shift; wait['end_ns'] -= shift
+        with self.assertRaises(ValueError):
+            check_rows(rows)
