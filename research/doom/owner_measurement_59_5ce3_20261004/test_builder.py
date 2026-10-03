@@ -27,6 +27,9 @@ class BuilderTests(unittest.TestCase):
     def source(self):
         if os.environ.get('OWNER_MEASUREMENT_SOURCE_FILE'):
             return Path(os.environ['OWNER_MEASUREMENT_SOURCE_FILE']).read_bytes()
+        if os.environ.get('OWNER_MEASUREMENT_SOURCE_ROOT'):
+            return (Path(os.environ['OWNER_MEASUREMENT_SOURCE_ROOT']) /
+                    'research/live_control/input_owner_v10.py').read_bytes()
         return subprocess.check_output(
             ['git', 'show', PIN + ':research/live_control/input_owner_v10.py'], cwd=HERE)
 
@@ -38,6 +41,10 @@ class BuilderTests(unittest.TestCase):
     def bundle_sources(self):
         names = ('input_owner_v10.py', 'doom_typed_release_backend_v1.py',
                  'session_map01_v12.py', 'map01_overlap_controller_v39.py')
+        if os.environ.get('OWNER_MEASUREMENT_SOURCE_ROOT'):
+            root = Path(os.environ['OWNER_MEASUREMENT_SOURCE_ROOT']) / 'research'
+            return {name: (root / ('live_control' if name == 'input_owner_v10.py' else 'doom') /
+                          name).read_bytes() for name in names}
         return {name: subprocess.check_output(['git', 'show', PIN + ':research/' +
             ('live_control/' if name == 'input_owner_v10.py' else 'doom/') + name],
             cwd=HERE) for name in names}
