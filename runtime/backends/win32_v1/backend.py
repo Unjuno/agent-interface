@@ -366,7 +366,8 @@ class Win32Backend:
             self.user32.ReleaseDC(source_hwnd, source_dc)
 
     def observe_read_only(self, target: str, frame: str, region) -> dict[str, Any]:
-        # Capture only: preserve caller-owned input and session recovery state.
+        # Validate binding without changing caller-owned input or recovery state.
+        self._target(target)
         return self.capture(target, frame, *region)
 
     def capture(self, target: str, frame: str, x: int, y: int,

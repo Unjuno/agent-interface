@@ -182,6 +182,24 @@ class Win32ReadOnlyObserveTests(unittest.TestCase):
                 backend._capture_hdc.assert_not_called()
                 self.assert_untouched(backend, session)
 
+    def test_win32_unknown_or_stale_target_refuses_both_frames(self):
+        for frame in ("window_client", "screen_physical_px"):
+            for target, live in (("unknown", True), ("fixture", False)):
+                with self.subTest(frame=frame, target=target, live=live):
+                    backend, session, _ = self.backend_session()
+                    backend.user32.IsWindow.return_value = live
+                    row = observe_in_session(session, target=target, frame=frame,
+                                             region=[0, 0, 4, 4])
+                    self.assertEqual(row["status"], "observation_failed")
+                    self.assertIn("unknown or stale target", row["error"])
+                    backend._capture_hdc.assert_not_called()
+                    backend.geometry.assert_not_called()
+                    if target == "unknown":
+                        backend.user32.IsWindow.assert_not_called()
+                    else:
+                        backend.user32.IsWindow.assert_called_once_with(42)
+                    self.assert_untouched(backend, session)
+
     def test_win32_artifact_request_still_refuses_before_capture(self):
         backend, session, _ = self.backend_session()
         row = observe_in_session(session, target="fixture", frame="window_client", region=[0, 0, 4, 4], capture_directory="unused")
