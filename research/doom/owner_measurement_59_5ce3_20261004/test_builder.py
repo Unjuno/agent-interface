@@ -1,0 +1,148 @@
+"""Executable-source construction tests; no native input or game execution."""
+import ast
+import importlib.util
+from pathlib import Path
+import subprocess
+import types
+import unittest
+
+HERE = Path(__file__).resolve().parent
+PIN = '12e4c1ebaf382d70760eafbe3cf2e5fda90a9d2c'
+
+
+class BuilderTests(unittest.TestCase):
+    def builder(self):
+        path = HERE / 'build_owner.py'
+        self.assertTrue(path.is_file(), 'missing pinned-source measurement builder')
+        spec = importlib.util.spec_from_file_location('measurement_builder', path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+
+    def source(self):
+        return subprocess.check_output(
+            ['git', 'show', PIN + ':research/live_control/input_owner_v10.py'], cwd=HERE)
+
+    def test_changed_source_is_rejected_before_generation(self):
+        builder = self.builder()
+        with self.assertRaises(ValueError):
+            builder.instrument(self.source() + b'\n# drift\n')
+
+    def test_generated_key_branch_retains_identity_and_explicit_up_return(self):
+        tree = ast.parse(self.builder().instrument(self.source()))
+        branch = next(n for n in ast.walk(tree) if isinstance(n, ast.If)
+                      and ast.unparse(n.test) == "op in ('down', 'up')")
+        code = compile(ast.fix_missing_locations(ast.Module(body=branch.body,
+                        type_ignores=[])), '<generated-key-branch>', 'exec')
+        events = []
+        class Display:
+            def keysym_to_keycode(self, value): return 38
+            def sync(self): events.append('sync')
+        class Lease:
+            deadline = 100000
+            token = 'intent-one'
+            cancel = types.SimpleNamespace(is_set=lambda: False)
+            def check(self): pass
+        ticks = iter(range(100, 1000))
+        owner = types.SimpleNamespace(owner_id='owner-one', records=[])
+        env = dict(d=Display(), XK=types.SimpleNamespace(string_to_keysym=lambda x: x),
+                   X=types.SimpleNamespace(KeyPress=2, KeyRelease=3),
+                   xtest=types.SimpleNamespace(fake_input=lambda d, kind, key: events.append((kind, key))),
+                   time=types.SimpleNamespace(perf_counter_ns=lambda: next(ticks)),
+                   self=owner, lease=Lease(), held={}, touched=set(), active=None,
+                   fault=None, invalid_focus=lambda lease: False, key='a', op='down')
+        helpers = [n for n in tree.body if isinstance(n, ast.FunctionDef)
+                   and n.name.startswith('_measurement_')]
+        exec(compile(ast.Module(body=helpers, type_ignores=[]), '<measurement-helpers>', 'exec'), env)
+        exec(code, env)
+        self.assertEqual(events, [(2, 38), 'sync'])
+        press = owner.records[0]
+        self.assertEqual((press['event'], press['owner_id'], press['intent'], press['keycode']),
+                         ('owner_key_press', 'owner-one', 'intent-one', 38))
+        self.assertLessEqual(press['request_started_ns'], press['sync_completed_ns'])
+        self.assertFalse(press['grants_input_authority'])
+        env['op'] = 'up'
+        exec(code, env)
+        self.assertIsNone(env['result'])
+        self.assertEqual(events, [(2, 38), 'sync', (3, 38), 'sync'])
+        self.assertEqual(env['held'], {})
+        up = owner.records[1]
+        self.assertEqual((up['event'], up['owner_id'], up['intent'], up['keycode']),
+                         ('owner_explicit_key_up', 'owner-one', 'intent-one', 38))
+
+    def cleanup_case(self, clock_failure=False, identity_failure=False):
+        tree = ast.parse(self.builder().instrument(self.source()))
+        release = next(n for n in ast.walk(tree) if isinstance(n, ast.FunctionDef)
+                       and n.name == 'release')
+        wrapper = ast.parse('''
+def factory(held, active, self, d, xtest, X, time):
+    revision = 0
+    buttons = {}
+    touched_buttons = set()
+    touched = set(held)
+''').body[0]
+        wrapper.body += [release, ast.Return(value=ast.Name(id='release', ctx=ast.Load()))]
+        helpers = [n for n in tree.body if isinstance(n, ast.FunctionDef)
+                   and n.name.startswith('_measurement_')]
+        env = {}
+        exec(compile(ast.fix_missing_locations(ast.Module(body=helpers + [wrapper],
+                     type_ignores=[])), '<generated-release>', 'exec'), env)
+        events = []
+        class Display:
+            def sync(self): events.append('sync')
+            def screen(self): return types.SimpleNamespace(root=types.SimpleNamespace(
+                query_pointer=lambda: types.SimpleNamespace(mask=0)))
+            def query_keymap(self): return bytes(32)
+        class Lease:
+            deadline = 10000
+            @property
+            def token(self):
+                if identity_failure:
+                    raise ValueError('injected telemetry identity failure')
+                return 'intent-one'
+        lease = Lease()
+        owner = types.SimpleNamespace(owner_id='owner-one', records=[])
+        ticks = iter(range(100, 1000))
+        def timestamp():
+            tick = next(ticks)
+            if clock_failure and tick < 103:
+                raise ValueError('injected telemetry clock failure')
+            return tick
+        held = {38: lease, 39: lease}
+        call = env['factory'](held, lease, owner, Display(),
+            types.SimpleNamespace(fake_input=lambda d, kind, key: events.append((kind, key))),
+            types.SimpleNamespace(KeyRelease=3, ButtonRelease=5, Button1Mask=256),
+            types.SimpleNamespace(perf_counter_ns=timestamp))
+        record = call('cancelled')
+        return record, events, held
+
+    def test_bulk_cleanup_retains_per_key_identity_and_one_batch_sync(self):
+        record, events, held = self.cleanup_case()
+        self.assertEqual(events, [(3, 38), (3, 39), 'sync'])
+        self.assertEqual(held, {})
+        self.assertTrue(record['verified'])
+        self.assertIn('key_release_brackets', record, 'bulk release has no per-key measurement')
+        rows = record['key_release_brackets']
+        self.assertEqual([(r['owner_id'], r['intent'], r['keycode']) for r in rows],
+                         [('owner-one', 'intent-one', 38), ('owner-one', 'intent-one', 39)])
+        self.assertEqual(rows[0]['sync_completed_ns'], rows[1]['sync_completed_ns'])
+        self.assertLessEqual(rows[0]['request_started_ns'], rows[1]['request_started_ns'])
+
+    def test_telemetry_clock_failure_does_not_block_bulk_release(self):
+        record, events, held = self.cleanup_case(clock_failure=True)
+        self.assertEqual(events, [(3, 38), (3, 39), 'sync'])
+        self.assertEqual(held, {})
+        self.assertTrue(record['verified'])
+        self.assertEqual([(r['request_started_ns'], r['sync_completed_ns'])
+                          for r in record['key_release_brackets']], [(None, None), (None, None)])
+
+    def test_telemetry_identity_failure_does_not_block_bulk_release(self):
+        record, events, held = self.cleanup_case(identity_failure=True)
+        self.assertEqual(events, [(3, 38), (3, 39), 'sync'])
+        self.assertEqual(held, {})
+        self.assertTrue(record['verified'])
+        self.assertEqual(record['key_release_brackets'], [])
+
+
+if __name__ == '__main__':
+    unittest.main()
