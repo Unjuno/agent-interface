@@ -13,7 +13,7 @@ completed exit0, not OOM, terminal. No scientific retries or replacement cells.
 | Prearmed-scope crash6 | exactlyone helperF8up, independentF8neutral before checkpoint |
 | Healthy6 | liveowner/F8held/helperpending at entry+200ms; public program completes later, no helperinput |
 | Bystander6 (subset of crash12) | separately-owned F9 retained through checkpoint; helper never touches it |
-| Final18 | whole32-byte keymap/buttons neutral, final emergency emissions0 |
+| Final18 | whole32-byte keymap and observed Button1–3 mask neutral, final emergency emissions0 |
 
 Formal outcome FAIL_EMPTY_SCOPE_AS_OWNER_RELEASE_EVIDENCE; reference
 SUPPORTED_PREARMED_OWNER_SCOPE_TRANSFER_SCOPED. 1748 independent query samples,
@@ -22,6 +22,10 @@ aafcc9a0b9db97619008dbb446304bf8d6ac703616e4a79329111fc674957643.
 Reference kill-request→publicrelease-return ms:3.889,0.806,3.471,0.911,3.522,3.703.
 These are observed software intervals under shared hardware, not hard deadlines,
 hardware sensing, app receiver latency or general reliability bounds.
+Button readback is limited to X Button1–3 masks. Buttons4+ and arbitrary pointer
+input are untested; neither whole-keymap queries nor the source release receipt
+establish an all-button global-neutral guarantee. This qualification does not
+change the F8/F9 contrast or the preserved first formal outcome.
 
 ## Death gate and preserved failures
 
