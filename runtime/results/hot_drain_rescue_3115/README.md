@@ -12,4 +12,4 @@ D: published614/614; saved108refusals/75positives; original75closed lifetimes; n
 C: saved classification is not original execution authentication, general malformed-family coverage or native leak evidence.
 U: original consumed native/producer/auditor allocations unrerun; no natural-load, performance, scheduler, GUI/task/model or runtime adoption certificate.
 
-Local CI is recorded separately in `local-ci.log`. macOS OrbStack image access has the known daemon-blob operation-not-supported STOP; no reset/prune/pull, shared VM or container execution is claimed.
+Local CI completed exit0 with `LOCAL_CI_SUMMARY: steps=43 failures=[]`, recorded separately in `local-ci.log`. macOS OrbStack image access has the known daemon-blob operation-not-supported STOP; no reset/prune/pull, shared VM or container execution is claimed.
