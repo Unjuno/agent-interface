@@ -19,6 +19,7 @@ SUITES = {
 }
 
 SUITES['protocol'].append('test_app_server_eof_stop')
+SUITES['protocol'].append('test_app_server_utf8')
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
