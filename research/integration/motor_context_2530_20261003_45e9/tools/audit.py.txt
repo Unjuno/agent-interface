@@ -1,0 +1,154 @@
+"""Raw-only reference classification; no production imports or reruns."""
+import copy
+from collections import Counter
+import hashlib
+import json
+from pathlib import Path
+import sys
+
+ACK = ("ACKED", "PENDING", "UNKNOWN")
+RELEASE = ("NOT_TERMINAL", "VERIFIED_EMPTY", "UNVERIFIED", "FAILED")
+UNCERTAINTY = ("NONE", "OS_UNCONFIRMED", "SURFACE_UNKNOWN", "FOCUS_UNKNOWN")
+STATUS = ("accepted", "rejected", "failed", "released")
+REQUIRED = ("state_id", "owner_id", "owner_revision", "observation_id", "surface_id", "coordinate_frame")
+
+
+def enum(value, domain):
+    return type(value) is str and value in domain
+
+
+def valid_state(row):
+    # The corpus varies these constraints; every other adapter requirement is fixed valid.
+    if not enum(row["input_ack"].get("status"), ACK) or type(row["input_ack"].get("id")) is not str:
+        return False, "input_ack"
+    if not enum(row["release"].get("status"), RELEASE) or type(row["release"].get("retained")) is not bool:
+        return False, "release"
+    if not enum(row["uncertainty"], UNCERTAINTY):
+        return False, "uncertainty"
+    if row["release"]["status"] != "NOT_TERMINAL" and not any(type(event) is dict and event.get("type") == "RELEASE_TRANSITION" for event in row["events"]):
+        return False, "release_event_not_retained"
+    if row["uncertainty"] == "NONE" and (row["observed_pointer"] is None or row["input_ack"]["status"] != "ACKED"):
+        return False, "implicit_confirmation"
+    return True, "ok"
+
+
+def expected(case):
+    if case["api"] == "validate":
+        return {"return": list(valid_state(case["row"]))}
+    result, context = case["result"], case["context"]
+    report = {"bridge": "dispatch-result-v1", "accepted": False}
+
+    def refuse(reason):
+        report["reason"] = reason
+        return {"return": [None, report]}
+
+    if type(result) is not dict:
+        return refuse("result_not_mapping")
+    status = result.get("status")
+    if not enum(status, STATUS):
+        return refuse("status")
+    report["source_status"] = status
+    if type(context) is not dict:
+        return refuse("explicit_context_required")
+    if any(key not in context for key in REQUIRED):
+        return refuse("context_incomplete")
+    if type(context["owner_revision"]) is not int or context["owner_revision"] < 0:
+        return refuse("context_owner_revision")
+    release = result.get("release")
+    release = copy.deepcopy(release) if type(release) is dict else {"status": "NOT_TERMINAL", "retained": False}
+    report["release"] = release
+    values = {}
+    for key, kind, default in (("events", list, []), ("commanded_pointer", dict, {}),
+                               ("held_keys", list, []), ("held_buttons", list, []),
+                               ("input_ack", dict, {"id": "unknown", "status": "UNKNOWN"})):
+        value = context.get(key, default)
+        if type(value) is not kind:
+            return refuse("context_" + key)
+        values[key] = copy.deepcopy(value)
+    row = {"schema": "agent-interface/motor-state-v1", **{key: context[key] for key in REQUIRED},
+           **values, "observed_pointer": context.get("observed_pointer"),
+           "release": release, "uncertainty": context.get("uncertainty", "OS_UNCONFIRMED")}
+    if status in ("released", "failed"):
+        row["events"].append({"type": "RELEASE_TRANSITION", "source": "dispatch_result"})
+    ok, reason = valid_state(row)
+    report["validation"] = reason
+    report["accepted"] = ok and status == "accepted"
+    if not ok:
+        return refuse("motor_state_validation")
+    if status != "accepted":
+        return refuse("dispatch_not_accepted")
+    return {"return": [row, report]}
+
+
+def same_type_value(left, right):
+    if type(left) is not type(right):
+        return False
+    if type(left) is dict:
+        return left.keys() == right.keys() and all(same_type_value(left[key], right[key]) for key in left)
+    if type(left) is list:
+        return len(left) == len(right) and all(same_type_value(a, b) for a, b in zip(left, right))
+    return left == right
+
+
+def inspect(cases, rows):
+    errors = []
+    wanted = {case["case_id"]: case for case in cases}
+    ids = [row.get("case_id") for row in rows]
+    if len(ids) != len(wanted) or len(set(ids)) != len(ids) or set(ids) != set(wanted):
+        errors.append("case_identity_or_completeness")
+    mismatches = []
+    exceptions = Counter()
+    for row in rows:
+        if set(row) != {"case_id", "actual", "unmutated"} or row["unmutated"] is not True:
+            errors.append("raw_shape_or_mutation")
+        case = wanted.get(row.get("case_id"))
+        if case is None:
+            continue
+        if "exception" in row["actual"]:
+            exceptions[row["actual"]["exception"]] += 1
+        if not same_type_value(row["actual"], expected(case)):
+            mismatches.append({"case_id": case["case_id"], "group": case["group"], "api": case["api"],
+                               "observed": row["actual"], "expected": expected(case)})
+    return errors, mismatches, dict(exceptions)
+
+
+def controls(cases, rows):
+    variants = {}
+    variants["omitted_row"] = copy.deepcopy(rows[:-1])
+    variants["duplicate_row"] = copy.deepcopy(rows + [rows[0]])
+    value = copy.deepcopy(rows); value[0]["case_id"] = "unknown"; variants["unknown_case"] = value
+    i = next(i for i, row in enumerate(rows) if row["actual"].get("return", [None])[0] is False)
+    value = copy.deepcopy(rows); value[i]["actual"]["return"][0] = 0; variants["bool_integer_alias"] = value
+    i = next(i for i, row in enumerate(rows) if type(row["actual"].get("return", [None])[0]) is dict)
+    value = copy.deepcopy(rows); value[i]["actual"]["return"][0]["owner_revision"] = True; variants["nested_bool_integer_alias"] = value
+    value = copy.deepcopy(rows); value[0]["unmutated"] = False; variants["mutation"] = value
+    value = copy.deepcopy(rows); value[0]["unmutated"] = 1; variants["mutation_bool_alias"] = value
+    value = copy.deepcopy(rows); value[0]["actual"] = {"exception": "Injected"}; variants["injected_exception"] = value
+    return {name: bool(inspect(cases, value)[0] or inspect(cases, value)[1]) for name, value in variants.items()}
+
+
+if __name__ == "__main__":
+    corpus, raw_path, freeze_path = map(Path, sys.argv[1:4])
+    mode = sys.argv[4]
+    freeze = json.loads(freeze_path.read_text(encoding="utf-8"))
+    raw = raw_path.read_bytes()
+    cases_raw = corpus.read_bytes()
+    summary = json.loads(raw_path.with_suffix(".summary.json").read_text(encoding="utf-8"))
+    assert hashlib.sha256(cases_raw).hexdigest() == freeze["cases_sha256"] == summary["cases_sha256"]
+    assert hashlib.sha256(raw).hexdigest() == summary["raw_sha256"]
+    cases = [json.loads(line) for line in cases_raw.splitlines()]
+    rows = [json.loads(line) for line in raw.splitlines()]
+    errors, mismatches, exceptions = inspect(cases, rows)
+    checks = controls(cases, rows) if mode == "after" else {}
+    decision = ("EXPECTED_BASELINE_COUNTEREXAMPLES" if mismatches and exceptions and not errors else "UNEXPECTED_BASELINE") if mode == "before" else ("PASS_FINITE_JSON_BOUNDARY" if not errors and not mismatches and all(checks.values()) else "FAIL_FINITE_JSON_BOUNDARY")
+    report = {"mode": mode, "decision": decision, "cases": len(rows), "structural_errors": errors,
+              "oracle_mismatches": len(mismatches), "mismatch_groups": dict(Counter(item["group"] for item in mismatches)),
+              "exceptions": exceptions, "negative_controls": checks,
+              "raw_sha256": summary["raw_sha256"], "source_sha256": summary["source_sha256"]}
+    with raw_path.with_suffix(".audit.json").open("x", encoding="utf-8", newline="\n") as target:
+        json.dump(report, target, indent=2); target.write("\n")
+    with raw_path.with_suffix(".mismatches.jsonl").open("x", encoding="utf-8", newline="\n") as target:
+        for item in mismatches:
+            target.write(json.dumps(item, sort_keys=True, separators=(",", ":")) + "\n")
+    print(json.dumps(report))
+    sys.exit(0 if decision in ("EXPECTED_BASELINE_COUNTEREXAMPLES", "PASS_FINITE_JSON_BOUNDARY") else 1)
