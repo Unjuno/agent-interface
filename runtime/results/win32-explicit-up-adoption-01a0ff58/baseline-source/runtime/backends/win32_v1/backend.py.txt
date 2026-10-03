@@ -281,6 +281,8 @@ class Win32Backend:
         self._send_key(vk, down)
         if down:
             self.held_keys[key] = vk
+        else:
+            self.held_keys.pop(key, None)
 
     def key_chord(self, keys: list[str]) -> None:
         for key in keys:
@@ -308,6 +310,8 @@ class Win32Backend:
         self._send(item)
         if down:
             self.held_buttons.add(button)
+        else:
+            self.held_buttons.discard(button)
 
     def scroll(self, dx: int, dy: int) -> None:
         for value, flag in ((dy, MOUSEEVENTF_WHEEL), (dx, MOUSEEVENTF_HWHEEL)):
