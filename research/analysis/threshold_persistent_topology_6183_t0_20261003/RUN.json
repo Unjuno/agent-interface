@@ -136,9 +136,6 @@
     ],
     "candidate_command": "docker run --name topology-6183-candidate-a03 --network none --cpus 1 --memory 512m --read-only --user 501:501 --cap-drop ALL --security-opt no-new-privileges --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,src=/home/taka/inputs/topology-6183-a03-candidate,dst=/src,readonly --mount type=bind,src=/home/taka/outputs/topology-6183-a03,dst=/out -e OUT_DIR=/out -e PYTHONDONTWRITEBYTECODE=1 -w /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 sh -c 'cat /sys/fs/cgroup/memory.max > /out/candidate.memory.max; cat /sys/fs/cgroup/cpu.max > /out/candidate.cpu.max; python /src/candidate_a03.py > /out/candidate.stdout.log 2>&1'",
     "auditor_command": "docker run --name topology-6183-auditor-a03 --network none --cpus 1 --memory 512m --read-only --user 501:501 --cap-drop ALL --security-opt no-new-privileges --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,src=/home/taka/inputs/topology-6183-a03-auditor,dst=/src,readonly --mount type=bind,src=/home/taka/outputs/topology-6183-a03,dst=/out -e OUT_DIR=/out -e PYTHONDONTWRITEBYTECODE=1 -w /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 sh -c 'cat /sys/fs/cgroup/memory.max > /out/auditor.memory.max; cat /sys/fs/cgroup/cpu.max > /out/auditor.cpu.max; python /src/audit_a03.py > /out/auditor.stdout.log 2>&1'",
-    "candidate_invocations": 0,
-    "auditor_invocations": 0,
-    "retries": 0,
     "container_ids": {
       "candidate": "6e9632d52fe685e756cfd9568bd1f3afb36608892179319c6c318ff192ba7987",
       "auditor": "beb45f2c1ab3024b63ba02afb8ed66c77ac479caa9aa7a541eefdeac3d5deb65"
