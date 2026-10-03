@@ -1,5 +1,14 @@
 # Paired-clock rescue preparation
 
+Latest main merged cleanly at 765111d48. Fresh pinned Python3.12 normal/-O
+module-selected post-dispatch/public-summary tests pass22; saved public reader
+under -O checks62 members/12 rows/6 controls; all72 checksums match.
+First discover invocation with -s runtime/cli_v1 lacked package context and
+errored on relative public_summary import (10 tests,1error); corrected by
+selecting runtime.cli_v1.test_post_dispatch_capture and test_public_summary.
+This invocation error is not silently counted as a product PASS.
+Local CI43 again exits0 failures=[]; full output is merged-local-ci.log.
+
 Original source `975947b469532fb968f46598450366acc941de84`. Entire historical packet restored unchanged, including original native integration FAILs and first console/path errors. No consumed probe allocation is replayed.
 
 Fresh pinned Python3.12 `-O` execution of unchanged `public_read_rows.py.txt` checked62 projection members, all12 raw rows, original plan/start join and six semantic controls. Decision remains `SUPPORTED_IN_FIXED_RUN`, witness rows0,1,3,4,6,7,9,10,11. One valid19ms perf counterexample is retained as `COUNTEREVIDENCE_SHORT_PERF`, not rejected. Fresh [report](saved-report.json) is separate from original audit. All72 package checksum targets match.
