@@ -4,6 +4,8 @@
 
 ## Navigate
 
+Retained [late/unowned response boundary](appserver_late_reply_59_20261003_df63/README.md): original Queue-backed construction, pending-ID counterfactual and first publication failures, not a production repair or real-server certificate. [Saved-data rescue](../../runtime/results/late_reply_rescue_d5ab/README.md) does not replay the original subject/collector or certify current-main behavior.
+
 Retained [reader-close precursor](reader_close_59_b04b/README.md): original RED, first checker/packaging STOPs and two qualified construction cells. Current main already includes its reader guard plus newer journal-lock repair; this archive grants no cancelled #6944 adoption. [Fresh rescue checks](../../runtime/results/reader_close_rescue_fb80/README.md) distinguish saved public data from current component tests and do not replay the original producer.
 
 Retained [predicate Condition boundary](appserver_predicate_condition_17_20261003_01a0ff52_b64b/README.md): four original directed Linux-pipe cells, ten copied-data refusals and first failures. This is not a production repair or callback hard deadline. [Local rescue verification](../../runtime/results/predicate_condition_rescue_78ae/README.md) checks saved evidence without native experiment replay.
