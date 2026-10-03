@@ -364,18 +364,21 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
                 raise ValueError("no-input terminal must be an explicit refusal")
             delivery["input_dispatched"] = terminal["input_dispatched"]
         _exact(terminal, terminal_fields, "execution terminal")
+        terminal = terminal.copy()
         release = terminal["release"]
         _exact(release, {"verified", "keys_down", "buttons_down"}, "release")
         released = (release["verified"] is True and release["keys_down"] == [] and
                     release["buttons_down"] == [])
+        preinput_refusal = (terminal.get("input_dispatched") is False and
+                            terminal["status"] == "refused" and
+                            release["keys_down"] == [] and release["buttons_down"] == [])
         emit({"event": "action_terminal", "action": action_name,
               "status": terminal["status"], "action_id": terminal["action_id"],
               "release_verified": released, **delivery})
         # An explicitly attested pre-input refusal has no new release receipt.
         # Stop without inventing neutrality, a completed action or a replay.
         # Unknown delivery and reported held input keep the stricter failure path.
-        if (terminal.get("input_dispatched") is False and terminal["status"] == "refused"
-                and release["keys_down"] == [] and release["buttons_down"] == []):
+        if preinput_refusal:
             return finish("SAFE_YIELD", "execution_refused")
         if not released:
             return finish("RUNTIME_FAILED", "execution_failed")

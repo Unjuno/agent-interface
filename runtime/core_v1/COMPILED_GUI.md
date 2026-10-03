@@ -91,3 +91,14 @@ It uses the existing graph with fresh bridge captures, boolean target prerequisi
 caller-owned perception/effect callbacks, per-action revalidation, one-use
 admission tokens and retained raw receipts. Its application-specific primary
 live trial does not establish general text verification or efficiency gains.
+
+An execution-terminal dictionary is copied after its exact outer shape and
+optional dispatch flag are checked. Release neutrality and an explicitly
+attested pre-input refusal are evaluated before the `action_terminal` journal
+callback. Later edits to an executor-retained dictionary or held-input lists
+cannot promote uncertain delivery, erase a completed prefix, replace action or
+effect references, or downgrade originally reported input to a pre-input refusal.
+The copy preserves original field types; it does not invoke terminal-member
+copy hooks to convert malformed release or reference objects into valid values.
+These retained declarations do not authenticate executor truth or physical input
+release. Actual cancellation remains the separate cooperative callback check.
