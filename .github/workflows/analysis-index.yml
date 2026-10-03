@@ -44,6 +44,8 @@ jobs:
         run: python -B -m unittest discover -s research/analysis/reversibility_deadline_frontier_6695_a01_20261003_01a0ff52 -p 'test_*.py' -v
       - name: Verify retained four-arm core admission composition
         run: python -B -m unittest discover -s research/integration/core_admission_composition_57_20261003_01a0ff59 -p 'test_archival.py' -v
+      - name: Verify historical compiled-sequence review and auditor counterexamples
+        run: python -B -m unittest discover -s research/integration/pr6863_review_rescue_20261003 -p 'test_archival.py' -v
       - name: Verify archived S05 WSLc image-gate preparation
         run: python -B -m unittest discover -s research/analysis/looming_visual_assumption_gate_5905_s05_wslc_20261003 -p 'test_*.py' -v
       - name: Verify Issue 6219 hash-bound publication recovery
