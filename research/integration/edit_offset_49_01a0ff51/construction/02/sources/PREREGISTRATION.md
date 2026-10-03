@@ -66,15 +66,8 @@ readbacks. No general Unicode segmentation implementation is supplied.
 Fixed image is a child of prior clipboard image18835dcb..., adding python3-xlib
 only. The missing-Xlib dependency attempt, policy import-red, original post-
 construction auditor KeyError and its corrected raw-only check are retained.
-Construction P01 four actual cells passed. Construction02 stopped at its first
-P02 cell: an untyped range started inside a supplementary surrogate pair and
-fixture selection reply raised UnicodeEncodeError/EOF before replacement. Its
-raw/app stderr/source/container exit1 and absent native app exit record remain
-unchanged. Construction03 uses P05 instead, avoiding that undeclared partial-
-surrogate behavior, plus P03/P04, to check conversion/refusal branches. The
-runner now records already-exited child return codes on future errors. All
-construction outcomes are excluded from32 formal counts; formal source cases
-were predetermined before this construction STOP and remain unchanged.
+Construction P01 four actual cells and separate P02/P03/P04 twelve cells test
+remaining conversion/refusal branches and are excluded from all32 formal counts.
 Three runtime implementation files are exact Git bytes from fb556b3d...;
 empty research namespace initializers avoid importing unrelated session code.
 No shared runtime/workflow/import/discovery/default or common index changes.

@@ -127,8 +127,6 @@ def main():
                         except subprocess.TimeoutExpired: app.kill(); app.wait(timeout=1)
                         row['forced_app_cleanup'] = True
                         row['app_exit'] = app.returncode
-                    elif app:
-                        row['app_exit'] = app.returncode
                     if xvfb:
                         xvfb.terminate()
                         try: xvfb.wait(timeout=2)
