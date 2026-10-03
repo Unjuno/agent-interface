@@ -20,8 +20,10 @@ documents the test hook; the child also checks the actual named binding.
 
 - First construction07:34:07.609762–07:34:07.994568UTC, exit1: both inert
   fixtures exited1 and had no start/exit record; the test helper then failed
-  ENOENT. Its nested fixture string is retained. JSON.stringify source passing
-  fixes construction only; missing child stderr is not recovered retrospectively.
+  ENOENT. Its nested fixture string and original full transport stderr logs contain
+  the actual SyntaxError. JSON.stringify source passing fixes construction only.
+  The first author description overlooked those retained stderr files; correction
+  FIRST_CONSTRUCTION_STDERR_RECONCILIATION.json preserves that initial false claim.
 - Repaired construction on unchanged V2 product07:35:58.767984–07:35:59.087269,
   exit1, 1/2 PASS: healthy ready/terminal, fault **ready** after captured error.
   Both original fixtures/hosts exit0, requests0, fixture PIDs absent and owned
@@ -86,3 +88,9 @@ failed TAP streams (indented blank lines) and one exact archived test source wit
 an existing CR character. All original bytes stay unchanged. The explicit scoped
 check excludes only those3 raw copies; its result is separate from full raw-inclusive
 cleanliness, and all executable source/documentation paths remain checked.
+
+The first local commitbf12b4e39 contains151 of the153 initially assembled leaf
+files because .gitignore excluded the two original stderr.log streams.
+That incomplete commit is retained; the follow-up adds only those exact logs
+and the explicit stderr-custody correction before any source push/proposal.
+The original first-stage/workspace PASS did not prove complete leaf custody.
