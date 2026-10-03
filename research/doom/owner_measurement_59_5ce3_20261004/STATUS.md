@@ -142,3 +142,28 @@ guarantee against import-time side effects, mutation races or hostile sys.module
 Final runtime requires independently frozen, read-only dependencies and actual
 selected-import qualification. Original six-test container receipt remains
 historical; it does not qualify this twelve-test source.
+
+## Compatible import environment preparation
+
+Official PyPI 1.3.0 metadata lists a CPython3.12 Linux-aarch64 wheel, with digest
+d27c9b20a93a9cdc4331988914e0d75d0d61f1818444ee956948562b49ab4d74. Own isolated
+container installed it plus resolved dependencies and system libraries, then
+actually imported Xlib/Pillow/numpy/VizDoom without game/owner instantiation.
+First preparation exited0/noOOM; no reinstall/retry. Actual pip download hash
+matches the observed official VizDoom metadata. ENVIRONMENT_PIP_REPORT.json and
+ENVIRONMENT_APT_HISTORY.log were copied unchanged from this container; apt
+history also includes inherited base entries, not all operations from this run.
+
+Own exited-container snapshot retained immutable image375118d626e922682598f45b5aa9eeb2cfc78ae8e9bb61be67e7f9713e981cf7.
+New offline read-only container from that exact image imported all4 successfully,
+exit0/noOOM: Xlib0.33, Pillow10.2.0, numpy2.5.3, VizDoom1.3.0. Engine0running then
+exactVM stoppedconfirmed. ENVIRONMENT_PREPARATION.json records identities/times.
+
+This closes only missing dependency imports for this image, not original source
+STOP history, full selected route, game/input/task-effect or formal allocation.
+The environment script is exploratory: apt repos and transitive versions were
+not frozen before resolution; the report/image retain what resolved. Freeze and
+independently verify that environment for future work rather than rerunning the
+unlocked script and assuming identical bytes. No image/branch push/PR/merge.
+One local metadata patch failed on an absent context line before application;
+the corrected evidence-only patch was then applied, with no experiment replay.
