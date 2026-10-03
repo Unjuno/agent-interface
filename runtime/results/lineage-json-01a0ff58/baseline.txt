@@ -51,20 +51,20 @@ def validate_lineage(program: Mapping[str, Any], receipt: Mapping[str, Any],
     if sidecar.get("evidence_receipt_digest") != receipt.get("digest"):
         raise ValueError("EVIDENCE_DIGEST_MISMATCH")
     for key in ("role", "currentness", "point", "observation_seq", "binding_revision"):
-        if _canon(sidecar.get(key)) != _canon(receipt.get(key)):
+        if sidecar.get(key) != receipt.get(key):
             raise ValueError("SIDECAR_RECEIPT_MISMATCH")
     if receipt.get("role") != "ADMISSION_DEPENDENCY" or receipt.get("currentness") != "CURRENT":
         raise ValueError("LINEAGE_NOT_CURRENT_ADMISSION")
-    if _canon(receipt.get("observation_seq")) != _canon(current_observation_seq):
+    if receipt.get("observation_seq") != current_observation_seq:
         raise ValueError("STALE_OBSERVATION")
-    if _canon(receipt.get("binding_revision")) != _canon(current_binding_revision):
+    if receipt.get("binding_revision") != current_binding_revision:
         raise ValueError("STALE_BINDING")
-    if _canon(program.get("source")) != _canon({
+    if program.get("source") != {
         "observation_seq": receipt.get("observation_seq"),
         "binding_revision": receipt.get("binding_revision"),
-    }):
+    }:
         raise ValueError("PROGRAM_SOURCE_MISMATCH")
-    if _canon(_pointer_point(program)) != _canon(list(receipt["point"])):
+    if _pointer_point(program) != list(receipt["point"]):
         raise ValueError("PROGRAM_POINT_MISMATCH")
 
 
