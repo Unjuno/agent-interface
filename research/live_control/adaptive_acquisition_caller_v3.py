@@ -502,7 +502,10 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
         return finish("TASK_SUCCEEDED", "verified_effect", task_effect="succeeded",
                       delivery="confirmed", execution_progress=execution)
     except ModelFailure as error:
-        return failure("TASK_DEFERRED" if error.typed_status == "DEFERRED_UPSTREAM"
-                      else "CALLER_FAILED", error.typed_status.lower())
+        status = getattr(error, "typed_status", None)
+        if type(status) is not str or status not in {"DEFERRED_UPSTREAM", "FAILED_UPSTREAM", "FAILED_OUTPUT"}:
+            return failure("CALLER_FAILED", "invalid_model_failure_status")
+        return failure("TASK_DEFERRED" if status == "DEFERRED_UPSTREAM"
+                       else "CALLER_FAILED", status.lower())
     except Exception as error:
         return failure("CALLER_FAILED", _error_text(error))
