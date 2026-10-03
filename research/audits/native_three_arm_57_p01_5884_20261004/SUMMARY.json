@@ -1,0 +1,403 @@
+{
+  "id": "57-native-three-arm-P01-20261004-5884",
+  "disposition": "HOLD_INTEGRATION_QUALIFICATION_WITH_MEASURED_SCOPED_BENEFIT",
+  "arms": {
+    "plain": {
+      "usage": {
+        "input_tokens": 108811,
+        "cached_input_tokens": 66688,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 562,
+        "reasoning_output_tokens": 118
+      },
+      "input_plus_output": 109373,
+      "generations_including_preflight": 7,
+      "grounding_calls": 6,
+      "model_images": 6,
+      "local_observations": 153,
+      "durable_calls": 84,
+      "ready_to_independent_oracle_ns": 36630792613,
+      "task_elapsed_ns": 36459013798,
+      "model_wait_ns": 22546447583,
+      "schema_model_wait_ns": 4734110292,
+      "correct_tasks": 6,
+      "duplicates": 0,
+      "unexpected_effects": 0,
+      "phase_rows": [
+        {
+          "task": "task-1",
+          "route": "cold",
+          "input_plus_output": 12917,
+          "generations": 1,
+          "elapsed_ns": 7242059874,
+          "repair": {
+            "required": false,
+            "old_reference_status": null,
+            "old_reference_pointer_admissions": 0,
+            "attempted": false,
+            "succeeded": false
+          },
+          "exact_single_effect": true
+        },
+        {
+          "task": "task-2",
+          "route": "cold",
+          "input_plus_output": 14271,
+          "generations": 1,
+          "elapsed_ns": 6004784052,
+          "repair": {
+            "required": false,
+            "old_reference_status": null,
+            "old_reference_pointer_admissions": 0,
+            "attempted": false,
+            "succeeded": false
+          },
+          "exact_single_effect": true
+        },
+        {
+          "task": "task-3",
+          "route": "cold",
+          "input_plus_output": 15605,
+          "generations": 1,
+          "elapsed_ns": 5493483431,
+          "repair": {
+            "required": false,
+            "old_reference_status": null,
+            "old_reference_pointer_admissions": 0,
+            "attempted": false,
+            "succeeded": false
+          },
+          "exact_single_effect": true
+        },
+        {
+          "task": "task-4",
+          "route": "cold",
+          "input_plus_output": 16976,
+          "generations": 1,
+          "elapsed_ns": 5530656981,
+          "repair": {
+            "required": false,
+            "old_reference_status": null,
+            "old_reference_pointer_admissions": 0,
+            "attempted": false,
+            "succeeded": false
+          },
+          "exact_single_effect": true
+        },
+        {
+          "task": "task-5",
+          "route": "cold",
+          "input_plus_output": 18318,
+          "generations": 1,
+          "elapsed_ns": 5588106402,
+          "repair": {
+            "required": false,
+            "old_reference_status": null,
+            "old_reference_pointer_admissions": 0,
+            "attempted": false,
+            "succeeded": false
+          },
+          "exact_single_effect": true
+        },
+        {
+          "task": "task-6",
+          "route": "cold",
+          "input_plus_output": 19661,
+          "generations": 1,
+          "elapsed_ns": 6599923058,
+          "repair": {
+            "required": false,
+            "old_reference_status": null,
+            "old_reference_pointer_admissions": 0,
+            "attempted": false,
+            "succeeded": false
+          },
+          "exact_single_effect": true
+        }
+      ],
+      "local_program_elapsed_ns": 9575606502
+    },
+    "ephemeral": {
+      "usage": {
+        "input_tokens": 110293,
+        "cached_input_tokens": 74752,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 933,
+        "reasoning_output_tokens": 132
+      },
+      "input_plus_output": 111226,
+      "generations_including_preflight": 7,
+      "grounding_calls": 6,
+      "model_images": 6,
+      "local_observations": 151,
+      "durable_calls": 96,
+      "ready_to_independent_oracle_ns": 46549813678,
+      "task_elapsed_ns": 46366039384,
+      "model_wait_ns": 29991364041,
+      "schema_model_wait_ns": 5671607666,
+      "correct_tasks": 6,
+      "duplicates": 0,
+      "unexpected_effects": 0,
+      "phase_rows": [
+        {
+          "task": "task-1",
+          "route": "cold",
+          "input_plus_output": 13065,
+          "generations": 1,
+          "elapsed_ns": 8002549639,
+          "repair": {
+            "required": false,
+            "old_reference_status": null,
+            "old_reference_pointer_admissions": 0,
+            "attempted": false,
+            "succeeded": false
+          },
+          "exact_single_effect": true
+        },
+        {
+          "task": "task-2",
+          "route": "cold",
+          "input_plus_output": 14476,
+          "generations": 1,
+          "elapsed_ns": 6310296982,
+          "repair": {
+            "required": false,
+            "old_reference_status": null,
+            "old_reference_pointer_admissions": 0,
+            "attempted": false,
+            "succeeded": false
+          },
+          "exact_single_effect": true
+        },
+        {
+          "task": "task-3",
+          "route": "cold",
+          "input_plus_output": 15870,
+          "generations": 1,
+          "elapsed_ns": 6545580098,
+          "repair": {
+            "required": false,
+            "old_reference_status": null,
+            "old_reference_pointer_admissions": 0,
+            "attempted": false,
+            "succeeded": false
+          },
+          "exact_single_effect": true
+        },
+        {
+          "task": "task-4",
+          "route": "cold",
+          "input_plus_output": 17293,
+          "generations": 1,
+          "elapsed_ns": 9126469393,
+          "repair": {
+            "required": false,
+            "old_reference_status": null,
+            "old_reference_pointer_admissions": 0,
+            "attempted": false,
+            "succeeded": false
+          },
+          "exact_single_effect": true
+        },
+        {
+          "task": "task-5",
+          "route": "cold",
+          "input_plus_output": 18679,
+          "generations": 1,
+          "elapsed_ns": 8058208021,
+          "repair": {
+            "required": false,
+            "old_reference_status": null,
+            "old_reference_pointer_admissions": 0,
+            "attempted": false,
+            "succeeded": false
+          },
+          "exact_single_effect": true
+        },
+        {
+          "task": "task-6",
+          "route": "cold",
+          "input_plus_output": 20065,
+          "generations": 1,
+          "elapsed_ns": 8322935251,
+          "repair": {
+            "required": false,
+            "old_reference_status": null,
+            "old_reference_pointer_admissions": 0,
+            "attempted": false,
+            "succeeded": false
+          },
+          "exact_single_effect": true
+        }
+      ],
+      "local_program_elapsed_ns": 10214438095
+    },
+    "persistent": {
+      "usage": {
+        "input_tokens": 38874,
+        "cached_input_tokens": 12032,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 455,
+        "reasoning_output_tokens": 112
+      },
+      "input_plus_output": 39329,
+      "generations_including_preflight": 3,
+      "grounding_calls": 2,
+      "model_images": 2,
+      "local_observations": 161,
+      "durable_calls": 114,
+      "ready_to_independent_oracle_ns": 27712045007,
+      "task_elapsed_ns": 27527710379,
+      "model_wait_ns": 10262195458,
+      "schema_model_wait_ns": 5087780000,
+      "correct_tasks": 6,
+      "duplicates": 0,
+      "unexpected_effects": 0,
+      "phase_rows": [
+        {
+          "task": "task-1",
+          "route": "cold",
+          "input_plus_output": 13060,
+          "generations": 1,
+          "elapsed_ns": 7644120089,
+          "repair": {
+            "required": false,
+            "old_reference_status": null,
+            "old_reference_pointer_admissions": 0,
+            "attempted": false,
+            "succeeded": false
+          },
+          "exact_single_effect": true
+        },
+        {
+          "task": "task-2",
+          "route": "reuse",
+          "input_plus_output": 0,
+          "generations": 0,
+          "elapsed_ns": 1530545200,
+          "repair": {
+            "required": false,
+            "old_reference_status": null,
+            "old_reference_pointer_admissions": 0,
+            "attempted": false,
+            "succeeded": false
+          },
+          "exact_single_effect": true
+        },
+        {
+          "task": "task-3",
+          "route": "reuse",
+          "input_plus_output": 0,
+          "generations": 0,
+          "elapsed_ns": 1951267073,
+          "repair": {
+            "required": false,
+            "old_reference_status": null,
+            "old_reference_pointer_admissions": 0,
+            "attempted": false,
+            "succeeded": false
+          },
+          "exact_single_effect": true
+        },
+        {
+          "task": "task-4",
+          "route": "repair",
+          "input_plus_output": 14504,
+          "generations": 1,
+          "elapsed_ns": 8030756664,
+          "repair": {
+            "required": true,
+            "old_reference_status": "missing",
+            "old_reference_pointer_admissions": 0,
+            "attempted": true,
+            "succeeded": true
+          },
+          "exact_single_effect": true
+        },
+        {
+          "task": "task-5",
+          "route": "reuse",
+          "input_plus_output": 0,
+          "generations": 0,
+          "elapsed_ns": 3623933988,
+          "repair": {
+            "required": false,
+            "old_reference_status": null,
+            "old_reference_pointer_admissions": 0,
+            "attempted": false,
+            "succeeded": false
+          },
+          "exact_single_effect": true
+        },
+        {
+          "task": "task-6",
+          "route": "reuse",
+          "input_plus_output": 0,
+          "generations": 0,
+          "elapsed_ns": 4747087365,
+          "repair": {
+            "required": false,
+            "old_reference_status": null,
+            "old_reference_pointer_admissions": 0,
+            "attempted": false,
+            "succeeded": false
+          },
+          "exact_single_effect": true
+        }
+      ],
+      "local_program_elapsed_ns": 11738112928
+    }
+  },
+  "cumulative": {
+    "plain": [
+      24542,
+      38813,
+      54418,
+      71394,
+      89712,
+      109373
+    ],
+    "ephemeral": [
+      24843,
+      39319,
+      55189,
+      72482,
+      91161,
+      111226
+    ],
+    "persistent": [
+      24825,
+      24825,
+      24825,
+      39329,
+      39329,
+      39329
+    ]
+  },
+  "overall_usage": {
+    "input_tokens": 257978,
+    "cached_input_tokens": 153472,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 1950,
+    "reasoning_output_tokens": 362
+  },
+  "actual_model_calls": 17,
+  "sample_count_per_arm": 1,
+  "failures_in_P01": 0,
+  "prior_N01_preserved": true,
+  "limits": [
+    "known fixture",
+    "fixed serial arm order",
+    "runtime full negative qualification incomplete",
+    "semantic abstention not expressed by schema",
+    "configured cgroup limits not sampled live in P01",
+    "between-arm observed token cap, not hard provider charging cap",
+    "100ms output polling permits byte overshoot",
+    "no monetary or population latency claim"
+  ],
+  "break_even_vs_plain": 2,
+  "break_even_vs_ephemeral": 1,
+  "persistent_token_reduction_vs_plain_percent": 64.04139961416438,
+  "persistent_token_reduction_vs_ephemeral_percent": 64.64046176253754,
+  "persistent_ready_to_oracle_reduction_vs_plain_percent": 24.34767846883772
+}
