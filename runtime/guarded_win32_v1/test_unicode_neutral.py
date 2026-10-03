@@ -26,15 +26,18 @@ class UnicodeNeutralCase(unittest.TestCase):
         self.assertEqual(first['status'],'recovery_failed')
         self.assertEqual(sends,[['unicode',65,False],['key',17,False]])
         self.assertEqual(backend.pending_unicode_ups,{65})
-        self.assertEqual(backend.held_keys,{})
+        # Current main retires ordinary ledger entries only after the complete
+        # Unicode release pass; a failed Unicode UP leaves all obligations.
+        self.assertEqual(backend.held_keys,{'CTRL':17})
         self.assertTrue(bridge.session.recovery_required)
         with self.assertRaisesRegex(ValueError,'recovery required'):bridge.prepare('button',[1,1])
         failed[0]=False
         second=bridge.recover_input()
         self.assertEqual(second['status'],'input_recovered')
+        self.assertEqual(backend.held_keys,{})
         self.assertIsNone(second['task_success'])
         self.assertFalse(second['replay_allowed'])
-        self.assertEqual(sends,[['unicode',65,False],['key',17,False],['unicode',65,False]])
+        self.assertEqual(sends,[['unicode',65,False],['key',17,False],['unicode',65,False],['key',17,False]])
         self.assertFalse(backend.pending_unicode_ups)
         self.assertFalse(bridge.session.recovery_required)
         self.assertEqual(bridge.execute(permit['authorization'])['error'],'AUTHORIZATION_CONSUMED_OR_UNKNOWN')

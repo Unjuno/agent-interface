@@ -345,6 +345,9 @@ class Win32Backend:
             if not mem_dc or not bitmap:
                 raise Win32BackendError("GDI allocation failed")
             old = self.gdi32.SelectObject(mem_dc, bitmap)
+            if not old or old == ctypes.c_void_p(-1).value:
+                old = None
+                raise Win32BackendError("GDI bitmap selection failed")
             if print_window:
                 if not self.user32.PrintWindow(source_hwnd, mem_dc, PW_CLIENTONLY):
                     raise Win32BackendError("PrintWindow failed")
@@ -490,12 +493,12 @@ class Win32Backend:
                           if self.user32.GetAsyncKeyState(BUTTON_FLAGS[button][2]) & 0x8000)
         # A sent UP is not neutral-state evidence. Keep unverified obligations;
         # an incomplete state read leaves the entire previous ledger intact.
+        if unicode_error is not None:
+            raise unicode_error
         for name in tracked_keys:
             if name not in keys:
                 self.held_keys.pop(name, None)
         self.held_buttons.difference_update(tracked_buttons - set(buttons))
-        if unicode_error is not None:
-            raise unicode_error
         return {"keys_down": keys, "buttons_down": buttons,
                 "verified": not keys and not buttons,
                 "monotonic_ns": time.monotonic_ns()}
