@@ -1,0 +1,396 @@
+{
+  "schema": "shared-prerequisite-claim-graph-v1",
+  "graph": {
+    "coverage_complete": true,
+    "premises": {
+      "P_SHARED": {"truth": true, "source_id": "src-shared-1"},
+      "P_CAPTURE_A": {"truth": true, "source_id": "src-capture-a"},
+      "P_CAPTURE_B": {"truth": true, "source_id": "src-capture-b"},
+      "P_CAPTURE_B_DUP": {"truth": true, "source_id": "src-capture-b"},
+      "P_CAPTURE_C": {"truth": true, "source_id": "src-capture-c"},
+      "P_VERIFY": {"truth": true, "source_id": "src-verify-1"},
+      "P_INERT": {"truth": true, "source_id": "src-inert-1"},
+      "P_DECOY": {"truth": true, "source_id": "src-decoy-1"},
+      "P_FALSE_EDGE": {"truth": true, "source_id": "src-unvalidated-1"},
+      "D_CAPTURE": {"truth": false, "source_id": "src-capture-defeater"},
+      "D_VERIFY": {"truth": false, "source_id": "src-verify-defeater"}
+    },
+    "decisions": {
+      "CAPTURE": {
+        "all": [
+          {"predicate": "P_SHARED"},
+          {"any": [
+            {"predicate": "P_CAPTURE_A"},
+            {"predicate": "P_CAPTURE_B"},
+            {"predicate": "P_CAPTURE_B_DUP"},
+            {"predicate": "P_CAPTURE_C"}
+          ]},
+          {"not": {"predicate": "D_CAPTURE"}}
+        ]
+      },
+      "VERIFY": {
+        "all": [
+          {"predicate": "P_SHARED"},
+          {"predicate": "P_VERIFY"},
+          {"not": {"predicate": "D_VERIFY"}}
+        ]
+      }
+    },
+    "edges": [
+      {"id": "e-shared-capture", "from": "P_SHARED", "to": "CAPTURE", "validated": true, "role": "supports"},
+      {"id": "e-shared-verify", "from": "P_SHARED", "to": "VERIFY", "validated": true, "role": "supports"},
+      {"id": "e-capture-a", "from": "P_CAPTURE_A", "to": "CAPTURE", "validated": true, "role": "supports"},
+      {"id": "e-capture-b", "from": "P_CAPTURE_B", "to": "CAPTURE", "validated": true, "role": "supports"},
+      {"id": "e-capture-b-duplicate", "from": "P_CAPTURE_B_DUP", "to": "CAPTURE", "validated": true, "role": "supports", "source_id": "src-capture-b"},
+      {"id": "e-capture-c", "from": "P_CAPTURE_C", "to": "CAPTURE", "validated": true, "role": "supports"},
+      {"id": "e-capture-defeater", "from": "D_CAPTURE", "to": "CAPTURE", "validated": true, "role": "defeats"},
+      {"id": "e-verify", "from": "P_VERIFY", "to": "VERIFY", "validated": true, "role": "supports"},
+      {"id": "e-verify-defeater", "from": "D_VERIFY", "to": "VERIFY", "validated": true, "role": "defeats"},
+      {"id": "e-false-verify", "from": "P_FALSE_EDGE", "to": "VERIFY", "validated": false, "role": "supports", "declared_by": "synthetic-invalid-link-control"},
+      {"id": "e-degree-01", "from": "P_DECOY", "to": "AUX_01", "validated": true, "role": "diagnostic-only"},
+      {"id": "e-degree-02", "from": "P_DECOY", "to": "AUX_02", "validated": true, "role": "diagnostic-only"},
+      {"id": "e-degree-03", "from": "P_DECOY", "to": "AUX_03", "validated": true, "role": "diagnostic-only"},
+      {"id": "e-degree-04", "from": "P_DECOY", "to": "AUX_04", "validated": true, "role": "diagnostic-only"},
+      {"id": "e-degree-05", "from": "P_DECOY", "to": "AUX_05", "validated": true, "role": "diagnostic-only"},
+      {"id": "e-degree-06", "from": "P_DECOY", "to": "AUX_06", "validated": true, "role": "diagnostic-only"},
+      {"id": "e-degree-07", "from": "P_DECOY", "to": "AUX_07", "validated": true, "role": "diagnostic-only"},
+      {"id": "e-degree-08", "from": "P_DECOY", "to": "AUX_08", "validated": true, "role": "diagnostic-only"},
+      {"id": "e-degree-09", "from": "P_DECOY", "to": "AUX_09", "validated": true, "role": "diagnostic-only"},
+      {"id": "e-degree-10", "from": "P_DECOY", "to": "AUX_10", "validated": true, "role": "diagnostic-only"},
+      {"id": "e-degree-11", "from": "P_DECOY", "to": "AUX_11", "validated": true, "role": "diagnostic-only"},
+      {"id": "e-degree-12", "from": "P_DECOY", "to": "AUX_12", "validated": true, "role": "diagnostic-only"}
+    ],
+    "correlated_source_groups": {
+      "src-capture-b": ["P_CAPTURE_B", "P_CAPTURE_B_DUP"]
+    }
+  },
+    "control_graphs": {
+      "disjoint": {
+        "coverage_complete": true,
+        "premises": {
+          "P_SHARED": {
+            "truth": true,
+            "source_id": "src-shared-1"
+          },
+          "P_CAPTURE_A": {
+            "truth": true,
+            "source_id": "src-capture-a"
+          },
+          "P_CAPTURE_B": {
+            "truth": true,
+            "source_id": "src-capture-b"
+          },
+          "P_CAPTURE_B_DUP": {
+            "truth": true,
+            "source_id": "src-capture-b"
+          },
+          "P_CAPTURE_C": {
+            "truth": true,
+            "source_id": "src-capture-c"
+          },
+          "P_VERIFY": {
+            "truth": true,
+            "source_id": "src-verify-1"
+          },
+          "P_INERT": {
+            "truth": true,
+            "source_id": "src-inert-1"
+          },
+          "P_DECOY": {
+            "truth": true,
+            "source_id": "src-decoy-1"
+          },
+          "P_FALSE_EDGE": {
+            "truth": true,
+            "source_id": "src-unvalidated-1"
+          },
+          "D_CAPTURE": {
+            "truth": false,
+            "source_id": "src-capture-defeater"
+          },
+          "D_VERIFY": {
+            "truth": false,
+            "source_id": "src-verify-defeater"
+          },
+          "P_SHARED_VERIFY": {
+            "truth": true,
+            "source_id": "src-shared-verify-independent"
+          }
+        },
+        "decisions": {
+          "CAPTURE": {
+            "all": [
+              {
+                "predicate": "P_SHARED"
+              },
+              {
+                "any": [
+                  {
+                    "predicate": "P_CAPTURE_A"
+                  },
+                  {
+                    "predicate": "P_CAPTURE_B"
+                  },
+                  {
+                    "predicate": "P_CAPTURE_B_DUP"
+                  },
+                  {
+                    "predicate": "P_CAPTURE_C"
+                  }
+                ]
+              },
+              {
+                "not": {
+                  "predicate": "D_CAPTURE"
+                }
+              }
+            ]
+          },
+          "VERIFY": {
+            "all": [
+              {
+                "predicate": "P_SHARED_VERIFY"
+              },
+              {
+                "predicate": "P_VERIFY"
+              },
+              {
+                "not": {
+                  "predicate": "D_VERIFY"
+                }
+              }
+            ]
+          }
+        },
+        "edges": [
+          {
+            "id": "e-shared-capture",
+            "from": "P_SHARED",
+            "to": "CAPTURE",
+            "validated": true,
+            "role": "supports"
+          },
+          {
+            "id": "e-independent-shared-verify",
+            "from": "P_SHARED_VERIFY",
+            "to": "VERIFY",
+            "validated": true,
+            "role": "supports"
+          },
+          {
+            "id": "e-capture-a",
+            "from": "P_CAPTURE_A",
+            "to": "CAPTURE",
+            "validated": true,
+            "role": "supports"
+          },
+          {
+            "id": "e-capture-b",
+            "from": "P_CAPTURE_B",
+            "to": "CAPTURE",
+            "validated": true,
+            "role": "supports"
+          },
+          {
+            "id": "e-capture-b-duplicate",
+            "from": "P_CAPTURE_B_DUP",
+            "to": "CAPTURE",
+            "validated": true,
+            "role": "supports",
+            "source_id": "src-capture-b"
+          },
+          {
+            "id": "e-capture-c",
+            "from": "P_CAPTURE_C",
+            "to": "CAPTURE",
+            "validated": true,
+            "role": "supports"
+          },
+          {
+            "id": "e-capture-defeater",
+            "from": "D_CAPTURE",
+            "to": "CAPTURE",
+            "validated": true,
+            "role": "defeats"
+          },
+          {
+            "id": "e-verify",
+            "from": "P_VERIFY",
+            "to": "VERIFY",
+            "validated": true,
+            "role": "supports"
+          },
+          {
+            "id": "e-verify-defeater",
+            "from": "D_VERIFY",
+            "to": "VERIFY",
+            "validated": true,
+            "role": "defeats"
+          },
+          {
+            "id": "e-false-verify",
+            "from": "P_FALSE_EDGE",
+            "to": "VERIFY",
+            "validated": false,
+            "role": "supports",
+            "declared_by": "synthetic-invalid-link-control"
+          },
+          {
+            "id": "e-degree-01",
+            "from": "P_DECOY",
+            "to": "AUX_01",
+            "validated": true,
+            "role": "diagnostic-only"
+          },
+          {
+            "id": "e-degree-02",
+            "from": "P_DECOY",
+            "to": "AUX_02",
+            "validated": true,
+            "role": "diagnostic-only"
+          },
+          {
+            "id": "e-degree-03",
+            "from": "P_DECOY",
+            "to": "AUX_03",
+            "validated": true,
+            "role": "diagnostic-only"
+          },
+          {
+            "id": "e-degree-04",
+            "from": "P_DECOY",
+            "to": "AUX_04",
+            "validated": true,
+            "role": "diagnostic-only"
+          },
+          {
+            "id": "e-degree-05",
+            "from": "P_DECOY",
+            "to": "AUX_05",
+            "validated": true,
+            "role": "diagnostic-only"
+          },
+          {
+            "id": "e-degree-06",
+            "from": "P_DECOY",
+            "to": "AUX_06",
+            "validated": true,
+            "role": "diagnostic-only"
+          },
+          {
+            "id": "e-degree-07",
+            "from": "P_DECOY",
+            "to": "AUX_07",
+            "validated": true,
+            "role": "diagnostic-only"
+          },
+          {
+            "id": "e-degree-08",
+            "from": "P_DECOY",
+            "to": "AUX_08",
+            "validated": true,
+            "role": "diagnostic-only"
+          },
+          {
+            "id": "e-degree-09",
+            "from": "P_DECOY",
+            "to": "AUX_09",
+            "validated": true,
+            "role": "diagnostic-only"
+          },
+          {
+            "id": "e-degree-10",
+            "from": "P_DECOY",
+            "to": "AUX_10",
+            "validated": true,
+            "role": "diagnostic-only"
+          },
+          {
+            "id": "e-degree-11",
+            "from": "P_DECOY",
+            "to": "AUX_11",
+            "validated": true,
+            "role": "diagnostic-only"
+          },
+          {
+            "id": "e-degree-12",
+            "from": "P_DECOY",
+            "to": "AUX_12",
+            "validated": true,
+            "role": "diagnostic-only"
+          }
+        ],
+        "correlated_source_groups": {
+          "src-capture-b": [
+            "P_CAPTURE_B",
+            "P_CAPTURE_B_DUP"
+          ]
+        }
+      }
+    },
+  "budget": {
+    "total": 4,
+    "mandatory_sentinel": {"id": "S-HARD-SAFETY", "cost": 1, "mandatory": true}
+  },
+  "legacy_baseline_actions": {
+    "capture-lean": "CAPTURE",
+    "verify-lean": "VERIFY",
+    "escape-lean": "NONE"
+  },
+  "experiments": [
+    {
+      "id": "E-cheapest-inert", "cost": 1,
+      "target": {"kind": "predicate", "id": "P_INERT"},
+      "legacy_outcomes": {
+        "capture-lean": [{"p": 0.25, "next_action": "CAPTURE"}, {"p": 0.25, "next_action": "CAPTURE"}, {"p": 0.25, "next_action": "CAPTURE"}, {"p": 0.25, "next_action": "CAPTURE"}],
+        "verify-lean": [{"p": 0.25, "next_action": "VERIFY"}, {"p": 0.25, "next_action": "VERIFY"}, {"p": 0.25, "next_action": "VERIFY"}, {"p": 0.25, "next_action": "VERIFY"}],
+        "escape-lean": [{"p": 0.25, "next_action": "NONE"}, {"p": 0.25, "next_action": "NONE"}, {"p": 0.25, "next_action": "NONE"}, {"p": 0.25, "next_action": "NONE"}]
+      }
+    },
+    {
+      "id": "E-degree-decoy", "cost": 2,
+      "target": {"kind": "predicate", "id": "P_DECOY"},
+      "legacy_outcomes": {
+        "capture-lean": [{"p": 0.20, "next_action": "VERIFY"}, {"p": 0.70, "next_action": "CAPTURE"}, {"p": 0.10, "next_action": "STOP"}],
+        "verify-lean": [{"p": 0.20, "next_action": "CAPTURE"}, {"p": 0.70, "next_action": "VERIFY"}, {"p": 0.10, "next_action": "STOP"}],
+        "escape-lean": [{"p": 0.20, "next_action": "CAPTURE"}, {"p": 0.70, "next_action": "NONE"}, {"p": 0.10, "next_action": "STOP"}]
+      }
+    },
+    {
+      "id": "E-capture-correlated-source", "cost": 2,
+      "target": {"kind": "source_id", "id": "src-capture-b"},
+      "legacy_outcomes": {
+        "capture-lean": [{"p": 0.30, "next_action": "VERIFY"}, {"p": 0.60, "next_action": "CAPTURE"}, {"p": 0.10, "next_action": "STOP"}],
+        "verify-lean": [{"p": 0.30, "next_action": "CAPTURE"}, {"p": 0.60, "next_action": "VERIFY"}, {"p": 0.10, "next_action": "STOP"}],
+        "escape-lean": [{"p": 0.30, "next_action": "CAPTURE"}, {"p": 0.60, "next_action": "NONE"}, {"p": 0.10, "next_action": "STOP"}]
+      }
+    },
+    {
+      "id": "E-verify-unique", "cost": 2,
+      "target": {"kind": "predicate", "id": "P_VERIFY"},
+      "legacy_outcomes": {
+        "capture-lean": [{"p": 0.75, "next_action": "VERIFY"}, {"p": 0.15, "next_action": "CAPTURE"}, {"p": 0.10, "next_action": "STOP"}],
+        "verify-lean": [{"p": 0.75, "next_action": "CAPTURE"}, {"p": 0.15, "next_action": "VERIFY"}, {"p": 0.10, "next_action": "STOP"}],
+        "escape-lean": [{"p": 0.75, "next_action": "CAPTURE"}, {"p": 0.15, "next_action": "NONE"}, {"p": 0.10, "next_action": "STOP"}]
+      }
+    },
+    {
+      "id": "E-shared-prerequisite", "cost": 3,
+      "target": {"kind": "predicate", "id": "P_SHARED"},
+      "legacy_outcomes": {
+        "capture-lean": [{"p": 0.45, "next_action": "VERIFY"}, {"p": 0.45, "next_action": "CAPTURE"}, {"p": 0.10, "next_action": "STOP"}],
+        "verify-lean": [{"p": 0.45, "next_action": "CAPTURE"}, {"p": 0.45, "next_action": "VERIFY"}, {"p": 0.10, "next_action": "STOP"}],
+        "escape-lean": [{"p": 0.45, "next_action": "CAPTURE"}, {"p": 0.45, "next_action": "NONE"}, {"p": 0.10, "next_action": "STOP"}]
+      }
+    },
+    {
+      "id": "E-unvalidated-edge", "cost": 2,
+      "target": {"kind": "predicate", "id": "P_FALSE_EDGE"},
+      "legacy_outcomes": {
+        "capture-lean": [{"p": 0.20, "next_action": "VERIFY"}, {"p": 0.70, "next_action": "CAPTURE"}, {"p": 0.10, "next_action": "STOP"}],
+        "verify-lean": [{"p": 0.20, "next_action": "CAPTURE"}, {"p": 0.70, "next_action": "VERIFY"}, {"p": 0.10, "next_action": "STOP"}],
+        "escape-lean": [{"p": 0.20, "next_action": "CAPTURE"}, {"p": 0.70, "next_action": "NONE"}, {"p": 0.10, "next_action": "STOP"}]
+      }
+    }
+  ]
+}

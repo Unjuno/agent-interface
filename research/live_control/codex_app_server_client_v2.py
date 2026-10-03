@@ -142,9 +142,15 @@ class CodexAppServerClient:
                 self.process.kill()
                 self.process.wait(timeout=timeout)
         self._reader.join(timeout=timeout)
+        if self._reader.is_alive():
+            raise TimeoutError("app-server reader close timed out")
         if self._journal is not None and not self._journal.closed:
-            with self._journal_lock:
+            if not self._journal_lock.acquire(timeout=-1 if timeout is None else timeout):
+                raise TimeoutError("app-server journal close timed out")
+            try:
                 self._journal.close()
+            finally:
+                self._journal_lock.release()
 
     def __enter__(self):
         return self
