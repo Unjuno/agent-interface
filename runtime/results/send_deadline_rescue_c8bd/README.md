@@ -19,3 +19,11 @@ certificate or sender handoff is inferred. Original Windows/custom-stream,
 concurrent EOF and whole-call deadline limits remain. Current source/main
 integration, checksum verification and local CI are still pending; source ref
 must not be retired yet.
+
+Fresh RED: original unchanged send-deadline test restored to active test path;
+`test_request_spends_one_budget_on_send_and_response_wait` against unchanged
+main client exits 1, one assertion failure: supplied deadline `[None]` instead
+of `[0.05]`. Full `red-budget.log` retained. This controlled-clock/mocked-send
+test establishes missing budget propagation, not a native pipe deadline bound.
+No production implementation has changed yet. Real-pipe and composed existing
+UTF-8/ID/close regressions remain necessary before integration.
