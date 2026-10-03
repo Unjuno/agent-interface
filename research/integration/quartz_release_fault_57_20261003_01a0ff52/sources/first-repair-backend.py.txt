@@ -386,7 +386,7 @@ class QuartzBackend:
                     "monotonic_ns": time.monotonic_ns()}
 
     def execute(self, program: dict[str, Any]) -> dict[str, Any]:
-        observations=[]; releases=[]; completed_ops=[]; started=time.monotonic_ns(); index=None
+        self.preflight(program); observations=[]; releases=[]; completed_ops=[]; started=time.monotonic_ns()
 
         def evidence() -> dict[str, Any]:
             return {"started_ns": started, "ended_ns": time.monotonic_ns(),
@@ -394,7 +394,6 @@ class QuartzBackend:
                     "releases": releases, "completed_ops": completed_ops}
 
         try:
-            self.preflight(program)
             for index, op in enumerate(program["ops"]):
                 kind=op["op"]
                 if kind=="focus": self.focus(op["target"])
@@ -407,7 +406,7 @@ class QuartzBackend:
                 elif kind=="observe": observations.append(self.capture(op["frame"],op["x"],op["y"],op["w"],op["h"]))
                 elif kind=="wait_update": time.sleep(op["timeout_ms"]/1000.0)
                 elif kind=="verify": pass
-                elif kind=="release_all": releases.append(self._release_after_failure())
+                elif kind=="release_all": releases.append(self.release_all())
                 else: raise QuartzBackendError(f"unsupported op {kind}")
                 completed_ops.append(index)
         except Exception as error:
