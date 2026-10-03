@@ -1,0 +1,150 @@
+"""Retained-trace grid accounting only; imports no source arm, assay or old auditor."""
+import datetime as dt
+import hashlib
+import json
+import pathlib
+import sys
+
+P = 100_000_000
+RAW_PIN = '33d50bf81dc5e3714e002503fa799d6aee26249d62a3dac4b89832a878b2ab65'
+
+def need(ok, label):
+    if not ok:
+        raise ValueError(label)
+
+def integer(value, label):
+    need(type(value) is int and value >= 0, label)
+
+def grid_scope(trace, cutoff):
+    """Assign each emitted sample to its receipt's current slot, not extra samples."""
+    integer(cutoff, 'integer virtual cutoff')
+    need(cutoff <= 1000 * P, 'bounded declared trace cutoff')
+    served, skipped = set(), set()
+    contribution = 0
+    previous_end = 0
+    next_receipt_grid = 0
+    for event in trace:
+        need(type(event) is list and event, 'event shape')
+        if event[0] == 'sample':
+            need(len(event) == 5, 'sample shape')
+            _, scheduled, started, ended, missing = event
+            for value in (scheduled, started, ended, missing):
+                integer(value, 'sample integer fields')
+            need(previous_end <= started <= ended <= cutoff, 'sample virtual order')
+            need(scheduled == next_receipt_grid and scheduled % P == 0, 'receipt grid continuity')
+            current = scheduled + missing * P
+            need(current == (started // P) * P, 'receipt selects current due slot')
+            represented = set(range(scheduled, current, P))
+            need(not served.intersection(represented) and not skipped.intersection(represented) and current not in served,
+                 'no repeated grid accounting')
+            served.add(current)
+            skipped.update(represented)
+            contribution += missing
+            next_receipt_grid = current + P
+        else:
+            need(len(event) == 4 and event[0] == 'command' and type(event[1]) is str, 'command shape')
+            _, _, started, ended = event
+            integer(started, 'command start')
+            integer(ended, 'command end')
+            need(previous_end <= started <= ended <= cutoff, 'command virtual order')
+        previous_end = ended
+    need(previous_end == cutoff, 'cutoff matches final retained event')
+    grid = set(range(0, cutoff, P))  # strict interior; endpoint at cutoff is excluded
+    missing = sorted(grid - served - skipped)
+    need(contribution == len(skipped), 'literal receipt contribution cardinality')
+    return {'interior_due_grid_points': len(grid), 'served_interior_grid_points': len(grid & served),
+            'receipt_reported_skipped_periods': contribution,
+            'represented_interior_skipped_points': len(grid & skipped),
+            'unrepresented_interior_grid_ns': missing, 'unrepresented_interior_grid_points': len(missing),
+            'scope': 'terminal grid points absent from emitted receipt accounting; final source stats were not captured'}
+
+def literal_checks():
+    cases = [
+        ('zero_cutoff', [['sample',0,0,0,0],['command','FINISH',0,0]], 0, []),
+        ('fast_finish', [['sample',0,0,P//2,0],['command','FINISH',P//2,P//2]], P//2, []),
+        ('long_final_sample', [['sample',0,0,7*P//2,0],['command','FINISH',7*P//2,7*P//2]], 7*P//2, [P,2*P,3*P]),
+        ('long_final_command', [['sample',0,0,0,0],['command','C000',0,3*P//2],['command','FINISH',3*P//2,3*P//2]], 3*P//2, [P]),
+        ('later_receipt_represents_skip', [['sample',0,0,0,0],['command','C000',0,5*P//2],['sample',P,5*P//2,5*P//2,1],['command','FINISH',5*P//2,5*P//2]], 5*P//2, []),
+        ('exact_stop_endpoint_excluded', [['sample',0,0,P,0],['command','FINISH',P,P]], P, [])]
+    checks = []
+    for name, trace, cutoff, expected in cases:
+        result = grid_scope(trace, cutoff)
+        need(result['unrepresented_interior_grid_ns'] == expected, 'literal independent expectation ' + name)
+        checks.append({'name': name, 'expected_unrepresented_grid_ns': expected, 'result': 'PASS'})
+    negatives = []
+    for name, trace, cutoff in [
+        ('boolean_skip', [['sample',0,0,0,False]],0),
+        ('wrong_receipt_slot', [['sample',0,P,P,0]],P),
+        ('false_cutoff', [['sample',0,0,0,0]],P)]:
+        try:
+            grid_scope(trace, cutoff)
+        except ValueError as error:
+            negatives.append({'name': name, 'refused': True, 'diagnostic': str(error)})
+        else:
+            raise ValueError('ineffective literal negative ' + name)
+    return {'ordinary_literal_checks': checks, 'literal_negatives': negatives,
+            'original_source_runtime_or_oracle_executed': False}
+
+def analyze(data):
+    need(hashlib.sha256(data).hexdigest() == RAW_PIN, 'exact retained original raw')
+    raw = json.loads(data)
+    need(raw['schema'] == 'scorer-burst-service-v1' and raw['period_simulated_ns'] == P and len(raw['rows']) == 768,
+         'fixed original identity/denominator')
+    rows, summary, witnesses = [], {}, {}
+    for index, original in enumerate(raw['rows']):
+        need('stats' not in original and 'missed_sample_periods' not in original,
+             'original raw does not capture terminal stats')
+        result = grid_scope(original['trace'], original['ended_simulated_ns'])
+        last, ages = None, []
+        for event in original['trace']:
+            if event[0] == 'sample':
+                last = event[2]
+            elif last is not None:
+                ages.append(event[2] - last)
+        age = max(ages, default=None)
+        need(age == original['max_command_sample_age_ns'], 'original start-age endpoint unchanged')
+        need(original['outcome'] in ('complete', 'diagnostic_budget_stop'), 'fixed original disposition')
+        if original['outcome'] == 'complete':
+            need(original['trace'][-1][0:2] == ['command','FINISH'], 'complete original FINISH')
+        row = {'original_row_index': index, 'case': original['case'], 'original_outcome': original['outcome'],
+               'cutoff_simulated_ns': original['ended_simulated_ns'], 'original_command_start_age_ns': age, **result}
+        rows.append(row)
+        arm = original['case']['arm']
+        key = arm + '/' + original['outcome']
+        group = summary.setdefault(key, {'rows':0,'rows_with_unrepresented_interior_grid':0,
+                                         'maximum_unrepresented_grid_points':0,'total_unrepresented_grid_points':0})
+        count = result['unrepresented_interior_grid_points']
+        group['rows'] += 1
+        group['rows_with_unrepresented_interior_grid'] += int(count > 0)
+        group['maximum_unrepresented_grid_points'] = max(group['maximum_unrepresented_grid_points'], count)
+        group['total_unrepresented_grid_points'] += count
+        witness_key = arm + '/' + original['case']['path'] + '/' + original['case']['layout']
+        if count and original['outcome'] == 'complete' and witness_key not in witnesses:
+            witnesses[witness_key] = row
+    return {'schema':'scorer-burst-terminal-scope-posthoc-v2','raw_sha256':RAW_PIN,'rows':rows,
+            'summary':summary,'first_complete_witness_by_arm_adapter_layout':witnesses,
+            'original_age_endpoints_revalidated':len(rows),'source_producer_or_original_auditor_invocations':0,
+            'terminal_source_stats_captured':False,'original_outcomes_changed':False,
+            'decision':'QUALIFY_RECEIPT_POLICY_AGREEMENT_ONLY_NOT_COMPLETE_TERMINAL_ACCOUNTING',
+            'limits':['post-hoc strict-interior nominal virtual grid, not physical sampling/effect truth',
+                      'an emitted current sample represents one slot plus its declared preceding skips; no catch-up samples are inferred',
+                      'FINISH rows and diagnostic sample-budget cutoffs are separate; diagnostic cutoffs are not successful terminal receipts',
+                      'does not execute or evaluate revised6913 accounting, change skipped-period convention, or prescribe a runtime repair']}
+
+def main():
+    started = dt.datetime.now(dt.timezone.utc).isoformat()
+    if sys.argv[1] == '--literal':
+        result = literal_checks()
+        dest = pathlib.Path(sys.argv[2])
+    else:
+        result = analyze(pathlib.Path(sys.argv[1]).read_bytes())
+        dest = pathlib.Path(sys.argv[2])
+    result['started_utc'] = started
+    result['ended_utc'] = dt.datetime.now(dt.timezone.utc).isoformat()
+    with dest.open('x', encoding='utf-8', newline='\n') as stream:
+        stream.write(json.dumps(result, indent=2, sort_keys=True, allow_nan=False) + '\n')
+    print(json.dumps({k:v for k,v in result.items() if k not in ['rows','first_complete_witness_by_arm_adapter_layout']}, sort_keys=True))
+    return 0
+
+if __name__ == '__main__':
+    raise SystemExit(main())
