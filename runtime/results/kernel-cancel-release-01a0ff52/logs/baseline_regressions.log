@@ -1,0 +1,50 @@
+test_duplicate_begin_does_not_weaken_first_start_bound (__main__.CancellationBoundaryTests.test_duplicate_begin_does_not_weaken_first_start_bound) ... ok
+test_equal_and_later_verified_release_accepted (__main__.CancellationBoundaryTests.test_equal_and_later_verified_release_accepted) ... ok
+test_missing_unverified_and_held_release_refused (__main__.CancellationBoundaryTests.test_missing_unverified_and_held_release_refused) ... ok
+test_rejected_first_begin_does_not_consume_start_bound (__main__.CancellationBoundaryTests.test_rejected_first_begin_does_not_consume_start_bound) ... ok
+test_stale_release_refused_without_mutation (__main__.CancellationBoundaryTests.test_stale_release_refused_without_mutation) ... 
+  test_stale_release_refused_without_mutation (__main__.CancellationBoundaryTests.test_stale_release_refused_without_mutation) (ns=0) ... FAIL
+  test_stale_release_refused_without_mutation (__main__.CancellationBoundaryTests.test_stale_release_refused_without_mutation) (ns=199) ... FAIL
+  test_stale_release_refused_without_mutation (__main__.CancellationBoundaryTests.test_stale_release_refused_without_mutation) (ns=200) ... FAIL
+  test_stale_release_refused_without_mutation (__main__.CancellationBoundaryTests.test_stale_release_refused_without_mutation) (ns=299) ... FAIL
+
+======================================================================
+FAIL: test_stale_release_refused_without_mutation (__main__.CancellationBoundaryTests.test_stale_release_refused_without_mutation) (ns=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-4/work/agent-interface/runtime/results/kernel-cancel-release-01a0ff52/check_candidate.py", line 16, in test_stale_release_refused_without_mutation
+    with self.assertRaises(self.k.ContractError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_stale_release_refused_without_mutation (__main__.CancellationBoundaryTests.test_stale_release_refused_without_mutation) (ns=199)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-4/work/agent-interface/runtime/results/kernel-cancel-release-01a0ff52/check_candidate.py", line 16, in test_stale_release_refused_without_mutation
+    with self.assertRaises(self.k.ContractError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_stale_release_refused_without_mutation (__main__.CancellationBoundaryTests.test_stale_release_refused_without_mutation) (ns=200)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-4/work/agent-interface/runtime/results/kernel-cancel-release-01a0ff52/check_candidate.py", line 16, in test_stale_release_refused_without_mutation
+    with self.assertRaises(self.k.ContractError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_stale_release_refused_without_mutation (__main__.CancellationBoundaryTests.test_stale_release_refused_without_mutation) (ns=299)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-4/work/agent-interface/runtime/results/kernel-cancel-release-01a0ff52/check_candidate.py", line 16, in test_stale_release_refused_without_mutation
+    with self.assertRaises(self.k.ContractError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ContractError not raised
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.012s
+
+FAILED (failures=4)
