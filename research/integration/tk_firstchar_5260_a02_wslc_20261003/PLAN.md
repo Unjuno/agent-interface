@@ -27,11 +27,11 @@ coordinate methods coincide -> describe arithmetic, not API identity.
 
 ### Task 1: runtime construction
 
-- [ ] Write `test_host_capture.py` for stdout/stderr/exit receipts,
+- [x] Write `test_host_capture.py` for stdout/stderr/exit receipts,
   occupied-output refusal and launch failure; run RED.
-- [ ] Implement `execute(argv: list[str], output: Path) -> dict`
+- [x] Implement `execute(argv: list[str], output: Path) -> dict`
   in `host_capture.py`; run GREEN.
-- [ ] Build image from `image/Dockerfile` with receipts outside context.
+- [x] Build image from `image/Dockerfile` with receipts outside context.
   Inspect only the resulting image; record exact identity/versions.
 
 Runtime observation: the selected system interpreter is Debian
@@ -40,17 +40,17 @@ This new environment is part of A02's scope, not parity with A01.
 
 ### Task 2: candidate and independent audit
 
-- [ ] Derive A01 source without changing originals.
-- [ ] Write tests exposing baseline integrity omission and read-only input
+- [x] Derive A01 source without changing originals.
+- [x] Write tests exposing baseline integrity omission and read-only input
   violation before correcting `audit.py`.
-- [ ] Retain one uniquely allocated smoke's first outcome.
-- [ ] Audit corruption copies; do not overwrite raw.
+- [x] Retain one uniquely allocated smoke's first outcome.
+- [x] Audit corruption copies; do not overwrite raw.
 
 ### Task 3: formal evidence and integration
 
-- [ ] Freeze SHA-bound sources/image/argv/new outputs; prospective Issue
+- [x] Freeze SHA-bound sources/image/argv/new outputs; prospective Issue
   allocation comment and source commit readback.
-- [ ] Candidate once, auditor once; preserve all first outcomes, raw
+- [x] Candidate once, auditor once; preserve all first outcomes, raw
   streams, receipts, warning and cleanup records.
 - [ ] Add read-only packet verifier and retained-only CI; run package and
   repository checks. PR, verify expected head/CI and integrate.
