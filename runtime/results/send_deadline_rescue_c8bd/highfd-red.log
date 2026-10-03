@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_saturated_high_descriptor_times_out_not_descriptor_range_error (test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_saturated_high_descriptor_times_out_not_descriptor_range_error)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/research/live_control/test_codex_app_server_send_deadline_v1.py", line 150, in test_saturated_high_descriptor_times_out_not_descriptor_range_error
+    self.assertIsInstance(error.__cause__, TimeoutError)
+AssertionError: ValueError('filedescriptor out of range in select()') is not an instance of <class 'TimeoutError'>
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

@@ -21,6 +21,12 @@ SUITES = {
 SUITES['protocol'].append('test_app_server_eof_stop')
 SUITES['protocol'].append('test_app_server_reply_id_5156')
 SUITES['protocol'].append('test_app_server_utf8')
+SUITES['protocol'].extend([
+    'test_codex_app_server_send_deadline_v1',
+    'test_app_server_runtime_eligibility',
+    'test_app_server_known_eof',
+    'test_app_server_send_snapshot',
+])
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)

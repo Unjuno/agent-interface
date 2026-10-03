@@ -7,7 +7,7 @@ import queue
 import threading
 import time
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 from research.live_control import codex_app_server_client_v2 as module
 
@@ -125,6 +125,31 @@ class AppServerSendDeadlineTests(unittest.TestCase):
                 write.assert_not_called()
                 record.assert_not_called()
 
+    @unittest.skipUnless(os.name == "posix", "POSIX descriptor-number regression")
+    def test_saturated_high_descriptor_times_out_not_descriptor_range_error(self):
+        # A usable high FD must retain the same timeout contract as a low FD.
+        # F_DUPFD allocates one owned descriptor; it does not overwrite any FD.
+        import fcntl
+        with owned_client() as (client, _read_fd):
+            high_fd = fcntl.fcntl(client.process.stdin.fileno(), fcntl.F_DUPFD, 2048)
+            client.process.stdin.close()
+            client.process.stdin = os.fdopen(high_fd, "w", encoding="utf-8")
+            self.assertGreaterEqual(high_fd, 2048)
+            os.set_blocking(high_fd, False)
+            filled = 0
+            while True:
+                try:
+                    filled += os.write(high_fd, b"P" * 4096)
+                except BlockingIOError:
+                    break
+            self.assertGreater(filled, 0)
+            message = {"method": "high-fd"}
+            error = self.assert_uncertain(
+                lambda: client._write(message, deadline=time.monotonic() + .02),
+                0, len(wire(message)))
+            self.assertIsInstance(error.__cause__, TimeoutError)
+            self.assert_uncertain(lambda: client.notify("followup", timeout=.1), 0, 0)
+
     def test_partial_record_reports_exact_prefix_and_no_replay(self):
         clock = Clock()
         message = {"method": "sample", "id": 1}
@@ -140,8 +165,12 @@ class AppServerSendDeadlineTests(unittest.TestCase):
             clock.now = 11
             return [], [], []
 
+        waiter = Mock()
+        waiter.poll.side_effect = wait
+
         with owned_client() as (client, _read_fd), patch.object(module.time, "monotonic", clock), \
                 patch.object(module.os, "write", write), patch.object(module.select, "select", wait), \
+                patch.object(module.select, "poll", return_value=waiter, create=True), \
                 patch.object(module.time, "sleep", wait):
             self.assert_uncertain(lambda: client._write(message, deadline=10), 7, len(wire(message)))
             self.assertEqual(attempts, [wire(message), wire(message)[7:]])
@@ -224,10 +253,15 @@ class AppServerSendDeadlineTests(unittest.TestCase):
 
     def test_cancellation_preserves_exception_and_quarantines(self):
         fault = KeyboardInterrupt("owned cancellation")
-        with owned_client() as (client, _read_fd), patch.object(module.os, "write", side_effect=fault):
+        with owned_client() as (client, _read_fd), patch.object(module.os, "write", side_effect=fault) as write:
             with self.assertRaises(KeyboardInterrupt) as result:
                 client._write({"method": "cancel"}, deadline=time.monotonic() + 1)
             self.assertIs(result.exception, fault)
+            self.assertTrue(client._send_uncertain)
+            with patch.object(client, "_record") as record:
+                self.assert_uncertain(lambda: client.notify("after-cancel", timeout=1), 0, 0)
+                record.assert_not_called()
+            self.assertEqual(write.call_count, 1)
         with owned_client() as (client, _read_fd), patch.object(module.os, "write", return_value=0):
             self.assert_uncertain(lambda: client._write({"method": "zero"}, deadline=time.monotonic() + 1), 0, len(wire({"method": "zero"})))
 

@@ -124,7 +124,12 @@ class CodexAppServerClient:
                             # Windows select accepts sockets, not pipe handles.
                             time.sleep(min(.01, remaining))
                         else:
-                            select.select([], [self._stdin_fd], [], remaining)
+                            # poll has no select FD_SETSIZE descriptor limit.
+                            # Cap each millisecond wait to avoid poll integer
+                            # overflow for otherwise valid large timeouts.
+                            waiter = select.poll()
+                            waiter.register(self._stdin_fd, select.POLLOUT)
+                            waiter.poll(min(remaining, 1) * 1000)
             except BaseException as error:
                 self._send_uncertain = True
                 if not isinstance(error, Exception):

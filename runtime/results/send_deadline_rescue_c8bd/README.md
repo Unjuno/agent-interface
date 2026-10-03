@@ -5,6 +5,8 @@ V1/V2/V3 inert evidence packages are restored unchanged. Original science,
 RED/GREEN, publication/construction failures and withdrawn V2 adoption remain.
 The active client is a composition, not a wholesale old-branch replacement.
 The native-suite runner remains unchanged.
+The later high-FD repair additively registers all four new suites; existing
+runner modules remain intact (no wholesale old-branch runner replacement).
 
 Fresh comparison against main `e14246bcb` identifies incompatible wholesale
 application: original branch would remove explicit UTF-8 Popen decoding,
@@ -67,3 +69,20 @@ the 249 inert source files remain unchanged.
 Local Analysis Index CI at f6ba64192 exits 0: 43 run steps, failures=[];
 full local-ci.log retained. This is the scoped workflow, not all repository
 workflows, full native-suite PASS, actual Windows or live GUI qualification.
+
+## High-descriptor follow-up (nonvoting technical review)
+
+Fresh first RED on an owned saturated POSIX pipe, F_DUPFD >=2048: expected
+TimeoutError cause, actual ValueError("filedescriptor out of range in select()").
+Only one new descriptor allocated, no unrelated descriptors overwritten.
+POSIX wait now uses poll/POLLOUT, with individual waits capped at 1000ms to avoid
+millisecond integer overflow for large valid timeouts. Windows sleep unchanged.
+Reference: https://docs.python.org/3/library/select.html#select.poll.
+
+After repair: 48 normal and 48 optimized methods PASS (no skips). Cancellation
+test now checks the same interrupted client refuses followup without another
+write/journal call. Four send-related suites are additively selected by the
+native runner. Fresh full native output still FAIL; baseline/new failure/error
+headers remain identical. This is not a full-suite or Windows result.
+First RED and complete new normal/O/native logs are retained. Original archive
+bytes/first outcomes and fixed committee conditions remain untouched.
