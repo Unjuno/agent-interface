@@ -1,0 +1,215 @@
+{
+  "schema": "clipboard36-independent-audit-v1",
+  "status": "FAIL_METHOD",
+  "raw_sha256": "33d96b67de463b93402103688519b573d76f935fa4e703a0e81622fe3c05001c",
+  "errors": [
+    "C12:request_trace"
+  ],
+  "findings": [
+    {
+      "id": "C01",
+      "effect_correct": true,
+      "judgments": {
+        "summary": "ELIGIBLE",
+        "manifest": "ELIGIBLE",
+        "format_effect": "VERIFIED_CORRECT",
+        "effect_only": "VERIFIED_CORRECT"
+      }
+    },
+    {
+      "id": "C02",
+      "effect_correct": true,
+      "judgments": {
+        "summary": "ELIGIBLE",
+        "manifest": "ELIGIBLE",
+        "format_effect": "VERIFIED_CORRECT",
+        "effect_only": "VERIFIED_CORRECT"
+      }
+    },
+    {
+      "id": "C03",
+      "effect_correct": false,
+      "judgments": {
+        "summary": "ELIGIBLE",
+        "manifest": "REJECT_DEPENDENCY",
+        "format_effect": "REJECT_DEPENDENCY",
+        "effect_only": "REJECT_DEPENDENCY"
+      }
+    },
+    {
+      "id": "C04",
+      "effect_correct": false,
+      "judgments": {
+        "summary": "REJECT_DEPENDENCY",
+        "manifest": "REJECT_DEPENDENCY",
+        "format_effect": "REJECT_DEPENDENCY",
+        "effect_only": "REJECT_DEPENDENCY"
+      }
+    },
+    {
+      "id": "C05",
+      "effect_correct": false,
+      "judgments": {
+        "summary": "ELIGIBLE",
+        "manifest": "ELIGIBLE",
+        "format_effect": "WRONG_FORMAT",
+        "effect_only": "VERIFIED_WRONG"
+      }
+    },
+    {
+      "id": "C06",
+      "effect_correct": false,
+      "judgments": {
+        "summary": "ELIGIBLE",
+        "manifest": "ELIGIBLE",
+        "format_effect": "VERIFIED_WRONG",
+        "effect_only": "VERIFIED_WRONG"
+      }
+    },
+    {
+      "id": "C07",
+      "effect_correct": true,
+      "judgments": {
+        "summary": "ELIGIBLE",
+        "manifest": "ELIGIBLE",
+        "format_effect": "HOLD_FORMAT",
+        "effect_only": "VERIFIED_CORRECT"
+      }
+    },
+    {
+      "id": "C08",
+      "effect_correct": false,
+      "judgments": {
+        "summary": "REJECT_DEPENDENCY",
+        "manifest": "REJECT_DEPENDENCY",
+        "format_effect": "REJECT_DEPENDENCY",
+        "effect_only": "REJECT_DEPENDENCY"
+      }
+    },
+    {
+      "id": "C09",
+      "effect_correct": false,
+      "judgments": {
+        "summary": "ELIGIBLE",
+        "manifest": "ELIGIBLE",
+        "format_effect": "NO_EFFECT",
+        "effect_only": "NO_EFFECT"
+      }
+    },
+    {
+      "id": "C10",
+      "effect_correct": true,
+      "judgments": {
+        "summary": "ELIGIBLE",
+        "manifest": "ELIGIBLE",
+        "format_effect": "VERIFIED_CORRECT",
+        "effect_only": "VERIFIED_CORRECT"
+      }
+    },
+    {
+      "id": "C11",
+      "effect_correct": true,
+      "judgments": {
+        "summary": "ELIGIBLE",
+        "manifest": "ELIGIBLE",
+        "format_effect": "VERIFIED_CORRECT",
+        "effect_only": "VERIFIED_CORRECT"
+      }
+    },
+    {
+      "id": "C12",
+      "effect_correct": false,
+      "judgments": {
+        "summary": "REJECT_DEPENDENCY",
+        "manifest": "REJECT_DEPENDENCY",
+        "format_effect": "REJECT_DEPENDENCY",
+        "effect_only": "REJECT_DEPENDENCY"
+      }
+    }
+  ],
+  "mutation_controls": [
+    {
+      "name": "omitted_case",
+      "rejected": true,
+      "errors": [
+        "roster"
+      ]
+    },
+    {
+      "name": "changed_html_digest",
+      "rejected": true,
+      "errors": [
+        "C03:observed",
+        "C03:planner_view",
+        "C12:request_trace"
+      ]
+    },
+    {
+      "name": "boolean_generation",
+      "rejected": true,
+      "errors": [
+        "C01:observed",
+        "C12:request_trace"
+      ]
+    },
+    {
+      "name": "fabricated_requested_format",
+      "rejected": true,
+      "errors": [
+        "C05:request_trace",
+        "C05:judgments",
+        "C12:request_trace"
+      ]
+    },
+    {
+      "name": "fabricated_bold_effect",
+      "rejected": true,
+      "errors": [
+        "C06:effect",
+        "C12:request_trace"
+      ]
+    },
+    {
+      "name": "missing_format_promoted",
+      "rejected": true,
+      "errors": [
+        "C07:judgments",
+        "C12:request_trace"
+      ]
+    },
+    {
+      "name": "no_paste_promoted",
+      "rejected": true,
+      "errors": [
+        "C09:attempt",
+        "C12:request_trace"
+      ]
+    },
+    {
+      "name": "synthetic_content_leak",
+      "rejected": true,
+      "errors": [
+        "C10:planner_view",
+        "C12:request_trace"
+      ]
+    },
+    {
+      "name": "saved_hash_corruption",
+      "rejected": true,
+      "errors": [
+        "C01:saved_hash:document.html",
+        "C12:request_trace"
+      ]
+    },
+    {
+      "name": "owner_relabel",
+      "rejected": true,
+      "errors": [
+        "C08:observed",
+        "C08:planner_view",
+        "C12:request_trace"
+      ]
+    }
+  ],
+  "consumed_format_independently_proven": false
+}

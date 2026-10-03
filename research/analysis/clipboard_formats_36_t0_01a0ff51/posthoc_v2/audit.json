@@ -1,0 +1,233 @@
+{
+  "schema": "clipboard36-posthoc-audit-v2",
+  "status": "PASS_POSTHOC_AUDIT_SCOPED",
+  "original_formal_outcome_preserved": true,
+  "candidate_rerun": false,
+  "raw_sha256": "31bdfa1a06a240adb4c4c61e71562dc0eaee0fdda4eff9f07414a1dfd69b1a85",
+  "errors": [],
+  "findings": [
+    {
+      "id": "C01",
+      "effect_correct": true,
+      "judgments": {
+        "summary": "ELIGIBLE",
+        "manifest": "ELIGIBLE",
+        "format_effect": "VERIFIED_CORRECT",
+        "effect_only": "VERIFIED_CORRECT"
+      }
+    },
+    {
+      "id": "C02",
+      "effect_correct": true,
+      "judgments": {
+        "summary": "ELIGIBLE",
+        "manifest": "ELIGIBLE",
+        "format_effect": "VERIFIED_CORRECT",
+        "effect_only": "VERIFIED_CORRECT"
+      }
+    },
+    {
+      "id": "C03",
+      "effect_correct": false,
+      "judgments": {
+        "summary": "ELIGIBLE",
+        "manifest": "REJECT_DEPENDENCY",
+        "format_effect": "REJECT_DEPENDENCY",
+        "effect_only": "REJECT_DEPENDENCY"
+      }
+    },
+    {
+      "id": "C04",
+      "effect_correct": false,
+      "judgments": {
+        "summary": "REJECT_DEPENDENCY",
+        "manifest": "REJECT_DEPENDENCY",
+        "format_effect": "REJECT_DEPENDENCY",
+        "effect_only": "REJECT_DEPENDENCY"
+      }
+    },
+    {
+      "id": "C05",
+      "effect_correct": false,
+      "judgments": {
+        "summary": "ELIGIBLE",
+        "manifest": "ELIGIBLE",
+        "format_effect": "WRONG_FORMAT",
+        "effect_only": "VERIFIED_WRONG"
+      }
+    },
+    {
+      "id": "C06",
+      "effect_correct": false,
+      "judgments": {
+        "summary": "ELIGIBLE",
+        "manifest": "ELIGIBLE",
+        "format_effect": "VERIFIED_WRONG",
+        "effect_only": "VERIFIED_WRONG"
+      }
+    },
+    {
+      "id": "C07",
+      "effect_correct": true,
+      "judgments": {
+        "summary": "ELIGIBLE",
+        "manifest": "ELIGIBLE",
+        "format_effect": "HOLD_FORMAT",
+        "effect_only": "VERIFIED_CORRECT"
+      }
+    },
+    {
+      "id": "C08",
+      "effect_correct": false,
+      "judgments": {
+        "summary": "REJECT_DEPENDENCY",
+        "manifest": "REJECT_DEPENDENCY",
+        "format_effect": "REJECT_DEPENDENCY",
+        "effect_only": "REJECT_DEPENDENCY"
+      }
+    },
+    {
+      "id": "C09",
+      "effect_correct": false,
+      "judgments": {
+        "summary": "ELIGIBLE",
+        "manifest": "ELIGIBLE",
+        "format_effect": "NO_EFFECT",
+        "effect_only": "NO_EFFECT"
+      }
+    },
+    {
+      "id": "C10",
+      "effect_correct": true,
+      "judgments": {
+        "summary": "ELIGIBLE",
+        "manifest": "ELIGIBLE",
+        "format_effect": "VERIFIED_CORRECT",
+        "effect_only": "VERIFIED_CORRECT"
+      }
+    },
+    {
+      "id": "C11",
+      "effect_correct": true,
+      "judgments": {
+        "summary": "ELIGIBLE",
+        "manifest": "ELIGIBLE",
+        "format_effect": "VERIFIED_CORRECT",
+        "effect_only": "VERIFIED_CORRECT"
+      }
+    },
+    {
+      "id": "C12",
+      "effect_correct": false,
+      "judgments": {
+        "summary": "HOLD_RESOURCE",
+        "manifest": "HOLD_RESOURCE",
+        "format_effect": "HOLD_RESOURCE",
+        "effect_only": "HOLD_RESOURCE"
+      }
+    }
+  ],
+  "original_controls": [
+    {
+      "name": "omitted_case",
+      "required_error": "roster",
+      "rejected": true,
+      "errors": [
+        "roster"
+      ]
+    },
+    {
+      "name": "changed_html_digest",
+      "required_error": "C03:observed",
+      "rejected": true,
+      "errors": [
+        "C03:observed",
+        "C03:planner_view"
+      ]
+    },
+    {
+      "name": "boolean_generation",
+      "required_error": "C01:observed",
+      "rejected": true,
+      "errors": [
+        "C01:observed"
+      ]
+    },
+    {
+      "name": "fabricated_requested_format",
+      "required_error": "C05:request_trace",
+      "rejected": true,
+      "errors": [
+        "C05:request_trace",
+        "C05:judgments"
+      ]
+    },
+    {
+      "name": "fabricated_bold_effect",
+      "required_error": "C06:effect",
+      "rejected": true,
+      "errors": [
+        "C06:effect"
+      ]
+    },
+    {
+      "name": "missing_format_promoted",
+      "required_error": "C07:judgments",
+      "rejected": true,
+      "errors": [
+        "C07:judgments"
+      ]
+    },
+    {
+      "name": "no_paste_promoted",
+      "required_error": "C09:attempt",
+      "rejected": true,
+      "errors": [
+        "C09:attempt"
+      ]
+    },
+    {
+      "name": "synthetic_content_leak",
+      "required_error": "C10:planner_view",
+      "rejected": true,
+      "errors": [
+        "C10:planner_view"
+      ]
+    },
+    {
+      "name": "saved_hash_corruption",
+      "required_error": "C01:saved_hash:document.html",
+      "rejected": true,
+      "errors": [
+        "C01:saved_hash:document.html"
+      ]
+    },
+    {
+      "name": "owner_relabel",
+      "required_error": "C08:observed",
+      "rejected": true,
+      "errors": [
+        "C08:observed",
+        "C08:planner_view"
+      ]
+    }
+  ],
+  "additional_scalar_controls": [
+    {
+      "mutation": "planner_generation_to_bool",
+      "v1_errors": [],
+      "v2_errors": [
+        "C01:planner_scalar_type"
+      ],
+      "rejected_for_required_reason": true
+    },
+    {
+      "mutation": "planner_generation_to_float",
+      "v1_errors": [],
+      "v2_errors": [
+        "C01:planner_scalar_type"
+      ],
+      "rejected_for_required_reason": true
+    }
+  ]
+}

@@ -33,6 +33,9 @@ class BackendRegistry:
         if factory is None:
             raise LookupError(f"no backend registered for platform {key!r}")
         backend = factory()
+        for method in ("probe", "observe", "execute", "release_all"):
+            if not callable(getattr(backend, method, None)):
+                raise ContractError(f"backend must provide callable {method}")
         info = backend.probe()
         if not isinstance(info, BackendInfo):
             raise ContractError("backend probe must return BackendInfo")

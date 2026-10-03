@@ -17,5 +17,16 @@ manifest identities.  Terminal execution requires a verified empty release.  Eff
 verification is separate from effect occurrence; a contradicted effect is never rewritten
 as pre-effect/no-effect.
 
+An execution receipt refuses a release observation from before its execution start.
+These timestamps must use a comparable clock. Equal timestamps remain representable;
+the lower bound does not prove release after the final action or physical input state.
+See the [retained regression evidence](../results/kernel-release-epoch-01a0ff34/README.md).
+
+Run the kernel and release-boundary regressions with:
+
+```text
+python -m unittest runtime.kernel.test_kernel runtime.kernel.test_release_epoch -v
+```
+
 This is an additive product contract, not a stable ABI.  Native backend adapters and
 cross-platform acceptance are later promotion gates.
