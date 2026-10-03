@@ -65,13 +65,7 @@ jobs:
         with:
           node-version: '22'
       - name: Test the persistent host relay adapter
-        run: |
-          set -euo pipefail
-          : "${RUNNER_TEMP:?}" "${GITHUB_ENV:?}"
-          PRIMARY_FAILURE_EVIDENCE="$(mktemp -d "$RUNNER_TEMP/primary-failure-order.XXXXXX")"
-          export PRIMARY_FAILURE_EVIDENCE
-          printf 'PRIMARY_FAILURE_EVIDENCE=%s\n' "$PRIMARY_FAILURE_EVIDENCE" >> "$GITHUB_ENV"
-          node --test research/live_control/test_native_relay_client_v1.mjs research/live_control/test_relay_host_timeline_v1.mjs runtime/host_v1/test_relay_client.mjs runtime/host_v1/test_relay_host.mjs runtime/host_v1/test_evidence_capacity.mjs runtime/host_v1/test_text_acknowledgment.mjs runtime/host_v1/test_primary_caller.mjs runtime/host_v1/test_primary_mint.mjs runtime/host_v1/test_primary_mint_many.mjs runtime/host_v1/test_primary_input.mjs runtime/host_v1/test_primary_window_review.mjs runtime/host_v1/test_primary_exchange.mjs runtime/host_v1/test_primary_stdio.mjs runtime/host_v1/test_primary_stdio_backpressure.mjs runtime/host_v1/test_primary_stdio_failure_order.mjs
+        run: node --test research/live_control/test_native_relay_client_v1.mjs research/live_control/test_relay_host_timeline_v1.mjs runtime/host_v1/test_relay_client.mjs runtime/host_v1/test_relay_host.mjs runtime/host_v1/test_evidence_capacity.mjs runtime/host_v1/test_text_acknowledgment.mjs runtime/host_v1/test_primary_caller.mjs runtime/host_v1/test_primary_mint.mjs runtime/host_v1/test_primary_mint_many.mjs runtime/host_v1/test_primary_input.mjs runtime/host_v1/test_primary_window_review.mjs runtime/host_v1/test_primary_exchange.mjs runtime/host_v1/test_primary_stdio.mjs runtime/host_v1/test_primary_stdio_backpressure.mjs runtime/host_v1/test_primary_stdio_failure_order.mjs
       - name: Run the shared local and CI integration checks
         run: python runtime/integration_checks/native.py --output results-local/native-ci
       - name: Retain contract results and full logs
@@ -79,7 +73,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: native-contract-checks
-          path: |
-            results-local/native-ci
-            ${{ env.PRIMARY_FAILURE_EVIDENCE }}
+          path: results-local/native-ci
           if-no-files-found: warn
