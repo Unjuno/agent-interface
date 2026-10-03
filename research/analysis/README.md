@@ -1,5 +1,6 @@
 # Analytical research
 
+- [`RESCUE_STATUS_6035_20261003.md`](RESCUE_STATUS_6035_20261003.md) — Issue #6035 A01/A02 frozen synthetic crossover protocols and terminal pre-candidate STOP records rescued from closed branches; zero formal invocations and no model/interface claim.
 - [`fault_exposure_6539_t0_20261002/RESCUE_STATUS.md`](fault_exposure_6539_t0_20261002/RESCUE_STATUS.md) — Issue #6539 frozen package rescued from PR #6697; paired-twin identifiability check retained, formal allocation still unassigned, and launch remains HOLD because the frozen CLI receipt path has a static `seeds` binding defect.
 - [`native_wsl2_migration_6389_t0_20261002/STOP.md`](native_wsl2_migration_6389_t0_20261002/STOP.md) — #6389 retrospective custody of #6434: original runtime-parity/contention STOP, formal measurement/auditor 0/0/0; later v2 preparation and #6618 repair remain separate, no host release or migration result.
 
@@ -278,6 +279,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`backward_observable_guards_6256_t0_20261002/`](backward_observable_guards_6256_t0_20261002/)
 - [`backward_observable_guards_6256_t2_false_stop_t5_20261002/`](backward_observable_guards_6256_t2_false_stop_t5_20261002/)
 - [`belief_auto_recommit_semantic_boundary_r3_v1/`](belief_auto_recommit_semantic_boundary_r3_v1/)
+- [`belief_external_drift_5368_t0_20261003/`](belief_external_drift_5368_t0_20261003/)
 - [`belief_recommit_epoch_aba_r2_v1/`](belief_recommit_epoch_aba_r2_v1/)
 - [`belief_repair_decision_lattice_r4_v1/`](belief_repair_decision_lattice_r4_v1/)
 - [`belief_stream_scheduling_6097_t0_20261001/`](belief_stream_scheduling_6097_t0_20261001/)
@@ -371,6 +373,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`decision_opportunity_feedback_5986_b7q1_v1/`](decision_opportunity_feedback_5986_b7q1_v1/)
 - [`decision_reversal_6003_container_repro_a01_20261003/`](decision_reversal_6003_container_repro_a01_20261003/)
 - [`decision_reversal_6003_container_repro_a02_20261003/`](decision_reversal_6003_container_repro_a02_20261003/)
+- [`decision_reversal_6003_t0_v1/`](decision_reversal_6003_t0_v1/)
 - [`decision_sufficiency_5329_v1/`](decision_sufficiency_5329_v1/)
 - [`delay_gain_stability_6195_t0_host_20261001_01/`](delay_gain_stability_6195_t0_host_20261001_01/)
 - [`denial_aware_deferral_authority_6422_a02_20261002_v1/`](denial_aware_deferral_authority_6422_a02_20261002_v1/)
@@ -890,3 +893,7 @@ The checker compares the generated block against every child directory with a re
 - [`version_defined_intervention_6691_a02_20261003/REPORT.md`](version_defined_intervention_6691_a02_20261003/REPORT.md) — #6691 successor A02: independent OrbStack audit reconstructed the retained synthetic version-mixture contrast (`PASS_AUDIT_ONLY_SCOPED`); A01 auditor-launch STOP remains unchanged.
 
 - [Issue #6808 / PR #6816 S02 session-isolation STOP](looming_visual_assumption_gate_5905_s02_wslc_20261003/STOP.md) — 34 exact original files (271,291 bytes); historical host construction only, formal candidate/auditor/retries 0/0/0, retrospective qualification, no scientific result or rerun.
+
+## Incomplete preregistration custody
+
+- [Issue #6655 / PR #6694 preregistration custody](incidental_state_legacy_6655_prereg_archive_226b426/README.md) — Eight exact published preregistration blobs; host outputs, process receipts and claimed report/results remain unrecovered. Consumed 1/1/0 host allocation and source-hash mismatches retained; no scientific promotion or rerun.

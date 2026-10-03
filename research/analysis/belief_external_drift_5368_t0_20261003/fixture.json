@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "action_contracts": {
+    "approve": {
+      "safe_states": ["A"]
+    }
+  },
+  "cases": [
+    {
+      "id": "complete_no_disturbance",
+      "input": {
+        "action": "approve",
+        "initial_belief": ["A"],
+        "transition_relation": {"A": ["A"], "B": ["B"], "C": ["C"]},
+        "transition_complete": true,
+        "elapsed_steps": 2,
+        "current_generation": 4,
+        "observation": null
+      },
+      "truth": {"actual_trace": ["A", "A", "A"], "actual_state": "A"},
+      "expected": {"reachable": ["A"], "decision": "ADMIT"}
+    },
+    {
+      "id": "hidden_redirect_without_observation",
+      "input": {
+        "action": "approve",
+        "initial_belief": ["A"],
+        "transition_relation": {"A": ["A", "B"], "B": ["B"], "C": ["C"]},
+        "transition_complete": true,
+        "elapsed_steps": 1,
+        "current_generation": 4,
+        "observation": null
+      },
+      "truth": {"actual_trace": ["A", "B"], "actual_state": "B"},
+      "expected": {"reachable": ["A", "B"], "decision": "YIELD_UNSAFE_OR_AMBIGUOUS"}
+    },
+    {
+      "id": "redirect_then_fresh_safe_observation",
+      "input": {
+        "action": "approve",
+        "initial_belief": ["A"],
+        "transition_relation": {"A": ["A", "B"], "B": ["B"], "C": ["C"]},
+        "transition_complete": true,
+        "elapsed_steps": 1,
+        "current_generation": 4,
+        "observation": {"states": ["A"], "generation": 4, "source_bound": true}
+      },
+      "truth": {"actual_trace": ["A", "A"], "actual_state": "A"},
+      "expected": {"reachable": ["A"], "decision": "ADMIT"}
+    },
+    {
+      "id": "redirect_then_fresh_unsafe_observation",
+      "input": {
+        "action": "approve",
+        "initial_belief": ["A"],
+        "transition_relation": {"A": ["A", "B"], "B": ["B"], "C": ["C"]},
+        "transition_complete": true,
+        "elapsed_steps": 1,
+        "current_generation": 4,
+        "observation": {"states": ["B"], "generation": 4, "source_bound": true}
+      },
+      "truth": {"actual_trace": ["A", "B"], "actual_state": "B"},
+      "expected": {"reachable": ["B"], "decision": "YIELD_UNSAFE_OR_AMBIGUOUS"}
+    },
+    {
+      "id": "stale_generation_observation_ignored",
+      "input": {
+        "action": "approve",
+        "initial_belief": ["A"],
+        "transition_relation": {"A": ["A", "B"], "B": ["B"], "C": ["C"]},
+        "transition_complete": true,
+        "elapsed_steps": 1,
+        "current_generation": 4,
+        "observation": {"states": ["A"], "generation": 3, "source_bound": true}
+      },
+      "truth": {"actual_trace": ["A", "B"], "actual_state": "B"},
+      "expected": {"reachable": ["A", "B"], "decision": "YIELD_UNSAFE_OR_AMBIGUOUS"}
+    },
+    {
+      "id": "unknown_transition_alphabet",
+      "input": {
+        "action": "approve",
+        "initial_belief": ["A"],
+        "transition_relation": {"A": ["A"]},
+        "transition_complete": false,
+        "elapsed_steps": 1,
+        "current_generation": 4,
+        "observation": null
+      },
+      "truth": {"actual_trace": ["A", "B"], "actual_state": "B"},
+      "expected": {"reachable": [], "decision": "UNKNOWN_MODEL"}
+    },
+    {
+      "id": "out_of_support_state_possible",
+      "input": {
+        "action": "approve",
+        "initial_belief": ["A"],
+        "transition_relation": {"A": ["A", "B"], "B": ["B"]},
+        "transition_complete": false,
+        "elapsed_steps": 1,
+        "current_generation": 4,
+        "observation": null
+      },
+      "truth": {"actual_trace": ["A", "C"], "actual_state": "C"},
+      "expected": {"reachable": [], "decision": "UNKNOWN_MODEL"}
+    },
+    {
+      "id": "fresh_observation_contradicts_complete_model",
+      "input": {
+        "action": "approve",
+        "initial_belief": ["A"],
+        "transition_relation": {"A": ["A"], "B": ["B"], "C": ["C"]},
+        "transition_complete": true,
+        "elapsed_steps": 1,
+        "current_generation": 4,
+        "observation": {"states": ["B"], "generation": 4, "source_bound": true}
+      },
+      "truth": {"actual_trace": ["A", "B"], "actual_state": "B"},
+      "expected": {"reachable": [], "decision": "UNKNOWN_MODEL"}
+    },
+    {
+      "id": "two_step_reachability",
+      "input": {
+        "action": "approve",
+        "initial_belief": ["A"],
+        "transition_relation": {"A": ["A", "B"], "B": ["B", "C"], "C": ["C"]},
+        "transition_complete": true,
+        "elapsed_steps": 2,
+        "current_generation": 4,
+        "observation": null
+      },
+      "truth": {"actual_trace": ["A", "B", "C"], "actual_state": "C"},
+      "expected": {"reachable": ["A", "B", "C"], "decision": "YIELD_UNSAFE_OR_AMBIGUOUS"}
+    }
+  ]
+}

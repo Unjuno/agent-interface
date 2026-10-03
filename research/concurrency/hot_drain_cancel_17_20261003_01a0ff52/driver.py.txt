@@ -1,0 +1,41 @@
+"""Verify prospective source/runtime pins, then producer1/auditor1, retry0."""
+import datetime
+import hashlib
+import json
+import pathlib
+import subprocess
+import sys
+
+source = pathlib.Path('/source')
+output = pathlib.Path('/out')
+freeze = json.loads((source/'FREEZE.json').read_text())
+for name, pin in freeze['source_sha256'].items():
+    if hashlib.sha256((source/name).read_bytes()).hexdigest() != pin:
+        raise RuntimeError('STOP source pin: '+name)
+environment = json.loads((source/'environment.json').read_text())
+runtime_check = subprocess.run([sys.executable,'-B',str(source/'preflight.py.txt')],capture_output=True,timeout=10)
+(output/'runtime.stdout').write_bytes(runtime_check.stdout)
+(output/'runtime.stderr').write_bytes(runtime_check.stderr)
+if runtime_check.returncode or json.loads(runtime_check.stdout) != environment:
+    raise RuntimeError('STOP runtime pin mismatch')
+receipts = []
+for component, filename, bound in [('candidate','candidate.py.txt',10),('auditor','audit.py.txt',10)]:
+    command = [sys.executable,'-B',str(source/filename)]
+    receipt = dict(component=component, command=command, started_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(), status='SENT_ONCE')
+    receipts.append(receipt)
+    (output/'driver_receipts.json').write_text(json.dumps(receipts,indent=2)+'\n')
+    try:
+        result = subprocess.run(command,capture_output=True,timeout=bound)
+        stdout, stderr, code = result.stdout, result.stderr, result.returncode
+    except subprocess.TimeoutExpired as exc:
+        stdout, stderr, code = exc.stdout or b'', exc.stderr or b'', 124
+        receipt['status'] = 'STOP_TIMEOUT'
+    (output/(component+'.stdout')).write_bytes(stdout)
+    (output/(component+'.stderr')).write_bytes(stderr)
+    receipt.update(ended_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),exit_code=code,stdout_sha256=hashlib.sha256(stdout).hexdigest(),stderr_sha256=hashlib.sha256(stderr).hexdigest())
+    if receipt['status'] == 'SENT_ONCE':
+        receipt['status'] = 'COMPLETE' if code == 0 else 'STOP_COMPONENT_FAILURE'
+    (output/'driver_receipts.json').write_text(json.dumps(receipts,indent=2)+'\n')
+    if code:
+        raise SystemExit(code)
+print(json.dumps({'candidate':1,'auditor':1,'retries':0}))
