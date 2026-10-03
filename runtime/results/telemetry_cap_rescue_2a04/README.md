@@ -17,6 +17,13 @@ No original candidate, auditor, launcher or consumed allocation was rerun.
 The original FINAL-v5 nonauthor-approval HOLD remains unchanged; this rescuer
 does not supply or invent either required approval. Scientific parents remain open.
 
+Existing nonauthor reference, explicitly nonvoting:
+https://github.com/Unjuno/agent-interface/pull/7043#issuecomment-5969122495
+reports a conditional count-order proof, but also an original identity witness
+where both arms finish five jobs and only report+cap finishes goal-valued `3:1`.
+Thus count dominance is not identity-set or goal-utility dominance. This rescue
+records that review's stated limit, not an independently rerun proof or approval.
+
 Local workflow replay at `b9e5996df4` exited 0: 43 steps, failures=[];
 full output is `local-ci.log`. Initial index-order failure is retained in
 `first-local-ci.log`; only the index ordering was corrected. This local replay
