@@ -1,0 +1,40 @@
+from pathlib import Path
+import ast,subprocess,threading,collections,json,time,tempfile,sys,hashlib,datetime
+p=Path(__file__).resolve().parent
+raw=(p/'client-message-shape-private.py.txt').read_bytes()
+assert hashlib.sha256(raw).hexdigest()=='c513bf6c736a8bbaee296ebbc2551e163fd283b43245996612f949453157833f'
+t=ast.parse(raw);ns={'subprocess':subprocess,'threading':threading,'deque':collections.deque,'json':json,'time':time}
+exec(compile(ast.Module(body=[n for n in t.body if isinstance(n,ast.ClassDef)],type_ignores=[]),'private-latest-owned-peer','exec'),ns)
+rows=[]
+for mode in ['echo','bad-json']:
+ code='import sys,json;row=json.loads(sys.stdin.readline());print(json.dumps({"id":row["id"],"result":row["params"]},ensure_ascii=False),flush=True)' if mode=='echo' else 'print("not-json",flush=True)'
+ intent={'state':'BEFORE_OWN_CHILD_START','case':mode,'command':[sys.executable,'-c',code],'utc':datetime.datetime.now(datetime.timezone.utc).isoformat()}
+ (p/('shape-qualified-'+mode+'-intent.json')).write_text(json.dumps(intent)+'\n')
+ client=None
+ with tempfile.TemporaryDirectory(dir=p,prefix='latest-peer-') as tmp:
+  try:
+   journal=Path(tmp)/'journal.jsonl';client=ns['CodexAppServerClient']([sys.executable,'-c',code],journal_path=journal)
+   if mode=='echo':
+    payload={'text':'日本語 ☃ café'};assert client.request('own/echo',payload,timeout=2)==payload
+   else:
+    client.process.wait(timeout=2);client._reader.join(1)
+    try:client.request('own/failed',timeout=.1)
+    except ns['AppServerError'] as e:assert isinstance(e.__cause__,json.JSONDecodeError) and e.__cause__ is client._reader_error
+    else:raise AssertionError('reader cause absent')
+   client.process.wait(timeout=2);client._reader.join(1);client.close(.2)
+   assert client.process.poll()==0 and not client._reader.is_alive() and client._journal.closed
+   assert all(getattr(client.process,n).closed for n in ['stdin','stdout','stderr'])
+   history=[json.loads(line) for line in journal.read_text().splitlines()]
+   if mode=='echo':assert len(history)==2 and history[0]['direction']=='sent' and history[1]['message']['result']==payload
+   else:assert history==[]
+   (p/('shape-qualified-'+mode+'-journal.jsonl.txt')).write_bytes(journal.read_bytes())
+   rows.append({'case':mode,'owned_pid':client.process.pid,'exit_code':client.process.poll(),'journal_rows':len(history),'reader_retired':True,'journal_and_pipe_wrappers_closed':True,'utc_end':datetime.datetime.now(datetime.timezone.utc).isoformat()})
+  finally:
+   if client:
+    if client.process.poll() is None:client.process.kill();client.process.wait(timeout=2)
+    client._reader.join(2)
+    for n in ['stdin','stdout','stderr']:getattr(client.process,n).close()
+    if not client._journal.closed:client._journal.close()
+out={'candidate_sha256':hashlib.sha256(raw).hexdigest(),'cases':rows,'scope':'own finite actual Python peers, private class, OS pipes/journal/reader; ordinary regression','limits':['not real app-server/model/task/input effect','no descendant or hard total deadline','production adoption absent']}
+(p/'SHAPE_OWNED_PEER_RESULTS.json').write_text(json.dumps(out,indent=2)+'\n')
+print(json.dumps(out,ensure_ascii=False))

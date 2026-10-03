@@ -1,0 +1,16 @@
+{
+  "original_primary_preserved": true,
+  "partial_client_reachable": true,
+  "actual_thread_ident": null,
+  "actual_thread_alive": false,
+  "close_retry_error": "cannot join thread before it is started",
+  "journal_closed_before_fixture_disposal": false,
+  "pipes_closed_before_fixture_disposal": [
+    false,
+    false,
+    false
+  ],
+  "classification": "private constructor repair incomplete for real unstarted Thread; earlier fake-join success not transferable",
+  "next": "distinguish definitely unstarted reader from uncertain/live started reader before joining",
+  "scope": "stdlib Thread object never started; no actor target executed; memory streams/inert process"
+}
