@@ -22,3 +22,8 @@ Use the pinned image and mounts/limits in the protocol; outputs must not exist.
 
 Construction failures, raw outcomes and original sources are retained under
 `construction/`. No audio, model, GPU, host clipboard or physical input is used.
+
+The [posthoc v2 audit](posthoc_v2/audit.json) corrects an additional delivered
+planner-metadata bool/int/float blind spot. The original frozen v1/first outcome
+stay immutable. Use `audit_v2.py` for new read-only checks; its two extra scalar
+controls pass, with twelve local tests. No experimental candidate was rerun.

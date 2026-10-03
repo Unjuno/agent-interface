@@ -127,3 +127,29 @@ are existing behavior, not a new Agent Interface mechanism. No shipped Qt
 binary/image is published by this evidence package.
 
 Local verification passed ten tests and the sparse-aware analysis index. Source/document diff checks passed. The complete diff check found three trailing spaces emitted in the immutable Docker version output (blank GitCommit fields); that raw file is preserved byte-for-byte and excluded from the source whitespace check. No remote CI was required by observed branch protection/rulesets; optional push/pull_request CI is skipped.
+
+## Additive integrity correction — retained raw only
+
+After the formal run, review of #6860's JSON-scalar issue prompted an additional
+read-only probe here. The original v1 auditor rejects a boolean in observed
+generation, but its planner_metadata dictionary equality accepted generation
+1 replaced by True or 1.0 in the delivered metadata copy. These two original
+acceptances are recorded in posthoc_v2/audit.json, not hidden or retroactively
+added to the formal gate. The original formal packet, auditor, freeze, source
+hashes, ten controls and first PASS_METHOD_SCOPED outcome remain unchanged.
+The original PASS applies to those predeclared controls; v1 is known to have
+this additional metadata-type blind spot.
+
+Additive audit_v2.py uses a type-sensitive canonical JSON comparison for the
+nested planner metadata while retaining v1's separate saved-state reconstruction.
+Two regression subtests failed before the fix. A single supplemental ordinary
+raw-only audit returned PASS_POSTHOC_AUDIT_SCOPED, accepted the unchanged original
+packet, retained all ten specific original rejections and rejected both new
+scalar corruptions for C01:planner_scalar_type. Twelve local test methods pass.
+No candidate/container/formal allocation was rerun; this posthoc audit has its
+own prospective source/raw provenance and receipt. Run it with
+`python -B audit_v2.py --oracle oracle.json --raw formal/01/candidate/raw.json --output /new/path/audit.json`.
+Use v2 for later read-only adjudication; preserve the original v1 result and
+limits. The scientific format/effect table and comparator disposition did not
+change. Content reviews target a new digest and committee epoch; old votes are
+not copied to the corrected delivery.
