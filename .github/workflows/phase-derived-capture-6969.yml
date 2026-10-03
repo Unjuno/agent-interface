@@ -1,0 +1,31 @@
+name: 'Phase-derived capture #6969'
+
+on:
+  pull_request:
+    paths:
+      - 'research/analysis/exogenous_phase_6803_derived_capture_a05_20261003_3cbf/**'
+      - '.github/workflows/phase-derived-capture-6969.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/analysis/exogenous_phase_6803_derived_capture_a05_20261003_3cbf/**'
+      - '.github/workflows/phase-derived-capture-6969.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  retained-evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fetch preserved predecessor source freeze
+        run: git fetch --no-tags --depth=1 origin 82100b79c845db3200d9637e070f6bde86db8832
+      - name: Construction and post-run custody tests (no formal replay)
+        run: python -B -m unittest discover -s research/analysis/exogenous_phase_6803_derived_capture_a05_20261003_3cbf -p 'test_*.py' -v
+      - name: Verify every retained artifact and exact observed runtime
+        run: python -B research/analysis/exogenous_phase_6803_derived_capture_a05_20261003_3cbf/verify_evidence.py
