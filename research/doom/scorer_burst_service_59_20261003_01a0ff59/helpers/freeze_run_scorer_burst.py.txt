@@ -1,0 +1,55 @@
+"""Prospective source freeze and one retained run, then separate raw-only audit."""
+import hashlib
+import json
+import platform
+import subprocess
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+REPO = ROOT / 'agent-interface'
+OUT = REPO / 'research/doom/scorer_burst_service_59_20261003_01a0ff59'
+BASE = '92ec265bf94697f85d8cdfecde6e2ddf17a53a88'
+fresh = subprocess.check_output(['git', '-C', str(REPO), 'ls-remote', 'origin', 'refs/heads/main']).decode().split()[0]
+if fresh != BASE:
+    raise RuntimeError('main changed before freeze; inspect compatibility before starting')
+files = ['PROTOCOL.md', 'assay.py', 'audit.py', 'test_reference.py', 'SOURCE_MAP.json', 'conftest.py']
+files += [p.relative_to(OUT).as_posix() for p in sorted((OUT / 'sources').rglob('*.py'))]
+freeze = {'worker': '01a0ff59-0820-7c81-8ef1-f7c3e48ab67d', 'policy': 'FINAL-v5',
+          'action_id': 'scorer-burst-59-01a0ff59-finite-01', 'base_sha': BASE,
+          'classification': 'ordinary stdlib finite scheduling characterization; no formal allocation',
+          'frozen_utc': datetime.now(timezone.utc).isoformat(), 'python': sys.version,
+          'platform': platform.platform(), 'expected_rows': 768, 'raw_budget_bytes': 16777216,
+          'sample_diagnostic_budget': 64,
+          'hashes': {p: hashlib.sha256((OUT / p).read_bytes()).hexdigest() for p in files}}
+with (OUT / 'FREEZE.json').open('x', encoding='utf-8') as handle:
+    json.dump(freeze, handle, indent=2)
+    handle.write('\n')
+(OUT / 'execution').mkdir(exist_ok=False)
+receipts = []
+
+def run(name, *args):
+    started = datetime.now(timezone.utc).isoformat()
+    command = [sys.executable, '-B', *args]
+    result = subprocess.run(command, cwd=OUT, capture_output=True)
+    item = {'command': command, 'started_utc': started,
+            'ended_utc': datetime.now(timezone.utc).isoformat(), 'exit_code': result.returncode}
+    for stream, data in (('stdout', result.stdout), ('stderr', result.stderr)):
+        with (OUT / 'execution' / (name + '.' + stream + '.txt')).open('xb') as handle:
+            handle.write(data)
+        item[stream + '_sha256'] = hashlib.sha256(data).hexdigest()
+    with (OUT / 'execution' / (name + '.receipt.json')).open('x', encoding='utf-8') as handle:
+        json.dump(item, handle, indent=2)
+    receipts.append(item)
+    print(json.dumps(item), flush=True)
+    print(result.stdout.decode(errors='replace')[-1500:], flush=True)
+    print(result.stderr.decode(errors='replace')[-1500:], flush=True)
+    return result.returncode
+
+code = run('candidate', 'assay.py', 'raw.json')
+if code == 0:
+    code = run('raw-only-audit', 'audit.py', 'raw.json', 'audit.json')
+with (OUT / 'execution/RESULT.json').open('x', encoding='utf-8') as handle:
+    json.dump({'exit_code': code, 'commands': receipts}, handle, indent=2)
+sys.exit(code)
