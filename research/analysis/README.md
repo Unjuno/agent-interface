@@ -327,6 +327,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`claim_scoped_partial_verdict_6509_t0_20261002/`](claim_scoped_partial_verdict_6509_t0_20261002/)
 - [`cli_v1_lineage_direct_tests_2428_v1/`](cli_v1_lineage_direct_tests_2428_v1/)
 - [`clipboard_formats_36_t0_01a0ff51/`](clipboard_formats_36_t0_01a0ff51/)
+- [`clipboard_formats_36_x11_transfer_01a0ff51/`](clipboard_formats_36_x11_transfer_01a0ff51/)
 - [`competence_location_map_3446_v1/`](competence_location_map_3446_v1/)
 - [`complementarity_marginal_evidence_5869_t0_v1/`](complementarity_marginal_evidence_5869_t0_v1/)
 - [`composition_heldout_fixture_2068_v1/`](composition_heldout_fixture_2068_v1/)
