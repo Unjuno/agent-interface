@@ -2,6 +2,7 @@
 import argparse
 import asyncio
 import json
+import math
 import os
 from pathlib import Path
 import sys
@@ -17,6 +18,13 @@ PUBLIC_TOOLS = ('list_tools', 'interface_clock', 'interface_validate', 'interfac
                 'interface_guarded_input', 'interface_guarded_review_window', 'interface_guarded_mint_many', 'interface_guarded_activate_window')
 
 
+def _finite_float(value):
+    number = float(value)
+    if not math.isfinite(number):
+        raise ValueError('nonfinite JSON number')
+    return number
+
+
 class Relay:
     def __init__(self, client, *, tools=PUBLIC_TOOLS):
         self.client = client
@@ -25,7 +33,8 @@ class Relay:
 
     async def request(self, line):
         try:
-            request = json.loads(line, parse_constant=lambda value: (_ for _ in ()).throw(ValueError(value)))
+            request = json.loads(line, parse_float=_finite_float,
+                                 parse_constant=lambda value: (_ for _ in ()).throw(ValueError(value)))
             if not isinstance(request, dict) or set(request) != {'id', 'tool', 'arguments'}:
                 raise ValueError('exact id/tool/arguments envelope required')
             if type(request['id']) is not int or request['id'] != self.next_id:
