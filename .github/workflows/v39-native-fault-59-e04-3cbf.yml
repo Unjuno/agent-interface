@@ -1,0 +1,33 @@
+name: v39-native-fault-59-e04-3cbf
+on:
+  pull_request:
+    paths:
+      - 'research/doom/v39_native_fault_59_e04_20261004_3cbf/**'
+      - '.github/workflows/v39-native-fault-59-e04-3cbf.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/doom/v39_native_fault_59_e04_20261004_3cbf/**'
+permissions:
+  contents: read
+jobs:
+  retained-failure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            research/doom/v39_native_fault_59_e04_20261004_3cbf
+            research/doom/v39_native_fault_59_e03_20261004_3cbf
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Pure method controls, no producer or official audit replay
+        working-directory: research/doom/v39_native_fault_59_e04_20261004_3cbf
+        run: python -B -m unittest discover -v
+      - name: Failure and byte custody only
+        working-directory: research/doom/v39_native_fault_59_e04_20261004_3cbf
+        run: python -B verify_retention.py
+      - name: Retained delivery hashes
+        working-directory: research/doom/v39_native_fault_59_e04_20261004_3cbf
+        run: sha256sum -c DELIVERY_MANIFEST.sha256
