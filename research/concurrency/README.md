@@ -26,6 +26,8 @@ The arrows show research lineage only. They do not rewrite the retained decision
 | [`live_phase_overlap_x11_v1/`](live_phase_overlap_x11_v1/) | `PASS_LIVE_PHASE_OVERLAP_X11_SCOPED` | Transfers the phase-overlap shape to two X11 surfaces while showing a shared global resource can make overlap incorrect even with serialized input. | Real productivity applications, broader resource declaration, cross-platform transfer, and production runtime integration. |
 | [`xterm_phase_overlap_v1/`](xterm_phase_overlap_v1/) | `FAIL_REAL_XTERM_PHASE_OVERLAP` | Retains a mechanically favorable XTerm first outcome but the frozen audit fails because it selects a later `done_already` diagnostic instead of the first terminal transition. | A no-rerun successor audit over the exact retained raw bytes; broader claims remain out of scope. |
 | [#3992 three-batch checkpoint freeze / #4028](online_checkpoint_publication_3911_batches_v2/ARCHIVAL_QUALIFICATION.md) | `HOLD_PUBLICATION_INCOMPLETE` | Exact pre-execution freeze and qualified historical three-by-42 result/status record; raw/source/audit corpus remains unavailable from the source head. | Exact-byte recovery and committed readback under #3992/#4028; no rerun or substitution from the distinct nine-by-14 allocation. |
+| [`singleflight_thread_exit_6501_01a0ff35/`](singleflight_thread_exit_6501_01a0ff35/) | `PASS_THREAD_LIFETIME_SCOPED` | Eight native executor/asyncio barrier rows distinguish wrapper cancellation from callable completion; Future-bound CLOSING prevents one early-rejoin overlap. | Arbitrary blocked I/O, scheduling, generation/clock trust, task effect and performance. |
+
 
 ## Concurrency boundary
 
