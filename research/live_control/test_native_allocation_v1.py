@@ -202,7 +202,7 @@ class AllocationTests(unittest.TestCase):
             self.assertEqual(diagnostic['tail'], raw[-2048:].decode())
             self.assertTrue(diagnostic['truncated'])
             self.assertEqual(diagnostic['byte_limit'], 2048)
-            self.assertEqual(diagnostic['path'], str(self.path/'stderr.log'))
+            self.assertEqual(diagnostic['path'], str((self.path/'stderr.log').resolve(strict=True)))
             self.assertEqual(diagnostic['authority'], 'none')
             self.assertIsNone(result['task_success'])
             self.assertFalse(result['cleanup_verified'])
