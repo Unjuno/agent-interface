@@ -25,8 +25,9 @@
       "path": "recovery.py",
       "origin": "qualified recovery.py",
       "measured_package_sha256": "73366c8da01cd7452972cdebb5c176933dc762e858c602759f6974ba92a13047",
-      "repository_image_sha256": "6f5c81cc20c3c5bbd5f1a87fb78d9676982ebfa68abc67cfe53e1d793c7e997e",
-      "projection": "CRLF source line endings to LF only; Python AST unchanged"
+      "repository_image_sha256": "45f15ff4d3a47f53acb6825f2eaea5c46ea1672928a952c70206664b4bb5a0d3",
+      "projection": "Source CRLF normalized to LF, plus two intentional request shallow-copy locations; not AST-identical to measured package",
+      "previous_repository_image_sha256": "6f5c81cc20c3c5bbd5f1a87fb78d9676982ebfa68abc67cfe53e1d793c7e997e"
     },
     {
       "path": "role_method.py",
@@ -37,6 +38,6 @@
       "previous_repository_image_sha256": "06f506501aac6d9d4635da1571857fa4e1522c70bb50f48b765570d115f1cd77"
     }
   ],
-  "scope": "Package source identity and explicit guard repair only; old formal/native results do not qualify repaired guard or constitute a full public capsule",
+  "scope": "Package source identity and explicit line-grammar/request-custody repairs only; old formal/native results do not qualify repaired source or constitute a full public capsule",
   "formal_result": "https://github.com/Unjuno/agent-interface/issues/57#issuecomment-5973271804"
 }

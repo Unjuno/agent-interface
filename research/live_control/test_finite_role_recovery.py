@@ -195,5 +195,46 @@ class LineGuardTests(unittest.TestCase):
             self.assertEqual(apply_role(DOC,'役割','加藤',bad)['outcome'],'REFUSE')
 
 
+class RequestCustodyTests(unittest.TestCase):
+ def case(self,kind):
+  mode='package_direct'
+  ROLE='議事録担当'
+  DOC='新しい検査\r\n議事録担当：安田\r\n受付担当：安田\r\n注記：元の本文\r\n'
+  task=dict(id='custody-fixed',document=DOC,old_person='安田',new_person='田島')
+  original=dict(task);events=[];calls=[]
+  class Editor:
+   replacements=saves=0
+   body=disk=DOC
+   def read_current(self):return self.body
+   def replace_once(self,text):self.replacements+=1;self.body=text
+   def save_once(self):self.saves+=1;self.disk=self.body
+  editor=Editor()
+  def subject(t,document):
+   calls.append(dict(t))
+   if kind in ('argument_first','external_first','external_first_return_alias') and len(calls)==1:
+    (t if kind=='argument_first' else task)['new_person']='石井'
+   if kind in ('argument_recovery','external_recovery') and len(calls)==2:
+    (t if kind=='argument_recovery' else task)['new_person']='石井'
+   if kind.endswith('recovery') and len(calls)==1:editor.body=editor.body.replace('元の本文','更新された注記')
+   source=task if kind=='external_first_return_alias' else t
+   return dict(updated_text=document.replace(ROLE+'：'+source['old_person'],ROLE+'：'+source['new_person']),changed_role=ROLE,previous_person=source['old_person'],new_person=source['new_person'],untouched_title='sibling.txt')
+  outcome='RETURN';error=None
+  submitted=task
+  callback=subject
+  try:run_with_one_recovery(submitted,editor,callback,lambda k,v:events.append([k,v]),reuse_label=False if kind.endswith('recovery') else True)
+  except RuntimeError as exc:outcome='STOP';error=str(exc)
+  expected=DOC.replace('議事録担当：安田','議事録担当：田島')
+  if kind.endswith('recovery'):expected=expected.replace('元の本文','更新された注記')
+  row=dict(kind=kind,mode=mode,original=original,caller_after=task,calls=calls,events=events,disk=editor.disk,expected=expected,replacements=editor.replacements,saves=editor.saves,outcome=outcome,error=error)
+
+  self.assertTrue(editor.disk==expected or (outcome=='STOP' and editor.replacements==editor.saves==0),'effect differs from original request without pre-input STOP')
+ def test_control(self):self.case('control')
+ def test_argument_first(self):self.case('argument_first')
+ def test_external_first(self):self.case('external_first')
+ def test_external_first_return_alias(self):self.case('external_first_return_alias')
+ def test_argument_recovery(self):self.case('argument_recovery')
+ def test_external_recovery(self):self.case('external_recovery')
+
+
 if __name__ == '__main__':
     unittest.main()
