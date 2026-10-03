@@ -2,10 +2,11 @@
 from . import pipeline
 
 def run_with_one_recovery(task,editor,subject,record,reuse_label=True):
+    task=dict(task) # Own the original string-valued request before callbacks.
     validated_label=None
     def infer(t,document):
         nonlocal validated_label
-        output=subject(t,document)
+        output=subject(dict(t),document) # A callback cannot rewrite validation input.
         checked=pipeline.contract.validate_subject(document,t,output)
         if checked['outcome']=='READY':validated_label=output['changed_role']
         return output
