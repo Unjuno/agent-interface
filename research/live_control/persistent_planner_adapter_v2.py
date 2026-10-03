@@ -148,7 +148,7 @@ class PersistentPlannerAdapter:
             raise PlannerProtocolError("turn/completed returned no status")
         with self._lock:
             self._require_active(handle)
-            self._terminal_status = status
+            output_schema = self._output_schema
             cancelled = self._cancellation_requested
 
         usage = self.client.latest_turn_usage(handle.thread_id, handle.turn_id)
@@ -172,16 +172,28 @@ class PersistentPlannerAdapter:
                 error = f"invalid JSON answer: {parse_error.msg}"
             else:
                 try:
-                    _validate_schema(answer, self._output_schema)
+                    _validate_schema(answer, output_schema)
                 except PlannerProtocolError as schema_error:
                     error = str(schema_error)
                     answer = None
                 else:
                     eligible = True
-        return TurnResult(
-            handle=handle, status=status, answer_eligible=eligible, answer=answer,
-            error=error, usage=usage, cancellation_requested=cancelled,
-            completed_agent_messages=len(messages))
+        with self._lock:
+            self._require_active(handle)
+            # Keep admission closed through result validation, and include an
+            # invalidation that arrived after wire completion but before this
+            # local result is committed.
+            cancelled = self._cancellation_requested
+            if status == "completed" and cancelled:
+                eligible = False
+                answer = None
+                error = "answer belongs to an invalidated observation"
+            result = TurnResult(
+                handle=handle, status=status, answer_eligible=eligible, answer=answer,
+                error=error, usage=usage, cancellation_requested=cancelled,
+                completed_agent_messages=len(messages))
+            self._terminal_status = status
+            return result
 
     def _require_active(self, handle):
         if handle != self._active:

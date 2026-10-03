@@ -45,6 +45,8 @@ SUITES["protocol"].append("test_adaptive_acquisition_caller_verify_progress_v3")
 SUITES['protocol'].append('test_planner_start_admission_01a0ff2d')
 SUITES['protocol'].append('test_grounding_start_admission_01a0ff2d')
 
+SUITES['protocol'].append('test_planner_result_finalization_01a0ff2d')
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--protocol-python', default=sys.executable)
