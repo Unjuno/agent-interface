@@ -10,7 +10,7 @@ from candidate import factory
 
 
 class RealPipeBoundary(unittest.TestCase):
-    def exercise(self, wire, first_event=None):
+    def exercise(self, wire, first_event=None, waits=1):
         archive = Path(__file__).parent.parent / 'v39_native_fault_59_e05_20261004_3cbf/source-closure.tar.gz'
         with tarfile.open(archive, 'r:gz') as source:
             code = source.extractfile('research/doom/v39_reader_signal_59_e02_20261004_3cbf/source/v39-candidate.py.txt').read()
@@ -24,13 +24,14 @@ class RealPipeBoundary(unittest.TestCase):
             self.assertFalse(thread.is_alive()); self.assertIsNone(child.poll())
             if first_event:
                 self.assertEqual(wait(lambda row: row['event'] == first_event, timeout=.1), {'event': first_event})
-            try:
-                wait(lambda row: False, timeout=.1)
-            except Exception as error:
-                self.assertEqual(type(error).__name__, '_SessionReaderFailure')
-                self.assertIsInstance(error.__cause__, json.JSONDecodeError if wire == 'not-json\n' else EOFError)
-            else:
-                self.fail('ended pipe not signalled')
+            for attempt in range(waits):
+                try:
+                    wait(lambda row: False, timeout=.1)
+                except Exception as error:
+                    self.assertEqual(type(error).__name__, '_SessionReaderFailure', f'wait attempt {attempt + 1}')
+                    self.assertIsInstance(error.__cause__, json.JSONDecodeError if wire == 'not-json\n' else EOFError)
+                else:
+                    self.fail('ended pipe not signalled')
         finally:
             child.terminate()
             try:
@@ -53,3 +54,9 @@ class RealPipeBoundary(unittest.TestCase):
 
     def test_parser_cause_not_replaced_with_eof(self):
         self.exercise('not-json\n')
+
+    def test_repeated_wait_does_not_lose_eof_state(self):
+        self.exercise('', waits=2)
+
+    def test_repeated_wait_does_not_lose_parser_failure(self):
+        self.exercise('not-json\n', waits=2)
