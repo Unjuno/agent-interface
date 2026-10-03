@@ -1,0 +1,15 @@
+{
+  "phase": "RED-eligibility",
+  "argv": [
+    "/run/current-system/sw/bin/python3",
+    "-m",
+    "unittest",
+    "-v",
+    "test_app_server_runtime_eligibility"
+  ],
+  "cwd": "<OWNED_TASK>",
+  "PYTHONPATH": "<OWNED_TASK>/source:<OWNED_TASK>/source/research/live_control:<OWNED_TASK>",
+  "source_sha256": "a18cab38b5336c801da63ee8b91ea67067bda6e9b76a83ef184723a3cc69999d",
+  "test_sha256": "99db6a74f49962dc041ce3dd384fdead60ce1233d97a835f1bf387000c482c11",
+  "scope": "ordinary affected regression; no native peer/formal replay"
+}

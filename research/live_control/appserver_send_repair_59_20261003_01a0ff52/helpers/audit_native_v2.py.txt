@@ -1,0 +1,99 @@
+"""Read saved native bytes and records only; do not import client/driver/peer."""
+from pathlib import Path
+import copy
+import hashlib
+import json
+
+WORK = Path(__file__).resolve().parent
+
+
+def require(value, reason):
+    if not value:
+        raise ValueError(reason)
+
+
+def check(row, spec, plan):
+    data = (WORK / 'native-results' / spec['mode'] / 'intended-wire.jsonl').read_bytes()
+    message = json.loads(data)
+    require(row['spec'] == spec, 'cell spec')
+    require(type(row['wire_bytes']) is int and row['wire_bytes'] == len(data), 'wire length')
+    require(row['wire_sha256'] == hashlib.sha256(data).hexdigest(), 'wire digest')
+    require(message['id'] == 1 and type(message['id']) is int and message['method'] == 'turn/start', 'request identity')
+    require(message['params']['input'][1]['imageUrl'] == 'data:image/png;base64,' + 'A' * spec['padding'], 'large input')
+    require(row['source_sha256'] == plan['sources']['research/live_control/codex_app_server_client_v2.py'], 'source identity')
+    require(row['ready'] == {'method': 'ready', 'params': {'mode': spec['mode']}}, 'ready mode')
+    require(row['caller_alive_at_checkpoint'] is False and row['child_live_at_checkpoint'] is True and row['reader_live_at_checkpoint'] is True, 'checkpoint lifecycle')
+    require(row['factory']['pid'] > 0 and type(row['factory']['pid']) is int, 'peer PID')
+    require(row['factory']['kwargs']['text'] is True and row['factory']['kwargs']['bufsize'] == 1, 'original Popen wrapper mode')
+    outcome = row['outcome']
+    require(outcome['started_ns'] <= outcome['ended_ns'] <= row['checkpoint_ns'] <= row['cleanup_started_ns'] <= row['cleanup_ended_ns'], 'timing custody')
+    offset = 0
+    for attempt in row['observed_writes']:
+        require(type(attempt['bytes']) is int and 0 < attempt['bytes'] <= 65536, 'syscall chunk')
+        require(attempt['sha256'] == hashlib.sha256(data[offset:offset + attempt['bytes']]).hexdigest(), 'attempt suffix bytes')
+        require(attempt['started_ns'] <= attempt['ended_ns'], 'attempt timing')
+        if 'count' in attempt:
+            count = attempt['count']
+            require(type(count) is int and 0 < count <= attempt['bytes'], 'OS prefix count')
+            offset += count
+        else:
+            require(attempt['error'] == 'BlockingIOError', 'OS blocked attempt')
+    if spec['mode'] == 'healthy':
+        expected = {'wire_sha256': hashlib.sha256(data).hexdigest(),
+                    'params_sha256': hashlib.sha256(json.dumps(message['params'], sort_keys=True, separators=(',', ':')).encode()).hexdigest()}
+        require(outcome.get('result') == expected and 'error' not in outcome, 'whole native result')
+        require(offset == len(data) and row['send_uncertain_at_checkpoint'] is False, 'whole send state')
+    else:
+        require(outcome.get('error') == 'AppServerWriteUncertain' and outcome['cause'] == 'TimeoutError', 'typed native failure')
+        require(type(outcome['sent']) is int and 0 < outcome['sent'] == offset < len(data), 'partial count')
+        require(type(outcome['total']) is int and outcome['total'] == len(data), 'total count')
+        require(row['send_uncertain_at_checkpoint'] is True, 'quarantine state')
+        followup = row['followup']
+        require(type(followup['writes_before']) is int and type(followup['writes_after']) is int and followup['writes_before'] == followup['writes_after'] == len(row['observed_writes']), 'no followup OS attempt')
+        require(len(followup['errors']) == 2 and all(e == {'error': 'AppServerWriteUncertain', 'sent': 0, 'total': 0} and type(e['sent']) is int and type(e['total']) is int for e in followup['errors']), 'two followup refusals')
+    final = row['final']
+    require(final['child_exit'] == -15 and type(final['child_exit']) is int, 'deliberate owned macOS termination')
+    require(final['caller_alive'] is False and final['reader_alive'] is False, 'thread closure')
+    require(set(final['pipes_closed']) == {'stdin', 'stdout', 'stderr'} and all(v is True for v in final['pipes_closed'].values()), 'driver pipe closure')
+    return {'mode': spec['mode'], 'wire_bytes': len(data), 'sent': offset,
+            'call_ns': outcome['ended_ns'] - outcome['started_ns'], 'write_attempts': len(row['observed_writes'])}
+
+
+if __name__ == '__main__':
+    plan = json.loads((WORK / 'NATIVE_PLAN.json').read_text())
+    rows = [json.loads((WORK / 'native-results' / spec['mode'] / 'result.json').read_text()) for spec in plan['cells']]
+    summary = [check(row, spec, plan) for row, spec in zip(rows, plan['cells'])]
+    controls = []
+    def add(name, index, mutate):
+        row = copy.deepcopy(rows[index])
+        mutate(row)
+        require(json.dumps(row, sort_keys=True) != json.dumps(rows[index], sort_keys=True), 'ineffective typed mutation')
+        controls.append((name, index, row))
+    add('wrong_wire_hash', 0, lambda r: r.update(wire_sha256='0' * 64))
+    add('wrong_wire_length', 0, lambda r: r.update(wire_bytes=1))
+    add('wrong_ready_mode', 1, lambda r: r['ready']['params'].update(mode='healthy'))
+    add('wrong_native_result', 0, lambda r: r['outcome']['result'].update(params_sha256='0' * 64))
+    add('boolean_partial_count', 1, lambda r: r['outcome'].update(sent=True))
+    add('extra_followup_write', 1, lambda r: r['followup'].update(writes_after=r['followup']['writes_before'] + 1))
+    add('wrong_native_source', 1, lambda r: r.update(source_sha256='0' * 64))
+    add('caller_still_live', 1, lambda r: r.update(caller_alive_at_checkpoint=True))
+    add('peer_already_dead', 1, lambda r: r.update(child_live_at_checkpoint=False))
+    add('boolean_closed_pipe', 1, lambda r: r['final']['pipes_closed'].update(stdin=1))
+    add('wrong_OS_prefix_count', 1, lambda r: r['observed_writes'][0].update(count=r['observed_writes'][0]['count'] - 1))
+    add('boolean_followup_zero', 1, lambda r: r['followup']['errors'][0].update(sent=False))
+    directory = WORK / 'native-copy-controls-v2'
+    directory.mkdir(exist_ok=False)
+    decisions = []
+    for name, index, row in controls:
+        path = directory / (name + '.json')
+        path.write_text(json.dumps(row, indent=2) + '\n')
+        try:
+            check(row, plan['cells'][index], plan)
+            decisions.append({'name': name, 'rejected': False})
+        except ValueError as error:
+            decisions.append({'name': name, 'rejected': True, 'reason': str(error)})
+    result = {'summary': summary, 'controls': decisions, 'native_replays': 0,
+              'scope': 'saved bytes/transparent OS-write records; not complete producer authenticity or actual task/model proof'}
+    (WORK / 'native-audit-v2.json').write_text(json.dumps(result, indent=2) + '\n')
+    require(all(v['rejected'] for v in decisions), 'a copied fault was accepted')
+    print(json.dumps(result))

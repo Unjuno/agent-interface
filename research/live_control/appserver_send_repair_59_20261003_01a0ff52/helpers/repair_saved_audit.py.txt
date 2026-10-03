@@ -1,0 +1,17 @@
+from pathlib import Path
+import hashlib
+WORK = Path(__file__).resolve().parent
+original = (WORK / 'audit_native.py').read_bytes()
+with (WORK / 'audit_native_v1.py.txt').open('xb') as out:
+    out.write(original)
+new = original.decode().replace("require(row != rows[index], 'ineffective mutation')", "require(json.dumps(row, sort_keys=True) != json.dumps(rows[index], sort_keys=True), 'ineffective typed mutation')")
+new = new.replace("'native-copy-controls'", "'native-copy-controls-v2'").replace("'native-audit.json'", "'native-audit-v2.json'")
+assert new.encode() != original
+(WORK / 'audit_native_v2.py').write_text(new)
+(WORK / 'SAVED_AUDIT_CORRECTION.md').write_text(
+    'First saved-only audit exited1 before materializing copied controls: Python equality calls True and integer1 equal, '
+    'so the copy generator wrongly called the intended Boolean-to-integer alteration ineffective. Original v1 source/error retained. '
+    'V2 compares canonical JSON representations for mutation effectiveness, uses separate output paths, and otherwise keeps all '
+    'row checks and copied changes identical. This repairs ordinary saved-data construction, not the native producer, source or gates. '
+    'No native replay. V1 SHA256 ' + hashlib.sha256(original).hexdigest() + '; V2 SHA256 ' + hashlib.sha256(new.encode()).hexdigest() + '.\n')
+print(hashlib.sha256(new.encode()).hexdigest())

@@ -1,0 +1,156 @@
+"""Build a source-only candidate in a private Git index; never apply main."""
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+
+HERE = Path(__file__).resolve().parent
+REPO = HERE.parent / 'agent-interface'
+BASE = '02f3ebcc8d721343dc8c503ac3c9553200facc74'
+OLD = 'fbd804e549b589e7e7e692ab4f89183d21451ca7'
+LEAF = 'research/live_control/appserver_send_runtime_v2_59_20261003_01a0ff52'
+CLIENT = 'research/live_control/codex_app_server_client_v2.py'
+V1 = json.loads((HERE.parent/'appserver-send-repair-01a0ff52/content-proposal.json').read_bytes())
+ENV = dict(os.environ, GIT_INDEX_FILE=str(HERE/'candidate-v3.index'))
+
+def git(*args, data=None):
+    return subprocess.run(['/run/current-system/sw/bin/git', '--no-lazy-fetch', '-C', str(REPO), *args],
+                          input=data, check=True, capture_output=True, env=ENV).stdout
+
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+
+def save(name, data):
+    path = HERE/name
+    with path.open('xb') as out:
+        out.write(data)
+
+def dump(value):
+    return (json.dumps(value, indent=2, ensure_ascii=True)+'\n').encode('utf-8')
+
+checkout_status = subprocess.run(['/run/current-system/sw/bin/git', '--no-lazy-fetch', '-C', str(REPO), 'status', '--porcelain=v1'], capture_output=True, check=True).stdout
+if git('rev-parse', 'HEAD').strip().decode() != OLD or checkout_status:
+    raise RuntimeError('owned checkout changed; do not build')
+if (HERE/'candidate-v3.index').exists():
+    raise RuntimeError('existing private candidate index; do not overwrite')
+old_paths = git('diff', '--name-only', '--no-renames', V1['review_base_sha'], OLD).decode().splitlines()
+old_archive = [p for p in old_paths if p.startswith(V1['package'])]
+if len(old_paths) != 164 or len(old_archive) != 160:
+    raise ValueError('v1 explicit scope mismatch')
+
+new_files = {}
+joins = []
+archive = {
+    'REPORT.md': HERE/'REPORT.md',
+    'V2_PLAN.json': HERE/'V2_PLAN.json',
+    'SOURCE_AND_INTAKE_CHECK.json': HERE/'SOURCE_AND_INTAKE_CHECK.json',
+    'original-main-test_app_server_eof_stop.py.txt': HERE/'original-main-test_app_server_eof_stop.py.txt',
+    'candidate-client.py.txt': HERE/'source/research/live_control/codex_app_server_client_v2.py',
+    'candidate-EOF-fixture.py.txt': HERE/'source/research/live_control/test_app_server_eof_stop.py',
+    'test_app_server_runtime_eligibility.py.txt': HERE/'test_app_server_runtime_eligibility.py',
+    'run_ordinary.py.txt': HERE/'run_ordinary.py',
+    'run_ordinary_v2.py.txt': HERE/'run_ordinary_v2.py',
+    'build_v2.py.txt': Path(__file__).resolve(),
+    'build_v2-first-stop.py.txt': HERE/'build_v2-first-stop.py.txt',
+    'build_v2-second-stop.py.txt': HERE/'build_v2-second-stop.py.txt',
+    'targeted-baseline-blob-recovery.json': HERE/'targeted-baseline-blob-recovery.json',
+}
+for phase in ['RED-eligibility', 'GREEN-normal', 'GREEN-normal-fixture', 'GREEN-optimized']:
+    receipt = json.loads((HERE/phase/'RECEIPT.json').read_bytes())
+    expected = 1 if phase in ['RED-eligibility', 'GREEN-normal'] else 0
+    if receipt['exit_code'] != expected:
+        raise ValueError('ordinary first outcome changed ' + phase)
+    for stream in ['stdout', 'stderr']:
+        raw = (HERE/phase/(stream+'.bin')).read_bytes()
+        if receipt[stream] != {'bytes':len(raw), 'sha256':sha(raw)}:
+            raise ValueError('ordinary receipt/raw mismatch')
+    for name in ['PLAN.json', 'RECEIPT.json', 'stdout.bin', 'stderr.bin']:
+        archive[phase+'/'+name] = HERE/phase/name
+for name, original_path in archive.items():
+    original = original_path.read_bytes()
+    public = original.replace(str(HERE).encode(), b'<OWNED_TASK>')
+    new_files[LEAF+'/'+name] = public
+    joins.append({'path':name, 'original_bytes':len(original), 'original_sha256':sha(original),
+                  'public_bytes':len(public), 'public_sha256':sha(public), 'exact':original == public})
+new_files[LEAF+'/.gitattributes'] = b'*.bin whitespace=-blank-at-eol\n'
+new_files[LEAF+'/PROJECTIONS.json'] = dump({'recipe':'only owned task prefix projected; first outcomes/raw remain unchanged privately', 'joins':joins})
+new_files[LEAF+'/PUBLICATION_STOP.json'] = dump({
+    'ordinary_merge':{'tool_chunk':'1359d0','exit_code':128,'missing_blob':'fd7bec5992ba1f8b70136ed2102bba00b4357bcd','observed_utc_upper':'2026-10-03T10:29:54Z','individual_outer_pid_receipt':'not retained; observed tool output only'},
+    'subsequent_targeted_read':{'tool_chunk':'e112fc','exit_code':1,'cause':'same absent required README blob; CalledProcessError output retained, captured Git stderr not separately printed'},
+    'recovery':'one exact public blob API read, Git hash verified, then private-index explicit candidate construction; no broad fetch/shared checkout rewrite',
+    'reviewer_shape_inspection':{'tool_chunk':'1141aa','exit_code':1,'error':'KeyError changed_images; existing v1 schema uses package/source_pins/diff and manifest','source_or_native_failure':False},
+    'fixture_diagnostic':{'tool_chunk':'933bfa','first_cat_failed':'wrong relative cwd; source then read by absolute path','last_shell_exit':0,'native_or_formal_failure':False},
+    'owned_checkout_after_stop':{'head':OLD,'clean':True,'MERGE_HEAD_present':False},'main_sends':0,'native_or_formal_replays':0})
+new_files[LEAF+'/PRIVATE_INDEX_FIRST_STOP.json'] = dump({'tool_chunk':'667699','exit_code':1,'cause':'author builder checked checkout status using a fresh alternate index; that index does not represent checkout state','source_checkout_changed':False,'repair':'status checked through ordinary owned index before private-index construction','first_helper_retained':'build_v2-first-stop.py.txt','native_or_formal_replays':0})
+new_files[LEAF+'/PRIVATE_INDEX_SECOND_STOP.json'] = dump({'tool_chunk':'66892e','exit_code':1,'git_operation':'write-tree','git_exit_code':128,'captured_git_stderr':'not separately retained; exception/observed tool output only','source_or_native_failure':False,'repair':'new private index; verify every changed blob exists, preserve every unchanged published-main mode/kind/OID; write-tree --missing-ok avoids requiring all unchanged promisor blobs','first_helper_retained':'build_v2-second-stop.py.txt','main_sends':0})
+new_files[LEAF+'/WINDOWS_V1_REFERENCE.json'] = dump({
+    'comments':[5968000441,5968000959,5968001463,5968002032], 'content_changes':5968026884,
+    'author_intake':5968243735,'head':OLD,'packet_bytes':6535438,
+    'packet_sha256':'5e22f6c780d8f13a61dc63433ce3515815883781ec0d7dd83b48f5b58ee76db9',
+    'gzip_bytes':133478,'gzip_sha256':'9e9b93a27e5d40fbfe37ae7582222750d084f0ecf18223a9225dbc36517c99de',
+    'verified_public_images':159,'declared_projections':40,'first_gate':'FAIL key-order/planned sidecar; V2 saved audit derives actual frozen INPUT, not original-plan PASS',
+    'new_source_native_execution':False,'native_or_formal_replays':0,'private_original_access_claimed':False})
+manifest = {'self_excluded':True, 'entries':[{'path':p.removeprefix(LEAF+'/'),'bytes':len(data),'sha256':sha(data)} for p,data in sorted(new_files.items())]}
+new_files[LEAF+'/MANIFEST.json'] = dump(manifest)
+
+new_files[CLIENT] = (HERE/'source/research/live_control/codex_app_server_client_v2.py').read_bytes()
+new_files['research/live_control/test_codex_app_server_send_deadline_v1.py'] = (HERE/'source/research/live_control/test_codex_app_server_send_deadline_v1.py').read_bytes()
+new_files['research/live_control/test_app_server_runtime_eligibility.py'] = (HERE/'test_app_server_runtime_eligibility.py').read_bytes()
+new_files['research/live_control/test_app_server_eof_stop.py'] = (HERE/'source/research/live_control/test_app_server_eof_stop.py').read_bytes()
+runner = (HERE/'base-native.py').read_bytes()
+anchor = b"'test_native_primary_review_v1', 'test_native_brief_review_v1', 'test_native_guarded_form_v1', 'test_guarded_source_dependencies_v1'],"
+if runner.count(anchor) != 1 or b'test_codex_app_server_send_deadline_v1' in runner or b'test_app_server_runtime_eligibility' in runner:
+    raise ValueError('base catalogue append precondition')
+new_files['runtime/integration_checks/native.py'] = runner.replace(anchor, anchor[:-2]+b",\n                 'research.live_control.test_codex_app_server_send_deadline_v1', 'research.live_control.test_app_server_runtime_eligibility'],")
+readme = (HERE/'base-live-control-README.md').read_bytes()
+addition = ('\n- [#6965 v1 send evidence](appserver_send_repair_59_20261003_01a0ff52/REPORT.md): original Mac/ordinary first outcomes retained; v1 adoption withdrawn after independent Windows3.11 compatibility failure.\n'
+            '- [#6965 v2 runtime eligibility and EOF combination](appserver_send_runtime_v2_59_20261003_01a0ff52/REPORT.md): Windows requires Python3.12+; all platforms require callable os.set_blocking. AppServerUnsupportedRuntime occurs before journal/process creation. Custom stdin must supply an exclusively owned nonblocking pipe descriptor; no blocking fallback or StringIO-send support. New23 ordinary regressions pass after retained first EOF-fixture failures; actual Windows v2/current-tree/UTF8 composition and adoption remain unqualified.\n').encode()
+new_files['research/live_control/README.md'] = readme+addition
+
+git('read-tree', BASE)
+index_records = []
+for path in old_archive:
+    metadata = git('ls-tree', OLD, '--', path).split(b'\t')[0].decode().split()
+    mode, kind, oid = metadata
+    if kind != 'blob':
+        raise ValueError('nonblob archive member')
+    index_records.append((mode+' '+oid+'\t'+path+'\0').encode())
+for path, data in new_files.items():
+    oid = git('hash-object', '-w', '--stdin', data=data).strip().decode()
+    index_records.append(('100644 '+oid+'\t'+path+'\0').encode())
+git('update-index', '-z', '--index-info', data=b''.join(index_records))
+# All changed blobs must exist; unchanged entries are pinned to published BASE.
+for record in index_records:
+    oid = record.split(b' ',1)[1].split(b'\t',1)[0].decode()
+    git('cat-file', '-e', oid+'^{blob}')
+tree = git('write-tree', '--missing-ok').strip().decode()
+head = git('commit-tree', tree, '-p', BASE, '-p', OLD, data=b'fix(research): reject unsupported pipe runtimes before startup [skip ci]\n').strip().decode()
+git('update-ref', 'refs/heads/review/appserver-send-runtime-v2-01a0ff52-20261003', head, '0'*40)
+
+rows = []
+all_tree = {}
+for record in git('ls-tree','-r','-z',head).split(b'\0'):
+    if record:
+        meta,path = record.split(b'\t',1); mode,kind,oid = meta.decode().split(); all_tree[path.decode()] = (mode,kind,oid)
+base_tree = {}
+for record in git('ls-tree','-r','-z',BASE).split(b'\0'):
+    if record:
+        meta,path = record.split(b'\t',1); base_tree[path.decode()] = tuple(meta.decode().split())
+changed = {p for p in base_tree.keys()|all_tree.keys() if base_tree.get(p)!=all_tree.get(p)}
+expected = set(old_archive)|set(new_files)
+if changed != expected:
+    raise ValueError('unexpected source tree delta')
+for path in sorted(changed):
+    mode,kind,oid = all_tree[path]; data=git('cat-file','blob',oid)
+    rows.append({'path':path,'mode':mode,'blob':oid,'bytes':len(data),'sha256':sha(data)})
+for path in old_archive:
+    if git('ls-tree',head,'--',path) != git('ls-tree',OLD,'--',path):
+        raise ValueError('v1 archive changed')
+recipe = V1['diff_recipe'][:-2]+[BASE,head]
+diff = git(*recipe)
+save('candidate-exact.diff',diff)
+save('candidate-images.json',dump(rows))
+metadata = {'head':head,'tree':tree,'review_base':BASE,'parents':[BASE,OLD],'changed_images':len(rows),'changed_image_bytes':sum(r['bytes'] for r in rows),'untouched_base_entries':sum(p not in changed for p in base_tree),'v1_archive_images_unchanged':160,'new_manifest_entries':len(manifest['entries']),'new_manifest_sha256':sha(new_files[LEAF+'/MANIFEST.json']),'new_leaf':LEAF,'source_pins':[r for r in rows if not r['path'].startswith(LEAF+'/') and r['path'] not in old_archive],'diff_recipe':recipe,'diff_bytes':len(diff),'diff_sha256':sha(diff),'native_or_formal_replays':0,'main_sends':0,'owned_checkout_retained':OLD}
+save('candidate-metadata.json',dump(metadata))
+print(json.dumps(metadata))

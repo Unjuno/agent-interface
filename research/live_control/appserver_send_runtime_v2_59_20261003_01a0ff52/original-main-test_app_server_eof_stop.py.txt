@@ -1,7 +1,6 @@
 """EOF must not synchronously drain another transport diagnostic stream."""
 import io
 import json
-import os
 import unittest
 
 from codex_app_server_client_v2 import AppServerError, CodexAppServerClient
@@ -14,8 +13,7 @@ class NoDiagnosticRead:
 
 class InertProcess:
     def __init__(self, messages):
-        self._stdin_read_fd, write_fd = os.pipe()
-        self.stdin = os.fdopen(write_fd, 'w', encoding='utf-8')
+        self.stdin = io.StringIO()
         self.stdout = io.StringIO(''.join(json.dumps(row) + '\n' for row in messages))
         self.stderr = NoDiagnosticRead()
 
@@ -23,16 +21,9 @@ class InertProcess:
         return 0
 
 
-    def close_streams(self):
-        self.stdin.close()
-        self.stdout.close()
-        os.close(self._stdin_read_fd)
-
-
 class EofStopRegression(unittest.TestCase):
     def client(self, messages=()):
         process = InertProcess(messages)
-        self.addCleanup(process.close_streams)
         client = CodexAppServerClient([], process_factory=lambda *args, **kwargs: process)
         client._reader.join(timeout=1)
         self.assertFalse(client._reader.is_alive())
