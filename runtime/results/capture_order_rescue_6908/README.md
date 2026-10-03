@@ -30,3 +30,9 @@ auditor exit 1 is required, supplemental exit 0 is required. Assert-based archiv
 auditors are intentionally not validated with `-O`. No old matrix/producer or
 shipping allocation is rerun. Private logs/working-source mixed-newline identities
 are not relabeled as public canonical bytes. All original limits remain.
+
+A further current committed-tree distribution check builds a fresh portable
+archive, compares its compiled module bytes with the composed production source,
+and executes all five original regression methods in an isolated `-I` child
+outside the checkout, importing only the archive runtime. This is new ordinary
+distribution engineering, not a repeat of the original shipping allocation.
