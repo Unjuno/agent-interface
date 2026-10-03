@@ -1,0 +1,19 @@
+{
+  "schema": "6501-browser-effects-cases-v1",
+  "service_delay_ms": 180,
+  "waiter_deadline_ms": 5000,
+  "cases": [
+    {"id":"cold_equivalent","kind":"equivalent","targets":{"w1":"A","w2":"A"},"warm":false},
+    {"id":"warm_equivalent","kind":"equivalent","targets":{"w1":"A","w2":"A"},"warm":true},
+    {"id":"mixed_targets","kind":"mixed","targets":{"w1":"A","w2":"B"},"warm":false},
+    {"id":"generation_change","kind":"generation","targets":{"w1":"A","w2":"A"},"warm":false},
+    {"id":"late_caller","kind":"late","targets":{"w1":"A","w2":"A"},"warm":false}
+  ],
+  "orders": [
+    ["cold_equivalent","independent"],["cold_equivalent","predicate"],["cold_equivalent","scoped"],
+    ["warm_equivalent","scoped"],["warm_equivalent","independent"],["warm_equivalent","predicate"],
+    ["mixed_targets","predicate"],["mixed_targets","scoped"],["mixed_targets","independent"],
+    ["generation_change","scoped"],["generation_change","predicate"],["generation_change","independent"],
+    ["late_caller","independent"],["late_caller","scoped"],["late_caller","predicate"]
+  ]
+}
