@@ -4,7 +4,8 @@ This standard-library prototype moves the qualified #57 role controller into a
 normal Python package. It replaces experiment-path module loading with relative
 imports. The line-parameter guard uses the document parser's `splitlines`
 grammar. The recovery entry owns a shallow copy of the original request and
-passes a separate shallow copy to each subject callback. All other function/class
+passes a separate shallow copy to each subject callback. The pipeline owns an
+exact builtin response dictionary before validation and journaling. Other function/class
 bodies retain the qualified version. Source line endings become LF.
 It does not automatically start a browser, model, native input, or experiment.
 
@@ -44,7 +45,7 @@ resending the action. Set `reuse_label=False` for the one-fresh-inference replan
 baseline. A returned label or Save call is not independent on-disk success.
 There is no atomicity guarantee against outside writers.
 
-Run the twenty-four public-state regressions from repository root:
+Run the twenty-six public-state regressions from repository root:
 
 ```text
 python -I research/live_control/test_finite_role_recovery.py -v
@@ -86,3 +87,9 @@ The original eighteen regressions and their definitions are preserved. Ordinary
 synthetic comparison found entry-only and callback-only copies insufficient;
 both copies either preserve the requested exact effect or stop before input.
 This is no new model/native/performance qualification.
+
+Two response-custody regressions preserve the validated returned role when a
+journal callback mutates the original response and retain refusal for dict
+subclasses. Response copying applies only to exact builtin dictionaries; the
+existing exact-string/schema checks remain unchanged. No concurrent response
+snapshot or new native/model qualification is claimed.

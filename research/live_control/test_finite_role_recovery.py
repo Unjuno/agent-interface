@@ -236,5 +236,41 @@ class RequestCustodyTests(unittest.TestCase):
  def test_external_recovery(self):self.case('external_recovery')
 
 
+class OutputCustodyTests(unittest.TestCase):
+ def test_validated_role_survives_journal_mutation(self):
+  doc='記録担当：山口\r\n受付担当：川村\r\n注記：新しい検査\r\n'
+  task=dict(id='output-custody',document=doc,old_person='山口',new_person='川村')
+  output=dict(updated_text='記録担当：川村\r\n受付担当：川村\r\n注記：新しい検査\r\n',changed_role='記録担当',previous_person='山口',new_person='川村',untouched_title='sibling.txt')
+  class Editor:
+   replacements=saves=0
+   body=disk=doc
+   def read_current(self):return self.body
+   def replace_once(self,text):self.replacements+=1;self.body=text
+   def save_once(self):self.saves+=1;self.disk=self.body
+  editor=Editor();events=[]
+  def record(k,v):
+   events.append([k,v])
+   if k=='subject_contract':output['changed_role']='受付担当'
+  label=run_with_one_recovery(task,editor,lambda t,d:output,record)
+  row=dict(returned_label=label,expected_label='記録担当',disk=editor.disk,expected_disk='記録担当：川村\r\n受付担当：川村\r\n注記：新しい検査\r\n',output_after=output,events=events,replacements=editor.replacements,saves=editor.saves)
+
+  self.assertEqual(editor.disk,row['expected_disk'])
+  self.assertEqual(label,'記録担当')
+ def test_dict_subclass_output_still_refuses(self):
+  class Response(dict):pass
+  class Editor:
+   replacements=saves=0
+   def read_current(self):return '記録担当：山口\r\n'
+   def replace_once(self,text):self.replacements+=1
+   def save_once(self):self.saves+=1
+  editor=Editor()
+  output=Response(updated_text='記録担当：川村\r\n',changed_role='記録担当',previous_person='山口',new_person='川村',untouched_title='sibling.txt')
+  task=dict(id='subclass-refusal',document='記録担当：山口\r\n',old_person='山口',new_person='川村')
+  with self.assertRaisesRegex(RuntimeError,'subject contract refusal'):
+   run_with_one_recovery(task,editor,lambda t,d:output,lambda k,v:None)
+  self.assertEqual(editor.replacements,0)
+  self.assertEqual(editor.saves,0)
+
+
 if __name__ == '__main__':
     unittest.main()

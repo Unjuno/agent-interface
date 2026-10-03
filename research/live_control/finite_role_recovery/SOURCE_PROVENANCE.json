@@ -11,8 +11,9 @@
       "path": "pipeline.py",
       "origin": "qualified task-controller.py",
       "measured_package_sha256": "12fff7effe218b6b5188dde59f642dd79b040ad6f961fb16ddb73392d9a517fb",
-      "repository_image_sha256": "7ccd2bb2cb3379376f1649cb3a725227e6c192e617ed46b006669e126f4ae4fe",
-      "projection": "CRLF source line endings to LF only; Python AST unchanged"
+      "repository_image_sha256": "0f2801f6594b4e28881115cf4af16282c8b20aa48cfc0bd87627c82257778a5d",
+      "projection": "Source CRLF normalized to LF, plus exact builtin response dictionary copy before validation/journaling; not AST-identical to measured package",
+      "previous_repository_image_sha256": "7ccd2bb2cb3379376f1649cb3a725227e6c192e617ed46b006669e126f4ae4fe"
     },
     {
       "path": "contract.py",
@@ -38,6 +39,6 @@
       "previous_repository_image_sha256": "06f506501aac6d9d4635da1571857fa4e1522c70bb50f48b765570d115f1cd77"
     }
   ],
-  "scope": "Package source identity and explicit line-grammar/request-custody repairs only; old formal/native results do not qualify repaired source or constitute a full public capsule",
+  "scope": "Package identity and explicit line-grammar/request/response-custody repairs only; old formal/native results do not qualify repaired source or constitute a full public capsule",
   "formal_result": "https://github.com/Unjuno/agent-interface/issues/57#issuecomment-5973271804"
 }
