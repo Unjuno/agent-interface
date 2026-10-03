@@ -1,0 +1,51 @@
+from pathlib import Path
+from datetime import datetime, timezone
+import hashlib
+import json
+import os
+import subprocess
+import sys
+import time
+ROOT = Path('/OWNED_REPOSITORY')
+WORK = Path(__file__).resolve().parent
+out = WORK / 'base-path-check'
+source = out / 'source'
+source.mkdir(parents=True, exist_ok=False)
+pins = []
+names = ['persistent_planner_adapter_v1.py', 'persistent_planner_adapter_v2.py',
+         'test_persistent_planner_adapter_v1.py', 'test_persistent_planner_adapter_v2.py',
+         'codex_app_server_client_v2.py']
+for name in names:
+    relative = 'research/live_control/' + name
+    data = subprocess.check_output(['/run/current-system/sw/bin/git', 'show', 'e5270c7bfe50911225afc6c3b5273021331b2bb1:' + relative], cwd=ROOT)
+    path = source / relative
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(data)
+    pins.append({'path': relative, 'sha256': hashlib.sha256(data).hexdigest()})
+program = """import sys, unittest
+names = ['research.live_control.test_persistent_planner_adapter_v1.PersistentPlannerAdapterTests.test_completed_structured_answer_is_eligible_and_usage_is_preserved', 'research.live_control.test_persistent_planner_adapter_v2.PersistentPlannerAdapterTests.test_completed_structured_answer_is_eligible_and_usage_is_preserved']
+suite = unittest.defaultTestLoader.loadTestsFromNames(names)
+assert 'research.live_control.codex_app_server_client_v2' not in sys.modules
+result = unittest.TextTestRunner(verbosity=2).run(suite)
+sys.exit(0 if result.wasSuccessful() else 1)
+"""
+argv = [sys.executable, '-c', program]
+receipt = {'argv': argv, 'cwd': str(source), 'source_pins': pins,
+           'started_utc': datetime.now(timezone.utc).isoformat(), 'started_ns': time.perf_counter_ns()}
+with (out / 'stdout.txt').open('xb') as stdout, (out / 'stderr.txt').open('xb') as stderr:
+    child = subprocess.Popen(argv, cwd=source, env={**os.environ, 'PYTHONPATH': str(source)}, stdout=stdout, stderr=stderr)
+    receipt['pid'] = child.pid
+    (out / 'START.json').write_text(json.dumps(receipt, indent=2) + '\n')
+    code = child.wait(timeout=10)
+receipt.update({'exit_code': code, 'ended_utc': datetime.now(timezone.utc).isoformat(), 'ended_ns': time.perf_counter_ns()})
+(out / 'END.json').write_text(json.dumps(receipt, indent=2) + '\n')
+stderr = (out / 'stderr.txt').read_text()
+assert code == 1 and 'Ran 2 tests' in stderr and 'FAILED (failures=2)' in stderr
+assert stderr.count("'C:/frame.png'") >= 2 and stderr.count('C:\\\\frame.png') >= 2
+(WORK / 'BASE_FAILURE_CLASSIFICATION.md').write_text(
+    'Related check ran38 methods:36 passed, two Windows-path expectation methods failed on macOS. '
+    'An isolated five-file export of unchanged e527 main reproduces exactly both failures, actual child exit1. '
+    'The child asserts that the modified app-server client was not imported; both use FakeClient. '
+    'This is an existing platform-dependent expectation, not a send-repair regression; neither tests nor adapters were changed. '
+    'Do not label the whole related suite PASS or silently exclude those rows. New send15 and integrated grounding4 passed within that original38 run.\n')
+print(json.dumps({'status': 'BASE_TWO_PATH_FAILURES_REPRODUCED', 'actual_child_exit': code, 'pid': child.pid}))

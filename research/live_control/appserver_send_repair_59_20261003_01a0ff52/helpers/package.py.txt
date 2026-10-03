@@ -1,0 +1,176 @@
+from pathlib import Path
+from datetime import datetime, timezone
+import ast
+import hashlib
+import json
+import subprocess
+
+ROOT = Path('/OWNED_REPOSITORY')
+WORK = Path(__file__).resolve().parent
+PREFIX = 'research/live_control/appserver_send_repair_59_20261003_01a0ff52'
+out = ROOT / PREFIX
+out.mkdir(exist_ok=False)
+entries = []
+project_root = str(ROOT.parent.parent)
+replacements = [(str(WORK), '/OWNED_WORK'), (str(ROOT), '/OWNED_REPOSITORY'),
+                (project_root, '/OWNED_PROJECT')]
+
+def retain(source, relative):
+    original = source.read_bytes()
+    text = original.decode('utf-8')
+    for old, new in replacements:
+        text = text.replace(old, new)
+    data = text.encode('utf-8')
+    destination = out / relative
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    with destination.open('xb') as stream:
+        stream.write(data)
+    entries.append({'path': relative, 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest(),
+                    'private_original_bytes': len(original), 'private_original_sha256': hashlib.sha256(original).hexdigest(),
+                    'projection': 'owned path substitution only' if data != original else 'byte-identical'})
+
+directories = ['first-red', 'first-green', 'native-capture', 'saved-audit', 'saved-audit-v2',
+               'final-regression', 'related-regression', 'optimized-send', 'base-failure-classification',
+               'native-results', 'native-copy-controls-v2', 'base-path-check']
+for directory in directories:
+    for source in sorted((WORK / directory).rglob('*')):
+        if source.is_file() and '__pycache__' not in source.parts:
+            relative = 'records/' + source.relative_to(WORK).as_posix()
+            if relative.endswith('.py'):
+                relative += '.txt'
+            retain(source, relative)
+names = ['source-pins.json', 'neighbor-pins.json', 'NATIVE_PLAN.json', 'native-audit-v2.json',
+         'FIRST_GREEN_SOURCE_RETENTION_NOTE.md', 'SAVED_AUDIT_CORRECTION.md', 'BASE_FAILURE_CLASSIFICATION.md',
+         'owned-pid-check.json', 'claim-intent.md', 'test-source-first-red.py.txt',
+         'codex_app_server_client_v2.py.original', 'native-suite.original.py.txt',
+         'codex_app_server_client_v2.py.native-source.txt', 'test_codex_app_server_send_deadline_v1.py.native-source.txt',
+         'native.py.native-source.txt']
+for name in names:
+    relative = 'sources/' + name if 'source' in name or 'original' in name else name
+    if name.endswith('.original'):
+        relative += '.txt'
+    retain(WORK / name, relative)
+for name in ['peer.py', 'native_send.py', 'freeze_native.py', 'audit_native.py', 'audit_native_v1.py.txt',
+             'audit_native_v2.py', 'run_check.py', 'base_path_check.py', 'prepare.py',
+             'retain_first_green.py', 'repair_saved_audit.py', 'prepare_neighbors.py', 'pid_check.py', 'package.py']:
+    retain(WORK / name, 'helpers/' + name + ('.txt' if name.endswith('.py') else ''))
+summary = json.loads((WORK / 'native-audit-v2.json').read_text())['summary']
+report = '''# App-server send repair (#59/#57)
+
+The current synchronous client starts its response deadline after buffered stdin write/flush.
+Own retained [#6954](https://github.com/Unjuno/agent-interface/pull/6954) first six cells remain unchanged.
+This separate ordinary repair integrates exclusive nonblocking descriptor sends into the same client.
+It adopts the existing bounded writer's partial-send/quarantine mechanism while preserving arbitrary
+previously JSON-serializable record sizes;64KiB limits one syscall, not a message.
+
+Request timeout is now one monotonic budget for write-lock admission, pipe send and response wait.
+Notify has an additive timeout parameter (default30 seconds). Invalid/nonfinite/negative/Boolean or
+over-lock-range budgets fail before request-ID allocation. Zero is valid but permits no send.
+The sole client owns stdin: external buffered writes, flag changes, fd closing/replacement and concurrent
+external process mutation violate that ownership contract. JSONL uses UTF-8/LF; default JSON ASCII escaping
+preserves serialized text and model input content. Existing Popen text wrappers remain for ownership/close,
+but all client sends use the descriptor. This changes the previous Windows TextIO newline translation.
+
+After a pipe-attempt failure, AppServerWriteUncertain retains exact OS-accepted prefix count, total bytes
+and original cause, and permanently refuses later request/notify sends before journaling or OS writing.
+KeyboardInterrupt/SystemExit keep their identity while also quarantining the connection. No automatic
+resend/reset/reconnect. A returned byte count proves pipe acceptance only, never server/action acceptance.
+Pre-send lock/budget/serialization/mode/journal failures send no bytes and do not poison the channel.
+
+## H / T / D / C / U
+
+H: this send integration preserves large JSON input and gives a finite uncertain result on owned pipe
+pressure without a later append. T: directed repair unit regressions, related fake-model/planner checks,
+and one newly frozen two-cell native repaired-runtime construction. D: exact full native wire/params hashes
+for healthy262144-byte dummy image input; positive partial count/typed uncertainty before500ms checkpoint,
+live peer and reader, and two separately submitted followups with no added OS write under pressure.
+Both native children must be deliberately reaped and caller/reader/pipes closed. No native repeat.
+C: source timeout was response-only; this is a changed send contract, not a retroactive whole-call promise.
+The existing writer's small-record cap cannot simply be adopted for rich model inputs. No new queue,
+background writer, retry service or learned controller is introduced. U: serialization and journal I/O,
+condition acquisition/arbitrary notification predicates, EOF diagnostic drain, and close are separate bounds.
+Scheduling can overshoot the budget; no whole-call hard bound or efficiency estimate is established.
+
+## First outcomes and checks
+
+First RED:13 methods,2 failures/22 errors including subtests; missing new APIs/imports account for many
+errors, while shared-budget and invalid-timeout behavior fail directly. Baseline native witness is #6954;
+this unit RED is not a second baseline latency experiment. Initial repair13 pass. Timeout validation then
+reordered its checks for huge Python integers; final directed suite15 pass in the related run and15 under-O.
+Related38 methods:36 pass/2 Windows-path expectation failures. An isolated unchanged e527 base export
+reproduces those exact two failures (actual child exit1), without importing the modified client. Tests and
+planner sources remain unchanged. Whole related suite is FAIL with a classified pre-existing expectation.
+The15 new methods are registered once in the existing shared protocol entry; the full entry and hosted CI
+were not executed or claimed PASS. Root has no configured Python linter; changed Python AST/import/unit
+and publication whitespace/navigation checks are used.
+
+Native plan2a26ccf7768f3a52ac3c17528952b07c199564134fa0dde4ea53049d96b4d9e0 frozen before the only
+two-cell invocation. Actual macOS27.0.1/arm64 Python3.12.13, stdlib/default Popen text=True/bufsize1,
+one owned inert peer at a time; dummy image text, no image decode/model/provider/GUI/input. Transparent
+OS-write observation records each actual return/error and suffix digest independently of the client count.
+Healthy262323 bytes fully received (6 attempts,0.001951250s); pressure65536/524467 bytes accepted before
+TimeoutError→AppServerWriteUncertain (2 attempts,0.055093791s for configured0.05s budget). Both fresh
+notify/request followups refuse with0/0 and attempt count2→2. These are single descriptive durations,
+with unknown load and no general latency/resource/correct-task claim. Native children exit-15 explicitly;
+base client.close leaves all3 pipe wrappers open, and this driver then closes them. Owned peer/driver PIDs
+are later absent. No cleanup/release repair is inferred from those driver actions.
+
+Saved-data v1 exits1 before materializing copied controls because Python True==1 makes the copy generator
+misclassify a type-changing mutation as ineffective. Original source/error retained. Post-result v2 only
+changes mutation-effectiveness comparison to canonical JSON and separate output paths; original2 rows
+and all12 altered copies are checked. Original native data/source/plan/gates unchanged; native replays0.
+This is scoped sensitivity and byte/count/lifecycle custody, not complete adversarial producer authenticity.
+
+## Eligibility and adoption boundary
+
+Unix pipes use select; Windows select only supports sockets, so the Windows branch sleeps up to10ms
+between nonblocking attempts. [Python3.12 os.set_blocking](https://docs.python.org/3.12/library/os.html#os.set_blocking)
+documents Windows pipe support beginning at3.12; [select documentation](https://docs.python.org/3.12/library/select.html)
+documents that socket restriction. Earlier/unsupported pipe modes fail before send. Actual Windows3.12+
+pipe, partial/zero-write behavior, LF interoperability and older-runtime compatibility disposition remain
+unverified: **HOLD cross-platform runtime adoption pending independent Windows native qualification**.
+Linux-native execution of this repair was not performed; only the earlier Linux writer mechanism is reused.
+EOF diagnostic #6953, Boolean-ID #6952, startup b04b and journal-close be6f remain their owners' separate
+source lanes; this PR does not apply them. Any current-tree combination must preserve their changes and
+perform the appropriate negative checks before adoption.
+
+Fixed prospective genuine nonauthor agreement, actual-current-tree confirmation, live requirements and
+sole-owner expected-old main update are still required. No main send, no lease or reset/replay is held.
+Actual task effect, environment-change recovery, per-key release, full model/game efficiency and whole
+computer-control completion remain unestablished.
+
+## Custody and safe archive
+
+All archive Python is .py.txt or .txt, unimported by runtime/discovery/workflows. Active changes are only
+the existing client, one new unit module, one shared protocol registration and one existing index row.
+The prospective native source/client/test/peer/driver pins are retained. First GREEN source pair is a
+post-result reconstruction verified against its earlier captured hashes, explicitly not pre-command
+file copies. First check wrapper itself was not prospectively source-pinned. Later checks capture source
+bytes, argv, PID and exit. Actual peer argv/PID/default kwargs and final observed exit are captured;
+there is no separately saved peer stdout/stderr byte stream or precise child exit instant.
+Public snapshots replace only owned absolute workspace paths; private originals remain retained.
+MANIFEST.json records original and public lengths/hashes and distinguishes byte-identical files from
+path projections. Projected helper snapshots are inert relocation examples, not the exact executed images.
+Exact active/runtime source snapshots, native wire bytes and source hashes retain their original images.
+Do not replay the native producer from this historical archive.
+'''
+(out / 'REPORT.md').write_text(report)
+(out / 'README.md').write_text('# Send repair archive\n\nSee [REPORT.md](REPORT.md), [NATIVE_PLAN.json](NATIVE_PLAN.json), [MANIFEST.json](MANIFEST.json) and retained records.\n')
+for relative in ['REPORT.md', 'README.md']:
+    data = (out / relative).read_bytes()
+    entries.append({'path': relative, 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest(), 'projection': 'new authored report'})
+for path in out.rglob('*.py.txt'):
+    ast.parse(path.read_text(), filename=str(path))
+manifest = {'schema': 'appserver-send-repair-retention-v1', 'created_utc': datetime.now(timezone.utc).isoformat(),
+            'source_base': 'e5270c7bfe50911225afc6c3b5273021331b2bb1', 'files': sorted(entries, key=lambda x: x['path']),
+            'projection_policy': 'owned absolute paths only; original private images retained; active runtime source and native wire bytes unchanged',
+            'formal_native_replays': 0}
+(out / 'MANIFEST.json').write_text(json.dumps(manifest, indent=2) + '\n')
+index = ROOT / 'research/live_control/README.md'
+row = '| #59/#57 synchronous app-server send repair | [report](appserver_send_repair_59_20261003_01a0ff52/REPORT.md) | Large-record-preserving nonblocking sends; native2, send15, classified base path failures; Windows adoption HOLD |\n'
+text = index.read_text()
+assert PREFIX.split('/')[-1] not in text
+index.write_text(text + row)
+(WORK / 'packaged.json').write_text(json.dumps({'archive_files': len(entries) + 1, 'manifest_targets': len(entries),
+                                             'total_bytes': sum(p.stat().st_size for p in out.rglob('*') if p.is_file()), 'prefix': PREFIX}, indent=2) + '\n')
+print((WORK / 'packaged.json').read_text())

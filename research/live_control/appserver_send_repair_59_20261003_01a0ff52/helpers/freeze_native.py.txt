@@ -1,0 +1,27 @@
+from pathlib import Path
+from datetime import datetime, timezone
+import hashlib
+import json
+ROOT = Path('/OWNED_REPOSITORY')
+WORK = Path(__file__).resolve().parent
+paths = ['research/live_control/codex_app_server_client_v2.py',
+         'research/live_control/test_codex_app_server_send_deadline_v1.py',
+         'runtime/integration_checks/native.py']
+pins = {p: hashlib.sha256((ROOT / p).read_bytes()).hexdigest() for p in paths}
+for name in ['native_send.py', 'peer.py']:
+    pins[name] = hashlib.sha256((WORK / name).read_bytes()).hexdigest()
+plan = {'frozen_utc': datetime.now(timezone.utc).isoformat(), 'sources': pins,
+        'kind': 'ordinary inert repaired-runtime construction; not formal allocation',
+        'cells': [{'mode': 'healthy', 'padding': 262144, 'timeout': 2, 'checkpoint': 3},
+                  {'mode': 'pressure', 'padding': 524288, 'timeout': .05, 'checkpoint': .5}],
+        'decision': {'healthy': 'exact whole wire hash and params hash returned',
+                     'pressure': 'positive partial prefix, WriteUncertain before checkpoint with child still live; two fresh followups no OS write',
+                     'all': 'caller/reader stopped, deliberate child termination recorded, all owned pipe wrappers separately closed'},
+        'stop': 'any missing/wrong stage/control/closure is FAIL or UNCERTAIN; no native replay',
+        'scope': 'macOS Popen default text wrappers/exclusive descriptor send only; dummy image bytes, no image decode/model/GUI/task or Windows-native claim'}
+with (WORK / 'NATIVE_PLAN.json').open('x') as out:
+    out.write(json.dumps(plan, indent=2) + '\n')
+for relative in paths:
+    with (WORK / (Path(relative).name + '.native-source.txt')).open('xb') as out:
+        out.write((ROOT / relative).read_bytes())
+print(json.dumps({'freeze_sha256': hashlib.sha256((WORK / 'NATIVE_PLAN.json').read_bytes()).hexdigest(), 'sources': pins}))

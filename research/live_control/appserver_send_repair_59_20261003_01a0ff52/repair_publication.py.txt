@@ -1,0 +1,28 @@
+from pathlib import Path
+import ast
+import hashlib
+import json
+import subprocess
+ROOT = Path('/OWNED_REPOSITORY')
+WORK = Path(__file__).resolve().parent
+LEAF = ROOT / 'research/live_control/appserver_send_repair_59_20261003_01a0ff52'
+tree = ast.parse((ROOT / '.github/check_public_navigation.py').read_text())
+docs = next(ast.literal_eval(node.value) for node in tree.body if isinstance(node, ast.Assign) and any(isinstance(t, ast.Name) and t.id == 'PUBLIC_DOCS' for t in node.targets))
+restored = []
+for relative in docs:
+    path = ROOT / relative
+    if not path.is_file():
+        data = subprocess.check_output(['/run/current-system/sw/bin/git', 'show', 'e5270c7bfe50911225afc6c3b5273021331b2bb1:' + relative], cwd=ROOT)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(data)
+        restored.append({'path': relative, 'sha256': hashlib.sha256(data).hexdigest()})
+assert len(restored) == 6
+(WORK / 'PUBLICATION_STOP.md').write_text(
+    'First staged whitespace check actual exit2: four trailing spaces in the retained original first-RED stderr. '
+    'Preserve exact error bytes; leaf attribute suppresses only blank-at-eol for that one frozen stderr, '
+    'not any source/report or other whitespace category. First public navigation exit1: six declared docs '
+    'absent from this sparse checkout after branch switch. Restore only their exact e527 Git images; no '
+    'source/native experiment or already-passing index test is repeated. No send occurred before these repairs.\n')
+(WORK / 'restored-public-docs.json').write_text(json.dumps(restored, indent=2) + '\n')
+(LEAF / '.gitattributes').write_text('records/first-red/stderr.txt whitespace=-blank-at-eol\n')
+print(json.dumps({'restored': restored, 'frozen_stderr_original_preserved': True}))

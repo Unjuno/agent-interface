@@ -1,0 +1,38 @@
+from pathlib import Path
+from datetime import datetime, timezone
+import hashlib
+import json
+import os
+import subprocess
+import sys
+import time
+
+root = Path('/OWNED_REPOSITORY')
+work = Path(__file__).resolve().parent
+label = sys.argv[1]
+command = sys.argv[2:]
+directory = work / label
+directory.mkdir(exist_ok=False)
+paths = ['research/live_control/codex_app_server_client_v2.py',
+         'research/live_control/test_codex_app_server_send_deadline_v1.py']
+pins = {p: hashlib.sha256((root / p).read_bytes()).hexdigest() for p in paths}
+for relative in paths:
+    (directory / (Path(relative).name + '.source.txt')).write_bytes((root / relative).read_bytes())
+(directory / 'command.json').write_text(json.dumps({'argv': command, 'cwd': str(root), 'sources': pins}, indent=2) + '\n')
+started = datetime.now(timezone.utc).isoformat()
+start_ns = time.perf_counter_ns()
+with (directory / 'stdout.txt').open('xb') as out, (directory / 'stderr.txt').open('xb') as err:
+    process = subprocess.Popen(command, cwd=root, stdout=out, stderr=err,
+                               env={**os.environ, 'PATH': '/run/current-system/sw/bin:' + os.environ['PATH']})
+    (directory / 'START.json').write_text(json.dumps({'utc': started, 'perf_ns': start_ns, 'pid': process.pid}, indent=2) + '\n')
+    try:
+        code = process.wait(timeout=45)
+    except subprocess.TimeoutExpired:
+        process.kill()
+        code = process.wait(timeout=5)
+        (directory / 'outer-timeout.txt').write_text('Owned check killed after 45s.\n')
+end = {'utc': datetime.now(timezone.utc).isoformat(), 'perf_ns': time.perf_counter_ns(), 'pid': process.pid, 'exit_code': code}
+(directory / 'END.json').write_text(json.dumps(end, indent=2) + '\n')
+print(json.dumps(end))
+print((directory / 'stderr.txt').read_text()[-8000:])
+sys.exit(0 if code == 0 else 1)

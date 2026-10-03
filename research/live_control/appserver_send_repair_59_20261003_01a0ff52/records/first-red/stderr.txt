@@ -1,0 +1,257 @@
+test_broken_pipe_preserves_cause_and_quarantines (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_broken_pipe_preserves_cause_and_quarantines) ... ERROR
+test_cancellation_preserves_exception_and_quarantines (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_cancellation_preserves_exception_and_quarantines) ... ERROR
+test_expired_prewrite_budget_does_not_poison (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_expired_prewrite_budget_does_not_poison) ... ERROR
+test_full_owned_pipe_times_out_and_quarantines_followup (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_full_owned_pipe_times_out_and_quarantines_followup) ... ERROR
+test_invalid_timeouts_are_refused_before_id_or_send (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_invalid_timeouts_are_refused_before_id_or_send) ... 
+  test_invalid_timeouts_are_refused_before_id_or_send (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_invalid_timeouts_are_refused_before_id_or_send) (timeout=True) ... ERROR
+  test_invalid_timeouts_are_refused_before_id_or_send (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_invalid_timeouts_are_refused_before_id_or_send) (notify=True) ... ERROR
+  test_invalid_timeouts_are_refused_before_id_or_send (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_invalid_timeouts_are_refused_before_id_or_send) (timeout=-1) ... ERROR
+  test_invalid_timeouts_are_refused_before_id_or_send (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_invalid_timeouts_are_refused_before_id_or_send) (notify=-1) ... ERROR
+  test_invalid_timeouts_are_refused_before_id_or_send (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_invalid_timeouts_are_refused_before_id_or_send) (timeout=inf) ... ERROR
+  test_invalid_timeouts_are_refused_before_id_or_send (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_invalid_timeouts_are_refused_before_id_or_send) (notify=inf) ... ERROR
+  test_invalid_timeouts_are_refused_before_id_or_send (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_invalid_timeouts_are_refused_before_id_or_send) (timeout=nan) ... ERROR
+  test_invalid_timeouts_are_refused_before_id_or_send (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_invalid_timeouts_are_refused_before_id_or_send) (notify=nan) ... ERROR
+  test_invalid_timeouts_are_refused_before_id_or_send (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_invalid_timeouts_are_refused_before_id_or_send) (timeout='1') ... ERROR
+  test_invalid_timeouts_are_refused_before_id_or_send (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_invalid_timeouts_are_refused_before_id_or_send) (notify='1') ... ERROR
+  test_invalid_timeouts_are_refused_before_id_or_send (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_invalid_timeouts_are_refused_before_id_or_send) (timeout=None) ... ERROR
+  test_invalid_timeouts_are_refused_before_id_or_send (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_invalid_timeouts_are_refused_before_id_or_send) (notify=None) ... ERROR
+test_invalid_timeouts_are_refused_before_id_or_send (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_invalid_timeouts_are_refused_before_id_or_send) ... FAIL
+test_large_record_is_preserved_across_partial_pipe_writes (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_large_record_is_preserved_across_partial_pipe_writes) ... ERROR
+test_lock_timeout_has_no_send_or_journal_and_does_not_poison (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_lock_timeout_has_no_send_or_journal_and_does_not_poison) ... ERROR
+test_notify_supplies_default_and_explicit_deadline (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_notify_supplies_default_and_explicit_deadline) ... ERROR
+test_partial_record_reports_exact_prefix_and_no_replay (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_partial_record_reports_exact_prefix_and_no_replay) ... ERROR
+test_ready_response_and_notification_records_are_preserved (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_ready_response_and_notification_records_are_preserved) ... ok
+test_request_spends_one_budget_on_send_and_response_wait (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_request_spends_one_budget_on_send_and_response_wait) ... FAIL
+test_serialization_error_has_no_pipe_effect (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_serialization_error_has_no_pipe_effect) ... ERROR
+test_windows_wait_branch_uses_sleep_not_socket_select (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_windows_wait_branch_uses_sleep_not_socket_select) ... ERROR
+
+======================================================================
+ERROR: test_broken_pipe_preserves_cause_and_quarantines (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_broken_pipe_preserves_cause_and_quarantines)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/OWNED_REPOSITORY/research/live_control/test_codex_app_server_send_deadline_v1.py", line 195, in test_broken_pipe_preserves_cause_and_quarantines
+    with owned_client() as (client, _read_fd), patch.object(module.os, "write", side_effect=BrokenPipeError("closed")):
+                                                            ^^^^^^^^^
+AttributeError: module 'research.live_control.codex_app_server_client_v2' has no attribute 'os'
+
+======================================================================
+ERROR: test_cancellation_preserves_exception_and_quarantines (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_cancellation_preserves_exception_and_quarantines)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/OWNED_REPOSITORY/research/live_control/test_codex_app_server_send_deadline_v1.py", line 201, in test_cancellation_preserves_exception_and_quarantines
+    with owned_client() as (client, _read_fd), patch.object(module.os, "write", side_effect=fault):
+                                                            ^^^^^^^^^
+AttributeError: module 'research.live_control.codex_app_server_client_v2' has no attribute 'os'
+
+======================================================================
+ERROR: test_expired_prewrite_budget_does_not_poison (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_expired_prewrite_budget_does_not_poison)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/OWNED_REPOSITORY/research/live_control/test_codex_app_server_send_deadline_v1.py", line 140, in test_expired_prewrite_budget_does_not_poison
+    with owned_client() as (client, _read_fd), patch.object(module.os, "write") as write:
+                                                            ^^^^^^^^^
+AttributeError: module 'research.live_control.codex_app_server_client_v2' has no attribute 'os'
+
+======================================================================
+ERROR: test_full_owned_pipe_times_out_and_quarantines_followup (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_full_owned_pipe_times_out_and_quarantines_followup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/OWNED_REPOSITORY/research/live_control/test_codex_app_server_send_deadline_v1.py", line 94, in test_full_owned_pipe_times_out_and_quarantines_followup
+    error = self.assert_uncertain(
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/OWNED_REPOSITORY/research/live_control/test_codex_app_server_send_deadline_v1.py", line 53, in assert_uncertain
+    operation()
+  File "/OWNED_REPOSITORY/research/live_control/test_codex_app_server_send_deadline_v1.py", line 95, in <lambda>
+    lambda: client._write(message, deadline=time.monotonic() + .02),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: CodexAppServerClient._write() got an unexpected keyword argument 'deadline'
+
+======================================================================
+ERROR: test_invalid_timeouts_are_refused_before_id_or_send (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_invalid_timeouts_are_refused_before_id_or_send) (timeout=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/OWNED_REPOSITORY/research/live_control/test_codex_app_server_send_deadline_v1.py", line 188, in test_invalid_timeouts_are_refused_before_id_or_send
+    client.request("invalid", timeout=timeout)
+  File "/OWNED_REPOSITORY/research/live_control/codex_app_server_client_v2.py", line 76, in request
+    raise AppServerError(f"app-server closed during {method}: {detail}")
+research.live_control.codex_app_server_client_v2.AppServerError: app-server closed during invalid: 
+
+======================================================================
+ERROR: test_invalid_timeouts_are_refused_before_id_or_send (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_invalid_timeouts_are_refused_before_id_or_send) (notify=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/OWNED_REPOSITORY/research/live_control/test_codex_app_server_send_deadline_v1.py", line 190, in test_invalid_timeouts_are_refused_before_id_or_send
+    client.notify("invalid", timeout=timeout)
+TypeError: CodexAppServerClient.notify() got an unexpected keyword argument 'timeout'
+
+======================================================================
+ERROR: test_invalid_timeouts_are_refused_before_id_or_send (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_invalid_timeouts_are_refused_before_id_or_send) (timeout=-1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/OWNED_REPOSITORY/research/live_control/test_codex_app_server_send_deadline_v1.py", line 188, in test_invalid_timeouts_are_refused_before_id_or_send
+    client.request("invalid", timeout=timeout)
+  File "/OWNED_REPOSITORY/research/live_control/codex_app_server_client_v2.py", line 73, in request
+    raise TimeoutError(f"app-server request timed out: {method}")
+TimeoutError: app-server request timed out: invalid
+
+======================================================================
+ERROR: test_invalid_timeouts_are_refused_before_id_or_send (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_invalid_timeouts_are_refused_before_id_or_send) (notify=-1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/OWNED_REPOSITORY/research/live_control/test_codex_app_server_send_deadline_v1.py", line 190, in test_invalid_timeouts_are_refused_before_id_or_send
+    client.notify("invalid", timeout=timeout)
+TypeError: CodexAppServerClient.notify() got an unexpected keyword argument 'timeout'
+
+======================================================================
+ERROR: test_invalid_timeouts_are_refused_before_id_or_send (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_invalid_timeouts_are_refused_before_id_or_send) (timeout=inf)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/OWNED_REPOSITORY/research/live_control/test_codex_app_server_send_deadline_v1.py", line 188, in test_invalid_timeouts_are_refused_before_id_or_send
+    client.request("invalid", timeout=timeout)
+  File "/OWNED_REPOSITORY/research/live_control/codex_app_server_client_v2.py", line 76, in request
+    raise AppServerError(f"app-server closed during {method}: {detail}")
+research.live_control.codex_app_server_client_v2.AppServerError: app-server closed during invalid: 
+
+======================================================================
+ERROR: test_invalid_timeouts_are_refused_before_id_or_send (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_invalid_timeouts_are_refused_before_id_or_send) (notify=inf)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/OWNED_REPOSITORY/research/live_control/test_codex_app_server_send_deadline_v1.py", line 190, in test_invalid_timeouts_are_refused_before_id_or_send
+    client.notify("invalid", timeout=timeout)
+TypeError: CodexAppServerClient.notify() got an unexpected keyword argument 'timeout'
+
+======================================================================
+ERROR: test_invalid_timeouts_are_refused_before_id_or_send (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_invalid_timeouts_are_refused_before_id_or_send) (timeout=nan)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/OWNED_REPOSITORY/research/live_control/test_codex_app_server_send_deadline_v1.py", line 188, in test_invalid_timeouts_are_refused_before_id_or_send
+    client.request("invalid", timeout=timeout)
+  File "/OWNED_REPOSITORY/research/live_control/codex_app_server_client_v2.py", line 76, in request
+    raise AppServerError(f"app-server closed during {method}: {detail}")
+research.live_control.codex_app_server_client_v2.AppServerError: app-server closed during invalid: 
+
+======================================================================
+ERROR: test_invalid_timeouts_are_refused_before_id_or_send (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_invalid_timeouts_are_refused_before_id_or_send) (notify=nan)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/OWNED_REPOSITORY/research/live_control/test_codex_app_server_send_deadline_v1.py", line 190, in test_invalid_timeouts_are_refused_before_id_or_send
+    client.notify("invalid", timeout=timeout)
+TypeError: CodexAppServerClient.notify() got an unexpected keyword argument 'timeout'
+
+======================================================================
+ERROR: test_invalid_timeouts_are_refused_before_id_or_send (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_invalid_timeouts_are_refused_before_id_or_send) (timeout='1')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/OWNED_REPOSITORY/research/live_control/test_codex_app_server_send_deadline_v1.py", line 188, in test_invalid_timeouts_are_refused_before_id_or_send
+    client.request("invalid", timeout=timeout)
+  File "/OWNED_REPOSITORY/research/live_control/codex_app_server_client_v2.py", line 68, in request
+    deadline = time.monotonic() + timeout
+               ~~~~~~~~~~~~~~~~~^~~~~~~~~
+TypeError: unsupported operand type(s) for +: 'float' and 'str'
+
+======================================================================
+ERROR: test_invalid_timeouts_are_refused_before_id_or_send (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_invalid_timeouts_are_refused_before_id_or_send) (notify='1')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/OWNED_REPOSITORY/research/live_control/test_codex_app_server_send_deadline_v1.py", line 190, in test_invalid_timeouts_are_refused_before_id_or_send
+    client.notify("invalid", timeout=timeout)
+TypeError: CodexAppServerClient.notify() got an unexpected keyword argument 'timeout'
+
+======================================================================
+ERROR: test_invalid_timeouts_are_refused_before_id_or_send (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_invalid_timeouts_are_refused_before_id_or_send) (timeout=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/OWNED_REPOSITORY/research/live_control/test_codex_app_server_send_deadline_v1.py", line 188, in test_invalid_timeouts_are_refused_before_id_or_send
+    client.request("invalid", timeout=timeout)
+  File "/OWNED_REPOSITORY/research/live_control/codex_app_server_client_v2.py", line 68, in request
+    deadline = time.monotonic() + timeout
+               ~~~~~~~~~~~~~~~~~^~~~~~~~~
+TypeError: unsupported operand type(s) for +: 'float' and 'NoneType'
+
+======================================================================
+ERROR: test_invalid_timeouts_are_refused_before_id_or_send (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_invalid_timeouts_are_refused_before_id_or_send) (notify=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/OWNED_REPOSITORY/research/live_control/test_codex_app_server_send_deadline_v1.py", line 190, in test_invalid_timeouts_are_refused_before_id_or_send
+    client.notify("invalid", timeout=timeout)
+TypeError: CodexAppServerClient.notify() got an unexpected keyword argument 'timeout'
+
+======================================================================
+ERROR: test_large_record_is_preserved_across_partial_pipe_writes (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_large_record_is_preserved_across_partial_pipe_writes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/OWNED_REPOSITORY/research/live_control/test_codex_app_server_send_deadline_v1.py", line 75, in test_large_record_is_preserved_across_partial_pipe_writes
+    client._write(message, deadline=time.monotonic() + 2)
+TypeError: CodexAppServerClient._write() got an unexpected keyword argument 'deadline'
+
+======================================================================
+ERROR: test_lock_timeout_has_no_send_or_journal_and_does_not_poison (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_lock_timeout_has_no_send_or_journal_and_does_not_poison)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/OWNED_REPOSITORY/research/live_control/test_codex_app_server_send_deadline_v1.py", line 130, in test_lock_timeout_has_no_send_or_journal_and_does_not_poison
+    with patch.object(module.os, "write") as write, patch.object(client, "_record") as record:
+                      ^^^^^^^^^
+AttributeError: module 'research.live_control.codex_app_server_client_v2' has no attribute 'os'
+
+======================================================================
+ERROR: test_notify_supplies_default_and_explicit_deadline (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_notify_supplies_default_and_explicit_deadline)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/OWNED_REPOSITORY/research/live_control/test_codex_app_server_send_deadline_v1.py", line 181, in test_notify_supplies_default_and_explicit_deadline
+    client.notify("custom", timeout=.5)
+TypeError: CodexAppServerClient.notify() got an unexpected keyword argument 'timeout'
+
+======================================================================
+ERROR: test_partial_record_reports_exact_prefix_and_no_replay (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_partial_record_reports_exact_prefix_and_no_replay)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/OWNED_REPOSITORY/research/live_control/test_codex_app_server_send_deadline_v1.py", line 119, in test_partial_record_reports_exact_prefix_and_no_replay
+    patch.object(module.os, "write", write), patch.object(module.select, "select", wait):
+                 ^^^^^^^^^
+AttributeError: module 'research.live_control.codex_app_server_client_v2' has no attribute 'os'
+
+======================================================================
+ERROR: test_serialization_error_has_no_pipe_effect (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_serialization_error_has_no_pipe_effect)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/OWNED_REPOSITORY/research/live_control/test_codex_app_server_send_deadline_v1.py", line 209, in test_serialization_error_has_no_pipe_effect
+    with owned_client() as (client, _read_fd), patch.object(module.os, "write") as write:
+                                                            ^^^^^^^^^
+AttributeError: module 'research.live_control.codex_app_server_client_v2' has no attribute 'os'
+
+======================================================================
+ERROR: test_windows_wait_branch_uses_sleep_not_socket_select (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_windows_wait_branch_uses_sleep_not_socket_select)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/OWNED_REPOSITORY/research/live_control/test_codex_app_server_send_deadline_v1.py", line 235, in test_windows_wait_branch_uses_sleep_not_socket_select
+    patch.object(module.os, "name", "nt"), patch.object(module.os, "write", write), \
+                 ^^^^^^^^^
+AttributeError: module 'research.live_control.codex_app_server_client_v2' has no attribute 'os'
+
+======================================================================
+FAIL: test_invalid_timeouts_are_refused_before_id_or_send (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_invalid_timeouts_are_refused_before_id_or_send)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/OWNED_REPOSITORY/research/live_control/test_codex_app_server_send_deadline_v1.py", line 191, in test_invalid_timeouts_are_refused_before_id_or_send
+    self.assertEqual(client._next_id, 1)
+AssertionError: 7 != 1
+
+======================================================================
+FAIL: test_request_spends_one_budget_on_send_and_response_wait (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_request_spends_one_budget_on_send_and_response_wait)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/OWNED_REPOSITORY/research/live_control/test_codex_app_server_send_deadline_v1.py", line 171, in test_request_spends_one_budget_on_send_and_response_wait
+    self.assertEqual(captured, [.05])
+AssertionError: Lists differ: [None] != [0.05]
+
+First differing element 0:
+None
+0.05
+
+- [None]
++ [0.05]
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.007s
+
+FAILED (failures=2, errors=22)

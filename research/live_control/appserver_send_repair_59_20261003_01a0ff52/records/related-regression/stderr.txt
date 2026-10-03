@@ -1,0 +1,71 @@
+test_broken_pipe_preserves_cause_and_quarantines (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_broken_pipe_preserves_cause_and_quarantines) ... ok
+test_cancellation_preserves_exception_and_quarantines (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_cancellation_preserves_exception_and_quarantines) ... ok
+test_expired_prewrite_budget_does_not_poison (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_expired_prewrite_budget_does_not_poison) ... ok
+test_failed_journal_prevents_pipe_send_without_poisoning (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_failed_journal_prevents_pipe_send_without_poisoning) ... ok
+test_full_owned_pipe_times_out_and_quarantines_followup (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_full_owned_pipe_times_out_and_quarantines_followup) ... ok
+test_invalid_timeouts_are_refused_before_id_or_send (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_invalid_timeouts_are_refused_before_id_or_send) ... ok
+test_large_record_is_preserved_across_partial_pipe_writes (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_large_record_is_preserved_across_partial_pipe_writes) ... ok
+test_lock_timeout_has_no_send_or_journal_and_does_not_poison (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_lock_timeout_has_no_send_or_journal_and_does_not_poison) ... ok
+test_notify_supplies_default_and_explicit_deadline (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_notify_supplies_default_and_explicit_deadline) ... ok
+test_partial_record_reports_exact_prefix_and_no_replay (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_partial_record_reports_exact_prefix_and_no_replay) ... ok
+test_ready_response_and_notification_records_are_preserved (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_ready_response_and_notification_records_are_preserved) ... ok
+test_request_spends_one_budget_on_send_and_response_wait (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_request_spends_one_budget_on_send_and_response_wait) ... ok
+test_serialization_error_has_no_pipe_effect (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_serialization_error_has_no_pipe_effect) ... ok
+test_unsupported_pipe_mode_fails_before_journal_or_send (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_unsupported_pipe_mode_fails_before_journal_or_send) ... ok
+test_windows_wait_branch_uses_sleep_not_socket_select (research.live_control.test_codex_app_server_send_deadline_v1.AppServerSendDeadlineTests.test_windows_wait_branch_uses_sleep_not_socket_select) ... ok
+test_contract_or_workspace_change_is_rejected_before_turn (research.live_control.test_integrated_efficiency_app_server_model_v1.PersistentIntegratedModelTests.test_contract_or_workspace_change_is_rejected_before_turn) ... ok
+test_minimal_command_is_explicit (research.live_control.test_integrated_efficiency_app_server_model_v1.PersistentIntegratedModelTests.test_minimal_command_is_explicit) ... ok
+test_two_calls_keep_thread_and_return_distinct_call_ids_and_last_usage (research.live_control.test_integrated_efficiency_app_server_model_v1.PersistentIntegratedModelTests.test_two_calls_keep_thread_and_return_distinct_call_ids_and_last_usage) ... ok
+test_usage_missing_stays_unknown_and_bad_shape_is_rejected (research.live_control.test_integrated_efficiency_app_server_model_v1.PersistentIntegratedModelTests.test_usage_missing_stays_unknown_and_bad_shape_is_rejected) ... ok
+test_completed_structured_answer_is_eligible_and_usage_is_preserved (research.live_control.test_persistent_planner_adapter_v1.PersistentPlannerAdapterTests.test_completed_structured_answer_is_eligible_and_usage_is_preserved) ... FAIL
+test_completion_wins_race_before_interrupt (research.live_control.test_persistent_planner_adapter_v1.PersistentPlannerAdapterTests.test_completion_wins_race_before_interrupt) ... ok
+test_duplicate_interrupt_sends_only_one_request (research.live_control.test_persistent_planner_adapter_v1.PersistentPlannerAdapterTests.test_duplicate_interrupt_sends_only_one_request) ... ok
+test_interrupt_wins_race_while_completion_waits (research.live_control.test_persistent_planner_adapter_v1.PersistentPlannerAdapterTests.test_interrupt_wins_race_while_completion_waits) ... ok
+test_interrupted_turn_never_admits_partial_or_completed_answer (research.live_control.test_persistent_planner_adapter_v1.PersistentPlannerAdapterTests.test_interrupted_turn_never_admits_partial_or_completed_answer) ... ok
+test_malformed_or_ambiguous_messages_fail_closed (research.live_control.test_persistent_planner_adapter_v1.PersistentPlannerAdapterTests.test_malformed_or_ambiguous_messages_fail_closed) ... ok
+test_missing_usage_remains_unknown (research.live_control.test_persistent_planner_adapter_v1.PersistentPlannerAdapterTests.test_missing_usage_remains_unknown) ... ok
+test_overlapping_turns_and_reset_with_active_turn_are_rejected (research.live_control.test_persistent_planner_adapter_v1.PersistentPlannerAdapterTests.test_overlapping_turns_and_reset_with_active_turn_are_rejected) ... ok
+test_session_identity_is_continuous_and_reset_is_explicit (research.live_control.test_persistent_planner_adapter_v1.PersistentPlannerAdapterTests.test_session_identity_is_continuous_and_reset_is_explicit) ... ok
+test_action_contract_bounds_and_const_fail_closed (research.live_control.test_persistent_planner_adapter_v2.PersistentPlannerAdapterTests.test_action_contract_bounds_and_const_fail_closed) ... ok
+test_completed_structured_answer_is_eligible_and_usage_is_preserved (research.live_control.test_persistent_planner_adapter_v2.PersistentPlannerAdapterTests.test_completed_structured_answer_is_eligible_and_usage_is_preserved) ... FAIL
+test_completion_wins_race_before_interrupt (research.live_control.test_persistent_planner_adapter_v2.PersistentPlannerAdapterTests.test_completion_wins_race_before_interrupt) ... ok
+test_duplicate_interrupt_sends_only_one_request (research.live_control.test_persistent_planner_adapter_v2.PersistentPlannerAdapterTests.test_duplicate_interrupt_sends_only_one_request) ... ok
+test_interrupt_wins_race_while_completion_waits (research.live_control.test_persistent_planner_adapter_v2.PersistentPlannerAdapterTests.test_interrupt_wins_race_while_completion_waits) ... ok
+test_interrupted_turn_never_admits_partial_or_completed_answer (research.live_control.test_persistent_planner_adapter_v2.PersistentPlannerAdapterTests.test_interrupted_turn_never_admits_partial_or_completed_answer) ... ok
+test_malformed_or_ambiguous_messages_fail_closed (research.live_control.test_persistent_planner_adapter_v2.PersistentPlannerAdapterTests.test_malformed_or_ambiguous_messages_fail_closed) ... ok
+test_missing_usage_remains_unknown (research.live_control.test_persistent_planner_adapter_v2.PersistentPlannerAdapterTests.test_missing_usage_remains_unknown) ... ok
+test_overlapping_turns_and_reset_with_active_turn_are_rejected (research.live_control.test_persistent_planner_adapter_v2.PersistentPlannerAdapterTests.test_overlapping_turns_and_reset_with_active_turn_are_rejected) ... ok
+test_session_identity_is_continuous_and_reset_is_explicit (research.live_control.test_persistent_planner_adapter_v2.PersistentPlannerAdapterTests.test_session_identity_is_continuous_and_reset_is_explicit) ... ok
+
+======================================================================
+FAIL: test_completed_structured_answer_is_eligible_and_usage_is_preserved (research.live_control.test_persistent_planner_adapter_v1.PersistentPlannerAdapterTests.test_completed_structured_answer_is_eligible_and_usage_is_preserved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/OWNED_REPOSITORY/research/live_control/test_persistent_planner_adapter_v1.py", line 73, in test_completed_structured_answer_is_eligible_and_usage_is_preserved
+    self.assertEqual(client.started[0][1][1], {"type": "localImage", "path": "C:\\frame.png"})
+AssertionError: {'type': 'localImage', 'path': 'C:/frame.png'} != {'type': 'localImage', 'path': 'C:\\frame.png'}
+- {'path': 'C:/frame.png', 'type': 'localImage'}
+?             ^
+
++ {'path': 'C:\\frame.png', 'type': 'localImage'}
+?             ^^
+
+
+======================================================================
+FAIL: test_completed_structured_answer_is_eligible_and_usage_is_preserved (research.live_control.test_persistent_planner_adapter_v2.PersistentPlannerAdapterTests.test_completed_structured_answer_is_eligible_and_usage_is_preserved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/OWNED_REPOSITORY/research/live_control/test_persistent_planner_adapter_v2.py", line 73, in test_completed_structured_answer_is_eligible_and_usage_is_preserved
+    self.assertEqual(client.started[0][1][1], {"type": "localImage", "path": "C:\\frame.png"})
+AssertionError: {'type': 'localImage', 'path': 'C:/frame.png'} != {'type': 'localImage', 'path': 'C:\\frame.png'}
+- {'path': 'C:/frame.png', 'type': 'localImage'}
+?             ^
+
++ {'path': 'C:\\frame.png', 'type': 'localImage'}
+?             ^^
+
+
+----------------------------------------------------------------------
+Ran 38 tests in 0.036s
+
+FAILED (failures=2)

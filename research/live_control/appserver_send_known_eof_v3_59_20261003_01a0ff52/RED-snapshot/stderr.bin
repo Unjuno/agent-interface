@@ -1,0 +1,31 @@
+test_caller_edit_after_record_does_not_change_snapshot (research.live_control.test_app_server_send_snapshot.SendSnapshotTests.test_caller_edit_after_record_does_not_change_snapshot) ... ok
+test_caller_edit_before_record_does_not_change_snapshot (research.live_control.test_app_server_send_snapshot.SendSnapshotTests.test_caller_edit_before_record_does_not_change_snapshot) ... FAIL
+test_healthy_nested_unicode_record_matches_wire (research.live_control.test_app_server_send_snapshot.SendSnapshotTests.test_healthy_nested_unicode_record_matches_wire) ... ok
+
+======================================================================
+FAIL: test_caller_edit_before_record_does_not_change_snapshot (research.live_control.test_app_server_send_snapshot.SendSnapshotTests.test_caller_edit_before_record_does_not_change_snapshot)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<OWNED_V3_TASK>/source/research/live_control/test_app_server_send_snapshot.py", line 40, in test_caller_edit_before_record_does_not_change_snapshot
+    self.check('before')
+  File "<OWNED_V3_TASK>/source/research/live_control/test_app_server_send_snapshot.py", line 32, in check
+    self.assertEqual(recorded, [('sent', expected)])
+AssertionError: Lists differ: [('se[26 chars] 'params': {'text': 'changed', 'nested': [1, {'ok': False}]}})] != [('se[26 chars] 'params': {'text': '原文\\"\n', 'nested': [1, {'ok': True}]}})]
+
+First differing element 0:
+('sen[24 chars], 'params': {'text': 'changed', 'nested': [1, {'ok': False}]}})
+('sen[24 chars], 'params': {'text': '原文\\"\n', 'nested': [1, {'ok': True}]}})
+
+  [('sent',
+    {'method': 'unicode',
+-    'params': {'nested': [1, {'ok': False}], 'text': 'changed'}})]
+?                                    ^^^^              ^^^ ---
+
++    'params': {'nested': [1, {'ok': True}], 'text': '原文\\"\n'}})]
+?                                    ^^^              ^^^^^^
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.002s
+
+FAILED (failures=1)

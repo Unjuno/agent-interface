@@ -1,0 +1,34 @@
+from pathlib import Path
+import hashlib
+import json
+ROOT = Path('/OWNED_REPOSITORY')
+WORK = Path(__file__).resolve().parent
+pins = json.loads((WORK / 'first-green/command.json').read_text())['sources']
+substitutions = {
+    'research/live_control/codex_app_server_client_v2.py':
+        ('    if (type(timeout) not in (int, float) or not 0 <= timeout <= threading.TIMEOUT_MAX\n            or not math.isfinite(timeout)):',
+         '    if type(timeout) not in (int, float) or not math.isfinite(timeout) or not 0 <= timeout <= threading.TIMEOUT_MAX:'),
+    'research/live_control/test_codex_app_server_send_deadline_v1.py':
+        ('float("nan"), 10 ** 400, "1", None', 'float("nan"), "1", None'),
+}
+for relative, (new, old) in substitutions.items():
+    text = (ROOT / relative).read_text()
+    assert text.count(new) == 1
+    data = text.replace(new, old).encode()
+    assert hashlib.sha256(data).hexdigest() == pins[relative]
+    with (WORK / 'first-green' / (Path(relative).name + '.reconstructed.txt')).open('xb') as out:
+        out.write(data)
+(WORK / 'FIRST_GREEN_SOURCE_RETENTION_NOTE.md').write_text(
+    'First check wrapper recorded exact source hashes, argv, PID and exit, but did not copy source files. '
+    'The first RED source/test were separately retained. The first GREEN pair was reconstructed after the '
+    'two-line timeout validation correction and verified byte-for-byte against its prior recorded hashes. '
+    'These are post-result reconstructions, not pre-command captured file copies. Later checks capture actual bytes.\n')
+data = __import__('subprocess').check_output(['/run/current-system/sw/bin/git', 'show', 'HEAD:runtime/integration_checks/native.py'], cwd=ROOT)
+with (WORK / 'native-suite.original.py.txt').open('xb') as out:
+    out.write(data)
+path = ROOT / 'runtime/integration_checks/native.py'
+path.parent.mkdir(parents=True, exist_ok=True)
+assert not path.exists()
+path.write_bytes(data.replace(b"'test_guarded_source_dependencies_v1'],", b"'test_guarded_source_dependencies_v1',\n                 'research.live_control.test_codex_app_server_send_deadline_v1'],"))
+assert path.read_bytes() != data
+print('First GREEN hashes matched; shared protocol test registration appended.')

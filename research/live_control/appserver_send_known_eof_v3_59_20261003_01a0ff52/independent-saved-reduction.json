@@ -1,0 +1,107 @@
+{
+  "status": "PASS scoped saved raw reduction",
+  "producer_replays": 0,
+  "rows": [
+    {
+      "lane": "main",
+      "case": "closed-request",
+      "wire_bytes": 71,
+      "sent_rows": 1,
+      "outcome": {
+        "kind": "exception",
+        "type": "AppServerError",
+        "message": "app-server closed during inert/request: stderr not drained"
+      }
+    },
+    {
+      "lane": "main",
+      "case": "closed-notify",
+      "wire_bytes": 63,
+      "sent_rows": 1,
+      "outcome": {
+        "kind": "return",
+        "value": null
+      }
+    },
+    {
+      "lane": "main",
+      "case": "healthy-request",
+      "wire_bytes": 71,
+      "sent_rows": 1,
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "ok": true,
+          "token": "inert-known-eof"
+        }
+      }
+    },
+    {
+      "lane": "main",
+      "case": "reply-eof-request",
+      "wire_bytes": 71,
+      "sent_rows": 1,
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "ok": true,
+          "token": "inert-known-eof"
+        }
+      }
+    },
+    {
+      "lane": "reference",
+      "case": "closed-request",
+      "wire_bytes": 0,
+      "sent_rows": 0,
+      "outcome": {
+        "kind": "exception",
+        "type": "AppServerError",
+        "message": "app-server reader already closed; no send attempted"
+      }
+    },
+    {
+      "lane": "reference",
+      "case": "closed-notify",
+      "wire_bytes": 0,
+      "sent_rows": 0,
+      "outcome": {
+        "kind": "exception",
+        "type": "AppServerError",
+        "message": "app-server reader already closed; no send attempted"
+      }
+    },
+    {
+      "lane": "reference",
+      "case": "healthy-request",
+      "wire_bytes": 71,
+      "sent_rows": 1,
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "ok": true,
+          "token": "inert-known-eof"
+        }
+      }
+    },
+    {
+      "lane": "reference",
+      "case": "reply-eof-request",
+      "wire_bytes": 71,
+      "sent_rows": 1,
+      "outcome": {
+        "kind": "return",
+        "value": {
+          "ok": true,
+          "token": "inert-known-eof"
+        }
+      }
+    }
+  ],
+  "limits": [
+    "peer stdout authenticity not independently established",
+    "sequential known-EOF only",
+    "no atomic concurrent revocation",
+    "no task or physical-input claim"
+  ]
+}
