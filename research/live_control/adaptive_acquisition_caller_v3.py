@@ -30,6 +30,14 @@ LOCAL_EXECUTION_YIELD_REASONS = {
 }
 
 
+def _error_text(error):
+    """Diagnostics must not replace a finalized failure or execution receipt."""
+    try:
+        return str.__str__(repr(error))
+    except BaseException:
+        return "<exception repr unavailable>"
+
+
 def _aggregate_cost(costs, attempted_calls):
     """Return a total only when all attempts have a representable numeric sum."""
     if len(costs) != attempted_calls:
@@ -87,6 +95,12 @@ def _usage(value):
 def _optional_count(value, name):
     if value is not None and (type(value) is not int or value < 0):
         raise ValueError(f"nonnegative integer or unavailable required for {name}")
+    return value
+
+
+def _optional_call_id(value):
+    if value is not None and (type(value) is not str or not value):
+        raise ValueError("nonempty failure call id or unavailable required")
     return value
 
 
@@ -254,11 +268,11 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                 execute_invoked = True
             value = callback(detached_payload)
         except Exception as error:
-            ended = clock(); stages[name] = {"status": "failed", "reason": repr(error)}
+            ended = clock(); stages[name] = {"status": "failed", "reason": _error_text(error)}
             phases.append({"stage": name, "started_ns": started, "ended_ns": ended,
                            "elapsed_ns": ended-started})
             emit({"event": "stage_failed", "stage": name, "ended_ns": ended,
-                  "error": repr(error)})
+                  "error": _error_text(error)})
             raise
         if name == "execute":
             # Detach the adapter return before auxiliary callbacks can change it.
@@ -287,20 +301,22 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
         except Exception as error:
             ended = clock()
             attempt.update(status="failed", completed_ns=ended,
-                           call_id=getattr(error, "call_id", None),
-                           error=repr(error))
-            metadata_error = None
-            for field in ("usage", "visible_images_submitted", "wait_ns"):
-                try:
-                    value = getattr(error, field, None)
-                    attempt[field] = _usage(value) if field == "usage" else _optional_count(value, field)
-                except ValueError as invalid_metadata:
-                    metadata_error = invalid_metadata
-                    attempt["error"] += "; invalid failure accounting: " + repr(invalid_metadata)
-            stages[name] = {"status": "failed", "reason": repr(error)}
+                           call_id=None,
+                           error=_error_text(error))
+            stages[name] = {"status": "failed", "reason": _error_text(error)}
             phases.append({"stage": name, "started_ns": started, "ended_ns": ended,
                            "elapsed_ns": ended-started})
-            emit({"event": "model_attempt_finished", **copy.deepcopy(attempt)})
+            metadata_error = None
+            try:
+                for field in ("call_id", "usage", "visible_images_submitted", "wait_ns"):
+                    try:
+                        value = getattr(error, field, None)
+                        attempt[field] = (_optional_call_id(value) if field == "call_id" else
+                                          _usage(value) if field == "usage" else _optional_count(value, field))
+                    except ValueError as invalid_metadata:
+                        metadata_error = invalid_metadata
+            finally:
+                emit({"event": "model_attempt_finished", **copy.deepcopy(attempt)})
             if metadata_error is not None:
                 raise ValueError("invalid model failure accounting") from error
             raise
@@ -377,7 +393,7 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                 result["execution_progress"] = copy.deepcopy(returned_execution)
             result.update(outcome="CALLER_FAILED", reason="terminal_journal_unavailable",
                           finalized_outcome=outcome, finalized_reason=reason,
-                          terminal_journal_error=repr(error))
+                          terminal_journal_error=_error_text(error))
         return result
 
     def execution_delivery(execution):
@@ -489,4 +505,4 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
         return failure("TASK_DEFERRED" if error.typed_status == "DEFERRED_UPSTREAM"
                       else "CALLER_FAILED", error.typed_status.lower())
     except Exception as error:
-        return failure("CALLER_FAILED", repr(error))
+        return failure("CALLER_FAILED", _error_text(error))

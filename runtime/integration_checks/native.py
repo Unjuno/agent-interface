@@ -60,5 +60,7 @@ def main():
     print(json.dumps({'status': report['status'], 'report': str(out/'result.json')}))
     return 0 if passed else 1
 
+SUITES['protocol'].extend(['test_adaptive_acquisition_aggregate_cost', 'test_adaptive_acquisition_cost_coverage', 'test_usage_subset_route', 'test_caller_diagnostic_composition', 'test_caller_failure_id_composition', 'test_adaptive_acquisition_failure_metadata_93c2'])
+
 if __name__ == '__main__':
     raise SystemExit(main())
