@@ -1,0 +1,212 @@
+✔ numbered commands return exact file/text descriptors with no image encoding (2.935458ms)
+✔ commands arriving while outstanding are rejected rather than queued (1.420875ms)
+✔ EOF waits for the already committed command without replaying it (0.571959ms)
+✔ malformed JSON is refused without invoking exchange or consuming a command (0.544625ms)
+✔ command error reports uncertainty and state without retry (0.417416ms)
+✔ output failure rejects the stream owner after one completed command (0.763416ms)
+✔ config refuses unknown routes and fields before starting a host (0.187625ms)
+✔ terminal output refuses before starting a relay or allocating its evidence (0.226916ms)
+✔ startup output failure keeps original exception, closes one relay and never writes again (49.029083ms)
+✔ failed review is correlated to its consumed command without a host call or replay (2.375792ms)
+STARTUP_EXCHANGE_WITNESS {"phase":"healthy","root":"/var/folders/pz/8_nc5kp109z8f36jl0172xzw0000gn/T/primary-startup-exchange-vGn9Rr","hookCalls":1,"errorObserved":false,"statuses":["ready","terminal"],"rows":[{"schema":"agent-interface/primary-stdio-v1","status":"ready","state":{"next_id":1,"busy":false,"stopped":null,"caller_state":{"stopped":null}}},{"schema":"agent-interface/primary-stdio-v1","status":"terminal","exit":{"code":0,"signal":null},"state":{"next_id":1,"busy":false,"stopped":null,"caller_state":{"stopped":null}}}],"hostExit":{"code":0,"signal":null},"fixtureStart":{"pid":32247,"ppid":32246},"fixtureExit":{"pid":32247,"code":0,"bytes":0},"childAbsent":true,"listeners":{"input":0,"output":0}}
+STARTUP_EXCHANGE_WITNESS {"phase":"fault","root":"/var/folders/pz/8_nc5kp109z8f36jl0172xzw0000gn/T/primary-startup-exchange-NChd0g","hookCalls":1,"errorObserved":true,"statuses":[],"rows":[],"hostExit":{"code":0,"signal":null},"fixtureStart":{"pid":32249,"ppid":32248},"fixtureExit":{"pid":32249,"code":0,"bytes":0},"childAbsent":true,"listeners":{"input":0,"output":0}}
+✔ pre-admission envelope error keeps requested id distinct from unconsumed next id (0.581917ms)
+✔ malformed command identity stays bounded and does not become a valid correlation (0.343ms)
+✖ input read failure waits for an accepted command and preserves its result (57.053875ms)
+✖ input read failure before a command rejects through the owned transport path (51.242875ms)
+✖ whole owner retains ready_input failure and observes its original relay exit (59.497583ms)
+✖ whole owner retains ready_output failure and observes its original relay exit (56.339375ms)
+✖ whole owner retains terminal_output failure and observes its original relay exit (98.636958ms)
+✔ startup exchange creation healthy control publishes ready and terminal (102.069291ms)
+✔ startup exchange creation failure never publishes ready (104.52825ms)
+✔ first busy failure survives later input error (65.370375ms)
+✔ first busy failure survives later output error (56.715ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 16
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 656.7185
+
+✖ failing tests:
+
+test at runtime/host_v1/test_primary_stdio.mjs:155:1
+✖ input read failure waits for an accepted command and preserves its result (57.053875ms)
+  AssertionError [ERR_ASSERTION]: node:events:505
+      throw er; // Unhandled 'error' event
+      ^
+  
+  Error: injected input read failure
+      at [eval]:18:19
+  Emitted 'error' event on Interface instance at:
+      at PassThrough.onerror (node:internal/readline/interface:264:10)
+      at PassThrough.emit (node:events:526:24)
+      at emitErrorNT (node:internal/streams/destroy:170:8)
+      at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+  
+  Node.js v26.7.0
+  
+  
+  1 !== 0
+  
+      at inputReadFailureProbe (file:///Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/host_v1/test_primary_stdio.mjs:151:10)
+      at TestContext.<anonymous> (file:///Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/host_v1/test_primary_stdio.mjs:156:16)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at runtime/host_v1/test_primary_stdio.mjs:161:1
+✖ input read failure before a command rejects through the owned transport path (51.242875ms)
+  AssertionError [ERR_ASSERTION]: node:events:505
+      throw er; // Unhandled 'error' event
+      ^
+  
+  Error: injected input read failure
+      at [eval]:18:19
+  Emitted 'error' event on Interface instance at:
+      at PassThrough.onerror (node:internal/readline/interface:264:10)
+      at PassThrough.emit (node:events:526:24)
+      at emitErrorNT (node:internal/streams/destroy:170:8)
+      at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+  
+  Node.js v26.7.0
+  
+  
+  1 !== 0
+  
+      at inputReadFailureProbe (file:///Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/host_v1/test_primary_stdio.mjs:151:10)
+      at TestContext.<anonymous> (file:///Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/host_v1/test_primary_stdio.mjs:162:20)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at runtime/host_v1/test_primary_stdio.mjs:212:1
+✖ whole owner retains ready_input failure and observes its original relay exit (59.497583ms)
+  AssertionError [ERR_ASSERTION]: node:events:505
+      throw er; // Unhandled 'error' event
+      ^
+  
+  Error: original ready_input failure
+      at [eval]:6:37
+  Emitted 'error' event on PassThrough instance at:
+      at emitErrorNT (node:internal/streams/destroy:170:8)
+      at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+  
+  Node.js v26.7.0
+  
+  
+  1 !== 0
+  
+      at ownerChannelFailureProbe (file:///Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/host_v1/test_primary_stdio.mjs:207:10)
+      at TestContext.<anonymous> (file:///Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/host_v1/test_primary_stdio.mjs:213:16)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at runtime/host_v1/test_primary_stdio.mjs:212:1
+✖ whole owner retains ready_output failure and observes its original relay exit (56.339375ms)
+  AssertionError [ERR_ASSERTION]: node:events:505
+      throw er; // Unhandled 'error' event
+      ^
+  
+  Error: original ready_output failure
+      at [eval]:6:38
+  Emitted 'error' event on Writable instance at:
+      at emitErrorNT (node:internal/streams/destroy:170:8)
+      at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+  
+  Node.js v26.7.0
+  
+  
+  1 !== 0
+  
+      at ownerChannelFailureProbe (file:///Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/host_v1/test_primary_stdio.mjs:207:10)
+      at TestContext.<anonymous> (file:///Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/host_v1/test_primary_stdio.mjs:213:16)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at runtime/host_v1/test_primary_stdio.mjs:212:1
+✖ whole owner retains terminal_output failure and observes its original relay exit (98.636958ms)
+  AssertionError [ERR_ASSERTION]: node:events:505
+      throw er; // Unhandled 'error' event
+      ^
+  
+  Error: original terminal_output failure
+      at [eval]:6:41
+  Emitted 'error' event on Writable instance at:
+      at emitErrorNT (node:internal/streams/destroy:170:8)
+      at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+  
+  Node.js v26.7.0
+  
+  
+  1 !== 0
+  
+      at ownerChannelFailureProbe (file:///Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/host_v1/test_primary_stdio.mjs:207:10)
+      at TestContext.<anonymous> (file:///Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/host_v1/test_primary_stdio.mjs:213:16)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
